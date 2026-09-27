@@ -107,6 +107,7 @@
 }
 
 .method-chapters { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }
+@media(min-width:1001px){.method-chapters{display:none}}
 .method-chapters button { padding:10px 16px; border:1px solid var(--line); border-radius:8px; background:white; color:var(--ink); }
 .method-chapters button[aria-pressed="true"] { background:var(--flow-green); color:white; }
 .method-chapter section { margin-top:24px; }
@@ -115,3 +116,10 @@
 .method-link { color:var(--flow-green); text-decoration:underline; text-underline-offset:3px; }
 .method-glossary-nav { margin-bottom:16px; }
 .method-return { margin:12px 0; }
+.method-entry-links {display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}
+.method-entry-links a {padding:12px 16px;border:1px solid var(--line);border-radius:8px;color:var(--flow-green);background:white;text-underline-offset:3px}
+.method-chapter p,.guide-explanation {max-width:85ch;line-height:1.65}
+.guide-exercise > summary {cursor:pointer;padding:12px 0;font-weight:600}
+.guide-explanation {margin:20px 0}
+.guide-contribute > h3 {margin:20px 0 12px}
+.guide-footer button {background:transparent;color:var(--flow-green);text-decoration:underline;padding:10px 0}

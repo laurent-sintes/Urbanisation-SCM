@@ -60,7 +60,7 @@ try {
   await heading(capability.fields.name);
   await page.getByTestId('business-sheet').waitFor();
   assert.equal(await page.locator('.behavior-section a').count(), children(capability.id).filter(id => byId.get(id)?.kind === 'behavior').length);
-  await page.locator(`[data-behavior-id="${behavior.id}"] summary`).click();
+  await page.locator(`[data-behavior-id="${behavior.id}"] p`).waitFor();
   await page.locator(`.behavior-section a[href*="node=${encodeURIComponent(behavior.id)}"]`).click();
   await heading(behavior.fields.name);
   assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('version'), model.version);

@@ -16,6 +16,7 @@ export interface RouteState extends GraphRoute {
   glossary?: 'model' | 'meta';
   principle?: string;
   information?: string;
+  returnTo?: string; catalogReturn?: string; scroll?: string;
   scenario?: string; stream?: string; path?: string; event?: string; object?: string; situation?: string; capability?: string; scenarioQuery?: string;
 }
 export function readRoute(hash: string): RouteState {
@@ -43,6 +44,8 @@ export function readRoute(hash: string): RouteState {
     ...(p.has('term') ? { term: p.get('term') || '' } : {}),
     ...(p.get('glossary') === 'meta' ? { glossary: 'meta' as const } : {}),
     ...(p.has('section') ? { section: p.get('section') || '' } : {}),
+    ...Object.fromEntries(['returnTo','catalogReturn'].filter(k => p.get(k)?.startsWith('#') && p.get(k)!.length < 12000).map(k => [k,p.get(k)!])),
+    ...(p.has('scroll') && /^\d{1,7}$/.test(p.get('scroll')!) ? {scroll:p.get('scroll')!} : {}),
     ...Object.fromEntries(['scenario','stream','path','event','object','situation','capability','scenarioQuery'].filter(k => p.has(k)).map(k => [k,p.get(k) || ''])),
     version: p.get('version') || '', query: p.get('q') || '',
     status: p.get('status') || '', relation: p.get('relation') || '',
@@ -57,6 +60,7 @@ export function routeHash(route: RouteState): string {
     q: route.query, status: route.status, relation: route.relation,
     source: route.source, anchor: route.anchor, sourceId: route.sourceId,
     term: route.term, section: route.section,
+    returnTo: route.returnTo, catalogReturn: route.catalogReturn, scroll: route.scroll,
     glossary: route.view === 'glossary' ? route.glossary : undefined,
     principle: route.view === 'principles' ? route.principle : undefined,
     information: route.view === 'information' ? route.information : undefined,

@@ -8,6 +8,16 @@ from app.modeling_guide import _validate_guide, ModelingGuideError
 ROOT = Path(__file__).resolve().parents[1]
 
 class ChapterContractTests(unittest.TestCase):
+    def test_ux_guide_links_resolve_and_maintenance_notes_stay_separate(self):
+        guide = read(ROOT / 'modeles/backlog/atlas-methodology-ux.yaml')
+        _validate_guide(guide, guide['version'])
+        scenario = next(t for t in guide['glossary']['terms'] if t['id'] == 'MOD027')
+        self.assertTrue(scenario['editorial_notes'])
+        self.assertFalse(any('scenario_catalog' in n for n in scenario['notes']))
+        guide['chapters'][0]['intro'] = '[Absente](method:MOD999)'
+        with self.assertRaisesRegex(ModelingGuideError, 'non résolue'):
+            _validate_guide(guide, guide['version'])
+
     def setUp(self):
         self.guide = read(ROOT / 'modeles/backlog/atlas-methodology-U788.yaml')
 

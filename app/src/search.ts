@@ -6,9 +6,10 @@ import { publicText } from './publicText.ts';
 import type { AtlasNode, GlossaryTerm, PublishedModel, MarketComparison, MarketInspiration } from './types.ts';
 import { marketSearchText } from './marketContent.ts';
 import { requestMetadataSearchText } from './requestMetadata.ts';
+import type { ModelingGuide } from './modelingGuide.ts';
 
 export interface SearchResult {
-  id: string; kind: 'model' | 'glossary' | 'scenario' | 'value_stream'; name: string; excerpt: string; score: number;
+  id: string; kind: 'model' | 'glossary' | 'scenario' | 'value_stream' | 'method' | 'guide'; name: string; excerpt: string; score: number;
   node?: AtlasNode; term?: GlossaryTerm;
 }
 const normalize = (text: string) => plainInlineText(text).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr');
@@ -45,11 +46,16 @@ function excerpt(text: string, queryWords: string[]): string {
   return `${start ? '…' : ''}${plain.slice(start, start + 175).trim()}${plain.length > start + 175 ? '…' : ''}`;
 }
 /** Search only content readable in this snapshot; no implicit synonyms or editorial metadata. */
-export function searchPublication(model: PublishedModel, query: string): SearchResult[] {
+export function searchPublication(model: PublishedModel, query: string, guide?: ModelingGuide): SearchResult[] {
   const needle = normalize(query).trim();
   const queryWords = words(query).filter(word => !stopWords.has(word));
   if (!needle || !queryWords.length) return [];
-  return index(model).flatMap(entry => {
+  const methodEntries: SearchResult[] = [
+    ...(guide?.glossary?.terms ?? []).filter(t => t.status !== 'retired').map(t => ({id:t.id,kind:'method' as const,name:t.label_fr || t.name,excerpt:[t.name,t.definition,t.short_description].filter(Boolean).join(' '),score:0})),
+    ...(guide?.chapters ?? []).map(c => ({id:c.id,kind:'guide' as const,name:c.title,excerpt:[c.intro,...c.sections.map(s=>[s.title,s.text,s.detail,s.example].filter(Boolean).join(' '))].join(' '),score:0})),
+    ...(guide?.lessons ?? []).map(l => ({id:l.id,kind:'guide' as const,name:l.title,excerpt:[l.rule,l.explanation].join(' '),score:0})),
+  ];
+  return [...index(model),...methodEntries].flatMap(entry => {
     const title = normalize(entry.name);
     const id = normalize(entry.id);
     const titleWords = words(entry.name), bodyWords = words(entry.excerpt);

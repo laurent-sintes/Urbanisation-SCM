@@ -15,7 +15,7 @@ import { MarketComparisons } from './components/MarketComparisons';
 import type { MarketComparison, MarketInspiration } from './types';
 import { ScenarioCatalogPage } from './components/ScenarioCatalogPage';
 import { GlossaryPage } from './components/GlossaryPage';
-import { ModelLinksProvider, ModelText } from './components/ModelLinks';
+import { ModelLinksProvider, ModelText, ContextReturn } from './components/ModelLinks';
 
 const ReactFlowPane = lazy(() => import('./ReactFlowPane').then(module => ({ default: module.ReactFlowPane })));
 const DependenciesPane = lazy(() => import('./DependenciesPane').then(module => ({ default: module.DependenciesPane })));
@@ -64,9 +64,10 @@ export function App() {
   const contentScope = view === 'map' ? scopeId : route.node;
   useLayoutEffect(() => {
     // A new view starts at the top; selecting a card in the same map does not jump.
-    content.current?.scrollTo({ top: restoreScroll.current ?? 0, left: 0, behavior: 'instant' });
+    content.current?.scrollTo({ top: restoreScroll.current ?? Number(route.scroll || 0), left: 0, behavior: 'instant' });
     restoreScroll.current = null;
-  }, [model?.version, view, contentScope, glossaryMode, route.principle, route.scenario, route.stream, route.path]);
+    if(!route.section) heading.current?.focus({preventScroll:true});
+  }, [model?.version, view, contentScope, glossaryMode, route.principle, route.scenario, route.stream, route.path, route.scroll]);
   const changeRoute = useCallback((changes: Partial<RouteState>, replace = false) => {
     setRoute(previous => {
       const next = { ...previous, ...changes };
@@ -84,12 +85,12 @@ export function App() {
     if (!section && kind === 'model') setTimeout(() => heading.current?.focus({ preventScroll: true }), 30);
   }, [changeRoute, model?.version, route.version, metaGlossary]);
   const openGlossary = useCallback((glossary: 'model' | 'meta' = 'model') => {
-    changeRoute({ view: 'glossary', glossary, node: '', term: '', principle: '', section: '', scope: '', relation: '', source: '', anchor: '', sourceId: '' });
+    changeRoute({ returnTo:'',catalogReturn:'',scroll:'', view: 'glossary', glossary, node: '', term: '', principle: '', section: '', scope: '', relation: '', source: '', anchor: '', sourceId: '' });
     setDrawer(false);
     setTimeout(() => heading.current?.focus({ preventScroll: true }), 30);
   }, [changeRoute]);
   const openPrinciples = useCallback(() => {
-    changeRoute({ view: 'principles', principle: '', node: '', term: '', section: '', scope: '', relation: '', source: '', anchor: '', sourceId: '', query: '', status: '' });
+    changeRoute({ returnTo:'',catalogReturn:'',scroll:'',view: 'principles', principle: '', node: '', term: '', section: '', scope: '', relation: '', source: '', anchor: '', sourceId: '', query: '', status: '' });
     setDrawer(false);
     setTimeout(() => heading.current?.focus({ preventScroll: true }), 30);
   }, [changeRoute]);
@@ -105,7 +106,7 @@ export function App() {
   useEffect(() => {
     const previousRestoration = history.scrollRestoration;
     history.scrollRestoration = 'manual';
-    const back = () => { restoreScroll.current = history.state?.atlasScroll ?? 0; setRoute(readRoute(location.hash)); setDrawer(false); };
+    const back = () => { restoreScroll.current = history.state?.atlasScroll ?? null; setRoute(readRoute(location.hash)); setDrawer(false); };
     window.addEventListener('hashchange', back);
     return () => { window.removeEventListener('hashchange', back); history.scrollRestoration = previousRestoration; };
   }, []);
@@ -135,7 +136,7 @@ export function App() {
     return () => document.removeEventListener('keydown', shortcut);
   }, [mobile]);
   const navigate = useCallback((id: string, focusHeading = true) => {
-    changeRoute({ node: id, scope: '', view: undefined, term: '', principle: '', section: '', query: '', status: '', relation: '', source: '', anchor: '', sourceId: '' });
+    changeRoute({ returnTo:'',catalogReturn:'',scroll:'', node: id, scope: '', view: undefined, term: '', principle: '', section: '', query: '', status: '', relation: '', source: '', anchor: '', sourceId: '' });
     setDrawer(false);
     if (focusHeading) setTimeout(() => heading.current?.focus({ preventScroll: true }), 50);
   }, [changeRoute]);
@@ -167,7 +168,7 @@ export function App() {
       {model && !mobile && <div className="topbar-navigation">{breadcrumbs}{shareButton}</div>}
       <button id="fa-refresh" className={`topbar-icon ${loading ? 'loading' : ''}`} aria-label="Actualiser la publication" title="Actualiser" disabled={loading} onClick={reload}><RefreshCw size={17} /></button>
     </header>
-    {model && <Sidebar model={model} route={{ ...route, glossary: glossaryMode }} open={drawer} mobile={mobile} searchRef={search} onClose={closeDrawer} onNavigate={navigate} onOpenGlossary={openGlossary} onOpenTerm={id => followReference('glossary', id)} onOpenPrinciples={openPrinciples} onSearch={changes => changeRoute(changes, true)} />}
+    {model && <Sidebar model={model} route={{ ...route, glossary: glossaryMode }} open={drawer} mobile={mobile} guide={guideState.status === 'ready' ? guideState.response.guide : undefined} searchRef={search} onClose={closeDrawer} onNavigate={navigate} onOpenGlossary={openGlossary} onOpenTerm={id => followReference('glossary', id)} onOpenPrinciples={openPrinciples} onSearch={changes => changeRoute(changes, true)} />}
     {model && <div className="rail-resizer" role="separator" tabIndex={0} aria-label="Largeur de l’arbre" aria-orientation="vertical" aria-valuemin={240} aria-valuemax={420} aria-valuenow={width}
       onKeyDown={e => { if (['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) { e.preventDefault(); setWidth(value => e.key === 'Home' ? 240 : e.key === 'End' ? 420 : clampWidth(value + (e.key === 'ArrowRight' ? 10 : -10))); } }}
       onPointerDown={e => { e.currentTarget.setPointerCapture(e.pointerId); }}
@@ -192,6 +193,7 @@ export function App() {
         }}><tab.Icon size={16} />{tab.label}{tab.id === 'relations' && selected && !['business_system', 'group', 'domain', 'area', 'reference'].includes(selected.kind) && <span className="count">{links.length}</span>}</button>)}</div>{view === 'map' && selected && selected.id !== headingNode?.id && <div className="view-context"><span className="view-selection" title={`Sélection : ${selected.name}`}>Sélection : {selected.name}</span></div>}</div>}
         </div>
         <div className="workspace-content" ref={content} tabIndex={0} role="region" aria-label="Contenu de la vue" onScroll={event => history.replaceState({ ...history.state, atlasScroll: event.currentTarget.scrollTop }, '', location.href)}>
+          <ContextReturn/>
         <div id="atlas-view" role={referenceView ? 'region' : 'tabpanel'} aria-labelledby={referenceView ? 'page-title' : `tab-${['sheet', 'market'].includes(view) && !selected ? 'map' : view}`}>
           {view === 'scenarios' ? <ScenarioCatalogPage model={model} route={route} onChange={changeRoute}/> : view === 'principles' ? <Suspense fallback={<p role="status">Ouverture du méta modèle…</p>}><ModelingGuidePage key={model.version} model={model} selected={route.principle} state={guideState} retry={retryGuide} onSelect={principle => changeRoute({ principle })} /></Suspense> : view === 'glossary' ? <GlossaryPage model={model} selected={route.term} mode={glossaryMode} guideState={guideState} onRetry={retryGuide} onSelect={term => changeRoute({ view: 'glossary', glossary: glossaryMode, term, section: '' })}/> : view === 'sheet' && selected ? <BusinessSheet model={model} node={selected} onShowMarket={() => changeRoute({ view: 'market', relation: '', section: '' })} /> : view === 'market' && selected ? <article className="market-page" key={selected.id}><MarketComparisons id={`field-${selected.id}-market_comparisons`} entries={selected.fields.market_comparisons as readonly MarketComparison[] | undefined} inspiration={selected.fields.market_inspiration as MarketInspiration | undefined} modelName={selected.name}/></article> : view === 'relations' ? <Suspense fallback={<div className="graph-canvas empty-state">Ouverture des relations…</div>}><DependenciesPane key={`${model.version}:${route.node}`} model={model} focusId={selected?.id} relationId={route.relation} settings={route} onSettings={changes => changeRoute(changes)} onSelectRelation={relation => changeRoute({ relation }, true)} onFocus={node => changeRoute({ node, scope: '', relation: '', view: 'relations', graphDepth: node ? 1 : 0 })} onRead={read}/></Suspense> : <>
             {!scopeId && model.nodes.some(node => node.kind === 'business_system') ? <Overview model={model} onExplore={explore} onRead={read}/> : <section className="map-panel" ref={mapPanel} aria-label="Carte du modèle">

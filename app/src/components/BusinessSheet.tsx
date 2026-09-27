@@ -3,10 +3,11 @@ import { publicText } from '../publicText';
 import { revealSection } from '../readerNavigation';
 import { ArrowRight, ArrowUpRight, GitBranch } from 'lucide-react';
 import { Fragment, type ReactNode } from 'react';
-import type { AtlasNode, AtlasRelation, PublishedModel, MarketComparison } from '../types';
+import type { AtlasNode, AtlasRelation, PublishedModel } from '../types';
 import { businessFields, businessQualification } from '../businessContent';
 import { kindLabel } from '../presentation';
 import './details.css';
+import './ux-reading.css';
 import { ModelText, ReferenceLink, MethodLink } from './ModelLinks';
 import { NodeIcon } from '../icons';
 import { childrenOf, relatedTo } from '../model';
@@ -36,7 +37,7 @@ function Value({ value }: { value: unknown }): ReactNode {
   if (typeof value === 'object') return <dl className="detail-values">{Object.entries(value).map(([key, item]) => <div key={key}><dt>{fieldName(key)}</dt><dd><Value value={item}/></dd></div>)}</dl>;
   return <span className="detail-text"><ModelText text={publicText(typeof value === 'boolean' ? value ? 'Oui' : 'Non' : String(value))}/></span>;
 }
-export function BusinessSheet({ model, node, onShowMarket }: { model: PublishedModel; node: AtlasNode; onShowMarket: () => void }) {
+export function BusinessSheet({ model, node }: { model: PublishedModel; node: AtlasNode; onShowMarket: () => void }) {
   const parents = model.relations.filter(r => ['contains', 'presents'].includes(r.type) && r.targetId === node.id);
   const children = childrenOf(model, node.id);
   const behaviors = children.filter(child => child.kind === 'behavior');
@@ -48,12 +49,10 @@ export function BusinessSheet({ model, node, onShowMarket }: { model: PublishedM
   const examples = examplesForNode(model, node);
   const scenarios = scenariosForNode(model,node.id);
   const scenarioSection = !!catalogOf(model) && ['domain', 'area', 'capability'].includes(node.kind);
-  const marketCount = (node.fields.market_comparisons as readonly MarketComparison[] | undefined)?.length || 0;
   const relations = relatedTo(model, node.id);
   const [scopeSummary, ...scopeDetails] = (fields.scope || '').trim().split(/\n\s*\n/);
-  const sections = [fields.scope && ['scope', 'Périmètre'], behaviors.length > 0 && ['behaviors', 'Comportements'], relations.length > 0 && ['interactions', 'Interactions'], (scenarioSection || scenarios.length > 0) && ['scenarios', 'Scénarios métier'], examples.length > 0 && ['examples', catalogOf(model) ? 'Illustrations' : 'Scénarios métier'], ['market_comparisons', 'Sources d’inspiration']].filter(Boolean) as string[][];
+  const sections = [examples.length > 0 && ['illustrations', catalogOf(model) ? 'Illustrations métier' : 'Scénarios métier'], otherChildren.length > 0 && ['children','Explorer ce périmètre'], fields.scope && ['scope','Périmètre'], behaviors.length > 0 && ['behaviors','Comportements'], (scenarioSection || scenarios.length > 0) && ['scenarios','Scénarios mobilisant ce périmètre'], relations.length > 0 && ['interactions','Responsabilités liées']].filter(Boolean) as string[][];
   const jump = (field: string) => {
-    if (field === 'market_comparisons') { onShowMarket(); return; }
     const target = document.getElementById(`field-${node.id}-${field}`);
     if (target) revealSection(target);
   };
@@ -78,6 +77,8 @@ export function BusinessSheet({ model, node, onShowMarket }: { model: PublishedM
       </section>}
       <section id={`field-${node.id}-definition`}><h2>Définition</h2><div className="business-copy"><Value value={fields.definition}/></div></section>
       {parents.length > 0 && <div className="sheet-parent">{parents.map(relation => <span key={relation.id}>{relation.type === 'presents' ? 'Présenté dans' : 'Rattaché à'} <ReferenceLink target={relation.sourceId}>{model.nodeById.get(relation.sourceId)?.name || relation.sourceId}</ReferenceLink></span>)}</div>}
+    {otherChildren.length > 0 && <section id={`field-${node.id}-children`} tabIndex={-1} className="sheet-children"><h2>Explorer ce périmètre <span>{otherChildren.length}</span></h2><div className="detail-children-list">{otherChildren.map((child, index) => <Fragment key={child.id}>{startsCapabilityTypeSection(otherChildren, index) && <hr className="capability-type-divider" aria-label="Changement de type de capacité"/>}<ReferenceLink target={child.id}><NodeIcon node={child} size={22}/><span><small>{kindLabel(child)}</small><strong>{child.displayCode && <small className="reading-code">{child.displayCode} · </small>}{child.name}</strong></span><ArrowRight size={18} aria-hidden="true"/></ReferenceLink></Fragment>)}</div></section>}
+      <BusinessExamples id={`field-${node.id}-illustrations`} examples={examples} illustrations={!!catalogOf(model)}/>
       {fields.scope && <section id={`field-${node.id}-scope`} tabIndex={-1} className="sheet-scope"><h2>Périmètre</h2>
         <div className="business-copy sheet-scope-summary"><Value value={scopeSummary}/></div>
         {scopeDetails.length > 0 && <div className="business-copy"><Value value={scopeDetails.join('\n\n')}/></div>}
@@ -93,23 +94,22 @@ export function BusinessSheet({ model, node, onShowMarket }: { model: PublishedM
         <h2>Comportements <span>{behaviors.length}</span></h2>
         {behaviorGroups.map(group => <div className="behavior-reading-group" key={group.key}>
           {group.label && <h3>{group.label}</h3>}
-          <div className="behavior-list">{group.behaviors.map(behavior => <details className="behavior-summary" key={behavior.id} data-behavior-id={behavior.id}>
-            <summary><NodeIcon node={behavior} size={21}/><span>{behavior.displayCode && <small className="reading-code">{behavior.displayCode}</small>}{behavior.name}<small>{behaviorTypeLabel(behavior)}</small></span></summary>
-            <p><ModelText text={publicText(behavior.definition)}/></p><ReferenceLink target={behavior.id}>Lire le comportement <ArrowUpRight size={16}/></ReferenceLink>
-          </details>)}</div>
+          <div className="behavior-list">{group.behaviors.map(behavior => <article className="behavior-summary" key={behavior.id} data-behavior-id={behavior.id}>
+            <h3><NodeIcon node={behavior} size={21}/><span>{behavior.displayCode && <small className="reading-code">{behavior.displayCode}</small>}<ReferenceLink target={behavior.id}>{behavior.name}</ReferenceLink><small>{behaviorTypeLabel(behavior)}</small></span></h3>
+            <p><ModelText text={publicText(behavior.definition)}/></p>
+          </article>)}</div>
         </div>)}
       </section>}
-      {relations.length > 0 && <section id={`field-${node.id}-interactions`} tabIndex={-1} className="sheet-interactions"><h2>Responsabilités liées <span>{relations.length}</span></h2><div className="interaction-groups">{groups.filter(group => group.items.length).map(group => <div key={group.label}><h3>{group.label}</h3>{group.items.map(relation => {
-        const other = relation.sourceId === node.id ? relation.targetId : relation.sourceId;
-        return <details className="interaction-item" key={relation.id}><summary>{model.nodeById.get(other)?.name || other}</summary><p><ReferenceLink target={other}>Lire la fiche <ArrowUpRight size={14}/></ReferenceLink></p><Value value={relation.qualification.meaning || relation.label}/>{Object.entries(businessQualification(relation.qualification)).filter(([key]) => !['meaning', 'role'].includes(key)).map(([key, value]) => <div key={key}><h4>{fieldName(key)}</h4><Value value={value}/></div>)}</details>;
-      })}</div>)}</div></section>}
       <section id={`field-${node.id}-examples`} tabIndex={-1}>
         {(scenarioSection || scenarios.length > 0) && <section id={`field-${node.id}-scenarios`} tabIndex={-1} className="scenario-links"><h2>Scénarios mobilisant ce périmètre</h2>{scenarios.length ? <ul>{scenarios.map(s=><li key={s.id}><CatalogLink scenario={s.id}>{s.title}</CatalogLink>{catalogOf(model)?.legacy_links.filter(a=>a.owner_id===node.id && a.scenario_id===s.id && a.contribution).map((a,i)=><p key={i}><ModelText text={a.contribution!}/></p>)}</li>)}</ul> : <p>Aucun scénario documenté pour ce périmètre.</p>}</section>}
-        <BusinessExamples id={`local-${node.id}-examples`} examples={examples} illustrations={!!catalogOf(model)}/>
+
       </section>
+      {relations.length > 0 && <section id={`field-${node.id}-interactions`} tabIndex={-1} className="sheet-interactions"><h2>Responsabilités liées <span>{relations.length}</span></h2><div className="interaction-groups">{groups.filter(group => group.items.length).map(group => <div key={group.label}><h3>{group.label}</h3>{[...new Set(group.items.map(r => r.sourceId === node.id ? r.targetId : r.sourceId))].map(other => <article className="interaction-item" key={other}>
+        <h4><ReferenceLink target={other}>{model.nodeById.get(other)?.name || other}</ReferenceLink></h4>
+        {group.items.filter(r => (r.sourceId === node.id ? r.targetId : r.sourceId) === other).map(relation => <div className="interaction-meaning" key={relation.id} data-relation-id={relation.id}><Value value={relation.qualification.meaning || relation.label}/>{Object.entries(businessQualification(relation.qualification)).filter(([key]) => !['meaning', 'role'].includes(key)).map(([key, value]) => <div key={key}><h5>{fieldName(key)}</h5><Value value={value}/></div>)}</div>)}
+      </article>)}</div>)}</div></section>}
     </div>
-    <div className="sheet-market-entry"><p>{marketCount ? `${marketCount} rapprochement${marketCount > 1 ? 's' : ''} documenté${marketCount > 1 ? 's' : ''} : vocabulaire, périmètre retenu et sources.` : 'Le positionnement marché de cet élément reste à documenter dans cette publication.'}</p><button className="secondary-button" onClick={onShowMarket}>Sources d’inspiration <ArrowUpRight size={16}/></button></div>
-    {otherChildren.length > 0 && <section className="sheet-children"><h2>Explorer ce périmètre <span>{otherChildren.length}</span></h2><div className="detail-children-list">{otherChildren.map((child, index) => <Fragment key={child.id}>{startsCapabilityTypeSection(otherChildren, index) && <hr className="capability-type-divider" aria-label="Changement de type de capacité"/>}<ReferenceLink target={child.id}><NodeIcon node={child} size={22}/><span><small>{kindLabel(child)}</small><strong>{child.displayCode && <small className="reading-code">{child.displayCode} · </small>}{child.name}</strong></span><ArrowRight size={18} aria-hidden="true"/></ReferenceLink></Fragment>)}</div></section>}
+
   </article>;
 }
 

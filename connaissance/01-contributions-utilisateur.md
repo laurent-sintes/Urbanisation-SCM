@@ -19741,3 +19741,27 @@ Retire la mention 1PL, ce n'est pas utile
 **contexte et portée**
 
 Retirer cette mention des définitions, du glossaire et des consignes courantes. Conserver les noms Logistics et Demand & Supply Planning retenus U801, leurs identités et leurs frontières métier. Les verbatims et éléments de comparaison historiques ne sont pas réécrits.
+
+## U803
+
+**id**
+
+U803
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Application et publication des améliorations UX d’Atlas
+
+**texte**
+
+Applique le plan
+
+Commit, release & push
+
+**contexte et portée**
+
+Demandes successives concernant le plan de l’audit UX `audits/2026-09-27-audit-ux/rapport.md` : simplifier la lecture, limiter les dépliables aux contenus longs, relier les notions méthodologiques, structurer les espaces et préserver le contexte de navigation. Publication du guide préparé `modeles/backlog/atlas-methodology-ux.yaml` avec l’application. Intervention de présentation et de documentation ; aucun nouvel accord sur le fond des capacités, leurs frontières ou leur réalisation installée.

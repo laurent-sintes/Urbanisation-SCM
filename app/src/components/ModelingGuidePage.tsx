@@ -1,10 +1,10 @@
 import { ReadingHelp } from './ReadingHelp';
 import type { GuideState } from '../useModelingGuide';
 import { useId, useState } from 'react';
-import { ArrowUpRight, BookOpen, ChevronDown, RefreshCw } from 'lucide-react';
+import { ArrowUpRight, BookOpen, RefreshCw } from 'lucide-react';
 import { lessonForPublication, type GuideLesson, type ModelingGuide } from '../modelingGuide';
 import type { PublishedModel } from '../types';
-import { ReferenceLink, MethodLink, MethodReturn } from './ModelLinks';
+import { ReferenceLink, MethodLink, MethodReturn, ModelText, CatalogLink } from './ModelLinks';
 import './modeling-guide.css';
 
 function LessonScene({ scene }: { scene: GuideLesson['scene'] }) {
@@ -22,13 +22,12 @@ function LessonScene({ scene }: { scene: GuideLesson['scene'] }) {
 
 function Lesson({ guide, lesson, model, index }: { guide: ModelingGuide; lesson: GuideLesson; model: PublishedModel; index: number }) {
   const [choice, setChoice] = useState<number>();
-  const [explained, setExplained] = useState(false);
   const titleId = useId();
   const questionId = useId();
   const answerId = useId();
   const modelLinks = lesson.model_links.filter(link => model.nodeById.has(link.id));
   const missingLinks = lesson.model_links.filter(link => !model.nodeById.has(link.id));
-  const answer = choice !== undefined ? lesson.choices[choice]?.feedback : explained ? lesson.explanation : undefined;
+  const answer = choice !== undefined ? lesson.choices[choice]?.feedback : undefined;
 
   return <article className="guide-lesson" aria-labelledby={titleId}>
     <div className="guide-lesson-heading">
@@ -37,18 +36,18 @@ function Lesson({ guide, lesson, model, index }: { guide: ModelingGuide; lesson:
       <p className="guide-rule">{lesson.rule}</p>
     </div>
     <LessonScene scene={lesson.scene}/>
-    <section className="guide-exercise" aria-labelledby={questionId}>
+    <p className="guide-explanation"><ModelText text={lesson.explanation}/></p>
+    <details className="guide-exercise"><summary>Tester ma compréhension</summary>
       <h3 id={questionId}>{lesson.question}</h3>
       <div className="guide-choices" role="group" aria-labelledby={questionId}>
         {lesson.choices.map((item, itemIndex) => <button type="button" key={itemIndex} aria-pressed={choice === itemIndex}
-          aria-controls={answerId} onClick={() => { setChoice(itemIndex); setExplained(false); }}>{item.label}</button>)}
+          aria-controls={answerId} onClick={() => { setChoice(itemIndex); }}>{item.label}</button>)}
       </div>
-      <button type="button" className="guide-reveal" aria-controls={answerId} aria-expanded={answer !== undefined}
-        onClick={() => { setChoice(undefined); setExplained(true); }}>Voir directement l’explication<ChevronDown size={14} aria-hidden="true"/></button>
       <div id={answerId} className={`guide-answer${answer ? ' is-visible' : ''}`} role="status" aria-atomic="true">{answer && <p>{answer}</p>}</div>
-    </section>
-    <details className="guide-contribute">
-      <summary><BookOpen size={17} aria-hidden="true"/>Pour contribuer<span>Critères et frontières</span></summary>
+      <p>Les réponses ne sont pas enregistrées.</p>
+    </details>
+    <section className="guide-contribute">
+      <h3>Pour contribuer</h3>
       <div className="guide-contributor-content">
         <div className="guide-detail-grid">
           <section><h3>Le critère utile</h3><p>{lesson.contributor.criterion}</p></section>
@@ -60,11 +59,12 @@ function Lesson({ guide, lesson, model, index }: { guide: ModelingGuide; lesson:
           {missingLinks.length > 0 && <p className="guide-unpublished">{missingLinks.map(link => link.label).join(' · ')} : {missingLinks.length === 1 ? 'exemple absent' : 'exemples absents'} de cette publication. L’illustration ci-dessus reste pédagogique.</p>}
         </section>}
       </div>
-    </details>
+    </section>
   </article>;
 }
 
 function GuideContent({ model, selected, onSelect, state, retry }: { model: PublishedModel; selected?: string; onSelect: (id: string) => void; state: GuideState; retry: () => void }) {
+  if (selected === 'codes') return <><MethodReturn/><button className="method-link" onClick={()=>onSelect('start')}>Retour à la méthode</button>{model.raw.display_index ? <ReadingHelp model={model}/> : <p>Cette publication ne définit pas de codes de lecture.</p>}</>;
   if (state.version !== model.version || state.status === 'loading') return <section className="guide-status" role="status" aria-live="polite"><p>Chargement du méta modèle pour {model.version}…</p></section>;
   if (state.status === 'error') return <section className="guide-status"><div role="alert"><h2>Le guide n’est pas accessible</h2><p>{state.message}</p></div><button type="button" className="secondary-button" onClick={retry}><RefreshCw size={16} aria-hidden="true"/>Réessayer</button></section>;
   const { response } = state;
@@ -78,7 +78,8 @@ function GuideContent({ model, selected, onSelect, state, retry }: { model: Publ
     <MethodReturn/>
     <p className="guide-edition">Méthode · {guide.version} — associée au modèle {model.version}</p>
     {guide.chapters && <nav className="method-chapters" aria-label="Rubriques de la méthode">{guide.chapters.map(item => <button key={item.id} aria-pressed={chapter?.id === item.id} onClick={() => onSelect(item.id)}>{item.title}</button>)}</nav>}
-    {chapter && <article className="guide-lesson method-chapter"><h2>{chapter.title}</h2><p>{chapter.intro}</p>{chapter.sections.map(item => <section key={item.title}><h3>{item.title}</h3><p>{item.text}</p>{item.example && <p className="guide-scene">{item.example}</p>}{item.detail && <details><summary>Approfondir</summary><p>{item.detail}</p></details>}{item.url && <a href={item.url} target="_blank" rel="noreferrer">Consulter la référence</a>}</section>)}</article>}
+    {chapter?.id === 'start' && <nav className="method-entry-links" aria-label="Par où commencer"><a href={`#version=${model.version}&view=map`}>Explorer la cartographie</a><CatalogLink>Parcourir les scénarios</CatalogLink><MethodLink term="MOD015">Comprendre les notions</MethodLink></nav>}
+    {chapter && <article className="guide-lesson method-chapter"><h2>{chapter.title}</h2><p><ModelText text={chapter.intro}/></p>{chapter.sections.map(item => <section key={item.title}><h3>{item.title}</h3><p><ModelText text={item.text}/></p>{item.example && <p className="guide-scene"><ModelText text={item.example}/></p>}{item.detail && <p><ModelText text={item.detail}/></p>}{item.url && <a href={item.url} target="_blank" rel="noreferrer">Consulter la référence</a>}</section>)}</article>}
     {(!chapter || chapter.id === 'metamodel') && <>
     <p><MethodLink term="MOD015">Ouvrir le glossaire méthodologique</MethodLink></p>
     <nav className="guide-topics" aria-label="Choisir un principe">
@@ -88,12 +89,12 @@ function GuideContent({ model, selected, onSelect, state, retry }: { model: Publ
     {lesson ? <Lesson key={`${model.version}:${guide.version}:${lesson.id}`} guide={guide} lesson={lesson} model={model} index={index}/>
       : !chapter && <section className="guide-status"><h2>Principe absent de ce guide</h2><p>La référence « {selected} » ne figure pas dans cette version. Choisis l’un des repères ci-dessus.</p></section>}
     </>}
-    <p className="guide-footer">Explore librement. Les choix servent à comprendre les principes ; ils ne sont pas enregistrés.</p>
+    <p className="guide-footer"><button onClick={() => onSelect('codes')}>Comprendre les codes et identifiants</button></p>
   </div>;
 }
 
 
 /** Rules are read only for publications that explicitly carry the frozen policy. */
 export function ModelingGuidePage(props: Parameters<typeof GuideContent>[0]) {
-  return <><GuideContent {...props}/><ReadingHelp model={props.model}/></>;
+  return <GuideContent {...props}/>;
 }

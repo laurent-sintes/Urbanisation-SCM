@@ -113,6 +113,15 @@
 .sidebar-help { flex: 0 0 auto; padding: 8px 12px; border-top: 1px solid var(--line); }
 .sidebar-help .glossary-nav { width: 100%; margin: 2px 0; padding: 7px 8px; min-height: 34px; font-size: 12px; border: 0; background: transparent; justify-content: flex-start; text-align: left; }
 .sidebar-help .glossary-nav:hover, .sidebar-help .glossary-nav[aria-current="page"] { background: #eef1fa; }
+
+.primary-spaces {display:grid;grid-template-columns:1fr;gap:3px;padding:4px 12px 12px;border-bottom:1px solid var(--line);flex:none}
+.primary-spaces button,.space-navigation button {justify-content:flex-start;text-align:left;min-height:40px;padding:9px 10px;border:0;background:transparent;color:var(--ink);gap:10px}
+.primary-spaces button[aria-current="page"],.space-navigation button[aria-current="page"] {background:#d8eee6;color:#174e46;font-weight:650}
+.primary-spaces button:hover,.space-navigation button:hover {background:#edf5f1}
+.space-navigation {flex:1;min-height:0;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.space-navigation h2 {font-size:13px;margin:10px 0;color:var(--muted)}
+.space-navigation a {color:var(--flow-green);padding:10px;line-height:1.45;text-underline-offset:3px;overflow-wrap:anywhere}
+.context-return {margin:0 0 16px}.context-return a {color:var(--flow-green);text-underline-offset:3px}
 .sheet-toc { display: flex; gap: 8px; flex-wrap: wrap; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
 .sheet-toc button { padding: 8px 12px; border: 1px solid #c0d2cc; border-radius: 6px; color: var(--flow-green); background: white; font-size: 14px; }
 .sheet-parent { color: #465f58; font-size: 14px; display: flex; gap: 12px; flex-wrap: wrap; }

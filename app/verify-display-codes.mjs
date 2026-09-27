@@ -52,7 +52,7 @@ try {
     assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('node'), capacity.id);
     assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('version'), version);
   }
-  await page.goto(base + `#version=${version}&view=principles`);
+  await page.goto(base + `#version=${version}&view=principles&principle=codes`);
   await page.getByRole('heading', { name: 'Identité et codes de lecture', exact:true }).waitFor();
   assert.ok((await page.getByRole('region', {name:'Identité et codes de lecture'}).innerText()).includes('CAP-025'));
   await page.setViewportSize({width:390,height:844});

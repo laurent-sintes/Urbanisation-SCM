@@ -1,4 +1,5 @@
 import { lessonForPublication } from './src/modelingGuide.ts';
+import { plainInlineText } from './src/inlineLinks.ts';
 // Headless, isolated browser fixture using the real immutable publication and guide loader.
 // No listener is started and no publication or production server is modified.
 import { execFileSync } from 'node:child_process';
@@ -83,11 +84,11 @@ try {
   if (guide.chapters) {
     const chapters = page.getByRole('navigation', { name: 'Rubriques de la méthode' });
     await chapters.waitFor();
-    assert.equal(await chapters.getByRole('button').count(), 4);
+    assert.equal((await chapters.getByRole('button').allTextContents()).filter(title=>guide.chapters.some(chapter=>chapter.title===title)).length,4);
     for (const chapter of guide.chapters) {
       await chapters.getByRole('button', { name: chapter.title, exact: true }).click();
       await page.getByRole('heading', { name: chapter.title, exact: true }).waitFor();
-      assert.ok((await page.locator('.method-chapter').innerText()).includes(chapter.intro));
+      assert.ok((await page.locator('.method-chapter').innerText()).includes(plainInlineText(chapter.intro)));
     }
     await chapters.getByRole('button', { name: 'Le métamodèle', exact: true }).click();
     await nav.getByRole('button').first().click();
@@ -107,13 +108,12 @@ try {
     assert.ok(page.url().includes('principle=' + lesson.id));
     const feedback = page.locator('.guide-answer');
     assert.equal(await feedback.innerText(), '');
+    assert.ok((await page.locator('.guide-explanation').innerText()).includes(lesson.explanation));
+    await page.getByText('Tester ma compréhension', {exact:true}).click();
     for (let choice = 0; choice < lesson.choices.length; choice++) {
       await page.locator('.guide-choices button').nth(choice).click();
       assert.ok((await feedback.innerText()).includes(lesson.choices[choice].feedback));
     }
-    await page.getByRole('button', { name: 'Voir directement l’explication' }).click();
-    assert.ok((await feedback.innerText()).includes(lesson.explanation));
-    await page.locator('.guide-contribute summary').click();
     const contribution = await page.locator('.guide-contributor-content').innerText();
     assert.ok(contribution.includes(lesson.contributor.criterion));
     assert.ok(contribution.includes(lessonForPublication(lesson, current).contributor.boundary));
@@ -169,7 +169,6 @@ try {
   injectMissingLink = true;
   await visit({ view: 'principles', principle: first.id });
   await currentLesson(first).waitFor();
-  await page.locator('.guide-contribute summary').click();
   assert.ok((await page.locator('.guide-unpublished').innerText()).includes('Référence absente de cette publication'));
   assert.equal(await page.getByRole('link', { name: 'Référence absente de cette publication' }).count(), 0);
   assert.ok(!requests.some(url => url.includes('/api/') || url.includes('backlog')));

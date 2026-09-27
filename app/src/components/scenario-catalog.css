@@ -11,4 +11,11 @@
 .scenario-filters input,.scenario-filters select,.scenario-path-select select {padding:8px;min-height:42px;max-width:100%;border:1px solid #9fb9ad;border-radius:6px;background:white;color:#193d2f}
 .mobilization-steps {padding-left:28px}.mobilization-steps>li {padding:16px;margin:16px 0;border-left:3px solid #43876a;background:#f6f8f6}.step-dependency {font-size:.92rem}
 .scenario-links {margin:20px 0}.scenario-links li {margin:8px 0}
+.scenario-catalog h2 {margin:18px 0}.scenario-catalog h3 {margin:20px 0 10px}
+.scenario-filters {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.scenario-filters label {min-width:0}.scenario-filters button {justify-self:start;min-height:42px}
+.stage-boundaries,.step-inputs {border-top:1px solid #dbe7e1;margin-top:12px;padding-top:10px}
+.step-inputs h5 {font-size:inherit;margin:0 0 6px}.stage-boundaries p {margin:4px 0}
+.scenario-conditions {margin:18px 0}.mobilization-steps p {margin:8px 0}
+@media(max-width:700px){.scenario-filters{grid-template-columns:1fr}.scenario-path-select{margin:18px 0}}
 @media(max-width:600px){.scenario-catalog{padding:12px}.scenario-filters label{width:100%}.scenario-filters select{width:100%}}

@@ -98,8 +98,21 @@ def _validate_guide(guide, version):
                 _require(isinstance(term['examples'], list) and all(isinstance(value, str) for value in term['examples']))
             if 'notes' in term:
                 _require(isinstance(term['notes'], list) and all(isinstance(value, str) for value in term['notes']))
+            if 'editorial_notes' in term:
+                _require(isinstance(term['editorial_notes'], list) and all(isinstance(value, str) for value in term['editorial_notes']))
         _require(all(isinstance(value, str) and bool(re.fullmatch(r'TER\d+', value)) for value in glossary['model_term_ids']))
         _require(len(set(glossary['model_term_ids'])) == len(glossary['model_term_ids']), 'Classement lexical dupliqué.')
+        def method_links(value):
+            if isinstance(value, str):
+                for ident in re.findall(r'\]\(method:([^)#]+)(?:#[^)]*)?\)', value):
+                    _require(ident in ids, 'Notion méthodologique non résolue : ' + ident)
+            elif isinstance(value, list):
+                for item in value:
+                    method_links(item)
+            elif isinstance(value, dict):
+                for item in value.values():
+                    method_links(item)
+        method_links(guide.get('chapters', []))
     _require(isinstance(guide.get("lessons"), list) and len(guide["lessons"]) == 6)
     lesson_ids = set()
     for lesson in guide["lessons"]:

@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useLayoutEffect, useId, useRef, u
 import { createPortal } from 'react-dom';
 import type { PublishedModel } from '../types';
 import type { RouteState } from '../navigation';
-import { routeHash } from '../navigation';
+import { routeHash, readRoute } from '../navigation';
 import { inlineParts, plainInlineText } from '../inlineLinks';
 import { publicText } from '../publicText';
 import { childrenOf } from '../model';
@@ -14,10 +14,31 @@ type LinksContext = { model: PublishedModel | null; metaGlossary?: ModelingGuide
 const Context = createContext<LinksContext | null>(null);
 export const ModelLinksProvider = Context.Provider;
 
-export function CatalogLink({scenario = '',stream = '',children}:{scenario?:string;stream?:string;children?:ReactNode}) {
+export function readingOrigin(route: RouteState, version: string) {
+  return routeHash({...route,version,scroll:String(Math.round(document.querySelector('.workspace-content')?.scrollTop || 0))});
+}
+
+export function CatalogLink({scenario = '',stream,children}:{scenario?:string;stream?:string;children?:ReactNode}) {
   const context=useContext(Context);
   if (!context?.model) return <>{children}</>;
-  return <a href={routeHash({...context.route,version:context.model.version,view:'scenarios',scenario,stream,path:'',section:'',query:'',event:'',object:'',situation:'',capability:'',scenarioQuery:''})}>{children || 'Scénarios métier'}</a>;
+  const route=context.route;
+  const returning=!scenario && stream===undefined && !!route.scenario;
+  const href=returning && route.catalogReturn && readRoute(route.catalogReturn).version===context.model.version && route.catalogReturn || routeHash({...route,version:context.model.version,view:'scenarios',scenario,stream:stream ?? (scenario ? route.stream : ''),path:'',section:'',query:'',scroll:'',returnTo:'',
+    catalogReturn:scenario && !route.scenario && route.view==='scenarios' ? readingOrigin({...route,catalogReturn:undefined},context.model.version) : route.catalogReturn});
+  return <a href={href} onClick={event => {
+    if(scenario && !route.scenario && route.view==='scenarios') {
+      event.currentTarget.href=routeHash({...readRoute(href),catalogReturn:readingOrigin({...route,catalogReturn:undefined},context.model!.version)});
+    }
+  }}>{children || 'Scénarios métier'}</a>;
+}
+
+export function ContextReturn() {
+  const context=useContext(Context);
+  if(!context?.model || !context.route.returnTo) return null;
+  const origin=readRoute(context.route.returnTo);
+  if(origin.version!==context.model.version) return null;
+  const label=origin.view==='scenarios' ? (origin.scenario ? 'Retour au scénario' : 'Retour au catalogue') : origin.view==='principles' ? 'Retour à la méthode' : origin.view==='glossary' ? 'Retour au glossaire' : 'Retour à la fiche : '+(context.model.nodeById.get(origin.node)?.name || origin.node);
+  return <p className="context-return"><a href={context.route.returnTo}>{label}</a></p>;
 }
 
 export function ReferenceLink({ kind = 'model', target, anchor, children, className, showBehaviors = false, fullDefinition = false }: { kind?: Kind; target: string; anchor?: string; children: ReactNode; className?: string; showBehaviors?: boolean; fullDefinition?: boolean }) {
@@ -72,13 +93,13 @@ export function ReferenceLink({ kind = 'model', target, anchor, children, classN
   const behaviors = showBehaviors && node?.kind === 'capability' ? childrenOf(model, node.id).filter(child => child.kind === 'behavior') : [];
   const description = plainInlineText(publicText(method?.short_description || method?.definition || ((showBehaviors || fullDefinition) && node ? node.definition : term?.short_description || term?.definition || String(node?.fields.short_description || node?.purpose || node?.definition || 'Description non renseignée.'))));
   const href = routeHash({ ...context.route, version: model.version, node: kind === 'method' ? context.route.node : kind === 'model' ? target : '',
-    view: kind === 'model' ? 'sheet' : 'glossary', glossary: kind === 'method' ? 'meta' : 'model', term: kind !== 'model' ? target : '', section: anchor || '',
-    scope: '', relation: '', source: '', anchor: '', sourceId: '', query: '', status: '' });
+    view: kind === 'model' ? 'sheet' : 'glossary', glossary: kind === 'method' || context.metaGlossary?.model_term_ids.includes(target) ? 'meta' : 'model', term: kind !== 'model' ? target : '', section: anchor || '',
+    returnTo: readingOrigin(context.route,model.version), scroll:'', scope: '', relation: '', source: '', anchor: '', sourceId: '', query: '', status: '' });
   return <><a ref={link} className={`model-reference ${className || ''}`} href={href} aria-describedby={open ? id : undefined}
     onMouseEnter={show} onMouseLeave={hide} onFocus={show} onBlur={hide} onClick={event => {
       if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      if (kind === 'method') { setOpen(false); return; }
-      event.preventDefault(); setOpen(false); context.onFollow(kind, target, anchor);
+      event.currentTarget.href=routeHash({...readRoute(href),returnTo:readingOrigin(context.route,model.version)});
+      setOpen(false);
     }}>{children}</a>{open && createPortal(<div ref={tooltip} id={id} role="tooltip" className="reference-tooltip" style={{ ...position, maxHeight: 'calc(100vh - 16px)' }} onMouseEnter={clear} onMouseLeave={hide}>
       <strong>{plainInlineText(item.name)}</strong><span>{description}</span>
       {behaviors.length > 0 && <div className="tooltip-behaviors"><b>Comportements</b><ul>{behaviors.map(behavior => <li key={behavior.id}>{behavior.name}</li>)}</ul></div>}
@@ -103,6 +124,7 @@ export function MethodLink({ term, children }: { term?: string; children: ReactN
 }
 export function MethodReturn() {
   const context = useContext(Context);
+  if(context?.route.returnTo) return null;
   const node = context?.model?.nodeById.get(context.route.node);
   return node ? <p className="method-return"><ReferenceLink target={node.id}>Retour à la fiche : {node.name}</ReferenceLink></p> : null;
 }
