@@ -134,7 +134,10 @@ try {
     await page.getByTestId('business-sheet').waitFor();
     await visit({ view: 'glossary', glossary: 'meta', term: 'MOD026', node: cap.id });
     await page.getByRole('link', { name: 'Parcours de mobilisation', exact: true }).click();
-    await page.getByRole('heading', { name: 'Parcours de mobilisation des capacités', exact: true }).waitFor();
+    const mobilizationPath = guide.glossary.terms.find(term => term.id === 'MOD028');
+    assert.ok(mobilizationPath, 'La publication doit définir le parcours de mobilisation.');
+    await page.getByRole('heading', { name: mobilizationPath.label_fr, exact: true }).waitFor();
+    assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('term'), 'MOD028');
     assert.ok((await page.locator('.glossary-term').innerText()).includes('couverture des situations examinées'));
     await page.setViewportSize({ width: 390, height: 844 });
     await visit({ view: 'principles', principle: 'start' });
