@@ -1916,7 +1916,7 @@ publication_delivery:
 
         Ajuster aussi les apports existants : augmenter, réduire, avancer, reporter ou annuler ce qui peut l’être. Exemple fictif : la cible passe de 100 à 80, avec 30 pièces présentes et 70 attendues. Examiner une réduction ou un report de 20 ; si l’engagement fournisseur l’interdit, rendre l’excédent visible. La décision ne modifie pas automatiquement une commande ferme.
 
-        Les trois comportements — calcul par besoins, calcul par cible et ajustement — peuvent se combiner sans séquence obligatoire. Préserver les apports déjà engagés. [Stock Redistribution](model:D05.c) arbitre la redistribution du stock existant ; un transfert peut servir les deux finalités, sans doubler l’apport. Les propositions d’achat du domaine [Plan](model:domain-plan) sont prises en compte ; une révision du calcul amont retourne à ce domaine.
+        Les trois comportements — calcul par besoins, calcul par cible et ajustement — peuvent se combiner sans séquence obligatoire. Préserver les apports déjà engagés. [Stock Redistribution](model:D05.c) arbitre la redistribution du stock existant ; un transfert peut servir les deux finalités, sans doubler l’apport. Les propositions d’achat du domaine [Demand & Supply Planning](model:domain-plan) sont prises en compte ; une révision du calcul amont retourne à ce domaine.
 
         Pour une implantation, déterminer produits, variantes, quantités, dates et besoins non couverts de chaque point. Les assortiments et cibles sont des entrées, non des choix refaits ici. Le contexte documenté distingue saisons été et hiver ; il ne suffit pas à conclure à un fonctionnement par capsules. Tailles, couleurs et conditionnements contraignent le résultat sans créer automatiquement des comportements.
 
