@@ -30,6 +30,8 @@ test('Purpose labels follow the selected snapshot without relabeling historical 
   assert.equal(kindLabel(current.nodeById.get('a')), 'Purpose');
   assert.equal(dependencyLevels(historical)[1].label, 'Areas et référentiels');
   assert.equal(dependencyLevels(current)[1].label, 'Purposes et référentiels');
+  const subdomain = adaptPublication({ ...next, principles: [{ id: 'PRINCIPLE-DOMAIN-SUBDOMAIN' }] });
+  assert.equal(dependencyLevels(subdomain)[1].label, 'Sous-domaines et référentiels');
   assert.equal(kindLabel(adaptPublication(old).nodeById.get('a')), 'Area');
 });
 const n = (id, kind, extra = {}) => ({ id, kind, layer: 'transactional', fields: { name: id }, ...extra });

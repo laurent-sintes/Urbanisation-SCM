@@ -27,6 +27,7 @@ export function Sidebar({ model, route, open, mobile, searchRef, onClose, onNavi
     return new Set(Array.isArray(saved) ? saved.filter(x => typeof x === 'string') : []);
   });
   const [focused, setFocused] = useState(route.node);
+  const [resultType, setResultType] = useState('all');
   const searching = Boolean(route.query.trim());
   useEffect(() => {
     const ancestors = lineageOf(model, route.node).map(n => n.id);
@@ -94,7 +95,7 @@ export function Sidebar({ model, route, open, mobile, searchRef, onClose, onNavi
     const children = childrenOf(model, node.id);
     const isExpanded = expanded.has(node.id);
     return <li key={node.id} role="treeitem" data-tree-id={node.id} className={typeStart ? 'capability-type-section-start' : undefined} aria-label={`${node.name} · ${kindLabel(node)}`}
-      aria-level={depth} aria-expanded={children.length ? isExpanded : undefined} aria-selected={route.node === node.id}
+      aria-description={node.displayCode} aria-level={depth} aria-expanded={children.length ? isExpanded : undefined} aria-selected={route.node === node.id}
       tabIndex={tabStop === node.id ? 0 : -1}
       onFocus={e => e.target === e.currentTarget && setFocused(node.id)} onKeyDown={e => keydown(e, node)}>
       <div className={`tree-row ${route.node === node.id ? 'selected' : ''}`} style={{ paddingLeft: (depth - 1) * 14 + 4 }} onClick={() => onNavigate(node.id)}>
@@ -102,23 +103,23 @@ export function Sidebar({ model, route, open, mobile, searchRef, onClose, onNavi
           {isExpanded ? <ChevronDown size={13} /> : <ChevronRight size={13} />}
         </button> : <span className="tree-spacer" />}
         <NodeIcon node={node} size={17} />
-        <span className="tree-label" title={`${node.id} · ${kindLabel(node)}`}>{node.displayCode && <small className="reading-code">{node.displayCode} · </small>}{node.name}</span>
+        <span className="tree-label" title={`${node.displayCode ?? node.id} · ${kindLabel(node)}`}><span className="sr-only">{node.displayCode} </span>{node.name}</span>
         {children.length > 0 && <small>{children.length}</small>}
       </div>
       {children.length > 0 && isExpanded && <ul role="group">{children.map((child, index) => renderNode(child, depth + 1, startsCapabilityTypeSection(children, index)))}</ul>}
     </li>;
   };
-  const matches = searching ? searchPublication(model, route.query) : [];
+  const matches = searching ? searchPublication(model, route.query).filter(result => resultType === 'all' || (resultType === 'glossary' ? result.kind === 'glossary' : result.node?.kind === resultType)) : [];
   const revision = model.revision ? `v${String(model.revision).padStart(3, '0')}` : model.version;
   const publicationLabel = `Version du modèle complet : ${revision} · ${model.version}. ${route.version ? 'Publication fixe' : 'Publication courante, actualisée automatiquement'}.`;
-  return <aside ref={panel} id="atlas-tree-panel" className={`sidebar ${open ? 'open' : ''}`} aria-label="Navigation du modèle" aria-modal={mobile && open ? true : undefined} role={mobile && open ? 'dialog' : undefined}>
+  return <aside ref={panel} id="atlas-tree-panel" className={`sidebar ${open ? 'open' : ''} ${searching ? 'is-searching' : ''}`} aria-label="Navigation du modèle" aria-modal={mobile && open ? true : undefined} role={mobile && open ? 'dialog' : undefined}>
     <div className="sidebar-heading"><button className="root-link" onClick={() => onNavigate('')}><Compass size={20} />Urbanisation</button>
       <button className="drawer-close" aria-label="Fermer l’arbre" onClick={onClose}><PanelLeftClose size={20} /></button></div>
     <div className="search-box"><Search size={17} /><input ref={searchRef} id="fa-search" aria-label="Rechercher dans le modèle publié" placeholder="Un nom, une idée, un repère…" value={route.query} onChange={e => onSearch({ query: e.target.value })} onKeyDown={e => {
       if (e.key === 'ArrowDown') { e.preventDefault(); panel.current?.querySelector<HTMLButtonElement>('[data-search-result]')?.focus(); }
       if (e.key === 'Escape') onSearch({ query: '', status: '' });
     }} />{route.query ? <button aria-label="Effacer la recherche" onClick={() => onSearch({ query: '', status: '' })}><X size={14} /></button> : <kbd>Ctrl K</kbd>}</div>
-    {searching ? <div className="search-results" aria-label="Résultats de recherche"><p role="status">{matches.length} résultat{matches.length > 1 ? 's' : ''}</p>{matches.map(result => <button key={`${result.kind}:${result.id}`} data-search-result={result.id} onClick={() => result.kind === 'glossary' ? onOpenTerm(result.id) : onNavigate(result.id, true)} onKeyDown={e => {
+    {searching ? <div className="search-results" aria-label="Résultats de recherche"><label className="search-filter">Afficher<select aria-label="Type de résultat" value={resultType} onChange={e => setResultType(e.target.value)}><option value="all">Tous les résultats</option><option value="capability">Capacités</option><option value="behavior">Comportements</option><option value="domain">Domaines</option><option value="area">Sous-domaines</option><option value="reference">Référentiels</option><option value="glossary">Glossaire</option></select></label><p role="status">{matches.length} résultat{matches.length > 1 ? 's' : ''}</p>{matches.map(result => <button key={`${result.kind}:${result.id}`} data-search-result={result.id} onClick={() => result.kind === 'glossary' ? onOpenTerm(result.id) : onNavigate(result.id, true)} onKeyDown={e => {
       if (e.key === 'ArrowDown') { e.preventDefault(); (e.currentTarget.nextElementSibling as HTMLElement)?.focus(); }
       if (e.key === 'ArrowUp') { e.preventDefault(); const previous = e.currentTarget.previousElementSibling; previous?.tagName === 'BUTTON' ? (previous as HTMLElement).focus() : searchRef.current?.focus(); }
     }}>{result.node ? <NodeIcon node={result.node} size={20} framed /> : <BookOpen size={22}/>}<span><strong>{result.name}</strong><small>{result.node ? `${kindLabel(result.node)} · ${lineageOf(model, result.id).slice(0, -1).map(n => n.name).join(' / ')}` : 'Terme du glossaire'} · {result.node?.displayCode ?? result.id}</small>{result.excerpt && <span className="search-excerpt">{result.excerpt}</span>}</span></button>)}{!matches.length && <p>Aucun élément ne correspond dans cette publication.</p>}</div>

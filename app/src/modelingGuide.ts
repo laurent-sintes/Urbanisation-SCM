@@ -1,4 +1,5 @@
 import { fetchJson, guideUrl, type FetchLike } from './publication.ts';
+import type { PublishedModel } from './types.ts';
 
 export interface GuideSource {
   readonly id: string;
@@ -57,6 +58,21 @@ export interface GuideResponse {
   readonly message: string;
   readonly association?: { readonly scope: string; readonly note: string };
   readonly guide?: ModelingGuide;
+}
+
+/** Reader labels follow the displayed hierarchy; stored historical guides are untouched. */
+export function lessonForPublication(lesson: GuideLesson, model: PublishedModel): GuideLesson {
+  if (!model.nodes.some(node => node.kind === 'business_system')) return lesson;
+  const labels: Record<string, string> = { Commerce: 'Sales / Sourcing and Procurement', Supply: 'Supply Chain Orchestration', Logistique: 'Logistics Execution' };
+  const hierarchy = (text: string) => text
+    .replace('Domain → Purpose → Capability → Behavior', 'Business System → Domain → Subdomain → Capability → Behavior')
+    .replace('Domain · Purpose · Capacité · Comportement · Relation', 'Système métier · Domaine · Sous-domaine · Capacité · Comportement · Relation');
+  return { ...lesson, rule: hierarchy(lesson.rule),
+    scene: { ...lesson.scene, items: lesson.scene.items.map(item => ({ ...item, label: labels[item.label] || item.label, text: hierarchy(item.text) })) },
+    contributor: { ...lesson.contributor, boundary: lesson.id === 'meaningful-links'
+      ? 'Les référentiels restent distincts et présentent les capacités de leur sujet. Les rattachements suivent la publication affichée. Une relation de présentation ne fusionne pas les références et ne crée pas un niveau métier supplémentaire.'
+      : lesson.contributor.boundary },
+  };
 }
 
 /** Every read is pinned to the displayed publication, including live-current mode. */

@@ -57,7 +57,7 @@ const familyOf = (relation: AtlasRelation): DependencyFamily => relation.qualifi
 export function dependencyLevels(model: PublishedModel): { value: DependencyLevel; label: string }[] {
   const systems = model.nodes.some(node => node.kind === 'business_system');
   const purposeLabel = model.nodes.some(node => node.kind === 'area' && node.hierarchyLabel === 'Purpose')
-    ? 'Purposes et référentiels' : 'Areas et référentiels';
+    ? 'Purposes et référentiels' : model.nodes.some(node => node.kind === 'area' && node.hierarchyLabel === 'Sous-domaine') ? 'Sous-domaines et référentiels' : 'Areas et référentiels';
   return hasAreaLevels(model)
     ? [{ value: 'capability', label: 'Capacités' }, { value: 'area', label: purposeLabel }, { value: 'domain', label: 'Domaines' }, ...(systems ? [{ value: 'business_system' as const, label: 'Systèmes métier' }] : [])]
     : [{ value: 'capability', label: 'Capacités' }, { value: 'domain', label: 'Domaines et référentiels' }, { value: 'universe', label: 'Univers' }];

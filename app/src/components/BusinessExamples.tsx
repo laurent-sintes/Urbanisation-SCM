@@ -11,6 +11,7 @@ export function BusinessExamples({ examples, id }: { examples: readonly ReaderEx
       <p><ModelText text={example.situation}/></p>
       {example.sourceNode && <p><ReferenceLink target={example.sourceNode} anchor="examples">Scénario partagé — fiche d’origine</ReferenceLink></p>}
       {example.contribution && <p><strong>Contribution de cette fiche. </strong><ModelText text={example.contribution}/></p>}
+      {(example.trigger || example.objective || example.constraints?.length || example.options?.length || example.steps?.length || example.contributions?.length || example.outcome || example.lesson || example.validation_points?.length) ? <details className="scenario-details"><summary>Lire le scénario complet</summary>
       {example.trigger && <p><strong>Déclencheur. </strong><ModelText text={example.trigger}/></p>}
       {example.objective && <p><strong>Résultat recherché. </strong><ModelText text={example.objective}/></p>}
       {!!example.constraints?.length && <><h4>Contraintes</h4><ul>{example.constraints.map((text, i) => <li key={i}><ModelText text={text}/></li>)}</ul></>}
@@ -25,6 +26,7 @@ export function BusinessExamples({ examples, id }: { examples: readonly ReaderEx
       {example.outcome && <p><strong>Ce qui se passe. </strong><ModelText text={example.outcome}/></p>}
       {example.lesson && <p className="example-lesson"><strong>Ce que cela illustre. </strong><ModelText text={example.lesson}/></p>}
       {!!example.validation_points?.length && <><h4>Ce que ce cas permet de vérifier</h4><ul>{example.validation_points.map((text, i) => <li key={i}><ModelText text={text}/></li>)}</ul></>}
+      </details> : null}
     </article>)}</div>
   </section>;
 }

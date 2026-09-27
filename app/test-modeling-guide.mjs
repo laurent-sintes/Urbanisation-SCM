@@ -1,8 +1,23 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { fetchModelingGuide } from './src/modelingGuide.ts';
+import { fetchModelingGuide, lessonForPublication } from './src/modelingGuide.ts';
 
 const response = data => new Response(JSON.stringify(data), { headers: { 'content-type': 'application/json' } });
+test('guide presentation follows the displayed hierarchy without rewriting historical lessons', () => {
+  const lesson = {
+    id: 'meaningful-links', rule: 'Domain → Purpose → Capability → Behavior',
+    scene: { items: [{ label: 'Commerce', text: 'Domain · Purpose · Capacité · Comportement · Relation' }] },
+    contributor: { boundary: 'Historical boundary' },
+  };
+  const before = structuredClone(lesson);
+  assert.equal(lessonForPublication(lesson, { nodes: [] }), lesson);
+  const current = lessonForPublication(lesson, { nodes: [{ kind: 'business_system' }] });
+  assert.equal(current.rule, 'Business System → Domain → Subdomain → Capability → Behavior');
+  assert.equal(current.scene.items[0].label, 'Sales / Sourcing and Procurement');
+  assert.match(current.scene.items[0].text, /Sous-domaine/);
+  assert.match(current.contributor.boundary, /publication affichée/);
+  assert.deepEqual(lesson, before);
+});
 test('guide selection is pinned to the displayed publication and carries cancellation', async () => {
   const controller = new AbortController();
   const expected = { schema_version: '1.0.0', publication_version: '2026-09-16.2', status: 'unavailable', message: 'Pas de guide associé.' };

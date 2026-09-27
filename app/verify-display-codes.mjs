@@ -40,7 +40,9 @@ try {
   await page.locator('.business-card').first().waitFor();
   const expected = childrenOf(model, area.id).map(n => n.displayCode);
   assert.deepEqual(await page.locator('.business-card .card-id').allTextContents(), expected);
-  assert.ok((await page.locator(`[data-tree-id="${area.id}"] > .tree-row`).innerText()).includes(area.displayCode));
+  assert.equal(await page.locator(`[data-tree-id="${area.id}"]`).getAttribute('aria-description'), area.displayCode);
+  assert.ok((await page.locator(`[data-tree-id="${area.id}"] .tree-label`).first().getAttribute('title')).includes(area.displayCode));
+  assert.equal(await page.locator(`[data-tree-id="${area.id}"] > .tree-row .reading-code`).count(), 0);
   const search = page.getByRole('textbox', { name: 'Rechercher dans le modèle publié' });
   for (const query of [capacity.displayCode, capacity.id]) {
     await search.fill(query);

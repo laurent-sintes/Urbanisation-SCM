@@ -23,6 +23,7 @@ export function publicText(text: string = ''): string {
   ];
   for (const sentence of editorialSentences) result = result.replaceAll(sentence, '');
   result = result
+    .replace(/Frontière U\d+(?:\/U\d+)*\s*:/g, 'Frontière :')
     .replace(/(?:Ce (?:placement|choix|déplacement|rattachement de domaine)|L’ancienne distinction)[^.\n]*\bU\d+[^.\n]*\./g, '')
     .replace(/La définition développée et les contrats restent proposés ; /g, '')
     .replace(/Identité et définition U\d+ conservées ; /g, '')

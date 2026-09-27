@@ -33,3 +33,10 @@ test('missing, duplicated or inconsistent frozen codes and trees are refused', (
     raw=>raw.display_index.children.D01.reverse(),raw=>raw.display_index.roots.push('D02.c'),raw=>raw.display_index.children['D02.c'].push('D01')];
   for(const mutate of mutations){const raw=fixture();mutate(raw);assert.throws(()=>adaptPublication(raw),/lecture|publication/);}
 });
+
+ test('code prefixes and mixed code/name queries find published objects without renumbering', () => {
+  const model=adaptPublication(fixture());
+  assert.deepEqual(searchPublication(model,'CAP-00').map(n=>n.id).sort(),['D01.f','D02.c']);
+  assert.equal(searchPublication(model,'CAP-002 Reservation')[0].id,'D02.c');
+  assert.deepEqual(childrenOf(model,'D01').map(n=>n.displayCode),['CAP-001','CAP-002']);
+});

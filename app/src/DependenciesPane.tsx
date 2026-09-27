@@ -31,6 +31,7 @@ export function DependenciesPane({ model, focusId, relationId, settings, onSetti
   }), [model, focusId, defaultLevel, settings.graphLevel, settings.graphDepth, settings.graphDirection, settings.graphFamily, settings.graphNeighbors]);
   const projection = useMemo(() => projectDependencies(model, options), [model, options]);
   const [selection, setSelection] = useState<Selection | null>(null);
+  const [showGraph, setShowGraph] = useState(() => !matchMedia('(max-width: 600px)').matches);
   const [fullscreenError, setFullscreenError] = useState('');
   const pane = useRef<HTMLElement>(null);
   const relationEdge = relationId ? projection.edges.find(e => e.relationIds.includes(relationId)) : undefined;
@@ -55,13 +56,14 @@ export function DependenciesPane({ model, focusId, relationId, settings, onSetti
 
   return <section ref={pane} className="map-panel dependencies-pane" data-testid="dependencies-pane" aria-label="Graphe des relations métier">
     <div className="map-toolbar"><div><strong>{focus && options.depth !== 0 ? `Autour de ${focus.name}` : 'Toutes les relations publiées'}</strong><span className="toolbar-note">Explore les interactions, puis ouvre le détail de chaque lien.</span></div>
-      <button className="dependency-fullscreen" aria-label="Afficher le graphe en plein écran" title="Plein écran" onClick={() => { if (document.fullscreenElement) void document.exitFullscreen(); else void pane.current?.requestFullscreen().catch(() => setFullscreenError('Le plein écran est indisponible dans ce navigateur.')); }}><Maximize2 size={17}/></button>
+      <button className="dependency-fullscreen" aria-label="Afficher le graphe en plein écran" title="Plein écran" onClick={() => { if (document.fullscreenElement) void document.exitFullscreen(); else { setShowGraph(true); void pane.current?.requestFullscreen().catch(() => setFullscreenError('Le plein écran est indisponible dans ce navigateur.')); } }}><Maximize2 size={17}/></button>
     </div>
     {fullscreenError && <p role="status" className="dependency-help">{fullscreenError}</p>}
-    <div className="dependency-controls">
+    <details className="dependency-settings"><summary>Régler le niveau et la profondeur</summary><div className="dependency-controls">
       <label>Niveau de lecture<select aria-label="Niveau de lecture" value={options.level} onChange={e => changes({ graphLevel: e.target.value as GraphRoute['graphLevel'] })}>{dependencyLevels(model).map(level => <option key={level.value} value={level.value}>{level.label}</option>)}</select></label>
       <label>Profondeur<select aria-label="Profondeur" value={options.depth} onChange={e => changes({ graphDepth: Number(e.target.value) as GraphRoute['graphDepth'] })}><option value="1">Voisins directs</option><option value="2">À deux pas</option><option value="3">À trois pas</option><option value="0">Toute la publication</option></select></label>
     </div>
+    </details>
     <details className="dependency-options"><summary>Affiner l’exploration</summary><div className="dependency-controls">
       <label>Liens entre voisins<select aria-label="Liens entre voisins" value={options.includeNeighborLinks ? 'all' : 'direct'} onChange={e => changes({ graphNeighbors: e.target.value === 'all' })}><option value="direct">Liens parcourus seulement</option><option value="all">Inclure les liens entre voisins</option></select></label>
       <label>Point de départ<select aria-label="Point de départ" value={focusId || ''} onChange={e => enter(e.target.value)}><option value="">Toute la publication</option>{focusChoices.map(n => <option key={n.id} value={n.id}>{n.name} · {n.displayCode ?? n.id}</option>)}</select></label>
@@ -70,11 +72,12 @@ export function DependenciesPane({ model, focusId, relationId, settings, onSetti
       <label>Disposition<select aria-label="Disposition" value={settings.graphLayout || 'organic'} onChange={e => changes({ graphLayout: e.target.value as GraphRoute['graphLayout'] })}><option value="organic">Organique</option><option value="hierarchical">Hiérarchique</option></select></label>
       <label>Libellés<select aria-label="Libellés" value={settings.graphLabels || 'focus'} onChange={e => changes({ graphLabels: e.target.value as GraphRoute['graphLabels'] })}><option value="focus">Autour de la sélection</option><option value="all">Tous</option></select></label>
     </div></details>
-    <div className="dependency-summary" role="status"><span>{projection.nodes.length} éléments · {projection.stats.visibleRelations} / {projection.stats.totalRelations} relations · {projection.stats.internalRelations} internes aux groupes</span><span>Publication {model.version}</span></div>
-    <CytoscapeCanvas projection={projection} layout={settings.graphLayout || 'organic'} labels={settings.graphLabels || 'focus'} selectedId={active?.id} onSelect={select} onRead={onRead}/>
+    <div className="dependency-summary" role="status"><span>{projection.nodes.length} éléments · {projection.stats.visibleRelations} relations affichées{projection.stats.internalRelations > 0 && ` · ${projection.stats.internalRelations} regroupées`}</span><span>Publication {model.version}</span></div>
+    <button className="secondary-button graph-visibility" aria-expanded={showGraph} onClick={() => setShowGraph(!showGraph)}>{showGraph ? 'Masquer le graphe' : 'Afficher le graphe'}</button>
+    {showGraph && <CytoscapeCanvas projection={projection} layout={settings.graphLayout || 'organic'} labels={settings.graphLabels || 'focus'} selectedId={active?.id} onSelect={select} onRead={onRead}/>}
     {!projection.relations.length && <p className="dependency-empty"><Network size={18}/>Aucune relation métier publiée avec ces critères.</p>}
-    <div className="dependency-legend"><span><i/>A besoin de · rôle explicite</span><span><i className="other"/>Autre relation · voir sa qualification</span></div>
-    <div className="map-footer"><span>Molette : zoom · Glisser : déplacer · Les liens des comportements sont regroupés avec leur capacité</span><span>Lecture seule</span></div>
+    <div className="dependency-legend" hidden={!showGraph}><span><i/>A besoin de · rôle explicite</span><span><i className="other"/>Autre relation · voir sa qualification</span></div>
+    <div className="map-footer" hidden={!showGraph}><span>Molette : zoom · Glisser : déplacer · Les liens des comportements sont regroupés avec leur capacité</span><span>Lecture seule</span></div>
     <div className="dependency-inspector" data-testid="dependency-inspector">
       <label className="dependency-picker">Inspecter un élément<select aria-label="Inspecter un élément" value={active ? `${active.kind}|${active.id}` : ''} onChange={e => { const [kind,...parts] = e.target.value.split('|'); select(kind ? {kind:kind as Selection['kind'],id:parts.join('|')} : null); }}>
         <option value="">Choisir un nœud ou un lien…</option>
@@ -85,7 +88,7 @@ export function DependenciesPane({ model, focusId, relationId, settings, onSetti
         <div className="dependency-node-actions"><button className="secondary-button" onClick={() => enter(pickedNode.id)}>Explorer depuis cet élément<ArrowRight size={14}/></button><button className="secondary-button" onClick={() => onRead(pickedNode.id)}>Ouvrir la fiche<ArrowUpRight size={14}/></button></div>
         {pickedNode.memberIds.length > 1 && <details><summary>Éléments regroupés ({pickedNode.memberIds.length})</summary><ul>{pickedNode.memberIds.map(id => <li key={id}><ReferenceLink target={id}>{model.nodeById.get(id)?.name || id}</ReferenceLink></li>)}</ul></details>}
       </div>}
-      <details className="dependency-relations" key={active ? `${active.kind}:${active.id}` : 'all'} open={Boolean(active)}><summary>{selectedName} · {shownRelations.length} relation(s) d’origine</summary>
+      <details className="dependency-relations" key={active ? `${active.kind}:${active.id}` : 'all'} open={!showGraph || Boolean(active)}><summary>{selectedName} · {shownRelations.length} relation(s) d’origine</summary>
         <div className="accessible-relations" aria-label="Liste des relations">{shownRelations.map(link => <button key={link.id} data-relation-id={link.id} aria-pressed={relationId === link.id} onClick={() => onSelectRelation(link.id)}>
           <span>{model.nodeById.get(link.sourceId)?.name || link.sourceId}<span aria-hidden="true"> → </span>{model.nodeById.get(link.targetId)?.name || link.targetId}</span>
           <small>{publicText(link.qualification.meaning || (link.label === link.type ? 'Qualification non renseignée dans cette publication.' : link.label))}</small>

@@ -51,14 +51,17 @@ export function searchPublication(model: PublishedModel, query: string): SearchR
     const titleWords = words(entry.name), bodyWords = words(entry.excerpt);
     const has = (values: string[], word: string) => values.some(value => value === word || (word.length >= 3 && value.startsWith(word)));
     const code = normalize(entry.node?.displayCode ?? '');
+    const codePrefix = needle.length >= 3 && Boolean(code) && code.startsWith(needle);
+    const primaryText = entry.node?.definition || entry.term?.definition || '';
+    const primary = words(primaryText).filter(word => !stopWords.has(word)).join(' ');
     const exact = id === needle || code === needle || title === needle;
-    if (!exact && !queryWords.every(word => has(titleWords, word) || has(bodyWords, word) || id === word)) return [];
+    if (!exact && !codePrefix && !queryWords.every(word => has(titleWords, word) || has(bodyWords, word) || id === word || has(words(code), word))) return [];
     const phrase = queryWords.join(' ');
     const bodyPhrase = bodyWords.filter(word => !stopWords.has(word)).join(' ');
-    const score = exact ? 10000 : title.startsWith(needle) ? 8000
+    const score = exact ? 10000 : codePrefix ? 9000 : title.startsWith(needle) ? 8000
       : queryWords.every(word => has(titleWords, word)) ? 6000
-      : bodyPhrase.startsWith(phrase) ? 4500 : bodyPhrase.includes(phrase) ? 2000
+      : primary.startsWith(phrase) ? 5500 : primary.includes(phrase) ? 5200 : queryWords.every(word => has(words(primary), word)) ? 5000 : bodyPhrase.startsWith(phrase) ? 4500 : bodyPhrase.includes(phrase) ? 2000
       : queryWords.reduce((sum, word) => sum + (has(titleWords, word) ? 500 : 10), 0);
-    return [{ ...entry, score, excerpt: excerpt(entry.excerpt, queryWords) }];
+    return [{ ...entry, score, excerpt: excerpt((id === needle || codePrefix || queryWords.some(word => normalize(primaryText).includes(word))) && primaryText ? primaryText : entry.excerpt, queryWords) }];
   }).sort((a, b) => b.score - a.score);
 }

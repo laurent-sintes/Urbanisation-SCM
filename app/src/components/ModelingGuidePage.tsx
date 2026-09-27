@@ -1,7 +1,8 @@
+import { ReadingHelp } from './ReadingHelp';
 import type { GuideState } from '../useModelingGuide';
 import { useId, useState } from 'react';
 import { ArrowUpRight, BookOpen, ChevronDown, RefreshCw } from 'lucide-react';
-import { type GuideLesson, type ModelingGuide } from '../modelingGuide';
+import { lessonForPublication, type GuideLesson, type ModelingGuide } from '../modelingGuide';
 import type { PublishedModel } from '../types';
 import { ReferenceLink } from './ModelLinks';
 import './modeling-guide.css';
@@ -70,7 +71,7 @@ function GuideContent({ model, selected, onSelect, state, retry }: { model: Publ
   if (response.status === 'unavailable' || !response.guide) return <section className="guide-status"><BookOpen size={28} aria-hidden="true"/><h2>Guide non associé à cette publication</h2><p>{response.message}</p><small>Publication {model.version}</small></section>;
   const { guide } = response;
   const index = selected ? guide.lessons.findIndex(lesson => lesson.id === selected) : 0;
-  const lesson = guide.lessons[index];
+  const lesson = guide.lessons[index] && lessonForPublication(guide.lessons[index], model);
 
   return <div className="modeling-guide-page">
     <nav className="guide-topics" aria-label="Choisir un principe">
@@ -86,12 +87,5 @@ function GuideContent({ model, selected, onSelect, state, retry }: { model: Publ
 
 /** Rules are read only for publications that explicitly carry the frozen policy. */
 export function ModelingGuidePage(props: Parameters<typeof GuideContent>[0]) {
-  return <>{props.model.raw.display_index && <section className="guide-lesson" aria-label="Identité et codes de lecture">
-    <h2>Identité et codes de lecture</h2>
-    <p>Le code situe un élément dans l’ordre de lecture de cette publication. Son identité persistante conserve les relations, les accords et les liens même si le code change dans une publication suivante.</p>
-    <p><strong>SYS</strong> : système métier · <strong>DOM</strong> : domaine · <strong>SUB</strong> : sous-domaine · <strong>REF</strong> : référentiel · <strong>CAP</strong> : capacité · <strong>BHV</strong> : comportement.</p>
-    <p>Trois chiffres au minimum, par exemple CAP-025. Chaque type possède sa séquence globale dans le parcours de l’arbre de haut en bas. Catégories et rôles ne créent pas de niveau numéroté.</p>
-    <p>Arbre, cartes et fiches suivent le même ordre. Rechercher, filtrer, replier l’arbre ou déplacer le graphe ne renumérote rien. Codes et ordre restent figés pour cette publication.</p>
-    <p>La recherche accepte le code ou l’identifiant persistant. Pour une référence durable, partage le lien de la fiche : il conserve son identité et sa publication. Les publications antérieures gardent leurs repères.</p>
-  </section>}<GuideContent {...props}/></>;
+  return <><GuideContent {...props}/><ReadingHelp model={props.model}/></>;
 }

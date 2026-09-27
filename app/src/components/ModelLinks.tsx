@@ -73,7 +73,7 @@ export function ReferenceLink({ kind = 'model', target, anchor, children, classN
     }}>{children}</a>{open && createPortal(<div ref={tooltip} id={id} role="tooltip" className="reference-tooltip" style={{ ...position, maxHeight: 'calc(100vh - 16px)' }} onMouseEnter={clear} onMouseLeave={hide}>
       <strong>{plainInlineText(item.name)}</strong><span>{description}</span>
       {behaviors.length > 0 && <div className="tooltip-behaviors"><b>Comportements</b><ul>{behaviors.map(behavior => <li key={behavior.id}>{behavior.name}</li>)}</ul></div>}
-      <small>{target} · {kind === 'glossary' ? 'Glossaire' : 'Fiche du modèle'}</small>
+      <small>{node?.displayCode ?? target} · {kind === 'glossary' ? 'Glossaire' : 'Fiche du modèle'}</small>
     </div>, document.body)}</>;
 }
 

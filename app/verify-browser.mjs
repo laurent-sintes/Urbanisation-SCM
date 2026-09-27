@@ -41,8 +41,9 @@ try {
   await visit({ view: 'map' });
   await heading('Urbanisation');
   const roots = model.nodes.filter(n => !model.relations.some(r => ['contains', 'presents'].includes(r.type) && r.target_id === n.id)).map(n => n.id);
-  await page.locator('.business-card').first().waitFor();
-  assert.deepEqual((await page.locator('.business-card').evaluateAll(items => items.map(el => el.dataset.nodeId))).sort(), roots.sort());
+  const rootCards = page.locator(model.nodes.some(n => n.kind === 'business_system') ? '.overview-system' : '.business-card');
+  await rootCards.first().waitFor();
+  assert.deepEqual((await rootCards.evaluateAll(items => items.map(el => el.dataset.nodeId))).sort(), roots.sort());
   assert.ok((await page.locator('.sidebar-stats').innerText()).includes(`${model.nodes.length} éléments`));
   assert.ok((await page.locator('.sidebar-stats').innerText()).includes(`${model.nodes.filter(n => n.kind === 'capability').length} capacités`));
   checks.push('Published systems and statistics');

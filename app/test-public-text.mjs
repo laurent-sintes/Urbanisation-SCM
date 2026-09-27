@@ -20,3 +20,7 @@ test('Business reservation, proposed dates, approval of scenarios and links are 
   const text = 'Sous réserve de sa disponibilité. Date proposée par le fournisseur. Valider un scénario puis conserver la décision adoptée.\n\n[Reservation](model:D02.c) protège le stock en réserve.';
   assert.equal(publicText(text), text);
 });
+
+test('frontier annotations retain business restrictions without contribution codes', () => {
+  assert.equal(publicText('Frontière U673 : Le protocole reste dans la capacité.'), 'Frontière : Le protocole reste dans la capacité.');
+});

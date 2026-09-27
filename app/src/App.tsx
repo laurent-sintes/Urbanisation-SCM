@@ -6,6 +6,8 @@ import { useModelingGuide } from './useModelingGuide';
 import { childrenOf, hasCapabilityCards, lineageOf, parentRelationOf, relatedTo } from './model';
 import { kindLabel } from './presentation';
 import { NodeIcon } from './icons';
+import { Overview } from './components/Overview';
+import { revealSection } from './readerNavigation';
 import { preference, readRoute, routeHash, savePreference, type RouteState, type View } from './navigation';
 import { Sidebar } from './components/Sidebar';
 import { BusinessSheet } from './components/BusinessSheet';
@@ -48,6 +50,8 @@ export function App() {
   const heading = useRef<HTMLHeadingElement>(null);
   const mapPanel = useRef<HTMLElement>(null);
   const content = useRef<HTMLDivElement>(null);
+  const restoreScroll = useRef<number | null>(null);
+  const [fullPath, setFullPath] = useState(false);
   const selected = model?.nodeById.get(route.node);
   const view: View = route.view || (selected && !childrenOf(model!, selected.id).length ? 'sheet' : 'map');
   const validScope = route.scope && model?.nodeById.has(route.scope) ? route.scope : '';
@@ -59,18 +63,20 @@ export function App() {
   const contentScope = view === 'map' ? scopeId : route.node;
   useLayoutEffect(() => {
     // A new view starts at the top; selecting a card in the same map does not jump.
-    content.current?.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    content.current?.scrollTo({ top: restoreScroll.current ?? 0, left: 0, behavior: 'instant' });
+    restoreScroll.current = null;
   }, [model?.version, view, contentScope, glossaryMode]);
   const changeRoute = useCallback((changes: Partial<RouteState>, replace = false) => {
     setRoute(previous => {
       const next = { ...previous, ...changes };
+      history.replaceState({ ...history.state, atlasScroll: content.current?.scrollTop ?? 0 }, '', location.href);
       history[replace ? 'replaceState' : 'pushState']({}, '', routeHash(next));
       return next;
     });
   }, []);
   const closeDrawer = useCallback(() => setDrawer(false), []);
   const followReference = useCallback((kind: 'glossary' | 'model', id: string, section = '') => {
-    changeRoute({ version: model?.version || route.version, view: kind === 'glossary' ? 'glossary' : section === 'market_comparisons' ? 'market' : 'sheet', glossary: isMetaTerm(id) ? 'meta' : 'model',
+    changeRoute({ view: kind === 'glossary' ? 'glossary' : section === 'market_comparisons' ? 'market' : 'sheet', glossary: isMetaTerm(id) ? 'meta' : 'model',
       node: kind === 'model' ? id : '', term: kind === 'glossary' ? id : '', section, principle: '',
       scope: '', relation: '', source: '', anchor: '', sourceId: '', query: '', status: '' });
     setDrawer(false);
@@ -91,19 +97,21 @@ export function App() {
     const timer = requestAnimationFrame(() => {
       const section = view === 'glossary' && route.section === 'short-description' ? 'definition' : route.section;
       const target = document.getElementById(view === 'glossary' ? `term-${route.term}-${section}` : `field-${route.node}-${section}`);
-      if (target) { target.tabIndex = -1; target.focus({ preventScroll: true }); target.scrollIntoView({ block: 'center' }); }
+      if (target) revealSection(target);
     });
     return () => cancelAnimationFrame(timer);
   }, [route.section, route.term, route.node, model, view]);
   useEffect(() => {
-    const back = () => { setRoute(readRoute(location.hash)); setDrawer(false); };
+    const previousRestoration = history.scrollRestoration;
+    history.scrollRestoration = 'manual';
+    const back = () => { restoreScroll.current = history.state?.atlasScroll ?? 0; setRoute(readRoute(location.hash)); setDrawer(false); };
     window.addEventListener('hashchange', back);
-    return () => window.removeEventListener('hashchange', back);
+    return () => { window.removeEventListener('hashchange', back); history.scrollRestoration = previousRestoration; };
   }, []);
   useEffect(() => {
     // Remember only the selected location. There is no visit history.
     savePreference('selection', routeHash({ ...route, version: '', query: '', status: '', source: '', anchor: '', sourceId: '' }));
-    history.replaceState({}, '', routeHash(route));
+    history.replaceState(history.state, '', routeHash(route));
   }, [route]);
   useEffect(() => savePreference('tree-width', width), [width]);
   useEffect(() => {
@@ -169,7 +177,7 @@ export function App() {
       {(error || notice || announcement) && <div className={`notice ${error ? 'error' : ''}`} role={error ? 'alert' : 'status'}>{error || notice || announcement}<button aria-label="Masquer le message" onClick={() => setAnnouncement('')} hidden={!announcement}><X size={14} /></button></div>}
       {!model ? <div className="empty-state"><Compass size={34} /><h1>{loading ? 'Ouverture du modèle…' : 'Publication indisponible'}</h1><p>{loading ? 'Chargement de l’Urbanisation publiée.' : 'Réessaie de charger la publication.'}</p>{!loading && <button className="secondary-button" onClick={reload}>Réessayer</button>}</div> : <>
         <div className="workspace-header">
-        {mobile && <div className="breadcrumb-row">{breadcrumbs}{shareButton}</div>}
+        {mobile && <div className="breadcrumb-row"><div className={`mobile-path ${fullPath ? 'expanded' : ''}`}><button className="path-toggle" aria-expanded={fullPath} onClick={() => setFullPath(!fullPath)}>Chemin {fullPath ? '−' : '…'}</button>{breadcrumbs}</div>{shareButton}</div>}
         <header className="page-heading"><div className="heading-icon">{headingNode ? <NodeIcon node={headingNode} size={30} framed /> : <span className="node-icon framed tone-universe">{view === 'principles' ? <Lightbulb size={30} /> : <Compass size={30} />}</span>}</div><div>
           <div className="eyebrow"><span>{headingNode ? kindLabel(headingNode) : view === 'principles' ? 'LE MÉTA MODÈLE' : view === 'glossary' ? 'LE VOCABULAIRE PUBLIÉ' : 'LE MODÈLE PUBLIÉ'}</span>{headingNode && <span title={`Identité persistante : ${headingNode.id}`}>{headingNode.displayCode ?? headingNode.id}</span>}</div>
           <h1 id="page-title" ref={heading} tabIndex={-1}>{view === 'principles' ? 'Comprendre le méta modèle' : view === 'glossary' ? glossaryTitle : headingNode?.name || 'Urbanisation'}</h1>
@@ -182,10 +190,10 @@ export function App() {
           items[(items.indexOf(e.currentTarget) + (e.key === 'ArrowRight' ? 1 : items.length - 1)) % items.length].focus();
         }}><tab.Icon size={16} />{tab.label}{tab.id === 'relations' && selected && !['business_system', 'group', 'domain', 'area', 'reference'].includes(selected.kind) && <span className="count">{links.length}</span>}</button>)}</div>{view === 'map' && selected && selected.id !== headingNode?.id && <div className="view-context"><span className="view-selection" title={`Sélection : ${selected.name}`}>Sélection : {selected.name}</span></div>}</div>}
         </div>
-        <div className="workspace-content" ref={content} tabIndex={0} role="region" aria-label="Contenu de la vue">
+        <div className="workspace-content" ref={content} tabIndex={0} role="region" aria-label="Contenu de la vue" onScroll={event => history.replaceState({ ...history.state, atlasScroll: event.currentTarget.scrollTop }, '', location.href)}>
         <div id="atlas-view" role={referenceView ? 'region' : 'tabpanel'} aria-labelledby={referenceView ? 'page-title' : `tab-${['sheet', 'market'].includes(view) && !selected ? 'map' : view}`}>
           {view === 'principles' ? <Suspense fallback={<p role="status">Ouverture du méta modèle…</p>}><ModelingGuidePage key={model.version} model={model} selected={route.principle} state={guideState} retry={retryGuide} onSelect={principle => changeRoute({ principle })} /></Suspense> : view === 'glossary' ? <GlossaryPage model={model} selected={route.term} mode={glossaryMode} guideState={guideState} onRetry={retryGuide} onSelect={term => changeRoute({ view: 'glossary', glossary: glossaryMode, term, section: '' })}/> : view === 'sheet' && selected ? <BusinessSheet model={model} node={selected} onShowMarket={() => changeRoute({ view: 'market', relation: '', section: '' })} /> : view === 'market' && selected ? <article className="market-page" key={selected.id}><MarketComparisons id={`field-${selected.id}-market_comparisons`} entries={selected.fields.market_comparisons as readonly MarketComparison[] | undefined} inspiration={selected.fields.market_inspiration as MarketInspiration | undefined} modelName={selected.name}/></article> : view === 'relations' ? <Suspense fallback={<div className="graph-canvas empty-state">Ouverture des relations…</div>}><DependenciesPane key={`${model.version}:${route.node}`} model={model} focusId={selected?.id} relationId={route.relation} settings={route} onSettings={changes => changeRoute(changes)} onSelectRelation={relation => changeRoute({ relation }, true)} onFocus={node => changeRoute({ node, scope: '', relation: '', view: 'relations', graphDepth: node ? 1 : 0 })} onRead={read}/></Suspense> : <>
-            <section className="map-panel" ref={mapPanel} aria-label="Carte du modèle">
+            {!scopeId && model.nodes.some(node => node.kind === 'business_system') ? <Overview model={model} onExplore={explore} onRead={read}/> : <section className="map-panel" ref={mapPanel} aria-label="Carte du modèle">
               <div className="map-toolbar"><div><strong>{scope?.name || 'Vue d’ensemble'}</strong><span className="toolbar-note">Entre dans une carte pour explorer son contenu.</span></div>
                 <div className="map-actions">
                   {scope && <button onClick={() => navigate(parentRelationOf(model, scope.id)?.sourceId || '')}><ArrowLeft size={14} />Remonter</button>}
@@ -193,7 +201,7 @@ export function App() {
               </div>
               <Suspense fallback={<div className="graph-canvas empty-state">Ouverture de la carte…</div>}><ReactFlowPane model={model} selectedId={selected?.id || ''} scopeId={scopeId} onSelect={select} onExplore={explore} onRead={read} perspective="" /></Suspense>
               <div className="map-footer"><span>{hasCapabilityCards(model, scopeId) ? 'Cliquer sur un lien pour lire sa fiche · Faire défiler pour parcourir' : 'Molette pour zoomer · Glisser pour parcourir'}</span><span>Lecture seule</span></div>
-            </section>
+            </section>}
           </>}
         </div>
         <footer className="workspace-footer">Urbanisation · {route.version ? 'Publication fixe' : 'Publication courante, actualisée automatiquement'}</footer>

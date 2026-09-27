@@ -8,6 +8,7 @@ export function marketText(text = ''): string {
     .replace(/\bU\d+(?:\/U\d+)*\s*:\s*/g, '')
     .replace(/\s+(?:adoptés?|adoptées?|validés?|validées?)\s+U\d+(?:\/U\d+)*/g, '')
     .replace(/\s*\(?\b(?:U|CMP|ELM)\d+(?:\/(?:U|CMP|ELM)\d+)*\)?/g, '')
+    .replace(/Comparaison et frontière réexaminées[^;]*;\s*/g, '')
     .replace(/[ \t]+/g, ' ').trim();
 }
 

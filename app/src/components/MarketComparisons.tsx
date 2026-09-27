@@ -13,29 +13,29 @@ function InspirationOverview({ entries, inspiration, modelName, id }: {
   entries: readonly MarketComparison[]; inspiration: MarketInspiration; modelName?: string; id: string;
 }) {
   return <div className="market-inspiration">
-    <p className="inspiration-choice"><ModelText text={marketText(inspiration.choice)}/></p>
+    <p className="inspiration-choice"><ModelText text={marketText(inspiration.choice) === modelName ? marketText(inspiration.flow_scope) : marketText(inspiration.choice)}/></p>
+    <section className="inspiration-synthesis" aria-labelledby={`${id}-synthesis-title`}>
+      <h3 id={`${id}-synthesis-title`}>Ce qui nous rapproche et nous distingue</h3>
+      {inspiration.synthesis.map((paragraph, i) => <p key={i}><ModelText text={marketText(paragraph)}/></p>)}
+    </section>
     <div className="inspiration-table-scroll" tabIndex={0} role="region" aria-labelledby={`${id}-table-caption`}>
       <table className="inspiration-table">
         <caption id={`${id}-table-caption`}>Comparer les sources d’inspiration et FLOW</caption>
         <thead><tr><th scope="col">Source</th><th scope="col">Nom du concept</th><th scope="col">Périmètre</th><th scope="col">Approche</th></tr></thead>
         <tbody>{entries.map((entry, i) => <tr key={`${entry.vendor}-${i}`}>
-          <th scope="row"><SourceLink url={entry.source_url} title={entry.vendor}/><small>{entry.product}</small></th>
-          <td><ModelText text={marketText(entry.concept_name)}/></td>
-          <td><ModelText text={marketText(entry.scope_summary)}/></td>
-          <td><ModelText text={marketText(entry.approach_summary)}/></td>
+          <th scope="row"><SourceLink url={entry.source_url} title={entry.vendor}/>{entry.product !== entry.concept_name && <small>{entry.product}</small>}</th>
+          <td data-label="Concept"><ModelText text={marketText(entry.concept_name)}/></td>
+          <td data-label="Périmètre"><ModelText text={marketText(entry.scope_summary)}/></td>
+          <td data-label="Approche"><ModelText text={marketText(entry.approach_summary)}/></td>
         </tr>)}
           <tr className="inspiration-flow"><th scope="row">Notre modèle FLOW</th>
-            <td><ModelText text={modelName || ''}/></td>
-            <td><ModelText text={marketText(inspiration.flow_scope)}/></td>
-            <td><ModelText text={marketText(inspiration.flow_approach)}/></td>
+            <td data-label="Concept"><ModelText text={modelName || ''}/></td>
+            <td data-label="Périmètre"><ModelText text={marketText(inspiration.flow_scope)}/></td>
+            <td data-label="Approche"><ModelText text={marketText(inspiration.flow_approach)}/></td>
           </tr>
         </tbody>
       </table>
     </div>
-    <section className="inspiration-synthesis" aria-labelledby={`${id}-synthesis-title`}>
-      <h3 id={`${id}-synthesis-title`}>Ce qui nous rapproche et nous distingue</h3>
-      {inspiration.synthesis.map((paragraph, i) => <p key={i}><ModelText text={marketText(paragraph)}/></p>)}
-    </section>
     {inspiration.examples.length > 0 && <section className="inspiration-examples" aria-labelledby={`${id}-examples-title`}>
       <h3 id={`${id}-examples-title`}>Un exemple pour comprendre</h3>
       {inspiration.examples.map((example, i) => <article className="inspiration-example" key={i}>
