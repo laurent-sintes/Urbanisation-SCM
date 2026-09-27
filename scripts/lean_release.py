@@ -137,6 +137,9 @@ def publish(root, stage, manifest):
         output[key + '_sha256'] = manifest['files'][name]
     workflow.write(release_dir / 'manifest.json', output)
     notes = f"# Urbanisation {version}\n\n{output['capability_count']} capacités. Sources : {', '.join(manifest['source_refs'])}.\n\nPublication et accord métier restent distincts. Comparaison détaillée disponible dans Git.\n"
+    if 'scenario_catalog' in candidate:
+        catalog = candidate['scenario_catalog']
+        notes += f"\n## Scénarios métier\n\n{len(catalog['value_streams'])} flux de valeur, {len(catalog['scenarios'])} scénarios et {len(catalog['paths'])} parcours autonomes. Illustrations locales et lecture des anciennes publications conservées. Les nouveaux contenus restent proposés.\n"
     (release_dir / 'release-notes.md').write_text(notes, encoding='utf-8')
     # Recheck every source immediately before the activation boundary.
     check_stage(root, stage, manifest)

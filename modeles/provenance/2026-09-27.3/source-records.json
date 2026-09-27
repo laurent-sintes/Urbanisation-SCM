@@ -18161,6 +18161,38 @@
       "line": 19517,
       "content_sha256": "a2e74c85de7904d054e9d7fe19753c5da1ace816bc91ebc7186d6be610003192",
       "captured_text": "## U793\n\n**id**\n\nU793\n\n**date**\n\n2026-09-27\n\n**titre**\n\nExécuter les six lots de transformation des scénarios\n\n**texte**\n\nGo pour l'enchainement de tous les lots.\n\n**contexte et portée**\n\nAutorisation d'exécuter le plan U792 : contrat, pilote éditorial, chaîne de données et migration, Atlas, généralisation et recette avec publication locale et guide associé. Les nouveaux contenus rédigés pendant la mise en œuvre restent proposés, sans validation métier individuelle déduite de ce Go. Préserver sources, accords historiques et publications ; aucun commit, push ou déploiement distant implicite."
+    },
+    {
+      "id": "U794",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u794",
+      "line": 19539,
+      "content_sha256": "472e54c362b51fcef805a0951f83f4ca9f98316fce691f6319718da183e68ff1",
+      "captured_text": "## U794\n\n**id**\n\nU794\n\n**date**\n\n2026-09-27\n\n**titre**\n\nRevoir l’ordre des domaines, expliciter Plan et comparer les sens d’Allocation\n\n**texte**\n\nJ'aimerais revoir le modèle :\n\n- le domaine \"sourcing et achat\" est après \"ventes\". Pas logique, il faut inverser et changer la numérotation\n- Plan Visibility doit être alimenté par un domaine \"Plan\" (le rôle d'un APS), hors scope de l'orchestration en elle même\n- le plus difficile : on avait noté dans agents.md qu'on utiliserait pas le terme d'Allocation car dans le monde SAP ça signifie plusieurs choses : une manière de protéger de stock ET un moyen de matching pour distribuer du stock aux demandes (AllocationRun). Je pense, en relisant les docs du marché, que le pb ne touche que SAP et que \"Allocation\" est une méthode de protection de quantités de stocks pour un usage ou une finalité (canal, client etc.). \"Stock Protection\" utilise d'autres méthodes comme la détermination de seuils min / max. D'autres méthodes peuvent exister. Je voudrais que tu compare ma prémisse avec le marché (est-ce que j'ai bien compris ?) et notre modèle. Je veux que tu me donnes ton avis.\n\n**contexte et portée**\n\nDemande d’inverser l’ordre de lecture de Sourcing and Procurement et Sales, avec renumérotation des codes de lecture à la prochaine publication et maintien des identités persistantes. Demande d’expliciter un domaine Plan externe à Supply Chain Orchestration alimentant Plan Visibility ; ne transfère pas implicitement les décisions opérationnelles vers ce domaine. Le troisième point est une hypothèse soumise à comparaison marché et avis : aucun renommage Allocation, Stock Protection ou Supply Protection Policy n’est adopté par cette demande. Aucun nouvel accord sur des définitions détaillées rédigées ensuite, aucune publication, commit ou push implicite."
+    },
+    {
+      "id": "U795",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u795",
+      "line": 19565,
+      "content_sha256": "7b018c88bb8efeee9b5797c417ecdd573c2e776c0c85b49214a162ccd1550ae6",
+      "captured_text": "## U795\n\n**id**\n\nU795\n\n**date**\n\n2026-09-27\n\n**titre**\n\nValider l’usage qualifié d’allocation de stock par groupe\n\n**texte**\n\nJe valide ton excellente idée\n\n**contexte et portée**\n\nAccord sur la proposition U794 : autoriser « allocation de stock par groupe », avec Group Inventory Allocation comme formulation anglaise qualifiée, pour les enveloppes et droits d’usage ; éviter Allocation seul et conserver les distinctions avec l’affectation aux demandes, la réservation, le plafond de consommation et le réassort. Réutiliser le mécanisme existant sans créer une capacité ni renommer automatiquement Group Supply Protection. L’accord ne vaut pas validation mot à mot des nouvelles rédactions ou de toutes les comparaisons. Le renommage éventuel du parent était une question ouverte, précisée par U796. Aucun ordre de publication, commit ou push."
+    },
+    {
+      "id": "U796",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u796",
+      "line": 19587,
+      "content_sha256": "43eeeb1e648a97219e2739c33e85e9e1bd9533df0f5f468e8bb69c146feaf8aa",
+      "captured_text": "## U796\n\n**id**\n\nU796\n\n**date**\n\n2026-09-27\n\n**titre**\n\nConserver le nom Supply Protection Policy\n\n**texte**\n\nSupply Protection Policy  : on garde comme ça\n\n**contexte et portée**\n\nConfirmation explicite du nom Supply Protection Policy pour D02.b. Clôt l’hypothèse de renommage soulevée dans l’avis U794 ; aucun changement de périmètre, de comportements ou de rattachement n’en découle. L’assouplissement lexical validé U795 reste applicable."
+    },
+    {
+      "id": "U797",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u797",
+      "line": 19609,
+      "content_sha256": "25f3c7c7edf11a48f9e4ba0d6e66fe6cdd95d5f7cc134a772897f64f7a7c717f",
+      "captured_text": "## U797\n\n**id**\n\nU797\n\n**date**\n\n2026-09-27\n\n**titre**\n\nReprendre en autonomie les écarts de l’audit éditorial\n\n**texte**\n\nTu peux reprendre tout ça en autonomie ?\n\n**contexte et portée**\n\nAutorisation d’exécuter la reprise décrite dans l’audit éditorial du 27 septembre : règles cohérentes, rédaction simple, jargon relié au glossaire, définitions courtes, rubrique scénarios systématique, pilote puis généralisation et recette. Conserver les noms, responsabilités, périmètres, preuves et accords existants ; Supply Protection Policy reste inchangé. Les rédactions nouvelles restent éditoriales, sans accord métier global. La mise à disposition des corrections dans Atlas suit le parcours de publication ; aucun commit de sauvegarde ou push implicite."
     }
   ]
 }

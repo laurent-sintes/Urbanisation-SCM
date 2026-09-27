@@ -1,4 +1,4 @@
-export type View = 'map' | 'sheet' | 'relations' | 'market' | 'glossary' | 'principles' | 'information';
+export type View = 'map' | 'sheet' | 'relations' | 'market' | 'glossary' | 'principles' | 'information' | 'scenarios';
 export interface GraphRoute {
   graphLevel?: 'capability' | 'area' | 'domain' | 'business_system' | 'universe';
   graphDepth?: 0 | 1 | 2 | 3;
@@ -16,6 +16,7 @@ export interface RouteState extends GraphRoute {
   glossary?: 'model' | 'meta';
   principle?: string;
   information?: string;
+  scenario?: string; stream?: string; path?: string; event?: string; object?: string; situation?: string; capability?: string; scenarioQuery?: string;
 }
 export function readRoute(hash: string): RouteState {
   const p = new URLSearchParams(hash.replace(/^#/, ''));
@@ -37,11 +38,12 @@ export function readRoute(hash: string): RouteState {
     ...((view === 'relations' || view === 'links') ? graph : {}),
     node: view === 'principles' || legacyRoots.includes(node) ? '' : node,
     scope: view === 'principles' ? '' : p.get('scope') || '',
-    view: view === 'links' ? 'relations' : ['map', 'sheet', 'relations', 'market', 'glossary', 'principles', 'information'].includes(view || '') ? view as View : undefined,
+    view: view === 'links' ? 'relations' : ['map', 'sheet', 'relations', 'market', 'glossary', 'principles', 'information', 'scenarios'].includes(view || '') ? view as View : undefined,
     ...(view === 'principles' && p.has('principle') ? { principle: p.get('principle') || '' } : {}),
     ...(p.has('term') ? { term: p.get('term') || '' } : {}),
     ...(p.get('glossary') === 'meta' ? { glossary: 'meta' as const } : {}),
     ...(p.has('section') ? { section: p.get('section') || '' } : {}),
+    ...Object.fromEntries(['scenario','stream','path','event','object','situation','capability','scenarioQuery'].filter(k => p.has(k)).map(k => [k,p.get(k) || ''])),
     version: p.get('version') || '', query: p.get('q') || '',
     status: p.get('status') || '', relation: p.get('relation') || '',
     source: p.get('source') || '', anchor: p.get('anchor') || '', sourceId: p.get('sourceId') || '',
@@ -50,6 +52,7 @@ export function readRoute(hash: string): RouteState {
 export function routeHash(route: RouteState): string {
   const p = new URLSearchParams();
   for (const [key, value] of Object.entries({
+    ...(route.view === 'scenarios' ? {scenario:route.scenario,stream:route.stream,path:route.path,event:route.event,object:route.object,situation:route.situation,capability:route.capability,scenarioQuery:route.scenarioQuery} : {}),
     version: route.version, node: route.node, scope: route.scope, view: route.view,
     q: route.query, status: route.status, relation: route.relation,
     source: route.source, anchor: route.anchor, sourceId: route.sourceId,

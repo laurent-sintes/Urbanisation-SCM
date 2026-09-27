@@ -140,6 +140,11 @@ def validate_urbanism(model, sources, schema=None):
     errors.extend(validate_information(model))
     nodes = _index(model["nodes"], "nodes", errors)
     errors.extend(validate_scenarios(nodes))
+    try:
+        from .scenario_catalog import validate_catalog
+    except ImportError:
+        from scenario_catalog import validate_catalog
+    errors.extend(validate_catalog(model))
     relations = _index(model["relations"], "relations", errors)
     for item in model['nodes'] + model['relations']:
         if 'market_comparisons' in item.get('fields', {}):
@@ -403,6 +408,8 @@ def validate_release(release, decisions_document, snapshot, sources, schema=None
     errors = validate_urbanism(release, sources, schema)
     if release.get("glossary") != snapshot.get("glossary"):
         errors.append("release: glossary differs from frozen input")
+    if release.get('scenario_catalog') != snapshot.get('scenario_catalog'):
+        errors.append('release: scenario catalogue differs from frozen input')
     if release.get('information_catalog') != snapshot.get('information_catalog'):
         errors.append('release: information catalogue differs from frozen input')
     if errors:

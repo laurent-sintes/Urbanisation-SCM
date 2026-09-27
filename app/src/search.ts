@@ -1,3 +1,4 @@
+import { catalogOf } from './scenarioCatalog.ts';
 import { businessFields } from './businessContent.ts';
 import { examplesForNode, readerExamplesSearchText } from './examples.ts';
 import { plainInlineText } from './inlineLinks.ts';
@@ -7,7 +8,7 @@ import { marketSearchText } from './marketContent.ts';
 import { requestMetadataSearchText } from './requestMetadata.ts';
 
 export interface SearchResult {
-  id: string; kind: 'model' | 'glossary'; name: string; excerpt: string; score: number;
+  id: string; kind: 'model' | 'glossary' | 'scenario' | 'value_stream'; name: string; excerpt: string; score: number;
   node?: AtlasNode; term?: GlossaryTerm;
 }
 const normalize = (text: string) => plainInlineText(text).normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr');
@@ -24,7 +25,10 @@ function index(model: PublishedModel): SearchResult[] {
     while (parent) { names.push(model.nodeById.get(parent)?.name || ''); parent = parents.get(parent); }
     return names.join(' / ');
   };
+  const catalog = catalogOf(model);
   const entries: SearchResult[] = [
+    ...(catalog?.scenarios || []).map(s => ({id:s.id,kind:'scenario' as const,name:s.title,excerpt:[s.situation,s.trigger,s.objective,...(catalog?.paths.filter(p=>p.scenario_id===s.id).flatMap(p=>p.steps.map(step=>step.description)) || [])].join(' '),score:0})),
+    ...(catalog?.value_streams || []).map(s => ({id:s.id,kind:'value_stream' as const,name:s.label_fr,excerpt:[s.name,s.value,s.beneficiary,s.boundary].join(' '),score:0})),
     ...model.nodes.map(node => ({ id: node.id, kind: 'model' as const, name: node.name,
       excerpt: [Object.values(businessFields(node.fields)).join('\n'), requestMetadataSearchText(node), ancestry(node.id), readerExamplesSearchText(examplesForNode(model, node)), marketSearchText(node.fields.market_comparisons as readonly MarketComparison[] | undefined, node.fields.market_inspiration as MarketInspiration | undefined)].join('\n'), score: 0, node })),
     ...model.glossary.map(term => ({ id: term.id, kind: 'glossary' as const, name: plainInlineText(term.name),

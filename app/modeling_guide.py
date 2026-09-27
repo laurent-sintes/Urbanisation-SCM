@@ -10,6 +10,7 @@ import hashlib
 from pathlib import Path
 import re
 import sys
+from urllib.parse import urlparse
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 if str(REPOSITORY_ROOT) not in sys.path:
@@ -66,6 +67,22 @@ def _validate_guide(guide, version):
         _require(all(isinstance(item, str) and item in source_ids for item in value), "Source de guide non résolue.")
 
     refs(guide.get("source_refs"))
+    if 'chapters' in guide:
+        chapters = guide['chapters']
+        _require(isinstance(chapters, list) and len(chapters) == 4, 'Rubriques de méthode invalides.')
+        _require([c.get('id') for c in chapters if isinstance(c, dict)] ==
+                 ['start', 'metamodel', 'method', 'references'], 'Ordre des rubriques invalide.')
+        for chapter in chapters:
+            _texts(chapter, 'id', 'title', 'intro')
+            _require(isinstance(chapter.get('sections'), list) and bool(chapter['sections']))
+            for section in chapter['sections']:
+                _texts(section, 'title', 'text')
+                for field in ('example', 'detail', 'url'):
+                    if field in section:
+                        _texts(section, field)
+                if 'url' in section:
+                    url = urlparse(section['url'])
+                    _require(url.scheme == 'https' and bool(url.hostname), 'Lien de référence invalide.')
     if 'glossary' in guide:
         glossary = guide['glossary']
         _require(isinstance(glossary, dict) and isinstance(glossary.get('terms'), list)
@@ -73,10 +90,14 @@ def _validate_guide(guide, version):
         ids = set()
         for term in glossary['terms']:
             _texts(term, 'id', 'name', 'definition')
+            if 'short_description' in term:
+                _texts(term, 'short_description')
             _require(bool(re.fullmatch(r'MOD\d+', term['id'])) and term['id'] not in ids, 'Identité de terme méthodologique invalide.')
             ids.add(term['id'])
             if 'examples' in term:
                 _require(isinstance(term['examples'], list) and all(isinstance(value, str) for value in term['examples']))
+            if 'notes' in term:
+                _require(isinstance(term['notes'], list) and all(isinstance(value, str) for value in term['notes']))
         _require(all(isinstance(value, str) and bool(re.fullmatch(r'TER\d+', value)) for value in glossary['model_term_ids']))
         _require(len(set(glossary['model_term_ids'])) == len(glossary['model_term_ids']), 'Classement lexical dupliqué.')
     _require(isinstance(guide.get("lessons"), list) and len(guide["lessons"]) == 6)

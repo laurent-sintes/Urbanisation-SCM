@@ -11,7 +11,7 @@ Origine des demandes : **Frontoffice** désigne une sollicitation externe au Dom
 | Repère | Nom | Niveau | Contenu direct | Statut |
 | --- | --- | --- | --- | --- |
 | system-design-development | Design & Development | Business System | Exploration différée | Validé par l’urbaniste — portée : name, modeling_depth |
-| system-business-operations | Business Operations | Business System | Sales, Sourcing and Procurement, Supply Chain Orchestration, Logistics Execution | Validé par l’urbaniste — portée : name, modeling_depth |
+| system-business-operations | Business Operations | Business System | Sourcing and Procurement, Sales, Demand & Supply Planning, Supply Chain Orchestration, Logistics | Validé par l’urbaniste — portée : name, modeling_depth |
 | system-enterprise-management-control | Enterprise Management & Control | Business System | Exploration différée | Validé par l’urbaniste — portée : name, modeling_depth |
 | universe-supply | Supply Chain Orchestration | Domain | Master Data, Policies, Plan Visibility, Order Management, Inventory Management, Demand & Supply Matching, Fulfilment Orchestration, Service Order Management, Order Promising | Proposé par l’IA |
 
@@ -30,14 +30,15 @@ Statut : **Validé par l’urbaniste — portée : name, modeling_depth**.
 
 Statut : **Validé par l’urbaniste — portée : name, modeling_depth**.
 
-[Business Operations](glossary:TER106) : faire fonctionner l’activité d’achat, de vente et de réalisation en faisant coopérer Sales, Sourcing and Procurement, Supply Chain Orchestration et Logistics Execution.
+[Business Operations](glossary:TER106) : faire fonctionner l’activité d’achat, de vente, de planification et de réalisation en faisant coopérer Sourcing and Procurement, Sales, Demand & Supply Planning, Supply Chain Orchestration et Logistics.
 
 | Repère | Nom | Type | Statut |
 | --- | --- | --- | --- |
-| domain-sales | Sales | Domain | Validé par l’urbaniste — portée : name, modeling_depth |
 | domain-sourcing-procurement | Sourcing and Procurement | Domain | Validé par l’urbaniste — portée : name, modeling_depth |
+| domain-sales | Sales | Domain | Validé par l’urbaniste — portée : name, modeling_depth |
+| domain-plan | Demand & Supply Planning | Domain | Proposé par l’IA |
 | universe-supply | Supply Chain Orchestration | Domain | Proposé par l’IA |
-| domain-logistics-execution | Logistics Execution | Domain | Validé par l’urbaniste — portée : name, modeling_depth |
+| domain-logistics-execution | Logistics | Domain | Validé par l’urbaniste — portée : name, modeling_depth |
 
 
 ## system-enterprise-management-control — Enterprise Management & Control
@@ -67,11 +68,20 @@ Statut : **Validé par l’urbaniste — portée : name, modeling_depth**.
 | Repère | Capacité | Type | Statut | Définition | Finalité | Rattachement |
 | --- | --- | --- | --- | --- | --- | --- |
 
+## domain-plan — Demand & Supply Planning
+
+Statut : **Proposé par l’IA**.
+
+[Demand & Supply Planning](glossary:TER111) : élaborer et réviser les plans prévisionnels de demande et de ressources pour anticiper les besoins et orienter les décisions opérationnelles.
+
+| Repère | Capacité | Type | Statut | Définition | Finalité | Rattachement |
+| --- | --- | --- | --- | --- | --- | --- |
+
 ## universe-supply — Supply Chain Orchestration
 
 Statut : **Proposé par l’IA**.
 
-La Supply Chain Orchestration est l’organe de régulation qui organise et adapte les ressources et les prestations pour satisfaire la demande : elle arbitre les priorités, les affectations et les apports, fait appliquer les changements nécessaires aux commandes et aux engagements, puis coordonne les prestations et suit leurs résultats.
+Organiser et adapter les ressources et les prestations pour satisfaire la demande. Arbitrer priorités, affectations et apports, faire appliquer les changements autorisés aux commandes et engagements, puis coordonner les prestations et suivre leurs résultats.
 
 | Repère | Nom | Type | Statut |
 | --- | --- | --- | --- |
@@ -195,19 +205,19 @@ Gouvernance des données : **Projection**.
 
 Statut : **Proposé par l’IA**.
 
-Gérer les commandes, leurs exigences et leurs évolutions, et porter les engagements de satisfaction jusqu’à leur conclusion.
+Gérer les commandes, leurs engagements et leurs évolutions, en distinguant ce qui est demandé, proposé, confirmé et réalisé.
 
 | Repère | Capacité | Type | Origine des demandes | Statut | Définition | Finalité | Rattachement |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | D04.i | Sales Order | action | — | Proposé par l’IA | Gérer les commandes clients à satisfaire : enregistrer ce qui est demandé, maintenir les quantités, destinations et échéances applicables, suivre les évolutions autorisées et déterminer ce qui reste à servir. | Disposer d’une commande client exploitable et d’un reste à satisfaire explicable pendant son traitement. | Validé par l’urbaniste — portée : source_id, target_id, type |
-| D04.j | Purchase Order | action | — | Proposé par l’IA | Prendre en charge les commandes d’achat de biens ou de prestations adressées aux fournisseurs, maintenir les attentes et les évolutions autorisées et rapprocher les réalisations pour connaître le reste à satisfaire. | Disposer d’attentes d’achat explicables, en biens ou prestations, et connaître ce qui reste à satisfaire selon les accords applicables. | Validé par l’urbaniste — portée : source_id, target_id, type |
+| D04.j | Purchase Order | action | — | Proposé par l’IA | Gérer les demandes d’achat de biens ou de services, les réponses du fournisseur et les engagements et reliquats qui en résultent. | Disposer d’attentes d’achat explicables, en biens ou prestations, et connaître ce qui reste à satisfaire selon les accords applicables. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D04.k | Transfer Order | action | Frontoffice, Backoffice | Proposé par l’IA | Gérer les ordres de déplacement de marchandises entre sites : maintenir origine, destination, quantités et échéances, suivre les modifications et rapprocher départs et arrivées pour connaître le transfert restant à satisfaire. | Rendre explicite ce qui doit être transféré, vers quel site et ce qui reste à acheminer ou à recevoir. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D04.l | Return Order | action | — | Proposé par l’IA | Prendre en charge les retours clients, leurs commandes et leurs suites logistiques, jusqu’au résultat attendu selon les décisions et autorisations applicables. | Connaître le retour client attendu, suivre ses suites logistiques et expliquer le résultat obtenu pour chaque produit ou quantité. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D04.m | Supplier Return Order | action | — | Proposé par l’IA | Prendre en charge les retours de marchandises aux fournisseurs et suivre leurs suites attendues, selon les accords applicables, en distinguant renvoi sans remplacement, remplacement et réparation avec restitution du bien. | Piloter un retour fournisseur explicite et traçable, distinct de la commande d’achat initiale. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D04.n | Order Structuring | action | — | Proposé par l’IA | Scinder, regrouper ou fusionner des commandes et leurs éléments, en préservant la traçabilité des demandes, les quantités et les engagements. | Conserver une lecture cohérente de l’ensemble, de ses engagements et de sa satisfaction au fil des évolutions de ses composants. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D04.r | Consignment Fill-up Order | action | — | Proposé par l’IA | Demander et suivre la mise en consignation initiale ou complémentaire de marchandises : produits, quantités, destinations, échéances et reste à apporter, conformément à l’accord applicable. | Constituer ou alimenter le stock consigné sans confondre mise à disposition et acquisition par le détenteur. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D04.t | Consignment Pick-up Order | action | — | Proposé par l’IA | Demander et suivre la reprise ou la restitution au propriétaire de marchandises restées consignées, avec les quantités, lieux, échéances et conditions applicables. | Mettre fin à la mise à disposition des biens concernés sous consignation et rendre leur restitution vérifiable. | Validé par l’urbaniste — portée : source_id, target_id, type |
-| order-visibility | Order Visibility | knowledge | — | Proposé par l’IA | Restituer une vue cohérente des demandes, engagements, réalisations imputées et restes à satisfaire, par Order et à travers le carnet. | Comprendre les demandes, leurs engagements et ce qui reste à satisfaire dans le carnet. | Proposé par l’IA |
+| order-visibility | Order Visibility | knowledge | — | Proposé par l’IA | Restituer une vue cohérente des demandes, engagements, réalisations imputées et restes à satisfaire, par [Order](glossary:TER012) et à travers le carnet. | Comprendre les demandes, leurs engagements et ce qui reste à satisfaire dans le carnet. | Proposé par l’IA |
 
 ## D01 — Inventory Management
 
@@ -229,36 +239,36 @@ Statut : **Proposé par l’IA**.
 
 Statut : **Proposé par l’IA**.
 
-Composer et coordonner les prestations, suivre leurs dépendances et rechercher les adaptations qui préservent la promesse et les équilibres du Matching.
+Composer et coordonner les prestations, suivre leurs dépendances et rechercher les adaptations qui préservent la promesse et les équilibres du [Matching](glossary:TER112).
 
 | Repère | Capacité | Type | Statut | Définition | Finalité | Rattachement |
 | --- | --- | --- | --- | --- | --- | --- |
-| D06.b | Service Capacity Visibility | knowledge | Proposé par l’IA | Rendre visible la capacité opérationnelle communiquée par les exécutants, avec son contexte, sa période et sa fraîcheur, pour alimenter les décisions Supply. | Donner à D03, à D04 et aux décisions d’exécution une connaissance exploitable des capacités annoncées par les exécutants. | Validé par l’urbaniste — portée : source_id, target_id, type |
-| D07.c | Service Reconciliation | action | En cours d’instruction | Rapprocher les résultats constatés des prestations attendues, qualifier les écarts et fournir les faits utiles aux sous-domaines consommateurs. | Expliquer les écarts de réalisation et alimenter le rapprochement des Orders sans confondre leurs reliquats. | Validé par l’urbaniste — portée : source_id, target_id, type |
+| D06.b | Service Capacity Visibility | knowledge | Proposé par l’IA | Rendre visible la capacité opérationnelle communiquée par les exécutants, avec son contexte, sa période et sa fraîcheur, pour alimenter les décisions Supply. | Donner à [Demand & Supply Matching](model:D03), à [Order Management](model:D04) et aux décisions d’exécution une connaissance exploitable des capacités annoncées par les exécutants. | Validé par l’urbaniste — portée : source_id, target_id, type |
+| D07.c | Service Reconciliation | action | En cours d’instruction | Rapprocher les résultats constatés des prestations attendues, qualifier les écarts et fournir les faits utiles aux sous-domaines consommateurs. | Expliquer les écarts de réalisation et alimenter le rapprochement des [Orders](glossary:TER012) sans confondre leurs reliquats. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D07.d | Operations Tracking | integration | Proposé par l’IA | Capter et intégrer les faits, jalons, estimations et retours de fin des prestations et processus Supply, en les rapprochant de la demande et de l’exécution concernées. | Rendre les retours d’exécution fiables et utilisables par les capacités consommatrices. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D06.d | Process Orchestration | orchestration | Proposé par l’IA | Coordonner le déclenchement, les dépendances et la progression des prestations jusqu’aux résultats attendus, en tenant compte des faits d’exécution et des adaptations autorisées. | Coordonner la réalisation du plan retenu entre les exécutants. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | operations-visibility | Operations Visibility | knowledge | Proposé par l’IA | Rendre visibles l’avancement, les résultats et les attentes des prestations et processus Supply à partir des faits intégrés. | Comprendre l’avancement et les résultats des prestations et processus Supply. | Proposé par l’IA |
 | D07.a | Service Requirements Decision | decision | Proposé par l’IA | Établir les prestations et résultats nécessaires pour satisfaire un besoin Supply : biens concernés, quantités, lieux, échéances et contraintes à porter dans les ordres confiés. | Déterminer les résultats de prestation nécessaires à la réalisation du besoin Supply. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D06.e | Service Selection Decision | decision | En cours d’instruction — portée : name | Déterminer les services et exécutants à mobiliser pour les prestations nécessaires, en tenant compte de leur admissibilité et des contraintes. | Retenir des services utilisables pour réaliser les prestations requises dans le cadre Supply applicable. | Validé par l’urbaniste — portée : source_id, target_id, type |
-| D06.f | Process Adaptation Decision | decision | Proposé par l’IA | Déterminer les adaptations du plan d’exécution permettant de préserver la promesse de l’Order et les grands équilibres du Matching face aux aléas. | Retenir une variation de réalisation adaptée à l’aléa et aux contraintes Supply. | Validé par l’urbaniste — portée : source_id, target_id, type |
+| D06.f | Process Adaptation Decision | decision | Proposé par l’IA | Déterminer les adaptations du plan d’exécution permettant de préserver la promesse de l’[Order](glossary:TER012) et les grands équilibres du [Matching](glossary:TER112) face aux aléas. | Retenir une variation de réalisation adaptée à l’aléa et aux contraintes Supply. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D05.i | Inventory Disposition Decision | decision | Proposé par l’IA | Déterminer les usages autorisés et le devenir logistique de biens selon leur état constaté, les politiques applicables et les possibilités de récupération de valeur, lors d’un retour ou en cours de stockage. | Maîtriser l’usage et le devenir des biens en conciliant conformité, engagements, coûts, risques et valeur récupérable. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | service-order-release-decision | Service Order Release Decision | decision | Proposé par l’IA | Déterminer quels ordres de prestation retenir ou libérer ensemble, et à quel moment, pour organiser leur traitement et favoriser les regroupements utiles tout en respectant les engagements. | Améliorer l’organisation du traitement et les regroupements logistiques sans compromettre les engagements. | Proposé par l’IA |
-| transport-plan-decision | Transport Plan Decision | decision | Proposé par l’IA | Construire et réviser un plan de transport qui regroupe les marchandises en chargements et détermine leurs trajets, arrêts et échéances compatibles avec les engagements. | À préciser | Proposé par l’IA |
+| transport-plan-decision | Transport Plan Decision | decision | Proposé par l’IA | Construire et réviser un plan de transport qui regroupe les marchandises en chargements et détermine leurs trajets, arrêts et échéances compatibles avec les engagements. | Organiser des chargements et trajets réalisables qui respectent les engagements. | Proposé par l’IA |
 
 ## D03 — Demand & Supply Matching
 
 Statut : **Proposé par l’IA**.
 
-Construire et maintenir le master plan de matching qui arbitre la couverture de la demande et les affectations de ressources, en mobilisant les décisions spécialisées et en faisant appliquer les changements autorisés.
+Construire et maintenir le [master plan de matching](glossary:TER100) qui arbitre la couverture de la demande et les affectations de ressources, en mobilisant les décisions spécialisées et en faisant appliquer les changements autorisés.
 
 | Repère | Capacité | Type | Statut | Définition | Finalité | Rattachement |
 | --- | --- | --- | --- | --- | --- | --- |
-| D02.e | Plan Application | action | Proposé par l’IA | Faire appliquer les recommandations autorisées et constater leur prise en compte. | Distinguer le plan retenu des effets effectivement pris en compte et rendre visibles les écarts. | Proposé par l’IA |
-| D05.f | Master Planning | planning | Proposé par l’IA | Cadrer, maintenir et réviser le master plan commun en mobilisant les capacités de matching, de simulation et d’application. | Maintenir un plan commun cohérent et rendre visibles ses effets pris en compte et les besoins restant à couvrir. | Validé par l’urbaniste — portée : source_id, target_id, type |
-| BHV006 | Simulation & Analysis | planning | Proposé par l’IA | Construire des alternatives de plan, projeter leurs conséquences et comparer leurs effets sur le service, les engagements, les stocks, les coûts et les risques pour éclairer les choix. | À préciser | Proposé par l’IA |
+| D02.e | Plan Application | action | Proposé par l’IA | Appliquer les décisions d’un plan aux ressources, demandes et règles concernées, puis suivre les effets obtenus et ceux restant à traiter. | Distinguer le plan retenu des effets effectivement pris en compte et rendre visibles les écarts. | Proposé par l’IA |
+| D05.f | Master Planning | planning | Proposé par l’IA | Cadrer, maintenir et réviser le master plan commun en mobilisant les capacités de [matching](glossary:TER112), de simulation et d’application. | Maintenir un plan commun cohérent et rendre visibles ses effets pris en compte et les besoins restant à couvrir. | Validé par l’urbaniste — portée : source_id, target_id, type |
+| BHV006 | Simulation & Analysis | planning | Proposé par l’IA | Construire des alternatives de plan, projeter leurs conséquences et comparer leurs effets sur le service, les engagements, les stocks, les coûts et les risques pour éclairer les choix. | Comparer les effets de plusieurs options avant de choisir un plan à appliquer. | Proposé par l’IA |
 | D05.a | Inventory Target Optimization | decision | Proposé par l’IA | Déterminer les objectifs de stock et les seuils associés, par produit, lieu et période, selon les besoins, le niveau de service recherché, les délais et les risques. | Définir les niveaux de stock auxquels comparer la situation connue ou attendue selon le compromis de service, immobilisation et risque. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D05.d | Group Protection Optimization | decision | Proposé par l’IA | Déterminer les quantités à protéger ou les limites d’usage par canal ou groupe de bénéficiaires. | Déterminer la répartition des droits d’usage du stock entre groupes, en préservant les usages retenus. | Validé par l’urbaniste — portée : source_id, target_id, type |
-| D05.e | Replenishment | decision | Proposé par l’IA | Déterminer les apports initiaux et successifs, leurs quantités, dates et ajustements, pour couvrir les besoins et les cibles de stock applicables. | Entretenir la disponibilité en ajustant les apports continus, tout en maîtrisant l’immobilisation et le risque d’excédent. | Validé par l’urbaniste — portée : source_id, target_id, type |
+| D05.e | Replenishment | decision | Proposé par l’IA | Déterminer les apports et ajustements nécessaires pour installer ou réapprovisionner un stock, en tenant compte des besoins, des cibles et des ressources déjà attendues. | Entretenir la disponibilité en ajustant les apports continus, tout en maîtrisant l’immobilisation et le risque d’excédent. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D05.c | Stock Redistribution | decision | Proposé par l’IA | Déterminer les transferts de stock existant entre sites pour mieux répondre aux besoins, reconstituer des assortiments utiles ou regrouper des stocks dispersés, en tenant compte des coûts et risques. | Obtenir une répartition du stock mieux adaptée aux besoins des périmètres concernés. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D05.h | Reservation Policy Optimization | decision | Proposé par l’IA | Déterminer dans quelles situations, à quel moment et pour quelle durée réserver des ressources afin de sécuriser la promesse, selon le risque de pénurie et le coût d’indisponibilité pour les autres demandes. | Choisir comment sécuriser les ressources d’une promesse tout en maîtrisant leur indisponibilité pour les autres demandes. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D03.m | Demand Prioritization | decision | Proposé par l’IA | Établir et réviser les priorités relatives des besoins à couvrir, selon les engagements et les politiques applicables. | Arbitrer les commandes à satisfaire en priorité lorsque leurs besoins se trouvent en concurrence. | Validé par l’urbaniste — portée : source_id, target_id, type |
@@ -272,7 +282,7 @@ Définir, maintenir et rendre applicables les règles qui encadrent les protecti
 
 | Repère | Capacité | Type | Gouvernance des données | Statut | Définition | Finalité | Rattachement |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| D02.b | Supply Protection Policy | policy | Domain-managed | Proposé par l’IA | Configurer et maintenir les politiques, règles et quantités qui encadrent l’usage et le renouvellement des ressources pour maîtriser pénurie, surstock et déséquilibre. | Encadrer l’usage et le renouvellement des ressources pour réduire pénurie, surstock et déséquilibre. | Validé par l’urbaniste — portée : source_id, target_id, type |
+| D02.b | Supply Protection Policy | policy | Domain-managed | Proposé par l’IA | Définir et appliquer les règles qui protègent l’accès aux stocks, limitent leur consommation et encadrent leur renouvellement. | Encadrer l’usage et le renouvellement des ressources pour réduire pénurie, surstock et déséquilibre. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D19.a | Service Provider Policy | policy | Domain-managed | Proposé par l’IA | Définir, maintenir et rendre applicables les règles de recours aux fournisseurs et à leurs Services, notamment les exclusions et les limites de sollicitation, afin de tenir compte de leur fiabilité et de leur situation opérationnelle. | Protéger la réalisation des demandes contre des sollicitations de prestataires inadaptées à leur situation. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | D19.b | Demand Protection Policy | policy | Domain-managed | Proposé par l’IA | Définir, maintenir et rendre applicables les règles qui protègent ou priorisent certaines demandes dans les arbitrages de couverture et de révision. | Préserver les exigences et engagements des demandes selon le cadre métier applicable. | Validé par l’urbaniste — portée : source_id, target_id, type |
 
@@ -280,13 +290,13 @@ Définir, maintenir et rendre applicables les règles qui encadrent les protecti
 
 Statut : **Proposé par l’IA**.
 
-Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la promesse et le Matching.
+Recevoir et rendre utilisables les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) calculés hors du domaine pour éclairer la promesse et le [Matching](glossary:TER112).
 
 | Repère | Capacité | Type | Gouvernance des données | Statut | Définition | Finalité | Rattachement |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| plans-ingestion | Plan Ingestion | integration | Projection | Proposé par l’IA | Recevoir et intégrer les Supply Plans et Demand Plans du domaine externe PLAN, porté par l’APS, avec leur provenance, horizon, version et statut. | Fournir des données prévisionnelles fiables aux décisions Supply. | Validé par l’urbaniste — portée : source_id, target_id, type |
-| plans-visibility | Supply Plan Visibility | knowledge | Domain-View | Proposé par l’IA | Rendre consultables les prévisions d’entrées ou de sorties de stock hors achats, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching. | Fournir des données prévisionnelles fiables aux décisions Supply. | Validé par l’urbaniste — portée : source_id, target_id, type |
-| demand-plan-visibility | Demand Plan Visibility | knowledge | Domain-View | Proposé par l’IA | Rendre consultable la demande prévisionnelle reçue du domaine PLAN, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching. | Fournir des données prévisionnelles fiables aux décisions Supply. | Proposé par l’IA |
+| plans-ingestion | Plan Ingestion | integration | Projection | Proposé par l’IA | Recevoir et intégrer les [Supply Plans](glossary:TER098) et [Demand Plans](glossary:TER099) du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un outil de planification avancée, avec leur provenance, horizon, version et statut. | Fournir des données prévisionnelles fiables aux décisions Supply. | Validé par l’urbaniste — portée : source_id, target_id, type |
+| plans-visibility | Supply Plan Visibility | knowledge | Domain-View | Proposé par l’IA | Rendre consultables les prévisions d’entrées ou de sorties de stock hors achats, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le [Matching](glossary:TER112). | Fournir des données prévisionnelles fiables aux décisions Supply. | Validé par l’urbaniste — portée : source_id, target_id, type |
+| demand-plan-visibility | Demand Plan Visibility | knowledge | Domain-View | Proposé par l’IA | Rendre consultable la demande prévisionnelle reçue du domaine Demand & Supply Planning, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le [Matching](glossary:TER112). | Fournir des données prévisionnelles fiables aux décisions Supply. | Proposé par l’IA |
 
 ## subdomain-service-orders — Service Order Management
 
@@ -303,17 +313,17 @@ Gérer les prestations confiées aux exécutants, leurs exigences, leurs engagem
 | service-order-labeling | Labeling Order | action | En cours d’instruction — portée : name | Tenir les demandes de marquage et d’étiquetage confiées aux exécutants, leurs exigences, engagements et suites des résultats. | Tenir les exigences et engagements de la prestation et expliquer ses suites. | En cours d’instruction — portée : source_id, target_id, type |
 | service-order-kitting | Kitting Order | action | En cours d’instruction — portée : name | Tenir les demandes de constitution, séparation et recomposition d’ensembles confiées aux exécutants, leurs exigences, engagements et suites des résultats. | Tenir les exigences et engagements de la prestation et expliquer ses suites. | En cours d’instruction — portée : source_id, target_id, type |
 | service-order-garment-finishing | Garment Finishing Order | action | En cours d’instruction — portée : name | Tenir les demandes de finition d’aspect des vêtements confiées aux exécutants, leurs exigences, engagements et suites des résultats. | Tenir les exigences et engagements de la prestation et expliquer ses suites. | En cours d’instruction — portée : source_id, target_id, type |
-| service-order-cleaning | Cleaning Order | action | En cours d’instruction — portée : name | Tenir les demandes de nettoyage des articles fashion confiées aux exécutants, leurs exigences, engagements et suites des résultats. | Tenir les exigences et engagements de la prestation et expliquer ses suites. | En cours d’instruction — portée : source_id, target_id, type |
-| service-order-repair-alteration | Repair & Alteration Order | action | En cours d’instruction — portée : name | Tenir les demandes de réparation et de retouche des articles fashion confiées aux exécutants, leurs exigences, engagements et suites des résultats. | Tenir les exigences et engagements de la prestation et expliquer ses suites. | En cours d’instruction — portée : source_id, target_id, type |
-| service-order-personalization | Personalization Order | action | En cours d’instruction — portée : name | Tenir les demandes de personnalisation des articles fashion confiées aux exécutants, leurs exigences, engagements et suites des résultats. | Tenir les exigences et engagements de la prestation et expliquer ses suites. | En cours d’instruction — portée : source_id, target_id, type |
-| service-order-inspection | Inspection Order | action | En cours d’instruction — portée : name | Tenir les demandes d’inspection des articles fashion confiées aux exécutants, leurs exigences, engagements et suites des résultats. | Tenir les exigences et engagements de la prestation et expliquer ses suites. | En cours d’instruction — portée : source_id, target_id, type |
+| service-order-cleaning | Cleaning Order | action | En cours d’instruction — portée : name | Tenir les demandes de nettoyage des vêtements, chaussures et accessoires confiées aux exécutants, leurs exigences, engagements et suites des résultats. | Tenir les exigences et engagements de la prestation et expliquer ses suites. | En cours d’instruction — portée : source_id, target_id, type |
+| service-order-repair-alteration | Repair & Alteration Order | action | En cours d’instruction — portée : name | Tenir les demandes de réparation et de retouche des vêtements, chaussures et accessoires confiées aux exécutants, leurs exigences, engagements et suites des résultats. | Tenir les exigences et engagements de la prestation et expliquer ses suites. | En cours d’instruction — portée : source_id, target_id, type |
+| service-order-personalization | Personalization Order | action | En cours d’instruction — portée : name | Tenir les demandes de personnalisation des vêtements, chaussures et accessoires confiées aux exécutants, leurs exigences, engagements et suites des résultats. | Tenir les exigences et engagements de la prestation et expliquer ses suites. | En cours d’instruction — portée : source_id, target_id, type |
+| service-order-inspection | Inspection Order | action | En cours d’instruction — portée : name | Tenir les demandes d’inspection des vêtements, chaussures et accessoires confiées aux exécutants, leurs exigences, engagements et suites des résultats. | Tenir les exigences et engagements de la prestation et expliquer ses suites. | En cours d’instruction — portée : source_id, target_id, type |
 | service-order-transport-booking | Transport Booking Order | action | En cours d’instruction — portée : name, definition | Gérer une demande autonome de réservation de capacité de transport, sa confirmation, ses changements et sa libération, avant ou indépendamment des instructions détaillées de déplacement. | Tenir les exigences, engagements et résultats de la prestation confiée. | En cours d’instruction — portée : source_id, target_id, type |
 | service-order-document-production | Document Production Order | action | En cours d’instruction — portée : name, definition | Obtenir un document ou dossier logistique conforme aux données et exigences confiées, disponible et transmis aux destinataires attendus. | Tenir les exigences, engagements et résultats de la prestation confiée. | En cours d’instruction — portée : source_id, target_id, type |
 | service-order-customs-clearance | Customs Clearance Order | action | En cours d’instruction — portée : name, definition | Confier et suivre une prestation de dédouanement pour des marchandises, depuis le dossier jusqu’au résultat de la procédure et au traitement des écarts. | Tenir les exigences, engagements et résultats de la prestation confiée. | En cours d’instruction — portée : source_id, target_id, type |
 | service-order-billing | Billing Order | action | En cours d’instruction — portée : name, definition | Demander et suivre la facturation des éléments éligibles d’une commande ou prestation, avec confirmation, rejet et correction. | Tenir les exigences, engagements et résultats de la prestation confiée. | En cours d’instruction — portée : source_id, target_id, type |
 | service-order-payment-collection | Payment Collection Order | action | En cours d’instruction — portée : name, definition | Demander et suivre une opération d’encaissement rattachée à la commande, lorsque FLOW en pilote effectivement le déclenchement et les suites. | Tenir les exigences, engagements et résultats de la prestation confiée. | En cours d’instruction — portée : source_id, target_id, type |
-| service-order-receiving | Receiving Order | action | Proposé par l’IA | Gérer les demandes de réception de marchandises confiées aux exécutants, leurs quantités et conditions attendues, leurs engagements et les suites des réceptions partielles, refusées ou non conformes. | À préciser | Proposé par l’IA |
-| service-order-scrapping | Scrapping Order | action | Proposé par l’IA | Porter une demande de mise au rebut de biens, ses autorisations, quantités, consignes et preuves attendues jusqu’à son résultat reconnu. | À préciser | Proposé par l’IA |
+| service-order-receiving | Receiving Order | action | Proposé par l’IA | Gérer les demandes de réception de marchandises confiées aux exécutants, leurs quantités et conditions attendues, leurs engagements et les suites des réceptions partielles, refusées ou non conformes. | Savoir ce qui doit être réceptionné, ce qui l’a été et ce qui reste à traiter. | Proposé par l’IA |
+| service-order-scrapping | Scrapping Order | action | Proposé par l’IA | Porter une demande de mise au rebut de biens, ses autorisations, quantités, consignes et preuves attendues jusqu’à son résultat reconnu. | Suivre une mise au rebut autorisée jusqu’à sa preuve et au traitement du solde. | Proposé par l’IA |
 
 ## price-book — Price Book
 
@@ -338,13 +348,13 @@ Statut : **Proposé par l’IA**.
 | D03.i | Available-to-Promise (ATP) | evaluation | Proposé par l’IA | Établir les quantités et dates auxquelles une demande ou un ensemble de demandes peut être satisfait par les ressources présentes ou futures admissibles dans la situation de référence, et expliciter la couverture qui rend ces engagements possibles. | Établir une solution de promesse réalisable dans la situation de référence. | Proposé par l’IA |
 | D03.j | Capable-to-Promise (CTP) | evaluation | Proposé par l’IA | Évaluer la faisabilité conditionnelle de satisfaction d’une demande selon les sources, matières, délais et capacités nécessaires, sans décider de leur mobilisation. | Établir à quelles conditions une promesse deviendrait réalisable après adaptation. | Proposé par l’IA |
 | D03.k | Profitable-to-Promise (PTP) | evaluation | Proposé par l’IA | Évaluer et comparer les conséquences économiques des possibilités de promesse, en explicitant les coûts, les conditions d’admissibilité et les incertitudes, sans sélectionner la réponse. | Éclairer le choix par un dossier économique local et contextuel des avantages et inconvénients des options, sans sélectionner la réponse. | Proposé par l’IA |
-| D03.l | Promise Selection Decision | decision | Proposé par l’IA | Choisir une proposition initiale ou révisée de promesse pour une demande ou un ensemble de commandes, parmi les possibilités admissibles, sans confirmer l’engagement ni affecter les ressources. | Retenir un échéancier acceptable pour honorer la commande. | Proposé par l’IA |
+| D03.l | Promise Selection Decision | decision | Proposé par l’IA | Choisir une proposition de promesse parmi les possibilités admissibles, avec ses quantités, dates, conditions et conséquences. | Retenir un échéancier acceptable pour honorer la commande. | Proposé par l’IA |
 
-## domain-logistics-execution — Logistics Execution
+## domain-logistics-execution — Logistics
 
 Statut : **Validé par l’urbaniste — portée : name, modeling_depth**.
 
-[Logistics Execution](glossary:TER110) : réaliser les opérations physiques et les formalités associées : entrepôt, transport et douane.
+[Logistics](glossary:TER110) : réaliser les opérations logistiques et les formalités associées, en organisant les moyens et opérations locaux.
 
 | Repère | Capacité | Type | Statut | Définition | Finalité | Rattachement |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -754,6 +764,50 @@ Microsoft Dynamics 365 · Processus de bout en bout · Recouvrement partiel · s
 
 Références : ELM841, CMP309.
 
+### Microsoft — Master plans overview
+
+Microsoft Dynamics 365 Supply Chain Management · Concept ou fonction documenté dans un produit · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Demand & Supply Planning est le nom retenu en U801 pour expliciter les plans de demande et de ressources ; les outils de planification possibles ne définissent pas son identité.
+
+**Pourquoi cette définition.** Responsabilité de production des plans, distincte de leur ingestion et de leur consultation ; détail des capacités hors périmètre.
+
+**Points communs.** Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
+
+**Différences.** Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
+
+**Position FLOW.** Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility les expose. Le master plan du Matching reste interne à l’orchestration.
+
+[Master plans overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans) — Documentation évolutive, mise à jour affichée le 25 mars 2026, consulté le 2026-09-27.
+
+**Passage.** Using master plans ; Firming ; Action message
+
+**Limite de preuve.** Recouvrement partiel avec les fonctions de planification documentées ; ni nomenclature universelle des domaines, ni preuve d’un APS installé chez Beaumanoir.
+
+Références : U794.
+
+### SAP — Outlining Program Planning
+
+SAP S/4HANA Cloud Public Edition · Concept ou fonction documenté dans un produit · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Demand & Supply Planning est le nom retenu en U801 pour expliciter les plans de demande et de ressources ; les outils de planification possibles ne définissent pas son identité.
+
+**Pourquoi cette définition.** Responsabilité de production des plans, distincte de leur ingestion et de leur consultation ; détail des capacités hors périmètre.
+
+**Points communs.** Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
+
+**Différences.** Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
+
+**Position FLOW.** Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility les expose. Le master plan du Matching reste interne à l’orchestration.
+
+[Outlining Program Planning](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Cours S/4HANA Cloud Public Edition, édition non affichée, consulté le 2026-09-27.
+
+**Passage.** Production Planning Overview ; Demand Management Overview
+
+**Limite de preuve.** Recouvrement partiel avec les fonctions de planification documentées ; ni nomenclature universelle des domaines, ni preuve d’un APS installé chez Beaumanoir.
+
+Références : U794.
+
 ## Scénarios métier — system-enterprise-management-control Enterprise Management & Control
 
 ### Illustration de responsabilité
@@ -922,6 +976,62 @@ Microsoft Dynamics 365 Supply Chain Management et Finance · Processus de bout e
 
 Références : ELM844, CMP309.
 
+## Scénarios métier — domain-plan Demand & Supply Planning
+
+### Prévision révisée
+
+Illustration fictive : le plan de demande d’un produit pour octobre passe de 1 000 à 800 pièces. Demand & Supply Planning fournit cette nouvelle version ; Plan Ingestion la reçoit et Demand Plan Visibility la rend consultable.
+
+**Ce que cela illustre.** La révision éclaire les décisions de Matching sans modifier automatiquement les commandes ou les engagements.
+
+Références : U794.
+
+## Sources d’inspiration — domain-plan Demand & Supply Planning
+
+### Microsoft — Master plans overview
+
+Microsoft Dynamics 365 Supply Chain Management · Concept ou fonction documenté dans un produit · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Demand & Supply Planning, retenu en U801, rend explicites les deux volets de planification. SCOR emploie Plan pour un processus plus large ; le rapprochement est partiel, sans nomenclature universelle ni équivalence à un module éditeur.
+
+**Pourquoi cette définition.** Responsabilité de production des plans, distincte de leur ingestion et de leur consultation ; détail des capacités hors périmètre.
+
+**Points communs.** Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
+
+**Différences.** Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
+
+**Position FLOW.** Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility les expose. Le master plan du Matching reste interne à l’orchestration.
+
+[Master plans overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans) — Documentation évolutive, mise à jour affichée le 25 mars 2026, consulté le 2026-09-27.
+
+**Passage.** Using master plans ; Firming ; Action message
+
+**Limite de preuve.** Recouvrement partiel avec les fonctions de planification documentées ; ni nomenclature universelle des domaines, ni preuve d’un APS installé chez Beaumanoir.
+
+Références : U794.
+
+### SAP — Outlining Program Planning
+
+SAP S/4HANA Cloud Public Edition · Concept ou fonction documenté dans un produit · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Demand & Supply Planning, retenu en U801, rend explicites les deux volets de planification. SCOR emploie Plan pour un processus plus large ; le rapprochement est partiel, sans nomenclature universelle ni équivalence à un module éditeur.
+
+**Pourquoi cette définition.** Responsabilité de production des plans, distincte de leur ingestion et de leur consultation ; détail des capacités hors périmètre.
+
+**Points communs.** Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
+
+**Différences.** Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
+
+**Position FLOW.** Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility les expose. Le master plan du Matching reste interne à l’orchestration.
+
+[Outlining Program Planning](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Cours S/4HANA Cloud Public Edition, édition non affichée, consulté le 2026-09-27.
+
+**Passage.** Production Planning Overview ; Demand Management Overview
+
+**Limite de preuve.** Recouvrement partiel avec les fonctions de planification documentées ; ni nomenclature universelle des domaines, ni preuve d’un APS installé chez Beaumanoir.
+
+Références : U794.
+
 ## Scénarios métier — universe-supply Supply Chain Orchestration
 
 ### Livrer 100 tee-shirts à un magasin vendredi
@@ -943,1201 +1053,6 @@ Une nouvelle variante de tee-shirt, bleu taille M, est créée dans l’applicat
 **Ce que cela illustre.** La projection sert aux opérations Supply. La création et les corrections de la référence restent dans la source de vérité externe.
 
 Références : U470, U97, U460.
-
-### Livrer une commande B2B avec un stock partiel
-
-Illustration FLOW fictive : un client B2B attend 100 vêtements ; 60 sont disponibles et une rentrée de 40 est annoncée. Plusieurs solutions de livraison sont examinées.
-
-**Déclencheur.** Une commande nécessite une proposition de quantité et de date.
-
-**Résultat recherché.** Préparer une promesse réalisable et expliquer les conséquences économiques des options.
-
-**Contraintes**
-
-- Date demandée et fractionnement autorisé par le client.
-- Disponibilité effective, fiabilité de la rentrée et délais de préparation et de transport.
-- Engagements existants et règles de protection du stock.
-
-**Options examinées**
-
-- Livraison fractionnée : Expédier les 60 disponibles, puis les 40 attendus : rendre visible le service anticipé et le coût des deux expéditions.
-- Livraison regroupée : Attendre les 40 pour préparer et expédier ensemble : examiner le gain logistique, le délai et les conséquences économiques d’une attente.
-
-**Ce qui se passe.** Un dossier présente les options avec quantité, date et conséquences économiques ; le choix reste explicite et distinct de l’évaluation. Aucun gagnant n’est présumé.
-
-**Ce que cela illustre.** Les capacités coopèrent selon le besoin ; ce récit n’impose ni pipeline universel ni modification des grands équilibres du Matching. Promettre, affecter les ressources et libérer les prestations restent distincts.
-
-#### 1. Qualifier les 100 vêtements attendus
-
-Le client demande 100 pièces vendredi ; il accepte une livraison partielle uniquement si elle est annoncée.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Sales Order (D04.i) | Porter la demande et les engagements acceptés. |
-| Inventory Visibility (D01.c) | Exposer les 60 pièces disponibles et la rentrée annoncée de 40 avec ses réserves. |
-
-**Résultat attendu.** Quantité, date et condition de fractionnement sont explicites.
-
-#### 2. Construire les possibilités
-
-Comparer 60 pièces plus tôt puis 40 après réception, et 100 ensemble. Si une solution exige une ressource supplémentaire, tester sa faisabilité sans créer une commande d’achat.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Available-to-Promise (ATP) (D03.i) | Évaluer le stock présent et projeté net des engagements et protections. |
-| Capable-to-Promise (CTP) (D03.j) | Évaluer si nécessaire les possibilités supplémentaires et leurs contraintes de capacité. |
-
-**Résultat attendu.** Options datées avec leurs conditions et incertitudes.
-
-#### 3. Éclairer puis choisir la promesse
-
-Comparer deux transports à une seule expédition, sans supposer que le moins cher est toujours préférable.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Profitable-to-Promise (PTP) (D03.k) | Produire le dossier économique local des options sans choisir. |
-| Promise Selection Decision (D03.l) | Choisir la proposition au regard du service, des évaluations et des règles. |
-
-**Résultat attendu.** Une proposition choisie, accompagnée de ses hypothèses, peut être acceptée dans la commande.
-
-#### 4. Affecter puis libérer les prestations
-
-Si le regroupement est accepté, affecter les ressources puis retenir les ordres éligibles jusqu’à complétude, dans la limite de la date promise.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Supply Assignment (D03.o) | Affecter les ressources dans les équilibres du master plan. |
-| Plan Application (D02.e) | Appliquer les affectations retenues. |
-| Service Order Release Decision (service-order-release-decision) | Déterminer le moment et le groupe de libération. |
-| Process Orchestration (D06.d) | Déclencher et coordonner les prestations. |
-| Packing Order (service-order-packing) | Porter l’exigence de conditionnement commun. |
-
-**Résultat attendu.** Les prestations compatibles sont libérées ensemble ; la préparation commune est demandée explicitement.
-
-**Ce que ce cas permet de vérifier**
-
-- Évaluer, choisir, engager, affecter et libérer ont des responsabilités distinctes.
-- La rétention ne décale pas silencieusement la promesse ; une expédition commune ne garantit pas à elle seule une palette unique.
-
-Références : U763, U764, U762, ELM763, ELM767, ELM768, U768.
-
-### Remettre en vente une robe retournée
-
-Illustration FLOW fictive. Une cliente retourne une robe dont une couture est ouverte. Le retour est accepté, mais la remise en stock vendable dépend du contrôle et de la réparation.
-
-**Ce qui se passe.** La robe apparaît dans le stock vendable avec une trace de ses mouvements.
-
-#### 1. Recevoir et contrôler
-
-Le retour est attendu puis reçu ; le prestataire confirme la couture ouverte et transmet le contrôle.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Return Order (D04.l) | Porter le retour attendu et son achèvement. |
-| Inspection Order (service-order-inspection) | Demander le contrôle et son résultat. |
-| Operations Tracking (D07.d) | Capter les faits d’exécution distants. |
-
-**Résultat attendu.** La robe est reçue mais sa remise en vente reste conditionnelle.
-
-#### 2. Choisir le devenir
-
-La réparation est autorisée et jugée pertinente pour cette robe ; une pièce irréparable suivrait une autre route.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Disposition Decision (D05.i) | Décider de la destination et du traitement de l’article retourné. |
-| Repair & Alteration Order (service-order-repair-alteration) | Porter la prestation de réparation confiée. |
-| Process Orchestration (D06.d) | Coordonner les dépendances et attendre la fin de réparation. |
-
-**Résultat attendu.** Une route de réparation est choisie sans confondre retour et réparation.
-
-#### 3. Rendre la robe à nouveau disponible
-
-Après réparation et contrôle conforme, les faits reconnus autorisent le reclassement du stock.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Tracking (D01.f) | Recevoir les faits de stock. |
-| Inventory Ledger (D01.g) | Conserver les mouvements et corrections reconnus. |
-| Inventory Visibility (D01.c) | Exposer la disponibilité actualisée. |
-
-**Résultat attendu.** La robe apparaît dans le stock vendable avec une trace de ses mouvements.
-
-**Ce que ce cas permet de vérifier**
-
-- Le retour ne réalise pas lui-même la réparation.
-- Un simple accusé de réception de prestation ne vaut pas réalisation conforme.
-- Inventory Disposition Decision couvre ce retour comme les incidents sur stock existant ; Policy-based Disposition applique les règles et Value Recovery Optimization compare les devenirs admissibles.
-
-Références : U768.
-
-### Vendre une partie du stock consigné puis reprendre le solde
-
-Illustration FLOW fictive. Un fournisseur confie 100 vestes à un distributeur. Selon le contrat fictif, les 30 vendues changent de propriétaire à la vente ; les 70 restantes sont reprises.
-
-**Ce qui se passe.** Le solde repris est rapproché de la demande et du stock.
-
-#### 1. Apporter les 100 vestes
-
-L’apport est demandé puis reçu chez le dépositaire sans achat immédiat.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Consignment Fill-up Order (D04.r) | Porter la demande d’apport en consignation. |
-| Inventory Tracking (D01.f) | Recevoir le fait de réception et sa dimension propriétaire. |
-| Inventory Ledger (D01.g) | Enregistrer le mouvement physique reconnu. |
-
-**Résultat attendu.** 100 vestes sont détenues pour le compte du fournisseur.
-
-#### 2. Reconnaître le transfert des 30 vendues
-
-Le fait de vente est rapproché de la clause de l’accord ; la réception initiale ne suffit pas à changer la propriété.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Sales Order (D04.i) | Porter la vente et ses engagements. |
-| Agreement Visibility (D11.b) | Rendre accessibles les conditions applicables. |
-| Inventory Ownership Transfer Decision (D01.h) | Qualifier le déclencheur contractuel et déterminer le transfert. |
-| Inventory Ownership Ledger (inventory-ownership-ledger) | Conserver la date, les parties, les quantités et le fondement du changement. |
-
-**Résultat attendu.** Le transfert reconnu de 30 vestes est tracé avec son fondement.
-
-#### 3. Reprendre les 70 restantes
-
-La campagne se termine et le fournisseur demande la reprise du solde.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Consignment Pick-up Order (D04.t) | Porter la demande de reprise. |
-| Process Orchestration (D06.d) | Coordonner la prestation de reprise. |
-| Inventory Visibility (D01.c) | Exposer séparément détention, propriété et disponibilité du solde. |
-
-**Résultat attendu.** Le solde repris est rapproché de la demande et du stock.
-
-**Ce que ce cas permet de vérifier**
-
-- Détention et propriété évoluent indépendamment.
-- Ce cas de vente ne couvre pas les contrats à échéance ni les transferts en transit.
-
-Références : U768.
-
-### Préparer une capsule pour l’ouverture de magasins
-
-Illustration FLOW fictive. Une capsule de 200 robes doit arriver sur cintres, étiquetée et conditionnée par magasin avant l’ouverture. Un plan externe prévoit les besoins ; le stock disponible doit être réparti.
-
-**Ce qui se passe.** Les prestations suivent les dépendances demandées et leur achèvement est observable.
-
-#### 1. Préparer les données utiles
-
-Les références, assortiments et prévisions sont reçus avant le calcul de réapprovisionnement.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Master Data Ingestion (master-data-ingestion) | Intégrer les référentiels fournis par les domaines sources. |
-| Plan Ingestion (plans-ingestion) | Intégrer les Supply et Demand Plans externes. |
-| Demand Plan Visibility (demand-plan-visibility) | Exposer les besoins prévus pertinents. |
-| Supply Plan Visibility (plans-visibility) | Exposer les mouvements prévus hors achats. |
-
-**Résultat attendu.** Les besoins prévus et les données nécessaires sont accessibles avec leur origine.
-
-#### 2. Déterminer les transferts
-
-Les besoins des magasins sont confrontés aux ressources ; les affectations retenues sont appliquées.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Replenishment (D05.e) | Déterminer les besoins de réapprovisionnement. |
-| Supply Assignment (D03.o) | Affecter les ressources entre demandes. |
-| Plan Application (D02.e) | Appliquer le plan retenu. |
-| Transfer Order (D04.k) | Porter chaque transfert attendu et ses engagements. |
-
-**Résultat attendu.** Des demandes de transfert identifiées portent quantités et dates.
-
-#### 3. Préparer puis expédier
-
-Le prestataire doit étiqueter, mettre sur cintre et conditionner par magasin avant la prise en charge transport.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Labeling Order (service-order-labeling) | Porter les exigences d’étiquetage. |
-| Garment Finishing Order (service-order-garment-finishing) | Porter la mise sur cintre requise. |
-| Packing Order (service-order-packing) | Porter le conditionnement par destination. |
-| Transport Order (service-order-transport) | Porter le transport attendu. |
-| Process Orchestration (D06.d) | Composer et coordonner la séquence. |
-| Operations Tracking (D07.d) | Capter les résultats des prestations. |
-
-**Résultat attendu.** Les prestations suivent les dépendances demandées et leur achèvement est observable.
-
-**Ce que ce cas permet de vérifier**
-
-- L’APS demeure extérieur au domaine.
-- L’ouverture est un contexte du Transfer Order ; les exigences concrètes sont portées par les prestations.
-
-Références : U768.
-
-### Réagir à une pénurie sans confondre promesse et affectation
-
-Illustration FLOW fictive. Un lot annoncé de 100 pièces est ramené à 60. Deux clients attendent chacun 50 pièces ; leurs protections et dates diffèrent.
-
-**Ce qui se passe.** Les choix de promesse et d’affectation sont traçables et leur application reste distincte.
-
-#### 1. Établir la situation
-
-L’annonce corrigée est reçue et rapprochée des engagements existants.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Tracking (D01.f) | Intégrer le fait corrigé. |
-| Inventory Visibility (D01.c) | Exposer les ressources actualisées. |
-| Order Visibility (order-visibility) | Exposer les commandes et promesses concernées. |
-
-**Résultat attendu.** Les 40 pièces manquantes et les demandes touchées sont identifiées.
-
-#### 2. Réexaminer les équilibres
-
-Comparer des répartitions possibles en respectant les protections applicables, sans modifier encore les commandes.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Master Planning (D05.f) | Piloter le recalcul du master plan sur le périmètre pertinent. |
-| Demand Prioritization (D03.m) | Prioriser les demandes. |
-| Demand Protection Policy (D19.b) | Fournir les règles de protection de la demande. |
-| Simulation & Analysis (BHV006) | Comparer les effets des hypothèses. |
-| Supply Assignment (D03.o) | Déterminer les affectations proposées. |
-
-**Résultat attendu.** Une proposition de réaffectation est explicitée.
-
-#### 3. Réexaminer puis appliquer
-
-Évaluer les nouvelles possibilités de promesse et les impacts économiques avant de retenir les changements autorisés.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Available-to-Promise (ATP) (D03.i) | Évaluer les disponibilités restantes et projetées. |
-| Profitable-to-Promise (PTP) (D03.k) | Éclairer les impacts économiques locaux. |
-| Promise Selection Decision (D03.l) | Choisir les propositions de promesse révisées. |
-| Sales Order (D04.i) | Porter les changements d’engagement acceptés. |
-| Plan Application (D02.e) | Appliquer les affectations autorisées. |
-
-**Résultat attendu.** Les choix de promesse et d’affectation sont traçables et leur application reste distincte.
-
-**Ce que ce cas permet de vérifier**
-
-- La réaffectation des ressources ne réécrit pas silencieusement une promesse.
-- Le dossier économique ne décide pas à la place de Promise Selection Decision.
-
-Références : U768.
-
-### Exporter des vêtements et attendre la fin des prestations distantes
-
-Illustration FLOW fictive. Un client attend 500 chemises exportées. Le contrat fictif impose un paiement confirmé avant libération ; la douane et la facturation sont exécutées par des intervenants externes.
-
-**Ce qui se passe.** La prestation transport est libérée sur des résultats reconnus.
-
-#### 1. Préparer les prestations
-
-Les conditions contractuelles et les besoins documentaires déterminent les prestations requises.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Agreement Visibility (D11.b) | Exposer les conditions applicables. |
-| Service Requirements Decision (D07.a) | Déterminer les exigences de service. |
-| Transport Booking Order (service-order-transport-booking) | Demander la réservation de transport. |
-| Document Production Order (service-order-document-production) | Demander les documents requis. |
-| Customs Clearance Order (service-order-customs-clearance) | Porter la prestation de dédouanement confiée. |
-
-**Résultat attendu.** Transport, documents et dépendances sont définis.
-
-#### 2. Déclencher les flux financiers
-
-La facture puis l’encaissement sont demandés aux exécutants compétents ; une acceptation technique ne vaut pas paiement.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Billing Order (service-order-billing) | Porter la demande de facturation. |
-| Payment Collection Order (service-order-payment-collection) | Porter le déclenchement et le résultat attendu de collecte. |
-| Process Orchestration (D06.d) | Coordonner les dépendances et attendre les résultats. |
-
-**Résultat attendu.** La collecte est en cours et son achèvement reste attendu.
-
-#### 3. Libérer au vu des résultats
-
-Les notifications sont rapprochées des ordres ; la confirmation de paiement et les conditions de passage autorisent la suite.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Operations Tracking (D07.d) | Capter les notifications d’exécution distante. |
-| Service Reconciliation (D07.c) | Rapprocher les résultats des prestations demandées. |
-| Operations Visibility (operations-visibility) | Exposer les prestations terminées ou bloquées. |
-| Service Order Release Decision (service-order-release-decision) | Décider de la libération des ordres éligibles. |
-| Transport Order (service-order-transport) | Porter les engagements de transport. |
-
-**Résultat attendu.** La prestation transport est libérée sur des résultats reconnus.
-
-**Ce que ce cas permet de vérifier**
-
-- Orchestrer la facturation ou l’encaissement ne signifie pas les exécuter dans Supply Chain Orchestration.
-- Les règles du cas sont des hypothèses illustratives, pas des obligations universelles.
-
-Références : U768.
-
-### Traiter un écart de comptage avant de repromettre
-
-Illustration FLOW fictive. Un emplacement contient 58 pulls alors que le registre en indique 60 ; une commande en attend 60.
-
-**Ce qui se passe.** Une proposition explicite est préparée pour la commande touchée.
-
-#### 1. Constater puis qualifier l’écart
-
-Un comptage contradictoire confirme 58 pièces. La correction n’est enregistrée qu’après reconnaissance selon les règles applicables.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Stocktaking (D01.d) | Organiser le comptage et qualifier l’écart. |
-| Inventory Ledger (D01.g) | Enregistrer la correction reconnue avec sa justification. |
-
-**Résultat attendu.** Le registre porte une correction justifiée de deux pièces.
-
-#### 2. Mesurer les conséquences
-
-La disponibilité actualisée est confrontée à la commande ; une autre rentrée peut éventuellement combler l’écart.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Visibility (D01.c) | Exposer le stock corrigé et les ressources pertinentes. |
-| Available-to-Promise (ATP) (D03.i) | Évaluer la quantité et la date réalisables. |
-| Promise Selection Decision (D03.l) | Choisir la proposition à soumettre. |
-| Sales Order (D04.i) | Conserver ou modifier la promesse selon le résultat accepté. |
-
-**Résultat attendu.** Une proposition explicite est préparée pour la commande touchée.
-
-**Ce que ce cas permet de vérifier**
-
-- Un comptage brut ne devient pas automatiquement une correction.
-- Une correction de stock ne modifie pas à elle seule la promesse client.
-
-Références : U768.
-
-### Deux clients veulent le dernier pull
-
-Illustration FLOW fictive. À 10 h, deux clients demandent le dernier pull bleu M. Le premier panier obtient une réservation limitée ; il est ensuite annulé.
-
-**Ce qui se passe.** Le pull redevient disponible sans duplication de droit.
-
-#### 1. Évaluer les deux demandes
-
-Les deux consultations peuvent voir une disponibilité avant tout engagement exclusif.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Available-to-Promise (ATP) (D03.i) | Évaluer la quantité disponible à la date demandée. |
-| Inventory Visibility (D01.c) | Exposer le stock et les engagements connus. |
-
-**Résultat attendu.** Les réponses de disponibilité restent distinctes du droit réservé.
-
-#### 2. Retenir et engager une proposition
-
-Une seule réservation est accordée selon les règles applicables ; l’autre demande attend ou reçoit une alternative.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Reservation (D02.c) | Attribuer le droit réservé et son échéance. |
-| Promise Selection Decision (D03.l) | Choisir une proposition compatible avec les conditions obtenues. |
-| Sales Order (D04.i) | Porter la commande et la promesse acceptée. |
-
-**Résultat attendu.** Aucune double réservation du dernier pull.
-
-#### 3. Annuler et libérer
-
-Le premier client annule avant préparation ; la réservation correspondante est levée puis la seconde demande est réévaluée.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Sales Order (D04.i) | Porter l’annulation effective. |
-| Reservation (D02.c) | Libérer le droit devenu sans objet. |
-| Available-to-Promise (ATP) (D03.i) | Réévaluer la seconde demande sur la situation actualisée. |
-
-**Résultat attendu.** Le pull redevient disponible sans duplication de droit.
-
-**Ce que ce cas permet de vérifier**
-
-- Une évaluation ATP ne garantit pas à elle seule une exclusivité.
-- L’expiration d’une réservation doit également produire un état observable avant réutilisation.
-
-Références : U768, U769.
-
-### Comparer une substitution, un autre site et un transport express
-
-Illustration FLOW fictive. Une boutique attend 20 robes vendredi. La référence demandée arrive lundi ; une robe autorisée en substitution existe ailleurs, avec un autre prix et un transport express plus cher.
-
-**Ce qui se passe.** La commande conserve la référence et les conditions réellement acceptées.
-
-#### 1. Qualifier les alternatives autorisées
-
-Le catalogue, l’assortiment et les prix applicables permettent de comparer la robe demandée et la substitution, ainsi que les services de transport.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Product Catalog Visibility (D12.b) | Exposer les offres éligibles. |
-| Assortment Visibility (D16.b) | Vérifier l’assortiment applicable à cette boutique. |
-| Price Book Visibility (price-book-visibility) | Exposer prix produit et service, contexte et validité. |
-
-**Résultat attendu.** Les prix et conditions des alternatives sont explicites.
-
-#### 2. Évaluer le service et l’économie
-
-Comparer attente jusqu’à lundi, départ depuis un autre site et substitution livrable vendredi.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Available-to-Promise (ATP) (D03.i) | Évaluer les disponibilités présentes et futures. |
-| Service Selection Decision (D06.e) | Proposer les prestations compatibles. |
-| Profitable-to-Promise (PTP) (D03.k) | Comparer les conséquences économiques sans sélectionner. |
-
-**Résultat attendu.** Chaque possibilité comporte date, conditions, coûts et risques connus.
-
-#### 3. Choisir et faire accepter
-
-La substitution plus coûteuse ne devient la promesse qu’après le choix et l’acceptation requis.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Promise Selection Decision (D03.l) | Choisir la proposition au regard des règles et évaluations. |
-| Sales Order (D04.i) | Porter la modification acceptée de la demande et de la promesse. |
-
-**Résultat attendu.** La commande conserve la référence et les conditions réellement acceptées.
-
-**Ce que ce cas permet de vérifier**
-
-- Un prix de service ne se confond pas avec le prix produit.
-- L’option la moins coûteuse ne remplace pas automatiquement l’article.
-
-Références : U768, U769.
-
-### Approvisionner une vente et traiter une confirmation fournisseur partielle
-
-Illustration FLOW fictive. Un client demande 100 vestes vendredi sans stock disponible. Le fournisseur pourrait en livrer 100, mais confirme finalement 60 vendredi et 40 mardi.
-
-**Ce qui se passe.** Le solde achat ne disparaît pas avec la seule annulation de vente.
-
-#### 1. Évaluer puis planifier
-
-Une possibilité d’achat est évaluée ; le master plan détermine ensuite les ressources à proposer pour la vente.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Capable-to-Promise (CTP) (D03.j) | Évaluer la faisabilité conditionnelle de l’apport. |
-| Master Planning (D05.f) | Piloter le plan et ses arbitrages. |
-| Supply Assignment (D03.o) | Déterminer l’affectation proposée. |
-| Plan Application (D02.e) | Mettre en application le plan autorisé. |
-| Purchase Order (D04.j) | Porter la demande d’achat réelle et sa confirmation. |
-
-**Résultat attendu.** L’hypothèse est distinguée de la commande réelle.
-
-#### 2. Réexaminer les engagements
-
-La confirmation 60/40 déclenche une réévaluation ; le client accepte le fractionnement ou une nouvelle proposition est nécessaire.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Purchase Order (D04.j) | Conserver les deux échéances fournisseur. |
-| Available-to-Promise (ATP) (D03.i) | Évaluer les disponibilités projetées corrigées. |
-| Promise Selection Decision (D03.l) | Choisir la proposition révisée. |
-| Sales Order (D04.i) | Tenir les engagements acceptés par le client. |
-
-**Résultat attendu.** Dates et quantités confirmées restent distinctes des dates demandées.
-
-#### 3. Recevoir puis traiter une annulation de solde
-
-60 sont reçues ; si le client annule les 40 restantes, la suite de l’achat dépend de son propre engagement fournisseur.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Tracking (D01.f) | Capter la réception réelle. |
-| Purchase Order (D04.j) | Rapprocher réception et reste à recevoir ; tenir les suites autorisées sur le solde. |
-| Supply Assignment (D03.o) | Réexaminer l’affectation du solde devenu sans demande. |
-| Sales Order (D04.i) | Porter l’annulation des 40 demandées. |
-
-**Résultat attendu.** Le solde achat ne disparaît pas avec la seule annulation de vente.
-
-**Ce que ce cas permet de vérifier**
-
-- CTP ne crée pas l’achat.
-- Une confirmation n’est pas une réception ; une annulation de vente n’annule pas automatiquement l’achat.
-
-Références : U768, U769.
-
-### Traiter un retrait non honoré ou une livraison directe partielle
-
-Illustration FLOW fictive. Deux clients choisissent des services différents : Léa retire une veste en magasin ; Amir reçoit deux chemises directement du fournisseur. Aucun passage par l’entrepôt central n’est prévu.
-
-**Ce qui se passe.** Les quantités sont libérées ou restent engagées selon la décision effective.
-
-#### 1. Porter les modalités promises
-
-La veste est préparée pour retrait ; les chemises sont demandées au fournisseur pour livraison à Amir.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Sales Order (D04.i) | Porter les modalités de chacune des ventes. |
-| Purchase Order (D04.j) | Porter l’achat avec livraison directe fournisseur. |
-| Process Orchestration (D06.d) | Coordonner les prestations adaptées à chaque parcours. |
-
-**Résultat attendu.** Les commandes distinguent destinataire, preuve et date attendus.
-
-#### 2. Constater les exceptions
-
-Léa ne vient pas dans le délai prévu ; une seule chemise est remise à Amir.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Operations Tracking (D07.d) | Capter les preuves ou absences de réalisation. |
-| Sales Order (D04.i) | Tenir le reste à satisfaire de chaque vente. |
-| Purchase Order (D04.j) | Rapprocher le résultat du fournisseur et son solde. |
-
-**Résultat attendu.** Absence de retrait et livraison partielle sont connues sans clôture fictive.
-
-#### 3. Adapter les suites
-
-Selon les règles acceptées, le retrait est prolongé ou annulé ; la seconde chemise reste attendue ou fait l’objet d’une nouvelle proposition.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Process Orchestration (D06.d) | Coordonner les suites autorisées. |
-| Reservation (D02.c) | Adapter les réservations concernées. |
-| Inventory Visibility (D01.c) | Exposer les disponibilités sans retour physique inventé. |
-| Promise Selection Decision (D03.l) | Choisir une nouvelle proposition si nécessaire. |
-
-**Résultat attendu.** Les quantités sont libérées ou restent engagées selon la décision effective.
-
-**Ce que ce cas permet de vérifier**
-
-- Préparer ne prouve pas le retrait.
-- La livraison directe ne crée pas de réception fictive en entrepôt.
-
-Références : U768, U769.
-
-### Sauver une livraison après une correspondance manquée
-
-Illustration FLOW fictive. Un lot de 80 manteaux manque sa correspondance. Une liaison routière peut encore livrer vendredi, mais la place et le coût doivent être vérifiés.
-
-**Ce qui se passe.** Aucun déplacement silencieux de date ni réaffectation globale par Fulfilment.
-
-#### 1. Qualifier l’aléa
-
-Le transporteur annonce le retard ; la réservation initiale n’est plus suffisante pour tenir la date.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Operations Tracking (D07.d) | Capter le fait de retard. |
-| Service Reconciliation (D07.c) | Le rapprocher de la prestation attendue. |
-| Transport Booking Order (service-order-transport-booking) | Conserver la place réservée et les changements confirmés. |
-| Transport Order (service-order-transport) | Porter l’obligation d’acheminement. |
-
-**Résultat attendu.** Le segment affecté et l’engagement menacé sont identifiés.
-
-#### 2. Comparer les solutions locales
-
-Une liaison routière offre 80 places ; sa disponibilité et ses contraintes sont qualifiées. Routing & Scheduling réexamine le parcours confié ; un changement d’engagement reste soumis aux capacités responsables.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Service Capacity Visibility (D06.b) | Exposer les capacités de service annoncées. |
-| Service Selection Decision (D06.e) | Sélectionner une prestation compatible. |
-| Profitable-to-Promise (PTP) (D03.k) | Éclairer le surcoût et les risques économiques. |
-| Process Adaptation Decision (D06.f) | Déterminer l’adaptation locale préservant la promesse. |
-| Transport Plan Decision (transport-plan-decision) | Réexaminer les étapes et horaires du transport confié dans les contraintes de promesse. |
-
-**Résultat attendu.** Une alternative réalisable et ses impacts sont exposés.
-
-#### 3. Appliquer ou faire réexaminer
-
-Si la solution tient vendredi, les ordres sont adaptés ; sinon une réévaluation de promesse et des affectations est nécessaire.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Process Orchestration (D06.d) | Coordonner les prestations modifiées. |
-| Promise Selection Decision (D03.l) | Choisir une nouvelle proposition si la promesse devient intenable. |
-| Supply Assignment (D03.o) | Réexaminer les affectations si l’équilibre du Matching est touché. |
-
-**Résultat attendu.** Aucun déplacement silencieux de date ni réaffectation globale par Fulfilment.
-
-**Ce que ce cas permet de vérifier**
-
-- La réservation de transport et le transport réalisé sont distincts.
-- Une adaptation locale ne décide pas seule de nouveaux équilibres globaux.
-
-Références : U768, U769.
-
-### Attendre un encaissement malgré des notifications ambiguës
-
-Illustration FLOW fictive. Une collecte de 1 000 euros est confiée à un prestataire. Deux notifications identiques annoncent 600 euros encaissés, puis un autre message annonce un échec.
-
-**Ce qui se passe.** La suite logistique dépend du résultat reconnu et des conditions applicables.
-
-#### 1. Attendre le résultat métier
-
-Le prestataire accepte la demande mais ne confirme pas encore l’encaissement.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Payment Collection Order (service-order-payment-collection) | Porter montant demandé et résultat attendu. |
-| Process Orchestration (D06.d) | Attendre l’achèvement requis avant de poursuivre. |
-
-**Résultat attendu.** La prestation reste en cours.
-
-#### 2. Rapprocher les notifications
-
-Les deux annonces de 600 correspondent au même fait ; l’échec contradictoire doit être qualifié.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Operations Tracking (D07.d) | Capter et corréler les faits distants sans double comptage. |
-| Service Reconciliation (D07.c) | Rapprocher résultats, montants et demande ; qualifier l’écart. |
-| Operations Visibility (operations-visibility) | Exposer réalisation partielle et état non résolu. |
-
-**Résultat attendu.** 600 ne deviennent pas 1 200 et la contradiction reste visible.
-
-#### 3. Clore ou poursuivre explicitement
-
-Après clarification, 600 sont reconnus ; les 400 restants sont relancés ou font l’objet d’une clôture partielle autorisée.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Payment Collection Order (service-order-payment-collection) | Tenir le solde et la clôture autorisée. |
-| Process Orchestration (D06.d) | Coordonner la suite ou maintenir l’attente. |
-
-**Résultat attendu.** La suite logistique dépend du résultat reconnu et des conditions applicables.
-
-**Ce que ce cas permet de vérifier**
-
-- Acceptation technique, paiement et clôture sont trois faits différents.
-- Un message tardif ou dupliqué ne doit pas créer un second résultat.
-
-Références : U768, U769.
-
-### Réexaminer une préparation après correction des données sources
-
-Illustration FLOW fictive. Une boutique prépare une capsule de 120 robes. Commerce corrige l’assortiment, Design la variante, Finance un prix ; un Demand Plan ancien annonce encore 150 pièces.
-
-**Ce qui se passe.** Le calcul local utilise une version identifiée ou explicite son incertitude.
-
-#### 1. Intégrer les corrections sourcées
-
-Les apports sont rapprochés des références locales, de leurs identités et dates de validité.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Master Data Ingestion (master-data-ingestion) | Intégrer les apports Commerce, Finance et Design. |
-| Product Reference Visibility (D08.e) | Exposer la variante corrigée. |
-| Party / Role Visibility (D09.e) | Identifier les parties et rôles concernés. |
-| Agreement Visibility (D11.b) | Exposer les conditions applicables. |
-| Price Book Visibility (price-book-visibility) | Exposer le prix et sa période de validité. |
-
-**Résultat attendu.** Les changements connus gardent origine et portée.
-
-#### 2. Vérifier les possibilités de service
-
-La boutique consulte l’offre corrigée, les 120 robes de son assortiment, le site et les prestations disponibles.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Product Catalog Visibility (D12.b) | Exposer les offres éligibles. |
-| Assortment Visibility (D16.b) | Exposer l’assortiment en vigueur. |
-| Fulfilment Network Visibility (D13.b) | Exposer sites et réseau utilisables. |
-| Service Catalog Visibility (D14.b) | Exposer les prestations proposées. |
-
-**Résultat attendu.** Le changement d’assortiment ne devient pas automatiquement un changement de promesse.
-
-#### 3. Traiter le décalage de plan
-
-L’ancien plan de 150 est distingué de la version corrigée ; l’APS reçoit le besoin de correction hors domaine et le plan reçu reste qualifié.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Plan Ingestion (plans-ingestion) | Recevoir les versions et corrections des plans externes. |
-| Demand Plan Visibility (demand-plan-visibility) | Exposer la prévision et sa validité connue. |
-| Master Planning (D05.f) | Conduire le réexamen local sur les hypothèses explicites. |
-
-**Résultat attendu.** Le calcul local utilise une version identifiée ou explicite son incertitude.
-
-**Ce que ce cas permet de vérifier**
-
-- Autorité des domaines sources et source de vérité locale Supply restent distinctes.
-- Le scénario n’impose pas de maître supplémentaire ni de correction automatique dans l’APS.
-
-Références : U768, U769.
-
-### Rééquilibrer et consolider des stocks sous protections
-
-Illustration FLOW fictive. Un magasin conserve 80 pulls qui se vendent peu, un second risque une rupture avec 5 pièces, et deux petits sites détiennent chacun 10 pièces. Le web possède une protection explicite.
-
-**Ce qui se passe.** Les transferts suivent le même cycle malgré des motifs différents.
-
-#### 1. Comparer cibles et protections
-
-Les cibles et règles sont examinées avant toute redistribution, y compris les droits réservés et le groupe web.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Target Optimization (D05.a) | Déterminer les cibles de stock utiles. |
-| Group Protection Optimization (D05.d) | Proposer les protections de groupes. |
-| Reservation Policy Optimization (D05.h) | Évaluer les règles de réservation appropriées. |
-| Supply Protection Policy (D02.b) | Porter les règles actives de protection de ressources. |
-| Demand Protection Policy (D19.b) | Porter les règles actives de protection des demandes. |
-
-**Résultat attendu.** Les ressources mobilisables et les protections sont explicites.
-
-#### 2. Construire deux actions complémentaires
-
-Proposer un apport au magasin en rupture et la consolidation des petits reliquats sur un site, sous réserve des besoins protégés.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Stock Redistribution (D05.c) | Déterminer les déplacements de redistribution. |
-| Demand Prioritization (D03.m) | Prioriser les demandes concurrentes. |
-| Master Planning (D05.f) | Piloter l’arbitrage du master plan. |
-| Supply Assignment (D03.o) | Déterminer les affectations compatibles. |
-
-**Résultat attendu.** Rééquilibrage et consolidation gardent des objectifs distincts dans le même plan.
-
-#### 3. Demander les déplacements retenus
-
-Les propositions autorisées deviennent des transferts avec quantités, origine, destination et date.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Plan Application (D02.e) | Appliquer le plan autorisé. |
-| Transfer Order (D04.k) | Porter les déplacements et leur reste à satisfaire. |
-
-**Résultat attendu.** Les transferts suivent le même cycle malgré des motifs différents.
-
-**Ce que ce cas permet de vérifier**
-
-- Protection active et optimisation de la protection sont distinctes.
-- Rééquilibrer ou consolider ne crée pas deux cycles de Transfer Order.
-
-Références : U768, U769.
-
-### Suivre trois issues contractuelles d’un retour fournisseur
-
-Illustration FLOW fictive. Après contrôle, 12 vestes défectueuses sont reprises : 4 donnent lieu à avoir, 4 à remplacement, 4 à réparation, selon l’accord accepté.
-
-**Ce qui se passe.** Un remplacement reste attendu ; le solde n’est pas masqué par les autres résultats.
-
-#### 1. Qualifier les quantités et leur orientation
-
-Les défauts et l’accord déterminent les suites ; un retour client éventuel garde son lien avec les vestes.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Return Order (D04.l) | Tenir le retour client lié le cas échéant. |
-| Inventory Disposition Decision (D05.i) | Déterminer le devenir autorisé. |
-| Supplier Return Order (D04.m) | Porter les trois engagements fournisseur distincts. |
-
-**Résultat attendu.** Chaque groupe de quatre possède un attendu explicite.
-
-#### 2. Exécuter et reconnaître les mouvements
-
-Les vestes sont expédiées ; l’expédition ne prouve ni avoir, ni remplacement, ni réparation.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Process Orchestration (D06.d) | Coordonner la reprise et les prestations requises. |
-| Inventory Ledger (D01.g) | Conserver les mouvements reconnus. |
-| Supplier Return Order (D04.m) | Rapprocher les résultats des attentes contractuelles. |
-
-**Résultat attendu.** Les mouvements sont tracés mais les engagements restent ouverts.
-
-#### 3. Solder chaque attendu
-
-L’avoir est confirmé, trois remplacements sur quatre arrivent et les quatre réparations sont acceptées.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Supplier Return Order (D04.m) | Tenir les soldes par engagement et leur preuve. |
-| Return Order (D04.l) | Répercuter le résultat pertinent sur le retour client lié. |
-
-**Résultat attendu.** Un remplacement reste attendu ; le solde n’est pas masqué par les autres résultats.
-
-**Ce que ce cas permet de vérifier**
-
-- L’avoir est exécuté hors de la tenue de Supplier Return Order.
-- Une même quantité ne doit pas être soldée à la fois comme avoir et remplacement sans justification.
-
-Références : U768, U769.
-
-### Composer des coffrets personnalisés puis traiter les reliquats
-
-Illustration FLOW fictive. Une campagne prévoit 40 coffrets contenant chacun un foulard et un bonnet personnalisé. Dix foulards nécessitent un nettoyage ; 60 composants arrivent en transit sans stockage durable.
-
-**Ce qui se passe.** Les composants récupérés et leurs conditions d’utilisation sont reconnus.
-
-#### 1. Préparer les composants
-
-Les arrivées en cross-dock et les prélèvements de stock doivent fournir les bons composants ; dix foulards attendent un nettoyage conforme.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Cross-Docking Order (service-order-cross-docking) | Porter les exigences de transit et de correspondance entrées-sorties. |
-| Picking Order (service-order-picking) | Porter les prélèvements nécessaires. |
-| Cleaning Order (service-order-cleaning) | Porter le nettoyage et son résultat attendu. |
-| Process Orchestration (D06.d) | Coordonner disponibilité et dépendances. |
-
-**Résultat attendu.** Les composants admissibles sont identifiés avant assemblage.
-
-#### 2. Personnaliser et assembler
-
-Chaque bonnet reçoit le marquage requis ; un foulard et un bonnet conformes composent chaque coffret.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Personalization Order (service-order-personalization) | Porter le marquage et ses critères d’acceptation. |
-| Kitting Order (service-order-kitting) | Porter la composition, les quantités et la conformité du kit. |
-| Packing Order (service-order-packing) | Porter le conditionnement de présentation et d’expédition. |
-
-**Résultat attendu.** 40 coffrets attendus gardent une correspondance avec leurs composants.
-
-#### 3. Décomposer le reliquat autorisé
-
-La campagne s’achève avec cinq coffrets non expédiés ; leur décomposition est demandée, mais les bonnets personnalisés ne sont pas réputés interchangeables.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Kitting Order (service-order-kitting) | Porter le Dekitting et les composants attendus. |
-| Service Reconciliation (D07.c) | Rapprocher les résultats de prestation. |
-| Inventory Ledger (D01.g) | Enregistrer les transformations de stock reconnues. |
-| Inventory Visibility (D01.c) | Exposer les disponibilités selon l’état reconnu. |
-
-**Résultat attendu.** Les composants récupérés et leurs conditions d’utilisation sont reconnus.
-
-**Ce que ce cas permet de vérifier**
-
-- Repacking change le conditionnement ; Kitting/Dekitting change la composition suivie.
-- Ni transit ni personnalisation ne justifient une duplication des quantités.
-
-Références : U768, U769.
-
-### Distinguer transfert contractuel, transit et formalité douanière
-
-Illustration FLOW fictive. Deux lots suivent des contrats différents : 200 manteaux achetés deviennent notre propriété à un jalon contractuel avant réception ; 50 robes consignées changent de propriétaire à une échéance convenue.
-
-**Ce qui se passe.** La réception physique n’enregistre pas un second transfert.
-
-#### 1. Identifier les conditions
-
-L’accord de chaque lot définit le déclencheur et les preuves attendues.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Agreement Visibility (D11.b) | Exposer les clauses pertinentes. |
-| Inventory Ownership Transfer Decision (D01.h) | Qualifier les conditions et faits nécessaires. |
-
-**Résultat attendu.** Aucun événement universel de transfert n’est supposé.
-
-#### 2. Reconnaître le bon fait
-
-Le jalon du premier lot est attesté ; l’échéance du second est vérifiée. Une formalité douanière n’a d’effet sur la propriété que si son lien contractuel est établi.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Ownership Transfer Decision (D01.h) | Déterminer le transfert pour chaque contexte. |
-| Customs Clearance Order (service-order-customs-clearance) | Porter la formalité et fournir son résultat pertinent. |
-| Inventory Ownership Ledger (inventory-ownership-ledger) | Conserver les transferts reconnus et leurs preuves. |
-
-**Résultat attendu.** Chaque transfert reconnu possède un fondement propre.
-
-#### 3. Rapprocher la réception ultérieure
-
-Les manteaux sont reçus trois jours après leur transfert de propriété.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Ledger (D01.g) | Tracer le mouvement physique reconnu. |
-| Inventory Ownership Ledger (inventory-ownership-ledger) | Permettre le rapprochement avec le transfert déjà reconnu. |
-| Inventory Visibility (D01.c) | Exposer séparément détention et propriété. |
-
-**Résultat attendu.** La réception physique n’enregistre pas un second transfert.
-
-**Ce que ce cas permet de vérifier**
-
-- Le cas n’énonce aucune règle juridique universelle.
-- Statut douanier, détention et propriété ne sont pas interchangeables.
-
-Références : U768, U769.
-
-### Scinder, regrouper ou fusionner sans perdre les engagements
-
-Illustration FLOW fictive. Une vente de 100 pièces doit partir en deux fois ; deux transferts pour une ouverture voyagent ensemble ; deux achats encore modifiables de 30 et 20 pièces pourraient être fusionnés.
-
-**Ce qui se passe.** La filiation et les engagements externes sont préservés.
-
-#### 1. Scinder une vente engagée
-
-La vente devient deux unités suivies de 60 et 40, liées à la demande initiale. Les réservations et affectations doivent rester cohérentes.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Order Structuring (D04.n) | Déterminer et porter la structuration autorisée avec sa filiation. |
-| Sales Order (D04.i) | Tenir les engagements de vente. |
-| Reservation (D02.c) | Adapter les droits réservés aux identités suivies. |
-| Supply Assignment (D03.o) | Maintenir la cohérence des affectations. |
-
-**Résultat attendu.** La quantité totale reste 100 et les engagements ne sont pas doublés.
-
-#### 2. Regrouper les transferts
-
-Les deux transferts gardent leur identité mais les prestations compatibles sont réalisées ensemble.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Order Structuring (D04.n) | Porter le regroupement sans fusion d’identité. |
-| Transfer Order (D04.k) | Tenir les deux transferts et leurs soldes. |
-| Process Orchestration (D06.d) | Coordonner les prestations communes et leur rattachement. |
-
-**Résultat attendu.** Un regroupement logistique n’efface aucune demande.
-
-#### 3. Fusionner seulement si compatible
-
-Les achats 30 et 20 deviennent un achat 50 si conditions et autorisations le permettent ; une prestation déjà engagée peut empêcher cette fusion.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Order Structuring (D04.n) | Porter la fusion autorisée et les liens d’origine. |
-| Purchase Order (D04.j) | Tenir l’engagement d’achat résultant. |
-| Process Orchestration (D06.d) | Rapprocher les prestations déjà lancées avant toute adaptation. |
-
-**Résultat attendu.** La filiation et les engagements externes sont préservés.
-
-**Ce que ce cas permet de vérifier**
-
-- Split, group et merge ont des effets différents sur l’identité.
-- Une opération de structure ne doit pas annuler implicitement un engagement externe.
-
-Références : U768, U769.
-
-### Libérer une préparation B2B à l’approche de sa limite d’attente
-
-Illustration FLOW fictive. Un client attend 300 vêtements sur une palette. 280 sont prêts, 20 arrivent demain ; attendre facilite le packing mais menace le départ transport.
-
-**Ce qui se passe.** Le prestataire reçoit des ordres cohérents ; aucun retard client silencieux.
-
-#### 1. Qualifier prestataire et exigences
-
-Deux prestataires annoncent des créneaux différents ; le client veut une préparation commune et une palette unique si réalisable.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Service Provider Policy (D19.a) | Fournir les règles de choix du prestataire. |
-| Service Capacity Visibility (D06.b) | Exposer les capacités annoncées. |
-| Service Requirements Decision (D07.a) | Déterminer les exigences de préparation et conditionnement. |
-| Service Selection Decision (D06.e) | Choisir une prestation compatible. |
-
-**Résultat attendu.** Les critères de compatibilité, charge et service sont explicites.
-
-#### 2. Comparer attente et libération
-
-Une fenêtre de transmission groupée peut organiser la charge ; attendre les 20 peut permettre une consolidation, mais seulement jusqu’à la limite compatible avec la promesse.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Service Order Release Decision (service-order-release-decision) | Déterminer ensemble et moment de libération. |
-| Picking Order (service-order-picking) | Porter l’exigence de préparation commune. |
-| Packing Order (service-order-packing) | Porter le résultat de conditionnement attendu. |
-
-**Résultat attendu.** Le choix de rétention ou libération est explicite et borné.
-
-#### 3. Adapter si la complétude n’arrive pas
-
-Les 20 sont retardés ; une solution locale est recherchée avant de réexaminer la promesse si nécessaire.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Process Adaptation Decision (D06.f) | Déterminer l’adaptation locale autorisée. |
-| Process Orchestration (D06.d) | Coordonner la libération et les prestations. |
-| Promise Selection Decision (D03.l) | Choisir une nouvelle proposition si l’engagement est menacé. |
-
-**Résultat attendu.** Le prestataire reçoit des ordres cohérents ; aucun retard client silencieux.
-
-**Ce que ce cas permet de vérifier**
-
-- Transmettre ensemble ne garantit pas une préparation ni une palette communes.
-- L’optimisation de release ne remplace pas les vagues et tâches détaillées de l’entrepôt.
-
-Références : U768, U769.
-
-### Retrouver les coffrets contenant un accessoire défectueux
-
-Illustration FLOW fictive. Le fournisseur signale un défaut sur le lot d’accessoires A17. Ce lot a servi à assembler 120 coffrets ; 70 ont été expédiés à deux magasins et 50 sont encore à l’entrepôt.
-
-**Ce qui se passe.** Les biens potentiellement concernés sont identifiés sans inventer une capacité autonome de traçabilité.
-
-#### 1. Relier composants et coffrets
-
-Les faits d’assemblage identifient A17, les coffrets obtenus, puis les expéditions. Les corrections conservent leur justification.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Tracking (D01.f) | Intégrer composants, transformations et destinations transmis. |
-| Inventory Ledger (D01.g) | Conserver les faits et liens reconnus. |
-
-**Résultat attendu.** Les filiations connues sont conservées ; l’origine du message ne tient pas lieu de généalogie.
-
-#### 2. Reconstituer les deux sens du parcours
-
-À partir d’un coffret, retrouver A17 ; à partir d’A17, retrouver les 120 coffrets et leurs destinations. Signaler toute rupture de lien.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Visibility (D01.c) | Restituer origines amont et destinations aval avec les limites connues. |
-
-**Résultat attendu.** Le responsable distingue les 50 présents, les 70 expédiés et les éventuelles zones non documentées.
-
-#### 3. Décider des suites autorisées
-
-Policy-based Disposition applique la politique au signalement qualifié et aux biens concernés : interdire l’usage des 50 coffrets présents jusqu’au contrôle requis. Les suites pour les expédiés sont confiées après autorisation par les responsables concernés.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Disposition Decision (D05.i) | Déterminer restrictions et orientation selon les faits et politiques. |
-| Process Orchestration (D06.d) | Coordonner les suites effectivement autorisées. |
-| Inventory Tracking (D01.f) | Intégrer les états reconnus. |
-| Inventory Ledger (D01.g) | Conserver restrictions et justifications. |
-
-**Résultat attendu.** Une trace n’est ni un ordre de rappel ni une autorisation automatique de retour.
-
-**Ce que ce cas permet de vérifier**
-
-- La traçabilité reste répartie entre intégration, registre et visibilité.
-- Une origine seule ne suffit pas après assemblage.
-- Le scénario ne transfère pas la décision réglementaire ou commerciale de rappel au registre.
-
-Références : U777.
-
-### Traiter des vestes abîmées sans retour client
-
-Illustration FLOW fictive. Une fuite a touché 100 vestes déjà stockées. Une inspection autonome est confiée avant d’autoriser leur usage.
-
-**Ce qui se passe.** Les deux stratégies de disposition et la prestation de rebut sont expliquées par leurs contributions propres.
-
-#### 1. Obtenir les constats
-
-L’inspection identifie 80 vestes conformes et 20 endommagées ; ses résultats et les quantités sont rapprochés de l’attendu.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inspection Order (service-order-inspection) | Porter la prestation de contrôle. |
-| Operations Tracking (D07.d) | Intégrer les résultats distants. |
-| Service Reconciliation (D07.c) | Rapprocher le contrôle demandé et réalisé. |
-
-**Résultat attendu.** La décision dispose de faits ; le contrôle ne vaut pas encore disposition.
-
-#### 2. Appliquer la politique
-
-Policy-based Disposition autorise les 80 conformes et maintient les 20 autres bloquées pour la vente. Les états reconnus alimentent registre et visibilité.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Disposition Decision (D05.i) | Déterminer les usages permis selon la politique. |
-| Inventory Tracking (D01.f) | Intégrer les décisions et états reconnus. |
-| Inventory Ledger (D01.g) | Conserver états, quantités et justifications. |
-| Inventory Visibility (D01.c) | Exposer les positions utilisables et bloquées. |
-
-**Résultat attendu.** Un résultat par quantité est distingué de la règle qui le justifie.
-
-#### 3. Comparer les devenirs admissibles
-
-Value Recovery Optimization confronte remise en état et rebut pour les 20 pièces. Dans ce cas fictif, la remise en état coûte davantage que la valeur récupérable ; les règles permettent le rebut, qui est retenu.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Inventory Disposition Decision (D05.i) | Comparer les coûts, délais, risques et valeur récupérable, puis retenir l’orientation. |
-
-**Résultat attendu.** L’optimisation choisit parmi les issues autorisées ; elle ne lève pas une interdiction obligatoire.
-
-#### 4. Confier puis rapprocher le rebut
-
-Scrapping Order confie les 20 pièces avec preuves requises. Le prestataire ne prouve d’abord le traitement que de 18 ; les deux restantes restent ouvertes et bloquées.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Scrapping Order (service-order-scrapping) | Porter autorisation, preuve et reliquat de la prestation. |
-| Process Orchestration (D06.d) | Coordonner l’exécution et la suite des deux restantes. |
-| Operations Tracking (D07.d) | Recevoir les preuves et quantités traitées. |
-| Service Reconciliation (D07.c) | Qualifier l’écart de deux pièces. |
-| Inventory Tracking (D01.f) | Intégrer les effets de stock reconnus. |
-| Inventory Ledger (D01.g) | Enregistrer les 18 sorties justifiées. |
-
-**Résultat attendu.** L’ordre et le registre reflètent le réalisé reconnu, pas les 20 demandées comme déjà détruites.
-
-**Ce que ce cas permet de vérifier**
-
-- Aucun Return Order artificiel pour des biens déjà stockés.
-- Blocage et libération sont des résultats, pas des comportements supplémentaires.
-- La décision, l’ordre de service et la preuve d’exécution restent distincts.
-
-Références : U777.
-
-### Planifier deux chargements pour six magasins
-
-Illustration FLOW fictive. Douze palettes de vêtements doivent être livrées à six magasins. La capacité proposée est de six palettes par véhicule ; deux magasins ferment leur réception à 10 h. Les affectations et promesses sont déjà établies.
-
-**Ce qui se passe.** Les capacités de planification, sélection, engagement et libération se confrontent à une tournée concrète.
-
-#### 1. Constituer les chargements
-
-Load Consolidation examine volumes, compatibilités, destinations et échéances pour répartir les douze palettes en deux chargements admissibles.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Transport Plan Decision (transport-plan-decision) | Constituer les chargements du plan. |
-| Service Capacity Visibility (D06.b) | Fournir les capacités et contraintes connues. |
-
-**Résultat attendu.** Deux chargements sont proposés sans fusionner les commandes magasin.
-
-#### 2. Organiser les arrêts et les horaires
-
-Routing & Scheduling place les magasins à fermeture matinale en début de parcours et vérifie les durées. Service Selection Decision retient les prestations et prestataires compatibles ; le plan est ajusté si une offre ne convient pas.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Transport Plan Decision (transport-plan-decision) | Déterminer parcours, arrêts et horaires réalisables. |
-| Service Selection Decision (D06.e) | Sélectionner les prestations et prestataires admissibles. |
-
-**Résultat attendu.** Le plan est conditionné aux capacités confirmées et respecte les échéances promises.
-
-#### 3. Engager puis libérer les ordres
-
-Les Transport Orders portent les arrêts et obligations retenus, avec la variante Multi-Stop Transport. Les préparations B2B sont retenues jusqu’à leur regroupement admissible, puis libérées selon leur échéance limite.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Transport Order (service-order-transport) | Porter les engagements de chaque transport multi-arrêts. |
-| Picking Order (service-order-picking) | Porter les préparations confiées. |
-| Service Order Release Decision (service-order-release-decision) | Décider de la rétention et de la libération des ordres. |
-| Process Orchestration (D06.d) | Coordonner les dépendances entre préparation et transport. |
-
-**Résultat attendu.** La constitution des chargements est séparée de la décision du moment d’envoi.
-
-#### 4. Adapter un parcours devenu impossible
-
-Un créneau change. Process Adaptation Decision sollicite un nouveau parcours local ; Transport Plan Decision vérifie qu’il préserve toutes les promesses. À défaut, les responsables des engagements et affectations doivent être sollicités.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Operations Tracking (D07.d) | Intégrer la modification communiquée. |
-| Process Adaptation Decision (D06.f) | Choisir et coordonner l’adaptation locale admissible. |
-| Transport Plan Decision (transport-plan-decision) | Réviser chargements ou parcours dans les contraintes. |
-
-**Résultat attendu.** Le plan ne déplace pas silencieusement la promesse ou les ressources réservées.
-
-**Ce que ce cas permet de vérifier**
-
-- Load Consolidation et Routing & Scheduling traitent deux problèmes combinables.
-- Multi-Stop Transport décrit l’engagement ; Routing & Scheduling construit le plan.
-- Libérer un lot d’ordres ne calcule pas le plan de transport.
-
-Références : U777.
 
 ## Sources d’inspiration — universe-supply Supply Chain Orchestration
 
@@ -4786,87 +3701,6 @@ Illustration FLOW fictive : Une option conditionnelle repose sur un approvisionn
 
 Références : U762, U763, U764, ELM762, ELM763.
 
-### Livrer une commande B2B avec un stock partiel
-
-Illustration FLOW fictive : un client B2B attend 100 vêtements ; 60 sont disponibles et une rentrée de 40 est annoncée. Plusieurs solutions de livraison sont examinées.
-
-**Fiche d’origine.** universe-supply
-
-**Contribution de cette fiche.** Comparer les effets économiques locaux de la livraison fractionnée et de la livraison regroupée. Ne pas décider à la place de Promise Selection Decision.
-
-**Déclencheur.** Une commande nécessite une proposition de quantité et de date.
-
-**Résultat recherché.** Préparer une promesse réalisable et expliquer les conséquences économiques des options.
-
-**Contraintes**
-
-- Date demandée et fractionnement autorisé par le client.
-- Disponibilité effective, fiabilité de la rentrée et délais de préparation et de transport.
-- Engagements existants et règles de protection du stock.
-
-**Options examinées**
-
-- Livraison fractionnée : Expédier les 60 disponibles, puis les 40 attendus : rendre visible le service anticipé et le coût des deux expéditions.
-- Livraison regroupée : Attendre les 40 pour préparer et expédier ensemble : examiner le gain logistique, le délai et les conséquences économiques d’une attente.
-
-**Ce qui se passe.** Un dossier présente les options avec quantité, date et conséquences économiques ; le choix reste explicite et distinct de l’évaluation. Aucun gagnant n’est présumé.
-
-**Ce que cela illustre.** Les capacités coopèrent selon le besoin ; ce récit n’impose ni pipeline universel ni modification des grands équilibres du Matching. Promettre, affecter les ressources et libérer les prestations restent distincts.
-
-#### 1. Qualifier les 100 vêtements attendus
-
-Le client demande 100 pièces vendredi ; il accepte une livraison partielle uniquement si elle est annoncée.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Sales Order (D04.i) | Porter la demande et les engagements acceptés. |
-| Inventory Visibility (D01.c) | Exposer les 60 pièces disponibles et la rentrée annoncée de 40 avec ses réserves. |
-
-**Résultat attendu.** Quantité, date et condition de fractionnement sont explicites.
-
-#### 2. Construire les possibilités
-
-Comparer 60 pièces plus tôt puis 40 après réception, et 100 ensemble. Si une solution exige une ressource supplémentaire, tester sa faisabilité sans créer une commande d’achat.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Available-to-Promise (ATP) (D03.i) | Évaluer le stock présent et projeté net des engagements et protections. |
-| Capable-to-Promise (CTP) (D03.j) | Évaluer si nécessaire les possibilités supplémentaires et leurs contraintes de capacité. |
-
-**Résultat attendu.** Options datées avec leurs conditions et incertitudes.
-
-#### 3. Éclairer puis choisir la promesse
-
-Comparer deux transports à une seule expédition, sans supposer que le moins cher est toujours préférable.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Profitable-to-Promise (PTP) (D03.k) | Produire le dossier économique local des options sans choisir. |
-| Promise Selection Decision (D03.l) | Choisir la proposition au regard du service, des évaluations et des règles. |
-
-**Résultat attendu.** Une proposition choisie, accompagnée de ses hypothèses, peut être acceptée dans la commande.
-
-#### 4. Affecter puis libérer les prestations
-
-Si le regroupement est accepté, affecter les ressources puis retenir les ordres éligibles jusqu’à complétude, dans la limite de la date promise.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Supply Assignment (D03.o) | Affecter les ressources dans les équilibres du master plan. |
-| Plan Application (D02.e) | Appliquer les affectations retenues. |
-| Service Order Release Decision (service-order-release-decision) | Déterminer le moment et le groupe de libération. |
-| Process Orchestration (D06.d) | Déclencher et coordonner les prestations. |
-| Packing Order (service-order-packing) | Porter l’exigence de conditionnement commun. |
-
-**Résultat attendu.** Les prestations compatibles sont libérées ensemble ; la préparation commune est demandée explicitement.
-
-**Ce que ce cas permet de vérifier**
-
-- Évaluer, choisir, engager, affecter et libérer ont des responsabilités distinctes.
-- La rétention ne décale pas silencieusement la promesse ; une expédition commune ne garantit pas à elle seule une palette unique.
-
-Références : U763, U764, U762, ELM763, ELM767, ELM768, U768.
-
 ## Sources d’inspiration — D03.k Profitable-to-Promise (PTP)
 
 Chiffrer les avantages et inconvénients économiques des options éclaire le choix de promesse. PTP fournit ce dossier local ; Promise Selection Decision choisit.
@@ -5660,55 +4494,6 @@ SAP S/4HANA — périmètre du cours cité · Mécanisme ou objet documenté dan
 **Limite de preuve.** Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement Beaumanoir déduit. Le document d’achat ne se confond pas avec la prestation logistique confiée pour exécuter cet achat.
 
 Références : U774, CMP307, ELM790.
-
-## Scénarios métier — D04.k Transfer Order
-
-### Réapprovisionner un magasin ou servir une commande identifiée
-
-Illustration FLOW fictive. Un magasin manque de pulls : 20 sont demandés pour réalimenter son stock, tandis que 2 sont destinés à une commande client précise.
-
-**Ce qui se passe.** Réception, solde du transfert et satisfaction client restent distincts.
-
-#### 1. Distinguer les besoins
-
-Le besoin de stock et celui du client sont identifiés pour éviter de compter deux fois les deux pièces engagées.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Replenishment (D05.e) | Déterminer le besoin de réapprovisionnement. |
-| Sales Order (D04.i) | Porter la demande client identifiée. |
-
-**Résultat attendu.** Les quantités et destinations du besoin sont explicites.
-
-#### 2. Affecter et demander le transfert
-
-Le plan retient les ressources et autorise leur déplacement vers le magasin.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Supply Assignment (D03.o) | Affecter les ressources aux demandes. |
-| Plan Application (D02.e) | Appliquer le plan autorisé. |
-| Transfer Order (D04.k) | Porter le transfert et son échéance. |
-
-**Résultat attendu.** Les 22 pièces à transférer sont reliées à leurs besoins respectifs.
-
-#### 3. Rapprocher le résultat
-
-Seules 20 pièces arrivent d’abord ; le transfert reste partiellement ouvert et l’affectation des quantités reçues ne se déduit pas de l’ordre d’arrivée.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Transfer Order (D04.k) | Tenir le reste à recevoir. |
-| Inventory Tracking (D01.f) | Capter la réception réelle. |
-| Supply Assignment (D03.o) | Maintenir les affectations explicites. |
-
-**Résultat attendu.** Réception, solde du transfert et satisfaction client restent distincts.
-
-**Ce que ce cas permet de vérifier**
-
-- Le motif du transfert ne remplace pas la décision d’affectation.
-
-Références : U768, U769.
 
 ## Sources d’inspiration — D04.k Transfer Order
 
@@ -7805,89 +6590,6 @@ Microsoft Dynamics 365 — application indiquée par la source · Mécanisme ou 
 
 Références : U774, CMP307, ELM279.
 
-## Scénarios métier — D01 Inventory Management
-
-### Livrer une commande B2B avec un stock partiel
-
-Illustration FLOW fictive : un client B2B attend 100 vêtements ; 60 sont disponibles et une rentrée de 40 est annoncée. Plusieurs solutions de livraison sont examinées.
-
-**Fiche d’origine.** universe-supply
-
-**Contribution de cette fiche.** Fournir les positions de stock, les engagements de quantité et les apports attendus qui alimentent les évaluations d’Order Promising.
-
-**Déclencheur.** Une commande nécessite une proposition de quantité et de date.
-
-**Résultat recherché.** Préparer une promesse réalisable et expliquer les conséquences économiques des options.
-
-**Contraintes**
-
-- Date demandée et fractionnement autorisé par le client.
-- Disponibilité effective, fiabilité de la rentrée et délais de préparation et de transport.
-- Engagements existants et règles de protection du stock.
-
-**Options examinées**
-
-- Livraison fractionnée : Expédier les 60 disponibles, puis les 40 attendus : rendre visible le service anticipé et le coût des deux expéditions.
-- Livraison regroupée : Attendre les 40 pour préparer et expédier ensemble : examiner le gain logistique, le délai et les conséquences économiques d’une attente.
-
-**Ce qui se passe.** Un dossier présente les options avec quantité, date et conséquences économiques ; le choix reste explicite et distinct de l’évaluation. Aucun gagnant n’est présumé.
-
-**Ce que cela illustre.** Les capacités coopèrent selon le besoin ; ce récit n’impose ni pipeline universel ni modification des grands équilibres du Matching. Promettre, affecter les ressources et libérer les prestations restent distincts.
-
-#### 1. Qualifier les 100 vêtements attendus
-
-Le client demande 100 pièces vendredi ; il accepte une livraison partielle uniquement si elle est annoncée.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Sales Order (D04.i) | Porter la demande et les engagements acceptés. |
-| Inventory Visibility (D01.c) | Exposer les 60 pièces disponibles et la rentrée annoncée de 40 avec ses réserves. |
-
-**Résultat attendu.** Quantité, date et condition de fractionnement sont explicites.
-
-#### 2. Construire les possibilités
-
-Comparer 60 pièces plus tôt puis 40 après réception, et 100 ensemble. Si une solution exige une ressource supplémentaire, tester sa faisabilité sans créer une commande d’achat.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Available-to-Promise (ATP) (D03.i) | Évaluer le stock présent et projeté net des engagements et protections. |
-| Capable-to-Promise (CTP) (D03.j) | Évaluer si nécessaire les possibilités supplémentaires et leurs contraintes de capacité. |
-
-**Résultat attendu.** Options datées avec leurs conditions et incertitudes.
-
-#### 3. Éclairer puis choisir la promesse
-
-Comparer deux transports à une seule expédition, sans supposer que le moins cher est toujours préférable.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Profitable-to-Promise (PTP) (D03.k) | Produire le dossier économique local des options sans choisir. |
-| Promise Selection Decision (D03.l) | Choisir la proposition au regard du service, des évaluations et des règles. |
-
-**Résultat attendu.** Une proposition choisie, accompagnée de ses hypothèses, peut être acceptée dans la commande.
-
-#### 4. Affecter puis libérer les prestations
-
-Si le regroupement est accepté, affecter les ressources puis retenir les ordres éligibles jusqu’à complétude, dans la limite de la date promise.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Supply Assignment (D03.o) | Affecter les ressources dans les équilibres du master plan. |
-| Plan Application (D02.e) | Appliquer les affectations retenues. |
-| Service Order Release Decision (service-order-release-decision) | Déterminer le moment et le groupe de libération. |
-| Process Orchestration (D06.d) | Déclencher et coordonner les prestations. |
-| Packing Order (service-order-packing) | Porter l’exigence de conditionnement commun. |
-
-**Résultat attendu.** Les prestations compatibles sont libérées ensemble ; la préparation commune est demandée explicitement.
-
-**Ce que ce cas permet de vérifier**
-
-- Évaluer, choisir, engager, affecter et libérer ont des responsabilités distinctes.
-- La rétention ne décale pas silencieusement la promesse ; une expédition commune ne garantit pas à elle seule une palette unique.
-
-Références : U763, U764, U762, ELM763, ELM767, ELM768, U768.
-
 ## Sources d’inspiration — D01 Inventory Management
 
 Inventory Management
@@ -7982,89 +6684,6 @@ SAP S/4HANA — périmètre du cours cité · Mécanisme ou objet documenté dan
 **Limite de preuve.** Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement Beaumanoir déduit. Le document matériel est une réalisation du journal métier, pas sa définition universelle ; le journal comptable reste distinct.
 
 Références : U774, CMP307, ELM786.
-
-## Scénarios métier — D06 Fulfilment Orchestration
-
-### Livrer une commande B2B avec un stock partiel
-
-Illustration FLOW fictive : un client B2B attend 100 vêtements ; 60 sont disponibles et une rentrée de 40 est annoncée. Plusieurs solutions de livraison sont examinées.
-
-**Fiche d’origine.** universe-supply
-
-**Contribution de cette fiche.** Retenir ou libérer les ordres de prestation en cohérence avec la promesse, notamment pour permettre une préparation regroupée.
-
-**Déclencheur.** Une commande nécessite une proposition de quantité et de date.
-
-**Résultat recherché.** Préparer une promesse réalisable et expliquer les conséquences économiques des options.
-
-**Contraintes**
-
-- Date demandée et fractionnement autorisé par le client.
-- Disponibilité effective, fiabilité de la rentrée et délais de préparation et de transport.
-- Engagements existants et règles de protection du stock.
-
-**Options examinées**
-
-- Livraison fractionnée : Expédier les 60 disponibles, puis les 40 attendus : rendre visible le service anticipé et le coût des deux expéditions.
-- Livraison regroupée : Attendre les 40 pour préparer et expédier ensemble : examiner le gain logistique, le délai et les conséquences économiques d’une attente.
-
-**Ce qui se passe.** Un dossier présente les options avec quantité, date et conséquences économiques ; le choix reste explicite et distinct de l’évaluation. Aucun gagnant n’est présumé.
-
-**Ce que cela illustre.** Les capacités coopèrent selon le besoin ; ce récit n’impose ni pipeline universel ni modification des grands équilibres du Matching. Promettre, affecter les ressources et libérer les prestations restent distincts.
-
-#### 1. Qualifier les 100 vêtements attendus
-
-Le client demande 100 pièces vendredi ; il accepte une livraison partielle uniquement si elle est annoncée.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Sales Order (D04.i) | Porter la demande et les engagements acceptés. |
-| Inventory Visibility (D01.c) | Exposer les 60 pièces disponibles et la rentrée annoncée de 40 avec ses réserves. |
-
-**Résultat attendu.** Quantité, date et condition de fractionnement sont explicites.
-
-#### 2. Construire les possibilités
-
-Comparer 60 pièces plus tôt puis 40 après réception, et 100 ensemble. Si une solution exige une ressource supplémentaire, tester sa faisabilité sans créer une commande d’achat.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Available-to-Promise (ATP) (D03.i) | Évaluer le stock présent et projeté net des engagements et protections. |
-| Capable-to-Promise (CTP) (D03.j) | Évaluer si nécessaire les possibilités supplémentaires et leurs contraintes de capacité. |
-
-**Résultat attendu.** Options datées avec leurs conditions et incertitudes.
-
-#### 3. Éclairer puis choisir la promesse
-
-Comparer deux transports à une seule expédition, sans supposer que le moins cher est toujours préférable.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Profitable-to-Promise (PTP) (D03.k) | Produire le dossier économique local des options sans choisir. |
-| Promise Selection Decision (D03.l) | Choisir la proposition au regard du service, des évaluations et des règles. |
-
-**Résultat attendu.** Une proposition choisie, accompagnée de ses hypothèses, peut être acceptée dans la commande.
-
-#### 4. Affecter puis libérer les prestations
-
-Si le regroupement est accepté, affecter les ressources puis retenir les ordres éligibles jusqu’à complétude, dans la limite de la date promise.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Supply Assignment (D03.o) | Affecter les ressources dans les équilibres du master plan. |
-| Plan Application (D02.e) | Appliquer les affectations retenues. |
-| Service Order Release Decision (service-order-release-decision) | Déterminer le moment et le groupe de libération. |
-| Process Orchestration (D06.d) | Déclencher et coordonner les prestations. |
-| Packing Order (service-order-packing) | Porter l’exigence de conditionnement commun. |
-
-**Résultat attendu.** Les prestations compatibles sont libérées ensemble ; la préparation commune est demandée explicitement.
-
-**Ce que ce cas permet de vérifier**
-
-- Évaluer, choisir, engager, affecter et libérer ont des responsabilités distinctes.
-- La rétention ne décale pas silencieusement la promesse ; une expédition commune ne garantit pas à elle seule une palette unique.
-
-Références : U763, U764, U762, ELM763, ELM767, ELM768, U768.
 
 ## Sources d’inspiration — D06 Fulfilment Orchestration
 
@@ -9027,6 +7646,7 @@ Préserver l’accès d’un groupe avant que ses demandes arrivent : Group Supp
 
 - Microsoft décrit directement la préservation d’une enveloppe. SAP montre pourquoi limiter certaines demandes ne protège pas automatiquement toutes les autres.
 - FLOW nomme le bénéfice recherché : garder un accès possible au groupe protégé. Il faut expliciter les usages concurrents et les conditions, sans promettre une disponibilité absolue.
+- U795 autorise le terme qualifié allocation de stock par groupe / Group Inventory Allocation pour ce mécanisme ; le nom du comportement Group Supply Protection est conservé.
 
 ### Illustration FLOW — attendre la demande du web
 
@@ -9054,15 +7674,15 @@ Dynamics 365 Supply Chain Management · Concept documenté par la source primair
 
 **Différences.** Les groupes Microsoft sont une réalisation possible, pas une hiérarchie imposée.
 
-**Position FLOW.** Préserver l’accès d’un groupe avant que ses demandes arrivent : Group Supply Protection applique les droits qui empêchent d’autres usages d’épuiser son enveloppe. Les quantités à protéger sont décidées ailleurs.
+**Position FLOW.** Le comportement Group Supply Protection conserve son nom. Allocation de stock par groupe est autorisé comme vocabulaire qualifié des enveloppes ; une limite de consommation seule ne crée pas un minimum protégé.
 
-[Inventory Visibility inventory allocation](https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation) — Documentation en ligne sans édition affichée, consulté le 2026-09-19.
+[Inventory Visibility inventory allocation](https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation) — Documentation en ligne sans édition affichée, consulté le 2026-09-27.
 
 **Passage.** Business background and purpose ; virtual pool ; Terminology
 
 **Limite de preuve.** Documentation primaire de produit ; aucune preuve de réalisation Beaumanoir ni équivalence de catalogue de capacités.
 
-Références : U477, ELM410, CMP190.
+Références : U477, ELM410, CMP190, U794, U795.
 
 #### SAP — Product Allocation (PAL)
 
@@ -9076,15 +7696,15 @@ SAP S/4HANA · Concept documenté par la source primaire · Recouvrement partiel
 
 **Différences.** Un plafond isolé n’est pas une garantie, surtout si d’autres demandes restent sans limite.
 
-**Position FLOW.** Préserver l’accès d’un groupe avant que ses demandes arrivent : Group Supply Protection applique les droits qui empêchent d’autres usages d’épuiser son enveloppe. Les quantités à protéger sont décidées ailleurs.
+**Position FLOW.** Le comportement Group Supply Protection conserve son nom. Allocation de stock par groupe est autorisé comme vocabulaire qualifié des enveloppes ; une limite de consommation seule ne crée pas un minimum protégé.
 
-[Explaining aATP Product Allocation (PAL)](https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-aatp-product-allocation-pal-_dd30c229-d63f-4aba-a950-a174280c4a58) — Cours en ligne sans édition affichée, consulté le 2026-09-19.
+[Explaining aATP Product Allocation (PAL)](https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-aatp-product-allocation-pal-_dd30c229-d63f-4aba-a950-a174280c4a58) — Cours en ligne sans édition affichée, consulté le 2026-09-27.
 
 **Passage.** PAL Concept ; Product Allocation Examples ; time series
 
 **Limite de preuve.** Documentation primaire de produit ; aucune preuve de réalisation Beaumanoir ni équivalence de catalogue de capacités.
 
-Références : U477, ELM448, CMP190.
+Références : U477, ELM448, CMP190, U794, U795.
 
 ## Sources d’inspiration — BHV018 Consumption Capping
 
@@ -11953,54 +10573,6 @@ S/4HANA Procurement · Concept et usage documentés · Recouvrement partiel · s
 **Limite de preuve.** Documentation primaire consultée ; périmètre du produit, sans preuve de déploiement Beaumanoir.
 
 Références : U477, ELM446, CMP189.
-
-## Scénarios métier — D04.r Consignment Fill-up Order
-
-### Implanter puis réalimenter un stock consigné
-
-Illustration FLOW fictive. Un corner reçoit 100 vestes pour son ouverture. Deux semaines plus tard, 30 ventes conduisent à demander un apport complémentaire de 30, selon les besoins retenus.
-
-**Ce qui se passe.** Le même cycle d’Order traite un motif d’alimentation continue.
-
-#### 1. Déterminer le besoin initial
-
-Le lancement nécessite 100 vestes au corner à une date précise.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Replenishment (D05.e) | Déterminer le besoin d’apport. |
-| Consignment Fill-up Order (D04.r) | Porter l’apport initial en consignation et sa date. |
-
-**Résultat attendu.** L’apport retenu est porté par une commande identifiée.
-
-#### 2. Recevoir sans confondre propriété
-
-Les 100 vestes sont reçues sous le régime prévu par l’accord.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Consignment Fill-up Order (D04.r) | Rapprocher la réception du besoin initial. |
-| Inventory Tracking (D01.f) | Capter le fait de réception. |
-| Inventory Visibility (D01.c) | Exposer stock détenu et propriété connue. |
-
-**Résultat attendu.** Détention et reste à apporter sont rapprochés.
-
-#### 3. Réalimenter pendant l’activité
-
-Après les ventes, un nouveau besoin de 30 est retenu et fait l’objet d’un apport distinct.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Replenishment (D05.e) | Déterminer le besoin complémentaire. |
-| Consignment Fill-up Order (D04.r) | Porter le nouvel apport et son solde. |
-
-**Résultat attendu.** Le même cycle d’Order traite un motif d’alimentation continue.
-
-**Ce que ce cas permet de vérifier**
-
-- Ouverture et alimentation continue sont deux contextes, pas deux cycles imposés.
-
-Références : U768, U769.
 
 ## Sources d’inspiration — D04.r Consignment Fill-up Order
 
@@ -15415,7 +13987,7 @@ Plan Visibility explicite la responsabilité FLOW.
 | [Microsoft](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans) — Master plans overview | Plans distincts, recalculs, simulations, conversion des propositions et suggestions de modification des ordres. | Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la promesse et le Matching. |
 | [SAP](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Outlining Program Planning | Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la stratégie. Demand Management gère leur interaction pour alimenter MRP. | Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la promesse et le Matching. |
 | [Microsoft](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast) — Inventory forecasts | Les prévisions Supply et Demand sont distinguées et consommées par la planification. | Rapprochement avec Plan Visibility : Les prévisions Supply et Demand sont distinguées et consommées par la planification. |
-| Notre modèle — Plan Visibility | Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la promesse et le Matching. | Recevoir les plans du domaine externe PLAN, porté par l’APS, par [Plan Ingestion](model:plans-ingestion). Ce domaine source existe mais n’est pas référencé dans cette cartographie. [Supply Plan Visibility](model:plans-visibility) expose les prévisions d’entrées et de sorties de stock hors achats ; [Demand Plan Visibility](model:demand-plan-visibility) expose la demande prévisionnelle. Les deux vues rendent explicites versions, horizons, provenance et incertitudes pour Order Promising et Matching. Le calcul des prévisions reste externe. Le master plan d’affectation est construit et géré dans [Demand & Supply Matching](model:D03). Une projection ne crée ni Order ferme ni mouvement de stock. |
+| Notre modèle — Plan Visibility | Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la promesse et le Matching. | Recevoir les plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un APS, par [Plan Ingestion](model:plans-ingestion). Le domaine source [Demand & Supply Planning](model:domain-plan) est représenté au même niveau que Supply Chain Orchestration, sans décomposition interne. [Supply Plan Visibility](model:plans-visibility) expose les prévisions d’entrées et de sorties de stock hors achats ; [Demand Plan Visibility](model:demand-plan-visibility) expose la demande prévisionnelle. Les deux vues rendent explicites versions, horizons, provenance et incertitudes pour Order Promising et Matching. Le calcul des prévisions reste externe. Le master plan d’affectation est construit et géré dans [Demand & Supply Matching](model:D03). Une projection ne crée ni Order ferme ni mouvement de stock. |
 
 ### Ce que nous en retenons
 
@@ -15423,7 +13995,7 @@ Plan Visibility explicite la responsabilité FLOW.
 
 ### Illustration FLOW — Plan Visibility
 
-Recevoir les plans du domaine externe PLAN, porté par l’APS, par [Plan Ingestion](model:plans-ingestion). Ce domaine source existe mais n’est pas référencé dans cette cartographie. [Supply Plan Visibility](model:plans-visibility) expose les prévisions d’entrées et de sorties de stock hors achats ; [Demand Plan Visibility](model:demand-plan-visibility) expose la demande prévisionnelle. Les deux vues rendent explicites versions, horizons, provenance et incertitudes pour Order Promising et Matching. Le calcul des prévisions reste externe. Le master plan d’affectation est construit et géré dans [Demand & Supply Matching](model:D03). Une projection ne crée ni Order ferme ni mouvement de stock.
+Recevoir les plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un APS, par [Plan Ingestion](model:plans-ingestion). Le domaine source [Demand & Supply Planning](model:domain-plan) est représenté au même niveau que Supply Chain Orchestration, sans décomposition interne. [Supply Plan Visibility](model:plans-visibility) expose les prévisions d’entrées et de sorties de stock hors achats ; [Demand Plan Visibility](model:demand-plan-visibility) expose la demande prévisionnelle. Les deux vues rendent explicites versions, horizons, provenance et incertitudes pour Order Promising et Matching. Le calcul des prévisions reste externe. Le master plan d’affectation est construit et géré dans [Demand & Supply Matching](model:D03). Une projection ne crée ni Order ferme ni mouvement de stock.
 
 **Ce qui se passe.** Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la promesse et le Matching.
 
@@ -15507,9 +14079,9 @@ Plan Ingestion explicite la responsabilité FLOW.
 
 | Source et nom employé | Périmètre | Approche |
 | --- | --- | --- |
-| [Microsoft](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans) — Master plans overview | Plans distincts, recalculs, simulations, conversion des propositions et suggestions de modification des ordres. | Recevoir et intégrer les Supply Plans et Demand Plans du domaine externe PLAN, porté par l’APS, avec leur provenance, horizon, version et statut. |
-| [SAP](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Outlining Program Planning | Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la stratégie. Demand Management gère leur interaction pour alimenter MRP. | Recevoir et intégrer les Supply Plans et Demand Plans du domaine externe PLAN, porté par l’APS, avec leur provenance, horizon, version et statut. |
-| Notre modèle — Plan Ingestion | Recevoir et intégrer les Supply Plans et Demand Plans du domaine externe PLAN, porté par l’APS, avec leur provenance, horizon, version et statut. | Une capacité commune reçoit les deux types de plans en conservant leur distinction. Reconnaître les nouvelles versions, corrections et rejets ; rapprocher les données de leurs références locales sans calculer les prévisions. Le domaine PLAN est externe et non référencé dans cette cartographie. Une projection révisée ne modifie ni un Order ni un mouvement constaté. Exemple fictif : une prévision d’entrée hors achat passe de 100 à 80 pièces ; intégrer la révision sans enregistrer une réception. |
+| [Microsoft](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans) — Master plans overview | Plans distincts, recalculs, simulations, conversion des propositions et suggestions de modification des ordres. | Recevoir et intégrer les Supply Plans et Demand Plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un APS, avec leur provenance, horizon, version et statut. |
+| [SAP](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Outlining Program Planning | Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la stratégie. Demand Management gère leur interaction pour alimenter MRP. | Recevoir et intégrer les Supply Plans et Demand Plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un APS, avec leur provenance, horizon, version et statut. |
+| Notre modèle — Plan Ingestion | Recevoir et intégrer les Supply Plans et Demand Plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un APS, avec leur provenance, horizon, version et statut. | Une capacité commune reçoit les deux types de plans en conservant leur distinction. Reconnaître les nouvelles versions, corrections et rejets ; rapprocher les données de leurs références locales sans calculer les prévisions. Le domaine [Demand & Supply Planning](model:domain-plan) est extérieur à Supply Chain Orchestration et représenté sans décomposition interne. Une projection révisée ne modifie ni un Order ni un mouvement constaté. Exemple fictif : une prévision d’entrée hors achat passe de 100 à 80 pièces ; intégrer la révision sans enregistrer une réception. |
 
 ### Ce que nous en retenons
 
@@ -15517,9 +14089,9 @@ Plan Ingestion explicite la responsabilité FLOW.
 
 ### Illustration FLOW — Plan Ingestion
 
-Une capacité commune reçoit les deux types de plans en conservant leur distinction. Reconnaître les nouvelles versions, corrections et rejets ; rapprocher les données de leurs références locales sans calculer les prévisions. Le domaine PLAN est externe et non référencé dans cette cartographie. Une projection révisée ne modifie ni un Order ni un mouvement constaté. Exemple fictif : une prévision d’entrée hors achat passe de 100 à 80 pièces ; intégrer la révision sans enregistrer une réception.
+Une capacité commune reçoit les deux types de plans en conservant leur distinction. Reconnaître les nouvelles versions, corrections et rejets ; rapprocher les données de leurs références locales sans calculer les prévisions. Le domaine [Demand & Supply Planning](model:domain-plan) est extérieur à Supply Chain Orchestration et représenté sans décomposition interne. Une projection révisée ne modifie ni un Order ni un mouvement constaté. Exemple fictif : une prévision d’entrée hors achat passe de 100 à 80 pièces ; intégrer la révision sans enregistrer une réception.
 
-**Ce qui se passe.** Recevoir et intégrer les Supply Plans et Demand Plans du domaine externe PLAN, porté par l’APS, avec leur provenance, horizon, version et statut.
+**Ce qui se passe.** Recevoir et intégrer les Supply Plans et Demand Plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un APS, avec leur provenance, horizon, version et statut.
 
 **Ce que cela illustre dans FLOW.** Exemple fictif de la frontière FLOW ; la source apporte un recouvrement partiel et ne démontre pas une réalisation Beaumanoir.
 
@@ -15541,7 +14113,7 @@ Master plans overview · Concept ou fonction documenté dans un produit · Recou
 
 **Différences.** Les sources étayent la réception ou la consommation de prévisions ; le périmètre Supply Plan hors achats et la séparation du master plan de matching sont propres à FLOW U668.
 
-**Position FLOW.** Recevoir et intégrer les Supply Plans et Demand Plans du domaine externe PLAN, porté par l’APS, avec leur provenance, horizon, version et statut.
+**Position FLOW.** Recevoir et intégrer les Supply Plans et Demand Plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un APS, avec leur provenance, horizon, version et statut.
 
 [Master plans overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans) — Documentation évolutive, mise à jour affichée le 25 mars 2026, consulté le 2026-09-23.
 
@@ -15563,7 +14135,7 @@ Outlining Program Planning · Concept ou fonction documenté dans un produit · 
 
 **Différences.** Les sources étayent la réception ou la consommation de prévisions ; le périmètre Supply Plan hors achats et la séparation du master plan de matching sont propres à FLOW U668.
 
-**Position FLOW.** Recevoir et intégrer les Supply Plans et Demand Plans du domaine externe PLAN, porté par l’APS, avec leur provenance, horizon, version et statut.
+**Position FLOW.** Recevoir et intégrer les Supply Plans et Demand Plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un APS, avec leur provenance, horizon, version et statut.
 
 [Outlining Program Planning](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Cours S/4HANA Cloud Public Edition, édition non affichée, consulté le 2026-09-23.
 
@@ -17629,10 +16201,10 @@ Demand Plan Visibility explicite la responsabilité FLOW.
 
 | Source et nom employé | Périmètre | Approche |
 | --- | --- | --- |
-| [Oracle](https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25c/fascp/overview-of-global-order-promising.html) — Overview of Global Order Promising | La promesse mobilise stock, apports attendus et planned orders de Supply Planning ; examine nouvelles ressources, sources, coûts, substitutions et fractionnements. | Rendre consultable la demande prévisionnelle reçue du domaine PLAN, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching. |
-| [SAP](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Outlining Program Planning | Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la stratégie. Demand Management gère leur interaction pour alimenter MRP. | Rendre consultable la demande prévisionnelle reçue du domaine PLAN, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching. |
+| [Oracle](https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25c/fascp/overview-of-global-order-promising.html) — Overview of Global Order Promising | La promesse mobilise stock, apports attendus et planned orders de Supply Planning ; examine nouvelles ressources, sources, coûts, substitutions et fractionnements. | Rendre consultable la demande prévisionnelle reçue du domaine Demand & Supply Planning, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching. |
+| [SAP](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Outlining Program Planning | Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la stratégie. Demand Management gère leur interaction pour alimenter MRP. | Rendre consultable la demande prévisionnelle reçue du domaine Demand & Supply Planning, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching. |
 | [Microsoft](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast) — Inventory forecasts | Les prévisions Supply et Demand sont distinguées et consommées par la planification. | Rapprochement avec Demand Plan Visibility : Les prévisions Supply et Demand sont distinguées et consommées par la planification. |
-| Notre modèle — Demand Plan Visibility | Rendre consultable la demande prévisionnelle reçue du domaine PLAN, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching. | Présenter les besoins prévisionnels sans les confondre avec les Orders entrants. Le calcul de prévision reste dans PLAN ; le rapprochement des prévisions avec les Orders pour éviter leur double comptage relève du Matching. Ne construit ni prévisions ni master plan d’affectation. Exemple fictif : exposer une prévision de demande de 200 robes pour la semaine suivante, distincte des commandes déjà enregistrées. |
+| Notre modèle — Demand Plan Visibility | Rendre consultable la demande prévisionnelle reçue du domaine Demand & Supply Planning, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching. | Présenter les besoins prévisionnels sans les confondre avec les Orders entrants. Le calcul de prévision reste dans Demand & Supply Planning ; le rapprochement des prévisions avec les Orders pour éviter leur double comptage relève du Matching. Ne construit ni prévisions ni master plan d’affectation. Exemple fictif : exposer une prévision de demande de 200 robes pour la semaine suivante, distincte des commandes déjà enregistrées. |
 
 ### Ce que nous en retenons
 
@@ -17640,9 +16212,9 @@ Demand Plan Visibility explicite la responsabilité FLOW.
 
 ### Illustration FLOW — Demand Plan Visibility
 
-Présenter les besoins prévisionnels sans les confondre avec les Orders entrants. Le calcul de prévision reste dans PLAN ; le rapprochement des prévisions avec les Orders pour éviter leur double comptage relève du Matching. Ne construit ni prévisions ni master plan d’affectation. Exemple fictif : exposer une prévision de demande de 200 robes pour la semaine suivante, distincte des commandes déjà enregistrées.
+Présenter les besoins prévisionnels sans les confondre avec les Orders entrants. Le calcul de prévision reste dans Demand & Supply Planning ; le rapprochement des prévisions avec les Orders pour éviter leur double comptage relève du Matching. Ne construit ni prévisions ni master plan d’affectation. Exemple fictif : exposer une prévision de demande de 200 robes pour la semaine suivante, distincte des commandes déjà enregistrées.
 
-**Ce qui se passe.** Rendre consultable la demande prévisionnelle reçue du domaine PLAN, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching.
+**Ce qui se passe.** Rendre consultable la demande prévisionnelle reçue du domaine Demand & Supply Planning, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching.
 
 **Ce que cela illustre dans FLOW.** Exemple fictif de la frontière FLOW ; la source apporte un recouvrement partiel et ne démontre pas une réalisation Beaumanoir.
 
@@ -17664,7 +16236,7 @@ Overview of Global Order Promising · Concept ou fonction documenté dans un pro
 
 **Différences.** Les sources étayent la réception ou la consommation de prévisions ; le périmètre Supply Plan hors achats et la séparation du master plan de matching sont propres à FLOW U668.
 
-**Position FLOW.** Rendre consultable la demande prévisionnelle reçue du domaine PLAN, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching.
+**Position FLOW.** Rendre consultable la demande prévisionnelle reçue du domaine Demand & Supply Planning, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching.
 
 [Overview of Global Order Promising](https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25c/fascp/overview-of-global-order-promising.html) — Fusion Cloud SCM 25C, consulté le 2026-09-23.
 
@@ -17686,7 +16258,7 @@ Outlining Program Planning · Concept ou fonction documenté dans un produit · 
 
 **Différences.** Les sources étayent la réception ou la consommation de prévisions ; le périmètre Supply Plan hors achats et la séparation du master plan de matching sont propres à FLOW U668.
 
-**Position FLOW.** Rendre consultable la demande prévisionnelle reçue du domaine PLAN, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching.
+**Position FLOW.** Rendre consultable la demande prévisionnelle reçue du domaine Demand & Supply Planning, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le Matching.
 
 [Outlining Program Planning](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Cours S/4HANA Cloud Public Edition, édition non affichée, consulté le 2026-09-23.
 
@@ -19069,89 +17641,6 @@ SAP S/4HANA — périmètre du cours cité · Mécanisme ou objet documenté dan
 
 Références : U774, CMP307, ELM785.
 
-## Scénarios métier — subdomain-order-promising Order Promising
-
-### Livrer une commande B2B avec un stock partiel
-
-Illustration FLOW fictive : un client B2B attend 100 vêtements ; 60 sont disponibles et une rentrée de 40 est annoncée. Plusieurs solutions de livraison sont examinées.
-
-**Fiche d’origine.** universe-supply
-
-**Contribution de cette fiche.** Évaluer les disponibilités, faisabilités et conséquences économiques des options, puis sélectionner une proposition distincte de l’engagement confirmé.
-
-**Déclencheur.** Une commande nécessite une proposition de quantité et de date.
-
-**Résultat recherché.** Préparer une promesse réalisable et expliquer les conséquences économiques des options.
-
-**Contraintes**
-
-- Date demandée et fractionnement autorisé par le client.
-- Disponibilité effective, fiabilité de la rentrée et délais de préparation et de transport.
-- Engagements existants et règles de protection du stock.
-
-**Options examinées**
-
-- Livraison fractionnée : Expédier les 60 disponibles, puis les 40 attendus : rendre visible le service anticipé et le coût des deux expéditions.
-- Livraison regroupée : Attendre les 40 pour préparer et expédier ensemble : examiner le gain logistique, le délai et les conséquences économiques d’une attente.
-
-**Ce qui se passe.** Un dossier présente les options avec quantité, date et conséquences économiques ; le choix reste explicite et distinct de l’évaluation. Aucun gagnant n’est présumé.
-
-**Ce que cela illustre.** Les capacités coopèrent selon le besoin ; ce récit n’impose ni pipeline universel ni modification des grands équilibres du Matching. Promettre, affecter les ressources et libérer les prestations restent distincts.
-
-#### 1. Qualifier les 100 vêtements attendus
-
-Le client demande 100 pièces vendredi ; il accepte une livraison partielle uniquement si elle est annoncée.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Sales Order (D04.i) | Porter la demande et les engagements acceptés. |
-| Inventory Visibility (D01.c) | Exposer les 60 pièces disponibles et la rentrée annoncée de 40 avec ses réserves. |
-
-**Résultat attendu.** Quantité, date et condition de fractionnement sont explicites.
-
-#### 2. Construire les possibilités
-
-Comparer 60 pièces plus tôt puis 40 après réception, et 100 ensemble. Si une solution exige une ressource supplémentaire, tester sa faisabilité sans créer une commande d’achat.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Available-to-Promise (ATP) (D03.i) | Évaluer le stock présent et projeté net des engagements et protections. |
-| Capable-to-Promise (CTP) (D03.j) | Évaluer si nécessaire les possibilités supplémentaires et leurs contraintes de capacité. |
-
-**Résultat attendu.** Options datées avec leurs conditions et incertitudes.
-
-#### 3. Éclairer puis choisir la promesse
-
-Comparer deux transports à une seule expédition, sans supposer que le moins cher est toujours préférable.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Profitable-to-Promise (PTP) (D03.k) | Produire le dossier économique local des options sans choisir. |
-| Promise Selection Decision (D03.l) | Choisir la proposition au regard du service, des évaluations et des règles. |
-
-**Résultat attendu.** Une proposition choisie, accompagnée de ses hypothèses, peut être acceptée dans la commande.
-
-#### 4. Affecter puis libérer les prestations
-
-Si le regroupement est accepté, affecter les ressources puis retenir les ordres éligibles jusqu’à complétude, dans la limite de la date promise.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Supply Assignment (D03.o) | Affecter les ressources dans les équilibres du master plan. |
-| Plan Application (D02.e) | Appliquer les affectations retenues. |
-| Service Order Release Decision (service-order-release-decision) | Déterminer le moment et le groupe de libération. |
-| Process Orchestration (D06.d) | Déclencher et coordonner les prestations. |
-| Packing Order (service-order-packing) | Porter l’exigence de conditionnement commun. |
-
-**Résultat attendu.** Les prestations compatibles sont libérées ensemble ; la préparation commune est demandée explicitement.
-
-**Ce que ce cas permet de vérifier**
-
-- Évaluer, choisir, engager, affecter et libérer ont des responsabilités distinctes.
-- La rétention ne décale pas silencieusement la promesse ; une expédition commune ne garantit pas à elle seule une palette unique.
-
-Références : U763, U764, U762, ELM763, ELM767, ELM768, U768.
-
 ## Sources d’inspiration — subdomain-order-promising Order Promising
 
 Order Promising
@@ -19541,60 +18030,6 @@ SAP S/4HANA — périmètre du cours cité · Mécanisme ou objet documenté dan
 
 Références : U774, CMP307, ELM458.
 
-## Scénarios métier — service-order-receiving Receiving Order
-
-### Recevoir un lot partiel sans solder prématurément l’achat
-
-Illustration FLOW fictive. Un fournisseur doit livrer 100 vestes. L’entrepôt est chargé de les recevoir ; 80 arrivent, dont 5 attendent un contrôle de conformité.
-
-**Ce qui se passe.** La prestation, l’achat et le stock portent des résultats cohérents sans fusionner leurs responsabilités.
-
-#### 1. Confier la réception
-
-Le créneau, les 100 vestes attendues et les consignes sont transmis au prestataire.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Purchase Order (D04.j) | Porter les 100 vestes dues par le fournisseur. |
-| Receiving Order (service-order-receiving) | Porter la réception confiée et ses conditions. |
-| Process Orchestration (D06.d) | Coordonner la prise en charge et les dépendances. |
-
-**Résultat attendu.** L’achat et la prestation de réception possèdent des engagements liés mais distincts.
-
-#### 2. Qualifier les 80 arrivées
-
-Le prestataire confirme 80 reçues et signale les 5 à contrôler.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Operations Tracking (D07.d) | Intégrer le résultat communiqué. |
-| Service Reconciliation (D07.c) | Rapprocher résultat et prestation attendue. |
-| Inspection Order (service-order-inspection) | Porter le contrôle autonome si celui-ci est explicitement confié. |
-
-**Résultat attendu.** Réception et disponibilité vendable sont distinguées.
-
-#### 3. Tenir les deux soldes et le stock
-
-La prestation conserve 20 à recevoir si aucune clôture partielle n’est autorisée ; l’achat reste également à rapprocher du solde fournisseur.
-
-| Capacité mobilisée | Contribution |
-| --- | --- |
-| Receiving Order (service-order-receiving) | Tenir le solde et la clôture autorisée de la prestation. |
-| Purchase Order (D04.j) | Tenir le reste dû selon l’engagement fournisseur. |
-| Inventory Tracking (D01.f) | Intégrer les faits de stock. |
-| Inventory Ledger (D01.g) | Enregistrer les états reconnus. |
-| Inventory Visibility (D01.c) | Exposer les positions selon leur disponibilité reconnue. |
-
-**Résultat attendu.** 80 pièces reçues ne deviennent ni 100 reçues ni 80 immédiatement vendables.
-
-**Ce que ce cas permet de vérifier**
-
-- Une instruction ne vaut pas réception.
-- Le solde de prestation, le solde achat et le stock disponible sont distincts.
-- La réception ne transfère pas automatiquement la propriété.
-
-Références : U771.
-
 ## Sources d’inspiration — service-order-receiving Receiving Order
 
 ### Microsoft — Inbound shipment order
@@ -19869,7 +18304,7 @@ SAP S/4HANA · Mécanisme métier documenté dans un produit · Recouvrement par
 
 Références : ELM833, U775, U777.
 
-## Scénarios métier — domain-logistics-execution Logistics Execution
+## Scénarios métier — domain-logistics-execution Logistics
 
 ### Illustration de responsabilité
 
@@ -19879,13 +18314,13 @@ Illustration FLOW fictive. Pour une expédition, l’entrepôt prépare les coli
 
 Références : U780.
 
-## Sources d’inspiration — domain-logistics-execution Logistics Execution
+## Sources d’inspiration — domain-logistics-execution Logistics
 
 ### SAP — Supply Chain — Delivery and Transportation ; Warehousing
 
 SAP S/4HANA 2025 · Périmètre produit · Recouvrement partiel · statut : proposed
 
-**Pourquoi ce terme.** Nom retenu dans le cadrage U778–U780 ; appui lexical SAP pour Sales et Sourcing and Procurement, convention FLOW pour les ensembles.
+**Pourquoi ce terme.** Logistics, retenu en U801, désigne les opérations logistiques et leur pilotage local dans FLOW, sans transférer les arbitrages transverses de Supply Chain Orchestration ni présumer une réalisation installée.
 
 **Pourquoi cette définition.** Responsabilité concrète et frontière avec les autres domaines ; aucune extension du périmètre d’intervention FLOW.
 
@@ -19893,7 +18328,7 @@ SAP S/4HANA 2025 · Périmètre produit · Recouvrement partiel · statut : prop
 
 **Différences.** Supply Chain et Inventory to deliver sont plus larges que l’exécution FLOW. Les appuis consultés sont partiels pour les formalités douanières ; aucun équivalent exact du domaine n’est affirmé.
 
-**Position FLOW.** Logistics Execution est décrit à la profondeur utile à FLOW ; les frontières métier sont explicites et indépendantes des applications.
+**Position FLOW.** Logistics est décrit à la profondeur utile à FLOW ; les frontières métier sont explicites et indépendantes des applications.
 
 [SAP S/4HANA 2025 — Feature Scope Description](https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68) — SAP S/4HANA 2025 ; document 1.0 du 2025-10-08, consulté le 2026-09-26.
 
@@ -19907,7 +18342,7 @@ Références : ELM840, CMP309.
 
 Microsoft Dynamics 365 · Processus de bout en bout · Recouvrement partiel · statut : proposed
 
-**Pourquoi ce terme.** Nom retenu dans le cadrage U778–U780 ; appui lexical SAP pour Sales et Sourcing and Procurement, convention FLOW pour les ensembles.
+**Pourquoi ce terme.** Logistics, retenu en U801, désigne les opérations logistiques et leur pilotage local dans FLOW, sans transférer les arbitrages transverses de Supply Chain Orchestration ni présumer une réalisation installée.
 
 **Pourquoi cette définition.** Responsabilité concrète et frontière avec les autres domaines ; aucune extension du périmètre d’intervention FLOW.
 
@@ -19915,7 +18350,7 @@ Microsoft Dynamics 365 · Processus de bout en bout · Recouvrement partiel · s
 
 **Différences.** Supply Chain et Inventory to deliver sont plus larges que l’exécution FLOW. Les appuis consultés sont partiels pour les formalités douanières ; aucun équivalent exact du domaine n’est affirmé.
 
-**Position FLOW.** Logistics Execution est décrit à la profondeur utile à FLOW ; les frontières métier sont explicites et indépendantes des applications.
+**Position FLOW.** Logistics est décrit à la profondeur utile à FLOW ; les frontières métier sont explicites et indépendantes des applications.
 
 [Introduction to inventory to deliver business process](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/inventory-to-deliver-introduction) — Page évolutive ; version globale non précisée, consulté le 2026-09-26.
 
@@ -21197,7 +19632,7 @@ Références : U477, ELM418, CMP191.
 
 ## Sources d’inspiration — Allocation de groupe
 
-Comprendre l’Allocation de groupe des sources : elle peut attribuer une enveloppe d’usage à une population. Dans le texte courant FLOW, préciser « enveloppe de protection » ou « droit d’usage par groupe » évite de la confondre avec Supply Assignment.
+Comprendre l’Allocation de groupe des sources : elle peut attribuer une enveloppe d’usage à une population. Dans le texte courant FLOW, allocation de stock par groupe est autorisé ; préciser les droits évite la confusion avec Supply Assignment.
 
 | Source et nom employé | Périmètre | Approche |
 | --- | --- | --- |
@@ -21233,15 +19668,15 @@ Dynamics 365 Supply Chain Management · Concept documenté par la source primair
 
 **Différences.** Le terme Microsoft ne désigne pas l’affectation de ressources à une commande FLOW.
 
-**Position FLOW.** Comprendre l’Allocation de groupe des sources : elle peut attribuer une enveloppe d’usage à une population. Dans le texte courant FLOW, préciser « enveloppe de protection » ou « droit d’usage par groupe » évite de la confondre avec Supply Assignment.
+**Position FLOW.** FLOW autorise allocation de stock par groupe / Group Inventory Allocation pour les enveloppes, en précisant les droits ; le terme ne désigne pas l’affectation individuelle. PAL plafonne la consommation ou la confirmation et ne garantit pas un minimum protégé.
 
-[Inventory Visibility inventory allocation](https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation) — Documentation en ligne sans édition affichée, consulté le 2026-09-19.
+[Inventory Visibility inventory allocation](https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation) — Documentation en ligne sans édition affichée, consulté le 2026-09-27.
 
 **Passage.** Business background and purpose ; virtual pool ; Terminology
 
 **Limite de preuve.** Documentation primaire de produit ; aucune preuve de réalisation Beaumanoir ni équivalence de catalogue de capacités.
 
-Références : U477, ELM410, CMP190.
+Références : U477, ELM410, CMP190, U795.
 
 #### SAP — Product Allocation (PAL)
 
@@ -21251,15 +19686,15 @@ SAP S/4HANA · Concept documenté par la source primaire · Recouvrement partiel
 
 **Différences.** Le plafond SAP ne garantit pas qu’une part de stock restera pour le groupe.
 
-**Position FLOW.** Comprendre l’Allocation de groupe des sources : elle peut attribuer une enveloppe d’usage à une population. Dans le texte courant FLOW, préciser « enveloppe de protection » ou « droit d’usage par groupe » évite de la confondre avec Supply Assignment.
+**Position FLOW.** FLOW autorise allocation de stock par groupe / Group Inventory Allocation pour les enveloppes, en précisant les droits ; le terme ne désigne pas l’affectation individuelle. PAL plafonne la consommation ou la confirmation et ne garantit pas un minimum protégé.
 
-[Explaining aATP Product Allocation (PAL)](https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-aatp-product-allocation-pal-_dd30c229-d63f-4aba-a950-a174280c4a58) — Cours en ligne sans édition affichée, consulté le 2026-09-19.
+[Explaining aATP Product Allocation (PAL)](https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-aatp-product-allocation-pal-_dd30c229-d63f-4aba-a950-a174280c4a58) — Cours en ligne sans édition affichée, consulté le 2026-09-27.
 
 **Passage.** PAL Concept ; Product Allocation Examples ; time series
 
 **Limite de preuve.** Documentation primaire de produit ; aucune preuve de réalisation Beaumanoir ni équivalence de catalogue de capacités.
 
-Références : U477, ELM448, CMP190.
+Références : U477, ELM448, CMP190, U795.
 
 #### SAP — Outlining aATP with Check Against Allocation
 
@@ -21267,21 +19702,21 @@ SAP S/4HANA — périmètre du cours cité · Mécanisme ou objet documenté dan
 
 **Pourquoi ce terme.** Le nom Allocation de groupe reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement cette appellation ni sa maille.
 
-**Pourquoi cette définition.** La Product Allocation limite les confirmations selon groupes, périodes et caractéristiques des demandes. Frontière conservée : PAL protège des droits de confirmation ; ce n’est pas l’affectation effective ARun. La définition FLOW conserve cette différence de sens d’Allocation.
+**Pourquoi cette définition.** La Product Allocation limite les confirmations selon groupes, périodes et caractéristiques des demandes. Frontière conservée : PAL plafonne les quantités confirmables sans garantir un minimum protégé ; ce n’est pas l’affectation effective ARun. La définition FLOW conserve cette différence de sens d’Allocation.
 
 **Points communs.** La Product Allocation limite les confirmations selon groupes, périodes et caractéristiques des demandes.
 
-**Différences.** PAL protège des droits de confirmation ; ce n’est pas l’affectation effective ARun. La définition FLOW conserve cette différence de sens d’Allocation.
+**Différences.** PAL plafonne les quantités confirmables sans garantir un minimum protégé ; ce n’est pas l’affectation effective ARun. La définition FLOW conserve cette différence de sens d’Allocation.
 
-**Position FLOW.** FLOW conserve le périmètre métier de Allocation de groupe. PAL protège des droits de confirmation ; ce n’est pas l’affectation effective ARun. La définition FLOW conserve cette différence de sens d’Allocation.
+**Position FLOW.** FLOW autorise allocation de stock par groupe / Group Inventory Allocation pour les enveloppes, en précisant les droits ; le terme ne désigne pas l’affectation individuelle. PAL plafonne la consommation ou la confirmation et ne garantit pas un minimum protégé.
 
 [Outlining aATP with Check Against Allocation](https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-aatp-with-check-against-allocation) — Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée., consulté le 2026-09-25.
 
 **Passage.** Outlining aATP with Check Against Allocation — passages sur le mécanisme rapproché.
 
-**Limite de preuve.** Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement Beaumanoir déduit. PAL protège des droits de confirmation ; ce n’est pas l’affectation effective ARun. La définition FLOW conserve cette différence de sens d’Allocation.
+**Limite de preuve.** Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement Beaumanoir déduit. PAL plafonne les quantités confirmables sans garantir un minimum protégé ; ce n’est pas l’affectation effective ARun. La définition FLOW conserve cette différence de sens d’Allocation.
 
-Références : U774, CMP307, ELM018.
+Références : U774, CMP307, ELM018, U795.
 
 ## Sources d’inspiration — Protection de ressource
 
@@ -29745,6 +28180,50 @@ Microsoft Dynamics 365 · Processus de bout en bout · Recouvrement partiel · s
 
 Références : ELM841, CMP309.
 
+### Microsoft — Master plans overview
+
+Microsoft Dynamics 365 Supply Chain Management · Concept ou fonction documenté dans un produit · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Demand & Supply Planning est le nom retenu en U801 pour expliciter les plans de demande et de ressources ; les outils de planification possibles ne définissent pas son identité.
+
+**Pourquoi cette définition.** Responsabilité de production des plans, distincte de leur ingestion et de leur consultation ; détail des capacités hors périmètre.
+
+**Points communs.** Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
+
+**Différences.** Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
+
+**Position FLOW.** Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility les expose. Le master plan du Matching reste interne à l’orchestration.
+
+[Master plans overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans) — Documentation évolutive, mise à jour affichée le 25 mars 2026, consulté le 2026-09-27.
+
+**Passage.** Using master plans ; Firming ; Action message
+
+**Limite de preuve.** Recouvrement partiel avec les fonctions de planification documentées ; ni nomenclature universelle des domaines, ni preuve d’un APS installé chez Beaumanoir.
+
+Références : U794.
+
+### SAP — Outlining Program Planning
+
+SAP S/4HANA Cloud Public Edition · Concept ou fonction documenté dans un produit · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Demand & Supply Planning est le nom retenu en U801 pour expliciter les plans de demande et de ressources ; les outils de planification possibles ne définissent pas son identité.
+
+**Pourquoi cette définition.** Responsabilité de production des plans, distincte de leur ingestion et de leur consultation ; détail des capacités hors périmètre.
+
+**Points communs.** Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
+
+**Différences.** Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
+
+**Position FLOW.** Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility les expose. Le master plan du Matching reste interne à l’orchestration.
+
+[Outlining Program Planning](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Cours S/4HANA Cloud Public Edition, édition non affichée, consulté le 2026-09-27.
+
+**Passage.** Production Planning Overview ; Demand Management Overview
+
+**Limite de preuve.** Recouvrement partiel avec les fonctions de planification documentées ; ni nomenclature universelle des domaines, ni preuve d’un APS installé chez Beaumanoir.
+
+Références : U794.
+
 ## Sources d’inspiration — Enterprise Management & Control
 
 ### SAP — Finance
@@ -29883,13 +28362,13 @@ Microsoft Dynamics 365 Supply Chain Management et Finance · Processus de bout e
 
 Références : ELM844, CMP309.
 
-## Sources d’inspiration — Logistics Execution
+## Sources d’inspiration — Logistics
 
 ### SAP — Supply Chain — Delivery and Transportation ; Warehousing
 
 SAP S/4HANA 2025 · Périmètre produit · Recouvrement partiel · statut : proposed
 
-**Pourquoi ce terme.** Nom retenu dans le cadrage U778–U780 ; appui lexical SAP pour Sales et Sourcing and Procurement, convention FLOW pour les ensembles.
+**Pourquoi ce terme.** Logistics, retenu en U801, désigne les opérations logistiques et leur pilotage local dans FLOW, sans transférer les arbitrages transverses de Supply Chain Orchestration ni présumer une réalisation installée.
 
 **Pourquoi cette définition.** Responsabilité concrète et frontière avec les autres domaines ; aucune extension du périmètre d’intervention FLOW.
 
@@ -29897,7 +28376,7 @@ SAP S/4HANA 2025 · Périmètre produit · Recouvrement partiel · statut : prop
 
 **Différences.** Supply Chain et Inventory to deliver sont plus larges que l’exécution FLOW. Les appuis consultés sont partiels pour les formalités douanières ; aucun équivalent exact du domaine n’est affirmé.
 
-**Position FLOW.** Logistics Execution est décrit à la profondeur utile à FLOW ; les frontières métier sont explicites et indépendantes des applications.
+**Position FLOW.** Logistics est décrit à la profondeur utile à FLOW ; les frontières métier sont explicites et indépendantes des applications.
 
 [SAP S/4HANA 2025 — Feature Scope Description](https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68) — SAP S/4HANA 2025 ; document 1.0 du 2025-10-08, consulté le 2026-09-26.
 
@@ -29911,7 +28390,7 @@ Références : ELM840, CMP309.
 
 Microsoft Dynamics 365 · Processus de bout en bout · Recouvrement partiel · statut : proposed
 
-**Pourquoi ce terme.** Nom retenu dans le cadrage U778–U780 ; appui lexical SAP pour Sales et Sourcing and Procurement, convention FLOW pour les ensembles.
+**Pourquoi ce terme.** Logistics, retenu en U801, désigne les opérations logistiques et leur pilotage local dans FLOW, sans transférer les arbitrages transverses de Supply Chain Orchestration ni présumer une réalisation installée.
 
 **Pourquoi cette définition.** Responsabilité concrète et frontière avec les autres domaines ; aucune extension du périmètre d’intervention FLOW.
 
@@ -29919,7 +28398,7 @@ Microsoft Dynamics 365 · Processus de bout en bout · Recouvrement partiel · s
 
 **Différences.** Supply Chain et Inventory to deliver sont plus larges que l’exécution FLOW. Les appuis consultés sont partiels pour les formalités douanières ; aucun équivalent exact du domaine n’est affirmé.
 
-**Position FLOW.** Logistics Execution est décrit à la profondeur utile à FLOW ; les frontières métier sont explicites et indépendantes des applications.
+**Position FLOW.** Logistics est décrit à la profondeur utile à FLOW ; les frontières métier sont explicites et indépendantes des applications.
 
 [Introduction to inventory to deliver business process](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/inventory-to-deliver-introduction) — Page évolutive ; version globale non précisée, consulté le 2026-09-26.
 
@@ -29928,6 +28407,120 @@ Microsoft Dynamics 365 · Processus de bout en bout · Recouvrement partiel · s
 **Limite de preuve.** Recouvrement partiel ; la référence ne suffit pas à établir toutes les formalités douanières ni leur réalisation Beaumanoir.
 
 Références : ELM845, CMP309.
+
+## Sources d’inspiration — Demand & Supply Planning
+
+### Microsoft — Master plans overview
+
+Microsoft Dynamics 365 Supply Chain Management · Concept ou fonction documenté dans un produit · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Demand & Supply Planning, retenu en U801, rend explicites les deux volets de planification. SCOR emploie Plan pour un processus plus large ; le rapprochement est partiel, sans nomenclature universelle ni équivalence à un module éditeur.
+
+**Pourquoi cette définition.** Responsabilité de production des plans, distincte de leur ingestion et de leur consultation ; détail des capacités hors périmètre.
+
+**Points communs.** Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
+
+**Différences.** Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
+
+**Position FLOW.** Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility les expose. Le master plan du Matching reste interne à l’orchestration.
+
+[Master plans overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans) — Documentation évolutive, mise à jour affichée le 25 mars 2026, consulté le 2026-09-27.
+
+**Passage.** Using master plans ; Firming ; Action message
+
+**Limite de preuve.** Recouvrement partiel avec les fonctions de planification documentées ; ni nomenclature universelle des domaines, ni preuve d’un APS installé chez Beaumanoir.
+
+Références : U794.
+
+### SAP — Outlining Program Planning
+
+SAP S/4HANA Cloud Public Edition · Concept ou fonction documenté dans un produit · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Demand & Supply Planning, retenu en U801, rend explicites les deux volets de planification. SCOR emploie Plan pour un processus plus large ; le rapprochement est partiel, sans nomenclature universelle ni équivalence à un module éditeur.
+
+**Pourquoi cette définition.** Responsabilité de production des plans, distincte de leur ingestion et de leur consultation ; détail des capacités hors périmètre.
+
+**Points communs.** Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
+
+**Différences.** Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
+
+**Position FLOW.** Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility les expose. Le master plan du Matching reste interne à l’orchestration.
+
+[Outlining Program Planning](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Cours S/4HANA Cloud Public Edition, édition non affichée, consulté le 2026-09-27.
+
+**Passage.** Production Planning Overview ; Demand Management Overview
+
+**Limite de preuve.** Recouvrement partiel avec les fonctions de planification documentées ; ni nomenclature universelle des domaines, ni preuve d’un APS installé chez Beaumanoir.
+
+Références : U794.
+
+## Sources d’inspiration — Demand & Supply Matching
+
+### Oracle — Overview of Backlog Management Processes
+
+Overview of Backlog Management Processes · Concept ou fonction documenté dans un produit · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Nom du sous-domaine retenu pour la responsabilité FLOW ; pas de correspondance universelle aux modules éditeurs.
+
+**Pourquoi cette définition.** Appui de Overview of Backlog Management Processes : Prioriser un portefeuille, construire un plan, tester des ajustements et libérer les résultats vers Order Management ; les simulations ne modifient pas seules les commandes. Limite de reprise dans FLOW : Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.
+
+**Points communs.** Prioriser un portefeuille, construire un plan, tester des ajustements et libérer les résultats vers Order Management ; les simulations ne modifient pas seules les commandes.
+
+**Différences.** Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.
+
+**Position FLOW.** Construire et maintenir le master plan de matching qui arbitre la couverture de la demande et les affectations de ressources, en mobilisant les décisions spécialisées et en faisant appliquer les changements autorisés.
+
+[Overview of Backlog Management Processes](https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26b/faubm/overview-of-backlog-management-processes.html) — Fusion Cloud SCM 26B, consulté le 2026-09-23.
+
+**Passage.** Quatre activités : planning, review, simulation, release
+
+**Limite de preuve.** Le portefeuille de commandes ne représente pas toutes les formes de demande FLOW ; pas de plan technique unique imposé. Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.
+
+Références : ELM650, CMP269, CMP270, U673.
+
+### Microsoft — Results of DOM runs
+
+Results of DOM runs · Concept ou fonction documenté dans un produit · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Nom du sous-domaine retenu pour la responsabilité FLOW ; pas de correspondance universelle aux modules éditeurs.
+
+**Pourquoi cette définition.** Appui de Results of DOM runs : Le résultat est un plan indiquant quantités et lieux affectés ; il peut être examiné ou appliqué, avec traitement explicite de conflits et de parties non affectées. Limite de reprise dans FLOW : Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.
+
+**Points communs.** Le résultat est un plan indiquant quantités et lieux affectés ; il peut être examiné ou appliqué, avec traitement explicite de conflits et de parties non affectées.
+
+**Différences.** Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.
+
+**Position FLOW.** Construire et maintenir le master plan de matching qui arbitre la couverture de la demande et les affectations de ressources, en mobilisant les décisions spécialisées et en faisant appliquer les changements autorisés.
+
+[Results of DOM runs](https://learn.microsoft.com/en-us/dynamics365/commerce/dom-runs-results) — Documentation évolutive, mise à jour affichée le 23 janvier 2026, consulté le 2026-09-23.
+
+**Passage.** Fulfillment plans ; Order line statuses
+
+**Limite de preuve.** Plan de fulfillment Commerce ; appui partiel au master plan de matching FLOW, sans équivalence au Supply Plan U668. Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.
+
+Références : ELM654, CMP269, CMP270, U673.
+
+### SAP — Explaining Supply Assignment
+
+SAP S/4HANA — périmètre du cours cité · Mécanisme ou objet documenté dans un produit · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Le nom Demand & Supply Matching reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement cette appellation ni sa maille.
+
+**Pourquoi cette définition.** Supply Assignment affecte les ressources aux commandes et applique des priorités et critères de libération. Frontière conservée : ARun éclaire l’affectation, pas un master plan FLOW complet. BOP revoit les confirmations ; il ne doit pas être confondu avec cette affectation.
+
+**Points communs.** Supply Assignment affecte les ressources aux commandes et applique des priorités et critères de libération.
+
+**Différences.** ARun éclaire l’affectation, pas un master plan FLOW complet. BOP revoit les confirmations ; il ne doit pas être confondu avec cette affectation.
+
+**Position FLOW.** FLOW conserve le périmètre métier de Demand & Supply Matching. ARun éclaire l’affectation, pas un master plan FLOW complet. BOP revoit les confirmations ; il ne doit pas être confondu avec cette affectation.
+
+[Explaining Supply Assignment](https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4) — Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée., consulté le 2026-09-25.
+
+**Passage.** Explaining Supply Assignment — passages sur le mécanisme rapproché.
+
+**Limite de preuve.** Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement Beaumanoir déduit. ARun éclaire l’affectation, pas un master plan FLOW complet. BOP revoit les confirmations ; il ne doit pas être confondu avec cette affectation.
+
+Références : U774, CMP307, ELM208.
 
 ## Informations métier
 
@@ -30617,3 +29210,77 @@ Références : ELM283, U436, CMP184, U468.
 | Fulfillment Proposal | peut proposer la révision d’un engagement existant | Fulfillment Commitment | La proposition vise un engagement actuel ; la révision n’est pas encore confirmée. | L’engagement actuel peut rester valable pendant l’examen de la proposition. |
 | Supply Assignment | peut contribuer à honorer l’engagement | Fulfillment Commitment | Ressource affectée et conditions promises sont compatibles ; leur rattachement à la demande est établi. | L’affectation peut changer à promesse constante ; un retard peut nécessiter une nouvelle proposition sans réaffectation. |
 | Reservation | contraint l’utilisation des ressources lors de l’affectation | Supply Assignment | Les périmètres se recoupent ; le bénéficiaire et les droits concurrents sont connus. | La réservation bloque les usages concurrents ; l’affectation ne crée pas ce droit et n’est pas nécessairement déjà établie. |
+
+## Catalogue des scénarios
+
+Flux de valeur et scénarios autonomes ; les contenus proposés ne sont pas des preuves de réalisation.
+
+### Obtenir les produits commandés
+
+Produits conformes mis à disposition selon un engagement explicite.
+
+- Livrer une commande B2B avec un stock partiel (`b2b-partial-stock`) — 2 parcours.
+- Réagir à une pénurie sans confondre promesse et affectation (`shortage-reassessment`) — 1 parcours.
+- Exporter des vêtements et attendre la fin des prestations distantes (`export-remote-services`) — 1 parcours.
+- Traiter un écart de comptage avant de repromettre (`stocktaking-variance`) — 1 parcours.
+- Deux clients veulent le dernier pull (`last-item-concurrency`) — 1 parcours.
+- Comparer une substitution, un autre site et un transport express (`substitution-price-service`) — 1 parcours.
+- Approvisionner une vente et traiter une confirmation fournisseur partielle (`additional-purchase-partial`) — 1 parcours.
+- Traiter un retrait non honoré ou une livraison directe partielle (`pickup-or-direct-shipment`) — 1 parcours.
+- Sauver une livraison après une correspondance manquée (`transport-missed-connection`) — 1 parcours.
+- Scinder, regrouper ou fusionner sans perdre les engagements (`order-structuring-engaged`) — 1 parcours.
+- Libérer une préparation B2B à l’approche de sa limite d’attente (`b2b-release-deadline`) — 1 parcours.
+- Réapprovisionner un magasin ou servir une commande identifiée (`transfer-replenishment-order-driven`) — 1 parcours.
+
+### Disposer du stock nécessaire
+
+Stock utilisable au lieu et au moment nécessaires, avec droits et contraintes connus.
+
+- Vendre une partie du stock consigné puis reprendre le solde (`consignment-sale-pickup`) — 1 parcours.
+- Préparer une capsule pour l’ouverture de magasins (`fashion-launch`) — 1 parcours.
+- Réagir à une pénurie sans confondre promesse et affectation (`shortage-reassessment`) — 1 parcours.
+- Approvisionner une vente et traiter une confirmation fournisseur partielle (`additional-purchase-partial`) — 1 parcours.
+- Réexaminer une préparation après correction des données sources (`reference-plan-correction`) — 1 parcours.
+- Rééquilibrer et consolider des stocks sous protections (`redistribute-protected-stock`) — 1 parcours.
+- Composer des coffrets personnalisés puis traiter les reliquats (`gift-kits-crossdock`) — 1 parcours.
+- Distinguer transfert contractuel, transit et formalité douanière (`ownership-transit-deadline`) — 1 parcours.
+- Scinder, regrouper ou fusionner sans perdre les engagements (`order-structuring-engaged`) — 1 parcours.
+- Planifier deux chargements pour six magasins (`transport-loads-six-stores`) — 1 parcours.
+- Réapprovisionner un magasin ou servir une commande identifiée (`transfer-replenishment-order-driven`) — 1 parcours.
+- Implanter puis réalimenter un stock consigné (`consignment-launch-replenishment`) — 1 parcours.
+- Recevoir un lot partiel sans solder prématurément l’achat (`partial-receiving`) — 1 parcours.
+
+### Traiter un produit retourné ou non conforme
+
+Issue autorisée et tracée : remise en usage, réparation, remplacement, règlement ou retrait.
+
+- Remettre en vente une robe retournée (`return-fashion-recovery`) — 1 parcours.
+- Vendre une partie du stock consigné puis reprendre le solde (`consignment-sale-pickup`) — 1 parcours.
+- Suivre trois issues contractuelles d’un retour fournisseur (`supplier-return-outcomes`) — 1 parcours.
+- Retrouver les coffrets contenant un accessoire défectueux (`trace-accessory-kits`) — 1 parcours.
+- Traiter des vestes abîmées sans retour client (`damaged-stock-disposition`) — 1 parcours.
+
+### Obtenir une prestation conforme
+
+Prestation obtenue avec preuve de résultat et écarts connus.
+
+- Livrer une commande B2B avec un stock partiel (`b2b-partial-stock`) — 2 parcours.
+- Préparer une capsule pour l’ouverture de magasins (`fashion-launch`) — 1 parcours.
+- Exporter des vêtements et attendre la fin des prestations distantes (`export-remote-services`) — 1 parcours.
+- Sauver une livraison après une correspondance manquée (`transport-missed-connection`) — 1 parcours.
+- Attendre un encaissement malgré des notifications ambiguës (`remote-payment-ambiguous`) — 1 parcours.
+- Suivre trois issues contractuelles d’un retour fournisseur (`supplier-return-outcomes`) — 1 parcours.
+- Composer des coffrets personnalisés puis traiter les reliquats (`gift-kits-crossdock`) — 1 parcours.
+- Libérer une préparation B2B à l’approche de sa limite d’attente (`b2b-release-deadline`) — 1 parcours.
+- Planifier deux chargements pour six magasins (`transport-loads-six-stores`) — 1 parcours.
+- Recevoir un lot partiel sans solder prématurément l’achat (`partial-receiving`) — 1 parcours.
+
+### Disposer d’informations fiables pour décider
+
+Informations utilisables, cohérentes et assorties de leurs limites de validité.
+
+- Traiter un écart de comptage avant de repromettre (`stocktaking-variance`) — 1 parcours.
+- Attendre un encaissement malgré des notifications ambiguës (`remote-payment-ambiguous`) — 1 parcours.
+- Réexaminer une préparation après correction des données sources (`reference-plan-correction`) — 1 parcours.
+- Distinguer transfert contractuel, transit et formalité douanière (`ownership-transit-deadline`) — 1 parcours.
+- Retrouver les coffrets contenant un accessoire défectueux (`trace-accessory-kits`) — 1 parcours.

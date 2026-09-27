@@ -147,7 +147,7 @@ publication_delivery:
   - id: domain-logistics-execution
     kind: domain
     fields:
-      name: Logistics Execution
+      name: Logistics
       modeling_depth: domains
     parent: system-business-operations
     parent_type: presents
@@ -166,3 +166,8 @@ publication_delivery:
     parent: D04
     fields:
       name: Purchase Order
+  superseded_checks_U801:
+  - id: domain-logistics-execution
+    field: name
+    previous_value: Logistics Execution
+    reason: Nom retenu U801 et alignement rédactionnel ; les preuves historiques restent conservées.

@@ -1890,61 +1890,39 @@ publication_delivery:
   - id: D02.e
     fields:
       scope: |-
-        Le plan porte l’échéancier des mises à jour. Plan Application peut appliquer une partie des changements. Il distingue les changements appliqués, en attente ou refusés.
+        Déterminer quand et sur quelle partie appliquer un plan, vérifier les conditions et dépendances, puis transmettre les changements aux capacités responsables. L’application peut être immédiate, programmée, progressive ou sélective. Une application volontairement partielle se distingue d’une application incomplète après échec. Programmer les calculs du plan reste la responsabilité de [Master Planning](model:D05.f).
 
-        L’application peut être progressive selon cet échéancier ou sélective sur une partie des changements. Cette sélection volontaire est distincte d’une application incomplète provoquée par un refus. L’échéancier concerne la mise en application des changements ; [Schedule Planning](model:BHV097) programme le travail de planification. Ces modalités restent décrites dans Plan Application, sans sous-comportement.
+        [Supply Assignment](model:D03.o) choisit les liens entre ressources et besoins ; Plan Application les matérialise, les complète, les révise ou les libère. Ces liens peuvent concerner un stock présent, une arrivée attendue, une commande ou un besoin prévisionnel. Préserver temporairement un lien pendant l’application n’instaure pas un gel durable. Une affectation ne constitue ni réservation, ni promesse, ni protection de groupe.
 
-        Faire appliquer les recommandations autorisées du plan commun et établir les effets effectivement pris en compte, refusés ou partiels. Vérifier leurs conditions et interdépendances au moment de l'application ; une recommandation devenue inapplicable reste visible pour réexamen. Aucun retour arrière global ni transaction atomique du plan n'est supposé.
+        Exemples fictifs : réaffecter 40 pièces d’une arrivée ; relier 300 pièces à un besoin prévisionnel de novembre ; appliquer un partage de 150 pièces en lots de 50 et 100. Ce partage n’impose ni règle universelle ni réduction des besoins non couverts.
 
-        Les familles d'effets comprennent les liens ressources-besoins, les nouveaux apports et ajustements d'Orders, les changements autorisés d'échéanciers et de promesses et les politiques à rendre applicables. Elles décrivent le contenu de cette capacité, sans décomposition systématique. Les décisions gardent les arbitrages ; Order Management porte commandes et engagements, Inventory Management les réservations, et Policies les règles actives. Fulfilment Orchestration coordonne les prestations.
+        Les familles de commandes portent leurs engagements et changements autorisés, y compris achat, transfert et consignation. [Reservation](model:D02.c) bloque les usages concurrents ; [Policies](model:subdomain-policies) rend les règles applicables. Plan Application ne confirme pas à leur place une commande, un engagement fournisseur ou une nouvelle politique. Les décisions de promesse et de programmation restent chez leurs responsables.
 
-        L’application des affectations retenues par Supply Assignment consiste à matérialiser et maintenir les liens entre ressources présentes ou futures et commandes ou besoins prévisionnels identifiés, même avant toute commande. Compléter des liens existants, réaffecter ou libérer ceux qui sont modifiables restent des modalités combinables. Seule la réservation bloque les usages concurrents ; l'affectation ne crée ni réservation ni promesse. Une prévision ne devient pas une commande du seul fait d'un lien de couverture. Les protections de groupe et gels restent applicables ; préserver un lien pendant un traitement ne crée pas un gel durable.
+        Suivre les changements acceptés, refusés et encore attendus. Une acceptation technique ne prouve pas l’effet métier ni l’exécution physique. Exemple fictif : un transfert de 30 pièces est accepté, un achat de 70 est rejeté ; conserver ce résultat partiel et traiter les 70 restantes. Le suivi permet d’ajuster la suite sans rollback global implicite ni redéfinition silencieuse du plan.
 
-        Exemples fictifs : affecter 40 pièces d'un arrivage à une commande puis en changer la provenance admissible ; lier 300 pièces attendues aux ventes web encore prévues en novembre. Pour des besoins de 100 et 200 et une ressource de 150, un prorata illustratif de 50 et 100 serait choisi par les décisions, puis matérialisé ici ; il ne réduit pas les demandes ni ne prescrit une politique universelle.
+        L’autorisation peut être humaine ou fondée sur des règles selon le changement, les échéances, les partenaires et les contrôles applicables. Examiner chaque portion d’une commande partiellement engagée : une portion non commencée n’est pas automatiquement modifiable. [Fulfilment Orchestration](model:D06) traite les adaptations, arrêts et reprises de réalisation. Conserver les faits déjà réalisés et expliciter tout effet inverse autorisé. Une exigence de livraison complète peut lier plusieurs portions.
 
-        [Purchase Order](model:D04.j), [Transfer Order](model:D04.k), [Consignment Fill-up Order](model:D04.r) et [les familles d’Orders](model:D04) portent les demandes et leurs changements autorisés. [les engagements portés par les Orders](model:D04) porte les propositions et engagements de satisfaction ; une affectation peut changer sans modifier la promesse, et réciproquement. [Reservation](model:D02.c) tient les engagements de réservation. [Supply Protection Policy](model:D02.b) et les autres capacités Policy mettent en vigueur les règles retenues. L'application les mobilise sans transférer leur responsabilité et sans créer un engagement fournisseur implicite.
-
-        Le résultat et les écarts alimentent [Monitor Plan](model:BHV101) et [Adjust Plan](model:BHV016). Une sollicitation acceptée n'établit pas l'application complète ; l'application partielle ne devient pas silencieusement un nouveau plan. La réalisation physique reste distincte. Exemple fictif : un transfert de 30 pièces est pris en compte mais un achat de 70 est refusé ; conserver le transfert et le refus, rendre visible le manque et faire réexaminer les possibilités. Une politique appliquée et un transfert partiel sont également deux résultats distincts ; le reliquat reste explicite.
-
-        Plan Application vérifie ou recueille les autorisations nécessaires à l’application des changements sélectionnés, puis fait appliquer ceux qui sont autorisés. Une autorisation ne prouve pas leur prise en compte effective. Les capacités responsables conservent l’autorisation de modifier leurs commandes, promesses ou politiques. L’autorisation peut être humaine ou fondée sur des règles, et différer selon les changements et leurs échéances ; elle ne remplace pas les contrôles des partenaires.
-
-        Pour une commande partiellement engagée, faire examiner chaque changement à la maille de la partie concernée, selon son état réel, ses engagements, protections et dépendances. Une partie non démarrée peut être révisée sous ces conditions ; une partie engagée exige d’examiner les possibilités d’adaptation, d’arrêt ou de reprise avec Fulfilment. Conserver les effets réalisés et traiter explicitement toute correction ou opération inverse. Une livraison complète peut lier les quantités non démarrées aux quantités déjà préparées.
-
-        Supply Assignment choisit les liens ; Plan Application en matérialise les changements autorisés et vérifie leur prise en compte. Les propriétaires des Orders, réservations et politiques conservent leur autorité. La promotion en capacité est locale au Matching et ne généralise pas ce découpage à tout Planning.
+        Les adaptations locales de réalisation ne passent pas toutes par un nouveau plan. Lorsqu’elles nécessitent un nouvel arbitrage entre demandes et ressources, les capacités de décision concernées le produisent avant son application.
   - id: D05.e
     fields:
       scope: |-
-        Déterminer les apports initiaux d’[implantation](glossary:TER079), les apports successifs de [réassort](glossary:TER080) et leurs ajustements. Chez Beaumanoir, l’alimentation continue des magasins est guidée par des seuils ; la cadence de révision, les formules et le degré d’automatisation ne sont pas imposés par ce constat. Le réapprovisionnement continu peut aussi concerner les stocks du réseau et les compléments fournisseur déjà couverts par cette capacité.
+        Couvrir l’implantation initiale et le réassort pendant la commercialisation, à partir du réseau de stocks et des compléments fournisseurs possibles. Dans le contexte Beaumanoir documenté, le réassort continu des magasins utilise des seuils ; cela ne fixe ni formule, ni cadence, ni automatisation universelle.
 
-        **Politique selon les besoins datés.** Déterminer les apports nécessaires à partir des besoins nets et de leurs dates. Les besoins peuvent être traités individuellement ou regroupés dans une période lorsque les contraintes le permettent ; cette agrégation ne justifie pas un comportement par cadence. Exemple fictif : 120 pièces nécessaires à J+7, 70 utilisables et 20 attendues à temps conduisent à examiner un apport complémentaire de 30, avant contraintes de lot et de délai.
+        Le calcul fondé sur les besoins déduit les quantités admissibles et attendues à temps. Exemple fictif : un besoin de 120 pièces à J+7, avec 70 disponibles et 20 attendues, laisse 30 pièces à couvrir avant contraintes de lot et de délai. Les besoins peuvent être regroupés par période sans créer un comportement par cadence.
 
-        **Politique selon un seuil et une cible.** Déterminer l’apport lorsqu’une position de stock projetée passe sous le seuil applicable, pour retrouver la cible retenue. Exemple fictif : position projetée de 50, seuil de 60 et cible de 100 conduisent à proposer 50 en l’absence d’autres besoins ou restrictions. Si les apports doivent être des multiples de 12, examiner 60 et l’excédent associé. Il ne s’agit pas d’une formule Min/Max universelle.
+        Le calcul fondé sur une cible détermine l’apport nécessaire quand la position passe sous le seuil. Exemple fictif : avec 50 pièces projetées, un seuil de 60 et une cible de 100, l’apport calculé est de 50. Un conditionnement par 12 conduit à examiner 60 pièces et leur excédent. Ce mécanisme n’impose pas une règle seuil de déclenchement et cible de réassort à toutes les situations.
 
-        [Inventory Target Optimization](model:D05.a) détermine les objectifs et seuils, qui peuvent dépendre des besoins et varier par produit, lieu et période ; ils ne sont pas présumés stables ou indépendants de la demande. [Supply Protection Policy](model:D02.b) gouverne et applique les versions opérationnelles de ces paramètres. Replenishment les utilise pour déterminer les quantités et dates d’apport. Les deux politiques ci-dessus ne forment pas une chaîne où les apports calculés par la première détermineraient les seuils de la seconde.
+        [Inventory Target Optimization](model:D05.a) détermine les cibles et seuils ; [Supply Protection Policy](model:D02.b) tient les valeurs applicables ; [Replenishment](glossary:TER074) détermine les apports. Tenir compte des produits, lieux, périodes, stocks admissibles, arrivées à temps, engagements, protections et contraintes. Ne pas déduire deux fois une arrivée ni recompter un besoin déjà intégré dans la cible. Le calcul net fait partie de cette décision.
 
-        Dans les deux politiques, évaluer le stock admissible, les entrées attendues à temps, les actions déjà engagées et les contraintes. Préciser l’horizon, la maille et les règles d’admissibilité ; ne pas déduire deux fois des demandes déjà intégrées à une cible ou couvrir deux fois le même manque. Une décision intègre ses calculs ; aucune capacité Calculation autonome.
+        Ajuster aussi les apports existants : augmenter, réduire, avancer, reporter ou annuler ce qui peut l’être. Exemple fictif : la cible passe de 100 à 80, avec 30 pièces présentes et 70 attendues. Examiner une réduction ou un report de 20 ; si l’engagement fournisseur l’interdit, rendre l’excédent visible. La décision ne modifie pas automatiquement une commande ferme.
 
-        **Ajustement des apports existants.** Réexaminer les apports prévus ou engagés lorsqu’évoluent besoins, cibles ou contraintes. Recommander une augmentation, une réduction, une avance, un report ou, si pertinent, une annulation admissible ; ce n’est pas un mécanisme limité à la création de commandes supplémentaires. Exemple fictif : la cible passe de 100 à 80, alors que 30 pièces sont présentes et 70 attendues. Examiner une réduction ou un report de 20. Si l’engagement fournisseur empêche la modification, expliciter l’excédent résiduel et les options encore possibles. Aucune modification d’un Order ferme n’est déduite du seul recalcul.
+        Les trois comportements — calcul par besoins, calcul par cible et ajustement — peuvent se combiner sans séquence obligatoire. Préserver les apports déjà engagés. [Stock Redistribution](model:D05.c) arbitre la redistribution du stock existant ; un transfert peut servir les deux finalités, sans doubler l’apport. Les propositions d’achat du domaine [Plan](model:domain-plan) sont prises en compte ; une révision du calcul amont retourne à ce domaine.
 
-        [Replenishment](model:D05.e) conserve les apports de lancement. Le réassort tient compte des apports d’implantation encore attendus, sans les recréer. [Stock Redistribution](model:D05.c) examine le rééquilibrage du stock existant ; coordonner les résultats pour éviter les doublons. Un transfert peut matérialiser un apport courant ou une redistribution selon sa finalité.
+        Pour une implantation, déterminer produits, variantes, quantités, dates et besoins non couverts de chaque point. Les assortiments et cibles sont des entrées, non des choix refaits ici. Le contexte documenté distingue saisons été et hiver ; il ne suffit pas à conclure à un fonctionnement par capsules. Tailles, couleurs et conditionnements contraignent le résultat sans créer automatiquement des comportements.
 
-        Les résultats précisent quantités, dates et ajustements recommandés. [Order Management](model:D04) et [les familles d’Orders](model:D04) vérifient et appliquent les changements autorisés, avec les accords et protections applicables. [Demand & Supply Matching](model:D03) décide de la satisfaction des demandes et D06 orchestre les services et leur adaptation. La recommandation ne crée ni promesse, ni modification automatique d’un Order, ni mouvement physique. Une application automatisée reste possible selon les règles et autorités ; le porteur détaillé du déclenchement reste à préciser.
+        Exemple fictif : au 1er mars, une cible de 100 pièces, 20 présentes et 30 attendues laissent 50 à apporter. Si seules 40 sont accessibles, expliciter les 10 manquantes et les options, sans changer la cible ni annoncer une promesse. Un complément tardif destiné à achever l’implantation reste qualifié par cette finalité. Les apports initiaux engagés restent visibles pour le réassort ultérieur.
 
-        U427 adopte trois comportements : Requirement-based Replenishment, Target-based Replenishment et Replenishment Adjustment. Les deux premiers rendent explicites des politiques distinctes de détermination des apports ; le troisième révise les apports existants et se combine avec les deux. Cette décomposition remplace la conclusion de non-décomposition U425 ; les codes, paramètres et formules produits ne créent pas de sous-comportement. Le point réassort de l’audit est traité, sans présumer une couverture exhaustive du marché.
-
-        Frontière U673 : Les compléments fournisseur ne dupliquent pas les achats projetés par l’APS. Garder les arbitrages opérationnels de couverture et remonter les besoins de révision du plan externe.
-
-        Implantation initiale : Décider les apports d’[implantation](glossary:TER079) destinés à constituer le stock de départ de chaque magasin à la date de lancement. Chez Beaumanoir, les deux saisons été/hiver constituent le contexte rapporté ; collections, capsules ou périodes plus fines sont des extensions possibles, pas des pratiques actuelles déduites. Le résultat précise produits ou variantes, magasins, quantités, dates et éventuels besoins non couverts.
-
-        L’assortiment retenu, les objectifs de stock et les contraintes constituent les entrées. [Inventory Target Optimization](model:D05.a) conserve la détermination des cibles ; cette décision détermine les apports pour les atteindre au lancement. Examiner stock déjà présent et admissible, apports attendus à temps, conditionnements, protections et contraintes de disponibilité. Le calcul net fait partie de la décision ; ne pas compter deux fois les mêmes entrées.
-
-        Exemple fictif : pour un lancement au 1er mars, une cible de 100 pièces, 20 pièces admissibles déjà présentes et 30 attendues à temps laissent 50 pièces à apporter. Si seulement 40 peuvent être disponibles, expliciter le manque de 10 et les options à examiner ; ne pas annoncer implicitement une promesse ni modifier la cible sans mobiliser la décision responsable. Les tailles, couleurs et conditionnements peuvent contraindre le résultat sans constituer automatiquement des comportements supplémentaires.
-
-        Au sein de Replenishment, la finalité distingue l’implantation initiale du réassort en cours de commercialisation. Un complément tardif destiné à achever la mise en place initiale reste à qualifier selon cette finalité ; la date seule ne suffit pas à le transformer en réassort. Les apports d’implantation engagés restent visibles pour les décisions ultérieures de réassort, afin d’éviter les doublons.
-
-        [Master Planning](model:D05.f) mobilise la décision pour ses scénarios. D04 gère les Orders nécessaires, D03 décide comment les satisfaire et D06 pilote les prestations ; retenir ces apports ne réalise ni livraison ni mise en rayon. [Plan Application](model:D02.e) conserve l’affectation des ressources aux commandes. Le choix de l’assortiment et la planification commerciale de saison ne deviennent pas des responsabilités de cette capacité.
-
-        Frontière U673 : La frontière avec le calcul externe est la suivante : déterminer et ajuster les apports de couverture du lancement, sans recalculer l’assortiment ni le plan prévisionnel amont.
+        [Master Planning](model:D05.f) mobilise cette décision dans ses scénarios. Les commandes portent les apports et changements autorisés ; [Supply Assignment](model:D03.o) choisit les affectations et [Plan Application](model:D02.e) les matérialise. [Fulfilment Orchestration](model:D06) coordonne la réalisation. Le résultat exprime quantités, dates, ajustements et manques ; il ne crée pas à lui seul une commande, une promesse ou une livraison. Une application automatique reste possible selon les règles et responsabilités autorisées. Le choix de l’assortiment, la planification commerciale, la prévision amont et la mise en rayon gardent leurs propres responsabilités.
   - id: D05.f
     fields:
       scope: |-
@@ -1954,9 +1932,9 @@ publication_delivery:
 
         [Simulation & Analysis](model:BHV006) compare les scénarios ; [Plan Application](model:D02.e) fait appliquer les changements autorisés. Ces capacités coopèrent au même plan sans être des sous-capacités de Master Planning. Aucun moteur unique ni ordre universel des calculs n’est imposé.
 
-        Scope, Schedule, Run, Stop, Rerun, Monitor et Adjust décrivent les pratiques de pilotage. Arrêter un calcul n’annule pas ses effets appliqués. Adjust Plan prépare les révisions en préservant les effets acquis et en faisant examiner les impacts sur les commandes. La comparaison des décalages relève de Simulation & Analysis et le choix des liens révisés de Supply Assignment.
+        Scope, Schedule, Run, Stop, Rerun, Monitor et Adjust décrivent les pratiques de pilotage. Arrêter un calcul n’annule pas ses effets appliqués. Adjust Plan prépare les révisions en préservant les effets acquis et en faisant examiner les impacts sur les commandes. La comparaison des décalages relève de Simulation & Analysis et le choix des liens révisés de [Supply Assignment](glossary:TER017).
 
-        Exemple : une réception retardée déclenche un réexamen ciblé ; comparer les alternatives, retenir un plan cohérent, puis faire appliquer les changements autorisés. Les confirmations restent portées par les Orders ; ATP/CTP/PTP et le réexamen de promesse relèvent d’[Order Promising](model:subdomain-order-promising). Le plan interne ne remplace pas l’APS et Fulfilment conserve les adaptations locales.
+        Exemple : une réception retardée déclenche un réexamen ciblé ; comparer les alternatives, retenir un plan cohérent, puis faire appliquer les changements autorisés. Les confirmations restent portées par les [Orders](glossary:TER012) ; [ATP](glossary:TER044)/[CTP](glossary:TER045)/[PTP](glossary:TER068) et le réexamen de promesse relèvent d’[Order Promising](model:subdomain-order-promising). Le plan interne ne remplace pas la planification externe et [Fulfilment](glossary:TER085) conserve les adaptations locales.
 
         Le [Matching Master Plan](glossary:TER100) est le plan interne commun ; les [Supply Plans](glossary:TER098) et [Demand Plans](glossary:TER099) sont des informations externes consommées. Cette séparation est propre au périmètre FLOW et ne recopie pas tous les calculs regroupés dans le master planning Microsoft.
   - id: D07.c
@@ -1964,13 +1942,13 @@ publication_delivery:
       scope: |-
         Rapprocher production, préparation, expédition, réception, consommation et résultats documentaires des prestations demandées et engagées. Les quantités manquantes, écarts et résultats partiels sont qualifiés à la maille pertinente.
 
-        Exemple : 80 unités sont reçues sur les 100 attendues ; qualifier l’écart de prestation et en transmettre les faits à la commande concernée. D04 conserve le reliquat de l’Order et D01 la représentation des mouvements de stock. Les cinq contributions existantes vers les capacités par type d’Order sont conservées, avec leur statut proposé. Operations Tracking intègre les faits ; Operations Visibility restitue l’avancement ; Service Reconciliation qualifie le réalisé au regard de l’attendu.
+        Exemple : 80 unités sont reçues sur les 100 attendues ; qualifier l’écart de prestation et en transmettre les faits à la commande concernée. [Order Management](model:D04) conserve le reliquat de l’[Order](glossary:TER012) et [Inventory Management](model:D01) la représentation des mouvements de stock. Les cinq contributions existantes vers les capacités par type d’[Order](glossary:TER012) sont conservées, avec leur statut proposé. Operations Tracking intègre les faits ; Operations Visibility restitue l’avancement ; Service Reconciliation qualifie le réalisé au regard de l’attendu.
 
-        Frontière : Reliquat prestation différent du reliquat Order ; le rapprochement bancaire ou comptable reste externe.
+        Frontière : Reliquat prestation différent du reliquat [Order](glossary:TER012) ; le rapprochement bancaire ou comptable reste externe.
 
-        Frontière U673 : Fournir les écarts aux Orders et les faits à Inventory ; ne pas tenir à leur place le reliquat commande ou le stock.
+        Fournir les écarts aux [Orders](glossary:TER012) et les faits à Inventory ; ne pas tenir à leur place le reliquat commande ou le stock.
 
-        Fournir les faits ou écarts qualifiés à Service Order Management pour les suites des ordres de prestation ; ne pas dupliquer la tenue de leurs engagements individuels.
+        Fournir les faits ou écarts qualifiés à [Service Order Management](model:subdomain-service-orders) pour les suites des ordres de prestation ; ne pas dupliquer la tenue de leurs engagements individuels.
 
         Pour une prestation d’encaissement, rapprocher la demande du résultat métier communiqué par le service financier : montant confirmé, partiel, rejeté ou non encore qualifié. Ce contrôle du résultat confié ne certifie ni écriture comptable, ni règlement bancaire, ni affectation à une créance. Une notification dupliquée ne produit pas un second résultat.
   - id: D06.d
@@ -1978,19 +1956,19 @@ publication_delivery:
       definition: Coordonner le déclenchement, les dépendances et la progression des prestations jusqu’aux résultats attendus,
         en tenant compte des faits d’exécution et des adaptations autorisées.
       scope: |-
-        Coordonner le déclenchement et l’enchaînement des prestations du plan retenu, en tenant compte de leurs dépendances, des prises en charge et des faits d’exécution. Mobiliser les familles de Service Orders pour tenir les demandes et leurs évolutions.
+        Coordonner le déclenchement et l’enchaînement des prestations du plan retenu, en tenant compte de leurs dépendances, des prises en charge et des faits d’exécution. Mobiliser les familles de [Service Orders](glossary:TER066) pour tenir les demandes et leurs évolutions.
 
         Exemple : coordonner la préparation, la disponibilité du document et la collecte. Si la décision d’adaptation retient un autre transporteur, coordonner la modification des prestations concernées et leur nouvel enchaînement.
 
         La détermination de la variation du plan appartient à Process Adaptation Decision. L’orchestration peut lui transmettre un aléa, mais ne porte plus cette décision dans sa propre définition. Les exécutants conservent l’organisation de leurs opérations internes. Aucun moteur de workflow, contrôle humain systématique ou rollback physique universel n’est présumé.
 
-        Frontière : Décision D06.f séparée ; pas de rollback physique ni seconde promesse.
+        Frontière : Décision [Process Adaptation Decision](model:D06.f) séparée ; pas de rollback physique ni seconde promesse.
 
-        Convention U409 : le Process orchestre des Services. Les Tasks expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; Operations Tracking intègre les faits d’exécution ; Operations Visibility restitue leur avancement et Process Visibility en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
+        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; Operations Tracking intègre les faits d’exécution ; Operations Visibility restitue leur avancement et Process Visibility en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
 
-        Frontière U673 : Distinguer le plan d’exécution coordonné du master plan de matching arbitré dans Matching.
+        Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Matching](glossary:TER112).
 
-        Service Order Management tient le cycle et les engagements des ordres de prestation. L’orchestration utilise leurs réponses et coordonne les conditions d’activation et dépendances ; elle ne recrée pas leur cycle.
+        [Service Order Management](model:subdomain-service-orders) tient le cycle et les engagements des ordres de prestation. L’orchestration utilise leurs réponses et coordonne les conditions d’activation et dépendances ; elle ne recrée pas leur cycle.
 
         U706/U709 : Coordonner aussi les prestations exécutées à distance : solliciter le service, attendre son résultat métier et poursuivre le flux selon ce résultat. Une acceptation du déclenchement ne vaut pas réalisation.
 
@@ -2003,64 +1981,192 @@ publication_delivery:
       scope: |-
         Porter l’origine attendue, les articles et quantités, le lieu, les créneaux, les consignes de prise en charge et les preuves attendues. Suivre acceptation, révisions, annulation, réception partielle et clôture avec le reste à réaliser. Une annonce d’arrivée ou un document ne prouve pas la réception.
 
-        Une demande de réception peut être liée à un Purchase Order, Transfer Order, Return Order ou apport consigné ; elle ne remplace pas leurs engagements. Le prestataire reçoit physiquement et organise ses tâches internes. Une inspection autonome peut être confiée à Inspection Order ; un contrôle intégré demeure dans la réception. Receiving Order ne décide pas du devenir d’un retour et ne garantit pas que le stock est vendable.
+        Une demande de réception peut être liée à un [Purchase Order](glossary:TER070), [Transfer Order](glossary:TER071), [Return Order](glossary:TER072) ou apport consigné ; elle ne remplace pas leurs engagements. Le prestataire reçoit physiquement et organise ses tâches internes. Une inspection autonome peut être confiée à [Inspection Order](model:service-order-inspection) ; un contrôle intégré demeure dans la réception. [Receiving Order](model:service-order-receiving) ne décide pas du devenir d’un retour et ne garantit pas que le stock est vendable.
 
-        Fulfilment Orchestration coordonne les prestations. Operations Tracking capte leur résultat et Service Reconciliation qualifie l’écart ; Receiving Order tient le solde de sa prestation. Inventory Tracking et Inventory Ledger prennent en compte les faits de stock reconnus. L’instruction de réception ne crée ni mouvement, ni changement automatique de propriété, ni nouvel achat.
+        [Fulfilment Orchestration](model:D06) coordonne les prestations. Operations Tracking capte leur résultat et Service Reconciliation qualifie l’écart ; [Receiving Order](model:service-order-receiving) tient le solde de sa prestation. Inventory Tracking et [Inventory Ledger](glossary:TER056) prennent en compte les faits de stock reconnus. L’instruction de réception ne crée ni mouvement, ni changement automatique de propriété, ni nouvel achat.
 
-        Créer cet Order lorsqu’une réception est explicitement confiée et suivie comme prestation. Recevoir seulement une notification ne justifie pas un ordre artificiel. Aucune famille supplémentaire de rangement ou de stockage ni réalisation Beaumanoir n’est déduite.
+        Créer cet [Order](glossary:TER012) lorsqu’une réception est explicitement confiée et suivie comme prestation. Recevoir seulement une notification ne justifie pas un ordre artificiel. Aucune famille supplémentaire de rangement ou de stockage ni réalisation Beaumanoir n’est déduite.
       nature: action
       category:
         id: warehouse
         display_name: Prestations d’entrepôt
         order: 10
+    superseded_field_checks:
       examples:
-      - id: partial-receiving
-        title: Recevoir un lot partiel sans solder prématurément l’achat
-        situation: Illustration FLOW fictive. Un fournisseur doit livrer 100 vestes. L’entrepôt est chargé de les recevoir
-          ; 80 arrivent, dont 5 attendent un contrôle de conformité.
-        steps:
-        - title: Confier la réception
-          description: Le créneau, les 100 vestes attendues et les consignes sont transmis au prestataire.
-          outcome: L’achat et la prestation de réception possèdent des engagements liés mais distincts.
-          contributions:
-          - node_id: D04.j
-            role: Porter les 100 vestes dues par le fournisseur.
-          - node_id: service-order-receiving
-            role: Porter la réception confiée et ses conditions.
-          - node_id: D06.d
-            role: Coordonner la prise en charge et les dépendances.
-        - title: Qualifier les 80 arrivées
-          description: Le prestataire confirme 80 reçues et signale les 5 à contrôler.
-          outcome: Réception et disponibilité vendable sont distinguées.
-          contributions:
-          - node_id: D07.d
-            role: Intégrer le résultat communiqué.
-          - node_id: D07.c
-            role: Rapprocher résultat et prestation attendue.
-          - node_id: service-order-inspection
-            role: Porter le contrôle autonome si celui-ci est explicitement confié.
-        - title: Tenir les deux soldes et le stock
-          description: La prestation conserve 20 à recevoir si aucune clôture partielle n’est autorisée ; l’achat reste également
-            à rapprocher du solde fournisseur.
-          outcome: 80 pièces reçues ne deviennent ni 100 reçues ni 80 immédiatement vendables.
-          contributions:
-          - node_id: service-order-receiving
-            role: Tenir le solde et la clôture autorisée de la prestation.
-          - node_id: D04.j
-            role: Tenir le reste dû selon l’engagement fournisseur.
-          - node_id: D01.f
-            role: Intégrer les faits de stock.
-          - node_id: D01.g
-            role: Enregistrer les états reconnus.
-          - node_id: D01.c
-            role: Exposer les positions selon leur disponibilité reconnue.
-        outcome: La prestation, l’achat et le stock portent des résultats cohérents sans fusionner leurs responsabilités.
-        validation_points:
-        - Une instruction ne vaut pas réception.
-        - Le solde de prestation, le solde achat et le stock disponible sont distincts.
-        - La réception ne transfère pas automatiquement la propriété.
-        source_refs:
-        - U771
+        expected_value:
+        - id: partial-receiving
+          title: Recevoir un lot partiel sans solder prématurément l’achat
+          situation: Illustration FLOW fictive. Un fournisseur doit livrer 100 vestes. L’entrepôt est chargé de les recevoir
+            ; 80 arrivent, dont 5 attendent un contrôle de conformité.
+          steps:
+          - title: Confier la réception
+            description: Le créneau, les 100 vestes attendues et les consignes sont transmis au prestataire.
+            outcome: L’achat et la prestation de réception possèdent des engagements liés mais distincts.
+            contributions:
+            - node_id: D04.j
+              role: Porter les 100 vestes dues par le fournisseur.
+            - node_id: service-order-receiving
+              role: Porter la réception confiée et ses conditions.
+            - node_id: D06.d
+              role: Coordonner la prise en charge et les dépendances.
+          - title: Qualifier les 80 arrivées
+            description: Le prestataire confirme 80 reçues et signale les 5 à contrôler.
+            outcome: Réception et disponibilité vendable sont distinguées.
+            contributions:
+            - node_id: D07.d
+              role: Intégrer le résultat communiqué.
+            - node_id: D07.c
+              role: Rapprocher résultat et prestation attendue.
+            - node_id: service-order-inspection
+              role: Porter le contrôle autonome si celui-ci est explicitement confié.
+          - title: Tenir les deux soldes et le stock
+            description: La prestation conserve 20 à recevoir si aucune clôture partielle n’est autorisée ; l’achat reste
+              également à rapprocher du solde fournisseur.
+            outcome: 80 pièces reçues ne deviennent ni 100 reçues ni 80 immédiatement vendables.
+            contributions:
+            - node_id: service-order-receiving
+              role: Tenir le solde et la clôture autorisée de la prestation.
+            - node_id: D04.j
+              role: Tenir le reste dû selon l’engagement fournisseur.
+            - node_id: D01.f
+              role: Intégrer les faits de stock.
+            - node_id: D01.g
+              role: Enregistrer les états reconnus.
+            - node_id: D01.c
+              role: Exposer les positions selon leur disponibilité reconnue.
+          outcome: La prestation, l’achat et le stock portent des résultats cohérents sans fusionner leurs responsabilités.
+          validation_points:
+          - Une instruction ne vaut pas réception.
+          - Le solde de prestation, le solde achat et le stock disponible sont distincts.
+          - La réception ne transfère pas automatiquement la propriété.
+          source_refs:
+          - U771
+        superseded_by: U793
+        reason: Migration vers scenario_catalog ; le contrat exact des cibles est contrôlé dans scenario-migration-U793.yaml.
+          Ce contrôle historique est conservé, sans réactivation ni nouvel accord.
+  editorial_superseded_checks_U797:
+  - id: D02.e
+    field: scope
+    previous_value: |-
+      Le plan porte l’échéancier des mises à jour. Plan Application peut appliquer une partie des changements. Il distingue les changements appliqués, en attente ou refusés.
+
+      L’application peut être progressive selon cet échéancier ou sélective sur une partie des changements. Cette sélection volontaire est distincte d’une application incomplète provoquée par un refus. L’échéancier concerne la mise en application des changements ; [Schedule Planning](model:BHV097) programme le travail de planification. Ces modalités restent décrites dans Plan Application, sans sous-comportement.
+
+      Faire appliquer les recommandations autorisées du plan commun et établir les effets effectivement pris en compte, refusés ou partiels. Vérifier leurs conditions et interdépendances au moment de l'application ; une recommandation devenue inapplicable reste visible pour réexamen. Aucun retour arrière global ni transaction atomique du plan n'est supposé.
+
+      Les familles d'effets comprennent les liens ressources-besoins, les nouveaux apports et ajustements d'Orders, les changements autorisés d'échéanciers et de promesses et les politiques à rendre applicables. Elles décrivent le contenu de cette capacité, sans décomposition systématique. Les décisions gardent les arbitrages ; Order Management porte commandes et engagements, Inventory Management les réservations, et Policies les règles actives. Fulfilment Orchestration coordonne les prestations.
+
+      L’application des affectations retenues par Supply Assignment consiste à matérialiser et maintenir les liens entre ressources présentes ou futures et commandes ou besoins prévisionnels identifiés, même avant toute commande. Compléter des liens existants, réaffecter ou libérer ceux qui sont modifiables restent des modalités combinables. Seule la réservation bloque les usages concurrents ; l'affectation ne crée ni réservation ni promesse. Une prévision ne devient pas une commande du seul fait d'un lien de couverture. Les protections de groupe et gels restent applicables ; préserver un lien pendant un traitement ne crée pas un gel durable.
+
+      Exemples fictifs : affecter 40 pièces d'un arrivage à une commande puis en changer la provenance admissible ; lier 300 pièces attendues aux ventes web encore prévues en novembre. Pour des besoins de 100 et 200 et une ressource de 150, un prorata illustratif de 50 et 100 serait choisi par les décisions, puis matérialisé ici ; il ne réduit pas les demandes ni ne prescrit une politique universelle.
+
+      [Purchase Order](model:D04.j), [Transfer Order](model:D04.k), [Consignment Fill-up Order](model:D04.r) et [les familles d’Orders](model:D04) portent les demandes et leurs changements autorisés. [les engagements portés par les Orders](model:D04) porte les propositions et engagements de satisfaction ; une affectation peut changer sans modifier la promesse, et réciproquement. [Reservation](model:D02.c) tient les engagements de réservation. [Supply Protection Policy](model:D02.b) et les autres capacités Policy mettent en vigueur les règles retenues. L'application les mobilise sans transférer leur responsabilité et sans créer un engagement fournisseur implicite.
+
+      Le résultat et les écarts alimentent [Monitor Plan](model:BHV101) et [Adjust Plan](model:BHV016). Une sollicitation acceptée n'établit pas l'application complète ; l'application partielle ne devient pas silencieusement un nouveau plan. La réalisation physique reste distincte. Exemple fictif : un transfert de 30 pièces est pris en compte mais un achat de 70 est refusé ; conserver le transfert et le refus, rendre visible le manque et faire réexaminer les possibilités. Une politique appliquée et un transfert partiel sont également deux résultats distincts ; le reliquat reste explicite.
+
+      Plan Application vérifie ou recueille les autorisations nécessaires à l’application des changements sélectionnés, puis fait appliquer ceux qui sont autorisés. Une autorisation ne prouve pas leur prise en compte effective. Les capacités responsables conservent l’autorisation de modifier leurs commandes, promesses ou politiques. L’autorisation peut être humaine ou fondée sur des règles, et différer selon les changements et leurs échéances ; elle ne remplace pas les contrôles des partenaires.
+
+      Pour une commande partiellement engagée, faire examiner chaque changement à la maille de la partie concernée, selon son état réel, ses engagements, protections et dépendances. Une partie non démarrée peut être révisée sous ces conditions ; une partie engagée exige d’examiner les possibilités d’adaptation, d’arrêt ou de reprise avec Fulfilment. Conserver les effets réalisés et traiter explicitement toute correction ou opération inverse. Une livraison complète peut lier les quantités non démarrées aux quantités déjà préparées.
+
+      Supply Assignment choisit les liens ; Plan Application en matérialise les changements autorisés et vérifie leur prise en compte. Les propriétaires des Orders, réservations et politiques conservent leur autorité. La promotion en capacité est locale au Matching et ne généralise pas ce découpage à tout Planning.
+    reason: Reprise éditoriale U797 ; ne vaut pas approbation de la nouvelle rédaction.
+  - id: D05.e
+    field: scope
+    previous_value: |-
+      Déterminer les apports initiaux d’[implantation](glossary:TER079), les apports successifs de [réassort](glossary:TER080) et leurs ajustements. Chez Beaumanoir, l’alimentation continue des magasins est guidée par des seuils ; la cadence de révision, les formules et le degré d’automatisation ne sont pas imposés par ce constat. Le réapprovisionnement continu peut aussi concerner les stocks du réseau et les compléments fournisseur déjà couverts par cette capacité.
+
+      **Politique selon les besoins datés.** Déterminer les apports nécessaires à partir des besoins nets et de leurs dates. Les besoins peuvent être traités individuellement ou regroupés dans une période lorsque les contraintes le permettent ; cette agrégation ne justifie pas un comportement par cadence. Exemple fictif : 120 pièces nécessaires à J+7, 70 utilisables et 20 attendues à temps conduisent à examiner un apport complémentaire de 30, avant contraintes de lot et de délai.
+
+      **Politique selon un seuil et une cible.** Déterminer l’apport lorsqu’une position de stock projetée passe sous le seuil applicable, pour retrouver la cible retenue. Exemple fictif : position projetée de 50, seuil de 60 et cible de 100 conduisent à proposer 50 en l’absence d’autres besoins ou restrictions. Si les apports doivent être des multiples de 12, examiner 60 et l’excédent associé. Il ne s’agit pas d’une formule Min/Max universelle.
+
+      [Inventory Target Optimization](model:D05.a) détermine les objectifs et seuils, qui peuvent dépendre des besoins et varier par produit, lieu et période ; ils ne sont pas présumés stables ou indépendants de la demande. [Supply Protection Policy](model:D02.b) gouverne et applique les versions opérationnelles de ces paramètres. Replenishment les utilise pour déterminer les quantités et dates d’apport. Les deux politiques ci-dessus ne forment pas une chaîne où les apports calculés par la première détermineraient les seuils de la seconde.
+
+      Dans les deux politiques, évaluer le stock admissible, les entrées attendues à temps, les actions déjà engagées et les contraintes. Préciser l’horizon, la maille et les règles d’admissibilité ; ne pas déduire deux fois des demandes déjà intégrées à une cible ou couvrir deux fois le même manque. Une décision intègre ses calculs ; aucune capacité Calculation autonome.
+
+      **Ajustement des apports existants.** Réexaminer les apports prévus ou engagés lorsqu’évoluent besoins, cibles ou contraintes. Recommander une augmentation, une réduction, une avance, un report ou, si pertinent, une annulation admissible ; ce n’est pas un mécanisme limité à la création de commandes supplémentaires. Exemple fictif : la cible passe de 100 à 80, alors que 30 pièces sont présentes et 70 attendues. Examiner une réduction ou un report de 20. Si l’engagement fournisseur empêche la modification, expliciter l’excédent résiduel et les options encore possibles. Aucune modification d’un Order ferme n’est déduite du seul recalcul.
+
+      [Replenishment](model:D05.e) conserve les apports de lancement. Le réassort tient compte des apports d’implantation encore attendus, sans les recréer. [Stock Redistribution](model:D05.c) examine le rééquilibrage du stock existant ; coordonner les résultats pour éviter les doublons. Un transfert peut matérialiser un apport courant ou une redistribution selon sa finalité.
+
+      Les résultats précisent quantités, dates et ajustements recommandés. [Order Management](model:D04) et [les familles d’Orders](model:D04) vérifient et appliquent les changements autorisés, avec les accords et protections applicables. [Demand & Supply Matching](model:D03) décide de la satisfaction des demandes et D06 orchestre les services et leur adaptation. La recommandation ne crée ni promesse, ni modification automatique d’un Order, ni mouvement physique. Une application automatisée reste possible selon les règles et autorités ; le porteur détaillé du déclenchement reste à préciser.
+
+      U427 adopte trois comportements : Requirement-based Replenishment, Target-based Replenishment et Replenishment Adjustment. Les deux premiers rendent explicites des politiques distinctes de détermination des apports ; le troisième révise les apports existants et se combine avec les deux. Cette décomposition remplace la conclusion de non-décomposition U425 ; les codes, paramètres et formules produits ne créent pas de sous-comportement. Le point réassort de l’audit est traité, sans présumer une couverture exhaustive du marché.
+
+      Frontière U673 : Les compléments fournisseur ne dupliquent pas les achats projetés par l’APS. Garder les arbitrages opérationnels de couverture et remonter les besoins de révision du plan externe.
+
+      Implantation initiale : Décider les apports d’[implantation](glossary:TER079) destinés à constituer le stock de départ de chaque magasin à la date de lancement. Chez Beaumanoir, les deux saisons été/hiver constituent le contexte rapporté ; collections, capsules ou périodes plus fines sont des extensions possibles, pas des pratiques actuelles déduites. Le résultat précise produits ou variantes, magasins, quantités, dates et éventuels besoins non couverts.
+
+      L’assortiment retenu, les objectifs de stock et les contraintes constituent les entrées. [Inventory Target Optimization](model:D05.a) conserve la détermination des cibles ; cette décision détermine les apports pour les atteindre au lancement. Examiner stock déjà présent et admissible, apports attendus à temps, conditionnements, protections et contraintes de disponibilité. Le calcul net fait partie de la décision ; ne pas compter deux fois les mêmes entrées.
+
+      Exemple fictif : pour un lancement au 1er mars, une cible de 100 pièces, 20 pièces admissibles déjà présentes et 30 attendues à temps laissent 50 pièces à apporter. Si seulement 40 peuvent être disponibles, expliciter le manque de 10 et les options à examiner ; ne pas annoncer implicitement une promesse ni modifier la cible sans mobiliser la décision responsable. Les tailles, couleurs et conditionnements peuvent contraindre le résultat sans constituer automatiquement des comportements supplémentaires.
+
+      Au sein de Replenishment, la finalité distingue l’implantation initiale du réassort en cours de commercialisation. Un complément tardif destiné à achever la mise en place initiale reste à qualifier selon cette finalité ; la date seule ne suffit pas à le transformer en réassort. Les apports d’implantation engagés restent visibles pour les décisions ultérieures de réassort, afin d’éviter les doublons.
+
+      [Master Planning](model:D05.f) mobilise la décision pour ses scénarios. D04 gère les Orders nécessaires, D03 décide comment les satisfaire et D06 pilote les prestations ; retenir ces apports ne réalise ni livraison ni mise en rayon. [Plan Application](model:D02.e) conserve l’affectation des ressources aux commandes. Le choix de l’assortiment et la planification commerciale de saison ne deviennent pas des responsabilités de cette capacité.
+
+      Frontière U673 : La frontière avec le calcul externe est la suivante : déterminer et ajuster les apports de couverture du lancement, sans recalculer l’assortiment ni le plan prévisionnel amont.
+    reason: Reprise éditoriale U797 ; ne vaut pas approbation de la nouvelle rédaction.
+  - id: D05.f
+    field: scope
+    previous_value: |-
+      Cadrer le périmètre, l’horizon et les objectifs du master plan commun, puis coordonner sa construction, son suivi et ses révisions. Couvrir commandes et prévision résiduelle sans double compte, à partir des plans externes et ressources admissibles.
+
+      [Demand Prioritization](model:D03.m) établit les priorités ; [Supply Assignment](model:D03.o) détermine les liens ressources-besoins ; [Replenishment](model:D05.e) recommande les apports et [Stock Redistribution](model:D05.c) les transferts utiles. Les capacités de Policy Optimization recommandent les cibles et protections, sans activer les politiques.
+
+      [Simulation & Analysis](model:BHV006) compare les scénarios ; [Plan Application](model:D02.e) fait appliquer les changements autorisés. Ces capacités coopèrent au même plan sans être des sous-capacités de Master Planning. Aucun moteur unique ni ordre universel des calculs n’est imposé.
+
+      Scope, Schedule, Run, Stop, Rerun, Monitor et Adjust décrivent les pratiques de pilotage. Arrêter un calcul n’annule pas ses effets appliqués. Adjust Plan prépare les révisions en préservant les effets acquis et en faisant examiner les impacts sur les commandes. La comparaison des décalages relève de Simulation & Analysis et le choix des liens révisés de Supply Assignment.
+
+      Exemple : une réception retardée déclenche un réexamen ciblé ; comparer les alternatives, retenir un plan cohérent, puis faire appliquer les changements autorisés. Les confirmations restent portées par les Orders ; ATP/CTP/PTP et le réexamen de promesse relèvent d’[Order Promising](model:subdomain-order-promising). Le plan interne ne remplace pas l’APS et Fulfilment conserve les adaptations locales.
+
+      Le [Matching Master Plan](glossary:TER100) est le plan interne commun ; les [Supply Plans](glossary:TER098) et [Demand Plans](glossary:TER099) sont des informations externes consommées. Cette séparation est propre au périmètre FLOW et ne recopie pas tous les calculs regroupés dans le master planning Microsoft.
+    reason: Reprise éditoriale U797 ; ne vaut pas approbation de la nouvelle rédaction.
+  - id: D07.c
+    field: scope
+    previous_value: |-
+      Rapprocher production, préparation, expédition, réception, consommation et résultats documentaires des prestations demandées et engagées. Les quantités manquantes, écarts et résultats partiels sont qualifiés à la maille pertinente.
+
+      Exemple : 80 unités sont reçues sur les 100 attendues ; qualifier l’écart de prestation et en transmettre les faits à la commande concernée. D04 conserve le reliquat de l’Order et D01 la représentation des mouvements de stock. Les cinq contributions existantes vers les capacités par type d’Order sont conservées, avec leur statut proposé. Operations Tracking intègre les faits ; Operations Visibility restitue l’avancement ; Service Reconciliation qualifie le réalisé au regard de l’attendu.
+
+      Frontière : Reliquat prestation différent du reliquat Order ; le rapprochement bancaire ou comptable reste externe.
+
+      Frontière U673 : Fournir les écarts aux Orders et les faits à Inventory ; ne pas tenir à leur place le reliquat commande ou le stock.
+
+      Fournir les faits ou écarts qualifiés à Service Order Management pour les suites des ordres de prestation ; ne pas dupliquer la tenue de leurs engagements individuels.
+
+      Pour une prestation d’encaissement, rapprocher la demande du résultat métier communiqué par le service financier : montant confirmé, partiel, rejeté ou non encore qualifié. Ce contrôle du résultat confié ne certifie ni écriture comptable, ni règlement bancaire, ni affectation à une créance. Une notification dupliquée ne produit pas un second résultat.
+    reason: Reprise éditoriale U797 ; ne vaut pas approbation de la nouvelle rédaction.
+  - id: D06.d
+    field: scope
+    previous_value: |-
+      Coordonner le déclenchement et l’enchaînement des prestations du plan retenu, en tenant compte de leurs dépendances, des prises en charge et des faits d’exécution. Mobiliser les familles de Service Orders pour tenir les demandes et leurs évolutions.
+
+      Exemple : coordonner la préparation, la disponibilité du document et la collecte. Si la décision d’adaptation retient un autre transporteur, coordonner la modification des prestations concernées et leur nouvel enchaînement.
+
+      La détermination de la variation du plan appartient à Process Adaptation Decision. L’orchestration peut lui transmettre un aléa, mais ne porte plus cette décision dans sa propre définition. Les exécutants conservent l’organisation de leurs opérations internes. Aucun moteur de workflow, contrôle humain systématique ou rollback physique universel n’est présumé.
+
+      Frontière : Décision D06.f séparée ; pas de rollback physique ni seconde promesse.
+
+      Convention U409 : le Process orchestre des Services. Les Tasks expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; Operations Tracking intègre les faits d’exécution ; Operations Visibility restitue leur avancement et Process Visibility en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
+
+      Frontière U673 : Distinguer le plan d’exécution coordonné du master plan de matching arbitré dans Matching.
+
+      Service Order Management tient le cycle et les engagements des ordres de prestation. L’orchestration utilise leurs réponses et coordonne les conditions d’activation et dépendances ; elle ne recrée pas leur cycle.
+
+      U706/U709 : Coordonner aussi les prestations exécutées à distance : solliciter le service, attendre son résultat métier et poursuivre le flux selon ce résultat. Une acceptation du déclenchement ne vaut pas réalisation.
+
+      Appliquer les attentes et libérations retenues par [Service Order Release Decision](model:service-order-release-decision), puis suivre la prise en charge des ordres. Un lot ne fusionne pas leurs identités. Distinguer une information anticipée de l’autorisation de lancement ; ne pas considérer la transmission comme preuve de réalisation.
+    reason: Reprise éditoriale U797 ; ne vaut pas approbation de la nouvelle rédaction.
+  - id: service-order-receiving
+    field: scope
+    previous_value: |-
+      Porter l’origine attendue, les articles et quantités, le lieu, les créneaux, les consignes de prise en charge et les preuves attendues. Suivre acceptation, révisions, annulation, réception partielle et clôture avec le reste à réaliser. Une annonce d’arrivée ou un document ne prouve pas la réception.
+
+      Une demande de réception peut être liée à un Purchase Order, Transfer Order, Return Order ou apport consigné ; elle ne remplace pas leurs engagements. Le prestataire reçoit physiquement et organise ses tâches internes. Une inspection autonome peut être confiée à Inspection Order ; un contrôle intégré demeure dans la réception. Receiving Order ne décide pas du devenir d’un retour et ne garantit pas que le stock est vendable.
+
+      Fulfilment Orchestration coordonne les prestations. Operations Tracking capte leur résultat et Service Reconciliation qualifie l’écart ; Receiving Order tient le solde de sa prestation. Inventory Tracking et Inventory Ledger prennent en compte les faits de stock reconnus. L’instruction de réception ne crée ni mouvement, ni changement automatique de propriété, ni nouvel achat.
+
+      Créer cet Order lorsqu’une réception est explicitement confiée et suivie comme prestation. Recevoir seulement une notification ne justifie pas un ordre artificiel. Aucune famille supplémentaire de rangement ou de stockage ni réalisation Beaumanoir n’est déduite.
+    reason: Reprise éditoriale U797 ; ne vaut pas approbation de la nouvelle rédaction.
 comparison_duplicates_before_U771:
 - node_id: D05.f
   comparison:

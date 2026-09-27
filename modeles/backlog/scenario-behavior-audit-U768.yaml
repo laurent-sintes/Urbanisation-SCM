@@ -1511,1212 +1511,1230 @@ publication_delivery:
       definition: 'Tenir les obligations de clôture du retour destiné au rebut : conserver l’autorisation, les quantités concernées
         et les preuves de traitement et de sortie de stock reconnue.'
   - id: universe-supply
-    fields:
+    fields: {}
+    superseded_field_checks:
       examples:
-      - title: Livrer 100 tee-shirts à un magasin vendredi
-        situation: Le magasin attend 100 tee-shirts pour vendredi. Un entrepôt en détient 60 et un fournisseur doit en livrer
-          40 jeudi.
-        outcome: La Supply vérifie si les 100 peuvent être livrés à temps, établit la quantité et la date promises, puis coordonne
-          préparation et transport. Si les 40 sont retardés, elle examine les alternatives et les conséquences sur la commande.
-        lesson: La Supply organise et suit la satisfaction de la demande ; les exécutants réalisent les opérations physiques.
-          La promesse ne réserve pas implicitement le stock.
-        source_refs:
-        - U470
-        - U436
-      - title: Recevoir une nouvelle référence produit
-        situation: Une nouvelle variante de tee-shirt, bleu taille M, est créée dans l’application qui fait autorité sur les
-          produits.
-        outcome: Son identifiant et ses caractéristiques utiles sont reçus dans [Product Reference](glossary:TER052). La Supply
-          peut alors utiliser cette référence dans ses commandes et ses stocks.
-        lesson: La projection sert aux opérations Supply. La création et les corrections de la référence restent dans la source
-          de vérité externe.
-        source_refs:
-        - U470
-        - U97
-        - U460
-      - id: b2b-partial-stock
-        title: Livrer une commande B2B avec un stock partiel
-        situation: 'Illustration FLOW fictive : un client B2B attend 100 vêtements ; 60 sont disponibles et une rentrée de
-          40 est annoncée. Plusieurs solutions de livraison sont examinées.'
-        trigger: Une commande nécessite une proposition de quantité et de date.
-        objective: Préparer une promesse réalisable et expliquer les conséquences économiques des options.
-        constraints:
-        - Date demandée et fractionnement autorisé par le client.
-        - Disponibilité effective, fiabilité de la rentrée et délais de préparation et de transport.
-        - Engagements existants et règles de protection du stock.
-        options:
-        - title: Livraison fractionnée
-          description: 'Expédier les 60 disponibles, puis les 40 attendus : rendre visible le service anticipé et le coût
-            des deux expéditions.'
-        - title: Livraison regroupée
-          description: 'Attendre les 40 pour préparer et expédier ensemble : examiner le gain logistique, le délai et les
-            conséquences économiques d’une attente.'
-        outcome: Un dossier présente les options avec quantité, date et conséquences économiques ; le choix reste explicite
-          et distinct de l’évaluation. Aucun gagnant n’est présumé.
-        lesson: Les capacités coopèrent selon le besoin ; ce récit n’impose ni pipeline universel ni modification des grands
-          équilibres du Matching. Promettre, affecter les ressources et libérer les prestations restent distincts.
-        source_refs:
-        - U763
-        - U764
-        - U762
-        - ELM763
-        - ELM767
-        - ELM768
-        - U768
-        steps:
-        - title: Qualifier les 100 vêtements attendus
-          description: Le client demande 100 pièces vendredi ; il accepte une livraison partielle uniquement si elle est annoncée.
-          outcome: Quantité, date et condition de fractionnement sont explicites.
-          contributions:
-          - node_id: D04.i
-            role: Porter la demande et les engagements acceptés.
-          - node_id: D01.c
-            role: Exposer les 60 pièces disponibles et la rentrée annoncée de 40 avec ses réserves.
-        - title: Construire les possibilités
-          description: Comparer 60 pièces plus tôt puis 40 après réception, et 100 ensemble. Si une solution exige une ressource
-            supplémentaire, tester sa faisabilité sans créer une commande d’achat.
-          outcome: Options datées avec leurs conditions et incertitudes.
-          contributions:
-          - node_id: D03.i
-            role: Évaluer le stock présent et projeté net des engagements et protections.
-          - node_id: D03.j
-            role: Évaluer si nécessaire les possibilités supplémentaires et leurs contraintes de capacité.
-        - title: Éclairer puis choisir la promesse
-          description: Comparer deux transports à une seule expédition, sans supposer que le moins cher est toujours préférable.
-          outcome: Une proposition choisie, accompagnée de ses hypothèses, peut être acceptée dans la commande.
-          contributions:
-          - node_id: D03.k
-            role: Produire le dossier économique local des options sans choisir.
-          - node_id: D03.l
-            role: Choisir la proposition au regard du service, des évaluations et des règles.
-        - title: Affecter puis libérer les prestations
-          description: Si le regroupement est accepté, affecter les ressources puis retenir les ordres éligibles jusqu’à complétude,
-            dans la limite de la date promise.
-          outcome: Les prestations compatibles sont libérées ensemble ; la préparation commune est demandée explicitement.
-          contributions:
-          - node_id: D03.o
-            role: Affecter les ressources dans les équilibres du master plan.
-          - node_id: D02.e
-            role: Appliquer les affectations retenues.
-          - node_id: service-order-release-decision
-            role: Déterminer le moment et le groupe de libération.
-          - node_id: D06.d
-            role: Déclencher et coordonner les prestations.
-          - node_id: service-order-packing
-            role: Porter l’exigence de conditionnement commun.
-        validation_points:
-        - Évaluer, choisir, engager, affecter et libérer ont des responsabilités distinctes.
-        - La rétention ne décale pas silencieusement la promesse ; une expédition commune ne garantit pas à elle seule une
-          palette unique.
-      - id: return-fashion-recovery
-        title: Remettre en vente une robe retournée
-        situation: Illustration FLOW fictive. Une cliente retourne une robe dont une couture est ouverte. Le retour est accepté,
-          mais la remise en stock vendable dépend du contrôle et de la réparation.
-        steps:
-        - title: Recevoir et contrôler
-          description: Le retour est attendu puis reçu ; le prestataire confirme la couture ouverte et transmet le contrôle.
-          outcome: La robe est reçue mais sa remise en vente reste conditionnelle.
-          contributions:
-          - node_id: D04.l
-            role: Porter le retour attendu et son achèvement.
-          - node_id: service-order-inspection
-            role: Demander le contrôle et son résultat.
-          - node_id: D07.d
-            role: Capter les faits d’exécution distants.
-        - title: Choisir le devenir
-          description: La réparation est autorisée et jugée pertinente pour cette robe ; une pièce irréparable suivrait une
-            autre route.
-          outcome: Une route de réparation est choisie sans confondre retour et réparation.
-          contributions:
-          - node_id: D05.i
-            role: Décider de la destination et du traitement de l’article retourné.
-          - node_id: service-order-repair-alteration
-            role: Porter la prestation de réparation confiée.
-          - node_id: D06.d
-            role: Coordonner les dépendances et attendre la fin de réparation.
-        - title: Rendre la robe à nouveau disponible
-          description: Après réparation et contrôle conforme, les faits reconnus autorisent le reclassement du stock.
+        expected_value:
+        - title: Livrer 100 tee-shirts à un magasin vendredi
+          situation: Le magasin attend 100 tee-shirts pour vendredi. Un entrepôt en détient 60 et un fournisseur doit en livrer
+            40 jeudi.
+          outcome: La Supply vérifie si les 100 peuvent être livrés à temps, établit la quantité et la date promises, puis
+            coordonne préparation et transport. Si les 40 sont retardés, elle examine les alternatives et les conséquences
+            sur la commande.
+          lesson: La Supply organise et suit la satisfaction de la demande ; les exécutants réalisent les opérations physiques.
+            La promesse ne réserve pas implicitement le stock.
+          source_refs:
+          - U470
+          - U436
+        - title: Recevoir une nouvelle référence produit
+          situation: Une nouvelle variante de tee-shirt, bleu taille M, est créée dans l’application qui fait autorité sur
+            les produits.
+          outcome: Son identifiant et ses caractéristiques utiles sont reçus dans [Product Reference](glossary:TER052). La
+            Supply peut alors utiliser cette référence dans ses commandes et ses stocks.
+          lesson: La projection sert aux opérations Supply. La création et les corrections de la référence restent dans la
+            source de vérité externe.
+          source_refs:
+          - U470
+          - U97
+          - U460
+        - id: b2b-partial-stock
+          title: Livrer une commande B2B avec un stock partiel
+          situation: 'Illustration FLOW fictive : un client B2B attend 100 vêtements ; 60 sont disponibles et une rentrée
+            de 40 est annoncée. Plusieurs solutions de livraison sont examinées.'
+          trigger: Une commande nécessite une proposition de quantité et de date.
+          objective: Préparer une promesse réalisable et expliquer les conséquences économiques des options.
+          constraints:
+          - Date demandée et fractionnement autorisé par le client.
+          - Disponibilité effective, fiabilité de la rentrée et délais de préparation et de transport.
+          - Engagements existants et règles de protection du stock.
+          options:
+          - title: Livraison fractionnée
+            description: 'Expédier les 60 disponibles, puis les 40 attendus : rendre visible le service anticipé et le coût
+              des deux expéditions.'
+          - title: Livraison regroupée
+            description: 'Attendre les 40 pour préparer et expédier ensemble : examiner le gain logistique, le délai et les
+              conséquences économiques d’une attente.'
+          outcome: Un dossier présente les options avec quantité, date et conséquences économiques ; le choix reste explicite
+            et distinct de l’évaluation. Aucun gagnant n’est présumé.
+          lesson: Les capacités coopèrent selon le besoin ; ce récit n’impose ni pipeline universel ni modification des grands
+            équilibres du Matching. Promettre, affecter les ressources et libérer les prestations restent distincts.
+          source_refs:
+          - U763
+          - U764
+          - U762
+          - ELM763
+          - ELM767
+          - ELM768
+          - U768
+          steps:
+          - title: Qualifier les 100 vêtements attendus
+            description: Le client demande 100 pièces vendredi ; il accepte une livraison partielle uniquement si elle est
+              annoncée.
+            outcome: Quantité, date et condition de fractionnement sont explicites.
+            contributions:
+            - node_id: D04.i
+              role: Porter la demande et les engagements acceptés.
+            - node_id: D01.c
+              role: Exposer les 60 pièces disponibles et la rentrée annoncée de 40 avec ses réserves.
+          - title: Construire les possibilités
+            description: Comparer 60 pièces plus tôt puis 40 après réception, et 100 ensemble. Si une solution exige une ressource
+              supplémentaire, tester sa faisabilité sans créer une commande d’achat.
+            outcome: Options datées avec leurs conditions et incertitudes.
+            contributions:
+            - node_id: D03.i
+              role: Évaluer le stock présent et projeté net des engagements et protections.
+            - node_id: D03.j
+              role: Évaluer si nécessaire les possibilités supplémentaires et leurs contraintes de capacité.
+          - title: Éclairer puis choisir la promesse
+            description: Comparer deux transports à une seule expédition, sans supposer que le moins cher est toujours préférable.
+            outcome: Une proposition choisie, accompagnée de ses hypothèses, peut être acceptée dans la commande.
+            contributions:
+            - node_id: D03.k
+              role: Produire le dossier économique local des options sans choisir.
+            - node_id: D03.l
+              role: Choisir la proposition au regard du service, des évaluations et des règles.
+          - title: Affecter puis libérer les prestations
+            description: Si le regroupement est accepté, affecter les ressources puis retenir les ordres éligibles jusqu’à
+              complétude, dans la limite de la date promise.
+            outcome: Les prestations compatibles sont libérées ensemble ; la préparation commune est demandée explicitement.
+            contributions:
+            - node_id: D03.o
+              role: Affecter les ressources dans les équilibres du master plan.
+            - node_id: D02.e
+              role: Appliquer les affectations retenues.
+            - node_id: service-order-release-decision
+              role: Déterminer le moment et le groupe de libération.
+            - node_id: D06.d
+              role: Déclencher et coordonner les prestations.
+            - node_id: service-order-packing
+              role: Porter l’exigence de conditionnement commun.
+          validation_points:
+          - Évaluer, choisir, engager, affecter et libérer ont des responsabilités distinctes.
+          - La rétention ne décale pas silencieusement la promesse ; une expédition commune ne garantit pas à elle seule une
+            palette unique.
+        - id: return-fashion-recovery
+          title: Remettre en vente une robe retournée
+          situation: Illustration FLOW fictive. Une cliente retourne une robe dont une couture est ouverte. Le retour est
+            accepté, mais la remise en stock vendable dépend du contrôle et de la réparation.
+          steps:
+          - title: Recevoir et contrôler
+            description: Le retour est attendu puis reçu ; le prestataire confirme la couture ouverte et transmet le contrôle.
+            outcome: La robe est reçue mais sa remise en vente reste conditionnelle.
+            contributions:
+            - node_id: D04.l
+              role: Porter le retour attendu et son achèvement.
+            - node_id: service-order-inspection
+              role: Demander le contrôle et son résultat.
+            - node_id: D07.d
+              role: Capter les faits d’exécution distants.
+          - title: Choisir le devenir
+            description: La réparation est autorisée et jugée pertinente pour cette robe ; une pièce irréparable suivrait
+              une autre route.
+            outcome: Une route de réparation est choisie sans confondre retour et réparation.
+            contributions:
+            - node_id: D05.i
+              role: Décider de la destination et du traitement de l’article retourné.
+            - node_id: service-order-repair-alteration
+              role: Porter la prestation de réparation confiée.
+            - node_id: D06.d
+              role: Coordonner les dépendances et attendre la fin de réparation.
+          - title: Rendre la robe à nouveau disponible
+            description: Après réparation et contrôle conforme, les faits reconnus autorisent le reclassement du stock.
+            outcome: La robe apparaît dans le stock vendable avec une trace de ses mouvements.
+            contributions:
+            - node_id: D01.f
+              role: Recevoir les faits de stock.
+            - node_id: D01.g
+              role: Conserver les mouvements et corrections reconnus.
+            - node_id: D01.c
+              role: Exposer la disponibilité actualisée.
           outcome: La robe apparaît dans le stock vendable avec une trace de ses mouvements.
-          contributions:
-          - node_id: D01.f
-            role: Recevoir les faits de stock.
-          - node_id: D01.g
-            role: Conserver les mouvements et corrections reconnus.
-          - node_id: D01.c
-            role: Exposer la disponibilité actualisée.
-        outcome: La robe apparaît dans le stock vendable avec une trace de ses mouvements.
-        validation_points:
-        - Le retour ne réalise pas lui-même la réparation.
-        - Un simple accusé de réception de prestation ne vaut pas réalisation conforme.
-        - Inventory Disposition Decision couvre ce retour comme les incidents sur stock existant ; Policy-based Disposition
-          applique les règles et Value Recovery Optimization compare les devenirs admissibles.
-        source_refs:
-        - U768
-      - id: consignment-sale-pickup
-        title: Vendre une partie du stock consigné puis reprendre le solde
-        situation: Illustration FLOW fictive. Un fournisseur confie 100 vestes à un distributeur. Selon le contrat fictif,
-          les 30 vendues changent de propriétaire à la vente ; les 70 restantes sont reprises.
-        steps:
-        - title: Apporter les 100 vestes
-          description: L’apport est demandé puis reçu chez le dépositaire sans achat immédiat.
-          outcome: 100 vestes sont détenues pour le compte du fournisseur.
-          contributions:
-          - node_id: D04.r
-            role: Porter la demande d’apport en consignation.
-          - node_id: D01.f
-            role: Recevoir le fait de réception et sa dimension propriétaire.
-          - node_id: D01.g
-            role: Enregistrer le mouvement physique reconnu.
-        - title: Reconnaître le transfert des 30 vendues
-          description: Le fait de vente est rapproché de la clause de l’accord ; la réception initiale ne suffit pas à changer
-            la propriété.
-          outcome: Le transfert reconnu de 30 vestes est tracé avec son fondement.
-          contributions:
-          - node_id: D04.i
-            role: Porter la vente et ses engagements.
-          - node_id: D11.b
-            role: Rendre accessibles les conditions applicables.
-          - node_id: D01.h
-            role: Qualifier le déclencheur contractuel et déterminer le transfert.
-          - node_id: inventory-ownership-ledger
-            role: Conserver la date, les parties, les quantités et le fondement du changement.
-        - title: Reprendre les 70 restantes
-          description: La campagne se termine et le fournisseur demande la reprise du solde.
+          validation_points:
+          - Le retour ne réalise pas lui-même la réparation.
+          - Un simple accusé de réception de prestation ne vaut pas réalisation conforme.
+          - Inventory Disposition Decision couvre ce retour comme les incidents sur stock existant ; Policy-based Disposition
+            applique les règles et Value Recovery Optimization compare les devenirs admissibles.
+          source_refs:
+          - U768
+        - id: consignment-sale-pickup
+          title: Vendre une partie du stock consigné puis reprendre le solde
+          situation: Illustration FLOW fictive. Un fournisseur confie 100 vestes à un distributeur. Selon le contrat fictif,
+            les 30 vendues changent de propriétaire à la vente ; les 70 restantes sont reprises.
+          steps:
+          - title: Apporter les 100 vestes
+            description: L’apport est demandé puis reçu chez le dépositaire sans achat immédiat.
+            outcome: 100 vestes sont détenues pour le compte du fournisseur.
+            contributions:
+            - node_id: D04.r
+              role: Porter la demande d’apport en consignation.
+            - node_id: D01.f
+              role: Recevoir le fait de réception et sa dimension propriétaire.
+            - node_id: D01.g
+              role: Enregistrer le mouvement physique reconnu.
+          - title: Reconnaître le transfert des 30 vendues
+            description: Le fait de vente est rapproché de la clause de l’accord ; la réception initiale ne suffit pas à changer
+              la propriété.
+            outcome: Le transfert reconnu de 30 vestes est tracé avec son fondement.
+            contributions:
+            - node_id: D04.i
+              role: Porter la vente et ses engagements.
+            - node_id: D11.b
+              role: Rendre accessibles les conditions applicables.
+            - node_id: D01.h
+              role: Qualifier le déclencheur contractuel et déterminer le transfert.
+            - node_id: inventory-ownership-ledger
+              role: Conserver la date, les parties, les quantités et le fondement du changement.
+          - title: Reprendre les 70 restantes
+            description: La campagne se termine et le fournisseur demande la reprise du solde.
+            outcome: Le solde repris est rapproché de la demande et du stock.
+            contributions:
+            - node_id: D04.t
+              role: Porter la demande de reprise.
+            - node_id: D06.d
+              role: Coordonner la prestation de reprise.
+            - node_id: D01.c
+              role: Exposer séparément détention, propriété et disponibilité du solde.
           outcome: Le solde repris est rapproché de la demande et du stock.
-          contributions:
-          - node_id: D04.t
-            role: Porter la demande de reprise.
-          - node_id: D06.d
-            role: Coordonner la prestation de reprise.
-          - node_id: D01.c
-            role: Exposer séparément détention, propriété et disponibilité du solde.
-        outcome: Le solde repris est rapproché de la demande et du stock.
-        validation_points:
-        - Détention et propriété évoluent indépendamment.
-        - Ce cas de vente ne couvre pas les contrats à échéance ni les transferts en transit.
-        source_refs:
-        - U768
-      - id: fashion-launch
-        title: Préparer une capsule pour l’ouverture de magasins
-        situation: Illustration FLOW fictive. Une capsule de 200 robes doit arriver sur cintres, étiquetée et conditionnée
-          par magasin avant l’ouverture. Un plan externe prévoit les besoins ; le stock disponible doit être réparti.
-        steps:
-        - title: Préparer les données utiles
-          description: Les références, assortiments et prévisions sont reçus avant le calcul de réapprovisionnement.
-          outcome: Les besoins prévus et les données nécessaires sont accessibles avec leur origine.
-          contributions:
-          - node_id: master-data-ingestion
-            role: Intégrer les référentiels fournis par les domaines sources.
-          - node_id: plans-ingestion
-            role: Intégrer les Supply et Demand Plans externes.
-          - node_id: demand-plan-visibility
-            role: Exposer les besoins prévus pertinents.
-          - node_id: plans-visibility
-            role: Exposer les mouvements prévus hors achats.
-        - title: Déterminer les transferts
-          description: Les besoins des magasins sont confrontés aux ressources ; les affectations retenues sont appliquées.
-          outcome: Des demandes de transfert identifiées portent quantités et dates.
-          contributions:
-          - node_id: D05.e
-            role: Déterminer les besoins de réapprovisionnement.
-          - node_id: D03.o
-            role: Affecter les ressources entre demandes.
-          - node_id: D02.e
-            role: Appliquer le plan retenu.
-          - node_id: D04.k
-            role: Porter chaque transfert attendu et ses engagements.
-        - title: Préparer puis expédier
-          description: Le prestataire doit étiqueter, mettre sur cintre et conditionner par magasin avant la prise en charge
-            transport.
+          validation_points:
+          - Détention et propriété évoluent indépendamment.
+          - Ce cas de vente ne couvre pas les contrats à échéance ni les transferts en transit.
+          source_refs:
+          - U768
+        - id: fashion-launch
+          title: Préparer une capsule pour l’ouverture de magasins
+          situation: Illustration FLOW fictive. Une capsule de 200 robes doit arriver sur cintres, étiquetée et conditionnée
+            par magasin avant l’ouverture. Un plan externe prévoit les besoins ; le stock disponible doit être réparti.
+          steps:
+          - title: Préparer les données utiles
+            description: Les références, assortiments et prévisions sont reçus avant le calcul de réapprovisionnement.
+            outcome: Les besoins prévus et les données nécessaires sont accessibles avec leur origine.
+            contributions:
+            - node_id: master-data-ingestion
+              role: Intégrer les référentiels fournis par les domaines sources.
+            - node_id: plans-ingestion
+              role: Intégrer les Supply et Demand Plans externes.
+            - node_id: demand-plan-visibility
+              role: Exposer les besoins prévus pertinents.
+            - node_id: plans-visibility
+              role: Exposer les mouvements prévus hors achats.
+          - title: Déterminer les transferts
+            description: Les besoins des magasins sont confrontés aux ressources ; les affectations retenues sont appliquées.
+            outcome: Des demandes de transfert identifiées portent quantités et dates.
+            contributions:
+            - node_id: D05.e
+              role: Déterminer les besoins de réapprovisionnement.
+            - node_id: D03.o
+              role: Affecter les ressources entre demandes.
+            - node_id: D02.e
+              role: Appliquer le plan retenu.
+            - node_id: D04.k
+              role: Porter chaque transfert attendu et ses engagements.
+          - title: Préparer puis expédier
+            description: Le prestataire doit étiqueter, mettre sur cintre et conditionner par magasin avant la prise en charge
+              transport.
+            outcome: Les prestations suivent les dépendances demandées et leur achèvement est observable.
+            contributions:
+            - node_id: service-order-labeling
+              role: Porter les exigences d’étiquetage.
+            - node_id: service-order-garment-finishing
+              role: Porter la mise sur cintre requise.
+            - node_id: service-order-packing
+              role: Porter le conditionnement par destination.
+            - node_id: service-order-transport
+              role: Porter le transport attendu.
+            - node_id: D06.d
+              role: Composer et coordonner la séquence.
+            - node_id: D07.d
+              role: Capter les résultats des prestations.
           outcome: Les prestations suivent les dépendances demandées et leur achèvement est observable.
-          contributions:
-          - node_id: service-order-labeling
-            role: Porter les exigences d’étiquetage.
-          - node_id: service-order-garment-finishing
-            role: Porter la mise sur cintre requise.
-          - node_id: service-order-packing
-            role: Porter le conditionnement par destination.
-          - node_id: service-order-transport
-            role: Porter le transport attendu.
-          - node_id: D06.d
-            role: Composer et coordonner la séquence.
-          - node_id: D07.d
-            role: Capter les résultats des prestations.
-        outcome: Les prestations suivent les dépendances demandées et leur achèvement est observable.
-        validation_points:
-        - L’APS demeure extérieur au domaine.
-        - L’ouverture est un contexte du Transfer Order ; les exigences concrètes sont portées par les prestations.
-        source_refs:
-        - U768
-      - id: shortage-reassessment
-        title: Réagir à une pénurie sans confondre promesse et affectation
-        situation: Illustration FLOW fictive. Un lot annoncé de 100 pièces est ramené à 60. Deux clients attendent chacun
-          50 pièces ; leurs protections et dates diffèrent.
-        steps:
-        - title: Établir la situation
-          description: L’annonce corrigée est reçue et rapprochée des engagements existants.
-          outcome: Les 40 pièces manquantes et les demandes touchées sont identifiées.
-          contributions:
-          - node_id: D01.f
-            role: Intégrer le fait corrigé.
-          - node_id: D01.c
-            role: Exposer les ressources actualisées.
-          - node_id: order-visibility
-            role: Exposer les commandes et promesses concernées.
-        - title: Réexaminer les équilibres
-          description: Comparer des répartitions possibles en respectant les protections applicables, sans modifier encore
-            les commandes.
-          outcome: Une proposition de réaffectation est explicitée.
-          contributions:
-          - node_id: D05.f
-            role: Piloter le recalcul du master plan sur le périmètre pertinent.
-          - node_id: D03.m
-            role: Prioriser les demandes.
-          - node_id: D19.b
-            role: Fournir les règles de protection de la demande.
-          - node_id: BHV006
-            role: Comparer les effets des hypothèses.
-          - node_id: D03.o
-            role: Déterminer les affectations proposées.
-        - title: Réexaminer puis appliquer
-          description: Évaluer les nouvelles possibilités de promesse et les impacts économiques avant de retenir les changements
-            autorisés.
+          validation_points:
+          - L’APS demeure extérieur au domaine.
+          - L’ouverture est un contexte du Transfer Order ; les exigences concrètes sont portées par les prestations.
+          source_refs:
+          - U768
+        - id: shortage-reassessment
+          title: Réagir à une pénurie sans confondre promesse et affectation
+          situation: Illustration FLOW fictive. Un lot annoncé de 100 pièces est ramené à 60. Deux clients attendent chacun
+            50 pièces ; leurs protections et dates diffèrent.
+          steps:
+          - title: Établir la situation
+            description: L’annonce corrigée est reçue et rapprochée des engagements existants.
+            outcome: Les 40 pièces manquantes et les demandes touchées sont identifiées.
+            contributions:
+            - node_id: D01.f
+              role: Intégrer le fait corrigé.
+            - node_id: D01.c
+              role: Exposer les ressources actualisées.
+            - node_id: order-visibility
+              role: Exposer les commandes et promesses concernées.
+          - title: Réexaminer les équilibres
+            description: Comparer des répartitions possibles en respectant les protections applicables, sans modifier encore
+              les commandes.
+            outcome: Une proposition de réaffectation est explicitée.
+            contributions:
+            - node_id: D05.f
+              role: Piloter le recalcul du master plan sur le périmètre pertinent.
+            - node_id: D03.m
+              role: Prioriser les demandes.
+            - node_id: D19.b
+              role: Fournir les règles de protection de la demande.
+            - node_id: BHV006
+              role: Comparer les effets des hypothèses.
+            - node_id: D03.o
+              role: Déterminer les affectations proposées.
+          - title: Réexaminer puis appliquer
+            description: Évaluer les nouvelles possibilités de promesse et les impacts économiques avant de retenir les changements
+              autorisés.
+            outcome: Les choix de promesse et d’affectation sont traçables et leur application reste distincte.
+            contributions:
+            - node_id: D03.i
+              role: Évaluer les disponibilités restantes et projetées.
+            - node_id: D03.k
+              role: Éclairer les impacts économiques locaux.
+            - node_id: D03.l
+              role: Choisir les propositions de promesse révisées.
+            - node_id: D04.i
+              role: Porter les changements d’engagement acceptés.
+            - node_id: D02.e
+              role: Appliquer les affectations autorisées.
           outcome: Les choix de promesse et d’affectation sont traçables et leur application reste distincte.
-          contributions:
-          - node_id: D03.i
-            role: Évaluer les disponibilités restantes et projetées.
-          - node_id: D03.k
-            role: Éclairer les impacts économiques locaux.
-          - node_id: D03.l
-            role: Choisir les propositions de promesse révisées.
-          - node_id: D04.i
-            role: Porter les changements d’engagement acceptés.
-          - node_id: D02.e
-            role: Appliquer les affectations autorisées.
-        outcome: Les choix de promesse et d’affectation sont traçables et leur application reste distincte.
-        validation_points:
-        - La réaffectation des ressources ne réécrit pas silencieusement une promesse.
-        - Le dossier économique ne décide pas à la place de Promise Selection Decision.
-        source_refs:
-        - U768
-      - id: export-remote-services
-        title: Exporter des vêtements et attendre la fin des prestations distantes
-        situation: Illustration FLOW fictive. Un client attend 500 chemises exportées. Le contrat fictif impose un paiement
-          confirmé avant libération ; la douane et la facturation sont exécutées par des intervenants externes.
-        steps:
-        - title: Préparer les prestations
-          description: Les conditions contractuelles et les besoins documentaires déterminent les prestations requises.
-          outcome: Transport, documents et dépendances sont définis.
-          contributions:
-          - node_id: D11.b
-            role: Exposer les conditions applicables.
-          - node_id: D07.a
-            role: Déterminer les exigences de service.
-          - node_id: service-order-transport-booking
-            role: Demander la réservation de transport.
-          - node_id: service-order-document-production
-            role: Demander les documents requis.
-          - node_id: service-order-customs-clearance
-            role: Porter la prestation de dédouanement confiée.
-        - title: Déclencher les flux financiers
-          description: La facture puis l’encaissement sont demandés aux exécutants compétents ; une acceptation technique
-            ne vaut pas paiement.
-          outcome: La collecte est en cours et son achèvement reste attendu.
-          contributions:
-          - node_id: service-order-billing
-            role: Porter la demande de facturation.
-          - node_id: service-order-payment-collection
-            role: Porter le déclenchement et le résultat attendu de collecte.
-          - node_id: D06.d
-            role: Coordonner les dépendances et attendre les résultats.
-        - title: Libérer au vu des résultats
-          description: Les notifications sont rapprochées des ordres ; la confirmation de paiement et les conditions de passage
-            autorisent la suite.
+          validation_points:
+          - La réaffectation des ressources ne réécrit pas silencieusement une promesse.
+          - Le dossier économique ne décide pas à la place de Promise Selection Decision.
+          source_refs:
+          - U768
+        - id: export-remote-services
+          title: Exporter des vêtements et attendre la fin des prestations distantes
+          situation: Illustration FLOW fictive. Un client attend 500 chemises exportées. Le contrat fictif impose un paiement
+            confirmé avant libération ; la douane et la facturation sont exécutées par des intervenants externes.
+          steps:
+          - title: Préparer les prestations
+            description: Les conditions contractuelles et les besoins documentaires déterminent les prestations requises.
+            outcome: Transport, documents et dépendances sont définis.
+            contributions:
+            - node_id: D11.b
+              role: Exposer les conditions applicables.
+            - node_id: D07.a
+              role: Déterminer les exigences de service.
+            - node_id: service-order-transport-booking
+              role: Demander la réservation de transport.
+            - node_id: service-order-document-production
+              role: Demander les documents requis.
+            - node_id: service-order-customs-clearance
+              role: Porter la prestation de dédouanement confiée.
+          - title: Déclencher les flux financiers
+            description: La facture puis l’encaissement sont demandés aux exécutants compétents ; une acceptation technique
+              ne vaut pas paiement.
+            outcome: La collecte est en cours et son achèvement reste attendu.
+            contributions:
+            - node_id: service-order-billing
+              role: Porter la demande de facturation.
+            - node_id: service-order-payment-collection
+              role: Porter le déclenchement et le résultat attendu de collecte.
+            - node_id: D06.d
+              role: Coordonner les dépendances et attendre les résultats.
+          - title: Libérer au vu des résultats
+            description: Les notifications sont rapprochées des ordres ; la confirmation de paiement et les conditions de
+              passage autorisent la suite.
+            outcome: La prestation transport est libérée sur des résultats reconnus.
+            contributions:
+            - node_id: D07.d
+              role: Capter les notifications d’exécution distante.
+            - node_id: D07.c
+              role: Rapprocher les résultats des prestations demandées.
+            - node_id: operations-visibility
+              role: Exposer les prestations terminées ou bloquées.
+            - node_id: service-order-release-decision
+              role: Décider de la libération des ordres éligibles.
+            - node_id: service-order-transport
+              role: Porter les engagements de transport.
           outcome: La prestation transport est libérée sur des résultats reconnus.
-          contributions:
-          - node_id: D07.d
-            role: Capter les notifications d’exécution distante.
-          - node_id: D07.c
-            role: Rapprocher les résultats des prestations demandées.
-          - node_id: operations-visibility
-            role: Exposer les prestations terminées ou bloquées.
-          - node_id: service-order-release-decision
-            role: Décider de la libération des ordres éligibles.
-          - node_id: service-order-transport
-            role: Porter les engagements de transport.
-        outcome: La prestation transport est libérée sur des résultats reconnus.
-        validation_points:
-        - Orchestrer la facturation ou l’encaissement ne signifie pas les exécuter dans Supply Chain Orchestration.
-        - Les règles du cas sont des hypothèses illustratives, pas des obligations universelles.
-        source_refs:
-        - U768
-      - id: stocktaking-variance
-        title: Traiter un écart de comptage avant de repromettre
-        situation: Illustration FLOW fictive. Un emplacement contient 58 pulls alors que le registre en indique 60 ; une commande
-          en attend 60.
-        steps:
-        - title: Constater puis qualifier l’écart
-          description: Un comptage contradictoire confirme 58 pièces. La correction n’est enregistrée qu’après reconnaissance
-            selon les règles applicables.
-          outcome: Le registre porte une correction justifiée de deux pièces.
-          contributions:
-          - node_id: D01.d
-            role: Organiser le comptage et qualifier l’écart.
-          - node_id: D01.g
-            role: Enregistrer la correction reconnue avec sa justification.
-        - title: Mesurer les conséquences
-          description: La disponibilité actualisée est confrontée à la commande ; une autre rentrée peut éventuellement combler
-            l’écart.
+          validation_points:
+          - Orchestrer la facturation ou l’encaissement ne signifie pas les exécuter dans Supply Chain Orchestration.
+          - Les règles du cas sont des hypothèses illustratives, pas des obligations universelles.
+          source_refs:
+          - U768
+        - id: stocktaking-variance
+          title: Traiter un écart de comptage avant de repromettre
+          situation: Illustration FLOW fictive. Un emplacement contient 58 pulls alors que le registre en indique 60 ; une
+            commande en attend 60.
+          steps:
+          - title: Constater puis qualifier l’écart
+            description: Un comptage contradictoire confirme 58 pièces. La correction n’est enregistrée qu’après reconnaissance
+              selon les règles applicables.
+            outcome: Le registre porte une correction justifiée de deux pièces.
+            contributions:
+            - node_id: D01.d
+              role: Organiser le comptage et qualifier l’écart.
+            - node_id: D01.g
+              role: Enregistrer la correction reconnue avec sa justification.
+          - title: Mesurer les conséquences
+            description: La disponibilité actualisée est confrontée à la commande ; une autre rentrée peut éventuellement
+              combler l’écart.
+            outcome: Une proposition explicite est préparée pour la commande touchée.
+            contributions:
+            - node_id: D01.c
+              role: Exposer le stock corrigé et les ressources pertinentes.
+            - node_id: D03.i
+              role: Évaluer la quantité et la date réalisables.
+            - node_id: D03.l
+              role: Choisir la proposition à soumettre.
+            - node_id: D04.i
+              role: Conserver ou modifier la promesse selon le résultat accepté.
           outcome: Une proposition explicite est préparée pour la commande touchée.
-          contributions:
-          - node_id: D01.c
-            role: Exposer le stock corrigé et les ressources pertinentes.
-          - node_id: D03.i
-            role: Évaluer la quantité et la date réalisables.
-          - node_id: D03.l
-            role: Choisir la proposition à soumettre.
-          - node_id: D04.i
-            role: Conserver ou modifier la promesse selon le résultat accepté.
-        outcome: Une proposition explicite est préparée pour la commande touchée.
-        validation_points:
-        - Un comptage brut ne devient pas automatiquement une correction.
-        - Une correction de stock ne modifie pas à elle seule la promesse client.
-        source_refs:
-        - U768
-      - id: last-item-concurrency
-        title: Deux clients veulent le dernier pull
-        situation: Illustration FLOW fictive. À 10 h, deux clients demandent le dernier pull bleu M. Le premier panier obtient
-          une réservation limitée ; il est ensuite annulé.
-        steps:
-        - title: Évaluer les deux demandes
-          description: Les deux consultations peuvent voir une disponibilité avant tout engagement exclusif.
-          outcome: Les réponses de disponibilité restent distinctes du droit réservé.
-          contributions:
-          - node_id: D03.i
-            role: Évaluer la quantité disponible à la date demandée.
-          - node_id: D01.c
-            role: Exposer le stock et les engagements connus.
-        - title: Retenir et engager une proposition
-          description: Une seule réservation est accordée selon les règles applicables ; l’autre demande attend ou reçoit
-            une alternative.
-          outcome: Aucune double réservation du dernier pull.
-          contributions:
-          - node_id: D02.c
-            role: Attribuer le droit réservé et son échéance.
-          - node_id: D03.l
-            role: Choisir une proposition compatible avec les conditions obtenues.
-          - node_id: D04.i
-            role: Porter la commande et la promesse acceptée.
-        - title: Annuler et libérer
-          description: Le premier client annule avant préparation ; la réservation correspondante est levée puis la seconde
-            demande est réévaluée.
+          validation_points:
+          - Un comptage brut ne devient pas automatiquement une correction.
+          - Une correction de stock ne modifie pas à elle seule la promesse client.
+          source_refs:
+          - U768
+        - id: last-item-concurrency
+          title: Deux clients veulent le dernier pull
+          situation: Illustration FLOW fictive. À 10 h, deux clients demandent le dernier pull bleu M. Le premier panier obtient
+            une réservation limitée ; il est ensuite annulé.
+          steps:
+          - title: Évaluer les deux demandes
+            description: Les deux consultations peuvent voir une disponibilité avant tout engagement exclusif.
+            outcome: Les réponses de disponibilité restent distinctes du droit réservé.
+            contributions:
+            - node_id: D03.i
+              role: Évaluer la quantité disponible à la date demandée.
+            - node_id: D01.c
+              role: Exposer le stock et les engagements connus.
+          - title: Retenir et engager une proposition
+            description: Une seule réservation est accordée selon les règles applicables ; l’autre demande attend ou reçoit
+              une alternative.
+            outcome: Aucune double réservation du dernier pull.
+            contributions:
+            - node_id: D02.c
+              role: Attribuer le droit réservé et son échéance.
+            - node_id: D03.l
+              role: Choisir une proposition compatible avec les conditions obtenues.
+            - node_id: D04.i
+              role: Porter la commande et la promesse acceptée.
+          - title: Annuler et libérer
+            description: Le premier client annule avant préparation ; la réservation correspondante est levée puis la seconde
+              demande est réévaluée.
+            outcome: Le pull redevient disponible sans duplication de droit.
+            contributions:
+            - node_id: D04.i
+              role: Porter l’annulation effective.
+            - node_id: D02.c
+              role: Libérer le droit devenu sans objet.
+            - node_id: D03.i
+              role: Réévaluer la seconde demande sur la situation actualisée.
           outcome: Le pull redevient disponible sans duplication de droit.
-          contributions:
-          - node_id: D04.i
-            role: Porter l’annulation effective.
-          - node_id: D02.c
-            role: Libérer le droit devenu sans objet.
-          - node_id: D03.i
-            role: Réévaluer la seconde demande sur la situation actualisée.
-        outcome: Le pull redevient disponible sans duplication de droit.
-        validation_points:
-        - Une évaluation ATP ne garantit pas à elle seule une exclusivité.
-        - L’expiration d’une réservation doit également produire un état observable avant réutilisation.
-        source_refs:
-        - U768
-        - U769
-      - id: substitution-price-service
-        title: Comparer une substitution, un autre site et un transport express
-        situation: Illustration FLOW fictive. Une boutique attend 20 robes vendredi. La référence demandée arrive lundi ;
-          une robe autorisée en substitution existe ailleurs, avec un autre prix et un transport express plus cher.
-        steps:
-        - title: Qualifier les alternatives autorisées
-          description: Le catalogue, l’assortiment et les prix applicables permettent de comparer la robe demandée et la substitution,
-            ainsi que les services de transport.
-          outcome: Les prix et conditions des alternatives sont explicites.
-          contributions:
-          - node_id: D12.b
-            role: Exposer les offres éligibles.
-          - node_id: D16.b
-            role: Vérifier l’assortiment applicable à cette boutique.
-          - node_id: price-book-visibility
-            role: Exposer prix produit et service, contexte et validité.
-        - title: Évaluer le service et l’économie
-          description: Comparer attente jusqu’à lundi, départ depuis un autre site et substitution livrable vendredi.
-          outcome: Chaque possibilité comporte date, conditions, coûts et risques connus.
-          contributions:
-          - node_id: D03.i
-            role: Évaluer les disponibilités présentes et futures.
-          - node_id: D06.e
-            role: Proposer les prestations compatibles.
-          - node_id: D03.k
-            role: Comparer les conséquences économiques sans sélectionner.
-        - title: Choisir et faire accepter
-          description: La substitution plus coûteuse ne devient la promesse qu’après le choix et l’acceptation requis.
+          validation_points:
+          - Une évaluation ATP ne garantit pas à elle seule une exclusivité.
+          - L’expiration d’une réservation doit également produire un état observable avant réutilisation.
+          source_refs:
+          - U768
+          - U769
+        - id: substitution-price-service
+          title: Comparer une substitution, un autre site et un transport express
+          situation: Illustration FLOW fictive. Une boutique attend 20 robes vendredi. La référence demandée arrive lundi
+            ; une robe autorisée en substitution existe ailleurs, avec un autre prix et un transport express plus cher.
+          steps:
+          - title: Qualifier les alternatives autorisées
+            description: Le catalogue, l’assortiment et les prix applicables permettent de comparer la robe demandée et la
+              substitution, ainsi que les services de transport.
+            outcome: Les prix et conditions des alternatives sont explicites.
+            contributions:
+            - node_id: D12.b
+              role: Exposer les offres éligibles.
+            - node_id: D16.b
+              role: Vérifier l’assortiment applicable à cette boutique.
+            - node_id: price-book-visibility
+              role: Exposer prix produit et service, contexte et validité.
+          - title: Évaluer le service et l’économie
+            description: Comparer attente jusqu’à lundi, départ depuis un autre site et substitution livrable vendredi.
+            outcome: Chaque possibilité comporte date, conditions, coûts et risques connus.
+            contributions:
+            - node_id: D03.i
+              role: Évaluer les disponibilités présentes et futures.
+            - node_id: D06.e
+              role: Proposer les prestations compatibles.
+            - node_id: D03.k
+              role: Comparer les conséquences économiques sans sélectionner.
+          - title: Choisir et faire accepter
+            description: La substitution plus coûteuse ne devient la promesse qu’après le choix et l’acceptation requis.
+            outcome: La commande conserve la référence et les conditions réellement acceptées.
+            contributions:
+            - node_id: D03.l
+              role: Choisir la proposition au regard des règles et évaluations.
+            - node_id: D04.i
+              role: Porter la modification acceptée de la demande et de la promesse.
           outcome: La commande conserve la référence et les conditions réellement acceptées.
-          contributions:
-          - node_id: D03.l
-            role: Choisir la proposition au regard des règles et évaluations.
-          - node_id: D04.i
-            role: Porter la modification acceptée de la demande et de la promesse.
-        outcome: La commande conserve la référence et les conditions réellement acceptées.
-        validation_points:
-        - Un prix de service ne se confond pas avec le prix produit.
-        - L’option la moins coûteuse ne remplace pas automatiquement l’article.
-        source_refs:
-        - U768
-        - U769
-      - id: additional-purchase-partial
-        title: Approvisionner une vente et traiter une confirmation fournisseur partielle
-        situation: Illustration FLOW fictive. Un client demande 100 vestes vendredi sans stock disponible. Le fournisseur
-          pourrait en livrer 100, mais confirme finalement 60 vendredi et 40 mardi.
-        steps:
-        - title: Évaluer puis planifier
-          description: Une possibilité d’achat est évaluée ; le master plan détermine ensuite les ressources à proposer pour
-            la vente.
-          outcome: L’hypothèse est distinguée de la commande réelle.
-          contributions:
-          - node_id: D03.j
-            role: Évaluer la faisabilité conditionnelle de l’apport.
-          - node_id: D05.f
-            role: Piloter le plan et ses arbitrages.
-          - node_id: D03.o
-            role: Déterminer l’affectation proposée.
-          - node_id: D02.e
-            role: Mettre en application le plan autorisé.
-          - node_id: D04.j
-            role: Porter la demande d’achat réelle et sa confirmation.
-        - title: Réexaminer les engagements
-          description: La confirmation 60/40 déclenche une réévaluation ; le client accepte le fractionnement ou une nouvelle
-            proposition est nécessaire.
-          outcome: Dates et quantités confirmées restent distinctes des dates demandées.
-          contributions:
-          - node_id: D04.j
-            role: Conserver les deux échéances fournisseur.
-          - node_id: D03.i
-            role: Évaluer les disponibilités projetées corrigées.
-          - node_id: D03.l
-            role: Choisir la proposition révisée.
-          - node_id: D04.i
-            role: Tenir les engagements acceptés par le client.
-        - title: Recevoir puis traiter une annulation de solde
-          description: 60 sont reçues ; si le client annule les 40 restantes, la suite de l’achat dépend de son propre engagement
-            fournisseur.
+          validation_points:
+          - Un prix de service ne se confond pas avec le prix produit.
+          - L’option la moins coûteuse ne remplace pas automatiquement l’article.
+          source_refs:
+          - U768
+          - U769
+        - id: additional-purchase-partial
+          title: Approvisionner une vente et traiter une confirmation fournisseur partielle
+          situation: Illustration FLOW fictive. Un client demande 100 vestes vendredi sans stock disponible. Le fournisseur
+            pourrait en livrer 100, mais confirme finalement 60 vendredi et 40 mardi.
+          steps:
+          - title: Évaluer puis planifier
+            description: Une possibilité d’achat est évaluée ; le master plan détermine ensuite les ressources à proposer
+              pour la vente.
+            outcome: L’hypothèse est distinguée de la commande réelle.
+            contributions:
+            - node_id: D03.j
+              role: Évaluer la faisabilité conditionnelle de l’apport.
+            - node_id: D05.f
+              role: Piloter le plan et ses arbitrages.
+            - node_id: D03.o
+              role: Déterminer l’affectation proposée.
+            - node_id: D02.e
+              role: Mettre en application le plan autorisé.
+            - node_id: D04.j
+              role: Porter la demande d’achat réelle et sa confirmation.
+          - title: Réexaminer les engagements
+            description: La confirmation 60/40 déclenche une réévaluation ; le client accepte le fractionnement ou une nouvelle
+              proposition est nécessaire.
+            outcome: Dates et quantités confirmées restent distinctes des dates demandées.
+            contributions:
+            - node_id: D04.j
+              role: Conserver les deux échéances fournisseur.
+            - node_id: D03.i
+              role: Évaluer les disponibilités projetées corrigées.
+            - node_id: D03.l
+              role: Choisir la proposition révisée.
+            - node_id: D04.i
+              role: Tenir les engagements acceptés par le client.
+          - title: Recevoir puis traiter une annulation de solde
+            description: 60 sont reçues ; si le client annule les 40 restantes, la suite de l’achat dépend de son propre engagement
+              fournisseur.
+            outcome: Le solde achat ne disparaît pas avec la seule annulation de vente.
+            contributions:
+            - node_id: D01.f
+              role: Capter la réception réelle.
+            - node_id: D04.j
+              role: Rapprocher réception et reste à recevoir ; tenir les suites autorisées sur le solde.
+            - node_id: D03.o
+              role: Réexaminer l’affectation du solde devenu sans demande.
+            - node_id: D04.i
+              role: Porter l’annulation des 40 demandées.
           outcome: Le solde achat ne disparaît pas avec la seule annulation de vente.
-          contributions:
-          - node_id: D01.f
-            role: Capter la réception réelle.
-          - node_id: D04.j
-            role: Rapprocher réception et reste à recevoir ; tenir les suites autorisées sur le solde.
-          - node_id: D03.o
-            role: Réexaminer l’affectation du solde devenu sans demande.
-          - node_id: D04.i
-            role: Porter l’annulation des 40 demandées.
-        outcome: Le solde achat ne disparaît pas avec la seule annulation de vente.
-        validation_points:
-        - CTP ne crée pas l’achat.
-        - Une confirmation n’est pas une réception ; une annulation de vente n’annule pas automatiquement l’achat.
-        source_refs:
-        - U768
-        - U769
-      - id: pickup-or-direct-shipment
-        title: Traiter un retrait non honoré ou une livraison directe partielle
-        situation: 'Illustration FLOW fictive. Deux clients choisissent des services différents : Léa retire une veste en
-          magasin ; Amir reçoit deux chemises directement du fournisseur. Aucun passage par l’entrepôt central n’est prévu.'
-        steps:
-        - title: Porter les modalités promises
-          description: La veste est préparée pour retrait ; les chemises sont demandées au fournisseur pour livraison à Amir.
-          outcome: Les commandes distinguent destinataire, preuve et date attendus.
-          contributions:
-          - node_id: D04.i
-            role: Porter les modalités de chacune des ventes.
-          - node_id: D04.j
-            role: Porter l’achat avec livraison directe fournisseur.
-          - node_id: D06.d
-            role: Coordonner les prestations adaptées à chaque parcours.
-        - title: Constater les exceptions
-          description: Léa ne vient pas dans le délai prévu ; une seule chemise est remise à Amir.
-          outcome: Absence de retrait et livraison partielle sont connues sans clôture fictive.
-          contributions:
-          - node_id: D07.d
-            role: Capter les preuves ou absences de réalisation.
-          - node_id: D04.i
-            role: Tenir le reste à satisfaire de chaque vente.
-          - node_id: D04.j
-            role: Rapprocher le résultat du fournisseur et son solde.
-        - title: Adapter les suites
-          description: Selon les règles acceptées, le retrait est prolongé ou annulé ; la seconde chemise reste attendue ou
-            fait l’objet d’une nouvelle proposition.
+          validation_points:
+          - CTP ne crée pas l’achat.
+          - Une confirmation n’est pas une réception ; une annulation de vente n’annule pas automatiquement l’achat.
+          source_refs:
+          - U768
+          - U769
+        - id: pickup-or-direct-shipment
+          title: Traiter un retrait non honoré ou une livraison directe partielle
+          situation: 'Illustration FLOW fictive. Deux clients choisissent des services différents : Léa retire une veste en
+            magasin ; Amir reçoit deux chemises directement du fournisseur. Aucun passage par l’entrepôt central n’est prévu.'
+          steps:
+          - title: Porter les modalités promises
+            description: La veste est préparée pour retrait ; les chemises sont demandées au fournisseur pour livraison à
+              Amir.
+            outcome: Les commandes distinguent destinataire, preuve et date attendus.
+            contributions:
+            - node_id: D04.i
+              role: Porter les modalités de chacune des ventes.
+            - node_id: D04.j
+              role: Porter l’achat avec livraison directe fournisseur.
+            - node_id: D06.d
+              role: Coordonner les prestations adaptées à chaque parcours.
+          - title: Constater les exceptions
+            description: Léa ne vient pas dans le délai prévu ; une seule chemise est remise à Amir.
+            outcome: Absence de retrait et livraison partielle sont connues sans clôture fictive.
+            contributions:
+            - node_id: D07.d
+              role: Capter les preuves ou absences de réalisation.
+            - node_id: D04.i
+              role: Tenir le reste à satisfaire de chaque vente.
+            - node_id: D04.j
+              role: Rapprocher le résultat du fournisseur et son solde.
+          - title: Adapter les suites
+            description: Selon les règles acceptées, le retrait est prolongé ou annulé ; la seconde chemise reste attendue
+              ou fait l’objet d’une nouvelle proposition.
+            outcome: Les quantités sont libérées ou restent engagées selon la décision effective.
+            contributions:
+            - node_id: D06.d
+              role: Coordonner les suites autorisées.
+            - node_id: D02.c
+              role: Adapter les réservations concernées.
+            - node_id: D01.c
+              role: Exposer les disponibilités sans retour physique inventé.
+            - node_id: D03.l
+              role: Choisir une nouvelle proposition si nécessaire.
           outcome: Les quantités sont libérées ou restent engagées selon la décision effective.
-          contributions:
-          - node_id: D06.d
-            role: Coordonner les suites autorisées.
-          - node_id: D02.c
-            role: Adapter les réservations concernées.
-          - node_id: D01.c
-            role: Exposer les disponibilités sans retour physique inventé.
-          - node_id: D03.l
-            role: Choisir une nouvelle proposition si nécessaire.
-        outcome: Les quantités sont libérées ou restent engagées selon la décision effective.
-        validation_points:
-        - Préparer ne prouve pas le retrait.
-        - La livraison directe ne crée pas de réception fictive en entrepôt.
-        source_refs:
-        - U768
-        - U769
-      - id: transport-missed-connection
-        title: Sauver une livraison après une correspondance manquée
-        situation: Illustration FLOW fictive. Un lot de 80 manteaux manque sa correspondance. Une liaison routière peut encore
-          livrer vendredi, mais la place et le coût doivent être vérifiés.
-        steps:
-        - title: Qualifier l’aléa
-          description: Le transporteur annonce le retard ; la réservation initiale n’est plus suffisante pour tenir la date.
-          outcome: Le segment affecté et l’engagement menacé sont identifiés.
-          contributions:
-          - node_id: D07.d
-            role: Capter le fait de retard.
-          - node_id: D07.c
-            role: Le rapprocher de la prestation attendue.
-          - node_id: service-order-transport-booking
-            role: Conserver la place réservée et les changements confirmés.
-          - node_id: service-order-transport
-            role: Porter l’obligation d’acheminement.
-        - title: Comparer les solutions locales
-          description: Une liaison routière offre 80 places ; sa disponibilité et ses contraintes sont qualifiées. Routing
-            & Scheduling réexamine le parcours confié ; un changement d’engagement reste soumis aux capacités responsables.
-          outcome: Une alternative réalisable et ses impacts sont exposés.
-          contributions:
-          - node_id: D06.b
-            role: Exposer les capacités de service annoncées.
-          - node_id: D06.e
-            role: Sélectionner une prestation compatible.
-          - node_id: D03.k
-            role: Éclairer le surcoût et les risques économiques.
-          - node_id: D06.f
-            role: Déterminer l’adaptation locale préservant la promesse.
-          - node_id: transport-plan-decision
-            role: Réexaminer les étapes et horaires du transport confié dans les contraintes de promesse.
-        - title: Appliquer ou faire réexaminer
-          description: Si la solution tient vendredi, les ordres sont adaptés ; sinon une réévaluation de promesse et des
-            affectations est nécessaire.
+          validation_points:
+          - Préparer ne prouve pas le retrait.
+          - La livraison directe ne crée pas de réception fictive en entrepôt.
+          source_refs:
+          - U768
+          - U769
+        - id: transport-missed-connection
+          title: Sauver une livraison après une correspondance manquée
+          situation: Illustration FLOW fictive. Un lot de 80 manteaux manque sa correspondance. Une liaison routière peut
+            encore livrer vendredi, mais la place et le coût doivent être vérifiés.
+          steps:
+          - title: Qualifier l’aléa
+            description: Le transporteur annonce le retard ; la réservation initiale n’est plus suffisante pour tenir la date.
+            outcome: Le segment affecté et l’engagement menacé sont identifiés.
+            contributions:
+            - node_id: D07.d
+              role: Capter le fait de retard.
+            - node_id: D07.c
+              role: Le rapprocher de la prestation attendue.
+            - node_id: service-order-transport-booking
+              role: Conserver la place réservée et les changements confirmés.
+            - node_id: service-order-transport
+              role: Porter l’obligation d’acheminement.
+          - title: Comparer les solutions locales
+            description: Une liaison routière offre 80 places ; sa disponibilité et ses contraintes sont qualifiées. Routing
+              & Scheduling réexamine le parcours confié ; un changement d’engagement reste soumis aux capacités responsables.
+            outcome: Une alternative réalisable et ses impacts sont exposés.
+            contributions:
+            - node_id: D06.b
+              role: Exposer les capacités de service annoncées.
+            - node_id: D06.e
+              role: Sélectionner une prestation compatible.
+            - node_id: D03.k
+              role: Éclairer le surcoût et les risques économiques.
+            - node_id: D06.f
+              role: Déterminer l’adaptation locale préservant la promesse.
+            - node_id: transport-plan-decision
+              role: Réexaminer les étapes et horaires du transport confié dans les contraintes de promesse.
+          - title: Appliquer ou faire réexaminer
+            description: Si la solution tient vendredi, les ordres sont adaptés ; sinon une réévaluation de promesse et des
+              affectations est nécessaire.
+            outcome: Aucun déplacement silencieux de date ni réaffectation globale par Fulfilment.
+            contributions:
+            - node_id: D06.d
+              role: Coordonner les prestations modifiées.
+            - node_id: D03.l
+              role: Choisir une nouvelle proposition si la promesse devient intenable.
+            - node_id: D03.o
+              role: Réexaminer les affectations si l’équilibre du Matching est touché.
           outcome: Aucun déplacement silencieux de date ni réaffectation globale par Fulfilment.
-          contributions:
-          - node_id: D06.d
-            role: Coordonner les prestations modifiées.
-          - node_id: D03.l
-            role: Choisir une nouvelle proposition si la promesse devient intenable.
-          - node_id: D03.o
-            role: Réexaminer les affectations si l’équilibre du Matching est touché.
-        outcome: Aucun déplacement silencieux de date ni réaffectation globale par Fulfilment.
-        validation_points:
-        - La réservation de transport et le transport réalisé sont distincts.
-        - Une adaptation locale ne décide pas seule de nouveaux équilibres globaux.
-        source_refs:
-        - U768
-        - U769
-      - id: remote-payment-ambiguous
-        title: Attendre un encaissement malgré des notifications ambiguës
-        situation: Illustration FLOW fictive. Une collecte de 1 000 euros est confiée à un prestataire. Deux notifications
-          identiques annoncent 600 euros encaissés, puis un autre message annonce un échec.
-        steps:
-        - title: Attendre le résultat métier
-          description: Le prestataire accepte la demande mais ne confirme pas encore l’encaissement.
-          outcome: La prestation reste en cours.
-          contributions:
-          - node_id: service-order-payment-collection
-            role: Porter montant demandé et résultat attendu.
-          - node_id: D06.d
-            role: Attendre l’achèvement requis avant de poursuivre.
-        - title: Rapprocher les notifications
-          description: Les deux annonces de 600 correspondent au même fait ; l’échec contradictoire doit être qualifié.
-          outcome: 600 ne deviennent pas 1 200 et la contradiction reste visible.
-          contributions:
-          - node_id: D07.d
-            role: Capter et corréler les faits distants sans double comptage.
-          - node_id: D07.c
-            role: Rapprocher résultats, montants et demande ; qualifier l’écart.
-          - node_id: operations-visibility
-            role: Exposer réalisation partielle et état non résolu.
-        - title: Clore ou poursuivre explicitement
-          description: Après clarification, 600 sont reconnus ; les 400 restants sont relancés ou font l’objet d’une clôture
-            partielle autorisée.
+          validation_points:
+          - La réservation de transport et le transport réalisé sont distincts.
+          - Une adaptation locale ne décide pas seule de nouveaux équilibres globaux.
+          source_refs:
+          - U768
+          - U769
+        - id: remote-payment-ambiguous
+          title: Attendre un encaissement malgré des notifications ambiguës
+          situation: Illustration FLOW fictive. Une collecte de 1 000 euros est confiée à un prestataire. Deux notifications
+            identiques annoncent 600 euros encaissés, puis un autre message annonce un échec.
+          steps:
+          - title: Attendre le résultat métier
+            description: Le prestataire accepte la demande mais ne confirme pas encore l’encaissement.
+            outcome: La prestation reste en cours.
+            contributions:
+            - node_id: service-order-payment-collection
+              role: Porter montant demandé et résultat attendu.
+            - node_id: D06.d
+              role: Attendre l’achèvement requis avant de poursuivre.
+          - title: Rapprocher les notifications
+            description: Les deux annonces de 600 correspondent au même fait ; l’échec contradictoire doit être qualifié.
+            outcome: 600 ne deviennent pas 1 200 et la contradiction reste visible.
+            contributions:
+            - node_id: D07.d
+              role: Capter et corréler les faits distants sans double comptage.
+            - node_id: D07.c
+              role: Rapprocher résultats, montants et demande ; qualifier l’écart.
+            - node_id: operations-visibility
+              role: Exposer réalisation partielle et état non résolu.
+          - title: Clore ou poursuivre explicitement
+            description: Après clarification, 600 sont reconnus ; les 400 restants sont relancés ou font l’objet d’une clôture
+              partielle autorisée.
+            outcome: La suite logistique dépend du résultat reconnu et des conditions applicables.
+            contributions:
+            - node_id: service-order-payment-collection
+              role: Tenir le solde et la clôture autorisée.
+            - node_id: D06.d
+              role: Coordonner la suite ou maintenir l’attente.
           outcome: La suite logistique dépend du résultat reconnu et des conditions applicables.
-          contributions:
-          - node_id: service-order-payment-collection
-            role: Tenir le solde et la clôture autorisée.
-          - node_id: D06.d
-            role: Coordonner la suite ou maintenir l’attente.
-        outcome: La suite logistique dépend du résultat reconnu et des conditions applicables.
-        validation_points:
-        - Acceptation technique, paiement et clôture sont trois faits différents.
-        - Un message tardif ou dupliqué ne doit pas créer un second résultat.
-        source_refs:
-        - U768
-        - U769
-      - id: reference-plan-correction
-        title: Réexaminer une préparation après correction des données sources
-        situation: Illustration FLOW fictive. Une boutique prépare une capsule de 120 robes. Commerce corrige l’assortiment,
-          Design la variante, Finance un prix ; un Demand Plan ancien annonce encore 150 pièces.
-        steps:
-        - title: Intégrer les corrections sourcées
-          description: Les apports sont rapprochés des références locales, de leurs identités et dates de validité.
-          outcome: Les changements connus gardent origine et portée.
-          contributions:
-          - node_id: master-data-ingestion
-            role: Intégrer les apports Commerce, Finance et Design.
-          - node_id: D08.e
-            role: Exposer la variante corrigée.
-          - node_id: D09.e
-            role: Identifier les parties et rôles concernés.
-          - node_id: D11.b
-            role: Exposer les conditions applicables.
-          - node_id: price-book-visibility
-            role: Exposer le prix et sa période de validité.
-        - title: Vérifier les possibilités de service
-          description: La boutique consulte l’offre corrigée, les 120 robes de son assortiment, le site et les prestations
-            disponibles.
-          outcome: Le changement d’assortiment ne devient pas automatiquement un changement de promesse.
-          contributions:
-          - node_id: D12.b
-            role: Exposer les offres éligibles.
-          - node_id: D16.b
-            role: Exposer l’assortiment en vigueur.
-          - node_id: D13.b
-            role: Exposer sites et réseau utilisables.
-          - node_id: D14.b
-            role: Exposer les prestations proposées.
-        - title: Traiter le décalage de plan
-          description: L’ancien plan de 150 est distingué de la version corrigée ; l’APS reçoit le besoin de correction hors
-            domaine et le plan reçu reste qualifié.
+          validation_points:
+          - Acceptation technique, paiement et clôture sont trois faits différents.
+          - Un message tardif ou dupliqué ne doit pas créer un second résultat.
+          source_refs:
+          - U768
+          - U769
+        - id: reference-plan-correction
+          title: Réexaminer une préparation après correction des données sources
+          situation: Illustration FLOW fictive. Une boutique prépare une capsule de 120 robes. Commerce corrige l’assortiment,
+            Design la variante, Finance un prix ; un Demand Plan ancien annonce encore 150 pièces.
+          steps:
+          - title: Intégrer les corrections sourcées
+            description: Les apports sont rapprochés des références locales, de leurs identités et dates de validité.
+            outcome: Les changements connus gardent origine et portée.
+            contributions:
+            - node_id: master-data-ingestion
+              role: Intégrer les apports Commerce, Finance et Design.
+            - node_id: D08.e
+              role: Exposer la variante corrigée.
+            - node_id: D09.e
+              role: Identifier les parties et rôles concernés.
+            - node_id: D11.b
+              role: Exposer les conditions applicables.
+            - node_id: price-book-visibility
+              role: Exposer le prix et sa période de validité.
+          - title: Vérifier les possibilités de service
+            description: La boutique consulte l’offre corrigée, les 120 robes de son assortiment, le site et les prestations
+              disponibles.
+            outcome: Le changement d’assortiment ne devient pas automatiquement un changement de promesse.
+            contributions:
+            - node_id: D12.b
+              role: Exposer les offres éligibles.
+            - node_id: D16.b
+              role: Exposer l’assortiment en vigueur.
+            - node_id: D13.b
+              role: Exposer sites et réseau utilisables.
+            - node_id: D14.b
+              role: Exposer les prestations proposées.
+          - title: Traiter le décalage de plan
+            description: L’ancien plan de 150 est distingué de la version corrigée ; l’APS reçoit le besoin de correction
+              hors domaine et le plan reçu reste qualifié.
+            outcome: Le calcul local utilise une version identifiée ou explicite son incertitude.
+            contributions:
+            - node_id: plans-ingestion
+              role: Recevoir les versions et corrections des plans externes.
+            - node_id: demand-plan-visibility
+              role: Exposer la prévision et sa validité connue.
+            - node_id: D05.f
+              role: Conduire le réexamen local sur les hypothèses explicites.
           outcome: Le calcul local utilise une version identifiée ou explicite son incertitude.
-          contributions:
-          - node_id: plans-ingestion
-            role: Recevoir les versions et corrections des plans externes.
-          - node_id: demand-plan-visibility
-            role: Exposer la prévision et sa validité connue.
-          - node_id: D05.f
-            role: Conduire le réexamen local sur les hypothèses explicites.
-        outcome: Le calcul local utilise une version identifiée ou explicite son incertitude.
-        validation_points:
-        - Autorité des domaines sources et source de vérité locale Supply restent distinctes.
-        - Le scénario n’impose pas de maître supplémentaire ni de correction automatique dans l’APS.
-        source_refs:
-        - U768
-        - U769
-      - id: redistribute-protected-stock
-        title: Rééquilibrer et consolider des stocks sous protections
-        situation: Illustration FLOW fictive. Un magasin conserve 80 pulls qui se vendent peu, un second risque une rupture
-          avec 5 pièces, et deux petits sites détiennent chacun 10 pièces. Le web possède une protection explicite.
-        steps:
-        - title: Comparer cibles et protections
-          description: Les cibles et règles sont examinées avant toute redistribution, y compris les droits réservés et le
-            groupe web.
-          outcome: Les ressources mobilisables et les protections sont explicites.
-          contributions:
-          - node_id: D05.a
-            role: Déterminer les cibles de stock utiles.
-          - node_id: D05.d
-            role: Proposer les protections de groupes.
-          - node_id: D05.h
-            role: Évaluer les règles de réservation appropriées.
-          - node_id: D02.b
-            role: Porter les règles actives de protection de ressources.
-          - node_id: D19.b
-            role: Porter les règles actives de protection des demandes.
-        - title: Construire deux actions complémentaires
-          description: Proposer un apport au magasin en rupture et la consolidation des petits reliquats sur un site, sous
-            réserve des besoins protégés.
-          outcome: Rééquilibrage et consolidation gardent des objectifs distincts dans le même plan.
-          contributions:
-          - node_id: D05.c
-            role: Déterminer les déplacements de redistribution.
-          - node_id: D03.m
-            role: Prioriser les demandes concurrentes.
-          - node_id: D05.f
-            role: Piloter l’arbitrage du master plan.
-          - node_id: D03.o
-            role: Déterminer les affectations compatibles.
-        - title: Demander les déplacements retenus
-          description: Les propositions autorisées deviennent des transferts avec quantités, origine, destination et date.
+          validation_points:
+          - Autorité des domaines sources et source de vérité locale Supply restent distinctes.
+          - Le scénario n’impose pas de maître supplémentaire ni de correction automatique dans l’APS.
+          source_refs:
+          - U768
+          - U769
+        - id: redistribute-protected-stock
+          title: Rééquilibrer et consolider des stocks sous protections
+          situation: Illustration FLOW fictive. Un magasin conserve 80 pulls qui se vendent peu, un second risque une rupture
+            avec 5 pièces, et deux petits sites détiennent chacun 10 pièces. Le web possède une protection explicite.
+          steps:
+          - title: Comparer cibles et protections
+            description: Les cibles et règles sont examinées avant toute redistribution, y compris les droits réservés et
+              le groupe web.
+            outcome: Les ressources mobilisables et les protections sont explicites.
+            contributions:
+            - node_id: D05.a
+              role: Déterminer les cibles de stock utiles.
+            - node_id: D05.d
+              role: Proposer les protections de groupes.
+            - node_id: D05.h
+              role: Évaluer les règles de réservation appropriées.
+            - node_id: D02.b
+              role: Porter les règles actives de protection de ressources.
+            - node_id: D19.b
+              role: Porter les règles actives de protection des demandes.
+          - title: Construire deux actions complémentaires
+            description: Proposer un apport au magasin en rupture et la consolidation des petits reliquats sur un site, sous
+              réserve des besoins protégés.
+            outcome: Rééquilibrage et consolidation gardent des objectifs distincts dans le même plan.
+            contributions:
+            - node_id: D05.c
+              role: Déterminer les déplacements de redistribution.
+            - node_id: D03.m
+              role: Prioriser les demandes concurrentes.
+            - node_id: D05.f
+              role: Piloter l’arbitrage du master plan.
+            - node_id: D03.o
+              role: Déterminer les affectations compatibles.
+          - title: Demander les déplacements retenus
+            description: Les propositions autorisées deviennent des transferts avec quantités, origine, destination et date.
+            outcome: Les transferts suivent le même cycle malgré des motifs différents.
+            contributions:
+            - node_id: D02.e
+              role: Appliquer le plan autorisé.
+            - node_id: D04.k
+              role: Porter les déplacements et leur reste à satisfaire.
           outcome: Les transferts suivent le même cycle malgré des motifs différents.
-          contributions:
-          - node_id: D02.e
-            role: Appliquer le plan autorisé.
-          - node_id: D04.k
-            role: Porter les déplacements et leur reste à satisfaire.
-        outcome: Les transferts suivent le même cycle malgré des motifs différents.
-        validation_points:
-        - Protection active et optimisation de la protection sont distinctes.
-        - Rééquilibrer ou consolider ne crée pas deux cycles de Transfer Order.
-        source_refs:
-        - U768
-        - U769
-      - id: supplier-return-outcomes
-        title: Suivre trois issues contractuelles d’un retour fournisseur
-        situation: 'Illustration FLOW fictive. Après contrôle, 12 vestes défectueuses sont reprises : 4 donnent lieu à avoir,
-          4 à remplacement, 4 à réparation, selon l’accord accepté.'
-        steps:
-        - title: Qualifier les quantités et leur orientation
-          description: Les défauts et l’accord déterminent les suites ; un retour client éventuel garde son lien avec les
-            vestes.
-          outcome: Chaque groupe de quatre possède un attendu explicite.
-          contributions:
-          - node_id: D04.l
-            role: Tenir le retour client lié le cas échéant.
-          - node_id: D05.i
-            role: Déterminer le devenir autorisé.
-          - node_id: D04.m
-            role: Porter les trois engagements fournisseur distincts.
-        - title: Exécuter et reconnaître les mouvements
-          description: Les vestes sont expédiées ; l’expédition ne prouve ni avoir, ni remplacement, ni réparation.
-          outcome: Les mouvements sont tracés mais les engagements restent ouverts.
-          contributions:
-          - node_id: D06.d
-            role: Coordonner la reprise et les prestations requises.
-          - node_id: D01.g
-            role: Conserver les mouvements reconnus.
-          - node_id: D04.m
-            role: Rapprocher les résultats des attentes contractuelles.
-        - title: Solder chaque attendu
-          description: L’avoir est confirmé, trois remplacements sur quatre arrivent et les quatre réparations sont acceptées.
+          validation_points:
+          - Protection active et optimisation de la protection sont distinctes.
+          - Rééquilibrer ou consolider ne crée pas deux cycles de Transfer Order.
+          source_refs:
+          - U768
+          - U769
+        - id: supplier-return-outcomes
+          title: Suivre trois issues contractuelles d’un retour fournisseur
+          situation: 'Illustration FLOW fictive. Après contrôle, 12 vestes défectueuses sont reprises : 4 donnent lieu à avoir,
+            4 à remplacement, 4 à réparation, selon l’accord accepté.'
+          steps:
+          - title: Qualifier les quantités et leur orientation
+            description: Les défauts et l’accord déterminent les suites ; un retour client éventuel garde son lien avec les
+              vestes.
+            outcome: Chaque groupe de quatre possède un attendu explicite.
+            contributions:
+            - node_id: D04.l
+              role: Tenir le retour client lié le cas échéant.
+            - node_id: D05.i
+              role: Déterminer le devenir autorisé.
+            - node_id: D04.m
+              role: Porter les trois engagements fournisseur distincts.
+          - title: Exécuter et reconnaître les mouvements
+            description: Les vestes sont expédiées ; l’expédition ne prouve ni avoir, ni remplacement, ni réparation.
+            outcome: Les mouvements sont tracés mais les engagements restent ouverts.
+            contributions:
+            - node_id: D06.d
+              role: Coordonner la reprise et les prestations requises.
+            - node_id: D01.g
+              role: Conserver les mouvements reconnus.
+            - node_id: D04.m
+              role: Rapprocher les résultats des attentes contractuelles.
+          - title: Solder chaque attendu
+            description: L’avoir est confirmé, trois remplacements sur quatre arrivent et les quatre réparations sont acceptées.
+            outcome: Un remplacement reste attendu ; le solde n’est pas masqué par les autres résultats.
+            contributions:
+            - node_id: D04.m
+              role: Tenir les soldes par engagement et leur preuve.
+            - node_id: D04.l
+              role: Répercuter le résultat pertinent sur le retour client lié.
           outcome: Un remplacement reste attendu ; le solde n’est pas masqué par les autres résultats.
-          contributions:
-          - node_id: D04.m
-            role: Tenir les soldes par engagement et leur preuve.
-          - node_id: D04.l
-            role: Répercuter le résultat pertinent sur le retour client lié.
-        outcome: Un remplacement reste attendu ; le solde n’est pas masqué par les autres résultats.
-        validation_points:
-        - L’avoir est exécuté hors de la tenue de Supplier Return Order.
-        - Une même quantité ne doit pas être soldée à la fois comme avoir et remplacement sans justification.
-        source_refs:
-        - U768
-        - U769
-      - id: gift-kits-crossdock
-        title: Composer des coffrets personnalisés puis traiter les reliquats
-        situation: Illustration FLOW fictive. Une campagne prévoit 40 coffrets contenant chacun un foulard et un bonnet personnalisé.
-          Dix foulards nécessitent un nettoyage ; 60 composants arrivent en transit sans stockage durable.
-        steps:
-        - title: Préparer les composants
-          description: Les arrivées en cross-dock et les prélèvements de stock doivent fournir les bons composants ; dix foulards
-            attendent un nettoyage conforme.
-          outcome: Les composants admissibles sont identifiés avant assemblage.
-          contributions:
-          - node_id: service-order-cross-docking
-            role: Porter les exigences de transit et de correspondance entrées-sorties.
-          - node_id: service-order-picking
-            role: Porter les prélèvements nécessaires.
-          - node_id: service-order-cleaning
-            role: Porter le nettoyage et son résultat attendu.
-          - node_id: D06.d
-            role: Coordonner disponibilité et dépendances.
-        - title: Personnaliser et assembler
-          description: Chaque bonnet reçoit le marquage requis ; un foulard et un bonnet conformes composent chaque coffret.
-          outcome: 40 coffrets attendus gardent une correspondance avec leurs composants.
-          contributions:
-          - node_id: service-order-personalization
-            role: Porter le marquage et ses critères d’acceptation.
-          - node_id: service-order-kitting
-            role: Porter la composition, les quantités et la conformité du kit.
-          - node_id: service-order-packing
-            role: Porter le conditionnement de présentation et d’expédition.
-        - title: Décomposer le reliquat autorisé
-          description: La campagne s’achève avec cinq coffrets non expédiés ; leur décomposition est demandée, mais les bonnets
-            personnalisés ne sont pas réputés interchangeables.
+          validation_points:
+          - L’avoir est exécuté hors de la tenue de Supplier Return Order.
+          - Une même quantité ne doit pas être soldée à la fois comme avoir et remplacement sans justification.
+          source_refs:
+          - U768
+          - U769
+        - id: gift-kits-crossdock
+          title: Composer des coffrets personnalisés puis traiter les reliquats
+          situation: Illustration FLOW fictive. Une campagne prévoit 40 coffrets contenant chacun un foulard et un bonnet
+            personnalisé. Dix foulards nécessitent un nettoyage ; 60 composants arrivent en transit sans stockage durable.
+          steps:
+          - title: Préparer les composants
+            description: Les arrivées en cross-dock et les prélèvements de stock doivent fournir les bons composants ; dix
+              foulards attendent un nettoyage conforme.
+            outcome: Les composants admissibles sont identifiés avant assemblage.
+            contributions:
+            - node_id: service-order-cross-docking
+              role: Porter les exigences de transit et de correspondance entrées-sorties.
+            - node_id: service-order-picking
+              role: Porter les prélèvements nécessaires.
+            - node_id: service-order-cleaning
+              role: Porter le nettoyage et son résultat attendu.
+            - node_id: D06.d
+              role: Coordonner disponibilité et dépendances.
+          - title: Personnaliser et assembler
+            description: Chaque bonnet reçoit le marquage requis ; un foulard et un bonnet conformes composent chaque coffret.
+            outcome: 40 coffrets attendus gardent une correspondance avec leurs composants.
+            contributions:
+            - node_id: service-order-personalization
+              role: Porter le marquage et ses critères d’acceptation.
+            - node_id: service-order-kitting
+              role: Porter la composition, les quantités et la conformité du kit.
+            - node_id: service-order-packing
+              role: Porter le conditionnement de présentation et d’expédition.
+          - title: Décomposer le reliquat autorisé
+            description: La campagne s’achève avec cinq coffrets non expédiés ; leur décomposition est demandée, mais les
+              bonnets personnalisés ne sont pas réputés interchangeables.
+            outcome: Les composants récupérés et leurs conditions d’utilisation sont reconnus.
+            contributions:
+            - node_id: service-order-kitting
+              role: Porter le Dekitting et les composants attendus.
+            - node_id: D07.c
+              role: Rapprocher les résultats de prestation.
+            - node_id: D01.g
+              role: Enregistrer les transformations de stock reconnues.
+            - node_id: D01.c
+              role: Exposer les disponibilités selon l’état reconnu.
           outcome: Les composants récupérés et leurs conditions d’utilisation sont reconnus.
-          contributions:
-          - node_id: service-order-kitting
-            role: Porter le Dekitting et les composants attendus.
-          - node_id: D07.c
-            role: Rapprocher les résultats de prestation.
-          - node_id: D01.g
-            role: Enregistrer les transformations de stock reconnues.
-          - node_id: D01.c
-            role: Exposer les disponibilités selon l’état reconnu.
-        outcome: Les composants récupérés et leurs conditions d’utilisation sont reconnus.
-        validation_points:
-        - Repacking change le conditionnement ; Kitting/Dekitting change la composition suivie.
-        - Ni transit ni personnalisation ne justifient une duplication des quantités.
-        source_refs:
-        - U768
-        - U769
-      - id: ownership-transit-deadline
-        title: Distinguer transfert contractuel, transit et formalité douanière
-        situation: 'Illustration FLOW fictive. Deux lots suivent des contrats différents : 200 manteaux achetés deviennent
-          notre propriété à un jalon contractuel avant réception ; 50 robes consignées changent de propriétaire à une échéance
-          convenue.'
-        steps:
-        - title: Identifier les conditions
-          description: L’accord de chaque lot définit le déclencheur et les preuves attendues.
-          outcome: Aucun événement universel de transfert n’est supposé.
-          contributions:
-          - node_id: D11.b
-            role: Exposer les clauses pertinentes.
-          - node_id: D01.h
-            role: Qualifier les conditions et faits nécessaires.
-        - title: Reconnaître le bon fait
-          description: Le jalon du premier lot est attesté ; l’échéance du second est vérifiée. Une formalité douanière n’a
-            d’effet sur la propriété que si son lien contractuel est établi.
-          outcome: Chaque transfert reconnu possède un fondement propre.
-          contributions:
-          - node_id: D01.h
-            role: Déterminer le transfert pour chaque contexte.
-          - node_id: service-order-customs-clearance
-            role: Porter la formalité et fournir son résultat pertinent.
-          - node_id: inventory-ownership-ledger
-            role: Conserver les transferts reconnus et leurs preuves.
-        - title: Rapprocher la réception ultérieure
-          description: Les manteaux sont reçus trois jours après leur transfert de propriété.
+          validation_points:
+          - Repacking change le conditionnement ; Kitting/Dekitting change la composition suivie.
+          - Ni transit ni personnalisation ne justifient une duplication des quantités.
+          source_refs:
+          - U768
+          - U769
+        - id: ownership-transit-deadline
+          title: Distinguer transfert contractuel, transit et formalité douanière
+          situation: 'Illustration FLOW fictive. Deux lots suivent des contrats différents : 200 manteaux achetés deviennent
+            notre propriété à un jalon contractuel avant réception ; 50 robes consignées changent de propriétaire à une échéance
+            convenue.'
+          steps:
+          - title: Identifier les conditions
+            description: L’accord de chaque lot définit le déclencheur et les preuves attendues.
+            outcome: Aucun événement universel de transfert n’est supposé.
+            contributions:
+            - node_id: D11.b
+              role: Exposer les clauses pertinentes.
+            - node_id: D01.h
+              role: Qualifier les conditions et faits nécessaires.
+          - title: Reconnaître le bon fait
+            description: Le jalon du premier lot est attesté ; l’échéance du second est vérifiée. Une formalité douanière
+              n’a d’effet sur la propriété que si son lien contractuel est établi.
+            outcome: Chaque transfert reconnu possède un fondement propre.
+            contributions:
+            - node_id: D01.h
+              role: Déterminer le transfert pour chaque contexte.
+            - node_id: service-order-customs-clearance
+              role: Porter la formalité et fournir son résultat pertinent.
+            - node_id: inventory-ownership-ledger
+              role: Conserver les transferts reconnus et leurs preuves.
+          - title: Rapprocher la réception ultérieure
+            description: Les manteaux sont reçus trois jours après leur transfert de propriété.
+            outcome: La réception physique n’enregistre pas un second transfert.
+            contributions:
+            - node_id: D01.g
+              role: Tracer le mouvement physique reconnu.
+            - node_id: inventory-ownership-ledger
+              role: Permettre le rapprochement avec le transfert déjà reconnu.
+            - node_id: D01.c
+              role: Exposer séparément détention et propriété.
           outcome: La réception physique n’enregistre pas un second transfert.
-          contributions:
-          - node_id: D01.g
-            role: Tracer le mouvement physique reconnu.
-          - node_id: inventory-ownership-ledger
-            role: Permettre le rapprochement avec le transfert déjà reconnu.
-          - node_id: D01.c
-            role: Exposer séparément détention et propriété.
-        outcome: La réception physique n’enregistre pas un second transfert.
-        validation_points:
-        - Le cas n’énonce aucune règle juridique universelle.
-        - Statut douanier, détention et propriété ne sont pas interchangeables.
-        source_refs:
-        - U768
-        - U769
-      - id: order-structuring-engaged
-        title: Scinder, regrouper ou fusionner sans perdre les engagements
-        situation: Illustration FLOW fictive. Une vente de 100 pièces doit partir en deux fois ; deux transferts pour une
-          ouverture voyagent ensemble ; deux achats encore modifiables de 30 et 20 pièces pourraient être fusionnés.
-        steps:
-        - title: Scinder une vente engagée
-          description: La vente devient deux unités suivies de 60 et 40, liées à la demande initiale. Les réservations et
-            affectations doivent rester cohérentes.
-          outcome: La quantité totale reste 100 et les engagements ne sont pas doublés.
-          contributions:
-          - node_id: D04.n
-            role: Déterminer et porter la structuration autorisée avec sa filiation.
-          - node_id: D04.i
-            role: Tenir les engagements de vente.
-          - node_id: D02.c
-            role: Adapter les droits réservés aux identités suivies.
-          - node_id: D03.o
-            role: Maintenir la cohérence des affectations.
-        - title: Regrouper les transferts
-          description: Les deux transferts gardent leur identité mais les prestations compatibles sont réalisées ensemble.
-          outcome: Un regroupement logistique n’efface aucune demande.
-          contributions:
-          - node_id: D04.n
-            role: Porter le regroupement sans fusion d’identité.
-          - node_id: D04.k
-            role: Tenir les deux transferts et leurs soldes.
-          - node_id: D06.d
-            role: Coordonner les prestations communes et leur rattachement.
-        - title: Fusionner seulement si compatible
-          description: Les achats 30 et 20 deviennent un achat 50 si conditions et autorisations le permettent ; une prestation
-            déjà engagée peut empêcher cette fusion.
+          validation_points:
+          - Le cas n’énonce aucune règle juridique universelle.
+          - Statut douanier, détention et propriété ne sont pas interchangeables.
+          source_refs:
+          - U768
+          - U769
+        - id: order-structuring-engaged
+          title: Scinder, regrouper ou fusionner sans perdre les engagements
+          situation: Illustration FLOW fictive. Une vente de 100 pièces doit partir en deux fois ; deux transferts pour une
+            ouverture voyagent ensemble ; deux achats encore modifiables de 30 et 20 pièces pourraient être fusionnés.
+          steps:
+          - title: Scinder une vente engagée
+            description: La vente devient deux unités suivies de 60 et 40, liées à la demande initiale. Les réservations et
+              affectations doivent rester cohérentes.
+            outcome: La quantité totale reste 100 et les engagements ne sont pas doublés.
+            contributions:
+            - node_id: D04.n
+              role: Déterminer et porter la structuration autorisée avec sa filiation.
+            - node_id: D04.i
+              role: Tenir les engagements de vente.
+            - node_id: D02.c
+              role: Adapter les droits réservés aux identités suivies.
+            - node_id: D03.o
+              role: Maintenir la cohérence des affectations.
+          - title: Regrouper les transferts
+            description: Les deux transferts gardent leur identité mais les prestations compatibles sont réalisées ensemble.
+            outcome: Un regroupement logistique n’efface aucune demande.
+            contributions:
+            - node_id: D04.n
+              role: Porter le regroupement sans fusion d’identité.
+            - node_id: D04.k
+              role: Tenir les deux transferts et leurs soldes.
+            - node_id: D06.d
+              role: Coordonner les prestations communes et leur rattachement.
+          - title: Fusionner seulement si compatible
+            description: Les achats 30 et 20 deviennent un achat 50 si conditions et autorisations le permettent ; une prestation
+              déjà engagée peut empêcher cette fusion.
+            outcome: La filiation et les engagements externes sont préservés.
+            contributions:
+            - node_id: D04.n
+              role: Porter la fusion autorisée et les liens d’origine.
+            - node_id: D04.j
+              role: Tenir l’engagement d’achat résultant.
+            - node_id: D06.d
+              role: Rapprocher les prestations déjà lancées avant toute adaptation.
           outcome: La filiation et les engagements externes sont préservés.
-          contributions:
-          - node_id: D04.n
-            role: Porter la fusion autorisée et les liens d’origine.
-          - node_id: D04.j
-            role: Tenir l’engagement d’achat résultant.
-          - node_id: D06.d
-            role: Rapprocher les prestations déjà lancées avant toute adaptation.
-        outcome: La filiation et les engagements externes sont préservés.
-        validation_points:
-        - Split, group et merge ont des effets différents sur l’identité.
-        - Une opération de structure ne doit pas annuler implicitement un engagement externe.
-        source_refs:
-        - U768
-        - U769
-      - id: b2b-release-deadline
-        title: Libérer une préparation B2B à l’approche de sa limite d’attente
-        situation: Illustration FLOW fictive. Un client attend 300 vêtements sur une palette. 280 sont prêts, 20 arrivent
-          demain ; attendre facilite le packing mais menace le départ transport.
-        steps:
-        - title: Qualifier prestataire et exigences
-          description: Deux prestataires annoncent des créneaux différents ; le client veut une préparation commune et une
-            palette unique si réalisable.
-          outcome: Les critères de compatibilité, charge et service sont explicites.
-          contributions:
-          - node_id: D19.a
-            role: Fournir les règles de choix du prestataire.
-          - node_id: D06.b
-            role: Exposer les capacités annoncées.
-          - node_id: D07.a
-            role: Déterminer les exigences de préparation et conditionnement.
-          - node_id: D06.e
-            role: Choisir une prestation compatible.
-        - title: Comparer attente et libération
-          description: Une fenêtre de transmission groupée peut organiser la charge ; attendre les 20 peut permettre une consolidation,
-            mais seulement jusqu’à la limite compatible avec la promesse.
-          outcome: Le choix de rétention ou libération est explicite et borné.
-          contributions:
-          - node_id: service-order-release-decision
-            role: Déterminer ensemble et moment de libération.
-          - node_id: service-order-picking
-            role: Porter l’exigence de préparation commune.
-          - node_id: service-order-packing
-            role: Porter le résultat de conditionnement attendu.
-        - title: Adapter si la complétude n’arrive pas
-          description: Les 20 sont retardés ; une solution locale est recherchée avant de réexaminer la promesse si nécessaire.
+          validation_points:
+          - Split, group et merge ont des effets différents sur l’identité.
+          - Une opération de structure ne doit pas annuler implicitement un engagement externe.
+          source_refs:
+          - U768
+          - U769
+        - id: b2b-release-deadline
+          title: Libérer une préparation B2B à l’approche de sa limite d’attente
+          situation: Illustration FLOW fictive. Un client attend 300 vêtements sur une palette. 280 sont prêts, 20 arrivent
+            demain ; attendre facilite le packing mais menace le départ transport.
+          steps:
+          - title: Qualifier prestataire et exigences
+            description: Deux prestataires annoncent des créneaux différents ; le client veut une préparation commune et une
+              palette unique si réalisable.
+            outcome: Les critères de compatibilité, charge et service sont explicites.
+            contributions:
+            - node_id: D19.a
+              role: Fournir les règles de choix du prestataire.
+            - node_id: D06.b
+              role: Exposer les capacités annoncées.
+            - node_id: D07.a
+              role: Déterminer les exigences de préparation et conditionnement.
+            - node_id: D06.e
+              role: Choisir une prestation compatible.
+          - title: Comparer attente et libération
+            description: Une fenêtre de transmission groupée peut organiser la charge ; attendre les 20 peut permettre une
+              consolidation, mais seulement jusqu’à la limite compatible avec la promesse.
+            outcome: Le choix de rétention ou libération est explicite et borné.
+            contributions:
+            - node_id: service-order-release-decision
+              role: Déterminer ensemble et moment de libération.
+            - node_id: service-order-picking
+              role: Porter l’exigence de préparation commune.
+            - node_id: service-order-packing
+              role: Porter le résultat de conditionnement attendu.
+          - title: Adapter si la complétude n’arrive pas
+            description: Les 20 sont retardés ; une solution locale est recherchée avant de réexaminer la promesse si nécessaire.
+            outcome: Le prestataire reçoit des ordres cohérents ; aucun retard client silencieux.
+            contributions:
+            - node_id: D06.f
+              role: Déterminer l’adaptation locale autorisée.
+            - node_id: D06.d
+              role: Coordonner la libération et les prestations.
+            - node_id: D03.l
+              role: Choisir une nouvelle proposition si l’engagement est menacé.
           outcome: Le prestataire reçoit des ordres cohérents ; aucun retard client silencieux.
-          contributions:
-          - node_id: D06.f
-            role: Déterminer l’adaptation locale autorisée.
-          - node_id: D06.d
-            role: Coordonner la libération et les prestations.
-          - node_id: D03.l
-            role: Choisir une nouvelle proposition si l’engagement est menacé.
-        outcome: Le prestataire reçoit des ordres cohérents ; aucun retard client silencieux.
-        validation_points:
-        - Transmettre ensemble ne garantit pas une préparation ni une palette communes.
-        - L’optimisation de release ne remplace pas les vagues et tâches détaillées de l’entrepôt.
-        source_refs:
-        - U768
-        - U769
-      - id: trace-accessory-kits
-        title: Retrouver les coffrets contenant un accessoire défectueux
-        situation: Illustration FLOW fictive. Le fournisseur signale un défaut sur le lot d’accessoires A17. Ce lot a servi
-          à assembler 120 coffrets ; 70 ont été expédiés à deux magasins et 50 sont encore à l’entrepôt.
-        steps:
-        - title: Relier composants et coffrets
-          description: Les faits d’assemblage identifient A17, les coffrets obtenus, puis les expéditions. Les corrections
-            conservent leur justification.
-          outcome: Les filiations connues sont conservées ; l’origine du message ne tient pas lieu de généalogie.
-          contributions:
-          - node_id: D01.f
-            role: Intégrer composants, transformations et destinations transmis.
-          - node_id: D01.g
-            role: Conserver les faits et liens reconnus.
-        - title: Reconstituer les deux sens du parcours
-          description: À partir d’un coffret, retrouver A17 ; à partir d’A17, retrouver les 120 coffrets et leurs destinations.
-            Signaler toute rupture de lien.
-          outcome: Le responsable distingue les 50 présents, les 70 expédiés et les éventuelles zones non documentées.
-          contributions:
-          - node_id: D01.c
-            role: Restituer origines amont et destinations aval avec les limites connues.
-        - title: Décider des suites autorisées
-          description: 'Policy-based Disposition applique la politique au signalement qualifié et aux biens concernés : interdire
-            l’usage des 50 coffrets présents jusqu’au contrôle requis. Les suites pour les expédiés sont confiées après autorisation
-            par les responsables concernés.'
-          outcome: Une trace n’est ni un ordre de rappel ni une autorisation automatique de retour.
-          contributions:
-          - node_id: D05.i
-            role: Déterminer restrictions et orientation selon les faits et politiques.
-          - node_id: D06.d
-            role: Coordonner les suites effectivement autorisées.
-          - node_id: D01.f
-            role: Intégrer les états reconnus.
-          - node_id: D01.g
-            role: Conserver restrictions et justifications.
-        validation_points:
-        - La traçabilité reste répartie entre intégration, registre et visibilité.
-        - Une origine seule ne suffit pas après assemblage.
-        - Le scénario ne transfère pas la décision réglementaire ou commerciale de rappel au registre.
-        outcome: Les biens potentiellement concernés sont identifiés sans inventer une capacité autonome de traçabilité.
-        source_refs:
-        - U777
-      - id: damaged-stock-disposition
-        title: Traiter des vestes abîmées sans retour client
-        situation: Illustration FLOW fictive. Une fuite a touché 100 vestes déjà stockées. Une inspection autonome est confiée
-          avant d’autoriser leur usage.
-        steps:
-        - title: Obtenir les constats
-          description: L’inspection identifie 80 vestes conformes et 20 endommagées ; ses résultats et les quantités sont
-            rapprochés de l’attendu.
-          outcome: La décision dispose de faits ; le contrôle ne vaut pas encore disposition.
-          contributions:
-          - node_id: service-order-inspection
-            role: Porter la prestation de contrôle.
-          - node_id: D07.d
-            role: Intégrer les résultats distants.
-          - node_id: D07.c
-            role: Rapprocher le contrôle demandé et réalisé.
-        - title: Appliquer la politique
-          description: Policy-based Disposition autorise les 80 conformes et maintient les 20 autres bloquées pour la vente.
-            Les états reconnus alimentent registre et visibilité.
-          outcome: Un résultat par quantité est distingué de la règle qui le justifie.
-          contributions:
-          - node_id: D05.i
-            role: Déterminer les usages permis selon la politique.
-          - node_id: D01.f
-            role: Intégrer les décisions et états reconnus.
-          - node_id: D01.g
-            role: Conserver états, quantités et justifications.
-          - node_id: D01.c
-            role: Exposer les positions utilisables et bloquées.
-        - title: Comparer les devenirs admissibles
-          description: Value Recovery Optimization confronte remise en état et rebut pour les 20 pièces. Dans ce cas fictif,
-            la remise en état coûte davantage que la valeur récupérable ; les règles permettent le rebut, qui est retenu.
-          outcome: L’optimisation choisit parmi les issues autorisées ; elle ne lève pas une interdiction obligatoire.
-          contributions:
-          - node_id: D05.i
-            role: Comparer les coûts, délais, risques et valeur récupérable, puis retenir l’orientation.
-        - title: Confier puis rapprocher le rebut
-          description: Scrapping Order confie les 20 pièces avec preuves requises. Le prestataire ne prouve d’abord le traitement
-            que de 18 ; les deux restantes restent ouvertes et bloquées.
-          outcome: L’ordre et le registre reflètent le réalisé reconnu, pas les 20 demandées comme déjà détruites.
-          contributions:
-          - node_id: service-order-scrapping
-            role: Porter autorisation, preuve et reliquat de la prestation.
-          - node_id: D06.d
-            role: Coordonner l’exécution et la suite des deux restantes.
-          - node_id: D07.d
-            role: Recevoir les preuves et quantités traitées.
-          - node_id: D07.c
-            role: Qualifier l’écart de deux pièces.
-          - node_id: D01.f
-            role: Intégrer les effets de stock reconnus.
-          - node_id: D01.g
-            role: Enregistrer les 18 sorties justifiées.
-        validation_points:
-        - Aucun Return Order artificiel pour des biens déjà stockés.
-        - Blocage et libération sont des résultats, pas des comportements supplémentaires.
-        - La décision, l’ordre de service et la preuve d’exécution restent distincts.
-        outcome: Les deux stratégies de disposition et la prestation de rebut sont expliquées par leurs contributions propres.
-        source_refs:
-        - U777
-      - id: transport-loads-six-stores
-        title: Planifier deux chargements pour six magasins
-        situation: Illustration FLOW fictive. Douze palettes de vêtements doivent être livrées à six magasins. La capacité
-          proposée est de six palettes par véhicule ; deux magasins ferment leur réception à 10 h. Les affectations et promesses
-          sont déjà établies.
-        steps:
-        - title: Constituer les chargements
-          description: Load Consolidation examine volumes, compatibilités, destinations et échéances pour répartir les douze
-            palettes en deux chargements admissibles.
-          outcome: Deux chargements sont proposés sans fusionner les commandes magasin.
-          contributions:
-          - node_id: transport-plan-decision
-            role: Constituer les chargements du plan.
-          - node_id: D06.b
-            role: Fournir les capacités et contraintes connues.
-        - title: Organiser les arrêts et les horaires
-          description: Routing & Scheduling place les magasins à fermeture matinale en début de parcours et vérifie les durées.
-            Service Selection Decision retient les prestations et prestataires compatibles ; le plan est ajusté si une offre
-            ne convient pas.
-          outcome: Le plan est conditionné aux capacités confirmées et respecte les échéances promises.
-          contributions:
-          - node_id: transport-plan-decision
-            role: Déterminer parcours, arrêts et horaires réalisables.
-          - node_id: D06.e
-            role: Sélectionner les prestations et prestataires admissibles.
-        - title: Engager puis libérer les ordres
-          description: Les Transport Orders portent les arrêts et obligations retenus, avec la variante Multi-Stop Transport.
-            Les préparations B2B sont retenues jusqu’à leur regroupement admissible, puis libérées selon leur échéance limite.
-          outcome: La constitution des chargements est séparée de la décision du moment d’envoi.
-          contributions:
-          - node_id: service-order-transport
-            role: Porter les engagements de chaque transport multi-arrêts.
-          - node_id: service-order-picking
-            role: Porter les préparations confiées.
-          - node_id: service-order-release-decision
-            role: Décider de la rétention et de la libération des ordres.
-          - node_id: D06.d
-            role: Coordonner les dépendances entre préparation et transport.
-        - title: Adapter un parcours devenu impossible
-          description: Un créneau change. Process Adaptation Decision sollicite un nouveau parcours local ; Transport Plan
-            Decision vérifie qu’il préserve toutes les promesses. À défaut, les responsables des engagements et affectations
-            doivent être sollicités.
-          outcome: Le plan ne déplace pas silencieusement la promesse ou les ressources réservées.
-          contributions:
-          - node_id: D07.d
-            role: Intégrer la modification communiquée.
-          - node_id: D06.f
-            role: Choisir et coordonner l’adaptation locale admissible.
-          - node_id: transport-plan-decision
-            role: Réviser chargements ou parcours dans les contraintes.
-        validation_points:
-        - Load Consolidation et Routing & Scheduling traitent deux problèmes combinables.
-        - Multi-Stop Transport décrit l’engagement ; Routing & Scheduling construit le plan.
-        - Libérer un lot d’ordres ne calcule pas le plan de transport.
-        outcome: Les capacités de planification, sélection, engagement et libération se confrontent à une tournée concrète.
-        source_refs:
-        - U777
+          validation_points:
+          - Transmettre ensemble ne garantit pas une préparation ni une palette communes.
+          - L’optimisation de release ne remplace pas les vagues et tâches détaillées de l’entrepôt.
+          source_refs:
+          - U768
+          - U769
+        - id: trace-accessory-kits
+          title: Retrouver les coffrets contenant un accessoire défectueux
+          situation: Illustration FLOW fictive. Le fournisseur signale un défaut sur le lot d’accessoires A17. Ce lot a servi
+            à assembler 120 coffrets ; 70 ont été expédiés à deux magasins et 50 sont encore à l’entrepôt.
+          steps:
+          - title: Relier composants et coffrets
+            description: Les faits d’assemblage identifient A17, les coffrets obtenus, puis les expéditions. Les corrections
+              conservent leur justification.
+            outcome: Les filiations connues sont conservées ; l’origine du message ne tient pas lieu de généalogie.
+            contributions:
+            - node_id: D01.f
+              role: Intégrer composants, transformations et destinations transmis.
+            - node_id: D01.g
+              role: Conserver les faits et liens reconnus.
+          - title: Reconstituer les deux sens du parcours
+            description: À partir d’un coffret, retrouver A17 ; à partir d’A17, retrouver les 120 coffrets et leurs destinations.
+              Signaler toute rupture de lien.
+            outcome: Le responsable distingue les 50 présents, les 70 expédiés et les éventuelles zones non documentées.
+            contributions:
+            - node_id: D01.c
+              role: Restituer origines amont et destinations aval avec les limites connues.
+          - title: Décider des suites autorisées
+            description: 'Policy-based Disposition applique la politique au signalement qualifié et aux biens concernés :
+              interdire l’usage des 50 coffrets présents jusqu’au contrôle requis. Les suites pour les expédiés sont confiées
+              après autorisation par les responsables concernés.'
+            outcome: Une trace n’est ni un ordre de rappel ni une autorisation automatique de retour.
+            contributions:
+            - node_id: D05.i
+              role: Déterminer restrictions et orientation selon les faits et politiques.
+            - node_id: D06.d
+              role: Coordonner les suites effectivement autorisées.
+            - node_id: D01.f
+              role: Intégrer les états reconnus.
+            - node_id: D01.g
+              role: Conserver restrictions et justifications.
+          validation_points:
+          - La traçabilité reste répartie entre intégration, registre et visibilité.
+          - Une origine seule ne suffit pas après assemblage.
+          - Le scénario ne transfère pas la décision réglementaire ou commerciale de rappel au registre.
+          outcome: Les biens potentiellement concernés sont identifiés sans inventer une capacité autonome de traçabilité.
+          source_refs:
+          - U777
+        - id: damaged-stock-disposition
+          title: Traiter des vestes abîmées sans retour client
+          situation: Illustration FLOW fictive. Une fuite a touché 100 vestes déjà stockées. Une inspection autonome est confiée
+            avant d’autoriser leur usage.
+          steps:
+          - title: Obtenir les constats
+            description: L’inspection identifie 80 vestes conformes et 20 endommagées ; ses résultats et les quantités sont
+              rapprochés de l’attendu.
+            outcome: La décision dispose de faits ; le contrôle ne vaut pas encore disposition.
+            contributions:
+            - node_id: service-order-inspection
+              role: Porter la prestation de contrôle.
+            - node_id: D07.d
+              role: Intégrer les résultats distants.
+            - node_id: D07.c
+              role: Rapprocher le contrôle demandé et réalisé.
+          - title: Appliquer la politique
+            description: Policy-based Disposition autorise les 80 conformes et maintient les 20 autres bloquées pour la vente.
+              Les états reconnus alimentent registre et visibilité.
+            outcome: Un résultat par quantité est distingué de la règle qui le justifie.
+            contributions:
+            - node_id: D05.i
+              role: Déterminer les usages permis selon la politique.
+            - node_id: D01.f
+              role: Intégrer les décisions et états reconnus.
+            - node_id: D01.g
+              role: Conserver états, quantités et justifications.
+            - node_id: D01.c
+              role: Exposer les positions utilisables et bloquées.
+          - title: Comparer les devenirs admissibles
+            description: Value Recovery Optimization confronte remise en état et rebut pour les 20 pièces. Dans ce cas fictif,
+              la remise en état coûte davantage que la valeur récupérable ; les règles permettent le rebut, qui est retenu.
+            outcome: L’optimisation choisit parmi les issues autorisées ; elle ne lève pas une interdiction obligatoire.
+            contributions:
+            - node_id: D05.i
+              role: Comparer les coûts, délais, risques et valeur récupérable, puis retenir l’orientation.
+          - title: Confier puis rapprocher le rebut
+            description: Scrapping Order confie les 20 pièces avec preuves requises. Le prestataire ne prouve d’abord le traitement
+              que de 18 ; les deux restantes restent ouvertes et bloquées.
+            outcome: L’ordre et le registre reflètent le réalisé reconnu, pas les 20 demandées comme déjà détruites.
+            contributions:
+            - node_id: service-order-scrapping
+              role: Porter autorisation, preuve et reliquat de la prestation.
+            - node_id: D06.d
+              role: Coordonner l’exécution et la suite des deux restantes.
+            - node_id: D07.d
+              role: Recevoir les preuves et quantités traitées.
+            - node_id: D07.c
+              role: Qualifier l’écart de deux pièces.
+            - node_id: D01.f
+              role: Intégrer les effets de stock reconnus.
+            - node_id: D01.g
+              role: Enregistrer les 18 sorties justifiées.
+          validation_points:
+          - Aucun Return Order artificiel pour des biens déjà stockés.
+          - Blocage et libération sont des résultats, pas des comportements supplémentaires.
+          - La décision, l’ordre de service et la preuve d’exécution restent distincts.
+          outcome: Les deux stratégies de disposition et la prestation de rebut sont expliquées par leurs contributions propres.
+          source_refs:
+          - U777
+        - id: transport-loads-six-stores
+          title: Planifier deux chargements pour six magasins
+          situation: Illustration FLOW fictive. Douze palettes de vêtements doivent être livrées à six magasins. La capacité
+            proposée est de six palettes par véhicule ; deux magasins ferment leur réception à 10 h. Les affectations et promesses
+            sont déjà établies.
+          steps:
+          - title: Constituer les chargements
+            description: Load Consolidation examine volumes, compatibilités, destinations et échéances pour répartir les douze
+              palettes en deux chargements admissibles.
+            outcome: Deux chargements sont proposés sans fusionner les commandes magasin.
+            contributions:
+            - node_id: transport-plan-decision
+              role: Constituer les chargements du plan.
+            - node_id: D06.b
+              role: Fournir les capacités et contraintes connues.
+          - title: Organiser les arrêts et les horaires
+            description: Routing & Scheduling place les magasins à fermeture matinale en début de parcours et vérifie les
+              durées. Service Selection Decision retient les prestations et prestataires compatibles ; le plan est ajusté
+              si une offre ne convient pas.
+            outcome: Le plan est conditionné aux capacités confirmées et respecte les échéances promises.
+            contributions:
+            - node_id: transport-plan-decision
+              role: Déterminer parcours, arrêts et horaires réalisables.
+            - node_id: D06.e
+              role: Sélectionner les prestations et prestataires admissibles.
+          - title: Engager puis libérer les ordres
+            description: Les Transport Orders portent les arrêts et obligations retenus, avec la variante Multi-Stop Transport.
+              Les préparations B2B sont retenues jusqu’à leur regroupement admissible, puis libérées selon leur échéance limite.
+            outcome: La constitution des chargements est séparée de la décision du moment d’envoi.
+            contributions:
+            - node_id: service-order-transport
+              role: Porter les engagements de chaque transport multi-arrêts.
+            - node_id: service-order-picking
+              role: Porter les préparations confiées.
+            - node_id: service-order-release-decision
+              role: Décider de la rétention et de la libération des ordres.
+            - node_id: D06.d
+              role: Coordonner les dépendances entre préparation et transport.
+          - title: Adapter un parcours devenu impossible
+            description: Un créneau change. Process Adaptation Decision sollicite un nouveau parcours local ; Transport Plan
+              Decision vérifie qu’il préserve toutes les promesses. À défaut, les responsables des engagements et affectations
+              doivent être sollicités.
+            outcome: Le plan ne déplace pas silencieusement la promesse ou les ressources réservées.
+            contributions:
+            - node_id: D07.d
+              role: Intégrer la modification communiquée.
+            - node_id: D06.f
+              role: Choisir et coordonner l’adaptation locale admissible.
+            - node_id: transport-plan-decision
+              role: Réviser chargements ou parcours dans les contraintes.
+          validation_points:
+          - Load Consolidation et Routing & Scheduling traitent deux problèmes combinables.
+          - Multi-Stop Transport décrit l’engagement ; Routing & Scheduling construit le plan.
+          - Libérer un lot d’ordres ne calcule pas le plan de transport.
+          outcome: Les capacités de planification, sélection, engagement et libération se confrontent à une tournée concrète.
+          source_refs:
+          - U777
+        superseded_by: U793
+        reason: Migration vers scenario_catalog ; le contrat exact des cibles est contrôlé dans scenario-migration-U793.yaml.
+          Ce contrôle historique est conservé, sans réactivation ni nouvel accord.
   - id: D04.k
-    fields:
+    fields: {}
+    superseded_field_checks:
       examples:
-      - id: transfer-replenishment-order-driven
-        title: Réapprovisionner un magasin ou servir une commande identifiée
-        situation: 'Illustration FLOW fictive. Un magasin manque de pulls : 20 sont demandés pour réalimenter son stock, tandis
-          que 2 sont destinés à une commande client précise.'
-        steps:
-        - title: Distinguer les besoins
-          description: Le besoin de stock et celui du client sont identifiés pour éviter de compter deux fois les deux pièces
-            engagées.
-          outcome: Les quantités et destinations du besoin sont explicites.
-          contributions:
-          - node_id: D05.e
-            role: Déterminer le besoin de réapprovisionnement.
-          - node_id: D04.i
-            role: Porter la demande client identifiée.
-        - title: Affecter et demander le transfert
-          description: Le plan retient les ressources et autorise leur déplacement vers le magasin.
-          outcome: Les 22 pièces à transférer sont reliées à leurs besoins respectifs.
-          contributions:
-          - node_id: D03.o
-            role: Affecter les ressources aux demandes.
-          - node_id: D02.e
-            role: Appliquer le plan autorisé.
-          - node_id: D04.k
-            role: Porter le transfert et son échéance.
-        - title: Rapprocher le résultat
-          description: Seules 20 pièces arrivent d’abord ; le transfert reste partiellement ouvert et l’affectation des quantités
-            reçues ne se déduit pas de l’ordre d’arrivée.
+        expected_value:
+        - id: transfer-replenishment-order-driven
+          title: Réapprovisionner un magasin ou servir une commande identifiée
+          situation: 'Illustration FLOW fictive. Un magasin manque de pulls : 20 sont demandés pour réalimenter son stock,
+            tandis que 2 sont destinés à une commande client précise.'
+          steps:
+          - title: Distinguer les besoins
+            description: Le besoin de stock et celui du client sont identifiés pour éviter de compter deux fois les deux pièces
+              engagées.
+            outcome: Les quantités et destinations du besoin sont explicites.
+            contributions:
+            - node_id: D05.e
+              role: Déterminer le besoin de réapprovisionnement.
+            - node_id: D04.i
+              role: Porter la demande client identifiée.
+          - title: Affecter et demander le transfert
+            description: Le plan retient les ressources et autorise leur déplacement vers le magasin.
+            outcome: Les 22 pièces à transférer sont reliées à leurs besoins respectifs.
+            contributions:
+            - node_id: D03.o
+              role: Affecter les ressources aux demandes.
+            - node_id: D02.e
+              role: Appliquer le plan autorisé.
+            - node_id: D04.k
+              role: Porter le transfert et son échéance.
+          - title: Rapprocher le résultat
+            description: Seules 20 pièces arrivent d’abord ; le transfert reste partiellement ouvert et l’affectation des
+              quantités reçues ne se déduit pas de l’ordre d’arrivée.
+            outcome: Réception, solde du transfert et satisfaction client restent distincts.
+            contributions:
+            - node_id: D04.k
+              role: Tenir le reste à recevoir.
+            - node_id: D01.f
+              role: Capter la réception réelle.
+            - node_id: D03.o
+              role: Maintenir les affectations explicites.
           outcome: Réception, solde du transfert et satisfaction client restent distincts.
-          contributions:
-          - node_id: D04.k
-            role: Tenir le reste à recevoir.
-          - node_id: D01.f
-            role: Capter la réception réelle.
-          - node_id: D03.o
-            role: Maintenir les affectations explicites.
-        outcome: Réception, solde du transfert et satisfaction client restent distincts.
-        validation_points:
-        - Le motif du transfert ne remplace pas la décision d’affectation.
-        source_refs:
-        - U768
-        - U769
+          validation_points:
+          - Le motif du transfert ne remplace pas la décision d’affectation.
+          source_refs:
+          - U768
+          - U769
+        superseded_by: U793
+        reason: Migration vers scenario_catalog ; le contrat exact des cibles est contrôlé dans scenario-migration-U793.yaml.
+          Ce contrôle historique est conservé, sans réactivation ni nouvel accord.
   - id: D04.r
-    fields:
+    fields: {}
+    superseded_field_checks:
       examples:
-      - id: consignment-launch-replenishment
-        title: Implanter puis réalimenter un stock consigné
-        situation: Illustration FLOW fictive. Un corner reçoit 100 vestes pour son ouverture. Deux semaines plus tard, 30
-          ventes conduisent à demander un apport complémentaire de 30, selon les besoins retenus.
-        steps:
-        - title: Déterminer le besoin initial
-          description: Le lancement nécessite 100 vestes au corner à une date précise.
-          outcome: L’apport retenu est porté par une commande identifiée.
-          contributions:
-          - node_id: D05.e
-            role: Déterminer le besoin d’apport.
-          - node_id: D04.r
-            role: Porter l’apport initial en consignation et sa date.
-        - title: Recevoir sans confondre propriété
-          description: Les 100 vestes sont reçues sous le régime prévu par l’accord.
-          outcome: Détention et reste à apporter sont rapprochés.
-          contributions:
-          - node_id: D04.r
-            role: Rapprocher la réception du besoin initial.
-          - node_id: D01.f
-            role: Capter le fait de réception.
-          - node_id: D01.c
-            role: Exposer stock détenu et propriété connue.
-        - title: Réalimenter pendant l’activité
-          description: Après les ventes, un nouveau besoin de 30 est retenu et fait l’objet d’un apport distinct.
+        expected_value:
+        - id: consignment-launch-replenishment
+          title: Implanter puis réalimenter un stock consigné
+          situation: Illustration FLOW fictive. Un corner reçoit 100 vestes pour son ouverture. Deux semaines plus tard, 30
+            ventes conduisent à demander un apport complémentaire de 30, selon les besoins retenus.
+          steps:
+          - title: Déterminer le besoin initial
+            description: Le lancement nécessite 100 vestes au corner à une date précise.
+            outcome: L’apport retenu est porté par une commande identifiée.
+            contributions:
+            - node_id: D05.e
+              role: Déterminer le besoin d’apport.
+            - node_id: D04.r
+              role: Porter l’apport initial en consignation et sa date.
+          - title: Recevoir sans confondre propriété
+            description: Les 100 vestes sont reçues sous le régime prévu par l’accord.
+            outcome: Détention et reste à apporter sont rapprochés.
+            contributions:
+            - node_id: D04.r
+              role: Rapprocher la réception du besoin initial.
+            - node_id: D01.f
+              role: Capter le fait de réception.
+            - node_id: D01.c
+              role: Exposer stock détenu et propriété connue.
+          - title: Réalimenter pendant l’activité
+            description: Après les ventes, un nouveau besoin de 30 est retenu et fait l’objet d’un apport distinct.
+            outcome: Le même cycle d’Order traite un motif d’alimentation continue.
+            contributions:
+            - node_id: D05.e
+              role: Déterminer le besoin complémentaire.
+            - node_id: D04.r
+              role: Porter le nouvel apport et son solde.
           outcome: Le même cycle d’Order traite un motif d’alimentation continue.
-          contributions:
-          - node_id: D05.e
-            role: Déterminer le besoin complémentaire.
-          - node_id: D04.r
-            role: Porter le nouvel apport et son solde.
-        outcome: Le même cycle d’Order traite un motif d’alimentation continue.
-        validation_points:
-        - Ouverture et alimentation continue sont deux contextes, pas deux cycles imposés.
-        source_refs:
-        - U768
-        - U769
+          validation_points:
+          - Ouverture et alimentation continue sont deux contextes, pas deux cycles imposés.
+          source_refs:
+          - U768
+          - U769
+        superseded_by: U793
+        reason: Migration vers scenario_catalog ; le contrat exact des cibles est contrôlé dans scenario-migration-U793.yaml.
+          Ce contrôle historique est conservé, sans réactivation ni nouvel accord.
 retired_nodes_U769:
 - id: BHV061
   revision: 5

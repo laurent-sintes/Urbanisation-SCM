@@ -81,12 +81,19 @@ def assign_versions(snapshot, previous, now=None, published=None):
         changed = fingerprint != previous_catalogue.get('content_sha256')
         catalogue.update(revision=max(1, previous_catalogue.get('revision', 0) + int(changed)),
                          last_modified=stamp if changed else previous_catalogue['last_modified'], content_sha256=fingerprint)
+    try:
+        from .scenario_catalog import assign_catalog_versions
+    except ImportError:
+        from scenario_catalog import assign_catalog_versions
+    changes.extend(assign_catalog_versions(snapshot, previous, stamp))
     root_value = {'model_id': snapshot['model_id'], 'limitations': snapshot.get('limitations', []),
                   'elements': {c: [(e['id'], e['content_sha256']) for e in snapshot.get(c, [])] for c in COLLECTIONS}}
     if 'glossary' in snapshot:
         root_value['glossary'] = snapshot['glossary']['content_sha256']
     if 'information_catalog' in snapshot:
         root_value['information_catalog'] = snapshot['information_catalog']['content_sha256']
+    if 'scenario_catalog' in snapshot:
+        root_value['scenario_catalog'] = snapshot['scenario_catalog']['content_sha256']
     if 'market_reference_policy' in snapshot:
         root_value['market_reference_policy'] = snapshot['market_reference_policy']
     fingerprint = content_hash(root_value)

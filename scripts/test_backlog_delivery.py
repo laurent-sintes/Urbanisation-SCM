@@ -48,3 +48,15 @@ class DeliveryTests(unittest.TestCase):
     def test_empty_applied_declaration_blocks(self):
         (self.folder / 'study.yaml').write_text(dumps({'publication_delivery': {'state': 'applied'}}), encoding='utf-8')
         self.assertTrue(check_delivery(self.root, self.model)[1])
+
+    def test_catalog_delivery_checks_exact_content_without_approval(self):
+        from scripts.element_versions import content_hash
+        item = {'id': 'scenario', 'title': 'Illustration', 'review': {'state': 'proposed'}}
+        self.model['scenario_catalog'] = {'scenarios': [item]}
+        declaration = {'state': 'applied', 'required_catalog': [
+            {'collection': 'scenarios', 'id': 'scenario', 'content_sha256': content_hash(item)}]}
+        (self.folder / 'catalog.yaml').write_text(dumps({'publication_delivery': declaration}), encoding='utf-8')
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+        item['title'] = 'Changed'
+        self.assertTrue(check_delivery(self.root, self.model)[1])
+        self.assertEqual(item['review']['state'], 'proposed')

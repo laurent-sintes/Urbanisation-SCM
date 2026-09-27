@@ -1,6 +1,6 @@
 id: flow-modeling-glossary
 kind: modeling_glossary
-as_of: '2026-09-26'
+as_of: '2026-09-27'
 source_refs:
 - U229
 - U230
@@ -46,6 +46,12 @@ source_refs:
 - U756
 - U767
 - U780
+- U786
+- U787
+- U791
+- U792
+- U793
+- U797
 purpose: Vocabulaire de modélisation en support à la définition des objets du modèle ; distinct du glossaire métier.
 boundary:
   business_glossary: modeles/backlog/glossary.yaml
@@ -107,6 +113,7 @@ terms:
     state: partial
     adopted_scope: Préférence pour Decision et distinction avec Planning ; aucun choix de capacité spécifique adopté.
     proposed_scope: Définition synthétique rédigée par Codex.
+  short_description: Choisir une réponse métier selon les faits, objectifs et contraintes.
 - id: MOD002
   name: Planning
   label_fr: Planification
@@ -154,6 +161,7 @@ terms:
       à l’extérieur.'
     proposed_scope: Définition synthétique, libellé Plan Application et détails des effets rédigés par Codex ; décomposition
       de chaque Planning et reparentage éventuel à instruire.
+  short_description: Construire et réviser un plan en mobilisant les décisions nécessaires, puis en suivre l’application.
 - id: MOD003
   name: Management
   label_fr: Gestion / gouvernance
@@ -182,6 +190,7 @@ terms:
       au Planning maintenue à l’extérieur, exemple Stock Protection.'
     proposed_scope: Généralisation à Management et formulation hors de ce cas. Définition générale clarifiée après U586 ;
       les nœuds existants gardent leur nature.
+  short_description: Tenir des états ou engagements dans la durée et gérer leurs évolutions.
 - id: MOD004
   name: Application transactionnelle
   definition: Mettre à jour transactionnellement les données, unitairement, en groupe ou en masse, par plusieurs types d’interfaces
@@ -208,6 +217,7 @@ terms:
     state: partial
     adopted_scope: Mise à jour transactionnelle et modalités précisées en U231 pour Stock Protection.
     proposed_scope: Reformulation, généralisation et précisions de lecture.
+  short_description: Appliquer des changements aux données, seuls ou regroupés, avec les contrôles nécessaires.
 - id: MOD005
   name: Couverture — convention de description
   definition: Qualifier toute affirmation de couverture en indiquant ce qui est couvert, par quoi, dans quel périmètre et
@@ -226,6 +236,7 @@ terms:
     state: partial
     adopted_scope: Présence du terme couverture dans le glossaire méthodologique demandée par Laurent.
     proposed_scope: Définition, critères et exemples de qualification rédigés par Codex ; aucune adoption détaillée déduite.
+  short_description: Préciser ce qui est couvert, par quoi et selon quel critère.
 - id: MOD006
   name: Capability Behavior
   label_fr: Comportement
@@ -389,6 +400,7 @@ terms:
     - ELM052
     - ELM234
     consulted_on: '2026-09-18'
+  short_description: Manière significative dont une capacité agit selon la situation.
 - id: MOD007
   name: Capability Nature
   label_fr: Type de capacité
@@ -437,6 +449,7 @@ terms:
       type de capacité Policy.'
     proposed_scope: Formulation méthodologique, grille détaillée et compléments individuels rédigés par Codex. Définition
       et frontières détaillées du type Policy.
+  short_description: Résultat métier dominant qui caractérise une capacité.
 - id: MOD008
   name: Domain
   label_fr: Domaine
@@ -463,6 +476,7 @@ terms:
     leur vocabulaire.
   - U780 ajoute Business System au-dessus de Domain ; la profondeur de description varie selon le périmètre. Les publications
     historiques gardent leurs niveaux.
+  short_description: Grand périmètre de responsabilités métier au sein d’un système métier.
 - id: MOD013
   name: Subdomain
   label_fr: Sous-domaine
@@ -513,6 +527,7 @@ terms:
     - CMP269
     - U673
   analysis_ref: modeles/backlog/subdomains-market-review-U658.yaml
+  short_description: Regroupement cohérent de capacités au sein d’un domaine.
 - id: MOD009
   name: Business Reference
   label_fr: Référentiel métier
@@ -530,6 +545,7 @@ terms:
   review:
     state: proposed
     proposed_scope: Formulation méthodologique de présentation ; aucun accord individuel déduit.
+  short_description: Données de référence dont les capacités ont besoin, avec une responsabilité de gestion explicite.
 - id: MOD010
   name: Model Relationship
   label_fr: Relation du modèle
@@ -540,6 +556,7 @@ terms:
   review:
     state: proposed
     proposed_scope: Formulation méthodologique de présentation ; aucun accord individuel déduit.
+  short_description: 'Lien explicite entre des éléments du modèle : appartenance, présentation ou interaction.'
 - id: MOD011
   name: Behavior Nature
   label_fr: Type de comportement
@@ -550,6 +567,7 @@ terms:
   review:
     state: proposed
     proposed_scope: Formulation méthodologique de présentation ; aucun accord individuel déduit.
+  short_description: Critère qui distingue une manière d’agir au sein d’une capacité.
 - id: MOD012
   name: Information
   label_fr: Information métier
@@ -617,6 +635,7 @@ terms:
     adopted_scope_U466: 'Distinct de la définition générale encore proposée : proposition et engagement de satisfaction sont
       deux informations métier reliées, pouvant coexister.'
   pilot_catalogue_ref: modeles/backlog/information-cards-U465.yaml
+  short_description: Connaissance métier utilisée, produite ou modifiée par une capacité, indépendamment de son format informatique.
 - id: MOD014
   name: Data Governance
   label_fr: Gouvernance des données
@@ -638,12 +657,14 @@ terms:
     state: partial
     adopted_scope: Distinction des dimensions et définitions explicites U613/U614, application demandée U615.
     proposed_scope: Choix du champ technique et rattachements détaillés réalisés par Codex ; aucun accord individuel implicite.
+  short_description: Responsabilité de tenir les données ou leur vue et de les actualiser.
 - id: MOD015
   name: Capability
   label_fr: Capacité
-  definition: Ce que sait faire durablement l’entreprise pour fonctionner et remplir ses finalités, indépendamment de son
-    organisation et de ses outils. Cela inclut la production, la tenue et l’exploitation des actifs métier qu’elle utilise
-    pour agir, décider, partager une connaissance et collaborer, notamment les Orders, les registres et les données agrégées.
+  definition: |-
+    Une capacité est une aptitude durable de l’entreprise à produire un résultat métier identifiable, indépendamment de son organisation et de ses outils. Elle exprime ce que l’entreprise sait faire pour agir, décider, tenir des engagements ou des actifs métier, et produire ou exploiter une connaissance.
+
+    Son périmètre permet d’identifier sa contribution propre dans des scénarios métier : les informations et conditions qu’elle mobilise, le résultat qu’elle produit et ses limites de responsabilité. Ses comportements précisent les manières significatives dont elle s’exerce.
   role: Décrire une aptitude métier au sein d’un sous-domaine ; ses comportements en précisent les manières de l’exercer.
   notes:
   - Un produit peut contribuer à plusieurs capacités ; une fonctionnalité ne suffit pas à définir une capacité.
@@ -659,6 +680,13 @@ terms:
   - Les domaines et sous-domaines regroupent finalités, connaissances ou problématiques pour partager et collaborer. Ils ne
     reproduisent ni organigramme ni découpage technologique ; automatisation et mutualisation peuvent conduire à des réalisations
     transversales.
+  - Une capacité est suffisamment détaillée lorsque sa contribution à un scénario métier peut être expliquée sans masquer
+    des responsabilités métier distinctes. Une décomposition supplémentaire se justifie lorsqu’elle rend identifiable un résultat
+    ou une responsabilité utile au pilotage ; une étape, un paramètre, un document ou une fonction d’outil ne suffit pas à
+    créer une capacité.
+  - 'U787 : TOGAF et BIZBOK constituent les appuis méthodologiques. Le niveau 4 FLOW, les comportements terminaux et la finesse
+    des décisions restent des conventions locales ; les numéros de niveau ne prouvent pas une équivalence de granularité.
+    Voir MOD027 et MOD028 ; MOD026 conserve la notion historique retirée sous U791.'
   source_refs:
   - U33
   - U624
@@ -667,10 +695,19 @@ terms:
   - U752
   - U753
   - CMP296
+  - U786
+  - U787
+  - U791
   review:
     state: partial
-    note: Principes U751/U752 intégrés à la demande U753 ; formulation de synthèse Codex. Aucun nouveau type ni regroupement
-      de capacités validé par extension.
+    adopted_scope: 'U787 : définition et règle de granularité présentées après U786 ; choix des appuis TOGAF et BIZBOK. Les
+      notes historiques conservent leurs portées propres.'
+    proposed_scope: Rédaction de liaison, rôle historique et détail documentaire des rapprochements ; aucun nouvel accord
+      sur les fiches opérationnelles.
+    previous_review:
+      state: partial
+      note: Principes U751/U752 intégrés à la demande U753 ; formulation de synthèse Codex. Aucun nouveau type ni regroupement
+        de capacités validé par extension.
   market_comparisons:
   - vendor: The Open Group
     product: TOGAF Series Guide
@@ -720,6 +757,28 @@ terms:
     - U477
     - ELM333
     - CMP192
+  - vendor: Business Architecture Guild
+    product: BIZBOK / Business Architecture Metamodel Guide
+    element_name: Capability and value stream stage
+    concept_name: Capability
+    element_type: Notion méthodologique
+    relationship: Appui méthodologique
+    similarities: Une aptitude produit un résultat et contribue aux étapes de création de valeur.
+    differences: FLOW conserve ses regroupements, son niveau Capability et ses comportements terminaux ; aucune reprise intégrale
+      de la structure Guild.
+    flow_position: Décrire la contribution propre de chaque capacité dans les cas d’usage.
+    source_title: Business Architecture Metamodel Guide v3.0
+    source_url: https://cdn.ymaws.com/www.businessarchitectureguild.org/resource/resmgr/whitepapers/Business_Architecture_Metamo.pdf
+    source_version: 3.0, septembre 2024
+    source_locator: §5.1 et §5.1.1, pages imprimées 13–15
+    consulted_on: '2026-09-27'
+    evidence_limits: Document primaire public consulté ; rapprochement méthodologique, pas équivalence du cas d’usage FLOW
+      et du value stream. Synthèse et lien ; guide BIZBOK complet non consulté.
+    status: proposed
+    source_refs:
+    - U786
+    - U787
+  short_description: Savoir-faire durable produisant un résultat métier, indépendant de l’organisation et des outils.
 - id: MOD016
   name: Capability Realization
   definition: 'Moyens concrets mobilisés pour exercer une capacité : acteurs, pratiques, outils et échanges.'
@@ -779,6 +838,7 @@ terms:
   review:
     state: proposed
     note: Organisation méthodologique U626 ; sens antérieur conservé.
+  short_description: Acteurs, pratiques, outils et échanges qui permettent d’exercer une capacité.
 - id: MOD017
   name: Function
   definition: 'Mot à qualifier avant emploi : il ne désigne pas un niveau unique adopté dans notre modèle.'
@@ -839,6 +899,7 @@ terms:
   review:
     state: proposed
     note: Organisation méthodologique U626 ; sens antérieur conservé.
+  short_description: 'Terme à préciser : il ne correspond pas à un niveau unique de ce modèle.'
 - id: MOD018
   name: Product Functionality
   definition: Comportement ou ensemble de comportements offert par un produit dans une édition et une configuration données.
@@ -898,6 +959,7 @@ terms:
   review:
     state: proposed
     note: Organisation méthodologique U626 ; sens antérieur conservé.
+  short_description: Possibilité offerte par un logiciel dans une version et une configuration données.
 - id: MOD019
   name: Capability Grouping
   definition: Ensemble de capacités rapprochées selon un critère métier explicite pour faciliter la lecture de la carte.
@@ -958,6 +1020,7 @@ terms:
   review:
     state: proposed
     note: Organisation méthodologique U626 ; sens antérieur conservé.
+  short_description: Rapprochement de capacités selon un critère métier pour faciliter la lecture.
 - id: MOD020
   name: Ledger
   definition: Type de capacité qui tient un registre métier durable de faits reconnus, datés et justifiés, en assurant leur
@@ -1043,6 +1106,7 @@ terms:
   review:
     state: partial
     note: Type et définition validés U756 ; formulation méthodologique complémentaire proposée.
+  short_description: Capacité de tenir un registre durable de faits reconnus, datés, justifiés et corrigibles.
 - id: MOD021
   name: Evaluation
   definition: Type de capacité qui évalue des possibilités, leur faisabilité ou leurs conséquences à partir de faits, règles
@@ -1129,6 +1193,7 @@ terms:
   review:
     state: partial
     note: Distinction évaluation/sélection validée ; définition méthodologique rédigée pour l’appliquer.
+  short_description: Évaluer des possibilités et leurs conséquences sans choisir ni engager leur réalisation.
 - id: MOD022
   name: Business System
   label_fr: Système métier
@@ -1149,6 +1214,7 @@ terms:
   - 'Design & Development et Enterprise Management & Control : contexte ; Business Operations : domaines ; Supply Chain Orchestration
     : capacités et comportements.'
   - Les sources marché comparent les périmètres ; elles ne définissent pas un équivalent exact de ce niveau FLOW.
+  short_description: Ensemble de domaines qui coopèrent pour une finalité commune.
 - id: MOD023
   name: Persistent Identifier
   label_fr: Identifiant persistant
@@ -1161,6 +1227,7 @@ terms:
     state: partial
     adopted_scope: Distinction identité/code/ordre et règles identification_rules adoptées U783.
     proposed_scope: Rédaction pédagogique de la définition.
+  short_description: Identifiant stable qui suit un élément malgré ses déplacements ou renommages.
 - id: MOD024
   name: Display Code
   label_fr: Code de lecture
@@ -1173,6 +1240,7 @@ terms:
     state: partial
     adopted_scope: Distinction identité/code/ordre et règles identification_rules adoptées U783.
     proposed_scope: Rédaction pédagogique de la définition.
+  short_description: Code court facilitant le repérage d’un élément dans une publication.
 - id: MOD025
   name: Reading Order
   label_fr: Ordre de lecture
@@ -1185,3 +1253,312 @@ terms:
     state: partial
     adopted_scope: Distinction identité/code/ordre et règles identification_rules adoptées U783.
     proposed_scope: Rédaction pédagogique de la définition.
+  short_description: Ordre de lecture de l’arbre, fixé pour une publication.
+- id: MOD026
+  name: Business Use Case
+  label_fr: Cas d’usage métier
+  definition: |-
+    Un cas d’usage métier décrit comment l’entreprise répond à une intention ou à un événement métier pour atteindre un résultat observable ayant une valeur pour une partie prenante. Il précise la situation initiale, le déclencheur, le résultat attendu, les conditions et les variantes significatives, ainsi que les capacités mobilisées et leurs contributions.
+
+    Il reste indépendant de l’organisation et des outils : les participants sont décrits par leurs rôles métier, sans imposer une équipe, une application ou un mode de réalisation.
+  notes:
+  - 'U791 : notion retirée du métamodèle actif. Cette entrée conserve le sens historique U787 et son identifiant ; utiliser
+    MOD027 Business Scenario et MOD028 Capability Mobilization Path. Aucun objet distinct Business Use Case n’est requis dans
+    FLOW.'
+  - Le cas d’usage expose l’objectif et l’ensemble des chemins possibles ; un scénario décrit un chemin particulier.
+  - 'Exemple illustratif : réexaminer la satisfaction d’une commande après une rupture d’approvisionnement.'
+  - Le Business Scenario TOGAF peut inclure l’environnement organisationnel et technique ; il est plus large que cette convention
+    FLOW. Aucun synonyme exact ni conformité UML revendiqués.
+  source_refs:
+  - U786
+  - U787
+  - U791
+  review:
+    state: partial
+    adopted_scope: 'U787 : proposition complète après U786, définition et règles de sens présentées. U791 retire cette notion
+      du métamodèle actif sans effacer sa définition ni son accord historiques.'
+    proposed_scope: Rédaction de liaison et métadonnées documentaires ; aucune adoption de réalisation technique.
+  market_comparisons:
+  - vendor: The Open Group
+    product: TOGAF Series Guide
+    element_name: Business Scenario
+    concept_name: Business Use Case
+    element_type: Notion méthodologique
+    relationship: Appui méthodologique, non-équivalence
+    similarities: Décrire la situation, les besoins et les résultats attendus pour éclairer les exigences.
+    differences: Le scénario TOGAF couvre aussi l’environnement organisationnel et technique ; FLOW définit ici un cas indépendant
+      des outils et de l’organisation.
+    flow_position: Convention FLOW de cas d’usage et de scénarios, sans reprise exacte du Business Scenario TOGAF.
+    source_title: Business Scenarios
+    source_url: https://governance.foundation/assets/frameworks/togaf/g176%20-%20TOGAF%20SERIES%20GUIDE%20BUSINESS%20SCENARIOS.pdf
+    source_version: G176, 2017
+    source_locator: Chapitre 1, pages imprimées 1–2 ; §3.1
+    consulted_on: '2026-09-27'
+    evidence_limits: Publication originale The Open Group consultée dans une copie tierce. Synthèse et lien ; ne pas attribuer
+      la définition FLOW au guide.
+    status: proposed
+    source_refs:
+    - U786
+    - U787
+  status: retired
+  short_description: Ancienne notion du modèle, remplacée par scénario métier et parcours de mobilisation.
+- id: MOD027
+  name: Business Scenario
+  label_fr: Scénario métier
+  definition: Description d’une situation métier délimitée, de son déclencheur, des conditions qui la caractérisent et du
+    résultat recherché pour une partie prenante. Il sert à examiner comment l’entreprise peut répondre à cette situation,
+    indépendamment de son organisation et de ses outils.
+  notes:
+  - Le scénario possède une identité autonome ; il n’appartient pas à un Domain, un Subdomain ou une Capability. Les relations
+    de mobilisation et les affichages contextuels restent possibles.
+  - Un scénario peut être examiné selon plusieurs parcours de mobilisation des capacités. Son résultat recherché ne préjuge
+    pas de la réponse retenue.
+  - 'Exemple illustratif : une réception retardée menace une livraison promise ; rechercher un stock alternatif ou réviser
+    la promesse constituent deux réponses à examiner.'
+  - 'Convention FLOW : ce scénario n’est pas une reprise exacte du Business Scenario TOGAF, qui peut aussi décrire organisation
+    et technologie, ni du Scenario BIZBOK, qui désigne une application de l’architecture métier à une problématique d’entreprise.'
+  - 'U792 : navigation principale du catalogue autonome par flux de valeur, avec filtres transverses (événement, objet métier,
+    situation nominale/exception/reprise, capacités mobilisées). Identité unique, rattachements multiples possibles. Les flux
+    doivent être formalisés avant qualification ; leur liste n’est pas encore adoptée. U793 : scenario_catalog porte les scénarios
+    autonomes ; les illustrations locales restent dans fields.examples et les anciennes publications gardent leur contrat.
+    Les petits exemples pédagogiques ne deviennent pas automatiquement des scénarios structurés.'
+  source_refs:
+  - U786
+  - U787
+  - U789
+  - U790
+  - U791
+  - U792
+  review:
+    state: partial
+    adopted_scope: 'U791 : définition, autonomie, retrait du cas d’usage distinct et relations avec les parcours, tels que
+      proposés après U789 et précisés après U790. U792 : principes de classement et navigation proposés après U791.'
+    proposed_scope: Contenus des flux et des scénarios proposés sous U793 ; leur publication ne donne pas un accord individuel.
+  short_description: Situation métier décrite par son déclencheur, ses conditions et le résultat recherché.
+- id: MOD028
+  name: Capability Mobilization Path
+  label_fr: Parcours de mobilisation des capacités métier
+  definition: Un parcours de mobilisation décrit, pour un scénario métier donné, les étapes nécessaires à l’obtention du résultat
+    recherché et les contributions des capacités à ces étapes. Il explicite les dépendances et les résultats intermédiaires
+    utiles à l’analyse de couverture, sans prescrire l’organisation, l’affectation des tâches ni les outils de réalisation.
+  notes:
+  - Une capacité peut intervenir plusieurs fois ; plusieurs peuvent contribuer en parallèle ; certaines entretiennent continuellement
+    une connaissance ou un registre.
+  - 'À chaque étape : quel résultat métier est nécessaire ? Quelle capacité en porte la responsabilité ? Quelles informations,
+    décisions ou conditions lui sont nécessaires ? Qui utilise son résultat pour poursuivre ou terminer le parcours ?'
+  - Un trou apparaît lorsqu’un résultat nécessaire reste sans responsable identifié, ou lorsqu’une étape suppose une information
+    ou un engagement que personne ne produit. Distinguer capacité manquante, description insuffisante, lien absent ou responsabilité
+    externe au périmètre.
+  - Le parcours permet de vérifier la couverture des situations examinées, pas de prouver à lui seul l’exhaustivité du modèle.
+  - La capacité définit l’aptitude durable ; le scénario expose la situation et le résultat recherché ; le parcours décrit
+    les étapes et les contributions des capacités. Une étape ne constitue pas une capacité ni un comportement.
+  - La frontière avec un processus tient à la finalité et au contenu de la représentation, pas à la seule absence de rôles.
+    Un processus peut être abstrait ; le parcours FLOW limite son détail à l’analyse de mobilisation et de couverture.
+  - 'Ce parcours ne constitue pas automatiquement un Value Stream : un flux de valeur explicite une création de valeur de
+    bout en bout pour une partie prenante, tandis qu’un parcours peut étudier une exception locale.'
+  source_refs:
+  - U786
+  - U787
+  - U789
+  - U790
+  - U791
+  - U792
+  review:
+    state: partial
+    adopted_scope: 'U791 : définition du parcours présentée après U790 et distinctions discutées après U789 ; étapes, contributions,
+      dépendances, résultats et absence de prescription organisationnelle.'
+    proposed_scope: Les parcours et les dépendances explicités sous U793 restent proposés au niveau de leur contenu.
+  short_description: Étapes et contributions des capacités permettant de répondre à un scénario, sans prescrire organisation
+    ou outils.
+- id: MOD029
+  name: Value Stream
+  label_fr: Flux de valeur
+  definition: Un flux de valeur décrit, du point de vue d’une partie prenante, la progression vers un résultat qui lui apporte
+    une valeur identifiable. Il précise le bénéficiaire, la valeur attendue, le déclencheur, les frontières et les étapes
+    de valeur ; il peut traverser plusieurs domaines.
+  notes:
+  - 'Convention FLOW mise en œuvre sous U793. Flux et étapes de valeur : appui BIZBOK/TOGAF ; étape de mobilisation : convention
+    locale. Aucun alignement automatique entre niveaux ou étapes.'
+  source_refs:
+  - U792
+  - U793
+  review:
+    state: proposed
+    note: Rédaction de mise en œuvre, pas de validation individuelle déduite.
+  short_description: Progression vers un résultat qui apporte une valeur à un bénéficiaire.
+- id: MOD030
+  name: Value Stream Stage
+  label_fr: Étape de valeur
+  definition: Une étape de valeur représente une progression identifiable vers la valeur attendue d’un flux. Elle précise
+    le résultat de valeur et les conditions d’entrée et de sortie ; elle ne correspond pas automatiquement à une étape d’un
+    parcours particulier.
+  notes:
+  - 'Convention FLOW mise en œuvre sous U793. Flux et étapes de valeur : appui BIZBOK/TOGAF ; étape de mobilisation : convention
+    locale. Aucun alignement automatique entre niveaux ou étapes.'
+  source_refs:
+  - U792
+  - U793
+  review:
+    state: proposed
+    note: Rédaction de mise en œuvre, pas de validation individuelle déduite.
+  short_description: Progression identifiable dans un flux de valeur, avec un résultat et des conditions d’entrée et de sortie.
+- id: MOD031
+  name: Capability Mobilization Step
+  label_fr: Étape de mobilisation des capacités
+  definition: Une étape de mobilisation décrit une contribution au résultat d’un parcours donné, les capacités qui y contribuent,
+    les informations et conditions nécessaires et le résultat intermédiaire. Elle ne constitue pas un niveau de décomposition
+    des capacités.
+  notes:
+  - 'Convention FLOW mise en œuvre sous U793. Flux et étapes de valeur : appui BIZBOK/TOGAF ; étape de mobilisation : convention
+    locale. Aucun alignement automatique entre niveaux ou étapes.'
+  source_refs:
+  - U792
+  - U793
+  review:
+    state: proposed
+    note: Rédaction de mise en œuvre, pas de validation individuelle déduite.
+  short_description: Contribution intermédiaire à un parcours, avec les capacités, informations et conditions nécessaires.
+methodology_agreements:
+- id: AGREEMENT-U787
+  source_refs:
+  - U786
+  - U787
+  author: Laurent
+  recorded_by: Codex
+  decided_on: '2026-09-27'
+  interpretation: contextual
+  scope: 'Proposition complète présentée après U786 : définitions et règles de granularité, cas/scénario/parcours, contrôles
+    et limites de couverture. Les libellés anglais MOD027/MOD028 et les précisions documentaires restent des rédactions de
+    mise en œuvre.'
+  methodological_references:
+  - TOGAF
+  - BIZBOK
+  fields:
+  - target: MOD015
+    field: definition
+    value_sha256: b698c841cbe034eaeb89cc265d7987bad2e7aa2b59d4c66650f259774b0cd040
+  - target: MOD015
+    field: notes.6
+    value_sha256: e3d8ecc7704816bad91da052b0dee484254ec63888f790f635a5df521125c321
+  - target: MOD026
+    field: definition
+    value_sha256: 73e6dd1932cc7537f070e6da5a72632901e4309aa7740a6fda0ce14581e660f0
+  - target: MOD026
+    field: notes.0
+    value_sha256: 82c3438e330eaacf3ed30cd6b8eeabb15416aa404298b286ae82ee32e5fbba16
+  - target: MOD026
+    field: notes.1
+    value_sha256: ac2a467d65e45db847def39fd0068db1fbb2ae79c573fdc6d23c0f5ce303605f
+  - target: MOD027
+    field: definition
+    value_sha256: 55eb720df60bcc0edbfcd55cf0a7c31e81be94447671623e286a016feadbba1a
+  - target: MOD027
+    field: notes.0
+    value_sha256: 6b73529cea74b92e16d8f50e264adb01e51d470c840136ed557675f84c0c8646
+  - target: MOD027
+    field: notes.1
+    value_sha256: 3c1fa6e2e48b154e82bb1dbabc28d1d3b2a5e70ef2fd2f85dd0e0d4a0fed5900
+  - target: MOD028
+    field: definition
+    value_sha256: d726694c4d325ec7bfe789aeee01bfa5b432a45398e28ad8b72e280b21801bbc
+  - target: MOD028
+    field: notes
+    value_sha256: 8e4eb0305d1a4205358a652903292351c769a61d79d8751d755836d121440f49
+  source_index_sha256: 7462b45fd35809941f4d806011319ec5da18f2cc0b84e212950c5add071fe2db
+  limits: Pas de nouvel accord sur les capacités opérationnelles ou leur réalisation ; pas de publication. Les principes du
+    modèle et le renvoi des conventions réexpriment cet accord, sans en élargir la portée.
+  capture_method: Empreintes des valeurs finales dans le registre méthodologique ; record_decision/record_intents ne supportent
+    que nodes/relations, pas les termes MOD.
+- id: AGREEMENT-U791
+  source_refs:
+  - U789
+  - U790
+  - U791
+  author: Laurent
+  recorded_by: Codex
+  decided_on: '2026-09-27'
+  interpretation: contextual
+  scope: 'Lot discuté après U789 et précisé après U790 : scénario autonome, parcours avec étapes et contributions, distinction
+    avec processus, retrait du cas d’usage distinct. Remplace ces aspects de U787 ; les preuves historiques sont conservées.'
+  fields:
+  - target: MOD026
+    field: notes.0
+    value_sha256: 00255eafe4e4638017012f5c76da94641b0b3cdd804f25f1f22de1f256566202
+  - target: MOD015
+    field: definition
+    value_sha256: 194affd7744ced2b96603f8076502d35f896c423983cec8948978c1693fffecf
+  - target: MOD015
+    field: notes.6
+    value_sha256: 8da2671d21ddc85e7a99e67b262e62259a1eed7084844670aa00d09869b9aac9
+  - target: MOD027
+    field: definition
+    value_sha256: 85c51632be6b40ade3f4db7a7ea497d5933b6697cd2b008e592acceb59b5f870
+  - target: MOD027
+    field: notes.0
+    value_sha256: 63ffd1de3649d663571bae55feb1db5f002c961936f7ca61dddb5a4cb229b3b9
+  - target: MOD027
+    field: notes.1
+    value_sha256: df6e7904dc4e3d2989b6fedff38a607d06c9085625def2707fa2da70f03a5fc8
+  - target: MOD028
+    field: definition
+    value_sha256: f026e7ef5bb0624554e9c6ff914d1571258c913c04004f70249d627468d2dd32
+  - target: MOD028
+    field: notes.4
+    value_sha256: 32dc26732d74547ad269193f097584e5e7f46514ed30baec5236b729acd4c07b
+  - target: MOD028
+    field: notes.5
+    value_sha256: 666d2a83141d7600ce93b01052c34c9001e902efd3d86dde8d6a9f443b2b505b
+  - target: MOD028
+    field: notes.6
+    value_sha256: 06904b40963ebbe6803cef68100f235f00b622990231b7cca9dfb18c36f50806
+  - target: PRINCIPLE-CAPABILITY
+    field: statement
+    value_sha256: 3d215d8cafd5ad51b62856c2f4ce31dfd0c0b027d0876861908608b999cbd137
+  - target: PRINCIPLE-BUSINESS-SCENARIOS
+    field: statement
+    value_sha256: 206e97a49425aa01c850403a9426b01c22cf6c8971be835fd1564fcbb395b641
+  source_index_sha256: 51d7e9637c0ea37d3e1ffb604af52d4d90bbd4710595b2e940cea271456d4e3c
+  limits: Le classement proposé après U791 n’est pas adopté. Migration technique des exemples et nouvelle publication non
+    réalisées. Aucun accord sur les capacités opérationnelles, leur contenu illustratif ou leur réalisation installée.
+  capture_method: Empreintes finales dans le registre méthodologique ; record_decision/record_intents ne supportent que nodes/relations,
+    pas les termes MOD ni les principes. Calcul par canonical_sha256 de record_decision.
+- id: AGREEMENT-U792
+  source_refs:
+  - U791
+  - U792
+  author: Laurent
+  recorded_by: Codex
+  decided_on: '2026-09-27'
+  interpretation: contextual
+  scope: 'Proposition complète après U791 : classement par flux de valeur et filtres transverses ; identité unique et rattachements
+    multiples ; distinction des étapes de flux et de parcours ; navigation Atlas dédiée et accès contextuels.'
+  fields:
+  - target: MOD027
+    field: notes.4
+    value_sha256: 48400e26007e7896177492ab5c851bf5560193ec81d50bb8653649c00158bbe7
+  - target: PRINCIPLE-BUSINESS-SCENARIOS
+    field: statement
+    value_sha256: c34beead6d9394bd6fcb89211f6f2150ee5dee14d9c61657a01bf0d7a598a93c
+  source_index_sha256: 1d3ff11cfeb01c0bd426981d4d72d3efe36439f93769c760a67ce94ac6ccc6fa
+  limits: Ni liste de flux, ni contenu individuel, ni choix techniques du plan rédigé ensuite implicitement adoptés. Le plan
+    est proposé ; catalogue et migration non réalisés. Pas de publication.
+  capture_method: Registre méthodologique et empreintes canonical_sha256 de record_decision ; les termes MOD et principes
+    ne sont pas des cibles nodes/relations.
+- id: AGREEMENT-U793
+  source_refs:
+  - U792
+  - U793
+  author: Laurent
+  recorded_by: Codex
+  decided_on: '2026-09-27'
+  interpretation: contextual
+  scope: Autorisation des six lots du plan U792, catalogue canonique et publication locale. Les nouvelles rédactions métier
+    restent proposées.
+  fields:
+  - target: PRINCIPLE-BUSINESS-SCENARIOS
+    field: statement
+    value_sha256: 7b6a9a1dcf1b85ba989533d0bcec91f7822fb89e7c8142315fe1157e63e56d3f
+  source_index_sha256: 345c24f24943050f32f79ff7260c59e15897c399230ba891173a3a75149cb698
+  limits: Aucune validation individuelle des flux, scénarios et parcours ; aucun commit ou push autorisé.
+  capture_method: Registre méthodologique pour les principes ; les contenus du catalogue portent leurs propres qualifications,
+    aucun accord hérité.

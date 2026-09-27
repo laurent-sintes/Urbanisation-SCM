@@ -203,6 +203,16 @@ def render(model, label):
         for link in catalogue['links']:
             lines.append('| ' + ' | '.join(cell(x) for x in [names[link['from_ref']], link['meaning'], names[link['to_ref']], link['condition'], link['effect']]) + ' |')
         lines += ['']
+    if model.get('scenario_catalog'):
+        catalogue = model['scenario_catalog']
+        lines += ['## Catalogue des scénarios', '', 'Flux de valeur et scénarios autonomes ; les contenus proposés ne sont pas des preuves de réalisation.', '']
+        for stream in catalogue['value_streams']:
+            lines += ['### ' + stream['label_fr'], '', stream['value'], '']
+            for scenario in catalogue['scenarios']:
+                if stream['id'] in scenario['value_stream_ids']:
+                    paths = [p for p in catalogue['paths'] if p['scenario_id'] == scenario['id']]
+                    lines.append('- ' + scenario['title'] + ' (`' + scenario['id'] + '`) — ' + str(len(paths)) + ' parcours.')
+            lines += ['']
     if model['space']=='release':
         lines += ['## Portée des validations', '', '| Repère | Champs adoptés | Champs restant proposés | Décisions |', '| --- | --- | --- | --- |']
         for n in model['nodes']:

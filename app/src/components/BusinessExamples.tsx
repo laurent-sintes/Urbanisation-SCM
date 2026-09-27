@@ -1,11 +1,12 @@
 import type { ReaderExample } from '../examples';
-import { ModelText, ReferenceLink } from './ModelLinks';
+import { ModelText, ReferenceLink, MethodLink } from './ModelLinks';
 import './examples.css';
 
-export function BusinessExamples({ examples, id }: { examples: readonly ReaderExample[]; id: string }) {
+export function BusinessExamples({ examples, id, illustrations = false }: { examples: readonly ReaderExample[]; id: string; illustrations?: boolean }) {
   if (!examples.length) return null;
-  return <section id={id} tabIndex={-1} className="business-examples" aria-label="Scénarios métier">
-    <h2>Scénarios métier</h2>
+  return <section id={id} tabIndex={-1} className="business-examples" aria-label={illustrations ? "Illustrations métier" : "Scénarios métier"}>
+    <h2>{illustrations ? "Illustrations métier" : "Scénarios métier"}</h2>
+    <p><MethodLink term={illustrations ? "MOD027" : "MOD026"}>{illustrations ? "Comprendre scénarios et parcours" : "Comprendre les cas d’usage et leurs parcours"}</MethodLink></p>
     <div className="example-cards">{examples.map((example, index) => <article className="example-card" key={index}>
       <h3>{example.title}</h3>
       <p><ModelText text={example.situation}/></p>

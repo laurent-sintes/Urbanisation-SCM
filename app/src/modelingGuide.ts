@@ -37,9 +37,16 @@ export interface GuideLesson {
   };
   readonly model_links: readonly { readonly id: string; readonly label: string }[];
 }
+export interface GuideChapter {
+  readonly id: string;
+  readonly title: string;
+  readonly intro: string;
+  readonly sections: readonly { title: string; text: string; example?: string; detail?: string; url?: string }[];
+}
 export interface ModelingGuide {
+  readonly chapters?: readonly GuideChapter[];
   readonly glossary?: {
-    readonly terms: readonly { id: string; name: string; label_fr?: string; definition: string; role?: string; examples?: readonly string[] }[];
+    readonly terms: readonly { id: string; name: string; status?: string; label_fr?: string; short_description?: string; definition: string; role?: string; notes?: readonly string[]; examples?: readonly string[] }[];
     readonly model_term_ids: readonly string[];
   };
   readonly id: string;

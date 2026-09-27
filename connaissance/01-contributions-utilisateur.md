@@ -19300,3 +19300,444 @@ release, commit & push
 **contexte et portée**
 
 Publication locale du backlog courant après U783, incluant la politique de codes de lecture et son ordre figé ; commit des changements de cette tâche et push vers le dépôt Urbanisation-SCM. Préserver les publications historiques dans Git avant leur retrait de l’arbre actif. La publication ne donne aucun accord métier supplémentaire et ne valide pas les rédactions nouvelles par extension.
+
+
+## U785
+
+**id**
+
+U785
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Auditer la granularité des capacités face au marché à niveau et périmètre comparables
+
+**texte**
+
+La carto est pas mal. Je souhaite que tu audite le modèle en terme de granularité. D'habitude, sur le marché, le périmètre de la supply chain management est décrit avec combien de capacités ? Il faut bien faire attention que la définition de capacité chez nous est proche de celle de Togaf et qu'elle est à un niveau 4 dans notre modèle Système / Domaine / Subdomain / Capability / Behavior. Il faut comparer ce qui est comparable : certaines cartographie appellent capacité ce qu'on appelle sous domaine.
+
+Je pense qu'on doit avoir un nombre de capacités supérieur à la moyenne car notre choix est de bien découper la notion de décision. Mais je n'aimerais pas avoir un découpage qui ne soit pas "dans la norme".
+
+**contexte et portée**
+
+Demande d'audit du backlog courant : comparer définition, périmètre et maille avant les nombres ; examiner l'effet du découpage des décisions et les éventuels excès de granularité. L'hypothèse d'un nombre supérieur à la moyenne est à éprouver, sans la tenir pour acquise. Aucun quota, fusion, modification canonique, nouvel accord métier ni publication demandé.
+
+
+## U786
+
+**id**
+
+U786
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Préciser la capacité et définir le cas d'usage métier pour éprouver la couverture
+
+**texte**
+
+Merci pour l'audit.
+
+Je souhaite améliorer la définition de capacité dans le métamodèle.
+
+Je souhaite y adjoindre une référence à Togaf. Y vois-tu une autre méthodologie SI à ajouter ?
+
+Je souhaite que les capacités soient suffisamment détaillées pour expliquer, au travers d'un cas d'usage métier (indépendant de l'organisation et des outils) quelles capacités sont activées. La chaîne d'activation de ces capacités permet aussi de vérifier qu'il n'y a pas de "trou" métier.
+
+La notion de "Cas d'usage métier" doit aussi avoir sa définition.
+
+Qu'en penses-tu ?
+
+**contexte et portée**
+
+Demande d'avis et de proposition pour améliorer MOD015 Capability, expliciter son appui TOGAF, examiner une référence complémentaire et définir Business Use Case. Le cas d'usage doit permettre d'identifier les capacités mobilisées et de rechercher les responsabilités manquantes sans imposer organisation ni outil. Les formulations proposées, les références supplémentaires et les conséquences sur la structure restent à discuter ; aucun accord global ni publication déduit.
+
+
+## U787
+
+**id**
+
+U787
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Valider la définition de capacité et les cas d'usage métier du métamodèle
+
+**texte**
+
+C'est parfait ! Je valide !
+
+**contexte et portée**
+
+Accord sur la proposition complète présentée après U786 : définition enrichie de Capability et règle de granularité ; appuis TOGAF et BIZBOK ; définition de Business Use Case, distinction avec le scénario et parcours de mobilisation des capacités ; quatre questions de contrôle et qualification des trous de couverture. Indépendance de l'organisation et des outils, rôles métier conservés ; répétitions, parallélisme et capacités continues possibles, sans ordre universel. La couverture ne vaut que pour les situations examinées. ArchiMate reste une possibilité ultérieure, sans adoption ni implémentation. Appliquer le lot au métamodèle sans nouvelle capacité opérationnelle, audit historique, publication, commit ou push. Les exemples illustratifs ne deviennent ni observations Beaumanoir ni accords sur la réalisation installée.
+
+
+## U788
+
+**id**
+
+U788
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Réaliser et publier l’espace Méthode & métamodèle dans Atlas
+
+**texte**
+
+Go pour tout
+
+**contexte et portée**
+
+Accord sur la proposition complète : accès permanent regroupant le guide et le glossaire méthodologique, quatre rubriques Pour commencer / Le métamodèle / La méthode / Les références, publics métier et SI, lecture progressive, accès contextuels depuis capacités, comportements et scénarios avec retour à la fiche. Publier une nouvelle édition méthodologique intégrant U787 et les publics/usages, explicitement associée à la publication consultée ; préserver les éditions historiques et le glossaire métier séparé. Autorise les adaptations frontend, tests, build et publication locale nécessaires ; aucun commit, push ni déploiement distant.
+
+## U789
+
+**id**
+
+U789
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Réexaminer les scénarios métier et leur relation avec la cartographie des capacités
+
+**texte**
+
+Maintenant, je m'intérroge sur les scénarios ou les cas d'usage qui étaient apportés en exemple.
+
+Je pense que je me suis trompé en les associant aux domaines / sous domaine / capacité.
+
+BIZBOK, comme TOGAF proposent tout deux une carto des usages/scénario avec son propre modèle d'orgnaisation et de faire des liens entre les objets.
+
+Je pense que :
+
+- le lien scénario -> parcours de mobilisation des capacités est à garder
+- il n'y a pas véritablement d'objet "Case d'usage métier"
+- L'association des scénarios aux objets de classement de la carto métier est une erreur.
+- Le terme "parcours de mobilisation des capacités métier" décrit sans doute un objet du méta modèle qu'il convient de définir en terme de nom et de définition
+
+Qu'en penses-tu ?
+
+**contexte et portée**
+
+Demande d'analyse et de proposition méthodologique, réexaminant les choix U787. Les points sont des hypothèses soumises à discussion : distinguer classement des capacités, identité des scénarios, relations de mobilisation et affichage contextuel. Aucun accord sur une suppression de Business Use Case, une nouvelle définition, une migration des exemples ni une nouvelle publication n'est déduit de cette question. Les accords et publications antérieurs restent conservés.
+
+## U790
+
+**id**
+
+U790
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Distinguer les étapes du scénario et la modélisation des processus
+
+**texte**
+
+Un scénario mobilise des étapes mais ce n'est pas un processus à proprement parlé car on n'y introduit pas la notion de rôle et d'organisation comme dans BPMN.
+
+Qu'en penses-tu ?
+
+**contexte et portée**
+
+Précision méthodologique proposée dans la discussion U789 : présence d'étapes, indépendance des rôles et de l'organisation, distinction avec un processus BPMN. Demande d'avis sur le critère de distinction ; ne vaut pas adoption d'une nouvelle définition ni autorisation de migration ou de publication. Conserver séparément l'intention FLOW et les caractéristiques vérifiées du standard BPMN.
+
+## U791
+
+**id**
+
+U791
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Valider la distinction scénario et parcours ; étudier le classement des scénarios
+
+**texte**
+
+JE valide la modification du modèle.
+
+Néanmoins, on ne peut pas se retrouver avec une liste de scénarios "en vrac". Il faut pouvoir les structurer, les classer. Que propose BIZBOK ou TOGAF ?
+
+**contexte et portée**
+
+Accord sur le lot méthodologique discuté après U789 et précisé après U790 : scénario autonome décrivant situation, déclencheur, conditions et résultat recherché ; parcours décrivant étapes et contributions des capacités ; retrait de la nécessité d'un objet Business Use Case distinct ; absence d'appartenance hiérarchique aux domaines, sous-domaines et capacités, avec maintien des relations et affichages contextuels. L'absence de rôles ne suffit pas à distinguer un processus ; le parcours FLOW limite sa description à l'analyse de mobilisation et de couverture sans prescrire organisation, affectation des tâches ou outils. Appliquer ces conventions au backlog et préserver les publications. Le classement du catalogue fait l'objet d'une nouvelle demande d'étude : aucune structure proposée dans la réponse à U791 n'est encore validée. La migration du stockage historique des exemples reste à réaliser dans le chantier du catalogue ; aucune publication, commit ou push demandé.
+
+## U792
+
+**id**
+
+U792
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Valider le classement des scénarios et demander un audit et un plan de transformation
+
+**texte**
+
+Je valide.
+
+Il y a des modificiation de modèle, de contenu et d'ATLAS.
+
+Tu peux auditer et proposer un plan de transfo ?
+
+**contexte et portée**
+
+Accord sur la proposition complète après U791 : catalogue autonome de scénarios, navigation principale par flux de valeur et filtres transverses, identité unique et rattachements multiples, distinction entre étapes du flux et étapes du parcours, accès depuis les capacités sans appartenance hiérarchique. Les finalités illustratives proposées ne constituent pas une liste de flux formalisés : bénéficiaire, valeur, déclencheur, frontières et étapes restent à définir et à qualifier. Demande présente : auditer le modèle, les contenus et Atlas et proposer un plan de transformation. N'autorise pas implicitement l'exécution du plan proposé ensuite, une nouvelle publication, un commit ou un push. Les contenus et accords historiques sont préservés.
+
+## U793
+
+**id**
+
+U793
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Exécuter les six lots de transformation des scénarios
+
+**texte**
+
+Go pour l'enchainement de tous les lots.
+
+**contexte et portée**
+
+Autorisation d'exécuter le plan U792 : contrat, pilote éditorial, chaîne de données et migration, Atlas, généralisation et recette avec publication locale et guide associé. Les nouveaux contenus rédigés pendant la mise en œuvre restent proposés, sans validation métier individuelle déduite de ce Go. Préserver sources, accords historiques et publications ; aucun commit, push ou déploiement distant implicite.
+
+## U794
+
+**id**
+
+U794
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Revoir l’ordre des domaines, expliciter Plan et comparer les sens d’Allocation
+
+**texte**
+
+J'aimerais revoir le modèle :
+
+- le domaine "sourcing et achat" est après "ventes". Pas logique, il faut inverser et changer la numérotation
+- Plan Visibility doit être alimenté par un domaine "Plan" (le rôle d'un APS), hors scope de l'orchestration en elle même
+- le plus difficile : on avait noté dans agents.md qu'on utiliserait pas le terme d'Allocation car dans le monde SAP ça signifie plusieurs choses : une manière de protéger de stock ET un moyen de matching pour distribuer du stock aux demandes (AllocationRun). Je pense, en relisant les docs du marché, que le pb ne touche que SAP et que "Allocation" est une méthode de protection de quantités de stocks pour un usage ou une finalité (canal, client etc.). "Stock Protection" utilise d'autres méthodes comme la détermination de seuils min / max. D'autres méthodes peuvent exister. Je voudrais que tu compare ma prémisse avec le marché (est-ce que j'ai bien compris ?) et notre modèle. Je veux que tu me donnes ton avis.
+
+**contexte et portée**
+
+Demande d’inverser l’ordre de lecture de Sourcing and Procurement et Sales, avec renumérotation des codes de lecture à la prochaine publication et maintien des identités persistantes. Demande d’expliciter un domaine Plan externe à Supply Chain Orchestration alimentant Plan Visibility ; ne transfère pas implicitement les décisions opérationnelles vers ce domaine. Le troisième point est une hypothèse soumise à comparaison marché et avis : aucun renommage Allocation, Stock Protection ou Supply Protection Policy n’est adopté par cette demande. Aucun nouvel accord sur des définitions détaillées rédigées ensuite, aucune publication, commit ou push implicite.
+
+## U795
+
+**id**
+
+U795
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Valider l’usage qualifié d’allocation de stock par groupe
+
+**texte**
+
+Je valide ton excellente idée
+
+**contexte et portée**
+
+Accord sur la proposition U794 : autoriser « allocation de stock par groupe », avec Group Inventory Allocation comme formulation anglaise qualifiée, pour les enveloppes et droits d’usage ; éviter Allocation seul et conserver les distinctions avec l’affectation aux demandes, la réservation, le plafond de consommation et le réassort. Réutiliser le mécanisme existant sans créer une capacité ni renommer automatiquement Group Supply Protection. L’accord ne vaut pas validation mot à mot des nouvelles rédactions ou de toutes les comparaisons. Le renommage éventuel du parent était une question ouverte, précisée par U796. Aucun ordre de publication, commit ou push.
+
+## U796
+
+**id**
+
+U796
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Conserver le nom Supply Protection Policy
+
+**texte**
+
+Supply Protection Policy  : on garde comme ça
+
+**contexte et portée**
+
+Confirmation explicite du nom Supply Protection Policy pour D02.b. Clôt l’hypothèse de renommage soulevée dans l’avis U794 ; aucun changement de périmètre, de comportements ou de rattachement n’en découle. L’assouplissement lexical validé U795 reste applicable.
+
+## U797
+
+**id**
+
+U797
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Reprendre en autonomie les écarts de l’audit éditorial
+
+**texte**
+
+Tu peux reprendre tout ça en autonomie ?
+
+**contexte et portée**
+
+Autorisation d’exécuter la reprise décrite dans l’audit éditorial du 27 septembre : règles cohérentes, rédaction simple, jargon relié au glossaire, définitions courtes, rubrique scénarios systématique, pilote puis généralisation et recette. Conserver les noms, responsabilités, périmètres, preuves et accords existants ; Supply Protection Policy reste inchangé. Les rédactions nouvelles restent éditoriales, sans accord métier global. La mise à disposition des corrections dans Atlas suit le parcours de publication ; aucun commit de sauvegarde ou push implicite.
+## U798
+
+**id**
+
+U798
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Position et noms des domaines Plan et Logistics Execution
+
+**texte**
+
+Concernant le domaine "Plan" je souhaite qu'il soit juste avant "Supply Chain Orchestration".
+Je ne suis pas sûr du nom du domaine. Qu'en penses-tu ?
+
+Le domaine "Logistics Execution" : pourquoi ne s'appelle-t-il pas tout simplement Logistics ?
+
+**contexte et portée**
+
+Position souhaitée explicite ; demande d’avis sur les deux noms. Aucun renommage approuvé par cette question. Vérifier l’ordre publié et comparer les appellations au périmètre des domaines avant recommandation.
+
+## U799
+
+**id**
+
+U799
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Planification de la demande et des ressources ; Logistics dans une lecture 1PL
+
+**texte**
+
+"Supply Chain Planning" n'est pas suffisant car ce domaine alimente le supply plan mais aussi la Demand Plan.
+
+L'idée de "Logistics" est de considérer la "logistics" comme 1PL uniquement. Du coup c'est logique.
+
+**contexte et portée**
+
+Précision sur la lisibilité attendue du nom de la planification et sur le sens envisagé pour Logistics. Conserver distincts périmètre métier, modèle d’exploitation 1PL et réalisation installée. Aucun nom alternatif de planification encore retenu ; aucun déploiement interne ou transfert des capacités de l’orchestration déduit.
+
+## U800
+
+**id**
+
+U800
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Plan dans SCOR et explicitation du nom de domaine
+
+**texte**
+
+Dans le modèle SCOR, ça s'appelle PLAN tout simplement. Mais ce n'est pas très explicite je trouve
+
+**contexte et portée**
+
+Référence méthodologique à examiner pour le nom du domaine, en continuité de U798–U799. Aucun renommage explicitement adopté. Distinguer le processus Plan de SCOR du domaine FLOW et de sa frontière avec Matching.
+
+## U801
+
+**id**
+
+U801
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Noms Logistics et Demand & Supply Planning retenus
+
+**texte**
+
+Ok pour "Logistics" et "Demand & Supply Planning"
+
+**contexte et portée**
+
+Accord sur les deux noms dans la discussion U798–U800. Demand & Supply Planning couvre les plans prévisionnels de demande et de ressources et reste immédiatement avant Supply Chain Orchestration. Logistics couvre les opérations logistiques et leur pilotage local ; la lecture 1PL est un périmètre de réalisation étudié, indépendant de la définition des capacités. Aucun déploiement interne, déplacement de capacité ou accord global sur les formulations et comparaisons n’est déduit. Appliquer les noms et aligner leurs références dans le backlog et le glossaire ; publication distincte.
+
+## U802
+
+**id**
+
+U802
+
+**date**
+
+2026-09-27
+
+**titre**
+
+Retirer la mention 1PL du cadrage courant
+
+**texte**
+
+Retire la mention 1PL, ce n'est pas utile
+
+**contexte et portée**
+
+Retirer cette mention des définitions, du glossaire et des consignes courantes. Conserver les noms Logistics et Demand & Supply Planning retenus U801, leurs identités et leurs frontières métier. Les verbatims et éléments de comparaison historiques ne sont pas réécrits.

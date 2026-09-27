@@ -5,9 +5,11 @@ source_refs:
 - CMP096
 - U290
 - U383
-state: convention_confirmed_U290
-authority: Convention confirmée et refonte demandée U290 ; valeur multidimensionnelle adoptée. Formulations détaillées et
-  critères ajoutés restent éditoriaux.
+- U795
+- U796
+state: convention_confirmed_U795_U796
+authority: Convention U289/U290 conservée pour Supply Assignment ; U795 autorise allocation de stock par groupe comme terme
+  FLOW qualifié. U796 conserve Supply Protection Policy. Textes détaillés ajoutés restent éditoriaux.
 canonical:
   en: Supply Assignment
   fr: Affectation des ressources aux commandes
@@ -22,10 +24,11 @@ rules:
 - Employer Supply Assignment / affectation pour les ressources destinées aux commandes ; pas Allocation comme synonyme dans
   les libellés FLOW.
 - Employer plan d’affectation, sans alterner avec plan d’allocation.
-- 'Pour les droits de groupes : enveloppes de protection, droits d’usage ou plafonds de consommation selon le résultat.'
+- 'Pour les droits de groupes : allocation de stock par groupe / Group Inventory Allocation est autorisé pour les enveloppes.
+  Préciser droits préservés et règles de consommation ; minimum protégé et plafond restent distincts.'
 - Répartition et distribution sont des verbes descriptifs ; toujours préciser entre quoi et quoi, pas de concepts concurrents.
-- 'Allocation reste un terme éditeur ou historique qualifié : SAP PAL, Microsoft Inventory Allocation, Oracle Retail Allocation,
-  ancien Order Allocation Run.'
+- 'Allocation seul reste ambigu. Les sens éditeur restent qualifiés : SAP PAL, Microsoft Inventory Allocation, Oracle Retail
+  Allocation, ancien Order Allocation Run.'
 - Maximiser une valeur multidimensionnelle sous contraintes ; les critères et leurs priorités sont explicites, sans réduire
   la valeur au volume promis ni à la marge.
 boundaries:
@@ -124,3 +127,14 @@ current_U383:
     stables, aucun quatrième niveau.'
   return_behaviors_direction: 'Remise en stock, réparation, renvoi : mécanismes demandés U382 ; définitions et rattachements
     détaillés à instruire, sans absorption des décisions ni de l’exécution physique.'
+current_U795:
+  source_refs:
+  - U795
+  - U796
+  approved_rule: Allocation de stock par groupe (Group Inventory Allocation) est un terme qualifié autorisé pour attribuer
+    une enveloppe de stock à un usage ou une population, avec des droits et règles de consommation explicites. Allocation
+    seul reste ambigu ; distinguer protection minimale, plafond de consommation, affectation aux demandes, réservation et
+    réassort.
+  unchanged_parent: Supply Protection Policy
+  scope: Assouplissement lexical sans nouvelle capacité, sans changement de périmètre ni renommage du comportement.
+  market_evidence: marche/allocation-protection-U794.md

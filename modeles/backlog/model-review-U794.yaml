@@ -1,0 +1,46 @@
+id: MODEL-REVIEW-U794
+status: applied_partial
+source_refs:
+- U794
+agreement_scope: Inversion achats/ventes et représentation de Plan hors orchestration. L’étude Allocation et ses recommandations
+  ne sont pas adoptées.
+reading_order:
+  parent: system-business-operations
+  children:
+  - domain-sourcing-procurement
+  - domain-sales
+  - domain-plan
+  - universe-supply
+  - domain-logistics-execution
+  note: Achats avant ventes par demande explicite. Plan placé avant l’orchestration par cohérence de lecture ; aucun ordre
+    chronologique imposé.
+allocation_review:
+  status: proposed
+  path: marche/allocation-protection-U794.md
+  canonical_names_changed: false
+publication_delivery:
+  state: applied
+  source_refs:
+  - U794
+  summary: Achats avant ventes ; domaine Plan externe à Supply Chain Orchestration et alimentation explicite de Plan Ingestion.
+  required_nodes:
+  - id: domain-plan
+    parent: system-business-operations
+    fields:
+      name: Demand & Supply Planning
+      modeling_depth: domains
+    parent_type: presents
+  superseded_checks_U801:
+  - id: domain-plan
+    field: name
+    previous_value: Plan
+    reason: Nom retenu U801 et alignement rédactionnel ; les preuves historiques restent conservées.
+relations_applied:
+- id: REL-U794-OPERATIONS-PLAN
+  type: presents
+  source_id: system-business-operations
+  target_id: domain-plan
+- id: REL-U794-PLAN-INGESTION
+  type: provides-knowledge
+  source_id: domain-plan
+  target_id: subdomain-plans

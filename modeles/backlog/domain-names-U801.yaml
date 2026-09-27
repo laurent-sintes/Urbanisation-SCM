@@ -1,0 +1,28 @@
+id: DOMAIN-NAMES-U801
+source_refs:
+- U798
+- U799
+- U800
+- U801
+- U802
+status: applied
+market_evidence: marche/noms-domaines-plan-logistics-U798.md
+agreement_scope: Noms retenus ; Demand & Supply Planning avant orchestration ; Logistics couvre les opérations logistiques
+  et leur pilotage local. Aucune réalisation installée ni accord global sur les textes déduit. U802 retire la mention du modèle
+  d’exploitation.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U801
+  summary: Domaines Demand & Supply Planning et Logistics ; identités et hiérarchie préservées.
+  required_nodes:
+  - id: domain-plan
+    fields:
+      name: Demand & Supply Planning
+    parent: system-business-operations
+    parent_type: presents
+  - id: domain-logistics-execution
+    fields:
+      name: Logistics
+    parent: system-business-operations
+    parent_type: presents

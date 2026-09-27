@@ -1,3 +1,4 @@
+import { lessonForPublication } from './src/modelingGuide.ts';
 // Headless, isolated browser fixture using the real immutable publication and guide loader.
 // No listener is started and no publication or production server is modified.
 import { execFileSync } from 'node:child_process';
@@ -78,11 +79,24 @@ try {
 
   await visit({ view: 'sheet', node: current.nodes.find(node => node.kind === 'capability').id });
   await page.getByTestId('business-sheet').waitFor();
-  await page.getByRole('button', { name: 'Comprendre le méta modèle', exact: true }).click();
+  await page.getByRole('button', { name: 'Méthode & métamodèle', exact: true }).click();
+  if (guide.chapters) {
+    const chapters = page.getByRole('navigation', { name: 'Rubriques de la méthode' });
+    await chapters.waitFor();
+    assert.equal(await chapters.getByRole('button').count(), 4);
+    for (const chapter of guide.chapters) {
+      await chapters.getByRole('button', { name: chapter.title, exact: true }).click();
+      await page.getByRole('heading', { name: chapter.title, exact: true }).waitFor();
+      assert.ok((await page.locator('.method-chapter').innerText()).includes(chapter.intro));
+    }
+    await chapters.getByRole('button', { name: 'Le métamodèle', exact: true }).click();
+    await nav.getByRole('button').first().click();
+    checks.push('Quatre rubriques avec contenu de l’édition figée.');
+  }
   await currentLesson(first).waitFor();
   assert.equal(await nav.getByRole('button').count(), 6);
   assert.equal(new URL(page.url()).hash.includes('view=principles'), true);
-  assert.equal(await page.getByRole('heading', { level: 1, name: 'Comprendre le méta modèle', exact: true }).count(), 1);
+  assert.equal(await page.getByRole('heading', { level: 1, name: 'Méthode & métamodèle', exact: true }).count(), 1);
   checks.push('Entrée depuis la fiche : six clés, vue dédiée et publication conservée.');
 
   for (let i = 0; i < guide.lessons.length; i++) {
@@ -102,13 +116,34 @@ try {
     await page.locator('.guide-contribute summary').click();
     const contribution = await page.locator('.guide-contributor-content').innerText();
     assert.ok(contribution.includes(lesson.contributor.criterion));
-    assert.ok(contribution.includes(lesson.contributor.boundary));
+    assert.ok(contribution.includes(lessonForPublication(lesson, current).contributor.boundary));
     for (const link of lesson.model_links.filter(link => ids.has(link.id))) {
       const href = await page.locator('.guide-model-links a').filter({ hasText: current.nodes.find(node => node.id === link.id).fields.name }).first().getAttribute('href');
       assert.ok(href.includes('version=' + current.version));
     }
   }
   checks.push('Six principes, exercices, explications et liens de la même publication.');
+  if (guide.chapters) {
+    const cap = current.nodes.find(node => node.kind === 'capability');
+    await visit({ view: 'sheet', node: cap.id });
+    await page.getByRole('link', { name: 'Qu’est-ce qu’une capacité ?', exact: true }).click();
+    await page.getByRole('heading', { name: 'Capacité', exact: true }).waitFor();
+    assert.ok(page.url().includes('term=MOD015'));
+    assert.ok(page.url().includes('version=' + current.version));
+    await page.getByRole('link', { name: 'Retour à la fiche : ' + cap.fields.name, exact: true }).click();
+    await page.getByTestId('business-sheet').waitFor();
+    await visit({ view: 'glossary', glossary: 'meta', term: 'MOD026', node: cap.id });
+    await page.getByRole('link', { name: 'Parcours de mobilisation', exact: true }).click();
+    await page.getByRole('heading', { name: 'Parcours de mobilisation des capacités', exact: true }).waitFor();
+    assert.ok((await page.locator('.glossary-term').innerText()).includes('couverture des situations examinées'));
+    await page.setViewportSize({ width: 390, height: 844 });
+    await visit({ view: 'principles', principle: 'start' });
+    await page.getByRole('heading', { name: 'Pour commencer', exact: true }).waitFor();
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
+    await page.screenshot({ path: resolve(output, 'method-mobile.png'), fullPage: true });
+    await page.setViewportSize({ width: 1440, height: 1100 });
+    checks.push('Liens contextuels, retour fiche, notions associées et lecture mobile.');
+  }
   await visit({ version: old.version, view: 'principles' });
   await page.getByRole('heading', { name: 'Guide non associé à cette publication' }).waitFor();
   await visit({ view: 'principles', principle: 'missing' });

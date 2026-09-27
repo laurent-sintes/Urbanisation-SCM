@@ -4,7 +4,7 @@ import { useId, useState } from 'react';
 import { ArrowUpRight, BookOpen, ChevronDown, RefreshCw } from 'lucide-react';
 import { lessonForPublication, type GuideLesson, type ModelingGuide } from '../modelingGuide';
 import type { PublishedModel } from '../types';
-import { ReferenceLink } from './ModelLinks';
+import { ReferenceLink, MethodLink, MethodReturn } from './ModelLinks';
 import './modeling-guide.css';
 
 function LessonScene({ scene }: { scene: GuideLesson['scene'] }) {
@@ -70,16 +70,24 @@ function GuideContent({ model, selected, onSelect, state, retry }: { model: Publ
   const { response } = state;
   if (response.status === 'unavailable' || !response.guide) return <section className="guide-status"><BookOpen size={28} aria-hidden="true"/><h2>Guide non associé à cette publication</h2><p>{response.message}</p><small>Publication {model.version}</small></section>;
   const { guide } = response;
+  const chapter = guide.chapters?.find(item => item.id === (selected || 'start'));
   const index = selected ? guide.lessons.findIndex(lesson => lesson.id === selected) : 0;
   const lesson = guide.lessons[index] && lessonForPublication(guide.lessons[index], model);
 
   return <div className="modeling-guide-page">
+    <MethodReturn/>
+    <p className="guide-edition">Méthode · {guide.version} — associée au modèle {model.version}</p>
+    {guide.chapters && <nav className="method-chapters" aria-label="Rubriques de la méthode">{guide.chapters.map(item => <button key={item.id} aria-pressed={chapter?.id === item.id} onClick={() => onSelect(item.id)}>{item.title}</button>)}</nav>}
+    {chapter && <article className="guide-lesson method-chapter"><h2>{chapter.title}</h2><p>{chapter.intro}</p>{chapter.sections.map(item => <section key={item.title}><h3>{item.title}</h3><p>{item.text}</p>{item.example && <p className="guide-scene">{item.example}</p>}{item.detail && <details><summary>Approfondir</summary><p>{item.detail}</p></details>}{item.url && <a href={item.url} target="_blank" rel="noreferrer">Consulter la référence</a>}</section>)}</article>}
+    {(!chapter || chapter.id === 'metamodel') && <>
+    <p><MethodLink term="MOD015">Ouvrir le glossaire méthodologique</MethodLink></p>
     <nav className="guide-topics" aria-label="Choisir un principe">
       {guide.lessons.map((item, itemIndex) => <button type="button" key={item.id} aria-pressed={item.id === lesson?.id}
         onClick={() => onSelect(item.id)}><span className="guide-topic-number" aria-hidden="true">{String(itemIndex + 1).padStart(2, '0')}</span><span>{item.label}</span></button>)}
     </nav>
     {lesson ? <Lesson key={`${model.version}:${guide.version}:${lesson.id}`} guide={guide} lesson={lesson} model={model} index={index}/>
-      : <section className="guide-status"><h2>Principe absent de ce guide</h2><p>La référence « {selected} » ne figure pas dans cette version. Choisis l’un des repères ci-dessus.</p></section>}
+      : !chapter && <section className="guide-status"><h2>Principe absent de ce guide</h2><p>La référence « {selected} » ne figure pas dans cette version. Choisis l’un des repères ci-dessus.</p></section>}
+    </>}
     <p className="guide-footer">Explore librement. Les choix servent à comprendre les principes ; ils ne sont pas enregistrés.</p>
   </div>;
 }

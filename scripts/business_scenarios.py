@@ -54,6 +54,14 @@ def scenario_coverage(model):
     capabilities = {n['id'] for n in model['nodes'] if n['kind'] == 'capability'}
     mapped = set()
     scenarios = []
+    catalog = model.get('scenario_catalog', {})
+    for scenario in catalog.get('scenarios', []):
+        paths = [p for p in catalog['paths'] if p['scenario_id'] == scenario['id']]
+        steps = [s for p in paths for s in p['steps']]
+        covered = capabilities & {c['node_id'] for s in steps for c in s['contributions']}
+        mapped.update(covered)
+        scenarios.append({'scenario_id': scenario['id'], 'title': scenario['title'],
+                          'steps': len(steps), 'path_count': len(paths), 'capability_ids': sorted(covered)})
     for node in model['nodes']:
         for index, example in enumerate(node.get('fields', {}).get('examples', [])):
             referenced = {c['node_id'] for c in example.get('contributions', [])}

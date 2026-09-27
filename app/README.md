@@ -1,5 +1,11 @@
 # FLOW Atlas — SPA statique
 
+## Scénarios métier — U793
+
+Le catalogue autonome est figé dans `scenario_catalog` de chaque publication : flux de valeur, scénarios, parcours, contributions et filtres contrôlés. La navigation « Scénarios métier » s’affiche pour les publications qui possèdent le catalogue ; les autres gardent leurs illustrations locales. Les liens directs utilisent `view=scenarios`, `scenario`, `stream` et `path`, avec une version fixe. Les liens depuis les fiches sont dérivés des contributions du même snapshot.
+
+Recette dédiée depuis la racine : `node app/verify-scenario-catalog.mjs`. Elle utilise un navigateur sans interface visible, un candidat isolé et les fichiers compilés ; elle ne sert ni ne publie le backlog. Tests unitaires : `app/test-scenario-catalog.mjs` et `scripts/test_scenario_catalog.py`.
+
 ## Publication statique et GitHub Pages
 
 Atlas charge `data/index.json`, puis `data/VERSION/model.json` et le guide `data/VERSION/guide.json`. Le chargement, les erreurs, la relance et le suivi automatique du courant sont conservés. Une sélection historique reste fixe. Les JSON sont téléchargés séparément du JavaScript ; l’historique complet n’est pas chargé à l’ouverture.
@@ -308,3 +314,12 @@ Les fiches présentent le périmètre et les comportements avant les scénarios.
 Les liens internes conservent le suivi courant ou la version fixe déjà choisie. La copie du lien et l’ouverture d’un lien de référence dans un autre onglet restent figées sur la publication. Le chargement JSON et ses messages restent actifs au démarrage, au changement réel de publication et pour les vues chargées à la demande.
 
 L’aide adapte les libellés de hiérarchie aux systèmes présents dans le snapshot et explique la politique de codes seulement lorsqu’elle y est publiée. Cette aide d’interface ne crée pas de termes canoniques ni ne modifie les guides ou glossaires historiques. Les homonymes du glossaire méthodologique sont distingués dans la liste.
+
+
+## Espace Méthode & métamodèle
+
+L’entrée permanente regroupe le guide et l’accès au glossaire méthodologique. Les nouvelles éditions portent quatre rubriques : Pour commencer, Le métamodèle, La méthode et Les références. Les anciens liens vers les six repères et le glossaire restent valides ; une édition historique sans rubriques conserve ses repères.
+
+Les liens contextuels depuis les capacités, comportements et scénarios conservent la publication et la fiche d’origine. Le retour à cette fiche est explicite. L’édition méthodologique affichée provient exclusivement de l’association figée à la publication, sans repli backlog. La source éditable du nouveau guide est `modeles/backlog/atlas-methodology-U788.yaml` ; sa publication utilise `release.py --guide`.
+
+Contrôles : `python -m unittest discover -s app -p test_modeling_guide.py`, tests frontend, build puis `node app/verify-modeling-guide.mjs` (navigateur isolé sans ouverture de fenêtre ni serveur supplémentaire).

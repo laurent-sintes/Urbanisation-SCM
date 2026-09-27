@@ -29,8 +29,18 @@ def check_delivery(root, candidate):
             continue
         required = declaration.get('required_nodes', [])
         absent = declaration.get('absent_nodes', [])
-        if not required and not absent:
+        catalog_checks = declaration.get('required_catalog', [])
+        if not required and not absent and not catalog_checks:
             errors.append('backlog-delivery: applied declaration without checks in ' + label)
+        try:
+            from .element_versions import content_hash
+        except ImportError:
+            from element_versions import content_hash
+        for expected in catalog_checks:
+            items = candidate.get('scenario_catalog', {}).get(expected['collection'], [])
+            item = next((v for v in items if v['id'] == expected['id']), None)
+            if item is None or content_hash(item) != expected['content_sha256']:
+                errors.append(f'backlog-delivery: {label}: catalog mismatch: {expected["id"]}')
         for item in required:
             ident = item['id']
             node = nodes.get(ident)

@@ -1,0 +1,825 @@
+source_refs:
+- U793
+source_model_sha256: 914c70177359fbf647751eaeee493c0bd7e4c50ed7730561594979250638f46b
+items:
+- owner_id: system-design-development
+  index: 0
+  legacy_id: ''
+  title: Illustration de responsabilité
+  source_sha256: 2fddb667822da60cba6c3e39b1f69c7952e506edb12837d52f0d13fd82214544
+  source_refs:
+  - U780
+  action: retain_illustration
+  target_ids: []
+- owner_id: system-business-operations
+  index: 0
+  legacy_id: ''
+  title: Illustration de responsabilité
+  source_sha256: e8027af99b67027e6bf0b3b9f9a583f98258e2d6db3ebce181a94edfb70e3d8a
+  source_refs:
+  - U780
+  action: retain_illustration
+  target_ids: []
+- owner_id: system-enterprise-management-control
+  index: 0
+  legacy_id: ''
+  title: Illustration de responsabilité
+  source_sha256: ab2319e85d749f0f3d3b42d60e0ff7f08ce230f1285e16b56fd1f8077d0c7e73
+  source_refs:
+  - U780
+  action: retain_illustration
+  target_ids: []
+- owner_id: domain-sales
+  index: 0
+  legacy_id: ''
+  title: Illustration de responsabilité
+  source_sha256: 14f62d5851d333a21e4eee1785d59d87db6e664d052a73ff0154dac386dca13e
+  source_refs:
+  - U780
+  action: retain_illustration
+  target_ids: []
+- owner_id: domain-sourcing-procurement
+  index: 0
+  legacy_id: ''
+  title: Illustration de responsabilité
+  source_sha256: 2c1f6b1bc64131f7a62c7a69bc43e0ff2082c15a4e1565b9462cf27919d751cf
+  source_refs:
+  - U780
+  action: retain_illustration
+  target_ids: []
+- owner_id: universe-supply
+  index: 0
+  legacy_id: ''
+  title: Livrer 100 tee-shirts à un magasin vendredi
+  source_sha256: 18d0580738ddda3853fafef238a8697baa26fa1d517be802ae8ada2722ab3cbc
+  source_refs:
+  - U470
+  - U436
+  action: retain_illustration
+  target_ids: []
+- owner_id: universe-supply
+  index: 1
+  legacy_id: ''
+  title: Recevoir une nouvelle référence produit
+  source_sha256: 416d8b0eafe4b863fe94f47387ef45e581ea42281389ad6d0506079b35bd658f
+  source_refs:
+  - U470
+  - U97
+  - U460
+  action: retain_illustration
+  target_ids: []
+- owner_id: universe-supply
+  index: 2
+  legacy_id: b2b-partial-stock
+  title: Livrer une commande B2B avec un stock partiel
+  source_sha256: b7171ff780e9e45592a46ccf95a3211273e62dc02d3f9f7571a72edaab555887
+  source_refs:
+  - U763
+  - U764
+  - U762
+  - ELM763
+  - ELM767
+  - ELM768
+  - U768
+  action: migrate_scenario
+  target_ids:
+  - b2b-partial-stock
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 3
+  legacy_id: return-fashion-recovery
+  title: Remettre en vente une robe retournée
+  source_sha256: 421900ee0a71526aa214fbbfc8ae215f81a429934950c5db4ff2585e719b8a7b
+  source_refs:
+  - U768
+  action: migrate_scenario
+  target_ids:
+  - return-fashion-recovery
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 4
+  legacy_id: consignment-sale-pickup
+  title: Vendre une partie du stock consigné puis reprendre le solde
+  source_sha256: 25c8ac1ba893e0031ce51a267823a15bf76532da807481f01539d4b84edfb7a7
+  source_refs:
+  - U768
+  action: migrate_scenario
+  target_ids:
+  - consignment-sale-pickup
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 5
+  legacy_id: fashion-launch
+  title: Préparer une capsule pour l’ouverture de magasins
+  source_sha256: 3ff93e3aff675ca3821ae7214b09833056cb411e8c3b92d71eba6859a94c4418
+  source_refs:
+  - U768
+  action: migrate_scenario
+  target_ids:
+  - fashion-launch
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 6
+  legacy_id: shortage-reassessment
+  title: Réagir à une pénurie sans confondre promesse et affectation
+  source_sha256: 8795f108af067d96bc01d95c11a23f8ea3903ef0a1d0fc3fe342a24944686714
+  source_refs:
+  - U768
+  action: migrate_scenario
+  target_ids:
+  - shortage-reassessment
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 7
+  legacy_id: export-remote-services
+  title: Exporter des vêtements et attendre la fin des prestations distantes
+  source_sha256: 7dae1f8988824cdc96ecb90c0735fbeec7beb6e817276397599d1aaf17821331
+  source_refs:
+  - U768
+  action: migrate_scenario
+  target_ids:
+  - export-remote-services
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 8
+  legacy_id: stocktaking-variance
+  title: Traiter un écart de comptage avant de repromettre
+  source_sha256: 158893dca82c2b525882b08e2a89e6908c4b8075384209192ac86b3717ce9ebd
+  source_refs:
+  - U768
+  action: migrate_scenario
+  target_ids:
+  - stocktaking-variance
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 9
+  legacy_id: last-item-concurrency
+  title: Deux clients veulent le dernier pull
+  source_sha256: 3cb85ba8d9d352938e79b86ff1507b83080fa2111cf048703b75576ccd5e8079
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - last-item-concurrency
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 10
+  legacy_id: substitution-price-service
+  title: Comparer une substitution, un autre site et un transport express
+  source_sha256: 2913fdbfcb386a826b8e927b3804feeaf3ddee9dfc987f6de6d2bbf6a998b24e
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - substitution-price-service
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 11
+  legacy_id: additional-purchase-partial
+  title: Approvisionner une vente et traiter une confirmation fournisseur partielle
+  source_sha256: a0cdc79cbc53cbdbc4563b571141acf137b95e7c4f15681bace147ca79494073
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - additional-purchase-partial
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 12
+  legacy_id: pickup-or-direct-shipment
+  title: Traiter un retrait non honoré ou une livraison directe partielle
+  source_sha256: 38e89bbeab70bf4c4b2daee43c205b24d905b8add217b0215f58bcd800656924
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - pickup-or-direct-shipment
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 13
+  legacy_id: transport-missed-connection
+  title: Sauver une livraison après une correspondance manquée
+  source_sha256: 04437263696170728de5274d287b9931ca833ee1f6ae1c7ab19a60fdaaddac9b
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - transport-missed-connection
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 14
+  legacy_id: remote-payment-ambiguous
+  title: Attendre un encaissement malgré des notifications ambiguës
+  source_sha256: 3a8539870e489b5ad3e1e9399952490e7cfaa18cb0b93d063b533823e769a03b
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - remote-payment-ambiguous
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 15
+  legacy_id: reference-plan-correction
+  title: Réexaminer une préparation après correction des données sources
+  source_sha256: 5ccb368d73e19ef03d25666b41ae1c59a8b8607d524069a071c7b490bf59bd96
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - reference-plan-correction
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 16
+  legacy_id: redistribute-protected-stock
+  title: Rééquilibrer et consolider des stocks sous protections
+  source_sha256: 67953d6566f55d698607fa4a6b65c931c7aa319ad32aba3a1a1b34e5717339ac
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - redistribute-protected-stock
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 17
+  legacy_id: supplier-return-outcomes
+  title: Suivre trois issues contractuelles d’un retour fournisseur
+  source_sha256: 770d42f0d46ad5b9a33fbbb367e008bff0db39ef7169682ed9957f17c4547972
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - supplier-return-outcomes
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 18
+  legacy_id: gift-kits-crossdock
+  title: Composer des coffrets personnalisés puis traiter les reliquats
+  source_sha256: 7da4e54587f0c9174b9b8903fc04e6f62db3a7aac7ff3b5c7a52d99113630e4d
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - gift-kits-crossdock
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 19
+  legacy_id: ownership-transit-deadline
+  title: Distinguer transfert contractuel, transit et formalité douanière
+  source_sha256: 72c3799c4f5c3bd53a15e42fcbd7e13bba50f515774cf108ecc0e46bea1841cd
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - ownership-transit-deadline
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 20
+  legacy_id: order-structuring-engaged
+  title: Scinder, regrouper ou fusionner sans perdre les engagements
+  source_sha256: 69bbfa47dc25beac9855ca45c2ffa5e418cb6be34273cd485dc782e519dc9f62
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - order-structuring-engaged
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 21
+  legacy_id: b2b-release-deadline
+  title: Libérer une préparation B2B à l’approche de sa limite d’attente
+  source_sha256: 1200f64aadee1caa6e15c5340cc0a5b9f9e90eb695bb08330906eb0ca869bba2
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - b2b-release-deadline
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 22
+  legacy_id: trace-accessory-kits
+  title: Retrouver les coffrets contenant un accessoire défectueux
+  source_sha256: bbd180ebc30bfa03f36b745376879eb2e924ad40f17e81813910d0a711ccdc98
+  source_refs:
+  - U777
+  action: migrate_scenario
+  target_ids:
+  - trace-accessory-kits
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 23
+  legacy_id: damaged-stock-disposition
+  title: Traiter des vestes abîmées sans retour client
+  source_sha256: e3c5756ae710f8a1c6373b772defec42509bc3a406c8087dc42f8b55c61da5ce
+  source_refs:
+  - U777
+  action: migrate_scenario
+  target_ids:
+  - damaged-stock-disposition
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: universe-supply
+  index: 24
+  legacy_id: transport-loads-six-stores
+  title: Planifier deux chargements pour six magasins
+  source_sha256: cf633243f7bee1e2c4fc4dad6611ef2c1af412fe9c388e9c580aaadf3231b5ba
+  source_refs:
+  - U777
+  action: migrate_scenario
+  target_ids:
+  - transport-loads-six-stores
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: D08
+  index: 0
+  legacy_id: ''
+  title: Une variante, plusieurs offres et plusieurs exemplaires
+  source_sha256: 974b991812891161d2f0b74b49ff21a3a4e67300223aaf7d2051b2fcee53bac1
+  source_refs:
+  - U191
+  - U193
+  - U202
+  - U460
+  - U462
+  action: retain_illustration
+  target_ids: []
+- owner_id: D02.c
+  index: 0
+  legacy_id: ''
+  title: Réserver avant de choisir le lot
+  source_sha256: 2ed758815e03b2fc7f248bcaf7cbb1e7cebfc41bb9385a23c03dd003539d06f8
+  source_refs:
+  - U436
+  - U460
+  - U462
+  action: retain_illustration
+  target_ids: []
+- owner_id: D02.e
+  index: 0
+  legacy_id: ''
+  title: Répartir une pénurie sans scinder les commandes
+  source_sha256: eac461685edf9ba6146108ba35834535899974c7c16876a7235712f9928f81b0
+  source_refs:
+  - U362
+  - U363
+  - U462
+  action: retain_illustration
+  target_ids: []
+- owner_id: D02.e
+  index: 1
+  legacy_id: ''
+  title: Affecter ne réserve pas
+  source_sha256: 8c9d0db64b62b468cbc2de81a3d8d02b4d8ad54cb38e6c7bf73b2d0f076d50ac
+  source_refs:
+  - U436
+  - U443
+  - U462
+  action: retain_illustration
+  target_ids: []
+- owner_id: D02.e
+  index: 2
+  legacy_id: ''
+  title: Affecter avant la commande
+  source_sha256: 7c395f93840a9652a196413614e25c790bebb11b9ee53cfa4c85f12a82dc03e4
+  source_refs:
+  - U562
+  - U564
+  action: retain_illustration
+  target_ids: []
+- owner_id: D03.k
+  index: 0
+  legacy_id: transport-speed
+  title: Comparer un transport standard et un transport express
+  source_sha256: 1e8ae134adad789ddfa1ef8e0cc45f29deb88ec7ff85b6b50191dbafcc77ec52
+  source_refs:
+  - U762
+  - U763
+  - U764
+  - ELM762
+  - ELM763
+  action: retain_illustration
+  target_ids: []
+- owner_id: D03.k
+  index: 1
+  legacy_id: substitution
+  title: Comparer un article demandé et un article de remplacement
+  source_sha256: 6b642f3d16abad05d8adcb45634a59780216b4027fbeb815df583d9ff09a9c1e
+  source_refs:
+  - U762
+  - U763
+  - U764
+  - ELM762
+  - ELM763
+  action: retain_illustration
+  target_ids: []
+- owner_id: D03.k
+  index: 2
+  legacy_id: alternate-site
+  title: Comparer deux sites de départ
+  source_sha256: dd8f6374b0bcfadbddd9f7790806d06d78f6e6433508a9f75f6f133225560f36
+  source_refs:
+  - U762
+  - U763
+  - U764
+  - ELM762
+  - ELM763
+  action: retain_illustration
+  target_ids: []
+- owner_id: D03.k
+  index: 3
+  legacy_id: additional-supply
+  title: Éclairer une option avec approvisionnement supplémentaire
+  source_sha256: 79692887c0dc4ad034c0429dbca35f90c5e3214c0776beba8865c0a3ad02d4cf
+  source_refs:
+  - U762
+  - U763
+  - U764
+  - ELM762
+  - ELM763
+  action: retain_illustration
+  target_ids: []
+- owner_id: D04.j
+  index: 0
+  legacy_id: ''
+  title: 'Réception partielle : rendre visible le reliquat'
+  source_sha256: 4b606234a292f7fab9a57d4deee5232f2e679eb9ba2ca1779953107dab4ba0b4
+  source_refs:
+  - U391
+  - U461
+  - U462
+  action: retain_illustration
+  target_ids: []
+- owner_id: D04.j
+  index: 1
+  legacy_id: ''
+  title: Le fournisseur propose un autre échéancier
+  source_sha256: 1b944d73d30d90346cbfa0161867f895dd5cd87cb382f83eaf0763e07105c8c8
+  source_refs:
+  - U403
+  - U443
+  - U462
+  action: retain_illustration
+  target_ids: []
+- owner_id: D04.k
+  index: 0
+  legacy_id: transfer-replenishment-order-driven
+  title: Réapprovisionner un magasin ou servir une commande identifiée
+  source_sha256: 80b24f32e3c38ded79405ccd3fa8ecb1f3c83a82eba1393820c5d18db6fb6c68
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - transfer-replenishment-order-driven
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: D04.n
+  index: 0
+  legacy_id: ''
+  title: Scinder
+  source_sha256: dc9d48b3f696e2e4f938050437919db9356ba25978dfe723fa8260361c2c0743
+  source_refs:
+  - U362
+  - U363
+  - U439
+  - U462
+  action: retain_illustration
+  target_ids: []
+- owner_id: D04.n
+  index: 1
+  legacy_id: ''
+  title: Regrouper en conservant les identités
+  source_sha256: 46e33c1b02af9dd1ee6b34bc5dfe20ea8d7e29f9be6e62a0adea3075c9f0e13e
+  source_refs:
+  - U440
+  - U442
+  - U462
+  action: retain_illustration
+  target_ids: []
+- owner_id: D04.n
+  index: 2
+  legacy_id: ''
+  title: Fusionner des demandes compatibles
+  source_sha256: dcca58a5be328422938066cdf4c42e8efa3256f66feecebe8cf38d13b19735c5
+  source_refs:
+  - U442
+  - U462
+  action: retain_illustration
+  target_ids: []
+- owner_id: D05.a
+  index: 0
+  legacy_id: ''
+  title: Choisir où porter le stock de sécurité
+  source_sha256: 7815a7d2cd68adfee9cf0c9968a4faaf476a2dafab117f60564cf2685d154848
+  source_refs:
+  - U331
+  - U332
+  - U462
+  action: retain_illustration
+  target_ids: []
+- owner_id: D04.r
+  index: 0
+  legacy_id: consignment-launch-replenishment
+  title: Implanter puis réalimenter un stock consigné
+  source_sha256: 35a9f8749b282707215b4bf2ae0495538f008847ef495eb500bc6c053d48c154
+  source_refs:
+  - U768
+  - U769
+  action: migrate_scenario
+  target_ids:
+  - consignment-launch-replenishment
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: service-order-receiving
+  index: 0
+  legacy_id: partial-receiving
+  title: Recevoir un lot partiel sans solder prématurément l’achat
+  source_sha256: 568518d9a5d0c7ec9c5c82b98dc21c02a78a427c54f12968f64d892d594213f5
+  source_refs:
+  - U771
+  action: migrate_scenario
+  target_ids:
+  - partial-receiving
+  note: Récit et contributions conservés ; champs extraits et classement proposés.
+- owner_id: domain-logistics-execution
+  index: 0
+  legacy_id: ''
+  title: Illustration de responsabilité
+  source_sha256: add0ebab71047c5e731410edae642c8bfc3915e8f6ddccfdc20a8dcb76422180
+  source_refs:
+  - U780
+  action: retain_illustration
+  target_ids: []
+limits:
+- Les sources historiques sont conservées ; aucune adoption individuelle héritée.
+- Les récits composites sont conservés et signalés pour lecture en branches ; ils ne sont pas arbitrairement scindés.
+publication_delivery:
+  state: applied
+  summary: Catalogue autonome de 5 flux, 26 scénarios et 27 parcours ; 23 illustrations conservées.
+  source_refs:
+  - U793
+  required_catalog:
+  - collection: value_streams
+    id: obtain-products
+    content_sha256: 5495fbfa8ded96c81948e9b0f083c01dfd710251ec49dbc3184cff402bdd3107
+  - collection: value_streams
+    id: replenish-stock
+    content_sha256: f021444752c3b0e034d9b58031b4ae43d9f51340885444aea025e5a583e31649
+  - collection: value_streams
+    id: recover-value
+    content_sha256: aa8d8225b8d6ac912166f269048c6c8a27f09413db27b1db0c80fbe015cdad43
+  - collection: value_streams
+    id: obtain-service
+    content_sha256: fb178a1617e797c7c52cd9d3602e0330b71d6ce06125c66d5da39e3fff13d748
+  - collection: value_streams
+    id: reliable-basis
+    content_sha256: 1dd50cf82c5d333f3a3f54ad31e59afe308a16e859c4444dda26e6b42dad110b
+  - collection: scenarios
+    id: b2b-partial-stock
+    content_sha256: f74a3c12ba7d85c285674db1594727287a299242b3c8fcc8b690f4c52ce3e147
+  - collection: scenarios
+    id: return-fashion-recovery
+    content_sha256: 440b4b9ac213c631fcb8514cfccbb986f19f32449a6af020eb7db02fa2f91ffc
+  - collection: scenarios
+    id: consignment-sale-pickup
+    content_sha256: f9c930d6381bad370c13822aac0667720191c166a857f89e891c8d3d5dcbe6e9
+  - collection: scenarios
+    id: fashion-launch
+    content_sha256: 298c03b74b6ef9fa928718b3269a7b93ef16584ccd88a2c92cb6900c375318ef
+  - collection: scenarios
+    id: shortage-reassessment
+    content_sha256: eb2f74ea1c9358a338c9aedc0518c07ba822f37dc69b5d2ce3a3d96cb8cad076
+  - collection: scenarios
+    id: export-remote-services
+    content_sha256: 92dd02316ae506a5274796138e8a68d5cf1e6d46b75411b2ba38b5449ec8b6ef
+  - collection: scenarios
+    id: stocktaking-variance
+    content_sha256: ebc68ad5baaa2e313d785a7893838f366002adbdb4cb577042a2f1862a623192
+  - collection: scenarios
+    id: last-item-concurrency
+    content_sha256: ed6b07affd3a341af08972d6d062b29d2c9bd59bd534156163e520d122ae96e6
+  - collection: scenarios
+    id: substitution-price-service
+    content_sha256: f581fb106d1c6f97608f09b237c58dbae93e6b224a8f000981156996a6c3ef13
+  - collection: scenarios
+    id: additional-purchase-partial
+    content_sha256: 16964feb19a39b0227a3964be643485dfd6bdc62000159b251b84322a31a80f1
+  - collection: scenarios
+    id: pickup-or-direct-shipment
+    content_sha256: 10f21cafec39e9a087831be1e7dccc6f2fdc6ca4c60857a2024d8a2b98227550
+  - collection: scenarios
+    id: transport-missed-connection
+    content_sha256: f678fcd2dcb6f9f0f1ecdaef359c99e185f5b2f9cea9ba7013d04336514927c3
+  - collection: scenarios
+    id: remote-payment-ambiguous
+    content_sha256: 0b27cb3404bdf168234fb53438ae6d24447dede90d2a47b12a1741b8b95315f6
+  - collection: scenarios
+    id: reference-plan-correction
+    content_sha256: 7e3c9a41602951f8178e321049cf022dddcfac1829250f13a000f3d6a3cc28bf
+  - collection: scenarios
+    id: redistribute-protected-stock
+    content_sha256: 30e38009543b085684500be3d522f17396a93b3f888c5fbdd5af620888ab7df3
+  - collection: scenarios
+    id: supplier-return-outcomes
+    content_sha256: c5beea615fcacc239c45102281940239b18ad586ecf8d6d25022c46085ed80f6
+  - collection: scenarios
+    id: gift-kits-crossdock
+    content_sha256: 1cd484d860322fadae1a31e15fba98d07d3748d7270548a1d4f228190c1cbb7c
+  - collection: scenarios
+    id: ownership-transit-deadline
+    content_sha256: aadf04a0aa5159c7d57011b1f9418320fd3eede7db174db495ba12348143c4c3
+  - collection: scenarios
+    id: order-structuring-engaged
+    content_sha256: dd3a7f9cdef0434dbc21b4c284f1b5bd83c6adb1ca6125caa31b1dc3763c7a46
+  - collection: scenarios
+    id: b2b-release-deadline
+    content_sha256: c834adeb86deeaca49011f7a738f47f3db85a71222fc56d8ff544ca797b8b72f
+  - collection: scenarios
+    id: trace-accessory-kits
+    content_sha256: f1b4b75d1ea1ce60d7cb2fb53bd7bd5926097a1c347d8bc18a954ae32843a4c8
+  - collection: scenarios
+    id: damaged-stock-disposition
+    content_sha256: 52823cee5c66ab8f9245650f0993005a4d86e205f6e3e1400943aec618d9a43a
+  - collection: scenarios
+    id: transport-loads-six-stores
+    content_sha256: 4209e29cf031ea176319d2427f391d5097c563cbca083c72a86dfd395b105895
+  - collection: scenarios
+    id: transfer-replenishment-order-driven
+    content_sha256: 0cc5039bf466472aa26521431082b85417edc14b949f21787f11c53010eb159d
+  - collection: scenarios
+    id: consignment-launch-replenishment
+    content_sha256: 5a1d990bea24e7a3001e513ea1dbd727453ccedaa27cc98710a5a88c250bf9fb
+  - collection: scenarios
+    id: partial-receiving
+    content_sha256: 5acb003d9a93725b4f9290aaa23a7ba61b3441a3e9686ed9cc41c2d2c9b8a918
+  - collection: paths
+    id: b2b-partial-stock-path
+    content_sha256: 2c2ed3b2d9486a15afc4cc76afac34d2630230ee00f16dd09940a84c9217c607
+  - collection: paths
+    id: return-fashion-recovery-path
+    content_sha256: 4c1d77cca3b14485168a6a055cf8c66f1e24d71304bc01f44ea6d9eff2ea8984
+  - collection: paths
+    id: consignment-sale-pickup-path
+    content_sha256: 77c9d3a45b4741761f2ffd80840ee9a5228462cef9d0b1bffffbd425142ed972
+  - collection: paths
+    id: fashion-launch-path
+    content_sha256: a2efe69e1221ec182b1e108a24a825c794666ba3d9afbd81ecc041a4ad7c7a7c
+  - collection: paths
+    id: shortage-reassessment-path
+    content_sha256: 261af75f146b545df4f13261087c3bde3eb4f7c6f23dc220099be1c89af4855f
+  - collection: paths
+    id: export-remote-services-path
+    content_sha256: 2432b93bbbfeee284d4815e1493435f2a9cb74d8e3c1b97a36ea6f9adc42a2f2
+  - collection: paths
+    id: stocktaking-variance-path
+    content_sha256: c9a3189cf3673b768d9afcae9e4a1cc47205bdf5187e2264bc5eb68d09945869
+  - collection: paths
+    id: last-item-concurrency-path
+    content_sha256: 7c5fa50bebb2e4b92d890cb87bcd11ea019a8d20cf58a238f00688bdd7bed819
+  - collection: paths
+    id: substitution-price-service-path
+    content_sha256: 818b76c3dd9c36b05957bbd33d5a52385f39f2cd0c50faad15810711df555998
+  - collection: paths
+    id: additional-purchase-partial-path
+    content_sha256: f795038cca142758d6bb88d52b1cc6acd44353c8e4ddcacd1983122204adb758
+  - collection: paths
+    id: pickup-or-direct-shipment-path
+    content_sha256: 6d1cbfc5ce7ed90c4a7e7643a861fe58191b9b0ae5baa37831a82fffadb3e889
+  - collection: paths
+    id: transport-missed-connection-path
+    content_sha256: 6486b9daab5846acdbefadceb04223d8422b550ebe0e3dfee882de331cab182a
+  - collection: paths
+    id: remote-payment-ambiguous-path
+    content_sha256: ea3e85c64b8cacdd6daa0671874a5e41885a5a55ab91060621f77ebdedd09509
+  - collection: paths
+    id: reference-plan-correction-path
+    content_sha256: 9734f3a4b4a28f71d798ac88af54dfccb60826c1faaf376eafb344f89d433a4c
+  - collection: paths
+    id: redistribute-protected-stock-path
+    content_sha256: 7b049ca30e7fae9d3382993eb6a6439310dcaa66858d1b3f4f2252032ff5da89
+  - collection: paths
+    id: supplier-return-outcomes-path
+    content_sha256: 306a768ef399c238f0d095936d05eea4e9e4b2f4f820aafff41e9447b6bed86c
+  - collection: paths
+    id: gift-kits-crossdock-path
+    content_sha256: 2c57f3d96a06645461961fabadcd88cf0ac55a4cb7107c9d72c7ba30fcd97683
+  - collection: paths
+    id: ownership-transit-deadline-path
+    content_sha256: 77567e48451b0046ef033a8516259f2b313b6778c270d83f21f6a1e51bd21068
+  - collection: paths
+    id: order-structuring-engaged-path
+    content_sha256: 79fde9661db0ea74ad57089a15bc8fc2fafcc2bab2727ac80e7b4ee22f9f4441
+  - collection: paths
+    id: b2b-release-deadline-path
+    content_sha256: 732b19e7f4231f769d2013d29addf29dcbc8a95469cebe9a4710c484850f529b
+  - collection: paths
+    id: trace-accessory-kits-path
+    content_sha256: 99ad67906f718498a5a94a2b20fb6e5c6b91d9251a7f41a11a852175ed69b167
+  - collection: paths
+    id: damaged-stock-disposition-path
+    content_sha256: f03b99fe3ffd01058ea50d55bf72c74bde451fb1f836319eddbf6707680b6064
+  - collection: paths
+    id: transport-loads-six-stores-path
+    content_sha256: 41ee5035b6be28047dda2ccab819e9d4a9633bf16a6ddc820b2ba5200c585597
+  - collection: paths
+    id: transfer-replenishment-order-driven-path
+    content_sha256: 08212ed78c4f9a16372971770adffba43f727ca16ee776646df78a44c7fc4626
+  - collection: paths
+    id: consignment-launch-replenishment-path
+    content_sha256: 85c7499905eb88b0951687823ec6bafe02d30793af35343abb75ee84af2ab267
+  - collection: paths
+    id: partial-receiving-path
+    content_sha256: 47bb461a97312b4249a9beb2c240c363d2e3961e98847cf3eb48405aa3929d7a
+  - collection: paths
+    id: b2b-partial-stock-split-path
+    content_sha256: 4a9e2b1f0760117b66c1c9e8157849e70110a6bdd8058b8816ce5bf5c38d3fc9
+  editorial_superseded_catalog_U797:
+  - collection: scenarios
+    id: b2b-partial-stock
+    content_sha256: 9c10d0ad39993448dc691b497f1104723df028e38aaf9ae254c0ef6f1b20658d
+  - collection: scenarios
+    id: return-fashion-recovery
+    content_sha256: 954d868e9c19c4eaea55ab88b8164b4894b3aaea53e4dfd5d57819045479d873
+  - collection: scenarios
+    id: fashion-launch
+    content_sha256: 5922c963875efe35375477e1b91148f8bb524293a376b46822a20469329e4083
+  - collection: scenarios
+    id: last-item-concurrency
+    content_sha256: d6e748d56325f80139c0d986ee2e43035a135fade284d81f0d3fe747c2d83347
+  - collection: scenarios
+    id: additional-purchase-partial
+    content_sha256: bc59299b47ab220ac855ff99f74aa0c1c94d277856902d053c215bd691241fce
+  - collection: scenarios
+    id: transport-missed-connection
+    content_sha256: b62f0ade78e02b4432b96953b94243f789e570ddc58fe74d5c55e2d95a460e4e
+  - collection: scenarios
+    id: reference-plan-correction
+    content_sha256: 45c33bef5eb962c6a8ce11e4a4f9b9e92caff6c0a2c023cbdabfb05ba10a4ac1
+  - collection: scenarios
+    id: redistribute-protected-stock
+    content_sha256: ff11a7201a7cfa52cde430b876d5770ae25c8332e54b818d080668d37f5e7ef1
+  - collection: scenarios
+    id: supplier-return-outcomes
+    content_sha256: 8d5154592b87a4c7803e38e36491a6a34f3ee0cb7ea16f028026f6f69051148e
+  - collection: scenarios
+    id: damaged-stock-disposition
+    content_sha256: c7a72f47ff101666b88991b4c702c48c93f327322155dc0941c979f5e76b8cd0
+  - collection: scenarios
+    id: consignment-launch-replenishment
+    content_sha256: 11def6a50e9c5f2b44fe90cb8d57621e02ad15edb9d577e9cbac2f52db29bbb5
+  - collection: paths
+    id: fashion-launch-path
+    content_sha256: c95d5986c45a7f8f45a98c358d08a1ce38b5b4ff254b0c922e20b2f4b07e5c86
+  - collection: paths
+    id: transport-missed-connection-path
+    content_sha256: bdde7c1b8258d846ac141c0e6a5171fd011ed6599e5682eecbf6ea883072b188
+  - collection: paths
+    id: damaged-stock-disposition-path
+    content_sha256: b955c13f5832dc62c90a8796b1dd09692fa73dee8f443077d8dbb3c37995ad62
+  - collection: paths
+    id: transport-loads-six-stores-path
+    content_sha256: a11326a49492a759d68cef18e584f1d6888f843bbb04ad042c5b224fc9649ee4
+  - collection: paths
+    id: consignment-launch-replenishment-path
+    content_sha256: 5aa09939a1a9ebea3236c8c85276e74c8b79c123f7eb130610638c4b1203d068
+content_review:
+  pilot:
+  - b2b-partial-stock
+  - partial-receiving
+  - supplier-return-outcomes
+  composite_stories:
+    pickup-or-direct-shipment: Deux branches comparées conservées dans une même illustration ; aucune séquence commune déduite.
+    supplier-return-outcomes: 'Trois issues appliquées à des quantités distinctes : scénario composite conservé.'
+    ownership-transit-deadline: Comparaison de deux contrats ; scénarios futurs spécialisés possibles.
+    order-structuring-engaged: Comparaison de trois opérations ; éviter toute lecture séquentielle obligatoire.
+  coverage: 74 capacités citées ; pas une preuve de couverture exhaustive.
+  new_content_status: proposed
+migrated_contextual_references:
+- owner_id: D03.k
+  legacy_id: b2b-partial-stock
+  scenario_id: b2b-partial-stock
+  contribution: Comparer les effets économiques locaux de la livraison fractionnée et de la livraison regroupée. Ne pas décider
+    à la place de Promise Selection Decision.
+- owner_id: D01
+  legacy_id: b2b-partial-stock
+  scenario_id: b2b-partial-stock
+  contribution: Fournir les positions de stock, les engagements de quantité et les apports attendus qui alimentent les évaluations
+    d’Order Promising.
+- owner_id: D06
+  legacy_id: b2b-partial-stock
+  scenario_id: b2b-partial-stock
+  contribution: Retenir ou libérer les ordres de prestation en cohérence avec la promesse, notamment pour permettre une préparation
+    regroupée.
+- owner_id: subdomain-order-promising
+  legacy_id: b2b-partial-stock
+  scenario_id: b2b-partial-stock
+  contribution: Évaluer les disponibilités, faisabilités et conséquences économiques des options, puis sélectionner une proposition
+    distincte de l’engagement confirmé.

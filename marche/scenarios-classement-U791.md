@@ -1,0 +1,18 @@
+# Scénarios et classement — U791
+
+Consultation : 27 septembre 2026. Analyse méthodologique ; aucune nouvelle capacité opérationnelle. Le lot scénario/parcours discuté sous U789–U790 est adopté sous U791 ; les propositions de classement ci-dessous restent à discuter.
+
+| Référence primaire consultée | Éléments et localisation | Rapprochement FLOW et limites |
+| --- | --- | --- |
+| Business Architecture Guild, *Business Architecture Metamodel Guide*, v3.0, septembre 2024, [document](https://cdn.ymaws.com/www.businessarchitectureguild.org/resource/resmgr/whitepapers/Business_Architecture_Metamo.pdf) | §4.2–4.3 : vues et scénarios d’application de l’architecture ; §5.1 : Value Stream, Value Stream Stage, capacités et valeur | Appui méthodologique pour séparer carte des capacités et perspective de valeur. Les scénarios d’architecture ne sont pas nos situations opérationnelles. La relation FLOW entre scénario et flux de valeur serait une adaptation ; aucune taxonomie universelle de nos scénarios identifiée dans ce document. |
+| The Open Group, *TOGAF Series Guide: Value Streams*, G178, 2017, [copie de la publication](https://governance.foundation/assets/frameworks/togaf/g178_2%20-%20Value%20Streams.pdf) | §1.4, §2.1–2.3, §3.1 : séparation capacité/organisation/valeur/processus ; nom, description, partie prenante, valeur ; étapes avec critères d’entrée et sortie ; mapping capacités | Appui méthodologique. Un flux de valeur est un objet métier structuré, pas une simple rubrique de classement. Lier un scénario à un ou plusieurs flux est une proposition FLOW. Document original consulté sur un hébergement tiers ; synthèse et lien uniquement. |
+| The Open Group, *TOGAF Series Guide: Business Scenarios*, G176, 2017, [copie de la publication](https://governance.foundation/assets/frameworks/togaf/g176%20-%20TOGAF%20SERIES%20GUIDE%20BUSINESS%20SCENARIOS.pdf) | Chapitre 1 et §3.1 : problème, contexte, résultats, acteurs, flux de valeur et capacités | Appui partiel : plus large que le scénario FLOW indépendant de l’organisation et des outils. Les éléments de description ne constituent pas une arborescence normalisée de classement. |
+| OMG, *BPMN*, 2.0.2, [spécification](https://www.omg.org/spec/BPMN/2.0.2/PDF/) | Process et LaneSet ; diagrammes de processus exécutables ou non exécutables | L’absence de rôles ou de couloirs ne suffit pas à distinguer scénario et processus. La finalité et le détail retenus dans FLOW déterminent la frontière. |
+
+## Proposition à discuter
+
+Organiser la navigation principale par finalité métier et, lorsque sa définition est suffisamment étayée, par flux de valeur. Conserver un scénario unique même lorsqu’il concerne plusieurs flux. Ajouter des filtres : situation nominale/exception/reprise, événement déclencheur, objet métier, partie prenante bénéficiaire ; dériver les capacités et périmètres concernés des contributions explicites. Les catégories sont des attributs de classement, pas des niveaux de la hiérarchie des capacités.
+
+Exemple purement illustratif : finalité « obtenir les produits commandés » ; scénarios de satisfaction nominale, de réception retardée menaçant la promesse, de satisfaction partielle. Une formulation de finalité ne suffit pas à qualifier un flux de valeur : décrire bénéficiaire, valeur attendue, déclencheur, frontières et étapes avant cette qualification. Aucun catalogue ni liste de flux n’est adopté ici.
+
+Cette adaptation apporte une entrée métier compréhensible et des recherches transverses, au prix de l’entretien d’un petit référentiel de classement. Les étapes du flux de valeur restent distinctes des étapes d’un parcours particulier ; aucune correspondance un-à-un automatique. La partie prenante bénéficiaire n’impose pas d’organisation d’exécution.

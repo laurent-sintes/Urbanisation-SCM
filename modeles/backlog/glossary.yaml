@@ -31,6 +31,7 @@ source_refs:
 - U624
 - U626
 - U780
+- U794
 terms:
 - id: TER001
   name: Capacité métier
@@ -1555,7 +1556,7 @@ terms:
   definition: Engagement quantitatif enregistré pour une demande identifiée, avec des effets définis sur les possibilités
     d’engagement pour les demandes concurrentes.
   context: Notion locale en cours de consolidation ; consulter les sources et les réserves. La réservation protège une ressource
-    pour une demande ; elle se distingue d’une interdiction d’usage pour non-conformité décidée par Inventory Disposition
+    pour une demande ; elle se distingue d’une interdiction d’usage pour non-conformité décidée par [Inventory Disposition](glossary:TER102)
     Decision.
   notes: |-
     Préciser modification, consommation et libération. Réviser un engagement existant relève de règles explicites ; ni sortie physique ni irrévocabilité implicite. N2/N3.
@@ -1570,6 +1571,7 @@ terms:
   - CMP307
   - ELM070
   - U777
+  - U797
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -1794,11 +1796,16 @@ terms:
   name: Allocation de groupe
   short_description: Attribution d’une enveloppe à un usage ou une population, avec des règles d’horizon et de consommation.
   definition: Attribution d’une enveloppe à un usage ou une population, avec des règles d’horizon et de consommation.
-  context: Terme historique / rapprochement éditeur. Dans le texte FLOW courant, employer enveloppe de protection ou droit
-    d’usage par groupe.
-  notes: 'Employer le qualificatif ; distinguer cette notion d’une affectation à une demande et d’un plafond de confirmation.
-    N2/N3. U289 : Allocation n’est pas un synonyme de Supply Assignment. Cette entrée historique reste résoluble ; le mot
-    seul est écarté des nouveaux libellés FLOW.'
+  context: 'Terme qualifié utilisable dans FLOW sous la formulation « allocation de stock par groupe » ; formulation anglaise
+    : Group Inventory Allocation. Désigne une enveloppe destinée à un usage ou à une population, avec droits, horizon et règles
+    de consommation explicites. Le comportement concerné reste [Group Supply Protection](model:BHV017), sous [Supply Protection
+    Policy](model:D02.b).'
+  notes: 'U795 assouplit la restriction U289 : le terme qualifié est autorisé au-delà des citations éditeur. Allocation seul
+    reste écarté des libellés FLOW. Une allocation de stock par groupe préserve une enveloppe pour un usage selon les règles
+    applicables ; elle ne garantit pas à elle seule une disponibilité absolue. Un plafond de consommation ne constitue pas
+    automatiquement un minimum protégé. Un seuil Min/Max de réassort ne rend pas automatiquement le stock restant invendable.
+    [Supply Assignment](glossary:TER017) conserve le sens d’affectation des ressources aux demandes ; U796 confirme le nom
+    Supply Protection Policy. Les identités et les périmètres sont conservés.'
   source_refs:
   - U203
   - U289
@@ -1808,12 +1815,16 @@ terms:
   - U774
   - CMP307
   - ELM018
+  - U795
+  - U796
+  - U797
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
   review:
-    state: under_review
-    note: Reprise documentaire ; aucune validation supplémentaire par la migration.
+    state: partial
+    note: Convention lexicale validée U795 et nom parent confirmé U796 ; nouvelles rédactions et comparaisons ne sont pas
+      globalement approuvées.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Supply Chain Management
@@ -1821,7 +1832,7 @@ terms:
     source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
     source_version: Documentation en ligne sans édition affichée
     source_locator: Business background and purpose ; virtual pool ; Terminology
-    consulted_on: '2026-09-19'
+    consulted_on: '2026-09-27'
     concept_name: Inventory allocation
     scope_summary: Enveloppes par canal, région ou groupe.
     approach_summary: Préserver une part et suivre sa consommation.
@@ -1832,21 +1843,22 @@ terms:
     relationship: Recouvrement partiel
     similarities: Inventory allocation protège une part pour des canaux ou groupes.
     differences: Le terme Microsoft ne désigne pas l’affectation de ressources à une commande FLOW.
-    flow_position: 'Comprendre l’Allocation de groupe des sources : elle peut attribuer une enveloppe d’usage à une population.
-      Dans le texte courant FLOW, préciser « enveloppe de protection » ou « droit d’usage par groupe » évite de la confondre
-      avec Supply Assignment.'
+    flow_position: FLOW autorise allocation de stock par groupe / Group Inventory Allocation pour les enveloppes, en précisant
+      les droits ; le terme ne désigne pas l’affectation individuelle. PAL plafonne la consommation ou la confirmation et
+      ne garantit pas un minimum protégé.
     status: proposed
     source_refs:
     - U477
     - ELM410
     - CMP190
+    - U795
   - vendor: SAP
     product: SAP S/4HANA
     source_title: Explaining aATP Product Allocation (PAL)
     source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-aatp-product-allocation-pal-_dd30c229-d63f-4aba-a950-a174280c4a58
     source_version: Cours en ligne sans édition affichée
     source_locator: PAL Concept ; Product Allocation Examples ; time series
-    consulted_on: '2026-09-19'
+    consulted_on: '2026-09-27'
     concept_name: Product Allocation (PAL)
     scope_summary: Limites de confirmation par groupe et période.
     approach_summary: Plafonner l’accès à un stock commun.
@@ -1857,14 +1869,15 @@ terms:
     relationship: Recouvrement partiel
     similarities: Product Allocation borne des confirmations par groupe et période.
     differences: Le plafond SAP ne garantit pas qu’une part de stock restera pour le groupe.
-    flow_position: 'Comprendre l’Allocation de groupe des sources : elle peut attribuer une enveloppe d’usage à une population.
-      Dans le texte courant FLOW, préciser « enveloppe de protection » ou « droit d’usage par groupe » évite de la confondre
-      avec Supply Assignment.'
+    flow_position: FLOW autorise allocation de stock par groupe / Group Inventory Allocation pour les enveloppes, en précisant
+      les droits ; le terme ne désigne pas l’affectation individuelle. PAL plafonne la consommation ou la confirmation et
+      ne garantit pas un minimum protégé.
     status: proposed
     source_refs:
     - U477
     - ELM448
     - CMP190
+    - U795
   - vendor: SAP
     product: SAP S/4HANA — périmètre du cours cité
     element_name: Outlining aATP with Check Against Allocation
@@ -1875,32 +1888,34 @@ terms:
     approach_summary: 'Rapprochement avec Allocation de groupe : La Product Allocation limite les confirmations selon groupes,
       périodes et caractéristiques des demandes.'
     similarities: La Product Allocation limite les confirmations selon groupes, périodes et caractéristiques des demandes.
-    differences: PAL protège des droits de confirmation ; ce n’est pas l’affectation effective ARun. La définition FLOW conserve
-      cette différence de sens d’Allocation.
-    flow_position: FLOW conserve le périmètre métier de Allocation de groupe. PAL protège des droits de confirmation ; ce
-      n’est pas l’affectation effective ARun. La définition FLOW conserve cette différence de sens d’Allocation.
+    differences: PAL plafonne les quantités confirmables sans garantir un minimum protégé ; ce n’est pas l’affectation effective
+      ARun. La définition FLOW conserve cette différence de sens d’Allocation.
+    flow_position: FLOW autorise allocation de stock par groupe / Group Inventory Allocation pour les enveloppes, en précisant
+      les droits ; le terme ne désigne pas l’affectation individuelle. PAL plafonne la consommation ou la confirmation et
+      ne garantit pas un minimum protégé.
     source_title: Outlining aATP with Check Against Allocation
     source_url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-aatp-with-check-against-allocation
     source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
     source_locator: Outlining aATP with Check Against Allocation — passages sur le mécanisme rapproché.
     consulted_on: '2026-09-25'
     evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
-      Beaumanoir déduit. PAL protège des droits de confirmation ; ce n’est pas l’affectation effective ARun. La définition
-      FLOW conserve cette différence de sens d’Allocation.
+      Beaumanoir déduit. PAL plafonne les quantités confirmables sans garantir un minimum protégé ; ce n’est pas l’affectation
+      effective ARun. La définition FLOW conserve cette différence de sens d’Allocation.
     status: proposed
     source_refs:
     - U774
     - CMP307
     - ELM018
+    - U795
     term_choice: Le nom Allocation de groupe reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
       cette appellation ni sa maille.
     definition_choice: 'La Product Allocation limite les confirmations selon groupes, périodes et caractéristiques des demandes.
-      Frontière conservée : PAL protège des droits de confirmation ; ce n’est pas l’affectation effective ARun. La définition
-      FLOW conserve cette différence de sens d’Allocation.'
+      Frontière conservée : PAL plafonne les quantités confirmables sans garantir un minimum protégé ; ce n’est pas l’affectation
+      effective ARun. La définition FLOW conserve cette différence de sens d’Allocation.'
   market_inspiration:
     choice: 'Comprendre l’Allocation de groupe des sources : elle peut attribuer une enveloppe d’usage à une population. Dans
-      le texte courant FLOW, préciser « enveloppe de protection » ou « droit d’usage par groupe » évite de la confondre avec
-      Supply Assignment.'
+      le texte courant FLOW, allocation de stock par groupe est autorisé ; préciser les droits évite la confusion avec Supply
+      Assignment.'
     flow_scope: Terme de rapprochement historique pour les droits par groupe.
     flow_approach: Qualifier le sens d’Allocation à chaque usage.
     synthesis:
@@ -3356,12 +3371,13 @@ terms:
   definition: Nom rapporté pour le document que MAP émet dans le premier cas d’achat décrit en U48, après planification en
     volumes et délais.
   context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
-  notes: 'Sens local incomplet : ne prouve ni commande ferme ni équivalence avec Planned Order, Purchase Requisition ou Purchase
-    Order. Q034, F141.'
+  notes: 'Sens local incomplet : ne prouve ni commande ferme ni équivalence avec Planned [Order](glossary:TER012), Purchase
+    Requisition ou [Purchase Order](glossary:TER070). Q034, F141.'
   source_refs:
   - U203
   - U477
   - CMP189
+  - U797
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -5990,8 +6006,8 @@ terms:
   short_description: Selon l’objet, lever un droit ou une restriction sur une ressource, ou autoriser un ordre à entrer en
     exécution.
   definition: Selon l’objet, lever un droit ou une restriction sur une ressource, ou autoriser un ordre à entrer en exécution.
-  context: Libérer une quantité réservée la rend réutilisable selon ses conditions ; libérer un Service Order autorise sa
-    prise en charge. Ni la transmission ni cette autorisation ne prouvent la réalisation.
+  context: Libérer une quantité réservée la rend réutilisable selon ses conditions ; libérer un [Service Order](glossary:TER066)
+    autorise sa prise en charge. Ni la transmission ni cette autorisation ne prouvent la réalisation.
   notes: Préciser « libérer une quantité réservée » ; « libérer pour livraison » peut vouloir dire autoriser.
   source_refs:
   - U203
@@ -5999,6 +6015,7 @@ terms:
   - CMP190
   - U771
   - CMP306
+  - U797
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -6727,8 +6744,8 @@ terms:
   definition: Évaluer la faisabilité conditionnelle de satisfaction d’une demande selon les sources, matières, délais et capacités
     nécessaires, sans décider de leur mobilisation.
   context: Supply-Based CTP examine sources, matières et délais ; Capacity-Constrained CTP approfondit les capacités finies.
-    Ces profondeurs sont une structuration FLOW. Matching décide de mobiliser les ressources ; CTP ne crée ni achat, ni affectation,
-    ni engagement.
+    Ces profondeurs sont une structuration FLOW. [Matching](glossary:TER112) décide de mobiliser les ressources ; CTP ne crée
+    ni achat, ni affectation, ni engagement.
   notes: La formulation historique fondée sur toute adaptation des ressources ou engagements est remplacée par la faisabilité
     conditionnelle. Une alternative de stock, site ou date ne constitue pas à elle seule du CTP. Les versions antérieures
     du glossaire restent dans les publications historiques.
@@ -6742,6 +6759,7 @@ terms:
   - CMP191
   - U771
   - CMP306
+  - U797
   source_locator:
     path: connaissance/33-frontieres-ctp.md
     anchor: ctp
@@ -7157,9 +7175,9 @@ terms:
   name: Agreement
   short_description: Contrat complet applicable, comprenant cadre, conditions particulières, périodes et engagements.
   definition: 'Contrat complet applicable entre parties : cadre, conditions particulières, périodes et engagements en quantité
-    ou en valeur. Sa projection dans la plateforme conserve les identifiants Party et Product Catalog ; les commandes restent
-    distinctes et en consomment les conditions. Il peut référencer ou figer un [assortiment](glossary:TER087) convenu, sans
-    que tout assortiment dépende d’un accord.'
+    ou en valeur. Sa projection dans la plateforme conserve les identifiants Party et [Product Catalog](glossary:TER049) ;
+    les commandes restent distinctes et en consomment les conditions. Il peut référencer ou figer un [assortiment](glossary:TER087)
+    convenu, sans que tout assortiment dépende d’un accord.'
   context: L’accord porte ce qui est convenu entre parties ; l’assortiment précise une sélection de produits et son affectation.
     Leur lien est explicite lorsque cette sélection est convenue.
   notes: Actualisé selon le modèle courant ; formulation détaillée proposée et périmètre local, pas une définition éditeur
@@ -7176,6 +7194,7 @@ terms:
   - U774
   - CMP307
   - ELM819
+  - U797
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -7287,15 +7306,15 @@ terms:
       - CMP193
 - id: TER049
   name: Product Catalog
-  short_description: Référentiel des offres de produits proposées à la commande, avec leur contenu, leurs conditions d’éligibilité
-    et leurs périmètres d’application. Il peut référencer des tarifs de Price Book sans en devenir une seconde source de vérité.
+  short_description: Catalogue des offres de produits, avec leurs conditions et leurs publics concernés.
   definition: Référentiel des offres de produits proposées à la commande, avec leur contenu, leurs conditions d’éligibilité
-    et leurs périmètres d’application. Il peut référencer des tarifs de Price Book sans en devenir une seconde source de vérité.
-  context: Le catalogue décrit ce qui est proposé ; Price Book porte les tarifs de référence. Le prix contextualisé résulte
-    des règles et autorités commerciales compétentes.
+    et leurs périmètres d’application. Il peut référencer des tarifs de [Price Book](glossary:TER097) sans en devenir une
+    seconde source de vérité.
+  context: Le catalogue décrit ce qui est proposé ; [Price Book](glossary:TER097) porte les tarifs de référence. Le prix contextualisé
+    résulte des règles et autorités commerciales compétentes.
   notes: 'U97 : ingestion D12 ; distinguer le catalogue commercial de la totalité des caractéristiques du modèle produit.
-    U509 : nom Product Catalog adopté. L’offre proposée reste distincte de la sélection applicable Assortment et de ce qui
-    est convenu dans Agreement.'
+    U509 : nom Product Catalog adopté. L’offre proposée reste distincte de la sélection applicable [Assortment](glossary:TER087)
+    et de ce qui est convenu dans [Agreement](glossary:TER048).'
   source_refs:
   - U203
   - U477
@@ -7307,6 +7326,7 @@ terms:
   - U774
   - CMP307
   - ELM517
+  - U797
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -8101,8 +8121,7 @@ terms:
       - CMP193
 - id: TER055
   name: Stock movement / Inventory movement ; Goods movement chez SAP
-  short_description: 'Mouvement de stock : fait de variation de quantité, localisation ou qualification du stock. Inclut notamment
-    réceptions, sorties, transferts et changements d’état sans déplacement physique. Les écritures et justificatifs qui le…'
+  short_description: Changement reconnu de quantité, de lieu ou de statut du stock, conservé avec ses justificatifs.
   definition: 'Mouvement de stock : fait de variation de quantité, localisation ou qualification du stock. Inclut notamment
     réceptions, sorties, transferts et changements d’état sans déplacement physique. Les écritures et justificatifs qui le
     représentent restent à distinguer du fait.'
@@ -8119,6 +8138,7 @@ terms:
   - U774
   - CMP307
   - ELM786
+  - U797
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -8233,9 +8253,7 @@ terms:
       - CMP190
 - id: TER056
   name: Ledger / Inventory Ledger
-  short_description: Registre métier des écritures reconnues qui expliquent les mouvements et états de stock, avec dates,
-    origines, justifications et corrections. Il ne désigne pas le mouvement lui-même et n’impose ni comptabilité financière
-    ni technologie de persistance.
+  short_description: Registre des faits de stock reconnus, de leurs corrections et de leurs justificatifs.
   definition: Registre métier des écritures reconnues qui expliquent les mouvements et états de stock, avec dates, origines,
     justifications et corrections. Il ne désigne pas le mouvement lui-même et n’impose ni comptabilité financière ni technologie
     de persistance.
@@ -8254,6 +8272,7 @@ terms:
   - CMP307
   - ELM786
   - U777
+  - U797
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -9189,7 +9208,8 @@ terms:
   name: Case
   short_description: Dossier de traitement d’une situation, d’une demande ou d’un problème.
   definition: Dossier de traitement d’une situation, d’une demande ou d’un problème.
-  context: Notion de dossier de traitement, distincte d’un Order. Elle ne désigne ni un domaine ni un niveau du modèle FLOW.
+  context: Notion de dossier de traitement, distincte d’un [Order](glossary:TER012). Elle ne désigne ni un domaine ni un niveau
+    du modèle FLOW.
   source_refs:
   - U169
   - U173
@@ -9199,6 +9219,7 @@ terms:
   - U477
   - CMP189
   - U482
+  - U797
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -9279,8 +9300,8 @@ terms:
     sa famille pour connaître ses engagements.
   definition: Terme générique local pour une commande dont la Supply travaille la couverture ou la satisfaction ; préciser
     sa famille pour connaître ses engagements.
-  context: Ce sens FLOW n’est pas celui du Supply Order Oracle, objet d’approvisionnement relié aux achats, fabrications ou
-    transferts, distinct notamment du Sales Order.
+  context: Ce sens FLOW n’est pas celui du Supply [Order](glossary:TER012) Oracle, objet d’approvisionnement relié aux achats,
+    fabrications ou transferts, distinct notamment du [Sales Order](glossary:TER069).
   source_refs:
   - U169
   - U203
@@ -9288,6 +9309,7 @@ terms:
   - CMP189
   - U771
   - CMP306
+  - U797
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -9368,13 +9390,11 @@ terms:
       - CMP189
 - id: TER066
   name: Service Order
-  short_description: Demande de [Service](glossary:TER075) confiée à un [Service Provider](glossary:TER088), tenue avec ses
-    exigences, les conditions acceptées, ses évolutions et ses suites dans Service Order Management. Sa formalisation documentaire
-    et son canal d’échange sont distincts de l’engagement de prestation.
+  short_description: Demande de prestation confiée à un exécutant, avec ses exigences, engagements et résultats attendus.
   definition: Demande de [Service](glossary:TER075) confiée à un [Service Provider](glossary:TER088), tenue avec ses exigences,
     les conditions acceptées, ses évolutions et ses suites dans Service Order Management. Sa formalisation documentaire et
     son canal d’échange sont distincts de l’engagement de prestation.
-  context: Supply Chain Orchestration ; distinguer intention, engagement, pilotage, résultat et document. Scrapping Order
+  context: Supply Chain Orchestration ; distinguer intention, engagement, pilotage, résultat et document. [Scrapping Order](glossary:TER104)
     porte aussi une prestation identifiable de mise au rebut, distincte de la décision de disposition et du résultat inscrit
     dans le stock.
   source_refs:
@@ -9400,6 +9420,7 @@ terms:
   - CMP307
   - ELM814
   - U777
+  - U797
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -9526,9 +9547,9 @@ terms:
       source_url: https://tmf-open-api-table-documents.s3.eu-west-1.amazonaws.com/Historic/TMF641_Service_Ordering/3.0.0/user_guides/TMF641_Service_Ordering_Management_API_user_guides_18.5.1.pdf
       source_refs:
       - U626
-  notes: Order Management porte la demande à satisfaire ; Service Order Management tient la prestation confiée ; Fulfilment
-    coordonne sa réalisation. Un acquittement technique ne prouve ni acceptation métier ni réalisation physique. Un ordre
-    peut regrouper plusieurs prestations ; aucune cardinalité universelle imposée.
+  notes: '[Order](glossary:TER012) Management porte la demande à satisfaire ; Service Order Management tient la prestation
+    confiée ; [Fulfilment](glossary:TER085) coordonne sa réalisation. Un acquittement technique ne prouve ni acceptation métier
+    ni réalisation physique. Un ordre peut regrouper plusieurs prestations ; aucune cardinalité universelle imposée.'
 - id: TER068
   name: Profitable-to-Promise (PTP)
   short_description: Évaluer et comparer les conséquences économiques des possibilités de promesse, en explicitant les coûts,
@@ -9536,7 +9557,8 @@ terms:
   definition: Évaluer et comparer les conséquences économiques des possibilités de promesse, en explicitant les coûts, les
     conditions d’admissibilité et les incertitudes, sans sélectionner la réponse.
   context: 'Sens FLOW : évaluation économique locale des options. Promise Selection Decision choisit la proposition ; les
-    Orders portent l’engagement. Le PTP Oracle inclut aussi une sélection, ce qui constitue un recouvrement partiel.'
+    [Orders](glossary:TER012) portent l’engagement. Le PTP Oracle inclut aussi une sélection, ce qui constitue un recouvrement
+    partiel.'
   source_refs:
   - U154
   - U203
@@ -9548,6 +9570,7 @@ terms:
   - CMP307
   - ELM794
   - ELM720
+  - U797
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -9702,7 +9725,7 @@ terms:
   definition: Commande portant les biens et quantités demandés par un client et leurs conditions applicables.
   context: Sens de travail dans le contexte Supply, selon la refonte D04 U214 ; définition détaillée proposée U215.
   notes: Famille gérée par [Sales Order](model:D04.i). Aucune création de nœud objet ni de schéma détaillé ; cycle distinct
-    des Service Orders. Le nom de capacité adopté ne vaut pas validation de cette définition lexicale.
+    des [Service Orders](glossary:TER066). Le nom de capacité adopté ne vaut pas validation de cette définition lexicale.
   source_refs:
   - U212
   - U214
@@ -9713,6 +9736,7 @@ terms:
   - U774
   - CMP307
   - ELM789
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -9826,9 +9850,10 @@ terms:
     leurs conditions applicables.
   context: Sens de travail dans le contexte Supply, selon la refonte D04 U214 ; définition détaillée proposée U215.
   notes: 'Famille gérée par [Purchase Order](model:D04.j). Aucune création de nœud objet ni de schéma détaillé ; cycle distinct
-    des Service Orders. Le nom de capacité adopté ne vaut pas validation de cette définition lexicale. U391 : inclut l’achat
-    de prestations, conformément à Service Procurement ; un apport en consignation sans engagement d’achat relève de Consignment
-    Fill-up Order. Précision lexicale éditoriale, sans validation nouvelle de cette définition.'
+    des [Service Orders](glossary:TER066). Le nom de capacité adopté ne vaut pas validation de cette définition lexicale.
+    U391 : inclut l’achat de prestations, conformément à Service Procurement ; un apport en consignation sans engagement d’achat
+    relève de [Consignment](glossary:TER090) Fill-up [Order](glossary:TER012). Précision lexicale éditoriale, sans validation
+    nouvelle de cette définition.'
   source_refs:
   - U212
   - U214
@@ -9841,6 +9866,7 @@ terms:
   - U774
   - CMP307
   - ELM790
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -9947,13 +9973,11 @@ terms:
       - CMP189
 - id: TER071
   name: Transfer Order
-  short_description: Demande de déplacement de marchandises entre sites, avec origine, destination, quantités, échéances et
-    contraintes. Le besoin peut relever du lancement, du réapprovisionnement, du rééquilibrage, de la consolidation ou d’une
-    commande identifiée.
+  short_description: Demande de déplacement interne de biens entre deux points du réseau, avec quantités, dates et engagements.
   definition: Demande de déplacement de marchandises entre sites, avec origine, destination, quantités, échéances et contraintes.
     Le besoin peut relever du lancement, du réapprovisionnement, du rééquilibrage, de la consolidation ou d’une commande identifiée.
   context: La finalité du déplacement ne crée pas à elle seule une famille ou un cycle distinct ; la propriété du stock ne
-    détermine pas seule le type d’Order.
+    détermine pas seule le type d’[Order](glossary:TER012).
   notes: 'L’intention prime : mettre en consignation, reprendre du stock encore consigné ou traiter un retour ne deviennent
     pas Transfer Order du seul fait d’un déplacement. Frontoffice et Backoffice désignent les origines de la demande. Le sens
     natif de Transfer Order peut être plus large dans les produits.'
@@ -9975,6 +9999,7 @@ terms:
   - U774
   - CMP307
   - ELM788
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -10094,8 +10119,8 @@ terms:
   context: Supply Chain Orchestration ; distinguer intention, engagement, pilotage, résultat et document.
   notes: L’intention de retour peut conduire à remise en stock, réparation, renvoi fournisseur, restitution ou rebut selon
     l’accord. Un retour après cession de biens consignés peut être pris en charge ici ; la reprise de biens encore consignés
-    relève de [Consignment Pick-up](glossary:TER092). Les parcours ne deviennent pas des familles d’Orders par seul effet
-    juridique.
+    relève de [Consignment Pick-up](glossary:TER092). Les parcours ne deviennent pas des familles d’[Orders](glossary:TER012)
+    par seul effet juridique.
   source_refs:
   - U212
   - U214
@@ -10110,6 +10135,7 @@ terms:
   - U774
   - CMP307
   - ELM455
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -10234,7 +10260,7 @@ terms:
   definition: Commande portant un renvoi de marchandises vers un fournisseur, distincte de l’achat d’origine.
   context: Sens de travail dans le contexte Supply, selon la refonte D04 U214 ; définition détaillée proposée U215.
   notes: Famille gérée par [Supplier Return Order](model:D04.m). Aucune création de nœud objet ni de schéma détaillé ; cycle
-    distinct des Service Orders. Le nom de capacité adopté ne vaut pas validation de cette définition lexicale.
+    distinct des [Service Orders](glossary:TER066). Le nom de capacité adopté ne vaut pas validation de cette définition lexicale.
   source_refs:
   - U212
   - U214
@@ -10245,6 +10271,7 @@ terms:
   - U774
   - CMP307
   - ELM791
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -10356,10 +10383,11 @@ terms:
     atteindre les cibles de stock applicables.
   definition: Déterminer les apports initiaux ou successifs et leurs ajustements pour couvrir des besoins datés ou atteindre
     les cibles de stock applicables.
-  context: Replenishment contribue au master plan de Demand & Supply Matching. Implantation décrit le contexte initial ; Réassort
-    désigne l’alimentation continue. Les Orders portent les demandes autorisées et Fulfilment coordonne les prestations.
+  context: Replenishment contribue au master plan de [Demand & Supply Matching](glossary:TER112). Implantation décrit le contexte
+    initial ; Réassort désigne l’alimentation continue. Les [Orders](glossary:TER012) portent les demandes autorisées et [Fulfilment](glossary:TER085)
+    coordonne les prestations.
   notes: |-
-    [Replenishment](model:D05.e) intègre les calculs des besoins nets et détermine les quantités et dates à retenir. La décision, la mise à jour transactionnelle, les Orders nécessaires, leurs promesses et les mouvements physiques restent distincts. Une application automatique est possible ; aucune création directe de Purchase Order ni validation humaine systématique n’est présumée.
+    [Replenishment](model:D05.e) intègre les calculs des besoins nets et détermine les quantités et dates à retenir. La décision, la mise à jour transactionnelle, les [Orders](glossary:TER012) nécessaires, leurs promesses et les mouvements physiques restent distincts. Une application automatique est possible ; aucune création directe de [Purchase Order](glossary:TER070) ni validation humaine systématique n’est présumée.
 
     U313/U316 : dans le contexte retail discuté, distinguer le réassort continu de l’[implantation](glossary:TER079), dont les apports sont décidés par [Replenishment](model:D05.e). Un produit couvrant les deux ne fusionne pas ces responsabilités.
   source_refs:
@@ -10377,6 +10405,7 @@ terms:
   - U774
   - CMP307
   - ELM784
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u221
@@ -10639,7 +10668,7 @@ terms:
   context: Définition métier proposée pour la refonte U244 ; pas de nouveau type d’objet instancié.
   notes: Dans cette refonte, le référentiel D14 contient les SLA globaux configurés. Ils restent distincts de l’engagement
     individuel de prestation, de l’estimation actualisée et du résultat observé. Un SLA compatible ne garantit pas la réussite
-    opérationnelle ; le maître de configuration et le lien à Agreement restent à préciser.
+    opérationnelle ; le maître de configuration et le lien à [Agreement](glossary:TER048) restent à préciser.
   source_refs:
   - U237
   - U238
@@ -10652,6 +10681,7 @@ terms:
   - U774
   - CMP307
   - ELM819
+  - U797
   source_locator:
     path: connaissance/32-execution-orchestration.md
     anchor: vocabulaire
@@ -10770,12 +10800,14 @@ terms:
   context: Sens métier proposé en U260 pour distinguer l’indicateur de stock de la couverture d’une demande identifiée.
   notes: 'Préciser produit, lieu, demande de référence, horizon et inclusion éventuelle des réceptions prévues. Exemple simplifié
     : 100 pièces utilisables, une consommation constante de 10 pièces par jour et aucune réception correspondent à dix jours
-    de couverture. Ce ratio n’est pas une formule universelle et ne garantit pas la satisfaction de chaque Order. Une couverture
-    cible constitue un objectif ; elle se distingue de la mesure constatée ou projetée. Voir [Couverture d’une demande](glossary:TER022).'
+    de couverture. Ce ratio n’est pas une formule universelle et ne garantit pas la satisfaction de chaque [Order](glossary:TER012).
+    Une couverture cible constitue un objectif ; elle se distingue de la mesure constatée ou projetée. Voir [Couverture d’une
+    demande](glossary:TER022).'
   source_refs:
   - U260
   - U477
   - CMP190
+  - U797
   source_locator:
     path: marche/atp-aatp-couverture.md
     anchor: couverture-deux-registres-separes
@@ -10862,13 +10894,13 @@ terms:
     aux commandes et besoins prévisionnels identifiés d’un périmètre, avec les hypothèses et contraintes applicables.
   context: Objet métier descriptif de résultat, pas un niveau supplémentaire de comportement ; convention de vocabulaire U289.
   notes: |-
-    Préciser statut proposé/retenu/appliqué, périmètre, version et hypothèses. Exemple fictif : ressource de 100 pièces affectée à deux commandes pour 60 et 40 selon les règles. Il ne s’agit ni d’une enveloppe par canal ni nécessairement d’un transfert entre sites. Décider les affectations, les enregistrer, confirmer la promesse et modifier les Orders ont des effets distincts.
+    Préciser statut proposé/retenu/appliqué, périmètre, version et hypothèses. Exemple fictif : ressource de 100 pièces affectée à deux commandes pour 60 et 40 selon les règles. Il ne s’agit ni d’une enveloppe par canal ni nécessairement d’un transfert entre sites. Décider les affectations, les enregistrer, confirmer la promesse et modifier les [Orders](glossary:TER012) ont des effets distincts.
 
     U290 : la finalité de l’affectation est de maximiser une valeur multidimensionnelle sous contraintes. Service, engagements, coûts et risques sont des exemples éditoriaux ; leurs poids et modes d’arbitrage ne sont pas fixés.
 
     U436 : seule la réservation bloque les usages concurrents ; l’affectation seule ne les bloque pas. Créer, conserver ou réviser un lien d’affectation ne crée donc pas implicitement une réservation. Les protections de groupe conservent leurs règles d’admissibilité, et un gel d’affectation sa restriction de modification. Expiration, consommation, libération et déclenchement automatique éventuel d’une réservation restent à préciser ; aucun mécanisme technique de concurrence n’est déduit de cette frontière.
 
-    U668/U673 : cet objet porte le master plan de matching, construit et géré dans Matching. Il est distinct du Supply Plan, prévision d’entrées et sorties de stock hors achats reçue dans Plans.
+    U668/U673 : cet objet porte le [master plan de matching](glossary:TER100), construit et géré dans [Matching](glossary:TER112). Il est distinct du [Supply Plan](glossary:TER098), prévision d’entrées et sorties de stock hors achats reçue dans Plans.
   source_refs:
   - U289
   - CMP096
@@ -10885,6 +10917,7 @@ terms:
   - U774
   - CMP307
   - ELM208
+  - U797
   source_locator:
     path: marche/assignment-allocation-convention.md
     anchor: convention-flow
@@ -11025,7 +11058,7 @@ terms:
   definition: Livraison initiale pour remplir les stocks en début de saison.
   context: Terme métier Beaumanoir défini par Laurent U310.
   notes: |-
-    L’existant rapporté utilise deux saisons annuelles, été/hiver. Des périodes plus fines ou capsules sont envisagées pour la cible, sans pratique installée déduite. Rapprochement marché : Initial Allocation chez SAP et RELEX ; allocation désigne ici la distribution retail vers les magasins, pas les enveloppes de protection ni automatiquement Supply Assignment. Décider les apports et réaliser la livraison restent distincts.
+    L’existant rapporté utilise deux saisons annuelles, été/hiver. Des périodes plus fines ou capsules sont envisagées pour la cible, sans pratique installée déduite. Rapprochement marché : Initial Allocation chez SAP et RELEX ; allocation désigne ici la distribution retail vers les magasins, pas les enveloppes de protection ni automatiquement [Supply Assignment](glossary:TER017). Décider les apports et réaliser la livraison restent distincts.
 
     U316 : Initial Stocking est le terme anglais adopté pour l’implantation. [Replenishment](model:D05.e) porte la décision ; [Replenishment](model:D05.e) reste distincte pour le réassort continu. Initial Distribution est une alternative de marché documentée, pas le nom retenu.
   source_refs:
@@ -11035,6 +11068,7 @@ terms:
   - U316
   - U477
   - CMP189
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u310
@@ -11159,10 +11193,10 @@ terms:
   short_description: Alimentation continue des stocks magasin guidée par des seuils.
   definition: Alimentation continue des stocks magasin guidée par des seuils.
   context: Terme métier Beaumanoir défini par Laurent U310.
-  notes: Le sens local est plus précis que Replenishment pris génériquement. Le réassort magasin ne désigne pas ici la seule
-    mise en rayon depuis la réserve. Les seuils ne permettent pas de déduire une formule min/max exacte, une cadence fixe
-    ou une validation humaine systématique. Le calcul des apports relève de Replenishment ; l’application aux Orders et la
-    livraison gardent leurs responsabilités.
+  notes: Le sens local est plus précis que [Replenishment](glossary:TER074) pris génériquement. Le réassort magasin ne désigne
+    pas ici la seule mise en rayon depuis la réserve. Les seuils ne permettent pas de déduire une formule min/max exacte,
+    une cadence fixe ou une validation humaine systématique. Le calcul des apports relève de [Replenishment](glossary:TER074)
+    ; l’application aux [Orders](glossary:TER012) et la livraison gardent leurs responsabilités.
   source_refs:
   - U310
   - CMP106
@@ -11170,6 +11204,7 @@ terms:
   - U316
   - U477
   - CMP193
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u310
@@ -11268,7 +11303,8 @@ terms:
   definition: Scission d’une commande ou de ses éléments en parties distinctes, avec préservation de leur filiation.
   context: Convention U362 intégrée U363 ; formulations développées éditoriales.
   notes: 'U362 : « coupe des commandes ». Ne crée pas une demande supplémentaire ; contrôler les quantités et préciser le
-    devenir de l’original. Les réalisations déjà acquises sont conservées. Le nom du comportement est Order Splitting.'
+    devenir de l’original. Les réalisations déjà acquises sont conservées. Le nom du comportement est [Order](glossary:TER012)
+    Splitting.'
   source_refs:
   - U362
   - U363
@@ -11279,6 +11315,7 @@ terms:
   - CMP186
   - U477
   - CMP193
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u362
@@ -11734,13 +11771,14 @@ terms:
     et conditions retenus.'
   context: La documentation Microsoft distingue optimisation de la satisfaction et opérations effectives de fulfillment. Formulation
     FLOW proposée ; aucune nouvelle capacité agrégée n’est créée par le terme.
-  notes: 'Un calcul ATP, une promesse confirmée ou une affectation seule ne prouve pas la réalisation. Demand & Supply Optimization
-    recherche comment satisfaire au mieux ; Demand Management établit les possibilités et tient les engagements de promesse
-    ; Fulfillment Strategy fixe le cadre ; les exécutants réalisent les prestations. Exemple fictif : choisir un stock et
-    un service puis préparer et livrer les pièces attendues. Le marché décrit souvent les commandes clients ; l’application
-    aux transferts, achats, retours ou services numériques de FLOW doit préciser le résultat et le point de vue, sans prétendre
-    à une équivalence universelle. Les retours ne sont pas automatiquement inclus ou exclus du seul fait du mot. Voir [Supply](glossary:TER083)
-    et [Supply Chain](glossary:TER084). Orthographe canonique proposée : Fulfillment ; Fulfilment est une variante orthographique.'
+  notes: 'Un calcul [ATP](glossary:TER044), une promesse confirmée ou une affectation seule ne prouve pas la réalisation.
+    Demand & Supply Optimization recherche comment satisfaire au mieux ; Demand Management établit les possibilités et tient
+    les engagements de promesse ; Fulfillment Strategy fixe le cadre ; les exécutants réalisent les prestations. Exemple fictif
+    : choisir un stock et un service puis préparer et livrer les pièces attendues. Le marché décrit souvent les commandes
+    clients ; l’application aux transferts, achats, retours ou services numériques de FLOW doit préciser le résultat et le
+    point de vue, sans prétendre à une équivalence universelle. Les retours ne sont pas automatiquement inclus ou exclus du
+    seul fait du mot. Voir [Supply](glossary:TER083) et [Supply Chain](glossary:TER084). Orthographe canonique proposée :
+    Fulfillment ; Fulfilment est une variante orthographique.'
   source_refs:
   - U366
   - U367
@@ -11752,6 +11790,7 @@ terms:
   - CMP189
   - U771
   - CMP306
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u367
@@ -11973,8 +12012,8 @@ terms:
   name: Assortment
   short_description: Sélection de produits ou variantes affectée à un périmètre de magasins, canaux ou clients et à une période.
   definition: Sélection de produits ou variantes affectée à un périmètre de magasins, canaux ou clients et à une période.
-  context: Peut résulter d’un choix commercial interne ou être convenu entre parties. Dans ce dernier cas, Agreement peut
-    référencer ou figer la sélection concernée.
+  context: Peut résulter d’un choix commercial interne ou être convenu entre parties. Dans ce dernier cas, [Agreement](glossary:TER048)
+    peut référencer ou figer la sélection concernée.
   notes: Référence reçue depuis les maîtres externes. Ne constitue ni un stock, ni une réservation, ni une promesse de fourniture.
     U509 adopte le nom et le sens ; détails éditoriaux proposés.
   source_refs:
@@ -11986,6 +12025,7 @@ terms:
   - U774
   - CMP307
   - ELM517
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u509
@@ -12113,8 +12153,8 @@ terms:
     mais sans restriction à ce secteur.
   context: Rôle d’une partie, distinct de la prestation fournie et des outils utilisés pour la réaliser.
   notes: L’identité et les rôles relèvent de [Party / Role](model:D09). Les [Services](glossary:TER075) proposés sont décrits
-    dans [Service Catalog](model:D14). Service Provider Policy porte les règles locales de recours, notamment exclusions et
-    limites de sollicitation ; sa matérialisation dans la refonte des Purposes reste proposée.
+    dans [Service Catalog](model:D14). [Service Provider Policy](glossary:TER095) porte les règles locales de recours, notamment
+    exclusions et limites de sollicitation ; sa matérialisation dans la refonte des Purposes reste proposée.
   source_refs:
   - U587
   - U590
@@ -12128,6 +12168,7 @@ terms:
   - U774
   - CMP307
   - ELM793
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u590
@@ -12215,16 +12256,15 @@ terms:
       les prestations.'
 - id: TER089
   name: Task
-  short_description: Contribution pilotée au sein d’un processus d’orchestration, avec ses conditions d’activation et ses
-    dépendances. Elle peut mobiliser des [Service Orders](glossary:TER066) dont Service Order Management tient les engagements
-    individuels ; elle n’est ni l’ordre lui-même ni une tâche opérateur de l’exécutant.
+  short_description: Contribution pilotée par l’orchestration, avec ses conditions et dépendances ; distincte d’un ordre de
+    prestation et d’une tâche opérateur.
   definition: Contribution pilotée au sein d’un processus d’orchestration, avec ses conditions d’activation et ses dépendances.
-    Elle peut mobiliser des [Service Orders](glossary:TER066) dont Service Order Management tient les engagements individuels
-    ; elle n’est ni l’ordre lui-même ni une tâche opérateur de l’exécutant.
+    Elle peut mobiliser des [Service Orders](glossary:TER066) dont [Service Order](glossary:TER066) Management tient les engagements
+    individuels ; elle n’est ni l’ordre lui-même ni une tâche opérateur de l’exécutant.
   context: Supply Chain Orchestration
   notes: Une Task peut attendre une condition, déclencher une sollicitation et vérifier le résultat de sa contribution. Les
-    réponses et reprises de l’ordre sont tenues par Service Order Management ; l’orchestration coordonne les dépendances et
-    mobilise les adaptations décidées. Un acquittement ne prouve pas une fin physique.
+    réponses et reprises de l’ordre sont tenues par [Service Order](glossary:TER066) Management ; l’orchestration coordonne
+    les dépendances et mobilise les adaptations décidées. Un acquittement ne prouve pas une fin physique.
   source_refs:
   - U616
   - U617
@@ -12235,6 +12275,7 @@ terms:
   - U681
   - U682
   - CMP273
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u626
@@ -12642,8 +12683,8 @@ terms:
     au retour après une vente ou consommation déjà reconnue.
   context: Supply Chain Orchestration
   notes: L’intention reste distincte de [Return Order](glossary:TER072) et de [Transfer Order](glossary:TER071). Les prestations
-    de collecte ou de transport passent par les Tasks ; ce terme ne crée pas à lui seul une nouvelle capacité ou un achat
-    de stock.
+    de collecte ou de transport passent par les [Tasks](glossary:TER089) ; ce terme ne crée pas à lui seul une nouvelle capacité
+    ou un achat de stock.
   source_refs:
   - U600
   - U611
@@ -12654,6 +12695,7 @@ terms:
   - U774
   - CMP307
   - ELM806
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u626
@@ -12778,8 +12820,8 @@ terms:
     prévus par l’accord.
   context: Supply Chain Orchestration
   notes: Dans FLOW, c’est un comportement de [Sales Order](model:D04.i), identifié par BHV096. L’intention première reste
-    vendre ; l’effet de propriété ne crée pas un Order autonome. Un mandat de vente sur des biens de tiers peut rendre ce
-    comportement pertinent sans achat automatique par le détenteur.
+    vendre ; l’effet de propriété ne crée pas un [Order](glossary:TER012) autonome. Un mandat de vente sur des biens de tiers
+    peut rendre ce comportement pertinent sans achat automatique par le détenteur.
   source_refs:
   - U602
   - U606
@@ -12790,6 +12832,7 @@ terms:
   - U774
   - CMP307
   - ELM806
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u626
@@ -13322,12 +13365,12 @@ terms:
   definition: Ensemble identifié de tarifs de référence de produits et de services, avec unités, devises, validité et conditions
     d’application.
   context: Supply Chain Orchestration / Master Data
-  notes: 'Plusieurs livres tarifaires peuvent coexister selon le contexte, les parties et l’autorité qui les fournit. Product
-    Catalog et Service Catalog décrivent les offres ; Assortment sélectionne les produits ; Agreement porte les conditions
-    convenues. Un Price Book peut leur être associé sans correspondance un-à-un obligatoire. Le tarif de référence ne constitue
-    ni le prix contextualisé calculé ni le prix engagé dans une commande. La maîtrise commerciale reste externe ; Supply conserve
-    la référence locale reçue. Exemple fictif : un tarif porte un montant par vêtement et un autre par prestation de réétiquetage,
-    chacun avec sa période et son unité.'
+  notes: 'Plusieurs livres tarifaires peuvent coexister selon le contexte, les parties et l’autorité qui les fournit. [Product
+    Catalog](glossary:TER049) et [Service Catalog](glossary:TER094) décrivent les offres ; [Assortment](glossary:TER087) sélectionne
+    les produits ; [Agreement](glossary:TER048) porte les conditions convenues. Un Price Book peut leur être associé sans
+    correspondance un-à-un obligatoire. Le tarif de référence ne constitue ni le prix contextualisé calculé ni le prix engagé
+    dans une commande. La maîtrise commerciale reste externe ; Supply conserve la référence locale reçue. Exemple fictif :
+    un tarif porte un montant par vêtement et un autre par prestation de réétiquetage, chacun avec sa période et son unité.'
   source_refs:
   - U723
   - ELM721
@@ -13336,6 +13379,7 @@ terms:
   - CMP307
   - ELM794
   - ELM798
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u723
@@ -13498,9 +13542,10 @@ terms:
   name: Supply Plan
   definition: Plan externe des entrées ou sorties de stock prévues hors achats, avec horizon, version et provenance.
   short_description: Plan externe des entrées ou sorties de stock prévues hors achats, avec horizon, version et provenance.
-  context: 'Sens FLOW : les projections d’achat externes restent distinctes et peuvent être adressées à Purchase Order. Ce
-    plan n’est ni un mouvement réalisé ni le master plan de matching. Les supply forecasts Microsoft peuvent couvrir des achats
-    ; leurs périmètres ne sont donc pas équivalents.'
+  context: 'Le domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration, fournit ce plan
+    à Plan Ingestion. Sens FLOW : les projections d’achat externes restent distinctes et peuvent être adressées à [Purchase
+    Order](glossary:TER070). Ce plan n’est ni un mouvement réalisé ni le [master plan de matching](glossary:TER100). Les supply
+    forecasts Microsoft peuvent couvrir des achats ; leurs périmètres ne sont donc pas équivalents.'
   notes: Sens local du modèle, distinct des périmètres des produits cités.
   source_refs:
   - U771
@@ -13508,6 +13553,9 @@ terms:
   - U774
   - CMP307
   - ELM600
+  - U794
+  - U797
+  - U801
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u771
@@ -13624,8 +13672,9 @@ terms:
     des besoins.
   short_description: Plan externe de demande prévisionnelle, daté et versionné, utilisé pour éclairer la promesse et la couverture
     des besoins.
-  context: Le calcul prévisionnel reste extérieur ; le Matching utilise la prévision résiduelle sans recompter les besoins
-    déjà portés par les Orders. Une prévision n’est pas une commande.
+  context: Le domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration, fournit ce plan
+    à Plan Ingestion. Le calcul prévisionnel reste extérieur ; le [Matching](glossary:TER112) utilise la prévision résiduelle
+    sans recompter les besoins déjà portés par les [Orders](glossary:TER012). Une prévision n’est pas une commande.
   notes: Sens local du modèle, distinct des périmètres des produits cités.
   source_refs:
   - U771
@@ -13633,6 +13682,9 @@ terms:
   - U774
   - CMP307
   - ELM600
+  - U794
+  - U797
+  - U801
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u771
@@ -13672,8 +13724,8 @@ terms:
     concept_name: Overview of Global Order Promising
     scope_summary: La promesse mobilise stock, apports attendus et planned orders de Supply Planning ; examine nouvelles ressources,
       sources, coûts, substitutions et fractionnements.
-    approach_summary: Rendre consultable la demande prévisionnelle reçue du domaine PLAN, avec versions, horizons, provenance
-      et incertitudes pour éclairer la promesse et le Matching.
+    approach_summary: Rendre consultable la demande prévisionnelle reçue du domaine Demand & Supply Planning, avec versions,
+      horizons, provenance et incertitudes pour éclairer la promesse et le Matching.
   - vendor: SAP
     product: Outlining Program Planning
     element_name: Outlining Program Planning
@@ -13706,8 +13758,8 @@ terms:
     concept_name: Outlining Program Planning
     scope_summary: Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la
       stratégie. Demand Management gère leur interaction pour alimenter MRP.
-    approach_summary: Rendre consultable la demande prévisionnelle reçue du domaine PLAN, avec versions, horizons, provenance
-      et incertitudes pour éclairer la promesse et le Matching.
+    approach_summary: Rendre consultable la demande prévisionnelle reçue du domaine Demand & Supply Planning, avec versions,
+      horizons, provenance et incertitudes pour éclairer la promesse et le Matching.
   - vendor: Microsoft
     product: Microsoft Dynamics 365 — application indiquée par la source
     element_name: Inventory forecasts
@@ -13747,9 +13799,9 @@ terms:
     conditions et suites d’application.
   short_description: Plan interne commun rassemblant les affectations et recommandations de couverture des besoins, leurs
     hypothèses, conditions et suites d’application.
-  context: Demand & Supply Matching construit et révise ce plan. Le Supply Assignment Plan en exprime les liens ressources-besoins
-    ; les apports, priorités et recommandations de politiques contribuent au plan commun. Aucun moteur ni ordre universel
-    de calcul imposé.
+  context: '[Demand & Supply Matching](glossary:TER112) construit et révise ce plan. Le [Supply Assignment Plan](glossary:TER078)
+    en exprime les liens ressources-besoins ; les apports, priorités et recommandations de politiques contribuent au plan
+    commun. Aucun moteur ni ordre universel de calcul imposé.'
   notes: Sens local du modèle, distinct des périmètres des produits cités.
   source_refs:
   - U771
@@ -13757,6 +13809,7 @@ terms:
   - U774
   - CMP307
   - ELM784
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u771
@@ -13864,11 +13917,13 @@ terms:
   definition: Capacité à retrouver l’origine et les destinations de biens à partir des faits et filiations connus.
   short_description: Capacité à retrouver l’origine et les destinations de biens à partir des faits et filiations connus.
   context: Une filiation relie, par exemple, un lot d’accessoires consommés aux coffrets produits. Un lot désigne un ensemble
-    de biens identifié pour le suivi. Dans FLOW, Inventory Tracking intègre ces liens, Inventory Ledger les conserve et Inventory
-    Visibility reconstitue les parcours ; aucune capacité autonome Inventory Traceability ni complétude sans données sources.
+    de biens identifié pour le suivi. Dans FLOW, Inventory Tracking intègre ces liens, [Inventory Ledger](glossary:TER056)
+    les conserve et Inventory Visibility reconstitue les parcours ; aucune capacité autonome Inventory Traceability ni complétude
+    sans données sources.
   notes: Sens du modèle FLOW ; exemples fictifs, sans preuve de réalisation installée.
   source_refs:
   - U777
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u777
@@ -14031,11 +14086,13 @@ terms:
   short_description: Plan organisant les marchandises en chargements et leurs parcours, arrêts et échéances pour les transports
     confiés.
   context: Transport Plan Decision le construit et le révise par Load Consolidation et Routing & Scheduling. Il préserve promesses
-    et affectations ; Transport Order porte les instructions engagées et Service Order Release Decision leur moment de libération.
-    Il ne s’agit ni du Matching Master Plan ni d’un Supply Plan externe.
+    et affectations ; Transport [Order](glossary:TER012) porte les instructions engagées et [Service Order](glossary:TER066)
+    Release Decision leur moment de libération. Il ne s’agit ni du [Matching Master Plan](glossary:TER100) ni d’un [Supply
+    Plan](glossary:TER098) externe.
   notes: Sens du modèle FLOW ; exemples fictifs, sans preuve de réalisation installée.
   source_refs:
   - U777
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u777
@@ -14152,11 +14209,12 @@ terms:
   short_description: Porter une demande de mise au rebut de biens, ses autorisations, quantités, consignes et preuves attendues
     jusqu’à son résultat reconnu.
   context: Prestation de mise au rebut explicitement confiée, avec autorisation, quantités, reliquat et preuves. Le comportement
-    Scrapping du Return Order garde l’issue du retour ; cette prestation peut exister hors retour. Une sortie comptable ne
-    prouve pas la destruction physique.
+    Scrapping du [Return Order](glossary:TER072) garde l’issue du retour ; cette prestation peut exister hors retour. Une
+    sortie comptable ne prouve pas la destruction physique.
   notes: Sens du modèle FLOW ; exemples fictifs, sans preuve de réalisation installée.
   source_refs:
   - U777
+  - U797
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u777
@@ -14302,9 +14360,9 @@ terms:
 - id: TER106
   name: Business Operations
   short_description: Acheter, vendre et réaliser les engagements en coordonnant les ressources et les prestations.
-  definition: Faire fonctionner l’activité d’achat, de vente et de réalisation en faisant coopérer Sales, Sourcing and Procurement,
-    Supply Chain Orchestration et Logistics Execution.
-  context: Regroupe les quatre domaines opérationnels, avec leurs finalités et frontières explicites. Supply Chain Orchestration
+  definition: faire fonctionner l’activité d’achat, de vente, de planification et de réalisation en faisant coopérer Sourcing
+    and Procurement, Sales, Demand & Supply Planning, Supply Chain Orchestration et Logistics.
+  context: Regroupe les cinq domaines opérationnels, avec leurs finalités et frontières explicites. Supply Chain Orchestration
     est approfondie jusqu’aux capacités et comportements ; les autres domaines restent décrits à la maille utile au cadrage.
     Le regroupement n’impose ni séquence, ni application commune, ni organisation. La Finance et la conception coopèrent avec
     cet ensemble sans être réputées exclusivement en aval ou en amont.
@@ -14312,6 +14370,8 @@ terms:
   source_refs:
   - U780
   - CMP309
+  - U794
+  - U801
   review:
     state: proposed
     note: Alignement éditorial avec le modèle ; pas d’accord mot à mot sur les textes nouveaux.
@@ -14371,6 +14431,64 @@ terms:
     - ELM841
     - CMP309
     status: proposed
+  - vendor: Microsoft
+    product: Microsoft Dynamics 365 Supply Chain Management
+    element_name: Master plans overview
+    element_type: Concept ou fonction documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
+    differences: Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand
+      & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
+    flow_position: Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility
+      les expose. Le master plan du Matching reste interne à l’orchestration.
+    source_title: Master plans overview
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
+    source_version: Documentation évolutive, mise à jour affichée le 25 mars 2026
+    consulted_on: '2026-09-27'
+    source_locator: Using master plans ; Firming ; Action message
+    evidence_limits: Recouvrement partiel avec les fonctions de planification documentées ; ni nomenclature universelle des
+      domaines, ni preuve d’un APS installé chez Beaumanoir.
+    status: proposed
+    source_refs:
+    - U794
+    term_choice: Demand & Supply Planning est le nom retenu en U801 pour expliciter les plans de demande et de ressources
+      ; les outils de planification possibles ne définissent pas son identité.
+    definition_choice: Responsabilité de production des plans, distincte de leur ingestion et de leur consultation ; détail
+      des capacités hors périmètre.
+    concept_name: Master plans overview
+    scope_summary: Plans distincts, recalculs, simulations, conversion des propositions et suggestions de modification des
+      ordres.
+    approach_summary: Rendre explicite le domaine source déjà évoqué dans le modèle, sans absorber les décisions de Matching
+      ni promettre une couverture APS exhaustive.
+  - vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition
+    element_name: Outlining Program Planning
+    element_type: Concept ou fonction documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
+    differences: Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand
+      & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
+    flow_position: Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility
+      les expose. Le master plan du Matching reste interne à l’orchestration.
+    source_title: Outlining Program Planning
+    source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a
+    source_version: Cours S/4HANA Cloud Public Edition, édition non affichée
+    consulted_on: '2026-09-27'
+    source_locator: Production Planning Overview ; Demand Management Overview
+    evidence_limits: Recouvrement partiel avec les fonctions de planification documentées ; ni nomenclature universelle des
+      domaines, ni preuve d’un APS installé chez Beaumanoir.
+    status: proposed
+    source_refs:
+    - U794
+    term_choice: Demand & Supply Planning est le nom retenu en U801 pour expliciter les plans de demande et de ressources
+      ; les outils de planification possibles ne définissent pas son identité.
+    definition_choice: Responsabilité de production des plans, distincte de leur ingestion et de leur consultation ; détail
+      des capacités hors périmètre.
+    concept_name: Outlining Program Planning
+    scope_summary: Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la
+      stratégie. Demand Management gère leur interaction pour alimenter MRP.
+    approach_summary: Rendre explicite le domaine source déjà évoqué dans le modèle, sans absorber les décisions de Matching
+      ni promettre une couverture APS exhaustive.
 - id: TER107
   name: Enterprise Management & Control
   short_description: Orienter, financer, mesurer et maîtriser l’activité de l’entreprise.
@@ -14449,13 +14567,14 @@ terms:
   short_description: Construire et gérer la relation commerciale et les conditions de vente côté client.
   definition: 'Construire et gérer la relation commerciale côté client : offres, négociations et conditions de vente.'
   context: Couvre le versant commercial de la vente. Les promesses de satisfaction, affectations et engagements opérationnels
-    restent décrits dans Supply Chain Orchestration. Sales Order garde son rattachement actuel dans Order Management ; aucun
-    deuxième cycle concurrent de commande n’est créé. L’exécution logistique et les traitements comptables ne sont pas absorbés.
-    Les sous-domaines seront ajoutés seulement si leur utilité pour FLOW est établie.
+    restent décrits dans Supply Chain Orchestration. [Sales Order](glossary:TER069) garde son rattachement actuel dans [Order](glossary:TER012)
+    Management ; aucun deuxième cycle concurrent de commande n’est créé. L’exécution logistique et les traitements comptables
+    ne sont pas absorbés. Les sous-domaines seront ajoutés seulement si leur utilité pour FLOW est établie.
   notes: Sens FLOW U778–U780 ; profondeur ciblée. Les illustrations ne constituent pas des observations installées.
   source_refs:
   - U780
   - CMP309
+  - U797
   review:
     state: proposed
     note: Alignement éditorial avec le modèle ; pas d’accord mot à mot sur les textes nouveaux.
@@ -14520,13 +14639,14 @@ terms:
   short_description: Sélectionner les fournisseurs, négocier les accords et gérer les achats de biens et de prestations.
   definition: Sélectionner les fournisseurs, négocier les accords et gérer les achats de biens et de prestations.
   context: Sourcing désigne la recherche, l’évaluation et la sélection des sources d’achat ; Procurement porte la gestion
-    de l’achat. Le domaine précise le versant fournisseur et commercial. Purchase Order garde son rattachement dans Order
-    Management pour le périmètre opérationnel déjà décrit ; aucun déplacement ou cycle concurrent n’est déduit de ce regroupement.
-    Réception physique, transport et paiement restent des responsabilités distinctes.
+    de l’achat. Le domaine précise le versant fournisseur et commercial. [Purchase Order](glossary:TER070) garde son rattachement
+    dans [Order](glossary:TER012) Management pour le périmètre opérationnel déjà décrit ; aucun déplacement ou cycle concurrent
+    n’est déduit de ce regroupement. Réception physique, transport et paiement restent des responsabilités distinctes.
   notes: Sens FLOW U778–U780 ; profondeur ciblée. Les illustrations ne constituent pas des observations installées.
   source_refs:
   - U780
   - CMP309
+  - U797
   review:
     state: proposed
     note: Alignement éditorial avec le modèle ; pas d’accord mot à mot sur les textes nouveaux.
@@ -14589,17 +14709,21 @@ terms:
     - CMP309
     status: proposed
 - id: TER110
-  name: Logistics Execution
-  short_description: Réaliser les opérations physiques et les formalités logistiques associées.
-  definition: 'Réaliser les opérations physiques et les formalités associées : entrepôt, transport et douane.'
-  context: 'Couvre la réalisation des prestations et les opérations internes des exécutants : réception, préparation, expédition,
-    transport et formalités douanières applicables. Supply Chain Orchestration porte les demandes de prestations, leur coordination
-    et le suivi de leurs résultats ; Logistics Execution les réalise. Les responsabilités de gouvernance de conformité restent
-    distinctes des contrôles opérationnels. Aucun WMS, TMS, acteur douanier ni déploiement Beaumanoir n’est présumé.'
-  notes: Sens FLOW U778–U780 ; profondeur ciblée. Les illustrations ne constituent pas des observations installées.
+  name: Logistics
+  short_description: Assurer les opérations logistiques et leur pilotage local.
+  definition: Réaliser les opérations logistiques et les formalités associées, en organisant les moyens et opérations locaux.
+  context: 'Couvre les opérations logistiques et leur pilotage local : réception, préparation, expédition, transport et formalités
+    douanières applicables. Les exécutants organisent leurs moyens et leurs opérations internes. [Supply Chain Orchestration](model:universe-supply)
+    porte les demandes de prestations, leur coordination et le suivi de leurs résultats ; Logistics les réalise. Les responsabilités
+    de gouvernance de conformité restent distinctes des contrôles opérationnels. Aucun WMS, TMS, acteur douanier ni déploiement
+    Beaumanoir n’est présumé.'
+  notes: 'Sens FLOW : opérations logistiques et pilotage local, distincts de leur orchestration transverse. Aucune réalisation
+    installée n’est déduite.'
   source_refs:
   - U780
   - CMP309
+  - U801
+  - U802
   review:
     state: proposed
     note: Alignement éditorial avec le modèle ; pas d’accord mot à mot sur les textes nouveaux.
@@ -14612,10 +14736,10 @@ terms:
     similarities: Réalisation des mouvements, des opérations d’entrepôt et du transport.
     differences: Supply Chain et Inventory to deliver sont plus larges que l’exécution FLOW. Les appuis consultés sont partiels
       pour les formalités douanières ; aucun équivalent exact du domaine n’est affirmé.
-    flow_position: Logistics Execution est décrit à la profondeur utile à FLOW ; les frontières métier sont explicites et
-      indépendantes des applications.
-    term_choice: Nom retenu dans le cadrage U778–U780 ; appui lexical SAP pour Sales et Sourcing and Procurement, convention
-      FLOW pour les ensembles.
+    flow_position: Logistics est décrit à la profondeur utile à FLOW ; les frontières métier sont explicites et indépendantes
+      des applications.
+    term_choice: Logistics, retenu en U801, désigne les opérations logistiques et leur pilotage local dans FLOW, sans transférer
+      les arbitrages transverses de Supply Chain Orchestration ni présumer une réalisation installée.
     definition_choice: Responsabilité concrète et frontière avec les autres domaines ; aucune extension du périmètre d’intervention
       FLOW.
     concept_name: Supply Chain — Delivery and Transportation ; Warehousing
@@ -14640,10 +14764,10 @@ terms:
     similarities: Réalisation des mouvements, des opérations d’entrepôt et du transport.
     differences: Supply Chain et Inventory to deliver sont plus larges que l’exécution FLOW. Les appuis consultés sont partiels
       pour les formalités douanières ; aucun équivalent exact du domaine n’est affirmé.
-    flow_position: Logistics Execution est décrit à la profondeur utile à FLOW ; les frontières métier sont explicites et
-      indépendantes des applications.
-    term_choice: Nom retenu dans le cadrage U778–U780 ; appui lexical SAP pour Sales et Sourcing and Procurement, convention
-      FLOW pour les ensembles.
+    flow_position: Logistics est décrit à la profondeur utile à FLOW ; les frontières métier sont explicites et indépendantes
+      des applications.
+    term_choice: Logistics, retenu en U801, désigne les opérations logistiques et leur pilotage local dans FLOW, sans transférer
+      les arbitrages transverses de Supply Chain Orchestration ni présumer une réalisation installée.
     definition_choice: Responsabilité concrète et frontière avec les autres domaines ; aucune extension du périmètre d’intervention
       FLOW.
     concept_name: Introduction to inventory to deliver business process
@@ -14660,5 +14784,292 @@ terms:
     - ELM845
     - CMP309
     status: proposed
+- id: TER111
+  name: Demand & Supply Planning
+  short_description: Élaborer et réviser les plans prévisionnels de demande et de ressources qui alimentent les décisions
+    opérationnelles.
+  definition: élaborer et réviser les plans prévisionnels de demande et de ressources pour anticiper les besoins et orienter
+    les décisions opérationnelles.
+  context: 'Domaine de Business Operations extérieur à [Supply Chain Orchestration](model:universe-supply). Il produit les
+    [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) transmis à [Plan Ingestion](model:plans-ingestion),
+    puis exposés par [Plan Visibility](model:subdomain-plans). Des outils de planification avancée peuvent servir ce domaine,
+    qui reste indépendant des outils et de l’organisation. Le contrat reçu conserve les versions, horizons, provenance et
+    statuts. Le [Supply Plan](glossary:TER098) consommé par FLOW garde son sens actuel : prévisions de mouvements de stock
+    hors achats ; cela ne limite pas l’ensemble des plans que le domaine Demand & Supply Planning peut produire. La décomposition
+    interne de Demand & Supply Planning reste hors périmètre. Les arbitrages opérationnels et le master plan de [Demand &
+    Supply Matching](glossary:TER112) restent dans l’orchestration ; recevoir une nouvelle prévision ne les remplace pas et
+    ne crée pas un ordre ferme. Aucun outil de planification avancée installé ni flux technique Beaumanoir n’est présumé.'
+  notes: 'Domaine métier distinct des documents Demand Plan et Supply Plan et du Matching Master Plan interne. Le rapprochement
+    avec SCOR Plan est partiel : certaines décisions de planification restent dans Matching. Le nom explicite les deux volets
+    ; aucune famille d’outils ne définit ce domaine.'
+  source_refs:
+  - U794
+  - U797
+  - U801
+  review:
+    state: proposed
+    note: Alignement avec le nouveau domaine ; les formulations détaillées ne sont pas un accord mot à mot.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Microsoft Dynamics 365 Supply Chain Management
+    element_name: Master plans overview
+    element_type: Concept ou fonction documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
+    differences: Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand
+      & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
+    flow_position: Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility
+      les expose. Le master plan du Matching reste interne à l’orchestration.
+    source_title: Master plans overview
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
+    source_version: Documentation évolutive, mise à jour affichée le 25 mars 2026
+    consulted_on: '2026-09-27'
+    source_locator: Using master plans ; Firming ; Action message
+    evidence_limits: Recouvrement partiel avec les fonctions de planification documentées ; ni nomenclature universelle des
+      domaines, ni preuve d’un APS installé chez Beaumanoir.
+    status: proposed
+    source_refs:
+    - U794
+    term_choice: Demand & Supply Planning, retenu en U801, rend explicites les deux volets de planification. SCOR emploie
+      Plan pour un processus plus large ; le rapprochement est partiel, sans nomenclature universelle ni équivalence à un
+      module éditeur.
+    definition_choice: Responsabilité de production des plans, distincte de leur ingestion et de leur consultation ; détail
+      des capacités hors périmètre.
+    concept_name: Master plans overview
+    scope_summary: Plans distincts, recalculs, simulations, conversion des propositions et suggestions de modification des
+      ordres.
+    approach_summary: Rendre explicite le domaine source déjà évoqué dans le modèle, sans absorber les décisions de Matching
+      ni promettre une couverture APS exhaustive.
+  - vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition
+    element_name: Outlining Program Planning
+    element_type: Concept ou fonction documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
+    differences: Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand
+      & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
+    flow_position: Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility
+      les expose. Le master plan du Matching reste interne à l’orchestration.
+    source_title: Outlining Program Planning
+    source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a
+    source_version: Cours S/4HANA Cloud Public Edition, édition non affichée
+    consulted_on: '2026-09-27'
+    source_locator: Production Planning Overview ; Demand Management Overview
+    evidence_limits: Recouvrement partiel avec les fonctions de planification documentées ; ni nomenclature universelle des
+      domaines, ni preuve d’un APS installé chez Beaumanoir.
+    status: proposed
+    source_refs:
+    - U794
+    term_choice: Demand & Supply Planning, retenu en U801, rend explicites les deux volets de planification. SCOR emploie
+      Plan pour un processus plus large ; le rapprochement est partiel, sans nomenclature universelle ni équivalence à un
+      module éditeur.
+    definition_choice: Responsabilité de production des plans, distincte de leur ingestion et de leur consultation ; détail
+      des capacités hors périmètre.
+    concept_name: Outlining Program Planning
+    scope_summary: Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la
+      stratégie. Demand Management gère leur interaction pour alimenter MRP.
+    approach_summary: Rendre explicite le domaine source déjà évoqué dans le modèle, sans absorber les décisions de Matching
+      ni promettre une couverture APS exhaustive.
+- id: TER112
+  name: Demand & Supply Matching
+  short_description: Arbitrage entre besoins et ressources pour construire un plan commun de couverture et d’affectation.
+  definition: Construire et réviser un plan commun qui arbitre la couverture des besoins et l’affectation des ressources,
+    avec les hypothèses et changements autorisés.
+  context: Dans FLOW, ce sous-domaine mobilise les décisions spécialisées de priorité, promesse, apport et affectation. Les
+    commandes portent leurs engagements ; Plan Application matérialise les décisions autorisées.
+  notes: Matching désigne ici le sous-domaine FLOW ; il ne se réduit ni à une allocation de groupe, ni à une réservation,
+    ni à une fonction de produit.
+  source_refs:
+  - P81
+  - P83
+  - U52
+  - U75
+  - U80
+  - U81
+  - U95
+  - F201
+  - C63
+  - CMP052
+  - U147
+  - U154
+  - U163
+  - U202
+  - U218
+  - U219
+  - U220
+  - U290
+  - U369
+  - U378
+  - U411
+  - U412
+  - U413
+  - ELM246
+  - CMP157
+  - U414
+  - ELM247
+  - CMP158
+  - U416
+  - U417
+  - U418
+  - ELM248
+  - CMP159
+  - U420
+  - U435
+  - U437
+  - U438
+  - U445
+  - U455
+  - U458
+  - U462
+  - U477
+  - CMP191
+  - U482
+  - U496
+  - U552
+  - U555
+  - U556
+  - CMP229
+  - CMP230
+  - U560
+  - CMP234
+  - U565
+  - U566
+  - CMP236
+  - U584
+  - U585
+  - U592
+  - U595
+  - U616
+  - U617
+  - U618
+  - U619
+  - U624
+  - U626
+  - U631
+  - U673
+  - U711
+  - U723
+  - U733
+  - U749
+  - U750
+  - CMP294
+  - U765
+  - U766
+  - CMP303
+  - U771
+  - CMP306
+  - U774
+  - CMP307
+  - ELM208
+  - U797
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u797
+  review:
+    state: proposed
+    note: Explication éditoriale du périmètre existant ; aucun nouvel accord métier.
+  market_comparisons:
+  - vendor: Oracle
+    product: Overview of Backlog Management Processes
+    element_name: Overview of Backlog Management Processes
+    element_type: Concept ou fonction documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Prioriser un portefeuille, construire un plan, tester des ajustements et libérer les résultats vers Order
+      Management ; les simulations ne modifient pas seules les commandes.
+    differences: Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande
+      prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.
+    flow_position: Construire et maintenir le master plan de matching qui arbitre la couverture de la demande et les affectations
+      de ressources, en mobilisant les décisions spécialisées et en faisant appliquer les changements autorisés.
+    source_title: Overview of Backlog Management Processes
+    source_url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26b/faubm/overview-of-backlog-management-processes.html
+    source_version: Fusion Cloud SCM 26B
+    consulted_on: '2026-09-23'
+    source_locator: 'Quatre activités : planning, review, simulation, release'
+    evidence_limits: Le portefeuille de commandes ne représente pas toutes les formes de demande FLOW ; pas de plan technique
+      unique imposé. Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande
+      prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.
+    status: proposed
+    source_refs:
+    - ELM650
+    - CMP269
+    - CMP270
+    - U673
+    term_choice: Nom du sous-domaine retenu pour la responsabilité FLOW ; pas de correspondance universelle aux modules éditeurs.
+    definition_choice: 'Appui de Overview of Backlog Management Processes : Prioriser un portefeuille, construire un plan,
+      tester des ajustements et libérer les résultats vers Order Management ; les simulations ne modifient pas seules les
+      commandes. Limite de reprise dans FLOW : Planifier, simuler et appliquer des affectations sont documentés. Le périmètre
+      FLOW inclut aussi la demande prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.'
+    concept_name: Overview of Backlog Management Processes
+    scope_summary: Prioriser un portefeuille, construire un plan, tester des ajustements et libérer les résultats vers Order
+      Management ; les simulations ne modifient pas seules les commandes.
+    approach_summary: Construire et maintenir le master plan de matching qui arbitre la couverture de la demande et les affectations
+      de ressources, en mobilisant les décisions spécialisées et en faisant appliquer les changements autorisés.
+  - vendor: Microsoft
+    product: Results of DOM runs
+    element_name: Results of DOM runs
+    element_type: Concept ou fonction documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Le résultat est un plan indiquant quantités et lieux affectés ; il peut être examiné ou appliqué, avec traitement
+      explicite de conflits et de parties non affectées.
+    differences: Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande
+      prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.
+    flow_position: Construire et maintenir le master plan de matching qui arbitre la couverture de la demande et les affectations
+      de ressources, en mobilisant les décisions spécialisées et en faisant appliquer les changements autorisés.
+    source_title: Results of DOM runs
+    source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom-runs-results
+    source_version: Documentation évolutive, mise à jour affichée le 23 janvier 2026
+    consulted_on: '2026-09-23'
+    source_locator: Fulfillment plans ; Order line statuses
+    evidence_limits: Plan de fulfillment Commerce ; appui partiel au master plan de matching FLOW, sans équivalence au Supply
+      Plan U668. Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande
+      prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.
+    status: proposed
+    source_refs:
+    - ELM654
+    - CMP269
+    - CMP270
+    - U673
+    term_choice: Nom du sous-domaine retenu pour la responsabilité FLOW ; pas de correspondance universelle aux modules éditeurs.
+    definition_choice: 'Appui de Results of DOM runs : Le résultat est un plan indiquant quantités et lieux affectés ; il
+      peut être examiné ou appliqué, avec traitement explicite de conflits et de parties non affectées. Limite de reprise
+      dans FLOW : Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande
+      prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.'
+    concept_name: Results of DOM runs
+    scope_summary: Le résultat est un plan indiquant quantités et lieux affectés ; il peut être examiné ou appliqué, avec
+      traitement explicite de conflits et de parties non affectées.
+    approach_summary: Construire et maintenir le master plan de matching qui arbitre la couverture de la demande et les affectations
+      de ressources, en mobilisant les décisions spécialisées et en faisant appliquer les changements autorisés.
+  - vendor: SAP
+    product: SAP S/4HANA — périmètre du cours cité
+    element_name: Explaining Supply Assignment
+    concept_name: Explaining Supply Assignment
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: Supply Assignment affecte les ressources aux commandes et applique des priorités et critères de libération.
+    approach_summary: 'Rapprochement avec Demand & Supply Matching : Supply Assignment affecte les ressources aux commandes
+      et applique des priorités et critères de libération.'
+    similarities: Supply Assignment affecte les ressources aux commandes et applique des priorités et critères de libération.
+    differences: ARun éclaire l’affectation, pas un master plan FLOW complet. BOP revoit les confirmations ; il ne doit pas
+      être confondu avec cette affectation.
+    flow_position: FLOW conserve le périmètre métier de Demand & Supply Matching. ARun éclaire l’affectation, pas un master
+      plan FLOW complet. BOP revoit les confirmations ; il ne doit pas être confondu avec cette affectation.
+    source_title: Explaining Supply Assignment
+    source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Explaining Supply Assignment — passages sur le mécanisme rapproché.
+    consulted_on: '2026-09-25'
+    evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. ARun éclaire l’affectation, pas un master plan FLOW complet. BOP revoit les confirmations ; il ne
+      doit pas être confondu avec cette affectation.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM208
+    term_choice: Le nom Demand & Supply Matching reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
+      cette appellation ni sa maille.
+    definition_choice: 'Supply Assignment affecte les ressources aux commandes et applique des priorités et critères de libération.
+      Frontière conservée : ARun éclaire l’affectation, pas un master plan FLOW complet. BOP revoit les confirmations ; il
+      ne doit pas être confondu avec cette affectation.'
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées.

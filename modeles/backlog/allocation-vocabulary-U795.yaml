@@ -1,0 +1,63 @@
+id: ALLOCATION-VOCABULARY-U795
+source_refs:
+- U795
+- U796
+status: applied
+agreement_scope:
+  lexical_rule: Allocation de stock par groupe (Group Inventory Allocation) est un terme qualifié autorisé pour attribuer
+    une enveloppe de stock à un usage ou une population, avec des droits et règles de consommation explicites. Allocation
+    seul reste ambigu ; distinguer protection minimale, plafond de consommation, affectation aux demandes, réservation et
+    réassort.
+  parent_name: Supply Protection Policy
+  excluded: Renommage/scission du parent, renommage du comportement, extension des droits, approbation globale des rédactions
+    ou des correspondances.
+market_evidence: marche/allocation-protection-U794.md
+publication_delivery:
+  state: applied
+  source_refs:
+  - U795
+  - U796
+  summary: Allocation de stock par groupe autorisé et relié au glossaire ; Supply Protection Policy conservé.
+  required_nodes:
+  - id: D02.b
+    fields:
+      name: Supply Protection Policy
+      scope: |-
+        Quatre mécanismes se combinent : protéger l’accès d’un groupe, plafonner sa consommation, définir un stock de sécurité et encadrer le réassort. Les décisions de [Demand & Supply Matching](model:D03) recommandent les valeurs. Supply Protection Policy tient les règles actives, leur portée, leur validité et leurs dérogations. Une recommandation ne devient pas automatiquement une règle applicable.
+
+        La capacité crée les enveloppes, transfère des droits entre groupes, libère les droits inutilisés et tient les consommations et corrections. Elle rend consultables les quantités allouées, consommées et restantes. L’application peut être individuelle, groupée ou en masse ; écran, traitement par lots ou flux continu ne changent pas cette responsabilité.
+
+        L’[allocation de stock par groupe](glossary:TER018) protège une enveloppe pour un usage, sans garantir à elle seule une disponibilité absolue. Un plafond de consommation n’est pas un minimum protégé. Un seuil de réassort ne rend pas automatiquement le stock restant invendable. La priorité d’une demande relève de [Demand Protection Policy](model:D19.b) ; les deux règles s’appliquent sans compter deux fois la même protection.
+
+        [Reservation Policy Optimization](model:D05.h) recommande les conditions de réservation. Supply Protection Policy les rend applicables ; [Reservation](model:D02.c) les applique aux engagements individuels. Changer la politique ne modifie pas silencieusement les réservations déjà constituées. Cette gouvernance reste distincte de la planification et ne réserve aucune quantité par elle-même.
+
+        Exemple fictif : protéger 200 pièces pour le web, plafonner sa consommation à 500, prévoir une sécurité de 40 et déclencher un réassort sous 60 vers 100. Ces paramètres ont des rôles distincts et ne s’additionnent pas automatiquement. Une valeur commune à la sécurité et au seuil n’est pas décomptée deux fois. Prévenir un surstock futur reste distinct de redistribuer un excès déjà présent.
+  - id: BHV017
+    fields:
+      name: Group Supply Protection
+      scope: |-
+        Critère différenciant : politique. Bénéfice ciblé : Éviter qu’une demande précoce épuise les ressources d’un autre groupe.
+
+        Protection mutuelle ou priorisée décrites ensemble ; D05.d décide les quantités.
+
+        Exemple fictif : Préserver 200 pièces pour le web avant sa demande.
+
+        Vocabulaire U795 : [allocation de stock par groupe](glossary:TER018), ou Group Inventory Allocation, est autorisé pour décrire les enveloppes de protection. Une allocation de stock par groupe préserve une enveloppe pour un usage selon les règles applicables ; elle ne garantit pas à elle seule une disponibilité absolue. Un plafond de consommation ne constitue pas automatiquement un minimum protégé. Un seuil Min/Max de réassort ne rend pas automatiquement le stock restant invendable.
+  editorial_superseded_checks_U797:
+  - id: D02.b
+    field: scope
+    previous_value: |-
+      Les quatre mécanismes décrits se combinent : préserver l’accès des groupes, plafonner leur consommation, définir le rôle d’un stock tampon et réguler le réassort. Les décisions spécialisées D03 déterminent les valeurs ; Supply Protection Policy en gouverne la validité et les applique transactionnellement ; les consommateurs respectent les règles actives.
+
+      Les opérations de création d’enveloppes, réallocation entre groupes, libération des droits inutilisés, imputation ou correction de consommation et consultation des quantités allouées, consommées et restantes restent des fonctions utiles. Les règles ont une validité, une portée et des conditions de dérogation. Leur application transactionnelle est possible à l’unité, par groupe ou en masse, via écran, batch, flux ou streaming ; ces modalités ne créent pas de comportement supplémentaire.
+
+      Exemple fictif : protéger 200 pièces pour le web face à d’autres demandes, plafonner la consommation d’un groupe à 500, prévoir une sécurité de 40 et déclencher le réassort sous 60 vers 100. Ces paramètres ont des rôles distincts et ne s’additionnent pas automatiquement ; une même valeur peut contribuer à la sécurité et au seuil sans double décompte. Prévenir le surstock futur par les règles reste distinct de redistribuer un excès déjà présent.
+
+      [Reservation Policy Optimization](model:D05.h) détermine les conditions de réservation à retenir. Supply Protection Policy les configure, les maintient et les rend applicables pour leur périmètre ; elle distingue la politique active d’une recommandation encore à examiner. [Reservation](model:D02.c) applique les conditions actives aux engagements individuels. Cette gouvernance n’effectue pas la réservation et ne transforme pas une protection de groupe en engagement exclusif. Elle reste extérieure aux Plannings ; le changement de politique ne modifie pas silencieusement des engagements déjà constitués.
+
+      Frontière U673 : Conserver la gouvernance des paramètres applicables ; les recommandations de valeurs issues du Matching ne les activent pas implicitement.
+
+      Distinguer la contrainte sur la ressource de celle sur la demande : une enveloppe de 200 pièces pour le web limite l’accès aux ressources ; la priorité ou la protection d’une commande web relève de Demand Protection Policy. Les consommateurs rapprochent les deux règles applicables sans comptabiliser deux fois la même protection.
+
+      Vocabulaire U795 : [allocation de stock par groupe](glossary:TER018), ou Group Inventory Allocation, est autorisé pour décrire les enveloppes de protection. Une allocation de stock par groupe préserve une enveloppe pour un usage selon les règles applicables ; elle ne garantit pas à elle seule une disponibilité absolue. Un plafond de consommation ne constitue pas automatiquement un minimum protégé. Un seuil Min/Max de réassort ne rend pas automatiquement le stock restant invendable.
+    reason: Reprise éditoriale U797 ; ne vaut pas approbation de la nouvelle rédaction.

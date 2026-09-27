@@ -317,6 +317,8 @@ def model_diff(previous, candidate):
             if delta:
                 result[collection]['modified'].append({'id': identifier, 'changes': delta})
     result['principles'] = changes(previous.get('principles', []), candidate.get('principles', []))
+    if 'scenario_catalog' in previous or 'scenario_catalog' in candidate:
+        result['scenario_catalog'] = changes(previous.get('scenario_catalog'), candidate.get('scenario_catalog'))
     if 'display_policy' in previous or 'display_policy' in candidate:
         result['display_policy'] = changes(previous.get('display_policy'), candidate.get('display_policy'))
         result['display_index'] = changes(previous.get('display_index'), candidate.get('display_index'))
@@ -654,6 +656,9 @@ def publish_prepared(root, version, activate=False):
         notes.append(f"{sum(item['reason']=='new' for item in term_changes)} termes introduits ; {sum(item['reason']=='changed' for item in term_changes)} révisés. Détail des changements, y compris retraits éventuels, dans changes.json.")
         for impact in report.get('glossary_reference_impacts', []):
             notes.append(f"- Sens à réexaminer : {impact['id']} ({impact['field']}) référence {', '.join(impact['changed_terms'])}.")
+    if 'scenario_catalog' in release:
+        catalogue = release['scenario_catalog']
+        notes += ['', '## Scénarios métier', '', f"{len(catalogue['value_streams'])} flux de valeur, {len(catalogue['scenarios'])} scénarios et {len(catalogue['paths'])} parcours figés dans cette publication. Les contenus proposés ne deviennent pas des accords métier par publication."]
     if 'information_catalog' in release:
         catalogue = release['information_catalog']
         notes += ['', '## Informations métier', '',

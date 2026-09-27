@@ -521,13 +521,13 @@ publication_delivery:
       definition: Évaluer les possibilités de satisfaction d’une demande et sélectionner une proposition de promesse, en explicitant
         quantités, dates, conditions et conséquences économiques.
       scope: |-
-        ATP, CTP et PTP produisent des évaluations indépendamment mobilisables. Promise Selection Decision choisit une proposition dans les possibilités admissibles. Les catégories Promise Evaluation et Promise Selection Decision facilitent la lecture sans ajouter de niveau.
+        [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068) produisent des évaluations indépendamment mobilisables. Promise Selection Decision choisit une proposition dans les possibilités admissibles. Les catégories Promise Evaluation et Promise Selection Decision facilitent la lecture sans ajouter de niveau.
 
-        Order Promising peut être sollicité avant la prise d’une commande, pendant sa révision, lors de la construction ou de la révision du master plan de Matching et pendant l’adaptation du Fulfilment. Le contexte détermine les évaluations utiles ; aucune séquence universelle ATP puis CTP puis PTP ni recalcul à chaque changement d’état n’est imposé.
+        [Order Promising](model:subdomain-order-promising) peut être sollicité avant la prise d’une commande, pendant sa révision, lors de la construction ou de la révision du [master plan de Matching](glossary:TER100) et pendant l’adaptation du [Fulfilment](glossary:TER085). Le contexte détermine les évaluations utiles ; aucune séquence universelle [ATP](glossary:TER044) puis [CTP](glossary:TER045) puis [PTP](glossary:TER068) ni recalcul à chaque changement d’état n’est imposé.
 
-        Inventory Management fournit la connaissance des stocks, apports et engagements de quantité ; Plan Visibility fournit les plans. Les capacités logistiques, calendriers, tarifs et règles sont consommés auprès de leurs responsables. PTP expose les avantages et inconvénients économiques locaux ; CTP ne déclenche pas les achats.
+        Inventory Management fournit la connaissance des stocks, apports et engagements de quantité ; Plan Visibility fournit les plans. Les capacités logistiques, calendriers, tarifs et règles sont consommés auprès de leurs responsables. [PTP](glossary:TER068) expose les avantages et inconvénients économiques locaux ; [CTP](glossary:TER045) ne déclenche pas les achats.
 
-        Matching conserve le master plan, les arbitrages collectifs et les affectations. Fulfilment coordonne les prestations et recherche des solutions locales préservant la promesse et les grands équilibres du Matching. Les Orders portent la confirmation et les révisions autorisées de l’engagement. Une proposition recalculée ne confirme, ne réserve et ne réaffecte rien à elle seule.
+        [Matching](glossary:TER112) conserve le master plan, les arbitrages collectifs et les affectations. [Fulfilment](glossary:TER085) coordonne les prestations et recherche des solutions locales préservant la promesse et les grands équilibres du [Matching](glossary:TER112). Les [Orders](glossary:TER012) portent la confirmation et les révisions autorisées de l’engagement. Une proposition recalculée ne confirme, ne réserve et ne réaffecte rien à elle seule.
   - id: D01
     fields:
       definition: Établir et fiabiliser la référence de stock, ses mouvements, sa propriété, ses disponibilités et ses engagements
@@ -564,6 +564,18 @@ publication_delivery:
     parent: D03.l
     fields:
       name: Promise Reassessment
+  editorial_superseded_checks_U797:
+  - id: subdomain-order-promising
+    field: scope
+    previous_value: |-
+      ATP, CTP et PTP produisent des évaluations indépendamment mobilisables. Promise Selection Decision choisit une proposition dans les possibilités admissibles. Les catégories Promise Evaluation et Promise Selection Decision facilitent la lecture sans ajouter de niveau.
+
+      Order Promising peut être sollicité avant la prise d’une commande, pendant sa révision, lors de la construction ou de la révision du master plan de Matching et pendant l’adaptation du Fulfilment. Le contexte détermine les évaluations utiles ; aucune séquence universelle ATP puis CTP puis PTP ni recalcul à chaque changement d’état n’est imposé.
+
+      Inventory Management fournit la connaissance des stocks, apports et engagements de quantité ; Plan Visibility fournit les plans. Les capacités logistiques, calendriers, tarifs et règles sont consommés auprès de leurs responsables. PTP expose les avantages et inconvénients économiques locaux ; CTP ne déclenche pas les achats.
+
+      Matching conserve le master plan, les arbitrages collectifs et les affectations. Fulfilment coordonne les prestations et recherche des solutions locales préservant la promesse et les grands équilibres du Matching. Les Orders portent la confirmation et les révisions autorisées de l’engagement. Une proposition recalculée ne confirme, ne réserve et ne réaffecte rien à elle seule.
+    reason: Reprise éditoriale U797 ; ne vaut pas approbation de la nouvelle rédaction.
 category_proposal_U732:
   status: applied_U733
   integration_direction: Réintégration appliquée U733.
