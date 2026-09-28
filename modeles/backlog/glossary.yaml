@@ -7456,7 +7456,8 @@ terms:
   definition: Aptitude à recevoir les informations de référence et leurs évolutions pour les rendre utilisables dans les opérations,
     en conservant les liens et identifiants du maître externe.
   context: 'Exemple : recevoir une variante de produit créée dans le référentiel maître, avec son identifiant, sa taille et
-    sa couleur. Une correction est reçue depuis cette même autorité ; la Supply ne modifie pas le maître à sa place.'
+    sa couleur. Une correction est reçue depuis cette même autorité ; la Supply ne modifie pas le maître à sa place. Master
+    Data Ingestion est rattachée à Integration, catégorie Inbound ; les références et leurs vues restent dans Master Data.'
   notes: L’autorité sur les références reste externe à Supply. Recevoir leurs évolutions ne transfère pas la responsabilité
     de créer, corriger ou supprimer les maîtres.
   source_refs:
@@ -14503,10 +14504,10 @@ terms:
   short_description: Orienter, financer, mesurer et maîtriser l’activité de l’entreprise.
   definition: Orienter et financer l’activité, mesurer ses résultats et organiser la maîtrise des risques et de la conformité
     à l’échelle de l’entreprise.
-  context: Vue de contexte réunissant Finance, contrôle de gestion, gouvernance de la conformité et performance entreprise.
-    Ces responsabilités interviennent avant, pendant et après les opérations. Leur application opérationnelle reste dans les
-    domaines concernés. FLOW ne prévoit normalement pas d’y intervenir ; seules les sources de référence nécessaires aux ingestions
-    seront détaillées à terme lorsqu’elles seront établies.
+  context: Vue de contexte réunissant [Finance](model:domain-finance), contrôle de gestion, gouvernance de la conformité et
+    performance entreprise. Ces responsabilités interviennent avant, pendant et après les opérations. Seul le raccordement
+    des faits opérationnels à [Accounting Interpretation](model:accounting-interpretation) est détaillé dans Finance ; les
+    autres responsabilités restent hors étude.
   notes: Sens FLOW U778–U780 ; profondeur ciblée. Les illustrations ne constituent pas des observations installées.
   source_refs:
   - U780
@@ -15080,5 +15081,583 @@ terms:
     definition_choice: 'Supply Assignment affecte les ressources aux commandes et applique des priorités et critères de libération.
       Frontière conservée : ARun éclaire l’affectation, pas un master plan FLOW complet. BOP revoit les confirmations ; il
       ne doit pas être confondu avec cette affectation.'
+- id: TER113
+  name: Integration
+  short_description: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres
+    domaines, selon les contrats convenus, sans reprendre le pilotage des exécutants.
+  definition: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines,
+    selon les contrats convenus, sans reprendre le pilotage des exécutants.
+  context: Dans Supply Chain Orchestration, Inbound et Outbound sont des catégories de présentation relatives au domaine.
+    Les interactions de pilotage des exécutants restent dans leurs capacités actuelles.
+  notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée.
+  source_refs:
+  - U826
+  - ELM853
+  - ELM854
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: proposed
+    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Demand planning home page
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: La planification reçoit historiques et références et fournit des prévisions.
+    differences: Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention
+      FLOW, pas une taxonomie éditeur.
+    flow_position: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines,
+      selon les contrats convenus, sans reprendre le pilotage des exécutants.
+    source_title: Demand planning home page
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/demand-planning/demand-planning-home-page
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: The demand planning process
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM853
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une
+      convention FLOW, pas une taxonomie éditeur.
+  - vendor: SAP
+    product: SAP S/4HANA Supply Chain Integration Add-On for SAP IBP
+    element_name: Administrator’s Guide
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Commandes et stocks alimentent la planification, avec chargements initiaux et changements.
+    differences: Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention
+      FLOW, pas une taxonomie éditeur.
+    flow_position: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines,
+      selon les contrats convenus, sans reprendre le pilotage des exécutants.
+    source_title: Administrator’s Guide
+    source_url: https://help.sap.com/doc/227fcaf7918e45378f8cb20a45ffe6a2/1.0%20SP19/en-US/loioc5148f2152294904ac379b94cb902e59.pdf
+    source_version: 1.0 SP19, Order-Based Planning Integration, pages 33–35
+    consulted_on: '2026-09-28'
+    source_locator: 1.0 SP19, Order-Based Planning Integration, pages 33–35
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM854
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une
+      convention FLOW, pas une taxonomie éditeur.
+- id: TER114
+  name: Accounting Data Provision
+  short_description: Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs
+    justificatifs et corrections.
+  definition: Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs justificatifs
+    et corrections.
+  context: Sortie de Supply Chain Orchestration vers Finance. Les registres conservent la responsabilité des faits ; Accounting
+    Interpretation les reçoit dans Finance.
+  notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée.
+  source_refs:
+  - U826
+  - ELM847
+  - ELM850
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: proposed
+    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Finance
+    element_name: Inventory posting
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Les mouvements de stock et leurs effets comptables sont distingués.
+    differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+    flow_position: Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs justificatifs
+      et corrections.
+    source_title: Inventory posting
+    source_url: https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/inventory-posting
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Tableau Inventory transactions, Transfer (journal)
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM847
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+  - vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition
+    element_name: Introducing Goods Movements
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Le fait matériel est distingué du document comptable produit lorsque le mouvement a un effet financier.
+    differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+    flow_position: Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs justificatifs
+      et corrections.
+    source_title: Introducing Goods Movements
+    source_url: https://learning.sap.com/courses/managing-inventory-movements-and-stock-transfers-in-sap-s-4hana-cloud-public-edition/introducing-goods-movements_ba906e87-54e8-4f56-837e-bde4d82599de
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Document Flow in Goods Movements
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM850
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+- id: TER115
+  name: Planning Data Provision
+  short_description: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs
+    corrections.
+  definition: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs corrections.
+  context: Sortie vers Demand & Supply Planning. Le retour des plans est reçu séparément par Plan Ingestion. Historiques,
+    positions et engagements ne sont pas confondus.
+  notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée.
+  source_refs:
+  - U826
+  - ELM853
+  - ELM854
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: proposed
+    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Demand planning home page
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: La planification reçoit historiques et références et fournit des prévisions.
+    differences: Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply Planning.
+    flow_position: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs
+      corrections.
+    source_title: Demand planning home page
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/demand-planning/demand-planning-home-page
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: The demand planning process
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM853
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply
+      Planning.
+  - vendor: SAP
+    product: SAP S/4HANA Supply Chain Integration Add-On for SAP IBP
+    element_name: Administrator’s Guide
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Commandes et stocks alimentent la planification, avec chargements initiaux et changements.
+    differences: Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply Planning.
+    flow_position: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs
+      corrections.
+    source_title: Administrator’s Guide
+    source_url: https://help.sap.com/doc/227fcaf7918e45378f8cb20a45ffe6a2/1.0%20SP19/en-US/loioc5148f2152294904ac379b94cb902e59.pdf
+    source_version: 1.0 SP19, Order-Based Planning Integration, pages 33–35
+    consulted_on: '2026-09-28'
+    source_locator: 1.0 SP19, Order-Based Planning Integration, pages 33–35
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM854
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply
+      Planning.
+- id: TER116
+  name: Product Feedback
+  short_description: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+  definition: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+  context: Sortie vers les responsables de conception et développement produit. Leurs outils peuvent recevoir ces constats
+    ; les modifications produit restent sous leur responsabilité.
+  notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée.
+  source_refs:
+  - U826
+  - ELM855
+  - ELM856
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: proposed
+    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Manage changes to engineering products
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Les services opérationnels peuvent fournir des signalements et demandes d’amélioration produit.
+    differences: Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit textile
+      ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+    flow_position: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+    source_title: Manage changes to engineering products
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/engineering-change-management
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Engineering change requests
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM855
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit
+      textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+  - vendor: SAP
+    product: PLM System Integration for SAP S/4HANA
+    element_name: Administration Guide for PLM System Integration for SAP S/4HANA
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Un problème issu des opérations est transmis au système de développement produit pour examen.
+    differences: Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit textile
+      ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+    flow_position: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+    source_title: Administration Guide for PLM System Integration for SAP S/4HANA
+    source_url: https://help.sap.com/doc/6f4e849a041c4bc59c4b9d6882053532/2.0%20FP03/en-US/Administration_Guide_TC.pdf
+    source_version: 2.0 FP03, document 1.0 du 2022-12-05, §7.3 p.60
+    consulted_on: '2026-09-28'
+    source_locator: 2.0 FP03, document 1.0 du 2022-12-05, §7.3 p.60
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM856
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit
+      textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+- id: TER117
+  name: Finance
+  short_description: Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les
+    décisions de l’entreprise.
+  definition: Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les décisions
+    de l’entreprise.
+  context: Domaine de contexte sous Enterprise Management & Control. Seul le raccordement comptable aux opérations est détaillé
+    ; les autres responsabilités restent hors étude.
+  notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée.
+  source_refs:
+  - U826
+  - ELM858
+  - ELM859
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: proposed
+    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Finance
+    element_name: Introduction to the record to report end-to-end business process
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Collecte des données financières, enregistrement, rapprochement et restitution des comptes.
+    differences: Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas décrire
+      tout le domaine Finance.
+    flow_position: Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les
+      décisions de l’entreprise.
+    source_title: Introduction to the record to report end-to-end business process
+    source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-introduction
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Record to report overview ; mise à jour 2026-07-31
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM858
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas
+      décrire tout le domaine Finance.
+  - vendor: SAP
+    product: SAP S/4HANA
+    element_name: Identifying the Basics of Financial and Management Accounting
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: La comptabilité financière enregistre les transactions et alimente les comptes ; elle est distinguée du
+      contrôle de gestion.
+    differences: Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas décrire
+      tout le domaine Finance.
+    flow_position: Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les
+      décisions de l’entreprise.
+    source_title: Identifying the Basics of Financial and Management Accounting
+    source_url: https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap-business-suite/identifying-the-areas-of-financial-and-management-accounting_e3512e3e-753c-4fc0-8e21-4391145368ef
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Financial Accounting et Management Accounting
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM859
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas
+      décrire tout le domaine Finance.
+- id: TER118
+  name: Financial Accounting
+  short_description: Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+  definition: Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+  context: Sous-domaine de contexte de Finance, utilisé pour situer Accounting Interpretation sans prétendre à une décomposition
+    exhaustive de la comptabilité.
+  notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée.
+  source_refs:
+  - U826
+  - ELM858
+  - ELM859
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: proposed
+    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Finance
+    element_name: Introduction to the record to report end-to-end business process
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Collecte des données financières, enregistrement, rapprochement et restitution des comptes.
+    differences: Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée
+      ici.
+    flow_position: Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+    source_title: Introduction to the record to report end-to-end business process
+    source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-introduction
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Record to report overview ; mise à jour 2026-07-31
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM858
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée
+      ici.
+  - vendor: SAP
+    product: SAP S/4HANA
+    element_name: Identifying the Basics of Financial and Management Accounting
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: La comptabilité financière enregistre les transactions et alimente les comptes ; elle est distinguée du
+      contrôle de gestion.
+    differences: Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée
+      ici.
+    flow_position: Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+    source_title: Identifying the Basics of Financial and Management Accounting
+    source_url: https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap-business-suite/identifying-the-areas-of-financial-and-management-accounting_e3512e3e-753c-4fc0-8e21-4391145368ef
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Financial Accounting et Management Accounting
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM859
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée
+      ici.
+- id: TER119
+  name: Accounting Interpretation
+  short_description: Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+  definition: Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+  context: Dans Finance, recevoir et vérifier les faits, appliquer les règles et produire les écritures prêtes à enregistrer
+    ou un rejet motivé. L’enregistrement effectif reste distinct.
+  notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée.
+  source_refs:
+  - U826
+  - ELM848
+  - ELM851
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: proposed
+    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Finance
+    element_name: Accounting distributions
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Les montants des documents sources sont répartis sur les comptes ; les corrections restent identifiables.
+    differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+    flow_position: Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+    source_title: Accounting distributions
+    source_url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-payable/accounting-distributions
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Introduction et Distribute amounts
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM848
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+  - vendor: SAP
+    product: SAP S/4HANA Materials Management
+    element_name: Describing Automatic Account Determination
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Les comptes sont déterminés pour les transactions pertinentes comptablement.
+    differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+    flow_position: Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+    source_title: Describing Automatic Account Determination
+    source_url: https://learning.sap.com/courses/cross-functional-customizing-in-sap-s-4hana-materials-management/describing-automatic-account-determination
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Automatic Account Determination
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM851
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+- id: TER120
+  name: Business Fact
+  short_description: Fait reconnu dans l’activité, daté et justifié, distingué d’une prévision, d’une demande et d’un simple
+    message technique.
+  definition: Fait reconnu dans l’activité, daté et justifié, distingué d’une prévision, d’une demande et d’un simple message
+    technique.
+  context: Une réception reconnue de 80 pièces constitue un fait ; une réception attendue de 100 pièces reste prévisionnelle.
+    Un fait corrigé conserve le lien vers sa version antérieure.
+  notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée.
+  source_refs:
+  - U826
+  - ELM847
+  - ELM850
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: proposed
+    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Finance
+    element_name: Inventory posting
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Les mouvements de stock et leurs effets comptables sont distingués.
+    differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+    flow_position: Fait reconnu dans l’activité, daté et justifié, distingué d’une prévision, d’une demande et d’un simple
+      message technique.
+    source_title: Inventory posting
+    source_url: https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/inventory-posting
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Tableau Inventory transactions, Transfer (journal)
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM847
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+  - vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition
+    element_name: Introducing Goods Movements
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Le fait matériel est distingué du document comptable produit lorsque le mouvement a un effet financier.
+    differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+    flow_position: Fait reconnu dans l’activité, daté et justifié, distingué d’une prévision, d’une demande et d’un simple
+      message technique.
+    source_title: Introducing Goods Movements
+    source_url: https://learning.sap.com/courses/managing-inventory-movements-and-stock-transfers-in-sap-s-4hana-cloud-public-edition/introducing-goods-movements_ba906e87-54e8-4f56-837e-bde4d82599de
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Document Flow in Goods Movements
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM850
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+- id: TER121
+  name: Accounting Entry
+  short_description: Enregistrement qui affecte des comptes et des montants selon les règles comptables, en conservant sa
+    justification.
+  definition: Enregistrement qui affecte des comptes et des montants selon les règles comptables, en conservant sa justification.
+  context: L’interprétation prépare les écritures ; leur enregistrement effectif les porte dans les comptes. Une reprise technique
+    ne doit pas créer un second effet comptable.
+  notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée.
+  source_refs:
+  - U826
+  - ELM848
+  - ELM851
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: proposed
+    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Finance
+    element_name: Accounting distributions
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Les montants des documents sources sont répartis sur les comptes ; les corrections restent identifiables.
+    differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+    flow_position: Enregistrement qui affecte des comptes et des montants selon les règles comptables, en conservant sa justification.
+    source_title: Accounting distributions
+    source_url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-payable/accounting-distributions
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Introduction et Distribute amounts
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM848
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+  - vendor: SAP
+    product: SAP S/4HANA Materials Management
+    element_name: Describing Automatic Account Determination
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Les comptes sont déterminés pour les transactions pertinentes comptablement.
+    differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
+    flow_position: Enregistrement qui affecte des comptes et des montants selon les règles comptables, en conservant sa justification.
+    source_title: Describing Automatic Account Determination
+    source_url: https://learning.sap.com/courses/cross-functional-customizing-in-sap-s-4hana-materials-management/describing-automatic-account-determination
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-09-28'
+    source_locator: Automatic Account Determination
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM851
+    - U826
+    term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+    definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable.
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées.

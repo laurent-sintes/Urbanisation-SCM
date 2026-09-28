@@ -1,0 +1,151 @@
+id: INTEGRATION-REVIEW-U823
+status: applied
+source_refs:
+- U818
+- U822
+- U823
+- U824
+- U826
+scope: Integration est-ouest appliqué ; les interactions nord-sud et les deux Tracking conservent leur rattachement.
+candidate_subdomain:
+  name: Integration
+  parent: supply-chain-orchestration
+  definition: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines,
+    selon les contrats convenus, sans reprendre le pilotage des exécutants.
+presentation_categories:
+- name: Inbound
+  existing_capabilities:
+  - master-data-ingestion
+  - plans-ingestion
+- name: Outbound
+  candidate_capabilities:
+  - accounting-data-provision
+  - Planning Data Provision
+  - Product Feedback
+preserve:
+- Identités et noms des capacités existantes et de leurs comportements
+- Registres et vues dans leurs sous-domaines métier
+- Accounting Interpretation dans Finance
+- Accords historiques sans propagation au nouveau contexte
+comparison_refs:
+- CMP310
+- CMP311
+- ELM853
+- ELM854
+- ELM855
+- ELM856
+- ELM857
+market_limit: Les échanges sont documentés ; aucun sous-domaine métier identique ni consensus de nommage établi.
+analysis: marche/diffusion-donnees-operationnelles-U822.md
+application: applied
+confirmed_boundary:
+  source_ref: U824
+  included: Échanges métier est-ouest entre Supply Chain Orchestration et les autres domaines.
+  excluded: Interactions nord-sud de pilotage des exécutants et services opérationnels.
+  interpretation: Les retours attachés aux prestations doivent rester cohérents avec leur pilotage ; ne pas déplacer tout
+    Tracking au seul motif de son type Integration.
+tracking_review:
+  ids:
+  - D01.f
+  - D07.d
+  status: not_approved_for_move
+  reason: Leur périmètre peut mêler retours d’exécution nord-sud et faits fournis par un autre domaine. Le type Integration
+    ne suffit pas à justifier un transfert complet.
+application_details:
+  source: U826
+  new_nodes:
+  - subdomain-integration
+  - accounting-data-provision
+  - planning-data-provision
+  - product-feedback
+  - domain-finance
+  - subdomain-financial-accounting
+  - accounting-interpretation
+  moved_nodes:
+  - master-data-ingestion
+  - plans-ingestion
+  unchanged_tracking:
+  - D01.f
+  - D07.d
+  glossary_terms:
+    integration: TER113
+    accounting-data-provision: TER114
+    planning-data-provision: TER115
+    product-feedback: TER116
+    finance: TER117
+    financial-accounting: TER118
+    accounting-interpretation: TER119
+    business-fact: TER120
+    accounting-entry: TER121
+  finance_context: Finance / Financial Accounting constitue un contexte minimal proposé, sans décomposition exhaustive ni
+    approbation globale de ses descriptions.
+  new_behavior_count: 0
+  scenarios: Aucun scénario inventé ; le catalogue existant et ses contributions sont conservés. Les listes de fiches dérivent
+    des liens documentés.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U826
+  summary: Integration est-ouest, Inbound/Outbound et deux ingestions déplacées ; trois sorties et interprétation dans Finance
+    ; Tracking conservés.
+  required_nodes:
+  - id: subdomain-integration
+    kind: area
+    fields:
+      name: Integration
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: accounting-data-provision
+    kind: capability
+    fields:
+      name: Accounting Data Provision
+    parent: subdomain-integration
+    parent_type: contains
+  - id: planning-data-provision
+    kind: capability
+    fields:
+      name: Planning Data Provision
+    parent: subdomain-integration
+    parent_type: contains
+  - id: product-feedback
+    kind: capability
+    fields:
+      name: Product Feedback
+    parent: subdomain-integration
+    parent_type: contains
+  - id: domain-finance
+    kind: domain
+    fields:
+      name: Finance
+    parent: system-enterprise-management-control
+    parent_type: presents
+  - id: subdomain-financial-accounting
+    kind: area
+    fields:
+      name: Financial Accounting
+    parent: domain-finance
+    parent_type: presents
+  - id: accounting-interpretation
+    kind: capability
+    fields:
+      name: Accounting Interpretation
+    parent: subdomain-financial-accounting
+    parent_type: contains
+  - id: master-data-ingestion
+    fields:
+      category:
+        id: inbound
+        display_name: Inbound
+        order: 10
+    parent: subdomain-integration
+  - id: plans-ingestion
+    fields:
+      category:
+        id: inbound
+        display_name: Inbound
+        order: 10
+    parent: subdomain-integration
+  - id: D01.f
+    parent: D01
+  - id: D07.d
+    parent: D06

@@ -307,18 +307,18 @@ nodes:
       modeling_depth: 6035c7459e58f5795e86d8aa7cb4df5512416eef5bd82f758dbefe3c85aa4bce
     note: Portée limitée à ces champs ; capture contextualisée INT-U780 séparée. Rédactions et comparaisons nouvelles proposées.
 - id: system-enterprise-management-control
-  revision: 1
+  revision: 2
   kind: business_system
   fields:
     name: Enterprise Management & Control
     definition: '[Enterprise Management & Control](glossary:TER107) : orienter et financer l’activité, mesurer ses résultats
       et organiser la maîtrise des risques et de la conformité à l’échelle de l’entreprise.'
     finality: Orienter, financer, mesurer et maîtriser l’activité de l’entreprise.
-    scope: Vue de contexte réunissant Finance, contrôle de gestion, gouvernance de la conformité et performance entreprise.
-      Ces responsabilités interviennent avant, pendant et après les opérations. Leur application opérationnelle reste dans
-      les domaines concernés. FLOW ne prévoit normalement pas d’y intervenir ; seules les sources de référence nécessaires
-      aux ingestions seront détaillées à terme lorsqu’elles seront établies.
-    modeling_depth: context
+    scope: Vue de contexte réunissant [Finance](model:domain-finance), contrôle de gestion, gouvernance de la conformité et
+      performance entreprise. Ces responsabilités interviennent avant, pendant et après les opérations. Seul le raccordement
+      des faits opérationnels à [Accounting Interpretation](model:accounting-interpretation) est détaillé dans Finance ; les
+      autres responsabilités restent hors étude.
+    modeling_depth: domains
     examples:
     - title: Illustration de responsabilité
       situation: Illustration FLOW fictive. Un budget oriente les achats avant la saison ; les résultats et la marge sont
@@ -389,13 +389,14 @@ nodes:
   - U779
   - U780
   - CMP309
+  - U826
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u780
   review:
     state: partial
-    note: U780 autorise nom, niveau, rattachement et profondeur ; nouvelles rédactions, illustrations et comparaisons restent
-      proposées.
+    note: Structure et frontière est-ouest appliquées ; nouveaux compléments rédactionnels proposés. Accords historiques conservés
+      sans extension automatique.
   lifecycle:
     state: urbanist_validated
     recorded_at: '2026-09-26T09:02:28.510648Z'
@@ -404,11 +405,11 @@ nodes:
     - U780
     validated_fields:
     - name
-    - modeling_depth
     value_sha256:
       name: c1053b71e628d7ad70eaad72f74e5846a0346e4daaa9e28ee83b07a7cc839eee
-      modeling_depth: 28b8c501c87f18578903305c7401cd4442a59d22af37a90fc558e694189456fc
     note: Portée limitée à ces champs ; capture contextualisée INT-U780 séparée. Rédactions et comparaisons nouvelles proposées.
+      La profondeur de contexte antérieure est remplacée par le raccordement ciblé à Finance sous U826 ; accord historique
+      conservé dans Git et les publications.
 - id: domain-sales
   revision: 1
   kind: domain
@@ -726,7 +727,7 @@ nodes:
     value_sha256: {}
     note: Accords explicites limités dans decision-intents ; descriptions et qualifications détaillées proposées.
 - id: supply-chain-orchestration
-  revision: 14
+  revision: 15
   kind: domain
   fields:
     name: Supply Chain Orchestration
@@ -1051,15 +1052,17 @@ nodes:
     finality: Satisfaire les besoins de la chaîne d’approvisionnement avec des engagements explicites et une utilisation cohérente
       des ressources.
     scope: |-
-      Le Domain comprend neuf sous-domaines : Master Data, Policies, Plan Visibility, [Order Management](model:D04), Inventory Management, [Order Promising](model:subdomain-order-promising), [Demand & Supply Matching](glossary:TER112), [Service Order Management](model:subdomain-service-orders) et [Fulfilment Orchestration](model:D06). Ils coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
+      Le Domain comprend dix sous-domaines : Master Data, Policies, Plan Visibility, [Order Management](model:D04), Inventory Management, [Order Promising](model:subdomain-order-promising), [Demand & Supply Matching](glossary:TER112), [Service Order Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Integration](model:subdomain-integration). Ils coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
 
-      [Plan Visibility](model:subdomain-plans) reçoit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) du domaine [Demand & Supply Planning](model:domain-plan), par [Plan Ingestion](model:plans-ingestion). [Supply Plan](glossary:TER098) porte les prévisions d’entrées ou de sorties de stock hors achats. Le [master plan de matching](glossary:TER100) est un objet distinct, construit et géré dans [Matching](glossary:TER112). Le domaine [Demand & Supply Planning](model:domain-plan) reste extérieur à l’orchestration.
+      [Integration](model:subdomain-integration) reçoit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) du domaine [Demand & Supply Planning](model:domain-plan), par [Plan Ingestion](model:plans-ingestion) ; [Plan Visibility](model:subdomain-plans) les rend consultables. [Supply Plan](glossary:TER098) porte les prévisions d’entrées ou de sorties de stock hors achats. Le [master plan de matching](glossary:TER100) est un objet distinct, construit et géré dans [Matching](glossary:TER112). Le domaine [Demand & Supply Planning](model:domain-plan) reste extérieur à l’orchestration.
 
       [Order Promising](model:subdomain-order-promising) évalue et recommande la promesse pour [Order Management](model:D04) ou pour [Matching](glossary:TER112) ; [Matching](glossary:TER112) arbitre les affectations ; [Order Management](model:D04) confirme, porte et révise les engagements. [Fulfilment](glossary:TER085) cherche des solutions locales préservant promesse et grands équilibres. Les exécutants réalisent les prestations et conservent leurs opérations internes.
 
       Les sources de vérité d’entreprise restent externes ; Master Data porte les références locales Supply, Policies les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
 
       [Service Order Management](model:subdomain-service-orders) porte les exigences et engagements propres des prestations confiées ; [Fulfilment](glossary:TER085) les compose et les coordonne. Les familles d’ordres de services sont des capacités, comme les familles d’[Orders](glossary:TER012) entrants.
+
+      [Integration](model:subdomain-integration) porte les échanges est-ouest avec les autres domaines. Les deux Tracking, les ordres et le pilotage des exécutants gardent leurs périmètres actuels.
     market_inspiration:
       choice: Supply Chain Orchestration orchestre les ressources et prestations pour satisfaire la demande, en reliant Matching
         & Balancing, application des changements et coordination de leur réalisation.
@@ -1153,13 +1156,14 @@ nodes:
   - U780
   - U797
   - U801
+  - U826
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u373
   review:
     state: partial
-    note: U780 ajoute le rattachement à Business Operations et la profondeur capacités/comportements. Les accords antérieurs
-      restent limités à leurs valeurs et contextes ; aucune reprise globale des définitions.
+    note: Structure et frontière est-ouest appliquées ; nouveaux compléments rédactionnels proposés. Accords historiques conservés
+      sans extension automatique.
   adoption_ids: []
   lifecycle:
     state: ai_proposed
@@ -1181,7 +1185,7 @@ nodes:
   - market_inspiration
   approved_fields: []
 - id: business-references
-  revision: 12
+  revision: 13
   kind: area
   fields:
     name: Master Data
@@ -1350,10 +1354,10 @@ nodes:
       et le réseau mobilisés par la Supply.
     scope: Les huit sujets [Product Reference](glossary:TER052), Party / Role, [Agreement](glossary:TER048), [Product Catalog](glossary:TER049),
       [Fulfilment Network](glossary:TER054), [Service Catalog](glossary:TER094), [Assortment](glossary:TER087) et [Price Book](model:price-book)
-      restent distincts avec leurs capacités Visibility. [Master Data Ingestion](model:master-data-ingestion) reçoit leurs
-      données depuis les domaines fournisseurs, sans correspondance un-à-un entre sujet et domaine source. Le domaine porte
-      leur source de vérité locale ; la maîtrise d’entreprise reste externe. Les règles actives relèvent de Policies, les
-      prévisions de Plan Visibility.
+      restent distincts avec leurs capacités Visibility. [Master Data Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration),
+      reçoit leurs données depuis les domaines fournisseurs, sans correspondance un-à-un entre sujet et domaine source. Le
+      domaine porte leur source de vérité locale ; la maîtrise d’entreprise reste externe. Les règles actives relèvent de
+      Policies, les prévisions de Plan Visibility.
     mastership: Source de vérité locale du domaine pour les sept référentiels ; sources de vérité d’entreprise externes. Les
       policies et plans ont leurs sous-domaines distincts.
     dominant_role:
@@ -1407,13 +1411,14 @@ nodes:
   - ELM063
   - ELM799
   - U797
+  - U826
   source_locator:
     path: connaissance/25-domaines-coeur-et-epreuve-recits.md
     anchor: business-references
   review:
-    state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    state: partial
+    note: Structure et frontière est-ouest appliquées ; nouveaux compléments rédactionnels proposés. Accords historiques conservés
+      sans extension automatique.
   adoption_ids:
   - ADOPT-042
   lifecycle:
@@ -26919,21 +26924,20 @@ nodes:
   approved_fields:
   - name
 - id: subdomain-plans
-  revision: 4
+  revision: 5
   kind: area
   fields:
     name: Plan Visibility
-    definition: Recevoir et rendre utilisables les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) calculés
-      hors du domaine pour éclairer la promesse et le [Matching](glossary:TER112).
-    scope: Recevoir les plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration
-      et pouvant être servi par un outil de planification avancée, par [Plan Ingestion](model:plans-ingestion). Le domaine
-      source [Demand & Supply Planning](model:domain-plan) est représenté au même niveau que Supply Chain Orchestration, sans
-      décomposition interne. [Supply Plan Visibility](model:plans-visibility) expose les prévisions d’entrées et de sorties
-      de stock hors achats ; [Demand Plan Visibility](model:demand-plan-visibility) expose la demande prévisionnelle. Les
-      deux vues rendent explicites versions, horizons, provenance et incertitudes pour [Order Promising](model:subdomain-order-promising)
-      et [Matching](glossary:TER112). Le calcul des prévisions reste externe. Le master plan d’affectation est construit et
-      géré dans [Demand & Supply Matching](model:D03). Une projection ne crée ni [Order](glossary:TER012) ferme ni mouvement
-      de stock.
+    definition: Rendre utilisables les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) reçus pour éclairer
+      la promesse et le [Matching](glossary:TER112).
+    scope: Exploiter les plans du domaine [Demand & Supply Planning](model:domain-plan), reçus par [Plan Ingestion](model:plans-ingestion)
+      dans [Integration](model:subdomain-integration). Le domaine source [Demand & Supply Planning](model:domain-plan) est
+      représenté au même niveau que Supply Chain Orchestration, sans décomposition interne. [Supply Plan Visibility](model:plans-visibility)
+      expose les prévisions d’entrées et de sorties de stock hors achats ; [Demand Plan Visibility](model:demand-plan-visibility)
+      expose la demande prévisionnelle. Les deux vues rendent explicites versions, horizons, provenance et incertitudes pour
+      [Order Promising](model:subdomain-order-promising) et [Matching](glossary:TER112). Le calcul des prévisions reste externe.
+      Le master plan d’affectation est construit et géré dans [Demand & Supply Matching](model:D03). Une projection ne crée
+      ni [Order](glossary:TER012) ferme ni mouvement de stock.
     finality: Disposer des prévisions nécessaires aux décisions sans reprendre leur calcul externe.
     market_comparisons:
     - vendor: Microsoft
@@ -26946,8 +26950,7 @@ nodes:
       differences: Les plans externes et besoins prévisionnels sont documentés ; leur ingestion dans un sous-domaine autonome
         est une frontière FLOW. Le sens Supply Plan hors achats vient de U668 ; ces sources ne prouvent pas une équivalence
         avec Supply Planning éditeur.
-      flow_position: Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer
-        la promesse et le Matching.
+      flow_position: Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching.
       source_title: Master plans overview
       source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
       source_version: Documentation évolutive, mise à jour affichée le 25 mars 2026
@@ -26971,8 +26974,7 @@ nodes:
       concept_name: Master plans overview
       scope_summary: Plans distincts, recalculs, simulations, conversion des propositions et suggestions de modification des
         ordres.
-      approach_summary: Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer
-        la promesse et le Matching.
+      approach_summary: Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching.
     - vendor: SAP
       product: Outlining Program Planning
       element_name: Outlining Program Planning
@@ -26983,8 +26985,7 @@ nodes:
       differences: Les plans externes et besoins prévisionnels sont documentés ; leur ingestion dans un sous-domaine autonome
         est une frontière FLOW. Le sens Supply Plan hors achats vient de U668 ; ces sources ne prouvent pas une équivalence
         avec Supply Planning éditeur.
-      flow_position: Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer
-        la promesse et le Matching.
+      flow_position: Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching.
       source_title: Outlining Program Planning
       source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a
       source_version: Cours S/4HANA Cloud Public Edition, édition non affichée
@@ -27009,8 +27010,7 @@ nodes:
       concept_name: Outlining Program Planning
       scope_summary: Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la
         stratégie. Demand Management gère leur interaction pour alimenter MRP.
-      approach_summary: Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer
-        la promesse et le Matching.
+      approach_summary: Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching.
     - vendor: Microsoft
       product: Microsoft Dynamics 365 — application indiquée par la source
       element_name: Inventory forecasts
@@ -27047,8 +27047,7 @@ nodes:
         ont une portée plus large. L’APS externe ne devient pas un sous-domaine.'
     market_inspiration:
       choice: Plan Visibility explicite la responsabilité FLOW.
-      flow_scope: Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la
-        promesse et le Matching.
+      flow_scope: Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching.
       flow_approach: Recevoir les plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain
         Orchestration et pouvant être servi par un APS, par [Plan Ingestion](model:plans-ingestion). Le domaine source [Demand
         & Supply Planning](model:domain-plan) est représenté au même niveau que Supply Chain Orchestration, sans décomposition
@@ -27071,8 +27070,7 @@ nodes:
           explicites versions, horizons, provenance et incertitudes pour Order Promising et Matching. Le calcul des prévisions
           reste externe. Le master plan d’affectation est construit et géré dans [Demand & Supply Matching](model:D03). Une
           projection ne crée ni Order ferme ni mouvement de stock.
-        outcome: Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la
-          promesse et le Matching.
+        outcome: Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching.
         lesson: Exemple fictif de la frontière FLOW ; la source apporte un recouvrement partiel et ne démontre pas une réalisation
           Beaumanoir.
         source_refs:
@@ -27099,13 +27097,14 @@ nodes:
   - U794
   - U797
   - U801
+  - U826
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u673
   review:
-    state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    state: partial
+    note: Structure et frontière est-ouest appliquées ; nouveaux compléments rédactionnels proposés. Accords historiques conservés
+      sans extension automatique.
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-09-25T11:06:16.310173Z'
@@ -27127,18 +27126,17 @@ nodes:
   - dominant_role
   approved_fields: []
 - id: plans-ingestion
-  revision: 3
+  revision: 4
   kind: capability
   fields:
     name: Plan Ingestion
     definition: Recevoir et intégrer les [Supply Plans](glossary:TER098) et [Demand Plans](glossary:TER099) du domaine [Demand
       & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un outil de
       planification avancée, avec leur provenance, horizon, version et statut.
-    scope: 'Une capacité commune reçoit les deux types de plans en conservant leur distinction. Reconnaître les nouvelles
-      versions, corrections et rejets ; rapprocher les données de leurs références locales sans calculer les prévisions. Le
-      domaine [Demand & Supply Planning](model:domain-plan) est extérieur à Supply Chain Orchestration et représenté sans
-      décomposition interne. Une projection révisée ne modifie ni un [Order](glossary:TER012) ni un mouvement constaté. Exemple
-      fictif : une prévision d’entrée hors achat passe de 100 à 80 pièces ; intégrer la révision sans enregistrer une réception.'
+    scope: |-
+      Une capacité commune reçoit les deux types de plans en conservant leur distinction. Reconnaître les nouvelles versions, corrections et rejets ; rapprocher les données de leurs références locales sans calculer les prévisions. Le domaine [Demand & Supply Planning](model:domain-plan) est extérieur à Supply Chain Orchestration et représenté sans décomposition interne. Une projection révisée ne modifie ni un [Order](glossary:TER012) ni un mouvement constaté. Exemple fictif : une prévision d’entrée hors achat passe de 100 à 80 pièces ; intégrer la révision sans enregistrer une réception.
+
+      Cette capacité appartient à [Integration](model:subdomain-integration), catégorie Inbound. Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
     finality: Fournir des données prévisionnelles fiables aux décisions Supply.
     nature: integration
     data_governance: Projection
@@ -27248,8 +27246,8 @@ nodes:
         source_title: Master plans overview
         source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
     category:
-      id: integration
-      display_name: Intégration
+      id: inbound
+      display_name: Inbound
       order: 10
   source_refs:
   - U673
@@ -27263,13 +27261,14 @@ nodes:
   - U794
   - U797
   - U801
+  - U826
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u673
   review:
-    state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    state: partial
+    note: Structure et frontière est-ouest appliquées ; nouveaux compléments rédactionnels proposés. Accords historiques conservés
+      sans extension automatique.
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-09-24T14:01:57.639021Z'
@@ -31636,7 +31635,7 @@ nodes:
   - market_inspiration
   approved_fields: []
 - id: master-data-ingestion
-  revision: 4
+  revision: 5
   kind: capability
   fields:
     name: Master Data Ingestion
@@ -31653,6 +31652,8 @@ nodes:
       Les références peuvent être liées sans fusionner leurs autorités : produit dans plusieurs catalogues, assortiment référencé par un accord, offre associée à des tarifs. Le tarif reste dans [Price Book](glossary:TER097) ; son évolution ne modifie pas automatiquement le prix ou le [SLA](glossary:TER076) d’un engagement existant. La consultation du catalogue de services ne remplace pas la captation des faits d’exécution.
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Price Book Visibility](model:price-book-visibility) expose la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
+
+      Cette capacité appartient à [Integration](model:subdomain-integration), catégorie Inbound. Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
     nature: integration
     market_comparisons:
     - vendor: SAP
@@ -31861,8 +31862,8 @@ nodes:
       Finance et Design, indépendamment des sujets référentiels ou des applications. Le contenu précis de chaque contrat reste
       à qualifier.
     category:
-      id: integration
-      display_name: Intégration
+      id: inbound
+      display_name: Inbound
       order: 10
   source_refs:
   - P81
@@ -31897,14 +31898,15 @@ nodes:
   - ELM063
   - ELM281
   - U797
+  - U826
   source_locator:
     path: connaissance/25-domaines-coeur-et-epreuve-recits.md
     anchor: d09-parties-et-relations
     line: 313
   review:
-    state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    state: partial
+    note: Structure et frontière est-ouest appliquées ; nouveaux compléments rédactionnels proposés. Accords historiques conservés
+      sans extension automatique.
   adoption_ids: []
   lifecycle:
     state: ai_proposed
@@ -32419,7 +32421,7 @@ nodes:
   revision: 1
   kind: behavior
   fields:
-    name: Finance Ingestion
+    name: Reference Ingestion from Finance
     definition: Intégrer les données de référence fournies par le domaine Finance selon son contrat métier et leur provenance.
     scope: 'Distinguer les contributions du domaine Finance pour appliquer leur identification, validité et traitement des
       corrections. Les sujets fournis, l’autorité et les contrats précis restent à qualifier ; aucune affectation automatique
@@ -35833,6 +35835,583 @@ nodes:
       modeling_depth: 6035c7459e58f5795e86d8aa7cb4df5512416eef5bd82f758dbefe3c85aa4bce
     note: Nom Logistics explicitement retenu U801 ; profondeur conservée depuis U780. Captures de champs séparées ; aucune
       approbation globale des textes.
+- id: subdomain-integration
+  revision: 1
+  kind: area
+  fields:
+    name: Integration
+    definition: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines,
+      selon les contrats convenus, sans reprendre le pilotage des exécutants.
+    finality: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines,
+      selon les contrats convenus, sans reprendre le pilotage des exécutants.
+    scope: |-
+      Recevoir les apports des autres domaines et leur fournir les informations opérationnelles convenues. Inbound regroupe [Master Data Ingestion](model:master-data-ingestion) et [Plan Ingestion](model:plans-ingestion). Outbound regroupe [Accounting Data Provision](model:accounting-data-provision), [Planning Data Provision](model:planning-data-provision) et [Product Feedback](model:product-feedback). Les catégories ne créent pas de niveau hiérarchique.
+
+      Les échanges sont est-ouest entre domaines. Les appels aux exécutants, leurs retours et leur pilotage restent dans les capacités opérationnelles ; [Inventory Tracking](model:D01.f) et [Operations Tracking](model:D07.d) conservent leur rattachement. Les registres et vues gardent leur responsabilité. La préparation conserve sens, provenance, dates, corrections et conditions d’accès ; aucune plateforme ni centralisation organisationnelle n’est imposée.
+
+      Exemple fictif : une réception corrigée de 100 à 80 pièces fournit un [fait de gestion](glossary:TER120) correctif à Finance et une position révisée à la planification, selon deux contrats distincts.
+    market_comparisons:
+    - vendor: Microsoft
+      product: Dynamics 365 Supply Chain Management
+      element_name: Demand planning home page
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: La planification reçoit historiques et références et fournit des prévisions.
+      differences: Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention
+        FLOW, pas une taxonomie éditeur.
+      flow_position: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres
+        domaines, selon les contrats convenus, sans reprendre le pilotage des exécutants.
+      source_title: Demand planning home page
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/demand-planning/demand-planning-home-page
+      source_version: Documentation évolutive ; édition globale non indiquée
+      consulted_on: '2026-09-28'
+      source_locator: The demand planning process
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM853
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont
+        une convention FLOW, pas une taxonomie éditeur.
+    - vendor: SAP
+      product: SAP S/4HANA Supply Chain Integration Add-On for SAP IBP
+      element_name: Administrator’s Guide
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: Commandes et stocks alimentent la planification, avec chargements initiaux et changements.
+      differences: Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention
+        FLOW, pas une taxonomie éditeur.
+      flow_position: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres
+        domaines, selon les contrats convenus, sans reprendre le pilotage des exécutants.
+      source_title: Administrator’s Guide
+      source_url: https://help.sap.com/doc/227fcaf7918e45378f8cb20a45ffe6a2/1.0%20SP19/en-US/loioc5148f2152294904ac379b94cb902e59.pdf
+      source_version: 1.0 SP19, Order-Based Planning Integration, pages 33–35
+      consulted_on: '2026-09-28'
+      source_locator: 1.0 SP19, Order-Based Planning Integration, pages 33–35
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM854
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont
+        une convention FLOW, pas une taxonomie éditeur.
+    dominant_role:
+      id: data-state
+      display_name: Données et état
+  source_refs:
+  - U826
+  - ELM853
+  - ELM854
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: partial
+    note: Lot appliqué sur autorisation ; compléments éditoriaux et contexte financier proposés, accords limités capturés
+      séparément.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: accounting-data-provision
+  revision: 1
+  kind: capability
+  fields:
+    name: Accounting Data Provision
+    definition: Sélectionner, préparer et transmettre les [faits de gestion](glossary:TER120) nécessaires à la comptabilité,
+      avec leurs justificatifs et corrections.
+    finality: Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs justificatifs
+      et corrections.
+    scope: |-
+      Sélectionner les [faits de gestion](glossary:TER120) selon le contrat convenu avec [Finance](glossary:TER117), vérifier les informations attendues et transmettre références, dates, justificatifs et corrections. [Inventory Ledger](model:D01.g), [Inventory Ownership Ledger](model:inventory-ownership-ledger) et les autres producteurs restent responsables de leurs faits.
+
+      Suivre transmission, acceptation ou rejet ; une réception technique ne prouve pas la comptabilisation. Une correction garde son lien au fait initial et une reprise ne crée pas un second fait. [Accounting Interpretation](model:accounting-interpretation) applique les règles comptables ; les [écritures](glossary:TER121) et leur enregistrement restent sous Finance. Exemple fictif : transmettre la correction de 100 à 80 pièces sans déclarer une réception supplémentaire de 80.
+    market_comparisons:
+    - vendor: Microsoft
+      product: Dynamics 365 Finance
+      element_name: Inventory posting
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: Les mouvements de stock et leurs effets comptables sont distingués.
+      differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+        et enregistrement comptable.
+      flow_position: Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs
+        justificatifs et corrections.
+      source_title: Inventory posting
+      source_url: https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/inventory-posting
+      source_version: Documentation évolutive ; édition globale non indiquée
+      consulted_on: '2026-09-28'
+      source_locator: Tableau Inventory transactions, Transfer (journal)
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM847
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+        et enregistrement comptable.
+    - vendor: SAP
+      product: SAP S/4HANA Cloud Public Edition
+      element_name: Introducing Goods Movements
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: Le fait matériel est distingué du document comptable produit lorsque le mouvement a un effet financier.
+      differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+        et enregistrement comptable.
+      flow_position: Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs
+        justificatifs et corrections.
+      source_title: Introducing Goods Movements
+      source_url: https://learning.sap.com/courses/managing-inventory-movements-and-stock-transfers-in-sap-s-4hana-cloud-public-edition/introducing-goods-movements_ba906e87-54e8-4f56-837e-bde4d82599de
+      source_version: Documentation évolutive ; édition globale non indiquée
+      consulted_on: '2026-09-28'
+      source_locator: Document Flow in Goods Movements
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM850
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+        et enregistrement comptable.
+    nature: integration
+    category:
+      id: outbound
+      display_name: Outbound
+      order: 20
+  source_refs:
+  - U826
+  - ELM847
+  - ELM850
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: partial
+    note: Lot appliqué sur autorisation ; compléments éditoriaux et contexte financier proposés, accords limités capturés
+      séparément.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: planning-data-provision
+  revision: 1
+  kind: capability
+  fields:
+    name: Planning Data Provision
+    definition: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs
+      corrections.
+    finality: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs corrections.
+    scope: |-
+      Préparer les historiques, positions et engagements dont [Demand & Supply Planning](model:domain-plan) a besoin, selon la population, la granularité, les dates et la fraîcheur convenues. Distinguer constat, prévision et engagement ; conserver origine et corrections. Les données fournies sont celles dont Supply possède une connaissance légitime.
+
+      Le domaine destinataire élabore les plans. [Plan Ingestion](model:plans-ingestion) reçoit leur retour ; cette boucle ne remplace pas le calcul des prévisions ni les décisions de Matching. Exemple fictif : fournir une position disponible corrigée de 100 à 80 pièces avec sa date, sans inventer une révision du plan.
+    market_comparisons:
+    - vendor: Microsoft
+      product: Dynamics 365 Supply Chain Management
+      element_name: Demand planning home page
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: La planification reçoit historiques et références et fournit des prévisions.
+      differences: Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply Planning.
+      flow_position: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs
+        corrections.
+      source_title: Demand planning home page
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/demand-planning/demand-planning-home-page
+      source_version: Documentation évolutive ; édition globale non indiquée
+      consulted_on: '2026-09-28'
+      source_locator: The demand planning process
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM853
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply
+        Planning.
+    - vendor: SAP
+      product: SAP S/4HANA Supply Chain Integration Add-On for SAP IBP
+      element_name: Administrator’s Guide
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: Commandes et stocks alimentent la planification, avec chargements initiaux et changements.
+      differences: Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply Planning.
+      flow_position: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs
+        corrections.
+      source_title: Administrator’s Guide
+      source_url: https://help.sap.com/doc/227fcaf7918e45378f8cb20a45ffe6a2/1.0%20SP19/en-US/loioc5148f2152294904ac379b94cb902e59.pdf
+      source_version: 1.0 SP19, Order-Based Planning Integration, pages 33–35
+      consulted_on: '2026-09-28'
+      source_locator: 1.0 SP19, Order-Based Planning Integration, pages 33–35
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM854
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply
+        Planning.
+    nature: integration
+    category:
+      id: outbound
+      display_name: Outbound
+      order: 20
+  source_refs:
+  - U826
+  - ELM853
+  - ELM854
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: partial
+    note: Lot appliqué sur autorisation ; compléments éditoriaux et contexte financier proposés, accords limités capturés
+      séparément.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: product-feedback
+  revision: 1
+  kind: capability
+  fields:
+    name: Product Feedback
+    definition: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+    finality: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+    scope: |-
+      Préparer et fournir les constats opérationnels utiles aux responsables de conception et développement produit, avec produit concerné, contexte, dates et preuves. [Design & Development](model:system-design-development) conserve l’instruction et les décisions de modification.
+
+      Un signalement ne modifie pas automatiquement la définition du produit. Cette capacité ne représente pas tous les échanges de données de conception. Les familles de constats et leur contrat restent à qualifier. Exemple fictif : transmettre un défaut récurrent d’emballage constaté à la réception, avec les quantités et circonstances connues, sans affirmer une cause non établie.
+    market_comparisons:
+    - vendor: Microsoft
+      product: Dynamics 365 Supply Chain Management
+      element_name: Manage changes to engineering products
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: Les services opérationnels peuvent fournir des signalements et demandes d’amélioration produit.
+      differences: Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit
+        textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+      flow_position: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+      source_title: Manage changes to engineering products
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/engineering-change-management
+      source_version: Documentation évolutive ; édition globale non indiquée
+      consulted_on: '2026-09-28'
+      source_locator: Engineering change requests
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM855
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit
+        textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+    - vendor: SAP
+      product: PLM System Integration for SAP S/4HANA
+      element_name: Administration Guide for PLM System Integration for SAP S/4HANA
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: Un problème issu des opérations est transmis au système de développement produit pour examen.
+      differences: Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit
+        textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+      flow_position: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+      source_title: Administration Guide for PLM System Integration for SAP S/4HANA
+      source_url: https://help.sap.com/doc/6f4e849a041c4bc59c4b9d6882053532/2.0%20FP03/en-US/Administration_Guide_TC.pdf
+      source_version: 2.0 FP03, document 1.0 du 2022-12-05, §7.3 p.60
+      consulted_on: '2026-09-28'
+      source_locator: 2.0 FP03, document 1.0 du 2022-12-05, §7.3 p.60
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM856
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit
+        textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+    nature: integration
+    category:
+      id: outbound
+      display_name: Outbound
+      order: 20
+  source_refs:
+  - U826
+  - ELM855
+  - ELM856
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: partial
+    note: Lot appliqué sur autorisation ; compléments éditoriaux et contexte financier proposés, accords limités capturés
+      séparément.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: domain-finance
+  revision: 1
+  kind: domain
+  fields:
+    name: Finance
+    definition: Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les décisions
+      de l’entreprise.
+    finality: Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les décisions
+      de l’entreprise.
+    scope: |-
+      Contexte financier extérieur à Supply Chain Orchestration. Le sous-domaine [Financial Accounting](glossary:TER118) situe ici [Accounting Interpretation](model:accounting-interpretation), contrepartie de l’alimentation opérationnelle. Le contrôle, les décisions financières et les autres responsabilités de Finance ne sont pas décomposés par ce lot.
+
+      Les règles comptables relèvent de Finance ; les domaines opérationnels restent responsables des faits transmis. Exemple fictif : un fait de réception est contrôlé et traduit selon les règles comptables avant enregistrement. Aucune application installée ni organisation n’est présumée.
+    market_comparisons:
+    - vendor: Microsoft
+      product: Dynamics 365 Finance
+      element_name: Introduction to the record to report end-to-end business process
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: Collecte des données financières, enregistrement, rapprochement et restitution des comptes.
+      differences: Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas décrire
+        tout le domaine Finance.
+      flow_position: Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les
+        décisions de l’entreprise.
+      source_title: Introduction to the record to report end-to-end business process
+      source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-introduction
+      source_version: Documentation évolutive ; édition globale non indiquée
+      consulted_on: '2026-09-28'
+      source_locator: Record to report overview ; mise à jour 2026-07-31
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM858
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend
+        pas décrire tout le domaine Finance.
+    - vendor: SAP
+      product: SAP S/4HANA
+      element_name: Identifying the Basics of Financial and Management Accounting
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: La comptabilité financière enregistre les transactions et alimente les comptes ; elle est distinguée du
+        contrôle de gestion.
+      differences: Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas décrire
+        tout le domaine Finance.
+      flow_position: Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les
+        décisions de l’entreprise.
+      source_title: Identifying the Basics of Financial and Management Accounting
+      source_url: https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap-business-suite/identifying-the-areas-of-financial-and-management-accounting_e3512e3e-753c-4fc0-8e21-4391145368ef
+      source_version: Documentation évolutive ; édition globale non indiquée
+      consulted_on: '2026-09-28'
+      source_locator: Financial Accounting et Management Accounting
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM859
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend
+        pas décrire tout le domaine Finance.
+    modeling_depth: behaviors
+  source_refs:
+  - U826
+  - ELM858
+  - ELM859
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: proposed
+    note: Lot appliqué sur autorisation ; compléments éditoriaux et contexte financier proposés, accords limités capturés
+      séparément.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: subdomain-financial-accounting
+  revision: 1
+  kind: area
+  fields:
+    name: Financial Accounting
+    definition: Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+    finality: Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+    scope: |-
+      Périmètre de contexte de la [comptabilité financière](glossary:TER118) dans [Finance](glossary:TER117). [Accounting Interpretation](model:accounting-interpretation) reçoit les faits et prépare les [écritures](glossary:TER121). Leur enregistrement, les rapprochements et les restitutions des comptes restent distincts et ne sont pas décomposés ici.
+
+      Exemple fictif : une réception documentée permet de préparer les écritures nécessaires ; sa simple transmission ne prouve pas leur enregistrement. Ce sous-domaine sert au rattachement ciblé, sans catalogue comptable exhaustif.
+    market_comparisons:
+    - vendor: Microsoft
+      product: Dynamics 365 Finance
+      element_name: Introduction to the record to report end-to-end business process
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: Collecte des données financières, enregistrement, rapprochement et restitution des comptes.
+      differences: Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée
+        ici.
+      flow_position: Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+      source_title: Introduction to the record to report end-to-end business process
+      source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-introduction
+      source_version: Documentation évolutive ; édition globale non indiquée
+      consulted_on: '2026-09-28'
+      source_locator: Record to report overview ; mise à jour 2026-07-31
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM858
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est
+        détaillée ici.
+    - vendor: SAP
+      product: SAP S/4HANA
+      element_name: Identifying the Basics of Financial and Management Accounting
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: La comptabilité financière enregistre les transactions et alimente les comptes ; elle est distinguée du
+        contrôle de gestion.
+      differences: Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée
+        ici.
+      flow_position: Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+      source_title: Identifying the Basics of Financial and Management Accounting
+      source_url: https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap-business-suite/identifying-the-areas-of-financial-and-management-accounting_e3512e3e-753c-4fc0-8e21-4391145368ef
+      source_version: Documentation évolutive ; édition globale non indiquée
+      consulted_on: '2026-09-28'
+      source_locator: Financial Accounting et Management Accounting
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM859
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est
+        détaillée ici.
+    dominant_role:
+      id: data-state
+      display_name: Données et état
+  source_refs:
+  - U826
+  - ELM858
+  - ELM859
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: proposed
+    note: Lot appliqué sur autorisation ; compléments éditoriaux et contexte financier proposés, accords limités capturés
+      séparément.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: accounting-interpretation
+  revision: 1
+  kind: capability
+  fields:
+    name: Accounting Interpretation
+    definition: Recevoir et contrôler les [faits de gestion](glossary:TER120), puis les traduire en [écritures](glossary:TER121)
+      selon les règles comptables.
+    finality: Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+    scope: |-
+      Recevoir les [faits de gestion](glossary:TER120) fournis notamment par [Accounting Data Provision](model:accounting-data-provision), contrôler leur complétude et leur cohérence, puis appliquer les règles de [Finance](glossary:TER117) pour produire les [écritures](glossary:TER121) prêtes à enregistrer. Conserver les liens vers les faits et justificatifs, les corrections et les rejets motivés.
+
+      Une information manquante entraîne une attente ou un rejet, sans inventer un montant. L’enregistrement effectif des écritures reste distinct. Exemple fictif : vérifier une réception reconnue de 80 pièces et déterminer son traitement comptable selon les règles applicables ; un composant installé hors du logiciel comptable peut servir cette responsabilité Finance.
+    market_comparisons:
+    - vendor: Microsoft
+      product: Dynamics 365 Finance
+      element_name: Accounting distributions
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: Les montants des documents sources sont répartis sur les comptes ; les corrections restent identifiables.
+      differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+        et enregistrement comptable.
+      flow_position: Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+      source_title: Accounting distributions
+      source_url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-payable/accounting-distributions
+      source_version: Documentation évolutive ; édition globale non indiquée
+      consulted_on: '2026-09-28'
+      source_locator: Introduction et Distribute amounts
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM848
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+        et enregistrement comptable.
+    - vendor: SAP
+      product: SAP S/4HANA Materials Management
+      element_name: Describing Automatic Account Determination
+      element_type: Fonction ou processus documenté
+      relationship: Recouvrement partiel
+      similarities: Les comptes sont déterminés pour les transactions pertinentes comptablement.
+      differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+        et enregistrement comptable.
+      flow_position: Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+      source_title: Describing Automatic Account Determination
+      source_url: https://learning.sap.com/courses/cross-functional-customizing-in-sap-s-4hana-materials-management/describing-automatic-account-determination
+      source_version: Documentation évolutive ; édition globale non indiquée
+      consulted_on: '2026-09-28'
+      source_locator: Automatic Account Determination
+      evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+      status: proposed
+      source_refs:
+      - ELM851
+      - U826
+      term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+      definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+        et enregistrement comptable.
+    nature: action
+    category:
+      id: accounting-preparation
+      display_name: Préparation comptable
+      order: 10
+  source_refs:
+  - U826
+  - ELM848
+  - ELM851
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u826
+  review:
+    state: partial
+    note: Lot appliqué sur autorisation ; compléments éditoriaux et contexte financier proposés, accords limités capturés
+      séparément.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
 relations:
 - id: REL-MEMBER-D01.f
   revision: 1
@@ -44804,34 +45383,26 @@ relations:
       ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
       ; autres valeurs et portées inchangées.
 - id: REL-U673-CONTAINS-plans-ingestion
-  revision: 1
+  revision: 2
   type: contains
-  source_id: subdomain-plans
+  source_id: subdomain-integration
   target_id: plans-ingestion
   source_refs:
   - U673
+  - U826
   review:
-    state: accepted
-    note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension.
+    state: partial
+    note: Rattachement est-ouest modifié sur autorisation ; anciennes preuves conservées dans Git et les publications.
+  last_modified: '2026-09-23T20:35:38.517366Z'
   lifecycle:
-    state: urbanist_validated
-    recorded_at: '2026-09-23T20:35:38.517366Z'
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U673
-    - U667
-    validated_fields:
-    - source_id
-    - target_id
-    - type
-    value_sha256:
-      source_id: 3e44a6e982b3806fa1c115f0b522ceaf9cffde4ecfddc514f5160d058e5753fa
-      target_id: 730f2608eba0cea4d2ea6684ba8acd8678c1b93dc14e801077a6b74e83c2bd75
-      type: dde0e3dc0ad9a0daf42c9d0ab5a9a1c466093b12ccae1ca4c613754a34526930
-    note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension.
-  last_modified: '2026-09-23T20:35:38.517366Z'
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
 - id: REL-U673-CONTAINS-plans-visibility
   revision: 1
   type: contains
@@ -45932,25 +46503,26 @@ relations:
     value_sha256: {}
     note: Séparation demandée U714 ; accord de rattachement capturé séparément.
 - id: REL-U717-MASTER-INGESTION
-  revision: 1
+  revision: 2
   type: contains
-  source_id: business-references
+  source_id: subdomain-integration
   target_id: master-data-ingestion
   source_refs:
   - U717
+  - U826
   last_modified: '2026-09-24T14:06:12.542663Z'
-  lifecycle:
-    state: ai_proposed
-    recorded_at: '2026-09-24T14:06:12.542663Z'
-    recorded_by: Codex
-    source_refs:
-    - U717
-    validated_fields: []
-    value_sha256: {}
-    note: Mise en œuvre U717 ; accords ciblés capturés séparément, détails rédigés ensuite proposés.
   review:
     state: partial
-    note: Accord cumulatif U712–U717 ; pas de validation implicite des détails nouveaux.
+    note: Rattachement est-ouest modifié sur autorisation ; anciennes preuves conservées dans Git et les publications.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
 - id: REL-U717-INGESTS-D09.e
   revision: 1
   type: relates-to
@@ -47868,6 +48440,314 @@ relations:
     validated_fields: []
     value_sha256: {}
     note: Accords explicites limités dans decision-intents ; descriptions et qualifications détaillées proposées.
+- id: REL-U826-subdomain-integration
+  revision: 1
+  type: presents
+  source_id: supply-chain-orchestration
+  target_id: subdomain-integration
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-accounting-data-provision
+  revision: 1
+  type: contains
+  source_id: subdomain-integration
+  target_id: accounting-data-provision
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-planning-data-provision
+  revision: 1
+  type: contains
+  source_id: subdomain-integration
+  target_id: planning-data-provision
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-product-feedback
+  revision: 1
+  type: contains
+  source_id: subdomain-integration
+  target_id: product-feedback
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-domain-finance
+  revision: 1
+  type: presents
+  source_id: system-enterprise-management-control
+  target_id: domain-finance
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-subdomain-financial-accounting
+  revision: 1
+  type: presents
+  source_id: domain-finance
+  target_id: subdomain-financial-accounting
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-accounting-interpretation
+  revision: 1
+  type: contains
+  source_id: subdomain-financial-accounting
+  target_id: accounting-interpretation
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-accounting-data-provision-TO-accounting-interpretation
+  revision: 1
+  type: relates-to
+  source_id: accounting-data-provision
+  target_id: accounting-interpretation
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  qualification:
+    meaning: Fournir les faits sélectionnés et leurs corrections pour leur traduction comptable.
+    conditions:
+    - Selon le contrat métier convenu et la portée des données effectivement reconnues.
+    effects:
+    - Rendre les informations utilisables sans transférer la responsabilité métier du producteur.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-planning-data-provision-TO-domain-plan
+  revision: 1
+  type: provides-knowledge
+  source_id: subdomain-integration
+  target_id: domain-plan
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  qualification:
+    meaning: Fournir les données opérationnelles nécessaires à la préparation des plans.
+    conditions:
+    - Selon le contrat métier convenu et la portée des données effectivement reconnues.
+    effects:
+    - Rendre les informations utilisables sans transférer la responsabilité métier du producteur.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-D01.g-TO-accounting-data-provision
+  revision: 1
+  type: relates-to
+  source_id: D01.g
+  target_id: accounting-data-provision
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  qualification:
+    meaning: Fournir les faits de stock reconnus et leurs corrections selon le besoin comptable.
+    conditions:
+    - Selon le contrat métier convenu et la portée des données effectivement reconnues.
+    effects:
+    - Rendre les informations utilisables sans transférer la responsabilité métier du producteur.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-inventory-ownership-ledger-TO-accounting-data-provision
+  revision: 1
+  type: relates-to
+  source_id: inventory-ownership-ledger
+  target_id: accounting-data-provision
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  qualification:
+    meaning: Fournir les changements de propriétaire reconnus, distincts des mouvements physiques.
+    conditions:
+    - Selon le contrat métier convenu et la portée des données effectivement reconnues.
+    effects:
+    - Rendre les informations utilisables sans transférer la responsabilité métier du producteur.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-D01.c-TO-planning-data-provision
+  revision: 1
+  type: relates-to
+  source_id: D01.c
+  target_id: planning-data-provision
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  qualification:
+    meaning: Fournir les positions de stock connues avec leurs dates et limites de connaissance.
+    conditions:
+    - Selon le contrat métier convenu et la portée des données effectivement reconnues.
+    effects:
+    - Rendre les informations utilisables sans transférer la responsabilité métier du producteur.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-plans-ingestion-TO-plans-visibility
+  revision: 1
+  type: relates-to
+  source_id: plans-ingestion
+  target_id: plans-visibility
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  qualification:
+    meaning: Fournir les Supply Plans intégrés pour leur restitution.
+    conditions:
+    - Selon le contrat métier convenu et la portée des données effectivement reconnues.
+    effects:
+    - Rendre les informations utilisables sans transférer la responsabilité métier du producteur.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+- id: REL-U826-plans-ingestion-TO-demand-plan-visibility
+  revision: 1
+  type: relates-to
+  source_id: plans-ingestion
+  target_id: demand-plan-visibility
+  source_refs:
+  - U826
+  review:
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+  qualification:
+    meaning: Fournir les Demand Plans intégrés pour leur restitution.
+    conditions:
+    - Selon le contrat métier convenu et la portée des données effectivement reconnues.
+    effects:
+    - Rendre les informations utilisables sans transférer la responsabilité métier du producteur.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
 alternatives: []
 principles:
 - id: PRINCIPLE-REFERENCE-PROJECTIONS

@@ -1,0 +1,67 @@
+id: ACCOUNTING-BOUNDARY-U818
+source_refs:
+- U813
+- U816
+- U818
+- U819
+- U820
+- U822
+- U823
+- U826
+status: applied
+approved_scope:
+  renamed_behavior:
+    id: master-data-ingestion-finance
+    name: Reference Ingestion from Finance
+  capabilities:
+  - id: accounting-data-provision
+    name: Accounting Data Provision
+    definition: Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs justificatifs
+      et corrections.
+    domain: supply-chain-orchestration
+  - id: accounting-interpretation
+    name: Accounting Interpretation
+    definition: Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+    domain_name: Finance
+  boundary: Les écritures produites sont prêtes à être enregistrées ; leur enregistrement effectif reste distinct.
+application:
+  rename: applied
+  capabilities: applied
+  glossary: Faits, écritures, fourniture et interprétation alignés dans le même lot.
+parent_resolution:
+  status: applied
+  source: U826
+  operational_parent: subdomain-integration
+  finance_parent: subdomain-financial-accounting
+  finance_context: Rattachement minimal proposé dans Finance ; pas de description exhaustive.
+market_basis:
+- CMP310
+- ELM847
+- ELM848
+- ELM849
+- ELM850
+- ELM851
+- ELM852
+- CMP311
+publication_delivery:
+  state: applied
+  source_refs:
+  - U818
+  - U819
+  - U826
+  summary: Fourniture dans Integration / Outbound et interprétation dans Finance / Financial Accounting appliquées.
+  required_nodes:
+  - id: master-data-ingestion-finance
+    fields:
+      name: Reference Ingestion from Finance
+    parent: master-data-ingestion
+  - id: accounting-data-provision
+    kind: capability
+    fields:
+      name: Accounting Data Provision
+    parent: subdomain-integration
+  - id: accounting-interpretation
+    kind: capability
+    fields:
+      name: Accounting Interpretation
+    parent: subdomain-financial-accounting

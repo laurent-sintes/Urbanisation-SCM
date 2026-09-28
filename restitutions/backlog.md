@@ -12,8 +12,9 @@ Origine des demandes : **Frontoffice** désigne une sollicitation externe au Dom
 | --- | --- | --- | --- | --- |
 | system-design-development | Design & Development | Business System | Exploration différée | Validé par l’urbaniste — portée : name, modeling_depth |
 | system-business-operations | Business Operations | Business System | Sourcing and Procurement, Sales, Demand & Supply Planning, Supply Chain Orchestration, Logistics | Validé par l’urbaniste — portée : name, modeling_depth |
-| system-enterprise-management-control | Enterprise Management & Control | Business System | Exploration différée | Validé par l’urbaniste — portée : name, modeling_depth |
-| supply-chain-orchestration | Supply Chain Orchestration | Domain | Master Data, Policies, Plan Visibility, Order Management, Inventory Management, Demand & Supply Matching, Fulfilment Orchestration, Service Order Management, Order Promising | Proposé par l’IA |
+| system-enterprise-management-control | Enterprise Management & Control | Business System | Finance | Validé par l’urbaniste — portée : name |
+| supply-chain-orchestration | Supply Chain Orchestration | Domain | Master Data, Policies, Plan Visibility, Order Management, Inventory Management, Demand & Supply Matching, Fulfilment Orchestration, Service Order Management, Order Promising, Integration | Proposé par l’IA |
+| domain-finance | Finance | Domain | Financial Accounting | Proposé par l’IA |
 
 Les groupes de présentation conservent leur rôle distinct des niveaux de décomposition métier.
 
@@ -43,12 +44,14 @@ Statut : **Validé par l’urbaniste — portée : name, modeling_depth**.
 
 ## system-enterprise-management-control — Enterprise Management & Control
 
-Statut : **Validé par l’urbaniste — portée : name, modeling_depth**.
+Statut : **Validé par l’urbaniste — portée : name**.
 
 [Enterprise Management & Control](glossary:TER107) : orienter et financer l’activité, mesurer ses résultats et organiser la maîtrise des risques et de la conformité à l’échelle de l’entreprise.
 
-| Repère | Capacité | Type | Statut | Définition | Finalité | Rattachement |
-| --- | --- | --- | --- | --- | --- | --- |
+| Repère | Nom | Type | Statut |
+| --- | --- | --- | --- |
+| domain-finance | Finance | Domain | Proposé par l’IA |
+
 
 ## domain-sales — Sales
 
@@ -94,6 +97,7 @@ Organiser et adapter les ressources et les prestations pour satisfaire la demand
 | D06 | Fulfilment Orchestration | Sous-domaine | Proposé par l’IA |
 | subdomain-service-orders | Service Order Management | Sous-domaine | En cours d’instruction — portée : name, definition |
 | subdomain-order-promising | Order Promising | Sous-domaine | Proposé par l’IA |
+| subdomain-integration | Integration | Sous-domaine | Proposé par l’IA |
 
 
 ## business-references — Master Data
@@ -113,9 +117,6 @@ Fournir les références locales nécessaires pour comprendre les produits, les 
 | D14 | Service Catalog | Référentiel | Proposé par l’IA |
 | price-book | Price Book | Référentiel | Proposé par l’IA |
 
-| Repère | Capacité | Type | Gouvernance des données | Statut | Définition | Finalité | Rattachement |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| master-data-ingestion | Master Data Ingestion | integration | Projection | Proposé par l’IA | Recevoir et intégrer les référentiels fournis par les domaines sources pour maintenir les références locales utilisées par la Supply. | Rendre utilisables les contributions des domaines fournisseurs dans les références locales Supply. | Proposé par l’IA |
 
 ## D08 — Product Reference
 
@@ -290,11 +291,10 @@ Définir, maintenir et rendre applicables les règles qui encadrent les protecti
 
 Statut : **Proposé par l’IA**.
 
-Recevoir et rendre utilisables les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) calculés hors du domaine pour éclairer la promesse et le [Matching](glossary:TER112).
+Rendre utilisables les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) reçus pour éclairer la promesse et le [Matching](glossary:TER112).
 
 | Repère | Capacité | Type | Gouvernance des données | Statut | Définition | Finalité | Rattachement |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| plans-ingestion | Plan Ingestion | integration | Projection | Proposé par l’IA | Recevoir et intégrer les [Supply Plans](glossary:TER098) et [Demand Plans](glossary:TER099) du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un outil de planification avancée, avec leur provenance, horizon, version et statut. | Fournir des données prévisionnelles fiables aux décisions Supply. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | plans-visibility | Supply Plan Visibility | knowledge | Domain-View | Proposé par l’IA | Rendre consultables les prévisions d’entrées ou de sorties de stock hors achats, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le [Matching](glossary:TER112). | Fournir des données prévisionnelles fiables aux décisions Supply. | Validé par l’urbaniste — portée : source_id, target_id, type |
 | demand-plan-visibility | Demand Plan Visibility | knowledge | Domain-View | Proposé par l’IA | Rendre consultable la demande prévisionnelle reçue du domaine Demand & Supply Planning, avec versions, horizons, provenance et incertitudes pour éclairer la promesse et le [Matching](glossary:TER112). | Fournir des données prévisionnelles fiables aux décisions Supply. | Proposé par l’IA |
 
@@ -358,6 +358,41 @@ Statut : **Validé par l’urbaniste — portée : name, modeling_depth**.
 
 | Repère | Capacité | Type | Statut | Définition | Finalité | Rattachement |
 | --- | --- | --- | --- | --- | --- | --- |
+
+## subdomain-integration — Integration
+
+Statut : **Proposé par l’IA**.
+
+Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines, selon les contrats convenus, sans reprendre le pilotage des exécutants.
+
+| Repère | Capacité | Type | Gouvernance des données | Statut | Définition | Finalité | Rattachement |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| plans-ingestion | Plan Ingestion | integration | Projection | Proposé par l’IA | Recevoir et intégrer les [Supply Plans](glossary:TER098) et [Demand Plans](glossary:TER099) du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un outil de planification avancée, avec leur provenance, horizon, version et statut. | Fournir des données prévisionnelles fiables aux décisions Supply. | Proposé par l’IA |
+| master-data-ingestion | Master Data Ingestion | integration | Projection | Proposé par l’IA | Recevoir et intégrer les référentiels fournis par les domaines sources pour maintenir les références locales utilisées par la Supply. | Rendre utilisables les contributions des domaines fournisseurs dans les références locales Supply. | Proposé par l’IA |
+| accounting-data-provision | Accounting Data Provision | integration | — | Proposé par l’IA | Sélectionner, préparer et transmettre les [faits de gestion](glossary:TER120) nécessaires à la comptabilité, avec leurs justificatifs et corrections. | Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs justificatifs et corrections. | Proposé par l’IA |
+| planning-data-provision | Planning Data Provision | integration | — | Proposé par l’IA | Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs corrections. | Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs corrections. | Proposé par l’IA |
+| product-feedback | Product Feedback | integration | — | Proposé par l’IA | Fournir des constats terrain documentés sur les produits pour instruire leur amélioration. | Fournir des constats terrain documentés sur les produits pour instruire leur amélioration. | Proposé par l’IA |
+
+## domain-finance — Finance
+
+Statut : **Proposé par l’IA**.
+
+Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les décisions de l’entreprise.
+
+| Repère | Nom | Type | Statut |
+| --- | --- | --- | --- |
+| subdomain-financial-accounting | Financial Accounting | Sous-domaine | Proposé par l’IA |
+
+
+## subdomain-financial-accounting — Financial Accounting
+
+Statut : **Proposé par l’IA**.
+
+Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+
+| Repère | Capacité | Type | Statut | Définition | Finalité | Rattachement |
+| --- | --- | --- | --- | --- | --- | --- |
+| accounting-interpretation | Accounting Interpretation | action | Proposé par l’IA | Recevoir et contrôler les [faits de gestion](glossary:TER120), puis les traduire en [écritures](glossary:TER121) selon les règles comptables. | Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables. | Proposé par l’IA |
 
 **Justification de la décomposition — D01.d :** Établir une référence complète sur un périmètre, entretenir la fiabilité par contrôles récurrents et répondre rapidement à une situation ciblée correspondent à trois politiques ou variantes métier, avec des bénéfices distincts. Les mêmes responsabilités de rapprochement et de correction justifiée sont mobilisées ; les interfaces et outils de comptage ne créent pas de comportement supplémentaire.
 
@@ -614,7 +649,7 @@ Dernier niveau de détail de la capacité ; les comportements ne sont pas des ca
 | Repère | Comportement | Statut | Définition |
 | --- | --- | --- | --- |
 | master-data-ingestion-commerce | Commerce Ingestion | Proposé par l’IA | Intégrer les données de référence fournies par le domaine Commerce selon son contrat métier et leur provenance. |
-| master-data-ingestion-finance | Finance Ingestion | Proposé par l’IA | Intégrer les données de référence fournies par le domaine Finance selon son contrat métier et leur provenance. |
+| master-data-ingestion-finance | Reference Ingestion from Finance | Proposé par l’IA | Intégrer les données de référence fournies par le domaine Finance selon son contrat métier et leur provenance. |
 | master-data-ingestion-design | Design Ingestion | Proposé par l’IA | Intégrer les données de référence fournies par le domaine Design selon son contrat métier et leur provenance. |
 
 **Justification de la décomposition — operations-visibility :** Distinguer les perspectives entrepôt, transport, magasin et progression du processus : leurs jalons, résultats et usages métier diffèrent, même lorsque les faits sont communs.
@@ -13984,10 +14019,10 @@ Plan Visibility explicite la responsabilité FLOW.
 
 | Source et nom employé | Périmètre | Approche |
 | --- | --- | --- |
-| [Microsoft](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans) — Master plans overview | Plans distincts, recalculs, simulations, conversion des propositions et suggestions de modification des ordres. | Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la promesse et le Matching. |
-| [SAP](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Outlining Program Planning | Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la stratégie. Demand Management gère leur interaction pour alimenter MRP. | Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la promesse et le Matching. |
+| [Microsoft](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans) — Master plans overview | Plans distincts, recalculs, simulations, conversion des propositions et suggestions de modification des ordres. | Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching. |
+| [SAP](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Outlining Program Planning | Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la stratégie. Demand Management gère leur interaction pour alimenter MRP. | Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching. |
 | [Microsoft](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast) — Inventory forecasts | Les prévisions Supply et Demand sont distinguées et consommées par la planification. | Rapprochement avec Plan Visibility : Les prévisions Supply et Demand sont distinguées et consommées par la planification. |
-| Notre modèle — Plan Visibility | Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la promesse et le Matching. | Recevoir les plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un APS, par [Plan Ingestion](model:plans-ingestion). Le domaine source [Demand & Supply Planning](model:domain-plan) est représenté au même niveau que Supply Chain Orchestration, sans décomposition interne. [Supply Plan Visibility](model:plans-visibility) expose les prévisions d’entrées et de sorties de stock hors achats ; [Demand Plan Visibility](model:demand-plan-visibility) expose la demande prévisionnelle. Les deux vues rendent explicites versions, horizons, provenance et incertitudes pour Order Promising et Matching. Le calcul des prévisions reste externe. Le master plan d’affectation est construit et géré dans [Demand & Supply Matching](model:D03). Une projection ne crée ni Order ferme ni mouvement de stock. |
+| Notre modèle — Plan Visibility | Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching. | Recevoir les plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un APS, par [Plan Ingestion](model:plans-ingestion). Le domaine source [Demand & Supply Planning](model:domain-plan) est représenté au même niveau que Supply Chain Orchestration, sans décomposition interne. [Supply Plan Visibility](model:plans-visibility) expose les prévisions d’entrées et de sorties de stock hors achats ; [Demand Plan Visibility](model:demand-plan-visibility) expose la demande prévisionnelle. Les deux vues rendent explicites versions, horizons, provenance et incertitudes pour Order Promising et Matching. Le calcul des prévisions reste externe. Le master plan d’affectation est construit et géré dans [Demand & Supply Matching](model:D03). Une projection ne crée ni Order ferme ni mouvement de stock. |
 
 ### Ce que nous en retenons
 
@@ -13997,7 +14032,7 @@ Plan Visibility explicite la responsabilité FLOW.
 
 Recevoir les plans du domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un APS, par [Plan Ingestion](model:plans-ingestion). Le domaine source [Demand & Supply Planning](model:domain-plan) est représenté au même niveau que Supply Chain Orchestration, sans décomposition interne. [Supply Plan Visibility](model:plans-visibility) expose les prévisions d’entrées et de sorties de stock hors achats ; [Demand Plan Visibility](model:demand-plan-visibility) expose la demande prévisionnelle. Les deux vues rendent explicites versions, horizons, provenance et incertitudes pour Order Promising et Matching. Le calcul des prévisions reste externe. Le master plan d’affectation est construit et géré dans [Demand & Supply Matching](model:D03). Une projection ne crée ni Order ferme ni mouvement de stock.
 
-**Ce qui se passe.** Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la promesse et le Matching.
+**Ce qui se passe.** Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching.
 
 **Ce que cela illustre dans FLOW.** Exemple fictif de la frontière FLOW ; la source apporte un recouvrement partiel et ne démontre pas une réalisation Beaumanoir.
 
@@ -14019,7 +14054,7 @@ Master plans overview · Concept ou fonction documenté dans un produit · Recou
 
 **Différences.** Les plans externes et besoins prévisionnels sont documentés ; leur ingestion dans un sous-domaine autonome est une frontière FLOW. Le sens Supply Plan hors achats vient de U668 ; ces sources ne prouvent pas une équivalence avec Supply Planning éditeur.
 
-**Position FLOW.** Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la promesse et le Matching.
+**Position FLOW.** Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching.
 
 [Master plans overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans) — Documentation évolutive, mise à jour affichée le 25 mars 2026, consulté le 2026-09-23.
 
@@ -14041,7 +14076,7 @@ Outlining Program Planning · Concept ou fonction documenté dans un produit · 
 
 **Différences.** Les plans externes et besoins prévisionnels sont documentés ; leur ingestion dans un sous-domaine autonome est une frontière FLOW. Le sens Supply Plan hors achats vient de U668 ; ces sources ne prouvent pas une équivalence avec Supply Planning éditeur.
 
-**Position FLOW.** Recevoir et rendre utilisables les Demand Plans et Supply Plans calculés hors du domaine pour éclairer la promesse et le Matching.
+**Position FLOW.** Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching.
 
 [Outlining Program Planning](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a) — Cours S/4HANA Cloud Public Edition, édition non affichée, consulté le 2026-09-23.
 
@@ -16666,7 +16701,7 @@ Use domain analysis to model microservices · Concept documenté par la source p
 
 Références : ELM711, CMP280, U718.
 
-## Sources d’inspiration — master-data-ingestion-finance Finance Ingestion
+## Sources d’inspiration — master-data-ingestion-finance Reference Ingestion from Finance
 
 ### SAP — SAP Master Data Integration with SAP Field Service and Asset Management
 
@@ -18359,6 +18394,328 @@ Microsoft Dynamics 365 · Processus de bout en bout · Recouvrement partiel · s
 **Limite de preuve.** Recouvrement partiel ; la référence ne suffit pas à établir toutes les formalités douanières ni leur réalisation Beaumanoir.
 
 Références : ELM845, CMP309.
+
+## Sources d’inspiration — subdomain-integration Integration
+
+### Microsoft — Demand planning home page
+
+Dynamics 365 Supply Chain Management · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention FLOW, pas une taxonomie éditeur.
+
+**Points communs.** La planification reçoit historiques et références et fournit des prévisions.
+
+**Différences.** Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention FLOW, pas une taxonomie éditeur.
+
+**Position FLOW.** Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines, selon les contrats convenus, sans reprendre le pilotage des exécutants.
+
+[Demand planning home page](https://learn.microsoft.com/en-us/dynamics365/supply-chain/demand-planning/demand-planning-home-page) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** The demand planning process
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM853, U826.
+
+### SAP — Administrator’s Guide
+
+SAP S/4HANA Supply Chain Integration Add-On for SAP IBP · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention FLOW, pas une taxonomie éditeur.
+
+**Points communs.** Commandes et stocks alimentent la planification, avec chargements initiaux et changements.
+
+**Différences.** Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention FLOW, pas une taxonomie éditeur.
+
+**Position FLOW.** Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines, selon les contrats convenus, sans reprendre le pilotage des exécutants.
+
+[Administrator’s Guide](https://help.sap.com/doc/227fcaf7918e45378f8cb20a45ffe6a2/1.0%20SP19/en-US/loioc5148f2152294904ac379b94cb902e59.pdf) — 1.0 SP19, Order-Based Planning Integration, pages 33–35, consulté le 2026-09-28.
+
+**Passage.** 1.0 SP19, Order-Based Planning Integration, pages 33–35
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM854, U826.
+
+## Sources d’inspiration — accounting-data-provision Accounting Data Provision
+
+### Microsoft — Inventory posting
+
+Dynamics 365 Finance · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Points communs.** Les mouvements de stock et leurs effets comptables sont distingués.
+
+**Différences.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Position FLOW.** Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs justificatifs et corrections.
+
+[Inventory posting](https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/inventory-posting) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Tableau Inventory transactions, Transfer (journal)
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM847, U826.
+
+### SAP — Introducing Goods Movements
+
+SAP S/4HANA Cloud Public Edition · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Points communs.** Le fait matériel est distingué du document comptable produit lorsque le mouvement a un effet financier.
+
+**Différences.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Position FLOW.** Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs justificatifs et corrections.
+
+[Introducing Goods Movements](https://learning.sap.com/courses/managing-inventory-movements-and-stock-transfers-in-sap-s-4hana-cloud-public-edition/introducing-goods-movements_ba906e87-54e8-4f56-837e-bde4d82599de) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Document Flow in Goods Movements
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM850, U826.
+
+## Sources d’inspiration — planning-data-provision Planning Data Provision
+
+### Microsoft — Demand planning home page
+
+Dynamics 365 Supply Chain Management · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply Planning.
+
+**Points communs.** La planification reçoit historiques et références et fournit des prévisions.
+
+**Différences.** Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply Planning.
+
+**Position FLOW.** Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs corrections.
+
+[Demand planning home page](https://learn.microsoft.com/en-us/dynamics365/supply-chain/demand-planning/demand-planning-home-page) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** The demand planning process
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM853, U826.
+
+### SAP — Administrator’s Guide
+
+SAP S/4HANA Supply Chain Integration Add-On for SAP IBP · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply Planning.
+
+**Points communs.** Commandes et stocks alimentent la planification, avec chargements initiaux et changements.
+
+**Différences.** Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply Planning.
+
+**Position FLOW.** Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs corrections.
+
+[Administrator’s Guide](https://help.sap.com/doc/227fcaf7918e45378f8cb20a45ffe6a2/1.0%20SP19/en-US/loioc5148f2152294904ac379b94cb902e59.pdf) — 1.0 SP19, Order-Based Planning Integration, pages 33–35, consulté le 2026-09-28.
+
+**Passage.** 1.0 SP19, Order-Based Planning Integration, pages 33–35
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM854, U826.
+
+## Sources d’inspiration — product-feedback Product Feedback
+
+### Microsoft — Manage changes to engineering products
+
+Dynamics 365 Supply Chain Management · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+
+**Points communs.** Les services opérationnels peuvent fournir des signalements et demandes d’amélioration produit.
+
+**Différences.** Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+
+**Position FLOW.** Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+
+[Manage changes to engineering products](https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/engineering-change-management) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Engineering change requests
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM855, U826.
+
+### SAP — Administration Guide for PLM System Integration for SAP S/4HANA
+
+PLM System Integration for SAP S/4HANA · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+
+**Points communs.** Un problème issu des opérations est transmis au système de développement produit pour examen.
+
+**Différences.** Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+
+**Position FLOW.** Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+
+[Administration Guide for PLM System Integration for SAP S/4HANA](https://help.sap.com/doc/6f4e849a041c4bc59c4b9d6882053532/2.0%20FP03/en-US/Administration_Guide_TC.pdf) — 2.0 FP03, document 1.0 du 2022-12-05, §7.3 p.60, consulté le 2026-09-28.
+
+**Passage.** 2.0 FP03, document 1.0 du 2022-12-05, §7.3 p.60
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM856, U826.
+
+## Sources d’inspiration — domain-finance Finance
+
+### Microsoft — Introduction to the record to report end-to-end business process
+
+Dynamics 365 Finance · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas décrire tout le domaine Finance.
+
+**Points communs.** Collecte des données financières, enregistrement, rapprochement et restitution des comptes.
+
+**Différences.** Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas décrire tout le domaine Finance.
+
+**Position FLOW.** Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les décisions de l’entreprise.
+
+[Introduction to the record to report end-to-end business process](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-introduction) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Record to report overview ; mise à jour 2026-07-31
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM858, U826.
+
+### SAP — Identifying the Basics of Financial and Management Accounting
+
+SAP S/4HANA · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas décrire tout le domaine Finance.
+
+**Points communs.** La comptabilité financière enregistre les transactions et alimente les comptes ; elle est distinguée du contrôle de gestion.
+
+**Différences.** Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas décrire tout le domaine Finance.
+
+**Position FLOW.** Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les décisions de l’entreprise.
+
+[Identifying the Basics of Financial and Management Accounting](https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap-business-suite/identifying-the-areas-of-financial-and-management-accounting_e3512e3e-753c-4fc0-8e21-4391145368ef) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Financial Accounting et Management Accounting
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM859, U826.
+
+## Sources d’inspiration — subdomain-financial-accounting Financial Accounting
+
+### Microsoft — Introduction to the record to report end-to-end business process
+
+Dynamics 365 Finance · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée ici.
+
+**Points communs.** Collecte des données financières, enregistrement, rapprochement et restitution des comptes.
+
+**Différences.** Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée ici.
+
+**Position FLOW.** Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+
+[Introduction to the record to report end-to-end business process](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-introduction) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Record to report overview ; mise à jour 2026-07-31
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM858, U826.
+
+### SAP — Identifying the Basics of Financial and Management Accounting
+
+SAP S/4HANA · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée ici.
+
+**Points communs.** La comptabilité financière enregistre les transactions et alimente les comptes ; elle est distinguée du contrôle de gestion.
+
+**Différences.** Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée ici.
+
+**Position FLOW.** Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+
+[Identifying the Basics of Financial and Management Accounting](https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap-business-suite/identifying-the-areas-of-financial-and-management-accounting_e3512e3e-753c-4fc0-8e21-4391145368ef) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Financial Accounting et Management Accounting
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM859, U826.
+
+## Sources d’inspiration — accounting-interpretation Accounting Interpretation
+
+### Microsoft — Accounting distributions
+
+Dynamics 365 Finance · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Points communs.** Les montants des documents sources sont répartis sur les comptes ; les corrections restent identifiables.
+
+**Différences.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Position FLOW.** Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+
+[Accounting distributions](https://learn.microsoft.com/en-us/dynamics365/finance/accounts-payable/accounting-distributions) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Introduction et Distribute amounts
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM848, U826.
+
+### SAP — Describing Automatic Account Determination
+
+SAP S/4HANA Materials Management · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Points communs.** Les comptes sont déterminés pour les transactions pertinentes comptablement.
+
+**Différences.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Position FLOW.** Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+
+[Describing Automatic Account Determination](https://learning.sap.com/courses/cross-functional-customizing-in-sap-s-4hana-materials-management/describing-automatic-account-determination) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Automatic Account Determination
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM851, U826.
 
 ## Sources d’inspiration — Capacité métier
 
@@ -28521,6 +28878,420 @@ SAP S/4HANA — périmètre du cours cité · Mécanisme ou objet documenté dan
 **Limite de preuve.** Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement Beaumanoir déduit. ARun éclaire l’affectation, pas un master plan FLOW complet. BOP revoit les confirmations ; il ne doit pas être confondu avec cette affectation.
 
 Références : U774, CMP307, ELM208.
+
+## Sources d’inspiration — Integration
+
+### Microsoft — Demand planning home page
+
+Dynamics 365 Supply Chain Management · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention FLOW, pas une taxonomie éditeur.
+
+**Points communs.** La planification reçoit historiques et références et fournit des prévisions.
+
+**Différences.** Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention FLOW, pas une taxonomie éditeur.
+
+**Position FLOW.** Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines, selon les contrats convenus, sans reprendre le pilotage des exécutants.
+
+[Demand planning home page](https://learn.microsoft.com/en-us/dynamics365/supply-chain/demand-planning/demand-planning-home-page) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** The demand planning process
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM853, U826.
+
+### SAP — Administrator’s Guide
+
+SAP S/4HANA Supply Chain Integration Add-On for SAP IBP · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention FLOW, pas une taxonomie éditeur.
+
+**Points communs.** Commandes et stocks alimentent la planification, avec chargements initiaux et changements.
+
+**Différences.** Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention FLOW, pas une taxonomie éditeur.
+
+**Position FLOW.** Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines, selon les contrats convenus, sans reprendre le pilotage des exécutants.
+
+[Administrator’s Guide](https://help.sap.com/doc/227fcaf7918e45378f8cb20a45ffe6a2/1.0%20SP19/en-US/loioc5148f2152294904ac379b94cb902e59.pdf) — 1.0 SP19, Order-Based Planning Integration, pages 33–35, consulté le 2026-09-28.
+
+**Passage.** 1.0 SP19, Order-Based Planning Integration, pages 33–35
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM854, U826.
+
+## Sources d’inspiration — Accounting Data Provision
+
+### Microsoft — Inventory posting
+
+Dynamics 365 Finance · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Points communs.** Les mouvements de stock et leurs effets comptables sont distingués.
+
+**Différences.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Position FLOW.** Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs justificatifs et corrections.
+
+[Inventory posting](https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/inventory-posting) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Tableau Inventory transactions, Transfer (journal)
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM847, U826.
+
+### SAP — Introducing Goods Movements
+
+SAP S/4HANA Cloud Public Edition · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Points communs.** Le fait matériel est distingué du document comptable produit lorsque le mouvement a un effet financier.
+
+**Différences.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Position FLOW.** Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs justificatifs et corrections.
+
+[Introducing Goods Movements](https://learning.sap.com/courses/managing-inventory-movements-and-stock-transfers-in-sap-s-4hana-cloud-public-edition/introducing-goods-movements_ba906e87-54e8-4f56-837e-bde4d82599de) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Document Flow in Goods Movements
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM850, U826.
+
+## Sources d’inspiration — Planning Data Provision
+
+### Microsoft — Demand planning home page
+
+Dynamics 365 Supply Chain Management · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply Planning.
+
+**Points communs.** La planification reçoit historiques et références et fournit des prévisions.
+
+**Différences.** Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply Planning.
+
+**Position FLOW.** Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs corrections.
+
+[Demand planning home page](https://learn.microsoft.com/en-us/dynamics365/supply-chain/demand-planning/demand-planning-home-page) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** The demand planning process
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM853, U826.
+
+### SAP — Administrator’s Guide
+
+SAP S/4HANA Supply Chain Integration Add-On for SAP IBP · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply Planning.
+
+**Points communs.** Commandes et stocks alimentent la planification, avec chargements initiaux et changements.
+
+**Différences.** Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Demand & Supply Planning.
+
+**Position FLOW.** Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs corrections.
+
+[Administrator’s Guide](https://help.sap.com/doc/227fcaf7918e45378f8cb20a45ffe6a2/1.0%20SP19/en-US/loioc5148f2152294904ac379b94cb902e59.pdf) — 1.0 SP19, Order-Based Planning Integration, pages 33–35, consulté le 2026-09-28.
+
+**Passage.** 1.0 SP19, Order-Based Planning Integration, pages 33–35
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM854, U826.
+
+## Sources d’inspiration — Product Feedback
+
+### Microsoft — Manage changes to engineering products
+
+Dynamics 365 Supply Chain Management · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+
+**Points communs.** Les services opérationnels peuvent fournir des signalements et demandes d’amélioration produit.
+
+**Différences.** Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+
+**Position FLOW.** Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+
+[Manage changes to engineering products](https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/engineering-change-management) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Engineering change requests
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM855, U826.
+
+### SAP — Administration Guide for PLM System Integration for SAP S/4HANA
+
+PLM System Integration for SAP S/4HANA · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+
+**Points communs.** Un problème issu des opérations est transmis au système de développement produit pour examen.
+
+**Différences.** Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+
+**Position FLOW.** Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+
+[Administration Guide for PLM System Integration for SAP S/4HANA](https://help.sap.com/doc/6f4e849a041c4bc59c4b9d6882053532/2.0%20FP03/en-US/Administration_Guide_TC.pdf) — 2.0 FP03, document 1.0 du 2022-12-05, §7.3 p.60, consulté le 2026-09-28.
+
+**Passage.** 2.0 FP03, document 1.0 du 2022-12-05, §7.3 p.60
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM856, U826.
+
+## Sources d’inspiration — Finance
+
+### Microsoft — Introduction to the record to report end-to-end business process
+
+Dynamics 365 Finance · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas décrire tout le domaine Finance.
+
+**Points communs.** Collecte des données financières, enregistrement, rapprochement et restitution des comptes.
+
+**Différences.** Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas décrire tout le domaine Finance.
+
+**Position FLOW.** Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les décisions de l’entreprise.
+
+[Introduction to the record to report end-to-end business process](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-introduction) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Record to report overview ; mise à jour 2026-07-31
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM858, U826.
+
+### SAP — Identifying the Basics of Financial and Management Accounting
+
+SAP S/4HANA · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas décrire tout le domaine Finance.
+
+**Points communs.** La comptabilité financière enregistre les transactions et alimente les comptes ; elle est distinguée du contrôle de gestion.
+
+**Différences.** Les sources éclairent la comptabilité et le contrôle financier ; la fiche de contexte ne prétend pas décrire tout le domaine Finance.
+
+**Position FLOW.** Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les décisions de l’entreprise.
+
+[Identifying the Basics of Financial and Management Accounting](https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap-business-suite/identifying-the-areas-of-financial-and-management-accounting_e3512e3e-753c-4fc0-8e21-4391145368ef) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Financial Accounting et Management Accounting
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM859, U826.
+
+## Sources d’inspiration — Financial Accounting
+
+### Microsoft — Introduction to the record to report end-to-end business process
+
+Dynamics 365 Finance · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée ici.
+
+**Points communs.** Collecte des données financières, enregistrement, rapprochement et restitution des comptes.
+
+**Différences.** Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée ici.
+
+**Position FLOW.** Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+
+[Introduction to the record to report end-to-end business process](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-introduction) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Record to report overview ; mise à jour 2026-07-31
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM858, U826.
+
+### SAP — Identifying the Basics of Financial and Management Accounting
+
+SAP S/4HANA · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée ici.
+
+**Points communs.** La comptabilité financière enregistre les transactions et alimente les comptes ; elle est distinguée du contrôle de gestion.
+
+**Différences.** Les sources couvrent aussi tenue et clôture des comptes ; seule la capacité d’interprétation est détaillée ici.
+
+**Position FLOW.** Traduire les opérations en comptes justifiés et produire les restitutions comptables de l’entreprise.
+
+[Identifying the Basics of Financial and Management Accounting](https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap-business-suite/identifying-the-areas-of-financial-and-management-accounting_e3512e3e-753c-4fc0-8e21-4391145368ef) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Financial Accounting et Management Accounting
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM859, U826.
+
+## Sources d’inspiration — Accounting Interpretation
+
+### Microsoft — Accounting distributions
+
+Dynamics 365 Finance · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Points communs.** Les montants des documents sources sont répartis sur les comptes ; les corrections restent identifiables.
+
+**Différences.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Position FLOW.** Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+
+[Accounting distributions](https://learn.microsoft.com/en-us/dynamics365/finance/accounts-payable/accounting-distributions) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Introduction et Distribute amounts
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM848, U826.
+
+### SAP — Describing Automatic Account Determination
+
+SAP S/4HANA Materials Management · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Points communs.** Les comptes sont déterminés pour les transactions pertinentes comptablement.
+
+**Différences.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Position FLOW.** Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+
+[Describing Automatic Account Determination](https://learning.sap.com/courses/cross-functional-customizing-in-sap-s-4hana-materials-management/describing-automatic-account-determination) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Automatic Account Determination
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM851, U826.
+
+## Sources d’inspiration — Business Fact
+
+### Microsoft — Inventory posting
+
+Dynamics 365 Finance · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Points communs.** Les mouvements de stock et leurs effets comptables sont distingués.
+
+**Différences.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Position FLOW.** Fait reconnu dans l’activité, daté et justifié, distingué d’une prévision, d’une demande et d’un simple message technique.
+
+[Inventory posting](https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/inventory-posting) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Tableau Inventory transactions, Transfer (journal)
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM847, U826.
+
+### SAP — Introducing Goods Movements
+
+SAP S/4HANA Cloud Public Edition · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Points communs.** Le fait matériel est distingué du document comptable produit lorsque le mouvement a un effet financier.
+
+**Différences.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Position FLOW.** Fait reconnu dans l’activité, daté et justifié, distingué d’une prévision, d’une demande et d’un simple message technique.
+
+[Introducing Goods Movements](https://learning.sap.com/courses/managing-inventory-movements-and-stock-transfers-in-sap-s-4hana-cloud-public-edition/introducing-goods-movements_ba906e87-54e8-4f56-837e-bde4d82599de) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Document Flow in Goods Movements
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM850, U826.
+
+## Sources d’inspiration — Accounting Entry
+
+### Microsoft — Accounting distributions
+
+Dynamics 365 Finance · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Points communs.** Les montants des documents sources sont répartis sur les comptes ; les corrections restent identifiables.
+
+**Différences.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Position FLOW.** Enregistrement qui affecte des comptes et des montants selon les règles comptables, en conservant sa justification.
+
+[Accounting distributions](https://learn.microsoft.com/en-us/dynamics365/finance/accounts-payable/accounting-distributions) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Introduction et Distribute amounts
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM848, U826.
+
+### SAP — Describing Automatic Account Determination
+
+SAP S/4HANA Materials Management · Fonction ou processus documenté · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+
+**Pourquoi cette définition.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Points communs.** Les comptes sont déterminés pour les transactions pertinentes comptablement.
+
+**Différences.** Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation et enregistrement comptable.
+
+**Position FLOW.** Enregistrement qui affecte des comptes et des montants selon les règles comptables, en conservant sa justification.
+
+[Describing Automatic Account Determination](https://learning.sap.com/courses/cross-functional-customizing-in-sap-s-4hana-materials-management/describing-automatic-account-determination) — Documentation évolutive ; édition globale non indiquée, consulté le 2026-09-28.
+
+**Passage.** Automatic Account Determination
+
+**Limite de preuve.** Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+
+Références : ELM851, U826.
 
 ## Informations métier
 

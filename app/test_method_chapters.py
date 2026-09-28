@@ -8,6 +8,24 @@ from app.modeling_guide import _validate_guide, ModelingGuideError
 ROOT = Path(__file__).resolve().parents[1]
 
 class ChapterContractTests(unittest.TestCase):
+    def test_transformation_candidate_keeps_legacy_contract_and_resolves_terms(self):
+        guide = read(ROOT / 'modeles/backlog/atlas-transformation-methodology.yaml')
+        _validate_guide(guide, guide['version'])
+        for mutation in ('missing_dimension', 'unknown_visual', 'broken_link', 'svg_script', 'svg_external'):
+            invalid = deepcopy(guide)
+            if mutation == 'missing_dimension': invalid['chapters'][0]['visual']['items'].pop()
+            if mutation == 'unknown_visual': invalid['chapters'][0]['visual']['kind'] = 'external-svg'
+            if mutation == 'broken_link': invalid['chapters'][1]['sections'][0]['text'] = '[DDD](method:MOD999)'
+            if mutation == 'svg_script': invalid['chapters'][0]['visual']['overview_svg'] = '<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>'
+            if mutation == 'svg_external': invalid['chapters'][0]['visual']['overview_svg'] = '<svg xmlns="http://www.w3.org/2000/svg"><style>text{fill:url(//example.com/remote)}</style></svg>'
+            with self.subTest(mutation=mutation), self.assertRaises(ModelingGuideError):
+                _validate_guide(invalid, invalid['version'])
+        canonical = read(ROOT / 'modeles/backlog/modeling-glossary.yaml')
+        for term in guide['glossary']['terms']:
+            if int(term['id'][3:]) >= 32:
+                source = next(t for t in canonical['terms'] if t['id'] == term['id'])
+                self.assertEqual(term['definition'], source['definition'])
+
     def test_simplified_glossary_covers_each_visible_term_once(self):
         guide = read(ROOT / 'modeles/backlog/atlas-methodology-glossary-U806.yaml')
         _validate_guide(guide, guide['version'])

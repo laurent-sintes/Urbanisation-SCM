@@ -8,8 +8,8 @@ import { plainInlineText } from '../inlineLinks';
 import { publicText } from '../publicText';
 import { MarketComparisons } from './MarketComparisons';
 
-export function GlossaryPage({ model, selected, mode, guideState, onSelect, onRetry }: {
-  model: PublishedModel; selected?: string; mode: 'model' | 'meta'; guideState: GuideState;
+export function GlossaryPage({ model, selected, mode, routeVersion, guideState, onSelect, onRetry }: {
+  model: PublishedModel; selected?: string; routeVersion?: string; mode: 'model' | 'meta'; guideState: GuideState;
   onSelect: (id: string) => void; onRetry: () => void;
 }) {
   const [query, setQuery] = useState('');
@@ -36,16 +36,16 @@ export function GlossaryPage({ model, selected, mode, guideState, onSelect, onRe
   }, [term?.id, model.version]);
   if (guideState.status === 'loading') return <p role="status">Chargement des glossaires…</p>;
   if (guideState.status === 'error') return <section className="glossary-empty"><h2>Les glossaires ne sont pas accessibles</h2><p>{guideState.message}</p><button onClick={onRetry}>Réessayer</button></section>;
-  if (mode === 'meta' && !glossary) return <section className="glossary-empty"><BookOpen size={30}/><h2>Glossaire du méta modèle indisponible pour cette version</h2></section>;
+  if (mode === 'meta' && !glossary) return <section className="glossary-empty"><BookOpen size={30}/><h2>Glossaire méthodologique indisponible pour cette version</h2></section>;
   if (!terms.length) return <section className="glossary-empty"><BookOpen size={30}/><h2>Aucun terme dans cette version</h2></section>;
-  return <><nav className="glossary-switch" aria-label="Choisir un glossaire"><a href={`#version=${model.version}&view=glossary&glossary=model`} aria-current={mode==='model' ? 'page' : undefined}>Métier</a><a href={`#version=${model.version}&view=glossary&glossary=meta`} aria-current={mode==='meta' ? 'page' : undefined}>Méthode</a></nav>{mode === 'meta' && <div className="method-glossary-nav"><MethodLink>Méthode & métamodèle</MethodLink><MethodReturn/></div>}<div className="glossary-page" data-glossary={mode}>
+  return <><nav className="glossary-switch" aria-label="Choisir un glossaire"><a href={`#${routeVersion ? `version=${routeVersion}&` : ''}view=glossary&glossary=model`} aria-current={mode==='model' ? 'page' : undefined}>Métier</a><a href={`#${routeVersion ? `version=${routeVersion}&` : ''}view=glossary&glossary=meta`} aria-current={mode==='meta' ? 'page' : undefined}>Méthode</a></nav>{mode === 'meta' && <div className="method-glossary-nav"><MethodLink>Retour à la méthodologie</MethodLink><MethodReturn/></div>}<div className="glossary-page" data-glossary={mode}>
     <section className="glossary-index" aria-label="Termes du glossaire">
       <label className="glossary-search"><Search size={17}/><input aria-label="Rechercher dans le glossaire" placeholder="Un terme, une définition…" value={query} onChange={event => setQuery(event.target.value)}/></label>
       <p role="status">{matches.length} termes{showReadingHelp ? ' · aide sur les codes disponible' : ''}</p>
       {(mode === 'meta' && glossary?.groups ? glossary.groups.map(group=>({label:group.label,items:matches.filter(t=>group.term_ids.includes(t.id))})) : [{label:'',items:matches}]).filter(group=>group.items.length).map(group=><section key={group.label}>
         {group.label && <h3>{group.label}</h3>}
         <ul tabIndex={0} aria-label={group.label || 'Liste des termes'}>{group.items.map(item => <li key={item.id}>
-          <a href={`#version=${model.version}&view=glossary&glossary=${mode}&term=${item.id}`} className={item.id===term?.id?'selected':''} aria-current={item.id===term?.id?'true':undefined}
+          <a href={`#${routeVersion ? `version=${routeVersion}&` : ''}view=glossary&glossary=${mode}&term=${item.id}`} className={item.id===term?.id?'selected':''} aria-current={item.id===term?.id?'true':undefined}
             onClick={event=>{if(event.button===0&&!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey){event.preventDefault();onSelect(item.id);}}}>{plainInlineText(item.label_fr || item.name)}</a>
         </li>)}</ul></section>)}
       {showReadingHelp && !query && <details><summary>Comprendre les codes et identifiants</summary><ReadingHelp model={model}/></details>}

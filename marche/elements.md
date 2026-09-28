@@ -6240,3 +6240,57 @@ MKT14 — Microsoft Dynamics 365. [Introduction to inventory to deliver business
 ### ELM846
 
 MKT14 — Microsoft Dynamics 365 Finance. [Record to report end-to-end overview](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-overview). Page évolutive ; version globale non précisée. Consulté le 2026-09-26. Nature : documentation primaire produit ou processus. Passage : Record to report process relationship ; Forecast to plan. Reformulation : La restitution financière coopère avec planification et budgets. Limites : Appui partiel pour Finance et contrôle ; ne définit pas tout Enterprise Management & Control, notamment sa gouvernance de conformité. Réutilisation : Synthèse originale et lien ; pas de redistribution du document source. U780, CMP309.
+### ELM847
+
+MKT14 — Dynamics 365 Finance. [Inventory posting](https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/inventory-posting), tableau, Transfer (journal). Page évolutive, édition unique inconnue ; consultée le 28 septembre 2026. Nature : documentation produit. Reformulation : certains transferts internes ne produisent pas de pièce comptable selon les dimensions suivies financièrement. Limite : aucune capacité autonome d’export démontrée. U813, CMP310.
+
+### ELM848
+
+MKT14 — Dynamics 365 Finance. [Accounting distributions](https://learn.microsoft.com/en-us/dynamics365/finance/accounts-payable/accounting-distributions), introduction et Distribute amounts. Page évolutive, mise à jour 2026-04-03 ; consultée le 28 septembre 2026. Nature : documentation produit. Reformulation : répartition des montants des documents sources sur les comptes et corrections par annulation puis nouvelles distributions. Limite : traitement déjà comptable, pas seule sélection des faits. U813, CMP310.
+
+### ELM849
+
+MKT14 — Dynamics 365 Finance. [Subledger transfer to the general ledger](https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/subledger-transfer), options de transfert. Page évolutive, mise à jour 2026-06-16 ; consultée le 28 septembre 2026. Nature : documentation produit. Reformulation : transfert asynchrone ou planifié d’écritures vers le grand livre. Limite : écritures déjà constituées, pas alimentation initiale en faits. U813, CMP310.
+
+### ELM850
+
+MKT13 — SAP S/4HANA Cloud Public Edition. [Introducing Goods Movements](https://learning.sap.com/courses/managing-inventory-movements-and-stock-transfers-in-sap-s-4hana-cloud-public-edition/introducing-goods-movements_ba906e87-54e8-4f56-837e-bde4d82599de), Document Flow in Goods Movements. Leçon évolutive, édition numérotée inconnue ; consultée le 28 septembre 2026. Nature : formation primaire produit. Reformulation : document de mouvement, complété d’un document comptable en cas d’impact financier. Limite : réalisation intégrée, pas service indépendant de publication. U813, CMP310.
+
+### ELM851
+
+MKT13 — SAP S/4HANA Materials Management. [Describing Automatic Account Determination](https://learning.sap.com/courses/cross-functional-customizing-in-sap-s-4hana-materials-management/describing-automatic-account-determination), Automatic Account Determination. Leçon évolutive, édition numérotée inconnue ; consultée le 28 septembre 2026. Nature : formation primaire produit. Reformulation : détermination des comptes pour les transactions pertinentes comptablement. Limite : fonction d’interprétation, pas définition de capacité FLOW. U813, CMP310.
+
+### ELM852
+
+MKT95 — Axway Financial Accounting Hub. [Présentation du produit](https://www.axway.com/en/products/afah), AFAH core functions et Data reliability. Page évolutive, version produit inconnue ; consultée le 28 septembre 2026. Nature : présentation commerciale primaire. Reformulation : connexion producteurs/consommateurs, transformation par règles comptables, piste d’audit et reprise. Limite : déclarations éditeur, pas détail des règles de sélection ni preuve installée. U813, CMP310.
+
+Pour ELM847–ELM852 : titres et sections ci-dessus sont les localisateurs ; aucun identifiant natif de capacité établi. Reformulations distinctes des libellés natifs, sans citation de définition universelle. Synthèses et liens uniquement, pas de reproduction intégrale. Analyse et limites d’accès : [étude U813](faits-gestion-comptabilite-U813.md).
+
+### ELM853
+
+MKT14 — [Dynamics 365 Demand planning home page](https://learn.microsoft.com/en-us/dynamics365/supply-chain/demand-planning/demand-planning-home-page). Documentation primaire consultée le 28 septembre 2026. Localisateur et édition : The demand planning process ; page évolutive, mise à jour 2026-07-01. Reformulation et limite : Import de données historiques et références puis calcul et export de prévisions. Appui côté consommateur, pas sous-domaine sortant. Aucun identifiant natif de capacité établi. Synthèse et lien, sans reproduction intégrale. U822, CMP311 ; détails d’accès dans [l’étude](diffusion-donnees-operationnelles-U822.md).
+
+### ELM854
+
+MKT13 — [SAP S/4HANA Supply Chain Integration Add-On for SAP IBP — Administrator’s Guide](https://help.sap.com/doc/227fcaf7918e45378f8cb20a45ffe6a2/1.0%20SP19/en-US/loioc5148f2152294904ac379b94cb902e59.pdf). Documentation primaire consultée le 28 septembre 2026. Localisateur et édition : 1.0 SP19 ; Configuration for Order-Based Planning Integration, p.33–35. Reformulation et limite : Commandes et stocks intégrés avec chargements initiaux et modifications. Édition précise, pas architecture de capacités FLOW. Aucun identifiant natif de capacité établi. Synthèse et lien, sans reproduction intégrale. U822, CMP311 ; détails d’accès dans [l’étude](diffusion-donnees-operationnelles-U822.md).
+
+### ELM855
+
+MKT14 — [Manage changes to engineering products](https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/engineering-change-management). Documentation primaire consultée le 28 septembre 2026. Localisateur et édition : Engineering change requests ; page évolutive, édition globale inconnue. Reformulation et limite : Signalements et demandes de changement depuis les services opérationnels. Ne prouve pas un export vers un PLM externe. Aucun identifiant natif de capacité établi. Synthèse et lien, sans reproduction intégrale. U822, CMP311 ; détails d’accès dans [l’étude](diffusion-donnees-operationnelles-U822.md).
+
+### ELM856
+
+MKT13 — [Administration Guide for PLM System Integration for SAP S/4HANA](https://help.sap.com/doc/6f4e849a041c4bc59c4b9d6882053532/2.0%20FP03/en-US/Administration_Guide_TC.pdf). Documentation primaire consultée le 28 septembre 2026. Localisateur et édition : 2.0 FP03 ; document 1.0 du 2022-12-05 ; §7.3 p.60, §9.3.1.3 p.82. Reformulation et limite : Problème issu de fabrication/logistique transmis au PLM pour examen et changement éventuel. Exemple industriel, aucune implantation Beaumanoir présumée. Aucun identifiant natif de capacité établi. Synthèse et lien, sans reproduction intégrale. U822, CMP311 ; détails d’accès dans [l’étude](diffusion-donnees-operationnelles-U822.md).
+
+### ELM857
+
+MKT14 — [Dynamics 365 Business events overview](https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/business-events/home-page). Documentation primaire consultée le 28 septembre 2026. Localisateur et édition : Introduction et Important ; documentation évolutive, édition globale inconnue. Reformulation et limite : Notifications vers systèmes externes distinctes des exports volumineux. Appui technique ; pas définition d’un sous-domaine métier. Aucun identifiant natif de capacité établi. Synthèse et lien, sans reproduction intégrale. U822, CMP311 ; détails d’accès dans [l’étude](diffusion-donnees-operationnelles-U822.md).
+
+### ELM858
+
+MKT14 — Dynamics 365 Finance. [Introduction to the record to report end-to-end business process](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-introduction). Documentation primaire consultée le 2026-09-28. Passage : Record to report overview ; mise à jour 2026-07-31. Page évolutive, édition globale inconnue. Reformulation : Collecte des données financières, enregistrement, rapprochement et restitution des comptes. Limite : contexte financier, sans preuve de réalisation Beaumanoir ni équivalence de découpage FLOW. Synthèse et lien uniquement. U826, CMP310, CMP311.
+
+
+### ELM859
+
+MKT13 — SAP S/4HANA. [Identifying the Basics of Financial and Management Accounting](https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap-business-suite/identifying-the-areas-of-financial-and-management-accounting_e3512e3e-753c-4fc0-8e21-4391145368ef). Documentation primaire consultée le 2026-09-28. Passage : Financial Accounting et Management Accounting. Page évolutive, édition globale inconnue. Reformulation : La comptabilité financière enregistre les transactions et alimente les comptes ; elle est distinguée du contrôle de gestion. Limite : contexte financier, sans preuve de réalisation Beaumanoir ni équivalence de découpage FLOW. Synthèse et lien uniquement. U826, CMP310, CMP311.

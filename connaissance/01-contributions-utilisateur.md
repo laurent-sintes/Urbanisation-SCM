@@ -19835,3 +19835,527 @@ Go
 **contexte et portée**
 
 Accord sur les recommandations complètes de l’audit U805 : retrait courant de MOD004, dédoublonnage des six couples, regroupement des types, simplification des notions techniques, déplacement des conventions vers la méthode et des codes vers l’aide, conservation des objets structurants et notions connexes. Préparer le guide et le front cohérents. Aucun reclassement de capacité ni nouvel accord sur les formulations métier n’est déduit ; les rédactions complémentaires restent éditoriales. La publication et le push restent des opérations distinctes.
+
+## U807
+
+**id**
+
+U807
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Discuter l’intégration de la cartographie dans une méthodologie de transformation
+
+**texte**
+
+Regarde cette conversation : [https://chatgpt.com/share/6aba1f19-7900-83eb-9925-75a9fb110601](https://chatgpt.com/share/6aba1f19-7900-83eb-9925-75a9fb110601)
+
+Je pense que ce serait interessant d'intégrer la méthode de cartographie des domaines et capacités dans une démarche de méthodologie de transformation. Cette méthode pourrait être un point d'entrée méthodologie dans ATLAS.
+
+Si c'est ok, la question se posera du périmètre du vocabulaire du méta modèle : c'est le méta modèle de la carto système / domaine / capacité ou c'est le méta modèle complet ?
+
+Qu'en penses-tu ?
+
+**contexte et portée**
+
+Proposition à discuter, sans accord d’application ni demande de publication. La conversation partagée « Comprendre BIZBOK et TOGAF » a été consultée le 28 septembre 2026 : elle articule architecture métier, cartographie des capacités, transformation et flux de valeur. Ses exemples et recommandations restent des éléments de discussion, sans adoption de noms, de périmètres ou de couverture des SI. La question porte sur la place de la méthode dans Atlas et sur l’étendue de son vocabulaire ; aucun élargissement du métamodèle ou du périmètre applicatif n’est acté.
+
+## U808
+
+**id**
+
+U808
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Proposer un parcours de transformation avec DDD, démarche produit et schéma SVG
+
+**texte**
+
+Je suis ok sur le principe.
+
+Je souhaite que soient positionné dans le parcours :
+
+- l'approche DDD
+- La démarche produit
+
+Je pense que le 4 est peut être à détailler.
+
+Il faut parler des références BIZBOK et TOGAF. Voire d'autres.
+
+Je verrais bien un svg qui fixe les idées.
+
+Tu peux me faire une proposition avant refacto ?
+
+**contexte et portée**
+
+Accord de principe sur le cadre proposé après U807 : une entrée Méthodologie dans Atlas, la cartographie inscrite dans une démarche de transformation, un glossaire méthodologique couvrant cette démarche et un métamodèle délimité aux objets effectivement structurés. Demande d’une proposition avant refonte, avec positionnement du DDD et de la démarche produit, détail du volet 4 « Construire la cible et la trajectoire », références BIZBOK et TOGAF et schéma SVG. Les précisions rédigées ensuite restent proposées ; aucun accord implicite sur leurs étapes, libellés, objets ou relations. Livrables de discussion dans `restitutions/methodologie-transformation-U808/` ; aucune modification du modèle, des glossaires canoniques, du frontend ou des publications dans ce lot.
+
+## U809
+
+**id**
+
+U809
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Positionner la technologie et la validation des fondations dans le parcours
+
+**texte**
+
+Je souhaite y intégrer également la place de la technologie : à quel moment on en parle et on valide les fondations ? Avant ou après la démarche produit ?
+
+**contexte et portée**
+
+Complément à la proposition avant refonte U808. Expliquer quand examiner les contraintes et possibilités technologiques, quand et sur quelles preuves valider les fondations, et comment articuler ces travaux avec la démarche produit. La question n’adopte aucun ordre définitif, socle technique ni choix de produit. À intégrer dans la même proposition et le même SVG.
+
+## U810
+
+**id**
+
+U810
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Présenter le cadrage comme un problème multidimensionnel traité conjointement
+
+**texte**
+
+JE pense que c'est bien d'expliquer que ce n'est pas un diagramme de gantt qui gère les successions d'étape qui est la bonne méthode. Le cadrage est un pb multidemensionnel qui mérite d'être traité en même temps. Les différentes dimensions se répondent. Tu es ok avec ça ?
+
+**contexte et portée**
+
+Précision structurante pour la proposition U808–U809 : montrer le cadrage comme l’examen conjoint de dimensions qui se répondent, plutôt que comme une succession d’étapes. La proposition et le SVG doivent rendre ces interactions visibles. Aucun plan de projet ni ordre universel de réalisation n’est adopté ; la distinction entre méthode d’instruction des décisions et outil de planification reste à expliquer. Les formulations complémentaires de Codex demeurent proposées avant refonte.
+
+## U811
+
+**id**
+
+U811
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Construire les décisions progressivement avec une équipe pluridisciplinaire
+
+**texte**
+
+Oui j'ai du mal à expliquer cette problématique aux équipes. On n'a pas un leader sur un chantier Technologie qui bosse dans son coin et livre à la fin. On a plutot une équipe pluridisciplinaire avec des leaders par compétence ou domaine d'expertise qui collaborent en continu. Une démarche agile est souvent la meilleure pour un cadrage. De plus pour faire prendre des décisions, il s'agit de présenter souvent l'avancée des travaux afin d'affiner. Si on livre à la fin une liste d'ADR à valider, ça n'embarque pas le métier dans une démarche entonnoir et progressive. Qu'en penses-tu ?
+
+**contexte et portée**
+
+Précision de la proposition U808–U810 : collaboration continue d’une équipe pluridisciplinaire avec leaders d’expertise, cadrage agile, présentations fréquentes et convergence progressive des décisions avec le métier. Les ADR ne doivent pas devenir un lot final de décisions découvertes au moment de leur validation. Cette contribution exprime une orientation méthodologique souhaitée, sans preuve d’organisation effectivement installée ni adoption d’un cadre agile particulier. Les modalités de rythme, de responsabilité et de décision proposées ensuite restent à discuter avant refonte.
+
+## U812
+
+**id**
+
+U812
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Ancrer la gouvernance dans la direction de programme et le COPIL de transformation mensuel
+
+**texte**
+
+On pourrait être plus précis sur la démarche en partant de ce qui existe :
+
+- Une direction de programme qui est en adhérence continue avec l'équipe de cadrage et de transformation : certaines décisions peuvent être prises localement selon le mandant du programme
+- Un copil de transfo une fois par mois qui invite les sponsors (DG, DSI, Directeur métier, CTO) pour les décisions les plus structurantes : je pense qu'un roadmap des copil qui anticipe un peu pourrait être un accélérateur.
+
+**contexte et portée**
+
+Laurent décrit comme existants la direction de programme en lien continu avec l’équipe de cadrage et de transformation, la possibilité de décisions locales selon le mandat du programme et un COPIL de transformation mensuel invitant les sponsors DG, DSI, directeur métier et CTO pour les décisions les plus structurantes. Il propose une feuille de route anticipant les COPIL. Les seuils de délégation, règles de quorum, décideurs nominatifs et calendrier précis ne sont pas fournis. Les modalités complémentaires rédigées dans la proposition U808 restent proposées, sans présumer leur fonctionnement installé ni engager les instances.
+## U813
+
+**id**
+
+U813
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Étudier la sélection des faits de gestion transmis à un interpréteur comptable
+
+**texte**
+
+Envoi des faits de gestion à la compta (finance)
+
+Je me demande s'il ne manque pas une capacité qui permet de sélectionner les faits de gestion à envoyer à un interpreteur comptable avant ingestion dans le domaine Finance.
+
+Tu peux analyser le marché sur le ce sujet ?
+
+**contexte et portée**
+
+Demande d’analyse marché d’une capacité éventuelle de sélection et transmission des faits de gestion vers un interpréteur comptable. Hypothèse à confronter au modèle et aux sources éditeurs ; aucun ajout de capacité, rattachement, choix de solution ou flux installé n’est validé par cette demande.
+
+## U814
+
+**id**
+
+U814
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Positionner l’architecture d’entreprise dans la méthode de transformation
+
+**texte**
+
+Le mandat n'est pas clair mais ce n'est pas grave.
+
+Je me pose la question de la place de "l'architecture d'entreprise" : pour moi c'est un organe de gouvernance qui fait le trait d'union entre la stratégie d'entreprise, le métier, la technologie et l'organisation. Ca permet de conserver une cohérence d'ensemble pendant la transformation et après.
+
+Est-ce que ce serait interessant d'en parler et de l'intégrer à la méthode ?
+
+**contexte et portée**
+
+Complément à la proposition méthodologique U808–U812. Laurent indique que l’imprécision actuelle du mandat n’est pas bloquante et propose d’examiner l’architecture d’entreprise comme trait d’union entre stratégie, métier, technologie et organisation, pour maintenir la cohérence pendant et après la transformation. La contribution ne prouve pas l’existence d’une équipe ou instance dédiée, ne désigne aucun responsable et ne confère aucun pouvoir d’arbitrage. Son positionnement transverse, son articulation avec les instances décrites en U812 et les modalités rédigées ensuite restent proposés avant refonte.
+
+## U815
+
+**id**
+
+U815
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Examiner les rôles Transformation Leader et Transformation Board
+
+**texte**
+
+Dernier point : la gouvernance programme. Transformation Leader + Transformation Board ?
+
+**contexte et portée**
+
+Question sur les rôles et intitulés de gouvernance dans la proposition méthodologique U808–U812 et U814. Rapprochement à proposer avec la direction de programme et le COPIL mensuel décrits par Laurent, sans création implicite d’un nouvel étage, nomination, délégation ou changement des instances existantes. Les intitulés et responsabilités détaillées restent proposés avant refonte ; aucun caractère normatif de ces noms n’est présumé.
+## U816
+
+**id**
+
+U816
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Clarifier Finance Ingestion et distinguer alimentation et interprétation comptables
+
+**texte**
+
+Finance Ingestion  : à quoi sert cette capacité ?
+
+Je pense qu'il faut effectivement une capacité d'ingestion et de transformation des faits de gestion dans le domaine finance afin de faire un lien entre "Accounting Event Provisioning" et la compta.
+
+  Pas fan de "Accounting Event Provisioning". Event ça fait très IT
+
+**contexte et portée**
+
+Laurent demande le rôle du comportement existant Finance Ingestion, propose une capacité de réception et transformation des faits de gestion dans Finance et écarte la connotation informatique de Event dans le nom proposé U813. Cette orientation ne valide ni un nouveau libellé, ni une décomposition détaillée, ni un rattachement canonique. Distinguer l’ingestion actuelle de références provenant de Finance et le nouveau besoin d’alimentation de Finance en faits opérationnels. Les noms complémentaires de Codex restent proposés.
+
+## U817
+
+**id**
+
+U817
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Revoir globalement la méthode de transformation, ses appuis marché et ses schémas
+
+**texte**
+
+Je pense qu'on a tout.
+
+Tu peux refaire un point global sur le sujet "méthodo de transfo" ?
+
+- Que dit le marché ? Que manque t il ? Y a t il des écarts flagrants ?
+- En terme de structuration, story telling, svg, est-ce que tout est cohérent ?
+
+**contexte et portée**
+
+Demande de revue globale de la proposition méthodologique construite sous U807–U812 et U814–U815 : comparaison aux références pertinentes, lacunes et écarts, structure éditoriale, récit et cohérence des deux SVG. « Je pense qu’on a tout » introduit cette revue et ne constitue pas un accord global sur chaque formulation ou sur de nouveaux compléments. Recommandations dans `restitutions/methodologie-transformation-U808/revue-globale.md`, avant refonte ; aucun élargissement canonique, publication ou modification de l’application n’est demandé.
+## U818
+
+**id**
+
+U818
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Valider alimentation comptable, interprétation dans Finance et clarification de l’ingestion des références
+
+**texte**
+
+Je valide
+
+**contexte et portée**
+
+Accord sur la proposition cumulative U813–U816 corrigée : Accounting Data Provision côté opérationnel, Accounting Interpretation dans Finance avec réception, contrôle et traduction des faits en écritures prêtes à enregistrer, distinction de leur enregistrement effectif ; renommage du comportement Finance Ingestion en Reference Ingestion from Finance à responsabilité inchangée. Accounting Event Provisioning est abandonné. L’accord ne valide pas les compléments rédigés après ce message, les réalisations installées, une publication, ni des sous-domaines parents non encore proposés. Leur rattachement précis fait l’objet d’une clarification séparée pour respecter la hiérarchie obligatoire.
+
+## U819
+
+**id**
+
+U819
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Éviter un sous-domaine dédié à une seule capacité d’alimentation comptable
+
+**texte**
+
+Dommage d'avoir un sous domaine dans "Orchestration" avec une seule capacité
+
+**contexte et portée**
+
+Réserve sur la proposition de rattachement à un nouveau sous-domaine Accounting Integration sous Supply Chain Orchestration. Aucun rattachement alternatif ni création de Financial Accounting n’est déduit de cette réponse. L’accord U818 sur les deux capacités et le renommage reste acquis ; la structure doit être résolue sans créer un regroupement artificiel.
+
+## U820
+
+**id**
+
+U820
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Examiner Order Management comme parent de l’alimentation comptable
+
+**texte**
+
+Peut être dans Order Management ?
+
+**contexte et portée**
+
+Piste de rattachement à examiner après U819, sans adoption implicite ni réduction du périmètre validé des faits de gestion aux seuls faits issus de commandes.
+
+## U821
+
+**id**
+
+U821
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Adapter la méthode à une équipe habituée au delivery et à la cascade
+
+**texte**
+
+Oui, il faut imaginer une équipe qui a l'habitude de faire du délivery, pas du cadrage de transfo et qui a l'habitude de la cascade et non de l'agile.
+
+**contexte et portée**
+
+Précision du public visé pour la revue U817 et la proposition méthodologique : concevoir la pédagogie pour une équipe familière de la réalisation et d’une démarche en cascade, moins du cadrage de transformation et de l’agile. Rendre explicites les activités de cadrage, leurs résultats, les revues et les preuves d’avancement, en conservant les repères utiles de planification et de responsabilité. Cette précision ne constitue pas une validation de tous les compléments de la revue ni un mandat de refonte de l’application.
+
+## U822
+
+**id**
+
+U822
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Étudier un sous-domaine de diffusion des données opérationnelles vers les autres domaines
+
+**texte**
+
+On pourrait imaginer un sous domaine "intégration outbound" qui publie, diffuse les données opérations dans les domaines hors supply : vers la compta, vers le plan, vers le PLM qui est dans "étude et développement".
+
+Tu peux analyser ça ?
+
+**contexte et portée**
+
+Hypothèse de regroupement des sorties de données opérationnelles vers Finance, Demand & Supply Planning et la conception et le développement, avec le PLM comme destinataire applicatif évoqué. Demande d’analyse, sans adoption de nom, de capacités supplémentaires, de sous-domaine ou de flux installé. Les accords U818 demeurent limités au lot comptable antérieur.
+
+## U823
+
+**id**
+
+U823
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Étudier un sous-domaine Integration avec catégories Inbound et Outbound
+
+**texte**
+
+On pourrait aller plus loin : un sous domaine intégration avec une catégorie inbound et une catégorie outbound. On peut imaginer intégrer toutes les capacités d'ingestion dans inbound et les nouvelles capacités de broadcast dans outbound. Ca allège les autres sous domaines et ça justifie ce domaine intégration.
+
+**contexte et portée**
+
+Proposition de regroupement des capacités d’ingestion et de diffusion dans un sous-domaine Integration de Supply Chain Orchestration, avec catégories Inbound et Outbound. À analyser après U822, sans adoption implicite du déplacement des Tracking, des registres, des vues ou des capacités des domaines consommateurs. Les catégories ne créent aucun niveau hiérarchique.
+
+## U824
+
+**id**
+
+U824
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Limiter Integration aux échanges est-ouest entre Supply Chain Orchestration et les autres domaines
+
+**texte**
+
+Oui, les interaction nord sud (appeler un service entrepot doit rester là où il est). Quand on parle d'intégration ici, on parle d'intégration est-ouest entre le domaine "Supply Orchestration" et le reste du monde.
+
+**contexte et portée**
+
+Laurent confirme la frontière métier d’Integration : échanges est-ouest entre Supply Chain Orchestration et les autres domaines. Les interactions nord-sud avec les exécutants, illustrées par l’appel d’un service d’entrepôt, restent dans les capacités qui les pilotent. Cette clarification ne renomme pas le domaine canonique et ne valide pas automatiquement le déplacement intégral d’Inventory Tracking ou Operations Tracking : leurs retours d’exécution doivent être distingués des échanges entre domaines. Le rattachement détaillé reste à revoir à cette lumière.
+
+## U825
+
+**id**
+
+U825
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Autoriser la refonte de la méthodologie de transformation
+
+**texte**
+
+Ok pour la refonte. Tu es autonome ou il faut arbitrer encore ?
+
+**contexte et portée**
+
+Autorisation de mettre en œuvre la proposition de méthodologie construite de U807 à U821, avec la revue globale et son adaptation aux équipes de delivery habituées à la cascade : dimensions conjointes, approche produit et DDD, technologie progressive, gouvernance existante, architecture d’entreprise, adoption, bénéfices et continuité. Refonte éditoriale, navigation et SVG autorisés. Aucun mandat supplémentaire, changement du catalogue métier, release, commit ou push implicite. Les formulations détaillées ajoutées en mise en œuvre restent des rédactions de Codex, sans validation individuelle déduite.
+
+## U826
+
+**id**
+
+U826
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Appliquer Integration est-ouest et ses catégories Inbound et Outbound au modèle
+
+**texte**
+
+Ca te parait clair ? On peut modifier le modèle ?
+
+**contexte et portée**
+
+Autorisation d’appliquer la proposition cumulative U818 et U822–U824, corrigée par la frontière est-ouest : sous-domaine Integration dans Supply Chain Orchestration, catégories Inbound et Outbound ; déplacement de Master Data Ingestion et Plan Ingestion, maintien des deux Tracking et du pilotage nord-sud dans leurs sous-domaines ; ajout des fournitures comptables et planning et du retour produit proposés. Accounting Interpretation reste côté Finance. Les noms, responsabilités et rattachements discutés sont retenus ; les compléments éditoriaux, exemples, comparaisons, relations détaillées et structure contextuelle minimale de Finance rédigés ensuite demeurent proposés. Aucune publication demandée.
+
+## U827
+
+**id**
+
+U827
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Reprendre et adapter les SVG de vue d’ensemble d’origine
+
+**texte**
+
+Ils ont un rôle important d’overwiew et en plus ils étaient très beaux, de qualité supérieure aux nouveaux svg, je trouve. On pourrait les récupérer et les réadapter ?
+
+**contexte et portée**
+
+Demande de reprendre les deux compositions SVG d’origine et leur rôle de vue d’ensemble, en les adaptant au contenu méthodologique retenu. Les intégrer dans la nouvelle édition et son aperçu, avec lecture agrandie. Correction éditoriale et visuelle ; aucune publication ni modification métier implicite.
+
+## U828
+
+**id**
+
+U828
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Découper la méthodologie et retirer les critères de durée
+
+**texte**
+
+La page générée est un peu longue peut-être. On peut découper avec sommaire et parcours ?
+
+JE ne souhaite pas donner des infos sur des critères de temps (les deux semaines de question par exemple)
+
+**contexte et portée**
+
+Découper l’aperçu généré avec un sommaire et un parcours de lecture. Retirer les durées recommandées pour instruire une question de cadrage ; garder une progression par questions, preuves et décisions. Le parcours de lecture ne prescrit pas une succession des travaux. La cadence mensuelle du comité décrit la gouvernance existante et ne constitue pas une durée de cadrage recommandée.

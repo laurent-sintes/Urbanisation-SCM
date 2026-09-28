@@ -173,8 +173,9 @@ publication_delivery:
   source_refs:
   - U717
   - U718
-  summary: Integration, Tracking / Visibility, ingestion Master Data commune avec Commerce, Finance, Design et catégorie Intégration
-    appliqués.
+  - U826
+  summary: 'Integration, Tracking / Visibility, ingestion Master Data commune avec Commerce, Finance, Design et catégorie
+    Intégration appliqués. U826 : attentes courantes alignées, anciennes valeurs conservées ci-dessous.'
   absent_nodes:
   - D09.d
   - D11.a
@@ -189,8 +190,8 @@ publication_delivery:
       name: Master Data Ingestion
       nature: integration
       category:
-        id: integration
-        display_name: Intégration
+        id: inbound
+        display_name: Inbound
         order: 10
   - id: operations-visibility
     fields:
@@ -223,11 +224,23 @@ publication_delivery:
   - id: master-data-ingestion-finance
     parent: master-data-ingestion
     fields:
-      name: Finance Ingestion
+      name: Reference Ingestion from Finance
   - id: master-data-ingestion-design
     parent: master-data-ingestion
     fields:
       name: Design Ingestion
+  superseded_checks_U826:
+  - id: master-data-ingestion
+    field: category
+    previous_value:
+      id: integration
+      display_name: Intégration
+      order: 10
+    reason: U826 remplace cette attente ; preuve historique conservée.
+  - id: master-data-ingestion-finance
+    field: name
+    previous_value: Finance Ingestion
+    reason: U826 remplace cette attente ; preuve historique conservée.
 category_confirmation_U757:
   status: applied
   capability: master-data-ingestion

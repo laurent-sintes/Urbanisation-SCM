@@ -163,8 +163,10 @@ publication_delivery:
   - U733
   - U750
   - U757
+  - U826
   summary: 'Rôles dominants, catégories ciblées, retrait du cycle générique et des comportements isolés. U757 : toutes les
-    capacités classées ; catégorie Intégration de Master Data Ingestion.'
+    capacités classées ; catégorie Intégration de Master Data Ingestion. U826 : attentes courantes alignées, anciennes valeurs
+    conservées ci-dessous.'
   required_nodes:
   - id: business-references
     fields:
@@ -381,11 +383,11 @@ publication_delivery:
         display_name: Incoming Orders
         order: 10
   - id: plans-ingestion
-    parent: subdomain-plans
+    parent: subdomain-integration
     fields:
       category:
-        id: integration
-        display_name: Intégration
+        id: inbound
+        display_name: Inbound
         order: 10
   - id: plans-visibility
     parent: subdomain-plans
@@ -402,11 +404,11 @@ publication_delivery:
         display_name: Plan Visibility
         order: 20
   - id: master-data-ingestion
-    parent: business-references
+    parent: subdomain-integration
     fields:
       category:
-        id: integration
-        display_name: Intégration
+        id: inbound
+        display_name: Inbound
         order: 10
   - id: price-book-visibility
     parent: price-book
@@ -426,6 +428,29 @@ publication_delivery:
   - D07.b
   - vas-repacking
   - vas-labeling-relabeling
+  superseded_checks_U826:
+  - id: plans-ingestion
+    field: category
+    previous_value:
+      id: integration
+      display_name: Intégration
+      order: 10
+    reason: U826 remplace cette attente ; preuve historique conservée.
+  - id: plans-ingestion
+    field: parent
+    previous_value: subdomain-plans
+    reason: U826 applique le nouveau rattachement à Integration.
+  - id: master-data-ingestion
+    field: category
+    previous_value:
+      id: integration
+      display_name: Intégration
+      order: 10
+    reason: U826 remplace cette attente ; preuve historique conservée.
+  - id: master-data-ingestion
+    field: parent
+    previous_value: business-references
+    reason: U826 applique le nouveau rattachement à Integration.
 superseded_U733: D18 retiré et ses capacités réintégrées à D01 ; son rôle dominant historique ne devient pas une exigence
   de présence.
 superseded_U750:

@@ -1,5 +1,17 @@
 # Modèles structurés
 
+La nouvelle édition de la méthode de transformation est préparée dans
+[`backlog/atlas-transformation-methodology.yaml`](backlog/atlas-transformation-methodology.yaml)
+(U825, édition `2026-09-28.2`). Elle sépare cinq rubriques de travail, le métamodèle,
+les conventions de cartographie et les références ; ses notions complémentaires
+figurent dans le glossaire méthodologique canonique. Ses deux schémas sont décrits
+dans l’édition elle-même, sans ressource mutable partagée entre publications.
+Elle est publiée avec le modèle `2026-09-28.3` (v041). Les éditions suivantes restent
+associées explicitement par `--guide modeles/backlog/atlas-transformation-methodology.yaml`.
+`node app/verify-transformation-method.mjs` vérifie le candidat dans le frontend
+compilé, sur une fixture isolée, et produit un aperçu HTML et les SVG sous
+`app/.runtime/qa-transformation-method/`. Aucun serveur ni publication n’est modifié.
+
 Pour choisir le niveau de lecture et comprendre qui utilise ou maintient le modèle, consulter les [publics et usages du modèle et du métamodèle](../CONVENTIONS-MODELE.md#publics-et-usages-du-modèle-et-du-métamodèle). La méthode s’adresse aux profils métier comme SI ; le métamodèle porte les règles communes de construction et de lecture.
 
 **Backlog U780 — systèmes métier et profondeur ciblée.** Business System → Domain → Subdomain → Capability → Behavior. Trois systèmes, dont Business Operations avec Sales, Sourcing and Procurement, Supply Chain Orchestration et Logistics Execution. Le détail des capacités et comportements reste concentré sur l’orchestration ; les systèmes périphériques sont des vues de contexte. [Portée et livraison](backlog/business-systems-U780.yaml). `business_system` et ses relations `presents` sont contrôlés par `PRINCIPLE-BUSINESS-SYSTEM` ; `modeling_depth` distingue profondeur de description, accord et réalisation. Les déclarations `publication_delivery.required_nodes` peuvent préciser `kind`, `parent` et `parent_type` (`contains` par défaut, `presents` pour les domaines). Ce lot n’est visible dans Atlas qu’après une release demandée ; les publications historiques restent figées.

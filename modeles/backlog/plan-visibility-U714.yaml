@@ -12,13 +12,15 @@ publication_delivery:
   state: applied
   source_refs:
   - U714
-  summary: 'Plan Visibility : ingestion commune depuis PLAN et vues Supply / Demand distinctes.'
+  - U826
+  summary: 'Plan Visibility : ingestion commune depuis PLAN et vues Supply / Demand distinctes. U826 : attentes courantes
+    alignées, anciennes valeurs conservées ci-dessous.'
   required_nodes:
   - id: subdomain-plans
     fields:
       name: Plan Visibility
   - id: plans-ingestion
-    parent: subdomain-plans
+    parent: subdomain-integration
     fields:
       name: Plan Ingestion
       nature: integration
@@ -32,3 +34,8 @@ publication_delivery:
     fields:
       name: Demand Plan Visibility
       nature: knowledge
+  superseded_checks_U826:
+  - id: plans-ingestion
+    field: parent
+    previous_value: subdomain-plans
+    reason: U826 applique le nouveau rattachement à Integration.

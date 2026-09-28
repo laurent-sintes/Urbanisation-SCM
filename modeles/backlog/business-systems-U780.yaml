@@ -113,7 +113,9 @@ publication_delivery:
   state: applied
   source_refs:
   - U780
-  summary: Trois systèmes métier ; quatre domaines opérationnels ; profondeur ciblée et parents des Orders préservés.
+  - U826
+  summary: 'Trois systèmes métier ; quatre domaines opérationnels ; profondeur ciblée et parents des Orders préservés. U826
+    : attentes de livraison alignées sur Integration et le raccordement Finance, anciennes valeurs conservées ci-dessous.'
   required_nodes:
   - id: system-design-development
     kind: business_system
@@ -129,7 +131,7 @@ publication_delivery:
     kind: business_system
     fields:
       name: Enterprise Management & Control
-      modeling_depth: context
+      modeling_depth: domains
   - id: domain-sales
     kind: domain
     fields:
@@ -171,3 +173,8 @@ publication_delivery:
     field: name
     previous_value: Logistics Execution
     reason: Nom retenu U801 et alignement rédactionnel ; les preuves historiques restent conservées.
+  superseded_checks_U826:
+  - id: system-enterprise-management-control
+    field: modeling_depth
+    previous_value: context
+    reason: U826 remplace cette attente dans le courant ; preuves historiques préservées.

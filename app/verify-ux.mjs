@@ -54,7 +54,10 @@ try {
  await page.getByRole('heading',{name:'Termes à ne pas confondre',exact:true}).waitFor();
  await visit({view:'principles',principle:'start'});
  await page.locator('.method-chapter').waitFor();
- assert.equal(await page.locator('.method-chapter details').count(),0);
+ assert.equal(await page.locator('.method-chapter details').count(),fixture.guide.chapters.find(c=>c.id==='start').sections.filter(s=>s.detail).length);
+ const detail=page.locator('.method-chapter details').first();
+ await detail.locator('summary').click();assert.equal(await detail.getAttribute('open'),'');
+ await detail.locator('summary').click();
  assert.ok(await page.locator('.method-chapter a[href*="term=MOD"]').count()>=7);
  assert.equal(await page.locator('.model-tree').count(),0);
  assert.equal(await page.getByRole('navigation',{name:'Espaces Atlas'}).getByRole('button').count(),4);

@@ -10,6 +10,7 @@ import hashlib
 from pathlib import Path
 import re
 import sys
+import xml.etree.ElementTree as ET
 from urllib.parse import urlparse
 
 REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
@@ -69,11 +70,35 @@ def _validate_guide(guide, version):
     refs(guide.get("source_refs"))
     if 'chapters' in guide:
         chapters = guide['chapters']
-        _require(isinstance(chapters, list) and len(chapters) == 4, 'Rubriques de méthode invalides.')
+        _require(isinstance(chapters, list) and len(chapters) in (4, 8), 'Rubriques de méthode invalides.')
         _require([c.get('id') for c in chapters if isinstance(c, dict)] ==
-                 ['start', 'metamodel', 'method', 'references'], 'Ordre des rubriques invalide.')
+                 (['start', 'metamodel', 'method', 'references'] if len(chapters) == 4 else
+                  ['start', 'explore', 'decisions', 'transform', 'sustain', 'metamodel', 'method', 'references']), 'Ordre des rubriques invalide.')
         for chapter in chapters:
             _texts(chapter, 'id', 'title', 'intro')
+            if 'visual' in chapter:
+                visual = chapter['visual']
+                _texts(visual, 'kind', 'title', 'description', 'center')
+                _require(visual['kind'] in ('dimensions', 'governance'), 'Schéma de méthode invalide.')
+                _require(isinstance(visual.get('items'), list) and
+                         len(visual['items']) == (6 if visual['kind'] == 'dimensions' else 3) and
+                         all(isinstance(item, str) and item.strip() for item in visual['items']),
+                         'Éléments de schéma invalides.')
+                if 'overview_svg' in visual:
+                    _texts(visual, 'overview_svg')
+                    svg = visual['overview_svg']
+                    _require('<!DOCTYPE' not in svg.upper() and '<!ENTITY' not in svg.upper(), 'SVG autonome requis.')
+                    try:
+                        tree = ET.fromstring(svg)
+                    except ET.ParseError as error:
+                        raise ModelingGuideError('SVG invalide.') from error
+                    allowed = {'svg', 'title', 'desc', 'defs', 'style', 'marker', 'path', 'rect', 'text', 'tspan', 'g', 'line', 'circle'}
+                    _require(tree.tag == '{http://www.w3.org/2000/svg}svg', 'SVG invalide.')
+                    for element in tree.iter():
+                        _require(element.tag in {'{http://www.w3.org/2000/svg}' + tag for tag in allowed}, 'Élément SVG interdit.')
+                        _require(all(not key.lower().startswith('on') and key not in ('href', '{http://www.w3.org/1999/xlink}href') for key in element.attrib), 'Attribut SVG interdit.')
+                    _require(not re.search(r'@import|https?:|javascript:|data:', svg.replace('http://www.w3.org/2000/svg', ''), re.I), 'Ressource SVG externe interdite.')
+                    _require(all(value.strip().startswith('#') for value in re.findall(r'url\(([^)]+)\)', svg)), 'Ressource SVG externe interdite.')
             _require(isinstance(chapter.get('sections'), list) and bool(chapter['sections']))
             for section in chapter['sections']:
                 _texts(section, 'title', 'text')

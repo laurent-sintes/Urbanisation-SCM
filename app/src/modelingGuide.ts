@@ -38,6 +38,7 @@ export interface GuideLesson {
   readonly model_links: readonly { readonly id: string; readonly label: string }[];
 }
 export interface GuideChapter {
+  readonly visual?: { readonly kind: 'dimensions' | 'governance'; readonly title: string; readonly description: string; readonly center: string; readonly items: readonly string[]; readonly overview_svg?: string };
   readonly id: string;
   readonly title: string;
   readonly intro: string;

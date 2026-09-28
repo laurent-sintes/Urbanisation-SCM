@@ -1,6 +1,6 @@
-# Urbanisation 2026-09-28.2
+# Urbanisation 2026-09-28.3
 
-74 capacités. Sources : U806.
+78 capacités. Sources : U825, U826, U827, U828.
 
 Publication et accord métier restent distincts. Comparaison détaillée disponible dans Git.
 

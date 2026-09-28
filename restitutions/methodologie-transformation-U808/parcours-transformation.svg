@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1720" viewBox="0 0 1600 1720" role="img" aria-labelledby="title desc">
+  <title id="title">FLOW — Transformer : instruire les dimensions ensemble</title>
+  <desc id="desc">Vue d’ensemble de la méthode de transformation adaptée après U825. Une équipe pluridisciplinaire avec des leaders d’expertise et une direction de programme associée en continu examine conjointement six dimensions : stratégie et valeur, métier et capacités, usages et produit, organisation et compétences, informations et données, solutions et technologie. Les décisions locales respectent le mandat du programme ; les décisions les plus structurantes sont préparées pour le COPIL de transformation mensuel avec les sponsors invités. La cible métier, l’architecture, les expérimentations et la trajectoire se construisent par itérations. Des revues fréquentes associent le métier aux options, aux preuves et aux arbitrages. Les fiches de décision d’architecture, ou ADR, accompagnent cette convergence progressive. Produit et technologie interviennent dès le cadrage. Le DDD éclaire le langage et la conception des modèles logiciels. Les fondations sont validées par des preuves adaptées au risque, puis pour chaque mise en production. Ce schéma représente une méthode de décision, pas un calendrier ni une succession obligatoire de phases. Le schéma gouvernance-decisions.svg détaille les rythmes et la préparation des COPIL.</desc>
+  <defs>
+    <style>
+      text { font-family: 'Segoe UI', Arial, sans-serif; fill: #16334b; }
+      .eyebrow { font-size: 17px; font-weight: 700; letter-spacing: 2px; }
+      .heading { font-size: 36px; font-weight: 700; }
+      .subtitle { font-size: 21px; fill: #506476; }
+      .card-title { font-size: 25px; font-weight: 700; }
+      .body { font-size: 21px; }
+      .small { font-size: 18px; fill: #506476; }
+      .ref { font-size: 17px; font-weight: 600; }
+      .section { font-size: 20px; font-weight: 700; letter-spacing: 1px; }
+      .step { font-size: 23px; font-weight: 700; }
+      .link { fill: none; stroke: #7d91a1; stroke-width: 2.5; marker-start: url(#arrow); marker-end: url(#arrow); }
+      .feedback { fill: none; stroke: #467875; stroke-width: 2.5; stroke-dasharray: 7 6; marker-end: url(#arrow-teal); }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#7d91a1" stroke-width="1.7"/></marker>
+    <marker id="arrow-teal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="#467875" stroke-width="1.7"/></marker>
+  </defs>
+  <rect width="1600" height="1720" fill="#f7f9fa"/>
+  <rect x="0" y="0" width="1600" height="9" fill="#11756f"/>
+  <text x="64" y="53" class="eyebrow" style="fill:#11756f">FLOW ATLAS / VUE D’ENSEMBLE DE LA TRANSFORMATION</text>
+  <text x="64" y="104" class="heading">Transformer : instruire les dimensions ensemble</text>
+  <text x="64" y="141" class="subtitle">Architecture d’entreprise : relier les dimensions et entretenir leur cohérence, pendant et après la transformation.</text>
+
+  <!-- Les six relations expriment un dialogue, sans ordre temporel. -->
+  <path d="M 280 369 L 280 448 L 491 448" class="link"/>
+  <path d="M 800 369 L 800 414" class="link"/>
+  <path d="M 1320 369 L 1320 448 L 1109 448" class="link"/>
+  <path d="M 280 581 L 280 491 L 491 491" class="link"/>
+  <path d="M 800 581 L 800 521" class="link"/>
+  <path d="M 1320 581 L 1320 491 L 1109 491" class="link"/>
+
+  <g>
+    <rect x="64" y="182" width="432" height="184" rx="14" fill="#ffffff" stroke="#cbd7df"/>
+    <rect x="64" y="182" width="7" height="184" rx="3" fill="#365a7d"/>
+    <text x="88" y="223" class="card-title">Stratégie et valeur</text>
+    <text x="88" y="259" class="body">Quels changements sont utiles ?</text>
+    <text x="88" y="290" class="body">Bénéficiaires, bénéfices, contraintes</text>
+    <text x="88" y="321" class="body">et indicateurs de réussite</text>
+    <text x="88" y="347" class="ref" style="fill:#365a7d">Stratégie · TOGAF · démarche produit</text>
+  </g>
+  <g>
+    <rect x="584" y="182" width="432" height="184" rx="14" fill="#ffffff" stroke="#b6d3cf"/>
+    <rect x="584" y="182" width="7" height="184" rx="3" fill="#11756f"/>
+    <text x="608" y="223" class="card-title">Métier et capacités</text>
+    <text x="608" y="259" class="body">Que doit savoir faire l’entreprise ?</text>
+    <text x="608" y="290" class="body">Carte, scénarios, flux de valeur,</text>
+    <text x="608" y="321" class="body">informations et langage partagé</text>
+    <text x="608" y="347" class="ref" style="fill:#11756f">BIZBOK · exploration métier avec DDD</text>
+  </g>
+  <g>
+    <rect x="1104" y="182" width="432" height="184" rx="14" fill="#ffffff" stroke="#d2c7e2"/>
+    <rect x="1104" y="182" width="7" height="184" rx="3" fill="#71529b"/>
+    <text x="1128" y="223" class="card-title">Usages et produit</text>
+    <text x="1128" y="259" class="body">Quel problème faut-il résoudre ?</text>
+    <text x="1128" y="290" class="body">Utilisateurs, recherche de solutions,</text>
+    <text x="1128" y="321" class="body">priorités et mesure des résultats</text>
+    <text x="1128" y="347" class="ref" style="fill:#71529b">Démarche produit · appui SVPG</text>
+  </g>
+
+  <rect x="492" y="415" width="616" height="105" rx="18" fill="#173950"/>
+  <text x="800" y="457" text-anchor="middle" style="font-size:25px;font-weight:700;fill:#ffffff;letter-spacing:1px">UNE ÉQUIPE PLURIDISCIPLINAIRE</text>
+  <text x="800" y="493" text-anchor="middle" style="font-size:20px;fill:#dfedef">Leaders d’expertise · direction de programme associée</text>
+
+  <g>
+    <rect x="64" y="584" width="432" height="184" rx="14" fill="#ffffff" stroke="#cbd7df"/>
+    <rect x="64" y="584" width="7" height="184" rx="3" fill="#526f86"/>
+    <text x="88" y="625" class="card-title" style="font-size:24px">Organisation et compétences</text>
+    <text x="88" y="661" class="body">Comment faire évoluer les pratiques ?</text>
+    <text x="88" y="692" class="body">Responsabilités, équipes, compétences</text>
+    <text x="88" y="723" class="body">et capacité à adopter le changement</text>
+    <text x="88" y="749" class="ref" style="fill:#526f86">Organisation · adoption · appui Prosci</text>
+  </g>
+  <g>
+    <rect x="584" y="584" width="432" height="184" rx="14" fill="#ffffff" stroke="#b6d3cf"/>
+    <rect x="584" y="584" width="7" height="184" rx="3" fill="#11756f"/>
+    <text x="608" y="625" class="card-title">Informations et données</text>
+    <text x="608" y="661" class="body">Quelles informations font autorité ?</text>
+    <text x="608" y="692" class="body">Sens, qualité, sources, responsabilités</text>
+    <text x="608" y="723" class="body">et circulation entre les acteurs</text>
+    <text x="608" y="749" class="ref" style="fill:#11756f">BIZBOK · TOGAF · gouvernance des données</text>
+  </g>
+  <g>
+    <rect x="1104" y="584" width="432" height="184" rx="14" fill="#ffffff" stroke="#dfcfb4"/>
+    <rect x="1104" y="584" width="7" height="184" rx="3" fill="#976323"/>
+    <text x="1128" y="625" class="card-title">Solutions et technologie</text>
+    <text x="1128" y="661" class="body">Quelles solutions et quelles fondations ?</text>
+    <text x="1128" y="692" class="body">Logiciels, intégration, sécurité, charge,</text>
+    <text x="1128" y="723" class="body">exploitation, coût et réversibilité</text>
+    <text x="1128" y="749" class="ref" style="fill:#976323">DDD · TOGAF · Well-Architected</text>
+  </g>
+
+  <text x="64" y="814" class="section">CONSTRUIRE LA CIBLE ET LA TRAJECTOIRE</text>
+  <text x="1536" y="814" text-anchor="end" class="small">Existant, cible, écarts et transitions dans chaque dimension</text>
+  <g>
+    <rect x="64" y="838" width="344" height="161" rx="12" fill="#eaf3f1"/>
+    <text x="84" y="876" class="step">Cible métier</text>
+    <text x="84" y="914" class="body">Résultats, pratiques et rôles</text>
+    <text x="84" y="945" class="body">Informations et règles</text>
+    <text x="84" y="976" class="small">Choix métier argumentés</text>
+    <rect x="440" y="838" width="344" height="161" rx="12" fill="#eaf0f5"/>
+    <text x="460" y="876" class="step">Options de réalisation</text>
+    <text x="460" y="914" class="body">Pratiques, logiciels et services</text>
+    <text x="460" y="945" class="body">Frontières et fondations</text>
+    <text x="460" y="976" class="small">Décisions et compromis</text>
+    <rect x="816" y="838" width="344" height="161" rx="12" fill="#f0ecf5"/>
+    <text x="836" y="876" class="step">Éprouver les options</text>
+    <text x="836" y="914" class="body">Essais avec les utilisateurs</text>
+    <text x="836" y="945" class="body">Expérimentations techniques</text>
+    <text x="836" y="976" class="small">Preuves pour choisir ou renoncer</text>
+    <rect x="1192" y="838" width="344" height="161" rx="12" fill="#f4efe6"/>
+    <text x="1212" y="876" class="step">Trajectoire soutenable</text>
+    <text x="1212" y="914" class="body">Moyens, coûts et dépendances</text>
+    <text x="1212" y="945" class="body">Migration, adoption et continuité</text>
+    <text x="1212" y="976" class="small">Engagements et critères de passage</text>
+    <path d="M 412 920 L 436 920" class="link"/>
+    <path d="M 788 920 L 812 920" class="link"/>
+    <path d="M 1164 920 L 1188 920" class="link"/>
+  </g>
+
+  <rect x="64" y="1030" width="1472" height="96" rx="12" fill="#173950"/>
+  <text x="88" y="1069" style="font-size:23px;font-weight:700;fill:white">LIVRER · ADOPTER · MESURER · FAIRE DURER</text>
+  <text x="88" y="1104" style="font-size:21px;fill:#dfedef">Responsables durables · Bénéfices observés · Pratiques et service stabilisés · Apprentissages continus</text>
+  <path d="M 64 1080 L 28 1080 L 28 468 L 480 468" class="feedback"/>
+  <text x="1536" y="1155" text-anchor="end" class="small">Les observations du terrain font réexaminer le cadrage et les choix.</text>
+
+  <text x="64" y="1200" class="section">QUAND VALIDER LES FONDATIONS ?</text>
+  <text x="64" y="1230" class="small">Dès le cadrage avec le produit, puis sur preuves : trois portées de décision, selon les risques et les incréments.</text>
+  <line x1="64" y1="1253" x2="1536" y2="1253" stroke="#cfdae0"/>
+  <text x="64" y="1290" class="step">Contraintes et exigences</text>
+  <text x="64" y="1324" class="body">Limites et besoins de service connus</text>
+  <text x="64" y="1353" class="small">Dès le cadrage ; hypothèses ouvertes</text>
+  <text x="584" y="1290" class="step">Options éprouvées</text>
+  <text x="584" y="1324" class="body">Faisabilité et compromis démontrés</text>
+  <text x="584" y="1353" class="small">Avant un engagement structurant</text>
+  <text x="1104" y="1290" class="step">Aptitude à la production</text>
+  <text x="1104" y="1324" class="body">Service et exploitation vérifiés</text>
+  <text x="1104" y="1353" class="small">Avant chaque mise en service</text>
+  <line x1="64" y1="1390" x2="1536" y2="1390" stroke="#cfdae0"/>
+  <text x="64" y="1431" class="section">DÉCIDER PROGRESSIVEMENT, AVEC LE MÉTIER</text>
+  <text x="64" y="1480" class="step">Mettre en discussion</text>
+  <text x="64" y="1511" class="small">Problème, options, conséquences</text>
+  <text x="440" y="1480" class="step">Éprouver et partager</text>
+  <text x="440" y="1511" class="small">Essais et enseignements visibles</text>
+  <text x="816" y="1480" class="step">Affiner et arbitrer</text>
+  <text x="816" y="1511" class="small">Choix progressifs et responsables</text>
+  <text x="1192" y="1480" class="step">Tracer et réexaminer</text>
+  <text x="1192" y="1511" class="small">Décisions, réserves, nouvelles preuves</text>
+  <path d="M 410 1473 L 432 1473" class="link"/>
+  <path d="M 786 1473 L 808 1473" class="link"/>
+  <path d="M 1162 1473 L 1184 1473" class="link"/>
+  <text x="64" y="1557" class="body">Des revues fréquentes resserrent les options et réduisent les incertitudes ; une preuve nouvelle peut rouvrir un choix.</text>
+  <text x="64" y="1592" class="small">ADR = fiche de décision d’architecture : ouverte pendant l’instruction, discutée puis actualisée après l’arbitrage.</text>
+  <line x1="64" y1="1622" x2="1536" y2="1622" stroke="#cfdae0"/>
+  <text x="64" y="1657" class="small">Le Gantt planifie les travaux. Ce schéma montre comment instruire les décisions, avec des interactions et des retours.</text>
+  <text x="64" y="1689" style="font-size:16px;fill:#637686">Appuis : BIZBOK · TOGAF · DDD · SVPG · Agile · ADR · Well-Architected · PMI · Prosci</text>
+  <text x="1536" y="1689" text-anchor="end" style="font-size:16px;fill:#637686">Vue d’ensemble adaptée · 28.09.2026</text>
+</svg>

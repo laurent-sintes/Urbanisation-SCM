@@ -80,24 +80,24 @@ try {
 
   await visit({ view: 'sheet', node: current.nodes.find(node => node.kind === 'capability').id });
   await page.getByTestId('business-sheet').waitFor();
-  await page.getByRole('button', { name: 'Méthode & métamodèle', exact: true }).click();
+  await page.getByRole('button', { name: guide.title, exact: true }).click();
   if (guide.chapters) {
-    const chapters = page.getByRole('navigation', { name: 'Rubriques de la méthode' });
+    const chapters = page.locator('.method-chapters');
     await chapters.waitFor();
-    assert.equal((await chapters.getByRole('button').allTextContents()).filter(title=>guide.chapters.some(chapter=>chapter.title===title)).length,4);
+    assert.equal((await chapters.getByRole('button').allTextContents()).filter(title=>guide.chapters.some(chapter=>chapter.title===title)).length,guide.chapters.length);
     for (const chapter of guide.chapters) {
       await chapters.getByRole('button', { name: chapter.title, exact: true }).click();
       await page.getByRole('heading', { name: chapter.title, exact: true }).waitFor();
       assert.ok((await page.locator('.method-chapter').innerText()).includes(plainInlineText(chapter.intro)));
     }
-    await chapters.getByRole('button', { name: 'Le métamodèle', exact: true }).click();
+    await chapters.getByRole('button', { name: guide.chapters.find(c=>c.id==='metamodel').title, exact: true }).click();
     await nav.getByRole('button').first().click();
-    checks.push('Quatre rubriques avec contenu de l’édition figée.');
+    checks.push('Rubriques de l’édition figée, sans nombre imposé.');
   }
   await currentLesson(first).waitFor();
   assert.equal(await nav.getByRole('button').count(), 6);
   assert.equal(new URL(page.url()).hash.includes('view=principles'), true);
-  assert.equal(await page.getByRole('heading', { level: 1, name: 'Méthode & métamodèle', exact: true }).count(), 1);
+  assert.equal(await page.getByRole('heading', { level: 1, name: guide.title, exact: true }).count(), 1);
   checks.push('Entrée depuis la fiche : six clés, vue dédiée et publication conservée.');
 
   for (let i = 0; i < guide.lessons.length; i++) {
@@ -141,7 +141,7 @@ try {
     assert.ok((await page.locator('.glossary-term').innerText()).includes('couverture des situations examinées'));
     await page.setViewportSize({ width: 390, height: 844 });
     await visit({ view: 'principles', principle: 'start' });
-    await page.getByRole('heading', { name: 'Pour commencer', exact: true }).waitFor();
+    await page.getByRole('heading', { name: guide.chapters.find(c=>c.id==='start').title, exact: true }).waitFor();
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
     await page.screenshot({ path: resolve(output, 'method-mobile.png'), fullPage: true });
     await page.setViewportSize({ width: 1440, height: 1100 });
@@ -159,7 +159,7 @@ try {
   await page.goto('http://atlas.test/#' + new URLSearchParams({ version: current.version, view: 'principles' }), { waitUntil: 'domcontentloaded' });
   await page.reload({ waitUntil: 'domcontentloaded' });
   await Promise.race([waiting, new Promise((_, reject) => setTimeout(() => reject(new Error('Guide request not started')), 10000))]);
-  await page.getByText(`Chargement du méta modèle pour ${current.version}…`).waitFor();
+  await page.getByText(`Chargement de la méthodologie pour ${current.version}…`).waitFor();
   await page.goto('http://atlas.test/#' + new URLSearchParams({ version: old.version, view: 'principles' }));
   await page.getByRole('heading', { name: 'Guide non associé à cette publication' }).waitFor();
   release();
