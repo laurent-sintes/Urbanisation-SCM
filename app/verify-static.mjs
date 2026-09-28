@@ -63,7 +63,7 @@ try {
   await page.goto(base);
   await page.locator(`#fa-version[data-version="${version}"]`).waitFor();
   await page.getByRole('button', { name: 'FLOW Atlas, accueil', exact: true }).click();
-  await page.getByRole('heading', { name: 'Urbanisation', exact: true }).waitFor();
+  await page.getByRole('heading', { name: 'Cartographie', exact: true }).waitFor();
   await mkdir(path.join(directory, '.runtime/qa-static'), { recursive: true });
   await page.screenshot({ path: path.join(directory, '.runtime/qa-static/overview.png') });
   assert.deepEqual(unexpected, []);
