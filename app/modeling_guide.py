@@ -209,8 +209,17 @@ def load_modeling_guide(root=REPOSITORY_ROOT, version=None):
         publication = resolve_release(root / "modeles/release", version)
     except (ValueError, KeyError, TypeError, OSError) as exc:
         raise ModelingGuideError("Publication inconnue ou non vérifiable pour ce guide.") from exc
+    return _load_associated_guide(root, publication['version'])
+
+
+def _load_associated_guide(root, publication_version):
+    """Internal bulk-export path, called only after verifying the publication.
+
+    The public loader above always resolves and verifies a selected publication.
+    This helper keeps all association, guide hash and guide content checks.
+    """
     response = {
-        "schema_version": "1.0.0", "publication_version": publication["version"],
+        "schema_version": "1.0.0", "publication_version": publication_version,
         "status": "unavailable", "message": "Aucun guide n’est associé à cette publication.",
     }
     folder = root / "modeles/modeling-guides"
@@ -232,7 +241,7 @@ def load_modeling_guide(root=REPOSITORY_ROOT, version=None):
             _require(bool(VERSION.fullmatch(item["publication_version"])) and item["publication_version"] not in associations)
             _require(item["guide_version"] in guides, "Guide associé absent de l’index.")
             associations[item["publication_version"]] = item
-        association = associations.get(publication["version"])
+        association = associations.get(publication_version)
         if association is None:
             return response
         entry = guides[association["guide_version"]]

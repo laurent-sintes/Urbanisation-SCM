@@ -63,6 +63,55 @@ class StaticExportTests(unittest.TestCase):
             export_atlas(self.root, [self.output])
         self.assertFalse(self.output.exists())
 
+    def test_inventory_is_read_once_and_each_model_is_verified_once(self):
+        from unittest.mock import patch
+        from scripts import release_catalog
+        with patch.object(release_catalog, 'descriptors', wraps=release_catalog.descriptors) as inventory, \
+                patch.object(release_catalog, '_read_release', wraps=release_catalog._read_release) as models:
+            result = export_atlas(self.root, [self.output])
+        self.assertEqual(inventory.call_count, 1)
+        self.assertEqual(models.call_count, 2)
+        self.assertGreaterEqual(result['timings_seconds']['total'], result['timings_seconds']['models'])
+
+    def test_descriptor_change_during_writes_blocks_catalog_activation(self):
+        from unittest.mock import patch
+        from scripts import export_atlas as module
+        original = module.atomic_write
+        def changed(path, payload):
+            if Path(path).name == 'model.json':
+                descriptor = self.release / '2026-09-26.1.json'
+                descriptor.write_bytes(descriptor.read_bytes() + b' ')
+            original(path, payload)
+        with patch.object(module, 'atomic_write', side_effect=changed):
+            with self.assertRaisesRegex(ValueError, 'descriptor hash mismatch'):
+                export_atlas(self.root, [self.output])
+        self.assertFalse((self.output / 'index.json').exists())
+
+    def test_warm_parsing_cache_does_not_skip_integrity_checks(self):
+        from scripts.structured_io import read
+        path = self.release / '2026-09-25.1/model.json'
+        expected = hashlib.sha256(path.read_bytes()).hexdigest()
+        read(path)
+        self.assertEqual(read(path, expected_sha256=expected)['version'], '2026-09-25.1')
+        with self.assertRaisesRegex(ValueError, 'hash mismatch'):
+            read(path, expected_sha256='0' * 64)
+        path.write_bytes(path.read_bytes().replace(b'2026-09-25.1', b'2026-09-25.2'))
+        with self.assertRaisesRegex(ValueError, 'hash mismatch'):
+            read(path, expected_sha256=expected)
+
+    def test_missing_model_hash_cannot_disable_verification(self):
+        descriptor_path = self.release / '2026-09-25.1.json'
+        descriptor = json.loads(descriptor_path.read_bytes())
+        descriptor['sha256'] = None
+        descriptor_path.write_bytes(encoded(descriptor))
+        index_path = self.release / 'index.json'
+        index = json.loads(index_path.read_bytes())
+        index['publications'][0]['sha256'] = hashlib.sha256(descriptor_path.read_bytes()).hexdigest()
+        index_path.write_bytes(encoded(index))
+        with self.assertRaisesRegex(ValueError, 'hash mismatch'):
+            export_atlas(self.root, [self.output])
+        self.assertFalse(self.output.exists())
+
     def test_shared_lock_refuses_other_process_and_allows_nested_owner(self):
         import subprocess
         import sys

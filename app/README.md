@@ -348,3 +348,17 @@ Le build compile dans un répertoire temporaire sous `app/.runtime/`, puis copie
 Le build produit `delivery.json`, une empreinte des fichiers nécessaires au lecteur et au contenu courant. Le workflow conserve ce manifeste comme artefact distinct. Après le déploiement, `scripts/atlas_delivery.py` compare les octets réellement servis avec cet artefact vérifié. Un déploiement techniquement réussi avec un ancien catalogue, un guide tronqué ou un module différent est donc en échec. Le vert de la chaîne inclut ce contrôle après mise en ligne.
 
 Avant de livrer une modification transversale : tests Python concernés (suite complète pour l’audit transversal), tests frontend, build, `pnpm --dir app verify`, puis contrôle du workflow complet et du site effectivement servi. Une recette de candidat isolé ne remplace jamais la recette de la publication réelle.
+
+## Mesurer le temps de publication
+
+`scripts/release.py` expose les durées de lecture du courant, construction et validation du candidat, préparation, publication, export statique et contrôle Atlas dans `timings_seconds`. L’export détaille aussi lecture du catalogue, modèles, guides, sérialisation et écriture. Ces mesures distinguent le travail local de l’attente du déploiement GitHub.
+
+Pour mesurer l’export sans modifier le site servi ni créer de publication :
+
+```powershell
+python scripts/benchmark_atlas_export.py --runs 2
+```
+
+Les données et mesures vont dans un répertoire unique sous `.runtime/atlas-benchmarks/`. `--profile` ajoute un profil Python, avec son coût de mesure ; `--compare CHEMIN` impose une égalité octet par octet avec un export de référence. Comparer les mêmes options et distinguer un premier passage sans cache de parsing d’un passage avec cache déjà chargé.
+
+L’export vérifie une fois l’inventaire des descripteurs, puis chaque modèle et chaque guide. Il contrôle de nouveau les empreintes des descripteurs avant activation. Il conserve tous les historiques, les contrôles de contenu et l’activation atomique ; il ne réutilise pas un ancien succès de validation. Le workflow exécute les contrats Python et les contrôles du lecteur dans des jobs parallèles ; le déploiement dépend de leur réussite ainsi que du contrôle du lanceur Windows.

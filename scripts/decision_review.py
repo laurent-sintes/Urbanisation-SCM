@@ -48,6 +48,11 @@ def input_state(root):
             if not path.is_relative_to(root):
                 raise ValueError('Publication baseline escapes the project')
             paths.append(path)
+        for relative in manifest.get('decision_review', {}):
+            path = (model.parent / relative).resolve()
+            if not path.is_relative_to(root):
+                raise ValueError('Reassessment evidence escapes the project')
+            paths.append(path)
     return {
         'files': {p.relative_to(root).as_posix(): digest(p) for p in sorted(paths)},
         'tool_code': {p.name: digest(p) for p in sorted(Path(__file__).parent.glob('*.py'))},
@@ -218,9 +223,12 @@ def apply_assessment(directory, current):
         decision['target'].update(revision=item['after_revision'], import_version=current['candidate_version'])
         decision['target']['approved_fields'] = list(selected)
         decision['target']['value_sha256'] = {field: prior_target['value_sha256'][field] for field in selected}
-        decision['note'] += (f" Réexamen de {item['decision_id']} par {reviewer.strip()} : {entry['rationale'].strip()} "
+        # The complete prior decision (including its note) is kept in review.json.
+        # Do not copy the entire reassessment history into each active decision.
+        decision['note'] = (f"Réexamen de {item['decision_id']} par {reviewer.strip()} : {entry['rationale'].strip()} "
                              'Transcription des seules valeurs historiques inchangées ; aucune extension de portée. '
-                             f"Preuve : modeles/revisions/{current['candidate_version']}/decision-review/assessment.yaml.")
+                             f"Preuve : modeles/revisions/{current['candidate_version']}/decision-review/assessment.yaml. "
+                             'Décision antérieure intégrale et empreinte : review.json du même dossier.')
         decisions.append(decision)
         transcriptions.append({'decision_id': identifier, 'prior_decision_id': item['decision_id'],
                                'approved_fields': decision['target']['approved_fields']})

@@ -52,6 +52,9 @@ class GitPublicationTests(unittest.TestCase):
             result = self.run_release(activate=True)
         self.assertEqual(result['status'], 'published')
         self.assertEqual(check.call_count, 1)
+        self.assertTrue({'load_current', 'candidate_and_validation', 'stage', 'publish', 'static_export', 'total'}
+                        <= result['timings_seconds'].keys())
+        self.assertTrue(all(value >= 0 for value in result['timings_seconds'].values()))
         self.assertFalse((self.models / 'release' / self.base).exists())
         self.assertEqual(workflow.read(self.models / 'release' / self.base / 'model.json'), before)
         self.assertEqual(workflow.resolve_release(self.models / 'release', self.base)['version'], self.base)
@@ -80,6 +83,40 @@ class GitPublicationTests(unittest.TestCase):
         self.mutate_capability()
         self.assertEqual(self.run_release(activate=True)['status'], 'needs_review')
         self.assertEqual(workflow.resolve_release(self.models / 'release')['version'], self.base)
+
+    def test_reassessment_evidence_survives_staging_and_is_verified(self):
+        model = workflow.read(self.backlog_path)
+        next(n for n in model['nodes'] if n['id'] == 'D03.a')['fields']['scope'] = 'Changed fixture scope.'
+        save(self.backlog_path, model)
+        result = self.run_release()
+        self.assertEqual(result['status'], 'needs_review')
+        folder = self.root / '.runtime/release-reviews' / self.version
+        assessment = workflow.read(folder / 'assessment.yaml')
+        assessment['reviewer'] = 'Fixture reviewer'
+        for entry in assessment['items']:
+            entry.update(action='retain' if entry['decision_id'] == 'ADOPT-003' else 'defer',
+                         rationale='Fixture: reviewed unchanged approved fields in their new context.')
+        save(folder / 'assessment.yaml', assessment)
+        self.assertEqual(self.run_release(review_path=folder)['status'], 'prepared')
+        staged_proof = self.root / '.runtime/publication' / self.version / 'decision-review/assessment.yaml'
+        frozen = staged_proof.read_bytes()
+        staged_proof.write_bytes(frozen + b'\n')
+        with self.assertRaisesRegex(ValueError, 'Prepared artifact changed'):
+            self.run_release(activate=True)
+        staged_proof.write_bytes(frozen)
+        self.assertEqual(self.run_release(activate=True)['status'], 'published')
+        proof = self.models / 'revisions' / self.version / 'decision-review'
+        for name in ('review.json', 'assessment.yaml'):
+            self.assertEqual(workflow.read(proof / name), workflow.read(folder / name))
+        self.assertEqual((proof / 'assessment.yaml').read_bytes(), frozen)
+        manifest = workflow.read(self.models / 'release' / self.version / 'manifest.json')
+        self.assertEqual(len(manifest['decision_review']), 3)
+        decisions = workflow.read(self.models / 'decisions' / (self.version + '.json'))['decisions']
+        self.assertTrue(any(d['note'].startswith('Réexamen de ADOPT-003 ') for d in decisions))
+        self.assertEqual(workflow.load_current(self.root)[1]['version'], self.version)
+        (proof / 'assessment.yaml').write_bytes(b'corrupted')
+        with self.assertRaisesRegex(ValueError, 'Archived review integrity mismatch'):
+            workflow.load_current(self.root)
 
     def test_uncommitted_publication_cannot_be_retired(self):
         self.editorial()

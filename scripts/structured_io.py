@@ -131,11 +131,13 @@ def clear_read_cache():
         _cache_bytes = 0
 
 
-def read(path):
+def read(path, *, expected_sha256=None):
     global _cache_bytes
     path = Path(path)
     content = read_bytes(path)
     key = (path.suffix.lower(), sha256(content).digest())
+    if expected_sha256 is not None and key[1].hex() != expected_sha256:
+        raise ValueError('Structured file hash mismatch: ' + str(path))
     with _cache_lock:
         cached = _cache.get(key)
         if cached is not None:

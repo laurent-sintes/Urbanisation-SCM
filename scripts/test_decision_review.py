@@ -70,6 +70,11 @@ class DecisionReviewTests(unittest.TestCase):
         self.assertEqual(len(mapping), 1)
         decision = next(d for d in decisions if d['id'] == mapping[0]['decision_id'])
         original = item['prior_decision']
+        self.assertEqual(self.bundle['review']['items'][0]['prior_decision'],
+                         workflow.read(stage / 'decision-review/review.json')['items'][0]['prior_decision'])
+        self.assertTrue(decision['note'].startswith('Réexamen de '))
+        self.assertIn('review.json', decision['note'])
+        self.assertNotIn(original['note'], decision['note'])
         for field in ('author', 'decided_at', 'interpretation', 'decision_state', 'source_refs'):
             self.assertEqual(decision[field], original[field])
         for field in ('collection', 'id', 'approved_fields', 'value_sha256'):
@@ -86,6 +91,21 @@ class DecisionReviewTests(unittest.TestCase):
         proof.write_bytes(proof.read_bytes() + b'\n')
         with self.assertRaisesRegex(ValueError, 'Archived review integrity mismatch'):
             workflow.load_current(self.root)
+
+    def test_long_history_stays_in_evidence_not_in_active_note(self):
+        item = self.dossier()
+        history = 'Historical rationale with original reservations. ' * 2000
+        item['prior_decision']['note'] = history
+        item['prior_decision_sha256'] = workflow.canonical_sha256(item['prior_decision'])
+        save(self.folder / 'review.json', self.bundle['review'])
+        assessment = self.assess()
+        assessment['review_sha256'] = workflow.canonical_sha256(self.bundle['review'])
+        save(self.folder / 'assessment.yaml', assessment)
+        decisions, evidence = review.apply_assessment(self.folder, self.bundle['review'])
+        self.assertLess(len(decisions['decisions'][0]['note']), 1000)
+        saved = next(i for i in evidence['review.json']['items'] if i['decision_id'] == 'ADOPT-003')
+        self.assertEqual(saved['prior_decision']['note'], history)
+        self.assertEqual(saved['prior_decision_sha256'], workflow.canonical_sha256(saved['prior_decision']))
 
     def test_changed_approved_values_cannot_be_transcribed(self):
         item = self.dossier(changed_approved=True)

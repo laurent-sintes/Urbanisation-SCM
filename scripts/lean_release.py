@@ -89,11 +89,17 @@ def stage_candidate(root, bundle, guide_path=None):
         for name, key in [('model.yaml', 'candidate'), ('backlog.yaml', 'snapshot'),
                           ('decisions.json', 'decisions'), ('source-records.json', 'provenance')]:
             workflow.write(folder / name, bundle[key])
+        evidence = bundle.get('review_evidence', {})
+        if evidence and set(evidence) != {'review.json', 'assessment.yaml', 'transcriptions.json'}:
+            raise ValueError('Incomplete reassessment evidence')
+        for name, document in evidence.items():
+            workflow.write(folder / 'decision-review' / name, document)
         report = workflow.summarize_report(bundle['report'])
         manifest = {'kind': 'git_preparation', 'version': bundle['candidate']['version'],
                     'base_version': bundle['pointer']['version'], 'input_state': bundle['input_state'],
                     'source_refs': bundle['publication_refs'], 'summary': report,
-                    'files': {p.name: workflow.digest(p) for p in folder.iterdir()},
+                    'files': {p.relative_to(folder).as_posix(): workflow.digest(p)
+                              for p in folder.rglob('*') if p.is_file()},
                     'modeling_guide': workflow.capture_association(root, bundle['pointer']['version'])}
         if guide_path:
             manifest['new_modeling_guide'] = workflow.guide_candidate.stage(root, guide_path, folder)
@@ -121,6 +127,13 @@ def publish(root, stage, manifest):
         'backlog.yaml': models / 'revisions' / version / 'backlog.yaml',
         'decisions.json': models / 'decisions' / (version + '.json'),
         'source-records.json': models / 'provenance' / version / 'source-records.json'}
+    review_files = {name: sha for name, sha in manifest['files'].items()
+                    if name.startswith('decision-review/')}
+    if review_files and set(review_files) != {
+            'decision-review/review.json', 'decision-review/assessment.yaml',
+            'decision-review/transcriptions.json'}:
+        raise ValueError('Incomplete reassessment evidence')
+    destinations.update({name: models / 'revisions' / version / name for name in review_files})
     if any(p.exists() for p in destinations.values()) or release_dir.exists():
         raise ValueError('Publication version already exists; inspect interrupted output')
     candidate = read(stage / 'model.yaml')
@@ -135,6 +148,9 @@ def publish(root, stage, manifest):
     for key, name in [('input_revision', 'backlog.yaml'), ('decisions', 'decisions.json'), ('provenance', 'source-records.json')]:
         output[key + '_path'] = os.path.relpath(destinations[name], release_dir).replace('\\', '/')
         output[key + '_sha256'] = manifest['files'][name]
+    if review_files:
+        output['decision_review'] = {f'../../revisions/{version}/{name}': sha
+                                    for name, sha in review_files.items()}
     workflow.write(release_dir / 'manifest.json', output)
     notes = f"# Urbanisation {version}\n\n{output['capability_count']} capacités. Sources : {', '.join(manifest['source_refs'])}.\n\nPublication et accord métier restent distincts. Comparaison détaillée disponible dans Git.\n"
     if 'scenario_catalog' in candidate:
@@ -173,12 +189,19 @@ def _run(root, version, source_refs, *, activate, review_path, decisions_path, g
     if not source_refs:
         raise ValueError('An explicit publication source is required')
     started = perf_counter()
-    current = workflow.load_current(root)
+    timings = {}
+    def measured(name, operation):
+        before = perf_counter()
+        try:
+            return operation()
+        finally:
+            timings[name] = round(perf_counter() - before, 4)
+    current = measured('load_current', lambda: workflow.load_current(root))
     version = workflow.valid_version(version or workflow.suggested_version(current[0]))
     if version == current[1]['version']:
         if not activate or review_path or decisions_path or guide_path or set(source_refs) != set(current[2].get('publication', {}).get('source_refs', [])):
             raise ValueError('Version already published with another requested scope')
-        return finish(root, {'status': 'published', 'version': version, 'already_published': True}, verify_site, atlas_url, started)
+        return finish(root, {'status': 'published', 'version': version, 'already_published': True}, verify_site, atlas_url, started, timings=timings)
     stage = root / '.runtime/publication' / version
     if stage.exists():
         if review_path or decisions_path or guide_path:
@@ -188,42 +211,49 @@ def _run(root, version, source_refs, *, activate, review_path, decisions_path, g
             raise ValueError('Preparation scope or base publication changed')
         check_stage(root, stage, manifest)
     else:
-        bundle = workflow.build_candidate(root, version, source_refs, decisions_path,
-                    review_path=review_path, include_review=True, current=current, lightweight=True)
+        bundle = measured('candidate_and_validation', lambda: workflow.build_candidate(root, version, source_refs, decisions_path,
+                    review_path=review_path, include_review=True, current=current, lightweight=True))
         report = bundle['report']
         if report['validation_errors']:
-            return {'status': 'blocked', 'summary': workflow.summarize_report(report)}
+            return {'status': 'blocked', 'summary': workflow.summarize_report(report), 'timings_seconds': {**timings, 'total': round(perf_counter() - started, 4)}}
         if report['deferred_decisions'] and review_path is None:
             folder = root / '.runtime/release-reviews' / version
             dossier = workflow.decision_review.save_review(folder, bundle['review'], report)
-            return {'status': 'needs_review', 'version': version, **dossier}
+            return {'status': 'needs_review', 'version': version, **dossier, 'timings_seconds': {**timings, 'total': round(perf_counter() - started, 4)}}
         has_changes = any(any(delta.values()) if isinstance(delta, dict) else bool(delta) for delta in report['changes'].values())
         if not has_changes and not report['glossary_changes'] and not report['new_decision_ids'] and guide_path is None:
-            return finish(root, {'status': 'unchanged', 'version': current[1]['version']}, activate and verify_site, atlas_url, started, export_site=activate)
-        stage, manifest = stage_candidate(root, bundle, guide_path)
+            return finish(root, {'status': 'unchanged', 'version': current[1]['version']}, activate and verify_site, atlas_url, started, export_site=activate, timings=timings)
+        stage, manifest = measured('stage', lambda: stage_candidate(root, bundle, guide_path))
     try:
-        result = publish(root, stage, manifest) if activate else {'status': 'prepared', 'version': version, 'prepared_manifest': str(stage / 'manifest.json'), 'summary': manifest['summary']}
+        result = measured('publish', lambda: publish(root, stage, manifest)) if activate else {'status': 'prepared', 'version': version, 'prepared_manifest': str(stage / 'manifest.json'), 'summary': manifest['summary']}
     except (OSError, ValueError) as exc:
         if (root / 'modeles/release' / version).exists():
             return {'status': 'publication_incomplete', 'version': version, 'error': str(exc),
                     'recovery': 'Inspect written artifacts and the active pointer before retrying.'}
         raise
-    return finish(root, result, activate and verify_site, atlas_url, started)
+    return finish(root, result, activate and verify_site, atlas_url, started, timings=timings)
 
 
-def finish(root, result, verify_site, atlas_url, started, export_site=True):
+def finish(root, result, verify_site, atlas_url, started, export_site=True, timings=None):
+    timings = dict(timings or {})
     if export_site and result['status'] in ('published', 'unchanged'):
         from .export_atlas import export_atlas
         try:
+            step = perf_counter()
             result['static_export'] = export_atlas(root)
         except (ValueError, OSError) as exc:
             result.update(status='published_checks_failed', static_export={'error': str(exc)})
             verify_site = False
+        finally:
+            timings['static_export'] = round(perf_counter() - step, 4)
     if verify_site:
         from .release import verify_atlas
         try:
+            step = perf_counter()
             result['atlas'] = verify_atlas(root, result['version'], atlas_url)
         except (ValueError, OSError) as exc:
             result.update(status='published_checks_failed', atlas={'verified': False, 'error': str(exc)})
-    result['timings_seconds'] = {'total': round(perf_counter() - started, 4)}
+        finally:
+            timings['verify_atlas'] = round(perf_counter() - step, 4)
+    result['timings_seconds'] = {**timings, 'total': round(perf_counter() - started, 4)}
     return result

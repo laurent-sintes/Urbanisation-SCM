@@ -70,16 +70,59 @@ def resolve_release(folder, version=None):
         item=legacy_descriptor(folder,version)
     else:
         item=read(folder/'current.json')
+    _read_release(folder, item)
+    return item
+
+
+def _read_release(folder, item):
+    """Parse the exact verified bytes once; reusable by the bulk export reader."""
+    if not isinstance(item.get('sha256'), str) or not re.fullmatch(r'[a-f0-9]{64}', item['sha256']):
+        raise ValueError('Published model hash mismatch')
     model_path=within(folder,item['path'])
-    if digest(model_path)!=item['sha256']:raise ValueError('Published model hash mismatch')
-    model=read(model_path)
+    model=read(model_path, expected_sha256=item['sha256'])
     if model['version']!=item['version']:raise ValueError('Published model version mismatch')
     if item.get('revision') is not None:
         for key in ('revision','last_modified'):
             if model.get(key)!=item[key]:raise ValueError('Published model metadata mismatch: '+key)
     if item.get('release_notes'):
         if digest(within(folder,item['release_notes']))!=item['release_notes_sha256']:raise ValueError('Release notes hash mismatch')
-    return item
+    return model
+
+
+class PublicationReader:
+    """One verified descriptor inventory per operation, no cross-run trust cache.
+
+    Every load still verifies the selected model and its notes. The exporter
+    checks the original index again before activating any generated catalogue.
+    """
+
+    def __init__(self, folder):
+        self.folder = Path(folder)
+        self.values = descriptors(self.folder)
+        index = read(self.folder / 'index.json')
+        self.current = index['current']
+        self._descriptor_hashes = {item['descriptor']: item['sha256'] for item in index['publications']}
+        self.by_version = {item['version']: item for item in self.values}
+        self.current_version = next(item['version'] for item in self.values
+                                    if item['descriptor'] == self.current)
+
+    def load(self, version=None):
+        version = self.current_version if version is None else version
+        if version not in self.by_version:
+            raise ValueError('Unknown publication version')
+        item = self.by_version[version]
+        return item, _read_release(self.folder, item)
+
+    def catalog(self):
+        values = sorted(self.values, key=lambda d: tuple(map(int, re.split(r'[-.]', d['version']))), reverse=True)
+        return {'current_version': self.current_version, 'versions': [
+            {k: d.get(k) for k in ('version', 'revision', 'published_at', 'last_modified', 'release_notes', 'descriptor')}
+            for d in values]}
+
+    def verify_descriptors(self):
+        for name, expected in self._descriptor_hashes.items():
+            if digest(within(self.folder, name)) != expected:
+                raise ValueError('Publication descriptor hash mismatch')
 
 
 def catalog(folder):

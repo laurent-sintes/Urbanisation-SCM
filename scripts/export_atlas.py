@@ -9,15 +9,15 @@ from pathlib import Path
 import re
 import sys
 import uuid
+from time import perf_counter
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.atlas_lock import atlas_lock
-from scripts.export_publication import export
-from scripts.release_catalog import catalog
-from app.modeling_guide import load_modeling_guide
+from scripts.release_catalog import PublicationReader
+from app.modeling_guide import _load_associated_guide
 
 
 def encoded(value):
@@ -44,38 +44,56 @@ def export_atlas(root=ROOT, destinations=None):
 
 
 def _export_atlas(root, destinations):
+    started = perf_counter()
     # Refuse the legacy directory-scanning fallback: the index is authoritative.
     index_path = root / 'modeles/release/index.json'
     before = index_path.read_bytes()
-    result = catalog(index_path.parent)
+    reader = PublicationReader(index_path.parent)
+    result = reader.catalog()
+    catalog_seconds = perf_counter() - started
+    model_seconds = guide_seconds = serialization_seconds = 0.0
     files = {}
     for entry in result['versions']:
         version = entry['version']
         if not isinstance(version, str) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}\.[1-9]\d*', version):
             raise ValueError('Invalid static publication version')
-        model = export(root, version)['raw']
-        guide = load_modeling_guide(root, version)
+        step = perf_counter()
+        descriptor, raw = reader.load(version)
+        model = {**raw, 'sourcePath': 'modeles/release/' + descriptor['path']}
+        model_seconds += perf_counter() - step
+        step = perf_counter()
+        guide = _load_associated_guide(root, version)
+        guide_seconds += perf_counter() - step
+        step = perf_counter()
         for name, value in (('model', model), ('guide', guide)):
             payload = encoded(value)
             relative = f'{version}/{name}.json'
             files[relative] = payload
             entry[name + '_sha256'] = hashlib.sha256(payload).hexdigest()
+        serialization_seconds += perf_counter() - step
     if index_path.read_bytes() != before:
         raise ValueError('Publication index changed during static export; retry.')
+    reader.verify_descriptors()
     destinations = destinations if destinations is not None else [root / 'app/public/data'] + (
         [root / 'app/dist/data'] if (root / 'app/dist/index.html').is_file() else [])
     # Build everything before touching the served catalog. Keep older files for
     # readers whose catalog request preceded a release.
+    write_started = perf_counter()
     for destination in destinations:
         destination = Path(destination)
         for relative, payload in files.items():
             atomic_write(destination / relative, payload)
         if index_path.read_bytes() != before:
             raise ValueError('Publication index changed before static activation; retry.')
+        reader.verify_descriptors()
         atomic_write(destination / 'index.json', encoded(result))
     return {'current_version': result['current_version'], 'publications': len(result['versions']),
             'files': len(files) + 1, 'bytes': sum(map(len, files.values())),
-            'destinations': [str(path) for path in destinations]}
+            'destinations': [str(path) for path in destinations],
+            'timings_seconds': {key: round(value, 4) for key, value in {
+                'catalog': catalog_seconds, 'models': model_seconds, 'guides': guide_seconds,
+                'serialization': serialization_seconds, 'write': perf_counter() - write_started,
+                'total': perf_counter() - started}.items()}}
 
 
 def main():
