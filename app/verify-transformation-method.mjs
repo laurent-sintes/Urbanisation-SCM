@@ -13,7 +13,7 @@ const dist = resolve(root, 'app/dist');
 const output = resolve(root, 'app/.runtime/qa-transformation-method');
 const current = (await loadPublication()).raw;
 const guide = JSON.parse(execFileSync(process.env.ATLAS_PYTHON || 'python', ['-X','utf8','-c',
-  "import json;from scripts.structured_io import read;from app.modeling_guide import _validate_guide;g=read('modeles/backlog/atlas-transformation-methodology.yaml');_validate_guide(g,g['version']);print(json.dumps(g))"],
+  "import json;from scripts.guide_candidate import load_draft;from app.modeling_guide import _validate_guide;g=load_draft('.', 'modeles/backlog/atlas-transformation-methodology.yaml');_validate_guide(g,g['version']);print(json.dumps(g))"],
   {cwd:root,encoding:'utf8',windowsHide:true,maxBuffer:8*1024*1024}));
 const published = JSON.parse(execFileSync(process.env.ATLAS_PYTHON || 'python', ['-X','utf8','-c',
   "import json;from app.modeling_guide import load_modeling_guide;print(json.dumps(load_modeling_guide(version='2026-09-28.2')))"],

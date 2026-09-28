@@ -3,13 +3,14 @@ import unittest
 from copy import deepcopy
 from pathlib import Path
 from scripts.structured_io import read
+from scripts.guide_candidate import load_draft
 from app.modeling_guide import _validate_guide, ModelingGuideError
 
 ROOT = Path(__file__).resolve().parents[1]
 
 class ChapterContractTests(unittest.TestCase):
     def test_transformation_candidate_keeps_legacy_contract_and_resolves_terms(self):
-        guide = read(ROOT / 'modeles/backlog/atlas-transformation-methodology.yaml')
+        guide = load_draft(ROOT, 'modeles/backlog/atlas-transformation-methodology.yaml')
         _validate_guide(guide, guide['version'])
         for mutation in ('missing_dimension', 'unknown_visual', 'broken_link', 'svg_script', 'svg_external'):
             invalid = deepcopy(guide)
@@ -27,7 +28,7 @@ class ChapterContractTests(unittest.TestCase):
                 self.assertEqual(term['definition'], source['definition'])
 
     def test_simplified_glossary_covers_each_visible_term_once(self):
-        guide = read(ROOT / 'modeles/backlog/atlas-methodology-glossary-U806.yaml')
+        guide = read(ROOT / 'modeles/modeling-guides/versions/2026-09-28.1.yaml')
         _validate_guide(guide, guide['version'])
         glossary = guide['glossary']
         self.assertNotIn('MOD004', [t['id'] for t in glossary['terms']])
@@ -40,7 +41,7 @@ class ChapterContractTests(unittest.TestCase):
             _validate_guide(guide, guide['version'])
 
     def test_ux_guide_links_resolve_and_maintenance_notes_stay_separate(self):
-        guide = read(ROOT / 'modeles/backlog/atlas-methodology-ux.yaml')
+        guide = read(ROOT / 'modeles/modeling-guides/versions/2026-09-27.4.yaml')
         _validate_guide(guide, guide['version'])
         scenario = next(t for t in guide['glossary']['terms'] if t['id'] == 'MOD027')
         self.assertTrue(scenario['editorial_notes'])
@@ -50,7 +51,7 @@ class ChapterContractTests(unittest.TestCase):
             _validate_guide(guide, guide['version'])
 
     def setUp(self):
-        self.guide = read(ROOT / 'modeles/backlog/atlas-methodology-U788.yaml')
+        self.guide = read(ROOT / 'modeles/modeling-guides/versions/2026-09-27.1.yaml')
 
     def test_new_and_legacy_guides(self):
         _validate_guide(self.guide, self.guide['version'])
@@ -69,7 +70,7 @@ class ChapterContractTests(unittest.TestCase):
                 _validate_guide(guide, guide['version'])
 
     def test_short_method_definitions_are_optional_nonempty_text(self):
-        guide = read(ROOT / 'modeles/backlog/atlas-methodology-U797.yaml')
+        guide = read(ROOT / 'modeles/modeling-guides/versions/2026-09-27.3.yaml')
         _validate_guide(guide, guide['version'])
         for value in ('', None, 12, ['definition']):
             invalid = deepcopy(guide)

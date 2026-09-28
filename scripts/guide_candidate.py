@@ -29,14 +29,59 @@ def validate(content):
     return _validate_guide(guide, guide['version'])
 
 
+CANONICAL_GLOSSARY = 'modeles/backlog/modeling-glossary.yaml'
+SHARED_FIELDS = {'name', 'label_fr', 'definition', 'short_description'}
+
+
+def compile_draft(root, source):
+    """Resolve working references once; published editions stay self-contained."""
+    root = Path(root).resolve()
+    source = Path(source)
+    source = (root / source).resolve() if not source.is_absolute() else source.resolve()
+    if not source.is_relative_to(root):
+        raise ValueError('Guide candidate must be inside the project')
+    raw = source.read_bytes()
+    guide = loads(raw.decode('utf-8-sig'), '.yaml')
+    dependencies = {source.relative_to(root).as_posix(): sha256(raw).hexdigest()}
+    glossary = guide.get('glossary', {})
+    if 'canonical_source' not in glossary:
+        return raw, validate(raw), dependencies
+    if glossary.pop('canonical_source') != CANONICAL_GLOSSARY:
+        raise ValueError('Unknown canonical methodology glossary')
+    glossary_path = (root / CANONICAL_GLOSSARY).resolve()
+    if not glossary_path.is_relative_to(root):
+        raise ValueError('Canonical glossary escapes project')
+    content = glossary_path.read_bytes()
+    dependencies[CANONICAL_GLOSSARY] = sha256(content).hexdigest()
+    records = loads(content.decode('utf-8-sig'), '.yaml')['terms']
+    terms = {term['id']: term for term in records}
+    if len(terms) != len(records):
+        raise ValueError('Duplicate canonical glossary term')
+    for term in glossary['terms']:
+        fields = term.pop('canonical_fields', None)
+        if (not isinstance(fields, list) or any(not isinstance(f, str) for f in fields)
+                or len(set(fields)) != len(fields) or not {'name', 'definition'} <= set(fields)
+                or not set(fields) <= SHARED_FIELDS or term['id'] not in terms):
+            raise ValueError('Invalid canonical term reference: ' + str(term.get('id')))
+        for field in fields:
+            if field in term or field not in terms[term['id']]:
+                raise ValueError('Missing or overridden canonical field: ' + term['id'] + '.' + field)
+            term[field] = terms[term['id']][field]
+    content = dumps(guide).encode('utf-8')
+    return content, validate(content), dependencies
+
+
+def load_draft(root, source):
+    return compile_draft(root, source)[1]
+
+
 def stage(root, source, destination):
     root = Path(root).resolve()
     source = Path(source)
     source = (root / source).resolve() if not source.is_absolute() else source.resolve()
     if not source.is_relative_to(root):
         raise ValueError('Guide candidate must be inside the project')
-    content = source.read_bytes()
-    guide = validate(content)
+    content, guide, dependencies = compile_draft(root, source)
     registry = read(root / 'modeles/provenance/source-records.json')
     if not set(guide['source_refs']) <= {r['id'] for r in registry['records']}:
         raise ValueError('Unknown candidate guide source')
@@ -49,7 +94,9 @@ def stage(root, source, destination):
     name = 'new-modeling-guide.yaml'
     (Path(destination) / name).write_bytes(content)
     return {'version': guide['version'], 'path': name, 'sha256': sha256(content).hexdigest(),
-            'source_path': source.relative_to(root).as_posix(), 'source_sha256': sha256(content).hexdigest(),
+            'source_path': source.relative_to(root).as_posix(),
+            'source_sha256': dependencies[source.relative_to(root).as_posix()],
+            'source_inputs': dependencies,
             'index_sha256': digest(index) if index.exists() else None}
 
 
@@ -63,6 +110,10 @@ def verify(root, stage_path, record):
     content = (Path(stage_path) / record['path']).read_bytes()
     if sha256(content).hexdigest() != record['sha256'] or digest(source) != record['source_sha256']:
         raise ValueError('Guide candidate changed since preparation')
+    if 'source_inputs' in record:
+        rebuilt, _, dependencies = compile_draft(root, source)
+        if dependencies != record['source_inputs'] or rebuilt != content:
+            raise ValueError('Guide dependencies changed since preparation')
     guide = validate(content)
     if guide['version'] != record['version']:
         raise ValueError('Guide version differs from prepared edition')

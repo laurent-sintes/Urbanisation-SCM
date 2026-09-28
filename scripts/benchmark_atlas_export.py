@@ -17,6 +17,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.export_atlas import export_atlas
+from scripts.clean_generated import clean
 
 
 def fingerprints(folder):
@@ -62,6 +63,9 @@ def main():
               'comparison': str(args.compare) if args.compare else None, 'runs': results}
     (folder / 'report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps({'report': str(folder / 'report.json')}))
+    # Only known regenerable exports, after a successful run and comparison.
+    if args.output.resolve() == (ROOT / '.runtime/atlas-benchmarks').resolve():
+        print(json.dumps({'retention': clean(ROOT, min_age_days=7, apply=True)}))
 
 
 if __name__ == '__main__':

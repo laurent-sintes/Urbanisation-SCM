@@ -12,13 +12,21 @@ associées explicitement par `--guide modeles/backlog/atlas-transformation-metho
 compilé, sur une fixture isolée, et produit un aperçu HTML et les SVG sous
 `app/.runtime/qa-transformation-method/`. Aucun serveur ni publication n’est modifié.
 
+### Une seule source de travail par information
+
+`backlog/atlas-transformation-methodology.yaml` est la seule source de travail du guide. Les noms, libellés, définitions et descriptions courtes des notions sont référencés par identifiant dans `backlog/modeling-glossary.yaml`, via `glossary.canonical_source` et `canonical_fields`. Les notes pédagogiques propres au guide restent dans le guide. Un champ référencé ne peut pas être redéfini localement.
+
+`scripts.guide_candidate.load_draft(root, source)` assemble le candidat pour les aperçus et contrôles. La préparation avec `--guide` matérialise un guide complet et fige les empreintes des deux sources ; leur modification bloque l’activation. Atlas lit uniquement les éditions publiées, autonomes et immuables. Ne pas lire le brouillon brut comme une édition publiable.
+
+Les six anciennes copies de travail identiques à une édition publiée ont quitté le backlog. Tests et références actives utilisent `modeling-guides/versions/` ; les anciens chemins restent récupérables au commit exact dans `git-history.json`. Les documents historiques ne deviennent pas des sources courantes. Les vues Markdown du modèle sont désormais [générées localement](../restitutions/README.md), sans double maintenance dans Git.
+
 Pour choisir le niveau de lecture et comprendre qui utilise ou maintient le modèle, consulter les [publics et usages du modèle et du métamodèle](../CONVENTIONS-MODELE.md#publics-et-usages-du-modèle-et-du-métamodèle). La méthode s’adresse aux profils métier comme SI ; le métamodèle porte les règles communes de construction et de lecture.
 
 **Backlog U780 — systèmes métier et profondeur ciblée.** Business System → Domain → Subdomain → Capability → Behavior. Trois systèmes, dont Business Operations avec Sales, Sourcing and Procurement, Supply Chain Orchestration et Logistics Execution. Le détail des capacités et comportements reste concentré sur l’orchestration ; les systèmes périphériques sont des vues de contexte. [Portée et livraison](backlog/business-systems-U780.yaml). `business_system` et ses relations `presents` sont contrôlés par `PRINCIPLE-BUSINESS-SYSTEM` ; `modeling_depth` distingue profondeur de description, accord et réalisation. Les déclarations `publication_delivery.required_nodes` peuvent préciser `kind`, `parent` et `parent_type` (`contains` par défaut, `presents` pour les domaines). Ce lot n’est visible dans Atlas qu’après une release demandée ; les publications historiques restent figées.
 
 Les intentions d’accord non encore publiées peuvent être suspendues explicitement dans `decision-intents.yaml`, sans modifier leur capture historique : `suspensions` précise l’identifiant, le responsable et la date du réexamen, ses sources et sa justification. Une suspension ne crée aucun accord. Les intentions déjà publiées relèvent toujours du parcours de réexamen des décisions ; une suspension figée ne peut pas être effacée ou réécrite.
 
-**Publication courante :** [index](release/index.json) et [restitution générée](../restitutions/release.md). Le [parcours regroupé](#parcours-de-release-regroupé--u504) évite de recopier les compteurs et de refaire les contrôles manuellement.
+**Publication courante :** [index](release/index.json) et [restitution générée](../restitutions/README.md). Le [parcours regroupé](#parcours-de-release-regroupé--u504) évite de recopier les compteurs et de refaire les contrôles manuellement.
 
 **Publication U502 : v017 / `2026-09-19.10`.** Service Requests et Backing Services, demande d’optimisation du carnet et six comportements, indicateurs Frontoffice/Backoffice. 48 capacités, 82 comportements, 348 relations et 110 termes métier. Guide méthodologique `.4` associé ; Périmètre lisible sans dépliage. Accords repris dans leur portée, détails éditoriaux proposés. Atlas vérifié, zéro erreur. [Rapport](../audits/2026-09-19-release-U502/rapport.md).
 
@@ -279,7 +287,7 @@ Les dossiers de revue sont locaux. Les décisions résultantes portent la porté
 
 Atlas indexe les champs métier et le glossaire du snapshot sélectionné, avec priorité au nom exact et à l’identifiant. U459 corrige le retrait des comparaisons : leurs champs de positionnement métier sont affichés et recherchables. Réserves, statuts et sources internes restent hors affichage et hors index de recherche. Les champs autorisés sont explicites dans `app/src/businessContent.ts` ; cette séparation de présentation n’est pas un contrôle d’accès à l’API locale. Les dépendances directes sont montrées par défaut ; les liens entre voisins se demandent explicitement. Les fiches gardent leurs conditions et effets accessibles dans les détails.
 
-`backlog/modeling-guide-U458.yaml` conserve la source de travail des six repères sans couches métier ni exploration de réalisations. U467 en publie une édition figée `2026-09-19.2`, explicitement associée à v011 ; v010 garde son guide précédent. Les sources de leçons sont embarquées dans le guide ; ses références racines relèvent du registre global. La préparation contrôle cette distinction sans inventer de source globale pour un extrait local. Les cinq cas pilotes sont dans `backlog/information-pilots-U458.yaml`, affinés par `backlog/information-cards-U465.yaml` ; leur suivi et leurs arbitrages restent dans `backlog/v0-readiness.yaml`.
+`modeling-guides/versions/2026-09-22.2.yaml` conserve une édition historique des six repères, réutilisée par les anciennes références de travail U458 ; la source courante unique est indiquée en tête de ce document. U467 en publie une édition figée `2026-09-19.2`, explicitement associée à v011 ; v010 garde son guide précédent. Les sources de leçons sont embarquées dans le guide ; ses références racines relèvent du registre global. La préparation contrôle cette distinction sans inventer de source globale pour un extrait local. Les cinq cas pilotes sont dans `backlog/information-pilots-U458.yaml`, affinés par `backlog/information-cards-U465.yaml` ; leur suivi et leurs arbitrages restent dans `backlog/v0-readiness.yaml`.
 
 
 ## Pluralité des sources marché — U470/U471

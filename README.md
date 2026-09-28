@@ -2,7 +2,7 @@
 
 Base de connaissance de travail issue du dossier ChatGPT v0.1, reprise le 9 septembre 2026.
 
-**Publication courante :** [FLOW Atlas](http://127.0.0.1:8765/) suit la version désignée par [l’index de release](modeles/release/index.json). La [restitution générée](restitutions/release.md) porte les compteurs et qualifications du snapshot publié ; le [guide des modèles](modeles/README.md) décrit le parcours. Le YAML fait autorité pour le backlog et les nouvelles publications. Les repères datés ci-dessous restent historiques.
+**Publication courante :** [FLOW Atlas](http://127.0.0.1:8765/) suit la version désignée par [l’index de release](modeles/release/index.json). La [restitution générée](restitutions/README.md) porte les compteurs et qualifications du snapshot publié ; le [guide des modèles](modeles/README.md) décrit le parcours. Le YAML fait autorité pour le backlog et les nouvelles publications. Les repères datés ci-dessous restent historiques.
 
 ## Objet
 
@@ -22,8 +22,8 @@ Les modèles font autorité en **JSON**. Les Markdown conservent récits, insigh
 
 | Espace | Contenu | Accès |
 | --- | --- | --- |
-| **Release** | Les 35 capacités publiées, avec leurs validations et réserves explicites | [Version courante](modeles/release/index.json) · [lecture Markdown](restitutions/release.md) |
-| **Backlog** | Modèle en réflexion, alternatives et illustrations | [Modèle JSON](modeles/backlog/model.yaml) · [lecture Markdown](restitutions/backlog.md) |
+| **Release** | Les 35 capacités publiées, avec leurs validations et réserves explicites | [Version courante](modeles/release/index.json) · [lecture Markdown](restitutions/README.md) |
+| **Backlog** | Modèle en réflexion, alternatives et illustrations | [Modèle JSON](modeles/backlog/model.yaml) · [lecture Markdown](restitutions/README.md) |
 | **Panorama As Is** | Les trois SI actuels ; Sarenza non traité | [Index JSON](modeles/panorama-as-is/current.json) · [vue de lecture](restitutions/panorama-as-is.md) |
 
 Publier ne vaut pas valider. La [release 2026-09-13.2](modeles/release/2026-09-13.2/model.json) conserve neuf capacités validées, les validations partielles et les capacités non validées ou en réexamen. La définition, la finalité et le rattachement ont des portées de validation distinctes.

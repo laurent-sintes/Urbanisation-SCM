@@ -18,7 +18,7 @@ for node in candidate['nodes']:
  for field in ['examples','scenario_refs','definition','finality','scope']:
   node['fields'].pop(field,None)
   if field in by_id[node['id']]['fields']: node['fields'][field]=by_id[node['id']]['fields'][field]
-guide=read('modeles/backlog/atlas-methodology-U797.yaml')
+guide=read('modeles/modeling-guides/versions/2026-09-27.3.yaml')
 print(json.dumps({'old':old,'candidate':candidate,'guide':guide},ensure_ascii=True))
 `],{cwd:root,encoding:'utf8',maxBuffer:24*1024*1024,windowsHide:true}));
 const browser=await chromium.launch(browserOptions);const errors=[];
@@ -51,9 +51,12 @@ try {
  assert.ok((await page.getByRole('tooltip').innerText()).includes('Situation métier décrite par son déclencheur'));
  await methodLink.click();assert.ok(page.url().includes('glossary=meta'));assert.ok(page.url().includes('version=editorial-candidate'));
  await visit({view:'scenarios'});await page.getByRole('heading',{name:'Explorer par flux de valeur'}).waitFor();
- assert.equal(await page.locator('.value-stream-cards>li').count(),5);
- assert.equal(await page.locator('.scenario-cards>li').count(),26);
- await page.getByLabel('Événement',{exact:true}).selectOption('shortage');assert.ok(await page.locator('.scenario-cards>li').count()<26);
+ assert.equal(await page.locator('.value-stream-cards>li').count(),fixture.candidate.scenario_catalog.value_streams.length);
+ const expectedScenarios=fixture.candidate.scenario_catalog.scenarios.map(s=>s.id).sort();
+ assert.ok(expectedScenarios.length>0);
+ const displayedScenarios=await page.locator('.scenario-cards>li>a').evaluateAll(links=>links.map(a=>new URLSearchParams(new URL(a.href).hash.slice(1)).get('scenario')).sort());
+ assert.deepEqual(displayedScenarios,expectedScenarios,'Each source scenario appears exactly once');
+ await page.getByLabel('Événement',{exact:true}).selectOption('shortage');assert.ok(await page.locator('.scenario-cards>li').count()<expectedScenarios.length);
  await page.getByRole('button',{name:'Effacer les filtres'}).click();
  await page.getByRole('link',{name:'Livrer une commande B2B avec un stock partiel',exact:true}).click();
  await page.getByRole('heading',{name:'Livrer une commande B2B avec un stock partiel',exact:true}).waitFor();
