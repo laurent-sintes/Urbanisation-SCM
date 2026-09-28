@@ -3456,7 +3456,7 @@ terms:
   definition: Dans le vocabulaire fonctionnel FLOW, prise en charge des parcours liés à la vente et coordination des contributions
     de la Supply pour satisfaire les demandes.
   context: Sens fonctionnel local, distinct de la catégorie de produits OMS. Il ne désigne pas un domaine supérieur à [Supply
-    Chain Orchestration](model:universe-supply).
+    Chain Orchestration](model:supply-chain-orchestration).
   notes: U54/U55 décrivaient les parcours et leur articulation avec la Supply selon l’ancien découpage. U373 distingue le
     nom de l’univers de la catégorie de produits OMS ; U455/U463 remplacent la hiérarchie par la coopération de responsabilités.
     La définition reste une convention locale, sans équivalence avec tout produit OMS ni adoption de nouveaux domaines.
@@ -3569,8 +3569,8 @@ terms:
   short_description: Coordination et optimisation métier de la satisfaction des demandes Supply.
   definition: Périmètre métier qui coordonne et optimise la satisfaction des demandes en mobilisant commandes, stocks, engagements
     et services exécutants.
-  context: Sens fonctionnel local porté par [Supply Chain Orchestration](model:universe-supply), distinct du côté ressources
-    [Supply](glossary:TER083) et du système étendu [Supply Chain](glossary:TER084).
+  context: Sens fonctionnel local porté par [Supply Chain Orchestration](model:supply-chain-orchestration), distinct du côté
+    ressources [Supply](glossary:TER083) et du système étendu [Supply Chain](glossary:TER084).
   notes: Les formulations U56–U58 et U367 sont conservées dans les sources et les publications historiques. U455/U463 remplacent
     la lecture en couches par des domaines et univers en interaction. Le périmètre fonctionnel FLOW ne couvre pas par déduction
     toute la Supply Chain ; les services exécutants conservent la responsabilité de leurs opérations. [Fulfillment](glossary:TER085)
@@ -14713,7 +14713,7 @@ terms:
   short_description: Assurer les opérations logistiques et leur pilotage local.
   definition: Réaliser les opérations logistiques et les formalités associées, en organisant les moyens et opérations locaux.
   context: 'Couvre les opérations logistiques et leur pilotage local : réception, préparation, expédition, transport et formalités
-    douanières applicables. Les exécutants organisent leurs moyens et leurs opérations internes. [Supply Chain Orchestration](model:universe-supply)
+    douanières applicables. Les exécutants organisent leurs moyens et leurs opérations internes. [Supply Chain Orchestration](model:supply-chain-orchestration)
     porte les demandes de prestations, leur coordination et le suivi de leurs résultats ; Logistics les réalise. Les responsabilités
     de gouvernance de conformité restent distinctes des contrôles opérationnels. Aucun WMS, TMS, acteur douanier ni déploiement
     Beaumanoir n’est présumé.'
@@ -14790,8 +14790,8 @@ terms:
     opérationnelles.
   definition: élaborer et réviser les plans prévisionnels de demande et de ressources pour anticiper les besoins et orienter
     les décisions opérationnelles.
-  context: 'Domaine de Business Operations extérieur à [Supply Chain Orchestration](model:universe-supply). Il produit les
-    [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) transmis à [Plan Ingestion](model:plans-ingestion),
+  context: 'Domaine de Business Operations extérieur à [Supply Chain Orchestration](model:supply-chain-orchestration). Il
+    produit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) transmis à [Plan Ingestion](model:plans-ingestion),
     puis exposés par [Plan Visibility](model:subdomain-plans). Des outils de planification avancée peuvent servir ce domaine,
     qui reste indépendant des outils et de l’organisation. Le contrat reçu conserve les versions, horizons, provenance et
     statuts. Le [Supply Plan](glossary:TER098) consommé par FLOW garde son sens actuel : prévisions de mouvements de stock

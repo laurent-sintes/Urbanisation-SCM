@@ -70,7 +70,7 @@ export interface GuideResponse {
 /** Reader labels follow the displayed hierarchy; stored historical guides are untouched. */
 export function lessonForPublication(lesson: GuideLesson, model: PublishedModel): GuideLesson {
   if (!model.nodes.some(node => node.kind === 'business_system')) return lesson;
-  const labels: Record<string, string> = { Commerce: 'Sales / Sourcing and Procurement', Supply: model.nodes.find(n=>n.id==='universe-supply')?.name || 'Supply Chain Orchestration', Logistique: model.nodes.find(n=>n.id==='domain-logistics-execution')?.name || 'Logistics Execution' };
+  const labels: Record<string, string> = { Commerce: 'Sales / Sourcing and Procurement', Supply: model.nodes.find(n=>n.id==='supply-chain-orchestration')?.name || 'Supply Chain Orchestration', Logistique: model.nodes.find(n=>n.id==='domain-logistics-execution')?.name || 'Logistics' };
   const hierarchy = (text: string) => text
     .replace('Domain → Purpose → Capability → Behavior', 'Business System → Domain → Subdomain → Capability → Behavior')
     .replace('Domain · Purpose · Capacité · Comportement · Relation', 'Système métier · Domaine · Sous-domaine · Capacité · Comportement · Relation');

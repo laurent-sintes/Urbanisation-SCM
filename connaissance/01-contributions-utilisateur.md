@@ -19765,3 +19765,51 @@ Commit, release & push
 **contexte et portée**
 
 Demandes successives concernant le plan de l’audit UX `audits/2026-09-27-audit-ux/rapport.md` : simplifier la lecture, limiter les dépliables aux contenus longs, relier les notions méthodologiques, structurer les espaces et préserver le contexte de navigation. Publication du guide préparé `modeles/backlog/atlas-methodology-ux.yaml` avec l’application. Intervention de présentation et de documentation ; aucun nouvel accord sur le fond des capacités, leurs frontières ou leur réalisation installée.
+
+## U804
+
+**id**
+
+U804
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Remplacer l’identité technique universe-supply dans le modèle courant
+
+**texte**
+
+Pourquoi garder `universe-supply`  ??
+
+Je n'ai jamais diffusé l'url de l'appli. La compatibilité ascendante, on s'en fout.
+
+Tu peux mettre à jour ?
+
+**contexte et portée**
+
+Accord sur la proposition de remplacer `universe-supply` par `supply-chain-orchestration` dans le modèle courant et ses références, sans alias de navigation. Exception explicite à la conservation de cet identifiant U783. Les publications figées et les preuves historiques conservent leurs identifiants d’origine. Le domaine, son nom, ses champs métier et ses rattachements restent inchangés ; aucun nouvel accord sur leurs formulations n’est déduit. Abandon de la solution qui masquait l’identité derrière un code de lecture dans les URL. La demande porte sur la mise à jour, sans nouvelle demande de publication ou de push.
+
+## U805
+
+**id**
+
+U805
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Audit du glossaire du métamodèle
+
+**texte**
+
+Regarde le glossaire du méta modèle : à mon avis, "application transactionnelle" doit être éliminé. Audite le reste
+
+**contexte et portée**
+
+Demande d’audit de pertinence, de clarté et de cohérence du glossaire méthodologique, notamment MOD004. Les recommandations sont proposées dans `audits/2026-09-28-glossaire-metamodele/rapport.md` ; elles ne constituent pas une adoption globale ni une modification des définitions. La release 2026-09-28.1 du lot antérieur est distincte de cet audit.

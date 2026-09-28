@@ -39,7 +39,8 @@ try {
   };
   const heading = name => page.getByRole('heading', { level: 1, name, exact: true }).waitFor();
   await visit({ view: 'map' });
-  await heading('Urbanisation');
+  await heading('Cartographie');
+  assert.equal(await page.getByRole('navigation', { name: 'Fil d’Ariane' }).getByRole('button', { name: 'Cartographie', exact: true }).count(), 0);
   const roots = model.nodes.filter(n => !model.relations.some(r => ['contains', 'presents'].includes(r.type) && r.target_id === n.id)).map(n => n.id);
   const rootCards = page.locator(model.nodes.some(n => n.kind === 'business_system') ? '.overview-system' : '.business-card');
   await rootCards.first().waitFor();
@@ -71,9 +72,11 @@ try {
   await page.locator(`[data-search-result="${capability.id}"]`).click();
   await heading(capability.fields.name);
   checks.push('Capability, behaviors, fixed deep links, back and search');
+  await page.getByRole('navigation', { name: 'Fil d’Ariane' }).getByRole('button', { name: 'Cartographie', exact: true }).click();
+  await heading('Cartographie');
 
   await visit({ view: 'map' });
-  const tree = page.getByRole('tree', { name: 'Arbre d’urbanisation' });
+  const tree = page.getByRole('tree', { name: 'Arbre de la cartographie' });
   const first = tree.getByRole('treeitem').first();
   await first.focus();
   await first.press('ArrowDown');

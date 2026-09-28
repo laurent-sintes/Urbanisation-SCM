@@ -625,8 +625,8 @@ nodes:
     definition: '[Demand & Supply Planning](glossary:TER111) : élaborer et réviser les plans prévisionnels de demande et de
       ressources pour anticiper les besoins et orienter les décisions opérationnelles.'
     finality: Fournir des plans prévisionnels cohérents et révisables aux domaines qui préparent et réalisent les engagements.
-    scope: 'Domaine de Business Operations extérieur à [Supply Chain Orchestration](model:universe-supply). Il produit les
-      [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) transmis à [Plan Ingestion](model:plans-ingestion),
+    scope: 'Domaine de Business Operations extérieur à [Supply Chain Orchestration](model:supply-chain-orchestration). Il
+      produit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) transmis à [Plan Ingestion](model:plans-ingestion),
       puis exposés par [Plan Visibility](model:subdomain-plans). Des outils de planification avancée peuvent servir ce domaine,
       qui reste indépendant des outils et de l’organisation. Le contrat reçu conserve les versions, horizons, provenance et
       statuts. Le [Supply Plan](glossary:TER098) consommé par FLOW garde son sens actuel : prévisions de mouvements de stock
@@ -725,7 +725,7 @@ nodes:
     validated_fields: []
     value_sha256: {}
     note: Accords explicites limités dans decision-intents ; descriptions et qualifications détaillées proposées.
-- id: universe-supply
+- id: supply-chain-orchestration
   revision: 14
   kind: domain
   fields:
@@ -35733,7 +35733,7 @@ nodes:
       les moyens et opérations locaux.'
     finality: Assurer les opérations logistiques et leur pilotage local.
     scope: 'Couvre les opérations logistiques et leur pilotage local : réception, préparation, expédition, transport et formalités
-      douanières applicables. Les exécutants organisent leurs moyens et leurs opérations internes. [Supply Chain Orchestration](model:universe-supply)
+      douanières applicables. Les exécutants organisent leurs moyens et leurs opérations internes. [Supply Chain Orchestration](model:supply-chain-orchestration)
       porte les demandes de prestations, leur coordination et le suivi de leurs résultats ; Logistics les réalise. Les responsabilités
       de gouvernance de conformité restent distinctes des contrôles opérationnels. Aucun WMS, TMS, acteur douanier ni déploiement
       Beaumanoir n’est présumé.'
@@ -36796,7 +36796,7 @@ relations:
 - id: REL-UNIVERSE-SUPPLY-business-references
   revision: 1
   type: presents
-  source_id: universe-supply
+  source_id: supply-chain-orchestration
   target_id: business-references
   source_refs:
   - U141
@@ -36809,7 +36809,7 @@ relations:
       ni des liens de coopération par extension.
   lifecycle:
     state: urbanist_validated
-    recorded_at: '2026-09-19T17:29:54.487177Z'
+    recorded_at: '2026-09-28T06:38:19.526863Z'
     recorded_by: Codex
     source_refs:
     - U141
@@ -36818,20 +36818,22 @@ relations:
     - U507
     - U667
     - U673
+    - U804
     validated_fields:
     - source_id
     - target_id
     - type
     value_sha256:
-      source_id: 8fce95e6cb23820ec5381094b850bb38115f1375fd18e259986cd2bd60aea415
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
       target_id: c9e934afa6b87f704decc8af0881066ff1228d8762c99cb68678666c409539a9
       type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
     note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension.
+      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
+      ; autres valeurs et portées inchangées.
 - id: REL-U673-PRESENTS-subdomain-policies
   revision: 1
   type: presents
-  source_id: universe-supply
+  source_id: supply-chain-orchestration
   target_id: subdomain-policies
   source_refs:
   - U673
@@ -36841,26 +36843,28 @@ relations:
       ni des liens de coopération par extension.
   lifecycle:
     state: urbanist_validated
-    recorded_at: '2026-09-23T20:35:38.517366Z'
+    recorded_at: '2026-09-28T06:38:19.526924Z'
     recorded_by: Codex
     source_refs:
     - U673
     - U667
+    - U804
     validated_fields:
     - source_id
     - target_id
     - type
     value_sha256:
-      source_id: 8fce95e6cb23820ec5381094b850bb38115f1375fd18e259986cd2bd60aea415
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
       target_id: bb08e75a9e6a257dceeb2d577c6936e041f4e9816a5c7cbcc9ac8c8614b806ac
       type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
     note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension.
+      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
+      ; autres valeurs et portées inchangées.
   last_modified: '2026-09-23T20:35:38.517366Z'
 - id: REL-U673-PRESENTS-subdomain-plans
   revision: 1
   type: presents
-  source_id: universe-supply
+  source_id: supply-chain-orchestration
   target_id: subdomain-plans
   source_refs:
   - U673
@@ -36870,26 +36874,28 @@ relations:
       ni des liens de coopération par extension.
   lifecycle:
     state: urbanist_validated
-    recorded_at: '2026-09-23T20:35:38.517366Z'
+    recorded_at: '2026-09-28T06:38:19.526950Z'
     recorded_by: Codex
     source_refs:
     - U673
     - U667
+    - U804
     validated_fields:
     - source_id
     - target_id
     - type
     value_sha256:
-      source_id: 8fce95e6cb23820ec5381094b850bb38115f1375fd18e259986cd2bd60aea415
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
       target_id: 3e44a6e982b3806fa1c115f0b522ceaf9cffde4ecfddc514f5160d058e5753fa
       type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
     note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension.
+      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
+      ; autres valeurs et portées inchangées.
   last_modified: '2026-09-23T20:35:38.517366Z'
 - id: REL-UNIVERSE-SUPPLY-D04
   revision: 1
   type: presents
-  source_id: universe-supply
+  source_id: supply-chain-orchestration
   target_id: D04
   source_refs:
   - U141
@@ -36901,7 +36907,7 @@ relations:
       ni des liens de coopération par extension.
   lifecycle:
     state: urbanist_validated
-    recorded_at: '2026-09-13T17:32:42.257717Z'
+    recorded_at: '2026-09-28T06:38:19.526970Z'
     recorded_by: Codex
     source_refs:
     - U141
@@ -36909,20 +36915,22 @@ relations:
     - CMP066
     - U667
     - U673
+    - U804
     validated_fields:
     - source_id
     - target_id
     - type
     value_sha256:
-      source_id: 8fce95e6cb23820ec5381094b850bb38115f1375fd18e259986cd2bd60aea415
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
       target_id: 0096bde465541109b5bce54d49a5c56a6b5a8c77c79d7ed9d49996276ee29b00
       type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
     note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension.
+      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
+      ; autres valeurs et portées inchangées.
 - id: REL-UNIVERSE-SUPPLY-D01
   revision: 1
   type: presents
-  source_id: universe-supply
+  source_id: supply-chain-orchestration
   target_id: D01
   source_refs:
   - U141
@@ -36934,7 +36942,7 @@ relations:
       ni des liens de coopération par extension.
   lifecycle:
     state: urbanist_validated
-    recorded_at: '2026-09-13T17:32:42.257717Z'
+    recorded_at: '2026-09-28T06:38:19.526990Z'
     recorded_by: Codex
     source_refs:
     - U141
@@ -36942,16 +36950,18 @@ relations:
     - CMP066
     - U667
     - U673
+    - U804
     validated_fields:
     - source_id
     - target_id
     - type
     value_sha256:
-      source_id: 8fce95e6cb23820ec5381094b850bb38115f1375fd18e259986cd2bd60aea415
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
       target_id: 121208ff481f75c3170b09ff2c95ac6efa7ab32ec9eeb2049653381840a8483f
       type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
     note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension.
+      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
+      ; autres valeurs et portées inchangées.
 - id: REL-MEMBER-D04.i
   revision: 3
   type: contains
@@ -44726,7 +44736,7 @@ relations:
 - id: REL-UNIVERSE-SUPPLY-D03
   revision: 1
   type: presents
-  source_id: universe-supply
+  source_id: supply-chain-orchestration
   target_id: D03
   source_refs:
   - U141
@@ -44738,7 +44748,7 @@ relations:
       ni des liens de coopération par extension.
   lifecycle:
     state: urbanist_validated
-    recorded_at: '2026-09-13T17:32:42.257717Z'
+    recorded_at: '2026-09-28T06:38:19.527175Z'
     recorded_by: Codex
     source_refs:
     - U141
@@ -44746,20 +44756,22 @@ relations:
     - CMP066
     - U667
     - U673
+    - U804
     validated_fields:
     - source_id
     - target_id
     - type
     value_sha256:
-      source_id: 8fce95e6cb23820ec5381094b850bb38115f1375fd18e259986cd2bd60aea415
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
       target_id: cb0e782c55c82dbc2e56703a58c295b0a4e3fcac81322068d6366c368b85efce
       type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
     note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension.
+      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
+      ; autres valeurs et portées inchangées.
 - id: REL-UNIVERSE-SUPPLY-D06
   revision: 1
   type: presents
-  source_id: universe-supply
+  source_id: supply-chain-orchestration
   target_id: D06
   source_refs:
   - U141
@@ -44771,7 +44783,7 @@ relations:
       ni des liens de coopération par extension.
   lifecycle:
     state: urbanist_validated
-    recorded_at: '2026-09-13T17:32:42.257717Z'
+    recorded_at: '2026-09-28T06:38:19.527215Z'
     recorded_by: Codex
     source_refs:
     - U141
@@ -44779,16 +44791,18 @@ relations:
     - CMP066
     - U667
     - U673
+    - U804
     validated_fields:
     - source_id
     - target_id
     - type
     value_sha256:
-      source_id: 8fce95e6cb23820ec5381094b850bb38115f1375fd18e259986cd2bd60aea415
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
       target_id: 17c128fc100f3fa90ffc5f6acdd8a736b5c1f6ceefffc66da48cb4529e9a55d4
       type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
     note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension.
+      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
+      ; autres valeurs et portées inchangées.
 - id: REL-U673-CONTAINS-plans-ingestion
   revision: 1
   type: contains
@@ -45147,7 +45161,7 @@ relations:
 - id: REL-U682-PRESENTS-SERVICE-ORDERS
   revision: 1
   type: presents
-  source_id: universe-supply
+  source_id: supply-chain-orchestration
   target_id: subdomain-service-orders
   source_refs:
   - U679
@@ -45160,21 +45174,23 @@ relations:
       détaillés proposés.
   lifecycle:
     state: under_instruction
-    recorded_at: '2026-09-24T07:34:47.738310Z'
+    recorded_at: '2026-09-28T06:38:19.527266Z'
     recorded_by: Codex
     source_refs:
     - U679
     - U681
     - U682
+    - U804
     validated_fields:
     - source_id
     - target_id
     - type
     value_sha256:
-      source_id: 8fce95e6cb23820ec5381094b850bb38115f1375fd18e259986cd2bd60aea415
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
       target_id: 6d3edae0d62dce73fff2944ac79533e34e9d390ac0a7f5765a50958e11a0cba7
       type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
-    note: Portée des accords capturée séparément ; aucun accord global sur les détails.
+    note: Portée des accords capturée séparément ; aucun accord global sur les détails. U804 autorise uniquement la substitution
+      technique de l’identité du domaine ; autres valeurs et portées inchangées.
 - id: REL-U682-CONTAINS-service-order-picking
   revision: 1
   type: contains
@@ -47375,7 +47391,7 @@ relations:
 - id: REL-U766-PRESENTS-PROMISING
   revision: 1
   type: presents
-  source_id: universe-supply
+  source_id: supply-chain-orchestration
   target_id: subdomain-order-promising
   source_refs:
   - U765
@@ -47768,11 +47784,11 @@ relations:
     validated_fields: []
     value_sha256: {}
     note: Accords explicites limités dans decision-intents ; descriptions et qualifications détaillées proposées.
-- id: REL-U780-OPERATIONS-universe-supply
+- id: REL-U780-OPERATIONS-supply-chain-orchestration
   revision: 1
   type: presents
   source_id: system-business-operations
-  target_id: universe-supply
+  target_id: supply-chain-orchestration
   source_refs:
   - U780
   review:
@@ -47780,10 +47796,11 @@ relations:
     note: Rattachement explicite du domaine à Business Operations, U780 ; aucune adoption des descendants par extension.
   lifecycle:
     state: urbanist_validated
-    recorded_at: '2026-09-26T09:02:28.510777Z'
+    recorded_at: '2026-09-28T06:38:19.527417Z'
     recorded_by: Codex
     source_refs:
     - U780
+    - U804
     validated_fields:
     - type
     - source_id
@@ -47791,8 +47808,9 @@ relations:
     value_sha256:
       type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
       source_id: 06fd5880f4881c4bef6680740cab4a2c5f2bfb903ad85ec58b85b8eec3cc0bef
-      target_id: 8fce95e6cb23820ec5381094b850bb38115f1375fd18e259986cd2bd60aea415
+      target_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
     note: Portée limitée à ces champs ; capture contextualisée INT-U780 séparée. Rédactions et comparaisons nouvelles proposées.
+      U804 autorise uniquement la substitution technique de l’identité du domaine ; autres valeurs et portées inchangées.
 - id: REL-U780-OPERATIONS-domain-logistics-execution
   revision: 1
   type: presents
@@ -52213,73 +52231,73 @@ scenario_catalog:
       condition: Proposition acceptée et ressources affectables.
     sequence_note: Dépendances conditionnelles du cas illustré ; aucune séquence universelle des capacités.
   legacy_links:
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: b2b-partial-stock
     scenario_id: b2b-partial-stock
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: return-fashion-recovery
     scenario_id: return-fashion-recovery
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: consignment-sale-pickup
     scenario_id: consignment-sale-pickup
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: fashion-launch
     scenario_id: fashion-launch
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: shortage-reassessment
     scenario_id: shortage-reassessment
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: export-remote-services
     scenario_id: export-remote-services
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: stocktaking-variance
     scenario_id: stocktaking-variance
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: last-item-concurrency
     scenario_id: last-item-concurrency
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: substitution-price-service
     scenario_id: substitution-price-service
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: additional-purchase-partial
     scenario_id: additional-purchase-partial
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: pickup-or-direct-shipment
     scenario_id: pickup-or-direct-shipment
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: transport-missed-connection
     scenario_id: transport-missed-connection
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: remote-payment-ambiguous
     scenario_id: remote-payment-ambiguous
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: reference-plan-correction
     scenario_id: reference-plan-correction
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: redistribute-protected-stock
     scenario_id: redistribute-protected-stock
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: supplier-return-outcomes
     scenario_id: supplier-return-outcomes
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: gift-kits-crossdock
     scenario_id: gift-kits-crossdock
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: ownership-transit-deadline
     scenario_id: ownership-transit-deadline
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: order-structuring-engaged
     scenario_id: order-structuring-engaged
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: b2b-release-deadline
     scenario_id: b2b-release-deadline
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: trace-accessory-kits
     scenario_id: trace-accessory-kits
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: damaged-stock-disposition
     scenario_id: damaged-stock-disposition
-  - owner_id: universe-supply
+  - owner_id: supply-chain-orchestration
     legacy_id: transport-loads-six-stores
     scenario_id: transport-loads-six-stores
   - owner_id: D04.k

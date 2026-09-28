@@ -22,19 +22,21 @@ Le contenu exporté est intégralement lisible par les visiteurs autorisés du s
 
 ## Vue d’ensemble des systèmes métier — U780
 
-Une publication portant des nœuds `business_system` présente ses systèmes à l’accueil. Les domaines explicitement reliés par `presents` sont visibles dans leurs cartes ; les vues de contexte restent compactes. Le champ `modeling_depth` indique la profondeur choisie : contexte, domaines, ou capacités et comportements. Le niveau Systèmes métier est également disponible dans Relations. Arbre, fiches, infobulles et liens directs restent liés au snapshot sélectionné. Une publication historique conserve sa structure ; aucun complément backlog n’est injecté. L’interface est prête avant publication du [lot U780](../modeles/backlog/business-systems-U780.yaml).
+Une publication portant des nœuds `business_system` présente ses systèmes à l’accueil. Les domaines explicitement reliés par `presents` sont visibles dans leurs cartes ; les vues de contexte restent compactes. Le champ `modeling_depth` indique la profondeur choisie : contexte, domaines, ou capacités et comportements. Le niveau Systèmes métier est également disponible dans Relations. Arbre, fiches, infobulles et liens directs restent liés au snapshot sélectionné. Une publication historique conserve sa structure ; aucun complément backlog n’est injecté. Voir le [lot U780](../modeles/backlog/business-systems-U780.yaml).
 
 ## Niveaux Domain / Area — U482/U507
 
-La nomenclature adoptée est **Domain → Area → Capability → Behavior**. Atlas rend les types du snapshot consulté : `domain` reste « Domaine », `area` devient « Area », tandis que les anciens groupes `urbanism_level` / `universe` restent « Univers ». **Authoritative Data** peut être publié comme Area depuis U507 ; les publications antérieures conservent leur groupe de présentation. Ses référentiels restent distincts (sept depuis U509), reliés par `presents`, et portent leurs capacités via `contains`.
+La hiérarchie courante est **Business System → Domain → Subdomain → Capability → Behavior**. Les référentiels conservent leur rattachement explicite. Le type technique `area` porte les sous-domaines ; le lecteur utilise le vocabulaire déclaré par chaque snapshot. Les anciens termes Univers, Area et Purpose sont réservés aux publications qui les portent.
 
-Les cartes d’une Area exposent ses capacités ou ses référentiels explicites ; chaque carte de référentiel expose ses propres capacités. Les liens, le fil d’Ariane et les icônes de capacités conservent ce rattachement, y compris pour Ingestion et Visibility. Le graphe Relations propose **Capacités / Sous-domaines et référentiels / Domaines** lorsque la publication contient des Areas, et conserve **Capacités / Domaines et référentiels / Univers** pour les publications antérieures. Les regroupements suivent les relations publiées, y compris pour les références. Le paramètre de lien `level=area` est partageable ; `level=universe` reste lisible dans l’historique et rejoint le niveau Domaine d’une publication au nouveau découpage. Aucun changement de vocabulaire n’est appliqué aux anciennes données ni déduit du backlog.
+Les liens utilisent l’identité canonique de chaque objet et peuvent fixer une publication. U804 remplace l’identité technique du domaine Supply Chain Orchestration par `supply-chain-orchestration` dans le modèle courant, sans alias de navigation. Les codes SYS/DOM/SUB/REF/CAP/BHV restent des repères de lecture et de recherche, pas des substituts d’identité dans les adresses. Les publications historiques conservent leurs propres objets et identifiants. Copier le lien fige la version consultée.
+
+Relations propose les niveaux de la publication, dont Systèmes métier. Le lien courant `level=subdomain` désigne les sous-domaines et référentiels ; l’ancien `level=area` reste accepté. Un ancien `level=universe` rejoint le niveau Domaine du modèle courant ; il garde son sens dans les publications historiques.
 
 Tests : `node --test --test-isolation=none app/test-dependency-graph.mjs app/test-navigation.mjs app/test-model.mjs`.
 
 ## Bandeau permanent et défilement
 
-Le fil d’Ariane, le titre, la description et les onglets **Carte / Fiche / Relations / Sources d’inspiration** restent visibles. Seule la zone de contenu sous ce bandeau défile ; l’arbre conserve son propre défilement. Cette règle est commune à l’accueil, aux univers, domaines, capacités et comportements, ainsi qu’aux glossaires et au guide du méta modèle. Sur les écrans de faible hauteur, le bandeau est plus compact.
+Le fil d’Ariane, le titre, la description et les onglets **Carte / Fiche / Relations / Sources d’inspiration** restent visibles. Seule la zone de contenu sous ce bandeau défile ; l’arbre conserve son propre défilement. Cette règle est commune à l’accueil, aux systèmes métier, domaines, sous-domaines, capacités et comportements, ainsi qu’aux glossaires et au guide du méta modèle. Sur les écrans de faible hauteur, le bandeau est plus compact.
 
 Sur grand écran, le fil d’Ariane et la copie du lien occupent la barre FLOW de 52 px : ils ne consomment plus une rangée au-dessus du titre. Sur mobile, le bouton d’ouverture de l’arbre rejoint FLOW, tandis que le fil d’Ariane garde sa propre ligne. Beaumanoir devient une signature de 76 px dans le pied de l’arbre, près des statistiques. Les noms longs du fil d’Ariane restent nommés intégralement pour les lecteurs d’écran ; sur grand écran, l’ellipse visuelle conserve leur accès et le titre au survol. [Identité et repères de design](BRANDING.md).
 
@@ -52,7 +54,7 @@ L’ancienne recette `verify-shell.mjs` et son option `--baseline` documentent l
 
 La navigation propose **Informations métier**, avec index filtrable et fiche de lecture. Chaque fiche expose sa question, sa définition, un exemple, sa composition sémantique, ses limites, ses usages par les capacités et les informations liées. L’onglet **Sources d’inspiration** donne les raisons du terme et du périmètre, les différences et les liens directs vers les sources consultées. Les qualifications de travail et identifiants de preuve ne sont pas affichés ni indexés.
 
-Les fiches de capacités, domaines et univers proposent les informations qui concernent leurs capacités explicitement rattachées. Aucun rôle n’est déduit pour un comportement ni propagé par une dépendance. La recherche générale inclut les informations, avec un filtre dédié. Les liens `#version=…&view=information&information=PINFO-…` conservent la publication ; `node=…` ajoute un périmètre de lecture facultatif. Une information absente ou une ancienne publication sans catalogue est signalée sans repli.
+Les fiches de capacités et de leurs périmètres parents proposent les informations qui concernent leurs capacités explicitement rattachées. Aucun rôle n’est déduit pour un comportement ni propagé par une dépendance. La recherche générale inclut les informations, avec un filtre dédié. Les liens `#version=…&view=information&information=PINFO-…` conservent la publication ; `node=…` ajoute un périmètre de lecture facultatif. Une information absente ou une ancienne publication sans catalogue est signalée sans repli.
 
 Sur écran large, liste et fiche défilent indépendamment ; changer d’information remet la fiche en haut. Sur petit écran, la liste reste compacte et la fiche suit le défilement de la page. Les onglets acceptent les flèches, Home et End. Les références viennent exclusivement de `information_catalog` dans le snapshot métier.
 
@@ -62,11 +64,11 @@ Les 14 fiches U468 sont publiées dans v012 / `2026-09-19.5` ; v011 reste sans c
 
 14 septembre 2026 — application React avec React Flow et interface sur mesure, selon le choix [U150](../connaissance/01-contributions-utilisateur.md#u150). La première réalisation U105 et l’essai comparatif U146 restent conservés dans les historiques.
 
-FLOW Atlas permet de parcourir l’urbanisation publiée, de comprendre une capacité dans son contexte et d’explorer ses liens. L’arbre gauche, la fiche centrale et la recherche accompagnent les cartes React Flow. Les modèles publiés en YAML, ou en JSON pour les versions historiques, sont l’autorité de cette consultation ; le Markdown conserve les récits, analyses, décisions et restitutions. Une publication ne vaut pas validation métier.
+FLOW Atlas permet de parcourir la cartographie publiée, de comprendre une capacité dans son contexte et d’explorer ses liens. L’arbre gauche, la fiche centrale et la recherche accompagnent les cartes React Flow. Les modèles publiés en YAML, ou en JSON pour les versions historiques, sont l’autorité de cette consultation ; le Markdown conserve les récits, analyses, décisions et restitutions. Une publication ne vaut pas validation métier.
 
 ## Exploration des dépendances — U415/U419
 
-Le 19 septembre 2026, Laurent a [validé Cytoscape.js](../connaissance/01-contributions-utilisateur.md#u415), puis [autorisé son intégration](../connaissance/01-contributions-utilisateur.md#u419). L’onglet **Relations**, disponible dès l’accueil ou depuis une fiche, utilise Cytoscape pour explorer les liens aux niveaux capacité, domaine et univers. Les cartes de structure conservent React Flow.
+Le 19 septembre 2026, Laurent a [validé Cytoscape.js](../connaissance/01-contributions-utilisateur.md#u415), puis [autorisé son intégration](../connaissance/01-contributions-utilisateur.md#u419). L’onglet **Relations**, disponible dès l’accueil ou depuis une fiche, utilise Cytoscape pour explorer les liens aux niveaux capacité, sous-domaine, domaine et système métier selon la publication. Les cartes de structure conservent React Flow.
 
 Le prototype comparatif utilisait une capture figée du backlog de 46 capacités et 186 relations. L’application lit exclusivement la publication consultée, sans cette capture ni complément depuis le backlog. La profondeur propose un, deux ou trois pas, ou toute la publication. Les filtres portent sur le sens du parcours et le rôle explicitement publié ; une qualification en texte libre ne devient pas automatiquement « a besoin de ». Les changements de niveau regroupent les extrémités selon les rattachements explicites, avec les liens internes et les relations d’origine accessibles dans l’inspecteur. Les comportements sont projetés sur leur capacité parente ; les objets, documents et événements restent distincts. Le parcours ne crée aucune relation transitive.
 
@@ -121,9 +123,9 @@ Ouvrir ensuite l’adresse locale ci-dessus ; `Ctrl+C` arrête ce serveur exécu
 
 `pnpm --dir app dev` exporte les publications puis lance Vite sur [http://127.0.0.1:5173/](http://127.0.0.1:5173/), sans proxy API ni serveur Python parallèle. Après une nouvelle publication, la release actualise les JSON servis par Vite. Pour vérifier la livraison locale, recompiler puis consulter le serveur statique sur 8765.
 
-## Urbanisation publiée
+## Cartographie publiée
 
-Atlas affiche uniquement les modèles publiés, sous le nom **Urbanisation**, sans sélecteur de release. Par défaut, la vue suit la publication courante désignée par l’index. Les liens directs contenant une version restent fixes sur cette publication. Les anciens liens contenant un espace backlog ou panorama reviennent à l’urbanisation publiée.
+Atlas affiche uniquement les modèles publiés, sous le nom **Cartographie**, sans sélecteur de release. Par défaut, la vue suit la publication courante désignée par l’index. Les liens directs contenant une version restent fixes sur cette publication. Les anciens liens contenant un espace backlog ou panorama reviennent à la cartographie publiée.
 
 Le serveur lit directement [l’index des publications](../modeles/release/index.json), le descripteur daté qu’il désigne, puis le modèle YAML (ou JSON historique) de cette publication. Atlas n’a pas de référentiel parallèle. Le backlog et le panorama As Is restent des fichiers de travail dans le projet et ne sont pas exposés dans cette interface.
 
@@ -143,7 +145,7 @@ La fiche présente la Finalité, la Définition, les comportements, le Périmèt
 
 Les cartes React Flow permettent de déplacer et cadrer la vue, puis d’ouvrir les éléments dans leur contexte. Les cartes hiérarchiques utilisent les enfants explicites ; la vue Relations utilise Cytoscape et conserve le sens et la qualification des liens publiés. Un placement visuel ou un cadre de contexte ne crée aucun domaine ni rattachement supplémentaire. Les contrôles de navigation et de carte emploient la même bibliothèque d’icônes.
 
-Dans la carte d’un univers, chaque domaine liste ses capacités avec leurs icônes. Le survol ou le focus d’un lien affiche son aperçu ; le clic ou Entrée ouvre directement sa fiche dans la même publication. Le retour du navigateur retrouve la vue Univers. Les listes suivent les rattachements publiés, y compris lorsqu’un identifiant conserve le préfixe d’un autre domaine. La hauteur des cartes suit leur contenu, sur une grille de une à trois colonnes ; la molette fait défiler la page et les boutons de zoom restent disponibles.
+Dans la carte d’un domaine, chaque sous-domaine liste ses capacités avec leurs icônes. Le survol ou le focus d’un lien affiche son aperçu ; le clic ou Entrée ouvre directement sa fiche dans la même publication. Le retour du navigateur retrouve la carte d’origine. Les listes suivent les rattachements publiés, y compris lorsqu’un identifiant conserve le préfixe d’un autre domaine. La hauteur des cartes suit leur contenu, sur une grille de une à trois colonnes ; la molette fait défiler la page et les boutons de zoom restent disponibles.
 
 La carte **Authoritative Data**, anciennement Business References, offre le même parcours : chaque référentiel affiche les liens de ses capacités, avec les mêmes icônes, infobulles et accès direct aux fiches. Son libellé Area ou groupe de présentation suit le type publié ; ses référentiels restent distincts.
 
@@ -327,3 +329,5 @@ Les quatre espaces principaux sont Cartographie, Scénarios métier, Glossaires 
 Contrôles : `python -m unittest discover -s app -p test_modeling_guide.py`, tests frontend, build puis `node app/verify-modeling-guide.mjs` (navigateur isolé sans ouverture de fenêtre ni serveur supplémentaire).
 
 `pnpm --dir app verify:ux` vérifie la lecture directe, les liens méthodologiques, la recherche, les relations conservées, les retours avec filtres et position, le parcours choisi après rechargement, le clavier et quatre vues mobiles. Le nouveau guide est injecté uniquement dans cette fixture ; il n’est jamais servi par Atlas avant publication. Ce contrôle fait aussi partie de `pnpm --dir app verify`.
+
+Dans la navigation, Cartographie désigne l’objet consulté ; Urbanisation désigne la démarche dans les contenus de méthode. Le fil d’Ariane affiche Cartographie sans lien à l’accueil et permet d’y revenir depuis une fiche. Le bandeau du menu indique Parcourir ; l’entrée Cartographie est l’unique accès à cet espace dans le menu.

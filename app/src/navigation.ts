@@ -1,3 +1,4 @@
+import type { PublishedModel } from './types.ts';
 export type View = 'map' | 'sheet' | 'relations' | 'market' | 'glossary' | 'principles' | 'information' | 'scenarios';
 export interface GraphRoute {
   graphLevel?: 'capability' | 'area' | 'domain' | 'business_system' | 'universe';
@@ -28,6 +29,7 @@ export function readRoute(hash: string): RouteState {
   const requestedView = p.get('view') === 'sheet' && p.get('section') === 'market_comparisons' ? 'market' : p.get('view');
   const view = requestedView === 'market' && (!node || legacyRoots.includes(node)) ? 'map' : requestedView;
   const graph: GraphRoute = {};
+  if (p.get('level') === 'subdomain') p.set('level', 'area');
   if (['capability', 'area', 'domain', 'business_system', 'universe'].includes(p.get('level') || '')) graph.graphLevel = p.get('level') as GraphRoute['graphLevel'];
   if (p.has('depth') && ['0', '1', '2', '3'].includes(p.get('depth')!)) graph.graphDepth = Number(p.get('depth')) as GraphRoute['graphDepth'];
   if (['both', 'incoming', 'outgoing'].includes(p.get('direction') || '')) graph.graphDirection = p.get('direction') as GraphRoute['graphDirection'];
@@ -52,7 +54,7 @@ export function readRoute(hash: string): RouteState {
     source: p.get('source') || '', anchor: p.get('anchor') || '', sourceId: p.get('sourceId') || '',
   };
 }
-export function routeHash(route: RouteState): string {
+export function routeHash(route: RouteState, model?: PublishedModel | null): string {
   const p = new URLSearchParams();
   for (const [key, value] of Object.entries({
     ...(route.view === 'scenarios' ? {scenario:route.scenario,stream:route.stream,path:route.path,event:route.event,object:route.object,situation:route.situation,capability:route.capability,scenarioQuery:route.scenarioQuery} : {}),
@@ -64,7 +66,7 @@ export function routeHash(route: RouteState): string {
     glossary: route.view === 'glossary' ? route.glossary : undefined,
     principle: route.view === 'principles' ? route.principle : undefined,
     information: route.view === 'information' ? route.information : undefined,
-    ...(route.view === 'relations' ? { level: route.graphLevel, depth: route.graphDepth, direction: route.graphDirection, qualification: route.graphFamily, layout: route.graphLayout, labels: route.graphLabels, neighbors: route.graphNeighbors ? 'all' : undefined } : {}),
+    ...(route.view === 'relations' ? { level: model?.nodes.some(n => n.hierarchyLabel === 'Sous-domaine') && route.graphLevel === 'area' ? 'subdomain' : model?.nodes.some(n => n.kind === 'area') && route.graphLevel === 'universe' ? 'domain' : route.graphLevel, depth: route.graphDepth, direction: route.graphDirection, qualification: route.graphFamily, layout: route.graphLayout, labels: route.graphLabels, neighbors: route.graphNeighbors ? 'all' : undefined } : {}),
   })) if (value !== undefined && value !== '') p.set(key, String(value));
   return p.size ? `#${p}` : '#';
 }

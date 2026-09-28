@@ -13,7 +13,7 @@ Origine des demandes : **Frontoffice** désigne une sollicitation externe au Dom
 | system-design-development | Design & Development | Business System | Exploration différée | Validé par l’urbaniste — portée : name, modeling_depth |
 | system-business-operations | Business Operations | Business System | Sourcing and Procurement, Sales, Demand & Supply Planning, Supply Chain Orchestration, Logistics | Validé par l’urbaniste — portée : name, modeling_depth |
 | system-enterprise-management-control | Enterprise Management & Control | Business System | Exploration différée | Validé par l’urbaniste — portée : name, modeling_depth |
-| universe-supply | Supply Chain Orchestration | Domain | Master Data, Policies, Plan Visibility, Order Management, Inventory Management, Demand & Supply Matching, Fulfilment Orchestration, Service Order Management, Order Promising | Proposé par l’IA |
+| supply-chain-orchestration | Supply Chain Orchestration | Domain | Master Data, Policies, Plan Visibility, Order Management, Inventory Management, Demand & Supply Matching, Fulfilment Orchestration, Service Order Management, Order Promising | Proposé par l’IA |
 
 Les groupes de présentation conservent leur rôle distinct des niveaux de décomposition métier.
 
@@ -37,7 +37,7 @@ Statut : **Validé par l’urbaniste — portée : name, modeling_depth**.
 | domain-sourcing-procurement | Sourcing and Procurement | Domain | Validé par l’urbaniste — portée : name, modeling_depth |
 | domain-sales | Sales | Domain | Validé par l’urbaniste — portée : name, modeling_depth |
 | domain-plan | Demand & Supply Planning | Domain | Proposé par l’IA |
-| universe-supply | Supply Chain Orchestration | Domain | Proposé par l’IA |
+| supply-chain-orchestration | Supply Chain Orchestration | Domain | Proposé par l’IA |
 | domain-logistics-execution | Logistics | Domain | Validé par l’urbaniste — portée : name, modeling_depth |
 
 
@@ -77,7 +77,7 @@ Statut : **Proposé par l’IA**.
 | Repère | Capacité | Type | Statut | Définition | Finalité | Rattachement |
 | --- | --- | --- | --- | --- | --- | --- |
 
-## universe-supply — Supply Chain Orchestration
+## supply-chain-orchestration — Supply Chain Orchestration
 
 Statut : **Proposé par l’IA**.
 
@@ -1032,7 +1032,7 @@ SAP S/4HANA Cloud Public Edition · Concept ou fonction documenté dans un produ
 
 Références : U794.
 
-## Scénarios métier — universe-supply Supply Chain Orchestration
+## Scénarios métier — supply-chain-orchestration Supply Chain Orchestration
 
 ### Livrer 100 tee-shirts à un magasin vendredi
 
@@ -1054,7 +1054,7 @@ Une nouvelle variante de tee-shirt, bleu taille M, est créée dans l’applicat
 
 Références : U470, U97, U460.
 
-## Sources d’inspiration — universe-supply Supply Chain Orchestration
+## Sources d’inspiration — supply-chain-orchestration Supply Chain Orchestration
 
 Supply Chain Orchestration orchestre les ressources et prestations pour satisfaire la demande, en reliant Matching & Balancing, application des changements et coordination de leur réalisation.
 

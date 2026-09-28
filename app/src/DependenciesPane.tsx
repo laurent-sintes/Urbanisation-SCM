@@ -23,7 +23,7 @@ type Selection = { kind: 'node' | 'edge'; id: string };
 
 export function DependenciesPane({ model, focusId, relationId, settings, onSettings, onSelectRelation, onFocus, onRead }: Props) {
   const focus = focusId ? model.nodeById.get(focusId) : undefined;
-  const defaultLevel = !focus || focus.levelRef === 'universe' || ['domain', 'area', 'reference'].includes(focus.kind) ? (hasAreaLevels(model) ? 'area' : 'domain') : 'capability';
+  const defaultLevel = focus?.kind === 'business_system' ? 'business_system' : !focus || focus.levelRef === 'universe' || ['domain', 'area', 'reference'].includes(focus.kind) ? (hasAreaLevels(model) ? 'area' : 'domain') : 'capability';
   const options = useMemo<DependencyOptions>(() => ({
     focusId, level: dependencyLevel(model, settings.graphLevel || defaultLevel),
     depth: settings.graphDepth ?? (focusId ? 1 : 0), direction: settings.graphDirection || 'both', family: settings.graphFamily || 'all',

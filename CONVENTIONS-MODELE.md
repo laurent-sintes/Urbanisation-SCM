@@ -409,6 +409,8 @@ Employer la graphie anglaise **Fulfilment** dans les libellés et descriptions F
 
 ## Identité et codes de lecture — U783
 
+Exception U804 : l’identifiant technique `universe-supply` est remplacé dans le modèle courant par `supply-chain-orchestration`, avec ses références et l’identifiant de sa relation de présentation. Aucun alias de navigation n’est conservé. Cette correction ne change ni le domaine ni ses responsabilités ; les publications et preuves historiques restent intactes. L’ancien identifiant ne doit pas être réutilisé. Voir `modeles/backlog/technical-identity-U804.yaml`.
+
 Les règles structurées du méta modèle sont `identification_rules` dans `modeles/backlog/modeling-glossary.yaml` ; le principe `PRINCIPLE-DISPLAY-CODES` et `display_policy: typed-tree-v1` les appliquent au modèle. `id` reste l’identité persistante, jamais réutilisée ni renumérotée. Le code visible SYS/DOM/SUB/REF/CAP/BHV est une séquence globale par type, sur trois chiffres au minimum, suivant le parcours de l’arbre. Une insertion peut décaler les codes dans une nouvelle publication.
 
 La préparation génère `display_index` après exclusion des illustrations : codes, racines et enfants sont figés dans le snapshot et contrôlés avant publication. Arbre, cartes et fiches utilisent cet ordre ; recherche, filtres, repli et placement du graphe ne le recalculent pas. Les publications anciennes restent inchangées. Recherche par code ou identité ; liens durables par identité et version. Ces règles de présentation ne valident aucun changement métier, parent ou accord.

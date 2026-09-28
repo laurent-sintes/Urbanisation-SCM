@@ -72,10 +72,10 @@ export function App() {
     setRoute(previous => {
       const next = { ...previous, ...changes };
       history.replaceState({ ...history.state, atlasScroll: content.current?.scrollTop ?? 0 }, '', location.href);
-      history[replace ? 'replaceState' : 'pushState']({}, '', routeHash(next));
+      history[replace ? 'replaceState' : 'pushState']({}, '', routeHash(next, model));
       return next;
     });
-  }, []);
+  }, [model]);
   const closeDrawer = useCallback(() => setDrawer(false), []);
   const followReference = useCallback((kind: 'glossary' | 'model', id: string, section = '') => {
     changeRoute({ view: kind === 'glossary' ? 'glossary' : section === 'market_comparisons' ? 'market' : 'sheet', glossary: isMetaTerm(id) ? 'meta' : 'model',
@@ -113,12 +113,12 @@ export function App() {
   useEffect(() => {
     // Remember only the selected location. There is no visit history.
     savePreference('selection', routeHash({ ...route, version: '', query: '', status: '', source: '', anchor: '', sourceId: '' }));
-    history.replaceState(history.state, '', routeHash(route));
-  }, [route]);
+    history.replaceState(history.state, '', routeHash(route, model));
+  }, [route, model]);
   useEffect(() => savePreference('tree-width', width), [width]);
   useEffect(() => {
     if (model && route.node && !model.nodeById.has(route.node)) {
-      setAnnouncement(`L’élément ${route.node} n’existe pas dans cette publication. Retour à Urbanisation.`);
+      setAnnouncement(`L’élément ${route.node} n’existe pas dans cette publication. Retour à la cartographie.`);
       changeRoute({ node: '', scope: '', view: 'map', relation: '' }, true);
     } else if (model && route.scope && route.scope !== '@root' && !model.nodeById.has(route.scope)) {
       setAnnouncement('Le périmètre de cette carte n’existe pas dans la publication. Le contexte de l’élément est rétabli.');
@@ -152,12 +152,13 @@ export function App() {
   const copyLink = async () => {
     try {
       const pinned = { ...route, version: model?.version || route.version };
-      const hash = routeHash(pinned);
+      const hash = routeHash(pinned, model);
       await navigator.clipboard.writeText(`${location.origin}${location.pathname}${hash}`);
       setAnnouncement('Lien copié vers cette publication.');
     } catch { setAnnouncement('La copie est indisponible. Tu peux copier l’adresse dans le navigateur.'); }
   };
-  const breadcrumbs = <nav className="breadcrumb" aria-label="Fil d’Ariane"><button onClick={() => navigate('')} aria-current={!headingNode && !referenceView ? 'page' : undefined}>Urbanisation</button>{headingNode && model && lineageOf(model, headingNode.id).map(node => <span key={node.id}><ChevronRight size={12} /><button title={node.name} onClick={() => navigate(node.id)} aria-current={headingNode.id === node.id ? 'page' : undefined}>{node.name}</button></span>)}{referenceView && <span><ChevronRight size={12}/><span aria-current="page">{view === 'scenarios' ? 'Scénarios métier' : view === 'principles' ? 'Méthode & métamodèle' : glossaryTitle}</span></span>}</nav>;
+  const atMapHome = view === 'map' && !headingNode;
+  const breadcrumbs = <nav className="breadcrumb" aria-label="Fil d’Ariane"><>{atMapHome ? <span aria-current="page">Cartographie</span> : <button onClick={() => navigate('')}>Cartographie</button>}</>{headingNode && model && lineageOf(model, headingNode.id).map(node => <span key={node.id}><ChevronRight size={12} /><button title={node.name} onClick={() => navigate(node.id)} aria-current={headingNode.id === node.id ? 'page' : undefined}>{node.name}</button></span>)}{referenceView && <span><ChevronRight size={12}/><span aria-current="page">{view === 'scenarios' ? 'Scénarios métier' : view === 'principles' ? 'Méthode & métamodèle' : glossaryTitle}</span></span>}</nav>;
   const shareButton = <button className="share-button" aria-label="Copier le lien" title="Copier le lien" onClick={copyLink}><Copy size={16} /><span>Copier le lien</span></button>;
   return <ModelLinksProvider value={{ model: model || null, metaGlossary, route, onFollow: followReference }}><div className="atlas-shell" style={{ '--sidebar': `${width}px` } as CSSProperties}>
     <header className="topbar" inert={mobile && drawer}>
@@ -177,12 +178,12 @@ export function App() {
     {drawer && mobile && <button className="drawer-scrim" tabIndex={-1} aria-label="Fermer l’arbre" onClick={closeDrawer} />}
     <main id="fa-main" className={`workspace ${!model ? 'without-model' : ''}`} inert={mobile && drawer} aria-busy={loading}>
       {(error || notice || announcement) && <div className={`notice ${error ? 'error' : ''}`} role={error ? 'alert' : 'status'}>{error || notice || announcement}<button aria-label="Masquer le message" onClick={() => setAnnouncement('')} hidden={!announcement}><X size={14} /></button></div>}
-      {!model ? <div className="empty-state"><Compass size={34} /><h1>{loading ? 'Ouverture du modèle…' : 'Publication indisponible'}</h1><p>{loading ? 'Chargement de l’Urbanisation publiée.' : 'Réessaie de charger la publication.'}</p>{!loading && <button className="secondary-button" onClick={reload}>Réessayer</button>}</div> : <>
+      {!model ? <div className="empty-state"><Compass size={34} /><h1>{loading ? 'Ouverture du modèle…' : 'Publication indisponible'}</h1><p>{loading ? 'Chargement de la cartographie publiée.' : 'Réessaie de charger la publication.'}</p>{!loading && <button className="secondary-button" onClick={reload}>Réessayer</button>}</div> : <>
         <div className="workspace-header">
         {mobile && <div className="breadcrumb-row"><div className={`mobile-path ${fullPath ? 'expanded' : ''}`}><button className="path-toggle" aria-expanded={fullPath} onClick={() => setFullPath(!fullPath)}>Chemin {fullPath ? '−' : '…'}</button>{breadcrumbs}</div>{shareButton}</div>}
-        <header className="page-heading"><div className="heading-icon">{headingNode ? <NodeIcon node={headingNode} size={30} framed /> : <span className="node-icon framed tone-universe">{view === 'principles' ? <Lightbulb size={30} /> : <Compass size={30} />}</span>}</div><div>
+        <header className="page-heading"><div className="heading-icon">{headingNode ? <NodeIcon node={headingNode} size={30} framed /> : <span className="node-icon framed tone-context">{view === 'principles' ? <Lightbulb size={30} /> : <Compass size={30} />}</span>}</div><div>
           <div className="eyebrow"><span>{headingNode ? kindLabel(headingNode) : view === 'principles' ? 'LE MÉTA MODÈLE' : view === 'glossary' ? 'LE VOCABULAIRE PUBLIÉ' : 'LE MODÈLE PUBLIÉ'}</span>{headingNode && <span title={`Identité persistante : ${headingNode.id}`}>{headingNode.displayCode ?? headingNode.id}</span>}</div>
-          <h1 id="page-title" ref={heading} tabIndex={-1}>{view === 'scenarios' ? 'Scénarios métier' : view === 'principles' ? 'Méthode & métamodèle' : view === 'glossary' ? glossaryTitle : headingNode?.name || 'Urbanisation'}</h1>
+          <h1 id="page-title" ref={heading} tabIndex={-1}>{view === 'scenarios' ? 'Scénarios métier' : view === 'principles' ? 'Méthode & métamodèle' : view === 'glossary' ? glossaryTitle : headingNode?.name || 'Cartographie'}</h1>
           {view !== 'sheet' && <p><ModelText text={view === 'scenarios' ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.' : view === 'principles' ? 'Comprendre le modèle, ses concepts et la manière de le construire.' : view === 'glossary' ? 'Les notions et leurs définitions dans la publication consultée.' : headingNode?.purpose || (headingNode ? 'Explore cet élément et ses relations dans le modèle publié.' : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')}/></p>}
         </div></header>
         {!referenceView && <div className="view-bar"><div className="view-tabs" role="tablist" aria-label="Vue du modèle">{([{ id: 'map', label: 'Carte', Icon: LayoutGrid }, { id: 'sheet', label: 'Fiche', Icon: FileText }, { id: 'relations', label: 'Relations', Icon: GitBranch }, { id: 'market', label: 'Sources d’inspiration', Icon: BookOpen }] as const).filter(tab => selected || !['sheet', 'market'].includes(tab.id)).map(tab => <button key={tab.id} role="tab" id={`tab-${tab.id}`} aria-controls="atlas-view" tabIndex={view === tab.id ? 0 : -1} aria-selected={view === tab.id} onClick={() => changeRoute({ view: tab.id, relation: '', section: '' })} onKeyDown={e => {
@@ -207,7 +208,7 @@ export function App() {
             </section>}
           </>}
         </div>
-        <footer className="workspace-footer">Urbanisation · {route.version ? 'Publication fixe' : 'Publication courante, actualisée automatiquement'}</footer>
+        <footer className="workspace-footer">Cartographie · {route.version ? 'Publication fixe' : 'Publication courante, actualisée automatiquement'}</footer>
         </div>
       </>}
     </main>

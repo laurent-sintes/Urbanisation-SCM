@@ -116,7 +116,7 @@ export function Sidebar({ model, guide, route, open, mobile, searchRef, onClose,
   const revision = model.revision ? `v${String(model.revision).padStart(3, '0')}` : model.version;
   const publicationLabel = `Version du modèle complet : ${revision} · ${model.version}. ${route.version ? 'Publication fixe' : 'Publication courante, actualisée automatiquement'}.`;
   return <aside ref={panel} id="atlas-tree-panel" className={`sidebar ${open ? 'open' : ''} ${searching ? 'is-searching' : ''}`} aria-label="Navigation du modèle" aria-modal={mobile && open ? true : undefined} role={mobile && open ? 'dialog' : undefined}>
-    <div className="sidebar-heading"><button className="root-link" onClick={() => onNavigate('')}><Compass size={20} />Urbanisation</button>
+    <div className="sidebar-heading"><span className="root-link">Parcourir</span>
       <button className="drawer-close" aria-label="Fermer l’arbre" onClick={onClose}><PanelLeftClose size={20} /></button></div>
     <nav className="primary-spaces" aria-label="Espaces Atlas">
       <button aria-current={!['scenarios','glossary','principles'].includes(route.view || '') ? 'page' : undefined} onClick={() => onNavigate('')}><Compass size={17}/>Cartographie</button>
@@ -136,7 +136,7 @@ export function Sidebar({ model, guide, route, open, mobile, searchRef, onClose,
         {route.view==='glossary' && <><button aria-current={route.glossary!=='meta' ? 'page' : undefined} onClick={()=>onOpenGlossary('model')}>Glossaire métier</button><button aria-current={route.glossary==='meta' ? 'page' : undefined} onClick={()=>onOpenGlossary('meta')}>Glossaire méthodologique</button></>}
         {route.view==='principles' && <>{guide?.chapters?.map(ch=><button key={ch.id} aria-current={(route.principle || 'start')===ch.id ? 'page' : undefined} onClick={()=>{onSearch({principle:ch.id,scroll:''});onClose();}}>{ch.title}</button>)}<button onClick={()=>{onSearch({principle:'codes',scroll:''});onClose();}}>Codes et identifiants</button></>}
         {route.view==='scenarios' && <><h2>Flux de valeur</h2><CatalogLink stream="">Tous les scénarios</CatalogLink>{catalogOf(model)?.value_streams.map(v=><CatalogLink key={v.id} stream={v.id}>{v.label_fr}</CatalogLink>)}</>}
-      </nav> : <div className="model-tree" ref={tree} role="tree" aria-label="Arbre d’urbanisation"><ul role="group">{rootsOf(model).filter(n => !['object','document','event'].includes(n.kind)).map(n => renderNode(n, 1))}</ul></div>}
+      </nav> : <div className="model-tree" ref={tree} role="tree" aria-label="Arbre de la cartographie"><ul role="group">{rootsOf(model).filter(n => !['object','document','event'].includes(n.kind)).map(n => renderNode(n, 1))}</ul></div>}
     <div className="sidebar-bottom"><div className="sidebar-stats"><span id="fa-version" className="model-version" data-version={model.version} title={publicationLabel} aria-label={publicationLabel}><span className={`live-dot ${route.version ? 'fixed' : ''}`} aria-hidden="true"/>Modèle · {revision}</span><span>{model.nodes.length} éléments</span><span>{model.nodes.filter(n => n.kind === 'capability').length} capacités{model.nodes.some(n => n.kind === 'behavior') && <> · {model.nodes.filter(n => n.kind === 'behavior').length} comportements</>}</span></div><img className="beaumanoir-source-logo" src={staticUrl('assets/beaumanoir-original.png')} width="1564" height="605" alt="Groupe Beaumanoir" /></div>
   </aside>;
 }

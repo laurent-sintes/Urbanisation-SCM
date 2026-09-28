@@ -1,0 +1,25 @@
+id: TECHNICAL-IDENTITY-U804
+status: applied
+source_refs:
+- U804
+scope: Renommage technique uniquement ; aucun changement de responsabilité ni nouvelle validation des formulations métier.
+retired_node_id: universe-supply
+node_id: supply-chain-orchestration
+retired_relation_id: REL-U780-OPERATIONS-universe-supply
+relation_id: REL-U780-OPERATIONS-supply-chain-orchestration
+navigation_alias: false
+historical_publications: Inchangées. Les identités antérieures restent dans leurs snapshots et preuves.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U804
+  summary: Identité supply-chain-orchestration dans le courant ; ancien identifiant absent, sans alias de navigation.
+  required_nodes:
+  - id: supply-chain-orchestration
+    kind: domain
+    fields:
+      name: Supply Chain Orchestration
+    parent: system-business-operations
+    parent_type: presents
+  absent_nodes:
+  - universe-supply
