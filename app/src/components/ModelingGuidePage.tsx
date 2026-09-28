@@ -86,7 +86,7 @@ function GuideContent({ model, selected, routeVersion, onSelect, state, retry }:
 
   return <div className="modeling-guide-page">
     <MethodReturn/>
-    <p className="guide-edition">Méthode · {guide.version} — associée au modèle {model.version}</p>
+    <p className="guide-edition">{guide.title} · {guide.version} — associée au modèle {model.version}</p>
     {guide.chapters && <nav className="method-chapters" aria-label="Rubriques de la méthode"><MethodNavigation guide={guide} selected={selected} onSelect={onSelect}/></nav>}
     {home && <article className="guide-lesson method-home"><h2>Une démarche, plusieurs portes d’entrée</h2><p>Comprendre ensemble, éprouver les options et décider progressivement. Ce parcours organise la lecture ; les dimensions du travail s’instruisent ensemble.</p><div className="method-home-cards">{reading.map(c=><button key={c.id} onClick={()=>onSelect(c.id)}><strong>{c.title}</strong><span>{c.intro}</span></button>)}</div>{reading[0]?.visual && <MethodVisual visual={reading[0].visual}/>}</article>}
     {(home || chapter?.id === 'start') && <nav className="method-entry-links" aria-label="Espaces liés"><a href={mapHref}>Explorer la cartographie</a>{!!model.raw.scenario_catalog && <CatalogLink>Parcourir les scénarios</CatalogLink>}<MethodLink index>Ouvrir le glossaire méthodologique</MethodLink></nav>}
@@ -102,7 +102,7 @@ function GuideContent({ model, selected, routeVersion, onSelect, state, retry }:
       : !chapter && <section className="guide-status"><h2>Principe absent de ce guide</h2><p>La référence « {selected} » ne figure pas dans cette version. Choisis l’un des repères ci-dessus.</p></section>}
     </>}
     {readingIndex >= 0 && <nav className="method-reading-path" aria-label="Parcours de lecture">{readingIndex>0 && <button onClick={()=>onSelect(reading[readingIndex-1].id)}>← {reading[readingIndex-1].title}</button>}{readingIndex<reading.length-1 && <button onClick={()=>onSelect(reading[readingIndex+1].id)}>Continuer : {reading[readingIndex+1].title} →</button>}</nav>}
-    <p className="guide-footer"><button onClick={()=>onSelect(isTransformationGuide(guide)?'home':'start')}>Retour à l’accueil de la méthode</button></p>
+    <p className="guide-footer"><button onClick={()=>onSelect(isTransformationGuide(guide)?'home':'start')}>Retour à l’accueil de la {isTransformationGuide(guide) ? 'méthodologie de transformation' : 'méthode'}</button></p>
     <p className="guide-footer"><button onClick={() => onSelect('codes')}>Comprendre les codes et identifiants</button></p>
   </div>;
 }
