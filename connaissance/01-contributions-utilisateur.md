@@ -20359,3 +20359,29 @@ JE ne souhaite pas donner des infos sur des critères de temps (les deux semaine
 **contexte et portée**
 
 Découper l’aperçu généré avec un sommaire et un parcours de lecture. Retirer les durées recommandées pour instruire une question de cadrage ; garder une progression par questions, preuves et décisions. Le parcours de lecture ne prescrit pas une succession des travaux. La cadence mensuelle du comité décrit la gouvernance existante et ne constitue pas une durée de cadrage recommandée.
+
+## U829
+
+**id**
+
+U829
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Auditer la conservation du contenu et stabiliser Atlas
+
+**texte**
+
+JE souhaite un audit profond du code, test, contrôles pour éviter que du contenu se perde dans le software. Ce n'est pas la premiere fois que ça arrive ; je veux des fondations saines.
+
+Ensuite je veux un audit du contenu, surtout sur les scénarios ET la méthodologie.
+
+JE veux de la fluidité. Je veux une version stable dès le début de l'après midi.
+
+**contexte et portée**
+
+Audit et stabilisation de la chaîne source, publication, export, interface et déploiement. La revue relève une condition de livraison regroupée placée dans les conditions communes du scénario B2B malgré sa variante fractionnée. Correction éditoriale proposée : conserver cette condition dans le seul parcours regroupé ; chaque variante garde ses conditions. Aucun accord métier supplémentaire, aucune nouvelle capacité ni couverture installée ne sont déduits de la demande.

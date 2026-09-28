@@ -1,8 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import { fetchModelingGuide, lessonForPublication } from './src/modelingGuide.ts';
 
 const response = data => new Response(JSON.stringify(data), { headers: { 'content-type': 'application/json' } });
+test('a guide replaced by an unavailable response is rejected by its published fingerprint', async () => {
+  const original = {schema_version:'1.0.0',publication_version:'fixed',status:'unavailable',message:'Historical absence'};
+  const fingerprint = createHash('sha256').update(JSON.stringify(original)).digest('hex');
+  await assert.rejects(fetchModelingGuide('fixed', undefined, async () => response({...original, message:'Substituted'}), fingerprint), /empreinte/);
+  assert.deepEqual(await fetchModelingGuide('fixed', undefined, async () => response(original), fingerprint), original);
+});
 test('guide presentation follows the displayed hierarchy without rewriting historical lessons', () => {
   const lesson = {
     id: 'meaningful-links', rule: 'Domain → Purpose → Capability → Behavior',

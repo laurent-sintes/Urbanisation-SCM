@@ -15,7 +15,7 @@ const byId = new Map(model.nodes.map(node => [node.id, node]));
 const children = id => model.relations.filter(r => ['contains', 'presents'].includes(r.type) && r.source_id === id).map(r => r.target_id);
 const capability = model.nodes.find(n => n.kind === 'capability' && children(n.id).some(id => byId.get(id)?.kind === 'behavior'));
 const behavior = byId.get(children(capability.id).find(id => byId.get(id)?.kind === 'behavior'));
-const base = 'http://atlas.test/Urbanisation-SCM/';
+const base = 'https://atlas.test/Urbanisation-SCM/';
 const browser = await chromium.launch(browserOptions);
 const errors = [], requests = [], checks = [];
 try {

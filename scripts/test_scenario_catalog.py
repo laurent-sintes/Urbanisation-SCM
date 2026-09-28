@@ -60,4 +60,25 @@ class ScenarioCatalogTests(unittest.TestCase):
         catalog['scenarios'][0]['events']=['not-a-facet']
         self.assertGreaterEqual(len(validate_catalog(self.model)),3)
 
+    def test_unreachable_legacy_links_and_duplicate_filter_choices_rejected(self):
+        catalog=self.model['scenario_catalog']
+        catalog['legacy_links'][0]['owner_id']='removed-owner'
+        catalog['legacy_links'].append(deepcopy(catalog['legacy_links'][0]))
+        catalog['facets']['events'].append(deepcopy(catalog['facets']['events'][0]))
+        errors=validate_catalog(self.model)
+        self.assertTrue(any('missing legacy owner' in e for e in errors))
+        self.assertTrue(any('duplicate legacy link' in e for e in errors))
+        self.assertTrue(any('duplicate facet' in e for e in errors))
+
+    def test_b2b_alternatives_keep_their_own_acceptance_conditions(self):
+        catalog=self.model['scenario_catalog']
+        scenario=next(s for s in catalog['scenarios'] if s['id']=='b2b-partial-stock')
+        grouped=next(p for p in catalog['paths'] if p['id']=='b2b-partial-stock-path')
+        split=next(p for p in catalog['paths'] if p['id']=='b2b-partial-stock-split-path')
+        condition='Le client accepte le regroupement et la date résultante.'
+        self.assertNotIn(condition,scenario['conditions'])
+        self.assertIn(condition,grouped['conditions'])
+        self.assertNotIn(condition,split['conditions'])
+        self.assertIn('Le client accepte deux livraisons annoncées et leurs dates.',split['conditions'])
+
 if __name__=='__main__': unittest.main()

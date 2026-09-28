@@ -21,6 +21,23 @@ test('search returns a unique scenario and a value stream, never review metadata
  const m=model();assert.equal(searchPublication(m,'Livraison partielle').filter(r=>r.kind==='scenario').length,1);
  assert.equal(searchPublication(m,'Recevoir des produits')[0].kind,'value_stream');
 });
+
+test('path choices, dependencies and results are discoverable without leaking review notes',()=>{
+ const raw=structuredClone(model().raw);
+ const c=raw.scenario_catalog;
+ c.paths[0].title='Livraison fractionnée';
+ c.paths[0].dependencies=[{from:'a',to:'b',condition:'Contrôle contradictoire'}];
+ c.paths[0].steps[0].outcome='Écart régularisé';
+ c.scenarios[0].review={note:'ConfidentielEditorial'};
+ c.paths.push({...c.paths[0],id:'second-path'});
+ const m=adaptPublication(raw);
+ for(const query of ['Livraison fractionnée','Contrôle contradictoire','Écart régularisé']){
+   assert.equal(searchPublication(m,query).filter(r=>r.kind==='scenario').length,1,query);
+   assert.equal(filterScenarios(c,{query}).length,1,query);
+ }
+ assert.equal(searchPublication(m,'ConfidentielEditorial').length,0);
+ assert.equal(filterScenarios(c,{query:'ConfidentielEditorial'}).length,0);
+});
 test('deep links pin version, path, origin and filters across reload',()=>{
  const route=readRoute('#version=fixed&view=scenarios&scenario=s&path=p&node=c&event=shortage');
  assert.equal(route.scenario,'s');assert.equal(route.path,'p');assert.equal(route.node,'c');

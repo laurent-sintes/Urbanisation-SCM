@@ -8,6 +8,8 @@ export interface ReleaseEntry {
   readonly last_modified?: string | null;
   readonly release_notes?: string | null;
   readonly descriptor?: string | null;
+  readonly model_sha256?: string;
+  readonly guide_sha256?: string;
 }
 export interface PublicationCatalog {
   readonly current: string;
@@ -23,7 +25,7 @@ export interface PublicationState {
 }
 export type FetchLike = (input: string, init?: RequestInit) => Promise<Response>;
 
-export async function fetchJson(url: string, signal?: AbortSignal, fetcher: FetchLike = fetch, timeoutMs = 15000): Promise<unknown> {
+export async function fetchJson(url: string, signal?: AbortSignal, fetcher: FetchLike = fetch, timeoutMs = 15000, expectedSha256?: string): Promise<unknown> {
   if (signal?.aborted) throw signal.reason;
   const controller = new AbortController();
   let timer: ReturnType<typeof setTimeout> | undefined;
@@ -40,8 +42,19 @@ export async function fetchJson(url: string, signal?: AbortSignal, fetcher: Fetc
     return await Promise.race([interrupted, (async () => {
       const response = await fetcher(url, { signal: controller.signal, cache: 'no-store' });
       let body: unknown;
-      try { body = await response.json(); }
-      catch { throw new Error(response.ok ? 'Le fichier JSON reçu est invalide.' : `Chargement impossible (HTTP ${response.status}).`); }
+      try {
+        if (response.ok && expectedSha256) {
+          const bytes = await response.arrayBuffer();
+          const digest = await crypto.subtle.digest('SHA-256', bytes);
+          const actual = Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
+          if (actual !== expectedSha256) throw new Error('integrity');
+          body = JSON.parse(new TextDecoder().decode(bytes));
+        } else body = await response.json();
+      }
+      catch (error) {
+        if (error instanceof Error && error.message === 'integrity') throw new Error('Le contenu reçu ne correspond pas à l’empreinte publiée. Réessaie pour recharger cette publication.');
+        throw new Error(response.ok ? 'Le fichier JSON reçu est invalide.' : `Chargement impossible (HTTP ${response.status}).`);
+      }
       if (!response.ok) {
         const error = body && typeof body === 'object' ? (body as Record<string, unknown>).error : undefined;
         const message = typeof error === 'string' ? error : error && typeof error === 'object' ? (error as Record<string, unknown>).message : undefined;
@@ -61,6 +74,9 @@ export function adaptCatalog(input: unknown): PublicationCatalog {
   if (typeof raw.current_version !== 'string' || !raw.current_version || !Array.isArray(raw.versions)) throw new Error('Catalogue des publications invalide.');
   const entries = raw.versions.map(value => {
     if (!value || typeof value !== 'object' || typeof value.version !== 'string' || !value.version) throw new Error('Identité de publication invalide.');
+    for (const field of ['model_sha256', 'guide_sha256']) {
+      if (value[field] !== undefined && (typeof value[field] !== 'string' || !/^[a-f0-9]{64}$/.test(value[field]))) throw new Error('Empreinte de publication invalide.');
+    }
     return Object.freeze({ ...value }) as ReleaseEntry;
   });
   if (new Set(entries.map(entry => entry.version)).size !== entries.length) throw new Error('Publication dupliquée dans le catalogue.');
@@ -119,7 +135,7 @@ export function createPublicationClient(fetcher: FetchLike = fetch) {
           return;
         }
         // Pin each read to the catalog identity. A concurrent publication cannot mix two versions.
-        const raw = await fetchJson(publicationUrl(target), abort.signal, fetcher) as RawPublication;
+        const raw = await fetchJson(publicationUrl(target), abort.signal, fetcher, 15000, nextCatalog.releases.find(entry => entry.version === target)?.model_sha256) as RawPublication;
         if (!isLatest()) return;
         if (raw?.version !== target) throw new Error(`Le modèle reçu ne correspond pas à la publication ${target}.`);
         const model = adaptPublication(raw);

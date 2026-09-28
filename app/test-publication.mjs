@@ -1,5 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
 import {
   adaptCatalog, createPublicationClient, fetchJson,
   publicationUrl, guideUrl, staticUrl,
@@ -12,6 +13,24 @@ const snapshot = version => ({
 });
 const catalog = (current = 'v3', versions = ['v3', 'v2', 'v1']) => ({ current_version: current, versions: versions.map(version => ({ version, revision: Number(version.slice(1)) })) });
 const response = (value, status = 200) => new Response(JSON.stringify(value), { status, headers: { 'content-type': 'application/json' } });
+const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+
+test('published fingerprints reject truncated or substituted content even with the correct version', async () => {
+  const original = snapshot('v3');
+  const index = catalog();
+  index.versions[0].model_sha256 = hash(original);
+  let body = {...original, nodes: []};
+  const client = createPublicationClient(async url => response(url.endsWith('index.json') ? index : body));
+  await client.setVersion();
+  assert.equal(client.getState().model, undefined);
+  assert.match(client.getState().error, /empreinte/);
+  body = original;
+  await client.reload();
+  assert.equal(client.getState().model.nodes.length, 1);
+  client.dispose();
+  index.versions[0].guide_sha256 = 'broken';
+  assert.throws(() => adaptCatalog(index), /Empreinte/);
+});
 const deferred = () => {
   let resolve, reject;
   const promise = new Promise((yes, no) => { resolve = yes; reject = no; });

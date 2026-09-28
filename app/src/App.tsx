@@ -3,6 +3,7 @@ import { staticUrl } from './publication';
 import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { ArrowLeft, BookOpen, ChevronRight, Compass, Copy, FileText, GitBranch, LayoutGrid, Lightbulb, Maximize2, PanelLeft, RefreshCw, X } from 'lucide-react';
 import { usePublication } from './usePublication';
+import { useBuildUpdate } from './useBuildUpdate';
 import { useModelingGuide } from './useModelingGuide';
 import { childrenOf, hasCapabilityCards, lineageOf, parentRelationOf, relatedTo } from './model';
 import { kindLabel } from './presentation';
@@ -37,9 +38,10 @@ function useMobile() {
   return mobile;
 }
 export function App() {
+  const softwareUpdate=useBuildUpdate();
   const [route, setRoute] = useState(initialRoute);
-  const { model, loading, error, notice, reload } = usePublication(route.version || undefined);
-  const { state: guideState, retry: retryGuide } = useModelingGuide(model?.version);
+  const { model, catalog, loading, error, notice, reload } = usePublication(route.version || undefined);
+  const { state: guideState, retry: retryGuide } = useModelingGuide(model?.version, catalog?.releases.find(entry => entry.version === model?.version)?.guide_sha256);
   const activeGuide = guideState.status === 'ready' ? guideState.response.guide : undefined;
   const methodTitle = activeGuide?.title || 'Méthodologie';
   const methodCrumb = methodEntries(activeGuide).find(item=>item.id===activeMethod(activeGuide,route.principle))?.title;
@@ -184,6 +186,8 @@ export function App() {
       {(error || notice || announcement) && <div className={`notice ${error ? 'error' : ''}`} role={error ? 'alert' : 'status'}>{error || notice || announcement}<button aria-label="Masquer le message" onClick={() => setAnnouncement('')} hidden={!announcement}><X size={14} /></button></div>}
       {!model ? <div className="empty-state"><Compass size={34} /><h1>{loading ? 'Ouverture du modèle…' : 'Publication indisponible'}</h1><p>{loading ? 'Chargement de la cartographie publiée.' : 'Réessaie de charger la publication.'}</p>{!loading && <button className="secondary-button" onClick={reload}>Réessayer</button>}</div> : <>
         <div className="workspace-header">
+        {softwareUpdate && <aside className="publication-selection" role="status"><span>Une nouvelle version de l’interface Atlas est disponible.</span><button onClick={()=>window.location.reload()}>Recharger l’application</button></aside>}
+        {route.version && <aside className="publication-selection" aria-label="Publication consultée"><span><strong>Publication figée · {route.version}</strong> — {catalog?.current !== route.version ? 'Une version plus récente est disponible.' : 'Ce lien restera sur cette édition.'}</span><button onClick={() => changeRoute({version:'',returnTo:'',catalogReturn:'',scroll:'',...(view === 'principles' ? {principle:''} : {})})}>Suivre la version courante</button></aside>}
         {mobile && <div className="breadcrumb-row"><div className={`mobile-path ${fullPath ? 'expanded' : ''}`}><button className="path-toggle" aria-expanded={fullPath} onClick={() => setFullPath(!fullPath)}>Chemin {fullPath ? '−' : '…'}</button>{breadcrumbs}</div>{shareButton}</div>}
         <header className="page-heading"><div className="heading-icon">{headingNode ? <NodeIcon node={headingNode} size={30} framed /> : <span className="node-icon framed tone-context">{view === 'principles' ? <Lightbulb size={30} /> : <Compass size={30} />}</span>}</div><div>
           <div className="eyebrow"><span>{headingNode ? kindLabel(headingNode) : view === 'principles' ? (isTransformationGuide(activeGuide) ? 'LA DÉMARCHE DE TRANSFORMATION' : 'LES REPÈRES MÉTHODOLOGIQUES') : view === 'glossary' ? 'LE VOCABULAIRE PUBLIÉ' : 'LE MODÈLE PUBLIÉ'}</span>{headingNode && <span title={`Identité persistante : ${headingNode.id}`}>{headingNode.displayCode ?? headingNode.id}</span>}</div>

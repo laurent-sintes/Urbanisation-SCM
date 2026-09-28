@@ -1,7 +1,7 @@
 """Publication workflow tests; all writes stay in isolated temporary projects."""
 
 from copy import deepcopy
-from scripts.structured_io import dumps
+from scripts.structured_io import dumps, read
 from contextlib import contextmanager
 import hashlib
 import json
@@ -59,6 +59,17 @@ def source(identifier, text):
 
 
 class IllustrationBoundaryTests(unittest.TestCase):
+    def test_publication_preserves_all_business_fields_and_scenario_content(self):
+        source = read(ROOT / 'modeles/backlog/model.yaml')
+        before = deepcopy(source)
+        published = publisher.compile_snapshot(source, {'decisions': []}, '2099-01-01.1', ['QA'])
+        self.assertEqual(source, before, 'Publication must not mutate the source')
+        expected = {n['id']: n['fields'] for n in source['nodes'] if n['review']['state'] != 'illustration'}
+        self.assertEqual({n['id']: n['fields'] for n in published['nodes']}, expected)
+        self.assertEqual(published['scenario_catalog'], source['scenario_catalog'])
+        self.assertEqual({n['id'] for n in published['excluded_nodes']},
+                         {n['id'] for n in source['nodes'] if n['review']['state'] == 'illustration'})
+
     def test_verified_copy_preserves_bytes_and_never_overwrites(self):
         with isolated_project() as root:
             source_path, target = root/'source.yaml', root/'frozen.yaml'

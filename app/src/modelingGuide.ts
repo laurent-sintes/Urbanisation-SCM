@@ -86,8 +86,8 @@ export function lessonForPublication(lesson: GuideLesson, model: PublishedModel)
 }
 
 /** Every read is pinned to the displayed publication, including live-current mode. */
-export async function fetchModelingGuide(version: string, signal?: AbortSignal, fetcher: FetchLike = fetch): Promise<GuideResponse> {
-  const raw = await fetchJson(guideUrl(version), signal, fetcher) as GuideResponse;
+export async function fetchModelingGuide(version: string, signal?: AbortSignal, fetcher: FetchLike = fetch, expectedSha256?: string): Promise<GuideResponse> {
+  const raw = await fetchJson(guideUrl(version), signal, fetcher, 15000, expectedSha256) as GuideResponse;
   if (!raw || raw.schema_version !== '1.0.0' || raw.publication_version !== version
     || !['available', 'unavailable'].includes(raw.status) || typeof raw.message !== 'string'
     || (raw.status === 'available' && (!raw.guide?.version || !Array.isArray(raw.guide.lessons) || !raw.guide.lessons.length || !Array.isArray(raw.guide.sources)))) {

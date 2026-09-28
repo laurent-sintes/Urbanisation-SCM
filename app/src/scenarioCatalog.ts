@@ -6,6 +6,21 @@ export interface MobilizationStep { id: string; title: string; description: stri
 export interface MobilizationPath { id: string; name: string; title: string; scenario_id: string; conditions: string[]; outcome: string; steps: MobilizationStep[]; dependencies: { from: string; to: string; condition: string }[]; sequence_note: string }
 export interface ScenarioCatalog { value_streams: ValueStream[]; scenarios: BusinessScenario[]; paths: MobilizationPath[]; facets: Record<string,{ id: string; label: string }[]>; legacy_links: { owner_id: string; legacy_id: string; scenario_id: string; contribution?: string }[] }
 export const catalogOf = (model: Pick<PublishedModel,'raw'>): ScenarioCatalog | undefined => model.raw.scenario_catalog as ScenarioCatalog | undefined;
+/** All reader prose is discoverable; editorial/review metadata stays excluded. */
+export function scenarioSearchText(catalog: ScenarioCatalog, scenario: BusinessScenario): string {
+  return [scenario.title,scenario.situation,scenario.trigger,scenario.objective,
+    ...(scenario.conditions || []),...(scenario.validation_points || []),
+    ...catalog.paths.filter(p=>p.scenario_id===scenario.id).flatMap(p=>[
+      p.title,p.sequence_note,p.outcome,...(p.conditions || []),
+      ...(p.dependencies || []).map(d=>d.condition),
+      ...p.steps.flatMap(s=>[s.title,s.description,s.outcome,...(s.inputs || []),...s.contributions.map(c=>c.role)]),
+    ])].filter(Boolean).join(' ');
+}
+export function valueStreamSearchText(stream: ValueStream): string {
+  return [stream.name,stream.label_fr,stream.description,stream.beneficiary,stream.value,stream.trigger,stream.boundary,
+    ...(stream.stages || []).flatMap(s=>[s.name,s.outcome,s.entry,s.exit]),stream.market_position,
+    ...(stream.market_sources || []).flatMap(s=>[s.vendor,s.support,s.limit])].filter(Boolean).join(' ');
+}
 export function scenarioCapabilities(catalog: ScenarioCatalog, id: string): string[] {
   return [...new Set(catalog.paths.filter(p => p.scenario_id === id).flatMap(p => p.steps.flatMap(s => s.contributions.map(c => c.node_id))))];
 }
@@ -18,5 +33,5 @@ export function scenariosForNode(model: PublishedModel, id: string): BusinessSce
 }
 export function filterScenarios(catalog: ScenarioCatalog, filter: { stream?: string; event?: string; object?: string; situation?: string; capability?: string; query?: string }) {
   const normalized = (v: string) => v.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-  return catalog.scenarios.filter(s => (!filter.stream || s.value_stream_ids.includes(filter.stream)) && (!filter.event || s.events.includes(filter.event)) && (!filter.object || s.objects.includes(filter.object)) && (!filter.situation || s.situations.includes(filter.situation)) && (!filter.capability || scenarioCapabilities(catalog,s.id).includes(filter.capability)) && (!filter.query || normalized([s.title,s.situation,s.objective].join(' ')).includes(normalized(filter.query))));
+  return catalog.scenarios.filter(s => (!filter.stream || s.value_stream_ids.includes(filter.stream)) && (!filter.event || s.events.includes(filter.event)) && (!filter.object || s.objects.includes(filter.object)) && (!filter.situation || s.situations.includes(filter.situation)) && (!filter.capability || scenarioCapabilities(catalog,s.id).includes(filter.capability)) && (!filter.query || normalized(scenarioSearchText(catalog,s)).includes(normalized(filter.query))));
 }

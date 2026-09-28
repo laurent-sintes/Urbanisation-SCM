@@ -56,16 +56,31 @@ jobs:
       - uses: actions/upload-pages-artifact@v4
         with:
           path: app/dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: atlas-delivery-manifest
+          path: app/dist/delivery.json
   deploy:
     needs: [build, launcher]
     runs-on: ubuntu-latest
     permissions:
+      contents: read
+      actions: read
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - uses: actions/checkout@v6
+      - uses: actions/download-artifact@v4
+        with:
+          name: atlas-delivery-manifest
+          path: .runtime/delivery
       - name: Deploy Atlas
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify deployed content
+        env:
+          ATLAS_URL: ${{ steps.deployment.outputs.page_url }}
+        run: python scripts/atlas_delivery.py --manifest .runtime/delivery/delivery.json --url "$ATLAS_URL" --attempts 6

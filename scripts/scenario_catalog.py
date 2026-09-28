@@ -32,6 +32,9 @@ def validate_catalog(model):
     all_ids = [i['id'] for c in COLLECTIONS for i in catalog[c]]
     if len(set(all_ids)) != len(all_ids):
         errors.append('scenario_catalog: identity shared by collections')
+    for facet, values in catalog['facets'].items():
+        if len({v['id'] for v in values}) != len(values):
+            errors.append(f'scenario_catalog: duplicate facet identity: {facet}')
     for stream in catalog['value_streams']:
         ids = [s['id'] for s in stream['stages']]
         if len(set(ids)) != len(ids):
@@ -64,9 +67,16 @@ def validate_catalog(model):
         for edge in path['dependencies']:
             if edge['from'] not in ids or edge['to'] not in ids:
                 errors.append(f'{path["id"]}: missing dependency endpoint')
+    aliases = set()
     for alias in catalog['legacy_links']:
         if alias['scenario_id'] not in indexes['scenarios']:
             errors.append('scenario_catalog: missing legacy target')
+        if alias['owner_id'] not in nodes:
+            errors.append('scenario_catalog: missing legacy owner: ' + alias['owner_id'])
+        identity = (alias['owner_id'], alias['legacy_id'], alias['scenario_id'])
+        if identity in aliases:
+            errors.append('scenario_catalog: duplicate legacy link')
+        aliases.add(identity)
     return errors
 
 

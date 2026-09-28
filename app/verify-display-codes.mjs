@@ -1,5 +1,6 @@
 /** Isolated future-policy fixture; never changes a published snapshot or catalog. */
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
 import { readFile, mkdir } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
@@ -17,10 +18,12 @@ const generated = spawnSync(process.env.ATLAS_PYTHON || 'python', ['-c',
   { cwd: path.dirname(app), input: source, encoding: 'utf8', env: { ...process.env, PYTHONUTF8: '1' }, maxBuffer: 20 * 1024 * 1024 });
 assert.equal(generated.status, 0, generated.stderr || generated.error?.message);
 const raw = JSON.parse(generated.stdout), model = adaptPublication(raw);
+// The isolated candidate has its own payload fingerprint, not the source file's.
+catalog.versions.find(item=>item.version===version).model_sha256=createHash('sha256').update(JSON.stringify(raw)).digest('hex');
 assert.deepEqual(raw.nodes, JSON.parse(source).nodes, 'The fixture preserves all French text and persistent IDs');
 const area = model.nodes.find(n => n.kind === 'area' && childrenOf(model, n.id).some(c => c.kind === 'capability'));
 const capacity = childrenOf(model, area.id).find(n => n.kind === 'capability');
-const base = 'http://atlas.test/Urbanisation-SCM/';
+const base = 'https://atlas.test/Urbanisation-SCM/';
 const browser = await chromium.launch(browserOptions);
 try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
@@ -30,6 +33,7 @@ try {
     const url = new URL(route.request().url());
     assert.ok(url.href.startsWith(base));
     const relative = decodeURIComponent(url.pathname.slice(new URL(base).pathname.length)) || 'index.html';
+    if (relative === 'data/index.json') return route.fulfill({json:catalog});
     if (relative === `data/${version}/model.json`) return route.fulfill({ json: raw });
     const target = path.resolve(dist, relative);
     assert.ok(target.startsWith(dist + path.sep));

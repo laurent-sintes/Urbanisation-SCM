@@ -123,6 +123,11 @@
 .method-section-index button,.method-reading-path button { padding:10px; color:var(--flow-green); text-decoration:underline; text-align:left; }
 .method-reading-path { display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; margin-top:24px; }
 @media(max-width:600px){.method-home-cards{grid-template-columns:1fr}.method-chapters button{padding:8px 10px}}
+@media(max-width:600px){
+  .method-chapters .method-nav-group { flex-wrap:nowrap; overflow-x:auto; padding-bottom:8px; }
+  .method-chapters .method-nav-group > strong { width:auto; min-width:72px; margin:0; }
+  .method-chapters .method-nav-group > button,.method-chapters .method-nav-group > a { flex-shrink:0; white-space:nowrap; }
+}
 .method-chapter section { margin-top:24px; }
 .method-chapter h3 { margin-bottom:8px; }
 .method-chapter details { margin-top:12px; }

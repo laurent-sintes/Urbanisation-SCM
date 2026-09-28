@@ -11,13 +11,15 @@ const catalog = JSON.parse(await readFile(path.join(dist, 'data/index.json'), 'u
 const version = catalog.current_version;
 const historical = catalog.versions.find(item => item.version !== version).version;
 const prefix = '/Urbanisation/';
-const base = 'http://atlas.test' + prefix;
+const base = 'https://atlas.test' + prefix;
 const types = { '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.html': 'text/html', '.png': 'image/png', '.svg': 'image/svg+xml' };
 const browser = await chromium.launch(browserOptions);
 const errors = [], requests = [], unexpected = [];
 let releaseModel;
 const gate = new Promise(resolve => { releaseModel = resolve; });
 let failModel = true;
+let failGuideModule = false;
+let newerBuild = false;
 try {
   const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   page.setDefaultTimeout(15000);
@@ -25,12 +27,14 @@ try {
   await page.route('**/*', async route => {
     const url = new URL(route.request().url());
     requests.push(url.pathname);
-    if (url.origin !== 'http://atlas.test' || !url.pathname.startsWith(prefix) || url.pathname.includes('/api/')) {
+    if (url.origin !== 'https://atlas.test' || !url.pathname.startsWith(prefix) || url.pathname.includes('/api/')) {
       unexpected.push(url.pathname); return route.abort();
     }
     const relative = decodeURIComponent(url.pathname.slice(prefix.length)) || 'index.html';
     const target = path.resolve(dist, relative);
     if (!target.startsWith(dist + path.sep)) return route.abort();
+    if(relative === 'delivery.json' && newerBuild) return route.fulfill({json:{schema_version:1,files:{'index.html':'new-build'}}});
+    if (failGuideModule && /ModelingGuidePage-.*\.js$/.test(relative)) return route.fulfill({status:503,body:'Stale lazy module'});
     if (relative === `data/${version}/model.json`) {
       await gate;
       if (failModel) return route.fulfill({ status: 503, contentType: 'text/html', body: '<h1>Temporarily unavailable</h1>' });
@@ -57,13 +61,24 @@ try {
   // Trigger a catalog check while a historical selection is fixed.
   await page.evaluate(() => window.dispatchEvent(new Event('online')));
   assert.equal(await page.locator('#fa-version').getAttribute('data-version'), historical);
+  failGuideModule = true;
   await page.goto(base + '#view=principles');
-  await page.locator('#page-title').waitFor();
-  await page.getByText('Chargement du guide', { exact: false }).waitFor({ state: 'hidden' });
+  await page.getByRole('heading', {name:'La lecture d’Atlas a été interrompue',exact:true}).waitFor();
+  failGuideModule = false;
+  await page.getByRole('button', {name:'Recharger Atlas',exact:true}).click();
+  await page.locator('.method-chapters').waitFor();
   await page.goto(base);
   await page.locator(`#fa-version[data-version="${version}"]`).waitFor();
   await page.getByRole('button', { name: 'FLOW Atlas, accueil', exact: true }).click();
   await page.getByRole('heading', { name: 'Cartographie', exact: true }).waitFor();
+  newerBuild = true;
+  await page.evaluate(()=>window.dispatchEvent(new Event('online')));
+  await page.getByText('Une nouvelle version de l’interface Atlas est disponible.',{exact:true}).waitFor();
+  const currentAddress=page.url();
+  newerBuild = false;
+  await page.getByRole('button',{name:'Recharger l’application',exact:true}).click();
+  await page.getByRole('heading',{name:'Cartographie',exact:true}).waitFor();
+  assert.equal(page.url(),currentAddress,'Updating software must preserve the reading URL');
   await mkdir(path.join(directory, '.runtime/qa-static'), { recursive: true });
   await page.screenshot({ path: path.join(directory, '.runtime/qa-static/overview.png') });
   assert.deepEqual(unexpected, []);
