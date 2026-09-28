@@ -20385,3 +20385,47 @@ JE veux de la fluidité. Je veux une version stable dès le début de l'après m
 **contexte et portée**
 
 Audit et stabilisation de la chaîne source, publication, export, interface et déploiement. La revue relève une condition de livraison regroupée placée dans les conditions communes du scénario B2B malgré sa variante fractionnée. Correction éditoriale proposée : conserver cette condition dans le seul parcours regroupé ; chaque variante garde ses conditions. Aucun accord métier supplémentaire, aucune nouvelle capacité ni couverture installée ne sont déduits de la demande.
+
+## U830
+
+**id**
+
+U830
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Illustrer l’intercompany par un scénario mobilisant des capacités
+
+**texte**
+
+JE souhaite un scénario intercompany. Je veux montrer que c'est un usage, pas une capacité. Qu'en penses-tu ?
+
+**contexte et portée**
+
+Demande d’un scénario et discussion de la distinction entre usage intercompany et capacité métier. Préparer une proposition concrète à partir du modèle courant et des références consultées. Cette demande ne vaut ni validation du récit proposé ensuite, ni retrait du comportement existant Intercompany Sales, ni preuve d’un usage installé dans le groupe.
+
+## U831
+
+**id**
+
+U831
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Conserver la variante Intercompany Sales et ajouter le scénario explicatif
+
+**texte**
+
+On peut garder le comportement dans le sens où c'est une variante d'exécution mais un scénario pour expliquer c'est une bonne idée
+
+**contexte et portée**
+
+Accord sur la proposition discutée sous U830 : conserver Intercompany Sales comme comportement de Sales Order, et illustrer la coopération des capacités par le scénario fictif « Livrer un client avec le stock d’une autre société du groupe ». La société A vend 100 vestes à son client ; B, société du même groupe, détient le stock et livre directement ce client. Distinguer engagements commerciaux, mouvement physique, changements de propriétaire et contributions comptables. L’accord porte sur ce récit et cette distinction ; les détails du parcours rédigés ensuite restent proposés. Aucune capacité Intercompany autonome n’est créée et aucune réalisation installée n’est déduite de l’exemple.

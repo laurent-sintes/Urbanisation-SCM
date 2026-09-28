@@ -50422,6 +50422,8 @@ scenario_catalog:
   - U792
   - U793
   - U797
+  - U830
+  - U831
   facets:
     events:
     - id: shortage
@@ -51434,6 +51436,66 @@ scenario_catalog:
     - Une instruction ne vaut pas réception.
     - Le solde de prestation, le solde achat et le stock disponible sont distincts.
     - La réception ne transfère pas automatiquement la propriété.
+  - id: intercompany-direct-delivery
+    name: Intercompany Direct Delivery
+    title: Livrer un client avec le stock d’une autre société du groupe
+    situation: 'Exemple fictif : un client commande 100 vestes à la société A. La société B, appartenant au même groupe, détient
+      le stock et livre directement le client. A reste son interlocuteur commercial. Il faut coordonner les engagements entre
+      les trois parties, la livraison, les changements de propriété et les faits transmis à la comptabilité.'
+    trigger: A reçoit une commande client dont les produits doivent être fournis par B, autre société du groupe.
+    objective: Livrer les 100 vestes au client selon les engagements convenus, en conservant les liens entre ventes, achat,
+      livraison et faits comptables.
+    conditions:
+    - A et B sont deux sociétés juridiquement distinctes du même groupe ; le client final est externe au groupe.
+    - Le montage commercial retenu est une vente de B à A, puis de A au client. A demeure l’interlocuteur commercial du client.
+    - La livraison directe depuis B est autorisée. Les quantités et dates réalisables restent à établir avant confirmation.
+    - Les [accords](glossary:TER048) applicables précisent les parties, les conditions de vente et les événements permettant
+      de reconnaître les changements de propriétaire.
+    nature: illustrative
+    value_stream_ids:
+    - obtain-products
+    events:
+    - demand
+    objects:
+    - order
+    - stock
+    - information
+    situations:
+    - nominal
+    validation_points:
+    - '[Intercompany](glossary:TER122) qualifie la relation entre sociétés. Le comportement [Intercompany Sales](model:BHV069)
+      décrit une variante d’exécution de [Sales Order](model:D04.i) ; le scénario décrit la coopération de plusieurs capacités.'
+    - A vend au client, A achète à B et B vend à A. Ces engagements restent distincts, même si les produits vont directement
+      de B au client.
+    - 'Le passage physique par un entrepôt de A n’est pas nécessaire. La sortie du stock de B ne prouve pas à elle seule un
+      changement de propriétaire : les conditions et preuves applicables restent déterminantes.'
+    - Les trois commandes portent des engagements liés sur les mêmes 100 vestes ; elles ne créent ni 300 vestes physiques
+      ni trois demandes indépendantes à approvisionner.
+    - Les prestations livrent les produits ; les capacités de gestion portent les demandes, décisions et faits associés. La
+      fourniture des faits comptables, leur interprétation et l’enregistrement des écritures sont distincts.
+    source_refs:
+    - U830
+    - U831
+    - ELM437
+    - ELM454
+    review:
+      state: partial
+      note: U831 retient le récit présenté sous U830 et le maintien du comportement. Titre, situation et nature illustrative
+        capturés par empreinte ; déclencheur, objectif, conditions, classement et points de contrôle rédigés ensuite restent
+        proposés.
+    field_agreements:
+    - field: title
+      source_refs:
+      - U831
+      value_sha256: e0f29c2294a871a196f105e940e6a6f9beda682fd406e26d7e2c177298a60396
+    - field: situation
+      source_refs:
+      - U831
+      value_sha256: 284ebac1c830d4d49d872d8229fe91f5f8fb4c941a2c33fedfc70a2650e65e48
+    - field: nature
+      source_refs:
+      - U831
+      value_sha256: 4f8daca9545dbfec8562cba365d6dc15cb9df8064934302d40d8e67ba5a635a6
   paths:
   - source_refs:
     - U763
@@ -53110,6 +53172,149 @@ scenario_catalog:
       to: step-4
       condition: Proposition acceptée et ressources affectables.
     sequence_note: Dépendances conditionnelles du cas illustré ; aucune séquence universelle des capacités.
+  - id: intercompany-direct-delivery-path
+    name: Intercompany Direct Delivery Response
+    title: Une livraison physique, des engagements commerciaux distincts
+    scenario_id: intercompany-direct-delivery
+    conditions:
+    - Les hypothèses du scénario sont réunies. Le client reçoit directement les produits de B ; le trajet ne passe pas par
+      un entrepôt de A.
+    outcome: La livraison au client, les engagements de chaque société, les changements de propriétaire reconnus et les faits
+      transmis à Finance restent reliés et distinguables.
+    steps:
+    - id: commercial-commitments
+      title: Relier les engagements des trois parties
+      description: A porte la [commande de vente](glossary:TER069) du client et une [commande d’achat](glossary:TER070) auprès
+        de B. B porte la commande de vente correspondante à A. Les références croisées conservent les parties, les 100 vestes
+        concernées et la destination finale.
+      inputs:
+      - Demande du client et [accords](glossary:TER048) applicables aux relations A–client et B–A.
+      outcome: Les engagements commerciaux sont identifiables et reliés ; leur confirmation dépend encore des possibilités
+        de satisfaction.
+      contributions:
+      - node_id: D04.i
+        role: Porter la demande du client chez A et la vente de B à A, avec leurs engagements distincts.
+      - node_id: D04.j
+        role: Porter l’achat de A auprès de B et la réponse attendue de B.
+      - node_id: D04.n
+        role: Relier les commandes conservées sans les fusionner ni additionner leurs quantités comme des besoins indépendants.
+    - id: promise-and-assignment
+      title: Confirmer une promesse réalisable et affecter le stock
+      description: Le stock de B est examiné avec ses engagements existants et les délais de préparation et de transport.
+        Une proposition est choisie, puis confirmée dans les commandes concernées. Les ressources nécessaires sont affectées
+        sans compter plusieurs fois le même besoin.
+      inputs:
+      - Commandes reliées, stock admissible chez B, engagements existants et conditions de livraison directe.
+      outcome: Quantités et dates confirmées sont cohérentes entre les commandes ; les affectations retenues sont appliquées.
+      contributions:
+      - node_id: D03.i
+        role: Évaluer les quantités et dates possibles à partir des ressources admissibles, nettes des engagements et protections.
+      - node_id: D03.l
+        role: Choisir la proposition de promesse à soumettre à confirmation.
+      - node_id: D04.i
+        role: Porter les confirmations autorisées dans les ventes de A au client et de B à A.
+      - node_id: D04.j
+        role: Conserver dans l’achat de A l’engagement accepté de B.
+      - node_id: D03.o
+        role: Déterminer les affectations aux besoins dans les équilibres du plan commun, en tenant compte des liens entre
+          commandes.
+      - node_id: D02.e
+        role: Appliquer les affectations retenues et suivre leurs effets.
+    - id: direct-delivery
+      title: Coordonner la livraison directe de B au client
+      description: Les demandes de préparation et de transport portent la destination du client final et les références des
+        commandes. Les exécutants prélèvent, emballent et livrent les vestes ; aucune réception physique chez A n’est inventée.
+      inputs:
+      - Engagements confirmés, ressources affectées et prestations de préparation et de transport définies.
+      outcome: Les prestations sont suivies jusqu’aux résultats de livraison, avec leurs preuves et leurs éventuels écarts.
+      contributions:
+      - node_id: service-order-picking
+        role: Porter la demande de prélèvement des 100 vestes chez B et les manquants éventuels.
+      - node_id: service-order-packing
+        role: Porter les exigences de conditionnement des vestes destinées au client.
+      - node_id: service-order-transport
+        role: Porter le déplacement de B au client, ses engagements et les écarts constatés.
+      - node_id: service-order-release-decision
+        role: Déterminer quand les ordres de prestation sont libérables au regard des engagements.
+      - node_id: D06.d
+        role: Coordonner le déclenchement et la progression des prestations à partir de leurs résultats.
+    - id: physical-and-ownership-facts
+      title: Distinguer le mouvement physique des changements de propriétaire
+      description: Les faits d’expédition et de livraison alimentent le suivi du stock. Séparément, les conditions contractuelles
+        et les preuves permettent de reconnaître les changements de propriétaire entre B et A, puis entre A et le client.
+        Leurs dates ne sont pas déduites du seul trajet physique.
+      inputs:
+      - Faits d’exécution reconnus, quantités concernées, [accords](glossary:TER048), dates et justificatifs.
+      outcome: Le mouvement physique et chaque changement de propriétaire reconnu sont tracés avec leur date, leurs parties
+        et leurs preuves.
+      contributions:
+      - node_id: D01.g
+        role: Tenir les mouvements physiques reconnus, leurs origines et leurs corrections, sans créer un passage fictif chez
+          A.
+      - node_id: D01.h
+        role: Déterminer si les conditions et preuves permettent de reconnaître un changement de propriétaire, pour quelles
+          quantités et à quelle date.
+      - node_id: inventory-ownership-ledger
+        role: Enregistrer chaque changement de propriétaire reconnu, distinctement du mouvement physique.
+    - id: order-follow-up
+      title: Rapprocher le réalisé des engagements commerciaux
+      description: A rapproche la livraison du besoin du client et de son achat auprès de B. B met à jour la vente à A. Un
+        écart éventuel reste visible dans chaque engagement concerné ; il n’est pas effacé par une clôture commune.
+      inputs:
+      - Résultats de livraison et faits reconnus reliés aux commandes, avec leurs réserves.
+      outcome: Chaque commande indique ce qui a été satisfait et ce qui reste à traiter, selon ses propres conditions.
+      contributions:
+      - node_id: D04.i
+        role: Actualiser les ventes de A au client et de B à A à partir du réalisé et des ajustements autorisés.
+      - node_id: D04.j
+        role: Actualiser l’achat de A auprès de B et conserver les reliquats ou contestations à traiter.
+    - id: accounting-facts
+      title: Fournir les faits utiles à la comptabilité
+      description: Les [faits de gestion](glossary:TER120) reconnus sont transmis avec leurs références et justificatifs.
+        [Finance](glossary:TER117) applique les règles comptables pertinentes. Une information manquante conduit à une attente
+        ou à un rejet explicite, sans inventer un montant.
+      inputs:
+      - Faits reconnus, parties, dates, justificatifs et données attendues selon le contrat avec Finance.
+      outcome: Les faits acceptés peuvent être traduits en [écritures](glossary:TER121) prêtes à enregistrer ; la transmission
+        seule ne prouve pas leur comptabilisation.
+      contributions:
+      - node_id: accounting-data-provision
+        role: Préparer et transmettre les faits nécessaires, avec leurs corrections ; suivre leur acceptation ou leur rejet.
+      - node_id: accounting-interpretation
+        role: Contrôler les faits reçus et appliquer les règles de Finance pour préparer les écritures ; leur enregistrement
+          reste distinct.
+    dependencies:
+    - from: commercial-commitments
+      to: promise-and-assignment
+      condition: Parties, besoin et commandes reliées identifiés ; les engagements sont encore à confirmer.
+    - from: promise-and-assignment
+      to: direct-delivery
+      condition: Engagements confirmés, ressources affectées et prestations libérables.
+    - from: commercial-commitments
+      to: physical-and-ownership-facts
+      condition: Parties et conditions contractuelles nécessaires à la reconnaissance de propriété connues.
+    - from: direct-delivery
+      to: physical-and-ownership-facts
+      condition: À mesure que des faits d’exécution et des preuves sont reçus ; la fin de toute la livraison n’est pas un
+        prérequis universel.
+    - from: physical-and-ownership-facts
+      to: order-follow-up
+      condition: Les faits nécessaires pour apprécier la satisfaction de chaque engagement sont reconnus.
+    - from: physical-and-ownership-facts
+      to: accounting-facts
+      condition: Un fait pertinent pour Finance est reconnu et documenté ; la clôture des commandes n’est pas requise.
+    sequence_note: Ce parcours explique les contributions au cas illustré. Le suivi des commandes et la fourniture des faits
+      à Finance peuvent avancer en parallèle. Les registres sont alimentés au fil des événements ; les changements de propriétaire
+      suivent leurs conditions propres. Cet ordre de lecture n’impose ni organisation, ni logiciel, ni séquence universelle.
+    source_refs:
+    - U830
+    - U831
+    - ELM437
+    - ELM454
+    review:
+      state: proposed
+      note: Parcours détaillé rédigé après U831 pour mettre en œuvre le récit retenu ; aucune validation individuelle des
+        étapes, contributions ou dépendances déduite.
   legacy_links:
   - owner_id: supply-chain-orchestration
     legacy_id: b2b-partial-stock

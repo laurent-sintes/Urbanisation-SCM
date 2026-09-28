@@ -29293,6 +29293,52 @@ SAP S/4HANA Materials Management · Fonction ou processus documenté · Recouvre
 
 Références : ELM851, U826.
 
+## Sources d’inspiration — Intercompany
+
+### Microsoft — Intercompany order
+
+Dynamics 365 SCM · Concept et usage documentés · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Intercompany conserve le terme des deux éditeurs pour une relation entre sociétés distinctes d’un même groupe ; il ne nomme pas une capacité autonome dans FLOW.
+
+**Pourquoi cette définition.** Distinguer les engagements de chaque société, le trajet physique et les changements de propriétaire. Les fonctions du produit ne prescrivent pas la décomposition FLOW.
+
+**Points communs.** Une vente à un client externe peut être reliée à un achat de la société vendeuse et à une vente de la société du groupe qui fournit les produits.
+
+**Différences.** Microsoft décrit des créations automatiques de commandes à deux ou trois branches. FLOW décrit les engagements et leurs liens sans imposer une automatisation ou un outil.
+
+**Position FLOW.** Intercompany qualifie la relation entre sociétés. Le scénario assemble des capacités réutilisables ; Intercompany Sales reste une variante d’exécution de Sales Order.
+
+[Intercompany orders and return orders](https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/intercompany-orders-and-return-orders) — Dynamics 365 Supply Chain Management ; page évolutive mise à jour le 2026-05-29, consulté le 2026-09-28.
+
+**Passage.** About intercompany orders ; Intercompany order example
+
+**Limite de preuve.** Passages primaires relus pendant la discussion U830, réutilisés sous U831 ; aucune taxonomie universelle, règle fiscale ou réalisation installée déduite.
+
+Références : U830, U831, ELM437.
+
+### SAP — Advanced intercompany sales
+
+S/4HANA Sales · Concept et usage documentés · Recouvrement partiel · statut : proposed
+
+**Pourquoi ce terme.** Intercompany conserve le terme des deux éditeurs pour une relation entre sociétés distinctes d’un même groupe ; il ne nomme pas une capacité autonome dans FLOW.
+
+**Pourquoi cette définition.** Distinguer les engagements de chaque société, le trajet physique et les changements de propriétaire. Les fonctions du produit ne prescrivent pas la décomposition FLOW.
+
+**Points communs.** La société vendeuse peut acheter à une autre société qui livre directement le client ; les changements de contrôle ou de propriété sont suivis séparément des mouvements physiques.
+
+**Différences.** SAP distingue les processus classique et avancé, ainsi que vente et transfert de stock. FLOW retient un exemple de vente avec livraison directe, sans généraliser ses documents ou ses mécanismes à tous les montages.
+
+**Position FLOW.** Intercompany qualifie la relation entre sociétés. Le scénario assemble des capacités réutilisables ; Intercompany Sales reste une variante d’exécution de Sales Order.
+
+[Executing the Advanced Intercompany Sales and Stock Transfer Process](https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/executing-the-advanced-intercompany-sales-and-stock-transfer-process_c5f8e409-c8e3-4e0a-b736-6d1d93d0f2bc) — SAP S/4HANA on-premise / Cloud Private Edition ; cours décrivant les processus avancés introduits en 2022, édition du cours non indiquée, consulté le 2026-09-28.
+
+**Passage.** Advanced Intercompany Sales Processing ; Advanced Intercompany Stock Transfer Processing
+
+**Limite de preuve.** Passages primaires relus pendant la discussion U830, réutilisés sous U831 ; aucune taxonomie universelle, règle fiscale ou réalisation installée déduite.
+
+Références : U830, U831, ELM454.
+
 ## Informations métier
 
 Vue transversale des informations utiles aux capacités ; aucune structure de données implémentable prescrite.
@@ -30002,6 +30048,7 @@ Produits conformes mis à disposition selon un engagement explicite.
 - Scinder, regrouper ou fusionner sans perdre les engagements (`order-structuring-engaged`) — 1 parcours.
 - Libérer une préparation B2B à l’approche de sa limite d’attente (`b2b-release-deadline`) — 1 parcours.
 - Réapprovisionner un magasin ou servir une commande identifiée (`transfer-replenishment-order-driven`) — 1 parcours.
+- Livrer un client avec le stock d’une autre société du groupe (`intercompany-direct-delivery`) — 1 parcours.
 
 ### Disposer du stock nécessaire
 

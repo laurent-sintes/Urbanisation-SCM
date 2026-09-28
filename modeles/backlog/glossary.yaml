@@ -15659,5 +15659,91 @@ terms:
     term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
     definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
       et enregistrement comptable.
+- id: TER122
+  name: Intercompany
+  short_description: Relation entre sociétés juridiquement distinctes d’un même groupe ; ici, une vente entre sociétés liée
+    à une livraison au client.
+  definition: Relation entre sociétés juridiquement distinctes d’un même groupe, appliquée ici à une vente et à l’achat correspondant.
+    Elle qualifie les parties à l’opération, indépendamment du trajet physique des produits.
+  context: 'Exemple fictif : A vend 100 vestes à un client, achète ces vestes à B et B livre directement le client. Les [commandes
+    de vente](glossary:TER069) et la [commande d’achat](glossary:TER070) restent distinctes et reliées. Une livraison directe
+    n’impose pas, à elle seule, la date de changement de propriétaire.'
+  notes: Dans FLOW, [Intercompany Sales](model:BHV069) est une variante d’exécution de [Sales Order](model:D04.i). Le scénario
+    explique la coopération des capacités ; il ne crée pas une capacité Intercompany autonome. Les règles de facturation et
+    de comptabilité restent dans leurs périmètres respectifs. L’exemple ne décrit aucune pratique installée du groupe.
+  source_refs:
+  - U830
+  - U831
+  - ELM437
+  - ELM454
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u831
+  review:
+    state: proposed
+    note: Explication alignée sur la distinction retenue sous U831 ; rédaction du glossaire proposée ensuite, sans accord
+      mot à mot.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 SCM
+    source_title: Intercompany orders and return orders
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/intercompany-orders-and-return-orders
+    source_version: Dynamics 365 Supply Chain Management ; page évolutive mise à jour le 2026-05-29
+    source_locator: About intercompany orders ; Intercompany order example
+    consulted_on: '2026-09-28'
+    evidence_limits: Passages primaires relus pendant la discussion U830, réutilisés sous U831 ; aucune taxonomie universelle,
+      règle fiscale ou réalisation installée déduite.
+    element_name: Intercompany order
+    element_type: Concept et usage documentés
+    relationship: Recouvrement partiel
+    similarities: Une vente à un client externe peut être reliée à un achat de la société vendeuse et à une vente de la société
+      du groupe qui fournit les produits.
+    differences: Microsoft décrit des créations automatiques de commandes à deux ou trois branches. FLOW décrit les engagements
+      et leurs liens sans imposer une automatisation ou un outil.
+    flow_position: Intercompany qualifie la relation entre sociétés. Le scénario assemble des capacités réutilisables ; Intercompany
+      Sales reste une variante d’exécution de Sales Order.
+    status: proposed
+    source_refs:
+    - U830
+    - U831
+    - ELM437
+    concept_name: Intercompany order
+    scope_summary: Vente et achat entre sociétés d’un groupe.
+    approach_summary: Relier les commandes de chaque société.
+    definition_choice: Distinguer les engagements de chaque société, le trajet physique et les changements de propriétaire.
+      Les fonctions du produit ne prescrivent pas la décomposition FLOW.
+    term_choice: Intercompany conserve le terme des deux éditeurs pour une relation entre sociétés distinctes d’un même groupe
+      ; il ne nomme pas une capacité autonome dans FLOW.
+  - vendor: SAP
+    product: S/4HANA Sales
+    source_title: Executing the Advanced Intercompany Sales and Stock Transfer Process
+    source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/executing-the-advanced-intercompany-sales-and-stock-transfer-process_c5f8e409-c8e3-4e0a-b736-6d1d93d0f2bc
+    source_version: SAP S/4HANA on-premise / Cloud Private Edition ; cours décrivant les processus avancés introduits en 2022,
+      édition du cours non indiquée
+    source_locator: Advanced Intercompany Sales Processing ; Advanced Intercompany Stock Transfer Processing
+    consulted_on: '2026-09-28'
+    evidence_limits: Passages primaires relus pendant la discussion U830, réutilisés sous U831 ; aucune taxonomie universelle,
+      règle fiscale ou réalisation installée déduite.
+    element_name: Advanced intercompany sales
+    element_type: Concept et usage documentés
+    relationship: Recouvrement partiel
+    similarities: La société vendeuse peut acheter à une autre société qui livre directement le client ; les changements de
+      contrôle ou de propriété sont suivis séparément des mouvements physiques.
+    differences: SAP distingue les processus classique et avancé, ainsi que vente et transfert de stock. FLOW retient un exemple
+      de vente avec livraison directe, sans généraliser ses documents ou ses mécanismes à tous les montages.
+    flow_position: Intercompany qualifie la relation entre sociétés. Le scénario assemble des capacités réutilisables ; Intercompany
+      Sales reste une variante d’exécution de Sales Order.
+    status: proposed
+    source_refs:
+    - U830
+    - U831
+    - ELM454
+    concept_name: Advanced intercompany sales
+    scope_summary: Vente impliquant sociétés vendeuse et livreuse.
+    approach_summary: Relier achat et vente internes dans le parcours avancé.
+    definition_choice: Distinguer les engagements de chaque société, le trajet physique et les changements de propriétaire.
+      Les fonctions du produit ne prescrivent pas la décomposition FLOW.
+    term_choice: Intercompany conserve le terme des deux éditeurs pour une relation entre sociétés distinctes d’un même groupe
+      ; il ne nomme pas une capacité autonome dans FLOW.
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées.

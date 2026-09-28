@@ -1,0 +1,105 @@
+source_refs:
+- U830
+- U831
+- ELM437
+- ELM454
+decision_scope:
+  accepted:
+  - Conserver BHV069 Intercompany Sales comme comportement de D04.i Sales Order, au sens de variante d’exécution.
+  - 'Illustrer la coopération des capacités par le récit fictif présenté sous U830 : A vend 100 vestes, B détient le stock
+    et livre directement le client.'
+  - Distinguer engagements commerciaux, mouvement physique, propriété et contributions comptables ; aucune capacité Intercompany
+    autonome.
+  proposed_after_agreement:
+  - Détail des étapes et dépendances du parcours.
+  - Classement, conditions, points de contrôle et rédaction de TER122.
+  capture: 'record_field_agreement de scripts/scenario_catalog.py : titre, situation et nature illustrative uniquement ; empreintes
+    dans le catalogue canonique.'
+alignment:
+  behavior: BHV069, son parent D04.i et ses champs sont inchangés ; le scénario référence ce comportement sans le convertir
+    en capacité.
+  business_glossary: TER122 explique Intercompany et renvoie aux commandes de vente et d’achat ; TER069 et TER070 restent
+    inchangés.
+  modeling_glossary: 'MOD015, MOD027 et MOD028 restent cohérents : aptitude durable, situation autonome et parcours de mobilisation
+    sont distincts ; aucune modification.'
+market_comparisons:
+- vendor: Microsoft
+  product: Dynamics 365 SCM
+  source_title: Intercompany orders and return orders
+  source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/intercompany-orders-and-return-orders
+  source_version: Dynamics 365 Supply Chain Management ; page évolutive mise à jour le 2026-05-29
+  source_locator: About intercompany orders ; Intercompany order example
+  consulted_on: '2026-09-28'
+  evidence_limits: Passages primaires relus pendant la discussion U830, réutilisés sous U831 ; aucune taxonomie universelle,
+    règle fiscale ou réalisation installée déduite.
+  element_name: Intercompany order
+  element_type: Concept et usage documentés
+  relationship: Recouvrement partiel
+  similarities: Une vente à un client externe peut être reliée à un achat de la société vendeuse et à une vente de la société
+    du groupe qui fournit les produits.
+  differences: Microsoft décrit des créations automatiques de commandes à deux ou trois branches. FLOW décrit les engagements
+    et leurs liens sans imposer une automatisation ou un outil.
+  flow_position: Intercompany qualifie la relation entre sociétés. Le scénario assemble des capacités réutilisables ; Intercompany
+    Sales reste une variante d’exécution de Sales Order.
+  status: proposed
+  source_refs:
+  - U830
+  - U831
+  - ELM437
+  concept_name: Intercompany order
+  scope_summary: Vente et achat entre sociétés d’un groupe.
+  approach_summary: Relier les commandes de chaque société.
+  definition_choice: Distinguer les engagements de chaque société, le trajet physique et les changements de propriétaire.
+    Les fonctions du produit ne prescrivent pas la décomposition FLOW.
+  term_choice: Intercompany conserve le terme des deux éditeurs pour une relation entre sociétés distinctes d’un même groupe
+    ; il ne nomme pas une capacité autonome dans FLOW.
+- vendor: SAP
+  product: S/4HANA Sales
+  source_title: Executing the Advanced Intercompany Sales and Stock Transfer Process
+  source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/executing-the-advanced-intercompany-sales-and-stock-transfer-process_c5f8e409-c8e3-4e0a-b736-6d1d93d0f2bc
+  source_version: SAP S/4HANA on-premise / Cloud Private Edition ; cours décrivant les processus avancés introduits en 2022,
+    édition du cours non indiquée
+  source_locator: Advanced Intercompany Sales Processing ; Advanced Intercompany Stock Transfer Processing
+  consulted_on: '2026-09-28'
+  evidence_limits: Passages primaires relus pendant la discussion U830, réutilisés sous U831 ; aucune taxonomie universelle,
+    règle fiscale ou réalisation installée déduite.
+  element_name: Advanced intercompany sales
+  element_type: Concept et usage documentés
+  relationship: Recouvrement partiel
+  similarities: La société vendeuse peut acheter à une autre société qui livre directement le client ; les changements de
+    contrôle ou de propriété sont suivis séparément des mouvements physiques.
+  differences: SAP distingue les processus classique et avancé, ainsi que vente et transfert de stock. FLOW retient un exemple
+    de vente avec livraison directe, sans généraliser ses documents ou ses mécanismes à tous les montages.
+  flow_position: Intercompany qualifie la relation entre sociétés. Le scénario assemble des capacités réutilisables ; Intercompany
+    Sales reste une variante d’exécution de Sales Order.
+  status: proposed
+  source_refs:
+  - U830
+  - U831
+  - ELM454
+  concept_name: Advanced intercompany sales
+  scope_summary: Vente impliquant sociétés vendeuse et livreuse.
+  approach_summary: Relier achat et vente internes dans le parcours avancé.
+  definition_choice: Distinguer les engagements de chaque société, le trajet physique et les changements de propriétaire.
+    Les fonctions du produit ne prescrivent pas la décomposition FLOW.
+  term_choice: Intercompany conserve le terme des deux éditeurs pour une relation entre sociétés distinctes d’un même groupe
+    ; il ne nomme pas une capacité autonome dans FLOW.
+publication_delivery:
+  state: applied
+  summary: Scénario intercompany autonome et parcours de six étapes intégrés au backlog ; comportement Intercompany Sales
+    conservé.
+  source_refs:
+  - U831
+  required_nodes:
+  - id: BHV069
+    kind: behavior
+    parent: D04.i
+    fields:
+      name: Intercompany Sales
+  required_catalog:
+  - collection: scenarios
+    id: intercompany-direct-delivery
+    content_sha256: 137055778440a2388dc98428a409c42e88fb6ad7dda45d485033687c326b9ed9
+  - collection: paths
+    id: intercompany-direct-delivery-path
+    content_sha256: 368767fe2b1363d82883d02c4ce2061dafc374ca7c626682f494e4ee6d0631d9
