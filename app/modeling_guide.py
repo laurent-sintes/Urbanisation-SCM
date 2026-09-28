@@ -102,6 +102,24 @@ def _validate_guide(guide, version):
                 _require(isinstance(term['editorial_notes'], list) and all(isinstance(value, str) for value in term['editorial_notes']))
         _require(all(isinstance(value, str) and bool(re.fullmatch(r'TER\d+', value)) for value in glossary['model_term_ids']))
         _require(len(set(glossary['model_term_ids'])) == len(glossary['model_term_ids']), 'Classement lexical dupliqué.')
+        aliases = glossary.get('aliases', {})
+        _require(isinstance(aliases, dict) and all(k in glossary['model_term_ids'] and v in ids for k, v in aliases.items()), 'Renvoi méthodologique invalide.')
+        groups = glossary.get('groups', [])
+        grouped = []
+        for group in groups:
+            _texts(group, 'id', 'label')
+            _require(isinstance(group.get('term_ids'), list), 'Groupe méthodologique invalide.')
+            grouped.extend(group['term_ids'])
+        for term in glossary['terms']:
+            if 'parent_term' in term:
+                _require(term['parent_term'] in ids and term['parent_term'] != term['id'], 'Type méthodologique non résolu.')
+            if 'guide_section' in term:
+                _require(term['guide_section'] in ('method', 'codes'), 'Destination méthodologique invalide.')
+            if 'values' in term:
+                _require(isinstance(term['values'], dict) and all(isinstance(k, str) and isinstance(v, str) and k.strip() and v.strip() for k, v in term['values'].items()), 'Valeurs méthodologiques invalides.')
+        if groups:
+            visible = {t['id'] for t in glossary['terms'] if t.get('status') != 'retired' and not t.get('parent_term') and not t.get('guide_section')} | (set(glossary['model_term_ids']) - set(aliases))
+            _require(len(set(grouped)) == len(grouped) and set(grouped) == visible, 'Groupes méthodologiques incomplets ou dupliqués.')
         def method_links(value):
             if isinstance(value, str):
                 for ident in re.findall(r'\]\(method:([^)#]+)(?:#[^)]*)?\)', value):

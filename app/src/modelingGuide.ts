@@ -46,7 +46,9 @@ export interface GuideChapter {
 export interface ModelingGuide {
   readonly chapters?: readonly GuideChapter[];
   readonly glossary?: {
-    readonly terms: readonly { id: string; name: string; status?: string; label_fr?: string; short_description?: string; definition: string; role?: string; notes?: readonly string[]; editorial_notes?: readonly string[]; examples?: readonly string[] }[];
+    readonly aliases?: Readonly<Record<string, string>>;
+    readonly groups?: readonly { id: string; label: string; term_ids: readonly string[] }[];
+    readonly terms: readonly { id: string; name: string; status?: string; parent_term?: string; guide_section?: string; values?: Readonly<Record<string,string>>; label_fr?: string; short_description?: string; definition: string; role?: string; notes?: readonly string[]; editorial_notes?: readonly string[]; examples?: readonly string[] }[];
     readonly model_term_ids: readonly string[];
   };
   readonly id: string;

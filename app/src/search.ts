@@ -51,11 +51,11 @@ export function searchPublication(model: PublishedModel, query: string, guide?: 
   const queryWords = words(query).filter(word => !stopWords.has(word));
   if (!needle || !queryWords.length) return [];
   const methodEntries: SearchResult[] = [
-    ...(guide?.glossary?.terms ?? []).filter(t => t.status !== 'retired').map(t => ({id:t.id,kind:'method' as const,name:t.label_fr || t.name,excerpt:[t.name,t.definition,t.short_description].filter(Boolean).join(' '),score:0})),
+    ...(guide?.glossary?.terms ?? []).filter(t => t.status !== 'retired' && !t.parent_term && !t.guide_section).map(t => ({id:t.id,kind:'method' as const,name:t.label_fr || t.name,excerpt:[t.name,t.definition,t.short_description,...Object.entries(t.values || {}).flat()].filter(Boolean).join(' '),score:0})),
     ...(guide?.chapters ?? []).map(c => ({id:c.id,kind:'guide' as const,name:c.title,excerpt:[c.intro,...c.sections.map(s=>[s.title,s.text,s.detail,s.example].filter(Boolean).join(' '))].join(' '),score:0})),
     ...(guide?.lessons ?? []).map(l => ({id:l.id,kind:'guide' as const,name:l.title,excerpt:[l.rule,l.explanation].join(' '),score:0})),
   ];
-  return [...index(model),...methodEntries].flatMap(entry => {
+  return [...index(model).filter(e => !guide?.glossary?.aliases?.[e.id]),...methodEntries].flatMap(entry => {
     const title = normalize(entry.name);
     const id = normalize(entry.id);
     const titleWords = words(entry.name), bodyWords = words(entry.excerpt);

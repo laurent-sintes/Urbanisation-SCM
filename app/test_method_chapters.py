@@ -8,6 +8,19 @@ from app.modeling_guide import _validate_guide, ModelingGuideError
 ROOT = Path(__file__).resolve().parents[1]
 
 class ChapterContractTests(unittest.TestCase):
+    def test_simplified_glossary_covers_each_visible_term_once(self):
+        guide = read(ROOT / 'modeles/backlog/atlas-methodology-glossary-U806.yaml')
+        _validate_guide(guide, guide['version'])
+        glossary = guide['glossary']
+        self.assertNotIn('MOD004', [t['id'] for t in glossary['terms']])
+        values = next(t for t in glossary['terms'] if t['id'] == 'MOD007')['values']
+        types = read(ROOT / 'modeles/backlog/capability-types-U449.yaml')['types']
+        self.assertEqual(values, {t['label_fr']: t['definition'] for t in types})
+        self.assertEqual(sum(len(g['term_ids']) for g in glossary['groups']), 21)
+        glossary['groups'][0]['term_ids'].append('MOD015')
+        with self.assertRaisesRegex(ModelingGuideError, 'incomplets ou dupliqués'):
+            _validate_guide(guide, guide['version'])
+
     def test_ux_guide_links_resolve_and_maintenance_notes_stay_separate(self):
         guide = read(ROOT / 'modeles/backlog/atlas-methodology-ux.yaml')
         _validate_guide(guide, guide['version'])

@@ -19813,3 +19813,25 @@ Regarde le glossaire du méta modèle : à mon avis, "application transactionnel
 **contexte et portée**
 
 Demande d’audit de pertinence, de clarté et de cohérence du glossaire méthodologique, notamment MOD004. Les recommandations sont proposées dans `audits/2026-09-28-glossaire-metamodele/rapport.md` ; elles ne constituent pas une adoption globale ni une modification des définitions. La release 2026-09-28.1 du lot antérieur est distincte de cet audit.
+
+## U806
+
+**id**
+
+U806
+
+**date**
+
+2026-09-28
+
+**titre**
+
+Appliquer l’audit du glossaire méthodologique
+
+**texte**
+
+Go
+
+**contexte et portée**
+
+Accord sur les recommandations complètes de l’audit U805 : retrait courant de MOD004, dédoublonnage des six couples, regroupement des types, simplification des notions techniques, déplacement des conventions vers la méthode et des codes vers l’aide, conservation des objets structurants et notions connexes. Préparer le guide et le front cohérents. Aucun reclassement de capacité ni nouvel accord sur les formulations métier n’est déduit ; les rédactions complémentaires restent éditoriales. La publication et le push restent des opérations distinctes.

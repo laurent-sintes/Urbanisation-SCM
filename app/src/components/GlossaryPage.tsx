@@ -15,15 +15,20 @@ export function GlossaryPage({ model, selected, mode, guideState, onSelect, onRe
   const [query, setQuery] = useState('');
   const detail = useRef<HTMLElement>(null);
   const glossary = guideState.status === 'ready' ? guideState.response.guide?.glossary : undefined;
+  if (mode === 'meta' && selected) {
+    selected = glossary?.aliases?.[selected] || selected;
+    selected = glossary?.terms.find(t => t.id === selected)?.parent_term || selected;
+  }
   const methodIds = new Set(glossary?.model_term_ids ?? []);
-  const modelTerms = model.glossary.filter(term => mode === 'meta' ? methodIds.has(term.id) : !methodIds.has(term.id));
+  const modelTerms = model.glossary.filter(term => mode === 'meta' ? methodIds.has(term.id) && !glossary?.aliases?.[term.id] : !methodIds.has(term.id));
   const terms = [
     ...modelTerms.map(term => ({ ...term, label_fr: '', role: '', examples: [] as readonly string[] })),
-    ...(mode === 'meta' ? (glossary?.terms ?? []).filter(term => term.status !== 'retired' || term.id === selected).map(term => ({ ...term, short_description: term.short_description ?? '', context: '', notes: '', historical: term.status === 'retired', market_comparisons: undefined, market_inspiration: undefined })) : []),
+    ...(mode === 'meta' ? (glossary?.terms ?? []).filter(term => (!term.parent_term && !term.guide_section && term.status !== 'retired') || term.id === selected).map(term => ({ ...term, short_description: term.short_description ?? '', context: '', notes: '', historical: term.status === 'retired', market_comparisons: undefined, market_inspiration: undefined })) : []),
   ].sort((a, b) => (a.label_fr || a.name).localeCompare(b.label_fr || b.name, 'fr'));
   const normalize = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr');
   const showReadingHelp = mode === 'meta' && Boolean(model.raw.display_index) && (!query || ['code', 'identifiant', 'identite', 'ordre', 'lecture', 'prefixe'].some(word => word.includes(normalize(query)) || normalize(query).includes(word)));
   const matches = terms.filter(term => normalize(`${term.label_fr} ${plainInlineText(term.name)} ${plainInlineText(term.definition)}`).includes(normalize(query)));
+  const relocated = glossary?.terms.find(t=>t.id===selected)?.guide_section;
   const term = selected ? terms.find(term => term.id === selected) : matches[0];
   useEffect(() => setQuery(''), [mode, model.version]);
   useEffect(() => {
@@ -37,13 +42,15 @@ export function GlossaryPage({ model, selected, mode, guideState, onSelect, onRe
     <section className="glossary-index" aria-label="Termes du glossaire">
       <label className="glossary-search"><Search size={17}/><input aria-label="Rechercher dans le glossaire" placeholder="Un terme, une définition…" value={query} onChange={event => setQuery(event.target.value)}/></label>
       <p role="status">{matches.length} termes{showReadingHelp ? ' · aide sur les codes disponible' : ''}</p>
-      <ul tabIndex={0} aria-label="Liste des termes">{matches.map(item => <li key={item.id}>
-        <a href={`#version=${model.version}&view=glossary&glossary=${mode}&term=${item.id}`} className={item.id === term?.id ? 'selected' : ''} aria-current={item.id === term?.id ? 'true' : undefined}
-          onClick={event => { if (event.button === 0 && !event.metaKey && !event.ctrlKey && !event.shiftKey && !event.altKey) { event.preventDefault(); onSelect(item.id); } }}>{plainInlineText(item.label_fr || item.name)}{mode === 'meta' && <small> — {item.id.startsWith('MOD') ? 'notion méthodologique' : 'vocabulaire du modèle'}</small>}</a>
-      </li>)}</ul>
+      {(mode === 'meta' && glossary?.groups ? glossary.groups.map(group=>({label:group.label,items:matches.filter(t=>group.term_ids.includes(t.id))})) : [{label:'',items:matches}]).filter(group=>group.items.length).map(group=><section key={group.label}>
+        {group.label && <h3>{group.label}</h3>}
+        <ul tabIndex={0} aria-label={group.label || 'Liste des termes'}>{group.items.map(item => <li key={item.id}>
+          <a href={`#version=${model.version}&view=glossary&glossary=${mode}&term=${item.id}`} className={item.id===term?.id?'selected':''} aria-current={item.id===term?.id?'true':undefined}
+            onClick={event=>{if(event.button===0&&!event.metaKey&&!event.ctrlKey&&!event.shiftKey&&!event.altKey){event.preventDefault();onSelect(item.id);}}}>{plainInlineText(item.label_fr || item.name)}</a>
+        </li>)}</ul></section>)}
       {showReadingHelp && !query && <details><summary>Comprendre les codes et identifiants</summary><ReadingHelp model={model}/></details>}
     </section>
-    {showReadingHelp && query ? <ReadingHelp model={model}/> : term ? <article className="glossary-term" id={`term-${term.id}`} ref={detail} tabIndex={0} aria-label={`Définition de ${term.label_fr || term.name}`}>
+    {relocated ? <section className="glossary-empty"><h2>Cette règle appartient à la méthode</h2><MethodLink term={selected}>Consulter cette règle</MethodLink></section> : showReadingHelp && query ? <ReadingHelp model={model}/> : term ? <article className="glossary-term" id={`term-${term.id}`} ref={detail} tabIndex={0} aria-label={`Définition de ${term.label_fr || term.name}`}>
       <h2>{plainInlineText(term.label_fr || term.name)}</h2>
       {term.historical && <p className="historical-notice">Notion historique : elle ne fait plus partie du métamodèle actif de cette publication.</p>}
       {mode === 'meta' && <p className="term-origin">{term.id.startsWith('MOD') ? 'Notion méthodologique' : 'Vocabulaire du modèle'} · {term.id}</p>}
@@ -52,6 +59,7 @@ export function GlossaryPage({ model, selected, mode, guideState, onSelect, onRe
       {publicText(term.context) && <section><h3>Contexte</h3><p><ModelText text={publicText(term.context)}/></p></section>}
       {mode === 'meta' && glossary?.terms.find(item => item.id === term.id)?.notes?.filter(note => !/scenario_catalog|fields\.|notion retirée du métamodèle actif/.test(note)).map((note, i) => <p key={i}><ModelText text={note}/></p>)}
       {mode === 'meta' && ['MOD026', 'MOD027', 'MOD028'].includes(term.id) && <nav aria-label="Notions associées">{glossary?.terms.find(t=>t.id==='MOD026')?.status !== 'retired' && <><MethodLink term="MOD026">Cas d’usage</MethodLink> · </>}<MethodLink term="MOD027">Scénario</MethodLink> · <MethodLink term="MOD028">Parcours de mobilisation</MethodLink></nav>}
+      {mode === 'meta' && glossary?.terms.find(t=>t.id===term.id)?.values && <section><h3>Valeurs</h3><dl>{Object.entries(glossary.terms.find(t=>t.id===term.id)!.values!).map(([label,definition])=><div key={label}><dt>{label}</dt><dd><ModelText text={definition}/></dd></div>)}</dl></section>}
       {term.examples && term.examples.length > 0 && <section><h3>Exemples</h3><ul>{term.examples.map(example => <li key={example}><ModelText text={example}/></li>)}</ul></section>}
       {(mode === 'model' || term.market_comparisons?.length) && <MarketComparisons id={`term-${term.id}-market_comparisons`} entries={term.market_comparisons} inspiration={term.market_inspiration} modelName={term.name}/>}
     </article> : <section className="glossary-empty"><h2>{selected ? 'Terme absent de ce glossaire' : 'Aucun résultat'}</h2><p>{matches.length ? 'Choisis un terme dans la liste.' : 'Essaie un autre terme ou efface la recherche.'}</p></section>}

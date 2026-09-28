@@ -44,6 +44,9 @@ export function ContextReturn() {
 export function ReferenceLink({ kind = 'model', target, anchor, children, className, showBehaviors = false, fullDefinition = false }: { kind?: Kind; target: string; anchor?: string; children: ReactNode; className?: string; showBehaviors?: boolean; fullDefinition?: boolean }) {
   const context = useContext(Context);
   const model = context?.model;
+  const alias = kind !== 'model' ? context?.metaGlossary?.aliases?.[target] : undefined;
+  if (alias) { target = alias; kind = 'method'; }
+
   const method = kind === 'method' ? context?.metaGlossary?.terms.find(term => term.id === target) : undefined;
   const item = kind === 'method' ? method : kind === 'model' ? model?.nodeById.get(target) : model?.glossaryById.get(target);
   const id = useId();
@@ -93,7 +96,7 @@ export function ReferenceLink({ kind = 'model', target, anchor, children, classN
   const behaviors = showBehaviors && node?.kind === 'capability' ? childrenOf(model, node.id).filter(child => child.kind === 'behavior') : [];
   const description = plainInlineText(publicText(method?.short_description || method?.definition || ((showBehaviors || fullDefinition) && node ? node.definition : term?.short_description || term?.definition || String(node?.fields.short_description || node?.purpose || node?.definition || 'Description non renseignée.'))));
   const href = routeHash({ ...context.route, version: model.version, node: kind === 'method' ? context.route.node : kind === 'model' ? target : '',
-    view: kind === 'model' ? 'sheet' : 'glossary', glossary: kind === 'method' || context.metaGlossary?.model_term_ids.includes(target) ? 'meta' : 'model', term: kind !== 'model' ? target : '', section: anchor || '',
+    view: method?.guide_section ? 'principles' : kind === 'model' ? 'sheet' : 'glossary', principle: method?.guide_section || '', glossary: kind === 'method' || context.metaGlossary?.model_term_ids.includes(target) ? 'meta' : 'model', term: method?.guide_section ? '' : kind !== 'model' ? method?.parent_term || target : '', section: anchor || '',
     returnTo: readingOrigin(context.route,model.version), scroll:'', scope: '', relation: '', source: '', anchor: '', sourceId: '', query: '', status: '' });
   return <><a ref={link} className={`model-reference ${className || ''}`} href={href} aria-describedby={open ? id : undefined}
     onMouseEnter={show} onMouseLeave={hide} onFocus={show} onBlur={hide} onClick={event => {

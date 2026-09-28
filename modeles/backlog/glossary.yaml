@@ -35,8 +35,11 @@ source_refs:
 terms:
 - id: TER001
   name: Capacité métier
-  short_description: Ce que sait faire l’entreprise indépendamment de son organisation et de ses outils.
-  definition: Ce que sait faire l’entreprise indépendamment de son organisation et de ses outils.
+  short_description: Savoir-faire durable produisant un résultat métier, indépendant de l’organisation et des outils.
+  definition: |-
+    Une capacité est une aptitude durable de l’entreprise à produire un résultat métier identifiable, indépendamment de son organisation et de ses outils. Elle exprime ce que l’entreprise sait faire pour agir, décider, tenir des engagements ou des actifs métier, et produire ou exploiter une connaissance.
+
+    Son périmètre permet d’identifier sa contribution propre dans des scénarios métier : les informations et conditions qu’elle mobilise, le résultat qu’elle produit et ses limites de responsabilité. Ses comportements précisent les manières significatives dont elle s’exerce.
   context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
   notes: |-
     Définition réaffirmée par Laurent, U33. Précision de lecture proposée : une opération ou une étape ne constitue pas automatiquement une capacité ; examiner l’aptitude exprimée et sa maille.
@@ -48,6 +51,7 @@ terms:
   - CMP192
   - U624
   - U626
+  - U806
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -2698,7 +2702,7 @@ terms:
       - CMP192
 - id: TER026
   name: Réalisation d’une capacité
-  short_description: 'Moyens concrets mobilisés pour exercer une capacité : acteurs, pratiques, outils et échanges.'
+  short_description: Acteurs, pratiques, outils et échanges qui permettent d’exercer une capacité.
   definition: 'Moyens concrets mobilisés pour exercer une capacité : acteurs, pratiques, outils et échanges.'
   context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
   notes: |-
@@ -2711,6 +2715,7 @@ terms:
   - CMP192
   - U624
   - U626
+  - U806
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -2788,7 +2793,7 @@ terms:
       - CMP192
 - id: TER027
   name: Fonction
-  short_description: 'Mot à qualifier avant emploi : il ne désigne pas un niveau unique adopté dans notre modèle.'
+  short_description: 'Terme à préciser : il ne correspond pas à un niveau unique de ce modèle.'
   definition: 'Mot à qualifier avant emploi : il ne désigne pas un niveau unique adopté dans notre modèle.'
   context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
   notes: |-
@@ -2802,6 +2807,7 @@ terms:
   - U482
   - U624
   - U626
+  - U806
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -2880,9 +2886,8 @@ terms:
       - CMP192
 - id: TER028
   name: Fonctionnalité de produit
-  short_description: Comportement ou ensemble de comportements offert par un produit dans une édition et une configuration
-    données.
-  definition: Comportement ou ensemble de comportements offert par un produit dans une édition et une configuration données.
+  short_description: Possibilité offerte par un logiciel dans une version et une configuration données.
+  definition: Possibilité offerte par un logiciel dans une version et une configuration données.
   context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
   notes: |-
     Peut contribuer à une ou plusieurs capacités, ou à une partie de capacité. Exemple : BOP comme fonctionnalité SAP ; aucune équivalence automatique avec une boîte métier. N5/N6.
@@ -2894,6 +2899,7 @@ terms:
   - CMP192
   - U624
   - U626
+  - U806
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -2972,7 +2978,7 @@ terms:
       - CMP192
 - id: TER029
   name: Regroupement de capacités
-  short_description: Ensemble de capacités rapprochées selon un critère métier explicite pour faciliter la lecture de la carte.
+  short_description: Rapprochement de capacités selon un critère métier pour faciliter la lecture.
   definition: Ensemble de capacités rapprochées selon un critère métier explicite pour faciliter la lecture de la carte.
   context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
   notes: |-
@@ -2986,6 +2992,7 @@ terms:
   - U482
   - U624
   - U626
+  - U806
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -3065,8 +3072,9 @@ terms:
       - CMP192
 - id: TER030
   name: Domaine
-  short_description: Espace cohérent de problèmes métier liés entre eux, que l’on gagne à comprendre et à traiter ensemble.
-  definition: Espace cohérent de problèmes métier liés entre eux, que l’on gagne à comprendre et à traiter ensemble.
+  short_description: Grand périmètre de responsabilités métier au sein d’un système métier.
+  definition: Grand périmètre cohérent de responsabilités métier au sein d’un Business System. Il peut être détaillé en Subdomains
+    puis en capacités et comportements selon la profondeur utile à FLOW.
   context: Dans la hiérarchie FLOW courante, Domain désigne le grand périmètre, comme Supply Chain Orchestration ; Subdomain
     regroupe des responsabilités cohérentes en son sein. Purpose est un ancien libellé, conservé seulement dans les publications
     historiques. Les règles de construction font autorité dans le glossaire méthodologique.
@@ -3085,6 +3093,7 @@ terms:
   - U650
   - U771
   - CMP306
+  - U806
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''

@@ -54,3 +54,9 @@ Les tentatives d’accès au PDF public BIZBOK 9 partie 1 et à la page historiq
 ## Ordre de mise en œuvre proposé
 
 Retirer MOD004 et traiter ses renvois ; dédoublonner les six couples ; réunir les types et corriger les formulations trop techniques ; ranger les conventions dans la méthode ; préparer un nouveau guide et vérifier recherche, liens et infobulles dans la même publication. Les définitions métier et classifications des capacités ne sont pas approuvées automatiquement par cet audit.
+
+## Application — U806
+
+Le Go U806 autorise ce lot. Glossaire méthodologique, définitions correspondantes du glossaire métier et typologie sont alignés. MOD004 est retiré du nouveau guide ; son enregistrement source est historique. La formulation de mise en effet de Supply Protection Policy est simplifiée, sans modifier les textes des preuves marché. Les dix types utilisent la grille de `capability-types-U449.yaml` ; aucune nature de capacité n’est modifiée.
+
+Le guide préparé `modeles/backlog/atlas-methodology-glossary-U806.yaml` porte 21 entrées visibles en trois groupes, les renvois des doublons et les destinations de méthode. Le front applique ces métadonnées aux liens, infobulles, listes et résultats de recherche. Les publications figées restent intactes. Cette préparation n’est pas une activation : aucune release, aucun commit ni push n’a été déclenché par le Go d’application.

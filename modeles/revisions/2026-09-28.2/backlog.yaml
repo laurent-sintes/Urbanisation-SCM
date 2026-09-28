@@ -1,6 +1,6 @@
 schema_version: 1.0.0
 model_id: flow-urbanism
-version: 2026-09-28.1
+version: 2026-09-28.2
 as_of: '2026-09-28'
 source_version: P81 0.9 + P82/U116 + libellés P84/P86 retenus en U118 + séparation D01 U125 (vocabulaire U126 ouvert) + nom
   D01.g adopté U129 + U141 univers Supply/Case et refonte D04 + U145 retrait D02 sans renumérotation + U154 D03 recomposé
@@ -2804,7 +2804,7 @@ nodes:
   last_modified: '2026-09-27T20:08:24.401951Z'
   content_sha256: 5da6f1b836f306a9f93e7b34aeab6894b167eac4498a06f7b2151b0d4579caef
 - id: D02.b
-  revision: 16
+  revision: 17
   kind: capability
   fields:
     name: Supply Protection Policy
@@ -3025,7 +3025,7 @@ nodes:
       flow_approach: |-
         Les quatre mécanismes décrits se combinent : préserver l’accès des groupes, plafonner leur consommation, définir le rôle d’un stock tampon et réguler le réassort. Les décisions spécialisées D03 déterminent les valeurs ; Supply Protection Policy en gouverne la validité et les applique transactionnellement ; les consommateurs respectent les règles actives.
 
-        Les opérations de création d’enveloppes, réallocation entre groupes, libération des droits inutilisés, imputation ou correction de consommation et consultation des quantités allouées, consommées et restantes restent des fonctions utiles. Les règles ont une validité, une portée et des conditions de dérogation. Leur application transactionnelle est possible à l’unité, par groupe ou en masse, via écran, batch, flux ou streaming ; ces modalités ne créent pas de comportement supplémentaire.
+        Les opérations de création d’enveloppes, réallocation entre groupes, libération des droits inutilisés, imputation ou correction de consommation et consultation des quantités allouées, consommées et restantes restent des fonctions utiles. Les règles ont une validité, une portée et des conditions de dérogation. La capacité tient à jour les protections autorisées. Le traitement d’une protection ou d’un ensemble de protections ne crée pas de comportement supplémentaire.
 
         Exemple fictif : protéger 200 pièces pour le web face à d’autres demandes, plafonner la consommation d’un groupe à 500, prévoir une sécurité de 40 et déclencher le réassort sous 60 vers 100. Ces paramètres ont des rôles distincts et ne s’additionnent pas automatiquement ; une même valeur peut contribuer à la sécurité et au seuil sans double décompte. Prévenir le surstock futur par les règles reste distinct de redistribuer un excès déjà présent.
 
@@ -3129,11 +3129,8 @@ nodes:
     line: 62
   review:
     state: proposed
-    note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8efcf038ed28c43f64b9bc6d,
-      ADOPT-REASSESS-8ca0dcc55b73bbc3625909fa. Note antérieure, qui ne qualifie pas cette révision : « Mise en cohérence sous
-      délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation globale de rédaction nouvelle.
-      »'
+    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
+      globale de rédaction nouvelle.
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-09-25T07:32:47.515317Z'
@@ -3146,8 +3143,8 @@ nodes:
     note: Accords de structure capturés séparément sur le lot final ; aucun accord global sur les descriptions.
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
     antérieurs conservés seulement sur valeurs inchangées. Historique : audits/2026-09-17-refonte-appliquee/model-before.yaml.'
-  last_modified: '2026-09-27T20:08:24.401951Z'
-  content_sha256: 5f8346476b405aea526e36373fcc671f992d03f1da3c134aff5f271993db44c8
+  last_modified: '2026-09-28T07:57:21.203496Z'
+  content_sha256: ba555337033b5ba86dce804c5e1a87022d04b03fff37221794a5439829692f47
 - id: D02.c
   revision: 13
   kind: capability
@@ -53093,8 +53090,11 @@ glossary:
   terms:
   - id: TER001
     name: Capacité métier
-    short_description: Ce que sait faire l’entreprise indépendamment de son organisation et de ses outils.
-    definition: Ce que sait faire l’entreprise indépendamment de son organisation et de ses outils.
+    short_description: Savoir-faire durable produisant un résultat métier, indépendant de l’organisation et des outils.
+    definition: |-
+      Une capacité est une aptitude durable de l’entreprise à produire un résultat métier identifiable, indépendamment de son organisation et de ses outils. Elle exprime ce que l’entreprise sait faire pour agir, décider, tenir des engagements ou des actifs métier, et produire ou exploiter une connaissance.
+
+      Son périmètre permet d’identifier sa contribution propre dans des scénarios métier : les informations et conditions qu’elle mobilise, le résultat qu’elle produit et ses limites de responsabilité. Ses comportements précisent les manières significatives dont elle s’exerce.
     context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
     notes: |-
       Définition réaffirmée par Laurent, U33. Précision de lecture proposée : une opération ou une étape ne constitue pas automatiquement une capacité ; examiner l’aptitude exprimée et sa maille.
@@ -53106,6 +53106,7 @@ glossary:
     - CMP192
     - U624
     - U626
+    - U806
     source_locator:
       path: connaissance/19-glossaire-metier.md
       anchor: ''
@@ -53181,9 +53182,9 @@ glossary:
         - U477
         - ELM333
         - CMP192
-    revision: 3
-    last_modified: '2026-09-23T06:45:38.745389Z'
-    content_sha256: 90e04fffeb4f66a05c854fefe87d2d0e9760f4b8f7f990c352063fa305571d96
+    revision: 4
+    last_modified: '2026-09-28T07:57:21.203496Z'
+    content_sha256: 96086c44d73e006df9be8007858a02cf64dd1fef6dc9d3d30b68e740c9c01c3e
   - id: TER002
     name: Objet métier
     short_description: Notion sur laquelle l’entreprise raisonne, tient des faits ou prend des décisions.
@@ -55838,7 +55839,7 @@ glossary:
     content_sha256: 38818f606b578a57bf401e0822d220cc8b071f4b49bf2025ee07b747e326286c
   - id: TER026
     name: Réalisation d’une capacité
-    short_description: 'Moyens concrets mobilisés pour exercer une capacité : acteurs, pratiques, outils et échanges.'
+    short_description: Acteurs, pratiques, outils et échanges qui permettent d’exercer une capacité.
     definition: 'Moyens concrets mobilisés pour exercer une capacité : acteurs, pratiques, outils et échanges.'
     context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
     notes: |-
@@ -55851,6 +55852,7 @@ glossary:
     - CMP192
     - U624
     - U626
+    - U806
     source_locator:
       path: connaissance/19-glossaire-metier.md
       anchor: ''
@@ -55926,12 +55928,12 @@ glossary:
         - U477
         - ELM333
         - CMP192
-    revision: 3
-    last_modified: '2026-09-23T06:45:38.745389Z'
-    content_sha256: d1ad681d89e866951ea5de0d8d8082a1773506a56a4316e05cb9f131dcc9b1f8
+    revision: 4
+    last_modified: '2026-09-28T07:57:21.203496Z'
+    content_sha256: 16fa585a0960bd019a508c7ad275c9590bae4cac670000a954159e84c522d676
   - id: TER027
     name: Fonction
-    short_description: 'Mot à qualifier avant emploi : il ne désigne pas un niveau unique adopté dans notre modèle.'
+    short_description: 'Terme à préciser : il ne correspond pas à un niveau unique de ce modèle.'
     definition: 'Mot à qualifier avant emploi : il ne désigne pas un niveau unique adopté dans notre modèle.'
     context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
     notes: |-
@@ -55945,6 +55947,7 @@ glossary:
     - U482
     - U624
     - U626
+    - U806
     source_locator:
       path: connaissance/19-glossaire-metier.md
       anchor: ''
@@ -56021,14 +56024,13 @@ glossary:
         - U477
         - ELM374
         - CMP192
-    revision: 3
-    last_modified: '2026-09-23T06:45:38.745389Z'
-    content_sha256: 9c7128272f701a17402813ac2b01ca9bee4e38bc068130e35562ad43d1fb5531
+    revision: 4
+    last_modified: '2026-09-28T07:57:21.203496Z'
+    content_sha256: a636668e67a026c94e45db2199887c2760073825833bf5b48c10d59292596545
   - id: TER028
     name: Fonctionnalité de produit
-    short_description: Comportement ou ensemble de comportements offert par un produit dans une édition et une configuration
-      données.
-    definition: Comportement ou ensemble de comportements offert par un produit dans une édition et une configuration données.
+    short_description: Possibilité offerte par un logiciel dans une version et une configuration données.
+    definition: Possibilité offerte par un logiciel dans une version et une configuration données.
     context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
     notes: |-
       Peut contribuer à une ou plusieurs capacités, ou à une partie de capacité. Exemple : BOP comme fonctionnalité SAP ; aucune équivalence automatique avec une boîte métier. N5/N6.
@@ -56040,6 +56042,7 @@ glossary:
     - CMP192
     - U624
     - U626
+    - U806
     source_locator:
       path: connaissance/19-glossaire-metier.md
       anchor: ''
@@ -56116,13 +56119,12 @@ glossary:
         - U477
         - ELM394
         - CMP192
-    revision: 3
-    last_modified: '2026-09-23T06:45:38.745389Z'
-    content_sha256: 3d1f441918146661caad3747b0261d3297feb1a2b1dcd33d8a62c77b1b53115c
+    revision: 4
+    last_modified: '2026-09-28T07:57:21.203496Z'
+    content_sha256: 6becb64f4d77872d2db9f8c997487534997d303f50edf7e390d31958b265b189
   - id: TER029
     name: Regroupement de capacités
-    short_description: Ensemble de capacités rapprochées selon un critère métier explicite pour faciliter la lecture de la
-      carte.
+    short_description: Rapprochement de capacités selon un critère métier pour faciliter la lecture.
     definition: Ensemble de capacités rapprochées selon un critère métier explicite pour faciliter la lecture de la carte.
     context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
     notes: |-
@@ -56136,6 +56138,7 @@ glossary:
     - U482
     - U624
     - U626
+    - U806
     source_locator:
       path: connaissance/19-glossaire-metier.md
       anchor: ''
@@ -56213,13 +56216,14 @@ glossary:
         - U477
         - ELM374
         - CMP192
-    revision: 3
-    last_modified: '2026-09-23T06:45:38.745389Z'
-    content_sha256: 4425dc984abdc71857b6ca5e9f016d84296fcf41fafb6a248dfc196ef2a3e115
+    revision: 4
+    last_modified: '2026-09-28T07:57:21.203496Z'
+    content_sha256: 036c1cce112062966252706093fd977095c25c5cde43383de0d7d8d3c4582e68
   - id: TER030
     name: Domaine
-    short_description: Espace cohérent de problèmes métier liés entre eux, que l’on gagne à comprendre et à traiter ensemble.
-    definition: Espace cohérent de problèmes métier liés entre eux, que l’on gagne à comprendre et à traiter ensemble.
+    short_description: Grand périmètre de responsabilités métier au sein d’un système métier.
+    definition: Grand périmètre cohérent de responsabilités métier au sein d’un Business System. Il peut être détaillé en
+      Subdomains puis en capacités et comportements selon la profondeur utile à FLOW.
     context: Dans la hiérarchie FLOW courante, Domain désigne le grand périmètre, comme Supply Chain Orchestration ; Subdomain
       regroupe des responsabilités cohérentes en son sein. Purpose est un ancien libellé, conservé seulement dans les publications
       historiques. Les règles de construction font autorité dans le glossaire méthodologique.
@@ -56238,6 +56242,7 @@ glossary:
     - U650
     - U771
     - CMP306
+    - U806
     source_locator:
       path: connaissance/19-glossaire-metier.md
       anchor: ''
@@ -56324,9 +56329,9 @@ glossary:
         - U477
         - ELM460
         - CMP192
-    revision: 5
-    last_modified: '2026-09-26T08:40:49.952598Z'
-    content_sha256: 1410cb0189ab6332c8669d8cb2eb9b40aa0eb61b01b376e8494b8aa28ae962aa
+    revision: 6
+    last_modified: '2026-09-28T07:57:21.203496Z'
+    content_sha256: 31183286ace7a7e600cf775d992bb55792b110279337e2e63768482dc67b0883
   - id: TER031
     name: Orchestration
     short_description: Coordination du déroulement d’activités et d’événements selon des dépendances et des règles de conduite
@@ -68593,10 +68598,10 @@ glossary:
     content_sha256: 3f36f3127611ffb72c440b5a8a2f3a0c5e0c978c25c92c0c78c6ab3419650cd9
   note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est
     figé avec chaque nouvelle publication. Les reformulations restent proposées.
-  revision: 24
-  last_modified: '2026-09-28T07:25:14.288096Z'
-  content_sha256: 737de3b15f397c0f05b4261d025589fcc124a0d5370f3db8c0b180d4120724ec
+  revision: 25
+  last_modified: '2026-09-28T07:57:21.203496Z'
+  content_sha256: 4b2ebfbd7b44efe79ea9793ca1896ab78874622915423266568f112ca1a8dd71
 element_versioning: 1
-revision: 39
-content_sha256: 4787ccd611f5af9d898d063941a02c7e221b4482948cfe403d5892bb09c5a63d
-last_modified: '2026-09-28T07:25:14.288096Z'
+revision: 40
+content_sha256: bb5325cddb478019c1271c6f93388a89981c2bc0e22ae30ce2c0a33a72e8d945
+last_modified: '2026-09-28T07:57:21.203496Z'

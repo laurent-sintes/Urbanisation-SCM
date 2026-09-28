@@ -25,3 +25,12 @@ test('method search uses only the supplied guide and excludes retired notions an
  assert.equal(searchPublication(model,'SECRETNOTE',guide).length,0);
  assert.deepEqual(inlineParts('[Capacité](method:MOD015)'),[{text:'Capacité',kind:'method',target:'MOD015',anchor:undefined}]);
 });
+
+
+test('method search suppresses aliases and moved entries but indexes the unified type definitions',()=>{
+ const model=adaptPublication({space:'release',version:'fixed',nodes:[],relations:[],glossary:{terms:[{id:'TER001',name:'Capacité',definition:'Aptitude'}]}});
+ const guide={glossary:{aliases:{TER001:'MOD015'},terms:[{id:'MOD015',name:'Capability',label_fr:'Capacité',definition:'Aptitude'},{id:'MOD007',name:'Type',definition:'Résultat dominant',values:{Décision:'Choisir une réponse'}},{id:'MOD001',name:'Decision',definition:'Choisir',parent_term:'MOD007'},{id:'MOD017',name:'Function',definition:'Fonction',guide_section:'method'}]},chapters:[],lessons:[]};
+ assert.deepEqual(searchPublication(model,'capacité',guide).map(t=>t.id),['MOD015']);
+ assert.deepEqual(searchPublication(model,'décision',guide).map(t=>t.id),['MOD007']);
+ assert.equal(searchPublication(model,'function',guide).length,0);
+});

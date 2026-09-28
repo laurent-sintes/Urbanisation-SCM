@@ -1,6 +1,6 @@
 id: flow-modeling-glossary
 kind: modeling_glossary
-as_of: '2026-09-27'
+as_of: '2026-09-28'
 source_refs:
 - U229
 - U230
@@ -52,6 +52,7 @@ source_refs:
 - U792
 - U793
 - U797
+- U806
 purpose: Vocabulaire de modélisation en support à la définition des objets du modèle ; distinct du glossaire métier.
 boundary:
   business_glossary: modeles/backlog/glossary.yaml
@@ -102,10 +103,6 @@ terms:
   label_fr: Décision
   definition: Déterminer une réponse métier à partir d’hypothèses, d’objectifs et de contraintes.
   role: Qualifier une responsabilité de décision dans le modèle.
-  notes:
-  - Les capacités de Planning se nourrissent des capacités de décision selon U229.
-  - Le calcul est un moyen possible ; U229 préfère Decision et souhaite éviter Calculation comme intitulé de capacité.
-  - Une décision modélisée ne prouve pas sa mise en application transactionnelle.
   source_refs:
   - U229
   - U232
@@ -114,13 +111,40 @@ terms:
     adopted_scope: Préférence pour Decision et distinction avec Planning ; aucun choix de capacité spécifique adopté.
     proposed_scope: Définition synthétique rédigée par Codex.
   short_description: Choisir une réponse métier selon les faits, objectifs et contraintes.
+  editorial_notes:
+  - Les capacités de Planning se nourrissent des capacités de décision selon U229.
+  - Le calcul est un moyen possible ; U229 préfère Decision et souhaite éviter Calculation comme intitulé de capacité.
+  - Une décision modélisée ne prouve pas sa mise en application transactionnelle.
+  notes:
+  - Une décision produit une réponse ; la capacité responsable rend cette réponse effective.
+  parent_term: MOD007
 - id: MOD002
   name: Planning
   label_fr: Planification
-  definition: Construire et actualiser des plans, simuler et analyser leurs conséquences, puis appliquer le plan retenu et
-    adapter sa mise en œuvre, en mobilisant les décisions spécialisées et les capacités partenaires.
+  definition: Construire et réviser un plan en mobilisant les décisions nécessaires.
   role: Qualifier les responsabilités de planification qui utilisent les décisions.
-  notes:
+  source_refs:
+  - U229
+  - U232
+  - U267
+  - U269
+  - U271
+  - U283
+  - U284
+  - U290
+  - U537
+  - U538
+  - CMP220
+  - U806
+  review:
+    state: partial
+    adopted_scope: 'Mobilisation des décisions U229 et trois directions de comportements Inventory Planning U283/U284, appliquées
+      U290. U537 : application du plan comme comportement du Planning. U538 : configuration apportée au Planning maintenue
+      à l’extérieur.'
+    proposed_scope: Définition synthétique, libellé Plan Application et détails des effets rédigés par Codex ; décomposition
+      de chaque Planning et reparentage éventuel à instruire.
+  short_description: Construire et réviser un plan en mobilisant les décisions nécessaires.
+  editorial_notes:
   - Planning mobilise les décisions spécialisées ; elles restent des capacités distinctes.
   - Inventory Planning comporte Scenario Construction, Simulation & Analysis et Scenario Execution Adaptation depuis U290.
     Comparaison, autorisation et mise en action restent des fonctions utiles.
@@ -142,32 +166,30 @@ terms:
   - U537 remplace l’exclusion antérieure d’un comportement d’application. Les trois comportements Inventory Planning de U290
     restent historiques et courants tant que leur décomposition précise n’est pas révisée. Aucun ajout automatique identique
     à tous les Plannings.
-  source_refs:
-  - U229
-  - U232
-  - U267
-  - U269
-  - U271
-  - U283
-  - U284
-  - U290
-  - U537
-  - U538
-  - CMP220
-  review:
-    state: partial
-    adopted_scope: 'Mobilisation des décisions U229 et trois directions de comportements Inventory Planning U283/U284, appliquées
-      U290. U537 : application du plan comme comportement du Planning. U538 : configuration apportée au Planning maintenue
-      à l’extérieur.'
-    proposed_scope: Définition synthétique, libellé Plan Application et détails des effets rédigés par Codex ; décomposition
-      de chaque Planning et reparentage éventuel à instruire.
-  short_description: Construire et réviser un plan en mobilisant les décisions nécessaires, puis en suivre l’application.
+  notes:
+  - Dans FLOW, la planification peut porter l’application du plan retenu en mobilisant les capacités responsables. Elle n’absorbe
+    pas leur responsabilité ni l’exécution physique.
+  parent_term: MOD007
 - id: MOD003
   name: Management
-  label_fr: Gestion / gouvernance
-  definition: Maintenir dans la durée un ensemble cohérent d’états, engagements ou obligations et gouverner ses évolutions.
+  label_fr: Gestion
+  definition: Tenir des états, des engagements ou des obligations dans la durée et gérer leurs évolutions.
   role: Qualifier une responsabilité de gestion, à préciser selon l’objet concerné.
-  notes:
+  source_refs:
+  - U230
+  - U231
+  - U232
+  - U538
+  - U586
+  - U806
+  review:
+    state: partial
+    adopted_scope: 'Qualification et application transactionnelle dans le cas Stock Protection. U538 : configuration apportée
+      au Planning maintenue à l’extérieur, exemple Stock Protection.'
+    proposed_scope: Généralisation à Management et formulation hors de ce cas. Définition générale clarifiée après U586 ;
+      les nœuds existants gardent leur nature.
+  short_description: Tenir des états, des engagements ou des obligations dans la durée et gérer leurs évolutions.
+  editorial_notes:
   - U230 qualifie Stock Protection de gouvernance/management ; U231 précise sa mise à jour transactionnelle.
   - Cette formulation générale est proposée à partir du cas Stock Protection ; elle n’impose pas la même définition à toute
     capacité nommée Management.
@@ -178,19 +200,10 @@ terms:
   - U586 ajoute Policy comme type dédié au cadre de règles applicable. La définition générale de Management est clarifiée
     ; le cas Stock Protection U230/U231 et ses accords restent historiques, sans reclassement automatique de Supply Protection.
     État antérieur conservé dans capability-types-U449.yaml#history_before_U586.
-  source_refs:
-  - U230
-  - U231
-  - U232
-  - U538
-  - U586
-  review:
-    state: partial
-    adopted_scope: 'Qualification et application transactionnelle dans le cas Stock Protection. U538 : configuration apportée
-      au Planning maintenue à l’extérieur, exemple Stock Protection.'
-    proposed_scope: Généralisation à Management et formulation hors de ce cas. Définition générale clarifiée après U586 ;
-      les nœuds existants gardent leur nature.
-  short_description: Tenir des états ou engagements dans la durée et gérer leurs évolutions.
+  notes:
+  - Gestion tient les états et engagements ; Politique définit le cadre de règles applicable. Le nom d’une capacité ne détermine
+    pas son type.
+  parent_term: MOD007
 - id: MOD004
   name: Application transactionnelle
   definition: Mettre à jour transactionnellement les données, unitairement, en groupe ou en masse, par plusieurs types d’interfaces
@@ -218,6 +231,9 @@ terms:
     adopted_scope: Mise à jour transactionnelle et modalités précisées en U231 pour Stock Protection.
     proposed_scope: Reformulation, généralisation et précisions de lecture.
   short_description: Appliquer des changements aux données, seuls ou regroupés, avec les contrôles nécessaires.
+  status: retired
+  retirement_source_refs:
+  - U806
 - id: MOD005
   name: Couverture — convention de description
   definition: Qualifier toute affirmation de couverture en indiquant ce qui est couvert, par quoi, dans quel périmètre et
@@ -237,51 +253,13 @@ terms:
     adopted_scope: Présence du terme couverture dans le glossaire méthodologique demandée par Laurent.
     proposed_scope: Définition, critères et exemples de qualification rédigés par Codex ; aucune adoption détaillée déduite.
   short_description: Préciser ce qui est couvert, par quoi et selon quel critère.
+  guide_section: method
 - id: MOD006
   name: Capability Behavior
   label_fr: Comportement
-  definition: 'Un comportement décrit une manière métier identifiable dont une capacité agit dans certaines circonstances
-    : politique ou stratégie, mécanisme, variante de prise en charge, périmètre significatif, dimension de raisonnement, effet
-    sur un engagement ou pratique de planification. Il précise ce qui change dans la réponse, l’action ou le résultat attendu,
-    sans détailler les fonctions du produit.'
+  definition: Manière identifiable dont une capacité agit dans une situation donnée. Elle précise ce qui change dans son action
+    ou dans le résultat attendu.
   role: Niveau complémentaire de détail sous une capacité ; dernier niveau de sa décomposition descriptive.
-  notes:
-  - U262 retient Comportement et l’arrêt de la décomposition à ce niveau.
-  - Un comportement précise une capacité ; il ne devient pas une capacité supplémentaire du catalogue.
-  - Plusieurs comportements peuvent se combiner ; ils ne sont pas nécessairement des variantes exclusives ni des étapes successives.
-  - L’arrêt concerne la décomposition des capacités. Objets, documents et événements restent des objets du modèle, sans devenir
-    des niveaux inférieurs de comportement.
-  - Le rapprochement avec Capability Behavior dans BIZBOK est documenté en CMP088. Le choix d’en faire le dernier niveau est
-    une convention FLOW.
-  - U263 impose des descriptions factuelles, sans niveaux promotionnels tels que Advanced ATP ; les appellations éditeur restent
-    dans les correspondances marché.
-  - 'U265 : une décomposition en comportements est justifiée par une complexité ou un bénéfice ciblé ; elle n’est pas systématique.
-    La justification est portée par fields.decomposition_rationale sur la capacité ; sa rédaction détaillée conserve sa propre
-    portée de validation.'
-  - 'U282 précise la maille recherchée sur Supply Protection : mécanismes métier de protection, plutôt que liste des opérations
-    sur Allocation. Les opérations fonctionnelles restent matière de conception produit ; elles ne constituent pas un nouveau
-    niveau inférieur dans le modèle. Les quatre mécanismes BHV017–020 ont été intégrés U290 ; la proposition antérieure reste
-    historique.'
-  - U283 retient Mécanisme, Politique, Variante ou bénéfice comme critères différenciants de décomposition. Pour Planning,
-    les effets sur les pratiques humaines et les processus distinguent les comportements des fonctions de produits. Ces critères
-    ne constituent pas quatre niveaux supplémentaires.
-  - 'U284 confirme la direction U283 et retient Simulation & analyse en un seul comportement : les impacts sont intégrés à
-    ce comportement, sans Scenario Impact Analysis autonome dans la cible.'
-  - U389 exige une liste concrète issue de l’existant. Les formes se recouvrent et ne sont ni des sous-niveaux ni une classification
-    obligatoire des nœuds.
-  - 'Le bénéfice ciblé reste un critère transversal de justification U265/U283 : il peut différencier une manière d’agir,
-    mais un bénéfice vague ne remplace pas la description de cette manière d’agir.'
-  - U389 a analysé les exemples de visibilité comme propositions distinctes du catalogue de l’époque. Depuis U406/U409, Operations
-    Tracking porte Warehouse Visibility, Transportation Visibility, Store Visibility et Process Tracking (BHV079–082). L’analyse
-    U389 reste une photographie historique ; leur présence actuelle ne vaut pas publication ni validation globale des détails.
-  - 'U398 : la mutualisation peut se lire dans les liens. Décrire le comportement mobilisé et sa différence métier selon le
-    contexte ; aucun comportement automatique par appelant et aucun sous-comportement. U399 : règles consignées pour le prochain
-    audit et/ou les prochaines améliorations, sans déclencher de nouvelle revue. Convention : modeles/backlog/business-interactions.yaml.'
-  - 'U501 : pour Order Backlog Optimization Request, Déclenchement et Activité regroupent visuellement des comportements au
-    même niveau terminal. L’angle de lecture est explicite ; il ne crée ni parent intermédiaire, ni séquence obligatoire,
-    ni requalification des comportements historiques. Cette décomposition est historique depuis U552 : les modes de sollicitation
-    sont des modalités de la gestion de demande, tandis que simulation et autorisation relèvent directement de Order Backlog
-    Planning ; aucun sous-comportement.'
   source_refs:
   - U262
   - U263
@@ -305,6 +283,7 @@ terms:
   - U501
   - U537
   - U538
+  - U806
   review:
     state: partial
     adopted_scope: 'Comportement comme niveau complémentaire sous la capacité ; arrêt de la décomposition à ce niveau. U263
@@ -400,35 +379,52 @@ terms:
     - ELM052
     - ELM234
     consulted_on: '2026-09-18'
-  short_description: Manière significative dont une capacité agit selon la situation.
+  short_description: Manière identifiable dont une capacité agit dans une situation donnée. Elle précise ce qui change dans
+    son action ou dans le résultat attendu.
+  editorial_notes:
+  - U262 retient Comportement et l’arrêt de la décomposition à ce niveau.
+  - Un comportement précise une capacité ; il ne devient pas une capacité supplémentaire du catalogue.
+  - Plusieurs comportements peuvent se combiner ; ils ne sont pas nécessairement des variantes exclusives ni des étapes successives.
+  - L’arrêt concerne la décomposition des capacités. Objets, documents et événements restent des objets du modèle, sans devenir
+    des niveaux inférieurs de comportement.
+  - Le rapprochement avec Capability Behavior dans BIZBOK est documenté en CMP088. Le choix d’en faire le dernier niveau est
+    une convention FLOW.
+  - U263 impose des descriptions factuelles, sans niveaux promotionnels tels que Advanced ATP ; les appellations éditeur restent
+    dans les correspondances marché.
+  - 'U265 : une décomposition en comportements est justifiée par une complexité ou un bénéfice ciblé ; elle n’est pas systématique.
+    La justification est portée par fields.decomposition_rationale sur la capacité ; sa rédaction détaillée conserve sa propre
+    portée de validation.'
+  - 'U282 précise la maille recherchée sur Supply Protection : mécanismes métier de protection, plutôt que liste des opérations
+    sur Allocation. Les opérations fonctionnelles restent matière de conception produit ; elles ne constituent pas un nouveau
+    niveau inférieur dans le modèle. Les quatre mécanismes BHV017–020 ont été intégrés U290 ; la proposition antérieure reste
+    historique.'
+  - U283 retient Mécanisme, Politique, Variante ou bénéfice comme critères différenciants de décomposition. Pour Planning,
+    les effets sur les pratiques humaines et les processus distinguent les comportements des fonctions de produits. Ces critères
+    ne constituent pas quatre niveaux supplémentaires.
+  - 'U284 confirme la direction U283 et retient Simulation & analyse en un seul comportement : les impacts sont intégrés à
+    ce comportement, sans Scenario Impact Analysis autonome dans la cible.'
+  - U389 exige une liste concrète issue de l’existant. Les formes se recouvrent et ne sont ni des sous-niveaux ni une classification
+    obligatoire des nœuds.
+  - 'Le bénéfice ciblé reste un critère transversal de justification U265/U283 : il peut différencier une manière d’agir,
+    mais un bénéfice vague ne remplace pas la description de cette manière d’agir.'
+  - U389 a analysé les exemples de visibilité comme propositions distinctes du catalogue de l’époque. Depuis U406/U409, Operations
+    Tracking porte Warehouse Visibility, Transportation Visibility, Store Visibility et Process Tracking (BHV079–082). L’analyse
+    U389 reste une photographie historique ; leur présence actuelle ne vaut pas publication ni validation globale des détails.
+  - 'U398 : la mutualisation peut se lire dans les liens. Décrire le comportement mobilisé et sa différence métier selon le
+    contexte ; aucun comportement automatique par appelant et aucun sous-comportement. U399 : règles consignées pour le prochain
+    audit et/ou les prochaines améliorations, sans déclencher de nouvelle revue. Convention : modeles/backlog/business-interactions.yaml.'
+  - 'U501 : pour Order Backlog Optimization Request, Déclenchement et Activité regroupent visuellement des comportements au
+    même niveau terminal. L’angle de lecture est explicite ; il ne crée ni parent intermédiaire, ni séquence obligatoire,
+    ni requalification des comportements historiques. Cette décomposition est historique depuis U552 : les modes de sollicitation
+    sont des modalités de la gestion de demande, tandis que simulation et autorisation relèvent directement de Order Backlog
+    Planning ; aucun sous-comportement.'
+  notes: []
 - id: MOD007
   name: Capability Nature
   label_fr: Type de capacité
   definition: Qualifier une capacité selon son résultat métier dominant, indépendamment de son nom, de ses comportements et
     de sa réalisation technique.
   role: Fournir une grille de lecture explicite et stable pour les icônes et la présentation des capacités.
-  notes:
-  - Les sept valeurs présentes dans FLOW sont action, management, policy, knowledge, orchestration, planning et decision.
-    Policy est ajouté par instruction U586.
-  - Decision, Planning et Management gardent leurs conventions MOD001–MOD003. Les types peuvent partager des opérations ;
-    la responsabilité dominante porte la classification.
-  - Les décisions sont présentées après les autres capacités ; cet ordre de lecture ne représente pas un enchaînement.
-  - La grille détaillée et les dix compléments proposés sont consignés dans capability-types-U449.yaml ; la nature propre
-    de chaque capacité reste portée par son fields.nature.
-  - OMG DMN éclaire la distinction décision/processus sans prescrire cette grille de types ni leurs icônes.
-  - 'U500/U501 : une capacité qui porte une demande peut préciser Frontoffice (sollicitation externe au Domain), Backoffice
-    (sollicitation interne) ou les deux. Ce qualificatif d’origine est distinct de sa nature, du déclencheur et de la provenance
-    de l’événement ; aucune valeur n’est inférée du nom ou du parent.'
-  - 'Policy : Définir, maintenir et rendre applicables les règles, politiques et configurations métier dont le Domain porte
-    la maîtrise, avec leur portée, leur validité et leurs conditions d’usage.'
-  - Le type policy qualifie une capacité ; une politique particulière est un contenu qu’elle gouverne. policy_strategy reste
-    une forme de comportement, indépendante du type de sa capacité parente.
-  - Un même Purpose réunit références et policies U618 ; le type Policy qualifie des capacités distinctes des projections
-    et des vues. Purpose, type de capacité et gouvernance des données sont des dimensions distinctes. Aucun comportement par
-    paramètre ni nouveau niveau hiérarchique.
-  - Un plan peut proposer une révision de politique et faire appliquer sa version autorisée, y compris automatiquement selon
-    une délégation ; une hypothèse de simulation ne modifie pas le cadre actif.
-  - 'U767 : Evaluation complète les types pour ATP/CTP/PTP, indépendamment de leur mise en œuvre humaine ou automatisée.'
   analysis_ref: modeles/backlog/capability-types-U449.yaml
   source_refs:
   - U449
@@ -450,6 +446,48 @@ terms:
     proposed_scope: Formulation méthodologique, grille détaillée et compléments individuels rédigés par Codex. Définition
       et frontières détaillées du type Policy.
   short_description: Résultat métier dominant qui caractérise une capacité.
+  editorial_notes:
+  - Les sept valeurs présentes dans FLOW sont action, management, policy, knowledge, orchestration, planning et decision.
+    Policy est ajouté par instruction U586.
+  - Decision, Planning et Management gardent leurs conventions MOD001–MOD003. Les types peuvent partager des opérations ;
+    la responsabilité dominante porte la classification.
+  - Les décisions sont présentées après les autres capacités ; cet ordre de lecture ne représente pas un enchaînement.
+  - La grille détaillée et les dix compléments proposés sont consignés dans capability-types-U449.yaml ; la nature propre
+    de chaque capacité reste portée par son fields.nature.
+  - OMG DMN éclaire la distinction décision/processus sans prescrire cette grille de types ni leurs icônes.
+  - 'U500/U501 : une capacité qui porte une demande peut préciser Frontoffice (sollicitation externe au Domain), Backoffice
+    (sollicitation interne) ou les deux. Ce qualificatif d’origine est distinct de sa nature, du déclencheur et de la provenance
+    de l’événement ; aucune valeur n’est inférée du nom ou du parent.'
+  - 'Policy : Définir, maintenir et rendre applicables les règles, politiques et configurations métier dont le Domain porte
+    la maîtrise, avec leur portée, leur validité et leurs conditions d’usage.'
+  - Le type policy qualifie une capacité ; une politique particulière est un contenu qu’elle gouverne. policy_strategy reste
+    une forme de comportement, indépendante du type de sa capacité parente.
+  - Un même Purpose réunit références et policies U618 ; le type Policy qualifie des capacités distinctes des projections
+    et des vues. Purpose, type de capacité et gouvernance des données sont des dimensions distinctes. Aucun comportement par
+    paramètre ni nouveau niveau hiérarchique.
+  - Un plan peut proposer une révision de politique et faire appliquer sa version autorisée, y compris automatiquement selon
+    une délégation ; une hypothèse de simulation ne modifie pas le cadre actif.
+  - 'U767 : Evaluation complète les types pour ATP/CTP/PTP, indépendamment de leur mise en œuvre humaine ou automatisée.'
+  notes:
+  - Le type décrit le résultat dominant de la capacité. Cette grille est une convention FLOW, pas une nouvelle hiérarchie.
+    Aucune capacité n’est reclassée par cette présentation.
+  values:
+    Action: Effectuer une opération métier ou matérialiser une évolution autorisée des données et engagements.
+    Gestion: Tenir des états, des engagements ou des obligations dans la durée et gérer leurs évolutions.
+    Politique: Définir, maintenir et rendre applicables les règles, politiques et configurations métier dont le Domain porte
+      la maîtrise, avec leur portée, leur validité et leurs conditions d’usage.
+    Connaissance / visibilité: Établir, actualiser et rendre accessible une connaissance fiable des états, faits et résultats
+      attendus.
+    Orchestration: Coordonner les prestations, leurs dépendances et leur progression dans un processus.
+    Planification: Construire et réviser un plan en mobilisant les décisions nécessaires.
+    Décision: Déterminer une réponse métier à partir des faits, règles, objectifs et contraintes applicables, en incluant
+      les calculs nécessaires.
+    Intégration: Acquérir ou transmettre des informations métier entre domaines ou exécutants, les reconnaître et les rapprocher
+      du contexte local pour les rendre utilisables avec leur provenance et leur résultat de prise en compte.
+    Registre: Tenir un registre métier durable de faits reconnus, datés et justifiés, en assurant leur traçabilité et leurs
+      corrections.
+    Évaluation: Type de capacité qui évalue des possibilités, leur faisabilité ou leurs conséquences à partir de faits, règles
+      et hypothèses, en explicitant résultats, conditions et incertitudes, sans sélectionner une réponse ni engager sa réalisation.
 - id: MOD008
   name: Domain
   label_fr: Domaine
@@ -531,9 +569,7 @@ terms:
 - id: MOD009
   name: Business Reference
   label_fr: Référentiel métier
-  definition: Ensemble cohérent de données de référence nécessaires aux capacités métier. Sa gouvernance précise si le domaine
-    porte leur CRUD (Domain-managed), reçoit une vérité externe (Projection), ou construit et rafraîchit une vue (Domain-View).
-    Les responsabilités peuvent porter sur des ensembles distincts autour du même sujet.
+  definition: Ensemble de données de référence partagées dont les capacités ont besoin pour exercer leurs responsabilités.
   role: Distinguer les références des commandes, décisions et réalisations.
   source_refs:
   - U450
@@ -542,10 +578,15 @@ terms:
   - U613
   - U614
   - U615
+  - U806
   review:
     state: proposed
     proposed_scope: Formulation méthodologique de présentation ; aucun accord individuel déduit.
-  short_description: Données de référence dont les capacités ont besoin, avec une responsabilité de gestion explicite.
+  short_description: Ensemble de données de référence partagées dont les capacités ont besoin pour exercer leurs responsabilités.
+  editorial_notes: []
+  notes:
+  - 'La responsabilité sur ces données est précisée séparément : qui les tient, qui les fournit et qui construit les vues
+    utiles.'
 - id: MOD010
   name: Model Relationship
   label_fr: Relation du modèle
@@ -568,6 +609,10 @@ terms:
     state: proposed
     proposed_scope: Formulation méthodologique de présentation ; aucun accord individuel déduit.
   short_description: Critère qui distingue une manière d’agir au sein d’une capacité.
+  editorial_notes: []
+  notes:
+  - Un comportement peut se distinguer par une politique, un mécanisme, une variante de prise en charge, un périmètre, une
+    dimension de raisonnement, un effet sur un engagement ou une pratique de planification. Ces formes ne sont pas des sous-niveaux.
 - id: MOD012
   name: Information
   label_fr: Information métier
@@ -637,14 +682,14 @@ terms:
   pilot_catalogue_ref: modeles/backlog/information-cards-U465.yaml
   short_description: Connaissance métier utilisée, produite ou modifiée par une capacité, indépendamment de son format informatique.
 - id: MOD014
-  name: Data Governance
-  label_fr: Gouvernance des données
-  definition: Responsabilité du domaine sur les données ou sur la construction et le rafraîchissement de leur vue, indépendante
-    du type de capacité.
+  name: Data Responsibility
+  label_fr: Responsabilité sur les données
+  definition: Responsabilité de tenir les données d’un domaine, de recevoir celles d’une source externe ou de construire une
+    vue utile aux capacités.
   values:
-    Domain-managed: 'Le domaine porte le CRUD : création, lecture, modification et suppression.'
-    Projection: La vérité vient d’une source externe au domaine.
-    Domain-View: Vue construite et rafraîchie par le domaine, quelle que soit l’origine des données.
+    Domain-managed: 'Le domaine tient les données : il les crée, les consulte, les modifie et les retire.'
+    Projection: Le domaine reçoit des données dont une source extérieure porte la vérité.
+    Domain-View: Le domaine construit et actualise une vue à partir des données disponibles.
   boundary: Un sujet peut associer données projetées et vue construite. Qualifier les responsabilités concernées séparément
     ; aucune technologie ni nouveau niveau hiérarchique imposé.
   source_refs:
@@ -653,11 +698,15 @@ terms:
   - U615
   - ELM528
   - ELM529
+  - U806
   review:
     state: partial
     adopted_scope: Distinction des dimensions et définitions explicites U613/U614, application demandée U615.
     proposed_scope: Choix du champ technique et rattachements détaillés réalisés par Codex ; aucun accord individuel implicite.
-  short_description: Responsabilité de tenir les données ou leur vue et de les actualiser.
+  short_description: Responsabilité de tenir les données d’un domaine, de recevoir celles d’une source externe ou de construire
+    une vue utile aux capacités.
+  editorial_notes: []
+  notes: []
 - id: MOD015
   name: Capability
   label_fr: Capacité
@@ -900,15 +949,17 @@ terms:
     state: proposed
     note: Organisation méthodologique U626 ; sens antérieur conservé.
   short_description: 'Terme à préciser : il ne correspond pas à un niveau unique de ce modèle.'
+  guide_section: method
 - id: MOD018
   name: Product Functionality
-  definition: Comportement ou ensemble de comportements offert par un produit dans une édition et une configuration données.
+  definition: Possibilité offerte par un logiciel dans une version et une configuration données.
   role: Autorité méthodologique de la notion ; le terme métier historique conserve son identifiant et un renvoi.
   source_refs:
   - U203
   - U477
   - CMP192
   - U626
+  - U806
   market_comparisons:
   - vendor: SAP
     product: S/4HANA Sales
@@ -960,6 +1011,7 @@ terms:
     state: proposed
     note: Organisation méthodologique U626 ; sens antérieur conservé.
   short_description: Possibilité offerte par un logiciel dans une version et une configuration données.
+  label_fr: Fonctionnalité de produit
 - id: MOD019
   name: Capability Grouping
   definition: Ensemble de capacités rapprochées selon un critère métier explicite pour faciliter la lecture de la carte.
@@ -1021,6 +1073,7 @@ terms:
     state: proposed
     note: Organisation méthodologique U626 ; sens antérieur conservé.
   short_description: Rapprochement de capacités selon un critère métier pour faciliter la lecture.
+  guide_section: method
 - id: MOD020
   name: Ledger
   definition: Type de capacité qui tient un registre métier durable de faits reconnus, datés et justifiés, en assurant leur
@@ -1107,6 +1160,7 @@ terms:
     state: partial
     note: Type et définition validés U756 ; formulation méthodologique complémentaire proposée.
   short_description: Capacité de tenir un registre durable de faits reconnus, datés, justifiés et corrigibles.
+  parent_term: MOD007
 - id: MOD021
   name: Evaluation
   definition: Type de capacité qui évalue des possibilités, leur faisabilité ou leurs conséquences à partir de faits, règles
@@ -1194,6 +1248,7 @@ terms:
     state: partial
     note: Distinction évaluation/sélection validée ; définition méthodologique rédigée pour l’appliquer.
   short_description: Évaluer des possibilités et leurs conséquences sans choisir ni engager leur réalisation.
+  parent_term: MOD007
 - id: MOD022
   name: Business System
   label_fr: Système métier
@@ -1218,16 +1273,20 @@ terms:
 - id: MOD023
   name: Persistent Identifier
   label_fr: Identifiant persistant
-  definition: Repère immuable qui distingue un élément au fil des publications, déplacements et changements de code visible.
+  definition: Identité stable d’un élément, distincte de son nom et de son code de lecture. Une migration exceptionnelle exige
+    une décision explicite et la mise à jour de ses références.
   role: Conserver les relations, accords et liens historiques ; ne jamais réutiliser un identifiant retiré.
   source_refs:
   - U782
   - U783
+  - U806
   review:
     state: partial
     adopted_scope: Distinction identité/code/ordre et règles identification_rules adoptées U783.
     proposed_scope: Rédaction pédagogique de la définition.
-  short_description: Identifiant stable qui suit un élément malgré ses déplacements ou renommages.
+  short_description: Identité stable d’un élément, distincte de son nom et de son code de lecture. Une migration exceptionnelle
+    exige une décision explicite et la mise à jour de ses références.
+  guide_section: codes
 - id: MOD024
   name: Display Code
   label_fr: Code de lecture
@@ -1241,6 +1300,7 @@ terms:
     adopted_scope: Distinction identité/code/ordre et règles identification_rules adoptées U783.
     proposed_scope: Rédaction pédagogique de la définition.
   short_description: Code court facilitant le repérage d’un élément dans une publication.
+  guide_section: codes
 - id: MOD025
   name: Reading Order
   label_fr: Ordre de lecture
@@ -1254,6 +1314,7 @@ terms:
     adopted_scope: Distinction identité/code/ordre et règles identification_rules adoptées U783.
     proposed_scope: Rédaction pédagogique de la définition.
   short_description: Ordre de lecture de l’arbre, fixé pour une publication.
+  guide_section: codes
 - id: MOD026
   name: Business Use Case
   label_fr: Cas d’usage métier
@@ -1562,3 +1623,47 @@ methodology_agreements:
   limits: Aucune validation individuelle des flux, scénarios et parcours ; aucun commit ou push autorisé.
   capture_method: Registre méthodologique pour les principes ; les contenus du catalogue portent leurs propres qualifications,
     aucun accord hérité.
+- source_refs:
+  - U806
+  scope: Retrait courant de MOD004, dédoublonnage, regroupement des types, séparation des objets, qualificatifs, notions connexes
+    et règles de méthode. Les rédactions nouvelles restent éditoriales ; aucune nature de capacité modifiée.
+presentation:
+  aliases:
+    TER001: MOD015
+    TER030: MOD008
+    TER026: MOD016
+    TER027: MOD017
+    TER028: MOD018
+    TER029: MOD019
+    TER031: MOD007
+  groups:
+  - id: objects
+    label: Objets et liens
+    term_ids:
+    - MOD022
+    - MOD008
+    - MOD013
+    - MOD015
+    - MOD006
+    - MOD009
+    - TER002
+    - MOD012
+    - MOD010
+    - MOD027
+    - MOD028
+    - MOD029
+    - MOD030
+    - MOD031
+  - id: attributes
+    label: Qualificatifs
+    term_ids:
+    - MOD007
+    - MOD011
+    - MOD014
+  - id: related
+    label: Notions connexes
+    term_ids:
+    - TER024
+    - TER025
+    - MOD016
+    - MOD018
