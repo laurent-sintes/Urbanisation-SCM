@@ -20,7 +20,12 @@ class SupplyIdentityTests(unittest.TestCase):
         self.assertEqual(node['kind'], 'domain')
         parents = [r for r in model['relations'] if r['type'] in ('contains', 'presents') and r['target_id'] == identifier]
         self.assertEqual([(r['source_id'], r['type']) for r in parents], [('system-business-operations', 'presents')])
-        self.assertEqual(len([r for r in model['relations'] if r['source_id'] == identifier and r['type'] == 'presents']), 9)
+        self.assertCountEqual(
+            [r['target_id'] for r in model['relations'] if r['source_id'] == identifier and r['type'] == 'presents'],
+            ['business-references', 'subdomain-policies', 'subdomain-plans',
+             'D04', 'D01', 'D03', 'D06', 'subdomain-service-orders',
+             'subdomain-order-promising', 'subdomain-integration'],
+        )
         self.assertEqual(check_delivery(ROOT, model)[1], [])
 
     def test_historical_identity_is_not_rewritten(self):
