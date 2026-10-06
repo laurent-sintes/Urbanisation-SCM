@@ -18633,6 +18633,46 @@
       "line": 21506,
       "content_sha256": "85b135ae0d82b5444d79372b2b6231f655ebef0a83a618220ee913d9a9357cd9",
       "captured_text": "## U874\n\n**id**\n\nU874\n\n**date**\n\n2026-10-06\n\n**titre**\n\nValider Service Management, les services financiers et le retrait de Document Production Order\n\n**texte**\n\nJe valide !\n\n**contexte et portée**\n\nAccord sur le lot cumulatif U872–U873 : Service Management remplace Service Order Management ; Financial Services remplace Financial Service Order Management ; Billing et Payment sont des services portés par FLOW et remplacent Billing Order et Payment Order. Les commandes logistiques restent des Orders documentaires, avec état et engagements, destinées à une organisation exécutante. Document Production Order est retiré sans capacité de remplacement ; ses exigences documentaires restent portées par les responsabilités et scénarios concernés. Le workflow pilote les Tasks ; Fulfilment Orchestration exécute la coordination déléguée. Le service porté ne présume ni réalisation logicielle installée ni absorption de la comptabilité ou de la trésorerie. Les noms discutés sont approuvés ; les formulations détaillées écrites ensuite restent des compléments proposés. Pas de release, commit ou push implicite."
+    },
+    {
+      "id": "U875",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u875",
+      "line": 21528,
+      "content_sha256": "239200c825977d97e445aa69da504e4390a8b6beb8f6d505dae2eecd4dd5d448",
+      "captured_text": "## U875\n\n**id**\n\nU875\n\n**date**\n\n2026-10-06\n\n**titre**\n\nAuditer R50 avant confrontation au client\n\n**texte**\n\nFais un audit du modèle.\n\n- Cohérence des noms et définitions\n- Regarde SAP et Microsoft pour voir si on oublie quelque chose d'important\n\nL'idée est de voir si c'est une version stable pour commencer à confronter au client.\n\n**contexte et portée**\n\nAudit de la publication courante R50 (2026-10-06.7), de sa cohérence lexicale et métier et de sa couverture au regard des sources primaires Microsoft Dynamics et SAP S/4HANA. Distinguer incohérences, responsabilités insuffisamment explicites et questions de périmètre à confronter au client. Ne pas déduire une nouvelle capacité de chaque fonction éditeur ni une réalisation installée. Aucun changement canonique, nouvel accord ou nouvelle publication implicitement autorisé par l’audit."
+    },
+    {
+      "id": "U876",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u876",
+      "line": 21555,
+      "content_sha256": "54d48975d8e846ece7121cad266479e76bfe2ec43ac21197aff9ae3162aa80a5",
+      "captured_text": "## U876\n\n**id**\n\nU876\n\n**date**\n\n2026-10-06\n\n**titre**\n\nPrioriser la complétude d’Availability dans l’audit R50\n\n**texte**\n\nSurtout vérifier si côté Availability on est complet.\n\n**contexte et portée**\n\nPrécision de priorité de l’audit U875 : approfondir les cinq Business Areas et les quinze capacités d’Availability, leurs dépendances à Inventory, Policies, Order Management, Integration et Fulfilment, et leurs scénarios. Conserver l’audit global des noms et définitions. Aucun ajout automatique de capacité ni modification canonique."
+    },
+    {
+      "id": "U877",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u877",
+      "line": 21577,
+      "content_sha256": "3a6eef98d7fa9caaf8df7d932078f20957bef6205c2c834f07ad43a5e0cb1866",
+      "captured_text": "## U877\n\n**id**\n\nU877\n\n**date**\n\n2026-10-06\n\n**titre**\n\nAppliquer les corrections de l’audit R50, notamment Availability\n\n**texte**\n\nOk pour les corrections\n\n**contexte et portée**\n\nAccord sur le lot de corrections proposé à l’issue de l’audit U875–U876 : alignement des sous-domaines et de Plan Visibility, Reference Ingestion et séparation des Price Books, convention documentaire d’Order, définitions autonomes, clarification des achats planifiés, alternatives autorisées, promesse complète, validité avant confirmation, réservation et absence de solution. Compléter les scénarios sans nouvelle capacité. Les frontières de remboursement/remplacement et de crédit restent explicitement à confronter au client ; aucun transfert arbitraire d’autorité à FLOW. L’accord autorise l’application de la proposition cumulative ; les formulations détaillées produites ensuite ne sont pas de nouveaux accords champ par champ. Réutiliser les sources SAP/Microsoft consultées et conservées dans l’audit. Pas de release, commit ou push implicite."
+    },
+    {
+      "id": "U878",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u878",
+      "line": 21599,
+      "content_sha256": "997550064492131f7012585147fa2d1c2b2d5ae51351d362cfd4f2cc11678ce0",
+      "captured_text": "## U878\n\n**id**\n\nU878\n\n**date**\n\n2026-10-06\n\n**titre**\n\nAutorité du contrôle de gestion et suites des retours clients\n\n**texte**\n\n\"les suites financières des retours clients — avoir, remboursement, remplacement — et les blocages pour risque de crédit\". Pour les blocages pour risque crédit, c'est le contrôle de gestion qui émet les règles et les classements des clients. Ces infos doivent être injectées dans Operational Reference, au niveau Partner & Agreement, j'imagine. J'aimerais ton avis là dessus.\n\navoir, remboursement, remplacement : ce ne sont pas des comportement du Return Order ?\n\n**contexte et portée**\n\nPrécision utilisateur sur l’autorité du contrôle de gestion pour les règles et classements de crédit. Proposition de rattachement aux références Partner & Agreement et question sur les comportements de Return Order ; ces deux propositions demandent une analyse, pas une modification canonique implicite. Distinguer informations de référence reçues, conditions contractuelles, règles opérationnelles et décisions de blocage. Distinguer résolution du retour, devenir du bien, émission d’un avoir et exécution d’un remboursement. Le lot U877 reste applicable indépendamment de ces propositions."
+    },
+    {
+      "id": "U879",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u879",
+      "line": 21623,
+      "content_sha256": "ad4f820695b04ca03b6e4777c3c475ea5d73274c36a8ed0eafff027894b63db0",
+      "captured_text": "## U879\n\n**id**\n\nU879\n\n**date**\n\n2026-10-06\n\n**titre**\n\nValider les références de crédit et les résolutions de retour\n\n**texte**\n\nJe valide ta proposition\n\n**contexte et portée**\n\nAccord sur la proposition cumulative U878 : Partner & Agreement References reçoit les références de crédit sous autorité du contrôle de gestion ; Party / Role porte profil, classement et limite autorisée, Agreement les conditions réellement convenues ; les règles générales externes ne sont pas assimilées à des contrats ni placées sous autorité de Policies. Order Management applique ou consomme le contrôle pour suspendre/reprendre, Sentry réagit aux changements ; encours ou résultat du contrôle financier restent nécessaires. Ajouter à Return Order Credit Resolution, Refund Resolution et Replacement Resolution, combinables avec les cinq comportements de devenir physique. Billing porte l’avoir, Payment le remboursement, une Sales Order liée le remplacement. Étendre explicitement Payment de l’encaissement au remboursement. Alignement du glossaire et scénarios ; nouvelles rédactions détaillées proposées, pas de validation globale des formulations ni de réalisation installée. Aucun lancement implicite de release, commit ou push."
     }
   ]
 }
