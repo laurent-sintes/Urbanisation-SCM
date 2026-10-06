@@ -1041,15 +1041,19 @@ publication_delivery:
   - U848
   - U853
   - U858
+  - U861
+  - U865
   summary: '16 Business Areas, 64 capacités regroupées et 17 directes ; aucun savoir-faire supprimé. U858 : contrôles courants
     adaptés au retrait des huit Visibility de références et à la conservation de l’interprétation des plans ; état antérieur
-    conservé dans Git (745813e).'
+    conservé dans Git (745813e). U861 : commandes passives et pilotage par les tâches du workflow explicités ; identités et
+    rattachements conservés. U865 : Plan Visibility dans Availability, Inventory State Management et précommandes ; contrôles
+    courants alignés.'
   required_nodes:
   - id: ba-inventory-position-management
     kind: business_area
     parent: D01
     fields:
-      name: Inventory Position Management
+      name: Inventory State Management
       definition: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits, vérifications
         et corrections.
       finality: Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
@@ -1059,6 +1063,8 @@ publication_delivery:
         Bénéficiaire et résultat : Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
 
         Exemple fictif : Une réception annoncée de 100 pièces est constatée à 80 : restituer la correction et les engagements concernés sans confondre disponibilité et propriété.
+
+        State désigne la situation quantitative datée : quantités par produit, lieu et état, mouvements reconnus, contrôles et engagements de [Reservation](model:D02.c). Ce périmètre reste distinct de la propriété des biens.
   - id: ba-inventory-ownership-management
     kind: business_area
     parent: D01
@@ -1155,6 +1161,8 @@ publication_delivery:
         Bénéficiaire et résultat : Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
 
         Exemple fictif : Un paiement confirmé débloque la suite de la commande ; un événement répété ne déclenche pas une seconde prestation. Une adaptation locale reste confiée à Fulfilment Orchestration.
+
+        Le moteur produit les [Tasks](glossary:TER089) qui pilotent le suivi des [Service Orders](glossary:TER066) passifs. La demande et son état restent dans l’Order ; le pilotage est dans les tâches ; la réalisation est chez le prestataire.
   - id: ba-service-planning
     kind: business_area
     parent: D06
@@ -1237,6 +1245,8 @@ publication_delivery:
         Bénéficiaire et résultat : Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
 
         Exemple fictif : Demander un nouvel étiquetage sur 40 pièces et suivre son acceptation puis son résultat ; la réalisation physique appartient au prestataire.
+
+        Les familles sont des commandes passives adressées à la logistique selon une offre de service définie. Elles portent les exigences et résultats ; les [Tasks](glossary:TER089) du moteur de [Reactive Workflow Management](glossary:TER125) pilotent leur suivi. Aucune décision autonome n’est attachée à ces familles.
   - id: ba-transport-order-management
     kind: business_area
     parent: subdomain-service-orders
@@ -1264,6 +1274,8 @@ publication_delivery:
         Bénéficiaire et résultat : Permettre au donneur d’ordre de connaître l’état et le résultat des prestations de facturation ou d’encaissement confiées.
 
         Exemple fictif : Confier une facturation et recevoir sa référence de résultat ; les règles fiscales et la tenue des comptes restent sous autorité financière.
+
+        [Billing Order](model:service-order-billing) et [Payment Order](model:service-order-payment-collection) sont des commandes passives de prestations définies. Les [Tasks](glossary:TER089) du workflow pilotent leur suivi ; les services financiers réalisent la facturation et l’encaissement.
   - id: D01.f
     parent: ba-inventory-position-management
   - id: D01.g

@@ -1,0 +1,72 @@
+schema_version: 1.0.0
+source_refs:
+- U864
+- U865
+- U866
+- U867
+- U868
+- U869
+- U870
+- U871
+status: applied
+identity_policy: Identités persistantes des Areas conservées ; subdomain-plans devient business_area sans renommage technique.
+  Codes de lecture figés à la prochaine publication.
+retired_relations:
+- REL-U673-PRESENTS-subdomain-plans
+changed_nodes:
+- D04.i
+- D04.j
+- D04
+- D03
+- subdomain-plans
+- demand-plan-visibility
+- ba-inventory-position-management
+publication_delivery:
+  state: applied
+  source_refs:
+  - U864
+  - U865
+  - U866
+  - U867
+  - U868
+  - U869
+  - U870
+  - U871
+  summary: Noms Inventory clarifiés ; Preorder et parcours documentés ; Plan Visibility Business Area d’Availability.
+  required_nodes:
+  - id: ba-inventory-position-management
+    fields:
+      name: Inventory State Management
+  - id: ba-inventory-ownership-management
+    fields:
+      name: Inventory Ownership Management
+  - id: subdomain-plans
+    kind: business_area
+    parent: D03
+    fields:
+      name: Plan Visibility
+  - id: plans-visibility
+    parent: subdomain-plans
+  - id: demand-plan-visibility
+    parent: subdomain-plans
+  - id: sales-order-preorder
+    kind: behavior
+    parent: D04.i
+    fields:
+      name: Preorder
+      nature: process_variant
+  required_catalog:
+  - collection: scenarios
+    id: preorder-future-availability
+    content_sha256: 18fbe84fca2bada3852365a92621fec2283bdbad484c85d56e36b15727a1033b
+  - collection: paths
+    id: preorder-future-availability-path
+    content_sha256: 2c768ead8be3faeb76c55adee9b2b3ce7feaadb3953da5e73a71030918673b73
+order_identity: Sales Order conserve son identité en sortant de Preorder. MAP envoie des Planned Purchase Orders (U871), distincts
+  des Purchase Orders produits à l’affermissement ; filiation conservée sans identité commune imposée.
+asymmetry_explanation: 'La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase
+  Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070),
+  avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150)
+  porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité.
+  Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement
+  restent distincts : un Sales Order existant peut encore être à confirmer.'

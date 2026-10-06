@@ -259,7 +259,9 @@ publication_delivery:
   state: applied
   source_refs:
   - U709
-  summary: Quatre familles de services documentaires, douaniers et financiers ; réalisation externe possible.
+  - U860
+  summary: 'Quatre familles de services documentaires, douaniers et financiers ; réalisation externe possible. U860 : nom
+    courant Payment Order, identité et périmètre conservés ; formulation historique du lot préservée.'
   required_nodes:
   - id: service-order-document-production
     fields:
@@ -275,7 +277,7 @@ publication_delivery:
     parent: ba-financial-service-order-management
   - id: service-order-payment-collection
     fields:
-      name: Payment Collection Order
+      name: Payment Order
     parent: ba-financial-service-order-management
   absent_nodes: []
 delivery_updates:

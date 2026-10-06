@@ -13,12 +13,17 @@ publication_delivery:
   source_refs:
   - U714
   - U826
+  - U865
   summary: 'Plan Visibility : ingestion commune depuis PLAN et vues Supply / Demand distinctes. U826 : attentes courantes
-    alignées, anciennes valeurs conservées ci-dessous.'
+    alignées, anciennes valeurs conservées ci-dessous. U865 : Plan Visibility dans Availability, Inventory State Management
+    et précommandes ; contrôles courants alignés.'
   required_nodes:
   - id: subdomain-plans
     fields:
       name: Plan Visibility
+    kind: business_area
+    parent: D03
+    parent_type: contains
   - id: plans-ingestion
     parent: ba-inbound-information-integration
     fields:

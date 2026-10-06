@@ -41,6 +41,29 @@ class BusinessAreaTests(unittest.TestCase):
         self.assertEqual(index['codes']['ba'], 'BA-001')
         self.assertEqual(index['children']['ref'], [])
 
+    def test_business_area_knowledge_is_not_a_hierarchy_link(self):
+        m = self.model()
+        m['relations'].append(dict(id='knowledge',type='provides-knowledge',source_id='ba',target_id='sub'))
+        self.assertEqual(validate_urbanism(m, {}), [])
+        m['display_policy'] = 'typed-tree-v1'
+        self.assertEqual(build_display_index(m)['children']['sub'], ['ba','direct'])
+
+    def test_reference_area_preserves_documentary_kind_and_unique_parent(self):
+        m = self.model()
+        m['display_policy'] = 'typed-tree-v1'
+        m['nodes'][2]['kind'] = 'reference'
+        m['relations'][1]['type'] = 'presents'
+        self.assertEqual(validate_urbanism(m, {}), [])
+        index = build_display_index(m)
+        self.assertEqual(index['children']['ba'], ['cap'])
+        self.assertTrue(index['codes']['cap'].startswith('REF-'))
+        duplicate = dict(id='duplicate', type='presents', source_id='sub', target_id='cap')
+        m['relations'].append(duplicate)
+        self.assertTrue(validate_urbanism(m, {}))
+        m['relations'].pop()
+        m['relations'][1]['type'] = 'contains'
+        self.assertTrue(validate_urbanism(m, {}))
+
     def test_live_mapping_is_exhaustive_and_scenarios_remain_capability_based(self):
         root = Path(__file__).resolve().parents[1]
         m = read(root/'modeles/backlog/model.yaml')
@@ -56,13 +79,22 @@ class BusinessAreaTests(unittest.TestCase):
         self.assertLessEqual(retired, initial_caps)
         self.assertEqual(initial_caps - retired, caps)
         self.assertTrue(retired.isdisjoint(nodes))
-        references = set(retirement['reference_mapping'].values())
-        self.assertEqual(len(references),8)
+        from scripts.glossary import references as inline_references
+        self.assertNotIn(('model', 'price-book'), set(inline_references(m)))
+        split = read(root/'modeles/backlog/operational-reference-areas-U863.yaml')
+        references = set(retirement['reference_mapping'].values()) - set(split['retirement']['nodes'])
+        references.update(split['replacement']['price-book'])
+        self.assertEqual(len(references),9)
         for identifier in references:
             self.assertEqual(nodes[identifier]['kind'],'reference')
+        reference_areas = {a['id'] for a in split['areas']}
         self.assertEqual({r['target_id'] for r in m['relations']
-                          if r['type']=='presents' and r['source_id']=='business-references'}, references)
-        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),16)
+                          if r['type']=='contains' and r['source_id']=='business-references'}, reference_areas)
+        self.assertEqual({r['target_id'] for r in m['relations']
+                          if r['type']=='presents' and r['source_id'] in reference_areas}, references)
+        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),17+len(reference_areas))
+        self.assertEqual(nodes['subdomain-plans']['kind'],'business_area')
+        self.assertTrue(any(r['type']=='contains' and r['source_id']=='D03' and r['target_id']=='subdomain-plans' for r in m['relations']))
         self.assertFalse(any(r['type']=='documents-reference' for r in m['relations']))
         self.assertEqual(check_delivery(root,m)[1],[])
         from scripts.json_contract import validate

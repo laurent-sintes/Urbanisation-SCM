@@ -223,8 +223,12 @@ publication_delivery:
   state: applied
   source_refs:
   - U858
-  summary: Huit capacités de consultation retirées ; huit références préservées ; deux capacités de plan contextualisées ;
-    liens et scénarios adaptés.
+  - U863
+  - U865
+  summary: 'Huit capacités de consultation retirées ; huit références préservées ; deux capacités de plan contextualisées
+    ; liens et scénarios adaptés. U863 : contrôles adaptés aux trois Areas et à la séparation des tarifs produit/service ;
+    preuves historiques conservées. U863 : liens tarifaires des parcours répartis entre produits et prestations. U865 : Plan
+    Visibility dans Availability, Inventory State Management et précommandes ; contrôles courants alignés.'
   absent_nodes:
   - D08.e
   - D09.e
@@ -249,15 +253,21 @@ publication_delivery:
     kind: reference
   - id: D16
     kind: reference
-  - id: price-book
+  - id: product-price-book
     kind: reference
+    fields:
+      name: Product Price Book
+  - id: service-price-book
+    kind: reference
+    fields:
+      name: Service Price Book
   - id: business-references
     fields:
       name: Operational References
       definition: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant
         leur référence locale fiable sans transférer la maîtrise d’entreprise.
       scope: |-
-        Les huit sujets [Product Reference](model:D08), [Party / Role](model:D09), [Agreement](model:D11), [Product Catalog](model:D12), [Fulfilment Network](model:D13), [Service Catalog](model:D14), [Assortment](model:D16), [Price Book](model:price-book) restent des références distinctes. Ce sous-domaine porte la composition, l’actualisation et la fourniture de leurs vues locales utilisables, avec versions, fraîcheur, provenance, validité et incohérences connues. Leur consultation ne justifie pas huit capacités autonomes.
+        Trois [Business Areas](method:MOD039) portent les références locales : [Partner & Agreement References](model:ba-partner-agreement-references), [Product References](model:ba-product-references), [Service References](model:ba-service-references). Les neuf références restent distinctes et documentaires. Ce sous-domaine porte la composition, l’actualisation et la fourniture de leurs vues utilisables, avec versions, fraîcheur, provenance, validité et incohérences connues. Leur consultation ne justifie pas des capacités autonomes.
 
         [Master Data Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
@@ -284,6 +294,8 @@ publication_delivery:
         Le [Demand Plan](glossary:TER099) décrit des besoins prévisionnels, distincts des commandes effectivement reçues. [Plan Ingestion](model:plans-ingestion) reçoit les versions et corrections ; [Demand & Supply Planning](model:domain-plan) produit les prévisions. [Availability](model:D03) conserve le calcul de couverture, la consommation de prévision par les [Orders](glossary:TER012) pour éviter le double comptage, les décisions de promesse et le [Matching Master Plan](glossary:TER100). L’interprétation du plan ne crée aucun engagement ni mouvement réalisé.
 
         Exemple fictif : Pour une demande de 30 robes en taille M d’une boutique, le plan annonce 200 robes toutes tailles pour la région sur la semaine. Le périmètre et la granularité sont explicités ; aucune part de ces 200 robes n’est attribuée à la boutique ou à la taille M sans règle documentée.
+
+        Les précommandes connues restent qualifiées par leur horizon et leur degré d’engagement. Leur seule présence ne justifie ni une seconde commande ni leur addition automatique à la prévision déjà représentative de ces besoins.
   required_catalog:
   - collection: paths
     id: consignment-sale-pickup-path
@@ -293,10 +305,10 @@ publication_delivery:
     content_sha256: a2cb0f13eea3640b0e0b77f51ff5af85d3166df4ae5cad7d114ddb3215f7b31b
   - collection: paths
     id: substitution-price-service-path
-    content_sha256: 8a749c378d3b4c5332237f9bfdff8db344a0d694127ec2ba7fe1398904c69252
+    content_sha256: 06d862d8970af3b9411d045cfe57acb845513c58b4d5f6e7b3655f1716f9f67e
   - collection: paths
     id: reference-plan-correction-path
-    content_sha256: 5109895f9cfc5bc9056414ab164d25d4a61d42edd180a2b022043f13dd0b732d
+    content_sha256: 9188d729d092b1d2fc820673beb9a648f41da6c30e30f467e9aa4a9a372205f4
   - collection: paths
     id: ownership-transit-deadline-path
     content_sha256: 74c4425a03cbf66c03ee069c1073918243eb04b6f629e7baf63a75f057a6c4bd

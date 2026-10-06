@@ -366,3 +366,6 @@ L’export vérifie une fois l’inventaire des descripteurs, puis chaque modèl
 ## Business Areas — U848
 
 Les publications portant `PRINCIPLE-BUSINESS-AREA` exposent les nœuds `business_area` (code BA). Leur profondeur est facultative : les sous-domaines peuvent présenter des Business Areas et des capacités directes. Arbre, cartes, fiches, recherche, scénarios et relations utilisent les liens explicites du snapshot. Les liens `documents-reference` relient une capacité à son référentiel documentaire sans créer de parent ; les anciennes publications restent lisibles avec leurs catégories.
+
+
+U861 : les vues d’ensemble (cartes, listes dans les cartes, bandeaux Business Areas et titre de la carte) affichent les noms sans codes de lecture ni identifiants techniques. Les codes publiés restent inchangés, recherchables et disponibles dans les fiches détaillées et les aides de navigation. La recette `verify-display-codes.mjs` vérifie cet allègement et la conservation des liens par identité.

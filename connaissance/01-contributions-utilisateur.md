@@ -21102,3 +21102,343 @@ Accord sur le retrait des huit capacités Visibility d’Operational References 
 - Microsoft Dynamics 365 Supply Chain Management, Inventory forecasts : https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast — prévisions Supply/Demand, dimensions et périodes. Le supply forecast Microsoft couvre les achats, contrairement au Supply Plan FLOW ici limité aux mouvements hors achats.
 - SAP S/4HANA Cloud Public Edition, Outlining Program Planning : https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a — besoins prévisionnels, commandes et consommation selon la stratégie. Appui au besoin d’interpréter les prévisions avec leur contexte ; le produit couvre aussi des calculs qui restent dans Availability pour FLOW.
 - Operational References : appuis Microsoft IOM Data management déjà consultés U854 et SAP S/4HANA Maintaining Materials and Business Partners consulté ce jour (https://learning.sap.com/courses/exploring-business-processes-for-supply-chain-execution-in-sap-s-4hana-cloud-private-edition/maintaining-materials-and-business-partners). Les références produit et partenaire servent l’exécution ; ces exemples ne prescrivent ni huit capacités ni leur retrait. La granularité retenue relève de l’accord FLOW U858, sans transfert de maîtrise d’entreprise.
+
+
+## U859
+
+**id**
+
+U859
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Préciser le caractère passif des commandes de prestation et questionner Collection
+
+**texte**
+
+"12 capacités de demandes de traitement des biens :" => ce sont des commandes passives, des orders qu'on envoie à la logistique selon une offre de service fixe. Pas de décision associée. C'est le moteur de workflow qui produira les tâches qui piloteront le suivi de ces orders.
+
+Document Production Order, Billing Order et  Payment Collection Order : même approche, c'est passif
+
+Pourquoi "Collection" ?
+
+**contexte et portée**
+
+Clarification des quinze familles examinées dans U856 : commandes de prestations passives, adressées selon l’offre de service, sans décision autonome associée. Le moteur de workflow produit les tâches de pilotage et de suivi. Ne pas confondre la commande porteuse d’état et de résultat attendu avec les tâches qui conduisent son parcours ou avec l’exécution du prestataire. La question sur Collection demande une explication du choix lexical ; aucun renommage validé.
+
+
+## U860
+
+**id**
+
+U860
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Renommer Payment Collection Order en Payment Order
+
+**texte**
+
+Payment Order ça suffira
+
+**contexte et portée**
+
+Adoption du nom Payment Order pour service-order-payment-collection. L’identité persistante, le rattachement et le périmètre d’encaissement confié restent inchangés ; le nom simplifié ne crée ni décision autonome ni nouvelle responsabilité financière. U859 porte séparément la clarification des commandes passives et de leur pilotage par le moteur de workflow. Ce renommage ne valide pas les autres rédactions ou propositions de l’audit. Les appuis Microsoft Dynamics et SAP S/4HANA consultés lors de U859 étayent les opérations et le recours au prestataire, pas une nomenclature universelle Payment Order.
+
+
+## U861
+
+**id**
+
+U861
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Aligner les commandes passives et alléger les vues d’ensemble d’Atlas
+
+**texte**
+
+Go pour la mise en cohérence.
+
+Data ATLAS, afficher les codes dans les overviews, ça bouffe de la place inutilement
+
+**contexte et portée**
+
+Autorise la mise en cohérence annoncée : quinze familles de commandes passives selon U859, tâches produites et pilotées par le moteur de workflow, prestataire responsable de la réalisation, clôture des réserves d’autonomie de l’audit. Payment Order reste le nom adopté U860. Retirer les codes visibles des vues d’ensemble Atlas, cartes et bandeaux inclus ; préserver identités, codes publiés, recherche et repères des fiches détaillées. Aucune release, commit ou push implicite.
+
+**Comparaison ciblée U861**
+
+Microsoft Dynamics Intelligent Order Management distingue les actions du flux, les commandes de fulfillment et les prestataires de fulfillment ou de facturation ([documentation consultée](https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows)). SAP S/4HANA Warehouse Management distingue les livraisons des tâches de préparation ou de rangement et de leur confirmation ([cours consulté](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-warehouse-management/understanding-sap-s-4hana-cloud-public-edition-warehouse-management_ff02ecf3-9fe0-499d-b96d-8cc0f7f66900)). Ces rapprochements étayent la séparation commande, pilotage et exécution ; les tâches entrepôt SAP restent des opérations du prestataire, distinctes des Tasks d’orchestration FLOW. Ils ne prouvent ni une nomenclature commune des quinze familles ni un modèle d’agrégat passif universel. Les appuis financiers consultés sous U859 restent pertinents. Le caractère passif est le choix de responsabilité FLOW confirmé par Laurent ; les correspondances partielles et lacunes marché des fiches restent conservées.
+
+## U862
+
+**id**
+
+U862
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Proposition de trois Areas dans Operational References
+
+**texte**
+
+Dommage qu'Operational References ne soit pas découpé en Area.
+
+J'en vois 3 :
+
+- Contrat : Party/role, Agreement
+- Produit : Product Reference, Catalog, Assortment, PriceBook
+- Service : Fulfillment Network, Price Book
+
+**contexte et portée**
+
+Proposition de structuration, sans modification canonique à ce stade. Price Book est cité dans deux groupes et Service Catalog est absent de la liste : ne pas supposer une suppression, une duplication ou une séparation tarifaire. Le modèle courant comporte huit références ; Price Book couvre explicitement produits et services. Proposition Codex : Partner & Agreement References, Product References, Service References ; conserver Service Catalog côté Service et clarifier le rattachement de Price Book avant application. Party / Role dépasse les seuls contrats et couvre aussi les opérations.
+
+**Comparaison ciblée**
+
+Microsoft Dynamics 365 Sales décrit des listes tarifaires pour produits et services (https://learn.microsoft.com/en-us/dynamics365/sales/create-price-lists-price-list-items-define-pricing-products, consultation 2026-10-06). SAP S/4HANA documente un Business Partner portant plusieurs rôles, dont client et fournisseur (https://help.sap.com/docs/SAP_S4HANA_CLOUD/f86dc2eb1f8b48c880a7607213104b27/45efed579120bc12e10000000a4450e5.html?locale=en-US, consultation 2026-10-06). Appuis sémantiques partiels sur les frontières tarifaire et partenaire ; ils ne prouvent ni le découpage FLOW en trois Areas ni une équivalence de chaque Area avec un module éditeur. Aucun accord sur les noms proposés ni sur la solution au double rattachement de Price Book n’est déduit.
+
+## U863
+
+**id**
+
+U863
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Séparer les références tarifaires produit et service
+
+**texte**
+
+Dans ce cas il faut séparer le price book produit de service, même si en terme de logiciel ce ne sera pas le cas.
+
+**contexte et portée**
+
+Précise U862 : séparer Product Price Book et Service Price Book dans le modèle métier et les rattacher respectivement aux Areas Produit et Service. La séparation n’impose pas deux composants logiciels ni deux stockages. Conserver Service Catalog dans l’Area Service, avec Fulfilment Network. Les trois regroupements proposés sont appliqués dans le backlog ; leurs noms anglais et rédactions détaillées restent des propositions éditoriales. Les publications existantes restent inchangées.
+
+**Comparaison et mise en œuvre U863**
+
+Les passages Microsoft Dynamics 365 Sales sur les Price Lists ont été relus le 6 octobre 2026 : un même mécanisme couvre produits et services, avec unités et contextes tarifaires. Le cours SAP S/4HANA « Configuring Pricing for Service Transactions » distingue notamment les conditions liées aux prestations et aux pièces/produits dans un même dispositif de tarification. Ces appuis partiels confortent la compatibilité entre distinction métier et mécanisme logiciel commun ; ils ne prescrivent pas le découpage FLOW en deux références. Sources : https://learn.microsoft.com/en-us/dynamics365/sales/create-price-lists-price-list-items-define-pricing-products et https://learning.sap.com/courses/performing-basic-customizing-for-service-in-sap-s-4hana-and-sap-s-4hana-cloud-private-edition/configuring-pricing-for-service-transactions_c9d5bd5a-5032-410b-8632-579a947eedcc . Les pages partenaires recherchées n’ont pas fourni un accès suffisant pour comparer l’Area complète ; les lacunes par éditeur sont explicites. Les trois Areas ne sont pas annoncées comme une taxonomie standard.
+
+L’ancienne identité price-book est retirée au profit de product-price-book et service-price-book, sans réutilisation. TER097 reste le terme générique du glossaire ; TER145 et TER146 explicitent les deux périmètres. Les liens d’ingestion, de catalogues, d’accord et d’évaluation économique sont répartis sans créer de capacité Visibility. Une Business Area peut présenter des références documentaires sans en faire des capacités. Le lot et ses contrôles de livraison sont dans operational-reference-areas-U863.yaml.
+
+## U864
+
+**id**
+
+U864
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Interroger les Areas Inventory, les précommandes et le rattachement de Plan Visibility
+
+**texte**
+
+"Inventory Position Management" : pourquoi Position ?
+
+Pareil pour "Inventory Ownership Management" : pourquoi Ownership ?
+
+Autre question : on n'a pas oublié les précommandes ?
+
+Et enfin : Plan visibility, c'est vraiment un sous domaines ou c'est un business area de Operational references ?
+
+**contexte et portée**
+
+Questions de sens, de couverture et de niveau ; aucun renommage, déplacement ou ajout canonique adopté. Inspection : Inventory Position Management porte Tracking, Ledger, Visibility, Stocktaking et Reservation ; Inventory Ownership Management porte la décision de transfert et le registre de propriété. Une seule mention des précommandes figure dans Sales Order, sans comportement ni scénario dédié. Plan Visibility porte deux capacités d’interprétation contextualisée ; réception dans Integration, production des prévisions dans Demand & Supply Planning, couverture et consommation de prévision dans Availability. Clarification demandée sur précommandes fermes avant disponibilité et intentions à affermir.
+
+**Comparaison ciblée et limites**
+
+Consultation 2026-10-06 : Microsoft Dynamics SCM distingue réception physique et journal de changement de propriété dans la consignation (https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/consignment) ; SAP S/4HANA distingue également détention chez le client et propriété fournisseur (https://learning.sap.com/courses/handling-special-stocks-and-physical-inventory-in-sap-s-4hana-cloud-public-edition/exploring-the-supplier-consignment-2lg-scenario_f7d023c2-e7c4-4af1-aaed-084fd946e5fa). Appuis à la frontière quantité/propriété, pas équivalence complète des deux Areas FLOW ni justification d’un propriétaire organisationnel.
+
+Microsoft IOM décrit une précommande comme une commande avant lancement, avec état d’attente sur la ligne, distinct du reliquat faute de stock (https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/backorder-preorder ; documentation signalée preview). SAP S/4HANA Fashion décrit la demande saisonnière portée par Sales Order (https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-sales-order-handling_b87d52ef-bf38-4a67-b6f5-7324019d8c24). Ces rapprochements soutiennent l’étude d’une variante de Sales Order, sans prouver qu’une intention non ferme est une commande ni imposer une capacité autonome.
+
+Microsoft SCM expose prévisions supply/demand par produit, quantité et calendrier, puis leur exploitation en planification (https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast). SAP S/4HANA Fashion documente la réduction des besoins prévisionnels par les commandes (https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/exploring-planning_ba3917f8-27b5-4623-add3-27a095af23d9). Appuis partiels à la distinction prévision/commande et au non-double-comptage ; aucun de ces documents ne tranche le niveau Subdomain ou Business Area de FLOW.
+
+**Analyse proposée, non appliquée**
+
+Position signifie situation quantitative datée, pas seulement emplacement ; une dénomination plus explicite peut être envisagée sans changer le périmètre. Ownership désigne la propriété des biens, distincte de leur détention et du déplacement. Les précommandes méritent une définition explicite, une variante de Sales Order si le cycle diffère, et un scénario reliant promesse future, suivi et prévisions sans double comptage. Plan Visibility ne relève pas naturellement des seuls référentiels structurels : maintenir son périmètre d’interprétation ; si une simplification hiérarchique est retenue, examiner une Business Area d’Availability ou élargir explicitement Operational References, sans assimiler prévisions et données structurelles.
+
+## U865
+
+**id**
+
+U865
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Valider les noms Inventory, les précommandes et Plan Visibility dans Availability
+
+**texte**
+
+3 : bonne idée. Finalement, c'est comme les Orders d'achat qui peuvent être planned (issues du supply planning)
+4 : Dans Availability, c'est une bonne idée
+
+Pour 1 et 2, ok
+
+**contexte et portée**
+
+Accord sur le lot proposé U864 : nom Inventory State Management pour l’Area actuelle, maintien d’Inventory Ownership Management ; comportement Preorder de Sales Order et scénario expliquant promesse future, attente, suivi, exécution et consommation des prévisions ; Plan Visibility devient une Business Area d’Availability avec ses deux capacités conservées. L’analogie avec les achats planned issus du supply planning précise la distinction entre demande préparée et engagement confirmé. Ne pas déduire que toute précommande est non ferme ; préserver l’origine et les liens d’affermissement sans imposer la même identité avant et après. Le Supply Plan au sens FLOW conserve son périmètre hors achats ; le supply planning externe peut produire des propositions d’achat. Les rédactions nouvelles restent qualifiées séparément ; aucune release implicite.
+
+## U866
+
+**id**
+
+U866
+
+**date**
+
+2026-10-06
+
+**titre**
+
+MAP produit des Purchase Orders Planned ; Preorder est un statut de Sales Order
+
+**texte**
+
+Un APM peut produire des Purchase Order au statut Planned et c'est ce que fait MAP.
+
+Coté vente, un Sales Order peut avoir un statut preorder et un cycle de vie associé.
+
+Ca peut se comprendre du coup
+
+**contexte et portée**
+
+Correction de l’interprétation U865 : MAP produit déjà des objets Purchase Order au statut Planned, selon l’apport de Laurent. Ne pas les décrire obligatoirement comme des propositions distinctes à convertir en nouveaux objets. Sales Order peut porter le statut Preorder et le cycle associé. Préserver ce fait rapporté sans déduire d’autres déploiements, flux ou le développement du sigle APM.
+
+## U867
+
+**id**
+
+U867
+
+**date**
+
+2026-10-06
+
+**titre**
+
+La précommande devient commande par changement de statut
+
+**texte**
+
+Et l'idée et qu'une précommande devient une commande juste en modifiant son statut.
+
+**contexte et portée**
+
+Le Sales Order conserve son identité lors de la sortie du statut Preorder ; il ne devient pas un second objet. Le comportement Preorder proposé décrit le cycle associé à ce statut au sein de Sales Order, pas une capacité, une famille d’Order ni un objet supplémentaire. Les transitions restent soumises aux conditions applicables ; aucune nomenclature d’états cibles complète n’est inventée. La formulation antérieure U865 laissant ouverte une conversion avec nouvelle identité est remplacée dans cette portée par U866/U867.
+
+## U868
+
+**id**
+
+U868
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Comparer la continuité d’identité des Orders au modèle Microsoft
+
+**texte**
+
+On est d'accord que ça correspond au modele microsoft ?
+
+**contexte et portée**
+
+Question de comparaison, sans nouvelle modification de responsabilité. Microsoft IOM documente Preorder Hold sur les lignes du Sales Order, puis leur progression vers l’exécution (source et consultation U864). Microsoft SCM « Firm planned orders », consulté le 6 octobre 2026, décrit la génération de commandes opérationnelles à l’affermissement, avec regroupement possible de plusieurs planned orders : https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/planned-order-firming . Cela étaye les stades planned/affermi, pas une identité technique unique de bout en bout. FLOW conserve la continuité métier demandée U866/U867 ; aucune équivalence complète d’identité avec Microsoft n’est affirmée. SAP S/4HANA documente également une conversion de demandes d’achat issues du MRP en commandes d’achat (https://learning.sap.com/courses/business-processes-in-sap-s-4hana-sourcing-and-procurement/generating-purchase-orders-automatically_da80a1c6-2724-496a-9477-2f3c69a19c82) : appui à la distinction des stades, pas preuve de la continuité d’identité FLOW.
+
+## U869
+
+**id**
+
+U869
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Distinguer Planned Purchase Order et Purchase Order
+
+**texte**
+
+Donc il faut séparer les Planned Purchase Order des Purchase Order, non ?
+
+**contexte et portée**
+
+Réexamen après la comparaison Microsoft U868. Correction de Codex : la règle de changement de statut avec identité conservée donnée U867 concernait la précommande de vente ; son extension automatique au Purchase Order était excessive. Pour les achats, distinguer l’objet de planification Planned Purchase Order et l’objet de commande Purchase Order, reliés par l’affermissement sans imposer une identité commune ni une relation un-à-un. Ne pas créer automatiquement deux capacités. Le témoignage U866 sur le libellé MAP « Purchase Order au statut Planned » est conservé ; sa correspondance exacte avec les deux objets reste à confirmer, sans nouvelle preuve de réalisation déduite. Côté vente, Sales Order au statut Preorder conserve son identité au changement de statut.
+
+## U870
+
+**id**
+
+U870
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Expliquer la différence entre achat planifié et précommande de vente
+
+**texte**
+
+Il faut expliquer pourquoi les achats sont coupés en deux et pas les ventes
+
+**contexte et portée**
+
+Documenter la raison du découpage retenu : Planned Purchase Order représente une proposition calculée par le planning ; son affermissement produit un Purchase Order opérationnel, avec filiation et regroupements possibles. Sales Order au statut Preorder porte déjà la demande d’un client avant disponibilité ; sa progression ne requiert pas une autre identité. Le parallèle pertinent du besoin d’achat planifié côté demande est le besoin prévisionnel, pas la précommande client. Identité de la demande et degré d’engagement restent distincts : un Sales Order existant n’est pas nécessairement confirmé. Ce n’est ni une loi universelle achat/vente ni une preuve du mapping MAP. Ajouter cette explication aux fiches, glossaires et scénario ; les sources Microsoft consultées U864/U868 soutiennent le contraste, sans imposer tous les choix FLOW.
+
+## U871
+
+**id**
+
+U871
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Confirmer que MAP envoie des Planned Purchase Orders
+
+**texte**
+
+Non non, Map envoie bien des Planned Purchase Order
+
+**contexte et portée**
+
+Laurent confirme explicitement que MAP envoie des Planned Purchase Orders. Cette précision lève la réserve de correspondance formulée par Codex U868–U870. Mettre à jour la description courante sans effacer les échanges historiques : proposition d’achat du planning, puis Purchase Order à l’affermissement. Ne pas déduire d’autres traitements ou applications de cet apport. La distinction avec Sales Order au statut Preorder reste celle exposée U870.

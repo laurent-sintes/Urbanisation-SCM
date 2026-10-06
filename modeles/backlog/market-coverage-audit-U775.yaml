@@ -864,7 +864,9 @@ publication_delivery:
   - U777
   - U835
   - U853
-  summary: Lot validé transport, rebut, traçabilité et disposition, avec trois scénarios et mapping des capacités.
+  - U861
+  summary: 'Lot validé transport, rebut, traçabilité et disposition, avec trois scénarios et mapping des capacités. U861 :
+    commandes passives et pilotage par les tâches du workflow explicités ; identités et rattachements conservés.'
   required_nodes:
   - id: supply-chain-orchestration
     fields: {}
@@ -2215,6 +2217,8 @@ publication_delivery:
   - id: subdomain-service-orders
     fields:
       scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
         Tenir les [Service Orders](glossary:TER066) avec les conditions demandées, acceptées et modifiées, les résultats attendus et les suites nécessaires. Les familles de prestations sont des capacités au même niveau que les [Orders](glossary:TER012) entrants. [Transport Order](model:service-order-transport) rend explicites les demandes de déplacement, composables avec les prestations d’entrepôt. Le cycle commun conserve les sollicitations de réception et services humains ou documentaires : la liste des familles explicites n’est pas exhaustive.
 
         [Order Management](model:D04) porte la demande à satisfaire et sa promesse. [Fulfilment Orchestration](model:D06) compose les prestations, coordonne leurs dépendances et choisit les adaptations ; ce sous-domaine tient leurs engagements individuels. Le [Service Catalog](model:D14) décrit l’offre, les exécutants réalisent le travail. Un ordre n’impose ni achat, ni document, ni canal technique.
@@ -2225,9 +2229,9 @@ publication_delivery:
 
         les prestations d’entrepôt sont distinguées par dix familles : [Picking Order](model:service-order-picking), [Packing Order](model:service-order-packing) (dont Repacking), [Cross-Docking Order](model:service-order-cross-docking), [Labeling Order](model:service-order-labeling), [Kitting Order](model:service-order-kitting) (dont Dekitting), [Garment Finishing Order](model:service-order-garment-finishing), [Cleaning Order](model:service-order-cleaning), [Repair & Alteration Order](model:service-order-repair-alteration), [Personalization Order](model:service-order-personalization) et [Inspection Order](model:service-order-inspection). Leurs résultats et contraintes peuvent être composés ; [Transport Order](model:service-order-transport) reste une famille distincte. Les exécutants réalisent les opérations.
 
-        le sous-domaine porte aussi [Transport Booking Order](model:service-order-transport-booking), [Document Production Order](model:service-order-document-production), [Customs Clearance Order](model:service-order-customs-clearance), [Billing Order](model:service-order-billing) et [Payment Collection Order](model:service-order-payment-collection). Les demandes peuvent être composées avec les prestations physiques. Le domaine orchestre les services ; leur réalisation financière, documentaire ou douanière peut être confiée ailleurs.
+        le sous-domaine porte aussi [Transport Booking Order](model:service-order-transport-booking), [Document Production Order](model:service-order-document-production), [Customs Clearance Order](model:service-order-customs-clearance), [Billing Order](model:service-order-billing) et [Payment Order](model:service-order-payment-collection). Les demandes peuvent être composées avec les prestations physiques. Le domaine orchestre les services ; leur réalisation financière, documentaire ou douanière peut être confiée ailleurs.
 
-        Chaque famille porte le cycle de ses demandes : activation immédiate, différée ou événementielle, sollicitation, acceptation, conditions et engagements, modification, annulation et clôture. Les résultats partiels conservent le reste de prestation ouvert. Une demande d’annulation ne prouve pas l’arrêt du travail ; un acquittement technique ne prouve pas la réalisation. [Fulfilment](glossary:TER085) coordonne les dépendances et capte les faits ; la famille concernée conserve les engagements individuels. [Receiving Order](model:service-order-receiving) porte les réceptions confiées ; les autres services sans famille spécialisée restent dans le périmètre annoncé, sans ordre artificiel par opération interne. Ces invariants ne constituent pas une capacité sœur des familles.
+        Chaque famille conserve les états et engagements de ses demandes, mis à jour sous le pilotage du workflow : activation immédiate, différée ou événementielle, sollicitation, acceptation, conditions et engagements, modification, annulation et clôture. Les résultats partiels conservent le reste de prestation ouvert. Une demande d’annulation ne prouve pas l’arrêt du travail ; un acquittement technique ne prouve pas la réalisation. [Fulfilment](glossary:TER085) coordonne les dépendances et capte les faits ; la famille concernée conserve les engagements individuels. [Receiving Order](model:service-order-receiving) porte les réceptions confiées ; les autres services sans famille spécialisée restent dans le périmètre annoncé, sans ordre artificiel par opération interne. Ces invariants ne constituent pas une capacité sœur des familles.
 
         [Scrapping Order](model:service-order-scrapping) porte les mises au rebut explicitement confiées, lors d’un retour ou pour des biens déjà stockés. Il se compose avec inspection et autres prestations au sein d’un parcours, avec autorisations, dépendances et preuves ; une décision ou une écriture de sortie ne suffit pas à solder le service.
   - id: service-order-transport
@@ -2319,6 +2323,8 @@ publication_delivery:
       definition: Porter une demande de mise au rebut de biens, ses autorisations, quantités, consignes et preuves attendues
         jusqu’à son résultat reconnu.
       scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
         Un [Scrapping Order](glossary:TER104) permet de confier et suivre la mise au rebut comme prestation logistique identifiable. Préciser les biens, quantités, autorisations, consignes de traitement et preuves exigées. L’[Order](glossary:TER012) conserve le réalisé, le reliquat et les écarts ; une clôture partielle doit être explicitement autorisée. Le traitement peut être exécuté par un prestataire externe et durer dans le temps.
 
         [Inventory Disposition Decision](model:D05.i) détermine le devenir autorisé ; l’[Order](glossary:TER012) ne décide pas de détruire au seul motif d’un écart de stock. [Process Orchestration](model:D06.d) coordonne la prestation ; [Operations Tracking](model:D07.d) reçoit les faits d’exécution et [Service Reconciliation](model:D07.c) les rapproche de l’attendu. [Inventory Tracking](model:D01.f) et [Inventory Ledger](model:D01.g) intègrent et conservent les effets reconnus sur le stock. Une instruction ou une écriture comptable ne prouve pas une destruction physique.

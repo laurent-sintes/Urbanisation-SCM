@@ -3582,19 +3582,30 @@ terms:
     - U853
 - id: TER033
   name: Planned Purchase Order
-  short_description: Nom rapporté pour le document que MAP émet dans le premier cas d’achat décrit en U48, après planification
-    en volumes et délais.
-  definition: Nom rapporté pour le document que MAP émet dans le premier cas d’achat décrit en U48, après planification en
-    volumes et délais.
-  context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
-  notes: 'Sens local incomplet : ne prouve ni commande ferme ni équivalence avec Planned [Order](glossary:TER012), Purchase
-    Requisition ou [Purchase Order](glossary:TER070). Q034, F141.'
+  short_description: Proposition d’achat planifiée, reliée à la commande issue de son affermissement.
+  definition: Proposition d’approvisionnement produite par le planning, distincte de la commande d’achat qui en résulte après
+    affermissement.
+  context: |-
+    [Planned Purchase Order](glossary:TER033) est une proposition d’approvisionnement issue du planning, distincte du [Purchase Order](glossary:TER070) produit à l’affermissement. Conserver les liens de provenance, quantités et échéances entre ces deux objets, sans imposer une identité commune ni un lien un-à-un : plusieurs propositions peuvent être regroupées. La confirmation fournisseur reste une étape distincte. Ne pas compter le même apport comme proposition encore active et comme commande résultante. Ce découpage d’objets ne crée pas deux capacités ; le calcul amont reste sous l’autorité de [Demand & Supply Planning](model:domain-plan).
+
+    Laurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’affermissement ; elle ne garantit pas une identité technique commune.
+
+    La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer.
+  notes: Laurent confirme en U871 que MAP envoie des Planned Purchase Orders. Cet apport précise le témoignage initial U48
+    et remplace la réserve de correspondance formulée par Codex U868–U870. Planned Purchase Order et Purchase Order restent
+    deux objets reliés par l’affermissement ; la conservation d’identité U867 concerne Sales Order au statut Preorder.
   source_refs:
   - U203
   - U477
   - CMP189
   - U797
   - U853
+  - U865
+  - U866
+  - U867
+  - U869
+  - U870
+  - U871
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -3615,12 +3626,19 @@ terms:
     relationship: Recouvrement partiel
     similarities: Planned purchase order peut désigner une proposition à affermir.
     differences: Cet usage Microsoft ne démontre pas la nature du document MAP.
-    flow_position: Qualifier son engagement et son cycle avant toute équivalence avec un objet éditeur.
+    flow_position: |-
+      [Planned Purchase Order](glossary:TER033) est une proposition d’approvisionnement issue du planning, distincte du [Purchase Order](glossary:TER070) produit à l’affermissement. Conserver les liens de provenance, quantités et échéances entre ces deux objets, sans imposer une identité commune ni un lien un-à-un : plusieurs propositions peuvent être regroupées. La confirmation fournisseur reste une étape distincte. Ne pas compter le même apport comme proposition encore active et comme commande résultante. Ce découpage d’objets ne crée pas deux capacités ; le calcul amont reste sous l’autorité de [Demand & Supply Planning](model:domain-plan).
+
+      Laurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’affermissement ; elle ne garantit pas une identité technique commune.
     status: proposed
     source_refs:
     - U477
     - ELM419
     - CMP189
+    - U866
+    - U867
+    - U868
+    - U869
     concept_name: Planned purchase order
     scope_summary: Proposition d’achat issue du plan.
     approach_summary: Transformer la proposition en commande par affermissement.
@@ -3637,20 +3655,31 @@ terms:
     relationship: Recouvrement partiel
     similarities: Le même nom existe chez Oracle Purchasing.
     differences: Chez Oracle EBS, il peut porter un engagement long terme avec livraisons précisées ensuite.
-    flow_position: Qualifier son engagement et son cycle avant toute équivalence avec un objet éditeur.
+    flow_position: |-
+      [Planned Purchase Order](glossary:TER033) est une proposition d’approvisionnement issue du planning, distincte du [Purchase Order](glossary:TER070) produit à l’affermissement. Conserver les liens de provenance, quantités et échéances entre ces deux objets, sans imposer une identité commune ni un lien un-à-un : plusieurs propositions peuvent être regroupées. La confirmation fournisseur reste une étape distincte. Ne pas compter le même apport comme proposition encore active et comme commande résultante. Ce découpage d’objets ne crée pas deux capacités ; le calcul amont reste sous l’autorité de [Demand & Supply Planning](model:domain-plan).
+
+      Laurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’affermissement ; elle ne garantit pas une identité technique commune.
     status: proposed
     source_refs:
     - U477
     - ELM343
     - CMP189
+    - U866
+    - U867
+    - U868
+    - U869
     concept_name: Planned Purchase Order
     scope_summary: Engagement d’achat avec échéances encore prévisionnelles.
     approach_summary: Préciser les livraisons par releases.
   market_inspiration:
     choice: Conserver le nom rapporté pour le document émis par MAP dans le cas U48. Planned Purchase Order ne dit pas encore,
       dans ce contexte local, si la commande est ferme.
-    flow_scope: Nom historique d’un document local, après planification en volumes et délais.
-    flow_approach: Qualifier son engagement et son cycle avant toute équivalence avec un objet éditeur.
+    flow_scope: Proposition d’approvisionnement produite par le planning, distincte de la commande d’achat qui en résulte
+      après affermissement.
+    flow_approach: |-
+      [Planned Purchase Order](glossary:TER033) est une proposition d’approvisionnement issue du planning, distincte du [Purchase Order](glossary:TER070) produit à l’affermissement. Conserver les liens de provenance, quantités et échéances entre ces deux objets, sans imposer une identité commune ni un lien un-à-un : plusieurs propositions peuvent être regroupées. La confirmation fournisseur reste une étape distincte. Ne pas compter le même apport comme proposition encore active et comme commande résultante. Ce découpage d’objets ne crée pas deux capacités ; le calcul amont reste sous l’autorité de [Demand & Supply Planning](model:domain-plan).
+
+      Laurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’affermissement ; elle ne garantit pas une identité technique commune.
     synthesis:
     - 'Microsoft et Oracle emploient des noms très proches pour des engagements différents : proposition à affermir chez Microsoft,
       accord engageant un achat à long terme puis décliné en commandes chez Oracle.'
@@ -7830,10 +7859,10 @@ terms:
   name: Product Catalog
   short_description: Catalogue des offres de produits, avec leurs conditions et leurs publics concernés.
   definition: Référentiel des offres de produits proposées à la commande, avec leur contenu, leurs conditions d’éligibilité
-    et leurs périmètres d’application. Il peut référencer des tarifs de [Price Book](glossary:TER097) sans en devenir une
-    seconde source de vérité.
-  context: Le catalogue décrit ce qui est proposé ; [Price Book](glossary:TER097) porte les tarifs de référence. Le prix contextualisé
-    résulte des règles et autorités commerciales compétentes.
+    et leurs périmètres d’application. Il peut référencer des tarifs de [Product Price Book](glossary:TER145) sans en devenir
+    une seconde source de vérité.
+  context: Le catalogue décrit ce qui est proposé ; [Product Price Book](glossary:TER145) porte les tarifs de référence. Le
+    prix contextualisé résulte des règles et autorités commerciales compétentes.
   notes: 'U97 : ingestion D12 ; distinguer le catalogue commercial de la totalité des caractéristiques du modèle produit.
     U509 : nom Product Catalog adopté. L’offre proposée reste distincte de la sélection applicable [Assortment](glossary:TER087)
     et de ce qui est convenu dans [Agreement](glossary:TER048).'
@@ -7849,6 +7878,7 @@ terms:
   - CMP307
   - ELM517
   - U797
+  - U863
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -10006,13 +10036,13 @@ terms:
     - U853
 - id: TER066
   name: Service Order
-  short_description: Demande de prestation confiée à un exécutant, avec ses exigences, engagements et résultats attendus.
-  definition: Demande de [Service](glossary:TER075) confiée à un [Service Provider](glossary:TER088), tenue avec ses exigences,
-    les conditions acceptées, ses évolutions et ses suites dans Service Order Management. Sa formalisation documentaire et
-    son canal d’échange sont distincts de l’engagement de prestation.
-  context: Supply Chain Orchestration ; distinguer intention, engagement, pilotage, résultat et document. [Scrapping Order](glossary:TER104)
-    porte aussi une prestation identifiable de mise au rebut, distincte de la décision de disposition et du résultat inscrit
-    dans le stock.
+  short_description: Commande de prestation portant demande, état et résultat ; son suivi est piloté par les tâches du workflow.
+  definition: Commande passive d’un [Service](glossary:TER075) confié à un [Service Provider](glossary:TER088), portant exigences,
+    engagements, état et résultat. Les [Tasks](glossary:TER089) du workflow pilotent son suivi.
+  context: |-
+    Supply Chain Orchestration ; distinguer intention, engagement, pilotage, résultat et document. [Scrapping Order](glossary:TER104) porte aussi une prestation identifiable de mise au rebut, distincte de la décision de disposition et du résultat inscrit dans le stock.
+
+    Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
   source_refs:
   - U169
   - U203
@@ -10038,6 +10068,8 @@ terms:
   - U777
   - U797
   - U853
+  - U859
+  - U861
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -10347,7 +10379,12 @@ terms:
   name: Sales Order
   short_description: Commande portant les biens et quantités demandés par un client et leurs conditions applicables.
   definition: Commande portant les biens et quantités demandés par un client et leurs conditions applicables.
-  context: Sens de travail dans le contexte Supply, selon la refonte D04 U214 ; définition détaillée proposée U215.
+  context: |-
+    Sens de travail dans le contexte Supply, selon la refonte D04 U214 ; définition détaillée proposée U215.
+
+    La variante [Preorder](glossary:TER150) porte une demande avant disponibilité commerciale, éventuellement déjà ferme. Le Sales Order conserve son identité lors de la sortie du statut Preorder.
+
+    La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer.
   notes: Famille gérée par [Sales Order](model:D04.i). Aucune création de nœud objet ni de schéma détaillé ; cycle distinct
     des [Service Orders](glossary:TER066). Le nom de capacité adopté ne vaut pas validation de cette définition lexicale.
   source_refs:
@@ -10361,6 +10398,11 @@ terms:
   - CMP307
   - ELM789
   - U797
+  - U865
+  - U866
+  - U867
+  - U870
+  - U871
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -10472,7 +10514,14 @@ terms:
     et leurs conditions applicables.
   definition: Commande d’achat portant les biens ou prestations attendus d’un fournisseur, leurs quantités ou périmètres et
     leurs conditions applicables.
-  context: Sens de travail dans le contexte Supply, selon la refonte D04 U214 ; définition détaillée proposée U215.
+  context: |-
+    Sens de travail dans le contexte Supply, selon la refonte D04 U214 ; définition détaillée proposée U215.
+
+    [Planned Purchase Order](glossary:TER033) est une proposition d’approvisionnement issue du planning, distincte du [Purchase Order](glossary:TER070) produit à l’affermissement. Conserver les liens de provenance, quantités et échéances entre ces deux objets, sans imposer une identité commune ni un lien un-à-un : plusieurs propositions peuvent être regroupées. La confirmation fournisseur reste une étape distincte. Ne pas compter le même apport comme proposition encore active et comme commande résultante. Ce découpage d’objets ne crée pas deux capacités ; le calcul amont reste sous l’autorité de [Demand & Supply Planning](model:domain-plan).
+
+    Laurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’affermissement ; elle ne garantit pas une identité technique commune.
+
+    La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer.
   notes: 'Famille gérée par [Purchase Order](model:D04.j). Aucune création de nœud objet ni de schéma détaillé ; cycle distinct
     des [Service Orders](glossary:TER066). Le nom de capacité adopté ne vaut pas validation de cette définition lexicale.
     U391 : inclut l’achat de prestations, conformément à Service Procurement ; un apport en consignation sans engagement d’achat
@@ -10491,6 +10540,12 @@ terms:
   - CMP307
   - ELM790
   - U797
+  - U865
+  - U866
+  - U867
+  - U869
+  - U870
+  - U871
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
@@ -13005,7 +13060,10 @@ terms:
   definition: Contribution pilotée au sein d’un processus d’orchestration, avec ses conditions d’activation et ses dépendances.
     Elle peut mobiliser des [Service Orders](glossary:TER066) dont [Service Order](glossary:TER066) Management tient les engagements
     individuels ; elle n’est ni l’ordre lui-même ni une tâche opérateur de l’exécutant.
-  context: Supply Chain Orchestration
+  context: |-
+    Supply Chain Orchestration
+
+    Le moteur de [Reactive Workflow Management](glossary:TER125) produit les tâches qui pilotent la sollicitation et le suivi des [Service Orders](glossary:TER066) passifs. Une tâche fait progresser le parcours ; la commande conserve demande, état, engagements et résultat. L’exécutant organise séparément ses tâches opérateur.
   notes: |-
     Une Task peut attendre une condition, déclencher une sollicitation et vérifier le résultat de sa contribution. Les réponses et reprises de l’ordre sont tenues par [Service Order](glossary:TER066) Management ; l’orchestration coordonne les dépendances et mobilise les adaptations décidées. Un acquittement ne prouve pas une fin physique.
 
@@ -13026,6 +13084,8 @@ terms:
   - U843
   - U844
   - U853
+  - U859
+  - U861
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u626
@@ -13759,6 +13819,7 @@ terms:
   - CMP307
   - ELM797
   - ELM820
+  - U863
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u626
@@ -14206,13 +14267,10 @@ terms:
   short_description: Ensemble de tarifs de référence de produits et services.
   definition: Ensemble identifié de tarifs de référence de produits et de services, avec unités, devises, validité et conditions
     d’application.
-  context: Supply Chain Orchestration / Operational References
-  notes: 'Plusieurs livres tarifaires peuvent coexister selon le contexte, les parties et l’autorité qui les fournit. [Product
-    Catalog](glossary:TER049) et [Service Catalog](glossary:TER094) décrivent les offres ; [Assortment](glossary:TER087) sélectionne
-    les produits ; [Agreement](glossary:TER048) porte les conditions convenues. Un Price Book peut leur être associé sans
-    correspondance un-à-un obligatoire. Le tarif de référence ne constitue ni le prix contextualisé calculé ni le prix engagé
-    dans une commande. La maîtrise commerciale reste externe ; Supply conserve la référence locale reçue. Exemple fictif :
-    un tarif porte un montant par vêtement et un autre par prestation de réétiquetage, chacun avec sa période et son unité.'
+  context: Terme générique ; deux références métier distinctes depuis U863.
+  notes: Notion générique conservée pour le vocabulaire. Le modèle distingue [Product Price Book](glossary:TER145) et [Service
+    Price Book](glossary:TER146), portés par leurs Areas respectives. La séparation métier reste compatible avec une réalisation
+    logicielle commune. Aucun troisième référentiel transverse n’est maintenu.
   source_refs:
   - U723
   - ELM721
@@ -14222,6 +14280,7 @@ terms:
   - ELM794
   - ELM798
   - U797
+  - U863
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u723
@@ -14370,7 +14429,7 @@ terms:
       ; Supply conserve la référence locale reçue. Exemple fictif : un tarif porte un montant par vêtement et un autre par
       prestation de réétiquetage, chacun avec sa période et son unité.'
     synthesis:
-    - Tarifs produits et services sous un même concept ; distinguer référence tarifaire, calcul et engagement.
+    - Un concept tarifaire générique, deux périmètres métier distincts dans FLOW.
     examples:
     - title: Illustration FLOW — produits et prestations
       situation: Une substitution et un nouveau trajet sont envisagés pour servir une commande.
@@ -14521,6 +14580,8 @@ terms:
     Le domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration, fournit ce plan à Plan Ingestion. Le calcul prévisionnel reste extérieur ; [Availability](glossary:TER112) utilise la prévision résiduelle sans recompter les besoins déjà portés par les [Orders](glossary:TER012). Une prévision n’est pas une commande.
 
     [Demand Plan Visibility](model:demand-plan-visibility) interprète les besoins prévisionnels dans le contexte d’une demande de la supply chain. La granularité et la portée reçues sont explicites ; leur consommation par les commandes et le calcul de couverture restent dans [Availability](model:D03).
+
+    La demande prévisionnelle ne s’additionne pas automatiquement aux précommandes ; conserver la qualification et les règles de consommation par les commandes.
   notes: Sens local du modèle, distinct des périmètres des produits cités.
   source_refs:
   - U771
@@ -14532,6 +14593,7 @@ terms:
   - U797
   - U801
   - U858
+  - U865
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u771
@@ -15719,9 +15781,10 @@ terms:
     par les ressources.
   definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
     conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
-  context: Sous-domaine FLOW regroupant Order Promising, Master Plan Management, Supply Matching et Policy Optimization. Inventory
-    Management tient les faits de stock et les réservations ; Order Management confirme les engagements. Les catégories restent
-    des attributs de présentation.
+  context: |-
+    Sous-domaine FLOW regroupant Order Promising, Master Plan Management, Supply Matching et Policy Optimization. Inventory Management tient les faits de stock et les réservations ; Order Management confirme les engagements. Les catégories restent des attributs de présentation.
+
+    [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability : elle interprète les prévisions reçues avant les décisions de couverture et de promesse.
   notes: Availability exprime le résultat métier recherché. Le matching reste un mécanisme de rapprochement et d’arbitrage
     des besoins et ressources, sans résumer tout le sous-domaine. Plan Visibility conserve demande prévisionnelle et projections
     d’entrées et de sorties.
@@ -15809,6 +15872,7 @@ terms:
   - ELM208
   - U797
   - U835
+  - U865
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u797
@@ -16776,6 +16840,8 @@ terms:
     Bénéficiaire et résultat : Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
 
     Exemple fictif : Un paiement confirmé débloque la suite de la commande ; un événement répété ne déclenche pas une seconde prestation. Une adaptation locale reste confiée à Fulfilment Orchestration.
+
+    Le moteur produit les [Tasks](glossary:TER089) qui pilotent le suivi des [Service Orders](glossary:TER066) passifs. La demande et son état restent dans l’Order ; le pilotage est dans les tâches ; la réalisation est chez le prestataire.
   notes: Périmètre de responsabilité U848 ; les capacités conservent leurs identités et leurs savoir-faire. La fiche détaillée
     est [Reactive Workflow Management](model:ba-reactive-workflow-management).
   source_refs:
@@ -16785,6 +16851,8 @@ terms:
   - U844
   - U848
   - U853
+  - U859
+  - U861
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u843
@@ -16997,8 +17065,10 @@ terms:
   name: Order Workflow Planning
   definition: Construire ou adapter le parcours.
   short_description: Construire ou adapter le parcours.
-  context: Capacité d’[Order Management](model:D04), dans [Reactive Workflow Management](glossary:TER125). Composer les activités,
-    dépendances et attentes du parcours sans prendre les décisions de promesse ou de choix du prestataire à leur place.
+  context: |-
+    Capacité d’[Order Management](model:D04), dans [Reactive Workflow Management](glossary:TER125). Composer les activités, dépendances et attentes du parcours sans prendre les décisions de promesse ou de choix du prestataire à leur place.
+
+    Produire les tâches de sollicitation, d’attente et de suivi nécessaires aux [Service Orders](glossary:TER066), à partir des activités réutilisables et du contexte. Les commandes restent passives : elles ne choisissent ni leur parcours ni les suites à donner aux événements. Ne pas confondre ces tâches de pilotage avec les tâches internes de la logistique.
   notes: Le nom et la définition appartiennent au lot U843 ; la fiche de capacité porte le périmètre détaillé. Comparaison
     fonctionnelle partielle, sans équivalence de taxonomie.
   source_refs:
@@ -17006,6 +17076,8 @@ terms:
   - U842
   - U843
   - U844
+  - U859
+  - U861
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u843
@@ -17069,9 +17141,10 @@ terms:
   name: Order Workflow Orchestration
   definition: Piloter les activités, attentes et résultats du parcours retenu.
   short_description: Piloter les activités, attentes et résultats du parcours retenu.
-  context: Capacité d’[Order Management](model:D04), dans [Reactive Workflow Management](glossary:TER125). Conduire les activités
-    autorisées et leurs attentes, en laissant aux familles de commandes leurs engagements et à Fulfilment la coordination
-    des prestations.
+  context: |-
+    Capacité d’[Order Management](model:D04), dans [Reactive Workflow Management](glossary:TER125). Conduire les activités autorisées et leurs attentes, en laissant aux familles de commandes leurs engagements et à Fulfilment la coordination des prestations.
+
+    Piloter les [Service Orders](glossary:TER066) passifs au moyen des [Tasks](glossary:TER089) produites pour le parcours : solliciter la prestation, organiser ses attentes, exploiter les résultats et appliquer les suites autorisées. La commande conserve son état, ses engagements et ses invariants ; elle ne décide ni ne s’orchestre elle-même. [Fulfilment Orchestration](model:D06) réalise la coordination d’exécution confiée, sans produire un parcours autonome concurrent.
   notes: Le nom et la définition appartiennent au lot U843 ; la fiche de capacité porte le périmètre détaillé. Comparaison
     fonctionnelle partielle, sans équivalence de taxonomie.
   source_refs:
@@ -17079,6 +17152,8 @@ terms:
   - U842
   - U843
   - U844
+  - U859
+  - U861
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u843
@@ -17160,7 +17235,7 @@ terms:
     state: proposed
     note: Documentation et alignement du lot U843 sous délégation U844.
 - id: TER131
-  name: Inventory Position Management
+  name: Inventory State Management
   definition: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits, vérifications
     et corrections.
   short_description: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits, vérifications
@@ -17171,11 +17246,14 @@ terms:
     Bénéficiaire et résultat : Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
 
     Exemple fictif : Une réception annoncée de 100 pièces est constatée à 80 : restituer la correction et les engagements concernés sans confondre disponibilité et propriété.
+
+    State désigne la situation quantitative datée : quantités par produit, lieu et état, mouvements reconnus, contrôles et engagements de [Reservation](model:D02.c). Ce périmètre reste distinct de la propriété des biens.
   notes: Périmètre de responsabilité U848 ; les capacités conservent leurs identités et leurs savoir-faire. La fiche détaillée
-    est [Inventory Position Management](model:ba-inventory-position-management).
+    est [Inventory State Management](model:ba-inventory-position-management).
   source_refs:
   - U848
   - U853
+  - U865
   review:
     state: proposed
     note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
@@ -17197,7 +17275,7 @@ terms:
       et corrections.
     definition_choice: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits, vérifications
       et corrections.
-    term_choice: Inventory Position Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+    term_choice: Inventory State Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
     scope_summary: Exposer les quantités et expliquer leur origine.
     approach_summary: La vue produit ne délimite pas à elle seule la responsabilité complète de tenue et correction FLOW.
     evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation installée
@@ -17222,7 +17300,7 @@ terms:
       et corrections.
     definition_choice: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits, vérifications
       et corrections.
-    term_choice: Inventory Position Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+    term_choice: Inventory State Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
     scope_summary: Utiliser stock et engagements pour calculer les besoins nets.
     approach_summary: Le calcul ne couvre pas toute la fiabilisation des positions FLOW.
     evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation installée
@@ -17855,11 +17933,15 @@ terms:
     Bénéficiaire et résultat : Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
 
     Exemple fictif : Demander un nouvel étiquetage sur 40 pièces et suivre son acceptation puis son résultat ; la réalisation physique appartient au prestataire.
+
+    Les familles sont des commandes passives adressées à la logistique selon une offre de service définie. Elles portent les exigences et résultats ; les [Tasks](glossary:TER089) du moteur de [Reactive Workflow Management](glossary:TER125) pilotent leur suivi. Aucune décision autonome n’est attachée à ces familles.
   notes: Périmètre de responsabilité U848 ; les capacités conservent leurs identités et leurs savoir-faire. La fiche détaillée
     est [Goods Processing Order Management](model:ba-goods-processing-order-management).
   source_refs:
   - U848
   - U853
+  - U859
+  - U861
   review:
     state: proposed
     note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
@@ -17985,11 +18067,18 @@ terms:
     Bénéficiaire et résultat : Permettre au donneur d’ordre de connaître l’état et le résultat des prestations de facturation ou d’encaissement confiées.
 
     Exemple fictif : Confier une facturation et recevoir sa référence de résultat ; les règles fiscales et la tenue des comptes restent sous autorité financière.
+
+    [Payment Order](model:service-order-payment-collection) désigne la demande d’encaissement confiée ; le nom simplifié ne change pas son périmètre.
+
+    [Billing Order](model:service-order-billing) et [Payment Order](model:service-order-payment-collection) sont des commandes passives de prestations définies. Les [Tasks](glossary:TER089) du workflow pilotent leur suivi ; les services financiers réalisent la facturation et l’encaissement.
   notes: Périmètre de responsabilité U848 ; les capacités conservent leurs identités et leurs savoir-faire. La fiche détaillée
     est [Financial Service Order Management](model:ba-financial-service-order-management).
   source_refs:
   - U848
   - U853
+  - U860
+  - U859
+  - U861
   review:
     state: proposed
     note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
@@ -18026,5 +18115,538 @@ terms:
     - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
     source_refs:
     - U853
+- id: TER145
+  name: Product Price Book
+  short_description: Tarifs de référence des produits.
+  definition: Ensemble identifié de tarifs de référence des produits, avec unités, devises, validité et conditions d’application.
+  context: Supply Chain Orchestration / Operational References
+  notes: 'Les tarifs se rapportent aux offres de [Product Catalog](model:D12) et aux conditions convenues dans [Agreement](model:D11).
+    Chaque tarif conserve son origine, son unité, sa devise, sa période et ses conditions d’application. Plusieurs livres
+    peuvent coexister. La maîtrise des tarifs à l’échelle de l’entreprise reste externe ; Operational References porte leur
+    référence locale utilisable, sa validité et ses incohérences connues. Consulter un tarif ne calcule pas le prix contextualisé
+    et ne modifie pas le prix engagé. Les deux référentiels métier peuvent être réalisés par un même composant logiciel et
+    un stockage commun. Exemple fictif : Tarif de référence d’un vêtement par unité, dans une devise et pour une période données.'
+  source_refs:
+  - U862
+  - U863
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u863
+  review:
+    state: proposed
+    note: Distinction métier U863 ; rédaction proposée.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Define product pricing with price lists and price list items
+    source_title: Define product pricing with price lists and price list items
+    source_url: https://learn.microsoft.com/en-us/dynamics365/sales/create-price-lists-price-list-items-define-pricing-products
+    source_version: Documentation évolutive consultée le 24 septembre 2026
+    source_locator: Introduction ; définition du livre ou de la liste tarifaire
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages consultés le 6 octobre 2026 ; rapprochement partiel. SAP documente notamment produits/pièces
+      et prestations dans les transactions de service ; ne couvre pas tout le tarif commercial des produits FLOW.
+    element_name: Define product pricing with price lists and price list items
+    concept_name: Define product pricing with price lists and price list items
+    element_type: Fonction documentée par la source primaire
+    scope_summary: Les Price Lists relient produits ou services, unités et détails tarifaires ; plusieurs listes existent
+      selon le contexte.
+    approach_summary: FLOW distingue les tarifs des produits et des prestations, tout en permettant une réalisation logicielle
+      commune.
+    similarities: Les Price Lists relient produits ou services, unités et détails tarifaires ; plusieurs listes existent selon
+      le contexte.
+    differences: Les mécanismes éditeurs couvrent aussi calcul et transactions ; FLOW conserve ici les tarifs de référence.
+      La source ne prescrit pas les deux Areas ni deux référentiels logiciels.
+    relationship: Appui sémantique
+    flow_position: Ensemble identifié de tarifs de référence des produits, avec unités, devises, validité et conditions d’application.
+    status: proposed
+    source_refs:
+    - ELM531
+    - CMP281
+    - U723
+    - U863
+    term_choice: Product Price Book précise le périmètre métier des tarifs ; aucun composant logiciel distinct imposé.
+    definition_choice: Ensemble identifié de tarifs de référence des produits, avec unités, devises, validité et conditions
+      d’application.
+  - vendor: SAP
+    product: SAP S/4HANA — périmètre du cours cité
+    element_name: Configuring Pricing for Service Transactions
+    concept_name: Configuring Pricing for Service Transactions
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: Les conditions de prix s’appliquent aux produits et services des transactions de service.
+    approach_summary: FLOW distingue les tarifs des produits et des prestations, tout en permettant une réalisation logicielle
+      commune.
+    similarities: Les conditions de prix s’appliquent aux produits et services des transactions de service.
+    differences: Les mécanismes éditeurs couvrent aussi calcul et transactions ; FLOW conserve ici les tarifs de référence.
+      La source ne prescrit pas les deux Areas ni deux référentiels logiciels.
+    flow_position: Ensemble identifié de tarifs de référence des produits, avec unités, devises, validité et conditions d’application.
+    source_title: Configuring Pricing for Service Transactions
+    source_url: https://learning.sap.com/courses/performing-basic-customizing-for-service-in-sap-s-4hana-and-sap-s-4hana-cloud-private-edition/configuring-pricing-for-service-transactions_c9d5bd5a-5032-410b-8632-579a947eedcc
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Configuring Pricing for Service Transactions — passages sur le mécanisme rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages consultés le 6 octobre 2026 ; rapprochement partiel. SAP documente notamment produits/pièces
+      et prestations dans les transactions de service ; ne couvre pas tout le tarif commercial des produits FLOW.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM798
+    - U863
+    term_choice: Product Price Book précise le périmètre métier des tarifs ; aucun composant logiciel distinct imposé.
+    definition_choice: Ensemble identifié de tarifs de référence des produits, avec unités, devises, validité et conditions
+      d’application.
+  market_inspiration:
+    choice: Product Price Book
+    flow_scope: Ensemble identifié de tarifs de référence des produits, avec unités, devises, validité et conditions d’application.
+    flow_approach: Chaque tarif conserve son origine, son unité, sa devise, sa période et ses conditions d’application. Plusieurs
+      livres peuvent coexister. La maîtrise des tarifs à l’échelle de l’entreprise reste externe ; Operational References
+      porte leur référence locale utilisable, sa validité et ses incohérences connues. Consulter un tarif ne calcule pas le
+      prix contextualisé et ne modifie pas le prix engagé. Les deux référentiels métier peuvent être réalisés par un même
+      composant logiciel et un stockage commun.
+    synthesis:
+    - Deux périmètres tarifaires métier ; une réalisation logicielle commune reste possible.
+    examples:
+    - title: Illustration FLOW
+      situation: Consulter le tarif d’un vêtement.
+      outcome: Obtenir le tarif de référence avec son unité et sa validité, avant toute évaluation contextualisée.
+      lesson: Le tarif reçu reste distinct du calcul et du prix engagé ; exemple fictif.
+      source_title: Define product pricing with price lists and price list items
+      source_url: https://learn.microsoft.com/en-us/dynamics365/sales/create-price-lists-price-list-items-define-pricing-products
+      source_refs:
+      - U863
+  label_fr: Tarifs de référence des produits
+- id: TER146
+  name: Service Price Book
+  short_description: Tarifs de référence des prestations.
+  definition: Ensemble identifié de tarifs de référence des prestations, avec unités, devises, validité et conditions d’application.
+  context: Supply Chain Orchestration / Operational References
+  notes: 'Les tarifs se rapportent aux offres de [Service Catalog](model:D14) et aux conditions convenues dans [Agreement](model:D11).
+    Chaque tarif conserve son origine, son unité, sa devise, sa période et ses conditions d’application. Plusieurs livres
+    peuvent coexister. La maîtrise des tarifs à l’échelle de l’entreprise reste externe ; Operational References porte leur
+    référence locale utilisable, sa validité et ses incohérences connues. Consulter un tarif ne calcule pas le prix contextualisé
+    et ne modifie pas le prix engagé. Les deux référentiels métier peuvent être réalisés par un même composant logiciel et
+    un stockage commun. Exemple fictif : Tarif de référence d’un réétiquetage par pièce ou d’un transport selon une unité
+    et une période données.'
+  source_refs:
+  - U862
+  - U863
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u863
+  review:
+    state: proposed
+    note: Distinction métier U863 ; rédaction proposée.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Define product pricing with price lists and price list items
+    source_title: Define product pricing with price lists and price list items
+    source_url: https://learn.microsoft.com/en-us/dynamics365/sales/create-price-lists-price-list-items-define-pricing-products
+    source_version: Documentation évolutive consultée le 24 septembre 2026
+    source_locator: Introduction ; définition du livre ou de la liste tarifaire
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages consultés le 6 octobre 2026 ; rapprochement partiel. SAP documente notamment produits/pièces
+      et prestations dans les transactions de service ; ne couvre pas tout le tarif commercial des produits FLOW.
+    element_name: Define product pricing with price lists and price list items
+    concept_name: Define product pricing with price lists and price list items
+    element_type: Fonction documentée par la source primaire
+    scope_summary: Les Price Lists relient produits ou services, unités et détails tarifaires ; plusieurs listes existent
+      selon le contexte.
+    approach_summary: FLOW distingue les tarifs des produits et des prestations, tout en permettant une réalisation logicielle
+      commune.
+    similarities: Les Price Lists relient produits ou services, unités et détails tarifaires ; plusieurs listes existent selon
+      le contexte.
+    differences: Les mécanismes éditeurs couvrent aussi calcul et transactions ; FLOW conserve ici les tarifs de référence.
+      La source ne prescrit pas les deux Areas ni deux référentiels logiciels.
+    relationship: Appui sémantique
+    flow_position: Ensemble identifié de tarifs de référence des prestations, avec unités, devises, validité et conditions
+      d’application.
+    status: proposed
+    source_refs:
+    - ELM531
+    - CMP281
+    - U723
+    - U863
+    term_choice: Service Price Book précise le périmètre métier des tarifs ; aucun composant logiciel distinct imposé.
+    definition_choice: Ensemble identifié de tarifs de référence des prestations, avec unités, devises, validité et conditions
+      d’application.
+  - vendor: SAP
+    product: SAP S/4HANA — périmètre du cours cité
+    element_name: Configuring Pricing for Service Transactions
+    concept_name: Configuring Pricing for Service Transactions
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: Les conditions de prix s’appliquent aux produits et services des transactions de service.
+    approach_summary: FLOW distingue les tarifs des produits et des prestations, tout en permettant une réalisation logicielle
+      commune.
+    similarities: Les conditions de prix s’appliquent aux produits et services des transactions de service.
+    differences: Les mécanismes éditeurs couvrent aussi calcul et transactions ; FLOW conserve ici les tarifs de référence.
+      La source ne prescrit pas les deux Areas ni deux référentiels logiciels.
+    flow_position: Ensemble identifié de tarifs de référence des prestations, avec unités, devises, validité et conditions
+      d’application.
+    source_title: Configuring Pricing for Service Transactions
+    source_url: https://learning.sap.com/courses/performing-basic-customizing-for-service-in-sap-s-4hana-and-sap-s-4hana-cloud-private-edition/configuring-pricing-for-service-transactions_c9d5bd5a-5032-410b-8632-579a947eedcc
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Configuring Pricing for Service Transactions — passages sur le mécanisme rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages consultés le 6 octobre 2026 ; rapprochement partiel. SAP documente notamment produits/pièces
+      et prestations dans les transactions de service ; ne couvre pas tout le tarif commercial des produits FLOW.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM798
+    - U863
+    term_choice: Service Price Book précise le périmètre métier des tarifs ; aucun composant logiciel distinct imposé.
+    definition_choice: Ensemble identifié de tarifs de référence des prestations, avec unités, devises, validité et conditions
+      d’application.
+  market_inspiration:
+    choice: Service Price Book
+    flow_scope: Ensemble identifié de tarifs de référence des prestations, avec unités, devises, validité et conditions d’application.
+    flow_approach: Chaque tarif conserve son origine, son unité, sa devise, sa période et ses conditions d’application. Plusieurs
+      livres peuvent coexister. La maîtrise des tarifs à l’échelle de l’entreprise reste externe ; Operational References
+      porte leur référence locale utilisable, sa validité et ses incohérences connues. Consulter un tarif ne calcule pas le
+      prix contextualisé et ne modifie pas le prix engagé. Les deux référentiels métier peuvent être réalisés par un même
+      composant logiciel et un stockage commun.
+    synthesis:
+    - Deux périmètres tarifaires métier ; une réalisation logicielle commune reste possible.
+    examples:
+    - title: Illustration FLOW
+      situation: Consulter le tarif d’une prestation de réétiquetage.
+      outcome: Obtenir le tarif de référence avec son unité et sa validité, avant toute évaluation contextualisée.
+      lesson: Le tarif reçu reste distinct du calcul et du prix engagé ; exemple fictif.
+      source_title: Define product pricing with price lists and price list items
+      source_url: https://learn.microsoft.com/en-us/dynamics365/sales/create-price-lists-price-list-items-define-pricing-products
+      source_refs:
+      - U863
+  label_fr: Tarifs de référence des prestations
+- id: TER147
+  name: Partner & Agreement References
+  label_fr: Références des partenaires et accords
+  short_description: Fournir les identités, rôles et accords de référence utiles aux engagements et opérations.
+  definition: Fournir les identités, rôles et accords de référence utiles aux engagements et opérations.
+  context: Présente [Party / Role](model:D09), [Agreement](model:D11). Ce périmètre porte la cohérence et la fourniture des
+    vues locales, avec validité, provenance et limites connues. Les références restent documentaires ; aucune capacité de
+    consultation autonome n’est créée. Une responsabilité métier distincte n’impose ni équipe ni composant logiciel séparé.
+  source_refs:
+  - U862
+  - U863
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u863
+  review:
+    state: proposed
+    note: Regroupement U862/U863 ; nom et rédaction proposés.
+  market_gaps:
+  - family: microsoft_dynamics
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Accès aux pages
+      partenaires insuffisant pour une comparaison complète de l’Area et des accords.
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/overview-global-address-book
+    source_refs:
+    - U862
+    - U863
+  - family: sap_s4hana
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Accès aux pages
+      partenaires insuffisant pour une comparaison complète de l’Area et des accords.
+    investigated_urls:
+    - https://help.sap.com/docs/SAP_S4HANA_CLOUD/f86dc2eb1f8b48c880a7607213104b27/45efed579120bc12e10000000a4450e5.html?locale=en-US
+    source_refs:
+    - U862
+    - U863
+- id: TER148
+  name: Product References
+  label_fr: Références des produits
+  short_description: Fournir les références des produits, des offres, des assortiments et des tarifs produits.
+  definition: Fournir les références des produits, des offres, des assortiments et des tarifs produits.
+  context: Présente [Product Reference](model:D08), [Product Catalog](model:D12), [Assortment](model:D16), [Product Price
+    Book](model:product-price-book). Ce périmètre porte la cohérence et la fourniture des vues locales, avec validité, provenance
+    et limites connues. Les références restent documentaires ; aucune capacité de consultation autonome n’est créée. Une responsabilité
+    métier distincte n’impose ni équipe ni composant logiciel séparé.
+  source_refs:
+  - U862
+  - U863
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u863
+  review:
+    state: proposed
+    note: Regroupement U862/U863 ; nom et rédaction proposés.
+  market_gaps:
+  - family: microsoft_dynamics
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Les passages
+      tarifaires ne couvrent pas l’ensemble des références de cette Area.
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/sales/create-price-lists-price-list-items-define-pricing-products
+    source_refs:
+    - U862
+    - U863
+  - family: sap_s4hana
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Les passages
+      tarifaires ne couvrent pas l’ensemble des références de cette Area.
+    investigated_urls:
+    - https://learning.sap.com/courses/performing-basic-customizing-for-service-in-sap-s-4hana-and-sap-s-4hana-cloud-private-edition/configuring-pricing-for-service-transactions_c9d5bd5a-5032-410b-8632-579a947eedcc
+    source_refs:
+    - U862
+    - U863
+- id: TER149
+  name: Service References
+  label_fr: Références des services
+  short_description: Fournir les références du réseau, des prestations proposées et des tarifs de services.
+  definition: Fournir les références du réseau, des prestations proposées et des tarifs de services.
+  context: Présente [Fulfilment Network](model:D13), [Service Catalog](model:D14), [Service Price Book](model:service-price-book).
+    Ce périmètre porte la cohérence et la fourniture des vues locales, avec validité, provenance et limites connues. Les références
+    restent documentaires ; aucune capacité de consultation autonome n’est créée. Une responsabilité métier distincte n’impose
+    ni équipe ni composant logiciel séparé.
+  source_refs:
+  - U862
+  - U863
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u863
+  review:
+    state: proposed
+    note: Regroupement U862/U863 ; nom et rédaction proposés.
+  market_gaps:
+  - family: microsoft_dynamics
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Les passages
+      tarifaires ne couvrent pas l’ensemble des références de cette Area.
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/sales/create-price-lists-price-list-items-define-pricing-products
+    source_refs:
+    - U862
+    - U863
+  - family: sap_s4hana
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Les passages
+      tarifaires ne couvrent pas l’ensemble des références de cette Area.
+    investigated_urls:
+    - https://learning.sap.com/courses/performing-basic-customizing-for-service-in-sap-s-4hana-and-sap-s-4hana-cloud-private-edition/configuring-pricing-for-service-transactions_c9d5bd5a-5032-410b-8632-579a947eedcc
+    source_refs:
+    - U862
+    - U863
+- id: TER150
+  name: Preorder
+  label_fr: Précommande
+  short_description: Statut d’un Sales Order avant disponibilité ; la même commande progresse par changement de statut.
+  definition: Porter le statut Preorder d’un Sales Order et le cycle associé avant disponibilité commerciale ; faire progresser
+    ce même Order par changement de statut.
+  context: |-
+    [Preorder](glossary:TER150) est un statut du [Sales Order](model:D04.i), pas un autre objet. La précommande devient commande par changement de statut en conservant son identité, son contenu, ses engagements et son historique. Le comportement décrit les conditions et activités associées à ce statut : prise en compte, attente, réexamen et sortie autorisée.
+
+    Une [précommande](glossary:TER150) conserve quantités, échéances demandées ou proposées, conditions et engagement reconnu. Elle peut être préparée puis affermie, ou être ferme dès son acceptation : attendre une disponibilité future ne signifie pas absence d’engagement. Elle reste une variante de [Sales Order](model:D04.i), combinable avec livraison, retrait et relation intercompany.
+
+    [Availability](model:D03) interprète les prévisions et détermine les possibilités de promesse ; [Order Management](model:D04) porte la confirmation. Le [workflow réactif](glossary:TER125) surveille les faits et échéances, produit les tâches de suivi et autorise la suite selon le contexte. Un retard appelle un réexamen, sans modifier automatiquement l’engagement. La précommande reste distincte d’un reliquat faute de stock après disponibilité.
+
+    La demande ferme consomme la prévision correspondante selon les règles applicables, sans compter deux fois le même besoin. Les [Planned Purchase Orders](glossary:TER033) et les Purchase Orders sont deux objets reliés par l’affermissement ; cette distinction côté achat ne s’applique pas au Sales Order qui sort de Preorder en conservant son identité. Un plan ou une date de lancement ne déclenche pas seul une réservation ni une prestation.
+
+    Exemple fictif : un client commande 40 robes pour une collection à venir. La date annoncée peut être révisée avant confirmation ; après confirmation, tout report conserve la trace de l’engagement et suit les autorisations applicables.
+
+    La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer.
+  source_refs:
+  - U864
+  - U865
+  - U866
+  - U867
+  - U869
+  - U870
+  - U871
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u865
+  review:
+    state: proposed
+    note: Notion adoptée U865 ; rédaction proposée.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Intelligent Order Management
+    source_title: Set up backorder and preorder functionality
+    source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/backorder-preorder
+    source_version: Documentation évolutive consultée le 6 octobre 2026
+    source_locator: Passages sur commandes, disponibilité future et prise en compte de la demande.
+    consulted_on: '2026-10-06'
+    evidence_limits: Appui partiel ; aucun consensus sur le découpage FLOW ni preuve de réalisation installée.
+    element_name: Set up backorder and preorder functionality
+    concept_name: Set up backorder and preorder functionality
+    element_type: Concept et usage documentés
+    scope_summary: La précommande précède le lancement ; les lignes peuvent attendre avant leur traitement.
+    approach_summary: La précommande précède le lancement ; les lignes peuvent attendre avant leur traitement.
+    similarities: La précommande précède le lancement ; les lignes peuvent attendre avant leur traitement.
+    differences: Documentation signalée preview ; FLOW ne reprend ni les états logiciels ni le traitement périodique imposé
+      par le produit. FLOW conserve le même Sales Order lors du changement de statut ; aucun processus de conversion éditeur
+      n’est imposé.
+    relationship: Recouvrement partiel
+    flow_position: Porter le statut Preorder d’un Sales Order et le cycle associé avant disponibilité commerciale ; faire
+      progresser ce même Order par changement de statut.
+    status: proposed
+    source_refs:
+    - U864
+    - U865
+    - U866
+    - U867
+    term_choice: Preorder explicite la prise de commande avant disponibilité commerciale, sans imposer son degré d’engagement.
+    definition_choice: Porter le statut Preorder d’un Sales Order et le cycle associé avant disponibilité commerciale ; faire
+      progresser ce même Order par changement de statut.
+  - vendor: SAP
+    product: SAP S/4HANA for Fashion and Vertical Business
+    source_title: Explaining Sales Order Handling
+    source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-sales-order-handling_b87d52ef-bf38-4a67-b6f5-7324019d8c24
+    source_version: Documentation évolutive consultée le 6 octobre 2026
+    source_locator: Passages sur commandes, disponibilité future et prise en compte de la demande.
+    consulted_on: '2026-10-06'
+    evidence_limits: Appui partiel ; aucun consensus sur le découpage FLOW ni preuve de réalisation installée.
+    element_name: Explaining Sales Order Handling
+    concept_name: Explaining Sales Order Handling
+    element_type: Concept et usage documentés
+    scope_summary: Sales Order porte la demande saisonnière des clients wholesale.
+    approach_summary: Sales Order porte la demande saisonnière des clients wholesale.
+    similarities: Sales Order porte la demande saisonnière des clients wholesale.
+    differences: Le passage saisonnier étaye l’anticipation commerciale, pas un comportement natif nommé Preorder ni le cycle
+      FLOW complet. FLOW conserve le même Sales Order lors du changement de statut ; aucun processus de conversion éditeur
+      n’est imposé.
+    relationship: Recouvrement partiel
+    flow_position: Porter le statut Preorder d’un Sales Order et le cycle associé avant disponibilité commerciale ; faire
+      progresser ce même Order par changement de statut.
+    status: proposed
+    source_refs:
+    - U864
+    - U865
+    - U866
+    - U867
+    term_choice: Preorder explicite la prise de commande avant disponibilité commerciale, sans imposer son degré d’engagement.
+    definition_choice: Porter le statut Preorder d’un Sales Order et le cycle associé avant disponibilité commerciale ; faire
+      progresser ce même Order par changement de statut.
+- id: TER151
+  name: Plan Visibility
+  label_fr: Interprétation des plans
+  short_description: Interpréter les prévisions reçues pour les décisions d’Availability.
+  definition: Interpréter les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) reçus dans le contexte des
+    demandes de la supply chain pour éclairer les décisions d’[Availability](glossary:TER112).
+  context: Business Area d’[Availability](model:D03), dédiée à l’interprétation des plans externes. Exploiter les plans du
+    domaine [Demand & Supply Planning](model:domain-plan), reçus par [Plan Ingestion](model:plans-ingestion) dans [Integration](model:subdomain-integration).
+    Le domaine source [Demand & Supply Planning](model:domain-plan) est représenté au même niveau que Supply Chain Orchestration,
+    sans décomposition interne. [Supply Plan Visibility](model:plans-visibility) interprète les prévisions d’entrées et de
+    sorties de stock hors achats ; [Demand Plan Visibility](model:demand-plan-visibility) interprète la demande prévisionnelle.
+    Les deux capacités qualifient la pertinence des données au regard de la demande examinée et rendent explicites versions,
+    horizons, provenance et incertitudes pour [Availability](glossary:TER112), pour les promesses et les arbitrages collectifs.
+    Le calcul des prévisions reste externe. Le master plan d’affectation est construit et géré dans [Availability](model:D03).
+    Une projection ne crée ni [Order](glossary:TER012) ferme ni mouvement de stock. Le rattachement rapproche interprétation
+    et décisions de couverture ; il ne déplace ni la production des prévisions ni leur ingestion.
+  source_refs:
+  - U858
+  - U864
+  - U865
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u865
+  review:
+    state: proposed
+    note: Rattachement adopté U865 ; responsabilités conservées.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Master plans overview
+    element_name: Master plans overview
+    element_type: Concept ou fonction documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Plans distincts, recalculs, simulations, conversion des propositions et suggestions de modification des
+      ordres.
+    differences: Les plans externes et besoins prévisionnels sont documentés ; leur ingestion dans un sous-domaine autonome
+      est une frontière FLOW. Le sens Supply Plan hors achats vient de U668 ; ces sources ne prouvent pas une équivalence
+      avec Supply Planning éditeur.
+    flow_position: Interpréter les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) reçus dans le contexte
+      des demandes de la supply chain pour éclairer les décisions d’[Availability](glossary:TER112).
+    source_title: Master plans overview
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
+    source_version: Documentation évolutive, mise à jour affichée le 25 mars 2026
+    consulted_on: '2026-09-23'
+    source_locator: Using master plans ; Firming ; Action message
+    evidence_limits: Le module calcule les plans ; FLOW sépare leur production APS et la fourniture de données planifiées.
+      Les plans externes et besoins prévisionnels sont documentés ; leur ingestion dans un sous-domaine autonome est une frontière
+      FLOW. Le sens Supply Plan hors achats vient de U668 ; ces sources ne prouvent pas une équivalence avec Supply Planning
+      éditeur.
+    status: proposed
+    source_refs:
+    - ELM415
+    - CMP269
+    - CMP270
+    - U673
+    term_choice: Nom explicitant le sujet et la visibilité dans FLOW ; pas une nomenclature universelle des éditeurs.
+    definition_choice: 'Appui de Master plans overview : Plans distincts, recalculs, simulations, conversion des propositions
+      et suggestions de modification des ordres. Limite de reprise dans FLOW : Les plans externes et besoins prévisionnels
+      sont documentés ; leur ingestion dans un sous-domaine autonome est une frontière FLOW. Le sens Supply Plan hors achats
+      vient de U668 ; ces sources ne prouvent pas une équivalence avec Supply Planning éditeur.'
+    concept_name: Master plans overview
+    scope_summary: Plans distincts, recalculs, simulations, conversion des propositions et suggestions de modification des
+      ordres.
+    approach_summary: Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching.
+  - vendor: SAP
+    product: Outlining Program Planning
+    element_name: Outlining Program Planning
+    element_type: Concept ou fonction documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la stratégie.
+      Demand Management gère leur interaction pour alimenter MRP.
+    differences: Les plans externes et besoins prévisionnels sont documentés ; leur ingestion dans un sous-domaine autonome
+      est une frontière FLOW. Le sens Supply Plan hors achats vient de U668 ; ces sources ne prouvent pas une équivalence
+      avec Supply Planning éditeur.
+    flow_position: Interpréter les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) reçus dans le contexte
+      des demandes de la supply chain pour éclairer les décisions d’[Availability](glossary:TER112).
+    source_title: Outlining Program Planning
+    source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a
+    source_version: Cours S/4HANA Cloud Public Edition, édition non affichée
+    consulted_on: '2026-09-23'
+    source_locator: Production Planning Overview ; Demand Management Overview
+    evidence_limits: Exemple de production, pas modèle universel de retail ; ne démontre pas l’externalisation de toute décision
+      de couverture. Les plans externes et besoins prévisionnels sont documentés ; leur ingestion dans un sous-domaine autonome
+      est une frontière FLOW. Le sens Supply Plan hors achats vient de U668 ; ces sources ne prouvent pas une équivalence
+      avec Supply Planning éditeur.
+    status: proposed
+    source_refs:
+    - ELM649
+    - CMP269
+    - CMP270
+    - U673
+    term_choice: Nom explicitant le sujet et la visibilité dans FLOW ; pas une nomenclature universelle des éditeurs.
+    definition_choice: 'Appui de Outlining Program Planning : Les prévisions IBP alimentent des besoins indépendants planifiés,
+      consommés par des commandes selon la stratégie. Demand Management gère leur interaction pour alimenter MRP. Limite de
+      reprise dans FLOW : Les plans externes et besoins prévisionnels sont documentés ; leur ingestion dans un sous-domaine
+      autonome est une frontière FLOW. Le sens Supply Plan hors achats vient de U668 ; ces sources ne prouvent pas une équivalence
+      avec Supply Planning éditeur.'
+    concept_name: Outlining Program Planning
+    scope_summary: Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la
+      stratégie. Demand Management gère leur interaction pour alimenter MRP.
+    approach_summary: Rendre utilisables les Demand Plans et Supply Plans reçus pour éclairer la promesse et le Matching.
+  - vendor: Microsoft
+    product: Microsoft Dynamics 365 — application indiquée par la source
+    element_name: Inventory forecasts
+    concept_name: Inventory forecasts
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: Les prévisions Supply et Demand sont distinguées et consommées par la planification.
+    approach_summary: 'Rapprochement avec Plan Visibility : Les prévisions Supply et Demand sont distinguées et consommées
+      par la planification.'
+    similarities: Les prévisions Supply et Demand sont distinguées et consommées par la planification.
+    differences: Le Supply Plan FLOW est volontairement limité aux prévisions de mouvements hors achats ; les prévisions Microsoft
+      ont une portée plus large. L’APS externe ne devient pas un sous-domaine.
+    flow_position: Interpréter les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) reçus dans le contexte
+      des demandes de la supply chain pour éclairer les décisions d’[Availability](glossary:TER112).
+    source_title: Inventory forecasts - Supply Chain Management | Dynamics 365 | Microsoft Learn
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Inventory forecasts - Supply Chain Management | Dynamics 365 | Microsoft Learn — passages sur le mécanisme
+      rapproché.
+    consulted_on: '2026-09-25'
+    evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. Le Supply Plan FLOW est volontairement limité aux prévisions de mouvements hors achats ; les prévisions
+      Microsoft ont une portée plus large. L’APS externe ne devient pas un sous-domaine.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM600
+    term_choice: Le nom Plan Visibility reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
+      cette appellation ni sa maille.
+    definition_choice: 'Les prévisions Supply et Demand sont distinguées et consommées par la planification. Frontière conservée
+      : Le Supply Plan FLOW est volontairement limité aux prévisions de mouvements hors achats ; les prévisions Microsoft
+      ont une portée plus large. L’APS externe ne devient pas un sous-domaine.'
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées.

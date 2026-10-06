@@ -42,16 +42,28 @@ try {
   });
   await page.goto(base + `#version=${version}&node=${area.id}&view=map`);
   await page.locator('.business-card').first().waitFor();
-  const expected = childrenOf(model, area.id).map(n => n.displayCode);
-  assert.deepEqual(await page.locator('.business-card .card-id').allTextContents(), expected);
+  const expected = childrenOf(model, area.id).map(n => n.id);
+  assert.deepEqual(await page.locator('.business-card').evaluateAll(cards => cards.map(card => card.dataset.nodeId)), expected);
+  assert.equal(await page.locator('.business-card .card-id, .business-card .reading-code, .category-banner .reading-code').count(), 0);
+  assert.ok(!(await page.locator('.eyebrow').innerText()).includes(area.displayCode));
   assert.equal(await page.locator(`[data-tree-id="${area.id}"]`).getAttribute('aria-description'), area.displayCode);
   assert.ok((await page.locator(`[data-tree-id="${area.id}"] .tree-label`).first().getAttribute('title')).includes(area.displayCode));
   assert.equal(await page.locator(`[data-tree-id="${area.id}"] > .tree-row .reading-code`).count(), 0);
+  const groupedArea = model.nodes.find(n => n.kind === 'area' && childrenOf(model, n.id).some(c => c.kind === 'business_area'));
+  assert.ok(groupedArea, 'Fixture includes Business Area banners');
+  await page.goto(base + `#version=${version}&node=${groupedArea.id}&view=map`);
+  await page.locator('.category-banner').first().waitFor();
+  assert.equal(await page.locator('.business-card .card-id, .business-card .reading-code, .category-banner .reading-code').count(), 0);
+  const overviewOutput = path.join(app, '.runtime/qa-display-codes');
+  await mkdir(overviewOutput, { recursive: true });
+  await page.screenshot({ path: path.join(overviewOutput, 'overview.png') });
   const search = page.getByRole('textbox', { name: 'Rechercher dans le modèle publié' });
   for (const query of [capacity.displayCode, capacity.id]) {
     await search.fill(query);
     await page.locator(`[data-search-result="${capacity.id}"]`).click();
     await page.getByRole('heading', {level:1, name:capacity.name, exact:true}).waitFor();
+    await page.goto(base + `#version=${version}&node=${capacity.id}&view=sheet`);
+    await page.getByTestId('business-sheet').waitFor();
     assert.ok((await page.locator('.eyebrow').innerText()).includes(capacity.displayCode));
     assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('node'), capacity.id);
     assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('version'), version);
@@ -67,5 +79,5 @@ try {
   const output = path.join(app,'.runtime/qa-display-codes');
   await mkdir(output,{recursive:true});
   await page.screenshot({path:path.join(output,'mobile.png')});
-  console.log(JSON.stringify({status:'passed',fixture:true,policy:raw.display_policy,codes:Object.keys(raw.display_index.codes).length,checks:['frozen card order','tree codes','search code and identity','stable versioned links','meta-model rules','mobile']}));
+  console.log(JSON.stringify({status:'passed',fixture:true,policy:raw.display_policy,codes:Object.keys(raw.display_index.codes).length,checks:['frozen card order without overview codes','tree codes','search code and identity','stable versioned links','meta-model rules','mobile']}));
 } finally { await browser.close(); }

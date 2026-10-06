@@ -43,7 +43,12 @@ publication_delivery:
   source_refs:
   - U843
   - U853
-  summary: Reactive Workflow Management dans Order Management ; Sentry actif et frontières de pilotage clarifiées.
+  - U861
+  - U865
+  - U869
+  summary: 'Reactive Workflow Management dans Order Management ; Sentry actif et frontières de pilotage clarifiées. U861 :
+    commandes passives et pilotage par les tâches du workflow explicités ; identités et rattachements conservés. U865 : Plan
+    Visibility dans Availability, Inventory State Management et précommandes ; contrôles courants alignés.'
   required_nodes:
   - id: workflow-definition-management
     parent: ba-reactive-workflow-management
@@ -88,6 +93,8 @@ publication_delivery:
         Un achat de service et une prestation confiée restent distincts ; toute prestation ne nécessite pas un [Purchase Order](glossary:TER070). [Service Order Management](model:subdomain-service-orders) tient les engagements de prestation. [Inventory Management](model:D01) porte les faits de stock et les réservations ; [Fulfilment](glossary:TER085) coordonne la réalisation. Les actes nécessaires à un changement de propriété peuvent être demandés ici, mais leur effet reconnu relève d’[Inventory Ownership Transfer Decision](model:D01.h) et du registre de propriété. Clôturer une commande ne prouve pas ce transfert.
 
         Le [Reactive Workflow Management](glossary:TER125) organise et conduit le parcours des commandes. Il maintient les activités réutilisables et leurs règles de composition, réagit au contexte, adapte le parcours et en pilote les attentes et résultats. Les familles de commandes conservent leur identité, leur état, leurs engagements et la validité des transitions. [Fulfilment](glossary:TER085) reçoit les travaux autorisés et coordonne les prestations ; il ne définit pas seul la structure du parcours de la commande.
+
+        Une demande peut être préparée ou planifiée avant affermissement. [Preorder](glossary:TER150) indique l’anticipation de disponibilité commerciale ; [Planned Purchase Order](glossary:TER033) désigne une proposition d’approvisionnement distincte du Purchase Order résultant. Origine, horizon et degré d’engagement restent trois informations distinctes. Preorder est un statut du Sales Order, dont l’identité est conservée ; l’affermissement d’un Planned Purchase Order relie deux objets distincts sans imposer une identité commune.
   - id: D06
     fields:
       scope: |-
@@ -113,11 +120,11 @@ publication_delivery:
 
         Exemple : coordonner la préparation, la disponibilité du document et la collecte. Si la décision d’adaptation retient un autre transporteur, coordonner la modification des prestations concernées et leur nouvel enchaînement.
 
-        La détermination de la variation du plan appartient à Process Adaptation Decision. L’orchestration peut lui transmettre un aléa, mais ne porte plus cette décision dans sa propre définition. Les exécutants conservent l’organisation de leurs opérations internes. Aucun moteur de workflow, contrôle humain systématique ou rollback physique universel n’est présumé.
+        La détermination de la variation du plan appartient à Process Adaptation Decision. L’orchestration peut lui transmettre un aléa, mais ne porte plus cette décision dans sa propre définition. Les exécutants conservent l’organisation de leurs opérations internes. Aucun produit logiciel particulier, contrôle humain systématique ou rollback physique universel n’est présumé.
 
         Frontière : Décision [Process Adaptation Decision](model:D06.f) séparée ; pas de rollback physique ni seconde promesse.
 
-        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; Operations Tracking intègre les faits d’exécution ; Operations Visibility restitue leur avancement et Process Visibility en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
+        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; Operations Tracking intègre les faits d’exécution ; Operations Visibility restitue leur avancement et Process Visibility en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun produit logiciel particulier ou nouveau niveau descriptif imposé.
 
         Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Availability](glossary:TER112).
 
@@ -128,6 +135,8 @@ publication_delivery:
         Appliquer les attentes et libérations retenues par [Service Order Release Decision](model:service-order-release-decision), puis suivre la prise en charge des ordres. Un lot ne fusionne pas leurs identités. Distinguer une information anticipée de l’autorisation de lancement ; ne pas considérer la transmission comme preuve de réalisation.
 
         Coordonner les prestations dans le mandat reçu d’[Order Workflow Orchestration](glossary:TER129), qui conduit le parcours de la commande. Une dépendance entre préparation et collecte ne se confond pas avec une attente de confirmation client dans ce parcours. Retourner les résultats et aléas utiles à [Order Workflow Sentry](glossary:TER127) ; ne pas modifier seul les engagements de la commande.
+
+        Exécuter les tâches de coordination confiées par le moteur de [Reactive Workflow Management](glossary:TER125). Les [Service Orders](glossary:TER066) restent des commandes passives ; leurs états et résultats alimentent le suivi conduit par les tâches du workflow. La coordination locale ne choisit pas un nouveau parcours de commande hors du mandat reçu.
   - id: D06.f
     fields:
       scope: |-

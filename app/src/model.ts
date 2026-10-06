@@ -202,6 +202,7 @@ export interface CardChildList {
 /** Preserve explicit reference boundaries inside an Area or a historical presentation group. */
 export function cardChildListOf(model: PublishedModel, node: AtlasNode): CardChildList | undefined {
   const children = childrenOf(model, node.id);
+  if (node.kind === 'reference' && !children.length) return undefined;
   if (node.kind === 'business_system' && children.some(child => child.kind === 'domain')) {
     return { kind: 'domain', items: children.filter(child => child.kind === 'domain') };
   }
@@ -209,7 +210,7 @@ export function cardChildListOf(model: PublishedModel, node: AtlasNode): CardChi
   if (node.kind === 'area' && children.some(child => child.kind === 'business_area')) {
     return { kind: 'mixed', items: children, businessAreaChildren: Object.fromEntries(children.filter(child => child.kind === 'business_area').map(child => [child.id, childrenOf(model, child.id)])) };
   }
-  if (references.length && (node.kind === 'area' || (node.kind === 'group' && node.groupRole !== 'urbanism_level'))) {
+  if (references.length && (node.kind === 'area' || node.kind === 'business_area' || (node.kind === 'group' && node.groupRole !== 'urbanism_level'))) {
     const capabilities = children.filter(child => child.kind === 'capability');
     if (capabilities.length) return { kind: 'mixed', items: [...references, ...capabilities] };
     return { kind: 'reference', items: references };

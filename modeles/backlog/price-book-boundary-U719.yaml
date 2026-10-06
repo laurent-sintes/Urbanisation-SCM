@@ -135,13 +135,20 @@ publication_delivery:
   source_refs:
   - U723
   - U858
+  - U863
   summary: 'Price Book produits/services, visibilité, ingestion commune et frontières économiques appliqués ; contrats et
     règles détaillés restent à qualifier. U858 : contrôles courants adaptés au retrait des huit Visibility de références et
-    à la conservation de l’interprétation des plans ; état antérieur conservé dans Git (745813e).'
+    à la conservation de l’interprétation des plans ; état antérieur conservé dans Git (745813e). U863 : contrôles adaptés
+    aux trois Areas et à la séparation des tarifs produit/service ; preuves historiques conservées.'
   required_nodes:
-  - id: price-book
+  - id: product-price-book
+    kind: reference
     fields:
-      name: Price Book
+      name: Product Price Book
+  - id: service-price-book
+    kind: reference
+    fields:
+      name: Service Price Book
 delivery_updates:
 - source_ref: U848
   fields:

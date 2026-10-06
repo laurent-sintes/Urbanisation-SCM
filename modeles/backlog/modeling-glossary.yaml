@@ -568,7 +568,7 @@ terms:
     comparison_ref: CMP269
     common: Le découpage distingue des périmètres métier cohérents.
     difference: Un sous-domaine métier ne constitue pas automatiquement un bounded context logiciel.
-    flow_position: Neuf sous-domaines décrivent Supply Chain Orchestration dans le modèle courant ; ce découpage propre à
+    flow_position: Huit sous-domaines décrivent Supply Chain Orchestration dans le modèle courant ; ce découpage propre à
       FLOW ne prétend pas être une taxonomie universelle.
     sources:
     - ref: ELM635
@@ -1674,19 +1674,22 @@ terms:
 - id: MOD039
   name: Business Area
   label_fr: Périmètre de responsabilité métier
-  definition: Partie cohérente de la responsabilité d’un sous-domaine, définie par sa finalité, ses résultats attendus et
-    ses frontières, et portée par des capacités.
-  short_description: Périmètre de responsabilité au sein d’un sous-domaine, porté par une ou plusieurs capacités.
+  definition: Partie cohérente de la responsabilité d’un sous-domaine, définie par sa finalité, ses résultats et ses frontières.
+    Elle porte des capacités ou un périmètre de références documentaires.
+  short_description: Périmètre de responsabilité au sein d’un sous-domaine, portant des capacités ou des références.
   role: Préciser une finalité et des frontières métier avant de détailler les savoir-faire.
   notes:
   - Niveau facultatif. Une seule capacité est admissible si le périmètre apporte un sens distinct ; aucun regroupement forcé.
   - Ne désigne automatiquement ni une équipe, ni un produit, ni une application.
   - Chaque capacité reste directement rattachée à un sous-domaine ou à une Business Area de ce sous-domaine.
+  - Une Area de références porte leur cohérence et leur fourniture locale. Elle les présente sans les transformer en capacités
+    ; chaque référence conserve un parent de présentation unique.
   source_refs:
   - U845
   - U846
   - U847
   - U848
+  - U863
   review:
     state: proposed
     note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
@@ -1718,8 +1721,8 @@ terms:
     annoncée et inconnues.'
   - '[Operations Visibility](model:operations-visibility) consolide faits et attentes pour exposer la progression et les informations
     absentes.'
-  - Lire le tarif reçu d’un [Price Book](model:price-book) reste un accès au référentiel ; le choix économique appartient
-    à la décision consommatrice.
+  - Lire le tarif reçu d’un [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book)
+    reste un accès au référentiel ; le choix économique appartient à la décision consommatrice.
   - '[Supply Plan Visibility](model:plans-visibility) et [Demand Plan Visibility](model:demand-plan-visibility) interprètent
     les prévisions pour une demande donnée, sans inventer une précision absente ni décider de sa couverture.'
   source_refs:

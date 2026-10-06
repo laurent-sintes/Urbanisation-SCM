@@ -35,6 +35,21 @@ test('scenarios aggregate across Business Areas without duplicates',()=>{
   assert.deepEqual(scenariosForNode(m,'ba').map(s=>s.id),['s']);
   assert.deepEqual(scenariosForNode(m,'sub').map(s=>s.id),['s']);
 });
+test('reference Areas retain documentary cards, grouping and navigation',()=>{
+  const source=raw();
+  source.relations.find(r=>r.id==='d').source_id='ba';
+  source.relations=source.relations.filter(r=>r.id!=='b' && r.id!=='cooperation');
+  source.nodes=source.nodes.filter(n=>n.id!=='cap');
+  const m=adaptPublication(source);
+  const list=cardChildListOf(m,m.nodeById.get('ba'));
+  assert.equal(list.kind,'reference');
+  assert.deepEqual(list.items.map(n=>n.id),['ref']);
+  assert.equal(list.items[0].kind,'reference');
+  assert.equal(cardChildListOf(m,m.nodeById.get('ref')),undefined);
+  assert.deepEqual(lineageOf(m,'ref').map(n=>n.id),['sub','ba','ref']);
+  assert.deepEqual(businessAreaSections(m,'sub')[0].items.map(n=>n.id),['ref']);
+  assert.deepEqual(cardChildListOf(m,m.nodeById.get('sub')).businessAreaChildren.ba.map(n=>n.id),['ref']);
+});
 test('map banners group actual children without changing parents or losing direct nodes',()=>{
   const m=adaptPublication(raw());
   const sections=businessAreaSections(m,'sub');

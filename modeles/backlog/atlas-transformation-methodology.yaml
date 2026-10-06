@@ -1,5 +1,5 @@
-id: flow-methodology-2026-10-06.4
-version: 2026-10-06.4
+id: flow-methodology-2026-10-06.5
+version: 2026-10-06.5
 as_of: '2026-10-06'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
@@ -54,6 +54,8 @@ source_refs:
 - U856
 - U857
 - U858
+- U863
+- U865
 lessons:
 - id: business-first
   label: Le métier d’abord
@@ -679,6 +681,16 @@ sources:
   excerpt: Ok pour Operational References. Pour Supply Plan Visibility et Demand Plan Visibility je propose de les garder
     car il s'agit d'interpréter les données de planification / prévision dans le contexte d'une demande de la supply chain
   scope: Retrait des huit capacités de consultation ; maintien des deux capacités d’interprétation des plans.
+- id: U863
+  title: Séparation métier des références tarifaires
+  excerpt: Dans ce cas il faut séparer le price book produit de service, même si en terme de logiciel ce ne sera pas le cas.
+  scope: Areas de références, séparation métier et réalisation logicielle commune possible ; pas de capacités de consultation
+    ajoutées.
+- id: U865
+  title: Plans, précommandes et Inventory
+  excerpt: '3 : bonne idée. Finalement, c’est comme les Orders d’achat qui peuvent être planned (issues du supply planning).
+    4 : Dans Availability, c’est une bonne idée. Pour 1 et 2, ok'
+  scope: Plan Visibility devient une Business Area d’Availability ; autres précisions dans le modèle métier.
 glossary:
   terms:
   - id: MOD001
@@ -1182,6 +1194,8 @@ glossary:
     - Niveau facultatif. Une seule capacité est admissible si le périmètre apporte un sens distinct ; aucun regroupement forcé.
     - Ne désigne automatiquement ni une équipe, ni un produit, ni une application.
     - Chaque capacité reste directement rattachée à un sous-domaine ou à une Business Area de ce sous-domaine.
+    - Une Area de références porte leur cohérence et leur fourniture locale. Elle les présente sans les transformer en capacités
+      ; chaque référence conserve un parent de présentation unique.
     canonical_fields:
     - name
     - label_fr
@@ -1715,8 +1729,9 @@ chapters:
       capacité précise ensuite les [capacités](method:MOD015) et leurs [comportements](method:MOD006). Une Business Area exprime
       un résultat et une frontière de responsabilité ; elle ne représente ni une équipe ni une application.
     detail: Une capacité possède un parent unique, sous-domaine ou Business Area. Une Business Area peut porter une seule
-      capacité lorsque son sens le justifie. Les référentiels sont des objets documentaires liés aux capacités ; ils ne deviennent
-      pas leurs parents. Les scénarios mobilisent plusieurs périmètres sans former une autre hiérarchie.
+      capacité lorsque son sens le justifie. Une Business Area peut aussi présenter des références et porter la cohérence
+      de leurs vues locales. Ces objets restent documentaires et ne deviennent pas des capacités ni leurs parents. Les scénarios
+      mobilisent plusieurs périmètres sans former une autre hiérarchie.
   - title: Les comportements
     text: Les [comportements](method:MOD006) décrivent des manières métier significatives d’exercer une [capacité](method:MOD015).
       Une [capacité](method:MOD015) possède zéro ou au moins deux [comportements](method:MOD006) différenciants, avec une

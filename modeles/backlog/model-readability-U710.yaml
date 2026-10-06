@@ -165,10 +165,12 @@ publication_delivery:
   - U757
   - U826
   - U858
+  - U865
   summary: 'Rôles dominants, catégories ciblées, retrait du cycle générique et des comportements isolés. U757 : toutes les
     capacités classées ; catégorie Intégration de Master Data Ingestion. U826 : attentes courantes alignées, anciennes valeurs
     conservées ci-dessous. U858 : contrôles courants adaptés au retrait des huit Visibility de références et à la conservation
-    de l’interprétation des plans ; état antérieur conservé dans Git (745813e).'
+    de l’interprétation des plans ; état antérieur conservé dans Git (745813e). U865 : Plan Visibility dans Availability,
+    Inventory State Management et précommandes ; contrôles courants alignés.'
   required_nodes:
   - id: business-references
     fields:
@@ -218,9 +220,10 @@ publication_delivery:
         display_name: Politiques
   - id: subdomain-plans
     fields:
-      dominant_role:
-        id: data-state
-        display_name: Données et état
+      dominant_role: null
+    kind: business_area
+    parent: D03
+    parent_type: contains
   - id: subdomain-service-orders
     fields:
       dominant_role:

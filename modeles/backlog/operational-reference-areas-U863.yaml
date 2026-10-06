@@ -1,0 +1,128 @@
+schema_version: 1.0.0
+source_refs:
+- U862
+- U863
+status: applied
+retirement:
+  nodes:
+  - price-book
+  relations:
+  - REL-U723-PRICE-BOOK
+  - REL-U858-REFERENCE-042
+  - REL-U723-REFERENCE-D12
+  - REL-U723-REFERENCE-D14
+  - REL-U723-REFERENCE-D11
+  - REL-U858-REFERENCE-043
+  - REL-U858-REFERENCE-044
+  - REL-U858-REFERENCE-045
+  - REL-GROUP-D08
+  - REL-GROUP-D09
+  - REL-GROUP-D12
+  - REL-GROUP-D16
+  - REL-GROUP-D11
+  - REL-GROUP-D13
+  - REL-GROUP-D14
+replacement:
+  price-book:
+  - product-price-book
+  - service-price-book
+areas:
+- id: ba-partner-agreement-references
+  name: Partner & Agreement References
+  references:
+  - D09
+  - D11
+- id: ba-product-references
+  name: Product References
+  references:
+  - D08
+  - D12
+  - D16
+  - product-price-book
+- id: ba-service-references
+  name: Service References
+  references:
+  - D13
+  - D14
+  - service-price-book
+software_boundary: Deux références métier ; une réalisation logicielle et un stockage communs restent possibles.
+market_limit: Appuis primaires Microsoft et SAP ciblés sur les tarifs ; comparaison complète des nouvelles Areas à compléter.
+  Aucun consensus ni réalisation installée déduits.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U862
+  - U863
+  summary: Trois Areas de références, séparation des tarifs produits/prestations, aucun ajout de capacité.
+  absent_nodes:
+  - price-book
+  required_nodes:
+  - id: ba-partner-agreement-references
+    kind: business_area
+    parent: business-references
+    fields:
+      name: Partner & Agreement References
+  - id: ba-product-references
+    kind: business_area
+    parent: business-references
+    fields:
+      name: Product References
+  - id: ba-service-references
+    kind: business_area
+    parent: business-references
+    fields:
+      name: Service References
+  - id: D09
+    kind: reference
+    parent: ba-partner-agreement-references
+    parent_type: presents
+    fields:
+      name: Party / Role
+  - id: D11
+    kind: reference
+    parent: ba-partner-agreement-references
+    parent_type: presents
+    fields:
+      name: Agreement
+  - id: D08
+    kind: reference
+    parent: ba-product-references
+    parent_type: presents
+    fields:
+      name: Product Reference
+  - id: D12
+    kind: reference
+    parent: ba-product-references
+    parent_type: presents
+    fields:
+      name: Product Catalog
+  - id: D16
+    kind: reference
+    parent: ba-product-references
+    parent_type: presents
+    fields:
+      name: Assortment
+  - id: product-price-book
+    kind: reference
+    parent: ba-product-references
+    parent_type: presents
+    fields:
+      name: Product Price Book
+  - id: D13
+    kind: reference
+    parent: ba-service-references
+    parent_type: presents
+    fields:
+      name: Fulfilment Network
+  - id: D14
+    kind: reference
+    parent: ba-service-references
+    parent_type: presents
+    fields:
+      name: Service Catalog
+  - id: service-price-book
+    kind: reference
+    parent: ba-service-references
+    parent_type: presents
+    fields:
+      name: Service Price Book

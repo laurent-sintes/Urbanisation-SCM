@@ -1885,8 +1885,9 @@ publication_delivery:
   - U770
   - U771
   - U835
+  - U861
   summary: 'Audit lexical appliqué : glossaire et frontières cohérents, appuis marché explicités, Receiving Order et scénario
-    ajoutés.'
+    ajoutés. U861 : commandes passives et pilotage par les tâches du workflow explicités ; identités et rattachements conservés.'
   required_nodes:
   - id: D02.e
     fields:
@@ -1961,11 +1962,11 @@ publication_delivery:
 
         Exemple : coordonner la préparation, la disponibilité du document et la collecte. Si la décision d’adaptation retient un autre transporteur, coordonner la modification des prestations concernées et leur nouvel enchaînement.
 
-        La détermination de la variation du plan appartient à Process Adaptation Decision. L’orchestration peut lui transmettre un aléa, mais ne porte plus cette décision dans sa propre définition. Les exécutants conservent l’organisation de leurs opérations internes. Aucun moteur de workflow, contrôle humain systématique ou rollback physique universel n’est présumé.
+        La détermination de la variation du plan appartient à Process Adaptation Decision. L’orchestration peut lui transmettre un aléa, mais ne porte plus cette décision dans sa propre définition. Les exécutants conservent l’organisation de leurs opérations internes. Aucun produit logiciel particulier, contrôle humain systématique ou rollback physique universel n’est présumé.
 
         Frontière : Décision [Process Adaptation Decision](model:D06.f) séparée ; pas de rollback physique ni seconde promesse.
 
-        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; Operations Tracking intègre les faits d’exécution ; Operations Visibility restitue leur avancement et Process Visibility en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
+        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; Operations Tracking intègre les faits d’exécution ; Operations Visibility restitue leur avancement et Process Visibility en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun produit logiciel particulier ou nouveau niveau descriptif imposé.
 
         Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Availability](glossary:TER112).
 
@@ -1976,12 +1977,16 @@ publication_delivery:
         Appliquer les attentes et libérations retenues par [Service Order Release Decision](model:service-order-release-decision), puis suivre la prise en charge des ordres. Un lot ne fusionne pas leurs identités. Distinguer une information anticipée de l’autorisation de lancement ; ne pas considérer la transmission comme preuve de réalisation.
 
         Coordonner les prestations dans le mandat reçu d’[Order Workflow Orchestration](glossary:TER129), qui conduit le parcours de la commande. Une dépendance entre préparation et collecte ne se confond pas avec une attente de confirmation client dans ce parcours. Retourner les résultats et aléas utiles à [Order Workflow Sentry](glossary:TER127) ; ne pas modifier seul les engagements de la commande.
+
+        Exécuter les tâches de coordination confiées par le moteur de [Reactive Workflow Management](glossary:TER125). Les [Service Orders](glossary:TER066) restent des commandes passives ; leurs états et résultats alimentent le suivi conduit par les tâches du workflow. La coordination locale ne choisit pas un nouveau parcours de commande hors du mandat reçu.
   - id: service-order-receiving
     fields:
       name: Receiving Order
-      definition: Gérer les demandes de réception de marchandises confiées aux exécutants, leurs quantités et conditions attendues,
-        leurs engagements et les suites des réceptions partielles, refusées ou non conformes.
+      definition: Porter les demandes de réception de marchandises confiées aux exécutants, leurs quantités et conditions
+        attendues, leurs engagements et les résultats des réceptions partielles, refusées ou non conformes.
       scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
         Porter l’origine attendue, les articles et quantités, le lieu, les créneaux, les consignes de prise en charge et les preuves attendues. Suivre acceptation, révisions, annulation, réception partielle et clôture avec le reste à réaliser. Une annonce d’arrivée ou un document ne prouve pas la réception.
 
         Une demande de réception peut être liée à un [Purchase Order](glossary:TER070), [Transfer Order](glossary:TER071), [Return Order](glossary:TER072) ou apport consigné ; elle ne remplace pas leurs engagements. Le prestataire reçoit physiquement et organise ses tâches internes. Une inspection autonome peut être confiée à [Inspection Order](model:service-order-inspection) ; un contrôle intégré demeure dans la réception. [Receiving Order](model:service-order-receiving) ne décide pas du devenir d’un retour et ne garantit pas que le stock est vendable.

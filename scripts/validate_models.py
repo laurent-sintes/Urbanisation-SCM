@@ -41,13 +41,13 @@ RELATION_KINDS = {
     "documents-reference": ({"capability"}, {"reference"}),
     "uses-reference": ({"capability"}, {"reference"}),
     "supplies-reference": ({"capability"}, {"reference"}),
-    "presents": ({"business_system", "group", "domain", "area"}, {"domain", "area", "reference", "group", "capability"}),
+    "presents": ({"business_system", "group", "domain", "area", "business_area"}, {"domain", "area", "reference", "group", "capability"}),
     "confirms": ({"capability"}, {"object"}),
     "associated-document": ({"capability"}, {"document"}),
     "observed-result": ({"capability"}, {"event"}),
     "represents": ({"document"}, {"object"}),
     "records": ({"document"}, {"event"}),
-    "provides-knowledge": ({"domain", "area"}, {"domain", "area"}),
+    "provides-knowledge": ({"domain", "area", "business_area"}, {"domain", "area", "business_area"}),
     "provides-conditions": ({"reference"}, {"domain", "area"}),
     "describes-network": ({"reference"}, {"domain", "area"}),
     "relates-to": ({"capability", "behavior", "reference"}, {"capability", "behavior", "object", "document", "event", "reference"}),
@@ -167,8 +167,12 @@ def validate_urbanism(model, sources, schema=None):
                     if not isinstance(node.get('fields', {}).get(field), str) or not node['fields'][field].strip():
                         errors.append(f'business-area/{identifier}: {field} must be nonempty')
                 children = [r for r in model['relations'] if r.get('type') in ('contains', 'presents') and r.get('source_id') == identifier]
-                if not children or any(r['type'] != 'contains' or nodes.get(r['target_id'], {}).get('kind') != 'capability' for r in children):
-                    errors.append(f'business-area/{identifier}: requires capability children only')
+                if not children or any((r['type'], nodes.get(r['target_id'], {}).get('kind')) not in {('contains', 'capability'), ('presents', 'reference')} for r in children):
+                    errors.append(f'business-area/{identifier}: requires contained capabilities or presented references')
+            if kind == 'reference':
+                parents = [r for r in model['relations'] if r.get('type') in ('contains', 'presents') and r.get('target_id') == identifier]
+                if any(nodes.get(r['source_id'], {}).get('kind') == 'business_area' for r in parents) and len(parents) != 1:
+                    errors.append(f'business-area/{identifier}: reference requires a unique presentation parent')
     for item in model['nodes'] + model['relations']:
         if 'market_comparisons' in item.get('fields', {}):
             errors.extend(validate_comparisons(item['fields']['market_comparisons'], item['id'] + '/market_comparisons'))
@@ -251,7 +255,7 @@ def validate_urbanism(model, sources, schema=None):
         if (rel.get("type") == "presents" and source.get("kind") == "domain"
                 and target.get("kind") not in {"area", "reference", "group"}):
             errors.append(f"relations/{identifier}: domain presents only areas, references or presentation groups")
-        if (rel.get("type") == "presents" and source.get("kind") == "area"
+        if (rel.get("type") == "presents" and source.get("kind") in {"area", "business_area"}
                 and target.get("kind") != "reference"):
             errors.append(f"relations/{identifier}: area presents only references; capabilities use contains")
         if rel.get("type") in {"relates-to", "uses-reference", "supplies-reference"}:

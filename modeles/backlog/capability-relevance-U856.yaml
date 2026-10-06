@@ -1,14 +1,17 @@
 id: capability-relevance-U856
-status: review_completed_U858_applied_other_reviews_open
+status: closed_U861
 source_refs:
 - U854
 - U855
 - U856
 - U857
 - U858
+- U860
+- U859
+- U861
 basis:
-  model_sha256: 57b560e48cd5eb73a0566591175f2ed4aa9c2fe71ea23c534e16075a8e4080c6
-  business_glossary_sha256: 4ec5f838aa0e2c75b4a33d9cdef3d5dd43ea3606aa89d341d0878e3ad4902dce
+  model_sha256: b229d55907312b33a872bb0b9cbf71619f263a0b5d1d321b53111c9539b4fda5
+  business_glossary_sha256: 75508aee86a2b2f1072209f6e197158303117003802b73a22850d8c7640a0556
   publication: 2026-10-06.3
 scope: 'Premier examen des définitions des 81 capacités, approfondissement des frontières Visibility, intégration, pilotage
   et familles de prestations ; pas de preuve terrain ni de revalidation exhaustive des comparaisons marché. U858 : les 81
@@ -23,8 +26,7 @@ criteria:
 summary:
   retain_on_documented_result: 58
   retired_U858: 8
-  review_capability_vs_service_variant: 12
-  retain_if_autonomous_service: 3
+  retain_passive_order_U861: 15
 records:
 - node_id: D01.f
   name: Inventory Tracking
@@ -1289,15 +1291,15 @@ records:
 - node_id: service-order-picking
   name: Picking Order
   parent_id: ba-goods-processing-order-management
-  recommendation: review_capability_vs_service_variant
-  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
-    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
-    regroupement décidé.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Gérer les demandes de prélèvement confiées aux exécutants, leurs exigences de quantité et de référence,
-    leurs engagements et les suites des manquants constatés.
+  expected_result: Porter les demandes de prélèvement confiées aux exécutants, leurs exigences de quantité et de référence,
+    leurs engagements et les manquants constatés.
   scenario_paths:
   - gift-kits-crossdock-path
   - b2b-release-deadline-path
@@ -1309,15 +1311,15 @@ records:
 - node_id: service-order-packing
   name: Packing Order
   parent_id: ba-goods-processing-order-management
-  recommendation: review_capability_vs_service_variant
-  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
-    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
-    regroupement décidé.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Tenir les demandes de conditionnement et de reconditionnement confiées aux exécutants, leurs exigences,
-    engagements et suites des résultats.
+  expected_result: Porter les demandes de conditionnement et de reconditionnement confiées aux exécutants, leurs exigences,
+    engagements et résultats.
   scenario_paths:
   - b2b-partial-stock-path
   - fashion-launch-path
@@ -1331,14 +1333,14 @@ records:
 - node_id: service-order-cross-docking
   name: Cross-Docking Order
   parent_id: ba-goods-processing-order-management
-  recommendation: review_capability_vs_service_variant
-  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
-    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
-    regroupement décidé.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Gérer les demandes de transit confiées aux exécutants et les engagements de passage des marchandises reçues
+  expected_result: Porter les demandes de transit confiées aux exécutants et les engagements de passage des marchandises reçues
     vers les départs prévus.
   scenario_paths:
   - gift-kits-crossdock-path
@@ -1371,15 +1373,15 @@ records:
 - node_id: service-order-labeling
   name: Labeling Order
   parent_id: ba-goods-processing-order-management
-  recommendation: review_capability_vs_service_variant
-  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
-    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
-    regroupement décidé.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Tenir les demandes de marquage et d’étiquetage confiées aux exécutants, leurs exigences, engagements et
-    suites des résultats.
+  expected_result: Porter les demandes de marquage et d’étiquetage confiées aux exécutants, leurs exigences, engagements et
+    résultats.
   scenario_paths:
   - fashion-launch-path
   incident_relations:
@@ -1387,15 +1389,15 @@ records:
 - node_id: service-order-kitting
   name: Kitting Order
   parent_id: ba-goods-processing-order-management
-  recommendation: review_capability_vs_service_variant
-  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
-    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
-    regroupement décidé.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Tenir les demandes de constitution, séparation et recomposition d’ensembles confiées aux exécutants, leurs
-    exigences, engagements et suites des résultats.
+  expected_result: Porter les demandes de constitution, séparation et recomposition d’ensembles confiées aux exécutants, leurs
+    exigences, engagements et résultats.
   scenario_paths:
   - gift-kits-crossdock-path
   incident_relations:
@@ -1403,15 +1405,15 @@ records:
 - node_id: service-order-garment-finishing
   name: Garment Finishing Order
   parent_id: ba-goods-processing-order-management
-  recommendation: review_capability_vs_service_variant
-  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
-    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
-    regroupement décidé.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Tenir les demandes de finition d’aspect des vêtements confiées aux exécutants, leurs exigences, engagements
-    et suites des résultats.
+  expected_result: Porter les demandes de finition d’aspect des vêtements confiées aux exécutants, leurs exigences, engagements
+    et résultats.
   scenario_paths:
   - fashion-launch-path
   incident_relations:
@@ -1419,15 +1421,15 @@ records:
 - node_id: service-order-cleaning
   name: Cleaning Order
   parent_id: ba-goods-processing-order-management
-  recommendation: review_capability_vs_service_variant
-  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
-    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
-    regroupement décidé.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Tenir les demandes de nettoyage des vêtements, chaussures et accessoires confiées aux exécutants, leurs
-    exigences, engagements et suites des résultats.
+  expected_result: Porter les demandes de nettoyage des vêtements, chaussures et accessoires confiées aux exécutants, leurs
+    exigences, engagements et résultats.
   scenario_paths:
   - gift-kits-crossdock-path
   incident_relations:
@@ -1435,15 +1437,15 @@ records:
 - node_id: service-order-repair-alteration
   name: Repair & Alteration Order
   parent_id: ba-goods-processing-order-management
-  recommendation: review_capability_vs_service_variant
-  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
-    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
-    regroupement décidé.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Tenir les demandes de réparation et de retouche des vêtements, chaussures et accessoires confiées aux exécutants,
-    leurs exigences, engagements et suites des résultats.
+  expected_result: Porter les demandes de réparation et de retouche des vêtements, chaussures et accessoires confiées aux
+    exécutants, leurs exigences, engagements et résultats.
   scenario_paths:
   - return-fashion-recovery-path
   incident_relations:
@@ -1451,15 +1453,15 @@ records:
 - node_id: service-order-personalization
   name: Personalization Order
   parent_id: ba-goods-processing-order-management
-  recommendation: review_capability_vs_service_variant
-  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
-    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
-    regroupement décidé.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Tenir les demandes de personnalisation des vêtements, chaussures et accessoires confiées aux exécutants,
-    leurs exigences, engagements et suites des résultats.
+  expected_result: Porter les demandes de personnalisation des vêtements, chaussures et accessoires confiées aux exécutants,
+    leurs exigences, engagements et résultats.
   scenario_paths:
   - gift-kits-crossdock-path
   incident_relations:
@@ -1467,15 +1469,15 @@ records:
 - node_id: service-order-inspection
   name: Inspection Order
   parent_id: ba-goods-processing-order-management
-  recommendation: review_capability_vs_service_variant
-  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
-    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
-    regroupement décidé.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Tenir les demandes d’inspection des vêtements, chaussures et accessoires confiées aux exécutants, leurs
-    exigences, engagements et suites des résultats.
+  expected_result: Porter les demandes d’inspection des vêtements, chaussures et accessoires confiées aux exécutants, leurs
+    exigences, engagements et résultats.
   scenario_paths:
   - return-fashion-recovery-path
   - damaged-stock-disposition-path
@@ -1502,14 +1504,15 @@ records:
 - node_id: service-order-document-production
   name: Document Production Order
   parent_id: subdomain-service-orders
-  recommendation: retain_if_autonomous_service
-  reason: La fiche justifie une demande confiée avec résultat et suites propres. Si FLOW reçoit seulement un statut ou produit
-    automatiquement un document, conserver une dépendance ou fonction au lieu d’un ordre autonome.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Obtenir un document ou dossier logistique conforme aux données et exigences confiées, disponible et transmis
-    aux destinataires attendus.
+  expected_result: Porter une demande de document ou de dossier logistique, les données et exigences confiées, les destinataires
+    et le résultat retourné par le service documentaire.
   scenario_paths:
   - export-remote-services-path
   incident_relations:
@@ -1533,29 +1536,31 @@ records:
 - node_id: service-order-billing
   name: Billing Order
   parent_id: ba-financial-service-order-management
-  recommendation: retain_if_autonomous_service
-  reason: La fiche justifie une demande confiée avec résultat et suites propres. Si FLOW reçoit seulement un statut ou produit
-    automatiquement un document, conserver une dépendance ou fonction au lieu d’un ordre autonome.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Demander et suivre la facturation des éléments éligibles d’une commande ou prestation, avec confirmation,
-    rejet et correction.
+  expected_result: Porter une demande de facturation confiée au service spécialisé, les éléments concernés et les résultats
+    de confirmation, rejet ou correction reçus.
   scenario_paths:
   - export-remote-services-path
   incident_relations:
   - REL-U848-PARENT-service-order-billing
 - node_id: service-order-payment-collection
-  name: Payment Collection Order
+  name: Payment Order
   parent_id: ba-financial-service-order-management
-  recommendation: retain_if_autonomous_service
-  reason: La fiche justifie une demande confiée avec résultat et suites propres. Si FLOW reçoit seulement un statut ou produit
-    automatiquement un document, conserver une dépendance ou fonction au lieu d’un ordre autonome.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Demander et suivre une opération d’encaissement rattachée à la commande, lorsque FLOW en pilote effectivement
-    le déclenchement et les suites.
+  expected_result: Porter une demande d’encaissement confiée au service de paiement, ses références, son état et le résultat
+    retourné.
   scenario_paths:
   - export-remote-services-path
   - remote-payment-ambiguous-path
@@ -1726,15 +1731,15 @@ records:
 - node_id: service-order-receiving
   name: Receiving Order
   parent_id: ba-goods-processing-order-management
-  recommendation: review_capability_vs_service_variant
-  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
-    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
-    regroupement décidé.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Gérer les demandes de réception de marchandises confiées aux exécutants, leurs quantités et conditions
-    attendues, leurs engagements et les suites des réceptions partielles, refusées ou non conformes.
+  expected_result: Porter les demandes de réception de marchandises confiées aux exécutants, leurs quantités et conditions
+    attendues, leurs engagements et les résultats des réceptions partielles, refusées ou non conformes.
   scenario_paths:
   - partial-receiving-path
   incident_relations:
@@ -1759,10 +1764,10 @@ records:
 - node_id: service-order-scrapping
   name: Scrapping Order
   parent_id: ba-goods-processing-order-management
-  recommendation: review_capability_vs_service_variant
-  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
-    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
-    regroupement décidé.
+  recommendation: retain_passive_order_U861
+  reason: 'U859/U861 : commande passive selon une offre de service définie ; aucune décision autonome. Les tâches du workflow
+    pilotent le suivi. Le cycle partagé ne suffit pas à retirer une famille ; contrat, exigences et résultat de prestation
+    justifient sa distinction.'
   evidence_fields:
   - definition
   - scope
@@ -1929,9 +1934,288 @@ market_position:
   additional_sources_reused_from_U854:
   - https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/data-management
   - https://learning.sap.com/courses/configuring-master-data-in-sap-s-4hana-cloud-private-edition-retail/assortment-1-1
-  assessment: 'Les sources distinguent données, usages et connaissances interprétées ; elles ne prescrivent pas une taxonomie
-    universelle de Visibility. U858 arbitre la granularité FLOW : huit capacités de consultation retirées, deux capacités
-    de plan conservées pour leur interprétation dans le contexte des demandes. Les autres examens de granularité restent ouverts.'
+  assessment: U858 retire huit consultations autonomes et conserve les deux interprétations de plan. U859/U861 conservent
+    les quinze familles d’Orders passifs ; la distinction Order / Task / exécution est explicite. Les correspondances marché
+    restent partielles et les lacunes existantes ne sont pas clôturées par cet arbitrage.
 business_glossary_check: 'U858 : Operational References et Reference Ingestion conservent les responsabilités des vues locales
   ; Supply Plan et Demand Plan explicitent leur interprétation dans le contexte des demandes. Aucun terme de référence supprimé.'
 current_capability_count: 73
+closure:
+  source_refs:
+  - U859
+  - U860
+  - U861
+  retained_capabilities: 73
+  retired_capabilities: 8
+  remaining_arbitrations: []
+  scope: Clôture des quinze réserves de granularité/autonomie ; ne certifie pas une couverture marché complète ni une réalisation
+    installée.
+  passive_order_boundary: 'Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les
+    exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit
+    pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089)
+    qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le
+    mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie
+    ni sans état ni sans règles de validité des transitions.'
+publication_delivery:
+  state: applied
+  source_refs:
+  - U859
+  - U860
+  - U861
+  summary: Quinze familles conservées comme commandes passives, pilotage par les tâches du workflow ; audit de pertinence
+    clôturé.
+  required_nodes:
+  - id: service-order-billing
+    fields:
+      name: Billing Order
+      definition: Porter une demande de facturation confiée au service spécialisé, les éléments concernés et les résultats
+        de confirmation, rejet ou correction reçus.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        La responsabilité financière d’émission, des taxes, de la créance et de la comptabilisation reste chez le service de facturation. FLOW porte la demande, les références et la progression nécessaire au flux.
+
+        Éviter une commande livrée dont la facturation nécessaire reste sans suivi.
+
+        Billing services est documenté ; [Billing Order](model:service-order-billing) est une proposition locale, pas une nomenclature interéditeurs.
+
+        [Operations Tracking](model:D07.d) capte le résultat métier retourné par le prestataire, distinct de l’accusé de réception technique. Les tâches du workflow exploitent ces faits pour conduire la suite ; la commande conserve son état et ses engagements.
+  - id: service-order-cleaning
+    fields:
+      name: Cleaning Order
+      definition: Porter les demandes de nettoyage des vêtements, chaussures et accessoires confiées aux exécutants, leurs
+        exigences, engagements et résultats.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Nettoyage et détachage des vêtements, chaussures et accessoires.
+
+        Résultat de propreté ; techniques au catalogue.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Détacher des chaussures retournées et distinguer les résultats complets et partiels.
+  - id: service-order-cross-docking
+    fields:
+      name: Cross-Docking Order
+      definition: Porter les demandes de transit confiées aux exécutants et les engagements de passage des marchandises reçues
+        vers les départs prévus.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Tenir les arrivées et sorties concernées, les quantités, fenêtres attendues, prises en charge et changements de prestation. [Availability](glossary:TER112) arbitre la couverture et les affectations partagées ; [Fulfilment](glossary:TER085) coordonne le passage et les adaptations locales. Une arrivée tardive ou un départ manqué produit des faits et suites explicites, sans réaffectation implicite d’autres commandes. L’instruction peut être autonome ou liée aux ordres entrants et sortants ; le cross-docking évite le stockage conventionnel sans imposer le même parcours à toutes les unités.
+
+        Exemple fictif : Un lot attendu doit rejoindre un départ magasin ; le retard d’arrivée exige une suite de prestation et un arbitrage si la promesse est affectée.
+
+        La prestation est décrite dans le [Service Catalog](model:D14) ; le [Service Order](glossary:TER066) en porte les exigences et engagements individuels auprès du [Service Provider](glossary:TER088).
+  - id: service-order-document-production
+    fields:
+      name: Document Production Order
+      definition: Porter une demande de document ou de dossier logistique, les données et exigences confiées, les destinataires
+        et le résultat retourné par le service documentaire.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        La réception, le mouvement de stock et les faits douaniers ne sont pas créés par le document. Mettre en forme ou joindre une facture existante ne vaut pas émettre une créance.
+
+        [Order](glossary:TER012) autonome seulement si prestation explicitement confiée et suivie ; une sortie automatique de réception ne crée pas systématiquement un [Order](glossary:TER012).
+
+        Rendre visibles délai, complétude, rejet et reprise du livrable documentaire.
+
+        Nom proposé FLOW ; les sources parlent de shipping documents et goods receipt slip, pas d’une famille normalisée [Document Production Order](model:service-order-document-production).
+
+        [Operations Tracking](model:D07.d) capte le résultat métier retourné par le prestataire, distinct de l’accusé de réception technique. Les tâches du workflow exploitent ces faits pour conduire la suite ; la commande conserve son état et ses engagements.
+  - id: service-order-garment-finishing
+    fields:
+      name: Garment Finishing Order
+      definition: Porter les demandes de finition d’aspect des vêtements confiées aux exécutants, leurs exigences, engagements
+        et résultats.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Finition d’aspect textile : repassage, défroissage, remise en forme.
+
+        Se distingue du support de présentation et du nettoyage.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Défroisser des chemises et signaler les pièces dont l’aspect reste non conforme.
+  - id: service-order-inspection
+    fields:
+      name: Inspection Order
+      definition: Porter les demandes d’inspection des vêtements, chaussures et accessoires confiées aux exécutants, leurs
+        exigences, engagements et résultats.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Inspection autonome, contrôle de conformité et classement d’état des articles.
+
+        Le contrôle intégré à une autre prestation reste dans cette prestation ; le constat ne décide pas du devenir du stock.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Examiner un lot retourné et livrer un constat d’état sans décider de sa destination.
+  - id: service-order-kitting
+    fields:
+      name: Kitting Order
+      definition: Porter les demandes de constitution, séparation et recomposition d’ensembles confiées aux exécutants, leurs
+        exigences, engagements et résultats.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Constitution, séparation et recomposition d’ensembles ou assortiments spécifiés.
+
+        Kitting / Dekitting regroupés ; ne décide pas des affectations de stock aux magasins.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Défaire des assortiments tailles/couleurs et constituer les ensembles spécifiés.
+  - id: service-order-labeling
+    fields:
+      name: Labeling Order
+      definition: Porter les demandes de marquage et d’étiquetage confiées aux exécutants, leurs exigences, engagements et
+        résultats.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Étiquetage et réétiquetage, RFID et pose d’antivols ; information, identification ou protection attendue.
+
+        Regroupe des variantes ; pas un ordre distinct pour chaque technologie.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Réétiqueter 200 vestes selon le tarif accepté et vérifier la version appliquée.
+
+        Qualifier et suivre la prestation d’étiquetage ou de réétiquetage confiée, en tenant la spécification attendue et la conformité du résultat communiqué.
+
+        La conformité porte sur l’information appliquée et sa version, pas seulement sur une quantité traitée. Les références des consignes relèvent du catalogue ; les exigences et engagements individuels sont tenus dans l’ordre. Le tracking et le rapprochement fournissent les constats et écarts ; l’exécutant réalise le geste physique.
+
+        Exemple fictif : Un changement d’étiquette exige la version attendue pour le lot concerné ; une confirmation de traitement ne suffit pas si elle concerne une autre version.
+
+        L’étiquetage et le réétiquetage relèvent de [Labeling Order](model:service-order-labeling). La consigne distingue version précédente, version cible et conformité du réétiquetage.
+  - id: service-order-packing
+    fields:
+      name: Packing Order
+      definition: Porter les demandes de conditionnement et de reconditionnement confiées aux exécutants, leurs exigences,
+        engagements et résultats.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Conditionnement initial, Repacking, pliage, mise sur cintre, présentation cadeau.
+
+        Repacking est une variante descriptive de [Packing Order](model:service-order-packing) ; son identifiant est conservé.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Passer un lot de vêtements pliés sur cintres, sans changer la composition des articles.
+
+        Porter la prestation de reconditionnement confiée, en précisant la transformation attendue du conditionnement et en conservant les écarts signalés.
+
+        Modifier un conditionnement existant ; clarifier la frontière avec [Packing Order](model:service-order-packing) sans créer deux demandes pour la même prestation. Les références des consignes relèvent du catalogue ; les exigences et engagements individuels sont tenus dans l’ordre. Le tracking et le rapprochement fournissent les constats et écarts ; l’exécutant réalise le geste physique.
+
+        Exemple fictif : Reconditionner un lot déjà emballé selon une nouvelle consigne ; distinguer quantité traitée et quantité conforme.
+
+        Le reconditionnement relève de [Packing Order](model:service-order-packing). La mise sur cintre, le changement de cintre et le retour à une présentation pliée relèvent du conditionnement, sans changer la composition d’un kit.
+
+        Porter les exigences de conditionnement commun, par exemple préparer les biens compatibles d’une commande B2B sur une palette lorsque cela est réalisable. La libération simultanée des ordres ne garantit pas ce résultat ; tenir la consigne, la prise en charge et le résultat effectif. L’exécutant conserve la palettisation détaillée.
+  - id: service-order-payment-collection
+    fields:
+      name: Payment Order
+      definition: Porter une demande d’encaissement confiée au service de paiement, ses références, son état et le résultat
+        retourné.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Distinguer autorisation, capture, règlement reçu et affectation à une créance. Le service financier ou de paiement exécute ; comptabilité, trésorerie, rapprochement et recouvrement des impayés ne sont pas automatiquement inclus.
+
+        Si FLOW ne fait que recevoir un statut payé ou une autorisation de poursuivre, conserver une dépendance et un statut : pas d’[Order](glossary:TER012) artificiel.
+
+        Conserver les résultats, échecs et paiements partiels transmis ; les tâches du workflow pilotent les étapes financières qui conditionnent la suite.
+
+        Payment Order désigne ici l’encaissement confié, pas le recouvrement des impayés. Le résultat demandé distingue autorisation, capture ou règlement selon la prestation. Autorisation carte seule ne vaut pas encaissement.
+
+        [Operations Tracking](model:D07.d) capte le résultat métier retourné par le prestataire, distinct de l’accusé de réception technique. Les tâches du workflow exploitent ces faits pour conduire la suite ; la commande conserve son état et ses engagements.
+  - id: service-order-personalization
+    fields:
+      name: Personalization Order
+      definition: Porter les demandes de personnalisation des vêtements, chaussures et accessoires confiées aux exécutants,
+        leurs exigences, engagements et résultats.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Personnalisation du produit : broderie, monogramme, gravure sur accessoires.
+
+        La carte cadeau jointe relève de la présentation, pas d’une transformation du produit.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Broder les initiales demandées sur les articles désignés.
+  - id: service-order-picking
+    fields:
+      name: Picking Order
+      definition: Porter les demandes de prélèvement confiées aux exécutants, leurs exigences de quantité et de référence,
+        leurs engagements et les manquants constatés.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Préciser les biens à prélever, les quantités, le lieu et l’échéance demandés ; tenir la prise en charge, les changements et le reste de prestation à traiter. Les constats proviennent du tracking et les écarts qualifiés du rapprochement. L’exécutant organise les emplacements, parcours et opérateurs. Aucun prélèvement ne réaffecte de lui-même les ressources d’une autre commande. La prestation peut appartenir à un ordre composite de préparation sans perdre ses exigences propres.
+
+        Exemple fictif : Sur 100 pièces demandées, 96 sont prélevées : tenir la suite des quatre manquantes sans confondre le reliquat de prestation avec celui de la commande.
+
+        La prestation est décrite dans le [Service Catalog](model:D14) ; le [Service Order](glossary:TER066) en porte les exigences et engagements individuels auprès du [Service Provider](glossary:TER088).
+
+        Porter les exigences de préparation commune lorsque des ordres sont libérés ensemble pour une commande ou un client. Conserver les quantités et engagements propres de chaque ordre ; le regroupement décidé par [Fulfilment](glossary:TER085) ne prescrit pas les vagues, parcours ou opérateurs internes.
+  - id: service-order-receiving
+    fields:
+      name: Receiving Order
+      definition: Porter les demandes de réception de marchandises confiées aux exécutants, leurs quantités et conditions
+        attendues, leurs engagements et les résultats des réceptions partielles, refusées ou non conformes.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Porter l’origine attendue, les articles et quantités, le lieu, les créneaux, les consignes de prise en charge et les preuves attendues. Suivre acceptation, révisions, annulation, réception partielle et clôture avec le reste à réaliser. Une annonce d’arrivée ou un document ne prouve pas la réception.
+
+        Une demande de réception peut être liée à un [Purchase Order](glossary:TER070), [Transfer Order](glossary:TER071), [Return Order](glossary:TER072) ou apport consigné ; elle ne remplace pas leurs engagements. Le prestataire reçoit physiquement et organise ses tâches internes. Une inspection autonome peut être confiée à [Inspection Order](model:service-order-inspection) ; un contrôle intégré demeure dans la réception. [Receiving Order](model:service-order-receiving) ne décide pas du devenir d’un retour et ne garantit pas que le stock est vendable.
+
+        [Fulfilment Orchestration](model:D06) coordonne les prestations. Operations Tracking capte leur résultat et Service Reconciliation qualifie l’écart ; [Receiving Order](model:service-order-receiving) tient le solde de sa prestation. Inventory Tracking et [Inventory Ledger](glossary:TER056) prennent en compte les faits de stock reconnus. L’instruction de réception ne crée ni mouvement, ni changement automatique de propriété, ni nouvel achat.
+
+        Créer cet [Order](glossary:TER012) lorsqu’une réception est explicitement confiée et suivie comme prestation. Recevoir seulement une notification ne justifie pas un ordre artificiel. Aucune famille supplémentaire de rangement ou de stockage ni réalisation Beaumanoir n’est déduite.
+  - id: service-order-repair-alteration
+    fields:
+      name: Repair & Alteration Order
+      definition: Porter les demandes de réparation et de retouche des vêtements, chaussures et accessoires confiées aux exécutants,
+        leurs exigences, engagements et résultats.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Correction de défauts et retouches confiées sur vêtements, chaussures et accessoires.
+
+        Distinguer restauration et modification demandée dans les exigences.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Remplacer des boutons sur un lot de manteaux selon les retouches autorisées.
+  - id: service-order-scrapping
+    fields:
+      name: Scrapping Order
+      definition: Porter une demande de mise au rebut de biens, ses autorisations, quantités, consignes et preuves attendues
+        jusqu’à son résultat reconnu.
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Un [Scrapping Order](glossary:TER104) permet de confier et suivre la mise au rebut comme prestation logistique identifiable. Préciser les biens, quantités, autorisations, consignes de traitement et preuves exigées. L’[Order](glossary:TER012) conserve le réalisé, le reliquat et les écarts ; une clôture partielle doit être explicitement autorisée. Le traitement peut être exécuté par un prestataire externe et durer dans le temps.
+
+        [Inventory Disposition Decision](model:D05.i) détermine le devenir autorisé ; l’[Order](glossary:TER012) ne décide pas de détruire au seul motif d’un écart de stock. [Process Orchestration](model:D06.d) coordonne la prestation ; [Operations Tracking](model:D07.d) reçoit les faits d’exécution et [Service Reconciliation](model:D07.c) les rapproche de l’attendu. [Inventory Tracking](model:D01.f) et [Inventory Ledger](model:D01.g) intègrent et conservent les effets reconnus sur le stock. Une instruction ou une écriture comptable ne prouve pas une destruction physique.
+
+        Le comportement Scrapping de [Return Order](glossary:TER072) continue à porter l’issue du retour et ses obligations ; [Scrapping Order](glossary:TER104) porte la prestation confiée, liée au retour lorsqu’il existe. Le rebut peut aussi concerner un stock abîmé hors retour. Aucune extension automatique aux dons, déstockages commerciaux ou à toutes les filières de recyclage.
+
+        Exemple fictif : vingt vestes sont autorisées au rebut. Le prestataire prouve le traitement de dix-huit ; deux restent en attente. L’[Order](glossary:TER012) conserve ce solde tant qu’une autre clôture n’est pas autorisée. Aucun comportement supplémentaire n’est créé pour chaque motif de rebut.
+  absent_nodes:
+  - D08.e
+  - D09.e
+  - D11.b
+  - D12.b
+  - D13.b
+  - D14.b
+  - D16.b
+  - price-book-visibility
