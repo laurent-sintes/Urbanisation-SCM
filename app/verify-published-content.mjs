@@ -74,7 +74,10 @@ try {
   for(const scenario of catalog.scenarios){
     for(const path of catalog.paths.filter(p=>p.scenario_id===scenario.id)){
       await visit({view:'scenarios',scenario:scenario.id,path:path.id});
-      await page.getByRole('heading',{name:path.title,exact:true}).waitFor();
+      // A single-path scenario may share its title with its mobilization path.
+      // Target the path region rather than assuming titles are globally unique.
+      await page.getByRole('region',{name:'Parcours de mobilisation',exact:true})
+        .getByRole('heading',{name:path.title,exact:true}).waitFor();
       const actual=await content('.scenario-catalog');
       for(const field of ['title','situation','trigger','objective'])contains(actual,scenario[field],`${scenario.id}/${field}`);
       for(const field of ['conditions','validation_points'])for(const value of scenario[field])contains(actual,value,`${scenario.id}/${field}`);
