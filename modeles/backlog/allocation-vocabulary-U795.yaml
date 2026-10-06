@@ -17,13 +17,14 @@ publication_delivery:
   source_refs:
   - U795
   - U796
+  - U835
   summary: Allocation de stock par groupe autorisé et relié au glossaire ; Supply Protection Policy conservé.
   required_nodes:
   - id: D02.b
     fields:
       name: Supply Protection Policy
       scope: |-
-        Quatre mécanismes se combinent : protéger l’accès d’un groupe, plafonner sa consommation, définir un stock de sécurité et encadrer le réassort. Les décisions de [Demand & Supply Matching](model:D03) recommandent les valeurs. Supply Protection Policy tient les règles actives, leur portée, leur validité et leurs dérogations. Une recommandation ne devient pas automatiquement une règle applicable.
+        Quatre mécanismes se combinent : protéger l’accès d’un groupe, plafonner sa consommation, définir un stock de sécurité et encadrer le réassort. Les décisions de [Availability](model:D03) recommandent les valeurs. Supply Protection Policy tient les règles actives, leur portée, leur validité et leurs dérogations. Une recommandation ne devient pas automatiquement une règle applicable.
 
         La capacité crée les enveloppes, transfère des droits entre groupes, libère les droits inutilisés et tient les consommations et corrections. Elle rend consultables les quantités allouées, consommées et restantes. L’application peut être individuelle, groupée ou en masse ; écran, traitement par lots ou flux continu ne changent pas cette responsabilité.
 
@@ -61,3 +62,13 @@ publication_delivery:
 
       Vocabulaire U795 : [allocation de stock par groupe](glossary:TER018), ou Group Inventory Allocation, est autorisé pour décrire les enveloppes de protection. Une allocation de stock par groupe préserve une enveloppe pour un usage selon les règles applicables ; elle ne garantit pas à elle seule une disponibilité absolue. Un plafond de consommation ne constitue pas automatiquement un minimum protégé. Un seuil Min/Max de réassort ne rend pas automatiquement le stock restant invendable.
     reason: Reprise éditoriale U797 ; ne vaut pas approbation de la nouvelle rédaction.
+delivery_updates:
+- source_refs:
+  - U835
+  reason: Nouvelle décision métier ; aucune extension des accords historiques. Les valeurs précédentes sont conservées dans
+    Git.
+  history_commit: 397c5b71eecf478fa30b2a8ebc714f7f1fe76e01
+  checks:
+  - target: D02.b
+    change: Alignement du contrôle sur le lot U835
+    previous_check_sha256: 7ab4e649213dcc8d9f30985a99d6d7e698d6386b330abb4d28eb2861cb5c8169

@@ -1,5 +1,7 @@
 # Procédures de travail de l’agent
 
+Démarrage Atlas : suivre `skills/server-admin/SKILL.md`. Regrouper lancement et contrôle léger du catalogue servi dans un seul appel d’exécution ; réutiliser le contrôle d’identité du lanceur. Aucun téléchargement du modèle complet, parsing YAML, build ou audit pour un simple démarrage réussi. Lire les instructions manquantes en bloc et réutiliser celles déjà valables dans la session.
+
 Règles transférées d’AGENTS.md sous U772, sans changement de portée. Lire la section concernée avant inspection, capture d’accords, publication, réexamen ou accès à l’historique. Les chemins et commandes sont relatifs à la racine du dépôt. Les skills restent obligatoires pour leurs opérations respectives.
 
 Lire le périmètre utile avec `python scripts/inspect_model.py D04.j --fields name definition scope` ; ajouter `--relations` si les liens sont concernés, `--collection terms` pour le glossaire, `--space release --version VERSION` pour un état publié. Sans identifiant : recherche `--query` et pagination. Le résultat provient directement du YAML désigné, sans catalogue concurrent. Les champs non sélectionnés ne sont pas réputés absents.

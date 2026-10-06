@@ -1,0 +1,179 @@
+id: AVAILABILITY-U835
+source_refs:
+- U832
+- U833
+- U834
+- U835
+status: applied
+agreement_scope: 'Lot discuté U832–U835 : noms, rattachement, catégorie et type décision ; formulations de définition présentées
+  et responsabilités de sélection/réexamen. Les autres rédactions détaillées restent proposées.'
+retirement:
+  nodes:
+  - subdomain-order-promising
+  - D03.l
+  - BHV109
+  - BHV110
+  relations:
+  - REL-DELIVERY-SCHEDULE-CTP
+  - REL-NEEDS-U290-041
+  - REL-NEEDS-U290-043
+  - REL-NEEDS-U290-044
+  - REL-NEEDS-U290-076
+  - REL-NEEDS-U378-05
+  - REL-MEMBER-D03.l
+  - REL-U766-PRESENTS-PROMISING
+  - REL-U766-D01-subdomain-order-promising
+  - REL-U766-subdomain-order-promising-D03
+  - REL-U766-subdomain-order-promising-D06
+  - REL-U766-subdomain-order-promising-D04
+  - REL-BEHAVIOR-BHV109
+  - REL-BEHAVIOR-BHV110
+  history_commit: 397c5b71eecf478fa30b2a8ebc714f7f1fe76e01
+  history_path: modeles/backlog/model.yaml
+  reason: Responsabilités intégrées aux capacités ATP, CTP et PTP ; aucune réutilisation des identifiants retirés.
+responsibility_transfer:
+  initial_and_reassessment:
+  - D03.i
+  - D03.j
+  - D03.k
+  collective_assignment: D03.o
+  confirmation: D04
+  behavior_policy: BHV109 et BHV110 intégrés dans les périmètres des trois capacités ; leurs deux dimensions existantes par
+    capacité sont conservées.
+scenario_paths_updated:
+- b2b-partial-stock-path
+- shortage-reassessment-path
+- stocktaking-variance-path
+- last-item-concurrency-path
+- substitution-price-service-path
+- additional-purchase-partial-path
+- pickup-or-direct-shipment-path
+- transport-missed-connection-path
+- b2b-release-deadline-path
+- b2b-partial-stock-split-path
+- intercompany-direct-delivery-path
+new_relations:
+- REL-U835-D03.i-D11.b
+- REL-U835-D03.j-D11.b
+- REL-U835-D04.n-D03.i
+- REL-U835-D04.n-D03.j
+- REL-U835-D04.n-D03.k
+- REL-U835-D03-D06
+- REL-U835-D03-D04
+glossary_alignment:
+  updated_terms:
+  - TER044
+  - TER045
+  - TER068
+  - TER112
+  - TER123
+  - TER124
+  plan_visibility: Périmètre Demand/Supply conservé, y compris sorties de stock.
+  methodology: Decision inclut ses calculs ; catégories de présentation sans niveau. Glossaire méthodologique inchangé.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U835
+  summary: Operational References et Availability ; ATP/CTP/PTP décisions dans Order Promising ; sélection et réexamen intégrés.
+  required_nodes:
+  - id: business-references
+    fields:
+      name: Operational References
+  - id: D03
+    fields:
+      name: Availability
+      definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
+        conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
+  - id: D03.i
+    parent: D03
+    fields:
+      definition: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
+      nature: decision
+      category:
+        id: promise-evaluation
+        display_name: Order Promising
+        order: 10
+  - id: D03.j
+    parent: D03
+    fields:
+      definition: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en explicitant
+        les conditions de faisabilité.
+      nature: decision
+      category:
+        id: promise-evaluation
+        display_name: Order Promising
+        order: 10
+  - id: D03.k
+    parent: D03
+    fields:
+      definition: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de service
+        et des règles applicables.
+      nature: decision
+      category:
+        id: promise-evaluation
+        display_name: Order Promising
+        order: 10
+  absent_nodes:
+  - subdomain-order-promising
+  - D03.l
+  - BHV109
+  - BHV110
+market_review:
+  consulted_on: '2026-10-06'
+  references:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Exchange data between systems
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-exchange-data
+    locator: Master and reference data
+    limits: 'Contexte entrepôt : ne définit pas les huit sujets de référence de FLOW.'
+  - vendor: SAP
+    product: S/4HANA
+    title: Maintaining Materials and Business Partners
+    url: https://learning.sap.com/courses/exploring-business-processes-for-supply-chain-execution-in-sap-s-4hana-cloud-private-edition/maintaining-materials-and-business-partners
+    locator: The Warehouse Product ; Business Partner Master Records
+    limits: Une vue produit ou partenaire ne définit ni le sous-domaine FLOW ni son autorité locale.
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Order promising
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+    locator: Delivery date control methods
+    limits: La configuration du produit ne prescrit pas une capacité distincte de sélection ni la taxonomie FLOW.
+  - vendor: SAP
+    product: S/4HANA
+    title: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+    url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-advanced-available-to-promise-aatp-in-sap-s-4hana
+    locator: 'aATP features : PAC, BOP, PAL, ABC'
+    limits: aATP est plus large que la seule capacité ATP de FLOW ; aucune équivalence complète avec Availability.
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Calculate sales order delivery dates using CTP
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp
+    locator: How CTP compares to ATP
+    limits: FLOW sépare la décision de proposition de son engagement et du déclenchement des moyens.
+  - vendor: SAP
+    product: S/4HANA
+    title: Using Advanced Available-To-Promise (aATP) in SAP S/4HANA
+    url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/using-advanced-available-to-promise-aatp-in-sap-s-4hana_ef38afd2-4730-433f-854a-613b8e4afec5
+    locator: PAC ; ABC ; BOP
+    limits: 'Appui voisin, partiel : ces alternatives ne prouvent pas un CTP avec contrôle des capacités de production. Aucune
+      équivalence CTP SAP S/4HANA complète établie dans ce lot.'
+  - vendor: Microsoft
+    product: Dynamics 365 Commerce
+    title: Distributed order management (DOM)
+    url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom
+    locator: 'Overview : business constraints and objectives'
+    limits: Optimisation de réalisation plus large que la décision économique de promesse ; le nom PTP n’est pas établi par
+      cette source.
+  - vendor: SAP
+    product: S/4HANA Cloud Public Edition Transportation Management
+    title: Configuring Charge Management and Explaining the Charge Calculation Process
+    url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-transportation-management/configuring-charge-management-and-explaining-the-charge-calculation-process_d2c3b050-5874-4439-a88e-8dcfa231311c
+    locator: Charge Calculation Process
+    limits: Appui sur le chiffrage utilisé dans une décision ; la page ne prouve pas une sélection économique de promesse
+      ni une capacité PTP SAP identique.
+  scope: Comparaisons ajoutées ou actualisées sur les cinq fiches et leurs entrées de glossaire. Sources antérieures conservées
+    ; pas de nouvelle consultation prétendue pour celles non relues.
+  gaps:
+  - 'Correspondance SAP CTP exacte non établie : appui aATP voisin seulement.'
+  - SAP Transportation Management étaye le chiffrage, pas une sélection PTP identique.

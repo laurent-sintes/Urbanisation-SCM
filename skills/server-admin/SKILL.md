@@ -11,11 +11,20 @@ Intervenir sur le projet Beaumanoir Cartographie, en français et en tutoyant La
 
 La demande indique l’action : état, démarrage, arrêt ou redémarrage. Si elle demande seulement un diagnostic, ne pas modifier le service. Si elle invoque seulement le skill sans action ni contexte, lire l’état puis demander l’action souhaitée. Utiliser le port demandé, sinon 8765. Garder ce même port pour toute l’opération.
 
-Le lanceur existant assure le suivi du processus et les contrôles d’identité. Exécuter depuis la racine du projet, dans PowerShell :
+Pour un démarrage ordinaire, réutiliser les instructions déjà lues et encore applicables. Sinon, regrouper les lectures nécessaires en un appel. Exécuter ensuite le lancement et le contrôle léger dans **un seul appel d’exécution**, sans appel HTTP préalable séparé. Dans l’environnement Codex Windows où le lancement et le HTTP local nécessitent une élévation, demander directement cette permission technique pour l’appel groupé ; ne pas répéter une tentative déjà connue pour échouer dans le bac à sable. La demande de démarrage autorise l’opération, sans nouvelle confirmation fonctionnelle.
+
+Le lanceur existant assure le suivi du processus et les contrôles d’identité, y compris lorsqu’il réutilise un serveur actif. Son succès dispense de répéter la requête d’identité. Exécuter depuis la racine du projet, dans PowerShell :
 
 ```powershell
 # Démarrer sans ouvrir une fenêtre de navigateur
+$ErrorActionPreference = 'Stop'
 .\Lancer-FLOW-Atlas.ps1 -Port 8765 -NoBrowser
+$atlasCatalog = Invoke-RestMethod -Uri 'http://127.0.0.1:8765/data/index.json' -TimeoutSec 3
+$atlasBuiltCatalog = Get-Content -LiteralPath 'app/dist/data/index.json' -Raw | ConvertFrom-Json
+if (-not $atlasCatalog.current_version -or $atlasCatalog.current_version -ne $atlasBuiltCatalog.current_version) {
+    throw 'Le catalogue servi ne correspond pas au build local.'
+}
+Write-Output ("Publication servie : " + $atlasCatalog.current_version)
 
 # Arrêter le serveur suivi
 .\Lancer-FLOW-Atlas.ps1 -Port 8765 -Stop
@@ -23,7 +32,7 @@ Le lanceur existant assure le suivi du processus et les contrôles d’identité
 
 Pour **redémarrer**, exécuter l’arrêt puis le démarrage séquentiellement ; ne pas lancer le démarrage si l’arrêt échoue. Si aucun serveur n’est actif et que le port est libre, un redémarrage revient à démarrer. Un démarrage répété réutilise le serveur correspondant, sans créer de second processus. N’ouvrir le navigateur que si demandé.
 
-Lire l’état avec une requête bornée dans le temps :
+Pour une demande d’état seule, ou un diagnostic après échec du lanceur, lire l’identité avec une requête bornée dans le temps :
 
 ```powershell
 Invoke-RestMethod -Uri 'http://127.0.0.1:8765/__atlas__/identity.json' -TimeoutSec 3
@@ -33,7 +42,9 @@ Le résultat attendu identifie `appName: FLOW Atlas`, `repositoryRoot` égal à 
 
 ## Vérifier le résultat et traiter les échecs
 
-Après démarrage ou redémarrage, vérifier l’identité du serveur puis lire `/data/index.json` et `/data/VERSION/model.json` : le modèle doit servir l’espace `release` et la version désignée par `modeles/release/index.json` et son descripteur courant. Le backlog et le panorama ne sont plus exposés par Atlas selon U117. Après arrêt, vérifier que le processus suivi a disparu et que le point d’identité de ce serveur ne répond plus. Une panne HTTP seule ne prouve pas l’arrêt du processus : en cas de doute, lire le suivi et les journaux.
+Après démarrage ou redémarrage réussi, le contrôle groupé ci-dessus suffit : identité confirmée par le lanceur et version servie conforme au catalogue du build local. Ne pas télécharger le modèle complet, lancer Python/PyYAML, reconstruire, exporter ou auditer les publications pour une simple demande de démarrage. La conformité du build aux sources publiées relève des contrôles de build/release ; ne pas annoncer qu’elle a été revérifiée ici. En cas d’écart ou de demande explicite de contrôle du contenu, effectuer alors le diagnostic ciblé du catalogue publié, de son descripteur et du modèle servi. Le backlog et le panorama ne sont plus exposés par Atlas selon U117.
+
+Après arrêt, vérifier que le processus suivi a disparu et que le point d’identité de ce serveur ne répond plus, dans le même appel que l’arrêt si possible. Une panne HTTP seule ne prouve pas l’arrêt du processus : en cas de doute, lire le suivi et les journaux. Pour un redémarrage, regrouper arrêt, démarrage et contrôle léger dans un appel, avec arrêt immédiat sur erreur.
 
 Les journaux sont `app/.runtime/server-<port>.stdout.log` et `server-<port>.stderr.log`. En cas de port occupé, d’identité incohérente ou de suivi périmé, diagnostiquer avant toute nouvelle action ; conserver les services non identifiés comme ceux du projet. Si une permission système empêche l’action autorisée, demander uniquement l’élévation nécessaire à la commande ciblée, sans modifier les politiques PowerShell ni contourner les contrôles du lanceur.
 

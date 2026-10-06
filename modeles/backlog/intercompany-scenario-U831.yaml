@@ -90,6 +90,7 @@ publication_delivery:
     conservé.
   source_refs:
   - U831
+  - U835
   required_nodes:
   - id: BHV069
     kind: behavior
@@ -102,4 +103,11 @@ publication_delivery:
     content_sha256: 137055778440a2388dc98428a409c42e88fb6ad7dda45d485033687c326b9ed9
   - collection: paths
     id: intercompany-direct-delivery-path
-    content_sha256: 368767fe2b1363d82883d02c4ce2061dafc374ca7c626682f494e4ee6d0631d9
+    content_sha256: b96b661a0b8cbe199aeb0df760b1345fc16cf0bf7709caf217856e942a27fdbd
+delivery_updates:
+- source_refs:
+  - U835
+  collection: paths
+  id: intercompany-direct-delivery-path
+  previous_content_sha256: 368767fe2b1363d82883d02c4ce2061dafc374ca7c626682f494e4ee6d0631d9
+  reason: Transfert de la sélection de promesse D03.l vers ATP ; récit et portée de l’accord U831 conservés.

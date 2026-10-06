@@ -20429,3 +20429,103 @@ On peut garder le comportement dans le sens où c'est une variante d'exécution 
 **contexte et portée**
 
 Accord sur la proposition discutée sous U830 : conserver Intercompany Sales comme comportement de Sales Order, et illustrer la coopération des capacités par le scénario fictif « Livrer un client avec le stock d’une autre société du groupe ». La société A vend 100 vestes à son client ; B, société du même groupe, détient le stock et livre directement ce client. Distinguer engagements commerciaux, mouvement physique, changements de propriétaire et contributions comptables. L’accord porte sur ce récit et cette distinction ; les détails du parcours rédigés ensuite restent proposés. Aucune capacité Intercompany autonome n’est créée et aucune réalisation installée n’est déduite de l’exemple.
+
+
+## U832
+
+**id**
+
+U832
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Revoir le nom Master Data et intégrer Order Promising à Demand & Supply Matching
+
+**texte**
+
+J'aimerais apporter des changements au modèle :
+
+- Sous - domaine "Master Data" => Ce sont tous les référentiels de structure importés qui servent à l'exécution de l'orchestration, contrairement à Policy qui est un sous domaine de data sous autorité de l'orchestration et Plan Visibility qui donne des données de prévision et de projection des flux inbound. Donc Master Data est trop fort comme nom
+- Order Promising :
+  - Promise Selection Decision => Je pense qu'on peut enlever cette capacité car elle est intégrée aux capacités ATP, CTP et PTP dont l'intention est bie nde prendre une décision.
+  - Le groupe Promise Evaluation devient Order Promising
+  - Je souhaite que Order Promising soit intégré au sous domaine Demand & Supply Matching
+
+Qu'en penses-tu ?
+
+**contexte et portée**
+
+Proposition soumise à discussion : clarifier le rôle des référentiels importés, réexaminer la responsabilité portée par Promise Selection Decision et regrouper les capacités de promesse dans Demand & Supply Matching. Le nouveau nom de Master Data reste à proposer. Aucun renommage, retrait, transfert de responsabilités, restriction de Plan Visibility aux seuls flux inbound ni accord sur les formulations proposées ensuite n'est appliqué par cet enregistrement. Les identifiants, accords et publications existants restent inchangés.
+
+
+## U833
+
+**id**
+
+U833
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Proposer Availability pour le sous-domaine Demand & Supply Matching
+
+**texte**
+
+Le sous domaine Demand / Supply Matching, je ne renommerais bien "Availability" tout simplement
+
+**contexte et portée**
+
+Précision de la proposition U832 : envisager Availability comme nom du sous-domaine regroupant les responsabilités actuelles de Demand & Supply Matching et Order Promising. Le périmètre et ses frontières avec Inventory Management, les référentiels, les politiques et les plans restent à discuter. Aucun renommage canonique, accord étendu ou nouvelle publication n'est effectué par cet enregistrement.
+
+
+## U834
+
+**id**
+
+U834
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Qualifier ATP, CTP et PTP comme décisions
+
+**texte**
+
+En conséquence, ATP, CTP et PTP sont de type décision
+
+**contexte et portée**
+
+Précision du lot U832–U833 : ATP, CTP et PTP portent des décisions ; leurs calculs et évaluations servent cette finalité.
+
+
+## U835
+
+**id**
+
+U835
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Valider le regroupement Availability et Operational References
+
+**texte**
+
+Je valide Tout.
+
+**contexte et portée**
+
+Accord sur le lot complet U832–U834 et les propositions discutées : Master Data devient Operational References ; Demand & Supply Matching devient Availability ; ATP, CTP et PTP sont des capacités de décision regroupées dans la catégorie Order Promising, au sein d’Availability. Retirer Promise Selection Decision et l’ancien sous-domaine Order Promising après reprise des responsabilités de sélection initiale et de réexamen et adaptation des scénarios. Préserver une proposition cohérente, sans séquence ATP–CTP–PTP imposée ni confirmation, réservation ou approvisionnement automatique. Conserver l’autorité locale des référentiels, la maîtrise externe d’entreprise et le périmètre actuel Demand/Supply de Plan Visibility. Les rédactions détaillées et comparaisons nouvelles restent des mises en œuvre proposées lorsqu’elles dépassent les formulations discutées. Aucune publication implicite.

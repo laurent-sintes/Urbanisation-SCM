@@ -1884,6 +1884,7 @@ publication_delivery:
   source_refs:
   - U770
   - U771
+  - U835
   summary: 'Audit lexical appliqué : glossaire et frontières cohérents, appuis marché explicités, Receiving Order et scénario
     ajoutés.'
   required_nodes:
@@ -1934,7 +1935,7 @@ publication_delivery:
 
         Scope, Schedule, Run, Stop, Rerun, Monitor et Adjust décrivent les pratiques de pilotage. Arrêter un calcul n’annule pas ses effets appliqués. Adjust Plan prépare les révisions en préservant les effets acquis et en faisant examiner les impacts sur les commandes. La comparaison des décalages relève de Simulation & Analysis et le choix des liens révisés de [Supply Assignment](glossary:TER017).
 
-        Exemple : une réception retardée déclenche un réexamen ciblé ; comparer les alternatives, retenir un plan cohérent, puis faire appliquer les changements autorisés. Les confirmations restent portées par les [Orders](glossary:TER012) ; [ATP](glossary:TER044)/[CTP](glossary:TER045)/[PTP](glossary:TER068) et le réexamen de promesse relèvent d’[Order Promising](model:subdomain-order-promising). Le plan interne ne remplace pas la planification externe et [Fulfilment](glossary:TER085) conserve les adaptations locales.
+        Exemple : une réception retardée déclenche un réexamen ciblé ; comparer les alternatives, retenir un plan cohérent, puis faire appliquer les changements autorisés. Les confirmations restent portées par les [Orders](glossary:TER012) ; [ATP](glossary:TER044)/[CTP](glossary:TER045)/[PTP](glossary:TER068) et le réexamen de promesse relèvent du groupe [Order Promising](glossary:TER124). Le plan interne ne remplace pas la planification externe et [Fulfilment](glossary:TER085) conserve les adaptations locales.
 
         Le [Matching Master Plan](glossary:TER100) est le plan interne commun ; les [Supply Plans](glossary:TER098) et [Demand Plans](glossary:TER099) sont des informations externes consommées. Cette séparation est propre au périmètre FLOW et ne recopie pas tous les calculs regroupés dans le master planning Microsoft.
   - id: D07.c
@@ -1966,7 +1967,7 @@ publication_delivery:
 
         Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; Operations Tracking intègre les faits d’exécution ; Operations Visibility restitue leur avancement et Process Visibility en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
 
-        Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Matching](glossary:TER112).
+        Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Availability](glossary:TER112).
 
         [Service Order Management](model:subdomain-service-orders) tient le cycle et les engagements des ordres de prestation. L’orchestration utilise leurs réponses et coordonne les conditions d’activation et dépendances ; elle ne recrée pas leur cycle.
 
@@ -3222,3 +3223,16 @@ verification_U771:
   mapped_capabilities: 72
   mapped_scenarios: 23
   publication: 'Unchanged: 2026-09-25.3'
+delivery_updates:
+- source_refs:
+  - U835
+  reason: Nouvelle décision métier ; aucune extension des accords historiques. Les valeurs précédentes sont conservées dans
+    Git.
+  history_commit: 397c5b71eecf478fa30b2a8ebc714f7f1fe76e01
+  checks:
+  - target: D05.f
+    change: Alignement du contrôle sur le lot U835
+    previous_check_sha256: 38a6dc283e3536ffa049c2bd1563587861711785c864dda75fb8abe906d2c969
+  - target: D06.d
+    change: Alignement du contrôle sur le lot U835
+    previous_check_sha256: a0711b76452d5bb18cf0b92ce9b24acfaa1bea77c8efce2de2e09f0950a06a1c

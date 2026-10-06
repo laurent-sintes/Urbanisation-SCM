@@ -396,6 +396,7 @@ publication_delivery:
   - U756
   - U766
   - U767
+  - U835
   summary: U766 Order Promising autonome ; U767 Evaluation, profondeurs, réexamen des promesses et Inventory Visibility fusionnée
     appliqués.
   absent_nodes:
@@ -460,41 +461,32 @@ publication_delivery:
         display_name: Inventory Visibility
         order: 20
   - id: D03.i
-    parent: subdomain-order-promising
+    parent: D03
     fields:
       name: Available-to-Promise (ATP)
-      nature: evaluation
-      category:
-        id: promise-evaluation
-        display_name: Promise Evaluation
-        order: 10
-  - id: D03.j
-    parent: subdomain-order-promising
-    fields:
-      name: Capable-to-Promise (CTP)
-      nature: evaluation
-      category:
-        id: promise-evaluation
-        display_name: Promise Evaluation
-        order: 10
-  - id: D03.k
-    parent: subdomain-order-promising
-    fields:
-      name: Profitable-to-Promise (PTP)
-      nature: evaluation
-      category:
-        id: promise-evaluation
-        display_name: Promise Evaluation
-        order: 10
-  - id: D03.l
-    parent: subdomain-order-promising
-    fields:
-      name: Promise Selection Decision
       nature: decision
       category:
-        id: promise-selection
-        display_name: Promise Selection
-        order: 20
+        id: promise-evaluation
+        display_name: Order Promising
+        order: 10
+  - id: D03.j
+    parent: D03
+    fields:
+      name: Capable-to-Promise (CTP)
+      nature: decision
+      category:
+        id: promise-evaluation
+        display_name: Order Promising
+        order: 10
+  - id: D03.k
+    parent: D03
+    fields:
+      name: Profitable-to-Promise (PTP)
+      nature: decision
+      category:
+        id: promise-evaluation
+        display_name: Order Promising
+        order: 10
   - id: inventory-ownership-ledger
     parent: D01
     fields:
@@ -515,19 +507,6 @@ publication_delivery:
     fields:
       name: Contractual Milestone-Based Ownership Transfer
       nature: business_effect
-  - id: subdomain-order-promising
-    fields:
-      name: Order Promising
-      definition: Évaluer les possibilités de satisfaction d’une demande et sélectionner une proposition de promesse, en explicitant
-        quantités, dates, conditions et conséquences économiques.
-      scope: |-
-        [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068) produisent des évaluations indépendamment mobilisables. Promise Selection Decision choisit une proposition dans les possibilités admissibles. Les catégories Promise Evaluation et Promise Selection Decision facilitent la lecture sans ajouter de niveau.
-
-        [Order Promising](model:subdomain-order-promising) peut être sollicité avant la prise d’une commande, pendant sa révision, lors de la construction ou de la révision du [master plan de Matching](glossary:TER100) et pendant l’adaptation du [Fulfilment](glossary:TER085). Le contexte détermine les évaluations utiles ; aucune séquence universelle [ATP](glossary:TER044) puis [CTP](glossary:TER045) puis [PTP](glossary:TER068) ni recalcul à chaque changement d’état n’est imposé.
-
-        Inventory Management fournit la connaissance des stocks, apports et engagements de quantité ; Plan Visibility fournit les plans. Les capacités logistiques, calendriers, tarifs et règles sont consommés auprès de leurs responsables. [PTP](glossary:TER068) expose les avantages et inconvénients économiques locaux ; [CTP](glossary:TER045) ne déclenche pas les achats.
-
-        [Matching](glossary:TER112) conserve le master plan, les arbitrages collectifs et les affectations. [Fulfilment](glossary:TER085) coordonne les prestations et recherche des solutions locales préservant la promesse et les grands équilibres du [Matching](glossary:TER112). Les [Orders](glossary:TER012) portent la confirmation et les révisions autorisées de l’engagement. Une proposition recalculée ne confirme, ne réserve et ne réaffecte rien à elle seule.
   - id: D01
     fields:
       definition: Établir et fiabiliser la référence de stock, ses mouvements, sa propriété, ses disponibilités et ses engagements
@@ -556,14 +535,6 @@ publication_delivery:
     parent: D03.k
     fields:
       name: Contextual Economic Impact Evaluation
-  - id: BHV109
-    parent: D03.l
-    fields:
-      name: Initial Promise Selection
-  - id: BHV110
-    parent: D03.l
-    fields:
-      name: Promise Reassessment
   editorial_superseded_checks_U797:
   - id: subdomain-order-promising
     field: scope
@@ -1669,3 +1640,31 @@ delivery_alignment_U771:
   - id: BHV107
     field: name
   note: Attendus actualisés sur le lot courant ; preuves et constats historiques conservés.
+delivery_updates:
+- source_refs:
+  - U835
+  reason: Nouvelle décision métier ; aucune extension des accords historiques. Les valeurs précédentes sont conservées dans
+    Git.
+  history_commit: 397c5b71eecf478fa30b2a8ebc714f7f1fe76e01
+  checks:
+  - target: D03.i
+    change: Alignement du contrôle sur le lot U835
+    previous_check_sha256: 132179ea250fd9b4c05aa87b39d816325e09814dfc45ae678256c2154ce754b0
+  - target: D03.j
+    change: Alignement du contrôle sur le lot U835
+    previous_check_sha256: a8de2e4445a7dab9fa8ee807e5239b7ade58fb0c36ae53c5a81787ffdf35bd35
+  - target: D03.k
+    change: Alignement du contrôle sur le lot U835
+    previous_check_sha256: 9a739bbcc707fbe3a42619100070c013490648812dfdcd8a34ec09b380d80769
+  - target: D03.l
+    change: Retrait couvert par availability-U835.yaml
+    previous_check_sha256: f008aea7e84f39fdd18682d84813d7bd054a9b5af61cc5516e53d079f8b1d873
+  - target: subdomain-order-promising
+    change: Retrait couvert par availability-U835.yaml
+    previous_check_sha256: 7862844682b614ea594124e4d58ccf8822450f3a01bb683addf2bdef0d431859
+  - target: BHV109
+    change: Retrait couvert par availability-U835.yaml
+    previous_check_sha256: c4e5a9fe3984ad807b276c02b72658be955ee455e2ec41527ef55ce97f7fcb17
+  - target: BHV110
+    change: Retrait couvert par availability-U835.yaml
+    previous_check_sha256: c042051401e6cb57859149ec2ff341aa74c6fb78d4ae6e8b86fe22a8620149c8

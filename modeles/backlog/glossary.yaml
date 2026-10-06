@@ -6610,17 +6610,13 @@ terms:
       - CMP189
 - id: TER044
   name: Available-to-Promise — ATP
-  short_description: Établir les engagements possibles et leur couverture avec les ressources admissibles présentes ou futures.
-  definition: Établir les quantités et dates auxquelles une demande ou un ensemble de demandes peut être satisfait par les
-    ressources présentes ou futures admissibles dans la situation de référence, et expliciter la couverture qui rend ces engagements
-    possibles.
-  context: Cette définition décrit la capacité FLOW. Dans les références APICS et Microsoft, ATP désigne aussi une quantité
-    non engagée disponible à promettre à un horizon donné, incluant des ressources futures admissibles.
-  notes: 'U260 accepte le principe d’une couverture explicative des quantités/dates ; le niveau d’identification des ressources
-    et le choix final restent à préciser. Ce calcul ne prouve pas une affectation ou une promesse confirmée. SAP aATP est
-    un ensemble de fonctions plus large, et non un synonyme de cette seule capacité. Synthèse proposée et sources : marche/atp-aatp-couverture.md,
-    CMP087 ; APICS CPIM 2019 et documentation Microsoft/SAP consultés le 16 septembre 2026. U264 : synthèse alignée sur la
-    capacité et les quatre comportements d’ATP ; terminologie factuelle, pas de niveau marketing Advanced ATP.'
+  short_description: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
+  definition: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
+  context: Dans FLOW, cette capacité est une décision du groupe Order Promising, au sein d’[Availability](glossary:TER112).
+    Elle inclut les calculs utiles, le choix initial et le réexamen. Les [Orders](glossary:TER012) portent les engagements
+    confirmés ; aucune réservation, affectation ou commande d’achat n’est créée automatiquement.
+  notes: U835 intègre le choix de proposition à la capacité. Les périmètres natifs des éditeurs restent explicités dans les
+    comparaisons ; ils ne définissent pas une taxonomie universelle. Les variantes descriptives existantes sont conservées.
   source_refs:
   - U154
   - U202
@@ -6633,12 +6629,13 @@ terms:
   - U774
   - CMP307
   - ELM783
+  - U835
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
   review:
     state: proposed
-    note: Reformulation lexicale alignée U264 ; les définitions des comportements sont adoptées séparément U263.
+    note: Définition alignée sur les formulations validées U835 ; contexte et notes de mise en œuvre proposés.
   previous_definition: Quantité non engagée disponible pour soutenir une promesse à un horizon donné, dans le périmètre et
     selon les règles considérés. Son calcul et son contrôle contribuent à évaluer une possibilité de fourniture.
   previous_notes_U260: Actualisé selon le modèle courant ; formulation détaillée proposée et périmètre local, pas une définition
@@ -6647,27 +6644,30 @@ terms:
     admissibles, en appliquant les protections et règles existantes, sans modifier ces engagements ou politiques.
   market_comparisons:
   - vendor: Microsoft
-    product: Dynamics 365 SCM / Commerce / Intelligent Order Management
-    element_name: Available-to-promise quantity
-    concept_name: Available-to-promise quantity
-    element_type: Concept ou mécanisme métier documenté dans un produit
-    relationship: Appui sémantique
-    scope_summary: Quantité promettable à une date.
-    approach_summary: Calculer réceptions et consommations.
-    similarities: Ressources futures déjà prévues incluses.
-    differences: ATP désigne ici principalement une mesure et son calcul.
-    flow_position: FLOW nomme également la responsabilité de décision.
+    product: Dynamics 365 Supply Chain Management
+    element_name: Order promising
+    concept_name: Order promising
+    element_type: Fonction ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: ATP et CTP contribuent à déterminer des dates de promesse.
+    differences: La configuration du produit ne prescrit pas une capacité distincte de sélection ni la taxonomie FLOW.
+    flow_position: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
+    scope_summary: ATP et CTP contribuent à déterminer des dates de promesse.
+    approach_summary: ATP et CTP contribuent à déterminer des dates de promesse.
     source_title: Order promising
     source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
-    source_version: Documentation évolutive, mise à jour affichée le 21 avril 2026
-    source_locator: Order promising ; ATP calculations ; Example ; CTP calculations
-    consulted_on: '2026-09-19'
-    evidence_limits: Documentation primaire consultée ; aucun choix de produit ni déploiement Beaumanoir déduit.
+    source_version: Documentation évolutive consultée le 6 octobre 2026 ; aucune version produit globale présumée.
+    source_locator: Delivery date control methods
+    consulted_on: '2026-10-06'
+    evidence_limits: La configuration du produit ne prescrit pas une capacité distincte de sélection ni la taxonomie FLOW.
+      Aucun consensus de taxonomie ni réalisation installée déduit.
     status: proposed
     source_refs:
-    - U477
-    - ELM434
-    - CMP191
+    - U832
+    - U834
+    - U835
+    term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
+    definition_choice: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
   - vendor: Oracle
     product: PeopleSoft Inventory
     element_name: Cumulative ATP
@@ -6678,7 +6678,7 @@ terms:
     approach_summary: Confronter ressources et demandes.
     similarities: Les engagements concurrents réduisent les possibilités.
     differences: Le calcul est intégré à des traitements de promesse.
-    flow_position: FLOW distingue la décision de son application.
+    flow_position: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
     source_title: Promising and Reserving Inventory
     source_url: https://docs.oracle.com/cd/E13228_01/fscm9pbr0/eng/psbooks/sinv/htm/sinv18.htm
     source_version: PeopleSoft Enterprise Inventory 9.0
@@ -6691,6 +6691,10 @@ terms:
     - U477
     - ELM337
     - CMP191
+    term_choice: Le terme est conservé ; FLOW qualifie la capacité de décision incluant calcul, sélection initiale et réexamen.
+      Le périmètre du produit cité peut être différent.
+    definition_choice: 'U835 : Déterminer les quantités et dates promettables à partir des ressources présentes ou futures
+      admissibles. Proposition distincte de la confirmation et de l’application.'
   - vendor: SAP
     product: SAP S/4HANA — périmètre du cours cité
     element_name: Running an Available-to-Promise (ATP) Check in SAP S/4HANA Sales
@@ -6703,9 +6707,7 @@ terms:
     similarities: L’ATP confronte quantité et date demandées aux disponibilités, puis propose des échéances confirmables.
     differences: Le produit enchaîne calcul et confirmation ; FLOW sépare évaluation, sélection de proposition et engagement
       de la commande. Les stocks futurs restent dans le périmètre ATP de référence.
-    flow_position: FLOW conserve le périmètre métier de Available-to-Promise — ATP. Le produit enchaîne calcul et confirmation
-      ; FLOW sépare évaluation, sélection de proposition et engagement de la commande. Les stocks futurs restent dans le périmètre
-      ATP de référence.
+    flow_position: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
     source_title: Running an Available-to-Promise (ATP) Check in SAP S/4HANA Sales
     source_url: https://learning.sap.com/courses/performing-the-availability-check/running-an-available-to-promise-atp-check-in-sap-s-4hana-sales_a2b4c5e3-1618-418d-a4f6-efe5ff43f7f1
     source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -6719,21 +6721,43 @@ terms:
     - U774
     - CMP307
     - ELM783
-    term_choice: Le nom Available-to-Promise — ATP reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
-      cette appellation ni sa maille.
-    definition_choice: 'L’ATP confronte quantité et date demandées aux disponibilités, puis propose des échéances confirmables.
-      Frontière conservée : Le produit enchaîne calcul et confirmation ; FLOW sépare évaluation, sélection de proposition
-      et engagement de la commande. Les stocks futurs restent dans le périmètre ATP de référence.'
+    term_choice: Le terme est conservé ; FLOW qualifie la capacité de décision incluant calcul, sélection initiale et réexamen.
+      Le périmètre du produit cité peut être différent.
+    definition_choice: 'U835 : Déterminer les quantités et dates promettables à partir des ressources présentes ou futures
+      admissibles. Proposition distincte de la confirmation et de l’application.'
+  - vendor: SAP
+    product: S/4HANA
+    element_name: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+    concept_name: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+    element_type: Fonction ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: La disponibilité, les propositions de confirmation, les protections et le réexamen coopèrent dans aATP.
+    differences: aATP est plus large que la seule capacité ATP de FLOW ; aucune équivalence complète avec Availability.
+    flow_position: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
+    scope_summary: La disponibilité, les propositions de confirmation, les protections et le réexamen coopèrent dans aATP.
+    approach_summary: La disponibilité, les propositions de confirmation, les protections et le réexamen coopèrent dans aATP.
+    source_title: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+    source_url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-advanced-available-to-promise-aatp-in-sap-s-4hana
+    source_version: Documentation évolutive consultée le 6 octobre 2026 ; aucune version produit globale présumée.
+    source_locator: 'aATP features : PAC, BOP, PAL, ABC'
+    consulted_on: '2026-10-06'
+    evidence_limits: aATP est plus large que la seule capacité ATP de FLOW ; aucune équivalence complète avec Availability.
+      Aucun consensus de taxonomie ni réalisation installée déduit.
+    status: proposed
+    source_refs:
+    - U832
+    - U834
+    - U835
+    term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
+    definition_choice: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
   market_inspiration:
-    choice: ATP indique ce qu’une demande peut recevoir avec les ressources admissibles déjà présentes ou attendues. Dans
-      FLOW, le terme nomme la décision qui établit les quantités, dates et couverture possibles, sans confirmer la promesse.
-    flow_scope: Possibilités dans la situation de référence.
-    flow_approach: Compter les consommations et engagements sur l’horizon.
+    choice: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
+    flow_scope: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
+    flow_approach: Calculer, comparer et choisir dans le périmètre spécialisé ; expliciter les conditions et réexaminer les
+      propositions sans modifier automatiquement les engagements.
     synthesis:
-    - Microsoft et PeopleSoft utilisent ATP pour une quantité disponible à promettre, calculée dans le temps. FLOW emploie
-      aussi le sigle pour la capacité qui établit ces possibilités. Ce passage de la mesure à la responsabilité est explicite.
-    - 'Le stock futur n’est pas réservé à CTP : s’il est déjà prévu et admissible, il appartient à ATP. Protections et réservations
-      existantes limitent la réponse ; le calcul n’en crée pas de nouvelles.'
+    - La décision inclut ses évaluations et calculs. Les correspondances éditeurs sont partielles ; aucun ordre ATP–CTP–PTP
+      ou objectif économique universel n’est imposé.
     examples:
     - title: Illustration FLOW — l’arrivage compte dans ATP
       situation: Un arrivage attendu à sept jours peut couvrir une demande à soixante jours si les besoins concurrents le
@@ -6748,16 +6772,15 @@ terms:
       - CMP191
 - id: TER045
   name: Capable-to-Promise — CTP
-  short_description: Évaluer la faisabilité conditionnelle de satisfaction d’une demande selon les sources, matières, délais
-    et capacités nécessaires, sans décider de leur mobilisation.
-  definition: Évaluer la faisabilité conditionnelle de satisfaction d’une demande selon les sources, matières, délais et capacités
-    nécessaires, sans décider de leur mobilisation.
-  context: Supply-Based CTP examine sources, matières et délais ; Capacity-Constrained CTP approfondit les capacités finies.
-    Ces profondeurs sont une structuration FLOW. [Matching](glossary:TER112) décide de mobiliser les ressources ; CTP ne crée
-    ni achat, ni affectation, ni engagement.
-  notes: La formulation historique fondée sur toute adaptation des ressources ou engagements est remplacée par la faisabilité
-    conditionnelle. Une alternative de stock, site ou date ne constitue pas à elle seule du CTP. Les versions antérieures
-    du glossaire restent dans les publications historiques.
+  short_description: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en
+    explicitant les conditions de faisabilité.
+  definition: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en explicitant
+    les conditions de faisabilité.
+  context: Dans FLOW, cette capacité est une décision du groupe Order Promising, au sein d’[Availability](glossary:TER112).
+    Elle inclut les calculs utiles, le choix initial et le réexamen. Les [Orders](glossary:TER012) portent les engagements
+    confirmés ; aucune réservation, affectation ou commande d’achat n’est créée automatiquement.
+  notes: U835 intègre le choix de proposition à la capacité. Les périmètres natifs des éditeurs restent explicités dans les
+    comparaisons ; ils ne définissent pas une taxonomie universelle. Les variantes descriptives existantes sont conservées.
   source_refs:
   - U154
   - U202
@@ -6769,79 +6792,82 @@ terms:
   - U771
   - CMP306
   - U797
+  - U835
   source_locator:
     path: connaissance/33-frontieres-ctp.md
     anchor: ctp
   review:
     state: proposed
-    note: Mise en cohérence lexicale U771 ; rédaction nouvelle non présentée comme approuvée mot à mot.
+    note: Définition alignée sur les formulations validées U835 ; contexte et notes de mise en œuvre proposés.
   previous_definition: Raisonnement de faisabilité de promesse prenant en compte les moyens nécessaires pour rendre une fourniture
     disponible, au-delà des ressources déjà présentes ou attendues mobilisables.
   market_comparisons:
   - vendor: Microsoft
-    product: Dynamics 365 Supply Chain Management / Planning Optimization
-    element_name: Capable-to-promise
-    concept_name: Capable-to-promise
-    element_type: Concept ou mécanisme métier documenté dans un produit
-    relationship: Appui sémantique
-    scope_summary: Fourniture réalisable par production.
-    approach_summary: Vérifier matières et capacité.
-    similarities: Tester comment rendre une demande satisfaisable.
-    differences: FLOW évalue une faisabilité conditionnelle ; réaffectation, modification d’engagement et application des
-      adaptations restent dans les capacités responsables.
-    flow_position: Évaluer la faisabilité conditionnelle de satisfaction d’une demande selon les sources, matières, délais
-      et capacités nécessaires, sans décider de leur mobilisation. Supply-Based CTP examine sources, matières et délais ;
-      Capacity-Constrained CTP approfondit les capacités finies. Ces profondeurs sont une structuration FLOW. Matching décide
-      de mobiliser les ressources ; CTP ne crée ni achat, ni affectation, ni engagement.
-    source_title: Calculate delivery dates using CTP
+    product: Dynamics 365 Supply Chain Management
+    element_name: Calculate sales order delivery dates using CTP
+    concept_name: Calculate sales order delivery dates using CTP
+    element_type: Fonction ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: CTP tient compte des matières et capacités pour établir une date réaliste.
+    differences: FLOW sépare la décision de proposition de son engagement et du déclenchement des moyens.
+    flow_position: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en
+      explicitant les conditions de faisabilité.
+    scope_summary: CTP tient compte des matières et capacités pour établir une date réaliste.
+    approach_summary: CTP tient compte des matières et capacités pour établir une date réaliste.
+    source_title: Calculate sales order delivery dates using CTP
     source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp
-    source_version: Documentation évolutive, mise à jour affichée le 27 juillet 2026
-    source_locator: How CTP compares to ATP ; exemple Item A composé de B et C ; View confirmed delivery dates
-    consulted_on: '2026-09-19'
-    evidence_limits: Documentation primaire consultée ; aucun choix de produit ni déploiement Beaumanoir déduit.
+    source_version: Documentation évolutive consultée le 6 octobre 2026 ; aucune version produit globale présumée.
+    source_locator: How CTP compares to ATP
+    consulted_on: '2026-10-06'
+    evidence_limits: FLOW sépare la décision de proposition de son engagement et du déclenchement des moyens. Aucun consensus
+      de taxonomie ni réalisation installée déduit.
     status: proposed
     source_refs:
-    - U477
-    - ELM417
-    - CMP191
+    - U832
+    - U834
+    - U835
+    term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
+    definition_choice: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires,
+      en explicitant les conditions de faisabilité.
   - vendor: SAP
-    product: SAP S/4HANA aATP
-    element_name: Alternative-Based Confirmation
-    concept_name: Alternative-Based Confirmation
-    element_type: Concept ou mécanisme métier documenté dans un produit
-    relationship: Appui sémantique
-    scope_summary: Site ou produit alternatif.
-    approach_summary: Explorer une autre solution.
-    similarities: Une adaptation peut améliorer la réponse.
-    differences: FLOW évalue une faisabilité conditionnelle ; réaffectation, modification d’engagement et application des
-      adaptations restent dans les capacités responsables.
-    flow_position: Évaluer la faisabilité conditionnelle de satisfaction d’une demande selon les sources, matières, délais
-      et capacités nécessaires, sans décider de leur mobilisation. Supply-Based CTP examine sources, matières et délais ;
-      Capacity-Constrained CTP approfondit les capacités finies. Ces profondeurs sont une structuration FLOW. Matching décide
-      de mobiliser les ressources ; CTP ne crée ni achat, ni affectation, ni engagement.
-    source_title: Alternative-Based Confirmation
+    product: S/4HANA
+    element_name: Using Advanced Available-To-Promise (aATP) in SAP S/4HANA
+    concept_name: Using Advanced Available-To-Promise (aATP) in SAP S/4HANA
+    element_type: Fonction ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Les contrôles de disponibilité et alternatives éclairent les réponses possibles à une demande.
+    differences: 'Appui voisin, partiel : ces alternatives ne prouvent pas un CTP avec contrôle des capacités de production.
+      Aucune équivalence CTP SAP S/4HANA complète établie dans ce lot.'
+    flow_position: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en
+      explicitant les conditions de faisabilité.
+    scope_summary: Les contrôles de disponibilité et alternatives éclairent les réponses possibles à une demande.
+    approach_summary: Les contrôles de disponibilité et alternatives éclairent les réponses possibles à une demande.
+    source_title: Using Advanced Available-To-Promise (aATP) in SAP S/4HANA
     source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/using-advanced-available-to-promise-aatp-in-sap-s-4hana_ef38afd2-4730-433f-854a-613b8e4afec5
-    source_version: Cours SAP S/4HANA, édition non précisée dans le passage
-    source_locator: 'Advanced ATP Scenario: Alternative-Based Confirmation ; Release for Delivery'
-    consulted_on: '2026-09-19'
-    evidence_limits: Documentation primaire consultée ; aucun choix de produit ni déploiement Beaumanoir déduit.
+    source_version: Documentation évolutive consultée le 6 octobre 2026 ; aucune version produit globale présumée.
+    source_locator: PAC ; ABC ; BOP
+    consulted_on: '2026-10-06'
+    evidence_limits: 'Appui voisin, partiel : ces alternatives ne prouvent pas un CTP avec contrôle des capacités de production.
+      Aucune équivalence CTP SAP S/4HANA complète établie dans ce lot. Aucun consensus de taxonomie ni réalisation installée
+      déduit.'
     status: proposed
     source_refs:
-    - U477
-    - ELM456
-    - CMP191
+    - U832
+    - U834
+    - U835
+    term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
+    definition_choice: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires,
+      en explicitant les conditions de faisabilité.
   market_inspiration:
-    choice: Évaluer les conditions de disponibilité des matières et capacités rend explicites les possibilités encore conditionnelles.
-      CTP ne décide ni adaptation des engagements ni mobilisation des ressources.
-    flow_scope: Évaluer la faisabilité conditionnelle de satisfaction d’une demande selon les sources, matières, délais et
-      capacités nécessaires, sans décider de leur mobilisation.
-    flow_approach: Supply-Based CTP examine sources, matières et délais ; Capacity-Constrained CTP approfondit les capacités
-      finies. Ces profondeurs sont une structuration FLOW. Matching décide de mobiliser les ressources ; CTP ne crée ni achat,
-      ni affectation, ni engagement.
+    choice: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en explicitant
+      les conditions de faisabilité.
+    flow_scope: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en explicitant
+      les conditions de faisabilité.
+    flow_approach: Calculer, comparer et choisir dans le périmètre spécialisé ; expliciter les conditions et réexaminer les
+      propositions sans modifier automatiquement les engagements.
     synthesis:
-    - Microsoft étaye la faisabilité matière et capacité. Les alternatives SAP ABC sont des fonctions voisines, sans prouver
-      une taxonomie CTP commune.
-    - FLOW distingue évaluation conditionnelle, décision et application ; les deux profondeurs sont un choix descriptif local.
+    - La décision inclut ses évaluations et calculs. Les correspondances éditeurs sont partielles ; aucun ordre ATP–CTP–PTP
+      ou objectif économique universel n’est imposé.
     examples:
     - title: Microsoft — composants et capacité pour un article absent
       situation: Un article A n’est pas en stock, mais ses composants B et C peuvent être disponibles.
@@ -7457,7 +7483,8 @@ terms:
     en conservant les liens et identifiants du maître externe.
   context: 'Exemple : recevoir une variante de produit créée dans le référentiel maître, avec son identifiant, sa taille et
     sa couleur. Une correction est reçue depuis cette même autorité ; la Supply ne modifie pas le maître à sa place. Master
-    Data Ingestion est rattachée à Integration, catégorie Inbound ; les références et leurs vues restent dans Master Data.'
+    Data Ingestion est rattachée à Integration, catégorie Inbound ; les références et leurs vues restent dans Operational
+    References.'
   notes: L’autorité sur les références reste externe à Supply. Recevoir leurs évolutions ne transfère pas la responsabilité
     de créer, corriger ou supprimer les maîtres.
   source_refs:
@@ -9562,13 +9589,13 @@ terms:
     ni réalisation physique. Un ordre peut regrouper plusieurs prestations ; aucune cardinalité universelle imposée.'
 - id: TER068
   name: Profitable-to-Promise (PTP)
-  short_description: Évaluer et comparer les conséquences économiques des possibilités de promesse, en explicitant les coûts,
-    les conditions d’admissibilité et les incertitudes, sans sélectionner la réponse.
-  definition: Évaluer et comparer les conséquences économiques des possibilités de promesse, en explicitant les coûts, les
-    conditions d’admissibilité et les incertitudes, sans sélectionner la réponse.
-  context: 'Sens FLOW : évaluation économique locale des options. Promise Selection Decision choisit la proposition ; les
-    [Orders](glossary:TER012) portent l’engagement. Le PTP Oracle inclut aussi une sélection, ce qui constitue un recouvrement
-    partiel.'
+  short_description: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de
+    service et des règles applicables.
+  definition: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de service
+    et des règles applicables.
+  context: Dans FLOW, cette capacité est une décision du groupe Order Promising, au sein d’[Availability](glossary:TER112).
+    Elle inclut les calculs utiles, le choix initial et le réexamen. Les [Orders](glossary:TER012) portent les engagements
+    confirmés ; aucune réservation, affectation ou commande d’achat n’est créée automatiquement.
   source_refs:
   - U154
   - U203
@@ -9581,12 +9608,13 @@ terms:
   - ELM794
   - ELM720
   - U797
+  - U835
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
   review:
     state: proposed
-    note: Mise en cohérence lexicale U771 ; rédaction nouvelle non présentée comme approuvée mot à mot.
+    note: Définition alignée sur les formulations validées U835 ; contexte et notes de mise en œuvre proposés.
   market_comparisons:
   - vendor: Oracle
     product: Oracle Fusion Cloud SCM / Order Management / Global Order Promising
@@ -9597,12 +9625,10 @@ terms:
     scope_summary: Coûts de satisfaction.
     approach_summary: Comparer les alternatives sous contrainte de délai.
     similarities: Même question économique.
-    differences: La sélection native peut accompagner le calcul économique. FLOW réserve PTP à l’évaluation et attribue le
-      choix à Promise Selection Decision.
-    flow_position: 'Évaluer et comparer les conséquences économiques des possibilités de promesse, en explicitant les coûts,
-      les conditions d’admissibilité et les incertitudes, sans sélectionner la réponse. Sens FLOW : évaluation économique
-      locale des options. Promise Selection Decision choisit la proposition ; les Orders portent l’engagement. Le PTP Oracle
-      inclut aussi une sélection, ce qui constitue un recouvrement partiel.'
+    differences: FLOW inclut désormais la sélection économique de la proposition. Les fonctions de coût et d’optimisation
+      citées apportent un recouvrement partiel, sans établir une capacité PTP identique chez tous les éditeurs.
+    flow_position: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de service
+      et des règles applicables.
     source_title: Create Alternative Fulfillment Scenarios to Reduce Cost
     source_url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26c/fascp/create-alternative-fulfillment-scenarios-to-reduce-cost.html
     source_version: Oracle Fusion Cloud SCM 26C
@@ -9614,64 +9640,66 @@ terms:
     - U477
     - ELM372
     - CMP191
+    term_choice: Le terme est conservé ; FLOW qualifie la capacité de décision incluant calcul, sélection initiale et réexamen.
+      Le périmètre du produit cité peut être différent.
+    definition_choice: 'U835 : Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes
+      de service et des règles applicables. Proposition distincte de la confirmation et de l’application.'
   - vendor: Microsoft
     product: Dynamics 365 Commerce
-    element_name: Fulfillment cost objectives
-    concept_name: Fulfillment cost objectives
-    element_type: Concept ou mécanisme métier documenté dans un produit
-    relationship: Appui sémantique
-    scope_summary: Coûts dans l’optimisation des commandes.
-    approach_summary: Associer objectifs et contraintes.
-    similarities: Le coût est une dimension du choix.
-    differences: La sélection native peut accompagner le calcul économique. FLOW réserve PTP à l’évaluation et attribue le
-      choix à Promise Selection Decision.
-    flow_position: 'Évaluer et comparer les conséquences économiques des possibilités de promesse, en explicitant les coûts,
-      les conditions d’admissibilité et les incertitudes, sans sélectionner la réponse. Sens FLOW : évaluation économique
-      locale des options. Promise Selection Decision choisit la proposition ; les Orders portent l’engagement. Le PTP Oracle
-      inclut aussi une sélection, ce qui constitue un recouvrement partiel.'
+    element_name: Distributed order management (DOM)
+    concept_name: Distributed order management (DOM)
+    element_type: Fonction ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: DOM arbitre les options selon coûts, ressources et exigences de service.
+    differences: Optimisation de réalisation plus large que la décision économique de promesse ; le nom PTP n’est pas établi
+      par cette source.
+    flow_position: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de service
+      et des règles applicables.
+    scope_summary: DOM arbitre les options selon coûts, ressources et exigences de service.
+    approach_summary: DOM arbitre les options selon coûts, ressources et exigences de service.
     source_title: Distributed order management (DOM)
     source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom
-    source_version: Documentation évolutive, mise à jour affichée le 3 juin 2026
-    source_locator: Introduction, objectifs et contraintes
-    consulted_on: '2026-09-19'
-    evidence_limits: Documentation primaire consultée ; aucun choix de produit ni déploiement Beaumanoir déduit.
+    source_version: Documentation évolutive consultée le 6 octobre 2026 ; aucune version produit globale présumée.
+    source_locator: 'Overview : business constraints and objectives'
+    consulted_on: '2026-10-06'
+    evidence_limits: Optimisation de réalisation plus large que la décision économique de promesse ; le nom PTP n’est pas
+      établi par cette source. Aucun consensus de taxonomie ni réalisation installée déduit.
     status: proposed
     source_refs:
-    - U477
-    - ELM393
-    - CMP191
+    - U832
+    - U834
+    - U835
+    term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
+    definition_choice: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes
+      de service et des règles applicables.
   - vendor: SAP
-    product: SAP S/4HANA — périmètre du cours cité
-    element_name: Configuring Charge Management and Explaining the Charge Calculati
-    concept_name: Configuring Charge Management and Explaining the Charge Calculati
-    element_type: Mécanisme ou objet documenté dans un produit
+    product: S/4HANA Cloud Public Edition Transportation Management
+    element_name: Configuring Charge Management and Explaining the Charge Calculation Process
+    concept_name: Configuring Charge Management and Explaining the Charge Calculation Process
+    element_type: Fonction ou mécanisme documenté dans un produit
     relationship: Recouvrement partiel
-    scope_summary: Les accords et barèmes permettent de calculer des charges de transport selon les étapes, distances et conditions.
-    approach_summary: 'Rapprochement avec Profitable-to-Promise (PTP) : Les accords et barèmes permettent de calculer des
-      charges de transport selon les étapes, distances et conditions.'
-    similarities: Les accords et barèmes permettent de calculer des charges de transport selon les étapes, distances et conditions.
-    differences: Appui à la composante coût, pas preuve d’un PTP natif SAP couvrant le dossier économique contextuel FLOW
-      ; ni choix de promesse ni marge globale déduits.
-    flow_position: FLOW conserve le périmètre métier de Profitable-to-Promise (PTP). Appui à la composante coût, pas preuve
-      d’un PTP natif SAP couvrant le dossier économique contextuel FLOW ; ni choix de promesse ni marge globale déduits.
-    source_title: Configuring Charge Management and Explaining the Charge Calculati
+    similarities: Les coûts de transport reposent sur tarifs, accords valides et données logistiques.
+    differences: Appui sur le chiffrage utilisé dans une décision ; la page ne prouve pas une sélection économique de promesse
+      ni une capacité PTP SAP identique.
+    flow_position: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de service
+      et des règles applicables.
+    scope_summary: Les coûts de transport reposent sur tarifs, accords valides et données logistiques.
+    approach_summary: Les coûts de transport reposent sur tarifs, accords valides et données logistiques.
+    source_title: Configuring Charge Management and Explaining the Charge Calculation Process
     source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-transportation-management/configuring-charge-management-and-explaining-the-charge-calculation-process_d2c3b050-5874-4439-a88e-8dcfa231311c
-    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
-    source_locator: Configuring Charge Management and Explaining the Charge Calculati — passages sur le mécanisme rapproché.
-    consulted_on: '2026-09-25'
-    evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
-      Beaumanoir déduit. Appui à la composante coût, pas preuve d’un PTP natif SAP couvrant le dossier économique contextuel
-      FLOW ; ni choix de promesse ni marge globale déduits.
+    source_version: Documentation évolutive consultée le 6 octobre 2026 ; aucune version produit globale présumée.
+    source_locator: Charge Calculation Process
+    consulted_on: '2026-10-06'
+    evidence_limits: Appui sur le chiffrage utilisé dans une décision ; la page ne prouve pas une sélection économique de
+      promesse ni une capacité PTP SAP identique. Aucun consensus de taxonomie ni réalisation installée déduit.
     status: proposed
     source_refs:
-    - U774
-    - CMP307
-    - ELM794
-    term_choice: Le nom Profitable-to-Promise (PTP) reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
-      cette appellation ni sa maille.
-    definition_choice: 'Les accords et barèmes permettent de calculer des charges de transport selon les étapes, distances
-      et conditions. Frontière conservée : Appui à la composante coût, pas preuve d’un PTP natif SAP couvrant le dossier économique
-      contextuel FLOW ; ni choix de promesse ni marge globale déduits.'
+    - U832
+    - U834
+    - U835
+    term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
+    definition_choice: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes
+      de service et des règles applicables.
   - vendor: Microsoft
     product: Microsoft Dynamics 365 — application indiquée par la source
     element_name: Landed cost module overview
@@ -9682,10 +9710,10 @@ terms:
     approach_summary: 'Rapprochement avec Profitable-to-Promise (PTP) : Le landed cost estime des coûts tels que fret, assurance
       et droits pour les marchandises en transit.'
     similarities: Le landed cost estime des coûts tels que fret, assurance et droits pour les marchandises en transit.
-    differences: Ce sont des composantes du dossier économique local PTP, sans choix de promesse ni preuve d’une évaluation
-      complète des opportunités et risques.
-    flow_position: FLOW conserve le périmètre métier de Profitable-to-Promise (PTP). Ce sont des composantes du dossier économique
-      local PTP, sans choix de promesse ni preuve d’une évaluation complète des opportunités et risques.
+    differences: FLOW inclut désormais la sélection économique de la proposition. Les fonctions de coût et d’optimisation
+      citées apportent un recouvrement partiel, sans établir une capacité PTP identique chez tous les éditeurs.
+    flow_position: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de service
+      et des règles applicables.
     source_title: Landed cost module overview - Supply Chain Management | Dynamics 365 | Microsoft Learn
     source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/landed-cost/landed-cost-overview
     source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -9700,24 +9728,20 @@ terms:
     - U774
     - CMP307
     - ELM720
-    term_choice: Le nom Profitable-to-Promise (PTP) reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
-      cette appellation ni sa maille.
-    definition_choice: 'Le landed cost estime des coûts tels que fret, assurance et droits pour les marchandises en transit.
-      Frontière conservée : Ce sont des composantes du dossier économique local PTP, sans choix de promesse ni preuve d’une
-      évaluation complète des opportunités et risques.'
+    term_choice: Le terme est conservé ; FLOW qualifie la capacité de décision incluant calcul, sélection initiale et réexamen.
+      Le périmètre du produit cité peut être différent.
+    definition_choice: 'U835 : Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes
+      de service et des règles applicables. Proposition distincte de la confirmation et de l’application.'
   market_inspiration:
-    choice: Chiffrer les avantages et inconvénients économiques des options éclaire le choix de promesse. PTP fournit ce dossier
-      local ; Promise Selection Decision choisit.
-    flow_scope: Évaluer et comparer les conséquences économiques des possibilités de promesse, en explicitant les coûts, les
-      conditions d’admissibilité et les incertitudes, sans sélectionner la réponse.
-    flow_approach: 'Sens FLOW : évaluation économique locale des options. Promise Selection Decision choisit la proposition
-      ; les Orders portent l’engagement. Le PTP Oracle inclut aussi une sélection, ce qui constitue un recouvrement partiel.'
+    choice: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de service
+      et des règles applicables.
+    flow_scope: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de service
+      et des règles applicables.
+    flow_approach: Calculer, comparer et choisir dans le périmètre spécialisé ; expliciter les conditions et réexaminer les
+      propositions sans modifier automatiquement les engagements.
     synthesis:
-    - Oracle emploie Profitable to Promise pour départager des solutions par leur coût selon ses priorités de délai. Microsoft
-      DOM traite les objectifs économiques dans une optimisation plus large. Le vocabulaire Oracle est proche ; le découpage
-      de responsabilité diffère.
-    - FLOW ne déduit du mot profitable ni une formule de marge ni une pondération générale. Le compromis collectif reste multidimensionnel
-      et les coûts inconnus ne deviennent pas nuls.
+    - La décision inclut ses évaluations et calculs. Les correspondances éditeurs sont partielles ; aucun ordre ATP–CTP–PTP
+      ou objectif économique universel n’est imposé.
     examples:
     - title: Illustration FLOW — économie sous condition de service
       situation: 'Deux solutions respectent le délai : une livraison accélérée à 120 et deux livraisons à 80.'
@@ -9729,6 +9753,8 @@ terms:
       - U477
       - ELM372
       - CMP191
+  notes: U835 intègre le choix de proposition à la capacité. Les périmètres natifs des éditeurs restent explicités dans les
+    comparaisons ; ils ne définissent pas une taxonomie universelle. Les variantes descriptives existantes sont conservées.
 - id: TER069
   name: Sales Order
   short_description: Commande portant les biens et quantités demandés par un client et leurs conditions applicables.
@@ -10393,8 +10419,8 @@ terms:
     atteindre les cibles de stock applicables.
   definition: Déterminer les apports initiaux ou successifs et leurs ajustements pour couvrir des besoins datés ou atteindre
     les cibles de stock applicables.
-  context: Replenishment contribue au master plan de [Demand & Supply Matching](glossary:TER112). Implantation décrit le contexte
-    initial ; Réassort désigne l’alimentation continue. Les [Orders](glossary:TER012) portent les demandes autorisées et [Fulfilment](glossary:TER085)
+  context: Replenishment contribue au master plan de [Availability](glossary:TER112). Implantation décrit le contexte initial
+    ; Réassort désigne l’alimentation continue. Les [Orders](glossary:TER012) portent les demandes autorisées et [Fulfilment](glossary:TER085)
     coordonne les prestations.
   notes: |-
     [Replenishment](model:D05.e) intègre les calculs des besoins nets et détermine les quantités et dates à retenir. La décision, la mise à jour transactionnelle, les [Orders](glossary:TER012) nécessaires, leurs promesses et les mouvements physiques restent distincts. Une application automatique est possible ; aucune création directe de [Purchase Order](glossary:TER070) ni validation humaine systématique n’est présumée.
@@ -10441,9 +10467,9 @@ terms:
     similarities: SAP calcule des besoins et prépare les suites d’approvisionnement.
     differences: Le parcours SAP associe calcul et documents ; FLOW conserve leurs responsabilités distinctes.
     flow_position: Déterminer les apports initiaux ou successifs et leurs ajustements pour couvrir des besoins datés ou atteindre
-      les cibles de stock applicables. Replenishment contribue au master plan de Demand & Supply Matching. Implantation décrit
-      le contexte initial ; Réassort désigne l’alimentation continue. Les Orders portent les demandes autorisées et Fulfilment
-      coordonne les prestations.
+      les cibles de stock applicables. Replenishment contribue au master plan de Availability. Implantation décrit le contexte
+      initial ; Réassort désigne l’alimentation continue. Les Orders portent les demandes autorisées et Fulfilment coordonne
+      les prestations.
     status: proposed
     source_refs:
     - U477
@@ -10466,9 +10492,9 @@ terms:
     similarities: Nextail distingue Replenishment de First Allocation.
     differences: Son périmètre magasin ne définit pas tous les lieux et sources d’approvisionnement FLOW.
     flow_position: Déterminer les apports initiaux ou successifs et leurs ajustements pour couvrir des besoins datés ou atteindre
-      les cibles de stock applicables. Replenishment contribue au master plan de Demand & Supply Matching. Implantation décrit
-      le contexte initial ; Réassort désigne l’alimentation continue. Les Orders portent les demandes autorisées et Fulfilment
-      coordonne les prestations.
+      les cibles de stock applicables. Replenishment contribue au master plan de Availability. Implantation décrit le contexte
+      initial ; Réassort désigne l’alimentation continue. Les Orders portent les demandes autorisées et Fulfilment coordonne
+      les prestations.
     status: proposed
     source_refs:
     - U477
@@ -10511,8 +10537,8 @@ terms:
       réassort décrivent des situations, sans fusion avec la commande ou la réception.
     flow_scope: Déterminer les apports initiaux ou successifs et leurs ajustements pour couvrir des besoins datés ou atteindre
       les cibles de stock applicables.
-    flow_approach: Replenishment contribue au master plan de Demand & Supply Matching. Implantation décrit le contexte initial
-      ; Réassort désigne l’alimentation continue. Les Orders portent les demandes autorisées et Fulfilment coordonne les prestations.
+    flow_approach: Replenishment contribue au master plan de Availability. Implantation décrit le contexte initial ; Réassort
+      désigne l’alimentation continue. Les Orders portent les demandes autorisées et Fulfilment coordonne les prestations.
     synthesis:
     - SAP décrit l’enchaînement jusqu’aux documents d’approvisionnement ; Nextail distingue l’implantation initiale du réassort
       courant. Les deux utilisent Replenishment pour alimenter le stock selon les besoins.
@@ -10891,7 +10917,7 @@ terms:
         ni autre restriction.
       outcome: Cette situation représente dix jours de couverture selon ces hypothèses.
       lesson: Des besoins irréguliers, des jours non ouvrés ou des réceptions futures exigent un calcul adapté.
-      source_title: Using Order-Based Planning with Flexible Master Data
+      source_title: Using Order-Based Planning with Flexible Operational References
       source_url: https://help.sap.com/doc/99c15843d16f46beba19fb8ed09169ab/2505/en-US/0adce9e356974d9790cae131bbedee30.pdf
       source_refs:
       - U477
@@ -10910,7 +10936,7 @@ terms:
 
     U436 : seule la réservation bloque les usages concurrents ; l’affectation seule ne les bloque pas. Créer, conserver ou réviser un lien d’affectation ne crée donc pas implicitement une réservation. Les protections de groupe conservent leurs règles d’admissibilité, et un gel d’affectation sa restriction de modification. Expiration, consommation, libération et déclenchement automatique éventuel d’une réservation restent à préciser ; aucun mécanisme technique de concurrence n’est déduit de cette frontière.
 
-    U668/U673 : cet objet porte le [master plan de matching](glossary:TER100), construit et géré dans [Matching](glossary:TER112). Il est distinct du [Supply Plan](glossary:TER098), prévision d’entrées et sorties de stock hors achats reçue dans Plans.
+    U668/U673 : cet objet porte le [master plan de matching](glossary:TER100), construit et géré dans [Availability](glossary:TER112). Il est distinct du [Supply Plan](glossary:TER098), prévision d’entrées et sorties de stock hors achats reçue dans Plans.
   source_refs:
   - U289
   - CMP096
@@ -13374,7 +13400,7 @@ terms:
   short_description: Ensemble de tarifs de référence de produits et services.
   definition: Ensemble identifié de tarifs de référence de produits et de services, avec unités, devises, validité et conditions
     d’application.
-  context: Supply Chain Orchestration / Master Data
+  context: Supply Chain Orchestration / Operational References
   notes: 'Plusieurs livres tarifaires peuvent coexister selon le contexte, les parties et l’autorité qui les fournit. [Product
     Catalog](glossary:TER049) et [Service Catalog](glossary:TER094) décrivent les offres ; [Assortment](glossary:TER087) sélectionne
     les produits ; [Agreement](glossary:TER048) porte les conditions convenues. Un Price Book peut leur être associé sans
@@ -13683,7 +13709,7 @@ terms:
   short_description: Plan externe de demande prévisionnelle, daté et versionné, utilisé pour éclairer la promesse et la couverture
     des besoins.
   context: Le domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration, fournit ce plan
-    à Plan Ingestion. Le calcul prévisionnel reste extérieur ; le [Matching](glossary:TER112) utilise la prévision résiduelle
+    à Plan Ingestion. Le calcul prévisionnel reste extérieur ; le [Availability](glossary:TER112) utilise la prévision résiduelle
     sans recompter les besoins déjà portés par les [Orders](glossary:TER012). Une prévision n’est pas une commande.
   notes: Sens local du modèle, distinct des périmètres des produits cités.
   source_refs:
@@ -13809,9 +13835,9 @@ terms:
     conditions et suites d’application.
   short_description: Plan interne commun rassemblant les affectations et recommandations de couverture des besoins, leurs
     hypothèses, conditions et suites d’application.
-  context: '[Demand & Supply Matching](glossary:TER112) construit et révise ce plan. Le [Supply Assignment Plan](glossary:TER078)
-    en exprime les liens ressources-besoins ; les apports, priorités et recommandations de politiques contribuent au plan
-    commun. Aucun moteur ni ordre universel de calcul imposé.'
+  context: '[Availability](glossary:TER112) construit et révise ce plan. Le [Supply Assignment Plan](glossary:TER078) en exprime
+    les liens ressources-besoins ; les apports, priorités et recommandations de politiques contribuent au plan commun. Aucun
+    moteur ni ordre universel de calcul imposé.'
   notes: Sens local du modèle, distinct des périmètres des produits cités.
   source_refs:
   - U771
@@ -13844,7 +13870,7 @@ terms:
     relationship: Recouvrement partiel
     similarities: Oracle permet de varier politiques, demandes et apports avant application.
     differences: La page décrit une fonction de plan, pas l’ensemble des responsabilités FLOW.
-    flow_position: Demand & Supply Matching construit et révise ce plan. Le Supply Assignment Plan en exprime les liens ressources-besoins
+    flow_position: Availability construit et révise ce plan. Le Supply Assignment Plan en exprime les liens ressources-besoins
       ; les apports, priorités et recommandations de politiques contribuent au plan commun. Aucun moteur ni ordre universel
       de calcul imposé.
     status: proposed
@@ -13874,7 +13900,7 @@ terms:
     relationship: Recouvrement partiel
     similarities: Microsoft distingue plans opérationnels et simulations.
     differences: Un plan produit regroupe aussi des calculs spécialisés que FLOW garde identifiés.
-    flow_position: Demand & Supply Matching construit et révise ce plan. Le Supply Assignment Plan en exprime les liens ressources-besoins
+    flow_position: Availability construit et révise ce plan. Le Supply Assignment Plan en exprime les liens ressources-besoins
       ; les apports, priorités et recommandations de politiques contribuent au plan commun. Aucun moteur ni ordre universel
       de calcul imposé.
     status: proposed
@@ -14806,9 +14832,9 @@ terms:
     qui reste indépendant des outils et de l’organisation. Le contrat reçu conserve les versions, horizons, provenance et
     statuts. Le [Supply Plan](glossary:TER098) consommé par FLOW garde son sens actuel : prévisions de mouvements de stock
     hors achats ; cela ne limite pas l’ensemble des plans que le domaine Demand & Supply Planning peut produire. La décomposition
-    interne de Demand & Supply Planning reste hors périmètre. Les arbitrages opérationnels et le master plan de [Demand &
-    Supply Matching](glossary:TER112) restent dans l’orchestration ; recevoir une nouvelle prévision ne les remplace pas et
-    ne crée pas un ordre ferme. Aucun outil de planification avancée installé ni flux technique Beaumanoir n’est présumé.'
+    interne de Demand & Supply Planning reste hors périmètre. Les arbitrages opérationnels et le master plan de [Availability](glossary:TER112)
+    restent dans l’orchestration ; recevoir une nouvelle prévision ne les remplace pas et ne crée pas un ordre ferme. Aucun
+    outil de planification avancée installé ni flux technique Beaumanoir n’est présumé.'
   notes: 'Domaine métier distinct des documents Demand Plan et Supply Plan et du Matching Master Plan interne. Le rapprochement
     avec SCOR Plan est partiel : certaines décisions de planification restent dans Matching. Le nom explicite les deux volets
     ; aucune famille d’outils ne définit ce domaine.'
@@ -14881,14 +14907,17 @@ terms:
     approach_summary: Rendre explicite le domaine source déjà évoqué dans le modèle, sans absorber les décisions de Matching
       ni promettre une couverture APS exhaustive.
 - id: TER112
-  name: Demand & Supply Matching
-  short_description: Arbitrage entre besoins et ressources pour construire un plan commun de couverture et d’affectation.
-  definition: Construire et réviser un plan commun qui arbitre la couverture des besoins et l’affectation des ressources,
-    avec les hypothèses et changements autorisés.
-  context: Dans FLOW, ce sous-domaine mobilise les décisions spécialisées de priorité, promesse, apport et affectation. Les
-    commandes portent leurs engagements ; Plan Application matérialise les décisions autorisées.
-  notes: Matching désigne ici le sous-domaine FLOW ; il ne se réduit ni à une allocation de groupe, ni à une réservation,
-    ni à une fonction de produit.
+  name: Availability
+  short_description: Décider des quantités, dates et conditions de satisfaction des demandes, puis arbitrer leur couverture
+    par les ressources.
+  definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
+    conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
+  context: Sous-domaine FLOW regroupant Order Promising, Master Plan Management, Supply Matching et Policy Optimization. Inventory
+    Management tient les faits de stock et les réservations ; Order Management confirme les engagements. Les catégories restent
+    des attributs de présentation.
+  notes: Availability exprime le résultat métier recherché. Le matching reste un mécanisme de rapprochement et d’arbitrage
+    des besoins et ressources, sans résumer tout le sous-domaine. Plan Visibility conserve demande prévisionnelle et projections
+    d’entrées et de sorties.
   source_refs:
   - P81
   - P83
@@ -14972,6 +15001,7 @@ terms:
   - CMP307
   - ELM208
   - U797
+  - U835
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u797
@@ -14988,8 +15018,8 @@ terms:
       Management ; les simulations ne modifient pas seules les commandes.
     differences: Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande
       prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.
-    flow_position: Construire et maintenir le master plan de matching qui arbitre la couverture de la demande et les affectations
-      de ressources, en mobilisant les décisions spécialisées et en faisant appliquer les changements autorisés.
+    flow_position: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
+      conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
     source_title: Overview of Backlog Management Processes
     source_url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26b/faubm/overview-of-backlog-management-processes.html
     source_version: Fusion Cloud SCM 26B
@@ -15004,11 +15034,11 @@ terms:
     - CMP269
     - CMP270
     - U673
-    term_choice: Nom du sous-domaine retenu pour la responsabilité FLOW ; pas de correspondance universelle aux modules éditeurs.
-    definition_choice: 'Appui de Overview of Backlog Management Processes : Prioriser un portefeuille, construire un plan,
-      tester des ajustements et libérer les résultats vers Order Management ; les simulations ne modifient pas seules les
-      commandes. Limite de reprise dans FLOW : Planifier, simuler et appliquer des affectations sont documentés. Le périmètre
-      FLOW inclut aussi la demande prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.'
+    term_choice: Nom FLOW choisi pour rendre lisible la responsabilité ; la source étaye un rapprochement fonctionnel, pas
+      une taxonomie universelle.
+    definition_choice: 'U835 : Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates
+      et sous quelles conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture. Proposition distincte
+      de la confirmation et de l’application.'
     concept_name: Overview of Backlog Management Processes
     scope_summary: Prioriser un portefeuille, construire un plan, tester des ajustements et libérer les résultats vers Order
       Management ; les simulations ne modifient pas seules les commandes.
@@ -15023,8 +15053,8 @@ terms:
       explicite de conflits et de parties non affectées.
     differences: Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande
       prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.
-    flow_position: Construire et maintenir le master plan de matching qui arbitre la couverture de la demande et les affectations
-      de ressources, en mobilisant les décisions spécialisées et en faisant appliquer les changements autorisés.
+    flow_position: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
+      conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
     source_title: Results of DOM runs
     source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom-runs-results
     source_version: Documentation évolutive, mise à jour affichée le 23 janvier 2026
@@ -15039,11 +15069,11 @@ terms:
     - CMP269
     - CMP270
     - U673
-    term_choice: Nom du sous-domaine retenu pour la responsabilité FLOW ; pas de correspondance universelle aux modules éditeurs.
-    definition_choice: 'Appui de Results of DOM runs : Le résultat est un plan indiquant quantités et lieux affectés ; il
-      peut être examiné ou appliqué, avec traitement explicite de conflits et de parties non affectées. Limite de reprise
-      dans FLOW : Planifier, simuler et appliquer des affectations sont documentés. Le périmètre FLOW inclut aussi la demande
-      prévisionnelle résiduelle, au-delà des seuls portefeuilles de commandes de ces exemples.'
+    term_choice: Nom FLOW choisi pour rendre lisible la responsabilité ; la source étaye un rapprochement fonctionnel, pas
+      une taxonomie universelle.
+    definition_choice: 'U835 : Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates
+      et sous quelles conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture. Proposition distincte
+      de la confirmation et de l’application.'
     concept_name: Results of DOM runs
     scope_summary: Le résultat est un plan indiquant quantités et lieux affectés ; il peut être examiné ou appliqué, avec
       traitement explicite de conflits et de parties non affectées.
@@ -15056,13 +15086,13 @@ terms:
     element_type: Mécanisme ou objet documenté dans un produit
     relationship: Recouvrement partiel
     scope_summary: Supply Assignment affecte les ressources aux commandes et applique des priorités et critères de libération.
-    approach_summary: 'Rapprochement avec Demand & Supply Matching : Supply Assignment affecte les ressources aux commandes
-      et applique des priorités et critères de libération.'
+    approach_summary: 'Rapprochement avec Availability : Supply Assignment affecte les ressources aux commandes et applique
+      des priorités et critères de libération.'
     similarities: Supply Assignment affecte les ressources aux commandes et applique des priorités et critères de libération.
     differences: ARun éclaire l’affectation, pas un master plan FLOW complet. BOP revoit les confirmations ; il ne doit pas
       être confondu avec cette affectation.
-    flow_position: FLOW conserve le périmètre métier de Demand & Supply Matching. ARun éclaire l’affectation, pas un master
-      plan FLOW complet. BOP revoit les confirmations ; il ne doit pas être confondu avec cette affectation.
+    flow_position: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
+      conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
     source_title: Explaining Supply Assignment
     source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
     source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -15076,11 +15106,65 @@ terms:
     - U774
     - CMP307
     - ELM208
-    term_choice: Le nom Demand & Supply Matching reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
-      cette appellation ni sa maille.
-    definition_choice: 'Supply Assignment affecte les ressources aux commandes et applique des priorités et critères de libération.
-      Frontière conservée : ARun éclaire l’affectation, pas un master plan FLOW complet. BOP revoit les confirmations ; il
-      ne doit pas être confondu avec cette affectation.'
+    term_choice: Nom FLOW choisi pour rendre lisible la responsabilité ; la source étaye un rapprochement fonctionnel, pas
+      une taxonomie universelle.
+    definition_choice: 'U835 : Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates
+      et sous quelles conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture. Proposition distincte
+      de la confirmation et de l’application.'
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Order promising
+    concept_name: Order promising
+    element_type: Fonction ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: ATP et CTP contribuent à déterminer des dates de promesse.
+    differences: La configuration du produit ne prescrit pas une capacité distincte de sélection ni la taxonomie FLOW.
+    flow_position: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
+      conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
+    scope_summary: ATP et CTP contribuent à déterminer des dates de promesse.
+    approach_summary: ATP et CTP contribuent à déterminer des dates de promesse.
+    source_title: Order promising
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+    source_version: Documentation évolutive consultée le 6 octobre 2026 ; aucune version produit globale présumée.
+    source_locator: Delivery date control methods
+    consulted_on: '2026-10-06'
+    evidence_limits: La configuration du produit ne prescrit pas une capacité distincte de sélection ni la taxonomie FLOW.
+      Aucun consensus de taxonomie ni réalisation installée déduit.
+    status: proposed
+    source_refs:
+    - U832
+    - U834
+    - U835
+    term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
+    definition_choice: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous
+      quelles conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
+  - vendor: SAP
+    product: S/4HANA
+    element_name: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+    concept_name: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+    element_type: Fonction ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: La disponibilité, les propositions de confirmation, les protections et le réexamen coopèrent dans aATP.
+    differences: aATP est plus large que la seule capacité ATP de FLOW ; aucune équivalence complète avec Availability.
+    flow_position: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
+      conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
+    scope_summary: La disponibilité, les propositions de confirmation, les protections et le réexamen coopèrent dans aATP.
+    approach_summary: La disponibilité, les propositions de confirmation, les protections et le réexamen coopèrent dans aATP.
+    source_title: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+    source_url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-advanced-available-to-promise-aatp-in-sap-s-4hana
+    source_version: Documentation évolutive consultée le 6 octobre 2026 ; aucune version produit globale présumée.
+    source_locator: 'aATP features : PAC, BOP, PAL, ABC'
+    consulted_on: '2026-10-06'
+    evidence_limits: aATP est plus large que la seule capacité ATP de FLOW ; aucune équivalence complète avec Availability.
+      Aucun consensus de taxonomie ni réalisation installée déduit.
+    status: proposed
+    source_refs:
+    - U832
+    - U834
+    - U835
+    term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
+    definition_choice: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous
+      quelles conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
 - id: TER113
   name: Integration
   short_description: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres
@@ -15745,5 +15829,145 @@ terms:
       Les fonctions du produit ne prescrivent pas la décomposition FLOW.
     term_choice: Intercompany conserve le terme des deux éditeurs pour une relation entre sociétés distinctes d’un même groupe
       ; il ne nomme pas une capacité autonome dans FLOW.
+- id: TER123
+  name: Operational References
+  definition: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant
+    leur référence locale fiable sans transférer la maîtrise d’entreprise.
+  short_description: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en
+    portant leur référence locale fiable sans transférer la maîtrise d’entreprise.
+  context: Les huit sujets de référence restent distincts. [Master Data Ingestion](model:master-data-ingestion) reçoit leurs
+    apports ; [Policies](model:subdomain-policies) porte les règles actives et [Plan Visibility](model:subdomain-plans) les
+    prévisions.
+  notes: Nom et périmètre FLOW issus du lot U835 ; rédaction de glossaire proposée.
+  source_refs:
+  - U835
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u835
+  review:
+    state: proposed
+    note: Alignement éditorial U835, sans accord mot à mot sur les compléments.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Exchange data between systems
+    concept_name: Exchange data between systems
+    element_type: Fonction ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Des données maîtres de produits peuvent être reçues depuis un système externe.
+    differences: 'Contexte entrepôt : ne définit pas les huit sujets de référence de FLOW.'
+    flow_position: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant
+      leur référence locale fiable sans transférer la maîtrise d’entreprise.
+    scope_summary: Des données maîtres de produits peuvent être reçues depuis un système externe.
+    approach_summary: Des données maîtres de produits peuvent être reçues depuis un système externe.
+    source_title: Exchange data between systems
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-exchange-data
+    source_version: Documentation évolutive consultée le 6 octobre 2026 ; aucune version produit globale présumée.
+    source_locator: Master and reference data
+    consulted_on: '2026-10-06'
+    evidence_limits: 'Contexte entrepôt : ne définit pas les huit sujets de référence de FLOW. Aucun consensus de taxonomie
+      ni réalisation installée déduit.'
+    status: proposed
+    source_refs:
+    - U832
+    - U834
+    - U835
+    term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
+    definition_choice: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en
+      portant leur référence locale fiable sans transférer la maîtrise d’entreprise.
+  - vendor: SAP
+    product: S/4HANA
+    element_name: Maintaining Materials and Business Partners
+    concept_name: Maintaining Materials and Business Partners
+    element_type: Fonction ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Articles et partenaires disposent de vues et rôles adaptés aux opérations.
+    differences: Une vue produit ou partenaire ne définit ni le sous-domaine FLOW ni son autorité locale.
+    flow_position: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant
+      leur référence locale fiable sans transférer la maîtrise d’entreprise.
+    scope_summary: Articles et partenaires disposent de vues et rôles adaptés aux opérations.
+    approach_summary: Articles et partenaires disposent de vues et rôles adaptés aux opérations.
+    source_title: Maintaining Materials and Business Partners
+    source_url: https://learning.sap.com/courses/exploring-business-processes-for-supply-chain-execution-in-sap-s-4hana-cloud-private-edition/maintaining-materials-and-business-partners
+    source_version: Documentation évolutive consultée le 6 octobre 2026 ; aucune version produit globale présumée.
+    source_locator: The Warehouse Product ; Business Partner Master Records
+    consulted_on: '2026-10-06'
+    evidence_limits: Une vue produit ou partenaire ne définit ni le sous-domaine FLOW ni son autorité locale. Aucun consensus
+      de taxonomie ni réalisation installée déduit.
+    status: proposed
+    source_refs:
+    - U832
+    - U834
+    - U835
+    term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
+    definition_choice: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en
+      portant leur référence locale fiable sans transférer la maîtrise d’entreprise.
+- id: TER124
+  name: Order Promising
+  definition: Choisir et réexaminer une proposition de quantités, dates et conditions de satisfaction d’une demande.
+  short_description: Choisir et réexaminer une proposition de quantités, dates et conditions de satisfaction d’une demande.
+  context: Catégorie de présentation des décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068),
+    dans [Availability](glossary:TER112). Aucun sous-domaine supplémentaire ni séquence universelle. La proposition reste
+    distincte de l’engagement confirmé dans les [Orders](glossary:TER012).
+  notes: Nom et périmètre FLOW issus du lot U835 ; rédaction de glossaire proposée.
+  source_refs:
+  - U835
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u835
+  review:
+    state: proposed
+    note: Alignement éditorial U835, sans accord mot à mot sur les compléments.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Order promising
+    concept_name: Order promising
+    element_type: Fonction ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: ATP et CTP contribuent à déterminer des dates de promesse.
+    differences: La configuration du produit ne prescrit pas une capacité distincte de sélection ni la taxonomie FLOW.
+    flow_position: Choisir et réexaminer une proposition de quantités, dates et conditions de satisfaction d’une demande.
+    scope_summary: ATP et CTP contribuent à déterminer des dates de promesse.
+    approach_summary: ATP et CTP contribuent à déterminer des dates de promesse.
+    source_title: Order promising
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+    source_version: Documentation évolutive consultée le 6 octobre 2026 ; aucune version produit globale présumée.
+    source_locator: Delivery date control methods
+    consulted_on: '2026-10-06'
+    evidence_limits: La configuration du produit ne prescrit pas une capacité distincte de sélection ni la taxonomie FLOW.
+      Aucun consensus de taxonomie ni réalisation installée déduit.
+    status: proposed
+    source_refs:
+    - U832
+    - U834
+    - U835
+    term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
+    definition_choice: Choisir et réexaminer une proposition de quantités, dates et conditions de satisfaction d’une demande.
+  - vendor: SAP
+    product: S/4HANA
+    element_name: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+    concept_name: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+    element_type: Fonction ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: La disponibilité, les propositions de confirmation, les protections et le réexamen coopèrent dans aATP.
+    differences: aATP est plus large que la seule capacité ATP de FLOW ; aucune équivalence complète avec Availability.
+    flow_position: Choisir et réexaminer une proposition de quantités, dates et conditions de satisfaction d’une demande.
+    scope_summary: La disponibilité, les propositions de confirmation, les protections et le réexamen coopèrent dans aATP.
+    approach_summary: La disponibilité, les propositions de confirmation, les protections et le réexamen coopèrent dans aATP.
+    source_title: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+    source_url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-advanced-available-to-promise-aatp-in-sap-s-4hana
+    source_version: Documentation évolutive consultée le 6 octobre 2026 ; aucune version produit globale présumée.
+    source_locator: 'aATP features : PAC, BOP, PAL, ABC'
+    consulted_on: '2026-10-06'
+    evidence_limits: aATP est plus large que la seule capacité ATP de FLOW ; aucune équivalence complète avec Availability.
+      Aucun consensus de taxonomie ni réalisation installée déduit.
+    status: proposed
+    source_refs:
+    - U832
+    - U834
+    - U835
+    term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
+    definition_choice: Choisir et réexaminer une proposition de quantités, dates et conditions de satisfaction d’une demande.
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées.
