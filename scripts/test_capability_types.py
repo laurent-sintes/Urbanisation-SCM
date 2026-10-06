@@ -3,6 +3,7 @@ from copy import deepcopy
 import unittest
 from scripts.validate_models import validate_urbanism, CAPABILITY_NATURES
 from scripts.structured_io import read
+from scripts.display_codes import build_display_index
 
 
 class CapabilityTypeTests(unittest.TestCase):
@@ -57,13 +58,23 @@ class CapabilityTypeTests(unittest.TestCase):
     def test_live_completeness_order_and_typology(self):
         model = read('modeles/backlog/model.yaml')
         nodes = {n['id']: n for n in model['nodes']}
+        display = build_display_index(model)
         for node in nodes.values():
             if node['kind'] == 'capability':
                 self.assertIn(node['fields'].get('nature'), CAPABILITY_NATURES)
                 self.assertTrue(node['fields'].get('category', {}).get('id'))
             if node['kind'] in ('domain', 'area', 'reference'):
-                decisions = [nodes[r['target_id']]['fields']['nature'] == 'decision' for r in model['relations']
-                             if r['source_id'] == node['id'] and r['type'] == 'contains']
-                self.assertEqual(decisions, sorted(decisions))
+                # U783 freezes the displayed order, independently of YAML edge order.
+                # Subdomains group categories first, then types within each category.
+                groups = {}
+                for child_id in display['children'][node['id']]:
+                    child = nodes[child_id]
+                    if child['kind'] != 'capability':
+                        continue
+                    category = child['fields'].get('category', {}).get('id') if node['kind'] == 'area' else None
+                    groups.setdefault(category, []).append(child['fields']['nature'] == 'decision')
+                for category, decisions in groups.items():
+                    with self.subTest(parent=node['id'], category=category):
+                        self.assertEqual(decisions, sorted(decisions))
         annex = read('modeles/backlog/capability-types-U449.yaml')
         self.assertEqual({item['id'] for item in annex['types']}, CAPABILITY_NATURES)

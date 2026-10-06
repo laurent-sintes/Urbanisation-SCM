@@ -24,8 +24,19 @@ class SupplyIdentityTests(unittest.TestCase):
             [r['target_id'] for r in model['relations'] if r['source_id'] == identifier and r['type'] == 'presents'],
             ['business-references', 'subdomain-policies', 'subdomain-plans',
              'D04', 'D01', 'D03', 'D06', 'subdomain-service-orders',
-             'subdomain-order-promising', 'subdomain-integration'],
+             'subdomain-integration'],
         )
+        nodes = {n['id']: n for n in model['nodes']}
+        self.assertEqual(nodes['D03']['fields']['name'], 'Availability')
+        self.assertEqual(nodes['business-references']['fields']['name'], 'Operational References')
+        for removed in ('subdomain-order-promising', 'D03.l', 'BHV109', 'BHV110'):
+            self.assertNotIn(removed, nodes)
+        for capability in ('D03.i', 'D03.j', 'D03.k'):
+            self.assertEqual(nodes[capability]['fields']['nature'], 'decision')
+            self.assertEqual(nodes[capability]['fields']['category']['display_name'], 'Order Promising')
+            self.assertEqual(
+                [r['source_id'] for r in model['relations']
+                 if r['type'] == 'contains' and r['target_id'] == capability], ['D03'])
         self.assertEqual(check_delivery(ROOT, model)[1], [])
 
     def test_historical_identity_is_not_rewritten(self):
