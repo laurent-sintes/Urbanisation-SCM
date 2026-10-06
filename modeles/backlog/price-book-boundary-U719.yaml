@@ -141,7 +141,12 @@ publication_delivery:
     fields:
       name: Price Book
   - id: price-book-visibility
-    parent: price-book
+    parent: business-references
     fields:
       name: Price Book Visibility
       nature: knowledge
+delivery_updates:
+- source_ref: U848
+  fields:
+  - price-book-visibility.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

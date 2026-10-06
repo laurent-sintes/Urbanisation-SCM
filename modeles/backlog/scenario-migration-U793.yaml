@@ -567,6 +567,7 @@ publication_delivery:
   source_refs:
   - U793
   - U835
+  - U853
   required_catalog:
   - collection: value_streams
     id: obtain-products
@@ -585,7 +586,7 @@ publication_delivery:
     content_sha256: 1dd50cf82c5d333f3a3f54ad31e59afe308a16e859c4444dda26e6b42dad110b
   - collection: scenarios
     id: b2b-partial-stock
-    content_sha256: 8dce9d8c5793e8238c4d85cb3f02df35347f4284d82bead71eb90e4a09c2e321
+    content_sha256: 5ae2787331ae18ed5c519fd1cabab82b3babe3832daef92cc6741e505d33ef60
   - collection: scenarios
     id: return-fashion-recovery
     content_sha256: 440b4b9ac213c631fcb8514cfccbb986f19f32449a6af020eb7db02fa2f91ffc
@@ -663,7 +664,7 @@ publication_delivery:
     content_sha256: 5acb003d9a93725b4f9290aaa23a7ba61b3441a3e9686ed9cc41c2d2c9b8a918
   - collection: paths
     id: b2b-partial-stock-path
-    content_sha256: e9ca65f6f389ce65ba7bf6e72c906c845f67f83ee44380ca96e527cc6b5e0860
+    content_sha256: cd18ae4491eb07fe1ff344bcbb4d9005c29dc2fdbb3f3d5139c91442cb7f1a37
   - collection: paths
     id: return-fashion-recovery-path
     content_sha256: 4c1d77cca3b14485168a6a055cf8c66f1e24d71304bc01f44ea6d9eff2ea8984
@@ -696,7 +697,7 @@ publication_delivery:
     content_sha256: cf7cfe1b650cc0f8b69038754b4a64fddc98ccaf6dedacd93d99a070266803af
   - collection: paths
     id: transport-missed-connection-path
-    content_sha256: 180ab587dd984e686e417cca5b49e26967ba59457850fc93c2676ed95ff3ccfe
+    content_sha256: 00e6a39d60df52be7cfd0b722162a995cb50743610c1cfcbfce9af370206555c
   - collection: paths
     id: remote-payment-ambiguous-path
     content_sha256: ea3e85c64b8cacdd6daa0671874a5e41885a5a55ab91060621f77ebdedd09509
@@ -797,6 +798,12 @@ publication_delivery:
     content_sha256: f74a3c12ba7d85c285674db1594727287a299242b3c8fcc8b690f4c52ce3e147
     reason: Condition propre au parcours regroupé retirée des conditions communes ; variante fractionnée conservée. Correction
       éditoriale proposée U829, sans nouvel accord métier.
+  editorial_alignment_U853:
+    fields:
+    - scenarios/b2b-partial-stock
+    - paths/transport-missed-connection-path
+    scope: Finalités et exemples de Business Areas, corrections de noms et de grammaire ; aucune modification de parent ni
+      extension des accords historiques.
 content_review:
   pilot:
   - b2b-partial-stock
@@ -873,3 +880,13 @@ delivery_updates:
   - target: b2b-partial-stock-split-path
     change: Alignement du vocabulaire ou des contributions de décision U835
     previous_check_sha256: 4a9e2b1f0760117b66c1c9e8157849e70110a6bdd8058b8816ce5bf5c38d3fc9
+- source_ref: U843
+  fields:
+  - paths.b2b-partial-stock-path
+  - paths.transport-missed-connection-path
+  history_commit: 852f73ca4bb8c9f78a2c6caa3ad274f998305308
+  reason: Aligner le contrôle de livraison sur les frontières révisées et les contributions réactives ; aucun accord antérieur
+    étendu.
+- source_ref: U844
+  reason: Compléter le récit des parcours sous délégation éditoriale, sans modifier leurs dépendances ni étendre les accords
+    historiques.

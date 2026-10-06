@@ -85,34 +85,22 @@ publication_delivery:
       definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
         conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
   - id: D03.i
-    parent: D03
+    parent: ba-order-promising
     fields:
       definition: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
       nature: decision
-      category:
-        id: promise-evaluation
-        display_name: Order Promising
-        order: 10
   - id: D03.j
-    parent: D03
+    parent: ba-order-promising
     fields:
       definition: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en explicitant
         les conditions de faisabilité.
       nature: decision
-      category:
-        id: promise-evaluation
-        display_name: Order Promising
-        order: 10
   - id: D03.k
-    parent: D03
+    parent: ba-order-promising
     fields:
       definition: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de service
         et des règles applicables.
       nature: decision
-      category:
-        id: promise-evaluation
-        display_name: Order Promising
-        order: 10
   absent_nodes:
   - subdomain-order-promising
   - D03.l
@@ -177,3 +165,13 @@ market_review:
   gaps:
   - 'Correspondance SAP CTP exacte non établie : appui aATP voisin seulement.'
   - SAP Transportation Management étaye le chiffrage, pas une sélection PTP identique.
+delivery_updates:
+- source_ref: U848
+  fields:
+  - D03.i.category
+  - D03.i.parent
+  - D03.j.category
+  - D03.j.parent
+  - D03.k.category
+  - D03.k.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

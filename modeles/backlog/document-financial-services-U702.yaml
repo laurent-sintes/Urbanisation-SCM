@@ -272,9 +272,15 @@ publication_delivery:
   - id: service-order-billing
     fields:
       name: Billing Order
-    parent: subdomain-service-orders
+    parent: ba-financial-service-order-management
   - id: service-order-payment-collection
     fields:
       name: Payment Collection Order
-    parent: subdomain-service-orders
+    parent: ba-financial-service-order-management
   absent_nodes: []
+delivery_updates:
+- source_ref: U848
+  fields:
+  - service-order-billing.parent
+  - service-order-payment-collection.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

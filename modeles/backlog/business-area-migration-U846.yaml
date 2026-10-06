@@ -1,0 +1,1461 @@
+id: BUSINESS-AREA-MIGRATION-U846
+status: applied
+source_refs:
+- U845
+- U846
+- U847
+- U848
+approved_principle: Plan U846/U847 validé intégralement par U848 et appliqué.
+canonical_model_changed: true
+basis:
+  path: modeles/backlog/model.yaml
+  content_sha256: 9dafb217987417723a093765f273540e9b968640d079a6dcd97b6224ff78075c
+  capabilities: 81
+  category_occurrences: 31
+recommendation:
+  business_areas: 16
+  capabilities_in_business_areas: 64
+  capabilities_directly_in_subdomains: 17
+  optional_level: true
+  business_area_definition: Partie cohérente de la responsabilité d’un sous-domaine, définie par sa finalité, ses résultats
+    attendus et ses frontières, et portée par des capacités.
+  identity: Nouvelle entité business_area, distincte du kind area actuel qui désigne les Subdomains. Proposition de code de
+    lecture BA, stable dans chaque publication.
+  ownership: Un parent métier principal par capacité ; les mobilisations transversales ne créent pas de copies ni de nouveaux
+    parents.
+  category_future: Retirer category du modèle courant après migration ; ne pas maintenir deux rattachements concurrents. Conserver
+    son interprétation pour les publications historiques.
+  reference_objects: Les références restent des objets documentaires avec leurs identités et contenus ; leurs liens de documentation
+    se distinguent du rattachement des capacités.
+  no_business_rewrite: Les regroupements proposés ne changent ni le sens, ni le type, ni les comportements des capacités ;
+    descriptions de frontières et liens sont alignés.
+  cardinality: Aucun minimum de deux capacités par Business Area. Une capacité unique est admissible si le périmètre apporte
+    une finalité, une frontière ou une lecture stable distincte. La règle zéro ou au moins deux comportements ne s’applique
+    pas ici.
+  semantic_test: La Business Area exprime le périmètre dont on répond ; la capacité exprime le savoir-faire. Si les deux descriptions
+    se confondent, conserver la capacité directement dans le sous-domaine. Ne pas inventer de capacité ni supposer un manque
+    pour remplir le périmètre.
+  count_status: 16 est le résultat de la proposition actuelle, pas un objectif de nombre ni une contrainte de cardinalité.
+business_areas:
+- proposed_id: ba-inventory-position-management
+  parent_id: D01
+  name: Inventory Position Management
+  definition: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits, vérifications
+    et corrections.
+  capability_ids:
+  - D01.f
+  - D01.g
+  - D01.d
+  - D02.c
+  - D01.c
+  boundary: Les changements de propriétaire sont portés par Inventory Ownership Management ; aucune fusion des registres ou
+    de la réservation.
+- proposed_id: ba-inventory-ownership-management
+  parent_id: D01
+  name: Inventory Ownership Management
+  definition: Déterminer et tracer les changements de propriétaire des biens à partir des faits et conditions applicables.
+  capability_ids:
+  - D01.h
+  - inventory-ownership-ledger
+  boundary: La reconnaissance de propriété reste distincte du déplacement physique et de l’écriture comptable.
+- proposed_id: ba-master-plan-management
+  parent_id: D03
+  name: Master Plan Management
+  definition: Maintenir et réviser un plan commun d’affectation en comparant les alternatives et en coordonnant son application.
+  capability_ids:
+  - D02.e
+  - D05.f
+  - BHV006
+  boundary: Distinct des plans prévisionnels reçus du domaine Demand & Supply Planning.
+- proposed_id: ba-order-promising
+  parent_id: D03
+  name: Order Promising
+  definition: Déterminer et réexaminer les propositions de quantités, dates et conditions de satisfaction des demandes.
+  capability_ids:
+  - D03.i
+  - D03.j
+  - D03.k
+  boundary: Proposer ne confirme pas un engagement de commande.
+- proposed_id: ba-supply-matching
+  parent_id: D03
+  name: Supply Matching
+  definition: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations de ressources.
+  capability_ids:
+  - D03.m
+  - D05.e
+  - D05.c
+  - D03.o
+  boundary: Les familles de commandes portent les demandes et leurs engagements ; les registres portent les effets reconnus.
+- proposed_id: ba-policy-optimization
+  parent_id: D03
+  name: Policy Optimization
+  definition: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
+  capability_ids:
+  - D05.a
+  - D05.d
+  - D05.h
+  boundary: Les règles actives et leur validité demeurent dans Policies.
+- proposed_id: ba-order-lifecycle-management
+  parent_id: D04
+  name: Order Lifecycle Management
+  definition: 'Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer leur état. '
+  capability_ids:
+  - D04.i
+  - D04.j
+  - D04.k
+  - D04.l
+  - D04.m
+  - D04.r
+  - D04.t
+  - D04.n
+  - order-visibility
+  boundary: La structuration et la visibilité restent des capacités distinctes ; le pilotage du parcours relève de Reactive
+    Workflow Management.
+- proposed_id: ba-reactive-workflow-management
+  parent_id: D04
+  name: Reactive Workflow Management
+  definition: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant leurs engagements.
+  capability_ids:
+  - workflow-definition-management
+  - order-workflow-sentry
+  - order-workflow-planning
+  - order-workflow-orchestration
+  boundary: Fulfilment conserve la coordination et les adaptations locales des prestations dans le mandat confié.
+- proposed_id: ba-service-planning
+  parent_id: D06
+  name: Service Planning
+  definition: Déterminer les prestations nécessaires, leurs exécutants et les plans de transport compatibles avec les engagements.
+  capability_ids:
+  - D06.b
+  - D07.a
+  - D06.e
+  - transport-plan-decision
+  boundary: La visibilité des capacités de service alimente ce périmètre ; aucun type de capacité n’est changé en Planning
+    par son rattachement.
+- proposed_id: ba-execution-assurance
+  parent_id: D06
+  name: Execution Assurance
+  definition: Établir une connaissance fiable de la réalisation des prestations, rapprocher leurs résultats et rendre visibles
+    les écarts.
+  capability_ids:
+  - D07.d
+  - D07.c
+  - operations-visibility
+  boundary: Ne décide pas seule des adaptations et ne se substitue pas à Order Workflow Sentry.
+- proposed_id: ba-execution-coordination
+  parent_id: D06
+  name: Execution Coordination
+  definition: Coordonner, libérer et adapter les prestations dans le mandat confié et les engagements applicables.
+  capability_ids:
+  - D06.d
+  - D06.f
+  - service-order-release-decision
+  boundary: La décision sur le devenir des biens reste une responsabilité distincte directement rattachée au sous-domaine.
+- proposed_id: ba-inbound-information-integration
+  parent_id: subdomain-integration
+  name: Inbound Information Integration
+  definition: Recevoir et intégrer les plans et référentiels fournis par les domaines sources.
+  capability_ids:
+  - plans-ingestion
+  - master-data-ingestion
+  boundary: Ne transfère pas leur maîtrise d’entreprise et ne reprend pas les événements des prestations pilotées par Fulfilment.
+- proposed_id: ba-outbound-information-provision
+  parent_id: subdomain-integration
+  name: Outbound Information Provision
+  definition: Fournir les informations opérationnelles utiles à la comptabilité, à la planification et à l’amélioration produit.
+  capability_ids:
+  - accounting-data-provision
+  - planning-data-provision
+  - product-feedback
+  boundary: Transmettre un fait de gestion ne le transforme pas en écriture comptable.
+- proposed_id: ba-goods-processing-order-management
+  parent_id: subdomain-service-orders
+  name: Goods Processing Order Management
+  definition: Tenir les demandes et engagements de prestations portant sur le traitement des biens.
+  capability_ids:
+  - service-order-picking
+  - service-order-packing
+  - service-order-cross-docking
+  - service-order-labeling
+  - service-order-kitting
+  - service-order-garment-finishing
+  - service-order-cleaning
+  - service-order-repair-alteration
+  - service-order-personalization
+  - service-order-inspection
+  - service-order-receiving
+  - service-order-scrapping
+  boundary: Couvre préparation, réception, transit, conditionnement, finition, entretien, contrôle et rebut ; ne présume pas
+    leur réalisation dans un entrepôt et ne pilote pas les opérations internes.
+- proposed_id: ba-transport-order-management
+  parent_id: subdomain-service-orders
+  name: Transport Order Management
+  definition: Tenir les demandes et engagements d’acheminement et de réservation de capacité de transport.
+  capability_ids:
+  - service-order-transport
+  - service-order-transport-booking
+  boundary: La construction du plan de transport reste dans Fulfilment.
+- proposed_id: ba-financial-service-order-management
+  parent_id: subdomain-service-orders
+  name: Financial Service Order Management
+  definition: Tenir les demandes confiées de facturation et d’encaissement et suivre leurs résultats.
+  capability_ids:
+  - service-order-billing
+  - service-order-payment-collection
+  boundary: Ne reprend ni la responsabilité comptable ni l’exécution des opérations par les services sollicités.
+direct_attachments:
+- parent_id: D06
+  capability_ids:
+  - D05.i
+  reason: Inventory Disposition Decision porte un résultat métier distinct ; ne pas créer une Business Area qui répète cette
+    seule capacité.
+- parent_id: subdomain-service-orders
+  capability_ids:
+  - service-order-document-production
+  - service-order-customs-clearance
+  reason: Document Production Order et Customs Clearance Order restent visibles directement, sans regroupement artificiel
+    ou assimilation de tout document à la douane.
+- parent_id: subdomain-policies
+  capability_ids:
+  - D02.b
+  - D19.a
+  - D19.b
+  reason: Le regroupement actuel répète le périmètre documenté du sous-domaine ; les capacités restent directement rattachées.
+- parent_id: subdomain-plans
+  capability_ids:
+  - plans-visibility
+  - demand-plan-visibility
+  reason: Le regroupement actuel répète le périmètre documenté du sous-domaine ; les capacités restent directement rattachées.
+- parent_id: subdomain-financial-accounting
+  capability_ids:
+  - accounting-interpretation
+  reason: Le regroupement actuel répète le périmètre documenté du sous-domaine ; les capacités restent directement rattachées.
+- parent_id: business-references
+  capability_ids:
+  - D08.e
+  - D09.e
+  - D11.b
+  - D12.b
+  - D13.b
+  - D14.b
+  - D16.b
+  - price-book-visibility
+  reason: Rattacher les capacités à Operational References dans la structure de responsabilité ; conserver chaque référentiel
+    comme objet documentaire et son lien explicite à la capacité, sans le convertir en Business Area.
+capability_mapping:
+- capability_id: D01.f
+  name: Inventory Tracking
+  current_parent_id: D01
+  current_category: inventory-foundation
+  target:
+    business_area_id: ba-inventory-position-management
+    subdomain_id: D01
+- capability_id: D01.g
+  name: Inventory Ledger
+  current_parent_id: D01
+  current_category: inventory-foundation
+  target:
+    business_area_id: ba-inventory-position-management
+    subdomain_id: D01
+- capability_id: D01.c
+  name: Inventory Visibility
+  current_parent_id: D01
+  current_category: inventory-visibility
+  target:
+    business_area_id: ba-inventory-position-management
+    subdomain_id: D01
+- capability_id: D01.d
+  name: Stocktaking
+  current_parent_id: D01
+  current_category: inventory-foundation
+  target:
+    business_area_id: ba-inventory-position-management
+    subdomain_id: D01
+- capability_id: D02.b
+  name: Supply Protection Policy
+  current_parent_id: subdomain-policies
+  current_category: operating-policies
+  target:
+    business_area_id: null
+    subdomain_id: subdomain-policies
+- capability_id: D02.c
+  name: Reservation
+  current_parent_id: D01
+  current_category: inventory-foundation
+  target:
+    business_area_id: ba-inventory-position-management
+    subdomain_id: D01
+- capability_id: D02.e
+  name: Plan Application
+  current_parent_id: D03
+  current_category: master-plan-management
+  target:
+    business_area_id: ba-master-plan-management
+    subdomain_id: D03
+- capability_id: D03.i
+  name: Available-to-Promise (ATP)
+  current_parent_id: D03
+  current_category: promise-evaluation
+  target:
+    business_area_id: ba-order-promising
+    subdomain_id: D03
+- capability_id: D03.j
+  name: Capable-to-Promise (CTP)
+  current_parent_id: D03
+  current_category: promise-evaluation
+  target:
+    business_area_id: ba-order-promising
+    subdomain_id: D03
+- capability_id: D03.k
+  name: Profitable-to-Promise (PTP)
+  current_parent_id: D03
+  current_category: promise-evaluation
+  target:
+    business_area_id: ba-order-promising
+    subdomain_id: D03
+- capability_id: D03.m
+  name: Demand Prioritization
+  current_parent_id: D03
+  current_category: supply-matching
+  target:
+    business_area_id: ba-supply-matching
+    subdomain_id: D03
+- capability_id: D04.i
+  name: Sales Order
+  current_parent_id: D04
+  current_category: incoming-orders
+  target:
+    business_area_id: ba-order-lifecycle-management
+    subdomain_id: D04
+- capability_id: D04.j
+  name: Purchase Order
+  current_parent_id: D04
+  current_category: incoming-orders
+  target:
+    business_area_id: ba-order-lifecycle-management
+    subdomain_id: D04
+- capability_id: D04.k
+  name: Transfer Order
+  current_parent_id: D04
+  current_category: incoming-orders
+  target:
+    business_area_id: ba-order-lifecycle-management
+    subdomain_id: D04
+- capability_id: D04.l
+  name: Return Order
+  current_parent_id: D04
+  current_category: incoming-orders
+  target:
+    business_area_id: ba-order-lifecycle-management
+    subdomain_id: D04
+- capability_id: D04.m
+  name: Supplier Return Order
+  current_parent_id: D04
+  current_category: incoming-orders
+  target:
+    business_area_id: ba-order-lifecycle-management
+    subdomain_id: D04
+- capability_id: D04.n
+  name: Order Structuring
+  current_parent_id: D04
+  current_category: order-support
+  target:
+    business_area_id: ba-order-lifecycle-management
+    subdomain_id: D04
+- capability_id: D05.a
+  name: Inventory Target Optimization
+  current_parent_id: D03
+  current_category: policy-optimization
+  target:
+    business_area_id: ba-policy-optimization
+    subdomain_id: D03
+- capability_id: D05.d
+  name: Group Protection Optimization
+  current_parent_id: D03
+  current_category: policy-optimization
+  target:
+    business_area_id: ba-policy-optimization
+    subdomain_id: D03
+- capability_id: D05.e
+  name: Replenishment
+  current_parent_id: D03
+  current_category: supply-matching
+  target:
+    business_area_id: ba-supply-matching
+    subdomain_id: D03
+- capability_id: D05.c
+  name: Stock Redistribution
+  current_parent_id: D03
+  current_category: supply-matching
+  target:
+    business_area_id: ba-supply-matching
+    subdomain_id: D03
+- capability_id: D05.f
+  name: Master Planning
+  current_parent_id: D03
+  current_category: master-plan-management
+  target:
+    business_area_id: ba-master-plan-management
+    subdomain_id: D03
+- capability_id: D06.b
+  name: Service Capacity Visibility
+  current_parent_id: D06
+  current_category: define-select
+  target:
+    business_area_id: ba-service-planning
+    subdomain_id: D06
+- capability_id: D07.a
+  name: Service Requirements Decision
+  current_parent_id: D06
+  current_category: define-select
+  target:
+    business_area_id: ba-service-planning
+    subdomain_id: D06
+- capability_id: D07.c
+  name: Service Reconciliation
+  current_parent_id: D06
+  current_category: track-reconcile
+  target:
+    business_area_id: ba-execution-assurance
+    subdomain_id: D06
+- capability_id: D07.d
+  name: Operations Tracking
+  current_parent_id: D06
+  current_category: integration
+  target:
+    business_area_id: ba-execution-assurance
+    subdomain_id: D06
+- capability_id: D06.d
+  name: Process Orchestration
+  current_parent_id: D06
+  current_category: coordinate-adapt
+  target:
+    business_area_id: ba-execution-coordination
+    subdomain_id: D06
+- capability_id: D06.e
+  name: Service Selection Decision
+  current_parent_id: D06
+  current_category: define-select
+  target:
+    business_area_id: ba-service-planning
+    subdomain_id: D06
+- capability_id: D06.f
+  name: Process Adaptation Decision
+  current_parent_id: D06
+  current_category: coordinate-adapt
+  target:
+    business_area_id: ba-execution-coordination
+    subdomain_id: D06
+- capability_id: BHV006
+  name: Simulation & Analysis
+  current_parent_id: D03
+  current_category: master-plan-management
+  target:
+    business_area_id: ba-master-plan-management
+    subdomain_id: D03
+- capability_id: D05.h
+  name: Reservation Policy Optimization
+  current_parent_id: D03
+  current_category: policy-optimization
+  target:
+    business_area_id: ba-policy-optimization
+    subdomain_id: D03
+- capability_id: D03.o
+  name: Supply Assignment
+  current_parent_id: D03
+  current_category: supply-matching
+  target:
+    business_area_id: ba-supply-matching
+    subdomain_id: D03
+- capability_id: D05.i
+  name: Inventory Disposition Decision
+  current_parent_id: D06
+  current_category: coordinate-adapt
+  target:
+    business_area_id: null
+    subdomain_id: D06
+- capability_id: D04.r
+  name: Consignment Fill-up Order
+  current_parent_id: D04
+  current_category: incoming-orders
+  target:
+    business_area_id: ba-order-lifecycle-management
+    subdomain_id: D04
+- capability_id: D01.h
+  name: Inventory Ownership Transfer Decision
+  current_parent_id: D01
+  current_category: inventory-foundation
+  target:
+    business_area_id: ba-inventory-ownership-management
+    subdomain_id: D01
+- capability_id: D08.e
+  name: Product Reference Visibility
+  current_parent_id: D08
+  current_category: reference-visibility
+  target:
+    business_area_id: null
+    subdomain_id: business-references
+- capability_id: D09.e
+  name: Party / Role Visibility
+  current_parent_id: D09
+  current_category: reference-visibility
+  target:
+    business_area_id: null
+    subdomain_id: business-references
+- capability_id: D11.b
+  name: Agreement Visibility
+  current_parent_id: D11
+  current_category: reference-visibility
+  target:
+    business_area_id: null
+    subdomain_id: business-references
+- capability_id: D12.b
+  name: Product Catalog Visibility
+  current_parent_id: D12
+  current_category: reference-visibility
+  target:
+    business_area_id: null
+    subdomain_id: business-references
+- capability_id: D13.b
+  name: Fulfilment Network Visibility
+  current_parent_id: D13
+  current_category: reference-visibility
+  target:
+    business_area_id: null
+    subdomain_id: business-references
+- capability_id: D14.b
+  name: Service Catalog Visibility
+  current_parent_id: D14
+  current_category: reference-visibility
+  target:
+    business_area_id: null
+    subdomain_id: business-references
+- capability_id: D16.b
+  name: Assortment Visibility
+  current_parent_id: D16
+  current_category: reference-visibility
+  target:
+    business_area_id: null
+    subdomain_id: business-references
+- capability_id: D19.a
+  name: Service Provider Policy
+  current_parent_id: subdomain-policies
+  current_category: operating-policies
+  target:
+    business_area_id: null
+    subdomain_id: subdomain-policies
+- capability_id: D19.b
+  name: Demand Protection Policy
+  current_parent_id: subdomain-policies
+  current_category: operating-policies
+  target:
+    business_area_id: null
+    subdomain_id: subdomain-policies
+- capability_id: D04.t
+  name: Consignment Pick-up Order
+  current_parent_id: D04
+  current_category: incoming-orders
+  target:
+    business_area_id: ba-order-lifecycle-management
+    subdomain_id: D04
+- capability_id: plans-ingestion
+  name: Plan Ingestion
+  current_parent_id: subdomain-integration
+  current_category: inbound
+  target:
+    business_area_id: ba-inbound-information-integration
+    subdomain_id: subdomain-integration
+- capability_id: plans-visibility
+  name: Supply Plan Visibility
+  current_parent_id: subdomain-plans
+  current_category: plan-visibility
+  target:
+    business_area_id: null
+    subdomain_id: subdomain-plans
+- capability_id: service-order-picking
+  name: Picking Order
+  current_parent_id: subdomain-service-orders
+  current_category: warehouse
+  target:
+    business_area_id: ba-goods-processing-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-packing
+  name: Packing Order
+  current_parent_id: subdomain-service-orders
+  current_category: warehouse
+  target:
+    business_area_id: ba-goods-processing-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-cross-docking
+  name: Cross-Docking Order
+  current_parent_id: subdomain-service-orders
+  current_category: warehouse
+  target:
+    business_area_id: ba-goods-processing-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-transport
+  name: Transport Order
+  current_parent_id: subdomain-service-orders
+  current_category: transport
+  target:
+    business_area_id: ba-transport-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-labeling
+  name: Labeling Order
+  current_parent_id: subdomain-service-orders
+  current_category: warehouse
+  target:
+    business_area_id: ba-goods-processing-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-kitting
+  name: Kitting Order
+  current_parent_id: subdomain-service-orders
+  current_category: warehouse
+  target:
+    business_area_id: ba-goods-processing-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-garment-finishing
+  name: Garment Finishing Order
+  current_parent_id: subdomain-service-orders
+  current_category: warehouse
+  target:
+    business_area_id: ba-goods-processing-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-cleaning
+  name: Cleaning Order
+  current_parent_id: subdomain-service-orders
+  current_category: warehouse
+  target:
+    business_area_id: ba-goods-processing-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-repair-alteration
+  name: Repair & Alteration Order
+  current_parent_id: subdomain-service-orders
+  current_category: warehouse
+  target:
+    business_area_id: ba-goods-processing-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-personalization
+  name: Personalization Order
+  current_parent_id: subdomain-service-orders
+  current_category: warehouse
+  target:
+    business_area_id: ba-goods-processing-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-inspection
+  name: Inspection Order
+  current_parent_id: subdomain-service-orders
+  current_category: warehouse
+  target:
+    business_area_id: ba-goods-processing-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-transport-booking
+  name: Transport Booking Order
+  current_parent_id: subdomain-service-orders
+  current_category: transport
+  target:
+    business_area_id: ba-transport-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-document-production
+  name: Document Production Order
+  current_parent_id: subdomain-service-orders
+  current_category: documents
+  target:
+    business_area_id: null
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-customs-clearance
+  name: Customs Clearance Order
+  current_parent_id: subdomain-service-orders
+  current_category: customs
+  target:
+    business_area_id: null
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-billing
+  name: Billing Order
+  current_parent_id: subdomain-service-orders
+  current_category: financial
+  target:
+    business_area_id: ba-financial-service-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: service-order-payment-collection
+  name: Payment Collection Order
+  current_parent_id: subdomain-service-orders
+  current_category: financial
+  target:
+    business_area_id: ba-financial-service-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: demand-plan-visibility
+  name: Demand Plan Visibility
+  current_parent_id: subdomain-plans
+  current_category: plan-visibility
+  target:
+    business_area_id: null
+    subdomain_id: subdomain-plans
+- capability_id: master-data-ingestion
+  name: Master Data Ingestion
+  current_parent_id: subdomain-integration
+  current_category: inbound
+  target:
+    business_area_id: ba-inbound-information-integration
+    subdomain_id: subdomain-integration
+- capability_id: operations-visibility
+  name: Operations Visibility
+  current_parent_id: D06
+  current_category: track-reconcile
+  target:
+    business_area_id: ba-execution-assurance
+    subdomain_id: D06
+- capability_id: price-book-visibility
+  name: Price Book Visibility
+  current_parent_id: price-book
+  current_category: reference-visibility
+  target:
+    business_area_id: null
+    subdomain_id: business-references
+- capability_id: order-visibility
+  name: Order Visibility
+  current_parent_id: D04
+  current_category: order-support
+  target:
+    business_area_id: ba-order-lifecycle-management
+    subdomain_id: D04
+- capability_id: inventory-ownership-ledger
+  name: Inventory Ownership Ledger
+  current_parent_id: D01
+  current_category: inventory-foundation
+  target:
+    business_area_id: ba-inventory-ownership-management
+    subdomain_id: D01
+- capability_id: service-order-release-decision
+  name: Service Order Release Decision
+  current_parent_id: D06
+  current_category: coordinate-adapt
+  target:
+    business_area_id: ba-execution-coordination
+    subdomain_id: D06
+- capability_id: service-order-receiving
+  name: Receiving Order
+  current_parent_id: subdomain-service-orders
+  current_category: warehouse
+  target:
+    business_area_id: ba-goods-processing-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: transport-plan-decision
+  name: Transport Plan Decision
+  current_parent_id: D06
+  current_category: define-select
+  target:
+    business_area_id: ba-service-planning
+    subdomain_id: D06
+- capability_id: service-order-scrapping
+  name: Scrapping Order
+  current_parent_id: subdomain-service-orders
+  current_category: warehouse
+  target:
+    business_area_id: ba-goods-processing-order-management
+    subdomain_id: subdomain-service-orders
+- capability_id: accounting-data-provision
+  name: Accounting Data Provision
+  current_parent_id: subdomain-integration
+  current_category: outbound
+  target:
+    business_area_id: ba-outbound-information-provision
+    subdomain_id: subdomain-integration
+- capability_id: planning-data-provision
+  name: Planning Data Provision
+  current_parent_id: subdomain-integration
+  current_category: outbound
+  target:
+    business_area_id: ba-outbound-information-provision
+    subdomain_id: subdomain-integration
+- capability_id: product-feedback
+  name: Product Feedback
+  current_parent_id: subdomain-integration
+  current_category: outbound
+  target:
+    business_area_id: ba-outbound-information-provision
+    subdomain_id: subdomain-integration
+- capability_id: accounting-interpretation
+  name: Accounting Interpretation
+  current_parent_id: subdomain-financial-accounting
+  current_category: accounting-preparation
+  target:
+    business_area_id: null
+    subdomain_id: subdomain-financial-accounting
+- capability_id: workflow-definition-management
+  name: Workflow Definition Management
+  current_parent_id: D04
+  current_category: reactive-workflow-management
+  target:
+    business_area_id: ba-reactive-workflow-management
+    subdomain_id: D04
+- capability_id: order-workflow-sentry
+  name: Order Workflow Sentry
+  current_parent_id: D04
+  current_category: reactive-workflow-management
+  target:
+    business_area_id: ba-reactive-workflow-management
+    subdomain_id: D04
+- capability_id: order-workflow-planning
+  name: Order Workflow Planning
+  current_parent_id: D04
+  current_category: reactive-workflow-management
+  target:
+    business_area_id: ba-reactive-workflow-management
+    subdomain_id: D04
+- capability_id: order-workflow-orchestration
+  name: Order Workflow Orchestration
+  current_parent_id: D04
+  current_category: reactive-workflow-management
+  target:
+    business_area_id: ba-reactive-workflow-management
+    subdomain_id: D04
+market_basis:
+  reuse: Comparaisons effectivement consultées pour U845 ; périmètre toujours pertinent. Les nouveaux noms sont des propositions
+    FLOW, pas des termes revendiqués comme communs aux éditeurs.
+  sources:
+  - vendor: SAP
+    url: https://learning.sap.com/courses/sap-enterprise-architecture-framework-foundation-introduction/discovering-the-reference-architecture-content
+    support: Business Domain / Business Area / Business Capability et rattachement unique ; exemple relié aux solutions S/4HANA.
+    limit: Aucune équivalence niveau à niveau avec la chaîne FLOW ni justification automatique des 16 noms proposés.
+  - vendor: Microsoft Dynamics
+    url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/about
+    support: Regroupement significatif de processus sous Business process area.
+    limit: Modèle de processus orienté solution ; ne prouve pas notre découpage de responsabilité.
+implementation_batches:
+- step: 1
+  name: Contrat et glossaire méthodologique
+  work:
+  - Définir Business Area, profondeur facultative, parentage et relations documentaires.
+  - Étendre schémas et validateurs sans modifier les snapshots historiques.
+  - Préparer les identités et codes de lecture ; aucun ID retiré réutilisé.
+- step: 2
+  name: Migration canonique contrôlée
+  work:
+  - Appliquer les rattachements de cette table aux 81 capacités, sans réécrire leurs savoir-faire.
+  - Retirer les relations de parentage remplacées en préservant leur provenance ; créer les nouvelles avec leurs identités
+    propres.
+  - Aligner les deux glossaires, principes, déclarations de livraison, références et contrôles concernés.
+  - Capturer uniquement l’accord obtenu sur le plan final ; réexaminer les accords historiques dont le contexte change.
+- step: 3
+  name: Lecture Atlas et publication
+  work:
+  - Arbre, fiche Business Area, recherche, liens directs, fil de navigation, vues de relations et exports.
+  - Une fiche Business Area expose finalité, frontières, capacités et scénarios dérivés sans recopier leurs catalogues.
+  - Conserver la consultation des anciennes publications avec leurs catégories ; aucun repli sur le backlog.
+  - Vérifier candidate et comparaison avant activation ; release, commit et push restent des opérations distinctes.
+- step: 4
+  name: Contrôles de non-régression
+  work:
+  - 81 capacités avant/après, mêmes identités, définitions, types et comportements.
+  - Un rattachement principal et aucun cycle, orphelin ou doublon.
+  - 27 scénarios et 28 parcours conservés ; contributions et liens directs inchangés.
+  - Contrôler explicitement les 8 références documentaires et leur accès.
+  - Tests de schémas, hiérarchie, recherche, scénarios, accords, codes et export ; build frontend et vérification des vues
+    nouvelles et historiques.
+validation_requested:
+- 16 Business Areas avec les noms, frontières et rattachements de cette proposition.
+- Niveau Business Area facultatif ; 17 capacités directement rattachées au sous-domaine.
+- Traitement des références comme objets documentaires distincts de la hiérarchie de responsabilité.
+delivery_boundary: Ce plan n’est pas une migration appliquée et ne demande pas la publication des Business Areas. Aucun accord
+  de champ capturé sur les propositions nouvelles avant validation.
+singleton_review:
+  source_ref: U847
+  status: recommendation_not_yet_approved
+  rule: Réexaminer les rattachements directs pour leur sens, non pour leur nombre.
+  examples:
+  - capability_id: service-order-customs-clearance
+    reason: La responsabilité de tenue des prestations douanières et la capacité actuelle se recouvrent fortement ; rattachement
+      direct recommandé à cette maille, pas suppression du sujet.
+  - capability_id: D05.i
+    reason: La décision du devenir des biens est distincte mais une Business Area Goods Disposition pourrait répéter la capacité
+      ; ne pas créer ce niveau uniquement pour homogénéiser l’arbre.
+retired_relation_ids:
+- REL-MEMBER-D01.f
+- REL-MEMBER-D01.g
+- REL-MEMBER-D01.c
+- REL-MEMBER-D01.d
+- REL-MEMBER-D02.c
+- REL-MEMBER-D02.e
+- REL-MEMBER-D03.i
+- REL-MEMBER-D03.j
+- REL-MEMBER-D03.k
+- REL-MEMBER-D03.m
+- REL-MEMBER-D04.i
+- REL-MEMBER-D04.j
+- REL-MEMBER-D04.k
+- REL-MEMBER-D04.l
+- REL-MEMBER-D04.m
+- REL-MEMBER-D04.n
+- REL-MEMBER-D05.a
+- REL-MEMBER-D05.d
+- REL-MEMBER-D05.e
+- REL-MEMBER-D05.c
+- REL-MEMBER-D05.f
+- REL-MEMBER-D06.b
+- REL-MEMBER-D07.a
+- REL-MEMBER-D07.c
+- REL-MEMBER-D07.d
+- REL-MEMBER-D06.d
+- REL-MEMBER-D06.e
+- REL-MEMBER-D06.f
+- REL-PLANNING-BHV006
+- REL-MEMBER-D05.h
+- REL-MEMBER-D03.o
+- REL-MEMBER-D04.r
+- REL-MEMBER-D01.h
+- REL-MEMBER-D08.e
+- REL-MEMBER-D09.e
+- REL-MEMBER-D11.b
+- REL-MEMBER-D12.b
+- REL-MEMBER-D13.b
+- REL-MEMBER-D14.b
+- REL-MEMBER-D16.b
+- REL-MEMBER-D04.t
+- REL-U673-CONTAINS-plans-ingestion
+- REL-U682-CONTAINS-service-order-picking
+- REL-U682-CONTAINS-service-order-packing
+- REL-U682-CONTAINS-service-order-cross-docking
+- REL-U698-CONTAINS-service-order-transport
+- REL-U707-CONTAINS-service-order-labeling
+- REL-U707-CONTAINS-service-order-kitting
+- REL-U707-CONTAINS-service-order-garment-finishing
+- REL-U707-CONTAINS-service-order-cleaning
+- REL-U707-CONTAINS-service-order-repair-alteration
+- REL-U707-CONTAINS-service-order-personalization
+- REL-U707-CONTAINS-service-order-inspection
+- REL-U709-CONTAINS-service-order-transport-booking
+- REL-U709-CONTAINS-service-order-billing
+- REL-U709-CONTAINS-service-order-payment-collection
+- REL-U717-MASTER-INGESTION
+- REL-U717-OPERATIONS-VISIBILITY
+- REL-U723-PRICE-VISIBILITY
+- REL-U725-ORDER-VISIBILITY
+- REL-MEMBER-INVENTORY-OWNERSHIP-LEDGER
+- REL-MEMBER-SERVICE-ORDER-RELEASE
+- REL-U771-CONTAINS-RECEIVING
+- REL-U777-CONTAINS-transport-plan-decision
+- REL-U777-CONTAINS-service-order-scrapping
+- REL-U826-accounting-data-provision
+- REL-U826-planning-data-provision
+- REL-U826-product-feedback
+- REL-U843-CONTAINS-workflow-definition-management
+- REL-U843-CONTAINS-order-workflow-sentry
+- REL-U843-CONTAINS-order-workflow-planning
+- REL-U843-CONTAINS-order-workflow-orchestration
+unpublished_retired_relations:
+- id: REL-U843-CONTAINS-workflow-definition-management
+  revision: 1
+  type: contains
+  source_id: D04
+  target_id: workflow-definition-management
+  source_refs:
+  - U839
+  - U842
+  - U843
+  review:
+    state: proposed
+    note: Lot U843 appliqué ; accord capturé séparément sur les champs présentés. Compléments détaillés proposés.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-10-06T00:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U843
+    - U844
+    validated_fields: []
+    value_sha256: {}
+    note: Documentation déléguée U844 ; accords U843 capturés séparément sur les champs présentés.
+- id: REL-U843-CONTAINS-order-workflow-sentry
+  revision: 1
+  type: contains
+  source_id: D04
+  target_id: order-workflow-sentry
+  source_refs:
+  - U839
+  - U842
+  - U843
+  review:
+    state: proposed
+    note: Lot U843 appliqué ; accord capturé séparément sur les champs présentés. Compléments détaillés proposés.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-10-06T00:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U843
+    - U844
+    validated_fields: []
+    value_sha256: {}
+    note: Documentation déléguée U844 ; accords U843 capturés séparément sur les champs présentés.
+- id: REL-U843-CONTAINS-order-workflow-planning
+  revision: 1
+  type: contains
+  source_id: D04
+  target_id: order-workflow-planning
+  source_refs:
+  - U839
+  - U842
+  - U843
+  review:
+    state: proposed
+    note: Lot U843 appliqué ; accord capturé séparément sur les champs présentés. Compléments détaillés proposés.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-10-06T00:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U843
+    - U844
+    validated_fields: []
+    value_sha256: {}
+    note: Documentation déléguée U844 ; accords U843 capturés séparément sur les champs présentés.
+- id: REL-U843-CONTAINS-order-workflow-orchestration
+  revision: 1
+  type: contains
+  source_id: D04
+  target_id: order-workflow-orchestration
+  source_refs:
+  - U839
+  - U842
+  - U843
+  review:
+    state: proposed
+    note: Lot U843 appliqué ; accord capturé séparément sur les champs présentés. Compléments détaillés proposés.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-10-06T00:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U843
+    - U844
+    validated_fields: []
+    value_sha256: {}
+    note: Documentation déléguée U844 ; accords U843 capturés séparément sur les champs présentés.
+history_commit: 852f73ca4bb8c9f78a2c6caa3ad274f998305308
+market_limit: Les appuis méthodologiques U845 restent valides. Les comparaisons fonctionnelles propres aux nouveaux périmètres
+  sont non documentées ; aucune correspondance des capacités n’est étendue automatiquement à leur Business Area.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U848
+  - U853
+  summary: 16 Business Areas, 64 capacités regroupées et 17 directes ; aucun savoir-faire supprimé.
+  required_nodes:
+  - id: ba-inventory-position-management
+    kind: business_area
+    parent: D01
+    fields:
+      name: Inventory Position Management
+      definition: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits, vérifications
+        et corrections.
+      finality: Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
+      scope: |-
+        Les changements de propriétaire sont portés par Inventory Ownership Management ; aucune fusion des registres ou de la réservation.
+
+        Bénéficiaire et résultat : Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
+
+        Exemple fictif : Une réception annoncée de 100 pièces est constatée à 80 : restituer la correction et les engagements concernés sans confondre disponibilité et propriété.
+  - id: ba-inventory-ownership-management
+    kind: business_area
+    parent: D01
+    fields:
+      name: Inventory Ownership Management
+      definition: Déterminer et tracer les changements de propriétaire des biens à partir des faits et conditions applicables.
+      finality: Permettre aux responsables des engagements de connaître le propriétaire reconnu des biens et le fait qui justifie
+        son changement.
+      scope: |-
+        La reconnaissance de propriété reste distincte du déplacement physique et de l’écriture comptable.
+
+        Bénéficiaire et résultat : Permettre aux responsables des engagements de connaître le propriétaire reconnu des biens et le fait qui justifie son changement.
+
+        Exemple fictif : Un prélèvement sur stock fournisseur déclenche le transfert prévu au contrat ; le mouvement physique et la comptabilisation restent des responsabilités distinctes.
+  - id: ba-master-plan-management
+    kind: business_area
+    parent: D03
+    fields:
+      name: Master Plan Management
+      definition: Maintenir et réviser un plan commun d’affectation en comparant les alternatives et en coordonnant son application.
+      finality: Donner aux responsables de couverture des demandes un plan commun dont les révisions et les conséquences sont
+        explicites.
+      scope: |-
+        Distinct des plans prévisionnels reçus du domaine Demand & Supply Planning.
+
+        Bénéficiaire et résultat : Donner aux responsables de couverture des demandes un plan commun dont les révisions et les conséquences sont explicites.
+
+        Exemple fictif : Une rentrée est retardée : comparer une nouvelle répartition, vérifier les engagements et ne rendre effective que la révision retenue.
+  - id: ba-order-promising
+    kind: business_area
+    parent: D03
+    fields:
+      name: Order Promising
+      definition: Déterminer et réexaminer les propositions de quantités, dates et conditions de satisfaction des demandes.
+      finality: Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
+      scope: |-
+        Proposer ne confirme pas un engagement de commande.
+
+        Bénéficiaire et résultat : Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
+
+        Exemple fictif : Proposer 60 pièces vendredi et 40 lundi ; la proposition ne devient un engagement que lors de sa confirmation dans la commande.
+  - id: ba-supply-matching
+    kind: business_area
+    parent: D03
+    fields:
+      name: Supply Matching
+      definition: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+        de ressources.
+      finality: Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins
+        restent découverts.
+      scope: |-
+        Les familles de commandes portent les demandes et leurs engagements ; les registres portent les effets reconnus.
+
+        Bénéficiaire et résultat : Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins restent découverts.
+
+        Exemple fictif : Deux demandes se partagent 80 pièces : arbitrer selon leurs priorités et expliciter la part non couverte sans réécrire les commandes.
+  - id: ba-policy-optimization
+    kind: business_area
+    parent: D03
+    fields:
+      name: Policy Optimization
+      definition: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
+      finality: Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
+      scope: |-
+        Les règles actives et leur validité demeurent dans Policies.
+
+        Bénéficiaire et résultat : Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
+
+        Exemple fictif : Recommander une protection de 20 pièces après comparaison des ruptures et surstocks ; Policies conserve la mise en vigueur de la règle.
+  - id: ba-order-lifecycle-management
+    kind: business_area
+    parent: D04
+    fields:
+      name: Order Lifecycle Management
+      definition: Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer leur
+        état.
+      finality: Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
+      scope: |-
+        La structuration et la visibilité restent des capacités distinctes ; le pilotage du parcours relève de Reactive Workflow Management.
+
+        Bénéficiaire et résultat : Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
+
+        Exemple fictif : Une commande est fractionnée avec accord du client : conserver les engagements et la filiation des parties sans choisir leur transporteur.
+  - id: ba-reactive-workflow-management
+    kind: business_area
+    parent: D04
+    fields:
+      name: Reactive Workflow Management
+      definition: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant leurs engagements.
+      finality: Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
+      scope: |-
+        Fulfilment conserve la coordination et les adaptations locales des prestations dans le mandat confié.
+
+        Bénéficiaire et résultat : Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
+
+        Exemple fictif : Un paiement confirmé débloque la suite de la commande ; un événement répété ne déclenche pas une seconde prestation. Une adaptation locale reste confiée à Fulfilment Orchestration.
+  - id: ba-service-planning
+    kind: business_area
+    parent: D06
+    fields:
+      name: Service Planning
+      definition: Déterminer les prestations nécessaires, leurs exécutants et les plans de transport compatibles avec les
+        engagements.
+      finality: Fournir aux responsables de la réalisation un ensemble de prestations réalisables et compatibles avec les
+        engagements confiés.
+      scope: |-
+        La visibilité des capacités de service alimente ce périmètre ; aucun type de capacité n’est changé en Planning par son rattachement.
+
+        Bénéficiaire et résultat : Fournir aux responsables de la réalisation un ensemble de prestations réalisables et compatibles avec les engagements confiés.
+
+        Exemple fictif : Prévoir emballage puis collecte selon la capacité annoncée et la date promise ; la famille de commande conserve l’engagement accepté.
+  - id: ba-execution-assurance
+    kind: business_area
+    parent: D06
+    fields:
+      name: Execution Assurance
+      definition: Établir une connaissance fiable de la réalisation des prestations, rapprocher leurs résultats et rendre
+        visibles les écarts.
+      finality: Permettre aux responsables de la coordination de distinguer réalisation attestée, attente et écart à traiter.
+      scope: |-
+        Ne décide pas seule des adaptations et ne se substitue pas à Order Workflow Sentry.
+
+        Bénéficiaire et résultat : Permettre aux responsables de la coordination de distinguer réalisation attestée, attente et écart à traiter.
+
+        Exemple fictif : Une collecte est annoncée mais non attestée : rapprocher les faits et rendre visible l’écart sans choisir seul une autre prestation.
+  - id: ba-execution-coordination
+    kind: business_area
+    parent: D06
+    fields:
+      name: Execution Coordination
+      definition: Coordonner, libérer et adapter les prestations dans le mandat confié et les engagements applicables.
+      finality: Faire réaliser les prestations confiées dans les limites de la promesse et des autorisations.
+      scope: |-
+        La décision sur le devenir des biens reste une responsabilité distincte directement rattachée au sous-domaine.
+
+        Bénéficiaire et résultat : Faire réaliser les prestations confiées dans les limites de la promesse et des autorisations.
+
+        Exemple fictif : Décaler une collecte dans la marge autorisée ; si la date promise devient impossible, remonter les faits à Order Management au lieu de changer seul la promesse.
+  - id: ba-inbound-information-integration
+    kind: business_area
+    parent: subdomain-integration
+    fields:
+      name: Inbound Information Integration
+      definition: Recevoir et intégrer les plans et référentiels fournis par les domaines sources.
+      finality: Donner aux décisions d’orchestration des données sources utilisables, datées et dont la provenance est conservée.
+      scope: |-
+        Ne transfère pas leur maîtrise d’entreprise et ne reprend pas les événements des prestations pilotées par Fulfilment.
+
+        Bénéficiaire et résultat : Donner aux décisions d’orchestration des données sources utilisables, datées et dont la provenance est conservée.
+
+        Exemple fictif : Recevoir une révision de plan et son périmètre ; rejeter un lot incohérent sans remplacer silencieusement la dernière version valide.
+  - id: ba-outbound-information-provision
+    kind: business_area
+    parent: subdomain-integration
+    fields:
+      name: Outbound Information Provision
+      definition: Fournir les informations opérationnelles utiles à la comptabilité, à la planification et à l’amélioration
+        produit.
+      finality: Permettre aux domaines destinataires d’exploiter des faits opérationnels traçables pour leurs propres décisions.
+      scope: |-
+        Transmettre un fait de gestion ne le transforme pas en écriture comptable.
+
+        Bénéficiaire et résultat : Permettre aux domaines destinataires d’exploiter des faits opérationnels traçables pour leurs propres décisions.
+
+        Exemple fictif : Transmettre une correction de stock à la planification avec son accusé de réception ; le destinataire décide seul de modifier son plan.
+  - id: ba-goods-processing-order-management
+    kind: business_area
+    parent: subdomain-service-orders
+    fields:
+      name: Goods Processing Order Management
+      definition: Tenir les demandes et engagements de prestations portant sur le traitement des biens.
+      finality: Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
+      scope: |-
+        Couvre préparation, réception, transit, conditionnement, finition, entretien, contrôle et rebut ; ne présume pas leur réalisation dans un entrepôt et ne pilote pas les opérations internes.
+
+        Bénéficiaire et résultat : Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
+
+        Exemple fictif : Demander un nouvel étiquetage sur 40 pièces et suivre son acceptation puis son résultat ; la réalisation physique appartient au prestataire.
+  - id: ba-transport-order-management
+    kind: business_area
+    parent: subdomain-service-orders
+    fields:
+      name: Transport Order Management
+      definition: Tenir les demandes et engagements d’acheminement et de réservation de capacité de transport.
+      finality: Donner aux parties du transport une demande et un engagement traçables sur l’acheminement ou la capacité réservée.
+      scope: |-
+        La construction du plan de transport reste dans Fulfilment.
+
+        Bénéficiaire et résultat : Donner aux parties du transport une demande et un engagement traçables sur l’acheminement ou la capacité réservée.
+
+        Exemple fictif : Réserver une capacité avant de connaître toutes les instructions, puis préciser l’acheminement sans confondre réservation et transport réalisé.
+  - id: ba-financial-service-order-management
+    kind: business_area
+    parent: subdomain-service-orders
+    fields:
+      name: Financial Service Order Management
+      definition: Tenir les demandes confiées de facturation et d’encaissement et suivre leurs résultats.
+      finality: Permettre au donneur d’ordre de connaître l’état et le résultat des prestations de facturation ou d’encaissement
+        confiées.
+      scope: |-
+        Ne reprend ni la responsabilité comptable ni l’exécution des opérations par les services sollicités.
+
+        Bénéficiaire et résultat : Permettre au donneur d’ordre de connaître l’état et le résultat des prestations de facturation ou d’encaissement confiées.
+
+        Exemple fictif : Confier une facturation et recevoir sa référence de résultat ; les règles fiscales et la tenue des comptes restent sous autorité financière.
+  - id: D01.f
+    parent: ba-inventory-position-management
+  - id: D01.g
+    parent: ba-inventory-position-management
+  - id: D01.c
+    parent: ba-inventory-position-management
+  - id: D01.d
+    parent: ba-inventory-position-management
+  - id: D02.b
+    parent: subdomain-policies
+  - id: D02.c
+    parent: ba-inventory-position-management
+  - id: D02.e
+    parent: ba-master-plan-management
+  - id: D03.i
+    parent: ba-order-promising
+  - id: D03.j
+    parent: ba-order-promising
+  - id: D03.k
+    parent: ba-order-promising
+  - id: D03.m
+    parent: ba-supply-matching
+  - id: D04.i
+    parent: ba-order-lifecycle-management
+  - id: D04.j
+    parent: ba-order-lifecycle-management
+  - id: D04.k
+    parent: ba-order-lifecycle-management
+  - id: D04.l
+    parent: ba-order-lifecycle-management
+  - id: D04.m
+    parent: ba-order-lifecycle-management
+  - id: D04.n
+    parent: ba-order-lifecycle-management
+  - id: D05.a
+    parent: ba-policy-optimization
+  - id: D05.d
+    parent: ba-policy-optimization
+  - id: D05.e
+    parent: ba-supply-matching
+  - id: D05.c
+    parent: ba-supply-matching
+  - id: D05.f
+    parent: ba-master-plan-management
+  - id: D06.b
+    parent: ba-service-planning
+  - id: D07.a
+    parent: ba-service-planning
+  - id: D07.c
+    parent: ba-execution-assurance
+  - id: D07.d
+    parent: ba-execution-assurance
+  - id: D06.d
+    parent: ba-execution-coordination
+  - id: D06.e
+    parent: ba-service-planning
+  - id: D06.f
+    parent: ba-execution-coordination
+  - id: BHV006
+    parent: ba-master-plan-management
+  - id: D05.h
+    parent: ba-policy-optimization
+  - id: D03.o
+    parent: ba-supply-matching
+  - id: D05.i
+    parent: D06
+  - id: D04.r
+    parent: ba-order-lifecycle-management
+  - id: D01.h
+    parent: ba-inventory-ownership-management
+  - id: D08.e
+    parent: business-references
+  - id: D09.e
+    parent: business-references
+  - id: D11.b
+    parent: business-references
+  - id: D12.b
+    parent: business-references
+  - id: D13.b
+    parent: business-references
+  - id: D14.b
+    parent: business-references
+  - id: D16.b
+    parent: business-references
+  - id: D19.a
+    parent: subdomain-policies
+  - id: D19.b
+    parent: subdomain-policies
+  - id: D04.t
+    parent: ba-order-lifecycle-management
+  - id: plans-ingestion
+    parent: ba-inbound-information-integration
+  - id: plans-visibility
+    parent: subdomain-plans
+  - id: service-order-picking
+    parent: ba-goods-processing-order-management
+  - id: service-order-packing
+    parent: ba-goods-processing-order-management
+  - id: service-order-cross-docking
+    parent: ba-goods-processing-order-management
+  - id: service-order-transport
+    parent: ba-transport-order-management
+  - id: service-order-labeling
+    parent: ba-goods-processing-order-management
+  - id: service-order-kitting
+    parent: ba-goods-processing-order-management
+  - id: service-order-garment-finishing
+    parent: ba-goods-processing-order-management
+  - id: service-order-cleaning
+    parent: ba-goods-processing-order-management
+  - id: service-order-repair-alteration
+    parent: ba-goods-processing-order-management
+  - id: service-order-personalization
+    parent: ba-goods-processing-order-management
+  - id: service-order-inspection
+    parent: ba-goods-processing-order-management
+  - id: service-order-transport-booking
+    parent: ba-transport-order-management
+  - id: service-order-document-production
+    parent: subdomain-service-orders
+  - id: service-order-customs-clearance
+    parent: subdomain-service-orders
+  - id: service-order-billing
+    parent: ba-financial-service-order-management
+  - id: service-order-payment-collection
+    parent: ba-financial-service-order-management
+  - id: demand-plan-visibility
+    parent: subdomain-plans
+  - id: master-data-ingestion
+    parent: ba-inbound-information-integration
+  - id: operations-visibility
+    parent: ba-execution-assurance
+  - id: price-book-visibility
+    parent: business-references
+  - id: order-visibility
+    parent: ba-order-lifecycle-management
+  - id: inventory-ownership-ledger
+    parent: ba-inventory-ownership-management
+  - id: service-order-release-decision
+    parent: ba-execution-coordination
+  - id: service-order-receiving
+    parent: ba-goods-processing-order-management
+  - id: transport-plan-decision
+    parent: ba-service-planning
+  - id: service-order-scrapping
+    parent: ba-goods-processing-order-management
+  - id: accounting-data-provision
+    parent: ba-outbound-information-provision
+  - id: planning-data-provision
+    parent: ba-outbound-information-provision
+  - id: product-feedback
+    parent: ba-outbound-information-provision
+  - id: accounting-interpretation
+    parent: subdomain-financial-accounting
+  - id: workflow-definition-management
+    parent: ba-reactive-workflow-management
+  - id: order-workflow-sentry
+    parent: ba-reactive-workflow-management
+  - id: order-workflow-planning
+    parent: ba-reactive-workflow-management
+  - id: order-workflow-orchestration
+    parent: ba-reactive-workflow-management
+  editorial_alignment_U853:
+    fields:
+    - ba-inventory-position-management.finality
+    - ba-inventory-position-management.scope
+    - ba-inventory-ownership-management.finality
+    - ba-inventory-ownership-management.scope
+    - ba-master-plan-management.finality
+    - ba-master-plan-management.scope
+    - ba-order-promising.finality
+    - ba-order-promising.scope
+    - ba-supply-matching.finality
+    - ba-supply-matching.scope
+    - ba-policy-optimization.finality
+    - ba-policy-optimization.scope
+    - ba-order-lifecycle-management.finality
+    - ba-order-lifecycle-management.scope
+    - ba-reactive-workflow-management.finality
+    - ba-reactive-workflow-management.scope
+    - ba-service-planning.finality
+    - ba-service-planning.scope
+    - ba-execution-assurance.finality
+    - ba-execution-assurance.scope
+    - ba-execution-coordination.finality
+    - ba-execution-coordination.scope
+    - ba-inbound-information-integration.finality
+    - ba-inbound-information-integration.scope
+    - ba-outbound-information-provision.finality
+    - ba-outbound-information-provision.scope
+    - ba-goods-processing-order-management.finality
+    - ba-goods-processing-order-management.scope
+    - ba-transport-order-management.finality
+    - ba-transport-order-management.scope
+    - ba-financial-service-order-management.finality
+    - ba-financial-service-order-management.scope
+    scope: Finalités et exemples de Business Areas, corrections de noms et de grammaire ; aucune modification de parent ni
+      extension des accords historiques.

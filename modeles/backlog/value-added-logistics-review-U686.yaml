@@ -734,45 +734,59 @@ publication_delivery:
   - id: service-order-labeling
     fields:
       name: Labeling Order
-    parent: subdomain-service-orders
+    parent: ba-goods-processing-order-management
   - id: service-order-packing
     fields:
       name: Packing Order
-    parent: subdomain-service-orders
+    parent: ba-goods-processing-order-management
   - id: service-order-kitting
     fields:
       name: Kitting Order
-    parent: subdomain-service-orders
+    parent: ba-goods-processing-order-management
   - id: service-order-garment-finishing
     fields:
       name: Garment Finishing Order
-    parent: subdomain-service-orders
+    parent: ba-goods-processing-order-management
   - id: service-order-cleaning
     fields:
       name: Cleaning Order
-    parent: subdomain-service-orders
+    parent: ba-goods-processing-order-management
   - id: service-order-repair-alteration
     fields:
       name: Repair & Alteration Order
-    parent: subdomain-service-orders
+    parent: ba-goods-processing-order-management
   - id: service-order-personalization
     fields:
       name: Personalization Order
-    parent: subdomain-service-orders
+    parent: ba-goods-processing-order-management
   - id: service-order-inspection
     fields:
       name: Inspection Order
-    parent: subdomain-service-orders
+    parent: ba-goods-processing-order-management
   - id: service-order-picking
     fields:
       name: Picking Order
-    parent: subdomain-service-orders
+    parent: ba-goods-processing-order-management
   - id: service-order-cross-docking
     fields:
       name: Cross-Docking Order
-    parent: subdomain-service-orders
+    parent: ba-goods-processing-order-management
   absent_nodes:
   - service-order-vas
   - vas-repacking
   - vas-labeling-relabeling
 application_U711: Descriptions des deux comportements isolés intégrées aux capacités ; identifiants retirés, historique conservé.
+delivery_updates:
+- source_ref: U848
+  fields:
+  - service-order-labeling.parent
+  - service-order-packing.parent
+  - service-order-kitting.parent
+  - service-order-garment-finishing.parent
+  - service-order-cleaning.parent
+  - service-order-repair-alteration.parent
+  - service-order-personalization.parent
+  - service-order-inspection.parent
+  - service-order-picking.parent
+  - service-order-cross-docking.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

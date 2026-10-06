@@ -282,7 +282,8 @@
     },
     "market_reference_policy": {
       "enum": [
-        "two_primary_sources"
+        "two_primary_sources",
+        "microsoft_sap_or_gap_v1"
       ]
     },
     "lifecycle_policy": {
@@ -301,6 +302,9 @@
               },
               "market_inspiration": {
                 "$ref": "#/$defs/marketInspiration"
+              },
+              "market_gaps": {
+                "$ref": "#/$defs/marketGaps"
               }
             }
           }
@@ -344,7 +348,7 @@
           "type": "object",
           "additionalProperties": {
             "type": "string",
-            "pattern": "^(SYS|DOM|SUB|REF|CAP|BHV)-[0-9]{3,}$"
+            "pattern": "^(SYS|DOM|SUB|BA|REF|CAP|BHV)-[0-9]{3,}$"
           }
         }
       },
@@ -1101,6 +1105,7 @@
             "business_system",
             "domain",
             "area",
+            "business_area",
             "reference",
             "group",
             "capability",
@@ -1256,6 +1261,9 @@
             },
             "examples": {
               "$ref": "#/$defs/businessExamples"
+            },
+            "market_gaps": {
+              "$ref": "#/$defs/marketGaps"
             }
           },
           "required": [],
@@ -1409,6 +1417,7 @@
                 "business_system",
                 "domain",
                 "area",
+                "business_area",
                 "reference",
                 "group",
                 "object",
@@ -2274,6 +2283,46 @@
         "links"
       ],
       "additionalProperties": false
+    },
+    "marketGaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "family",
+          "reason",
+          "investigated_urls",
+          "source_refs"
+        ],
+        "properties": {
+          "family": {
+            "enum": [
+              "microsoft_dynamics",
+              "sap_s4hana"
+            ]
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 20
+          },
+          "investigated_urls": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^https://"
+            }
+          },
+          "source_refs": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
     }
   }
 }

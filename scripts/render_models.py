@@ -93,7 +93,7 @@ def render(model, label):
             lines.append('| ' + ' | '.join(cell(v) for v in [level['id'], level['fields'].get('name', ''), level_name, ', '.join(children) or 'Exploration différée', status(level)]) + ' |')
         lines += ['', 'Les groupes de présentation conservent leur rôle distinct des niveaux de décomposition métier.', '']
     for domain in model['nodes']:
-        if domain['kind'] not in ('business_system', 'domain', 'area', 'reference'):
+        if domain['kind'] not in ('business_system', 'domain', 'area', 'business_area', 'reference'):
             continue
         lines += [f'## {domain["id"]} — {domain["fields"].get("name", "Libellé à préciser")}', '', f'Statut : **{status(domain)}**.', '', domain['fields'].get('definition','Définition à préciser.'), '']
         if domain['fields'].get('data_governance'):
@@ -104,7 +104,7 @@ def render(model, label):
             hierarchy_principles = {p.get('id') for p in model.get('principles', [])}
             purpose_label = ('Sous-domaine' if 'PRINCIPLE-DOMAIN-SUBDOMAIN' in hierarchy_principles
                              else 'Purpose' if 'PRINCIPLE-DOMAIN-PURPOSE' in hierarchy_principles else 'Area')
-            labels = {'domain': 'Domain', 'area': purpose_label, 'reference': 'Référentiel', 'group': 'Groupe de présentation'}
+            labels = {'domain': 'Domain', 'area': purpose_label, 'business_area': 'Business Area', 'reference': 'Référentiel', 'group': 'Groupe de présentation'}
             lines += ['| Repère | Nom | Type | Statut |', '| --- | --- | --- | --- |']
             for child in presented:
                 lines.append('| ' + ' | '.join(cell(v) for v in [child['id'], child['fields'].get('name', child['id']), labels.get(child['kind'], child['kind']), status(child)]) + ' |')
@@ -113,7 +113,7 @@ def render(model, label):
         show_origins = any(nodes[r['target_id']]['fields'].get('request_origins') for r in contains)
         show_governance = any(nodes[r['target_id']]['fields'].get('data_governance') for r in contains)
         if contains or not presented:
-            columns = ['Repère', 'Capacité', 'Type'] + (['Gouvernance des données'] if show_governance else []) + (['Origine des demandes'] if show_origins else []) + ['Statut', 'Définition', 'Finalité', 'Rattachement']
+            columns = ['Repère', 'Élément', 'Type'] + (['Gouvernance des données'] if show_governance else []) + (['Origine des demandes'] if show_origins else []) + ['Statut', 'Définition', 'Finalité', 'Rattachement']
             lines += ['| ' + ' | '.join(columns) + ' |', '| ' + ' | '.join('---' for _ in columns) + ' |']
         for relation in contains:
             n=nodes[relation['target_id']]; f=n['fields']

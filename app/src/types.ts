@@ -11,6 +11,11 @@ export interface MarketComparison {
   status: 'proposed' | 'under_review' | 'validated';
 }
 
+export interface MarketGap {
+  family: 'microsoft_dynamics' | 'sap_s4hana';
+  reason: string; investigated_urls: string[]; source_refs: string[];
+}
+
 export interface BusinessExample {
   title: string; situation: string; outcome?: string; lesson?: string;
   steps?: { title: string; description: string; contributions: { node_id: string; role: string }[]; outcome: string }[];
@@ -98,7 +103,7 @@ export interface RawRelation extends JsonRecord {
   last_modified?: string;
 }
 export interface GlossaryTerm extends JsonRecord {
-  market_comparisons?: MarketComparison[];
+  market_comparisons?: MarketComparison[]; market_gaps?: MarketGap[];
   market_inspiration?: MarketInspiration;
   id: string; name: string; short_description: string; definition: string;
   context?: string; notes?: string; source_refs: string[]; historical?: boolean;

@@ -17,11 +17,20 @@ class GuideSourceTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name).resolve()
-        for name in (DRAFT, guide.CANONICAL_GLOSSARY):
+        self.expected = read(ROOT / 'modeles/modeling-guides/versions/2026-09-28.2.yaml')
+        # A frozen fixture tests compilation independently of the evolving backlog.
+        draft = deepcopy(self.expected)
+        canonical = {'terms': deepcopy(draft['glossary']['terms'])}
+        draft['glossary']['canonical_source'] = guide.CANONICAL_GLOSSARY
+        for term in draft['glossary']['terms']:
+            fields = [f for f in sorted(guide.SHARED_FIELDS) if f in term]
+            term['canonical_fields'] = fields
+            for field in fields:
+                del term[field]
+        for name, document in ((DRAFT, draft), (guide.CANONICAL_GLOSSARY, canonical)):
             target = self.root / name
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_bytes((ROOT / name).read_bytes())
-        self.expected = read(ROOT / 'modeles/modeling-guides/versions/2026-09-28.2.yaml')
+            target.write_text(dumps(document), encoding='utf-8')
         registry = self.root / 'modeles/provenance/source-records.json'
         registry.parent.mkdir(parents=True)
         registry.write_text(json.dumps({'records': [{'id': i} for i in self.expected['source_refs']]}))
@@ -61,3 +70,21 @@ class GuideSourceTests(unittest.TestCase):
         self.assertEqual(content, path.read_bytes())
         self.assertEqual(result, self.expected)
         self.assertEqual(set(dependencies), {DRAFT})
+
+    def test_model_examples_freeze_their_model_dependency(self):
+        draft = read(self.root / DRAFT)
+        draft['model_examples'] = [{'node_id': 'atp', 'name': 'ATP', 'nature': 'decision'}]
+        # This test adds a current-model contract to a historical fixture:
+        # remove its unrelated obsolete explanatory examples first.
+        content = dumps(draft)
+        for old in ('ATP, CTP et PTP sont de type Evaluation', 'Promise Selection Decision choisit',
+                    'Les catégories regroupent des capacités'):
+            content = content.replace(old, 'Exemple isolé du test')
+        (self.root / DRAFT).write_text(content, encoding='utf-8')
+        model_path = self.root / 'modeles/backlog/model.yaml'
+        model_path.write_text(dumps({'nodes': [{'id': 'atp', 'fields': {'name': 'ATP', 'nature': 'decision'}}], 'relations': []}), encoding='utf-8')
+        frozen = guide.stage(self.root, DRAFT, self.stage)
+        self.assertIn('modeles/backlog/model.yaml', frozen['source_inputs'])
+        model_path.write_bytes(model_path.read_bytes() + b'\n# new input\n')
+        with self.assertRaisesRegex(ValueError, 'dependencies changed'):
+            guide.verify(self.root, self.stage, frozen)

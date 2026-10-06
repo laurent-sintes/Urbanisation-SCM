@@ -1974,6 +1974,8 @@ publication_delivery:
         U706/U709 : Coordonner aussi les prestations exécutées à distance : solliciter le service, attendre son résultat métier et poursuivre le flux selon ce résultat. Une acceptation du déclenchement ne vaut pas réalisation.
 
         Appliquer les attentes et libérations retenues par [Service Order Release Decision](model:service-order-release-decision), puis suivre la prise en charge des ordres. Un lot ne fusionne pas leurs identités. Distinguer une information anticipée de l’autorisation de lancement ; ne pas considérer la transmission comme preuve de réalisation.
+
+        Coordonner les prestations dans le mandat reçu d’[Order Workflow Orchestration](glossary:TER129), qui conduit le parcours de la commande. Une dépendance entre préparation et collecte ne se confond pas avec une attente de confirmation client dans ce parcours. Retourner les résultats et aléas utiles à [Order Workflow Sentry](glossary:TER127) ; ne pas modifier seul les engagements de la commande.
   - id: service-order-receiving
     fields:
       name: Receiving Order
@@ -1988,10 +1990,6 @@ publication_delivery:
 
         Créer cet [Order](glossary:TER012) lorsqu’une réception est explicitement confiée et suivie comme prestation. Recevoir seulement une notification ne justifie pas un ordre artificiel. Aucune famille supplémentaire de rangement ou de stockage ni réalisation Beaumanoir n’est déduite.
       nature: action
-      category:
-        id: warehouse
-        display_name: Prestations d’entrepôt
-        order: 10
     superseded_field_checks:
       examples:
         expected_value:
@@ -3236,3 +3234,13 @@ delivery_updates:
   - target: D06.d
     change: Alignement du contrôle sur le lot U835
     previous_check_sha256: a0711b76452d5bb18cf0b92ce9b24acfaa1bea77c8efce2de2e09f0950a06a1c
+- source_ref: U843
+  fields:
+  - D06.d.scope
+  history_commit: 852f73ca4bb8c9f78a2c6caa3ad274f998305308
+  reason: Aligner le contrôle de livraison sur les frontières révisées et les contributions réactives ; aucun accord antérieur
+    étendu.
+- source_ref: U848
+  fields:
+  - service-order-receiving.category
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

@@ -1,0 +1,467 @@
+id: transversal-audit-U850
+status: remediated_with_documented_market_gaps
+as_of: '2026-10-06'
+source_refs:
+- U850
+- U851
+- U852
+- U853
+scope:
+  backlog: modeles/backlog/model.yaml
+  publication: 2026-10-06.2
+  guide: 2026-10-06.1
+  local_url: http://127.0.0.1:8765/
+  limits:
+  - Audit structurel exhaustif du modèle courant et des contributions de scénarios ; lecture des définitions des 81 capacités
+    et des 16 Business Areas.
+  - Inventaire documentaire sur toutes les fiches ; relecture primaire ciblée de quatre sources, pas revalidation des 296
+    URL uniques du modèle.
+  - Aucune preuve de réalisation installée ni évaluation terrain nouvelle ; aucune déclaration de complétude entreprise.
+  - Audit historique U431 non rejoué ; aucune release, aucun commit ni push dans cette intervention.
+summary: Aucune perte d’entité publiée observée dans la migration v044 vers v045. La structure est conservée, mais pédagogie,
+  comparaisons marché et tests complets ne sont pas alignés. La régression de bandeaux a été corrigée localement sur demande
+  U852.
+integrity:
+  backlog_nodes: 203
+  published_nodes: 199
+  published_kinds:
+    business_system: 3
+    domain: 6
+    area: 10
+    reference: 8
+    capability: 81
+    behavior: 75
+    business_area: 16
+  excluded_backlog_nodes:
+  - ILL-DOC-01
+  - ILL-EVT-01
+  - ILL-OBJ-01
+  - ILL-OBJ-02
+  exclusion_reason: Quatre objets illustratifs exclus de la publication ; aucune capacité ni comportement exclu.
+  lost_previous_published_ids: []
+  added_ids:
+  - ba-execution-assurance
+  - ba-execution-coordination
+  - ba-financial-service-order-management
+  - ba-goods-processing-order-management
+  - ba-inbound-information-integration
+  - ba-inventory-ownership-management
+  - ba-inventory-position-management
+  - ba-master-plan-management
+  - ba-order-lifecycle-management
+  - ba-order-promising
+  - ba-outbound-information-provision
+  - ba-policy-optimization
+  - ba-reactive-workflow-management
+  - ba-service-planning
+  - ba-supply-matching
+  - ba-transport-order-management
+  - order-workflow-orchestration
+  - order-workflow-planning
+  - order-workflow-sentry
+  - workflow-definition-management
+  business_field_differences_backlog_publication: []
+  identity_rule: Les IDs persistants restent stables, y compris BHV006 qui est une capacité historique. Les codes de lecture
+    sont figés par publication ; CAP/BHV ne se déduisent pas de l’ID.
+  business_areas: 16
+  capabilities_in_areas: 64
+  direct_capabilities: 17
+depth:
+  behavior_counts_per_capability:
+    '0': 58
+    '2': 8
+    '3': 7
+    '4': 4
+    '5': 3
+    '7': 1
+  assessment: 58 capacités sans comportement ; pas une anomalie à elle seule. Les 23 autres ont au moins deux comportements.
+    La profondeur doit répondre à un besoin métier, sans décomposition systématique.
+market_inventory:
+  unique_model_urls: 296
+  missing_vendor_pair:
+    business_system: []
+    domain: []
+    area: []
+    business_area: []
+    reference: []
+    capability:
+    - D04.n
+    - D05.a
+    - D05.c
+    - D05.h
+    - D11.b
+    - D19.a
+    - D04.t
+    - service-order-labeling
+    - service-order-garment-finishing
+    - service-order-cleaning
+    - service-order-repair-alteration
+    - service-order-personalization
+    - service-order-transport-booking
+    - service-order-document-production
+    - service-order-billing
+    behavior:
+    - BHV016
+    - BHV019
+    - BHV020
+    - BHV024
+    - BHV025
+    - BHV026
+    - BHV027
+    - BHV028
+    - BHV032
+    - BHV033
+    - BHV034
+    - BHV035
+    - BHV044
+    - BHV050
+    - BHV054
+    - BHV057
+    - BHV059
+    - BHV064
+    - BHV067
+    - BHV068
+    - BHV075
+    - BHV076
+    - BHV078
+    - BHV085
+    - BHV086
+    - BHV087
+    - BHV096
+    - BHV099
+    - BHV100
+    - transport-appointments
+    - transport-rescheduling-redirection
+    - BHV102
+    - BHV103
+    - BHV108
+  without_comparisons:
+    business_system: []
+    domain: []
+    area: []
+    business_area:
+    - ba-inventory-position-management
+    - ba-inventory-ownership-management
+    - ba-master-plan-management
+    - ba-order-promising
+    - ba-supply-matching
+    - ba-policy-optimization
+    - ba-order-lifecycle-management
+    - ba-reactive-workflow-management
+    - ba-service-planning
+    - ba-execution-assurance
+    - ba-execution-coordination
+    - ba-inbound-information-integration
+    - ba-outbound-information-provision
+    - ba-goods-processing-order-management
+    - ba-transport-order-management
+    - ba-financial-service-order-management
+    reference: []
+    capability: []
+    behavior: []
+  qualification: Manques certains détectés par éditeur ; la présence des deux noms ne prouve ni pertinence ni couverture des
+    produits requis.
+scenario_inventory:
+  scenarios: 27
+  paths: 28
+  steps: 90
+  capabilities_used: 79
+  unused_capabilities:
+  - planning-data-provision
+  - product-feedback
+  paths_without_explicit_dependencies: 25
+  assessment: '27 scénarios, 28 parcours ; seul un scénario a plusieurs parcours. 25 parcours sans dépendances explicites
+    : ce n’est pas automatiquement une anomalie, leur ordre est présenté comme lecture et non comme workflow exécutable. Pour
+    démontrer les arbitrages, compléter les alternatives et conditions là où elles changent le résultat.'
+  recommended_stress_cases:
+  - 'Changement de version du référentiel d’activités avec commandes en cours : maintien de version ou migration autorisée.'
+  - 'Événement tardif ou répété : absence de double engagement, réaction Sentry justifiée.'
+  - 'Désactivation temporaire par Policies : distinction nouvelles demandes et engagements existants.'
+  - Adaptation locale Fulfilment versus révision du parcours et confirmation des engagements.
+  stress_case_status: Questions de couverture proposées, pas nouvelles capacités ni cas réputés absents du métier.
+business_assessment:
+  strengths:
+  - Les frontières Order Management, Fulfilment, Service Order Management, Availability et Policies sont désormais explicites
+    dans leurs scopes.
+  - Intercompany est un scénario autonome et une variante d’exécution ; aucune capacité autonome artificielle créée.
+  - Les Business Areas sont facultatives ; la migration conserve 17 capacités directement rattachées, sans imposer deux capacités
+    par area.
+  - Les scénarios mobilisent les capacités par contributions, sans se substituer à leur hiérarchie.
+  naming_tradeoffs:
+  - Sales Order et les autres noms d’ordres sont nominaux, mais leurs définitions décrivent la gestion durable d’engagements
+    ; pas une preuve qu’ils seraient seulement des objets de données.
+  - Workflow Definition Management et Sentry doivent rester des responsabilités métier, pas un catalogue de composants Camunda
+    ; la séparation technique restera à définir dans la réalisation.
+  methodology: Les six dimensions, produit et technologie dès le cadrage, DDD, gouvernance continue, COPIL mensuel, architecture
+    d’entreprise et validation progressive des fondations sont présents, avec deux SVG. Le problème principal est l’alignement
+    du métamodèle actif, pas la disparition de cette démarche.
+market_readings:
+- url: https://learning.sap.com/courses/sap-enterprise-architecture-framework-foundation-introduction/discovering-the-reference-architecture-content
+  consulted_on: '2026-10-06'
+  conclusion: 'SAP distingue Business Domain, Business Area et Business Capability, avec une area par capacité. FLOW ajoute
+    System et Subdomain et rend Business Area facultative : adaptation explicite, pas reproduction exacte.'
+- url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/about
+  consulted_on: '2026-10-06'
+  conclusion: Les business process areas appartiennent à un catalogue de processus ; elles ne constituent pas une taxonomie
+    de capacités équivalente.
+- url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+  consulted_on: '2026-10-06'
+  conclusion: Les activités, conditions, divisions et regroupements étayent la conduite de parcours ; ils ne prouvent pas
+    une décomposition standard en quatre capacités FLOW.
+- url: https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+  consulted_on: '2026-10-06'
+  conclusion: Les activités et conditions dans un scénario applicatif étayent partiellement la flexibilité ; elles ne prouvent
+    pas un constructeur général de workflow de commande.
+findings:
+- id: A01
+  priority: P1
+  topic: metamodel
+  title: Le guide publié contredit les décisions de promesse
+  status: implemented_pending_publication
+  observation: MOD021 et le guide actif présentent ATP, CTP et PTP comme Evaluation et citent Promise Selection Decision ;
+    les trois capacités sont de type decision et la capacité de sélection a été retirée.
+  impact: Un lecteur reçoit deux explications incompatibles dans la même publication. Les contrôles de présence et de liens
+    ne détectent pas une référence rédigée en texte libre.
+  remedy: Aligner le glossaire méthodologique canonique et les notes propres au guide ; publier ensuite une nouvelle édition,
+    sans modifier v045. Ajouter un contrôle des exemples nommant des capacités et de leur type.
+  evidence:
+  - modeles/backlog/modeling-glossary.yaml:1185
+  - modeles/backlog/atlas-transformation-methodology.yaml:951
+  - modeles/modeling-guides/versions/2026-10-06.1.yaml:947
+  - 'modeles/backlog/model.yaml: D03.i, D03.j, D03.k'
+  remediation_ref: modeles/backlog/transversal-remediation-U853.yaml
+- id: A02
+  priority: P1
+  topic: code
+  title: La validation marché ne traduit pas la règle Microsoft et SAP
+  status: implemented_pending_publication
+  observation: validate_reference_policy vérifie seulement deux URL distinctes quand des comparaisons existent. Deux pages
+    Microsoft passent ; aucune comparaison passe également. Le contrat two_primary_sources ne contrôle ni éditeur, ni produit,
+    ni caractère primaire.
+  impact: Un contrôle vert ne garantit pas la règle U772. Une lacune métier peut être publiée sans être rendue bloquante ni
+    qualifiée par cette fonction.
+  remedy: 'Introduire un contrat explicite pour les nouveaux candidats : appuis Microsoft Dynamics et SAP S/4HANA, ou lacune
+    documentée visible. Conserver le contrat historique ; ne pas déduire la pertinence d’une simple URL.'
+  evidence:
+  - scripts/market_comparison.py:55
+  - 'reproduction: validate_reference_policy avec deux URL Microsoft renvoie []'
+  remediation_ref: modeles/backlog/transversal-remediation-U853.yaml
+- id: A03
+  priority: P2
+  topic: market
+  title: Le socle documentaire marché reste incomplet
+  status: documented_gaps_remaining
+  observation: Au minimum 15 capacités et 34 comportements comparés ne possèdent pas les deux éditeurs exigés. Les autres
+    lignes ont seulement passé un inventaire des éditeurs, pas une certification de pertinence S/4HANA et Dynamics.
+  impact: La présence de comparaisons ne permet pas d’annoncer une couverture marché complète.
+  remedy: Compléter les fiches listées dans market_inventory.missing_vendor_pair, au périmètre exact, en conservant les limites
+    et les réserves. Prioriser Order Structuring, optimisations et ordres de prestation spécialisés.
+  evidence:
+  - market_inventory.missing_vendor_pair
+  - 'modeles/backlog/market-coverage-audit-U775.yaml: status partially_applied'
+  remediation_ref: modeles/backlog/transversal-remediation-U853.yaml
+- id: A04
+  priority: P2
+  topic: business_model
+  title: Les Business Areas ont une frontière mais pas de comparaison fonctionnelle propre
+  status: implemented_pending_publication
+  observation: Les 16 Business Areas ont nom, définition, finalité et scope ; les 16 finalités répètent leur définition et
+    aucune ne porte market_comparisons. Le plan U846 signale explicitement cette limite.
+  impact: Le regroupement est implémenté, mais sa valeur et ses frontières ne sont pas justifiées au même niveau que les capacités.
+  remedy: Documenter bénéficiaire, résultat, frontière et compromis de chaque regroupement ; réutiliser les sources pertinentes
+    sans transférer automatiquement une comparaison de capacité à son parent. Ne pas ajouter des capacités artificielles pour
+    atteindre une taille cible.
+  evidence:
+  - modeles/backlog/business-area-migration-U846.yaml
+  - 'modeles/backlog/model.yaml: 16 business_area'
+  remediation_ref: modeles/backlog/transversal-remediation-U853.yaml
+- id: A05
+  priority: P2
+  topic: metamodel
+  title: La pédagogie mélange catégories historiques et Business Areas actuelles
+  status: implemented_pending_publication
+  observation: Les chapitres metamodel et method expliquent encore que les catégories regroupent les capacités sans ajouter
+    de niveau. Business Area figure ailleurs, mais le passage de l’attribut au périmètre de responsabilité n’est pas expliqué
+    dans ces sections. MOD013 évoque huit sous-domaines Supply, contre neuf dans le modèle courant.
+  impact: Le lecteur ne sait pas si Business Area est une catégorie renommée ou une responsabilité dotée d’identité et de
+    frontière.
+  remedy: 'Expliquer les deux modèles liés : responsabilités System/Domain/Subdomain/Business Area facultative, puis Capability/Behavior.
+    Ajouter un exemple avec et sans Business Area et distinguer références et liens non hiérarchiques. Réserver les catégories
+    aux éditions historiques.'
+  evidence:
+  - modeles/backlog/atlas-transformation-methodology.yaml:1647
+  - modeles/backlog/atlas-transformation-methodology.yaml:1695
+  - modeles/backlog/modeling-glossary.yaml:569
+  remediation_ref: modeles/backlog/transversal-remediation-U853.yaml
+- id: A06
+  priority: P2
+  topic: use_cases
+  title: Deux capacités ne sont mobilisées par aucun parcours
+  status: implemented_pending_publication
+  observation: Planning Data Provision et Product Feedback sont les seules capacités parmi 81 sans contribution explicite
+    dans les 28 parcours.
+  impact: La boucle de retour vers la planification et vers l’amélioration produit reste annoncée dans le catalogue mais non
+    démontrée par un scénario.
+  remedy: Compléter un scénario de remontée des faits vers la planification et un scénario de retour qualité produit, en distinguant
+    transmission, décision externe et preuve de réception. Valider les résultats métier attendus avant ajout.
+  evidence:
+  - scenario_inventory.unused_capabilities
+  remediation_ref: modeles/backlog/transversal-remediation-U853.yaml
+- id: A07
+  priority: P2
+  topic: code
+  title: Trois tests Python ne suivent plus les contrats courants
+  status: fixed_locally
+  observation: '368 tests exécutés : 364 réussites, deux failures, une error, un skipped. Deux échecs viennent de test_guide_candidate
+    qui compare le brouillon courant à 2026-09-28.2 et construit son registre de sources depuis cette édition ; le troisième
+    attend un en-tête Capacité remplacé par Élément.'
+  impact: La suite complète n’est pas verte ; les 50 tests ciblés de publication ne révèlent pas ces régressions de fixtures.
+    Cela ne démontre pas une corruption du guide publié.
+  remedy: Isoler les fixtures historiques des sources vivantes ; vérifier les contrats de compilation sans exiger que le brouillon
+    courant reste identique à une ancienne édition. Actualiser l’assertion de restitution tout en conservant son objectif
+    de non-invention des métadonnées.
+  evidence:
+  - scripts/test_guide_candidate.py:25
+  - scripts/test_request_metadata.py:151
+  - .runtime/u850-tests.log
+  remediation_ref: modeles/backlog/transversal-remediation-U853.yaml
+- id: A08
+  priority: P2
+  topic: ux
+  title: Les Business Areas avaient perdu les bandeaux des catégories
+  status: fixed_locally
+  observation: 'Reproduction locale : les entités étaient présentes dans v045 mais apparaissaient comme cartes intermédiaires.
+    U852 précise l’attente de regroupement visuel. La correction restaure les bandeaux cliquables et les capacités dessous,
+    dans la carte et les aperçus.'
+  impact: La migration conservait les données mais perdait une lecture appréciée et donnait une impression de disparition.
+  remedy: Correction livrée dans le build local ; vérifier tous les sous-domaines, les capacités directes, les liens vers
+    les fiches et le rendu mobile. Les parents et les snapshots restent inchangés.
+  evidence:
+  - app/src/mapSections.ts
+  - app/src/ReactFlowPane.tsx
+  - app/verify-browser.mjs
+  - app/test-business-areas.mjs
+  - .runtime/u852-mobile.png
+  remediation_ref: modeles/backlog/transversal-remediation-U853.yaml
+- id: A09
+  priority: P2
+  topic: ux
+  title: La recherche n’a pas de filtre Business Area
+  status: fixed_locally
+  observation: La recherche Tous les résultats retrouve les Business Areas, mais le sélecteur de type propose Sous-domaines,
+    Capacités et Référentiels sans Business Areas.
+  impact: Le nouveau niveau n’est pas uniformément représenté dans les commandes de navigation.
+  remedy: Ajouter le type de résultat et vérifier recherche par nom, identité et code BA, avec le chemin complet.
+  evidence:
+  - app/src/components/Sidebar.tsx:132
+  remediation_ref: modeles/backlog/transversal-remediation-U853.yaml
+- id: A10
+  priority: P2
+  topic: editorial
+  title: Des formulations anciennes subsistent dans les fiches modifiées
+  status: implemented_pending_publication
+  observation: Le scope de Process Adaptation Decision cite encore Process Tracking comme responsabilité séparée ; le modèle
+    courant dispose de Operations Tracking et Operations Visibility. Des tournures telles que « du Availability » et « le
+    Availability » persistent après renommage.
+  impact: Les liens structurés sont valides mais le texte libre peut faire croire à une responsabilité autonome disparue ou
+    brouiller les frontières.
+  remedy: Revoir les occurrences actives des noms retirés, en distinguant noms de produits, historiques et règles courantes.
+    Ne pas remplacer aveuglément tout Matching, qui peut décrire un concept métier valide.
+  evidence:
+  - 'modeles/backlog/model.yaml: D06.f/scope, D06/definition, subdomain-plans/definition'
+  remediation_ref: modeles/backlog/transversal-remediation-U853.yaml
+- id: A11
+  priority: P2
+  topic: tests
+  title: Un test UX a un échec intermittent à qualifier
+  status: fixed_locally
+  observation: pnpm verify passe les contrôles browser, static, modeling-guide et display-codes, puis échoue dans verify-ux
+    sur la fermeture d’un tooltip par Escape. Le rejeu isolé de verify-ux réussit ; la cause n’est pas démontrée.
+  impact: La chaîne complète n’a pas un résultat reproductible établi. Ni un défaut permanent d’accessibilité ni une simple
+    erreur de test ne sont prouvés.
+  remedy: Isoler le lien ciblé, les tooltips concurrents et l’ordre focus/survol/Escape ; conserver un test clavier déterministe.
+    Ne pas masquer l’échec par une attente arbitraire.
+  evidence:
+  - app/verify-ux.mjs:64
+  - .runtime/u850-browser-suite.log
+  - .runtime/u850-ux-recheck.log
+  remediation_ref: modeles/backlog/transversal-remediation-U853.yaml
+- id: A12
+  priority: P3
+  topic: code
+  title: La vue de référence contourne le rendu des liens métier
+  status: fixed_locally
+  observation: Le nouveau bloc de carte vide pour les références affiche emptyScope.definition directement dans un paragraphe,
+    au lieu de ModelText.
+  impact: Une définition contenant un lien de glossaire peut afficher sa syntaxe brute et perdre son aide contextuelle.
+  remedy: Employer le même rendu de texte métier que les fiches et ajouter un cas de référence contenant un lien.
+  evidence:
+  - 'app/src/ReactFlowPane.tsx: referenceCapabilities empty-state'
+  remediation_ref: modeles/backlog/transversal-remediation-U853.yaml
+checks:
+  python_full_suite:
+    total: 368
+    passed: 364
+    failures: 2
+    errors: 1
+    skipped: 1
+    seconds: 203.588
+  frontend_unit:
+    passed: 135
+  build: passed
+  browser_maps_after_fix: passed, including all Business Area banners and maps
+  mobile_after_fix: 390 x 844, no horizontal page overflow; screenshot inspected
+  browser_suite_before_fix: four scripts passed; UX tooltip failure; content script not reached in this combined run
+  ux_isolated_recheck: passed
+  published_content_previous_check: passed against v045, 113 sheets, 27 scenarios, 28 paths, 90 steps, 8 chapters, 42 sections,
+    2 SVG; reused before the presentation fix
+  validation: 'passed: 0 errors after refresh_sources, 2816 source records'
+  published_content_after_fix: 'passed: 113 fiches, 27 scénarios, 28 parcours, 90 étapes, 8 chapitres, 42 sections, 2 SVG,
+    6 leçons et 29 termes'
+  diff_whitespace: git diff --check passed
+  overview_after_fix: 16 bandeaux dans la vue Supply Chain Orchestration ; clic sur le bandeau Reactive Workflow Management
+    ouvre sa fiche ; aperçu inspecté
+remediation_order:
+- 'P1 : aligner les explications métier et méthodologiques ; définir le contrat de couverture marché applicable.'
+- 'P2 : corriger les tests obsolètes et qualifier le test UX intermittent ; compléter les comparaisons et les scénarios manquants.'
+- 'P2/P3 : terminer les filtres de navigation et les textes actifs ; conserver des tests de parcours réels et de regroupement
+  visuel.'
+- 'Après corrections métier autorisées et contrôlées : préparer une nouvelle publication figée, sans réécrire les anciennes.'
+input_sha256:
+  modeles/backlog/model.yaml: c62ce51dbf4c5e1c466811abdd4295c09466177b5d04b32383ef597646ec7cf9
+  modeles/backlog/glossary.yaml: f199241a654ba9b11f3858807ad7a1c53ce48fc52fc39f9619a416b257fff241
+  modeles/backlog/modeling-glossary.yaml: 9b1e273a807e0a50da89be2546e735f982b131ee221409f8d6e49c0bab199c38
+  modeles/backlog/atlas-transformation-methodology.yaml: 56ca5b7de576abea5e6df984b32fe2a35e9ac4ffb39033ce3e900872189196e5
+  modeles/release/2026-10-06.2/model.yaml: e049b7b8fb2e22f482e03d5a42e29f95174e21ccba2920ade25ceb4616fa364f
+remediation_U853:
+  scope: Mise en œuvre du plan A01 à A12 ; nouvelle publication à préparer, sans activation ni commit.
+  candidate_version: 2026-10-06.3
+  guide_version: 2026-10-06.2
+  checks:
+    python_full_suite:
+      total: 378
+      passed: 377
+      skipped: 1
+      seconds: 198.738
+    frontend_unit: 135
+    build: passed
+    browser_maps_search_references: passed
+    browser_static_guide_codes: passed
+    browser_ux: passed, trois cycles focus/Escape sur le lien ciblé
+    published_content: passed against unchanged v045
+    new_content_preview: 'passed: quatre scénarios, responsabilités du métamodèle, lacunes marché visibles, finalité Business
+      Area'
+    validation: 0 errors before preparation; frozen candidate has its own validation gate
+  content:
+    business_areas_documented: 16
+    added_market_comparisons: 42
+    new_scenarios: 4
+    total_scenarios: 31
+    total_paths: 32
+    capabilities_with_paths: 81
+    remaining_market_gap_sheets: 44
+    remaining_market_gap_families: 61
+  limits:
+  - 'A03 : les 44 fiches restantes possèdent une lacune explicite ; couverture documentaire complète non revendiquée.'
+  - Les nouvelles rédactions ne reçoivent pas automatiquement les accords historiques.
+  - La publication active et les éditions historiques restent inchangées.

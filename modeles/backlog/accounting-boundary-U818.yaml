@@ -59,9 +59,14 @@ publication_delivery:
     kind: capability
     fields:
       name: Accounting Data Provision
-    parent: subdomain-integration
+    parent: ba-outbound-information-provision
   - id: accounting-interpretation
     kind: capability
     fields:
       name: Accounting Interpretation
     parent: subdomain-financial-accounting
+delivery_updates:
+- source_ref: U848
+  fields:
+  - accounting-data-provision.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

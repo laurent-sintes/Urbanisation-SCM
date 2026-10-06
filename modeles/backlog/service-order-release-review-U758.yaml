@@ -115,14 +115,10 @@ publication_delivery:
   summary: Décision de libération et deux stratégies appliquées ; frontière avec orchestration, traitement commun et WMS conservée.
   required_nodes:
   - id: service-order-release-decision
-    parent: D06
+    parent: ba-execution-coordination
     fields:
       name: Service Order Release Decision
       nature: decision
-      category:
-        id: coordinate-adapt
-        display_name: Coordonner et adapter
-        order: 20
       definition: Déterminer quels ordres de prestation retenir ou libérer ensemble, et à quel moment, pour organiser leur
         traitement et favoriser les regroupements utiles tout en respectant les engagements.
   - id: BHV105
@@ -160,3 +156,9 @@ application:
   - DEC-U759-PARENT-service-order-release-decision
   - DEC-U759-PARENT-BHV105
   - DEC-U759-PARENT-BHV106
+delivery_updates:
+- source_ref: U848
+  fields:
+  - service-order-release-decision.category
+  - service-order-release-decision.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

@@ -1,7 +1,7 @@
 import type { PublishedModel } from './types.ts';
 export type View = 'map' | 'sheet' | 'relations' | 'market' | 'glossary' | 'principles' | 'information' | 'scenarios';
 export interface GraphRoute {
-  graphLevel?: 'capability' | 'area' | 'domain' | 'business_system' | 'universe';
+  graphLevel?: 'capability' | 'business_area' | 'area' | 'domain' | 'business_system' | 'universe';
   graphDepth?: 0 | 1 | 2 | 3;
   graphDirection?: 'both' | 'incoming' | 'outgoing';
   graphFamily?: 'all' | 'needs' | 'other';
@@ -30,7 +30,7 @@ export function readRoute(hash: string): RouteState {
   const view = requestedView === 'market' && (!node || legacyRoots.includes(node)) ? 'map' : requestedView;
   const graph: GraphRoute = {};
   if (p.get('level') === 'subdomain') p.set('level', 'area');
-  if (['capability', 'area', 'domain', 'business_system', 'universe'].includes(p.get('level') || '')) graph.graphLevel = p.get('level') as GraphRoute['graphLevel'];
+  if (['capability', 'business_area', 'area', 'domain', 'business_system', 'universe'].includes(p.get('level') || '')) graph.graphLevel = p.get('level') as GraphRoute['graphLevel'];
   if (p.has('depth') && ['0', '1', '2', '3'].includes(p.get('depth')!)) graph.graphDepth = Number(p.get('depth')) as GraphRoute['graphDepth'];
   if (['both', 'incoming', 'outgoing'].includes(p.get('direction') || '')) graph.graphDirection = p.get('direction') as GraphRoute['graphDirection'];
   if (['all', 'needs', 'other'].includes(p.get('qualification') || '')) graph.graphFamily = p.get('qualification') as GraphRoute['graphFamily'];

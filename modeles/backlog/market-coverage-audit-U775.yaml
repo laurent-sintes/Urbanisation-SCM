@@ -863,6 +863,7 @@ publication_delivery:
   - U776
   - U777
   - U835
+  - U853
   summary: Lot validé transport, rebut, traçabilité et disposition, avec trois scénarios et mapping des capacités.
   required_nodes:
   - id: supply-chain-orchestration
@@ -2067,7 +2068,9 @@ publication_delivery:
 
         Solliciter les décisions de promesse d’[Availability](glossary:TER112) pour les évaluations utiles aux adaptations locales : disponibilités, faisabilité ou dossier économique des options. Une réponse recalculée ne modifie pas automatiquement la promesse confirmée.
 
-        [Transport Plan Decision](model:transport-plan-decision) construit les chargements et parcours des transports confiés. [Inventory Disposition Decision](model:D05.i) détermine les usages autorisés et le devenir des biens, y compris hors retour. Ces décisions peuvent déclencher des prestations externes ; leurs résultats sont suivis sans absorber le [Availability](glossary:TER112) ni la tenue des registres de stock.
+        [Transport Plan Decision](model:transport-plan-decision) construit les chargements et parcours des transports confiés. [Inventory Disposition Decision](model:D05.i) détermine les usages autorisés et le devenir des biens, y compris hors retour. Ces décisions peuvent déclencher des prestations externes ; leurs résultats sont suivis sans absorber [Availability](glossary:TER112) ni la tenue des registres de stock.
+
+        Agir comme pilote exécutant dans le mandat confié par [Order Workflow Orchestration](glossary:TER129). Conserver les décisions spécialisées et la latitude d’adaptation locale autorisée. La structure du parcours de la commande relève d’[Order Management](model:D04) ; un changement de ce parcours ou des engagements dépasse la seule adaptation des prestations. Transmettre les faits et impacts utiles à [Order Workflow Sentry](glossary:TER127), qui déclenche la réaction appropriée sans imposer un réexamen pour chaque événement.
   - id: D06.e
     fields:
       scope: |-
@@ -2095,13 +2098,15 @@ publication_delivery:
 
         Frontière : Remonter effet promesse à [Order Management](model:D04) ; [Availability](model:D03) peut revoir son scénario sans décider le transporteur.
 
-        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; Operations Tracking rend visibles les opérations et Process Tracking leur contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
+        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; [Operations Tracking](model:D07.d) recueille les faits de réalisation ; [Operations Visibility](model:operations-visibility) restitue leur progression et leurs écarts. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
 
         Le plan concerné est le plan d’exécution. Préserver promesse et grands équilibres ; transmettre les impacts non absorbables à [Availability](glossary:TER112) et [Order Management](model:D04), sans seuils à définir ici.
 
         La rétention anticipée et le regroupement en fonctionnement normal relèvent de [Service Order Release Decision](model:service-order-release-decision). Une adaptation peut modifier les conditions de libération, qui sont alors réévaluées ; ne pas dupliquer la décision de choix des lots.
 
         [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
+
+        Adapter localement les prestations dans le mandat confié, en préservant les engagements et les autorisations. Si la réponse nécessite de réorganiser le parcours de la commande, transmettre le contexte à [Order Workflow Sentry](glossary:TER127), qui peut solliciter [Order Workflow Planning](glossary:TER128). Une adaptation locale autorisée ne nécessite pas systématiquement cette réorganisation.
   - id: D05.i
     fields:
       name: Inventory Disposition Decision
@@ -2116,7 +2121,7 @@ publication_delivery:
 
         [Inspection Order](model:service-order-inspection) porte une inspection confiée ; [Scrapping Order](model:service-order-scrapping), les prestations de rebut ; les [Orders](glossary:TER012) de réparation ou de retour fournisseur portent leurs engagements propres. [Process Orchestration](model:D06.d) coordonne les prestations et reçoit leurs résultats via Operations Tracking. La décision peut être exécutée ailleurs ; la capacité ne prescrit ni organisation ni logiciel interne.
 
-        L’autorisation commerciale du retour, le remboursement, le remplacement client et l’avoir fournisseur restent distincts. Stock Redistribution conserve les déplacements entre sites ; le [Availability](glossary:TER112) traite l’impact sur les ressources partagées. Une décision locale ne doit pas masquer un effet sur les affectations ou promesses : solliciter les capacités responsables. Ce n’est pas une seconde planification générale des usages du stock.
+        L’autorisation commerciale du retour, le remboursement, le remplacement client et l’avoir fournisseur restent distincts. Stock Redistribution conserve les déplacements entre sites ; [Availability](glossary:TER112) traite l’impact sur les ressources partagées. Une décision locale ne doit pas masquer un effet sur les affectations ou promesses : solliciter les capacités responsables. Ce n’est pas une seconde planification générale des usages du stock.
 
         Exemple fictif : cent vestes ont subi un dégât dans l’entrepôt. L’inspection justifie quatre-vingts remises à disposition et vingt maintenues bloquées. Pour ces vingt, la décision examine une remise en état ou un rebut selon les politiques et la valeur récupérable. Les prestations sont ensuite confiées et leurs résultats reconnus séparément.
   - id: BHV048
@@ -2264,13 +2269,15 @@ publication_delivery:
 
         La décision intervient aussi en fonctionnement normal. [Process Adaptation Decision](model:D06.f) traite les aléas remettant le plan d’exécution en cause ; la libération peut ensuite être réévaluée. Les fenêtres, délais maximaux, seuils et exceptions sont des règles ; ne pas créer une capacité par paramètre.
 
-        Respecter la promesse portée par [Order Management](model:D04) et les affectations du [Availability](glossary:TER112). Si la rétention compromet ces engagements, transmettre les impacts à leurs responsables ; ne pas modifier silencieusement dates, quantités ou affectations. Les ordres attendus et capacités communiquées sont des informations datées, sans certitude d’arrivée inventée.
+        Respecter la promesse portée par [Order Management](model:D04) et les affectations d’[Availability](glossary:TER112). Si la rétention compromet ces engagements, transmettre les impacts à leurs responsables ; ne pas modifier silencieusement dates, quantités ou affectations. Les ordres attendus et capacités communiquées sont des informations datées, sans certitude d’arrivée inventée.
 
         Libérer ensemble ne garantit pas préparer ensemble ni obtenir une seule palette. Les [Picking Order](model:service-order-picking) et [Packing Order](model:service-order-packing) portent les exigences de traitement commun ; les exécutants conservent vagues, parcours, tâches et palettisation détaillée.
 
         Exemple fictif : une commande B2B de 300 pièces devient éligible en trois ensembles. Retenir les premiers pour une libération commune compatible avec la promesse, puis demander un packing commun. Le nombre réel de palettes dépend des biens, des exigences et des capacités physiques.
 
         [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
+
+        Décider du moment et du regroupement des prestations dans l’autorisation reçue d’[Order Workflow Orchestration](glossary:TER129). Cette décision ne remplace pas l’autorisation de poursuivre le parcours de la commande. Si une confirmation client reste requise, l’éligibilité logistique ne permet pas à elle seule de la contourner.
   - id: transport-plan-decision
     fields:
       name: Transport Plan Decision
@@ -2279,16 +2286,12 @@ publication_delivery:
       scope: |-
         Construire le [plan de transport](glossary:TER103) pour organiser les transports confiés en un ensemble réalisable : [Load Consolidation](model:transport-load-consolidation) constitue les chargements ; [Routing & Scheduling](model:transport-routing-scheduling) en détermine les trajets et échéances. Les deux stratégies peuvent s’articuler et être réexaminées sans séquence universelle imposée. Le plan rend explicites les capacités, compatibilités, créneaux et conditions restant à confirmer.
 
-        Préserver les promesses portées par les [Orders](glossary:TER012) et les affectations du [Availability](glossary:TER112). Si aucune solution locale ne les respecte, faire examiner l’adaptation par les capacités responsables ; ne pas réaffecter implicitement la supply ni reconfirmer une commande. Ce plan de transport n’est ni le [Matching Master Plan](glossary:TER100) ni un [Supply Plan](glossary:TER098) prévisionnel externe.
+        Préserver les promesses portées par les [Orders](glossary:TER012) et les affectations d’[Availability](glossary:TER112). Si aucune solution locale ne les respecte, faire examiner l’adaptation par les capacités responsables ; ne pas réaffecter implicitement la supply ni reconfirmer une commande. Ce plan de transport n’est ni le [Matching Master Plan](glossary:TER100) ni un [Supply Plan](glossary:TER098) prévisionnel externe.
 
         [Service Selection Decision](model:D06.e) choisit les prestations et prestataires admissibles en articulation avec le plan. [Transport Order](model:service-order-transport) porte les instructions et engagements de transport ; [Transport Booking Order](model:service-order-transport-booking) porte les réservations de transport confiées. [Service Order Release Decision](model:service-order-release-decision) décide quand libérer les ordres : une rétention d’ordres ne constitue pas à elle seule un plan de chargement ou de route.
 
         L’exécutant réalise les opérations et ses tâches internes. La capacité ne prescrit ni placement physique en trois dimensions, ni conduite, ni optimisation des tournées internes du transporteur qui ne sont pas confiées à l’orchestration. Exemple fictif : répartir les palettes destinées à six magasins entre deux chargements, puis retenir les arrêts et horaires compatibles avec leurs réceptions.
       nature: decision
-      category:
-        id: define-select
-        display_name: Définir et choisir les prestations
-        order: 10
     parent_id: D06
   - id: transport-load-consolidation
     fields:
@@ -2324,10 +2327,6 @@ publication_delivery:
 
         Exemple fictif : vingt vestes sont autorisées au rebut. Le prestataire prouve le traitement de dix-huit ; deux restent en attente. L’[Order](glossary:TER012) conserve ce solde tant qu’une autre clôture n’est pas autorisée. Aucun comportement supplémentaire n’est créé pour chaque motif de rebut.
       nature: action
-      category:
-        id: warehouse
-        display_name: Prestations d’entrepôt
-        order: 10
     parent_id: subdomain-service-orders
   editorial_superseded_checks_U797:
   - id: D01.f
@@ -2525,6 +2524,15 @@ publication_delivery:
 
       Exemple fictif : vingt vestes sont autorisées au rebut. Le prestataire prouve le traitement de dix-huit ; deux restent en attente. L’Order conserve ce solde tant qu’une autre clôture n’est pas autorisée. Aucun comportement supplémentaire n’est créé pour chaque motif de rebut.
     reason: Reprise éditoriale U797 ; ne vaut pas approbation de la nouvelle rédaction.
+  editorial_alignment_U853:
+    fields:
+    - D06.scope
+    - D06.f.scope
+    - D05.i.scope
+    - service-order-release-decision.scope
+    - transport-plan-decision.scope
+    scope: Finalités et exemples de Business Areas, corrections de noms et de grammaire ; aucune modification de parent ni
+      extension des accords historiques.
 delivery_updates:
 - source_refs:
   - U835
@@ -2553,3 +2561,16 @@ delivery_updates:
   - target: transport-plan-decision
     change: Alignement du contrôle sur le lot U835
     previous_check_sha256: 48077b8056abc11929bb496afb2578e90865bc88759ce779359fc396825ed2f9
+- source_ref: U843
+  fields:
+  - D06.scope
+  - D06.f.scope
+  - service-order-release-decision.scope
+  history_commit: 852f73ca4bb8c9f78a2c6caa3ad274f998305308
+  reason: Aligner le contrôle de livraison sur les frontières révisées et les contributions réactives ; aucun accord antérieur
+    étendu.
+- source_ref: U848
+  fields:
+  - transport-plan-decision.category
+  - service-order-scrapping.category
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

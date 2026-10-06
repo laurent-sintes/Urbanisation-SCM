@@ -362,3 +362,7 @@ python scripts/benchmark_atlas_export.py --runs 2
 Les données et mesures vont dans un répertoire unique sous `.runtime/atlas-benchmarks/`. `--profile` ajoute un profil Python, avec son coût de mesure ; `--compare CHEMIN` impose une égalité octet par octet avec un export de référence. Comparer les mêmes options et distinguer un premier passage sans cache de parsing d’un passage avec cache déjà chargé.
 
 L’export vérifie une fois l’inventaire des descripteurs, puis chaque modèle et chaque guide. Il contrôle de nouveau les empreintes des descripteurs avant activation. Il conserve tous les historiques, les contrôles de contenu et l’activation atomique ; il ne réutilise pas un ancien succès de validation. Le workflow exécute les contrats Python et les contrôles du lecteur dans des jobs parallèles ; le déploiement dépend de leur réussite ainsi que du contrôle du lanceur Windows.
+
+## Business Areas — U848
+
+Les publications portant `PRINCIPLE-BUSINESS-AREA` exposent les nœuds `business_area` (code BA). Leur profondeur est facultative : les sous-domaines peuvent présenter des Business Areas et des capacités directes. Arbre, cartes, fiches, recherche, scénarios et relations utilisent les liens explicites du snapshot. Les liens `documents-reference` relient une capacité à son référentiel documentaire sans créer de parent ; les anciennes publications restent lisibles avec leurs catégories.

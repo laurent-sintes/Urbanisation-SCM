@@ -16,7 +16,7 @@ compilé, sur une fixture isolée, et produit un aperçu HTML et les SVG sous
 
 `backlog/atlas-transformation-methodology.yaml` est la seule source de travail du guide. Les noms, libellés, définitions et descriptions courtes des notions sont référencés par identifiant dans `backlog/modeling-glossary.yaml`, via `glossary.canonical_source` et `canonical_fields`. Les notes pédagogiques propres au guide restent dans le guide. Un champ référencé ne peut pas être redéfini localement.
 
-`scripts.guide_candidate.load_draft(root, source)` assemble le candidat pour les aperçus et contrôles. La préparation avec `--guide` matérialise un guide complet et fige les empreintes des deux sources ; leur modification bloque l’activation. Atlas lit uniquement les éditions publiées, autonomes et immuables. Ne pas lire le brouillon brut comme une édition publiable.
+`scripts.guide_candidate.load_draft(root, source)` assemble le candidat pour les aperçus et contrôles. La préparation avec `--guide` matérialise un guide complet et fige les empreintes du brouillon, du glossaire canonique et, lorsque le guide déclare `model_examples`, du modèle dont ces exemples vérifient les noms, types et parents ; leur modification bloque l’activation. Atlas lit uniquement les éditions publiées, autonomes et immuables. Ne pas lire le brouillon brut comme une édition publiable.
 
 Les six anciennes copies de travail identiques à une édition publiée ont quitté le backlog. Tests et références actives utilisent `modeling-guides/versions/` ; les anciens chemins restent récupérables au commit exact dans `git-history.json`. Les documents historiques ne deviennent pas des sources courantes. Les vues Markdown du modèle sont désormais [générées localement](../restitutions/README.md), sans double maintenance dans Git.
 
@@ -292,7 +292,7 @@ Atlas indexe les champs métier et le glossaire du snapshot sélectionné, avec 
 
 ## Pluralité des sources marché — U470/U471
 
-Le champ racine optionnel `market_reference_policy: two_primary_sources` exige au moins deux documents distincts pour chaque nœud non illustratif, relation ou terme comportant des comparaisons. `validate_models.py` et la préparation de publication l’appliquent ; les URL ne deviennent pas distinctes par changement d’ancre ou ajout de paramètres. Les fiches sans comparaison ne reçoivent aucun appui fictif. La qualité primaire et la pertinence sont contrôlées éditorialement. La politique participe à l’empreinte du modèle et laisse les snapshots historiques sans marqueur inchangés.
+Le contrat historique `market_reference_policy: two_primary_sources` exige au moins deux documents distincts pour chaque nœud non illustratif, relation ou terme comportant des comparaisons. `validate_models.py` et la préparation de publication l’appliquent ; les URL ne deviennent pas distinctes par changement d’ancre ou ajout de paramètres. Les fiches sans comparaison ne reçoivent aucun appui fictif. La qualité primaire et la pertinence sont contrôlées éditorialement. La politique participe à l’empreinte du modèle et laisse les snapshots historiques sans marqueur inchangés.
 
 U470 masque temporairement le catalogue Informations métier dans Atlas sans supprimer ses données du modèle. Aucune extension n’est engagée pendant cette consolidation.
 
@@ -323,3 +323,7 @@ Un accord valide la proposition complète construite dans la discussion, avec se
 
 
 Les nouveaux descripteurs utilisent désormais `urbanisation-vNNN-YYYY-MM-DD.N.yaml` : la version de publication rend le nom unique même si deux publications ont la même révision et le même instant. L’horodatage UTC reste porté par `published_at`. Les descripteurs historiques et leurs noms restent inchangés.
+
+### Contrôle des appuis marché courants — U853
+
+Le contrat `microsoft_sap_or_gap_v1` contrôle les familles Microsoft Dynamics et SAP S/4HANA sur les domaines documentaires primaires. Toute famille manquante exige `market_gaps` : motif précis, URL examinées et sources de provenance. Atlas affiche ces limites dans les comparaisons. La présence d’une lacune autorise une publication transparente ; elle ne certifie pas la couverture du marché. Les rapprochements partiels conservent leurs différences et limites. Le contrôle ne peut pas établir automatiquement la pertinence métier d’un document. Les publications historiques gardent leur contrat et leur contenu.

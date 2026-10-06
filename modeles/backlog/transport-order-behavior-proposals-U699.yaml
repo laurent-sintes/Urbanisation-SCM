@@ -316,5 +316,10 @@ publication_delivery:
   - id: service-order-transport-booking
     fields:
       name: Transport Booking Order
-    parent: subdomain-service-orders
+    parent: ba-transport-order-management
   absent_nodes: []
+delivery_updates:
+- source_ref: U848
+  fields:
+  - service-order-transport-booking.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

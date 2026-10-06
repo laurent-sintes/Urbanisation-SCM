@@ -1,7 +1,7 @@
 """Optional illustrative scenarios, resolved exclusively inside one model snapshot."""
 from copy import deepcopy
 
-LEVELS = {'domain', 'area', 'capability'}
+LEVELS = {'domain', 'area', 'business_area', 'capability'}
 
 
 def validate_scenarios(nodes):

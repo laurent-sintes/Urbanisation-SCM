@@ -99,19 +99,19 @@ publication_delivery:
     kind: capability
     fields:
       name: Accounting Data Provision
-    parent: subdomain-integration
+    parent: ba-outbound-information-provision
     parent_type: contains
   - id: planning-data-provision
     kind: capability
     fields:
       name: Planning Data Provision
-    parent: subdomain-integration
+    parent: ba-outbound-information-provision
     parent_type: contains
   - id: product-feedback
     kind: capability
     fields:
       name: Product Feedback
-    parent: subdomain-integration
+    parent: ba-outbound-information-provision
     parent_type: contains
   - id: domain-finance
     kind: domain
@@ -132,20 +132,25 @@ publication_delivery:
     parent: subdomain-financial-accounting
     parent_type: contains
   - id: master-data-ingestion
-    fields:
-      category:
-        id: inbound
-        display_name: Inbound
-        order: 10
-    parent: subdomain-integration
+    fields: {}
+    parent: ba-inbound-information-integration
   - id: plans-ingestion
-    fields:
-      category:
-        id: inbound
-        display_name: Inbound
-        order: 10
-    parent: subdomain-integration
+    fields: {}
+    parent: ba-inbound-information-integration
   - id: D01.f
-    parent: D01
+    parent: ba-inventory-position-management
   - id: D07.d
-    parent: D06
+    parent: ba-execution-assurance
+delivery_updates:
+- source_ref: U848
+  fields:
+  - accounting-data-provision.parent
+  - planning-data-provision.parent
+  - product-feedback.parent
+  - master-data-ingestion.category
+  - master-data-ingestion.parent
+  - plans-ingestion.category
+  - plans-ingestion.parent
+  - D01.f.parent
+  - D07.d.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

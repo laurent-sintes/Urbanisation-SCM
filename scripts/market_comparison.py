@@ -2,6 +2,7 @@
 from datetime import date
 from functools import lru_cache
 import json
+import re
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -46,6 +47,8 @@ def document_key(url):
 
 def validate_reference_policy(model):
     # Historical snapshots keep their original contract. New candidates opt in.
+    if model.get('market_reference_policy') == 'microsoft_sap_or_gap_v1':
+        return validate_vendor_policy(model)
     if model.get('market_reference_policy') != 'two_primary_sources':
         return []
     records = [(item['id'], item.get('fields', {}).get('market_comparisons', []))
@@ -58,4 +61,51 @@ def validate_reference_policy(model):
         if entries and len({document_key(e.get('source_url', '')) for e in entries
                             if isinstance(e, dict) and e.get('source_url')}) < 2:
             errors.append(label + '/market_comparisons: at least two distinct primary source documents required')
+    return errors
+
+
+REFERENCE_FAMILIES = ('microsoft_dynamics', 'sap_s4hana')
+
+
+def reference_family(entry):
+    """Recognize product evidence, not its semantic adequacy (an authored comparison)."""
+    url = urlsplit(entry.get('source_url', ''))
+    vendor = entry.get('vendor', '').lower()
+    if url.scheme != 'https':
+        return None
+    if vendor == 'microsoft' and url.hostname == 'learn.microsoft.com' and '/dynamics365/' in url.path:
+        return 'microsoft_dynamics'
+    if vendor == 'sap' and url.hostname in ('help.sap.com', 'learning.sap.com', 'www.sap.com'):
+        if re.search(r's[ /_-]?4[ /_-]?hana', entry.get('product', '') + ' ' + url.path, re.I):
+            return 'sap_s4hana'
+    return None
+
+
+def validate_vendor_policy(model):
+    records = [(n['id'], n.get('fields', {})) for n in model.get('nodes', [])
+               if n.get('review', {}).get('state') != 'illustration']
+    records += [(r['id'], r.get('fields', {})) for r in model.get('relations', [])
+                if r.get('fields', {}).get('market_comparisons')]
+    records += [('glossary/' + t['id'], t) for t in model.get('glossary', {}).get('terms', [])
+                if t.get('market_comparisons') or t.get('market_gaps')]
+    errors = []
+    for label, fields in records:
+        entries = fields.get('market_comparisons', [])
+        families = {reference_family(e) for e in entries if isinstance(e, dict)}
+        gaps = fields.get('market_gaps', [])
+        if not isinstance(gaps, list):
+            errors.append(label + ': market_gaps must be a list')
+            continue
+        declared = set()
+        for gap in gaps:
+            family = gap.get('family') if isinstance(gap, dict) else None
+            if family not in REFERENCE_FAMILIES or family in declared or family in families:
+                errors.append(label + ': unknown, duplicate or obsolete market gap')
+            if isinstance(family, str):
+                declared.add(family)
+            if not isinstance(gap, dict) or not all(gap.get(k) for k in ('reason', 'investigated_urls', 'source_refs')):
+                errors.append(label + ': market gap requires reason, investigated sources and provenance')
+        for family in REFERENCE_FAMILIES:
+            if family not in families and family not in declared:
+                errors.append(f'{label}: missing {family} primary product evidence or explicit market gap')
     return errors

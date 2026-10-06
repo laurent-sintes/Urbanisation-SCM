@@ -77,6 +77,7 @@ identification_rules:
   source_refs:
   - U782
   - U783
+  - U848
   persistent_identity: id immuable, sans réutilisation après retrait ; porte les relations, accords et liens historiques.
   prefixes:
     business_system: SYS
@@ -85,11 +86,12 @@ identification_rules:
     reference: REF
     capability: CAP
     behavior: BHV
+    business_area: BA
   format: PREFIX-NNN ; padding minimal de trois chiffres, sans limite à 999.
   scope: Séquence globale distincte par type, sur les éléments effectivement publiés ; catégories, rôles, termes, relations
     et illustrations hors de cette numérotation.
-  traversal: Parcours en profondeur préordre, racines dans l’ordre canonique. Enfants selon les relations explicites, regroupements
-    de catégories puis types de capacités existants ; Déclenchement avant Activité pour les comportements.
+  traversal: Parcours en profondeur préordre sur les relations explicites ; types de capacités puis Déclenchement avant Activité.
+    Les catégories restent interprétées uniquement pour les publications historiques.
   freeze: display_index généré dans le snapshot à la préparation ; codes, racines et listes d’enfants figés. Aucun calcul
     dépendant de la largeur, des filtres, du repli ou de la recherche.
   evolution: Insertion ou déplacement peut décaler les codes dans une nouvelle publication ; les anciennes conservent leurs
@@ -502,10 +504,10 @@ terms:
 - id: MOD008
   name: Domain
   label_fr: Domaine
-  definition: Grand périmètre cohérent de responsabilités métier au sein d’un Business System. Il peut être détaillé en Subdomains
-    puis en capacités et comportements selon la profondeur utile à FLOW.
+  definition: Grand périmètre cohérent de responsabilités métier au sein d’un Business System. Il peut être détaillé en Subdomains,
+    éventuellement Business Areas, puis en capacités et comportements selon la profondeur utile à FLOW.
   role: Délimiter une responsabilité métier et ses coopérations. Sales, Sourcing and Procurement, Supply Chain Orchestration
-    et Logistics Execution appartiennent à Business Operations.
+    et Logistics appartiennent à Business Operations.
   source_refs:
   - U141
   - U446
@@ -516,6 +518,8 @@ terms:
   - U646
   - U650
   - U780
+  - U848
+  - U853
   review:
     state: partial
     adopted_scope: 'U482 : nom Domain et position au-dessus des Areas.'
@@ -529,14 +533,14 @@ terms:
 - id: MOD013
   name: Subdomain
   label_fr: Sous-domaine
-  definition: Périmètre cohérent de responsabilités métier au sein d’un Domain, regroupant les capacités qui les portent.
+  definition: Périmètre cohérent de responsabilités métier au sein d’un Domain, détaillé en Business Areas lorsque cela est
+    utile et en capacités.
   role: Organiser le modèle entre Domain et Capability, sans représenter une application ni une équipe.
   notes:
-  - 'U673 : Subdomain remplace Purpose dans le backlog ; les publications historiques conservent Area ou Purpose selon leur
-    version.'
-  - Un seul sous-domaine de rattachement par capacité ; ses coopérations avec les autres ne créent pas de second parent.
-  - Les sept référentiels organisent les sujets de Master Data sans niveau descriptif supplémentaire.
-  - Le découpage métier ne prescrit pas un bounded context logiciel ni une architecture de services.
+  - Une capacité possède un seul sous-domaine de rattachement, directement ou via une Business Area.
+  - Les référentiels d’Operational References restent des objets documentaires, liés aux capacités sans former un niveau de
+    responsabilité.
+  - La structure métier ne prescrit ni équipe, ni application, ni découpage logiciel.
   source_refs:
   - U481
   - U482
@@ -554,6 +558,8 @@ terms:
   - U626
   - U655
   - U673
+  - U848
+  - U853
   review:
     state: partial
     adopted_scope: Nom et niveau Subdomain demandés U655 et mis en œuvre U673.
@@ -562,7 +568,8 @@ terms:
     comparison_ref: CMP269
     common: Le découpage distingue des périmètres métier cohérents.
     difference: Un sous-domaine métier ne constitue pas automatiquement un bounded context logiciel.
-    flow_position: Huit sous-domaines Supply convenus ; pas de taxonomie universelle revendiquée.
+    flow_position: Neuf sous-domaines décrivent Supply Chain Orchestration dans le modèle courant ; ce découpage propre à
+      FLOW ne prétend pas être une taxonomie universelle.
     sources:
     - ref: ELM635
       url: https://learn.microsoft.com/en-us/azure/architecture/microservices/model/domain-analysis
@@ -1178,7 +1185,8 @@ terms:
     et hypothèses, en explicitant résultats, conditions et incertitudes, sans sélectionner une réponse ni engager sa réalisation.
   role: Distinguer une évaluation métier autonome, réutilisable par plusieurs décisions, de la sélection d’une réponse.
   notes:
-  - ATP, CTP et PTP sont de type Evaluation ; Promise Selection Decision choisit une proposition.
+  - '[ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068) sont des capacités de décision : elles déterminent
+    une proposition et conservent leurs évaluations internes. La confirmation de l’engagement appartient à [Order Management](model:D04).'
   - 'Une décision conserve ses calculs internes : aucune capacité créée pour chaque formule.'
   - Knowledge établit et expose la connaissance de la situation ; Evaluation apprécie des possibilités dans un contexte.
   - Convention FLOW ; le marché peut réunir évaluation et sélection dans une même fonction.
@@ -1188,6 +1196,7 @@ terms:
   - U767
   - ELM762
   - ELM763
+  - U853
   market_comparisons:
   - vendor: Oracle
     product: Global Order Promising
@@ -1658,6 +1667,25 @@ terms:
   review:
     state: proposed
     note: Rédaction de mise en œuvre de la refonte ; aucune validation individuelle déduite.
+- id: MOD039
+  name: Business Area
+  label_fr: Périmètre de responsabilité métier
+  definition: Partie cohérente de la responsabilité d’un sous-domaine, définie par sa finalité, ses résultats attendus et
+    ses frontières, et portée par des capacités.
+  short_description: Périmètre de responsabilité au sein d’un sous-domaine, porté par une ou plusieurs capacités.
+  role: Préciser une finalité et des frontières métier avant de détailler les savoir-faire.
+  notes:
+  - Niveau facultatif. Une seule capacité est admissible si le périmètre apporte un sens distinct ; aucun regroupement forcé.
+  - Ne désigne automatiquement ni une équipe, ni un produit, ni une application.
+  - Chaque capacité reste directement rattachée à un sous-domaine ou à une Business Area de ce sous-domaine.
+  source_refs:
+  - U845
+  - U846
+  - U847
+  - U848
+  review:
+    state: proposed
+    note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
 methodology_agreements:
 - id: AGREEMENT-U787
   source_refs:
@@ -1822,6 +1850,7 @@ presentation:
     - MOD022
     - MOD008
     - MOD013
+    - MOD039
     - MOD015
     - MOD006
     - MOD009

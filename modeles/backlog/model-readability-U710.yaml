@@ -174,29 +174,13 @@ publication_delivery:
         id: data-state
         display_name: Données et état
   - id: D06.b
-    fields:
-      category:
-        id: define-select
-        display_name: Définir et choisir les prestations
-        order: 10
+    fields: {}
   - id: D07.a
-    fields:
-      category:
-        id: define-select
-        display_name: Définir et choisir les prestations
-        order: 10
+    fields: {}
   - id: D07.c
-    fields:
-      category:
-        id: track-reconcile
-        display_name: Suivre et rapprocher
-        order: 30
+    fields: {}
   - id: D07.d
-    fields:
-      category:
-        id: integration
-        display_name: Intégration
-        order: 10
+    fields: {}
   - id: D04
     fields:
       dominant_role:
@@ -218,29 +202,13 @@ publication_delivery:
         id: decision-planning
         display_name: Décision et planification
   - id: D06.d
-    fields:
-      category:
-        id: coordinate-adapt
-        display_name: Coordonner et adapter
-        order: 20
+    fields: {}
   - id: D06.e
-    fields:
-      category:
-        id: define-select
-        display_name: Définir et choisir les prestations
-        order: 10
+    fields: {}
   - id: D06.f
-    fields:
-      category:
-        id: coordinate-adapt
-        display_name: Coordonner et adapter
-        order: 20
+    fields: {}
   - id: D05.i
-    fields:
-      category:
-        id: coordinate-adapt
-        display_name: Coordonner et adapter
-        order: 20
+    fields: {}
   - id: subdomain-policies
     fields:
       dominant_role:
@@ -258,172 +226,76 @@ publication_delivery:
         display_name: Gestion des engagements
   - id: D02.b
     parent: subdomain-policies
-    fields:
-      category:
-        id: operating-policies
-        display_name: Operating Policies
-        order: 10
+    fields: {}
   - id: D04.i
-    parent: D04
-    fields:
-      category:
-        id: incoming-orders
-        display_name: Incoming Orders
-        order: 10
+    parent: ba-order-lifecycle-management
+    fields: {}
   - id: D04.j
-    parent: D04
-    fields:
-      category:
-        id: incoming-orders
-        display_name: Incoming Orders
-        order: 10
+    parent: ba-order-lifecycle-management
+    fields: {}
   - id: D04.k
-    parent: D04
-    fields:
-      category:
-        id: incoming-orders
-        display_name: Incoming Orders
-        order: 10
+    parent: ba-order-lifecycle-management
+    fields: {}
   - id: D04.l
-    parent: D04
-    fields:
-      category:
-        id: incoming-orders
-        display_name: Incoming Orders
-        order: 10
+    parent: ba-order-lifecycle-management
+    fields: {}
   - id: D04.m
-    parent: D04
-    fields:
-      category:
-        id: incoming-orders
-        display_name: Incoming Orders
-        order: 10
+    parent: ba-order-lifecycle-management
+    fields: {}
   - id: D04.n
-    parent: D04
-    fields:
-      category:
-        id: order-support
-        display_name: Order Support
-        order: 20
+    parent: ba-order-lifecycle-management
+    fields: {}
   - id: D04.r
-    parent: D04
-    fields:
-      category:
-        id: incoming-orders
-        display_name: Incoming Orders
-        order: 10
+    parent: ba-order-lifecycle-management
+    fields: {}
   - id: D08.e
-    parent: D08
-    fields:
-      category:
-        id: reference-visibility
-        display_name: Reference Visibility
-        order: 20
+    parent: business-references
+    fields: {}
   - id: D09.e
-    parent: D09
-    fields:
-      category:
-        id: reference-visibility
-        display_name: Reference Visibility
-        order: 20
+    parent: business-references
+    fields: {}
   - id: D11.b
-    parent: D11
-    fields:
-      category:
-        id: reference-visibility
-        display_name: Reference Visibility
-        order: 20
+    parent: business-references
+    fields: {}
   - id: D12.b
-    parent: D12
-    fields:
-      category:
-        id: reference-visibility
-        display_name: Reference Visibility
-        order: 20
+    parent: business-references
+    fields: {}
   - id: D13.b
-    parent: D13
-    fields:
-      category:
-        id: reference-visibility
-        display_name: Reference Visibility
-        order: 20
+    parent: business-references
+    fields: {}
   - id: D14.b
-    parent: D14
-    fields:
-      category:
-        id: reference-visibility
-        display_name: Reference Visibility
-        order: 20
+    parent: business-references
+    fields: {}
   - id: D16.b
-    parent: D16
-    fields:
-      category:
-        id: reference-visibility
-        display_name: Reference Visibility
-        order: 20
+    parent: business-references
+    fields: {}
   - id: D19.a
     parent: subdomain-policies
-    fields:
-      category:
-        id: operating-policies
-        display_name: Operating Policies
-        order: 10
+    fields: {}
   - id: D19.b
     parent: subdomain-policies
-    fields:
-      category:
-        id: operating-policies
-        display_name: Operating Policies
-        order: 10
+    fields: {}
   - id: D04.t
-    parent: D04
-    fields:
-      category:
-        id: incoming-orders
-        display_name: Incoming Orders
-        order: 10
+    parent: ba-order-lifecycle-management
+    fields: {}
   - id: plans-ingestion
-    parent: subdomain-integration
-    fields:
-      category:
-        id: inbound
-        display_name: Inbound
-        order: 10
+    parent: ba-inbound-information-integration
+    fields: {}
   - id: plans-visibility
     parent: subdomain-plans
-    fields:
-      category:
-        id: plan-visibility
-        display_name: Plan Visibility
-        order: 20
+    fields: {}
   - id: demand-plan-visibility
     parent: subdomain-plans
-    fields:
-      category:
-        id: plan-visibility
-        display_name: Plan Visibility
-        order: 20
+    fields: {}
   - id: master-data-ingestion
-    parent: subdomain-integration
-    fields:
-      category:
-        id: inbound
-        display_name: Inbound
-        order: 10
+    parent: ba-inbound-information-integration
+    fields: {}
   - id: price-book-visibility
-    parent: price-book
-    fields:
-      category:
-        id: reference-visibility
-        display_name: Reference Visibility
-        order: 20
+    parent: business-references
+    fields: {}
   - id: order-visibility
-    parent: D04
-    fields:
-      category:
-        id: order-support
-        display_name: Order Support
-        order: 20
+    parent: ba-order-lifecycle-management
+    fields: {}
   absent_nodes:
   - D07.b
   - vas-repacking
@@ -764,3 +636,58 @@ business_scenarios_U763:
           scenario_id: b2b-partial-stock
           contribution: Comparer les effets économiques locaux de la livraison fractionnée et de la livraison regroupée. Ne
             pas décider à la place de Promise Selection Decision.
+delivery_updates:
+- source_ref: U848
+  fields:
+  - D06.b.category
+  - D07.a.category
+  - D07.c.category
+  - D07.d.category
+  - D06.d.category
+  - D06.e.category
+  - D06.f.category
+  - D05.i.category
+  - D02.b.category
+  - D04.i.category
+  - D04.i.parent
+  - D04.j.category
+  - D04.j.parent
+  - D04.k.category
+  - D04.k.parent
+  - D04.l.category
+  - D04.l.parent
+  - D04.m.category
+  - D04.m.parent
+  - D04.n.category
+  - D04.n.parent
+  - D04.r.category
+  - D04.r.parent
+  - D08.e.category
+  - D08.e.parent
+  - D09.e.category
+  - D09.e.parent
+  - D11.b.category
+  - D11.b.parent
+  - D12.b.category
+  - D12.b.parent
+  - D13.b.category
+  - D13.b.parent
+  - D14.b.category
+  - D14.b.parent
+  - D16.b.category
+  - D16.b.parent
+  - D19.a.category
+  - D19.b.category
+  - D04.t.category
+  - D04.t.parent
+  - plans-ingestion.category
+  - plans-ingestion.parent
+  - plans-visibility.category
+  - demand-plan-visibility.category
+  - master-data-ingestion.category
+  - master-data-ingestion.parent
+  - price-book-visibility.category
+  - price-book-visibility.parent
+  - order-visibility.category
+  - order-visibility.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

@@ -5,7 +5,8 @@ import { NodeIcon } from './icons';
 import { startsCapabilityTypeSection } from './capabilityTypes';
 import { categoryCaption, categoryOf, startsCategorySection } from './categories';
 import { roleOf } from './subdomainRoles';
-import { ReferenceLink } from './components/ModelLinks';
+import { businessAreaSections } from './mapSections';
+import { ReferenceLink, ModelText } from './components/ModelLinks';
 import { childrenOf, rootsOf, hasCapabilityCards, cardChildListOf, type CardChildList } from './model';
 import { kindLabel, modelingDepthLabel, shortText } from './presentation';
 import type { AtlasNode, PublishedModel } from './types';
@@ -14,7 +15,7 @@ import '@xyflow/react/dist/style.css';
 type Card = Node<{ item: AtlasNode; count: number; childList?: CardChildList; onHeight: (id: string, height: number) => void; onExplore: (id: string) => void; onRead: (id: string) => void; highlighted: boolean; muted: boolean }, 'business'>;
 type Container = Node<{ item: AtlasNode }, 'container'>;
 function OverviewName({ item }: { item: AtlasNode }) {
-  if (item.kind !== 'business_system' && item.kind !== 'domain' && item.kind !== 'area' && item.groupRole !== 'urbanism_level') return <>{item.name}</>;
+  if (item.kind !== 'business_system' && item.kind !== 'domain' && item.kind !== 'area' && item.kind !== 'business_area' && item.groupRole !== 'urbanism_level') return <>{item.name}</>;
   return <span className="nodrag nopan" onClick={event => event.stopPropagation()} onDoubleClick={event => event.stopPropagation()} onKeyDown={event => { if (['Enter', ' '].includes(event.key)) event.stopPropagation(); }}><ReferenceLink target={item.id} fullDefinition className="overview-name-link">{item.name}</ReferenceLink></span>;
 }
 function BusinessCard({ data, selected }: NodeProps<Card>) {
@@ -22,7 +23,7 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
   const presentation = data.item.kind === 'group' && data.item.groupRole !== 'urbanism_level';
   const card = useRef<HTMLElement>(null);
   const expanded = data.childList !== undefined;
-  const listLabel = data.childList?.kind === 'domain' ? 'Domaines' : data.childList?.kind === 'mixed' ? 'Référentiels et capacités' : data.childList?.kind === 'reference' ? 'Référentiels' : data.childList?.kind === 'behavior' ? 'Comportements' : 'Capacités';
+  const listLabel = data.childList?.kind === 'domain' ? 'Domaines' : data.childList?.kind === 'mixed' ? 'Périmètres et capacités' : data.childList?.kind === 'reference' ? 'Référentiels' : data.childList?.kind === 'behavior' ? 'Comportements' : 'Capacités';
   useLayoutEffect(() => {
     if (!card.current) return;
     // Measure unscaled content, including wrapped names, instead of clipping a growing list.
@@ -41,7 +42,7 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
     {data.childList && <div className="card-child-list nodrag nopan nowheel" onClick={event => event.stopPropagation()} onDoubleClick={event => event.stopPropagation()} onKeyDown={event => { if (['Enter', ' '].includes(event.key)) event.stopPropagation(); }}>
       <div className="child-list-heading">{listLabel} <span>{data.childList.items.length}</span></div>
       {data.childList.items.length ? <ul aria-label={`${listLabel} de ${data.item.name}`}>
-        {data.childList.items.map((child, index) => <li key={child.id} className={startsCapabilityTypeSection(data.childList!.items, index) ? 'capability-type-section-start' : undefined}>{data.item.kind === 'area' && startsCategorySection(data.childList!.items, index) && <div className="category-list-banner">{categoryCaption(child)}</div>}<ReferenceLink target={child.id} showBehaviors={child.kind === 'capability'} className={`card-child-link ${child.kind === 'reference' ? 'reference-link' : child.kind === 'behavior' ? 'behavior-link' : 'capacity-link'}`}><NodeIcon node={child} size={16}/><span>{child.displayCode && <small className="reading-code">{child.displayCode} · </small>}{child.name}</span><ArrowUpRight size={12} className="child-arrow"/></ReferenceLink>{data.childList?.kind === 'domain' && <span className="domain-card-summary">{shortText(child.purpose || child.definition, 120)}{child.fields.modeling_depth === 'behaviors' && <strong> · Capacités et comportements</strong>}</span>}</li>)}
+        {data.childList.items.map((child, index) => child.kind === 'business_area' && data.childList?.businessAreaChildren ? <li key={child.id} className="business-area-list-group"><div className="category-list-banner" data-business-area-summary={child.id}><ReferenceLink target={child.id} fullDefinition>{child.displayCode} · {child.name}</ReferenceLink></div><ul>{data.childList.businessAreaChildren[child.id].map(capability => <li key={capability.id}><ReferenceLink target={capability.id} showBehaviors className="card-child-link capacity-link"><NodeIcon node={capability} size={16}/><span><small className="reading-code">{capability.displayCode} · </small>{capability.name}</span><ArrowUpRight size={12}/></ReferenceLink></li>)}</ul></li> : <li key={child.id} className={startsCapabilityTypeSection(data.childList!.items, index) ? 'capability-type-section-start' : undefined}>{data.item.kind === 'area' && startsCategorySection(data.childList!.items, index) && <div className="category-list-banner">{categoryCaption(child)}</div>}<ReferenceLink target={child.id} showBehaviors={child.kind === 'capability'} className={`card-child-link ${child.kind === 'reference' ? 'reference-link' : child.kind === 'behavior' ? 'behavior-link' : 'capacity-link'}`}><NodeIcon node={child} size={16}/><span>{child.displayCode && <small className="reading-code">{child.displayCode} · </small>}{child.name}</span><ArrowUpRight size={12} className="child-arrow"/></ReferenceLink>{data.childList?.kind === 'domain' && <span className="domain-card-summary">{shortText(child.purpose || child.definition, 120)}{child.fields.modeling_depth === 'behaviors' && <strong> · Capacités et comportements</strong>}</span>}</li>)}
       </ul> : <p>Aucune capacité publiée.</p>}
     </div>}
     <div className="card-bottom"><span>{data.count ? `${data.count} éléments` : kindLabel(data.item)}</span><button className="nodrag nopan" aria-label={`${data.count ? 'Explorer' : 'Lire'} ${data.item.name}`} onClick={e => { e.stopPropagation(); (data.count ? data.onExplore : data.onRead)(data.item.id); }}>{data.count ? 'Explorer' : 'Fiche'}<ArrowUpRight size={13}/></button></div>
@@ -52,8 +53,8 @@ function GroupCard({ data }: NodeProps<Container>) {
   return <div className={`map-container ${data.item.kind === 'group' && data.item.groupRole !== 'urbanism_level' ? 'presentation-container' : ''}`}><div className="container-label"><NodeIcon node={data.item} size={20}/><strong><OverviewName item={data.item}/></strong><span>{kindLabel(data.item)}</span>{role && <span className="subdomain-role" data-role={role.id}>{role.display_name}</span>}</div></div>;
 }
 function CapabilityTypeDivider() { return <div className="map-capability-type-divider" role="separator" aria-label="Changement de type de capacité"/>; }
-function CategoryBanner({ data }: NodeProps<Node<{ caption: string }, 'categoryBanner'>>) {
-  return <div className="category-banner" role="heading" aria-level={3}>{data.caption}</div>;
+function CategoryBanner({ data }: NodeProps<Node<{ caption: string; area?: AtlasNode }, 'categoryBanner'>>) {
+  return <div className="category-banner" role="heading" aria-level={3} data-business-area={data.area?.id}>{data.area ? <><span className="reading-code">{data.area.displayCode} · </span><ReferenceLink target={data.area.id} fullDefinition className="nodrag nopan">{data.caption}</ReferenceLink></> : data.caption}</div>;
 }
 const nodeTypes = { business: BusinessCard, container: GroupCard, capabilityTypeDivider: CapabilityTypeDivider, categoryBanner: CategoryBanner };
 
@@ -86,14 +87,15 @@ function Canvas(props: ReactFlowPaneProps) {
   const onHeight = useCallback((id: string, height: number) => {
     setCardHeights(previous => previous[id] === height ? previous : { ...previous, [id]: height });
   }, []);
+  const areaSections = useMemo(() => businessAreaSections(model, scopeId), [model, scopeId]);
   const graph = useMemo(() => {
     if (!scopeId) return { nodes: rootsOf(model), group: undefined };
     const scope = model.nodeById.get(scopeId);
     if (!scope) return { nodes: [], group: undefined };
-    const children = childrenOf(model, scopeId);
+    const children = areaSections ? areaSections.flatMap(section => section.items) : childrenOf(model, scopeId);
     // Cards only express explicit structure. A leaf never expands into business neighbours here.
     return children.length ? { nodes: [scope, ...children], group: scope } : { nodes: [scope], group: undefined };
-  }, [model, scopeId]);
+  }, [model, scopeId, areaSections]);
   useEffect(() => {
     let current = true;
     const start = performance.now();
@@ -109,15 +111,20 @@ function Canvas(props: ReactFlowPaneProps) {
     // A bounded grid keeps cards readable; it does not create model relationships.
     const columns = Math.min(items.length, capabilityOverview ? Math.max(1, Math.min(3, Math.floor((canvasWidth - 60 + 28) / 328))) : items.length > 4 ? 3 : 2) || 1;
     const categorized = group?.kind === 'area' && items.some(categoryOf);
-    const boundaries = [0, ...items.flatMap((_, index) => index > 0 && (categorized && startsCategorySection(items, index) || startsCapabilityTypeSection(items, index)) ? [index] : []), items.length];
+    const sectionByItem = new Map(areaSections?.flatMap(section => section.items.map(item => [item.id, section] as const)));
+    const startsArea = (index: number) => !!areaSections && (index === 0 || sectionByItem.get(items[index].id) !== sectionByItem.get(items[index - 1].id));
+    const boundaries = [0, ...items.flatMap((_, index) => index > 0 && (startsArea(index) || categorized && startsCategorySection(items, index) || startsCapabilityTypeSection(items, index)) ? [index] : []), items.length];
     const sections = boundaries.slice(0, -1).map((start, index) => inputs.slice(start, boundaries[index + 1]));
     const positioned: (typeof inputs[number] & { x: number; y: number })[] = [];
     let top = 16;
     const dividerPositions: number[] = [];
-    const banners: { caption: string; y: number }[] = [];
+    const banners: { caption: string; y: number; area?: AtlasNode }[] = [];
     sections.forEach((section, sectionIndex) => {
       const start = boundaries[sectionIndex];
-      if (categorized && startsCategorySection(items, start)) {
+      if (startsArea(start)) {
+        const area = sectionByItem.get(items[start].id)?.area;
+        banners.push({caption: area?.name || 'Rattachement direct au sous-domaine', area, y: top}); top += 64;
+      } else if (categorized && startsCategorySection(items, start)) {
         banners.push({ caption: categoryCaption(items[start]), y: top }); top += 52;
       } else if (sectionIndex) { dividerPositions.push(top - 7); top += 14; }
       for (let offset = 0; offset < section.length; offset += columns) {
@@ -134,10 +141,10 @@ function Canvas(props: ReactFlowPaneProps) {
       if (!current) return;
       const nodes: Node[] = [];
       if (group) nodes.push({ id: `group:${group.id}`, type: 'container', data: { item: group }, position: { x: 0, y: 0 }, width: (result.width || 380) + 28, height: (result.height || 250) + 70, style: { width: (result.width || 380) + 28, height: (result.height || 250) + 70 }, selectable: false, draggable: false, focusable: false });
-      banners.forEach((banner, index) => nodes.push({ id: `category-banner:${scopeId}:${index}`, type: 'categoryBanner', data: { caption: banner.caption },
+      banners.forEach((banner, index) => nodes.push({ id: `category-banner:${scopeId}:${index}`, type: 'categoryBanner', data: { caption: banner.caption, area: banner.area },
         position: { x: 16 + (group ? 14 : 0), y: banner.y + (group ? 54 : 0) },
         ...(group ? { parentId: `group:${group.id}`, extent: 'parent' as const } : {}),
-        width: result.width - 32, height: 40, style: { width: result.width - 32, height: 40 }, selectable: false, draggable: false, focusable: false }));
+        width: result.width - 32, height: areaSections ? 52 : 40, style: { width: result.width - 32, height: areaSections ? 52 : 40 }, selectable: false, draggable: false, focusable: false }));
       dividerPositions.forEach((dividerY, index) => nodes.push({ id: `capability-type-divider:${scopeId}:${index}`, type: 'capabilityTypeDivider', data: {},
         position: { x: 16 + (group ? 14 : 0), y: dividerY + (group ? 54 : 0) },
         ...(group ? { parentId: `group:${group.id}`, extent: 'parent' as const } : {}),
@@ -152,7 +159,7 @@ function Canvas(props: ReactFlowPaneProps) {
       setLayout({ nodes, ms: Math.round(performance.now() - start), width: (result.width || 380) + (group ? 28 : 0), height: (result.height || 250) + (group ? 70 : 0) });
     }).catch(e => current && setError(String(e)));
     return () => { current = false; };
-  }, [graph, model, scopeId, arrangement, capabilityOverview, cardHeights, capabilityOverview ? canvasWidth : 0]);
+  }, [graph, model, scopeId, areaSections, arrangement, capabilityOverview, cardHeights, capabilityOverview ? canvasWidth : 0]);
   useEffect(() => { const id = setTimeout(() => fitView({ padding: 0.06, maxZoom: 1, duration: matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 220 }), 80); return () => clearTimeout(id); }, [layout, fitView]);
   useEffect(() => {
     if (!container.current) return;
@@ -165,8 +172,10 @@ function Canvas(props: ReactFlowPaneProps) {
   }, [fitView, scopeId]);
   const nodes = useMemo(() => layout.nodes.map(n => n.type !== 'business' ? n : { ...n, selected: n.id === selectedId, data: { ...n.data, onHeight, count: childrenOf(model, n.id).length, onExplore: props.onExplore, onRead: props.onRead, highlighted: Boolean(perspective && model.nodeById.get(n.id)?.status === perspective), muted: Boolean(perspective && model.nodeById.get(n.id)?.status !== perspective) } }), [layout, selectedId, model, props.onExplore, props.onRead, perspective, onHeight]);
   const select = useCallback((_event: unknown, node: Node) => { if (node.type === 'business') props.onSelect(node.id); }, [props.onSelect]);
-  const emptyScope = scopeId && model.nodeById.get(scopeId);
-  if (emptyScope && ['group', 'domain', 'area', 'reference'].includes(emptyScope.kind) && !childrenOf(model, emptyScope.id).length) return <div className="graph-canvas empty-state"><NodeIcon node={emptyScope} size={38}/><h2>{emptyScope.name}</h2><p>Aucun élément publié dans ce périmètre.</p></div>;
+  const emptyScope = scopeId ? model.nodeById.get(scopeId) : undefined;
+  const referenceCapabilities = emptyScope?.kind === 'reference' ? model.relations.filter(r => r.type === 'documents-reference' && r.targetId === emptyScope.id).map(r => model.nodeById.get(r.sourceId)!) : [];
+  if (emptyScope && referenceCapabilities.length) return <div className="graph-canvas empty-state"><NodeIcon node={emptyScope} size={38}/><h2>{emptyScope.name}</h2><p><ModelText text={emptyScope.definition}/></p><h3>Capacités liées à ce référentiel</h3><ul>{referenceCapabilities.map(capability => <li key={capability.id}><ReferenceLink target={capability.id}>{capability.name}</ReferenceLink></li>)}</ul></div>;
+  if (emptyScope && ['group', 'domain', 'area', 'business_area', 'reference'].includes(emptyScope.kind) && !childrenOf(model, emptyScope.id).length) return <div className="graph-canvas empty-state"><NodeIcon node={emptyScope} size={38}/><h2>{emptyScope.name}</h2><p>Aucun élément publié dans ce périmètre.</p></div>;
   if (error) return <div className="empty-state" role="alert">Le placement a échoué : {error}</div>;
   // Let the page grow with capability lists, keeping text near its natural size.
   const canvasHeight = capabilityOverview && layout.width && canvasWidth ? Math.max(420, Math.ceil(layout.height * Math.min(1, canvasWidth / layout.width)) + 70) : undefined;

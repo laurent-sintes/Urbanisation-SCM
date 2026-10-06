@@ -94,7 +94,7 @@ try {
     }counts.scenarios++;
   }
   // Every participating capability and its hierarchy parents retain scenario access.
-  for(const node of model.nodes.filter(n=>['capability','area','domain'].includes(n.kind))){
+  for(const node of model.nodes.filter(n=>['capability','business_area','area','domain'].includes(n.kind))){
     const descendants=new Set([node.id]);let size=-1;
     while(size!==descendants.size){size=descendants.size;for(const r of model.relations)if(['contains','presents'].includes(r.type)&&descendants.has(r.source_id))descendants.add(r.target_id);}
     const expected=catalog.scenarios.filter(s=>catalog.paths.some(p=>p.scenario_id===s.id&&p.steps.some(step=>step.contributions.some(c=>descendants.has(c.node_id))))||catalog.legacy_links.some(a=>a.owner_id===node.id&&a.scenario_id===s.id));

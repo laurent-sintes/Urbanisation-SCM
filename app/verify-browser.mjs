@@ -49,14 +49,44 @@ try {
   assert.ok((await page.locator('.sidebar-stats').innerText()).includes(`${model.nodes.filter(n => n.kind === 'capability').length} capacités`));
   checks.push('Published systems and statistics');
 
-  for (const node of model.nodes.filter(n => ['business_system', 'domain', 'area', 'reference'].includes(n.kind) && children(n.id).length)) {
+  for (const node of model.nodes.filter(n => ['business_system', 'domain', 'area', 'business_area', 'reference'].includes(n.kind) && children(n.id).length)) {
     await visit({ node: node.id, view: 'map' });
     await heading(node.fields.name);
     await page.locator('.business-card').first().waitFor();
     const cards = await page.locator('.business-card').evaluateAll(items => items.map(el => el.dataset.nodeId));
-    assert.deepEqual(cards.sort(), children(node.id).sort(), `Explicit children of ${node.id}`);
+    const areas = node.kind === 'area' ? children(node.id).filter(id => byId.get(id).kind === 'business_area') : [];
+    const expected = children(node.id).flatMap(id => areas.includes(id) ? children(id) : [id]);
+    assert.deepEqual(cards.sort(), expected.sort(), `Explicit content of ${node.id}`);
+    assert.deepEqual((await page.locator('.category-banner[data-business-area]').evaluateAll(es=>es.map(e=>e.dataset.businessArea))).sort(), areas.sort(), `Business Area banners of ${node.id}`);
+    for (const id of areas) assert.equal(await page.locator(`[data-business-area="${id}"] a[href*="node=${id}"]`).count(), 1);
   }
   checks.push('All published system/domain/subdomain/reference maps');
+  for (const area of model.nodes.filter(n => n.kind === 'business_area')) {
+    for (const query of [area.fields.name, area.id, model.display_index?.codes?.[area.id]].filter(Boolean)) {
+      await page.getByLabel('Rechercher dans le modèle publié').fill(query);
+      await page.getByLabel('Type de résultat').selectOption('business_area');
+      const result = page.locator(`[data-search-result="${area.id}"]`);
+      await result.waitFor();
+      assert.match(await result.innerText(), /Business Area/);
+      assert.ok((await result.innerText()).includes(' / '), 'Full responsibility path');
+    }
+  }
+  await page.getByLabel('Type de résultat').selectOption('all');
+  await page.getByLabel('Rechercher dans le modèle publié').fill('');
+  checks.push('Business Area search by name, identity and frozen code');
+  const linkedReference = model.nodes.find(n => n.kind === 'reference' && n.fields.definition.includes('](glossary:') && model.relations.some(r => r.type === 'documents-reference' && r.target_id === n.id));
+  if (linkedReference) {
+    await visit({view:'map', node:linkedReference.id});
+    const definition = page.locator('.graph-canvas.empty-state > p');
+    await definition.locator('a.model-reference').first().waitFor();
+    assert.ok(!(await definition.innerText()).includes('](glossary:'), 'Reference definition renders its glossary links');
+    const link = definition.locator('a.model-reference').first();
+    await link.focus();
+    await page.getByRole('tooltip').waitFor();
+    await page.keyboard.press('Escape');
+    await page.getByRole('tooltip').waitFor({state:'hidden'});
+    checks.push('Reference definition glossary link and keyboard help');
+  }
   await visit({ node: capability.id, view: 'sheet' });
   await heading(capability.fields.name);
   await page.getByTestId('business-sheet').waitFor();

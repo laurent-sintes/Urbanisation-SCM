@@ -1536,14 +1536,10 @@ publication_delivery:
   - BHV077
   required_nodes:
   - id: D05.f
-    parent: D03
+    parent: ba-master-plan-management
     fields:
       name: Master Planning
       nature: planning
-      category:
-        id: master-plan-management
-        display_name: Master Plan Management
-        order: 10
   - id: D04.s
     parent: D05.f
     fields:
@@ -1573,41 +1569,25 @@ publication_delivery:
     fields:
       name: Adjust Plan
   - id: BHV006
-    parent: D03
+    parent: ba-master-plan-management
     fields:
       name: Simulation & Analysis
       nature: planning
-      category:
-        id: master-plan-management
-        display_name: Master Plan Management
-        order: 10
   - id: D02.e
-    parent: D03
+    parent: ba-master-plan-management
     fields:
       name: Plan Application
       nature: action
-      category:
-        id: master-plan-management
-        display_name: Master Plan Management
-        order: 10
   - id: D03.m
-    parent: D03
+    parent: ba-supply-matching
     fields:
       name: Demand Prioritization
       nature: decision
-      category:
-        id: supply-matching
-        display_name: Supply Matching
-        order: 20
   - id: D03.o
-    parent: D03
+    parent: ba-supply-matching
     fields:
       name: Supply Assignment
       nature: decision
-      category:
-        id: supply-matching
-        display_name: Supply Matching
-        order: 20
   - id: BHV102
     parent: D03.o
     fields:
@@ -1617,14 +1597,10 @@ publication_delivery:
     fields:
       name: Supply Reassignment
   - id: D05.e
-    parent: D03
+    parent: ba-supply-matching
     fields:
       name: Replenishment
       nature: decision
-      category:
-        id: supply-matching
-        display_name: Supply Matching
-        order: 20
   - id: BHV083
     parent: D05.e
     fields:
@@ -1638,14 +1614,10 @@ publication_delivery:
     fields:
       name: Replenishment Adjustment
   - id: D05.c
-    parent: D03
+    parent: ba-supply-matching
     fields:
       name: Stock Redistribution
       nature: decision
-      category:
-        id: supply-matching
-        display_name: Supply Matching
-        order: 20
   - id: BHV024
     parent: D05.c
     fields:
@@ -1655,14 +1627,10 @@ publication_delivery:
     fields:
       name: Stock Consolidation
   - id: D05.a
-    parent: D03
+    parent: ba-policy-optimization
     fields:
       name: Inventory Target Optimization
       nature: decision
-      category:
-        id: policy-optimization
-        display_name: Policy Optimization
-        order: 30
   - id: BHV026
     parent: D05.a
     fields:
@@ -1676,23 +1644,15 @@ publication_delivery:
     fields:
       name: Multi-Echelon Demand & Supply Optimization
   - id: D05.d
-    parent: D03
+    parent: ba-policy-optimization
     fields:
       name: Group Protection Optimization
       nature: decision
-      category:
-        id: policy-optimization
-        display_name: Policy Optimization
-        order: 30
   - id: D05.h
-    parent: D03
+    parent: ba-policy-optimization
     fields:
       name: Reservation Policy Optimization
       nature: decision
-      category:
-        id: policy-optimization
-        display_name: Policy Optimization
-        order: 30
   - id: BHV032
     parent: D05.h
     fields:
@@ -1709,3 +1669,27 @@ publication_delivery:
     parent: D05.h
     fields:
       name: Risk-Adaptive Reservation Policy
+delivery_updates:
+- source_ref: U848
+  fields:
+  - D05.f.category
+  - D05.f.parent
+  - BHV006.category
+  - BHV006.parent
+  - D02.e.category
+  - D02.e.parent
+  - D03.m.category
+  - D03.m.parent
+  - D03.o.category
+  - D03.o.parent
+  - D05.e.category
+  - D05.e.parent
+  - D05.c.category
+  - D05.c.parent
+  - D05.a.category
+  - D05.a.parent
+  - D05.d.category
+  - D05.d.parent
+  - D05.h.category
+  - D05.h.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

@@ -1,0 +1,210 @@
+id: REACTIVE-WORKFLOW-U843
+source_refs:
+- U836
+- U837
+- U838
+- U839
+- U840
+- U841
+- U842
+- U843
+- U844
+status: applied
+agreement_scope: Noms, définitions présentées, catégorie et rattachement des quatre capacités à Order Management. Frontières
+  convenues avec Policies, familles de commandes et Fulfilment. Les types, formulations détaillées, comparaisons, relations
+  transversales et contributions de scénarios rédigés après l’accord restent proposés.
+retained: Toutes les capacités et identités de Fulfilment sont conservées ; aucun transfert général ni comportement artificiel.
+realization_limit: Le référentiel de Tasks, la sentinelle, l’interprétation de contexte et la construction dynamique évoqués
+  par Laurent sont une intention de réalisation. Aucune implantation Camunda, aucune technologie ni architecture logicielle
+  imposée par le catalogue métier.
+market_position: Microsoft Dynamics documente les flux d’orchestration ; SAP S/4HANA les activités, conditions et blocs flexibles.
+  Recouvrements partiels ; la séparation en quatre capacités et le nom Sentry sont des choix FLOW. Camunda apporte des moyens
+  possibles, sans prouver ce découpage métier ni une génération arbitraire de parcours.
+glossary_alignment:
+  new:
+  - TER125
+  - TER126
+  - TER127
+  - TER128
+  - TER129
+  - TER130
+  updated:
+  - TER031
+  - TER085
+  - TER089
+  checked:
+  - TER024
+  - TER095
+scenario_paths_updated:
+- b2b-partial-stock-path
+- transport-missed-connection-path
+publication_delivery:
+  state: applied
+  source_refs:
+  - U843
+  - U853
+  summary: Reactive Workflow Management dans Order Management ; Sentry actif et frontières de pilotage clarifiées.
+  required_nodes:
+  - id: workflow-definition-management
+    parent: ba-reactive-workflow-management
+    kind: capability
+    fields:
+      name: Workflow Definition Management
+      definition: Maintenir les activités réutilisables et leurs règles de composition.
+  - id: order-workflow-sentry
+    parent: ba-reactive-workflow-management
+    kind: capability
+    fields:
+      name: Order Workflow Sentry
+      definition: 'Détecter les événements et conditions pertinents dans le contexte d’une commande, puis déclencher la réaction
+        prévue : poursuivre le parcours, réexaminer son organisation ou solliciter une décision.'
+  - id: order-workflow-planning
+    parent: ba-reactive-workflow-management
+    kind: capability
+    fields:
+      name: Order Workflow Planning
+      definition: Construire ou adapter le parcours.
+  - id: order-workflow-orchestration
+    parent: ba-reactive-workflow-management
+    kind: capability
+    fields:
+      name: Order Workflow Orchestration
+      definition: Piloter les activités, attentes et résultats du parcours retenu.
+  - id: D04
+    fields:
+      scope: |-
+        Chaque famille tient l’origine, les parties, biens ou services, quantités, dates et conditions de ses commandes. Conserver les versions et les liens entre commandes structurées, y compris les propositions provenant des plans amont. Une proposition retirée n’efface pas une commande affermie. Affermir une demande ne confirme pas automatiquement sa quantité et sa date.
+
+        Les décisions de promesse d’[Availability](glossary:TER112) proposent une réponse ; les familles de commandes portent la confirmation et ses révisions autorisées. Distinguer demandé, proposé, confirmé et réalisé par ligne, quantité ou groupe pertinent. Exemple fictif : pour 100 pièces demandées vendredi, une proposition de 60 vendredi et 40 lundi peut conduire à ne confirmer que les 60 premières. La promesse fournisseur et la promesse client restent distinctes. Affecter une ressource ne réserve pas automatiquement le stock.
+
+        Préparation, engagement, protection contre réoptimisation, autorisation de prise en charge, suspension et terminaison sont des dimensions distinctes. Leur combinaison dépend du périmètre et des règles applicables, sans état global ni séquence unique. Libérer une commande ne prouve pas le début de réalisation. Les modifications respectent les engagements, dépendances et dérogations autorisées.
+
+        Annuler retire le besoin dans la portée autorisée ; clôturer règle le reste à traiter en conservant les faits. Exemple fictif : sur 100 pièces, 40 sont préparées et 60 ne le sont pas. Les 60 ne sont ni automatiquement modifiables ni automatiquement bloquées : les engagements et une éventuelle exigence de livraison complète comptent. [Fulfilment Orchestration](model:D06) traite les conséquences sur le travail engagé.
+
+        Conserver prix et versions ; consulter l’historique sans réactiver la commande. Restaurer, rouvrir et purger sont des opérations distinctes, soumises à leurs règles sans durée légale ou solution technique présumée. Supprimer un brouillon se distingue d’annuler une commande engagée. Copier une commande ne copie pas ses engagements ou réalisations ; une substitution ne change pas silencieusement son prix.
+
+        [Order Visibility](model:order-visibility) expose demandes, engagements, réalisations rapprochées et restes à satisfaire sans double comptage. Les propositions amont ne sont pas à elles seules commandes fermes, réservations, promesses ou autorisations de démarrage. Réviser un besoin doit préserver ses liens sans en créer un doublon.
+
+        Un achat de service et une prestation confiée restent distincts ; toute prestation ne nécessite pas un [Purchase Order](glossary:TER070). [Service Order Management](model:subdomain-service-orders) tient les engagements de prestation. [Inventory Management](model:D01) porte les faits de stock et les réservations ; [Fulfilment](glossary:TER085) coordonne la réalisation. Les actes nécessaires à un changement de propriété peuvent être demandés ici, mais leur effet reconnu relève d’[Inventory Ownership Transfer Decision](model:D01.h) et du registre de propriété. Clôturer une commande ne prouve pas ce transfert.
+
+        Le [Reactive Workflow Management](glossary:TER125) organise et conduit le parcours des commandes. Il maintient les activités réutilisables et leurs règles de composition, réagit au contexte, adapte le parcours et en pilote les attentes et résultats. Les familles de commandes conservent leur identité, leur état, leurs engagements et la validité des transitions. [Fulfilment](glossary:TER085) reçoit les travaux autorisés et coordonne les prestations ; il ne définit pas seul la structure du parcours de la commande.
+  - id: D06
+    fields:
+      scope: |-
+        Déterminer les prestations requises, choisir les services et exécutants, coordonner leurs contributions et adapter le plan d’exécution. [Service Order Management](model:subdomain-service-orders) tient les exigences, engagements propres et évolutions des prestations confiées. [Fulfilment](glossary:TER085) conserve la visibilité des capacités communiquées, le tracking, le rapprochement des résultats et la décision de devenir logistique des retours.
+
+        Les [Tasks](glossary:TER089) expriment les contributions et dépendances du processus ; elles ne remplacent pas les [Service Orders](glossary:TER066) comme porteurs des engagements individuels. Une adaptation préserve la promesse d’[Order Management](model:D04) et les grands équilibres du [master plan de Matching](glossary:TER100) ; transmettre les impacts non absorbables à leurs responsables. Les exécutants conservent leurs opérations internes. Exemple fictif : coordonner réétiquetage, préparation et collecte pour tenir une livraison, puis choisir une autre collecte si nécessaire.
+
+        Un changement de trajet ou de prestation peut modifier coûts et tarifs : obtenir leur évaluation pour choisir les solutions locales. Respecter les engagements de la commande et transmettre les effets qui nécessitent leur révision à [Order Management](model:D04) ; aucun surcoût automatiquement refacturé.
+
+        Pour les actes nécessaires à un changement de propriétaire, coordonner la réalisation et capter son résultat, y compris distant. Inventory reçoit les faits utiles ; une demande ou un lancement de processus ne vaut pas changement de propriétaire réalisé.
+
+        [Service Order Release Decision](model:service-order-release-decision) détermine les ensembles et moments de libération des ordres logistiques, y compris leur rétention en fonctionnement normal. Process Orchestration applique le choix ; les exécutants conservent leurs vagues et leur organisation interne.
+
+        Solliciter les décisions de promesse d’[Availability](glossary:TER112) pour les évaluations utiles aux adaptations locales : disponibilités, faisabilité ou dossier économique des options. Une réponse recalculée ne modifie pas automatiquement la promesse confirmée.
+
+        [Transport Plan Decision](model:transport-plan-decision) construit les chargements et parcours des transports confiés. [Inventory Disposition Decision](model:D05.i) détermine les usages autorisés et le devenir des biens, y compris hors retour. Ces décisions peuvent déclencher des prestations externes ; leurs résultats sont suivis sans absorber [Availability](glossary:TER112) ni la tenue des registres de stock.
+
+        Agir comme pilote exécutant dans le mandat confié par [Order Workflow Orchestration](glossary:TER129). Conserver les décisions spécialisées et la latitude d’adaptation locale autorisée. La structure du parcours de la commande relève d’[Order Management](model:D04) ; un changement de ce parcours ou des engagements dépasse la seule adaptation des prestations. Transmettre les faits et impacts utiles à [Order Workflow Sentry](glossary:TER127), qui déclenche la réaction appropriée sans imposer un réexamen pour chaque événement.
+  - id: D06.d
+    fields:
+      scope: |-
+        Coordonner le déclenchement et l’enchaînement des prestations du plan retenu, en tenant compte de leurs dépendances, des prises en charge et des faits d’exécution. Mobiliser les familles de [Service Orders](glossary:TER066) pour tenir les demandes et leurs évolutions.
+
+        Exemple : coordonner la préparation, la disponibilité du document et la collecte. Si la décision d’adaptation retient un autre transporteur, coordonner la modification des prestations concernées et leur nouvel enchaînement.
+
+        La détermination de la variation du plan appartient à Process Adaptation Decision. L’orchestration peut lui transmettre un aléa, mais ne porte plus cette décision dans sa propre définition. Les exécutants conservent l’organisation de leurs opérations internes. Aucun moteur de workflow, contrôle humain systématique ou rollback physique universel n’est présumé.
+
+        Frontière : Décision [Process Adaptation Decision](model:D06.f) séparée ; pas de rollback physique ni seconde promesse.
+
+        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; Operations Tracking intègre les faits d’exécution ; Operations Visibility restitue leur avancement et Process Visibility en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
+
+        Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Availability](glossary:TER112).
+
+        [Service Order Management](model:subdomain-service-orders) tient le cycle et les engagements des ordres de prestation. L’orchestration utilise leurs réponses et coordonne les conditions d’activation et dépendances ; elle ne recrée pas leur cycle.
+
+        U706/U709 : Coordonner aussi les prestations exécutées à distance : solliciter le service, attendre son résultat métier et poursuivre le flux selon ce résultat. Une acceptation du déclenchement ne vaut pas réalisation.
+
+        Appliquer les attentes et libérations retenues par [Service Order Release Decision](model:service-order-release-decision), puis suivre la prise en charge des ordres. Un lot ne fusionne pas leurs identités. Distinguer une information anticipée de l’autorisation de lancement ; ne pas considérer la transmission comme preuve de réalisation.
+
+        Coordonner les prestations dans le mandat reçu d’[Order Workflow Orchestration](glossary:TER129), qui conduit le parcours de la commande. Une dépendance entre préparation et collecte ne se confond pas avec une attente de confirmation client dans ce parcours. Retourner les résultats et aléas utiles à [Order Workflow Sentry](glossary:TER127) ; ne pas modifier seul les engagements de la commande.
+  - id: D06.f
+    fields:
+      scope: |-
+        Déterminer la variation à retenir lorsqu’un fait, un retard ou un échec remet en cause le plan d’exécution. Mobiliser les décisions de service, les capacités communiquées et les informations sur les demandes et réalisations.
+
+        Exemple : un [SLA](glossary:TER076) était compatible avec la collecte, mais une panne retarde la préparation. Déterminer une autre collecte, un autre transporteur ou une réalisation partielle selon les possibilités ; Orchestration coordonne ensuite les prestations du plan retenu.
+
+        Si la variation remet la promesse Supply en cause, fournir à [Order Management](model:D04) les faits et variantes utiles à son réexamen. Cette capacité ne décide pas seule d’une nouvelle promesse. La latitude d’adaptation relève des règles de fonctionnement et ne conditionne pas le catalogue.
+
+        Decision détermine une réponse métier ; Planning conserve le sens reconfigurer, simuler et valider en mobilisant des décisions. La séparation demandée n’ajoute pas automatiquement une capacité Planning ou un contrôle humain obligatoire.
+
+        Frontière : Remonter effet promesse à [Order Management](model:D04) ; [Availability](model:D03) peut revoir son scénario sans décider le transporteur.
+
+        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; [Operations Tracking](model:D07.d) recueille les faits de réalisation ; [Operations Visibility](model:operations-visibility) restitue leur progression et leurs écarts. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
+
+        Le plan concerné est le plan d’exécution. Préserver promesse et grands équilibres ; transmettre les impacts non absorbables à [Availability](glossary:TER112) et [Order Management](model:D04), sans seuils à définir ici.
+
+        La rétention anticipée et le regroupement en fonctionnement normal relèvent de [Service Order Release Decision](model:service-order-release-decision). Une adaptation peut modifier les conditions de libération, qui sont alors réévaluées ; ne pas dupliquer la décision de choix des lots.
+
+        [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
+
+        Adapter localement les prestations dans le mandat confié, en préservant les engagements et les autorisations. Si la réponse nécessite de réorganiser le parcours de la commande, transmettre le contexte à [Order Workflow Sentry](glossary:TER127), qui peut solliciter [Order Workflow Planning](glossary:TER128). Une adaptation locale autorisée ne nécessite pas systématiquement cette réorganisation.
+  - id: subdomain-policies
+    fields:
+      scope: |-
+        Conserver les règles actives, leur portée et leur validité. Les décisions de [Availability](glossary:TER112) peuvent recommander des valeurs ou adaptations ; cette recommandation ne change pas implicitement la règle active. Les réservations constituées restent dans Inventory Management. Exemple fictif : protéger une quantité pour un groupe de demandes et limiter temporairement les nouvelles sollicitations d’un prestataire, sans annuler ses travaux déjà engagés.
+
+        Porter les contrôles actifs du fonctionnement courant : seuils, limites, protections, désactivations et réactivations temporaires de possibilités métier, avec leur portée et leur validité. Exemple fictif : désactiver temporairement le fractionnement pour de nouvelles sollicitations, sans annuler les engagements existants. Les règles de structure du parcours et de composition des activités relèvent de [Workflow Definition Management](glossary:TER126) dans Order Management. Une modification de contrôle ne vaut ni modification rétroactive des commandes ni nouvel engagement.
+  - id: service-order-release-decision
+    fields:
+      scope: |-
+        Déterminer les ordres et quantités éligibles à libérer ensemble, leur moment ou condition de libération et les éléments à maintenir en attente, avec leur justification. Mobiliser exigences de livraison, dates de préparation et d’expédition, complétude attendue, compatibilité des regroupements et capacités communiquées par les exécutants. Comparer les bénéfices du regroupement aux conséquences de l’attente ; aucune optimisation mathématique universelle n’est promise.
+
+        [Process Orchestration](model:D06.d) matérialise l’attente et la libération décidées, puis suit la prise en charge. Les familles de [Service Orders](glossary:TER066) conservent leur identité, leurs exigences et engagements. Une transmission anticipée pour visibilité peut être distincte de l’autorisation de lancement ; aucun protocole ou fichier unique n’est imposé.
+
+        La décision intervient aussi en fonctionnement normal. [Process Adaptation Decision](model:D06.f) traite les aléas remettant le plan d’exécution en cause ; la libération peut ensuite être réévaluée. Les fenêtres, délais maximaux, seuils et exceptions sont des règles ; ne pas créer une capacité par paramètre.
+
+        Respecter la promesse portée par [Order Management](model:D04) et les affectations d’[Availability](glossary:TER112). Si la rétention compromet ces engagements, transmettre les impacts à leurs responsables ; ne pas modifier silencieusement dates, quantités ou affectations. Les ordres attendus et capacités communiquées sont des informations datées, sans certitude d’arrivée inventée.
+
+        Libérer ensemble ne garantit pas préparer ensemble ni obtenir une seule palette. Les [Picking Order](model:service-order-picking) et [Packing Order](model:service-order-packing) portent les exigences de traitement commun ; les exécutants conservent vagues, parcours, tâches et palettisation détaillée.
+
+        Exemple fictif : une commande B2B de 300 pièces devient éligible en trois ensembles. Retenir les premiers pour une libération commune compatible avec la promesse, puis demander un packing commun. Le nombre réel de palettes dépend des biens, des exigences et des capacités physiques.
+
+        [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
+
+        Décider du moment et du regroupement des prestations dans l’autorisation reçue d’[Order Workflow Orchestration](glossary:TER129). Cette décision ne remplace pas l’autorisation de poursuivre le parcours de la commande. Si une confirmation client reste requise, l’éligibilité logistique ne permet pas à elle seule de la contourner.
+  required_catalog:
+  - collection: paths
+    id: b2b-partial-stock-path
+    content_sha256: cd18ae4491eb07fe1ff344bcbb4d9005c29dc2fdbb3f3d5139c91442cb7f1a37
+  - collection: paths
+    id: transport-missed-connection-path
+    content_sha256: 00e6a39d60df52be7cfd0b722162a995cb50743610c1cfcbfce9af370206555c
+  absent_nodes: []
+  editorial_alignment_U853:
+    fields:
+    - D06.scope
+    - D06.f.scope
+    - service-order-release-decision.scope
+    - paths/transport-missed-connection-path
+    scope: Finalités et exemples de Business Areas, corrections de noms et de grammaire ; aucune modification de parent ni
+      extension des accords historiques.
+editorial_delegation:
+  source_ref: U844
+  scope: Documentation complète des responsabilités, frontières, exemples, comparaisons et scénarios sans arbitrage rédactionnel
+    supplémentaire.
+behavior_policy: 'Aucun comportement créé : les quatre savoir-faire sont distincts ; les variantes sont décrites dans leur
+  périmètre sans décomposition artificielle.'
+delivery_updates:
+- source_ref: U848
+  fields:
+  - workflow-definition-management.category
+  - workflow-definition-management.parent
+  - order-workflow-sentry.category
+  - order-workflow-sentry.parent
+  - order-workflow-planning.category
+  - order-workflow-planning.parent
+  - order-workflow-orchestration.category
+  - order-workflow-orchestration.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

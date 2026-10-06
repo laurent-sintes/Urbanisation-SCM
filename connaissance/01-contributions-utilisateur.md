@@ -20529,3 +20529,437 @@ Je valide Tout.
 **contexte et portée**
 
 Accord sur le lot complet U832–U834 et les propositions discutées : Master Data devient Operational References ; Demand & Supply Matching devient Availability ; ATP, CTP et PTP sont des capacités de décision regroupées dans la catégorie Order Promising, au sein d’Availability. Retirer Promise Selection Decision et l’ancien sous-domaine Order Promising après reprise des responsabilités de sélection initiale et de réexamen et adaptation des scénarios. Préserver une proposition cohérente, sans séquence ATP–CTP–PTP imposée ni confirmation, réservation ou approvisionnement automatique. Conserver l’autorité locale des référentiels, la maîtrise externe d’entreprise et le périmètre actuel Demand/Supply de Plan Visibility. Les rédactions détaillées et comparaisons nouvelles restent des mises en œuvre proposées lorsqu’elles dépassent les formulations discutées. Aucune publication implicite.
+
+
+## U836
+
+**id**
+
+U836
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Interroger la place de DMN et des moteurs de règles dans Order Management
+
+**texte**
+
+JE me demande si un espace dans Order Management qui traite du DMN / moteur de règles ne manque pas.
+
+**contexte et portée**
+
+Question ouverte sur une éventuelle responsabilité manquante dans Order Management et sur la place de la modélisation et de l’exécution des règles. Aucun ajout de capacité, choix technologique, élargissement de Policies ou adoption de DMN n’est déduit de cette question.
+
+
+## U837
+
+**id**
+
+U837
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Positionner le pilotage du workflow dans Order Management
+
+**texte**
+
+Ce sont les décision de workflow contrôlé par l'order management. Fulfilment Orchestration est un pilote executant
+
+**contexte et portée**
+
+Clarification de U836 : le besoin vise les décisions de workflow contrôlées par Order Management ; Fulfilment Orchestration est qualifié de pilote exécutant. La piste Order Policy Management proposée précédemment ne constitue pas une réponse validée. Les noms, la décomposition, le mandat des adaptations locales et les éventuels transferts des capacités existantes restent à préciser ; aucun retrait de décision ni transfert canonique n’est appliqué par cet enregistrement.
+
+
+## U838
+
+**id**
+
+U838
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Distinguer contrôle du run et règles du workflow adaptatif
+
+**texte**
+
+Dans Policy, j'entends un contrôle du run : des seuils, des limites, des désactivation, du feature flipping.
+Dans Order Management, je vois le DMN comme les règles de structure du workflow dans un modèle adaptatif
+
+**contexte et portée**
+
+Précision de U836–U837 : Policies porte les commandes de contrôle opérationnel du run (seuils, limites, désactivations et bascules de fonctionnalités) ; Order Management porte les règles structurant le workflow adaptatif, envisagées à travers DMN. Cette distinction corrige la proposition initiale de placer les règles du workflow de commande dans Policies. Elle ne valide pas encore un nom, une décomposition en capacités, une architecture technique ni le retrait des capacités existantes.
+
+
+## U839
+
+**id**
+
+U839
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Décrire une catégorie de pilotage adaptatif du workflow
+
+**texte**
+
+Tout à fait, DMN est une mauvaise formulation.
+
+Je pensais à une catégorie de capacités de pilotage du workflow. Dans camunda, ça prend la forme d'un référentiel de Tasks, d'une sentinelle événementielle, d'un interpréteur de contexte, d'un constructeur dynamique de straightlined workfow. Tous ces éléments sont dans un référentiel organisé appelable par les Demandes qui sont des agregateRoot etat / transition dont le code est simplifié car il appelle ce référentiel de moteur d'exécution.
+
+**contexte et portée**
+
+Laurent écarte DMN comme formulation du besoin et précise une catégorie de capacités de pilotage du workflow dans Order Management. Il décrit une architecture utilisant un référentiel de Tasks, une surveillance événementielle, une interprétation du contexte et une construction dynamique de workflow ; les Demandes sont décrites comme des aggregate roots portant états et transitions et appelant ce dispositif. Conserver la distinction entre architecture décrite, fonctionnalités natives de Camunda effectivement documentées et capacités métier proposées. Aucun déploiement Beaumanoir, nom de capacité ou détail de contrat non présenté n’est déduit de cet apport.
+
+
+## U840
+
+**id**
+
+U840
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Réexaminer le périmètre de Fulfilment Orchestration face au moteur de workflow
+
+**texte**
+
+Peut être qu'on a mis trop de chose dans Fulfillment Orchestration et qu'il manque une matérialisation de ce moteur
+
+**contexte et portée**
+
+Hypothèse complétant U839 : examiner une éventuelle surcharge de Fulfilment Orchestration et rendre explicite le moteur de pilotage du workflow. Aucun déplacement ni suppression de capacité n’est encore validé ; distinguer le pilotage de la demande, celui des prestations et leur réalisation.
+
+
+## U841
+
+**id**
+
+U841
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Préférer Sentry à Order Context Assessment
+
+**texte**
+
+Order Context Assessment => Je préfère Sentry : finalement on comprend mieux ce que ça fait.
+
+**contexte et portée**
+
+Préférence pour Sentry afin de nommer la responsabilité proposée de surveillance et de qualification du contexte. Le nom composé Order Workflow Sentry proposé ensuite et sa définition ne sont pas déduits comme approuvés mot à mot.
+
+
+## U842
+
+**id**
+
+U842
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Qualifier le regroupement par son intention réactive
+
+**texte**
+
+Je préfère Sentry à Monitor cat Monitor est passif. L'intention de Sentry est bien d'avoir un système réactif.
+
+Le regroupement pourrait porter ce terme "reactive"
+
+**contexte et portée**
+
+Laurent précise l’intention active de Sentry et propose le qualificatif reactive pour la catégorie de pilotage du workflow. Conserver cette préférence de modélisation sans en déduire une propriété universelle des termes Monitor ou Sentry, une réaction automatique à tout événement ou la validation d’un nom composé encore non présenté. Aucun changement canonique ni publication implicite.
+
+
+## U843
+
+**id**
+
+U843
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Valider Reactive Workflow Management dans Order Management
+
+**texte**
+
+Top ! Go pour la mise à jour
+
+**contexte et portée**
+
+Accord sur la proposition complète U836–U842 corrigée : catégorie Reactive Workflow Management dans Order Management ; Workflow Definition Management, Order Workflow Sentry, Order Workflow Planning et Order Workflow Orchestration. Sentry détecte et déclenche la réaction prévue ; Planning construit ou adapte le parcours ; Orchestration le conduit ; une progression autorisée ne nécessite pas toujours une nouvelle planification. Les familles de demandes conservent identité, état, engagements et validité des transitions. Policies porte les contrôles actifs du run ; les règles de structure du parcours relèvent du pilotage du workflow. Fulfilment Orchestration demeure pilote exécutant avec adaptation locale et libération des prestations dans son mandat. Conserver les identités et responsabilités spécialisées existantes ; pas de transfert général de Fulfilment, de capacité DMN, de modèle imposé de moteur ou de déploiement Camunda déduit. Les noms et définitions présentés sont validés ; les détails de réalisation, types techniques, comparaisons et parcours rédigés ensuite restent proposés. Mise à jour du backlog autorisée ; aucune release, commit ou push implicite.
+
+## U844
+
+**id**
+
+U844
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Déléguer la documentation complète du pilotage réactif
+
+**texte**
+
+"je distingue ton accord sur la proposition des détails rédactionnels ajoutés pour la documenter" => Vas-y documente, tu as tout compris à ce que je veux faire
+
+**contexte et portée**
+
+Laurent confie à Codex la documentation complète du lot U843 : responsabilités, frontières, exemples, glossaire, comparaisons et scénarios. Finaliser ces éléments sans demander une validation de chaque formulation. Cette délégation éditoriale n’impose pas de technologie ni de réalisation installée ; les portées d’accord métier existantes restent traçables. Aucune publication ou opération Git n’est demandée dans ce message.
+
+
+## U845
+
+**id**
+
+U845
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Analyser une séparation entre modèle de responsabilité et modèle de capacité
+
+**texte**
+
+Je me pose la question du regroupement "category". Ce n'est peut être pas qu'une entité de classement. Elle porte un sens dans le sous domaine.
+
+On pourrait avoir un modèle métier à 2 niveaux :
+
+- Système / Domain / Subdomain / category (le mote ne convient pas il faut le changer) => C'est le modèle de responsabilité
+- Capacité / Comportement => C'est le modèle de Capacité
+
+Je voudrais ton analyse.
+
+**contexte et portée**
+
+Demande d’analyse d’une évolution du métamodèle : donner une portée de responsabilité au regroupement actuel et distinguer ce modèle du modèle Capacité / Comportement. Le nom du nouveau concept reste à proposer. Aucune migration des catégories ni modification de la hiérarchie canonique validée par cette question.
+
+
+## U846
+
+**id**
+
+U846
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Accepter Business Area et demander un plan de migration à valider
+
+**texte**
+
+Ok pour ajouter la "business area".
+
+Tu peux proposer un plan de transformation des category en business area à me faire valider ?
+
+**contexte et portée**
+
+Accord de principe sur l’ajout du concept Business Area après l’analyse U845. Laurent demande un plan concret de transformation des catégories, soumis à sa validation avant migration. Le principe accepté ne vaut pas accord sur les noms, regroupements, rattachements, exceptions ou modifications techniques qui seront proposés dans ce plan. Préserver le lot U843/U844 déjà appliqué et les publications ; aucune migration, release, commit ou push demandé à ce stade.
+
+
+## U847
+
+**id**
+
+U847
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Signaler la difficulté des Business Areas à capacité unique
+
+**texte**
+
+Ce qui n'est pas simple, c'est d'avoir des area qui ne contiennent pas qu'une seule capacité. L'exercice est difficile.
+
+**contexte et portée**
+
+Laurent souligne la difficulté de constituer des Business Areas comprenant plusieurs capacités. Cette observation nourrit le plan demandé sous U846 ; elle n’impose pas un nombre minimal et ne valide pas les rattachements proposés. Examiner l’apport sémantique du périmètre, éviter les regroupements forcés et les capacités inventées pour remplir un niveau.
+
+
+## U848
+
+**id**
+
+U848
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Valider et appliquer la migration vers Business Area
+
+**texte**
+
+Je valide
+
+**contexte et portée**
+
+Accord sur le plan U846 précisé sous U847 : 16 Business Areas, 64 capacités rattachées à ces périmètres et 17 directement aux sous-domaines, selon la table des 81 capacités. Business Area est facultatif ; aucun minimum de deux capacités. Les noms, définitions et frontières proposés ainsi que les rattachements sont retenus. Les référentiels restent documentaires, reliés explicitement à leurs capacités désormais rattachées à Operational References. Adapter le modèle, ses glossaires, Atlas et ses contrôles ; préserver les identités et savoir-faire des capacités, comportements, scénarios et publications historiques. Le lot Reactive Workflow Management U843/U844 reste acquis dans son périmètre ; sa catégorie devient une Business Area. Aucune release, commit ou push implicite.
+
+
+## U849
+
+**id**
+
+U849
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Publier la migration Business Area après ses contrôles
+
+**texte**
+
+Release en suivant
+
+**contexte et portée**
+
+Autorisation de publier localement dans Atlas le lot U848 et le lot Reactive Workflow Management U843/U844 après finalisation et contrôles, avec le guide et le métamodèle alignés. La publication ne vaut pas accord supplémentaire sur des champs non validés. Aucun commit ni push implicite.
+
+
+## U850
+
+**id**
+
+U850
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Demander un audit profond du modèle, du code et des usages
+
+**texte**
+
+Je souhaite un audit profond à tous les niveaux :
+
+- Modèle métier : cohérence, profondeur, complétude, référence marché
+- Code : aligné sur le métier
+- Référentiel : nommage, numéro identifiant aligné avec la visu
+- Explication méta modèle
+- Use Case : complétude, lien avec les capacités.
+
+**contexte et portée**
+
+Audit transversal demandé après la publication 2026-10-06.2 : examiner le backlog, la publication et ses restitutions, le code, les identités et codes de lecture, la pédagogie du métamodèle, la couverture des scénarios et les appuis marché. Distinguer anomalie démontrée, lacune documentaire et arbitrage métier. Cette demande n’étend pas les accords métier et ne déclenche pas de nouvelle publication ni d’opération Git. L’audit des comportements clos U431 n’est pas rejoué ; les contrôles structurels du modèle courant restent applicables.
+
+
+## U851
+
+**id**
+
+U851
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Signaler l’absence des Business Areas dans Atlas local
+
+**texte**
+
+Pour info, les areas n'apparaissent pas dans ATLAS
+
+Précision : l’url locale.
+
+**contexte et portée**
+
+Signalement à examiner pendant U850. Le serveur local et le navigateur de contrôle montrent les entités en v045 ; U852 précise que le manque concerne les bandeaux de regroupement attendus. Ne pas assimiler cette observation à une perte de données ou à une ancienne version sélectionnée sans preuve.
+
+## U852
+
+**id**
+
+U852
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Conserver les bandeaux de regroupement pour les Business Areas
+
+**texte**
+
+Avant, les catégories avaient le droit à un bandeau de séparation élégant. Je m'attendais que les area récupère cette présentation, ce qui n'est pas le cas
+
+**contexte et portée**
+
+Rétablir la présentation en bandeaux des Business Areas dans la carte du sous-domaine et ses aperçus, avec leurs capacités regroupées, tout en conservant les entités, fiches, liens et parents explicites du modèle publié. Correction de restitution ; aucune nouvelle décision métier ni modification d’une publication figée. L’audit transversal U850 se poursuit.
+
+
+## U853
+
+**id**
+
+U853
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Appliquer intégralement le plan de correction de l’audit transversal
+
+**texte**
+
+Applique le plan totalement
+
+**contexte et portée**
+
+Autorisation d’exécuter les remèdes A01 à A12 de transversal-audit-U850 : alignement des explications et du modèle, documentation des Business Areas, références marché qualifiées sans équivalence inventée, scénarios couvrant les deux capacités restantes et situations de robustesse proposées, contrôles et corrections UX. Préparer une nouvelle publication figée après vérification ; préserver les éditions existantes et les portées des accords. La rédaction des compléments est autorisée ; cette délégation ne constitue pas une validation champ par champ des contenus non encore présentés. Aucun commit ni push implicite.

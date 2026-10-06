@@ -33,10 +33,10 @@ class SupplyIdentityTests(unittest.TestCase):
             self.assertNotIn(removed, nodes)
         for capability in ('D03.i', 'D03.j', 'D03.k'):
             self.assertEqual(nodes[capability]['fields']['nature'], 'decision')
-            self.assertEqual(nodes[capability]['fields']['category']['display_name'], 'Order Promising')
+            self.assertEqual(nodes['ba-order-promising']['fields']['name'], 'Order Promising')
             self.assertEqual(
                 [r['source_id'] for r in model['relations']
-                 if r['type'] == 'contains' and r['target_id'] == capability], ['D03'])
+                 if r['type'] == 'contains' and r['target_id'] == capability], ['ba-order-promising'])
         self.assertEqual(check_delivery(ROOT, model)[1], [])
 
     def test_historical_identity_is_not_rewritten(self):

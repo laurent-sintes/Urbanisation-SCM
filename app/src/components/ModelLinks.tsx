@@ -55,10 +55,12 @@ export function ReferenceLink({ kind = 'model', target, anchor, children, classN
   const link = useRef<HTMLAnchorElement>(null);
   const tooltip = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const dismissed = useRef(false);
   const clear = () => clearTimeout(timer.current);
   const hide = () => { clear(); timer.current = setTimeout(() => setOpen(false), 100); };
   const show = () => {
     clear();
+    if (dismissed.current) return;
     const rect = link.current?.getBoundingClientRect();
     if (rect) setPosition({ left: Math.max(8, Math.min(rect.left, window.innerWidth - 348)), top: rect.bottom + 8 });
     setOpen(true);
@@ -72,10 +74,12 @@ export function ReferenceLink({ kind = 'model', target, anchor, children, classN
     setPosition({ left: Math.max(8, Math.min(rect.left, window.innerWidth - 348)),
       top: below + height <= window.innerHeight - 8 ? below : Math.max(8, rect.top - height - 8) });
   }, [open]);
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (!open) return;
     const close = () => setOpen(false);
-    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') { event.stopPropagation(); close(); } };
+    // Install before paint: a visible tooltip must already respond to Escape.
+    // Keep it dismissed until a new intentional focus/hover interaction.
+    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') { dismissed.current = true; clear(); event.stopPropagation(); close(); } };
     window.addEventListener('keydown', escape, true);
     const scroll = () => {
       if (tooltip.current?.matches(':hover')) return;
@@ -99,7 +103,7 @@ export function ReferenceLink({ kind = 'model', target, anchor, children, classN
     view: method?.guide_section ? 'principles' : kind === 'model' ? 'sheet' : 'glossary', principle: method?.guide_section || '', glossary: kind === 'method' || context.metaGlossary?.model_term_ids.includes(target) ? 'meta' : 'model', term: method?.guide_section ? '' : kind !== 'model' ? method?.parent_term || target : '', section: anchor || '',
     returnTo: readingOrigin(context.route,model.version), scroll:'', scope: '', relation: '', source: '', anchor: '', sourceId: '', query: '', status: '' });
   return <><a ref={link} className={`model-reference ${className || ''}`} href={href} aria-describedby={open ? id : undefined}
-    onMouseEnter={show} onMouseLeave={hide} onFocus={show} onBlur={hide} onClick={event => {
+    onMouseEnter={show} onMouseLeave={() => { dismissed.current = false; hide(); }} onFocus={() => { dismissed.current = false; show(); }} onBlur={() => { dismissed.current = false; hide(); }} onClick={event => {
       if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
       event.currentTarget.href=routeHash({...readRoute(href),returnTo:readingOrigin(context.route,model.version)});
       setOpen(false);

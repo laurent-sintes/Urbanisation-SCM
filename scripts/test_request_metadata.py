@@ -148,7 +148,7 @@ class RequestMetadataTests(unittest.TestCase):
         result = render(current, 'Backlog')
         self.assertNotIn('Origine des demandes', result)
         self.assertNotIn('Angle de lecture', result)
-        self.assertIn('| Repère | Capacité | Type | Statut | Définition | Finalité | Rattachement |', result)
+        self.assertIn('| Repère | Élément | Type | Statut | Définition | Finalité | Rattachement |', result)
         self.assertIn('| Repère | Comportement | Statut | Définition |', result)
 
 

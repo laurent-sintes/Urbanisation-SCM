@@ -189,10 +189,6 @@ publication_delivery:
     fields:
       name: Master Data Ingestion
       nature: integration
-      category:
-        id: inbound
-        display_name: Inbound
-        order: 10
   - id: operations-visibility
     fields:
       name: Operations Visibility
@@ -250,3 +246,8 @@ category_confirmation_U757:
     display_name: Intégration
     order: 10
   note: Le type existait déjà U717 ; la catégorie manquante est ajoutée U757.
+delivery_updates:
+- source_ref: U848
+  fields:
+  - master-data-ingestion.category
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

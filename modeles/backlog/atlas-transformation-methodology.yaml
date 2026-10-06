@@ -1,11 +1,10 @@
-id: flow-methodology-2026-09-28.2
-version: 2026-09-28.2
-as_of: '2026-09-28'
+id: flow-methodology-2026-10-06.2
+version: 2026-10-06.2
+as_of: '2026-10-06'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
 editorial_status: implementation_wording
-scope: Refonte autorisée en U825. Méthode, métamodèle et vocabulaire distincts ; aucune extension du modèle métier ni publication
-  implicite.
+scope: Méthodologie de transformation et métamodèle ; Business Area intégré sous U848. Les éditions historiques restent figées.
 source_refs:
 - U319
 - U320
@@ -49,12 +48,15 @@ source_refs:
 - U825
 - U827
 - U828
+- U848
+- U853
 lessons:
 - id: business-first
   label: Le métier d’abord
   title: Des responsabilités métier qui coopèrent
-  rule: Une capacité décrit ce que l’entreprise sait faire durablement. Business System → Domain → Subdomain → Capability
-    → Behavior distingue le grand périmètre, ses responsabilités, les aptitudes et leurs manières d’agir.
+  rule: Une capacité décrit ce que l’entreprise sait faire durablement. Business System → Domain → Subdomain → Business Area
+    facultative → Capability → Behavior distingue le grand périmètre, ses responsabilités, les aptitudes et leurs manières
+    d’agir.
   established_at: '2026-09-19'
   scene:
     kind: responsibilities
@@ -274,7 +276,7 @@ lessons:
     caption: Deux vocabulaires complémentaires, consultables séparément.
     items:
     - label: Méta modèle
-      text: Système métier · Domaine · Sous-domaine · Capacité · Comportement · Relation
+      text: Système métier · Domaine · Sous-domaine · Business Area facultative · Capacité · Comportement · Relation
     - label: Modèle métier
       text: Stock · Commande · Réservation · Promesse
   question: Où chercher la différence entre une capacité et un comportement ?
@@ -646,6 +648,14 @@ sources:
 
     JE ne souhaite pas donner des infos sur des critères de temps (les deux semaines de question par exemple)
   scope: Aperçu découpé avec sommaire et parcours de lecture ; suppression des durées recommandées du cadrage.
+- id: U848
+  title: Valider la migration Business Area
+  excerpt: Je valide
+  scope: 'Plan U846/U847 : Business Area facultative, 16 périmètres, préservation des capacités et des publications historiques.'
+- id: U853
+  title: Appliquer le plan de correction transversal
+  excerpt: Applique le plan totalement
+  scope: 'A01 à A12 : cohérence des explications, documentation des limites, scénarios et contrôles.'
 glossary:
   terms:
   - id: MOD001
@@ -794,7 +804,11 @@ glossary:
     - definition
     - short_description
   - id: MOD008
-    notes: []
+    notes:
+    - U482 remplace Universe par Domain à ce niveau. L’identifiant MOD008 est conservé ; les publications historiques gardent
+      leur vocabulaire.
+    - U780 ajoute Business System au-dessus de Domain ; la profondeur de description varie selon le périmètre. Les publications
+      historiques gardent leurs niveaux.
     editorial_notes:
     - U482 remplace Universe par Domain à ce niveau. L’identifiant MOD008 est conservé ; les publications historiques gardent
       leur vocabulaire.
@@ -807,9 +821,10 @@ glossary:
     - short_description
   - id: MOD013
     notes:
-    - Un seul sous-domaine de rattachement par capacité ; ses coopérations avec les autres ne créent pas de second parent.
-    - Les sept référentiels organisent les sujets de Master Data sans niveau descriptif supplémentaire.
-    - Le découpage métier ne prescrit pas un bounded context logiciel ni une architecture de services.
+    - Une capacité possède un seul sous-domaine de rattachement, directement ou via une Business Area.
+    - Les référentiels d’Operational References restent des objets documentaires, liés aux capacités sans former un niveau
+      de responsabilité.
+    - La structure métier ne prescrit ni équipe, ni application, ni découpage logiciel.
     editorial_notes:
     - 'U673 : Subdomain remplace Purpose dans le backlog ; les publications historiques conservent Area ou Purpose selon leur
       version.'
@@ -942,7 +957,8 @@ glossary:
     - short_description
   - id: MOD021
     notes:
-    - ATP, CTP et PTP sont de type Evaluation ; Promise Selection Decision choisit une proposition.
+    - '[ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068) sont des capacités de décision : elles déterminent
+      une proposition et conservent leurs évaluations internes. La confirmation de l’engagement appartient à [Order Management](model:D04).'
     - 'Une décision conserve ses calculs internes : aucune capacité créée pour chaque formule.'
     - Knowledge établit et expose la connaissance de la situation ; Evaluation apprécie des possibilités dans un contexte.
     - Convention FLOW ; le marché peut réunir évaluation et sélection dans une même fonction.
@@ -1135,6 +1151,16 @@ glossary:
     - label_fr
     - definition
     - short_description
+  - id: MOD039
+    notes:
+    - Niveau facultatif. Une seule capacité est admissible si le périmètre apporte un sens distinct ; aucun regroupement forcé.
+    - Ne désigne automatiquement ni une équipe, ni un produit, ni une application.
+    - Chaque capacité reste directement rattachée à un sous-domaine ou à une Business Area de ce sous-domaine.
+    canonical_fields:
+    - name
+    - label_fr
+    - definition
+    - short_description
   model_term_ids:
   - TER001
   - TER002
@@ -1161,6 +1187,7 @@ glossary:
     - MOD022
     - MOD008
     - MOD013
+    - MOD039
     - MOD015
     - MOD006
     - MOD009
@@ -1627,10 +1654,12 @@ chapters:
 
       Son périmètre permet d’identifier sa contribution propre dans des [scénarios](method:MOD027) métier : les informations et conditions qu’elle mobilise, le résultat qu’elle produit et ses limites de responsabilité. Ses [comportements](method:MOD006) précisent les manières significatives dont elle s’exerce.
   - title: Des relations explicites
-    text: Une décomposition, une dépendance et une présentation expriment des liens différents. Les catégories et les types
-      de [capacités](method:MOD015) sont des attributs de lecture, sans niveau hiérarchique supplémentaire.
-    detail: Une [capacité](method:MOD015) peut être mobilisée dans plusieurs [scénarios](method:MOD027). Un [scénario](method:MOD027)
-      ne crée pas de nouvelle hiérarchie et son ordre ne prescrit pas un processus universel.
+    text: Le modèle de responsabilité se lit Business System → Domain → Subdomain → Business Area facultative. Le modèle de
+      capacité précise ensuite les [capacités](method:MOD015) et leurs [comportements](method:MOD006). Une Business Area exprime
+      un résultat et une frontière de responsabilité ; elle ne représente ni une équipe ni une application.
+    detail: Une capacité possède un parent unique, sous-domaine ou Business Area. Une Business Area peut porter une seule
+      capacité lorsque son sens le justifie. Les référentiels sont des objets documentaires liés aux capacités ; ils ne deviennent
+      pas leurs parents. Les scénarios mobilisent plusieurs périmètres sans former une autre hiérarchie.
   - title: Les comportements
     text: Les [comportements](method:MOD006) décrivent des manières métier significatives d’exercer une [capacité](method:MOD015).
       Une [capacité](method:MOD015) possède zéro ou au moins deux [comportements](method:MOD006) différenciants, avec une
@@ -1674,9 +1703,12 @@ chapters:
     text: 'Une [capacité](method:MOD015) décrit une aptitude métier ; une [fonctionnalité](method:MOD018) décrit une possibilité
       offerte par un produit. « Fonction » doit être qualifié avant emploi : ce mot ne désigne pas un niveau supplémentaire
       du modèle.'
-  - title: Classer sans ajouter de niveau
-    text: La hiérarchie précise les périmètres parents. Les catégories regroupent des capacités pour faciliter la lecture.
-      Les filtres sélectionnent les objets affichés sans changer leur identité ni leur parent.
+  - title: Regrouper par responsabilité
+    text: Créer une Business Area lorsque le regroupement exprime un service cohérent, un bénéficiaire et une frontière utile.
+      Sinon, rattacher les capacités directement au sous-domaine. Les types, filtres et codes de lecture ne changent ni les
+      identités ni les parents.
+    example: Order Promising regroupe ATP, CTP et PTP dans Availability. Les capacités de Policies restent directement rattachées
+      à leur sous-domaine. Le bandeau de la carte rend le regroupement visible et ouvre sa fiche.
 - id: references
   title: Références
   intro: Références consultées le 28 septembre 2026. Elles éclairent des aspects complémentaires ; leur combinaison est une
@@ -1727,3 +1759,19 @@ chapters:
     url: https://www.omg.org/spec/BPMN/2.0.2/About-BPMN
 note: 'Édition préparée après l’audit UX du 27 septembre 2026 : accueil orienté lecture, liens vers les notions publiées et
   séparation des notes de maintenance. Définitions et preuves historiques préservées.'
+model_examples:
+- node_id: D03.i
+  name: Available-to-Promise (ATP)
+  nature: decision
+  parent_id: ba-order-promising
+- node_id: D03.j
+  name: Capable-to-Promise (CTP)
+  nature: decision
+  parent_id: ba-order-promising
+- node_id: D03.k
+  name: Profitable-to-Promise (PTP)
+  nature: decision
+  parent_id: ba-order-promising
+- node_id: ba-order-promising
+  name: Order Promising
+  parent_id: D03

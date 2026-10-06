@@ -67,6 +67,17 @@ def compile_draft(root, source):
             if field in term or field not in terms[term['id']]:
                 raise ValueError('Missing or overridden canonical field: ' + term['id'] + '.' + field)
             term[field] = terms[term['id']][field]
+    if guide.get('model_examples'):
+        try:
+            from .methodology_alignment import validate_examples
+        except ImportError:
+            from methodology_alignment import validate_examples
+        model_path = root / 'modeles/backlog/model.yaml'
+        model_content = model_path.read_bytes()
+        dependencies['modeles/backlog/model.yaml'] = sha256(model_content).hexdigest()
+        errors = validate_examples(guide, loads(model_content.decode('utf-8-sig'), '.yaml'))
+        if errors:
+            raise ValueError('; '.join(errors))
     content = dumps(guide).encode('utf-8')
     return content, validate(content), dependencies
 

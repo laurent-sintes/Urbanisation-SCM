@@ -61,7 +61,18 @@ try {
  assert.ok(await page.locator('.method-chapter a[href*="term=MOD"]').count()>=7);
  assert.equal(await page.locator('.model-tree').count(),0);
  assert.equal(await page.getByRole('navigation',{name:'Espaces Atlas'}).getByRole('button').count(),4);
- const cap=page.locator('.method-chapter a[href*="term=MOD015"]').first();await cap.focus();await page.getByRole('tooltip').waitFor();await page.keyboard.press('Escape');await page.getByRole('tooltip').waitFor({state:'hidden'});
+ const cap=page.locator('.method-chapter a[href*="term=MOD015"]').first();
+ await page.mouse.move(0,0);
+ for(let attempt=0;attempt<3;attempt++) {
+  await cap.focus();
+  await page.waitForFunction(()=>!!document.activeElement?.getAttribute('aria-describedby'));
+  const tooltipId=await cap.getAttribute('aria-describedby');
+  await page.locator(`[id="${tooltipId}"]`).waitFor();
+  await page.keyboard.press('Escape');
+  await page.locator(`[id="${tooltipId}"]`).waitFor({state:'hidden'});
+  assert.equal(await cap.getAttribute('aria-describedby'),null);
+  await cap.evaluate(el=>el.blur());
+ }
  await cap.click();await page.getByRole('heading',{name:'Capacité',exact:true}).waitFor();
  await page.getByRole('link',{name:'Retour à la méthode',exact:true}).click();await page.locator('.method-chapter').waitFor();
  await page.screenshot({path:resolve(output,'start.png')});

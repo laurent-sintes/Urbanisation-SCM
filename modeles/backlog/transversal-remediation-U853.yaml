@@ -1,0 +1,1646 @@
+id: transversal-remediation-U853
+source_refs:
+- U853
+status: implemented_ready_for_preparation
+sources:
+  ms-stock:
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Inventory on-hand list
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-on-hand-list
+    source_locator: Query your on-hand inventory ; colonnes disponibles, attendues et réservées
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  ms-plan:
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Master planning home page
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+    source_locator: Besoins nets, ordres planifiés et distinction des prévisions
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  ms-flow:
+    vendor: Microsoft
+    product: Dynamics 365 Intelligent Order Management
+    source_title: Create orchestration flows
+    source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+    source_locator: Actions, conditions, publication des parcours et envoi aux prestataires
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  ms-consign:
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Set up consignment
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/consignment
+    source_locator: Propriété fournisseur, prélèvement et journal de changement de propriétaire
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  ms-service:
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Service orders
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders
+    source_locator: Prestations, étapes et validation des ordres de service
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  ms-agreement:
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Service agreements
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-agreements
+    source_locator: Validité des accords et suspension de création des ordres
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  ms-transport:
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Transportation management overview
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+    source_locator: Planification des chargements et choix des transports
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  sap-mrp:
+    vendor: SAP
+    product: SAP S/4HANA
+    source_title: Understanding MRP in SAP S/4HANA
+    source_url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/understanding-mrp-in-sap-s-4hana
+    source_locator: Calcul des besoins nets, tailles de lots et stock de sécurité
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  sap-retail:
+    vendor: SAP
+    product: SAP S/4HANA Retail
+    source_title: Running Replenishment Planning
+    source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/running-replenishment-planning_e456b0ed-3094-4056-9ba8-aa56cf6833ed
+    source_locator: Réapprovisionnement magasin, stock cible statique ou dynamique ; hors SAP CAR et F&R
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  sap-tm:
+    vendor: SAP
+    product: SAP S/4HANA Transportation Management
+    source_title: Warehouse Integration
+    source_url: https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+    source_locator: Groupement des livraisons, blocage de sortie et retours d’exécution
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  sap-vas:
+    vendor: SAP
+    product: SAP S/4HANA Fashion
+    source_title: Explaining VAS
+    source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-vas_f2561ed9-da50-493e-8d2f-b68d3c46ee05
+    source_locator: Étiquetage, emballage et instructions attachées aux documents
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  sap-ppds:
+    vendor: SAP
+    product: SAP S/4HANA Manufacturing for planning and scheduling
+    source_title: Explaining Supply Chain Planning
+    source_url: https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning
+    source_locator: Planification opérationnelle, ressources contraintes et CTP de production
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  sap-proc:
+    vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition
+    source_title: Procurement Overview and Analytics
+    source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sourcing-and-procurement/introducing-procurement-overview-page-and-real-time-reporting-and-monitoring-for-procurement_b1220cd8-8141-476c-bd30-0de739fdb2f6
+    source_locator: Suivi des contrats, confirmations et extraction des données achats
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  sap-assign:
+    vendor: SAP
+    product: SAP S/4HANA Fashion
+    source_title: Explaining Supply Assignment
+    source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+    source_locator: Affectation, statuts, libération et retrait des affectations
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  sap-consign:
+    vendor: SAP
+    product: SAP S/4HANA
+    source_title: Performing the Process of Vendor Consignment
+    source_url: https://learning.sap.com/courses/inventory-management-and-physical-inventory-in-sap-s-4hana/performing-the-process-of-vendor-consignment
+    source_locator: Stock en consignation fournisseur, prélèvement et règlement
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  sap-flow:
+    vendor: SAP
+    product: SAP S/4HANA Flexible Workflow
+    source_title: Explaining Flexible Workflow
+    source_url: https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+    source_locator: Scénarios applicatifs, conditions et activités prédéfinies
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+  sap-returns:
+    vendor: SAP
+    product: SAP S/4HANA Sales
+    source_title: Managing Customer Returns
+    source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+    source_locator: Retours avancés, inspection, réparation et suites logistiques
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+added_comparisons:
+- node_id: D04.n
+  source: sap-tm
+  support: Grouper et fractionner des quantités pour préparer les livraisons.
+  limit: La livraison SAP ne prouve pas la fusion des engagements de commandes FLOW.
+- node_id: D05.a
+  source: sap-retail
+  support: Déterminer des cibles de réapprovisionnement selon stock et besoins attendus.
+  limit: Le calcul magasin ne démontre pas l’optimisation multi-échelon de FLOW.
+- node_id: D11.b
+  source: sap-proc
+  support: Restituer les contrats achats, consommations et confirmations.
+  limit: Appui achats uniquement ; FLOW couvre aussi les accords utiles à d’autres prestations.
+- node_id: D19.a
+  source: ms-agreement
+  support: Appliquer validité et suspension à la création de prestations.
+  limit: Un accord de service ne démontre pas le classement d’un panel de transporteurs.
+- node_id: service-order-labeling
+  source: sap-vas
+  support: Porter les instructions d’étiquetage des biens.
+  limit: SAP les rattache aux documents commerciaux ; FLOW tient un engagement de prestation distinct.
+- node_id: service-order-billing
+  source: ms-flow
+  support: Confier des ordres à un prestataire de facturation.
+  limit: L’envoi ne démontre pas tout le cycle de la demande de facturation FLOW.
+- node_id: BHV019
+  source: sap-mrp
+  support: Protéger les besoins avec un stock de sécurité.
+  limit: Le paramétrage ne prouve pas une optimisation autonome de sa valeur.
+- node_id: BHV020
+  source: sap-retail
+  support: Déclencher le réapprovisionnement selon des seuils de stock.
+  limit: Périmètre magasin ; FLOW sépare règle active et recommandation de réglage.
+- node_id: BHV026
+  source: sap-retail
+  support: Calculer un stock cible magasin à partir des besoins attendus.
+  limit: Pas de preuve de tous les arbitrages transverses du modèle FLOW.
+- node_id: BHV044
+  source: sap-tm
+  support: Fractionner des quantités entre livraisons.
+  limit: Le document de livraison ne se confond pas avec la commande et ses engagements.
+- node_id: BHV086
+  source: sap-tm
+  support: Regrouper des lignes pour une livraison.
+  limit: Un groupement logistique ne fusionne pas juridiquement les commandes.
+- node_id: BHV075
+  source: sap-ppds
+  support: Tester une création de ressources pour satisfaire la demande.
+  limit: Cas de production documenté ; pas de généralisation à tous les approvisionnements.
+- node_id: BHV076
+  source: sap-ppds
+  support: Prendre en compte les ressources contraintes dans la réponse de production.
+  limit: La faisabilité de production ne couvre pas toutes les capacités de service FLOW.
+- node_id: BHV078
+  source: sap-proc
+  support: Suivre les confirmations fournisseur attendues et reçues.
+  limit: Visibilité documentée, sans preuve d’un cycle complet de négociation.
+- node_id: BHV102
+  source: sap-assign
+  support: Restreindre les réaffectations selon les statuts des engagements.
+  limit: Les statuts SAP ne sont pas les engagements et réservations FLOW.
+- node_id: BHV103
+  source: sap-assign
+  support: Retirer puis refaire une affectation selon les règles applicables.
+  limit: FLOW explicite les conséquences sur le plan et les commandes ; pas de traduction automatique des statuts.
+- node_id: ba-inventory-position-management
+  source: ms-stock
+  support: Exposer les quantités et expliquer leur origine.
+  limit: La vue produit ne délimite pas à elle seule la responsabilité complète de tenue et correction FLOW.
+- node_id: ba-inventory-position-management
+  source: sap-mrp
+  support: Utiliser stock et engagements pour calculer les besoins nets.
+  limit: Le calcul ne couvre pas toute la fiabilisation des positions FLOW.
+- node_id: ba-inventory-ownership-management
+  source: ms-consign
+  support: Tracer le changement de propriétaire au prélèvement.
+  limit: Cas fournisseur ; FLOW distingue cette reconnaissance de la décision comptable.
+- node_id: ba-inventory-ownership-management
+  source: sap-consign
+  support: Distinguer stock fournisseur et transfert au prélèvement.
+  limit: Le processus SAP regroupe aussi règlement et opérations que FLOW sépare.
+- node_id: ba-master-plan-management
+  source: ms-plan
+  support: Maintenir un plan tenant compte des besoins et ressources.
+  limit: Le plan FLOW porte les affectations opérationnelles ; il ne reprend pas tout le module de prévision.
+- node_id: ba-master-plan-management
+  source: sap-ppds
+  support: Réviser un plan sous contraintes de ressources.
+  limit: Appui production ; ce module ne définit pas les frontières transverses de FLOW.
+- node_id: ba-order-promising
+  source: sap-ppds
+  support: Proposer une réponse faisable sous contraintes.
+  limit: CTP de production seulement, sans assimilation de toute la Business Area à PP/DS.
+- node_id: ba-supply-matching
+  source: ms-plan
+  support: Rapprocher les besoins et apports nécessaires.
+  limit: Des ordres planifiés ne valent pas affectation ni engagement confirmé.
+- node_id: ba-supply-matching
+  source: sap-assign
+  support: Affecter les ressources aux demandes selon des priorités.
+  limit: La Business Area FLOW englobe plusieurs décisions, pas uniquement la fonction d’affectation SAP.
+- node_id: ba-policy-optimization
+  source: ms-plan
+  support: Calculer les besoins selon les paramètres de protection.
+  limit: Le réglage des paramètres ne prouve pas leur optimisation ; la recommandation FLOW reste distincte.
+- node_id: ba-policy-optimization
+  source: sap-retail
+  support: Calculer des cibles de stock.
+  limit: Appui limité aux cibles ; pas de preuve d’une optimisation des politiques de réservation.
+- node_id: ba-order-lifecycle-management
+  source: ms-flow
+  support: Valider les commandes puis transmettre leurs résultats aux prestataires.
+  limit: Le parcours n’est pas le registre d’engagements FLOW.
+- node_id: ba-reactive-workflow-management
+  source: ms-flow
+  support: Composer un parcours à partir d’actions et de conditions.
+  limit: FLOW sépare sentinelle, planification et conduite ; le produit ne prescrit pas ce découpage.
+- node_id: ba-reactive-workflow-management
+  source: sap-flow
+  support: Choisir des activités applicatives selon des conditions.
+  limit: Un scénario SAP prédéfini ne prouve pas un moteur général de composition dynamique.
+- node_id: ba-service-planning
+  source: ms-transport
+  support: Planifier les chargements et itinéraires.
+  limit: Appui transport, pas ensemble des prestations de traitement des biens.
+- node_id: ba-service-planning
+  source: sap-tm
+  support: Articuler plan de transport et instructions entrepôt.
+  limit: FLOW sépare planification, engagement et réalisation physique.
+- node_id: ba-execution-assurance
+  source: sap-tm
+  support: Recevoir les retours entre transport et entrepôt.
+  limit: Les statuts produits ne prouvent pas tout le rapprochement et la qualification des écarts FLOW.
+- node_id: ba-execution-coordination
+  source: ms-flow
+  support: Confier la réalisation à un prestataire et organiser les branches de réponse.
+  limit: Le parcours de commande est plus large que la coordination locale confiée à Fulfilment.
+- node_id: ba-execution-coordination
+  source: sap-tm
+  support: Coordonner instructions de chargement et autorisation de sortie.
+  limit: La coordination transport ne démontre pas toutes les adaptations de prestations FLOW.
+- node_id: ba-inbound-information-integration
+  source: ms-flow
+  support: Recevoir des données de fournisseurs configurés.
+  limit: La réception technique ne suffit pas à établir validité, provenance et autorité métier des plans.
+- node_id: ba-outbound-information-provision
+  source: sap-proc
+  support: Extraire les faits achats pour des usages externes.
+  limit: Périmètre achats seulement ; pas de preuve de toutes les données comptables, de planification et produit.
+- node_id: ba-goods-processing-order-management
+  source: ms-service
+  support: Tenir des demandes de prestations et leurs étapes.
+  limit: Le service de technicien ne constitue pas une preuve des prestations textiles particulières.
+- node_id: ba-goods-processing-order-management
+  source: sap-vas
+  support: Porter des instructions de traitement comme étiquetage et emballage.
+  limit: Les instructions sont attachées aux documents ; FLOW tient une demande de prestation distincte.
+- node_id: ba-transport-order-management
+  source: ms-transport
+  support: Construire et suivre des chargements à partir des ordres.
+  limit: Ne démontre pas une réservation de capacité autonome avant instructions.
+- node_id: ba-transport-order-management
+  source: sap-tm
+  support: Relier ordres de transport, livraisons et exécution.
+  limit: Le cycle exact de réservation anticipée reste à qualifier.
+- node_id: ba-financial-service-order-management
+  source: ms-flow
+  support: Transmettre une demande au prestataire de facturation.
+  limit: Ne démontre pas le cycle d’encaissement ni la maîtrise comptable, qui reste externe.
+remaining_documentary_gaps:
+- node_id: D05.c
+  family: microsoft_dynamics
+  reason: Les sources rapprochent besoins et ressources ou affectent une offre ; elles ne démontrent pas la décision de redistribuer
+    physiquement un stock entre sites. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+  source_refs:
+  - U853
+- node_id: D05.c
+  family: sap_s4hana
+  reason: Les sources rapprochent besoins et ressources ou affectent une offre ; elles ne démontrent pas la décision de redistribuer
+    physiquement un stock entre sites. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+  source_refs:
+  - U853
+- node_id: BHV016
+  family: sap_s4hana
+  reason: La révision de plans produit ne prouve pas toutes les conditions d’ajustement du plan commun d’affectation FLOW.
+    Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning
+  source_refs:
+  - U853
+- node_id: BHV024
+  family: microsoft_dynamics
+  reason: La couverture des besoins et l’affectation ne démontrent pas le choix d’un rééquilibrage physique entre sites. Appui
+    requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+  source_refs:
+  - U853
+- node_id: BHV024
+  family: sap_s4hana
+  reason: La couverture des besoins et l’affectation ne démontrent pas le choix d’un rééquilibrage physique entre sites. Appui
+    requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+  source_refs:
+  - U853
+- node_id: BHV025
+  family: microsoft_dynamics
+  reason: La couverture des besoins et l’affectation ne démontrent pas le choix de concentrer les stocks sur moins de sites.
+    Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+  source_refs:
+  - U853
+- node_id: BHV025
+  family: sap_s4hana
+  reason: La couverture des besoins et l’affectation ne démontrent pas le choix de concentrer les stocks sur moins de sites.
+    Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+  source_refs:
+  - U853
+- node_id: BHV027
+  family: sap_s4hana
+  reason: Le réapprovisionnement magasin ne prouve pas l’optimisation d’une cible de stock en centre de distribution. Appui
+    requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/running-replenishment-planning_e456b0ed-3094-4056-9ba8-aa56cf6833ed
+  source_refs:
+  - U853
+- node_id: BHV028
+  family: microsoft_dynamics
+  reason: La planification des besoins ou la planification d’un site de production ne démontre pas l’optimisation conjointe
+    de plusieurs échelons ; SAP IBP ne constitue pas un appui S/4HANA. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+  source_refs:
+  - U853
+- node_id: BHV028
+  family: sap_s4hana
+  reason: La planification des besoins ou la planification d’un site de production ne démontre pas l’optimisation conjointe
+    de plusieurs échelons ; SAP IBP ne constitue pas un appui S/4HANA. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning
+  source_refs:
+  - U853
+- node_id: D05.h
+  family: sap_s4hana
+  reason: Les paramètres et statuts d’affectation sont documentés ; l’optimisation autonome des règles de réservation selon
+    leurs conséquences ne l’est pas. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+  source_refs:
+  - U853
+- node_id: BHV032
+  family: microsoft_dynamics
+  reason: Les statuts d’affectation ne démontrent pas une règle de réservation déclenchée par les jalons du parcours. Appui
+    requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-on-hand-list
+  source_refs:
+  - U853
+- node_id: BHV032
+  family: sap_s4hana
+  reason: Les statuts d’affectation ne démontrent pas une règle de réservation déclenchée par les jalons du parcours. Appui
+    requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+  source_refs:
+  - U853
+- node_id: BHV033
+  family: microsoft_dynamics
+  reason: Les statuts d’affectation ne démontrent pas une règle de réservation évoluant selon des horizons temporels. Appui
+    requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-on-hand-list
+  source_refs:
+  - U853
+- node_id: BHV033
+  family: sap_s4hana
+  reason: Les statuts d’affectation ne démontrent pas une règle de réservation évoluant selon des horizons temporels. Appui
+    requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+  source_refs:
+  - U853
+- node_id: BHV034
+  family: sap_s4hana
+  reason: Les tris d’affectation ne démontrent pas la politique de réservation différenciée par profil de demande. Appui requis
+    encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+  source_refs:
+  - U853
+- node_id: BHV035
+  family: microsoft_dynamics
+  reason: Les statuts d’affectation ne démontrent pas l’ajustement de réservation fondé sur un risque estimé. Appui requis
+    encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-on-hand-list
+  source_refs:
+  - U853
+- node_id: BHV035
+  family: sap_s4hana
+  reason: Les statuts d’affectation ne démontrent pas l’ajustement de réservation fondé sur un risque estimé. Appui requis
+    encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+  source_refs:
+  - U853
+- node_id: BHV050
+  family: sap_s4hana
+  reason: Le traitement des retours et la réparation sont abordés ; le passage examiné ne suffit pas à établir précisément
+    Return to Stock et ses limites dans FLOW. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+  source_refs:
+  - U853
+- node_id: BHV052
+  family: microsoft_dynamics
+  reason: Le document examiné « Master planning home page » ne permet pas d’établir un appui suffisamment précis pour Return
+    to Supplier. Le périmètre FLOW reste documenté ; sa correspondance produit exige une source plus ciblée.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+  source_refs:
+  - U853
+- node_id: BHV054
+  family: sap_s4hana
+  reason: Le traitement des retours et la réparation sont abordés ; le passage examiné ne suffit pas à établir précisément
+    Scrapping et ses limites dans FLOW. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+  source_refs:
+  - U853
+- node_id: BHV057
+  family: microsoft_dynamics
+  reason: Le traitement des retours et la réparation sont abordés ; le passage examiné ne suffit pas à établir précisément
+    Return for Repair et ses limites dans FLOW. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders
+  source_refs:
+  - U853
+- node_id: BHV057
+  family: sap_s4hana
+  reason: Le traitement des retours et la réparation sont abordés ; le passage examiné ne suffit pas à établir précisément
+    Return for Repair et ses limites dans FLOW. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+  source_refs:
+  - U853
+- node_id: BHV059
+  family: sap_s4hana
+  reason: Les flux transport documentés ne précisent pas le cycle d’achat en livraison directe chez le destinataire final.
+    Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+  source_refs:
+  - U853
+- node_id: BHV064
+  family: microsoft_dynamics
+  reason: Le transfert au prélèvement est documenté ; il ne démontre pas un transfert déclenché par l’ancienneté du stock.
+    Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/consignment
+  source_refs:
+  - U853
+- node_id: BHV064
+  family: sap_s4hana
+  reason: Le transfert au prélèvement est documenté ; il ne démontre pas un transfert déclenché par l’ancienneté du stock.
+    Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/inventory-management-and-physical-inventory-in-sap-s-4hana/performing-the-process-of-vendor-consignment
+  source_refs:
+  - U853
+- node_id: BHV067
+  family: sap_s4hana
+  reason: La coordination des livraisons ne documente pas la remise au client venant retirer sa commande. Appui requis encore
+    à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+  source_refs:
+  - U853
+- node_id: BHV068
+  family: sap_s4hana
+  reason: Les flux transport documentés ne précisent pas le cycle de vente en livraison directe sans passage par un stock
+    propre. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+  source_refs:
+  - U853
+- node_id: BHV085
+  family: sap_s4hana
+  reason: Le calcul de réapprovisionnement ne démontre pas les règles de révision des propositions déjà portées dans le plan
+    FLOW. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/running-replenishment-planning_e456b0ed-3094-4056-9ba8-aa56cf6833ed
+  source_refs:
+  - U853
+- node_id: BHV087
+  family: sap_s4hana
+  reason: La convergence de branches ou le regroupement de livraisons ne prouve pas la fusion des engagements de plusieurs
+    commandes. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+  source_refs:
+  - U853
+- node_id: BHV096
+  family: microsoft_dynamics
+  reason: Le prélèvement d’un stock détenu chez soi pour un fournisseur ne démontre pas le cycle commercial de consommation
+    d’une consignation chez un client. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/consignment
+  source_refs:
+  - U853
+- node_id: D04.t
+  family: microsoft_dynamics
+  reason: La consignation fournisseur documentée n’établit pas le cycle de reprise de biens consignés chez un client. Appui
+    requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/consignment
+  source_refs:
+  - U853
+- node_id: BHV099
+  family: sap_s4hana
+  reason: Le calcul de plan est documenté ; l’arrêt contrôlé du calcul avec préservation de la version applicable ne l’est
+    pas. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning
+  source_refs:
+  - U853
+- node_id: BHV100
+  family: sap_s4hana
+  reason: La planification est documentée ; les conditions de relance et de reprise d’un plan interrompu restent à qualifier.
+    Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning
+  source_refs:
+  - U853
+- node_id: service-order-labeling
+  family: microsoft_dynamics
+  reason: Le cycle générique d’ordre de service ne documente pas les exigences et résultats d’un étiquetage textile. Appui
+    requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders
+  source_refs:
+  - U853
+- node_id: service-order-garment-finishing
+  family: microsoft_dynamics
+  reason: Les prestations génériques et instructions d’étiquetage ou d’emballage ne documentent pas le cycle spécifique de
+    finition des vêtements. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders
+  source_refs:
+  - U853
+- node_id: service-order-garment-finishing
+  family: sap_s4hana
+  reason: Les prestations génériques et instructions d’étiquetage ou d’emballage ne documentent pas le cycle spécifique de
+    finition des vêtements. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-vas_f2561ed9-da50-493e-8d2f-b68d3c46ee05
+  source_refs:
+  - U853
+- node_id: service-order-cleaning
+  family: microsoft_dynamics
+  reason: Les prestations génériques et instructions d’étiquetage ou d’emballage ne documentent pas le nettoyage textile,
+    ses exigences et son résultat attendu. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders
+  source_refs:
+  - U853
+- node_id: service-order-cleaning
+  family: sap_s4hana
+  reason: Les prestations génériques et instructions d’étiquetage ou d’emballage ne documentent pas le nettoyage textile,
+    ses exigences et son résultat attendu. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-vas_f2561ed9-da50-493e-8d2f-b68d3c46ee05
+  source_refs:
+  - U853
+- node_id: service-order-repair-alteration
+  family: sap_s4hana
+  reason: Le traitement des retours et la réparation sont abordés ; le passage examiné ne suffit pas à établir précisément
+    Repair & Alteration Order et ses limites dans FLOW. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+  source_refs:
+  - U853
+- node_id: service-order-personalization
+  family: microsoft_dynamics
+  reason: Les prestations génériques et instructions d’étiquetage ou d’emballage ne suffisent pas à établir un cycle de personnalisation
+    des biens. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders
+  source_refs:
+  - U853
+- node_id: service-order-personalization
+  family: sap_s4hana
+  reason: Les prestations génériques et instructions d’étiquetage ou d’emballage ne suffisent pas à établir un cycle de personnalisation
+    des biens. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-vas_f2561ed9-da50-493e-8d2f-b68d3c46ee05
+  source_refs:
+  - U853
+- node_id: transport-appointments
+  family: sap_s4hana
+  reason: La coordination transport-entrepôt ne documente pas suffisamment la négociation et la confirmation des créneaux
+    de rendez-vous. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+  source_refs:
+  - U853
+- node_id: transport-rescheduling-redirection
+  family: microsoft_dynamics
+  reason: La coordination transport-entrepôt ne démontre pas le cycle complet d’une redirection ou reprogrammation après engagement.
+    Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+  source_refs:
+  - U853
+- node_id: transport-rescheduling-redirection
+  family: sap_s4hana
+  reason: La coordination transport-entrepôt ne démontre pas le cycle complet d’une redirection ou reprogrammation après engagement.
+    Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+  source_refs:
+  - U853
+- node_id: service-order-transport-booking
+  family: microsoft_dynamics
+  reason: La construction d’un chargement à partir des ordres ne démontre pas une réservation de capacité autonome avant les
+    instructions de transport. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+  source_refs:
+  - U853
+- node_id: service-order-document-production
+  family: microsoft_dynamics
+  reason: Les actions de parcours ne documentent pas une demande autonome de production documentaire avec engagement, remise
+    et correction du résultat. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+  source_refs:
+  - U853
+- node_id: master-data-ingestion-commerce
+  family: microsoft_dynamics
+  reason: La référence SAP existante porte un service d’intégration distinct. Elle ne démontre pas le périmètre S/4HANA de
+    cette ingestion ; un appui produit précis reste à établir.
+  investigated_urls:
+  - https://help.sap.com/docs/SAP_FIELD_SERVICE_MANAGEMENT/703cab4eaf67401293a27fa1b63f4edb/mdi-introduction.html
+  source_refs:
+  - U853
+- node_id: master-data-ingestion-commerce
+  family: sap_s4hana
+  reason: La référence SAP existante porte un service d’intégration distinct. Elle ne démontre pas le périmètre S/4HANA de
+    cette ingestion ; un appui produit précis reste à établir.
+  investigated_urls:
+  - https://help.sap.com/docs/SAP_FIELD_SERVICE_MANAGEMENT/703cab4eaf67401293a27fa1b63f4edb/mdi-introduction.html
+  source_refs:
+  - U853
+- node_id: master-data-ingestion-finance
+  family: microsoft_dynamics
+  reason: La référence SAP existante porte un service d’intégration distinct. Elle ne démontre pas le périmètre S/4HANA de
+    cette ingestion ; un appui produit précis reste à établir.
+  investigated_urls:
+  - https://help.sap.com/docs/SAP_FIELD_SERVICE_MANAGEMENT/703cab4eaf67401293a27fa1b63f4edb/mdi-introduction.html
+  source_refs:
+  - U853
+- node_id: master-data-ingestion-finance
+  family: sap_s4hana
+  reason: La référence SAP existante porte un service d’intégration distinct. Elle ne démontre pas le périmètre S/4HANA de
+    cette ingestion ; un appui produit précis reste à établir.
+  investigated_urls:
+  - https://help.sap.com/docs/SAP_FIELD_SERVICE_MANAGEMENT/703cab4eaf67401293a27fa1b63f4edb/mdi-introduction.html
+  source_refs:
+  - U853
+- node_id: master-data-ingestion-design
+  family: microsoft_dynamics
+  reason: La référence SAP existante porte un service d’intégration distinct. Elle ne démontre pas le périmètre S/4HANA de
+    cette ingestion ; un appui produit précis reste à établir.
+  investigated_urls:
+  - https://help.sap.com/docs/SAP_FIELD_SERVICE_MANAGEMENT/703cab4eaf67401293a27fa1b63f4edb/mdi-introduction.html
+  source_refs:
+  - U853
+- node_id: master-data-ingestion-design
+  family: sap_s4hana
+  reason: La référence SAP existante porte un service d’intégration distinct. Elle ne démontre pas le périmètre S/4HANA de
+    cette ingestion ; un appui produit précis reste à établir.
+  investigated_urls:
+  - https://help.sap.com/docs/SAP_FIELD_SERVICE_MANAGEMENT/703cab4eaf67401293a27fa1b63f4edb/mdi-introduction.html
+  source_refs:
+  - U853
+- node_id: BHV108
+  family: microsoft_dynamics
+  reason: Les contraintes et coûts de production ne démontrent pas toutes les conséquences économiques contextuelles prises
+    en compte dans la décision de promesse FLOW. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+  source_refs:
+  - U853
+- node_id: BHV108
+  family: sap_s4hana
+  reason: Les contraintes et coûts de production ne démontrent pas toutes les conséquences économiques contextuelles prises
+    en compte dans la décision de promesse FLOW. Appui requis encore à établir pour cette famille produit.
+  investigated_urls:
+  - https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning
+  source_refs:
+  - U853
+- node_id: ba-order-promising
+  family: microsoft_dynamics
+  reason: Le document examiné « Create orchestration flows » ne permet pas d’établir un appui suffisamment précis pour Order
+    Promising. Le périmètre FLOW reste documenté ; sa correspondance produit exige une source plus ciblée.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+  source_refs:
+  - U853
+- node_id: ba-order-lifecycle-management
+  family: sap_s4hana
+  reason: Le document examiné « Explaining Flexible Workflow » ne permet pas d’établir un appui suffisamment précis pour Order
+    Lifecycle Management. Le périmètre FLOW reste documenté ; sa correspondance produit exige une source plus ciblée.
+  investigated_urls:
+  - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+  source_refs:
+  - U853
+- node_id: ba-execution-assurance
+  family: microsoft_dynamics
+  reason: Le document examiné « Create orchestration flows » ne permet pas d’établir un appui suffisamment précis pour Execution
+    Assurance. Le périmètre FLOW reste documenté ; sa correspondance produit exige une source plus ciblée.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+  source_refs:
+  - U853
+- node_id: ba-inbound-information-integration
+  family: sap_s4hana
+  reason: Le document examiné « Explaining Flexible Workflow » ne permet pas d’établir un appui suffisamment précis pour Inbound
+    Information Integration. Le périmètre FLOW reste documenté ; sa correspondance produit exige une source plus ciblée.
+  investigated_urls:
+  - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+  source_refs:
+  - U853
+- node_id: ba-outbound-information-provision
+  family: microsoft_dynamics
+  reason: Le document examiné « Create orchestration flows » ne permet pas d’établir un appui suffisamment précis pour Outbound
+    Information Provision. Le périmètre FLOW reste documenté ; sa correspondance produit exige une source plus ciblée.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+  source_refs:
+  - U853
+- node_id: ba-financial-service-order-management
+  family: sap_s4hana
+  reason: Le document examiné « Explaining Flexible Workflow » ne permet pas d’établir un appui suffisamment précis pour Financial
+    Service Order Management. Le périmètre FLOW reste documenté ; sa correspondance produit exige une source plus ciblée.
+  investigated_urls:
+  - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+  source_refs:
+  - U853
+limits:
+- Les correspondances partielles ne sont pas des preuves de couverture complète.
+- Les lacunes documentaires ne prouvent pas l’absence d’une fonction produit.
+- Aucune réalisation installée nouvelle déclarée.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U853
+  summary: 16 Business Areas documentées, 42 appuis partiels ajoutés, lacunes explicites et quatre scénarios de retour et
+    réaction.
+  required_nodes:
+  - id: ba-inventory-position-management
+    fields:
+      finality: Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
+      scope: |-
+        Les changements de propriétaire sont portés par Inventory Ownership Management ; aucune fusion des registres ou de la réservation.
+
+        Bénéficiaire et résultat : Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
+
+        Exemple fictif : Une réception annoncée de 100 pièces est constatée à 80 : restituer la correction et les engagements concernés sans confondre disponibilité et propriété.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        source_title: Inventory on-hand list
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-on-hand-list
+        source_locator: Query your on-hand inventory ; colonnes disponibles, attendues et réservées
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Inventory on-hand list
+        concept_name: Inventory on-hand list
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Exposer les quantités et expliquer leur origine.
+        differences: La vue produit ne délimite pas à elle seule la responsabilité complète de tenue et correction FLOW.
+        flow_position: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits, vérifications
+          et corrections.
+        definition_choice: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits,
+          vérifications et corrections.
+        term_choice: Inventory Position Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Exposer les quantités et expliquer leur origine.
+        approach_summary: La vue produit ne délimite pas à elle seule la responsabilité complète de tenue et correction FLOW.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA
+        source_title: Understanding MRP in SAP S/4HANA
+        source_url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/understanding-mrp-in-sap-s-4hana
+        source_locator: Calcul des besoins nets, tailles de lots et stock de sécurité
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Understanding MRP in SAP S/4HANA
+        concept_name: Understanding MRP in SAP S/4HANA
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Utiliser stock et engagements pour calculer les besoins nets.
+        differences: Le calcul ne couvre pas toute la fiabilisation des positions FLOW.
+        flow_position: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits, vérifications
+          et corrections.
+        definition_choice: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits,
+          vérifications et corrections.
+        term_choice: Inventory Position Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Utiliser stock et engagements pour calculer les besoins nets.
+        approach_summary: Le calcul ne couvre pas toute la fiabilisation des positions FLOW.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-inventory-ownership-management
+    fields:
+      finality: Permettre aux responsables des engagements de connaître le propriétaire reconnu des biens et le fait qui justifie
+        son changement.
+      scope: |-
+        La reconnaissance de propriété reste distincte du déplacement physique et de l’écriture comptable.
+
+        Bénéficiaire et résultat : Permettre aux responsables des engagements de connaître le propriétaire reconnu des biens et le fait qui justifie son changement.
+
+        Exemple fictif : Un prélèvement sur stock fournisseur déclenche le transfert prévu au contrat ; le mouvement physique et la comptabilisation restent des responsabilités distinctes.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        source_title: Set up consignment
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/consignment
+        source_locator: Propriété fournisseur, prélèvement et journal de changement de propriétaire
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Set up consignment
+        concept_name: Set up consignment
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Tracer le changement de propriétaire au prélèvement.
+        differences: Cas fournisseur ; FLOW distingue cette reconnaissance de la décision comptable.
+        flow_position: Déterminer et tracer les changements de propriétaire des biens à partir des faits et conditions applicables.
+        definition_choice: Déterminer et tracer les changements de propriétaire des biens à partir des faits et conditions
+          applicables.
+        term_choice: Inventory Ownership Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Tracer le changement de propriétaire au prélèvement.
+        approach_summary: Cas fournisseur ; FLOW distingue cette reconnaissance de la décision comptable.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA
+        source_title: Performing the Process of Vendor Consignment
+        source_url: https://learning.sap.com/courses/inventory-management-and-physical-inventory-in-sap-s-4hana/performing-the-process-of-vendor-consignment
+        source_locator: Stock en consignation fournisseur, prélèvement et règlement
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Performing the Process of Vendor Consignment
+        concept_name: Performing the Process of Vendor Consignment
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Distinguer stock fournisseur et transfert au prélèvement.
+        differences: Le processus SAP regroupe aussi règlement et opérations que FLOW sépare.
+        flow_position: Déterminer et tracer les changements de propriétaire des biens à partir des faits et conditions applicables.
+        definition_choice: Déterminer et tracer les changements de propriétaire des biens à partir des faits et conditions
+          applicables.
+        term_choice: Inventory Ownership Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Distinguer stock fournisseur et transfert au prélèvement.
+        approach_summary: Le processus SAP regroupe aussi règlement et opérations que FLOW sépare.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-master-plan-management
+    fields:
+      finality: Donner aux responsables de couverture des demandes un plan commun dont les révisions et les conséquences sont
+        explicites.
+      scope: |-
+        Distinct des plans prévisionnels reçus du domaine Demand & Supply Planning.
+
+        Bénéficiaire et résultat : Donner aux responsables de couverture des demandes un plan commun dont les révisions et les conséquences sont explicites.
+
+        Exemple fictif : Une rentrée est retardée : comparer une nouvelle répartition, vérifier les engagements et ne rendre effective que la révision retenue.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        source_title: Master planning home page
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+        source_locator: Besoins nets, ordres planifiés et distinction des prévisions
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Master planning home page
+        concept_name: Master planning home page
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Maintenir un plan tenant compte des besoins et ressources.
+        differences: Le plan FLOW porte les affectations opérationnelles ; il ne reprend pas tout le module de prévision.
+        flow_position: Maintenir et réviser un plan commun d’affectation en comparant les alternatives et en coordonnant son
+          application.
+        definition_choice: Maintenir et réviser un plan commun d’affectation en comparant les alternatives et en coordonnant
+          son application.
+        term_choice: Master Plan Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Maintenir un plan tenant compte des besoins et ressources.
+        approach_summary: Le plan FLOW porte les affectations opérationnelles ; il ne reprend pas tout le module de prévision.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Manufacturing for planning and scheduling
+        source_title: Explaining Supply Chain Planning
+        source_url: https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning
+        source_locator: Planification opérationnelle, ressources contraintes et CTP de production
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Explaining Supply Chain Planning
+        concept_name: Explaining Supply Chain Planning
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Réviser un plan sous contraintes de ressources.
+        differences: Appui production ; ce module ne définit pas les frontières transverses de FLOW.
+        flow_position: Maintenir et réviser un plan commun d’affectation en comparant les alternatives et en coordonnant son
+          application.
+        definition_choice: Maintenir et réviser un plan commun d’affectation en comparant les alternatives et en coordonnant
+          son application.
+        term_choice: Master Plan Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Réviser un plan sous contraintes de ressources.
+        approach_summary: Appui production ; ce module ne définit pas les frontières transverses de FLOW.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-order-promising
+    fields:
+      finality: Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
+      scope: |-
+        Proposer ne confirme pas un engagement de commande.
+
+        Bénéficiaire et résultat : Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
+
+        Exemple fictif : Proposer 60 pièces vendredi et 40 lundi ; la proposition ne devient un engagement que lors de sa confirmation dans la commande.
+      market_comparisons:
+      - vendor: SAP
+        product: SAP S/4HANA Manufacturing for planning and scheduling
+        source_title: Explaining Supply Chain Planning
+        source_url: https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning
+        source_locator: Planification opérationnelle, ressources contraintes et CTP de production
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Explaining Supply Chain Planning
+        concept_name: Explaining Supply Chain Planning
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Proposer une réponse faisable sous contraintes.
+        differences: CTP de production seulement, sans assimilation de toute la Business Area à PP/DS.
+        flow_position: Déterminer et réexaminer les propositions de quantités, dates et conditions de satisfaction des demandes.
+        definition_choice: Déterminer et réexaminer les propositions de quantités, dates et conditions de satisfaction des
+          demandes.
+        term_choice: Order Promising désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Proposer une réponse faisable sous contraintes.
+        approach_summary: CTP de production seulement, sans assimilation de toute la Business Area à PP/DS.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-supply-matching
+    fields:
+      finality: Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins
+        restent découverts.
+      scope: |-
+        Les familles de commandes portent les demandes et leurs engagements ; les registres portent les effets reconnus.
+
+        Bénéficiaire et résultat : Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins restent découverts.
+
+        Exemple fictif : Deux demandes se partagent 80 pièces : arbitrer selon leurs priorités et expliciter la part non couverte sans réécrire les commandes.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        source_title: Master planning home page
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+        source_locator: Besoins nets, ordres planifiés et distinction des prévisions
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Master planning home page
+        concept_name: Master planning home page
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Rapprocher les besoins et apports nécessaires.
+        differences: Des ordres planifiés ne valent pas affectation ni engagement confirmé.
+        flow_position: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        term_choice: Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Rapprocher les besoins et apports nécessaires.
+        approach_summary: Des ordres planifiés ne valent pas affectation ni engagement confirmé.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Fashion
+        source_title: Explaining Supply Assignment
+        source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+        source_locator: Affectation, statuts, libération et retrait des affectations
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Explaining Supply Assignment
+        concept_name: Explaining Supply Assignment
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Affecter les ressources aux demandes selon des priorités.
+        differences: La Business Area FLOW englobe plusieurs décisions, pas uniquement la fonction d’affectation SAP.
+        flow_position: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        term_choice: Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Affecter les ressources aux demandes selon des priorités.
+        approach_summary: La Business Area FLOW englobe plusieurs décisions, pas uniquement la fonction d’affectation SAP.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-policy-optimization
+    fields:
+      finality: Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
+      scope: |-
+        Les règles actives et leur validité demeurent dans Policies.
+
+        Bénéficiaire et résultat : Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
+
+        Exemple fictif : Recommander une protection de 20 pièces après comparaison des ruptures et surstocks ; Policies conserve la mise en vigueur de la règle.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        source_title: Master planning home page
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+        source_locator: Besoins nets, ordres planifiés et distinction des prévisions
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Master planning home page
+        concept_name: Master planning home page
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Calculer les besoins selon les paramètres de protection.
+        differences: Le réglage des paramètres ne prouve pas leur optimisation ; la recommandation FLOW reste distincte.
+        flow_position: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
+        definition_choice: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
+        term_choice: Policy Optimization désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Calculer les besoins selon les paramètres de protection.
+        approach_summary: Le réglage des paramètres ne prouve pas leur optimisation ; la recommandation FLOW reste distincte.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Retail
+        source_title: Running Replenishment Planning
+        source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/running-replenishment-planning_e456b0ed-3094-4056-9ba8-aa56cf6833ed
+        source_locator: Réapprovisionnement magasin, stock cible statique ou dynamique ; hors SAP CAR et F&R
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Running Replenishment Planning
+        concept_name: Running Replenishment Planning
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Calculer des cibles de stock.
+        differences: Appui limité aux cibles ; pas de preuve d’une optimisation des politiques de réservation.
+        flow_position: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
+        definition_choice: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
+        term_choice: Policy Optimization désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Calculer des cibles de stock.
+        approach_summary: Appui limité aux cibles ; pas de preuve d’une optimisation des politiques de réservation.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-order-lifecycle-management
+    fields:
+      finality: Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
+      scope: |-
+        La structuration et la visibilité restent des capacités distinctes ; le pilotage du parcours relève de Reactive Workflow Management.
+
+        Bénéficiaire et résultat : Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
+
+        Exemple fictif : Une commande est fractionnée avec accord du client : conserver les engagements et la filiation des parties sans choisir leur transporteur.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Intelligent Order Management
+        source_title: Create orchestration flows
+        source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+        source_locator: Actions, conditions, publication des parcours et envoi aux prestataires
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Create orchestration flows
+        concept_name: Create orchestration flows
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Valider les commandes puis transmettre leurs résultats aux prestataires.
+        differences: Le parcours n’est pas le registre d’engagements FLOW.
+        flow_position: Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer
+          leur état.
+        definition_choice: Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer
+          leur état.
+        term_choice: Order Lifecycle Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Valider les commandes puis transmettre leurs résultats aux prestataires.
+        approach_summary: Le parcours n’est pas le registre d’engagements FLOW.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-reactive-workflow-management
+    fields:
+      finality: Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
+      scope: |-
+        Fulfilment conserve la coordination et les adaptations locales des prestations dans le mandat confié.
+
+        Bénéficiaire et résultat : Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
+
+        Exemple fictif : Un paiement confirmé débloque la suite de la commande ; un événement répété ne déclenche pas une seconde prestation. Une adaptation locale reste confiée à Fulfilment Orchestration.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Intelligent Order Management
+        source_title: Create orchestration flows
+        source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+        source_locator: Actions, conditions, publication des parcours et envoi aux prestataires
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Create orchestration flows
+        concept_name: Create orchestration flows
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Composer un parcours à partir d’actions et de conditions.
+        differences: FLOW sépare sentinelle, planification et conduite ; le produit ne prescrit pas ce découpage.
+        flow_position: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant leurs
+          engagements.
+        definition_choice: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant
+          leurs engagements.
+        term_choice: Reactive Workflow Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Composer un parcours à partir d’actions et de conditions.
+        approach_summary: FLOW sépare sentinelle, planification et conduite ; le produit ne prescrit pas ce découpage.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Flexible Workflow
+        source_title: Explaining Flexible Workflow
+        source_url: https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+        source_locator: Scénarios applicatifs, conditions et activités prédéfinies
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Explaining Flexible Workflow
+        concept_name: Explaining Flexible Workflow
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Choisir des activités applicatives selon des conditions.
+        differences: Un scénario SAP prédéfini ne prouve pas un moteur général de composition dynamique.
+        flow_position: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant leurs
+          engagements.
+        definition_choice: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant
+          leurs engagements.
+        term_choice: Reactive Workflow Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Choisir des activités applicatives selon des conditions.
+        approach_summary: Un scénario SAP prédéfini ne prouve pas un moteur général de composition dynamique.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-service-planning
+    fields:
+      finality: Fournir aux responsables de la réalisation un ensemble de prestations réalisables et compatibles avec les
+        engagements confiés.
+      scope: |-
+        La visibilité des capacités de service alimente ce périmètre ; aucun type de capacité n’est changé en Planning par son rattachement.
+
+        Bénéficiaire et résultat : Fournir aux responsables de la réalisation un ensemble de prestations réalisables et compatibles avec les engagements confiés.
+
+        Exemple fictif : Prévoir emballage puis collecte selon la capacité annoncée et la date promise ; la famille de commande conserve l’engagement accepté.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        source_title: Transportation management overview
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+        source_locator: Planification des chargements et choix des transports
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Transportation management overview
+        concept_name: Transportation management overview
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Planifier les chargements et itinéraires.
+        differences: Appui transport, pas ensemble des prestations de traitement des biens.
+        flow_position: Déterminer les prestations nécessaires, leurs exécutants et les plans de transport compatibles avec
+          les engagements.
+        definition_choice: Déterminer les prestations nécessaires, leurs exécutants et les plans de transport compatibles
+          avec les engagements.
+        term_choice: Service Planning désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Planifier les chargements et itinéraires.
+        approach_summary: Appui transport, pas ensemble des prestations de traitement des biens.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Transportation Management
+        source_title: Warehouse Integration
+        source_url: https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+        source_locator: Groupement des livraisons, blocage de sortie et retours d’exécution
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Warehouse Integration
+        concept_name: Warehouse Integration
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Articuler plan de transport et instructions entrepôt.
+        differences: FLOW sépare planification, engagement et réalisation physique.
+        flow_position: Déterminer les prestations nécessaires, leurs exécutants et les plans de transport compatibles avec
+          les engagements.
+        definition_choice: Déterminer les prestations nécessaires, leurs exécutants et les plans de transport compatibles
+          avec les engagements.
+        term_choice: Service Planning désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Articuler plan de transport et instructions entrepôt.
+        approach_summary: FLOW sépare planification, engagement et réalisation physique.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-execution-assurance
+    fields:
+      finality: Permettre aux responsables de la coordination de distinguer réalisation attestée, attente et écart à traiter.
+      scope: |-
+        Ne décide pas seule des adaptations et ne se substitue pas à Order Workflow Sentry.
+
+        Bénéficiaire et résultat : Permettre aux responsables de la coordination de distinguer réalisation attestée, attente et écart à traiter.
+
+        Exemple fictif : Une collecte est annoncée mais non attestée : rapprocher les faits et rendre visible l’écart sans choisir seul une autre prestation.
+      market_comparisons:
+      - vendor: SAP
+        product: SAP S/4HANA Transportation Management
+        source_title: Warehouse Integration
+        source_url: https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+        source_locator: Groupement des livraisons, blocage de sortie et retours d’exécution
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Warehouse Integration
+        concept_name: Warehouse Integration
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Recevoir les retours entre transport et entrepôt.
+        differences: Les statuts produits ne prouvent pas tout le rapprochement et la qualification des écarts FLOW.
+        flow_position: Établir une connaissance fiable de la réalisation des prestations, rapprocher leurs résultats et rendre
+          visibles les écarts.
+        definition_choice: Établir une connaissance fiable de la réalisation des prestations, rapprocher leurs résultats et
+          rendre visibles les écarts.
+        term_choice: Execution Assurance désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Recevoir les retours entre transport et entrepôt.
+        approach_summary: Les statuts produits ne prouvent pas tout le rapprochement et la qualification des écarts FLOW.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-execution-coordination
+    fields:
+      finality: Faire réaliser les prestations confiées dans les limites de la promesse et des autorisations.
+      scope: |-
+        La décision sur le devenir des biens reste une responsabilité distincte directement rattachée au sous-domaine.
+
+        Bénéficiaire et résultat : Faire réaliser les prestations confiées dans les limites de la promesse et des autorisations.
+
+        Exemple fictif : Décaler une collecte dans la marge autorisée ; si la date promise devient impossible, remonter les faits à Order Management au lieu de changer seul la promesse.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Intelligent Order Management
+        source_title: Create orchestration flows
+        source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+        source_locator: Actions, conditions, publication des parcours et envoi aux prestataires
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Create orchestration flows
+        concept_name: Create orchestration flows
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Confier la réalisation à un prestataire et organiser les branches de réponse.
+        differences: Le parcours de commande est plus large que la coordination locale confiée à Fulfilment.
+        flow_position: Coordonner, libérer et adapter les prestations dans le mandat confié et les engagements applicables.
+        definition_choice: Coordonner, libérer et adapter les prestations dans le mandat confié et les engagements applicables.
+        term_choice: Execution Coordination désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Confier la réalisation à un prestataire et organiser les branches de réponse.
+        approach_summary: Le parcours de commande est plus large que la coordination locale confiée à Fulfilment.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Transportation Management
+        source_title: Warehouse Integration
+        source_url: https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+        source_locator: Groupement des livraisons, blocage de sortie et retours d’exécution
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Warehouse Integration
+        concept_name: Warehouse Integration
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Coordonner instructions de chargement et autorisation de sortie.
+        differences: La coordination transport ne démontre pas toutes les adaptations de prestations FLOW.
+        flow_position: Coordonner, libérer et adapter les prestations dans le mandat confié et les engagements applicables.
+        definition_choice: Coordonner, libérer et adapter les prestations dans le mandat confié et les engagements applicables.
+        term_choice: Execution Coordination désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Coordonner instructions de chargement et autorisation de sortie.
+        approach_summary: La coordination transport ne démontre pas toutes les adaptations de prestations FLOW.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-inbound-information-integration
+    fields:
+      finality: Donner aux décisions d’orchestration des données sources utilisables, datées et dont la provenance est conservée.
+      scope: |-
+        Ne transfère pas leur maîtrise d’entreprise et ne reprend pas les événements des prestations pilotées par Fulfilment.
+
+        Bénéficiaire et résultat : Donner aux décisions d’orchestration des données sources utilisables, datées et dont la provenance est conservée.
+
+        Exemple fictif : Recevoir une révision de plan et son périmètre ; rejeter un lot incohérent sans remplacer silencieusement la dernière version valide.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Intelligent Order Management
+        source_title: Create orchestration flows
+        source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+        source_locator: Actions, conditions, publication des parcours et envoi aux prestataires
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Create orchestration flows
+        concept_name: Create orchestration flows
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Recevoir des données de fournisseurs configurés.
+        differences: La réception technique ne suffit pas à établir validité, provenance et autorité métier des plans.
+        flow_position: Recevoir et intégrer les plans et référentiels fournis par les domaines sources.
+        definition_choice: Recevoir et intégrer les plans et référentiels fournis par les domaines sources.
+        term_choice: Inbound Information Integration désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Recevoir des données de fournisseurs configurés.
+        approach_summary: La réception technique ne suffit pas à établir validité, provenance et autorité métier des plans.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-outbound-information-provision
+    fields:
+      finality: Permettre aux domaines destinataires d’exploiter des faits opérationnels traçables pour leurs propres décisions.
+      scope: |-
+        Transmettre un fait de gestion ne le transforme pas en écriture comptable.
+
+        Bénéficiaire et résultat : Permettre aux domaines destinataires d’exploiter des faits opérationnels traçables pour leurs propres décisions.
+
+        Exemple fictif : Transmettre une correction de stock à la planification avec son accusé de réception ; le destinataire décide seul de modifier son plan.
+      market_comparisons:
+      - vendor: SAP
+        product: SAP S/4HANA Cloud Public Edition
+        source_title: Procurement Overview and Analytics
+        source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sourcing-and-procurement/introducing-procurement-overview-page-and-real-time-reporting-and-monitoring-for-procurement_b1220cd8-8141-476c-bd30-0de739fdb2f6
+        source_locator: Suivi des contrats, confirmations et extraction des données achats
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Procurement Overview and Analytics
+        concept_name: Procurement Overview and Analytics
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Extraire les faits achats pour des usages externes.
+        differences: Périmètre achats seulement ; pas de preuve de toutes les données comptables, de planification et produit.
+        flow_position: Fournir les informations opérationnelles utiles à la comptabilité, à la planification et à l’amélioration
+          produit.
+        definition_choice: Fournir les informations opérationnelles utiles à la comptabilité, à la planification et à l’amélioration
+          produit.
+        term_choice: Outbound Information Provision désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Extraire les faits achats pour des usages externes.
+        approach_summary: Périmètre achats seulement ; pas de preuve de toutes les données comptables, de planification et
+          produit.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-goods-processing-order-management
+    fields:
+      finality: Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
+      scope: |-
+        Couvre préparation, réception, transit, conditionnement, finition, entretien, contrôle et rebut ; ne présume pas leur réalisation dans un entrepôt et ne pilote pas les opérations internes.
+
+        Bénéficiaire et résultat : Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
+
+        Exemple fictif : Demander un nouvel étiquetage sur 40 pièces et suivre son acceptation puis son résultat ; la réalisation physique appartient au prestataire.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        source_title: Service orders
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders
+        source_locator: Prestations, étapes et validation des ordres de service
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Service orders
+        concept_name: Service orders
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Tenir des demandes de prestations et leurs étapes.
+        differences: Le service de technicien ne constitue pas une preuve des prestations textiles particulières.
+        flow_position: Tenir les demandes et engagements de prestations portant sur le traitement des biens.
+        definition_choice: Tenir les demandes et engagements de prestations portant sur le traitement des biens.
+        term_choice: Goods Processing Order Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Tenir des demandes de prestations et leurs étapes.
+        approach_summary: Le service de technicien ne constitue pas une preuve des prestations textiles particulières.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Fashion
+        source_title: Explaining VAS
+        source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-vas_f2561ed9-da50-493e-8d2f-b68d3c46ee05
+        source_locator: Étiquetage, emballage et instructions attachées aux documents
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Explaining VAS
+        concept_name: Explaining VAS
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Porter des instructions de traitement comme étiquetage et emballage.
+        differences: Les instructions sont attachées aux documents ; FLOW tient une demande de prestation distincte.
+        flow_position: Tenir les demandes et engagements de prestations portant sur le traitement des biens.
+        definition_choice: Tenir les demandes et engagements de prestations portant sur le traitement des biens.
+        term_choice: Goods Processing Order Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Porter des instructions de traitement comme étiquetage et emballage.
+        approach_summary: Les instructions sont attachées aux documents ; FLOW tient une demande de prestation distincte.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-transport-order-management
+    fields:
+      finality: Donner aux parties du transport une demande et un engagement traçables sur l’acheminement ou la capacité réservée.
+      scope: |-
+        La construction du plan de transport reste dans Fulfilment.
+
+        Bénéficiaire et résultat : Donner aux parties du transport une demande et un engagement traçables sur l’acheminement ou la capacité réservée.
+
+        Exemple fictif : Réserver une capacité avant de connaître toutes les instructions, puis préciser l’acheminement sans confondre réservation et transport réalisé.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        source_title: Transportation management overview
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+        source_locator: Planification des chargements et choix des transports
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Transportation management overview
+        concept_name: Transportation management overview
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Construire et suivre des chargements à partir des ordres.
+        differences: Ne démontre pas une réservation de capacité autonome avant instructions.
+        flow_position: Tenir les demandes et engagements d’acheminement et de réservation de capacité de transport.
+        definition_choice: Tenir les demandes et engagements d’acheminement et de réservation de capacité de transport.
+        term_choice: Transport Order Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Construire et suivre des chargements à partir des ordres.
+        approach_summary: Ne démontre pas une réservation de capacité autonome avant instructions.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Transportation Management
+        source_title: Warehouse Integration
+        source_url: https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+        source_locator: Groupement des livraisons, blocage de sortie et retours d’exécution
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Warehouse Integration
+        concept_name: Warehouse Integration
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Relier ordres de transport, livraisons et exécution.
+        differences: Le cycle exact de réservation anticipée reste à qualifier.
+        flow_position: Tenir les demandes et engagements d’acheminement et de réservation de capacité de transport.
+        definition_choice: Tenir les demandes et engagements d’acheminement et de réservation de capacité de transport.
+        term_choice: Transport Order Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Relier ordres de transport, livraisons et exécution.
+        approach_summary: Le cycle exact de réservation anticipée reste à qualifier.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  - id: ba-financial-service-order-management
+    fields:
+      finality: Permettre au donneur d’ordre de connaître l’état et le résultat des prestations de facturation ou d’encaissement
+        confiées.
+      scope: |-
+        Ne reprend ni la responsabilité comptable ni l’exécution des opérations par les services sollicités.
+
+        Bénéficiaire et résultat : Permettre au donneur d’ordre de connaître l’état et le résultat des prestations de facturation ou d’encaissement confiées.
+
+        Exemple fictif : Confier une facturation et recevoir sa référence de résultat ; les règles fiscales et la tenue des comptes restent sous autorité financière.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Intelligent Order Management
+        source_title: Create orchestration flows
+        source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+        source_locator: Actions, conditions, publication des parcours et envoi aux prestataires
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Create orchestration flows
+        concept_name: Create orchestration flows
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Transmettre une demande au prestataire de facturation.
+        differences: Ne démontre pas le cycle d’encaissement ni la maîtrise comptable, qui reste externe.
+        flow_position: Tenir les demandes confiées de facturation et d’encaissement et suivre leurs résultats.
+        definition_choice: Tenir les demandes confiées de facturation et d’encaissement et suivre leurs résultats.
+        term_choice: Financial Service Order Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie
+          revendiquée.
+        scope_summary: Transmettre une demande au prestataire de facturation.
+        approach_summary: Ne démontre pas le cycle d’encaissement ni la maîtrise comptable, qui reste externe.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  required_catalog:
+  - collection: scenarios
+    id: planning-actuals-feedback
+    content_sha256: 2e79066148e170ca2a60affaccda83c3cc8093dbe306b4713106e307e8969247
+  - collection: scenarios
+    id: product-quality-feedback
+    content_sha256: f3dc6bb425de6fb92196508951726392777951c74e800ad97d77fd0cd40f0e2f
+  - collection: scenarios
+    id: workflow-version-change
+    content_sha256: 4cfdf5e6e18f1df041976148774a56a54eee43f24251d84c55a456871cd23641
+  - collection: scenarios
+    id: service-policy-deactivation
+    content_sha256: 28025e6df4f4e9b86a81c8fa12b8f9810d188a56a07c5febb0697a26a22b7783
+  - collection: paths
+    id: planning-actuals-feedback-path
+    content_sha256: 2870db162cc0686399e579576176c2f78a1fb09948c30a6d7f8c6ea7eafd157a
+  - collection: paths
+    id: product-quality-feedback-path
+    content_sha256: 3ccfe97bf283fb6cafc79ac0512efe36d33f48610a21fe69ef4d5a80e58d650d
+  - collection: paths
+    id: workflow-version-change-path
+    content_sha256: e013b532355e5129fc702f1b19bab8efc77d15cfd34d23b8b2e83a9950fe2d2a
+  - collection: paths
+    id: service-policy-deactivation-path
+    content_sha256: c959cb79170c05893e9f1333db224e753552ada1f4d9dea7203bd927c4c38b48
+verification:
+  python_full_suite:
+    total: 378
+    passed: 377
+    skipped: 1
+    seconds: 198.738
+  frontend_unit: 135
+  build: passed
+  browser_maps_search_references: passed
+  browser_static_guide_codes: passed
+  browser_ux: passed, trois cycles focus/Escape sur le lien ciblé
+  published_content: passed against unchanged v045
+  new_content_preview: 'passed: quatre scénarios, responsabilités du métamodèle, lacunes marché visibles, finalité Business
+    Area'
+  validation: 0 errors before preparation; frozen candidate has its own validation gate
+review_scope: Conserver uniquement les champs historiques inchangés après examen du contexte. Les scopes enrichis des 16 Business
+  Areas sont exclus de la reprise des accords.

@@ -20,7 +20,7 @@ publication_delivery:
     fields:
       name: Plan Visibility
   - id: plans-ingestion
-    parent: subdomain-integration
+    parent: ba-inbound-information-integration
     fields:
       name: Plan Ingestion
       nature: integration
@@ -39,3 +39,8 @@ publication_delivery:
     field: parent
     previous_value: subdomain-plans
     reason: U826 applique le nouveau rattachement à Integration.
+delivery_updates:
+- source_ref: U848
+  fields:
+  - plans-ingestion.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

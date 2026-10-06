@@ -8,7 +8,7 @@ export function validateDisplayIndex(raw: RawPublication): void {
   if (raw.display_policy !== 'typed-tree-v1' || !index || index.policy !== raw.display_policy
     || !Array.isArray(index.roots) || !index.children || !index.codes) return fail();
   const nodes = new Map(raw.nodes.map(node => [node.id, node]));
-  const prefixes: Record<string, string> = { business_system: 'SYS', domain: 'DOM', area: 'SUB', reference: 'REF', capability: 'CAP', behavior: 'BHV' };
+  const prefixes: Record<string, string> = { business_system: 'SYS', domain: 'DOM', area: 'SUB', business_area: 'BA', reference: 'REF', capability: 'CAP', behavior: 'BHV' };
   const links = raw.relations.filter(r => ['contains', 'presents'].includes(r.type));
   const expectedRoots = raw.nodes.filter(n => !links.some(r => r.target_id === n.id)).map(n => n.id);
   const same = (a: string[], b: string[]) => a.length === b.length && [...a].sort().every((id, i) => id === [...b].sort()[i]);

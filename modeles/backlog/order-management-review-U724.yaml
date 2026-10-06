@@ -703,47 +703,47 @@ publication_delivery:
   - D04.q
   required_nodes:
   - id: D04.i
-    parent: D04
+    parent: ba-order-lifecycle-management
     fields:
       name: Sales Order
       nature: action
   - id: D04.j
-    parent: D04
+    parent: ba-order-lifecycle-management
     fields:
       name: Purchase Order
       nature: action
   - id: D04.k
-    parent: D04
+    parent: ba-order-lifecycle-management
     fields:
       name: Transfer Order
       nature: action
   - id: D04.l
-    parent: D04
+    parent: ba-order-lifecycle-management
     fields:
       name: Return Order
       nature: action
   - id: D04.m
-    parent: D04
+    parent: ba-order-lifecycle-management
     fields:
       name: Supplier Return Order
       nature: action
   - id: D04.r
-    parent: D04
+    parent: ba-order-lifecycle-management
     fields:
       name: Consignment Fill-up Order
       nature: action
   - id: D04.t
-    parent: D04
+    parent: ba-order-lifecycle-management
     fields:
       name: Consignment Pick-up Order
       nature: action
   - id: D04.n
-    parent: D04
+    parent: ba-order-lifecycle-management
     fields:
       name: Order Structuring
       nature: action
   - id: order-visibility
-    parent: D04
+    parent: ba-order-lifecycle-management
     fields:
       name: Order Visibility
       nature: knowledge
@@ -814,3 +814,16 @@ migration:
   responsibility_destination: D04 contrat commun, familles pertinentes ; vue consolidée order-visibility ; les effets et distinctions
     sont conservés dans les scopes.
   illustrations: Liens illustratifs de promesse rattachés à Sales Order, sans ajout d’objet ni exposition du catalogue masqué.
+delivery_updates:
+- source_ref: U848
+  fields:
+  - D04.i.parent
+  - D04.j.parent
+  - D04.k.parent
+  - D04.l.parent
+  - D04.m.parent
+  - D04.r.parent
+  - D04.t.parent
+  - D04.n.parent
+  - order-visibility.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

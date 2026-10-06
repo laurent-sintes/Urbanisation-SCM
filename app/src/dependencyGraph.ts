@@ -1,7 +1,7 @@
 import type { AtlasNode, AtlasRelation, PublishedModel } from './types.ts';
 import { hasAreaLevels, isStructural } from './model.ts';
 
-export type DependencyLevel = 'capability' | 'area' | 'domain' | 'business_system' | 'universe';
+export type DependencyLevel = 'capability' | 'business_area' | 'area' | 'domain' | 'business_system' | 'universe';
 export type DependencyFamily = 'needs' | 'other';
 
 export interface DependencyOptions {
@@ -51,7 +51,7 @@ export interface DependencyProjection {
 
 type EndpointRelation = { relation: AtlasRelation; source: string; target: string; family: DependencyFamily };
 const isUniverse = (node: AtlasNode): boolean => node.levelRef === 'universe';
-const isGrouping = (node: AtlasNode): boolean => ['business_system', 'group', 'domain', 'area', 'reference'].includes(node.kind) || isUniverse(node);
+const isGrouping = (node: AtlasNode): boolean => ['business_system', 'group', 'domain', 'area', 'business_area', 'reference'].includes(node.kind) || isUniverse(node);
 const familyOf = (relation: AtlasRelation): DependencyFamily => relation.qualification.role === 'needs' ? 'needs' : 'other';
 
 export function dependencyLevels(model: PublishedModel): { value: DependencyLevel; label: string }[] {
@@ -59,12 +59,13 @@ export function dependencyLevels(model: PublishedModel): { value: DependencyLeve
   const purposeLabel = model.nodes.some(node => node.kind === 'area' && node.hierarchyLabel === 'Purpose')
     ? 'Purposes et référentiels' : model.nodes.some(node => node.kind === 'area' && node.hierarchyLabel === 'Sous-domaine') ? 'Sous-domaines et référentiels' : 'Areas et référentiels';
   return hasAreaLevels(model)
-    ? [{ value: 'capability', label: 'Capacités' }, { value: 'area', label: purposeLabel }, { value: 'domain', label: 'Domaines' }, ...(systems ? [{ value: 'business_system' as const, label: 'Systèmes métier' }] : [])]
+    ? [{ value: 'capability', label: 'Capacités' }, ...(model.nodes.some(n => n.kind === 'business_area') ? [{ value: 'business_area' as const, label: 'Business Areas et capacités directes' }] : []), { value: 'area', label: purposeLabel }, { value: 'domain', label: 'Domaines' }, ...(systems ? [{ value: 'business_system' as const, label: 'Systèmes métier' }] : [])]
     : [{ value: 'capability', label: 'Capacités' }, { value: 'domain', label: 'Domaines et référentiels' }, { value: 'universe', label: 'Univers' }];
 }
 
 /** Retain shareable links when changing publication without relabeling its objects. */
 export function dependencyLevel(model: PublishedModel, requested: DependencyLevel): DependencyLevel {
+  if (requested === 'business_area') return model.nodes.some(n => n.kind === 'business_area') ? requested : 'capability';
   if (requested === 'business_system') return model.nodes.some(node => node.kind === 'business_system') ? requested : hasAreaLevels(model) ? 'domain' : 'universe';
   if (hasAreaLevels(model)) return requested === 'universe' ? 'domain' : requested;
   return requested === 'area' ? 'domain' : requested;
@@ -77,14 +78,15 @@ export function dependencyLevel(model: PublishedModel, requested: DependencyLeve
  * default; additional links between neighbors require the explicit option.
  */
 export function projectDependencies(model: PublishedModel, options: DependencyOptions): DependencyProjection {
-  if (!['capability', 'area', 'domain', 'business_system', 'universe'].includes(options.level)) throw new Error('Niveau de dépendances inconnu.');
+  if (!['capability', 'business_area', 'area', 'domain', 'business_system', 'universe'].includes(options.level)) throw new Error('Niveau de dépendances inconnu.');
   if (![0, 1, 2, 3].includes(options.depth)) throw new Error('La profondeur doit être 0, 1, 2 ou 3.');
   if (!['both', 'incoming', 'outgoing'].includes(options.direction)) throw new Error('Sens de parcours inconnu.');
   if (!['all', 'needs', 'other'].includes(options.family)) throw new Error('Famille de relations inconnue.');
   if (options.focusId && !model.nodeById.has(options.focusId)) throw new Error(`Nœud de focalisation absent : ${options.focusId}.`);
   const level = dependencyLevel(model, options.level);
   const areaLevels = hasAreaLevels(model);
-  const atLevel = (item: AtlasNode): boolean => level === 'area' ? item.kind === 'area' || item.kind === 'reference'
+  const atLevel = (item: AtlasNode): boolean => level === 'business_area' ? item.kind === 'business_area'
+    : level === 'area' ? item.kind === 'area' || item.kind === 'reference'
     : level === 'domain' ? item.kind === 'domain' || (!areaLevels && item.kind === 'reference')
     : level === 'business_system' ? item.kind === 'business_system' : level === 'universe' && isUniverse(item);
 

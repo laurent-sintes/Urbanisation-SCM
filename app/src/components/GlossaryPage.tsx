@@ -23,7 +23,7 @@ export function GlossaryPage({ model, selected, mode, routeVersion, guideState, 
   const modelTerms = model.glossary.filter(term => mode === 'meta' ? methodIds.has(term.id) && !glossary?.aliases?.[term.id] : !methodIds.has(term.id));
   const terms = [
     ...modelTerms.map(term => ({ ...term, label_fr: '', role: '', examples: [] as readonly string[] })),
-    ...(mode === 'meta' ? (glossary?.terms ?? []).filter(term => (!term.parent_term && !term.guide_section && term.status !== 'retired') || term.id === selected).map(term => ({ ...term, short_description: term.short_description ?? '', context: '', notes: '', historical: term.status === 'retired', market_comparisons: undefined, market_inspiration: undefined })) : []),
+    ...(mode === 'meta' ? (glossary?.terms ?? []).filter(term => (!term.parent_term && !term.guide_section && term.status !== 'retired') || term.id === selected).map(term => ({ ...term, short_description: term.short_description ?? '', context: '', notes: '', historical: term.status === 'retired', market_comparisons: undefined, market_gaps: undefined, market_inspiration: undefined })) : []),
   ].sort((a, b) => (a.label_fr || a.name).localeCompare(b.label_fr || b.name, 'fr'));
   const normalize = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr');
   const showReadingHelp = mode === 'meta' && Boolean(model.raw.display_index) && (!query || ['code', 'identifiant', 'identite', 'ordre', 'lecture', 'prefixe'].some(word => word.includes(normalize(query)) || normalize(query).includes(word)));
@@ -61,7 +61,7 @@ export function GlossaryPage({ model, selected, mode, routeVersion, guideState, 
       {mode === 'meta' && ['MOD026', 'MOD027', 'MOD028'].includes(term.id) && <nav aria-label="Notions associées">{glossary?.terms.find(t=>t.id==='MOD026')?.status !== 'retired' && <><MethodLink term="MOD026">Cas d’usage</MethodLink> · </>}<MethodLink term="MOD027">Scénario</MethodLink> · <MethodLink term="MOD028">Parcours de mobilisation</MethodLink></nav>}
       {mode === 'meta' && glossary?.terms.find(t=>t.id===term.id)?.values && <section><h3>Valeurs</h3><dl>{Object.entries(glossary.terms.find(t=>t.id===term.id)!.values!).map(([label,definition])=><div key={label}><dt>{label}</dt><dd><ModelText text={definition}/></dd></div>)}</dl></section>}
       {term.examples && term.examples.length > 0 && <section><h3>Exemples</h3><ul>{term.examples.map(example => <li key={example}><ModelText text={example}/></li>)}</ul></section>}
-      {(mode === 'model' || term.market_comparisons?.length) && <MarketComparisons id={`term-${term.id}-market_comparisons`} entries={term.market_comparisons} inspiration={term.market_inspiration} modelName={term.name}/>}
+      {(mode === 'model' || term.market_comparisons?.length) && <MarketComparisons id={`term-${term.id}-market_comparisons`} entries={term.market_comparisons} inspiration={term.market_inspiration} modelName={term.name} gaps={term.market_gaps}/>}
     </article> : <section className="glossary-empty"><h2>{selected ? 'Terme absent de ce glossaire' : 'Aucun résultat'}</h2><p>{matches.length ? 'Choisis un terme dans la liste.' : 'Essaie un autre terme ou efface la recherche.'}</p></section>}
   </div></>;
 }

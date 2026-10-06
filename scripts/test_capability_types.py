@@ -62,8 +62,8 @@ class CapabilityTypeTests(unittest.TestCase):
         for node in nodes.values():
             if node['kind'] == 'capability':
                 self.assertIn(node['fields'].get('nature'), CAPABILITY_NATURES)
-                self.assertTrue(node['fields'].get('category', {}).get('id'))
-            if node['kind'] in ('domain', 'area', 'reference'):
+                self.assertNotIn('category', node['fields'])
+            if node['kind'] in ('domain', 'area', 'business_area', 'reference'):
                 # U783 freezes the displayed order, independently of YAML edge order.
                 # Subdomains group categories first, then types within each category.
                 groups = {}

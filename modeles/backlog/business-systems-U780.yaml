@@ -161,11 +161,11 @@ publication_delivery:
     parent: system-business-operations
     parent_type: presents
   - id: D04.i
-    parent: D04
+    parent: ba-order-lifecycle-management
     fields:
       name: Sales Order
   - id: D04.j
-    parent: D04
+    parent: ba-order-lifecycle-management
     fields:
       name: Purchase Order
   superseded_checks_U801:
@@ -178,3 +178,9 @@ publication_delivery:
     field: modeling_depth
     previous_value: context
     reason: U826 remplace cette attente dans le courant ; preuves historiques préservées.
+delivery_updates:
+- source_ref: U848
+  fields:
+  - D04.i.parent
+  - D04.j.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

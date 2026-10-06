@@ -37,7 +37,8 @@ REQUEST_ORIGINS = {'frontoffice', 'backoffice'}
 BEHAVIOR_ASPECTS = {'trigger', 'activity'}
 RELATION_KINDS = {
     # The former lower-level domain remains supported in frozen publications.
-    "contains": ({"domain", "area", "reference", "capability"}, {"capability", "behavior"}),
+    "contains": ({"domain", "area", "business_area", "reference", "capability"}, {"business_area", "capability", "behavior"}),
+    "documents-reference": ({"capability"}, {"reference"}),
     "presents": ({"business_system", "group", "domain", "area"}, {"domain", "area", "reference", "group", "capability"}),
     "confirms": ({"capability"}, {"object"}),
     "associated-document": ({"capability"}, {"document"}),
@@ -146,6 +147,26 @@ def validate_urbanism(model, sources, schema=None):
         from scenario_catalog import validate_catalog
     errors.extend(validate_catalog(model))
     relations = _index(model["relations"], "relations", errors)
+    business_areas = any(p.get('id') == 'PRINCIPLE-BUSINESS-AREA' for p in model.get('principles', []))
+    if any(n.get('kind') == 'business_area' for n in nodes.values()) and not business_areas:
+        errors.append('business-area: explicit principle required')
+    if business_areas:
+        for identifier, node in nodes.items():
+            kind = node.get('kind')
+            if 'category' in node.get('fields', {}):
+                errors.append(f'business-area/{identifier}: category is retired')
+            if kind in ('business_area', 'capability'):
+                parents = [r for r in model['relations'] if r.get('type') in ('contains', 'presents') and r.get('target_id') == identifier]
+                allowed = ('area',) if kind == 'business_area' else ('area', 'business_area')
+                if len(parents) != 1 or parents[0]['type'] != 'contains' or nodes.get(parents[0]['source_id'], {}).get('kind') not in allowed:
+                    errors.append(f'business-area/{identifier}: invalid responsibility parent')
+            if kind == 'business_area':
+                for field in ('name', 'definition', 'finality', 'scope'):
+                    if not isinstance(node.get('fields', {}).get(field), str) or not node['fields'][field].strip():
+                        errors.append(f'business-area/{identifier}: {field} must be nonempty')
+                children = [r for r in model['relations'] if r.get('type') in ('contains', 'presents') and r.get('source_id') == identifier]
+                if not children or any(r['type'] != 'contains' or nodes.get(r['target_id'], {}).get('kind') != 'capability' for r in children):
+                    errors.append(f'business-area/{identifier}: requires capability children only')
     for item in model['nodes'] + model['relations']:
         if 'market_comparisons' in item.get('fields', {}):
             errors.extend(validate_comparisons(item['fields']['market_comparisons'], item['id'] + '/market_comparisons'))
@@ -652,6 +673,16 @@ def validate_project(root=ROOT):
         if glossary_path.exists():
             backlog["glossary"] = _load(glossary_path)
         errors.extend(f"backlog: {e}" for e in validate_urbanism(backlog, sources, urbanism_schema))
+        guide_path = root / 'modeles/backlog/atlas-transformation-methodology.yaml'
+        if guide_path.exists() and _load(guide_path).get('model_examples'):
+            try:
+                from .guide_candidate import compile_draft
+            except ImportError:
+                from guide_candidate import compile_draft
+            try:
+                compile_draft(root, guide_path)
+            except ValueError as exc:
+                errors.append('methodology alignment: ' + str(exc))
         counters["backlog_nodes"] = len(backlog["nodes"])
         counters["backlog_capabilities"] = sum(n["kind"] == "capability" for n in backlog["nodes"])
         pointer = resolve_release(root / "modeles/release")

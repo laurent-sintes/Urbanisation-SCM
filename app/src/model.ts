@@ -48,6 +48,9 @@ export function adaptPublication(input: RawPublication): PublishedModel {
   const usesSubdomains = Array.isArray(raw.principles) && raw.principles.some(p => p?.id === 'PRINCIPLE-DOMAIN-SUBDOMAIN');
   const referenceParents = new Map(raw.nodes.filter(node => node.kind === 'reference').map(node => [node.id, textField(node.fields?.name)]));
   const referenceByChild = new Map(raw.relations.filter(edge => edge.type === 'contains' && referenceParents.has(edge.source_id)).map(edge => [edge.target_id, referenceParents.get(edge.source_id)]));
+  for (const edge of raw.relations.filter(edge => edge.type === 'documents-reference')) {
+    referenceByChild.set(edge.source_id, referenceParents.get(edge.target_id));
+  }
   const nodes: AtlasNode[] = raw.nodes.map(node => {
     const fields = node.fields ?? {};
     return freezeDeep({
@@ -164,7 +167,7 @@ export function childrenOf(model: PublishedModel, id: string, type?: StructuralR
   const children = structuralRelations(model, type).filter(relation => relation.sourceId === id).map(relation => model.nodeById.get(relation.targetId)!);
   const kind = model.nodeById.get(id)?.kind;
   if (kind === 'area') return categorySections(children).flatMap(section => sortCapabilitiesByType(section.items));
-  return ['domain', 'reference'].includes(kind ?? '') ? sortCapabilitiesByType(children) : children;
+  return ['domain', 'reference', 'business_area'].includes(kind ?? '') ? sortCapabilitiesByType(children) : children;
 }
 
 export function parentsOf(model: PublishedModel, id: string, type?: StructuralRelationType): AtlasNode[] {
@@ -187,12 +190,13 @@ export function hasAreaLevels(model: PublishedModel): boolean {
 }
 
 export function isCapabilityContainer(model: PublishedModel, node: AtlasNode): boolean {
-  return node.kind === 'area' || node.kind === 'reference' || (node.kind === 'domain' && !hasAreaLevels(model));
+  return node.kind === 'area' || node.kind === 'business_area' || node.kind === 'reference' || (node.kind === 'domain' && !hasAreaLevels(model));
 }
 
 export interface CardChildList {
   kind: 'domain' | 'capability' | 'reference' | 'behavior' | 'mixed';
   items: AtlasNode[];
+  businessAreaChildren?: Record<string, AtlasNode[]>;
 }
 
 /** Preserve explicit reference boundaries inside an Area or a historical presentation group. */
@@ -202,6 +206,9 @@ export function cardChildListOf(model: PublishedModel, node: AtlasNode): CardChi
     return { kind: 'domain', items: children.filter(child => child.kind === 'domain') };
   }
   const references = children.filter(child => child.kind === 'reference');
+  if (node.kind === 'area' && children.some(child => child.kind === 'business_area')) {
+    return { kind: 'mixed', items: children, businessAreaChildren: Object.fromEntries(children.filter(child => child.kind === 'business_area').map(child => [child.id, childrenOf(model, child.id)])) };
+  }
   if (references.length && (node.kind === 'area' || (node.kind === 'group' && node.groupRole !== 'urbanism_level'))) {
     const capabilities = children.filter(child => child.kind === 'capability');
     if (capabilities.length) return { kind: 'mixed', items: [...references, ...capabilities] };

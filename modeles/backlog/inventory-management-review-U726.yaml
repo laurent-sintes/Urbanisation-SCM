@@ -407,88 +407,52 @@ publication_delivery:
   - BHV003
   required_nodes:
   - id: D01.f
-    parent: D01
+    parent: ba-inventory-position-management
     fields:
       name: Inventory Tracking
       nature: integration
-      category:
-        id: inventory-foundation
-        display_name: Inventory Foundation
-        order: 10
   - id: D01.g
-    parent: D01
+    parent: ba-inventory-position-management
     fields:
       name: Inventory Ledger
       nature: ledger
-      category:
-        id: inventory-foundation
-        display_name: Inventory Foundation
-        order: 10
   - id: D01.d
-    parent: D01
+    parent: ba-inventory-position-management
     fields:
       name: Stocktaking
       nature: action
-      category:
-        id: inventory-foundation
-        display_name: Inventory Foundation
-        order: 10
   - id: D02.c
-    parent: D01
+    parent: ba-inventory-position-management
     fields:
       name: Reservation
       nature: action
-      category:
-        id: inventory-foundation
-        display_name: Inventory Foundation
-        order: 10
   - id: D01.h
-    parent: D01
+    parent: ba-inventory-ownership-management
     fields:
       name: Inventory Ownership Transfer Decision
       nature: decision
-      category:
-        id: inventory-foundation
-        display_name: Inventory Foundation
-        order: 10
   - id: D01.c
-    parent: D01
+    parent: ba-inventory-position-management
     fields:
       name: Inventory Visibility
       nature: knowledge
-      category:
-        id: inventory-visibility
-        display_name: Inventory Visibility
-        order: 20
   - id: D03.i
-    parent: D03
+    parent: ba-order-promising
     fields:
       name: Available-to-Promise (ATP)
       nature: decision
-      category:
-        id: promise-evaluation
-        display_name: Order Promising
-        order: 10
   - id: D03.j
-    parent: D03
+    parent: ba-order-promising
     fields:
       name: Capable-to-Promise (CTP)
       nature: decision
-      category:
-        id: promise-evaluation
-        display_name: Order Promising
-        order: 10
   - id: D03.k
-    parent: D03
+    parent: ba-order-promising
     fields:
       name: Profitable-to-Promise (PTP)
       nature: decision
-      category:
-        id: promise-evaluation
-        display_name: Order Promising
-        order: 10
   - id: inventory-ownership-ledger
-    parent: D01
+    parent: ba-inventory-ownership-management
     fields:
       name: Inventory Ownership Ledger
       nature: ledger
@@ -1668,3 +1632,25 @@ delivery_updates:
   - target: BHV110
     change: Retrait couvert par availability-U835.yaml
     previous_check_sha256: c042051401e6cb57859149ec2ff341aa74c6fb78d4ae6e8b86fe22a8620149c8
+- source_ref: U848
+  fields:
+  - D01.f.category
+  - D01.f.parent
+  - D01.g.category
+  - D01.g.parent
+  - D01.d.category
+  - D01.d.parent
+  - D02.c.category
+  - D02.c.parent
+  - D01.h.category
+  - D01.h.parent
+  - D01.c.category
+  - D01.c.parent
+  - D03.i.category
+  - D03.i.parent
+  - D03.j.category
+  - D03.j.parent
+  - D03.k.category
+  - D03.k.parent
+  - inventory-ownership-ledger.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.

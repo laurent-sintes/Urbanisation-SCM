@@ -7,7 +7,7 @@ export function kindLabel(node: AtlasNode) {
   if (node.kind === 'capability') return `Capacité · ${capabilityTypeLabel(node)}`;
   if (node.kind === 'behavior') return `Comportement · ${behaviorTypeLabel(node)}`;
   if (node.kind === 'area') return node.hierarchyLabel || 'Area';
-  return ({ domain: 'Domaine', area: 'Area', capability: 'Capacité', behavior: 'Comportement', reference: 'Référence', group: 'Groupe de présentation', object: 'Objet métier', document: 'Document', event: 'Événement' } as Record<string,string>)[node.kind] || node.kind;
+  return ({ domain: 'Domaine', area: 'Area', business_area: 'Business Area', capability: 'Capacité', behavior: 'Comportement', reference: 'Référence', group: 'Groupe de présentation', object: 'Objet métier', document: 'Document', event: 'Événement' } as Record<string,string>)[node.kind] || node.kind;
 }
 export function modelingDepthLabel(node: AtlasNode): string {
   if (node.kind === 'domain' && node.fields.modeling_depth === 'domains') return 'Vue de domaine';

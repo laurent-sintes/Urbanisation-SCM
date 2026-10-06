@@ -1,0 +1,76 @@
+id: RESPONSIBILITY-MODEL-U845
+source_refs:
+- U845
+status: discussion
+canonical_model_changed: false
+question: Distinguer une structure de responsabilités métier et un modèle Capacité / Comportement ; qualifier le sens des
+  catégories actuelles.
+recommendation:
+  views: Deux dimensions reliées du même modèle métier, plutôt que deux niveaux ou deux catalogues autonomes.
+  responsibility_structure:
+  - Business System
+  - Domain
+  - Subdomain
+  - Business Area
+  capability_structure:
+  - Capability
+  - Behavior
+  proposed_term: Business Area
+  french_label: Périmètre de responsabilité métier
+  definition: Partie cohérente de la responsabilité d’un sous-domaine, définie par sa finalité, ses résultats attendus et
+    ses frontières, et portée par un ensemble de capacités.
+  qualification: Proposition FLOW ; le rapprochement avec Business Area chez SAP ne valide pas un niveau supplémentaire universel
+    ni une équivalence exacte.
+  alternative: Responsibility Area explicite davantage la responsabilité mais reste une convention lexicale locale.
+  attachment: Une capacité conserve une identité et un rattachement principal explicite ; les usages transversaux sont des
+    relations de mobilisation, sans duplication.
+  organization: Responsabilité fonctionnelle indépendante des équipes, produits et applications ; leur attribution se décrit
+    par des relations distinctes.
+  optional_depth: Ne pas imposer un périmètre intermédiaire artificiel à chaque sous-domaine.
+current_examples:
+- category: Reactive Workflow Management
+  assessment: 'Candidat cohérent : organiser et conduire le parcours des commandes selon leur contexte.'
+- category: Order Promising
+  assessment: 'Candidat cohérent : déterminer et réexaminer une proposition de satisfaction.'
+- category: Order Support
+  assessment: Libellé de support insuffisant pour délimiter une responsabilité autonome ; requalifier avant promotion.
+- category: Intégration
+  assessment: Dans Fulfilment, décrit surtout une nature de contribution ; préciser la responsabilité métier avant promotion.
+acceptance_criteria:
+- Finalité compréhensible sans énumérer les capacités.
+- Résultats attendus et frontières explicites.
+- Périmètre stable lors d’un changement d’équipe ou d’outil.
+- 'Apport distinct du sous-domaine et des capacités : aucune simple répétition.'
+market_comparison:
+- vendor: SAP
+  source_title: Discovering the Reference Architecture Content
+  source_url: https://learning.sap.com/courses/sap-enterprise-architecture-framework-foundation-introduction/discovering-the-reference-architecture-content
+  consulted_on: '2026-10-06'
+  source_locator: Reference Architecture Content Framework ; Business Capability Model Example
+  finding: Le modèle distingue Business Domain, Business Area et Business Capability ; chaque capacité est rattachée à une
+    Business Area. La page illustre séparément les réalisations SAP S/4HANA.
+  relationship: Appui méthodologique partiel
+  difference: FLOW ajoute ses propres mailles System/Domain/Subdomain ; aucune transposition de niveaux terme à terme. La
+    page est une référence d’architecture SAP, pas une preuve de responsabilité installée S/4HANA.
+- vendor: Microsoft
+  product: Dynamics 365
+  source_title: Introduction to the business process catalog for Dynamics 365 apps and services
+  source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/about
+  consulted_on: '2026-10-06'
+  source_locator: What is in the catalog? — Business process areas
+  finding: Business process area regroupe des activités liées à un objectif, souvent par fonction ou département.
+  relationship: Appui sémantique partiel
+  difference: Catalogue de processus orienté implémentation ; ne prouve ni la séparation proposée ni un modèle de responsabilité
+    indépendant de l’organisation.
+access_limits:
+- Les pages et extraits BIZBOK et TOGAF ciblés n’ont pas pu être ouverts ; aucune conformité de la proposition à ces référentiels
+  n’est déduite.
+implementation_if_approved:
+- Créer une entité avec identité persistante, définition, finalité, frontières et relations explicites.
+- Requalifier chaque catégorie concernée ; ne pas transformer les regroupements purement visuels automatiquement.
+- Préserver les identifiants de capacités, leurs relations, scénarios et accords ; réexaminer les contextes modifiés.
+- Aligner glossaire méthodologique, schémas, navigation, recherche et export de publication ; conserver les snapshots historiques.
+benefit: Lire et arbitrer les frontières de responsabilité sans devoir parcourir toutes les capacités, puis descendre au détail
+  des savoir-faire.
+risk: Créer une hiérarchie de capacités agrégées sous un autre nom ou ajouter des regroupements artificiels sans information
+  nouvelle.

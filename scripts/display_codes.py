@@ -1,6 +1,6 @@
 """Versioned reading order and codes; persistent object IDs never change."""
 POLICY = 'typed-tree-v1'
-PREFIXES = {'business_system': 'SYS', 'domain': 'DOM', 'area': 'SUB',
+PREFIXES = {'business_system': 'SYS', 'domain': 'DOM', 'area': 'SUB', 'business_area': 'BA',
             'reference': 'REF', 'capability': 'CAP', 'behavior': 'BHV'}
 NATURES = ['integration', 'action', 'management', 'ledger', 'knowledge',
            'orchestration', 'planning', 'policy', 'evaluation', 'decision']
@@ -37,7 +37,7 @@ def build_display_index(model):
                 orders.setdefault(key, category.get('order', 0) if category else 0)
             children[identifier] = [child for key in sorted(groups, key=lambda key: (key is None, orders[key]))
                                     for child in sorted(groups[key], key=type_rank)]
-        elif kind in ('domain', 'reference'):
+        elif kind in ('domain', 'reference', 'business_area'):
             children[identifier] = sorted(items, key=type_rank)
         elif kind == 'capability':
             # Same trigger/activity groups in tree, cards and behavior sheets.

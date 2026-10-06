@@ -1,4 +1,4 @@
-import type { MarketComparison, MarketInspiration } from '../types';
+import type { MarketComparison, MarketInspiration, MarketGap } from '../types';
 import { ModelText } from './ModelLinks';
 import { marketText, marketComparisonsForReading } from '../marketContent';
 import './market-comparisons.css';
@@ -69,11 +69,12 @@ function InspirationOverview({ entries, inspiration, modelName, id }: {
   </div>;
 }
 
-export function MarketComparisons({ entries, inspiration, modelName, id }: {
-  entries?: readonly MarketComparison[]; inspiration?: MarketInspiration; modelName?: string; id: string;
+export function MarketComparisons({ entries, inspiration, modelName, id, gaps }: {
+  entries?: readonly MarketComparison[]; inspiration?: MarketInspiration; modelName?: string; id: string; gaps?: readonly MarketGap[];
 }) {
   return <section id={id} tabIndex={-1} className="market-comparisons" aria-label="Sources d’inspiration">
     <h2>Sources d’inspiration</h2>
+    {!!gaps?.length && <section className="market-gaps" aria-label="Limites de la comparaison"><h3>Appuis restant à établir</h3><ul>{gaps.map(gap=><li key={gap.family}><strong>{gap.family === 'microsoft_dynamics' ? 'Microsoft Dynamics' : 'SAP S/4HANA'} : </strong><ModelText text={gap.reason}/></li>)}</ul><p>Cette limite documentaire ne signifie pas que la fonction est absente du produit.</p></section>}
     {inspiration ? <InspirationOverview entries={entries || []} inspiration={inspiration} modelName={modelName} id={id}/> : !entries?.length ? <p className="market-intro">Positionnement non documenté dans cette publication.</p> : <>
     <p className="market-intro">Pourquoi ces termes et ce périmètre : choix FLOW, appuis du marché et différences. Ces références éclairent le métier sans désigner une solution à implémenter.</p>
     <div className="market-cards">{marketComparisonsForReading(entries).map((entry, i) => <article className="market-card" key={`${entry.vendor}-${entry.element_name}-${i}`}>
