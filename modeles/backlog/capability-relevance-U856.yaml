@@ -1,0 +1,1934 @@
+id: capability-relevance-U856
+status: review_complete_proposals_not_applied
+source_refs:
+- U854
+- U855
+- U856
+- U857
+basis:
+  model_sha256: 6b4315f2797fba06528db5f22df629c2d49cf1cad1d6803027e6749f6d3ed4e1
+  business_glossary_sha256: a194937ea634a90217af24ca5e722266a8bb37c942deb4b0524546d7aae50599
+  publication: 2026-10-06.3
+scope: Premier examen des définitions des 81 capacités, approfondissement des frontières Visibility, intégration, pilotage
+  et familles de prestations ; pas de preuve terrain ni de revalidation exhaustive des comparaisons marché.
+criteria:
+- Résultat métier propre et bénéficiaire identifiable.
+- Responsabilité durable indépendante des outils et écrans.
+- Connaissance construite pour Visibility, au-delà de la simple lecture ; complexité technique insuffisante.
+- Aucune duplication d’une responsabilité portée entièrement ailleurs.
+- Différencier capacité, comportement, type de service et information consommée.
+- Un retrait conserve responsabilités utiles, données, contrats de fourniture, scénarios et historique.
+summary:
+  retain_on_documented_result: 56
+  retirement_candidate: 10
+  review_capability_vs_service_variant: 12
+  retain_if_autonomous_service: 3
+records:
+- node_id: D01.f
+  name: Inventory Tracking
+  parent_id: ba-inventory-position-management
+  recommendation: retain_on_documented_result
+  reason: Reconnaît événements et corrections, rapproche les identités et évite les doubles effets ; distinct de la tenue
+    du registre.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Capter et intégrer les faits et états de stock transmis par les sources, ainsi que les origines et liens
+    de filiation des biens, avec leurs dates et corrections.
+  scenario_paths:
+  - return-fashion-recovery-path
+  - consignment-sale-pickup-path
+  - shortage-reassessment-path
+  - additional-purchase-partial-path
+  - trace-accessory-kits-path
+  - damaged-stock-disposition-path
+  - transfer-replenishment-order-driven-path
+  - consignment-launch-replenishment-path
+  - partial-receiving-path
+  - planning-actuals-feedback-path
+  incident_relations:
+  - REL-NEEDS-U290-002
+  - REL-NEEDS-U290-003
+  - REL-U756-FACTS
+  - REL-U756-ESTABLISHED
+  - REL-U848-PARENT-D01.f
+- node_id: D01.g
+  name: Inventory Ledger
+  parent_id: ba-inventory-position-management
+  recommendation: retain_on_documented_result
+  reason: Conserve les faits de stock reconnus et leurs corrections ; une consultation calculée ne remplace pas cette responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Tenir le registre fiable des mouvements et états de stock reconnus, avec leurs dates, origines, justifications
+    et corrections.
+  scenario_paths:
+  - return-fashion-recovery-path
+  - consignment-sale-pickup-path
+  - stocktaking-variance-path
+  - supplier-return-outcomes-path
+  - gift-kits-crossdock-path
+  - ownership-transit-deadline-path
+  - trace-accessory-kits-path
+  - damaged-stock-disposition-path
+  - partial-receiving-path
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-NEEDS-U290-002
+  - REL-NEEDS-U290-004
+  - REL-NEEDS-U290-005
+  - REL-NEEDS-U290-006
+  - REL-NEEDS-U391-STOCK-FACTS
+  - REL-AUDIT-U435-PLNK-04
+  - REL-U756-MOVEMENTS
+  - REL-U826-D01.g-TO-accounting-data-provision
+  - REL-U848-PARENT-D01.g
+- node_id: D01.c
+  name: Inventory Visibility
+  parent_id: ba-inventory-position-management
+  recommendation: retain_on_documented_result
+  reason: Rapproche les deux registres, les apports attendus et les engagements ; évite le double compte entre prévisions
+    et réalisations.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Restituer les positions actuelles et projetées du stock et le détail des apports attendus, avec quantités,
+    échéances, engagements, provenance et incertitudes.
+  scenario_paths:
+  - b2b-partial-stock-path
+  - return-fashion-recovery-path
+  - consignment-sale-pickup-path
+  - shortage-reassessment-path
+  - stocktaking-variance-path
+  - last-item-concurrency-path
+  - pickup-or-direct-shipment-path
+  - gift-kits-crossdock-path
+  - ownership-transit-deadline-path
+  - trace-accessory-kits-path
+  - damaged-stock-disposition-path
+  - consignment-launch-replenishment-path
+  - partial-receiving-path
+  - b2b-partial-stock-split-path
+  - planning-actuals-feedback-path
+  incident_relations:
+  - REL-NEEDS-U290-006
+  - REL-NEEDS-U290-007
+  - REL-NEEDS-U290-010
+  - REL-NEEDS-U290-023
+  - REL-NEEDS-U290-027
+  - REL-NEEDS-U290-079
+  - REL-NEEDS-U290-082
+  - REL-NEEDS-U290-085
+  - REL-NEEDS-U290-091
+  - REL-NEEDS-U290-099
+  - REL-INITIAL-STOCKING-INVENTORY
+  - REL-RESERVATION-POLICY-INVENTORY
+  - REL-NEEDS-U380-02
+  - REL-AUDIT-U435-CONSIGNED-TRACKING
+  - REL-U717-SUPPLY-TRACKING-VISIBILITY
+  - REL-U756-VISIBILITY
+  - REL-U826-D01.c-TO-planning-data-provision
+  - REL-U848-PARENT-D01.c
+- node_id: D01.d
+  name: Stocktaking
+  parent_id: ba-inventory-position-management
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Organiser les vérifications de stock, rapprocher les quantités constatées et enregistrées et établir les
+    corrections justifiées.
+  scenario_paths:
+  - stocktaking-variance-path
+  incident_relations:
+  - REL-NEEDS-U290-004
+  - REL-NEEDS-U290-007
+  - REL-BEHAVIOR-BHV029
+  - REL-BEHAVIOR-BHV030
+  - REL-BEHAVIOR-BHV031
+  - REL-U848-PARENT-D01.d
+- node_id: D02.b
+  name: Supply Protection Policy
+  parent_id: subdomain-policies
+  recommendation: retain_on_documented_result
+  reason: Porte des règles actives et leur validité ; distinct de la recommandation de réglage et des décisions consommatrices.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Définir et appliquer les règles qui protègent l’accès aux stocks, limitent leur consommation et encadrent
+    leur renouvellement.
+  scenario_paths:
+  - redistribute-protected-stock-path
+  incident_relations:
+  - REL-MEMBER-D02.b
+  - REL-MEMBER-BHV017
+  - REL-MEMBER-BHV018
+  - REL-MEMBER-BHV019
+  - REL-MEMBER-BHV020
+  - REL-NEEDS-U290-008
+  - REL-NEEDS-U290-009
+  - REL-NEEDS-U290-011
+  - REL-NEEDS-U290-024
+  - REL-NEEDS-U290-028
+  - REL-NEEDS-U290-083
+  - REL-NEEDS-U290-086
+  - REL-NEEDS-U290-092
+  - REL-NEEDS-U290-101
+  - REL-INITIAL-STOCKING-PROTECTION
+  - REL-RESERVATION-POLICY-PROTECTION
+  - REL-NEEDS-U378-06
+  - REL-U560-PROTECTION-RESERVATION-POLICY
+- node_id: D02.c
+  name: Reservation
+  parent_id: ba-inventory-position-management
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Établir et tenir un engagement de quantité pour un besoin identifié, dont les usages concurrents doivent
+    tenir compte.
+  scenario_paths:
+  - last-item-concurrency-path
+  - pickup-or-direct-shipment-path
+  - order-structuring-engaged-path
+  incident_relations:
+  - REL-NEEDS-U290-010
+  - REL-NEEDS-U290-011
+  - REL-NEEDS-U290-025
+  - REL-NEEDS-U290-029
+  - REL-RESERVATION-POLICY-APPLICATION
+  - REL-U848-PARENT-D02.c
+- node_id: D02.e
+  name: Plan Application
+  parent_id: ba-master-plan-management
+  recommendation: retain_on_documented_result
+  reason: Suit l’application acceptée, rejetée ou partielle du plan auprès des responsables ; distinct du choix du plan.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Appliquer les décisions d’un plan aux ressources, demandes et règles concernées, puis suivre les effets
+    obtenus et ceux restant à traiter.
+  scenario_paths:
+  - b2b-partial-stock-path
+  - fashion-launch-path
+  - shortage-reassessment-path
+  - additional-purchase-partial-path
+  - redistribute-protected-stock-path
+  - transfer-replenishment-order-driven-path
+  - b2b-partial-stock-split-path
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-NEEDS-U290-023
+  - REL-NEEDS-U290-024
+  - REL-NEEDS-U290-025
+  - REL-NEEDS-U290-026
+  - REL-NEEDS-U290-030
+  - REL-NEEDS-U378-07
+  - REL-BACKLOG-REQUEST-ASSIGNMENT
+  - REL-U848-PARENT-D02.e
+- node_id: D03.i
+  name: Available-to-Promise (ATP)
+  parent_id: ba-order-promising
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
+  scenario_paths:
+  - b2b-partial-stock-path
+  - shortage-reassessment-path
+  - stocktaking-variance-path
+  - last-item-concurrency-path
+  - substitution-price-service-path
+  - additional-purchase-partial-path
+  - pickup-or-direct-shipment-path
+  - transport-missed-connection-path
+  - b2b-release-deadline-path
+  - b2b-partial-stock-split-path
+  - intercompany-direct-delivery-path
+  - service-policy-deactivation-path
+  incident_relations:
+  - REL-ATP-BHV002
+  - REL-ATP-BHV004
+  - REL-NEEDS-U290-027
+  - REL-NEEDS-U290-028
+  - REL-NEEDS-U290-029
+  - REL-NEEDS-U290-030
+  - REL-NEEDS-U290-031
+  - REL-NEEDS-U290-032
+  - REL-NEEDS-U290-033
+  - REL-NEEDS-U290-038
+  - REL-U835-D03.i-D11.b
+  - REL-U835-D04.n-D03.i
+  - REL-RESERVATION-POLICY-ATP
+  - REL-NEEDS-U378-01
+  - REL-U848-PARENT-D03.i
+- node_id: D03.j
+  name: Capable-to-Promise (CTP)
+  parent_id: ba-order-promising
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en
+    explicitant les conditions de faisabilité.
+  scenario_paths:
+  - b2b-partial-stock-path
+  - additional-purchase-partial-path
+  - b2b-partial-stock-split-path
+  incident_relations:
+  - REL-CTP-ORDER-PRIORITIZATION
+  - REL-CTP-EXECUTION-SERVICE
+  - REL-CTP-STOCK-ALLOCATION
+  - REL-CTP-COVERAGE-TARGET
+  - REL-PTP-CTP-SCENARIOS
+  - REL-NEEDS-U290-033
+  - REL-U835-D03.j-D11.b
+  - REL-U835-D04.n-D03.j
+  - REL-NEEDS-U378-02
+  - REL-BEHAVIOR-BHV075
+  - REL-BEHAVIOR-BHV076
+  - REL-U848-PARENT-D03.j
+- node_id: D03.k
+  name: Profitable-to-Promise (PTP)
+  parent_id: ba-order-promising
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de service
+    et des règles applicables.
+  scenario_paths:
+  - b2b-partial-stock-path
+  - shortage-reassessment-path
+  - substitution-price-service-path
+  - transport-missed-connection-path
+  - b2b-partial-stock-split-path
+  incident_relations:
+  - REL-PTP-CTP-SCENARIOS
+  - REL-NEEDS-U290-038
+  - REL-NEEDS-U290-040
+  - REL-U835-D04.n-D03.k
+  - REL-NEEDS-U378-03
+  - REL-U723-CONSUMER-D03.k
+  - REL-BEHAVIOR-BHV107
+  - REL-BEHAVIOR-BHV108
+  - REL-U848-PARENT-D03.k
+- node_id: D03.m
+  name: Demand Prioritization
+  parent_id: ba-supply-matching
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Établir et réviser les priorités relatives des besoins à couvrir, selon les engagements et les politiques
+    applicables.
+  scenario_paths:
+  - shortage-reassessment-path
+  - redistribute-protected-stock-path
+  incident_relations:
+  - REL-CTP-ORDER-PRIORITIZATION
+  - REL-NEEDS-U290-026
+  - REL-NEEDS-U290-045
+  - REL-RESERVATION-POLICY-PRIORITY
+  - REL-NEEDS-U378-04
+  - REL-U848-PARENT-D03.m
+- node_id: D04.i
+  name: Sales Order
+  parent_id: ba-order-lifecycle-management
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: 'Gérer les commandes clients à satisfaire : enregistrer ce qui est demandé, maintenir les quantités, destinations
+    et échéances applicables, suivre les évolutions autorisées et déterminer ce qui reste à servir.'
+  scenario_paths:
+  - b2b-partial-stock-path
+  - consignment-sale-pickup-path
+  - shortage-reassessment-path
+  - stocktaking-variance-path
+  - last-item-concurrency-path
+  - substitution-price-service-path
+  - additional-purchase-partial-path
+  - pickup-or-direct-shipment-path
+  - transport-missed-connection-path
+  - order-structuring-engaged-path
+  - transfer-replenishment-order-driven-path
+  - b2b-partial-stock-split-path
+  - intercompany-direct-delivery-path
+  - workflow-version-change-path
+  - service-policy-deactivation-path
+  incident_relations:
+  - REL-EXECUTION-FACTS-D04.i
+  - REL-NEEDS-U290-046
+  - REL-NEEDS-U290-048
+  - REL-NEEDS-U290-050
+  - REL-NEEDS-U290-051
+  - REL-NEEDS-U290-052
+  - REL-NEEDS-U290-053
+  - REL-NEEDS-U290-068
+  - REL-NEEDS-U290-108
+  - REL-NEEDS-U391-DIRECT-SALES
+  - REL-BEHAVIOR-BHV066
+  - REL-BEHAVIOR-BHV067
+  - REL-BEHAVIOR-BHV068
+  - REL-BEHAVIOR-BHV069
+  - REL-BEHAVIOR-BHV096
+  - REL-U725-VISIBILITY-D04.i
+  - REL-U725-ILL-001
+  - REL-U725-ILL-002
+  - REL-U725-ILL-003
+  - REL-U848-PARENT-D04.i
+- node_id: D04.j
+  name: Purchase Order
+  parent_id: ba-order-lifecycle-management
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Gérer les demandes d’achat de biens ou de services, les réponses du fournisseur et les engagements et reliquats
+    qui en résultent.
+  scenario_paths:
+  - additional-purchase-partial-path
+  - pickup-or-direct-shipment-path
+  - order-structuring-engaged-path
+  - partial-receiving-path
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-EXECUTION-FACTS-D04.j
+  - REL-NEEDS-U290-054
+  - REL-NEEDS-U290-056
+  - REL-NEEDS-U290-057
+  - REL-NEEDS-U290-058
+  - REL-NEEDS-U290-059
+  - REL-NEEDS-U290-073
+  - REL-NEEDS-U290-089
+  - REL-NEEDS-U290-102
+  - REL-INITIAL-STOCKING-PURCHASE
+  - REL-NEEDS-U387-REPLACEMENT-PURCHASE
+  - REL-BEHAVIOR-BHV058
+  - REL-BEHAVIOR-BHV059
+  - REL-BEHAVIOR-BHV060
+  - REL-BEHAVIOR-BHV078
+  - REL-AUDIT-U435-CONSIGNED-PURCHASE
+  - REL-U725-VISIBILITY-D04.j
+  - REL-U848-PARENT-D04.j
+- node_id: D04.k
+  name: Transfer Order
+  parent_id: ba-order-lifecycle-management
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: 'Gérer les ordres de déplacement de marchandises entre sites : maintenir origine, destination, quantités
+    et échéances, suivre les modifications et rapprocher départs et arrivées pour connaître le transfert restant à satisfaire.'
+  scenario_paths:
+  - fashion-launch-path
+  - redistribute-protected-stock-path
+  - order-structuring-engaged-path
+  - transfer-replenishment-order-driven-path
+  incident_relations:
+  - REL-EXECUTION-FACTS-D04.k
+  - REL-NEEDS-U290-060
+  - REL-NEEDS-U290-062
+  - REL-NEEDS-U290-063
+  - REL-NEEDS-U290-064
+  - REL-NEEDS-U290-090
+  - REL-NEEDS-U290-103
+  - REL-INITIAL-STOCKING-TRANSFER
+  - REL-U725-VISIBILITY-D04.k
+  - REL-U848-PARENT-D04.k
+- node_id: D04.l
+  name: Return Order
+  parent_id: ba-order-lifecycle-management
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Prendre en charge les retours clients, leurs commandes et leurs suites logistiques, jusqu’au résultat attendu
+    selon les décisions et autorisations applicables.
+  scenario_paths:
+  - return-fashion-recovery-path
+  - supplier-return-outcomes-path
+  incident_relations:
+  - REL-EXECUTION-FACTS-D04.l
+  - REL-NEEDS-U290-065
+  - REL-NEEDS-U290-067
+  - REL-NEEDS-U290-068
+  - REL-NEEDS-U290-069
+  - REL-NEEDS-U380-03
+  - REL-BEHAVIOR-BHV050
+  - REL-BEHAVIOR-BHV051
+  - REL-BEHAVIOR-BHV052
+  - REL-BEHAVIOR-BHV053
+  - REL-BEHAVIOR-BHV054
+  - REL-U725-VISIBILITY-D04.l
+  - REL-U848-PARENT-D04.l
+- node_id: D04.m
+  name: Supplier Return Order
+  parent_id: ba-order-lifecycle-management
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Prendre en charge les retours de marchandises aux fournisseurs et suivre leurs suites attendues, selon
+    les accords applicables, en distinguant renvoi sans remplacement, remplacement et réparation avec restitution du bien.
+  scenario_paths:
+  - supplier-return-outcomes-path
+  incident_relations:
+  - REL-EXECUTION-FACTS-D04.m
+  - REL-NEEDS-U290-070
+  - REL-NEEDS-U290-072
+  - REL-NEEDS-U290-073
+  - REL-NEEDS-U290-074
+  - REL-NEEDS-U290-075
+  - REL-NEEDS-U385-SUPPLIER-RETURN
+  - REL-BEHAVIOR-BHV055
+  - REL-BEHAVIOR-BHV056
+  - REL-BEHAVIOR-BHV057
+  - REL-AUDIT-U435-CONSIGNED-SUPPLIER-RETURN
+  - REL-U725-VISIBILITY-D04.m
+  - REL-U848-PARENT-D04.m
+- node_id: D04.n
+  name: Order Structuring
+  parent_id: ba-order-lifecycle-management
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Scinder, regrouper ou fusionner des commandes et leurs éléments, en préservant la traçabilité des demandes,
+    les quantités et les engagements.
+  scenario_paths:
+  - order-structuring-engaged-path
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-NEEDS-U290-046
+  - REL-NEEDS-U290-054
+  - REL-NEEDS-U290-060
+  - REL-NEEDS-U290-065
+  - REL-NEEDS-U290-070
+  - REL-U835-D04.n-D03.i
+  - REL-U835-D04.n-D03.j
+  - REL-U835-D04.n-D03.k
+  - REL-BEHAVIOR-BHV044
+  - REL-AUDIT-U435-CONSIGNED-STRUCTURING
+  - REL-BEHAVIOR-BHV086
+  - REL-BEHAVIOR-BHV087
+  - REL-U848-PARENT-D04.n
+- node_id: D05.a
+  name: Inventory Target Optimization
+  parent_id: ba-policy-optimization
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer les objectifs de stock et les seuils associés, par produit, lieu et période, selon les besoins,
+    le niveau de service recherché, les délais et les risques.
+  scenario_paths:
+  - redistribute-protected-stock-path
+  incident_relations:
+  - REL-INVENTORY-PLANNING-D05.a
+  - REL-CTP-COVERAGE-TARGET
+  - REL-NEEDS-U290-008
+  - REL-NEEDS-U290-079
+  - REL-NEEDS-U290-080
+  - REL-NEEDS-U290-081
+  - REL-NEEDS-U290-084
+  - REL-NEEDS-U290-087
+  - REL-INITIAL-STOCKING-TARGET
+  - REL-BEHAVIOR-BHV026
+  - REL-BEHAVIOR-BHV027
+  - REL-BEHAVIOR-BHV028
+  - REL-U848-PARENT-D05.a
+- node_id: D05.d
+  name: Group Protection Optimization
+  parent_id: ba-policy-optimization
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer les quantités à protéger ou les limites d’usage par canal ou groupe de bénéficiaires.
+  scenario_paths:
+  - redistribute-protected-stock-path
+  incident_relations:
+  - REL-INVENTORY-PLANNING-D05.d
+  - REL-CTP-STOCK-ALLOCATION
+  - REL-NEEDS-U290-009
+  - REL-NEEDS-U290-082
+  - REL-NEEDS-U290-083
+  - REL-NEEDS-U290-084
+  - REL-U848-PARENT-D05.d
+- node_id: D05.e
+  name: Replenishment
+  parent_id: ba-supply-matching
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer les apports et ajustements nécessaires pour installer ou réapprovisionner un stock, en tenant
+    compte des besoins, des cibles et des ressources déjà attendues.
+  scenario_paths:
+  - fashion-launch-path
+  - transfer-replenishment-order-driven-path
+  - consignment-launch-replenishment-path
+  incident_relations:
+  - REL-INVENTORY-PLANNING-D05.e
+  - REL-NEEDS-U290-085
+  - REL-NEEDS-U290-086
+  - REL-NEEDS-U290-087
+  - REL-NEEDS-U290-088
+  - REL-NEEDS-U290-089
+  - REL-NEEDS-U290-090
+  - REL-NEEDS-U290-094
+  - REL-INVENTORY-PLANNING-D05.g
+  - REL-INITIAL-STOCKING-INVENTORY
+  - REL-INITIAL-STOCKING-TARGET
+  - REL-INITIAL-STOCKING-PROTECTION
+  - REL-INITIAL-STOCKING-PURCHASE
+  - REL-INITIAL-STOCKING-TRANSFER
+  - REL-INITIAL-STOCKING-TRACKING
+  - REL-REDISTRIBUTION-INITIAL-STOCKING
+  - REL-NEEDS-U395-03
+  - REL-NEEDS-U395-04
+  - REL-BEHAVIOR-BHV083
+  - REL-BEHAVIOR-BHV084
+  - REL-BEHAVIOR-BHV085
+  - REL-U848-PARENT-D05.e
+- node_id: D05.c
+  name: Stock Redistribution
+  parent_id: ba-supply-matching
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer les transferts de stock existant entre sites pour mieux répondre aux besoins, reconstituer des
+    assortiments utiles ou regrouper des stocks dispersés, en tenant compte des coûts et risques.
+  scenario_paths:
+  - redistribute-protected-stock-path
+  incident_relations:
+  - REL-INVENTORY-PLANNING-D05.c
+  - REL-NEEDS-U290-091
+  - REL-NEEDS-U290-092
+  - REL-NEEDS-U290-093
+  - REL-NEEDS-U290-094
+  - REL-REDISTRIBUTION-INITIAL-STOCKING
+  - REL-BEHAVIOR-BHV024
+  - REL-BEHAVIOR-BHV025
+  - REL-U848-PARENT-D05.c
+- node_id: D05.f
+  name: Master Planning
+  parent_id: ba-master-plan-management
+  recommendation: retain_on_documented_result
+  reason: Cadre et révise le plan commun ; mobilise les décisions sans reprendre leurs calculs.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Cadrer, maintenir et réviser le master plan commun en mobilisant les capacités de [matching](glossary:TER112),
+    de simulation et d’application.
+  scenario_paths:
+  - shortage-reassessment-path
+  - additional-purchase-partial-path
+  - reference-plan-correction-path
+  - redistribute-protected-stock-path
+  incident_relations:
+  - REL-INVENTORY-PLANNING-D05.a
+  - REL-INVENTORY-PLANNING-D05.d
+  - REL-INVENTORY-PLANNING-D05.e
+  - REL-INVENTORY-PLANNING-D05.c
+  - REL-MEMBER-BHV016
+  - REL-NEEDS-U290-099
+  - REL-NEEDS-U290-100
+  - REL-NEEDS-U290-101
+  - REL-NEEDS-U290-102
+  - REL-NEEDS-U290-103
+  - REL-NEEDS-U290-104
+  - REL-INVENTORY-PLANNING-D05.g
+  - REL-INVENTORY-PLANNING-D05.h
+  - REL-AUDIT-U435-PLNK-01
+  - REL-AUDIT-U435-PLNK-06
+  - REL-MEMBER-D04.s
+  - REL-BACKLOG-REQUEST-ASSIGNMENT
+  - REL-MEMBER-BHV097
+  - REL-MEMBER-BHV098
+  - REL-MEMBER-BHV099
+  - REL-MEMBER-BHV100
+  - REL-MEMBER-BHV101
+  - REL-U673-PLAN-COVERAGE
+  - REL-U750-PLANNING-SIMULATION
+  - REL-U750-PLANNING-ASSIGNMENT
+  - REL-U848-PARENT-D05.f
+- node_id: D06.b
+  name: Service Capacity Visibility
+  parent_id: ba-service-planning
+  recommendation: retain_on_documented_result
+  reason: 'U857 : interpréter et qualifier des informations fournisseur dont le contenu et le sens ne sont pas présumés, pour
+    établir une connaissance exploitable et signaler ses incertitudes.'
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Interpréter et qualifier les informations communiquées par les exécutants pour établir une connaissance
+    exploitable des capacités de service, de leur portée et de leurs incertitudes.
+  scenario_paths:
+  - transport-missed-connection-path
+  - b2b-release-deadline-path
+  - transport-loads-six-stores-path
+  incident_relations:
+  - REL-EXECUTION-ADAPTATION-CAPACITY
+  - REL-EXECUTION-SERVICE-CAPACITY
+  - REL-NEEDS-U290-031
+  - REL-NEEDS-U290-105
+  - REL-U759-CAPACITY
+  - REL-U848-PARENT-D06.b
+  source_refs:
+  - U857
+- node_id: D07.a
+  name: Service Requirements Decision
+  parent_id: ba-service-planning
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: 'Établir les prestations et résultats nécessaires pour satisfaire un besoin Supply : biens concernés, quantités,
+    lieux, échéances et contraintes à porter dans les ordres confiés.'
+  scenario_paths:
+  - export-remote-services-path
+  - b2b-release-deadline-path
+  incident_relations:
+  - REL-NEEDS-U290-106
+  - REL-NEEDS-U290-107
+  - REL-NEEDS-U290-108
+  - REL-NEEDS-U290-109
+  - REL-NEEDS-U290-117
+  - REL-U848-PARENT-D07.a
+- node_id: D07.c
+  name: Service Reconciliation
+  parent_id: ba-execution-assurance
+  recommendation: retain_on_documented_result
+  reason: Qualifie l’écart entre la prestation attendue et les résultats reçus ; la simple restitution d’avancement ne remplit
+    pas cette responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Rapprocher les résultats constatés des prestations attendues, qualifier les écarts et fournir les faits
+    utiles aux sous-domaines consommateurs.
+  scenario_paths:
+  - export-remote-services-path
+  - transport-missed-connection-path
+  - remote-payment-ambiguous-path
+  - gift-kits-crossdock-path
+  - damaged-stock-disposition-path
+  - partial-receiving-path
+  incident_relations:
+  - REL-EXECUTION-FACTS-D04.i
+  - REL-EXECUTION-FACTS-D04.j
+  - REL-EXECUTION-FACTS-D04.k
+  - REL-EXECUTION-FACTS-D04.l
+  - REL-EXECUTION-FACTS-D04.m
+  - REL-NEEDS-U290-005
+  - REL-NEEDS-U290-048
+  - REL-NEEDS-U290-056
+  - REL-NEEDS-U290-062
+  - REL-NEEDS-U290-067
+  - REL-NEEDS-U290-072
+  - REL-NEEDS-U290-127
+  - REL-AUDIT-U435-PLNK-03
+  - REL-U725-ORDER-RESULTS
+  - REL-U843-D07.c-order-workflow-sentry
+  - REL-U848-PARENT-D07.c
+- node_id: D07.d
+  name: Operations Tracking
+  parent_id: ba-execution-assurance
+  recommendation: retain_on_documented_result
+  reason: Rapproche les faits reçus de la prestation concernée ; distinct de leur consolidation et de la qualification des
+    écarts.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Capter et intégrer les faits, jalons, estimations et retours de fin des prestations et processus Supply,
+    en les rapprochant de la demande et de l’exécution concernées.
+  scenario_paths:
+  - return-fashion-recovery-path
+  - fashion-launch-path
+  - export-remote-services-path
+  - pickup-or-direct-shipment-path
+  - transport-missed-connection-path
+  - remote-payment-ambiguous-path
+  - damaged-stock-disposition-path
+  - transport-loads-six-stores-path
+  - partial-receiving-path
+  - product-quality-feedback-path
+  incident_relations:
+  - REL-EXECUTION-TRACKING-ORCHESTRATION
+  - REL-EXECUTION-TRACKING-ADAPTATION
+  - REL-NEEDS-U290-003
+  - REL-NEEDS-U290-088
+  - REL-NEEDS-U290-100
+  - REL-NEEDS-U290-113
+  - REL-NEEDS-U290-121
+  - REL-NEEDS-U290-127
+  - REL-INITIAL-STOCKING-TRACKING
+  - REL-NEEDS-U380-01
+  - REL-U717-OPERATIONS-TRACKING-VISIBILITY
+  - REL-U717-SUPPLY-TRACKING-VISIBILITY
+  - REL-U848-PARENT-D07.d
+- node_id: D06.d
+  name: Process Orchestration
+  parent_id: ba-execution-coordination
+  recommendation: retain_on_documented_result
+  reason: Coordonne les prestations confiées dans le mandat d’exécution ; ne réorganise pas seul les engagements de commande.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Coordonner le déclenchement, les dépendances et la progression des prestations jusqu’aux résultats attendus,
+    en tenant compte des faits d’exécution et des adaptations autorisées.
+  scenario_paths:
+  - b2b-partial-stock-path
+  - return-fashion-recovery-path
+  - consignment-sale-pickup-path
+  - fashion-launch-path
+  - export-remote-services-path
+  - pickup-or-direct-shipment-path
+  - transport-missed-connection-path
+  - remote-payment-ambiguous-path
+  - supplier-return-outcomes-path
+  - gift-kits-crossdock-path
+  - order-structuring-engaged-path
+  - b2b-release-deadline-path
+  - trace-accessory-kits-path
+  - damaged-stock-disposition-path
+  - transport-loads-six-stores-path
+  - partial-receiving-path
+  - b2b-partial-stock-split-path
+  - intercompany-direct-delivery-path
+  - workflow-version-change-path
+  incident_relations:
+  - REL-EXECUTION-TRACKING-ORCHESTRATION
+  - REL-EXECUTION-ADAPTATION-ORCHESTRATION
+  - REL-NEEDS-U290-104
+  - REL-NEEDS-U290-117
+  - REL-NEEDS-U290-118
+  - REL-NEEDS-U290-119
+  - REL-NEEDS-U290-121
+  - REL-NEEDS-U380-04
+  - REL-NEEDS-U388-REPAIR-EXECUTION
+  - REL-U759-APPLY
+  - REL-U843-order-workflow-orchestration-D06.d
+  - REL-U848-PARENT-D06.d
+- node_id: D06.e
+  name: Service Selection Decision
+  parent_id: ba-service-planning
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer les services et exécutants à mobiliser pour les prestations nécessaires, en tenant compte de
+    leur admissibilité et des contraintes.
+  scenario_paths:
+  - substitution-price-service-path
+  - transport-missed-connection-path
+  - b2b-release-deadline-path
+  - transport-loads-six-stores-path
+  - service-policy-deactivation-path
+  incident_relations:
+  - REL-EXECUTION-ADAPTATION-SERVICE
+  - REL-EXECUTION-SERVICE-CAPACITY
+  - REL-CTP-EXECUTION-SERVICE
+  - REL-NEEDS-U290-109
+  - REL-NEEDS-U290-110
+  - REL-NEEDS-U290-111
+  - REL-NEEDS-U290-118
+  - REL-U848-PARENT-D06.e
+- node_id: D06.f
+  name: Process Adaptation Decision
+  parent_id: ba-execution-coordination
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer les adaptations du plan d’exécution permettant de préserver la promesse de l’[Order](glossary:TER012)
+    et les grands équilibres d’[Availability](glossary:TER112) face aux aléas.
+  scenario_paths:
+  - transport-missed-connection-path
+  - b2b-release-deadline-path
+  - transport-loads-six-stores-path
+  - service-policy-deactivation-path
+  incident_relations:
+  - REL-EXECUTION-TRACKING-ADAPTATION
+  - REL-EXECUTION-ADAPTATION-SERVICE
+  - REL-EXECUTION-ADAPTATION-CAPACITY
+  - REL-EXECUTION-ADAPTATION-ORCHESTRATION
+  - REL-NEEDS-U290-113
+  - REL-NEEDS-U290-119
+  - REL-U848-PARENT-D06.f
+- node_id: BHV006
+  name: Simulation & Analysis
+  parent_id: ba-master-plan-management
+  recommendation: retain_on_documented_result
+  reason: Produit des alternatives comparables et leurs impacts sans les appliquer ; le périmètre est explicitement séparé
+    de Master Planning.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Construire des alternatives de plan, projeter leurs conséquences et comparer leurs effets sur le service,
+    les engagements, les stocks, les coûts et les risques pour éclairer les choix.
+  scenario_paths:
+  - shortage-reassessment-path
+  incident_relations:
+  - REL-U750-PLANNING-SIMULATION
+  - REL-U848-PARENT-BHV006
+- node_id: D05.h
+  name: Reservation Policy Optimization
+  parent_id: ba-policy-optimization
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer dans quelles situations, à quel moment et pour quelle durée réserver des ressources afin de
+    sécuriser la promesse, selon le risque de pénurie et le coût d’indisponibilité pour les autres demandes.
+  scenario_paths:
+  - redistribute-protected-stock-path
+  incident_relations:
+  - REL-BEHAVIOR-BHV032
+  - REL-BEHAVIOR-BHV033
+  - REL-BEHAVIOR-BHV034
+  - REL-BEHAVIOR-BHV035
+  - REL-RESERVATION-POLICY-INVENTORY
+  - REL-RESERVATION-POLICY-ATP
+  - REL-RESERVATION-POLICY-PRIORITY
+  - REL-RESERVATION-POLICY-PROTECTION
+  - REL-RESERVATION-POLICY-AGREEMENT
+  - REL-RESERVATION-POLICY-APPLICATION
+  - REL-INVENTORY-PLANNING-D05.h
+  - REL-U560-PROTECTION-RESERVATION-POLICY
+  - REL-U848-PARENT-D05.h
+- node_id: D03.o
+  name: Supply Assignment
+  parent_id: ba-supply-matching
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer les affectations cohérentes des ressources aux besoins et leurs révisions autorisées dans le
+    master plan commun.
+  scenario_paths:
+  - b2b-partial-stock-path
+  - fashion-launch-path
+  - shortage-reassessment-path
+  - additional-purchase-partial-path
+  - transport-missed-connection-path
+  - redistribute-protected-stock-path
+  - order-structuring-engaged-path
+  - transfer-replenishment-order-driven-path
+  - b2b-partial-stock-split-path
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-NEEDS-U378-01
+  - REL-NEEDS-U378-02
+  - REL-NEEDS-U378-03
+  - REL-NEEDS-U378-04
+  - REL-NEEDS-U378-06
+  - REL-NEEDS-U378-07
+  - REL-AUDIT-U435-PLNK-01
+  - REL-AUDIT-U435-CONSIGNED-SUPPLIER-RETURN
+  - REL-BEHAVIOR-BHV102
+  - REL-BEHAVIOR-BHV103
+  - REL-U750-PLANNING-ASSIGNMENT
+  - REL-U848-PARENT-D03.o
+- node_id: D05.i
+  name: Inventory Disposition Decision
+  parent_id: D06
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer les usages autorisés et le devenir logistique de biens selon leur état constaté, les politiques
+    applicables et les possibilités de récupération de valeur, lors d’un retour ou en cours de stockage.
+  scenario_paths:
+  - return-fashion-recovery-path
+  - supplier-return-outcomes-path
+  - trace-accessory-kits-path
+  - damaged-stock-disposition-path
+  incident_relations:
+  - REL-NEEDS-U380-01
+  - REL-NEEDS-U380-02
+  - REL-NEEDS-U380-03
+  - REL-NEEDS-U380-04
+  - REL-BEHAVIOR-BHV048
+  - REL-BEHAVIOR-BHV049
+  - REL-MEMBER-D05.i
+- node_id: D04.r
+  name: Consignment Fill-up Order
+  parent_id: ba-order-lifecycle-management
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: 'Demander et suivre la mise en consignation initiale ou complémentaire de marchandises : produits, quantités,
+    destinations, échéances et reste à apporter, conformément à l’accord applicable.'
+  scenario_paths:
+  - consignment-sale-pickup-path
+  - consignment-launch-replenishment-path
+  incident_relations:
+  - REL-NEEDS-U395-02
+  - REL-NEEDS-U395-03
+  - REL-NEEDS-U395-04
+  - REL-AUDIT-U435-PLNK-03
+  - REL-AUDIT-U435-PLNK-06
+  - REL-AUDIT-U435-CONSIGNED-STRUCTURING
+  - REL-U725-VISIBILITY-D04.r
+  - REL-U848-PARENT-D04.r
+- node_id: D01.h
+  name: Inventory Ownership Transfer Decision
+  parent_id: ba-inventory-ownership-management
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer si les faits des processus, les échéances et les conditions applicables de l’accord conduisent
+    à reconnaître ou à demander un transfert de propriété, pour quelles quantités, entre quelles parties et à quelle date,
+    avec ou sans consignation.
+  scenario_paths:
+  - consignment-sale-pickup-path
+  - ownership-transit-deadline-path
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-NEEDS-U395-01
+  - REL-BEHAVIOR-BHV063
+  - REL-BEHAVIOR-BHV064
+  - REL-AUDIT-U435-PLNK-04
+  - REL-AUDIT-U435-CONSIGNED-TRACKING
+  - REL-AUDIT-U435-CONSIGNED-PURCHASE
+  - REL-BEHAVIOR-BHV104
+  - REL-U756-FACTS
+  - REL-U756-DETERMINATION
+  - REL-U848-PARENT-D01.h
+- node_id: D08.e
+  name: Product Reference Visibility
+  parent_id: business-references
+  recommendation: retirement_candidate
+  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
+    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Retrouver un produit ou une variante et consulter les caractéristiques de référence nécessaires pour comprendre
+    de quel produit parlent une offre, un accord ou une commande. Construire et rafraîchir la vue de référence nécessaire
+    à cette consultation.
+  scenario_paths:
+  - reference-plan-correction-path
+  - product-quality-feedback-path
+  incident_relations:
+  - REL-NEEDS-U290-050
+  - REL-NEEDS-U290-057
+  - REL-NEEDS-U290-064
+  - REL-NEEDS-U290-069
+  - REL-NEEDS-U290-081
+  - REL-NEEDS-U290-130
+  - REL-U717-INGESTS-D08.e
+  - REL-U848-PARENT-D08.e
+  - REL-U848-REFERENCE-D08.e
+- node_id: D09.e
+  name: Party / Role Visibility
+  parent_id: business-references
+  recommendation: retirement_candidate
+  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
+    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Retrouver une [personne physique ou morale](glossary:TER046) et consulter son identité, ses relations et
+    les [rôles](glossary:TER047) sous lesquels elle participe aux accords et opérations Supply. Construire et rafraîchir la
+    vue de référence nécessaire à cette consultation.
+  scenario_paths:
+  - reference-plan-correction-path
+  incident_relations:
+  - REL-NEEDS-U290-051
+  - REL-NEEDS-U290-058
+  - REL-NEEDS-U290-074
+  - REL-NEEDS-U290-128
+  - REL-NEEDS-U290-131
+  - REL-NEEDS-U290-132
+  - REL-U717-INGESTS-D09.e
+  - REL-U848-PARENT-D09.e
+  - REL-U848-REFERENCE-D09.e
+- node_id: D11.b
+  name: Agreement Visibility
+  parent_id: business-references
+  recommendation: retirement_candidate
+  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
+    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Retrouver un [accord](glossary:TER048) et consulter les personnes engagées, les conditions, les périodes
+    et les engagements contractuels enregistrés pour comprendre ce qu’il prévoit. Construire et rafraîchir la vue de référence
+    nécessaire à cette consultation.
+  scenario_paths:
+  - consignment-sale-pickup-path
+  - export-remote-services-path
+  - reference-plan-correction-path
+  - ownership-transit-deadline-path
+  incident_relations:
+  - REL-NEEDS-U290-040
+  - REL-U835-D03.i-D11.b
+  - REL-U835-D03.j-D11.b
+  - REL-NEEDS-U290-045
+  - REL-NEEDS-U290-052
+  - REL-NEEDS-U290-059
+  - REL-NEEDS-U290-075
+  - REL-RESERVATION-POLICY-AGREEMENT
+  - REL-NEEDS-U395-01
+  - REL-NEEDS-U395-02
+  - REL-U717-INGESTS-D11.b
+  - REL-U848-PARENT-D11.b
+  - REL-U848-REFERENCE-D11.b
+- node_id: D12.b
+  name: Product Catalog Visibility
+  parent_id: business-references
+  recommendation: retirement_candidate
+  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
+    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Retrouver un catalogue et consulter les offres, produits et conditions commerciales enregistrées pour comprendre
+    ce qui est proposé et dans quel périmètre. Construire et rafraîchir la vue de référence nécessaire à cette consultation.
+  scenario_paths:
+  - substitution-price-service-path
+  - reference-plan-correction-path
+  incident_relations:
+  - REL-NEEDS-U290-053
+  - REL-NEEDS-U290-129
+  - REL-U717-INGESTS-D12.b
+  - REL-U723-CONSUMER-D12.b
+  - REL-U848-PARENT-D12.b
+  - REL-U848-REFERENCE-D12.b
+- node_id: D13.b
+  name: Fulfilment Network Visibility
+  parent_id: business-references
+  recommendation: retirement_candidate
+  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
+    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Retrouver un point du réseau Supply et consulter ses caractéristiques, ses rattachements et ses relations
+    de référence pour comprendre sa place dans le réseau. Construire et rafraîchir la vue de référence nécessaire à cette
+    consultation.
+  scenario_paths:
+  - reference-plan-correction-path
+  incident_relations:
+  - REL-NEEDS-U290-032
+  - REL-NEEDS-U290-063
+  - REL-NEEDS-U290-080
+  - REL-NEEDS-U290-093
+  - REL-NEEDS-U290-107
+  - REL-NEEDS-U290-111
+  - REL-NEEDS-U290-133
+  - REL-U717-INGESTS-D13.b
+  - REL-U848-PARENT-D13.b
+  - REL-U848-REFERENCE-D13.b
+- node_id: D14.b
+  name: Service Catalog Visibility
+  parent_id: business-references
+  recommendation: retirement_candidate
+  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
+    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Retrouver un [Service](glossary:TER075) et consulter son résultat attendu, son fournisseur et les conditions
+    de référence de sa réalisation pour comprendre ce que l’orchestration peut mobiliser. Construire et rafraîchir la vue
+    de référence nécessaire à cette consultation.
+  scenario_paths:
+  - reference-plan-correction-path
+  incident_relations:
+  - REL-NEEDS-U290-105
+  - REL-NEEDS-U290-106
+  - REL-NEEDS-U290-110
+  - REL-U717-INGESTS-D14.b
+  - REL-U723-CONSUMER-D14.b
+  - REL-U848-PARENT-D14.b
+  - REL-U848-REFERENCE-D14.b
+- node_id: D16.b
+  name: Assortment Visibility
+  parent_id: business-references
+  recommendation: retirement_candidate
+  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
+    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Retrouver un assortiment et consulter quels produits sont retenus pour quels magasins, canaux ou clients
+    et pendant quelle période. Construire et rafraîchir la vue de référence nécessaire à cette consultation.
+  scenario_paths:
+  - substitution-price-service-path
+  - reference-plan-correction-path
+  incident_relations:
+  - REL-U717-INGESTS-D16.b
+  - REL-U848-PARENT-D16.b
+  - REL-U848-REFERENCE-D16.b
+- node_id: D19.a
+  name: Service Provider Policy
+  parent_id: subdomain-policies
+  recommendation: retain_on_documented_result
+  reason: Porte des règles actives et leur validité ; distinct de la recommandation de réglage et des décisions consommatrices.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Définir, maintenir et rendre applicables les règles de recours aux fournisseurs et à leurs Services, notamment
+    les exclusions et les limites de sollicitation, afin de tenir compte de leur fiabilité et de leur situation opérationnelle.
+  scenario_paths:
+  - b2b-release-deadline-path
+  - service-policy-deactivation-path
+  incident_relations:
+  - REL-MEMBER-D19.a
+- node_id: D19.b
+  name: Demand Protection Policy
+  parent_id: subdomain-policies
+  recommendation: retain_on_documented_result
+  reason: Porte des règles actives et leur validité ; distinct de la recommandation de réglage et des décisions consommatrices.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Définir, maintenir et rendre applicables les règles qui protègent ou priorisent certaines demandes dans
+    les arbitrages de couverture et de révision.
+  scenario_paths:
+  - shortage-reassessment-path
+  - redistribute-protected-stock-path
+  incident_relations:
+  - REL-MEMBER-D19.b
+- node_id: D04.t
+  name: Consignment Pick-up Order
+  parent_id: ba-order-lifecycle-management
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Demander et suivre la reprise ou la restitution au propriétaire de marchandises restées consignées, avec
+    les quantités, lieux, échéances et conditions applicables.
+  scenario_paths:
+  - consignment-sale-pickup-path
+  incident_relations:
+  - REL-U725-VISIBILITY-D04.t
+  - REL-U848-PARENT-D04.t
+- node_id: plans-ingestion
+  name: Plan Ingestion
+  parent_id: ba-inbound-information-integration
+  recommendation: retain_on_documented_result
+  reason: Intègre les plans externes, versions et rejets ; ne construit pas les prévisions.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Recevoir et intégrer les [Supply Plans](glossary:TER098) et [Demand Plans](glossary:TER099) du domaine
+    [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration et pouvant être servi par un outil
+    de planification avancée, avec leur provenance, horizon, version et statut.
+  scenario_paths:
+  - fashion-launch-path
+  - reference-plan-correction-path
+  - planning-actuals-feedback-path
+  incident_relations:
+  - REL-U826-plans-ingestion-TO-plans-visibility
+  - REL-U826-plans-ingestion-TO-demand-plan-visibility
+  - REL-U848-PARENT-plans-ingestion
+- node_id: plans-visibility
+  name: Supply Plan Visibility
+  parent_id: subdomain-plans
+  recommendation: retirement_candidate
+  reason: Expose un plan calculé ailleurs. La fiche exclut le calcul de prévision et le rapprochement anti-double-compte,
+    déjà confié à Availability ; conserver les plans comme informations consommées.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Rendre consultables les prévisions d’entrées ou de sorties de stock hors achats, avec versions, horizons,
+    provenance et incertitudes pour éclairer la promesse et [Availability](glossary:TER112).
+  scenario_paths:
+  - fashion-launch-path
+  - planning-actuals-feedback-path
+  incident_relations:
+  - REL-U673-CONTAINS-plans-visibility
+  - REL-U673-PLAN-COVERAGE
+  - REL-U826-plans-ingestion-TO-plans-visibility
+- node_id: service-order-picking
+  name: Picking Order
+  parent_id: ba-goods-processing-order-management
+  recommendation: review_capability_vs_service_variant
+  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
+    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
+    regroupement décidé.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Gérer les demandes de prélèvement confiées aux exécutants, leurs exigences de quantité et de référence,
+    leurs engagements et les suites des manquants constatés.
+  scenario_paths:
+  - gift-kits-crossdock-path
+  - b2b-release-deadline-path
+  - transport-loads-six-stores-path
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-U759-PICKING
+  - REL-U848-PARENT-service-order-picking
+- node_id: service-order-packing
+  name: Packing Order
+  parent_id: ba-goods-processing-order-management
+  recommendation: review_capability_vs_service_variant
+  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
+    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
+    regroupement décidé.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Tenir les demandes de conditionnement et de reconditionnement confiées aux exécutants, leurs exigences,
+    engagements et suites des résultats.
+  scenario_paths:
+  - b2b-partial-stock-path
+  - fashion-launch-path
+  - gift-kits-crossdock-path
+  - b2b-release-deadline-path
+  - b2b-partial-stock-split-path
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-U759-PACKING
+  - REL-U848-PARENT-service-order-packing
+- node_id: service-order-cross-docking
+  name: Cross-Docking Order
+  parent_id: ba-goods-processing-order-management
+  recommendation: review_capability_vs_service_variant
+  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
+    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
+    regroupement décidé.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Gérer les demandes de transit confiées aux exécutants et les engagements de passage des marchandises reçues
+    vers les départs prévus.
+  scenario_paths:
+  - gift-kits-crossdock-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-cross-docking
+- node_id: service-order-transport
+  name: Transport Order
+  parent_id: ba-transport-order-management
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Porter les demandes de déplacement de marchandises, leurs quantités, origine et destination, contraintes
+    de collecte et de livraison, conditions de transport, engagements acceptés et suites des écarts.
+  scenario_paths:
+  - fashion-launch-path
+  - export-remote-services-path
+  - transport-missed-connection-path
+  - transport-loads-six-stores-path
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-U709-CONTAINS-transport-multi-stop
+  - REL-U709-CONTAINS-transport-multi-leg
+  - REL-U709-CONTAINS-transport-scheduled
+  - REL-U709-CONTAINS-transport-appointments
+  - REL-U709-CONTAINS-transport-rescheduling-redirection
+  - REL-U848-PARENT-service-order-transport
+- node_id: service-order-labeling
+  name: Labeling Order
+  parent_id: ba-goods-processing-order-management
+  recommendation: review_capability_vs_service_variant
+  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
+    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
+    regroupement décidé.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Tenir les demandes de marquage et d’étiquetage confiées aux exécutants, leurs exigences, engagements et
+    suites des résultats.
+  scenario_paths:
+  - fashion-launch-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-labeling
+- node_id: service-order-kitting
+  name: Kitting Order
+  parent_id: ba-goods-processing-order-management
+  recommendation: review_capability_vs_service_variant
+  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
+    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
+    regroupement décidé.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Tenir les demandes de constitution, séparation et recomposition d’ensembles confiées aux exécutants, leurs
+    exigences, engagements et suites des résultats.
+  scenario_paths:
+  - gift-kits-crossdock-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-kitting
+- node_id: service-order-garment-finishing
+  name: Garment Finishing Order
+  parent_id: ba-goods-processing-order-management
+  recommendation: review_capability_vs_service_variant
+  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
+    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
+    regroupement décidé.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Tenir les demandes de finition d’aspect des vêtements confiées aux exécutants, leurs exigences, engagements
+    et suites des résultats.
+  scenario_paths:
+  - fashion-launch-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-garment-finishing
+- node_id: service-order-cleaning
+  name: Cleaning Order
+  parent_id: ba-goods-processing-order-management
+  recommendation: review_capability_vs_service_variant
+  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
+    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
+    regroupement décidé.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Tenir les demandes de nettoyage des vêtements, chaussures et accessoires confiées aux exécutants, leurs
+    exigences, engagements et suites des résultats.
+  scenario_paths:
+  - gift-kits-crossdock-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-cleaning
+- node_id: service-order-repair-alteration
+  name: Repair & Alteration Order
+  parent_id: ba-goods-processing-order-management
+  recommendation: review_capability_vs_service_variant
+  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
+    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
+    regroupement décidé.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Tenir les demandes de réparation et de retouche des vêtements, chaussures et accessoires confiées aux exécutants,
+    leurs exigences, engagements et suites des résultats.
+  scenario_paths:
+  - return-fashion-recovery-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-repair-alteration
+- node_id: service-order-personalization
+  name: Personalization Order
+  parent_id: ba-goods-processing-order-management
+  recommendation: review_capability_vs_service_variant
+  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
+    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
+    regroupement décidé.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Tenir les demandes de personnalisation des vêtements, chaussures et accessoires confiées aux exécutants,
+    leurs exigences, engagements et suites des résultats.
+  scenario_paths:
+  - gift-kits-crossdock-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-personalization
+- node_id: service-order-inspection
+  name: Inspection Order
+  parent_id: ba-goods-processing-order-management
+  recommendation: review_capability_vs_service_variant
+  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
+    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
+    regroupement décidé.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Tenir les demandes d’inspection des vêtements, chaussures et accessoires confiées aux exécutants, leurs
+    exigences, engagements et suites des résultats.
+  scenario_paths:
+  - return-fashion-recovery-path
+  - damaged-stock-disposition-path
+  - partial-receiving-path
+  - product-quality-feedback-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-inspection
+- node_id: service-order-transport-booking
+  name: Transport Booking Order
+  parent_id: ba-transport-order-management
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Gérer une demande autonome de réservation de capacité de transport, sa confirmation, ses changements et
+    sa libération, avant ou indépendamment des instructions détaillées de déplacement.
+  scenario_paths:
+  - export-remote-services-path
+  - transport-missed-connection-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-transport-booking
+- node_id: service-order-document-production
+  name: Document Production Order
+  parent_id: subdomain-service-orders
+  recommendation: retain_if_autonomous_service
+  reason: La fiche justifie une demande confiée avec résultat et suites propres. Si FLOW reçoit seulement un statut ou produit
+    automatiquement un document, conserver une dépendance ou fonction au lieu d’un ordre autonome.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Obtenir un document ou dossier logistique conforme aux données et exigences confiées, disponible et transmis
+    aux destinataires attendus.
+  scenario_paths:
+  - export-remote-services-path
+  incident_relations:
+  - REL-U709-CONTAINS-service-order-document-production
+- node_id: service-order-customs-clearance
+  name: Customs Clearance Order
+  parent_id: subdomain-service-orders
+  recommendation: retain_on_documented_result
+  reason: Porte un résultat ou un engagement métier explicite ; le premier examen ne démontre pas qu’un autre périmètre en
+    assume déjà toute la responsabilité.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Confier et suivre une prestation de dédouanement pour des marchandises, depuis le dossier jusqu’au résultat
+    de la procédure et au traitement des écarts.
+  scenario_paths:
+  - export-remote-services-path
+  - ownership-transit-deadline-path
+  incident_relations:
+  - REL-U709-CONTAINS-service-order-customs-clearance
+- node_id: service-order-billing
+  name: Billing Order
+  parent_id: ba-financial-service-order-management
+  recommendation: retain_if_autonomous_service
+  reason: La fiche justifie une demande confiée avec résultat et suites propres. Si FLOW reçoit seulement un statut ou produit
+    automatiquement un document, conserver une dépendance ou fonction au lieu d’un ordre autonome.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Demander et suivre la facturation des éléments éligibles d’une commande ou prestation, avec confirmation,
+    rejet et correction.
+  scenario_paths:
+  - export-remote-services-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-billing
+- node_id: service-order-payment-collection
+  name: Payment Collection Order
+  parent_id: ba-financial-service-order-management
+  recommendation: retain_if_autonomous_service
+  reason: La fiche justifie une demande confiée avec résultat et suites propres. Si FLOW reçoit seulement un statut ou produit
+    automatiquement un document, conserver une dépendance ou fonction au lieu d’un ordre autonome.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Demander et suivre une opération d’encaissement rattachée à la commande, lorsque FLOW en pilote effectivement
+    le déclenchement et les suites.
+  scenario_paths:
+  - export-remote-services-path
+  - remote-payment-ambiguous-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-payment-collection
+- node_id: demand-plan-visibility
+  name: Demand Plan Visibility
+  parent_id: subdomain-plans
+  recommendation: retirement_candidate
+  reason: Expose un plan calculé ailleurs. La fiche exclut le calcul de prévision et le rapprochement anti-double-compte,
+    déjà confié à Availability ; conserver les plans comme informations consommées.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Rendre consultable la demande prévisionnelle reçue du domaine Demand & Supply Planning, avec versions,
+    horizons, provenance et incertitudes pour éclairer la promesse et [Availability](glossary:TER112).
+  scenario_paths:
+  - fashion-launch-path
+  - reference-plan-correction-path
+  incident_relations:
+  - REL-U714-CONTAINS-DEMAND-PLAN
+  - REL-U826-plans-ingestion-TO-demand-plan-visibility
+- node_id: master-data-ingestion
+  name: Master Data Ingestion
+  parent_id: ba-inbound-information-integration
+  recommendation: retain_on_documented_result
+  reason: Intègre versions, rejets et références sources ; ne pas y transférer implicitement les responsabilités encore attribuées
+    aux Visibility.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Recevoir et intégrer les référentiels fournis par les domaines sources pour maintenir les références locales
+    utilisées par la Supply.
+  scenario_paths:
+  - fashion-launch-path
+  - reference-plan-correction-path
+  - product-quality-feedback-path
+  incident_relations:
+  - REL-NEEDS-U290-128
+  - REL-NEEDS-U290-129
+  - REL-NEEDS-U290-130
+  - REL-NEEDS-U290-131
+  - REL-NEEDS-U290-132
+  - REL-NEEDS-U290-133
+  - REL-U717-INGESTS-D09.e
+  - REL-U717-INGESTS-D11.b
+  - REL-U717-INGESTS-D08.e
+  - REL-U717-INGESTS-D12.b
+  - REL-U717-INGESTS-D13.b
+  - REL-U717-INGESTS-D14.b
+  - REL-U717-INGESTS-D16.b
+  - REL-U718-COMMERCE
+  - REL-U718-FINANCE
+  - REL-U718-DESIGN
+  - REL-U723-PRICE-INGESTION
+  - REL-U848-PARENT-master-data-ingestion
+- node_id: operations-visibility
+  name: Operations Visibility
+  parent_id: ba-execution-assurance
+  recommendation: retain_on_documented_result
+  reason: Consolide plusieurs perspectives de réalisation et distingue faits, estimations, attentes et informations absentes.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Rendre visibles l’avancement, les résultats et les attentes des prestations et processus Supply à partir
+    des faits intégrés.
+  scenario_paths:
+  - export-remote-services-path
+  - remote-payment-ambiguous-path
+  incident_relations:
+  - REL-BEHAVIOR-BHV079
+  - REL-BEHAVIOR-BHV080
+  - REL-BEHAVIOR-BHV081
+  - REL-BEHAVIOR-BHV082
+  - REL-U717-OPERATIONS-TRACKING-VISIBILITY
+  - REL-U848-PARENT-operations-visibility
+- node_id: price-book-visibility
+  name: Price Book Visibility
+  parent_id: business-references
+  recommendation: retirement_candidate
+  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
+    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Construire, maintenir et restituer la vue locale des tarifs de référence des produits et services, avec
+    leurs versions, provenance et conditions d’application, pour éclairer les décisions Supply.
+  scenario_paths:
+  - substitution-price-service-path
+  - reference-plan-correction-path
+  incident_relations:
+  - REL-U723-PRICE-INGESTION
+  - REL-U723-CONSUMER-D03.k
+  - REL-U723-CONSUMER-D12.b
+  - REL-U723-CONSUMER-D14.b
+  - REL-U848-PARENT-price-book-visibility
+  - REL-U848-REFERENCE-price-book-visibility
+- node_id: order-visibility
+  name: Order Visibility
+  parent_id: ba-order-lifecycle-management
+  recommendation: retain_on_documented_result
+  reason: Recompose demandé, confirmé, réalisé et reste à satisfaire à travers les commandes ; distingue leurs états sans
+    double compte.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Restituer une vue cohérente des demandes, engagements, réalisations imputées et restes à satisfaire, par
+    [Order](glossary:TER012) et à travers le carnet.
+  scenario_paths:
+  - shortage-reassessment-path
+  incident_relations:
+  - REL-U725-VISIBILITY-D04.i
+  - REL-U725-VISIBILITY-D04.j
+  - REL-U725-VISIBILITY-D04.k
+  - REL-U725-VISIBILITY-D04.l
+  - REL-U725-VISIBILITY-D04.m
+  - REL-U725-VISIBILITY-D04.r
+  - REL-U725-VISIBILITY-D04.t
+  - REL-U725-ORDER-RESULTS
+  - REL-U848-PARENT-order-visibility
+- node_id: inventory-ownership-ledger
+  name: Inventory Ownership Ledger
+  parent_id: ba-inventory-ownership-management
+  recommendation: retain_on_documented_result
+  reason: Conserve les changements de propriétaire reconnus ; un mouvement physique et un transfert de propriété ne sont pas
+    interchangeables.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Tenir le registre des changements de propriétaire reconnus, avec quantités, parties, date d’effet, accord,
+    fait déclencheur, acte éventuel et preuve.
+  scenario_paths:
+  - consignment-sale-pickup-path
+  - ownership-transit-deadline-path
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-U756-DETERMINATION
+  - REL-U756-ESTABLISHED
+  - REL-U756-MOVEMENTS
+  - REL-U756-VISIBILITY
+  - REL-U826-inventory-ownership-ledger-TO-accounting-data-provision
+  - REL-U848-PARENT-inventory-ownership-ledger
+- node_id: service-order-release-decision
+  name: Service Order Release Decision
+  parent_id: ba-execution-coordination
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Déterminer quels ordres de prestation retenir ou libérer ensemble, et à quel moment, pour organiser leur
+    traitement et favoriser les regroupements utiles tout en respectant les engagements.
+  scenario_paths:
+  - b2b-partial-stock-path
+  - export-remote-services-path
+  - b2b-release-deadline-path
+  - transport-loads-six-stores-path
+  - b2b-partial-stock-split-path
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-BEHAVIOR-BHV105
+  - REL-BEHAVIOR-BHV106
+  - REL-U759-APPLY
+  - REL-U759-CAPACITY
+  - REL-U759-PICKING
+  - REL-U759-PACKING
+  - REL-U848-PARENT-service-order-release-decision
+- node_id: service-order-receiving
+  name: Receiving Order
+  parent_id: ba-goods-processing-order-management
+  recommendation: review_capability_vs_service_variant
+  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
+    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
+    regroupement décidé.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Gérer les demandes de réception de marchandises confiées aux exécutants, leurs quantités et conditions
+    attendues, leurs engagements et les suites des réceptions partielles, refusées ou non conformes.
+  scenario_paths:
+  - partial-receiving-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-receiving
+- node_id: transport-plan-decision
+  name: Transport Plan Decision
+  parent_id: ba-service-planning
+  recommendation: retain_on_documented_result
+  reason: Produit une réponse métier distincte ; la présence de calculs internes ne justifie pas de capacités supplémentaires.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Construire et réviser un plan de transport qui regroupe les marchandises en chargements et détermine leurs
+    trajets, arrêts et échéances compatibles avec les engagements.
+  scenario_paths:
+  - transport-missed-connection-path
+  - transport-loads-six-stores-path
+  incident_relations:
+  - REL-U777-CONTAINS-transport-load-consolidation
+  - REL-U777-CONTAINS-transport-routing-scheduling
+  - REL-U848-PARENT-transport-plan-decision
+- node_id: service-order-scrapping
+  name: Scrapping Order
+  parent_id: ba-goods-processing-order-management
+  recommendation: review_capability_vs_service_variant
+  reason: Résultat de prestation distinct, mais cycle de tenue des demandes largement commun. Examiner les engagements, règles
+    de traitement des écarts et contraintes réellement propres avant de choisir entre capacité et variante de service. Aucun
+    regroupement décidé.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Porter une demande de mise au rebut de biens, ses autorisations, quantités, consignes et preuves attendues
+    jusqu’à son résultat reconnu.
+  scenario_paths:
+  - damaged-stock-disposition-path
+  incident_relations:
+  - REL-U848-PARENT-service-order-scrapping
+- node_id: accounting-data-provision
+  name: Accounting Data Provision
+  parent_id: ba-outbound-information-provision
+  recommendation: retain_on_documented_result
+  reason: Prépare faits et justificatifs selon un contrat de données ; ne produit pas les écritures.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Sélectionner, préparer et transmettre les [faits de gestion](glossary:TER120) nécessaires à la comptabilité,
+    avec leurs justificatifs et corrections.
+  scenario_paths:
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-U826-accounting-data-provision-TO-accounting-interpretation
+  - REL-U826-D01.g-TO-accounting-data-provision
+  - REL-U826-inventory-ownership-ledger-TO-accounting-data-provision
+  - REL-U848-PARENT-accounting-data-provision
+- node_id: planning-data-provision
+  name: Planning Data Provision
+  parent_id: ba-outbound-information-provision
+  recommendation: retain_on_documented_result
+  reason: Prépare les faits pour une responsabilité de planification externe ; le contrat et la preuve de réception restent
+    à préciser sans inventer un calcul.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs
+    corrections.
+  scenario_paths:
+  - planning-actuals-feedback-path
+  incident_relations:
+  - REL-U826-D01.c-TO-planning-data-provision
+  - REL-U848-PARENT-planning-data-provision
+- node_id: product-feedback
+  name: Product Feedback
+  parent_id: ba-outbound-information-provision
+  recommendation: retain_on_documented_result
+  reason: Transmet des constats avec preuves au responsable produit ; distinguer cette responsabilité d’un simple transport
+    technique de messages.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+  scenario_paths:
+  - product-quality-feedback-path
+  incident_relations:
+  - REL-U848-PARENT-product-feedback
+- node_id: accounting-interpretation
+  name: Accounting Interpretation
+  parent_id: subdomain-financial-accounting
+  recommendation: retain_on_documented_result
+  reason: Traduit les faits en écritures sous autorité financière ; résultat distinct de leur transmission.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Recevoir et contrôler les [faits de gestion](glossary:TER120), puis les traduire en [écritures](glossary:TER121)
+    selon les règles comptables.
+  scenario_paths:
+  - intercompany-direct-delivery-path
+  incident_relations:
+  - REL-U826-accounting-interpretation
+  - REL-U826-accounting-data-provision-TO-accounting-interpretation
+- node_id: workflow-definition-management
+  name: Workflow Definition Management
+  parent_id: ba-reactive-workflow-management
+  recommendation: retain_on_documented_result
+  reason: Tient les activités et règles versionnées réutilisables ; distinct de la construction d’un parcours de commande.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Maintenir les activités réutilisables et leurs règles de composition.
+  scenario_paths:
+  - b2b-partial-stock-path
+  - workflow-version-change-path
+  incident_relations:
+  - REL-U843-order-workflow-planning-workflow-definition-management
+  - REL-U843-order-workflow-sentry-workflow-definition-management
+  - REL-U848-PARENT-workflow-definition-management
+- node_id: order-workflow-sentry
+  name: Order Workflow Sentry
+  parent_id: ba-reactive-workflow-management
+  recommendation: retain_on_documented_result
+  reason: Qualifie le contexte et déclenche une réaction autorisée ; ne se limite pas à observer un état.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: 'Détecter les événements et conditions pertinents dans le contexte d’une commande, puis déclencher la réaction
+    prévue : poursuivre le parcours, réexaminer son organisation ou solliciter une décision.'
+  scenario_paths:
+  - b2b-partial-stock-path
+  - transport-missed-connection-path
+  - workflow-version-change-path
+  - service-policy-deactivation-path
+  incident_relations:
+  - REL-U843-order-workflow-sentry-workflow-definition-management
+  - REL-U843-order-workflow-sentry-order-workflow-planning
+  - REL-U843-order-workflow-sentry-order-workflow-orchestration
+  - REL-U843-D07.c-order-workflow-sentry
+  - REL-U848-PARENT-order-workflow-sentry
+- node_id: order-workflow-planning
+  name: Order Workflow Planning
+  parent_id: ba-reactive-workflow-management
+  recommendation: retain_on_documented_result
+  reason: Compose le parcours de commande en préservant acquis et engagements ; distinct du plan local de prestations.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Construire ou adapter le parcours.
+  scenario_paths:
+  - b2b-partial-stock-path
+  - transport-missed-connection-path
+  - workflow-version-change-path
+  - service-policy-deactivation-path
+  incident_relations:
+  - REL-U843-order-workflow-planning-workflow-definition-management
+  - REL-U843-order-workflow-sentry-order-workflow-planning
+  - REL-U843-order-workflow-planning-order-workflow-orchestration
+  - REL-U848-PARENT-order-workflow-planning
+- node_id: order-workflow-orchestration
+  name: Order Workflow Orchestration
+  parent_id: ba-reactive-workflow-management
+  recommendation: retain_on_documented_result
+  reason: Conduit les activités et attentes du parcours ; sollicite Fulfilment sans dupliquer ses opérations internes.
+  evidence_fields:
+  - definition
+  - scope
+  expected_result: Piloter les activités, attentes et résultats du parcours retenu.
+  scenario_paths:
+  - b2b-partial-stock-path
+  - transport-missed-connection-path
+  - workflow-version-change-path
+  incident_relations:
+  - REL-U843-order-workflow-sentry-order-workflow-orchestration
+  - REL-U843-order-workflow-orchestration-D06.d
+  - REL-U843-order-workflow-planning-order-workflow-orchestration
+  - REL-U848-PARENT-order-workflow-orchestration
+migration_requirements:
+- Conserver les huit références documentaires et leur maîtrise locale ; ne pas les supprimer avec leurs capacités de consultation.
+- Expliciter avant retrait qui porte réception, validité, provenance et incohérences ; aucun transfert implicite vers Integration.
+- Transformer les contributions des capacités retirées en besoins d’information dans les étapes et en responsabilités des
+  véritables consommateurs ; ne pas les attribuer arbitrairement à une autre capacité.
+- Vérifier schéma, liens de fiches, scénarios, publication_delivery et visualisation des sous-domaines sans capacité, avant
+  de retirer des nœuds.
+- Retirer sans réutiliser les IDs ; conserver les publications historiques. Aucun remplacement générique imposé.
+market_position:
+  sources:
+  - url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-on-hand-list
+    consulted_on: '2026-10-06'
+    support: 'Dynamics 365 Supply Chain Management : positions agrégées, quantités physiques et réservées, distinction des
+      calculs selon les dimensions.'
+  - url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sourcing-and-procurement/introducing-procurement-overview-page-and-real-time-reporting-and-monitoring-for-procurement_b1220cd8-8141-476c-bd30-0de739fdb2f6
+    consulted_on: '2026-10-06'
+    support: 'SAP S/4HANA : indicateurs et suivi des achats et confirmations ; appui à la connaissance construite, pas à une
+      taxonomie Visibility universelle.'
+  additional_sources_reused_from_U854:
+  - https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/data-management
+  - https://learning.sap.com/courses/configuring-master-data-in-sap-s-4hana-cloud-private-edition-retail/assortment-1-1
+  assessment: Les sources distinguent données, usages et connaissances calculées ; elles ne prouvent ni une taxonomie universelle
+    de Visibility ni les dix suppressions proposées. Le choix de granularité repose ici sur les frontières explicites du modèle
+    FLOW.
+business_glossary_check: Visibility est défini dans le glossaire méthodologique. Service Planning (TER137) explicite la connaissance
+  apportée par Service Capacity Visibility ; les autres fiches métier restent inchangées, les retraits étant des propositions.

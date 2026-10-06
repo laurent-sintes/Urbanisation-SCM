@@ -1,6 +1,6 @@
 schema_version: 1.0.0
 model_id: flow-urbanism
-version: 2026-10-06.3
+version: 2026-10-06.4
 as_of: '2026-10-06'
 source_version: P81 0.9 + P82/U116 + libellés P84/P86 retenus en U118 + séparation D01 U125 (vocabulaire U126 ouvert) + nom
   D01.g adopté U129 + U141 univers Supply/Case et refonte D04 + U145 retrait D02 sans renumérotation + U154 D03 recomposé
@@ -5263,8 +5263,8 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bb9ceed9ecac699726a01482,
-      ADOPT-REASSESS-362b533ab8750ffc29243c81. Note antérieure, qui ne qualifie pas cette révision : « Mise en cohérence sous
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0611a01edbd3d2f503b486f3,
+      ADOPT-REASSESS-cba08ee707582c0970735131. Note antérieure, qui ne qualifie pas cette révision : « Mise en cohérence sous
       délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation globale de rédaction nouvelle.
       »'
   lifecycle:
@@ -10013,17 +10013,19 @@ nodes:
   last_modified: '2026-10-06T10:11:47.750609Z'
   content_sha256: 682ccdc31448cffd1a8e81033fd9f34b41ea23bada7172008bf57c85681b9f60
 - id: D06.b
-  revision: 20
+  revision: 21
   kind: capability
   fields:
     name: Service Capacity Visibility
-    definition: Rendre visible la capacité opérationnelle communiquée par les exécutants, avec son contexte, sa période et
-      sa fraîcheur, pour alimenter les décisions Supply.
+    definition: Interpréter et qualifier les informations communiquées par les exécutants pour établir une connaissance exploitable
+      des capacités de service, de leur portée et de leurs incertitudes.
     finality: Donner à [Availability](model:D03), à [Order Management](model:D04) et aux décisions d’exécution une connaissance
       exploitable des capacités annoncées par les exécutants.
     nature: knowledge
     scope: |-
-      Rendre accessible la capacité logistique dans son contexte, par exemple le nombre maximal de préparations communiqué pour un site et un créneau. Expliciter le service, l’unité, la période, l’origine et la fraîcheur des informations disponibles.
+      Interpréter les informations de capacité communiquées par les [Service Providers](glossary:TER088), sans présumer leur contenu ni une signification commune. Distinguer plafond, charge et disponibilité annoncée ; qualifier le service, l’unité, la période, l’origine et la fraîcheur. Cette [Visibility](method:MOD040) construit une connaissance métier, au-delà de la consultation des données reçues.
+
+      Signaler les informations manquantes, ambiguës ou non comparables et les précisions nécessaires au fournisseur. Une donnée absente reste inconnue, et ne signifie ni zéro ni capacité illimitée. Illustration fictive : 1 000 pièces par jour et 200 commandes par créneau ne sont pas comparables sans connaître la composition des commandes et les règles de conversion.
 
       Exemple : l’entrepôt annonce un plafond de 1 000 préparations sur un créneau ; si une charge ou un disponible sont également communiqués, les présenter avec leur sens et leur date de connaissance. Ne pas transformer sans règle connue ce plafond en capacité encore disponible.
 
@@ -10040,16 +10042,18 @@ nodes:
       source_title: Schedule workload capacity
       source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/schedule-workload-capacity
       source_version: Mise à jour du 7 mai 2025
-      source_locator: Warehouse workload capacity ; seasonal workforce example
-      consulted_on: '2026-09-19'
+      source_locator: 'Set up workload capacity : limites volume/poids ; View workload capacity : projections et données produit
+        manquantes.'
+      consulted_on: '2026-10-06'
       evidence_limits: Document primaire consulté ; rapprochement de concepts, sans preuve de réalisation Beaumanoir.
       element_name: Workload capacity
       element_type: Concept documenté par la source primaire
       relationship: Recouvrement partiel
       similarities: Charge et plafond d’entrepôt sur une période.
-      differences: FLOW reçoit une capacité contextualisée, sans reprendre son calcul ou le dimensionnement des équipes.
-      flow_position: Connaître la capacité annoncée par un exécutant pour éclairer les décisions Supply. Service Capacity
-        Visibility rend cette information compréhensible dans son contexte, sans transformer un plafond en disponible garanti.
+      differences: Le produit configure des plafonds et projette la charge ; FLOW interprète les informations communiquées
+        sans reprendre le dimensionnement des équipes ni présumer des données fournisseur.
+      flow_position: Interpréter et qualifier les capacités annoncées par les exécutants pour éclairer les décisions Supply,
+        sans transformer un plafond en disponible garanti ni présumer le sens des données fournisseur.
       status: proposed
       source_refs:
       - U470
@@ -10059,11 +10063,13 @@ nodes:
       - U477
       - ELM443
       - CMP193
+      - U857
       concept_name: Workload capacity
       scope_summary: Charge et plafond d’entrepôt sur une période.
       approach_summary: Comparer des projections avec des limites configurées.
-      definition_choice: 'Appui de Workload capacity : Charge et plafond d’entrepôt sur une période. Limite de reprise dans
-        FLOW : FLOW reçoit une capacité contextualisée, sans reprendre son calcul ou le dimensionnement des équipes.'
+      definition_choice: 'Charge et plafond d’entrepôt sur une période. Frontière FLOW : Le produit configure des plafonds
+        et projette la charge ; FLOW interprète les informations communiquées sans reprendre le dimensionnement des équipes
+        ni présumer des données fournisseur.'
       term_choice: Le repère natif « Workload capacity » étaye le rapprochement décrit ci-dessous. « Service Capacity Visibility
         » nomme la responsabilité FLOW à cette maille ; la proximité des termes ne prouve pas une nomenclature commune.
     - vendor: Microsoft
@@ -10079,8 +10085,8 @@ nodes:
       relationship: Recouvrement partiel
       similarities: Besoins d’une intervention et ressources pour la réaliser.
       differences: La planification et l’affectation Field Service dépassent la seule visibilité.
-      flow_position: Connaître la capacité annoncée par un exécutant pour éclairer les décisions Supply. Service Capacity
-        Visibility rend cette information compréhensible dans son contexte, sans transformer un plafond en disponible garanti.
+      flow_position: Interpréter et qualifier les capacités annoncées par les exécutants pour éclairer les décisions Supply,
+        sans transformer un plafond en disponible garanti ni présumer le sens des données fournisseur.
       status: proposed
       source_refs:
       - U477
@@ -10104,14 +10110,17 @@ nodes:
       approach_summary: 'Rapprochement avec Service Capacity Visibility : La sélection du transporteur rapproche coûts, contraintes
         et capacités disponibles avant sollicitation.'
       similarities: La sélection du transporteur rapproche coûts, contraintes et capacités disponibles avant sollicitation.
-      differences: Le périmètre documenté est le transport ; il ne prouve pas la visibilité de capacité de toutes les prestations.
-      flow_position: FLOW conserve le périmètre métier de Service Capacity Visibility. Le périmètre documenté est le transport
-        ; il ne prouve pas la visibilité de capacité de toutes les prestations.
+      differences: La source contrôle notamment des allocations de transport et sélectionne les transporteurs ; FLOW qualifie
+        ici le sens des informations reçues, sans assimiler une allocation à une capacité physique restante. Le transport
+        ne couvre pas toutes les prestations.
+      flow_position: Interpréter et qualifier les capacités annoncées par les exécutants pour éclairer les décisions Supply,
+        sans transformer un plafond en disponible garanti ni présumer le sens des données fournisseur.
       source_title: Selecting Carriers and Tendering
       source_url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-transportation-management/selecting-carriers-and-tendering_d66f6116-ed5d-491f-b91b-e958fdedf2a5
       source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
-      source_locator: Selecting Carriers and Tendering — passages sur le mécanisme rapproché.
-      consulted_on: '2026-09-25'
+      source_locator: 'Manual Carrier Selection : contrôle des transportation allocations configurées ; Automatic Carrier
+        Selection : contraintes.'
+      consulted_on: '2026-10-06'
       evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
         Beaumanoir déduit. Le périmètre documenté est le transport ; il ne prouve pas la visibilité de capacité de toutes
         les prestations.
@@ -10120,21 +10129,26 @@ nodes:
       - U774
       - CMP307
       - ELM793
+      - U857
       term_choice: Le nom Service Capacity Visibility reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
         cette appellation ni sa maille.
       definition_choice: 'La sélection du transporteur rapproche coûts, contraintes et capacités disponibles avant sollicitation.
-        Frontière conservée : Le périmètre documenté est le transport ; il ne prouve pas la visibilité de capacité de toutes
-        les prestations.'
+        Frontière FLOW : La source contrôle notamment des allocations de transport et sélectionne les transporteurs ; FLOW
+        qualifie ici le sens des informations reçues, sans assimiler une allocation à une capacité physique restante. Le transport
+        ne couvre pas toutes les prestations.'
     market_inspiration:
-      choice: Connaître la capacité annoncée par un exécutant pour éclairer les décisions Supply. Service Capacity Visibility
-        rend cette information compréhensible dans son contexte, sans transformer un plafond en disponible garanti.
-      flow_scope: Capacité, unité, période, calendrier, origine et fraîcheur communiqués.
-      flow_approach: Présenter ce qui est connu avec son sens et ses limites.
+      choice: Interpréter et qualifier les capacités annoncées par les exécutants pour éclairer les décisions Supply, sans
+        transformer un plafond en disponible garanti ni présumer le sens des données fournisseur.
+      flow_scope: Sens de la capacité annoncée, unité, période, calendrier, origine, fraîcheur, comparabilité et informations
+        manquantes.
+      flow_approach: Qualifier ce qui est connu, ambigu ou absent selon des règles métier explicites ; conserver les incertitudes
+        utiles aux décisions.
       synthesis:
       - Microsoft SCM compare charge prévue et capacité d’entrepôt ; Field Service rapproche les besoins d’intervention des
         ressources disponibles. Les deux montrent qu’une capacité dépend du travail, de la période et des moyens considérés.
-      - 'Ces produits organisent aussi les ressources et leur affectation. FLOW isole ici la visibilité sur l’information
-        communiquée : calculer un reste disponible ou engager la capacité nécessite des règles et responsabilités supplémentaires.'
+      - FLOW isole ici l’interprétation de l’information communiquée. Calculer un reste disponible ou engager la capacité
+        nécessite des données, des règles et des responsabilités supplémentaires ; les appuis consultés ne prouvent pas un
+        modèle universel de données fournisseur.
       examples:
       - title: Illustration FLOW — un plafond ne suffit pas
         situation: L’entrepôt annonce un maximum de 1 000 préparations pour un créneau, sans communiquer sa charge engagée.
@@ -10207,13 +10221,14 @@ nodes:
   - U797
   - U835
   - U848
+  - U857
   source_locator:
     path: connaissance/32-execution-orchestration.md
     anchor: d06-b
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ecffa1103a09275f9f00bb28.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fe17c02838ffc0d6ccb84cd2.
       Note antérieure, qui ne qualifie pas cette révision : « Mise en cohérence sous délégation U771 ; seuls les accords de
       champs inchangés restent applicables, sans validation globale de rédaction nouvelle. »'
   lifecycle:
@@ -10227,8 +10242,8 @@ nodes:
     note: Accord U766 capturé séparément sur les champs présentés ; aucune adoption implicite des compléments.
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
     antérieurs conservés seulement sur valeurs inchangées. Historique : audits/2026-09-17-refonte-appliquee/model-before.yaml.'
-  last_modified: '2026-10-06T09:16:17.871814Z'
-  content_sha256: e46996f87292843a83aa86d40695f5b3cf7c2effd77f7062fe43128c376c6d73
+  last_modified: '2026-10-06T12:45:07.225022Z'
+  content_sha256: cb92dc11f1a23f353e97ccce8bd88176203c41e96359723740dba2d5e7d6c030
 - id: D07.a
   revision: 20
   kind: capability
@@ -12848,7 +12863,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a299a7b7f18d153eb4ffb48e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cb114345dbc1daed6815858e.
       Note antérieure, qui ne qualifie pas cette révision : « Lot métier U777 appliqué ; capture ciblée des accords, rédactions
       nouvelles proposées. »'
   lifecycle:
@@ -13094,7 +13109,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4cdcb4bccbf182de03dce3d4.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6a64ec1ac6e2a1f75398a41a.
       Note antérieure, qui ne qualifie pas cette révision : « Lot U843 appliqué et documenté sous délégation U844. Les accords
       de champs restent capturés séparément ; aucune réalisation technique présumée. »'
   lifecycle:
@@ -24990,7 +25005,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3585eddc9dcff396736bf474.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d92fcb6538fd5699843b87ac.
       Note antérieure, qui ne qualifie pas cette révision : « Mise en cohérence sous délégation U771 ; seuls les accords de
       champs inchangés restent applicables, sans validation globale de rédaction nouvelle. »'
   lifecycle:
@@ -33816,7 +33831,7 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d7ab8a3d9e5dcce1a069515e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2a8f73818aae0c2e6cba3d7c.
       Note antérieure, qui ne qualifie pas cette révision : « Lot U843 appliqué et documenté sous délégation U844. Les accords
       de champs restent capturés séparément ; aucune réalisation technique présumée. »'
   lifecycle:
@@ -37014,9 +37029,9 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INTENT-U848-ba-service-planning. Note
-      antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés séparément.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-422993eb8c7577bbee6a1822.
+      Note antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés
+      séparément. »'
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-10-06T00:00:00Z'
@@ -39061,8 +39076,8 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e4f0f7a0288953dbf28be31a,
-      ADOPT-REASSESS-2b5257eb6cbcf73530e7320d. Note antérieure, qui ne qualifie pas cette révision : « Comportement terminal
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-addc14637882db2ec71727c2,
+      ADOPT-REASSESS-d5aeefcab8b33134229b0d7f. Note antérieure, qui ne qualifie pas cette révision : « Comportement terminal
       d’ATP adopté U262/U263 et instancié sur demande U264. »'
   lifecycle:
     state: urbanist_validated
@@ -39095,8 +39110,8 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-71927c58909da263daf5f042,
-      ADOPT-REASSESS-f28c024fcef16465a9c16817. Note antérieure, qui ne qualifie pas cette révision : « Comportement terminal
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fbcbdb6525dcfb8a3ccf39c0,
+      ADOPT-REASSESS-3a0fa8e33538472cb7462fae. Note antérieure, qui ne qualifie pas cette révision : « Comportement terminal
       d’ATP adopté U262/U263 et instancié sur demande U264. »'
   lifecycle:
     state: urbanist_validated
@@ -47869,7 +47884,7 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7adf8c3c92c33afa09f794e0.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0d83a0db32791c47525e3ce7.
       Note antérieure, qui ne qualifie pas cette révision : « Lot U758 validé U759 ; compléments rédactionnels proposés. »'
   lifecycle:
     state: ai_proposed
@@ -47894,7 +47909,7 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a48becab7f38d559d87bce1b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-be0588a3357066a4a60332e3.
       Note antérieure, qui ne qualifie pas cette révision : « Lot U758 validé U759 ; compléments rédactionnels proposés. »'
   lifecycle:
     state: ai_proposed
@@ -49070,7 +49085,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INTENT-U848-REL-U848-PARENT-ba-service-planning.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-50315973f5d710f368de68f6.
       Note antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés
       séparément. »'
   lifecycle:
@@ -49406,9 +49421,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INTENT-U848-REL-U848-PARENT-D03.i. Note
-      antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés séparément.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-93ec6724cf1259eec504c8dd.
+      Note antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés
+      séparément. »'
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-10-06T00:00:00Z'
@@ -49766,9 +49781,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INTENT-U848-REL-U848-PARENT-D06.b. Note
-      antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés séparément.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-eb3a8d0916b06247524eaf51.
+      Note antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés
+      séparément. »'
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-10-06T00:00:00Z'
@@ -49790,9 +49805,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INTENT-U848-REL-U848-PARENT-D07.a. Note
-      antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés séparément.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c69269301760133f71830e31.
+      Note antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés
+      séparément. »'
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-10-06T00:00:00Z'
@@ -49886,9 +49901,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INTENT-U848-REL-U848-PARENT-D06.e. Note
-      antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés séparément.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cbbf943aefd118374165d147.
+      Note antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés
+      séparément. »'
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-10-06T00:00:00Z'
@@ -49910,9 +49925,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INTENT-U848-REL-U848-PARENT-D06.f. Note
-      antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés séparément.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-82ac168df0eb4deaaae176b4.
+      Note antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés
+      séparément. »'
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-10-06T00:00:00Z'
@@ -50334,9 +50349,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INTENT-U848-REL-U848-PARENT-D14.b. Note
-      antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés séparément.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2b41e48fdba9c195bd702200.
+      Note antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés
+      séparément. »'
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-10-06T00:00:00Z'
@@ -50358,7 +50373,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INTENT-U848-REL-U848-REFERENCE-D14.b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-406ab56edeb56c475c2e5602.
       Note antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés
       séparément. »'
   lifecycle:
@@ -50982,7 +50997,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INTENT-U848-REL-U848-PARENT-service-order-release-decision.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c95a6afcdaef4db13ffc12cc.
       Note antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés
       séparément. »'
   lifecycle:
@@ -51030,7 +51045,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INTENT-U848-REL-U848-PARENT-transport-plan-decision.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e62c26c0190f8d482bdd09f7.
       Note antérieure, qui ne qualifie pas cette révision : « Plan validé U848 ; accords de champs et rattachements capturés
       séparément. »'
   lifecycle:
@@ -74804,7 +74819,7 @@ glossary:
     short_description: Déterminer les prestations nécessaires, leurs exécutants et les plans de transport compatibles avec
       les engagements.
     context: |-
-      La visibilité des capacités de service alimente ce périmètre ; aucun type de capacité n’est changé en Planning par son rattachement.
+      [Service Capacity Visibility](model:D06.b) interprète et qualifie les informations des [Service Providers](glossary:TER088), sans présumer leur contenu ; elle distingue plafond, charge, disponibilité annoncée et informations manquantes. Cette connaissance alimente ce périmètre ; aucun type de capacité n’est changé en Planning par son rattachement.
 
       Bénéficiaire et résultat : Fournir aux responsables de la réalisation un ensemble de prestations réalisables et compatibles avec les engagements confiés.
 
@@ -74814,6 +74829,7 @@ glossary:
     source_refs:
     - U848
     - U853
+    - U857
     review:
       state: proposed
       note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
@@ -74868,9 +74884,9 @@ glossary:
       status: proposed
       source_refs:
       - U853
-    revision: 2
-    last_modified: '2026-10-06T10:11:47.750609Z'
-    content_sha256: a37a412b45117cc9a278ca7ba91d606c7d5134d6e9b5043ae02e50f8ba52761b
+    revision: 3
+    last_modified: '2026-10-06T12:45:07.225022Z'
+    content_sha256: dce305cb74a7392913514529652a77d1f2ed8101d43d19f83d452d27fbfc4fce
   - id: TER138
     name: Execution Assurance
     definition: Établir une connaissance fiable de la réalisation des prestations, rapprocher leurs résultats et rendre visibles
@@ -75300,10 +75316,10 @@ glossary:
     content_sha256: 23172fd573c2f5a02d4b2101d53d5fbdae3aa93cf808e6a704c2f1e774791175
   note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est
     figé avec chaque nouvelle publication. Les reformulations restent proposées.
-  revision: 30
-  last_modified: '2026-10-06T10:11:47.750609Z'
-  content_sha256: e3fd30835441d6ec7200c1cc8589be55a55abd560f7c5efb4aab00141f7832f8
+  revision: 31
+  last_modified: '2026-10-06T12:45:07.225022Z'
+  content_sha256: cafa632cf93b57be34b9754adfeca662695a47f3744d548c4efc7eef14c360cc
 element_versioning: 1
-revision: 46
-content_sha256: 7f379e97373ebd422e944e4df1353eb653833d20d20828d9d6ff73752968173a
-last_modified: '2026-10-06T10:11:47.750609Z'
+revision: 47
+content_sha256: be9c4055becafcdc0ab8621d4339cd99a19e50caf315f7ac203266935b9da5a0
+last_modified: '2026-10-06T12:45:07.225022Z'

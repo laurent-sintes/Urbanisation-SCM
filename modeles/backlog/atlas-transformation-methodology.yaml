@@ -1,5 +1,5 @@
-id: flow-methodology-2026-10-06.2
-version: 2026-10-06.2
+id: flow-methodology-2026-10-06.3
+version: 2026-10-06.3
 as_of: '2026-10-06'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
@@ -50,6 +50,9 @@ source_refs:
 - U828
 - U848
 - U853
+- U855
+- U856
+- U857
 lessons:
 - id: business-first
   label: Le métier d’abord
@@ -656,6 +659,20 @@ sources:
   title: Appliquer le plan de correction transversal
   excerpt: Applique le plan totalement
   scope: 'A01 à A12 : cohérence des explications, documentation des limites, scénarios et contrôles.'
+- id: U855
+  title: Distinguer Visibility et simple accès aux données
+  excerpt: Visibility, on pourrait le mettre que si acquisition d'information demande une analyse ou une complexité quelconque.
+  scope: Critère de pertinence et ajout au glossaire méthodologique ; examen des capacités sans retrait automatique.
+- id: U856
+  title: Définir Visibility et examiner les capacités
+  excerpt: Le terme de Visibility doit être mis dans le glossaire meta et je pense qu'il faut faire la chasse aux capacités
+    inutiles.
+  scope: Critère de pertinence et ajout au glossaire méthodologique ; examen des capacités sans retrait automatique.
+- id: U857
+  title: Interpréter les capacités fournisseur
+  excerpt: 'Service Capacity Visibility : merite une interprétation par flow car on ne sait pas les données remontées par
+    le supplier.'
+  scope: Responsabilité de connaissance métier justifiant le maintien de Service Capacity Visibility.
 glossary:
   terms:
   - id: MOD001
@@ -1161,6 +1178,34 @@ glossary:
     - label_fr
     - definition
     - short_description
+  - id: MOD040
+    canonical_fields:
+    - name
+    - label_fr
+    - definition
+    - short_description
+    role: Distinguer une connaissance métier construite d’un accès aux données.
+    notes:
+    - 'Justifier une [capacité](method:MOD015) par la connaissance métier produite : rapprochement de faits, consolidation
+      sans double compte, interprétation des états, qualification de validité ou traitement des incohérences.'
+    - Une consultation, une recherche, un affichage, une copie ou une transformation purement technique ne justifient pas
+      une capacité Visibility autonome. Une règle métier simple peut suffire si elle établit un résultat distinct ; aucune
+      complexité minimale artificielle.
+    - Visibility établit ce qui est connu, estimé ou incertain. Une [Evaluation](method:MOD021) apprécie des possibilités
+      et une [Decision](method:MOD001) choisit une réponse. L’acquisition de faits peut contribuer à Visibility sans imposer
+      un nouveau découpage technique.
+    - Convention de nommage et de périmètre FLOW, rattachée à la nature Knowledge lorsqu’elle est pertinente ; ni nouveau
+      type, ni niveau hiérarchique, ni prescription d’outil.
+    - Avant un retrait, conserver les données, leurs sources, les responsabilités utiles et les dépendances des scénarios.
+      Ne pas créer automatiquement une capacité générique de remplacement.
+    examples:
+    - '[Inventory Visibility](model:D01.c) rapproche stock, apports attendus et engagements sans compter deux fois une réception.'
+    - '[Service Capacity Visibility](model:D06.b) interprète les informations fournisseur et distingue plafond, charge, disponibilité
+      annoncée et inconnues.'
+    - '[Operations Visibility](model:operations-visibility) consolide faits et attentes pour exposer la progression et les
+      informations absentes.'
+    - Lire le tarif reçu d’un [Price Book](model:price-book) reste un accès au référentiel ; le choix économique appartient
+      à la décision consommatrice.
   model_term_ids:
   - TER001
   - TER002
@@ -1205,6 +1250,7 @@ glossary:
     - MOD007
     - MOD011
     - MOD014
+    - MOD040
   - id: related
     label: Notions connexes
     term_ids:
@@ -1709,6 +1755,15 @@ chapters:
       identités ni les parents.
     example: Order Promising regroupe ATP, CTP et PTP dans Availability. Les capacités de Policies restent directement rattachées
       à leur sous-domaine. Le bandeau de la carte rend le regroupement visible et ouvre sa fiche.
+  - title: Justifier une capacité, au-delà d’un accès aux données
+    text: Une [capacité](method:MOD015) doit produire un résultat métier identifiable, avec une responsabilité propre. Un
+      objet de données, une opération technique ou une fonctionnalité d’écran ne suffisent pas. Pour [Visibility](method:MOD040),
+      identifier la connaissance réellement construite, les informations rapprochées et les règles métier appliquées.
+    example: Consulter un tarif reçu relève du référentiel. Rapprocher les stocks, les réceptions attendues et les engagements
+      sans double compte établit une situation utile aux décisions.
+    detail: Examiner aussi les doublons, les étapes internes d’une autre capacité et les variantes qui pourraient être des
+      comportements. Une dépendance ou un scénario existant ne prouve pas à lui seul qu’une capacité doit subsister. Avant
+      un retrait, conserver les responsabilités utiles et corriger leurs liens.
 - id: references
   title: Références
   intro: Références consultées le 28 septembre 2026. Elles éclairent des aspects complémentaires ; leur combinaison est une

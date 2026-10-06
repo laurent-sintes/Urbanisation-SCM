@@ -10188,17 +10188,19 @@ nodes:
   - data_governance
   approved_fields: []
 - id: D06.b
-  revision: 15
+  revision: 16
   kind: capability
   fields:
     name: Service Capacity Visibility
-    definition: Rendre visible la capacité opérationnelle communiquée par les exécutants, avec son contexte, sa période et
-      sa fraîcheur, pour alimenter les décisions Supply.
+    definition: Interpréter et qualifier les informations communiquées par les exécutants pour établir une connaissance exploitable
+      des capacités de service, de leur portée et de leurs incertitudes.
     finality: Donner à [Availability](model:D03), à [Order Management](model:D04) et aux décisions d’exécution une connaissance
       exploitable des capacités annoncées par les exécutants.
     nature: knowledge
     scope: |-
-      Rendre accessible la capacité logistique dans son contexte, par exemple le nombre maximal de préparations communiqué pour un site et un créneau. Expliciter le service, l’unité, la période, l’origine et la fraîcheur des informations disponibles.
+      Interpréter les informations de capacité communiquées par les [Service Providers](glossary:TER088), sans présumer leur contenu ni une signification commune. Distinguer plafond, charge et disponibilité annoncée ; qualifier le service, l’unité, la période, l’origine et la fraîcheur. Cette [Visibility](method:MOD040) construit une connaissance métier, au-delà de la consultation des données reçues.
+
+      Signaler les informations manquantes, ambiguës ou non comparables et les précisions nécessaires au fournisseur. Une donnée absente reste inconnue, et ne signifie ni zéro ni capacité illimitée. Illustration fictive : 1 000 pièces par jour et 200 commandes par créneau ne sont pas comparables sans connaître la composition des commandes et les règles de conversion.
 
       Exemple : l’entrepôt annonce un plafond de 1 000 préparations sur un créneau ; si une charge ou un disponible sont également communiqués, les présenter avec leur sens et leur date de connaissance. Ne pas transformer sans règle connue ce plafond en capacité encore disponible.
 
@@ -10215,16 +10217,18 @@ nodes:
       source_title: Schedule workload capacity
       source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/schedule-workload-capacity
       source_version: Mise à jour du 7 mai 2025
-      source_locator: Warehouse workload capacity ; seasonal workforce example
-      consulted_on: '2026-09-19'
+      source_locator: 'Set up workload capacity : limites volume/poids ; View workload capacity : projections et données produit
+        manquantes.'
+      consulted_on: '2026-10-06'
       evidence_limits: Document primaire consulté ; rapprochement de concepts, sans preuve de réalisation Beaumanoir.
       element_name: Workload capacity
       element_type: Concept documenté par la source primaire
       relationship: Recouvrement partiel
       similarities: Charge et plafond d’entrepôt sur une période.
-      differences: FLOW reçoit une capacité contextualisée, sans reprendre son calcul ou le dimensionnement des équipes.
-      flow_position: Connaître la capacité annoncée par un exécutant pour éclairer les décisions Supply. Service Capacity
-        Visibility rend cette information compréhensible dans son contexte, sans transformer un plafond en disponible garanti.
+      differences: Le produit configure des plafonds et projette la charge ; FLOW interprète les informations communiquées
+        sans reprendre le dimensionnement des équipes ni présumer des données fournisseur.
+      flow_position: Interpréter et qualifier les capacités annoncées par les exécutants pour éclairer les décisions Supply,
+        sans transformer un plafond en disponible garanti ni présumer le sens des données fournisseur.
       status: proposed
       source_refs:
       - U470
@@ -10234,11 +10238,13 @@ nodes:
       - U477
       - ELM443
       - CMP193
+      - U857
       concept_name: Workload capacity
       scope_summary: Charge et plafond d’entrepôt sur une période.
       approach_summary: Comparer des projections avec des limites configurées.
-      definition_choice: 'Appui de Workload capacity : Charge et plafond d’entrepôt sur une période. Limite de reprise dans
-        FLOW : FLOW reçoit une capacité contextualisée, sans reprendre son calcul ou le dimensionnement des équipes.'
+      definition_choice: 'Charge et plafond d’entrepôt sur une période. Frontière FLOW : Le produit configure des plafonds
+        et projette la charge ; FLOW interprète les informations communiquées sans reprendre le dimensionnement des équipes
+        ni présumer des données fournisseur.'
       term_choice: Le repère natif « Workload capacity » étaye le rapprochement décrit ci-dessous. « Service Capacity Visibility
         » nomme la responsabilité FLOW à cette maille ; la proximité des termes ne prouve pas une nomenclature commune.
     - vendor: Microsoft
@@ -10254,8 +10260,8 @@ nodes:
       relationship: Recouvrement partiel
       similarities: Besoins d’une intervention et ressources pour la réaliser.
       differences: La planification et l’affectation Field Service dépassent la seule visibilité.
-      flow_position: Connaître la capacité annoncée par un exécutant pour éclairer les décisions Supply. Service Capacity
-        Visibility rend cette information compréhensible dans son contexte, sans transformer un plafond en disponible garanti.
+      flow_position: Interpréter et qualifier les capacités annoncées par les exécutants pour éclairer les décisions Supply,
+        sans transformer un plafond en disponible garanti ni présumer le sens des données fournisseur.
       status: proposed
       source_refs:
       - U477
@@ -10279,14 +10285,17 @@ nodes:
       approach_summary: 'Rapprochement avec Service Capacity Visibility : La sélection du transporteur rapproche coûts, contraintes
         et capacités disponibles avant sollicitation.'
       similarities: La sélection du transporteur rapproche coûts, contraintes et capacités disponibles avant sollicitation.
-      differences: Le périmètre documenté est le transport ; il ne prouve pas la visibilité de capacité de toutes les prestations.
-      flow_position: FLOW conserve le périmètre métier de Service Capacity Visibility. Le périmètre documenté est le transport
-        ; il ne prouve pas la visibilité de capacité de toutes les prestations.
+      differences: La source contrôle notamment des allocations de transport et sélectionne les transporteurs ; FLOW qualifie
+        ici le sens des informations reçues, sans assimiler une allocation à une capacité physique restante. Le transport
+        ne couvre pas toutes les prestations.
+      flow_position: Interpréter et qualifier les capacités annoncées par les exécutants pour éclairer les décisions Supply,
+        sans transformer un plafond en disponible garanti ni présumer le sens des données fournisseur.
       source_title: Selecting Carriers and Tendering
       source_url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-transportation-management/selecting-carriers-and-tendering_d66f6116-ed5d-491f-b91b-e958fdedf2a5
       source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
-      source_locator: Selecting Carriers and Tendering — passages sur le mécanisme rapproché.
-      consulted_on: '2026-09-25'
+      source_locator: 'Manual Carrier Selection : contrôle des transportation allocations configurées ; Automatic Carrier
+        Selection : contraintes.'
+      consulted_on: '2026-10-06'
       evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
         Beaumanoir déduit. Le périmètre documenté est le transport ; il ne prouve pas la visibilité de capacité de toutes
         les prestations.
@@ -10295,21 +10304,26 @@ nodes:
       - U774
       - CMP307
       - ELM793
+      - U857
       term_choice: Le nom Service Capacity Visibility reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
         cette appellation ni sa maille.
       definition_choice: 'La sélection du transporteur rapproche coûts, contraintes et capacités disponibles avant sollicitation.
-        Frontière conservée : Le périmètre documenté est le transport ; il ne prouve pas la visibilité de capacité de toutes
-        les prestations.'
+        Frontière FLOW : La source contrôle notamment des allocations de transport et sélectionne les transporteurs ; FLOW
+        qualifie ici le sens des informations reçues, sans assimiler une allocation à une capacité physique restante. Le transport
+        ne couvre pas toutes les prestations.'
     market_inspiration:
-      choice: Connaître la capacité annoncée par un exécutant pour éclairer les décisions Supply. Service Capacity Visibility
-        rend cette information compréhensible dans son contexte, sans transformer un plafond en disponible garanti.
-      flow_scope: Capacité, unité, période, calendrier, origine et fraîcheur communiqués.
-      flow_approach: Présenter ce qui est connu avec son sens et ses limites.
+      choice: Interpréter et qualifier les capacités annoncées par les exécutants pour éclairer les décisions Supply, sans
+        transformer un plafond en disponible garanti ni présumer le sens des données fournisseur.
+      flow_scope: Sens de la capacité annoncée, unité, période, calendrier, origine, fraîcheur, comparabilité et informations
+        manquantes.
+      flow_approach: Qualifier ce qui est connu, ambigu ou absent selon des règles métier explicites ; conserver les incertitudes
+        utiles aux décisions.
       synthesis:
       - Microsoft SCM compare charge prévue et capacité d’entrepôt ; Field Service rapproche les besoins d’intervention des
         ressources disponibles. Les deux montrent qu’une capacité dépend du travail, de la période et des moyens considérés.
-      - 'Ces produits organisent aussi les ressources et leur affectation. FLOW isole ici la visibilité sur l’information
-        communiquée : calculer un reste disponible ou engager la capacité nécessite des règles et responsabilités supplémentaires.'
+      - FLOW isole ici l’interprétation de l’information communiquée. Calculer un reste disponible ou engager la capacité
+        nécessite des données, des règles et des responsabilités supplémentaires ; les appuis consultés ne prouvent pas un
+        modèle universel de données fournisseur.
       examples:
       - title: Illustration FLOW — un plafond ne suffit pas
         situation: L’entrepôt annonce un maximum de 1 000 préparations pour un créneau, sans communiquer sa charge engagée.
@@ -10382,6 +10396,7 @@ nodes:
   - U797
   - U835
   - U848
+  - U857
   source_locator:
     path: connaissance/32-execution-orchestration.md
     anchor: d06-b

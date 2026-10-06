@@ -6827,6 +6827,38 @@
       "captured_text": "## U853\n\n**id**\n\nU853\n\n**date**\n\n2026-10-06\n\n**titre**\n\nAppliquer intégralement le plan de correction de l’audit transversal\n\n**texte**\n\nApplique le plan totalement\n\n**contexte et portée**\n\nAutorisation d’exécuter les remèdes A01 à A12 de transversal-audit-U850 : alignement des explications et du modèle, documentation des Business Areas, références marché qualifiées sans équivalence inventée, scénarios couvrant les deux capacités restantes et situations de robustesse proposées, contrôles et corrections UX. Préparer une nouvelle publication figée après vérification ; préserver les éditions existantes et les portées des accords. La rédaction des compléments est autorisée ; cette délégation ne constitue pas une validation champ par champ des contenus non encore présentés. Aucun commit ni push implicite."
     },
     {
+      "id": "U854",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u854",
+      "line": 20968,
+      "content_sha256": "7746772025eedc6b3e4c92bc0e5049ecd150ff169edf0a36fa277628fa72a147",
+      "captured_text": "## U854\n\n**id**\n\nU854\n\n**date**\n\n2026-10-06\n\n**titre**\n\nQuestionner les capacités Visibility des Operational References\n\n**texte**\n\nJe pense que les capacités Visibility de Operational Reference pourraient sauter. Qu’en penses-tu ?\n\n**contexte et portée**\n\nProposition à analyser concernant les capacités Visibility rattachées à Operational References. Aucune suppression ni nouvelle capacité validée à ce stade ; distinguer consultation des données, tenue de leur référence locale et décisions qui les utilisent.\n\n\n**analyse proposée — non validée**\n\nLes huit capacités Visibility d’Operational References répètent consultation et construction/actualisation de vues locales ; six parcours les mobilisent. Proposition : retirer cette décomposition par objet, préserver les huit référentiels documentaires et expliciter une responsabilité commune de fourniture de références locales fiables, distincte de l’ingestion et des décisions consommatrices. Operational Reference Provision est un nom de travail FLOW, pas un standard revendiqué. La provenance, la validité et les incohérences connues ne doivent pas disparaître ; ne pas transférer la maîtrise d’entreprise ni fusionner les données. Inventory Visibility, Operations Visibility et Service Capacity Visibility ont un résultat opérationnel distinct ; cette proposition ne les retire pas. Aucun changement du modèle, des rattachements, glossaires ou publications à ce stade.\n\n**appuis consultés le 2026-10-06**\n\n- Microsoft Dynamics 365 Intelligent Order Management, Data management : https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/data-management — sections Master data et Import and export data. Les produits et comptes peuvent provenir d’autres systèmes et servent à valider/conduire l’orchestration. Appui à la distinction données sources/usage, pas preuve d’une taxonomie de capacités ni de la capacité commune proposée.\n- SAP S/4HANA Retail, Assortment : https://learning.sap.com/courses/configuring-master-data-in-sap-s-4hana-cloud-private-edition-retail/assortment-1-1 — Assortment Management and Maintenance. Distingue objet assortiment, affectations/périodes et usage pour contrôler des commandes ; couvre aussi une maintenance source hors du périmètre local FLOW. Ne démontre pas une capacité autonome Assortment Visibility ni un consensus sur le retrait des huit capacités."
+    },
+    {
+      "id": "U855",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u855",
+      "line": 21001,
+      "content_sha256": "67530dbd072c39c76378178cb4ddde2343316e295b8b2e5475a45e46c3fa7bc3",
+      "captured_text": "## U855\n\n**id**\n\nU855\n\n**date**\n\n2026-10-06\n\n**titre**\n\nConditionner Visibility à un travail de connaissance métier\n\n**texte**\n\nVisibility, on pourrait le mettre que si acquisition d'information demande une analyse ou une complexité quelconque.\n\n**contexte et portée**\n\nCritère proposé : distinguer simple consultation et connaissance nécessitant analyse ou qualification métier ; la complexité purement technique ne suffit pas. Ne pas créer automatiquement une capacité commune remplaçant les Visibility de référentiels."
+    },
+    {
+      "id": "U856",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u856",
+      "line": 21024,
+      "content_sha256": "884833b7159f5b77e402f2f78d75f8a02d27f9dda629ca6ac41b7ec3c050be16",
+      "captured_text": "## U856\n\n**id**\n\nU856\n\n**date**\n\n2026-10-06\n\n**titre**\n\nDéfinir Visibility dans le glossaire méthodologique et examiner les capacités\n\n**texte**\n\nLe terme de Visibility doit être mis dans le glossaire meta et je pense qu'il faut faire la chasse aux capacités inutiles.\n\n**contexte et portée**\n\nAjouter la notion méthodologique selon U855 et examiner les capacités pour identifier consultations, doublons et granularités injustifiées. Autorise la rédaction et l’audit ; aucun retrait individuel ni fusion précise encore décidé. Préserver les responsabilités, scénarios, preuves et publications."
+    },
+    {
+      "id": "U857",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u857",
+      "line": 21047,
+      "content_sha256": "e1181931fcc7e4404646127259cc8b3ed80d2ec926ad726e35ab9a4dcdaf6e1f",
+      "captured_text": "## U857\n\n**id**\n\nU857\n\n**date**\n\n2026-10-06\n\n**titre**\n\nInterpréter les capacités de service communiquées par les fournisseurs\n\n**texte**\n\nService Capacity Visibility : merite une interprétation par flow car on ne sait pas les données remontées par le supplier.\n\n**contexte et portée**\n\nConserver Service Capacity Visibility et expliciter le travail d’interprétation métier des informations fournisseur. Leur contenu, leur unité et leur portée ne sont pas présumés uniformes. Qualifier ce qui est connu et ce qui manque sans fabriquer de disponible ni reprendre la gestion des ressources de l’exécutant. Cette précision ne valide pas les autres retraits proposés dans l’audit U856.\n\n**appuis consultés le 2026-10-06**\n\n- Microsoft Dynamics 365 Supply Chain Management, Schedule workload capacity : https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/schedule-workload-capacity — limites en volume/poids, projections de charge et données produit manquantes. Appui au besoin de contextualiser les unités et limites ; le produit calcule aussi la charge, hors de la seule responsabilité FLOW décrite ici.\n- SAP S/4HANA Transportation Management, Selecting Carriers and Tendering : https://learning.sap.com/courses/business-processes-in-sap-s-4hana-transportation-management/selecting-carriers-and-tendering_d66f6116-ed5d-491f-b91b-e958fdedf2a5 — sélection et contrôle des allocations de transport lorsqu’il est configuré. Une allocation ne prouve pas une capacité physique restante. Appui transport partiel, sans preuve d’un interpréteur universel de données fournisseur ; ce dernier périmètre est un choix FLOW."
+    },
+    {
       "id": "F001",
       "path": "connaissance/02-assertions.md",
       "anchor": "f001",
