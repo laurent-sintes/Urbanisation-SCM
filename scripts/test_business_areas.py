@@ -45,12 +45,25 @@ class BusinessAreaTests(unittest.TestCase):
         root = Path(__file__).resolve().parents[1]
         m = read(root/'modeles/backlog/model.yaml')
         plan = read(root/'modeles/backlog/business-area-migration-U846.yaml')
+        retirement = read(root/'modeles/backlog/visibility-scope-U858.yaml')
         nodes = {n['id']:n for n in m['nodes']}
         caps = {i for i,n in nodes.items() if n['kind']=='capability'}
-        self.assertEqual(len(caps),81)
-        self.assertEqual({r['capability_id'] for r in plan['capability_mapping']},caps)
+        # U846 remains the historical mapping; U858 explicitly retires eight members.
+        initial_caps = {r['capability_id'] for r in plan['capability_mapping']}
+        retired = set(retirement['retirement']['nodes'])
+        self.assertEqual(len(initial_caps),81)
+        self.assertEqual(len(retired),8)
+        self.assertLessEqual(retired, initial_caps)
+        self.assertEqual(initial_caps - retired, caps)
+        self.assertTrue(retired.isdisjoint(nodes))
+        references = set(retirement['reference_mapping'].values())
+        self.assertEqual(len(references),8)
+        for identifier in references:
+            self.assertEqual(nodes[identifier]['kind'],'reference')
+        self.assertEqual({r['target_id'] for r in m['relations']
+                          if r['type']=='presents' and r['source_id']=='business-references'}, references)
         self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),16)
-        self.assertEqual(sum(r['type']=='documents-reference' for r in m['relations']),8)
+        self.assertFalse(any(r['type']=='documents-reference' for r in m['relations']))
         self.assertEqual(check_delivery(root,m)[1],[])
         from scripts.json_contract import validate
         published = deepcopy(m)
