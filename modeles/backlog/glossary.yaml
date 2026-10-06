@@ -7968,10 +7968,10 @@ terms:
     les opérations, en conservant les liens et identifiants du maître externe.
   definition: Aptitude à recevoir les informations de référence et leurs évolutions pour les rendre utilisables dans les opérations,
     en conservant les liens et identifiants du maître externe.
-  context: 'Exemple : recevoir une variante de produit créée dans le référentiel maître, avec son identifiant, sa taille et
-    sa couleur. Une correction est reçue depuis cette même autorité ; la Supply ne modifie pas le maître à sa place. Master
-    Data Ingestion est rattachée à Integration, catégorie Inbound ; les références et leurs vues restent dans Operational
-    References.'
+  context: |-
+    Exemple : recevoir une variante de produit créée dans le référentiel maître, avec son identifiant, sa taille et sa couleur. Une correction est reçue depuis cette même autorité ; la Supply ne modifie pas le maître à sa place. Master Data Ingestion est rattachée à Integration, catégorie Inbound ; les références et leurs vues restent dans Operational References.
+
+    L’ingestion reconnaît les apports et leur prise en compte ; [Operational References](model:business-references) conserve la responsabilité des vues locales utilisables. Aucune capacité de consultation par référence ne s’interpose.
   notes: L’autorité sur les références reste externe à Supply. Recevoir leurs évolutions ne transfère pas la responsabilité
     de créer, corriger ou supprimer les maîtres.
   source_refs:
@@ -7983,6 +7983,7 @@ terms:
   - CMP307
   - ELM063
   - ELM281
+  - U858
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -14256,7 +14257,8 @@ terms:
     - ELM721
     - CMP281
     - U723
-    term_choice: Price Book nomme les tarifs de référence ; Visibility distingue leur consultation de leur administration.
+    term_choice: Price Book nomme les tarifs de référence ; leur consultation ne constitue pas une capacité autonome et reste
+      distincte de leur administration.
     definition_choice: Ensemble identifié de tarifs de référence de produits et de services, avec unités, devises, validité
       et conditions d’application.
   - vendor: Microsoft
@@ -14289,7 +14291,8 @@ terms:
     - ELM531
     - CMP281
     - U723
-    term_choice: Price Book nomme les tarifs de référence ; Visibility distingue leur consultation de leur administration.
+    term_choice: Price Book nomme les tarifs de référence ; leur consultation ne constitue pas une capacité autonome et reste
+      distincte de leur administration.
     definition_choice: Ensemble identifié de tarifs de référence de produits et de services, avec unités, devises, validité
       et conditions d’application.
   - vendor: SAP
@@ -14383,10 +14386,10 @@ terms:
   name: Supply Plan
   definition: Plan externe des entrées ou sorties de stock prévues hors achats, avec horizon, version et provenance.
   short_description: Plan externe des entrées ou sorties de stock prévues hors achats, avec horizon, version et provenance.
-  context: 'Le domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration, fournit ce plan
-    à Plan Ingestion. Sens FLOW : les projections d’achat externes restent distinctes et peuvent être adressées à [Purchase
-    Order](glossary:TER070). Ce plan n’est ni un mouvement réalisé ni le [master plan de matching](glossary:TER100). Les supply
-    forecasts Microsoft peuvent couvrir des achats ; leurs périmètres ne sont donc pas équivalents.'
+  context: |-
+    Le domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration, fournit ce plan à Plan Ingestion. Sens FLOW : les projections d’achat externes restent distinctes et peuvent être adressées à [Purchase Order](glossary:TER070). Ce plan n’est ni un mouvement réalisé ni le [master plan de matching](glossary:TER100). Les supply forecasts Microsoft peuvent couvrir des achats ; leurs périmètres ne sont donc pas équivalents.
+
+    [Supply Plan Visibility](model:plans-visibility) interprète les mouvements prévus dans le contexte d’une demande de la supply chain : lieu, produit, période, version et incertitude. Elle ne transforme pas une prévision en approvisionnement ferme et ne calcule pas la couverture.
   notes: Sens local du modèle, distinct des périmètres des produits cités.
   source_refs:
   - U771
@@ -14397,6 +14400,7 @@ terms:
   - U794
   - U797
   - U801
+  - U858
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u771
@@ -14513,9 +14517,10 @@ terms:
     des besoins.
   short_description: Plan externe de demande prévisionnelle, daté et versionné, utilisé pour éclairer la promesse et la couverture
     des besoins.
-  context: Le domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration, fournit ce plan
-    à Plan Ingestion. Le calcul prévisionnel reste extérieur ; [Availability](glossary:TER112) utilise la prévision résiduelle
-    sans recompter les besoins déjà portés par les [Orders](glossary:TER012). Une prévision n’est pas une commande.
+  context: |-
+    Le domaine [Demand & Supply Planning](model:domain-plan), extérieur à Supply Chain Orchestration, fournit ce plan à Plan Ingestion. Le calcul prévisionnel reste extérieur ; [Availability](glossary:TER112) utilise la prévision résiduelle sans recompter les besoins déjà portés par les [Orders](glossary:TER012). Une prévision n’est pas une commande.
+
+    [Demand Plan Visibility](model:demand-plan-visibility) interprète les besoins prévisionnels dans le contexte d’une demande de la supply chain. La granularité et la portée reçues sont explicites ; leur consommation par les commandes et le calcul de couverture restent dans [Availability](model:D03).
   notes: Sens local du modèle, distinct des périmètres des produits cités.
   source_refs:
   - U771
@@ -14526,6 +14531,7 @@ terms:
   - U794
   - U797
   - U801
+  - U858
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u771
@@ -15281,7 +15287,7 @@ terms:
     differences: Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand
       & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
     flow_position: Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility
-      les expose. Le master plan du Matching reste interne à l’orchestration.
+      les interprète dans le contexte des demandes. Le master plan du Matching reste interne à l’orchestration.
     source_title: Master plans overview
     source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
     source_version: Documentation évolutive, mise à jour affichée le 25 mars 2026
@@ -15310,7 +15316,7 @@ terms:
     differences: Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand
       & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
     flow_position: Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility
-      les expose. Le master plan du Matching reste interne à l’orchestration.
+      les interprète dans le contexte des demandes. Le master plan du Matching reste interne à l’orchestration.
     source_title: Outlining Program Planning
     source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a
     source_version: Cours S/4HANA Cloud Public Edition, édition non affichée
@@ -15631,15 +15637,10 @@ terms:
     opérationnelles.
   definition: élaborer et réviser les plans prévisionnels de demande et de ressources pour anticiper les besoins et orienter
     les décisions opérationnelles.
-  context: 'Domaine de Business Operations extérieur à [Supply Chain Orchestration](model:supply-chain-orchestration). Il
-    produit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) transmis à [Plan Ingestion](model:plans-ingestion),
-    puis exposés par [Plan Visibility](model:subdomain-plans). Des outils de planification avancée peuvent servir ce domaine,
-    qui reste indépendant des outils et de l’organisation. Le contrat reçu conserve les versions, horizons, provenance et
-    statuts. Le [Supply Plan](glossary:TER098) consommé par FLOW garde son sens actuel : prévisions de mouvements de stock
-    hors achats ; cela ne limite pas l’ensemble des plans que le domaine Demand & Supply Planning peut produire. La décomposition
-    interne de Demand & Supply Planning reste hors périmètre. Les arbitrages opérationnels et le master plan de [Availability](glossary:TER112)
-    restent dans l’orchestration ; recevoir une nouvelle prévision ne les remplace pas et ne crée pas un ordre ferme. Aucun
-    outil de planification avancée installé ni flux technique Beaumanoir n’est présumé.'
+  context: |-
+    Domaine de Business Operations extérieur à [Supply Chain Orchestration](model:supply-chain-orchestration). Il produit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) transmis à [Plan Ingestion](model:plans-ingestion), puis interprétés dans le contexte des demandes par [Plan Visibility](model:subdomain-plans). Des outils de planification avancée peuvent servir ce domaine, qui reste indépendant des outils et de l’organisation. Le contrat reçu conserve les versions, horizons, provenance et statuts. Le [Supply Plan](glossary:TER098) consommé par FLOW garde son sens actuel : prévisions de mouvements de stock hors achats ; cela ne limite pas l’ensemble des plans que le domaine Demand & Supply Planning peut produire. La décomposition interne de Demand & Supply Planning reste hors périmètre. Les arbitrages opérationnels et le master plan de [Availability](glossary:TER112) restent dans l’orchestration ; recevoir une nouvelle prévision ne les remplace pas et ne crée pas un ordre ferme. Aucun outil de planification avancée installé ni flux technique Beaumanoir n’est présumé.
+
+    Le domaine producteur garde la prévision ; l’orchestration en qualifie le sens et les limites pour ses demandes.
   notes: 'Domaine métier distinct des documents Demand Plan et Supply Plan et du Matching Master Plan interne. Le rapprochement
     avec SCOR Plan est partiel : certaines décisions de planification restent dans Matching. Le nom explicite les deux volets
     ; aucune famille d’outils ne définit ce domaine.'
@@ -15647,6 +15648,7 @@ terms:
   - U794
   - U797
   - U801
+  - U858
   review:
     state: proposed
     note: Alignement avec le nouveau domaine ; les formulations détaillées ne sont pas un accord mot à mot.
@@ -15660,7 +15662,7 @@ terms:
     differences: Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand
       & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
     flow_position: Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility
-      les expose. Le master plan du Matching reste interne à l’orchestration.
+      les interprète dans le contexte des demandes. Le master plan du Matching reste interne à l’orchestration.
     source_title: Master plans overview
     source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
     source_version: Documentation évolutive, mise à jour affichée le 25 mars 2026
@@ -15690,7 +15692,7 @@ terms:
     differences: Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Le domaine Demand
       & Supply Planning externe à Supply Chain Orchestration est une frontière métier FLOW, pas une architecture éditeur imposée.
     flow_position: Demand & Supply Planning produit les plans prévisionnels ; Plan Ingestion reçoit les données et Plan Visibility
-      les expose. Le master plan du Matching reste interne à l’orchestration.
+      les interprète dans le contexte des demandes. Le master plan du Matching reste interne à l’orchestration.
     source_title: Outlining Program Planning
     source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a
     source_version: Cours S/4HANA Cloud Public Edition, édition non affichée
@@ -16640,12 +16642,14 @@ terms:
     leur référence locale fiable sans transférer la maîtrise d’entreprise.
   short_description: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en
     portant leur référence locale fiable sans transférer la maîtrise d’entreprise.
-  context: Les huit sujets de référence restent distincts. [Master Data Ingestion](model:master-data-ingestion) reçoit leurs
-    apports ; [Policies](model:subdomain-policies) porte les règles actives et [Plan Visibility](model:subdomain-plans) les
-    prévisions.
+  context: |-
+    Les huit sujets de référence restent distincts. [Master Data Ingestion](model:master-data-ingestion) reçoit leurs apports ; [Policies](model:subdomain-policies) porte les règles actives et [Plan Visibility](model:subdomain-plans) les prévisions.
+
+    Operational References porte la composition, l’actualisation et la fourniture des vues locales, avec provenance, validité, fraîcheur et incohérences connues. Les huit références restent documentaires ; aucune capacité Visibility par objet n’est nécessaire. Les consommateurs prennent les décisions dans le contexte de leurs demandes.
   notes: Nom et périmètre FLOW issus du lot U835 ; rédaction de glossaire proposée.
   source_refs:
   - U835
+  - U858
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u835

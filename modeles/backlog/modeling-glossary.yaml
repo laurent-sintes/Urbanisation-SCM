@@ -597,6 +597,7 @@ terms:
   - U614
   - U615
   - U806
+  - U858
   review:
     state: proposed
     proposed_scope: Formulation méthodologique de présentation ; aucun accord individuel déduit.
@@ -605,6 +606,9 @@ terms:
   notes:
   - 'La responsabilité sur ces données est précisée séparément : qui les tient, qui les fournit et qui construit les vues
     utiles.'
+  - Une capacité peut utiliser une référence (uses-reference) ou l’alimenter avec des apports sourcés (supplies-reference).
+    Ces liens portent conditions et effets, sans rattachement hiérarchique ni transfert de maîtrise ; les associations entre
+    références restent distinctes.
 - id: MOD010
   name: Model Relationship
   label_fr: Relation du modèle
@@ -1716,10 +1720,13 @@ terms:
     absentes.'
   - Lire le tarif reçu d’un [Price Book](model:price-book) reste un accès au référentiel ; le choix économique appartient
     à la décision consommatrice.
+  - '[Supply Plan Visibility](model:plans-visibility) et [Demand Plan Visibility](model:demand-plan-visibility) interprètent
+    les prévisions pour une demande donnée, sans inventer une précision absente ni décider de sa couverture.'
   source_refs:
   - U855
   - U856
   - U857
+  - U858
   review:
     state: proposed
     note: Ajout demandé U856 ; rédaction du critère U855, sans accord individuel sur les suppressions proposées.

@@ -164,9 +164,11 @@ publication_delivery:
   - U750
   - U757
   - U826
+  - U858
   summary: 'Rôles dominants, catégories ciblées, retrait du cycle générique et des comportements isolés. U757 : toutes les
     capacités classées ; catégorie Intégration de Master Data Ingestion. U826 : attentes courantes alignées, anciennes valeurs
-    conservées ci-dessous.'
+    conservées ci-dessous. U858 : contrôles courants adaptés au retrait des huit Visibility de références et à la conservation
+    de l’interprétation des plans ; état antérieur conservé dans Git (745813e).'
   required_nodes:
   - id: business-references
     fields:
@@ -248,27 +250,6 @@ publication_delivery:
   - id: D04.r
     parent: ba-order-lifecycle-management
     fields: {}
-  - id: D08.e
-    parent: business-references
-    fields: {}
-  - id: D09.e
-    parent: business-references
-    fields: {}
-  - id: D11.b
-    parent: business-references
-    fields: {}
-  - id: D12.b
-    parent: business-references
-    fields: {}
-  - id: D13.b
-    parent: business-references
-    fields: {}
-  - id: D14.b
-    parent: business-references
-    fields: {}
-  - id: D16.b
-    parent: business-references
-    fields: {}
   - id: D19.a
     parent: subdomain-policies
     fields: {}
@@ -289,9 +270,6 @@ publication_delivery:
     fields: {}
   - id: master-data-ingestion
     parent: ba-inbound-information-integration
-    fields: {}
-  - id: price-book-visibility
-    parent: business-references
     fields: {}
   - id: order-visibility
     parent: ba-order-lifecycle-management

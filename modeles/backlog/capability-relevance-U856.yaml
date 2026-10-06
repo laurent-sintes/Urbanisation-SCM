@@ -1,16 +1,18 @@
 id: capability-relevance-U856
-status: review_complete_proposals_not_applied
+status: review_completed_U858_applied_other_reviews_open
 source_refs:
 - U854
 - U855
 - U856
 - U857
+- U858
 basis:
-  model_sha256: 6b4315f2797fba06528db5f22df629c2d49cf1cad1d6803027e6749f6d3ed4e1
-  business_glossary_sha256: a194937ea634a90217af24ca5e722266a8bb37c942deb4b0524546d7aae50599
+  model_sha256: 57b560e48cd5eb73a0566591175f2ed4aa9c2fe71ea23c534e16075a8e4080c6
+  business_glossary_sha256: 4ec5f838aa0e2c75b4a33d9cdef3d5dd43ea3606aa89d341d0878e3ad4902dce
   publication: 2026-10-06.3
-scope: Premier examen des définitions des 81 capacités, approfondissement des frontières Visibility, intégration, pilotage
-  et familles de prestations ; pas de preuve terrain ni de revalidation exhaustive des comparaisons marché.
+scope: 'Premier examen des définitions des 81 capacités, approfondissement des frontières Visibility, intégration, pilotage
+  et familles de prestations ; pas de preuve terrain ni de revalidation exhaustive des comparaisons marché. U858 : les 81
+  fiches examinées sont conservées comme résultat d’audit, dont huit désormais retirées ; le modèle courant compte 73 capacités.'
 criteria:
 - Résultat métier propre et bénéficiaire identifiable.
 - Responsabilité durable indépendante des outils et écrans.
@@ -19,8 +21,8 @@ criteria:
 - Différencier capacité, comportement, type de service et information consommée.
 - Un retrait conserve responsabilités utiles, données, contrats de fourniture, scénarios et historique.
 summary:
-  retain_on_documented_result: 56
-  retirement_candidate: 10
+  retain_on_documented_result: 58
+  retired_U858: 8
   review_capability_vs_service_variant: 12
   retain_if_autonomous_service: 3
 records:
@@ -1038,9 +1040,9 @@ records:
 - node_id: D08.e
   name: Product Reference Visibility
   parent_id: business-references
-  recommendation: retirement_candidate
-  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
-    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  recommendation: retired_U858
+  reason: Retrait autorisé U858 et appliqué ; données et responsabilités conservées dans la référence D08. Voir visibility-scope-U858.yaml
+    pour les impacts.
   evidence_fields:
   - definition
   - scope
@@ -1063,9 +1065,9 @@ records:
 - node_id: D09.e
   name: Party / Role Visibility
   parent_id: business-references
-  recommendation: retirement_candidate
-  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
-    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  recommendation: retired_U858
+  reason: Retrait autorisé U858 et appliqué ; données et responsabilités conservées dans la référence D09. Voir visibility-scope-U858.yaml
+    pour les impacts.
   evidence_fields:
   - definition
   - scope
@@ -1087,9 +1089,9 @@ records:
 - node_id: D11.b
   name: Agreement Visibility
   parent_id: business-references
-  recommendation: retirement_candidate
-  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
-    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  recommendation: retired_U858
+  reason: Retrait autorisé U858 et appliqué ; données et responsabilités conservées dans la référence D11. Voir visibility-scope-U858.yaml
+    pour les impacts.
   evidence_fields:
   - definition
   - scope
@@ -1118,9 +1120,9 @@ records:
 - node_id: D12.b
   name: Product Catalog Visibility
   parent_id: business-references
-  recommendation: retirement_candidate
-  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
-    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  recommendation: retired_U858
+  reason: Retrait autorisé U858 et appliqué ; données et responsabilités conservées dans la référence D12. Voir visibility-scope-U858.yaml
+    pour les impacts.
   evidence_fields:
   - definition
   - scope
@@ -1139,9 +1141,9 @@ records:
 - node_id: D13.b
   name: Fulfilment Network Visibility
   parent_id: business-references
-  recommendation: retirement_candidate
-  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
-    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  recommendation: retired_U858
+  reason: Retrait autorisé U858 et appliqué ; données et responsabilités conservées dans la référence D13. Voir visibility-scope-U858.yaml
+    pour les impacts.
   evidence_fields:
   - definition
   - scope
@@ -1164,9 +1166,9 @@ records:
 - node_id: D14.b
   name: Service Catalog Visibility
   parent_id: business-references
-  recommendation: retirement_candidate
-  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
-    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  recommendation: retired_U858
+  reason: Retrait autorisé U858 et appliqué ; données et responsabilités conservées dans la référence D14. Voir visibility-scope-U858.yaml
+    pour les impacts.
   evidence_fields:
   - definition
   - scope
@@ -1186,9 +1188,9 @@ records:
 - node_id: D16.b
   name: Assortment Visibility
   parent_id: business-references
-  recommendation: retirement_candidate
-  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
-    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  recommendation: retired_U858
+  reason: Retrait autorisé U858 et appliqué ; données et responsabilités conservées dans la référence D16. Voir visibility-scope-U858.yaml
+    pour les impacts.
   evidence_fields:
   - definition
   - scope
@@ -1269,14 +1271,14 @@ records:
 - node_id: plans-visibility
   name: Supply Plan Visibility
   parent_id: subdomain-plans
-  recommendation: retirement_candidate
-  reason: Expose un plan calculé ailleurs. La fiche exclut le calcul de prévision et le rapprochement anti-double-compte,
-    déjà confié à Availability ; conserver les plans comme informations consommées.
+  recommendation: retain_on_documented_result
+  reason: 'U858 : interpréter les plans et prévisions dans le contexte d’une demande de la supply chain, sans reprendre les
+    décisions de couverture.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Rendre consultables les prévisions d’entrées ou de sorties de stock hors achats, avec versions, horizons,
-    provenance et incertitudes pour éclairer la promesse et [Availability](glossary:TER112).
+  expected_result: Interpréter les prévisions d’entrées et de sorties de stock hors achats dans le contexte d’une demande
+    de la supply chain, pour établir les mouvements prévus pertinents et leurs limites d’utilisation.
   scenario_paths:
   - fashion-launch-path
   - planning-actuals-feedback-path
@@ -1562,14 +1564,14 @@ records:
 - node_id: demand-plan-visibility
   name: Demand Plan Visibility
   parent_id: subdomain-plans
-  recommendation: retirement_candidate
-  reason: Expose un plan calculé ailleurs. La fiche exclut le calcul de prévision et le rapprochement anti-double-compte,
-    déjà confié à Availability ; conserver les plans comme informations consommées.
+  recommendation: retain_on_documented_result
+  reason: 'U858 : interpréter les plans et prévisions dans le contexte d’une demande de la supply chain, sans reprendre les
+    décisions de couverture.'
   evidence_fields:
   - definition
   - scope
-  expected_result: Rendre consultable la demande prévisionnelle reçue du domaine Demand & Supply Planning, avec versions,
-    horizons, provenance et incertitudes pour éclairer la promesse et [Availability](glossary:TER112).
+  expected_result: Interpréter la demande prévisionnelle reçue dans le contexte d’une demande de la supply chain, pour établir
+    les besoins prévus pertinents et leurs limites d’utilisation.
   scenario_paths:
   - fashion-launch-path
   - reference-plan-correction-path
@@ -1633,9 +1635,9 @@ records:
 - node_id: price-book-visibility
   name: Price Book Visibility
   parent_id: business-references
-  recommendation: retirement_candidate
-  reason: 'Décomposition par objet de référence : consultation et vue locale répétées. Aucun travail de connaissance spécifique
-    suffisamment établi ; préserver validité, provenance, incohérences et autorité locale avant retrait.'
+  recommendation: retired_U858
+  reason: Retrait autorisé U858 et appliqué ; données et responsabilités conservées dans la référence price-book. Voir visibility-scope-U858.yaml
+    pour les impacts.
   evidence_fields:
   - definition
   - scope
@@ -1927,8 +1929,9 @@ market_position:
   additional_sources_reused_from_U854:
   - https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/data-management
   - https://learning.sap.com/courses/configuring-master-data-in-sap-s-4hana-cloud-private-edition-retail/assortment-1-1
-  assessment: Les sources distinguent données, usages et connaissances calculées ; elles ne prouvent ni une taxonomie universelle
-    de Visibility ni les dix suppressions proposées. Le choix de granularité repose ici sur les frontières explicites du modèle
-    FLOW.
-business_glossary_check: Visibility est défini dans le glossaire méthodologique. Service Planning (TER137) explicite la connaissance
-  apportée par Service Capacity Visibility ; les autres fiches métier restent inchangées, les retraits étant des propositions.
+  assessment: 'Les sources distinguent données, usages et connaissances interprétées ; elles ne prescrivent pas une taxonomie
+    universelle de Visibility. U858 arbitre la granularité FLOW : huit capacités de consultation retirées, deux capacités
+    de plan conservées pour leur interprétation dans le contexte des demandes. Les autres examens de granularité restent ouverts.'
+business_glossary_check: 'U858 : Operational References et Reference Ingestion conservent les responsabilités des vues locales
+  ; Supply Plan et Demand Plan explicitent leur interprétation dans le contexte des demandes. Aucun terme de référence supprimé.'
+current_capability_count: 73

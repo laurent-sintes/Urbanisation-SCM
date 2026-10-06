@@ -153,6 +153,31 @@ class ModelLevelTests(unittest.TestCase):
         self.assertEqual(previous['nodes'][0]['kind'], 'domain')
         self.assertTrue(any(c['id'] == 'D01' and c['reason'] == 'changed' for c in changes))
 
+    def test_reference_use_and_supply_are_qualified_non_structural_links(self):
+        for relation_type in ('uses-reference', 'supplies-reference'):
+            with self.subTest(relation_type=relation_type):
+                model = self.modern()
+                capability = next(n['id'] for n in model['nodes'] if n['kind'] == 'capability')
+                relation = {
+                    'id': 'REFERENCE-USE', 'revision': 1, 'type': relation_type,
+                    'source_id': capability, 'target_id': 'D11', 'source_refs': ['U858'],
+                    'review': {'state': 'proposed', 'note': 'Information, pas un parent.'},
+                    'qualification': {'meaning': 'Informations contractuelles reçues.',
+                                      'conditions': ['Si pertinentes pour la demande.'],
+                                      'effects': ['Conserver origine et validité.']},
+                    'lifecycle': {'state': 'ai_proposed', 'recorded_at': '2026-10-06T00:00:00Z',
+                                  'recorded_by': 'Codex', 'source_refs': ['U858'],
+                                  'validated_fields': [], 'value_sha256': {}, 'note': 'Test.'}}
+                model['relations'].append(relation)
+                assign_versions(model, {}, now='2026-10-06T00:00:00Z')
+                self.assertEqual(validate_urbanism(model, self.sources, self.schema), [])
+                unqualified = deepcopy(model)
+                unqualified['relations'][-1].pop('qualification')
+                self.assertTrue(any('requires qualification' in e for e in validate_urbanism(unqualified, self.sources)))
+                reversed_link = deepcopy(model)
+                reversed_link['relations'][-1].update(source_id='D11', target_id=capability)
+                self.assertTrue(any('incompatible endpoint kinds' in e for e in validate_urbanism(reversed_link, self.sources)))
+
     def test_reference_association_is_qualified_and_does_not_create_a_parent(self):
         model = self.modern()
         relation = {'id': 'REFERENCE-LINK', 'revision': 1, 'type': 'relates-to',

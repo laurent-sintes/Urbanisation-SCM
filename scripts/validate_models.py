@@ -39,6 +39,8 @@ RELATION_KINDS = {
     # The former lower-level domain remains supported in frozen publications.
     "contains": ({"domain", "area", "business_area", "reference", "capability"}, {"business_area", "capability", "behavior"}),
     "documents-reference": ({"capability"}, {"reference"}),
+    "uses-reference": ({"capability"}, {"reference"}),
+    "supplies-reference": ({"capability"}, {"reference"}),
     "presents": ({"business_system", "group", "domain", "area"}, {"domain", "area", "reference", "group", "capability"}),
     "confirms": ({"capability"}, {"object"}),
     "associated-document": ({"capability"}, {"document"}),
@@ -252,12 +254,13 @@ def validate_urbanism(model, sources, schema=None):
         if (rel.get("type") == "presents" and source.get("kind") == "area"
                 and target.get("kind") != "reference"):
             errors.append(f"relations/{identifier}: area presents only references; capabilities use contains")
-        if rel.get("type") == "relates-to":
-            if ((source.get("kind") == "reference") != (target.get("kind") == "reference")):
+        if rel.get("type") in {"relates-to", "uses-reference", "supplies-reference"}:
+            if (rel.get("type") == "relates-to" and
+                    ((source.get("kind") == "reference") != (target.get("kind") == "reference"))):
                 errors.append(f"relations/{identifier}: a reference relates-to another reference; mixed endpoint kinds are not supported")
             qualification = rel.get("qualification")
             if not isinstance(qualification, dict):
-                errors.append(f"relations/{identifier}: relates-to requires qualification")
+                errors.append(f"relations/{identifier}: {rel.get('type')} requires qualification")
             else:
                 if not isinstance(qualification.get("meaning"), str) or not qualification["meaning"].strip():
                     errors.append(f"relations/{identifier}: qualification needs a nonempty meaning")

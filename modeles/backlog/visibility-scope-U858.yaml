@@ -1,0 +1,310 @@
+id: visibility-scope-U858
+status: applied
+source_refs:
+- U854
+- U855
+- U856
+- U857
+- U858
+agreement_scope: Retrait des huit capacités Visibility de références ; maintien de Supply Plan Visibility et Demand Plan Visibility
+  pour interpréter les prévisions dans le contexte des demandes. Rédactions et adaptations de liens proposées sous cet accord,
+  sans validation automatique de chaque champ.
+retirement:
+  nodes:
+  - D08.e
+  - D09.e
+  - D11.b
+  - D12.b
+  - D13.b
+  - D14.b
+  - D16.b
+  - price-book-visibility
+  relations:
+  - REL-NEEDS-U290-032
+  - REL-NEEDS-U290-040
+  - REL-U835-D03.i-D11.b
+  - REL-U835-D03.j-D11.b
+  - REL-NEEDS-U290-045
+  - REL-NEEDS-U290-050
+  - REL-NEEDS-U290-051
+  - REL-NEEDS-U290-052
+  - REL-NEEDS-U290-053
+  - REL-NEEDS-U290-057
+  - REL-NEEDS-U290-058
+  - REL-NEEDS-U290-059
+  - REL-NEEDS-U290-063
+  - REL-NEEDS-U290-064
+  - REL-NEEDS-U290-069
+  - REL-NEEDS-U290-074
+  - REL-NEEDS-U290-075
+  - REL-NEEDS-U290-080
+  - REL-NEEDS-U290-081
+  - REL-NEEDS-U290-093
+  - REL-NEEDS-U290-105
+  - REL-NEEDS-U290-106
+  - REL-NEEDS-U290-107
+  - REL-NEEDS-U290-110
+  - REL-NEEDS-U290-111
+  - REL-NEEDS-U290-128
+  - REL-NEEDS-U290-129
+  - REL-NEEDS-U290-130
+  - REL-NEEDS-U290-131
+  - REL-NEEDS-U290-132
+  - REL-NEEDS-U290-133
+  - REL-RESERVATION-POLICY-AGREEMENT
+  - REL-NEEDS-U395-01
+  - REL-NEEDS-U395-02
+  - REL-U717-INGESTS-D09.e
+  - REL-U717-INGESTS-D11.b
+  - REL-U717-INGESTS-D08.e
+  - REL-U717-INGESTS-D12.b
+  - REL-U717-INGESTS-D13.b
+  - REL-U717-INGESTS-D14.b
+  - REL-U717-INGESTS-D16.b
+  - REL-U723-PRICE-INGESTION
+  - REL-U723-CONSUMER-D03.k
+  - REL-U723-CONSUMER-D12.b
+  - REL-U723-CONSUMER-D14.b
+  - REL-U848-PARENT-D08.e
+  - REL-U848-REFERENCE-D08.e
+  - REL-U848-PARENT-D09.e
+  - REL-U848-REFERENCE-D09.e
+  - REL-U848-PARENT-D11.b
+  - REL-U848-REFERENCE-D11.b
+  - REL-U848-PARENT-D12.b
+  - REL-U848-REFERENCE-D12.b
+  - REL-U848-PARENT-D13.b
+  - REL-U848-REFERENCE-D13.b
+  - REL-U848-PARENT-D14.b
+  - REL-U848-REFERENCE-D14.b
+  - REL-U848-PARENT-D16.b
+  - REL-U848-REFERENCE-D16.b
+  - REL-U848-PARENT-price-book-visibility
+  - REL-U848-REFERENCE-price-book-visibility
+  history_commit: 745813e6511c6f2008a6026728fb8c8a50fd426c
+  history_path: modeles/backlog/model.yaml
+  reason: Consultation des références conservée dans les données et responsabilités du sous-domaine, sans capacité autonome
+    par objet. Identifiants non réutilisables.
+  unpublished_relation_ids_not_reused:
+  - REL-U858-REFERENCE-029
+  - REL-U858-REFERENCE-030
+  - REL-U858-REFERENCE-035
+  - REL-U858-REFERENCE-037
+  - REL-U858-REFERENCE-038
+  - REL-U858-REFERENCE-039
+reference_mapping:
+  D08.e: D08
+  D09.e: D09
+  D11.b: D11
+  D12.b: D12
+  D13.b: D13
+  D14.b: D14
+  D16.b: D16
+  price-book-visibility: price-book
+information_dependencies:
+- previous_id: REL-NEEDS-U290-032
+  replacement_id: REL-U858-REFERENCE-001
+- previous_id: REL-NEEDS-U290-040
+  replacement_id: REL-U858-REFERENCE-002
+- previous_id: REL-U835-D03.i-D11.b
+  replacement_id: REL-U858-REFERENCE-003
+- previous_id: REL-U835-D03.j-D11.b
+  replacement_id: REL-U858-REFERENCE-004
+- previous_id: REL-NEEDS-U290-045
+  replacement_id: REL-U858-REFERENCE-005
+- previous_id: REL-NEEDS-U290-050
+  replacement_id: REL-U858-REFERENCE-006
+- previous_id: REL-NEEDS-U290-051
+  replacement_id: REL-U858-REFERENCE-007
+- previous_id: REL-NEEDS-U290-052
+  replacement_id: REL-U858-REFERENCE-008
+- previous_id: REL-NEEDS-U290-053
+  replacement_id: REL-U858-REFERENCE-009
+- previous_id: REL-NEEDS-U290-057
+  replacement_id: REL-U858-REFERENCE-010
+- previous_id: REL-NEEDS-U290-058
+  replacement_id: REL-U858-REFERENCE-011
+- previous_id: REL-NEEDS-U290-059
+  replacement_id: REL-U858-REFERENCE-012
+- previous_id: REL-NEEDS-U290-063
+  replacement_id: REL-U858-REFERENCE-013
+- previous_id: REL-NEEDS-U290-064
+  replacement_id: REL-U858-REFERENCE-014
+- previous_id: REL-NEEDS-U290-069
+  replacement_id: REL-U858-REFERENCE-015
+- previous_id: REL-NEEDS-U290-074
+  replacement_id: REL-U858-REFERENCE-016
+- previous_id: REL-NEEDS-U290-075
+  replacement_id: REL-U858-REFERENCE-017
+- previous_id: REL-NEEDS-U290-080
+  replacement_id: REL-U858-REFERENCE-018
+- previous_id: REL-NEEDS-U290-081
+  replacement_id: REL-U858-REFERENCE-019
+- previous_id: REL-NEEDS-U290-093
+  replacement_id: REL-U858-REFERENCE-020
+- previous_id: REL-NEEDS-U290-105
+  replacement_id: REL-U858-REFERENCE-021
+- previous_id: REL-NEEDS-U290-106
+  replacement_id: REL-U858-REFERENCE-022
+- previous_id: REL-NEEDS-U290-107
+  replacement_id: REL-U858-REFERENCE-023
+- previous_id: REL-NEEDS-U290-110
+  replacement_id: REL-U858-REFERENCE-024
+- previous_id: REL-NEEDS-U290-111
+  replacement_id: REL-U858-REFERENCE-025
+- previous_id: REL-NEEDS-U290-128
+  replacement_id: REL-U858-REFERENCE-026
+- previous_id: REL-NEEDS-U290-129
+  replacement_id: REL-U858-REFERENCE-027
+- previous_id: REL-NEEDS-U290-130
+  replacement_id: REL-U858-REFERENCE-028
+- previous_id: REL-NEEDS-U290-131
+  replacement_id: REL-U858-REFERENCE-026
+- previous_id: REL-NEEDS-U290-132
+  replacement_id: REL-U858-REFERENCE-026
+- previous_id: REL-NEEDS-U290-133
+  replacement_id: REL-U858-REFERENCE-031
+- previous_id: REL-RESERVATION-POLICY-AGREEMENT
+  replacement_id: REL-U858-REFERENCE-032
+- previous_id: REL-NEEDS-U395-01
+  replacement_id: REL-U858-REFERENCE-033
+- previous_id: REL-NEEDS-U395-02
+  replacement_id: REL-U858-REFERENCE-034
+- previous_id: REL-U717-INGESTS-D09.e
+  replacement_id: REL-U858-REFERENCE-026
+- previous_id: REL-U717-INGESTS-D11.b
+  replacement_id: REL-U858-REFERENCE-036
+- previous_id: REL-U717-INGESTS-D08.e
+  replacement_id: REL-U858-REFERENCE-028
+- previous_id: REL-U717-INGESTS-D12.b
+  replacement_id: REL-U858-REFERENCE-027
+- previous_id: REL-U717-INGESTS-D13.b
+  replacement_id: REL-U858-REFERENCE-031
+- previous_id: REL-U717-INGESTS-D14.b
+  replacement_id: REL-U858-REFERENCE-040
+- previous_id: REL-U717-INGESTS-D16.b
+  replacement_id: REL-U858-REFERENCE-041
+- previous_id: REL-U723-PRICE-INGESTION
+  replacement_id: REL-U858-REFERENCE-042
+- previous_id: REL-U723-CONSUMER-D03.k
+  replacement_id: REL-U858-REFERENCE-043
+- previous_id: REL-U723-CONSUMER-D12.b
+  replacement_id: REL-U858-REFERENCE-044
+- previous_id: REL-U723-CONSUMER-D14.b
+  replacement_id: REL-U858-REFERENCE-045
+scenario_paths_updated:
+- consignment-sale-pickup-path
+- export-remote-services-path
+- substitution-price-service-path
+- reference-plan-correction-path
+- ownership-transit-deadline-path
+- product-quality-feedback-path
+information_steps_merged:
+- path_id: substitution-price-service-path
+  removed_step: step-1
+  integrated_into: step-2
+- path_id: reference-plan-correction-path
+  removed_step: step-2
+  integrated_into: step-3
+superseded_delivery_files:
+- business-area-migration-U846.yaml
+- model-readability-U710.yaml
+- price-book-boundary-U719.yaml
+- scenario-migration-U793.yaml
+- transversal-remediation-U853.yaml
+responsibility_boundaries:
+  master-data-ingestion: Réception et prise en compte des apports sourcés, périmètre inchangé.
+  business-references: Composition, actualisation et fourniture des références locales utilisables, avec provenance, fraîcheur,
+    validité et incohérences.
+  plans-visibility: Interprétation des mouvements prévus hors achats pour la demande examinée.
+  demand-plan-visibility: Interprétation des besoins prévisionnels pour la demande examinée.
+  D03: Couverture, consommation de prévision, décisions de promesse et master plan ; aucun transfert aux capacités Visibility.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U858
+  summary: Huit capacités de consultation retirées ; huit références préservées ; deux capacités de plan contextualisées ;
+    liens et scénarios adaptés.
+  absent_nodes:
+  - D08.e
+  - D09.e
+  - D11.b
+  - D12.b
+  - D13.b
+  - D14.b
+  - D16.b
+  - price-book-visibility
+  required_nodes:
+  - id: D08
+    kind: reference
+  - id: D09
+    kind: reference
+  - id: D11
+    kind: reference
+  - id: D12
+    kind: reference
+  - id: D13
+    kind: reference
+  - id: D14
+    kind: reference
+  - id: D16
+    kind: reference
+  - id: price-book
+    kind: reference
+  - id: business-references
+    fields:
+      name: Operational References
+      definition: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant
+        leur référence locale fiable sans transférer la maîtrise d’entreprise.
+      scope: |-
+        Les huit sujets [Product Reference](model:D08), [Party / Role](model:D09), [Agreement](model:D11), [Product Catalog](model:D12), [Fulfilment Network](model:D13), [Service Catalog](model:D14), [Assortment](model:D16), [Price Book](model:price-book) restent des références distinctes. Ce sous-domaine porte la composition, l’actualisation et la fourniture de leurs vues locales utilisables, avec versions, fraîcheur, provenance, validité et incohérences connues. Leur consultation ne justifie pas huit capacités autonomes.
+
+        [Master Data Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+
+        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Policies](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+  - id: plans-visibility
+    fields:
+      name: Supply Plan Visibility
+      definition: Interpréter les prévisions d’entrées et de sorties de stock hors achats dans le contexte d’une demande de
+        la supply chain, pour établir les mouvements prévus pertinents et leurs limites d’utilisation.
+      scope: |-
+        Qualifier les produits, lieux, périodes, unités, version, provenance et incertitudes au regard de la demande examinée. Distinguer les données applicables, hors périmètre et insuffisamment précises. Une prévision agrégée ne devient pas une quantité détaillée sans règle explicite ; une donnée absente reste inconnue. Cette [Visibility](method:MOD040) produit une connaissance contextualisée, au-delà de l’affichage du plan reçu.
+
+        Le [Supply Plan](glossary:TER098) garde le sens FLOW de mouvements prévus hors achats. [Plan Ingestion](model:plans-ingestion) reçoit les versions et corrections ; [Demand & Supply Planning](model:domain-plan) produit les prévisions. [Availability](model:D03) conserve le calcul de couverture, la consommation de prévision par les [Orders](glossary:TER012) pour éviter le double comptage, les décisions de promesse et le [Matching Master Plan](glossary:TER100). L’interprétation du plan ne crée aucun engagement ni mouvement réalisé.
+
+        Exemple fictif : Pour une demande de 40 robes livrables vendredi, un plan annonce une entrée de 100 robes la semaine suivante sur un autre site. L’entrée prévue est identifiée mais ne constitue pas une ressource disponible pour vendredi ; les dates et le lieu restent attachés à la prévision.
+  - id: demand-plan-visibility
+    fields:
+      name: Demand Plan Visibility
+      definition: Interpréter la demande prévisionnelle reçue dans le contexte d’une demande de la supply chain, pour établir
+        les besoins prévus pertinents et leurs limites d’utilisation.
+      scope: |-
+        Qualifier les produits, lieux, périodes, unités, version, provenance et incertitudes au regard de la demande examinée. Distinguer les données applicables, hors périmètre et insuffisamment précises. Une prévision agrégée ne devient pas une quantité détaillée sans règle explicite ; une donnée absente reste inconnue. Cette [Visibility](method:MOD040) produit une connaissance contextualisée, au-delà de l’affichage du plan reçu.
+
+        Le [Demand Plan](glossary:TER099) décrit des besoins prévisionnels, distincts des commandes effectivement reçues. [Plan Ingestion](model:plans-ingestion) reçoit les versions et corrections ; [Demand & Supply Planning](model:domain-plan) produit les prévisions. [Availability](model:D03) conserve le calcul de couverture, la consommation de prévision par les [Orders](glossary:TER012) pour éviter le double comptage, les décisions de promesse et le [Matching Master Plan](glossary:TER100). L’interprétation du plan ne crée aucun engagement ni mouvement réalisé.
+
+        Exemple fictif : Pour une demande de 30 robes en taille M d’une boutique, le plan annonce 200 robes toutes tailles pour la région sur la semaine. Le périmètre et la granularité sont explicités ; aucune part de ces 200 robes n’est attribuée à la boutique ou à la taille M sans règle documentée.
+  required_catalog:
+  - collection: paths
+    id: consignment-sale-pickup-path
+    content_sha256: b0a41f20dfc70a7f5f9e6b61b18ac21251569958f653c3d40fb5bfd9e55b4c8f
+  - collection: paths
+    id: export-remote-services-path
+    content_sha256: a2cb0f13eea3640b0e0b77f51ff5af85d3166df4ae5cad7d114ddb3215f7b31b
+  - collection: paths
+    id: substitution-price-service-path
+    content_sha256: 8a749c378d3b4c5332237f9bfdff8db344a0d694127ec2ba7fe1398904c69252
+  - collection: paths
+    id: reference-plan-correction-path
+    content_sha256: 5109895f9cfc5bc9056414ab164d25d4a61d42edd180a2b022043f13dd0b732d
+  - collection: paths
+    id: ownership-transit-deadline-path
+    content_sha256: 74c4425a03cbf66c03ee069c1073918243eb04b6f629e7baf63a75f057a6c4bd
+  - collection: paths
+    id: product-quality-feedback-path
+    content_sha256: 6421019fc6cf59e9bf383d2530c2286c4f9776354cef1f81542fec02baa8eb23
+relation_contract:
+  uses-reference: Capacité consommatrice → référence documentaire ; dépendance qualifiée sans nouveau parent.
+  supplies-reference: Capacité d’ingestion → référence documentaire ; apport sourcé, sans transfert de responsabilité de la
+    vue locale.
+  relates-to: Association qualifiée entre deux références, contrat historique conservé.

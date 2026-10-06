@@ -1040,7 +1040,10 @@ publication_delivery:
   source_refs:
   - U848
   - U853
-  summary: 16 Business Areas, 64 capacités regroupées et 17 directes ; aucun savoir-faire supprimé.
+  - U858
+  summary: '16 Business Areas, 64 capacités regroupées et 17 directes ; aucun savoir-faire supprimé. U858 : contrôles courants
+    adaptés au retrait des huit Visibility de références et à la conservation de l’interprétation des plans ; état antérieur
+    conservé dans Git (745813e).'
   required_nodes:
   - id: ba-inventory-position-management
     kind: business_area
@@ -1331,20 +1334,6 @@ publication_delivery:
     parent: ba-order-lifecycle-management
   - id: D01.h
     parent: ba-inventory-ownership-management
-  - id: D08.e
-    parent: business-references
-  - id: D09.e
-    parent: business-references
-  - id: D11.b
-    parent: business-references
-  - id: D12.b
-    parent: business-references
-  - id: D13.b
-    parent: business-references
-  - id: D14.b
-    parent: business-references
-  - id: D16.b
-    parent: business-references
   - id: D19.a
     parent: subdomain-policies
   - id: D19.b
@@ -1393,8 +1382,6 @@ publication_delivery:
     parent: ba-inbound-information-integration
   - id: operations-visibility
     parent: ba-execution-assurance
-  - id: price-book-visibility
-    parent: business-references
   - id: order-visibility
     parent: ba-order-lifecycle-management
   - id: inventory-ownership-ledger

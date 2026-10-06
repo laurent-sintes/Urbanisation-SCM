@@ -21070,3 +21070,35 @@ Conserver Service Capacity Visibility et expliciter le travail d’interprétati
 
 - Microsoft Dynamics 365 Supply Chain Management, Schedule workload capacity : https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/schedule-workload-capacity — limites en volume/poids, projections de charge et données produit manquantes. Appui au besoin de contextualiser les unités et limites ; le produit calcule aussi la charge, hors de la seule responsabilité FLOW décrite ici.
 - SAP S/4HANA Transportation Management, Selecting Carriers and Tendering : https://learning.sap.com/courses/business-processes-in-sap-s-4hana-transportation-management/selecting-carriers-and-tendering_d66f6116-ed5d-491f-b91b-e958fdedf2a5 — sélection et contrôle des allocations de transport lorsqu’il est configuré. Une allocation ne prouve pas une capacité physique restante. Appui transport partiel, sans preuve d’un interpréteur universel de données fournisseur ; ce dernier périmètre est un choix FLOW.
+
+
+## U858
+
+**id**
+
+U858
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Retirer les Visibility des référentiels et conserver l’interprétation des plans
+
+**texte**
+
+Ok pour Operational References.
+
+Pour Supply Plan Visibility et Demand Plan Visibility je propose de les garder car il s'agit d'interpréter les données de planification / prévision dans le contexte d'une demande de la supply chain
+
+**contexte et portée**
+
+Accord sur le retrait des huit capacités Visibility d’Operational References listées dans l’échange précédent : Product Reference, Party / Role, Agreement, Product Catalog, Fulfilment Network, Service Catalog, Assortment et Price Book Visibility. Préserver les huit référentiels, leurs responsabilités locales, leurs informations et les besoins des scénarios. Conserver Supply Plan Visibility et Demand Plan Visibility et expliciter l’interprétation contextuelle des plans/prévisions pour une demande de la supply chain. Ne pas leur transférer la production des prévisions, le calcul de couverture, la consommation de prévision ou les décisions de promesse. Les formulations nouvelles et les adaptations de liens sont une mise en œuvre de cet accord, sans validation globale de chaque rédaction. Aucune publication implicite.
+
+
+**appuis et limites — consultés le 2026-10-06**
+
+- Microsoft Dynamics 365 Supply Chain Management, Inventory forecasts : https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast — prévisions Supply/Demand, dimensions et périodes. Le supply forecast Microsoft couvre les achats, contrairement au Supply Plan FLOW ici limité aux mouvements hors achats.
+- SAP S/4HANA Cloud Public Edition, Outlining Program Planning : https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a — besoins prévisionnels, commandes et consommation selon la stratégie. Appui au besoin d’interpréter les prévisions avec leur contexte ; le produit couvre aussi des calculs qui restent dans Availability pour FLOW.
+- Operational References : appuis Microsoft IOM Data management déjà consultés U854 et SAP S/4HANA Maintaining Materials and Business Partners consulté ce jour (https://learning.sap.com/courses/exploring-business-processes-for-supply-chain-execution-in-sap-s-4hana-cloud-private-edition/maintaining-materials-and-business-partners). Les références produit et partenaire servent l’exécution ; ces exemples ne prescrivent ni huit capacités ni leur retrait. La granularité retenue relève de l’accord FLOW U858, sans transfert de maîtrise d’entreprise.

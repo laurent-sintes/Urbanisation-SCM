@@ -1,5 +1,5 @@
-id: flow-methodology-2026-10-06.3
-version: 2026-10-06.3
+id: flow-methodology-2026-10-06.4
+version: 2026-10-06.4
 as_of: '2026-10-06'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
@@ -53,6 +53,7 @@ source_refs:
 - U855
 - U856
 - U857
+- U858
 lessons:
 - id: business-first
   label: Le métier d’abord
@@ -673,6 +674,11 @@ sources:
   excerpt: 'Service Capacity Visibility : merite une interprétation par flow car on ne sait pas les données remontées par
     le supplier.'
   scope: Responsabilité de connaissance métier justifiant le maintien de Service Capacity Visibility.
+- id: U858
+  title: Conserver l’interprétation des plans et retirer les consultations autonomes
+  excerpt: Ok pour Operational References. Pour Supply Plan Visibility et Demand Plan Visibility je propose de les garder
+    car il s'agit d'interpréter les données de planification / prévision dans le contexte d'une demande de la supply chain
+  scope: Retrait des huit capacités de consultation ; maintien des deux capacités d’interprétation des plans.
 glossary:
   terms:
   - id: MOD001
@@ -854,6 +860,9 @@ glossary:
     notes:
     - 'La responsabilité sur ces données est précisée séparément : qui les tient, qui les fournit et qui construit les vues
       utiles.'
+    - Une capacité peut utiliser une référence (uses-reference) ou l’alimenter avec des apports sourcés (supplies-reference).
+      Ces liens portent conditions et effets, sans rattachement hiérarchique ni transfert de maîtrise ; les associations entre
+      références restent distinctes.
     canonical_fields:
     - name
     - label_fr
@@ -1206,6 +1215,8 @@ glossary:
       informations absentes.'
     - Lire le tarif reçu d’un [Price Book](model:price-book) reste un accès au référentiel ; le choix économique appartient
       à la décision consommatrice.
+    - '[Supply Plan Visibility](model:plans-visibility) et [Demand Plan Visibility](model:demand-plan-visibility) interprètent
+      les prévisions pour une demande donnée, sans inventer une précision absente ni décider de sa couverture.'
   model_term_ids:
   - TER001
   - TER002
