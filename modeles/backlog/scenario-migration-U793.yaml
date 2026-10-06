@@ -565,13 +565,17 @@ publication_delivery:
   state: applied
   summary: 'Catalogue autonome de 5 flux, 26 scénarios et 27 parcours ; 23 illustrations conservées. U858 : contrôles courants
     adaptés au retrait des huit Visibility de références et à la conservation de l’interprétation des plans ; état antérieur
-    conservé dans Git (745813e). U863 : liens tarifaires des parcours répartis entre produits et prestations.'
+    conservé dans Git (745813e). U863 : liens tarifaires des parcours répartis entre produits et prestations. U874 : services
+    financiers portés par FLOW et retrait de Document Production Order ; attentes courantes alignées, preuves historiques
+    conservées.'
   source_refs:
   - U793
   - U835
   - U853
   - U858
   - U863
+  - U874
+  - U877
   required_catalog:
   - collection: value_streams
     id: obtain-products
@@ -683,16 +687,16 @@ publication_delivery:
     content_sha256: 7ca5626dadae0e2a9a963091246c6c749c0e9fe4b0350779958d93e699bb782b
   - collection: paths
     id: export-remote-services-path
-    content_sha256: a2cb0f13eea3640b0e0b77f51ff5af85d3166df4ae5cad7d114ddb3215f7b31b
+    content_sha256: 2cfd2f2e1b279d63acffe34d8e9b97e5a02c9c98a00449966bc906df45b92c98
   - collection: paths
     id: stocktaking-variance-path
     content_sha256: 79358b23bcc3f05e5ad434bf25113679074d031dc66c6ad2c986546104adeb86
   - collection: paths
     id: last-item-concurrency-path
-    content_sha256: 23efb43837441855f15526070149de304d94e94c1f7ccd5f939c6f32658e911a
+    content_sha256: 28d1d9357a2c2269c95968023578bb92600040ea8fb195c4364841b07e4ab9c5
   - collection: paths
     id: substitution-price-service-path
-    content_sha256: 06d862d8970af3b9411d045cfe57acb845513c58b4d5f6e7b3655f1716f9f67e
+    content_sha256: 3c3dd19287febc43f18615fa28e59ee2d88ff3070ed67e82e5e1252fe3820cec
   - collection: paths
     id: additional-purchase-partial-path
     content_sha256: e7bafed5bd2122bd69d3e5a852a755cf25bbf35794fb5ce0cbd1aa3feea8b096
@@ -808,6 +812,7 @@ publication_delivery:
     - paths/transport-missed-connection-path
     scope: Finalités et exemples de Business Areas, corrections de noms et de grammaire ; aucune modification de parent ni
       extension des accords historiques.
+  required_nodes: []
 content_review:
   pilot:
   - b2b-partial-stock

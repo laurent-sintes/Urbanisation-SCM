@@ -1043,11 +1043,14 @@ publication_delivery:
   - U858
   - U861
   - U865
+  - U874
+  - U877
   summary: '16 Business Areas, 64 capacités regroupées et 17 directes ; aucun savoir-faire supprimé. U858 : contrôles courants
     adaptés au retrait des huit Visibility de références et à la conservation de l’interprétation des plans ; état antérieur
     conservé dans Git (745813e). U861 : commandes passives et pilotage par les tâches du workflow explicités ; identités et
     rattachements conservés. U865 : Plan Visibility dans Availability, Inventory State Management et précommandes ; contrôles
-    courants alignés.'
+    courants alignés. U874 : services financiers portés par FLOW et retrait de Document Production Order ; attentes courantes
+    alignées, preuves historiques conservées.'
   required_nodes:
   - id: ba-inventory-position-management
     kind: business_area
@@ -1106,6 +1109,8 @@ publication_delivery:
         Bénéficiaire et résultat : Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
 
         Exemple fictif : Proposer 60 pièces vendredi et 40 lundi ; la proposition ne devient un engagement que lors de sa confirmation dans la commande.
+
+        Construire les options de produit, site, date et prestation à partir des possibilités connues et autorisées. Une substitution exige une équivalence et une autorisation provenant du responsable commercial ; ni le stock disponible ni un meilleur coût ne les créent. [ATP](glossary:TER044) évalue les ressources admissibles, [CTP](glossary:TER045) la faisabilité d’un apport et [PTP](glossary:TER068) les compromis économiques. [Service Selection Decision](model:D06.e) choisit les prestations dans le respect de la promesse. Ces décisions composent une proposition, sans capacité de sélection supplémentaire.
   - id: ba-supply-matching
     kind: business_area
     parent: D03
@@ -1264,18 +1269,18 @@ publication_delivery:
     kind: business_area
     parent: subdomain-service-orders
     fields:
-      name: Financial Service Order Management
-      definition: Tenir les demandes confiées de facturation et d’encaissement et suivre leurs résultats.
-      finality: Permettre au donneur d’ordre de connaître l’état et le résultat des prestations de facturation ou d’encaissement
-        confiées.
+      name: Financial Services
+      definition: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier, leur
+        progression et leurs résultats.
+      finality: Permettre au bénéficiaire du flux de disposer de la facture attendue et de connaître le résultat du paiement.
       scope: |-
-        Ne reprend ni la responsabilité comptable ni l’exécution des opérations par les services sollicités.
+        [Billing](glossary:TER153) et [Payment](glossary:TER154) sont des services portés par FLOW. Ils peuvent mobiliser des applications ou prestataires spécialisés sans devenir des commandes documentaires adressées à la logistique. Leur responsabilité métier est distincte de la réalisation technique.
 
-        Bénéficiaire et résultat : Permettre au donneur d’ordre de connaître l’état et le résultat des prestations de facturation ou d’encaissement confiées.
+        Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
 
-        Exemple fictif : Confier une facturation et recevoir sa référence de résultat ; les règles fiscales et la tenue des comptes restent sous autorité financière.
+        La comptabilité générale, la trésorerie et le recouvrement des impayés ne sont pas inclus par extension. Les autorités financières compétentes conservent leurs règles et contrôles.
 
-        [Billing Order](model:service-order-billing) et [Payment Order](model:service-order-payment-collection) sont des commandes passives de prestations définies. Les [Tasks](glossary:TER089) du workflow pilotent leur suivi ; les services financiers réalisent la facturation et l’encaissement.
+        Exemple fictif : après une livraison, Billing obtient la facture correspondant aux éléments facturables ; Payment tient le résultat de l’encaissement. Un paiement refusé reste visible et conduit le workflow à traiter la suite autorisée.
   - id: D01.f
     parent: ba-inventory-position-management
   - id: D01.g
@@ -1380,8 +1385,6 @@ publication_delivery:
     parent: ba-goods-processing-order-management
   - id: service-order-transport-booking
     parent: ba-transport-order-management
-  - id: service-order-document-production
-    parent: subdomain-service-orders
   - id: service-order-customs-clearance
     parent: subdomain-service-orders
   - id: service-order-billing

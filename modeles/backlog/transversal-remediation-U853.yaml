@@ -808,11 +808,14 @@ publication_delivery:
   - U858
   - U861
   - U865
+  - U874
+  - U877
   summary: '16 Business Areas documentées, 42 appuis partiels ajoutés, lacunes explicites et quatre scénarios de retour et
     réaction. U858 : contrôles courants adaptés au retrait des huit Visibility de références et à la conservation de l’interprétation
     des plans ; état antérieur conservé dans Git (745813e). U861 : commandes passives et pilotage par les tâches du workflow
     explicités ; identités et rattachements conservés. U865 : Plan Visibility dans Availability, Inventory State Management
-    et précommandes ; contrôles courants alignés.'
+    et précommandes ; contrôles courants alignés. U874 : services financiers portés par FLOW et retrait de Document Production
+    Order ; attentes courantes alignées, preuves historiques conservées.'
   required_nodes:
   - id: ba-inventory-position-management
     fields:
@@ -1005,6 +1008,8 @@ publication_delivery:
         Bénéficiaire et résultat : Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
 
         Exemple fictif : Proposer 60 pièces vendredi et 40 lundi ; la proposition ne devient un engagement que lors de sa confirmation dans la commande.
+
+        Construire les options de produit, site, date et prestation à partir des possibilités connues et autorisées. Une substitution exige une équivalence et une autorisation provenant du responsable commercial ; ni le stock disponible ni un meilleur coût ne les créent. [ATP](glossary:TER044) évalue les ressources admissibles, [CTP](glossary:TER045) la faisabilité d’un apport et [PTP](glossary:TER068) les compromis économiques. [Service Selection Decision](model:D06.e) choisit les prestations dans le respect de la promesse. Ces décisions composent une proposition, sans capacité de sélection supplémentaire.
       market_comparisons:
       - vendor: SAP
         product: SAP S/4HANA Manufacturing for planning and scheduling
@@ -1585,16 +1590,15 @@ publication_delivery:
         - U853
   - id: ba-financial-service-order-management
     fields:
-      finality: Permettre au donneur d’ordre de connaître l’état et le résultat des prestations de facturation ou d’encaissement
-        confiées.
+      finality: Permettre au bénéficiaire du flux de disposer de la facture attendue et de connaître le résultat du paiement.
       scope: |-
-        Ne reprend ni la responsabilité comptable ni l’exécution des opérations par les services sollicités.
+        [Billing](glossary:TER153) et [Payment](glossary:TER154) sont des services portés par FLOW. Ils peuvent mobiliser des applications ou prestataires spécialisés sans devenir des commandes documentaires adressées à la logistique. Leur responsabilité métier est distincte de la réalisation technique.
 
-        Bénéficiaire et résultat : Permettre au donneur d’ordre de connaître l’état et le résultat des prestations de facturation ou d’encaissement confiées.
+        Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
 
-        Exemple fictif : Confier une facturation et recevoir sa référence de résultat ; les règles fiscales et la tenue des comptes restent sous autorité financière.
+        La comptabilité générale, la trésorerie et le recouvrement des impayés ne sont pas inclus par extension. Les autorités financières compétentes conservent leurs règles et contrôles.
 
-        [Billing Order](model:service-order-billing) et [Payment Order](model:service-order-payment-collection) sont des commandes passives de prestations définies. Les [Tasks](glossary:TER089) du workflow pilotent leur suivi ; les services financiers réalisent la facturation et l’encaissement.
+        Exemple fictif : après une livraison, Billing obtient la facture correspondant aux éléments facturables ; Payment tient le résultat de l’encaissement. Un paiement refusé reste visible et conduit le workflow à traiter la suite autorisée.
       market_comparisons:
       - vendor: Microsoft
         product: Dynamics 365 Intelligent Order Management
@@ -1609,11 +1613,12 @@ publication_delivery:
         relationship: Recouvrement partiel
         similarities: Transmettre une demande au prestataire de facturation.
         differences: Ne démontre pas le cycle d’encaissement ni la maîtrise comptable, qui reste externe.
-        flow_position: Tenir les demandes confiées de facturation et d’encaissement et suivre leurs résultats. Commandes passives,
-          pilotage par les tâches du workflow et réalisation du prestataire restent distincts dans FLOW.
-        definition_choice: Tenir les demandes confiées de facturation et d’encaissement et suivre leurs résultats.
-        term_choice: Financial Service Order Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie
-          revendiquée.
+        flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
+          leur progression et leurs résultats.
+        definition_choice: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
+          leur progression et leurs résultats.
+        term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence
+          de taxonomie éditeur.
         scope_summary: Transmettre une demande au prestataire de facturation.
         approach_summary: Ne démontre pas le cycle d’encaissement ni la maîtrise comptable, qui reste externe.
         evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
@@ -1621,6 +1626,105 @@ publication_delivery:
         status: proposed
         source_refs:
         - U853
+        - U874
+      - vendor: SAP
+        product: SAP S/4HANA — périmètre du cours cité
+        element_name: Describing Omnichannel Convergent Billing (1MC)
+        concept_name: Describing Omnichannel Convergent Billing (1MC)
+        element_type: Mécanisme ou objet documenté dans un produit
+        relationship: Recouvrement partiel
+        scope_summary: Des demandes de facturation externes sont intégrées puis regroupées ou traitées pour produire les factures.
+        approach_summary: 'Rapprochement avec Billing : Des demandes de facturation externes sont intégrées puis regroupées
+          ou traitées pour produire les factures.'
+        similarities: Des demandes de facturation externes sont intégrées puis regroupées ou traitées pour produire les factures.
+        differences: Le pilotage FLOW reste distinct du moteur de facturation, de la comptabilisation et du recouvrement.
+        flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
+          leur progression et leurs résultats.
+        source_title: Describing Omnichannel Convergent Billing (1MC)
+        source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sales-automation-and-analytics/describing-omnichannel-convergent-billing-1mc-_e8281711-58ac-4058-93e3-f9fb65eb4537
+        source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+        source_locator: Describing Omnichannel Convergent Billing (1MC) — passages sur le mécanisme rapproché.
+        consulted_on: '2026-10-06'
+        evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou
+          déploiement Beaumanoir déduit. Le pilotage FLOW reste distinct du moteur de facturation, de la comptabilisation
+          et du recouvrement.
+        status: proposed
+        source_refs:
+        - U774
+        - CMP307
+        - ELM808
+        - U874
+        term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence
+          de taxonomie éditeur.
+        definition_choice: Assurer la facturation des éléments éligibles du flux et tenir la facture obtenue, les rejets et
+          les corrections nécessaires.
+      - vendor: Microsoft
+        product: Microsoft Dynamics 365 — application indiquée par la source
+        element_name: Manage payment authorizations
+        concept_name: Manage payment authorizations
+        element_type: Mécanisme ou objet documenté dans un produit
+        relationship: Recouvrement partiel
+        scope_summary: La documentation distingue autorisation et capture du paiement, avec un statut retourné par le prestataire.
+        approach_summary: 'Rapprochement avec Payment : La documentation distingue autorisation et capture du paiement, avec
+          un statut retourné par le prestataire.'
+        similarities: La documentation distingue autorisation et capture du paiement, avec un statut retourné par le prestataire.
+        differences: 'Limite explicite : un accusé de capture n’est pas toujours le résultat final asynchrone. Ce document
+          ne prouve pas une notification complète de fin ; FLOW doit suivre ce résultat distant.'
+        flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
+          leur progression et leurs résultats.
+        source_title: Manage payment authorizations - Commerce | Dynamics 365 | Microsoft Learn
+        source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/manage-payment-authorizations
+        source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+        source_locator: Manage payment authorizations - Commerce | Dynamics 365 | Microsoft Learn — passages sur le mécanisme
+          rapproché.
+        consulted_on: '2026-10-06'
+        evidence_limits: 'Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou
+          déploiement Beaumanoir déduit. Limite explicite : un accusé de capture n’est pas toujours le résultat final asynchrone.
+          Ce document ne prouve pas une notification complète de fin ; FLOW doit suivre ce résultat distant.'
+        status: proposed
+        source_refs:
+        - U774
+        - CMP307
+        - ELM811
+        - U874
+        term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence
+          de taxonomie éditeur.
+        definition_choice: Assurer le service de paiement associé au flux et tenir son résultat, ses refus et ses montants
+          restant à encaisser.
+      - vendor: SAP
+        product: SAP S/4HANA — périmètre du cours cité
+        element_name: Explaining Digital Payments
+        concept_name: Explaining Digital Payments
+        element_type: Mécanisme ou objet documenté dans un produit
+        relationship: Recouvrement partiel
+        scope_summary: S/4HANA sollicite un prestataire de paiement via Digital Payments et reçoit les résultats pour actualiser
+          le statut.
+        approach_summary: 'Rapprochement avec Payment : S/4HANA sollicite un prestataire de paiement via Digital Payments
+          et reçoit les résultats pour actualiser le statut.'
+        similarities: S/4HANA sollicite un prestataire de paiement via Digital Payments et reçoit les résultats pour actualiser
+          le statut.
+        differences: Le prestataire réalise le paiement ; FLOW orchestre sa demande et son résultat sans absorber les responsabilités
+          financières.
+        flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
+          leur progression et leurs résultats.
+        source_title: Explaining Digital Payments
+        source_url: https://learning.sap.com/courses/configuring-additional-settings-in-financial-accounting-in-sap-s-4hana/explaining-digital-payments
+        source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+        source_locator: Explaining Digital Payments — passages sur le mécanisme rapproché.
+        consulted_on: '2026-10-06'
+        evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou
+          déploiement Beaumanoir déduit. Le prestataire réalise le paiement ; FLOW orchestre sa demande et son résultat sans
+          absorber les responsabilités financières.
+        status: proposed
+        source_refs:
+        - U774
+        - CMP307
+        - ELM812
+        - U874
+        term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence
+          de taxonomie éditeur.
+        definition_choice: Assurer le service de paiement associé au flux et tenir son résultat, ses refus et ses montants
+          restant à encaisser.
   required_catalog:
   - collection: scenarios
     id: planning-actuals-feedback

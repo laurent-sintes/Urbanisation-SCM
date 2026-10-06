@@ -1,0 +1,750 @@
+schema_version: 1.0.0
+id: model-stability-audit-U875
+source_refs:
+- U875
+- U876
+status: audit_completed_recommendations_not_applied
+audited_on: '2026-10-06'
+basis:
+  publication: R50
+  version: 2026-10-06.7
+  path: modeles/release/2026-10-06.7/model.yaml
+  sha256: 017a39c3ff8190f388392da732195cf2ea3074e7cddf6088e7f0f997f65a38ef
+  authority: Catalogue courant → descripteur → snapshot ; aucun complément backlog dans le modèle audité.
+verdict:
+  client_workshop: Base suffisamment structurée pour une confrontation guidée, après correction des contradictions rédactionnelles
+    listées.
+  stable_reference: R50 ne doit pas être présentée comme référentiel entièrement stabilisé ou entièrement validé marché.
+  availability: 'Architecture fonctionnelle cohérente : 5 Business Areas, 15 capacités, 27 comportements ; aucune grande capacité
+    manquante démontrée. Compléter les contrats métier et cas limites avant de déclarer le périmètre clos.'
+  change_policy: Aucune modification canonique, aucun accord nouveau ni publication dans cet audit.
+method:
+  read: Noms/définitions de tous les éléments publiés ; scopes et frontières approfondis pour Availability et les constats
+    cités ; scénarios mobilisant les capacités concernées.
+  market: Comparaison ciblée aux fonctions et processus SAP S/4HANA et Microsoft Dynamics effectivement consultés ; ni certification
+    exhaustive des produits ni équivalence de chaque fiche.
+  behavior_audit: Constats sur le snapshot courant ; aucun rejeu de l’audit historique clos U431.
+  limitations:
+  - Une contribution à un scénario ne prouve pas la couverture de tous les cas limites.
+  - Les lacunes marché déjà déclarées ne prouvent pas une absence fonctionnelle.
+  - La validation de schéma et des références ne prouve pas la cohérence sémantique de la prose.
+  - Certaines pages SAP Help sont seulement accessibles via leur extrait indexé ; les cours SAP Learning consultables complètent
+    les comparaisons.
+inventory:
+  all_nodes:
+    business_system: 3
+    domain: 6
+    area: 9
+    reference: 9
+    capability: 72
+    behavior: 76
+    business_area: 20
+  relations: 418
+  scm:
+    domain: 1
+    area: 8
+    reference: 9
+    capability: 71
+    behavior: 76
+    business_area: 20
+  availability:
+    capability: 15
+    area: 1
+    behavior: 27
+    business_area: 5
+  scenarios: 32
+  paths: 33
+  capabilities_without_explicit_scenario: []
+  existing_market_gaps_by_kind:
+    capability: 9
+    behavior: 28
+    business_area: 8
+checks:
+  validate_models: PASS — 0 errors, 2026-10-06
+  duplicate_names: Aucun nom dupliqué dans les niveaux Subdomain, Business Area et Capability.
+  scenario_links: 72/72 capacités publiées et 15/15 capacités Availability ont une contribution explicite à au moins un parcours.
+  release_unchanged: true
+findings:
+- id: R50-01
+  priority: P1
+  kind: contradiction
+  title: Plan Visibility encore présenté comme un sous-domaine
+  node_ids:
+  - supply-chain-orchestration
+  - D03
+  - subdomain-plans
+  evidence:
+    scope_quote: Le Domain comprend neuf sous-domaines
+    structure: 8 sous-domaines SCM ; subdomain-plans est une Business Area sous D03.
+  impact: La fiche de synthèse contredit l’arbre que le client parcourt.
+  recommendation: Corriger la liste et éviter les décomptes et listes hiérarchiques recopiés en prose lorsque la structure
+    peut les fournir.
+  market_sources: []
+  gate: before_client_presentation
+  status: proposed_not_applied
+- id: R50-02
+  priority: P1
+  kind: lexical_and_boundary
+  title: Ingestion des références non alignée
+  node_ids:
+  - master-data-ingestion
+  - D12
+  evidence:
+    glossary: TER050 = Reference Ingestion ; capacité = Master Data Ingestion.
+    scope: Huit sujets et Price Book unique encore décrits dans l’ingestion, contre neuf références et deux Price Books dans
+      l’arbre.
+    catalog_quote: Les tarifs de produits et services sont portés par [Product Price Book](model:product-price-book).
+  impact: L’autorité des données et la séparation des tarifs produits/services peuvent être mal comprises.
+  recommendation: Aligner Reference Ingestion et les neuf références ; corriger la phrase qui place les tarifs des services
+    dans Product Price Book.
+  market_sources: []
+  gate: before_client_presentation
+  status: proposed_not_applied
+- id: R50-03
+  priority: P1
+  kind: conceptual_contradiction
+  title: Commande et représentation documentaire
+  node_ids:
+  - D04.j
+  evidence:
+    TER012: Commande définie comme document métier structuré U874.
+    TER086: Purchase Order Document distingue encore le document et la commande métier.
+    scope: Purchase Order oppose encore objet et document sans expliciter représentation et identité.
+  impact: Le lecteur ne sait pas si la commande documentaire est l’objet métier lui-même ou un autre objet.
+  recommendation: 'Préserver la décision U874 : distinguer clairement commande structurée, ses éditions/messages et capacité
+    qui la gère, puis harmoniser TER086 et les fiches.'
+  market_sources: []
+  gate: before_client_presentation
+  status: proposed_not_applied
+- id: R50-04
+  priority: P2
+  kind: editorial
+  title: Définitions trop courtes et noms larges
+  node_ids:
+  - order-workflow-planning
+  - D05.f
+  - service-order-payment-collection
+  - D03.j
+  evidence:
+    workflow: Construire ou adapter le parcours.
+    planning: Master Planning désigne le plan de matching interne, pas tout le master planning Microsoft.
+    payment: Nom Payment plus large que le périmètre d’encaissement retenu.
+    ctp: Définition parle de ressources supplémentaires ; le scope précise des capacités pouvant déjà exister.
+  impact: Les détails longs réparent des ambiguïtés introduites dès le titre ou la définition courte.
+  recommendation: Définitions autonomes incluant objet et frontière ; conserver les noms validés sauf arbitrage ultérieur.
+    Mentionner le matching interne, le périmètre d’encaissement et la faisabilité des apports CTP.
+  market_sources: []
+  gate: before_client_presentation
+  status: proposed_not_applied
+- id: AV-01
+  priority: P1
+  kind: responsibility_to_explicit
+  title: 'Achats planifiés : admission et affermissement'
+  node_ids:
+  - plans-ingestion
+  - plans-visibility
+  - D04.j
+  - D03.i
+  - D03.j
+  - D01.c
+  evidence:
+    present: Distinction Planned Purchase Order/Purchase Order, filiation et absence de double compte documentées.
+    gap: Supply Plan et Plan Ingestion sont décrits hors achats. Le point de réception, la tenue et l’admissibilité de la
+      proposition MAP avant affermissement ne sont pas définis aussi explicitement que sa conversion.
+  impact: Une proposition planifiée pourrait être ignorée ou traitée à tort comme apport confirmé.
+  recommendation: 'Nommer le responsable de réception/tenue et les règles de prise en compte : proposition, affermi, confirmé,
+    expédié, reçu ; conserver le lien et retirer l’ancienne attente. Aucun ajout de capacité nécessaire par défaut.'
+  market_sources:
+  - MS-FIRM
+  - SAP-MRP
+  gate: scope_to_expose_in_client_workshop
+  status: proposed_not_applied
+- id: AV-02
+  priority: P2
+  kind: partial_coverage
+  title: 'Alternatives : auteur et admissibilité'
+  node_ids:
+  - D03.i
+  - D03.j
+  - D03.k
+  - D12
+  - D06.e
+  evidence:
+    present: Réseau ATP, équivalence autorisée en CTP, comparaison économique PTP et scénario substitution-price-service.
+    gap: La responsabilité de produire les candidats produit/site/date/service et l’autorité sur l’équivalence ne sont pas
+      réunies dans un contrat explicite.
+  impact: Une option peu coûteuse pourrait être lue comme automatiquement autorisée.
+  recommendation: Décrire les entrées d’autorisation commerciale, la construction des options par les capacités existantes
+    et l’évaluation ATP/CTP/PTP. Ne pas recréer Promise Selection Decision ni déplacer les référentiels dans Availability.
+  market_sources:
+  - MS-DOM
+  - SAP-ABC
+  gate: scope_to_expose_in_client_workshop
+  status: proposed_not_applied
+- id: AV-03
+  priority: P2
+  kind: partial_coverage
+  title: 'Promesse complète : maille ligne et commande'
+  node_ids:
+  - D03.i
+  - D03.k
+  - D04.n
+  - D02.e
+  evidence:
+    present: Dates, quantités, part non couverte et exemple B2B 60+40 ; exigence de livraison complète dans Plan Application.
+    gap: Peu d’explication sur la faisabilité conjointe de plusieurs lignes, d’un kit ou d’un assortiment complet lorsque
+      chacune est promettable séparément.
+  impact: Une promesse correcte par ligne peut être irréalisable pour une commande devant partir ensemble.
+  recommendation: 'Ajouter un cas multi-lignes à livraison complète : synchroniser les dates et contraintes avant confirmation
+    ; distinguer fractionnement proposé et scission effective de commande.'
+  market_sources:
+  - MS-DOM
+  - SAP-ABC
+  gate: client_challenge_case
+  status: proposed_not_applied
+- id: AV-04
+  priority: P2
+  kind: contradiction_and_contract
+  title: Validité de proposition et réservation
+  node_ids:
+  - D02.c
+  - D03.i
+  - D04.i
+  - D05.h
+  evidence:
+    contradiction: 'D02.c conserve U436 : expiration/consommation/libération restent à préciser, puis U733 les déclare responsabilités
+      communes.'
+    present: Le scénario last-item-concurrency distingue consultation, réservation unique et annulation.
+    gap: Validité de la proposition pendant l’attente de confirmation et réévaluation si la situation change restent peu explicites.
+  impact: Une proposition calculée à un instant pourrait être assimilée à un droit garanti jusqu’à acceptation.
+  recommendation: Nettoyer la réserve périmée et expliciter validité, éventuelle protection, réexamen avant confirmation et
+    libération. Pas de durée arbitraire ni mécanisme logiciel imposé.
+  market_sources:
+  - MS-RES
+  - SAP-BOP
+  gate: before_client_presentation
+  status: proposed_not_applied
+- id: AV-05
+  priority: P2
+  kind: partial_evidence
+  title: Décision sans solution et explication au client
+  node_ids:
+  - D03.i
+  - D03.k
+  - BHV006
+  - order-visibility
+  evidence:
+    present: Part non couverte, hypothèses, incertitudes et absence de solution admissible mentionnées.
+    gap: Motif limitant, alternatives rejetées et condition permettant de réexaminer sont dispersés ; aucun scénario explicite
+      ne clôt sur aucune solution autorisée.
+  impact: Le modèle peut donner l’impression qu’une combinaison ATP/CTP/PTP produit toujours une réponse acceptable.
+  recommendation: 'Préciser le résultat métier négatif et un cas sans solution : manque, restriction, date, capacité ou coût
+    ; tracer l’explication dans les objets existants, sans nouvelle capacité Visibility.'
+  market_sources:
+  - SAP-RACR
+  - MS-ATP
+  gate: client_challenge_case
+  status: proposed_not_applied
+- id: GEN-01
+  priority: P1
+  kind: scope_gap
+  title: 'Retour client : autorisation, avoir, remboursement et remplacement'
+  node_ids:
+  - D04.l
+  - D05.i
+  - service-order-billing
+  - service-order-payment-collection
+  evidence:
+    explicit_reserve: 'D04.l : autorisation commerciale du retour, remboursement et remplacement client restent à délimiter.'
+    current: Les cinq parcours décrivent principalement le devenir physique ; Payment est borné à l’encaissement.
+  impact: Un flux de retour complet ne peut être présenté comme fermé de bout en bout.
+  recommendation: 'Décider qui autorise et qui réalise : Sales/Finance/FLOW. Documenter les coopérations et couvrir au moins
+    avoir, remboursement et échange ; ne pas inventer automatiquement Refund Management.'
+  market_sources:
+  - MS-RETURN
+  - SAP-RETURN
+  gate: scope_to_expose_in_client_workshop
+  status: proposed_not_applied
+- id: GEN-02
+  priority: P2
+  kind: scope_gap
+  title: Blocage commercial pour risque de crédit
+  node_ids:
+  - D04.i
+  - order-workflow-sentry
+  - D19.b
+  evidence:
+    present: Suspension/reprise et conditions de parcours génériques.
+    gap: 'Pas de règle de coopération explicite avec une autorité de crédit dans les définitions/scopes examinés. Absence
+      lexicale seule non utilisée comme preuve : les cycles génériques ont été lus.'
+  impact: Le parcours B2B peut promettre puis réaliser sans savoir qui impose ou lève le blocage financier.
+  recommendation: Préciser les décisions externes consommées, leur effet et leur levée. La finance peut rester hors de FLOW
+    ; cela ne dispense pas de représenter l’interface métier.
+  market_sources:
+  - MS-CREDIT
+  - SAP-CREDIT
+  gate: scope_to_expose_in_client_workshop
+  status: proposed_not_applied
+availability_matrix:
+- topic: Stock courant et ressources futures
+  state: covered
+  owners:
+  - D03.i
+  - BHV002
+  - BHV004
+  - D01.c
+  market_sources:
+  - MS-ATP
+  - SAP-BOP
+  assessment: Deux profondeurs ATP ; origine, fraîcheur, engagements et double compte traités.
+- topic: Délais, calendriers, heures limites et date de réception
+  state: covered
+  owners:
+  - D03.i
+  - D03
+  market_sources:
+  - MS-ATP
+  - SAP-BPS
+  assessment: Mention explicite de préparation, transport, jours ouvrés, fermetures et fuseaux ; ne pas confondre expédition
+    et réception.
+- topic: Faisabilité de nouveaux apports et capacités finies
+  state: covered_with_dependencies
+  owners:
+  - D03.j
+  - BHV075
+  - BHV076
+  - D06.b
+  market_sources:
+  - MS-CTP
+  - SAP-SBC
+  assessment: Approfondissement matière puis capacité ; FLOW consomme la faisabilité sans reconstituer la planification interne
+    des exécutants.
+- topic: Première promesse et réexamen collectif
+  state: covered
+  owners:
+  - D03.i
+  - D03.j
+  - D03.k
+  - D03.m
+  - D03.o
+  - D05.f
+  market_sources:
+  - MS-ATP
+  - SAP-BOP
+  assessment: BOP est réparti entre priorisation, affectation et réexamen de promesse. Pas de capacité Backorder Processing
+    à ajouter uniquement pour copier SAP.
+- topic: Protections, plafonds et consommation par groupe
+  state: covered_with_dependencies
+  owners:
+  - D05.d
+  - D02.b
+  - D19.b
+  market_sources:
+  - MS-ALLOC
+  - SAP-PAL
+  - SAP-SUP
+  assessment: Optimisation dans Availability ; droits actifs dans Policies. Une enveloppe n’est pas une réservation individuelle.
+- topic: Affectation, réservation et concurrence
+  state: covered_with_cleanup
+  owners:
+  - D03.o
+  - D02.e
+  - D02.c
+  - D05.h
+  market_sources:
+  - MS-RES
+  - SAP-PAL
+  assessment: Frontières explicites et scénario du dernier article ; nettoyer la réserve historique AV-04.
+- topic: Arbitrage économique
+  state: covered_partial_market_mapping
+  owners:
+  - D03.k
+  - BHV107
+  - BHV108
+  market_sources:
+  - MS-DOM
+  - SAP-COST
+  assessment: Coûts et compromis documentés ; ne pas annoncer que Profitable-to-Promise est une taxonomie commune SAP/Microsoft
+    ou garantit une marge maximale.
+- topic: Substitution produit/site/date/service
+  state: partial_responsibility_contract
+  owners:
+  - D03.i
+  - D03.j
+  - D03.k
+  - D06.e
+  market_sources:
+  - MS-DOM
+  - SAP-ABC
+  assessment: Cas et contraintes présents ; préciser production et admissibilité des alternatives AV-02.
+- topic: Fractionnement et livraison complète
+  state: covered_single_item_extend_multiline
+  owners:
+  - D03.i
+  - D03.k
+  - D04.n
+  - D02.e
+  market_sources:
+  - MS-DOM
+  - SAP-ABC
+  assessment: Cas 60+40 couvert ; éprouver une commande multi-lignes complète AV-03.
+- topic: Prévisions et commandes sans double compte
+  state: covered_principle
+  owners:
+  - demand-plan-visibility
+  - plans-visibility
+  - D05.f
+  - D03.o
+  market_sources:
+  - MS-FIRM
+  - SAP-MRP
+  assessment: Prévision résiduelle explicitée ; contrats de granularité et consommation à éprouver avec le client, sans reconstruire
+    ses prévisions.
+- topic: Achats planifiés et affermissement
+  state: partial_inbound_contract
+  owners:
+  - plans-ingestion
+  - D04.j
+  - D01.c
+  - D03.i
+  market_sources:
+  - MS-FIRM
+  - SAP-MRP
+  assessment: Distinction d’objets couverte ; chaîne d’admission de la proposition MAP à préciser AV-01.
+- topic: Réassort, redistribution, cibles et scénarios
+  state: covered_local_design
+  owners:
+  - D05.e
+  - D05.c
+  - D05.a
+  - BHV006
+  market_sources:
+  - MS-FIRM
+  - SAP-MRP
+  assessment: Responsabilités distinctes et frontières amont décrites ; les sources ne démontrent pas une équivalence détaillée
+    de Stock Redistribution ni de toutes les optimisations FLOW.
+- topic: État qualité et stock non admissible
+  state: covered_with_dependencies
+  owners:
+  - D05.i
+  - D01.c
+  - D03.i
+  - service-order-inspection
+  market_sources:
+  - MS-QUALITY
+  - SAP-QUALITY
+  assessment: Blocage/libération et impact sur promesse sont présents malgré l’absence du mot Quarantine. Pas de capacité
+    nouvelle déduite de ce libellé éditeur.
+- topic: Explication et absence de solution
+  state: partial_output_contract
+  owners:
+  - D03.i
+  - D03.k
+  - BHV006
+  - order-visibility
+  market_sources:
+  - MS-ATP
+  - SAP-RACR
+  assessment: Justifications présentes mais dispersées ; documenter une issue négative et ses conditions de réexamen AV-05.
+- topic: Application partielle et engagements déjà réalisés
+  state: covered
+  owners:
+  - D02.e
+  - D04
+  - D06
+  market_sources:
+  - MS-FIRM
+  - SAP-BOP
+  assessment: Effets acceptés/refusés, autorisations et absence de rollback physique universel explicités ; pas de correspondance
+    éditeur complète revendiquée.
+market_sources:
+- id: MS-ATP
+  vendor: Microsoft
+  title: Order promising
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Delivery date control methods ; ATP time fences
+  access: page_read
+  support: Disponibilité datée, ressources attendues et calcul des dates. Les paramètres produit ne sont pas des capacités
+    FLOW.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: MS-CTP
+  vendor: Microsoft
+  title: Calculate sales order delivery dates using CTP
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: CTP et Planning Optimization
+  access: page_read
+  support: La faisabilité de fourniture complète le contrôle sur le stock disponible.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: MS-RES
+  vendor: Microsoft
+  title: Inventory Visibility reservations
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-reservations
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Soft reservations ; offsets
+  access: page_read
+  support: Une réservation logique limite les usages concurrents et doit être rapprochée de ses évolutions opérationnelles.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: MS-ALLOC
+  vendor: Microsoft
+  title: Inventory Visibility inventory allocation
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Allocation workflow
+  access: page_read
+  support: Protection de quantités par groupes et consommation des droits.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: MS-DOM
+  vendor: Microsoft
+  title: Distributed order management (DOM)
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Overview ; optimization constraints
+  access: page_read
+  support: Choix de sources de réalisation selon coûts et contraintes. Appui partiel pour PTP, pas preuve d’un terme interéditeurs
+    universel.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: MS-FIRM
+  vendor: Microsoft
+  title: Firm planned orders
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/planned-order-firming
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Manual/automatic firming ; grouping
+  access: page_read
+  support: L’affermissement crée des commandes opérationnelles et peut regrouper les propositions d’achat.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: MS-RETURN
+  vendor: Microsoft
+  title: Sales returns
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Return order process ; credit only ; replacement orders
+  access: page_read
+  support: Retours physiques, avoir sans retour et remplacement sont distingués.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: MS-CREDIT
+  vendor: Microsoft
+  title: Credit holds for sales orders
+  url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-sales-order-credit-holds
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Blocking rules ; checkpoints
+  access: page_read
+  support: Contrôle de crédit pouvant bloquer la progression d’une commande.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: MS-QUALITY
+  vendor: Microsoft
+  title: Inventory blocking
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-blocking
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Manual, quality order and status blocking
+  access: page_read
+  support: Stock présent ne signifie pas stock utilisable ; articuler contrôles qualité, états et disponibilité.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: SAP-BOP
+  vendor: SAP S/4HANA
+  title: Outlining Backorder Processing for Advanced ATP
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-backorder-processing-for-advanced-atp-in-sap-s-4hana
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Backorder Processing
+  access: page_read
+  support: Réexamen des confirmations au regard des changements de demande et de ressources ; sélection et priorités.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: SAP-ABC
+  vendor: SAP S/4HANA
+  title: Outlining Alternative-based Confirmation
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-alternative-based-confirmation
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Alternative controls ; building rules
+  access: page_read
+  support: Recherche de lieux alternatifs et règles de confirmation complète, à date ou anticipée ; les versions décrites
+    ont leurs limites.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: SAP-SBC
+  vendor: SAP S/4HANA
+  title: Outlining Supply Based Confirmation
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-supply-based-confirmation-sbc-
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Supply Creation-Based Confirmation
+  access: page_read
+  support: Articulation aATP–PP/DS pour une promesse nécessitant de créer de la supply. Recouvrement partiel avec CTP FLOW.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: SAP-PAL
+  vendor: SAP S/4HANA
+  title: Outlining aATP with Check Against Allocation
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-aatp-with-check-against-allocation
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Product Allocation ; consumption periods
+  access: page_read
+  support: Restrictions quantitatives par période et caractéristiques, dont clients ou régions ; distinguer ces droits de
+    l’affectation individuelle.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: SAP-SUP
+  vendor: SAP S/4HANA
+  title: Outlining aATP with Supply Protection
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-aatp-with-supply-protection-sup-
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Supply Protection
+  access: page_read
+  support: Protection d’accès à la supply pour des groupes de besoins.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: SAP-BPS
+  vendor: SAP S/4HANA
+  title: Exploring Business Process Scheduling
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/exploring-business-process-scheduling-bps-
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Business Process Scheduling
+  access: page_read
+  support: Les dates résultent d’activités et de contraintes de calendrier, au-delà de la quantité disponible.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: SAP-RACR
+  vendor: SAP S/4HANA
+  title: Review Availability Check Result
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/explore-the-fiori-app-review-availability-check-result-racr-
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Review Availability Check Result
+  access: page_read
+  support: Expliquer l’effet des alternatives, allocations et protections sur le résultat de confirmation.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: SAP-MRP
+  vendor: SAP S/4HANA
+  title: Running Materials Requirements Planning
+  url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-sourcing-procurement/running-materials-requirements-planning
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Procurement proposals ; classic MRP and MRP Live
+  access: page_read
+  support: Les propositions peuvent être des ordres planifiés ou demandes d’achat selon le processus. Ne pas imposer le vocabulaire
+    Microsoft à SAP.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: SAP-RETURN
+  vendor: SAP S/4HANA
+  title: Managing Customer Returns
+  url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Customer Returns ; refund determination
+  access: page_read
+  support: Le retour client articule les suites logistiques et la décision d’avoir ou de remplacement.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: SAP-CREDIT
+  vendor: SAP S/4HANA Cloud
+  title: Checking and Releasing SD Documents
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/918bca53037f408f91a2295d04ac16bc/84452f7da9c4467b9228d049126a2907.html
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: 'Extrait indexé : credit check and blocking'
+  access: indexed_excerpt_only
+  support: Contrôle négatif, blocage et décision de crédit documentée. Page directe sans texte exploitable ; cet appui reste
+    partiel.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: SAP-QUALITY
+  vendor: SAP S/4HANA
+  title: Perfoming Usage Decisions
+  url: https://learning.sap.com/courses/implementing-sap-s-4hana-quality-management/perfoming-usage-decisions_e926fbdd-a525-472d-8dfe-f34ebdc0849f
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Inspection lot completion ; stock postings
+  access: page_read
+  support: Décision après inspection et suites sur l’usage du stock ; recouvrement avec Disposition et ses interactions, pas
+    besoin d’une capacité Quarantine déduite du seul nom produit.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+- id: SAP-COST
+  vendor: SAP S/4HANA Cloud
+  title: Configuring Charge Management and Explaining the Charge Calculation Process
+  url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-transportation-management/configuring-charge-management-and-explaining-the-charge-calculation-process_d2c3b050-5874-4439-a88e-8dcfa231311c
+  consulted_on: '2026-10-06'
+  version: Documentation évolutive ; version produit limitée au passage consulté.
+  locator: Charge calculation
+  access: page_read
+  support: Chiffrage transport selon accords et tarifs. Appui partiel au coût de réalisation, pas équivalence de décision
+    de promesse rentable.
+  limits: Source produit, sans équivalence automatique de capacité ni preuve de réalisation Beaumanoir.
+client_challenge_cases:
+- case: Deux demandes pour le dernier article
+  existing: last-item-concurrency-path
+  question: Qui acquiert le droit, que vaut la proposition avant confirmation, et que se passe-t-il à annulation ou expiration
+    ?
+- case: Réception prévue décalée et engagements protégés
+  existing: shortage-reassessment-path
+  question: Quelles promesses peuvent être révisées, par qui, avec quels impacts exposés ?
+- case: Substitution commercialement interdite mais moins coûteuse
+  existing: substitution-price-service-path
+  question: Qui fournit et applique les équivalences et conditions autorisées ?
+- case: Commande multi-lignes à livraison complète
+  existing: null
+  question: Deux lignes promettables à des dates différentes permettent-elles une confirmation commune ?
+- case: 'MAP : proposition d’achat, affermissement puis réception partielle'
+  existing: preorder-future-availability-path
+  question: Qui tient chaque état, et quelle quantité peut soutenir une promesse sans double compte ?
+- case: Toutes les alternatives violent une contrainte
+  existing: null
+  question: Quelle réponse négative est produite et quel fait permet un nouvel examen ?
+- case: Protections saison/canal en concurrence avec engagements fermes
+  existing: redistribute-protected-stock-path
+  question: Quelles limites sont impératives, quelles dérogations sont permises et qui les autorise ?
+stabilization_plan:
+- order: 1
+  action: Corriger les contradictions de prose et les définitions courtes sans refondre l’arbre.
+  findings:
+  - R50-01
+  - R50-02
+  - R50-03
+  - R50-04
+  - AV-04
+- order: 2
+  action: Rendre explicites les responsabilités et entrées/sorties d’Availability ; aucune nouvelle capacité par défaut.
+  findings:
+  - AV-01
+  - AV-02
+  - AV-03
+  - AV-05
+- order: 3
+  action: Confronter les cas proposés au client et décider les frontières financières.
+  findings:
+  - GEN-01
+  - GEN-02
+- order: 4
+  action: 'Renforcer les contrôles des migrations : noms et références croisés, affirmations structurelles dupliquées, réserves
+    remplacées ; l’audit montre que le validateur actuel ne suffit pas pour la prose.'
+  findings:
+  - R50-01
+  - R50-02
+  - R50-03
+  - AV-04
+remediation:
+  source_refs:
+  - U877
+  - U879
+  state: corrections_applied_to_backlog
+  closed_findings:
+  - R50-01
+  - R50-02
+  - R50-03
+  - R50-04
+  - AV-01
+  - AV-02
+  - AV-03
+  - AV-04
+  - AV-05
+  - GEN-01
+  - GEN-02
+  client_scope_questions: []
+  note: Frontières crédit et résolutions des retours appliquées U879 au backlog. Autorité commerciale d’acceptation du retour,
+    règles détaillées et contrats d’échange restent à préciser ; aucune réalisation installée présumée.

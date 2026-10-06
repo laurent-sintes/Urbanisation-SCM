@@ -1,0 +1,254 @@
+schema_version: 1.0.0
+source_refs:
+- U875
+- U876
+- U877
+status: applied
+scope: Corrections de cohérence R50 et contrats Availability ; architecture et identifiants conservés, aucune nouvelle capacité.
+changed_nodes:
+- supply-chain-orchestration
+- business-references
+- D02.c
+- D12
+- D03.i
+- D03.j
+- D03.k
+- D04.j
+- D05.f
+- plans-ingestion
+- service-order-payment-collection
+- master-data-ingestion
+- master-data-ingestion-commerce
+- master-data-ingestion-finance
+- master-data-ingestion-design
+- subdomain-integration
+- order-workflow-planning
+- ba-order-promising
+open_client_questions: []
+market_basis: Comparaisons SAP S/4HANA et Microsoft Dynamics consultées dans model-stability-audit-U875.yaml, réutilisées
+  ; correspondances partielles, sans conformité globale déduite.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U877
+  - U879
+  summary: Reference Ingestion, cohérence documentaire et contrats de promesse ; deux scénarios complémentaires.
+  required_nodes:
+  - id: supply-chain-orchestration
+    fields:
+      scope: |-
+        Le domaine réunit [Operational References](model:business-references), [Policies](model:subdomain-policies), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) et [Integration](model:subdomain-integration). [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability. Ces périmètres coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
+
+        [Integration](model:subdomain-integration) reçoit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) du domaine [Demand & Supply Planning](model:domain-plan), par [Plan Ingestion](model:plans-ingestion) ; [Plan Visibility](model:subdomain-plans) les interprète dans le contexte des demandes. [Supply Plan](glossary:TER098) porte les prévisions d’entrées ou de sorties de stock hors achats. Le [master plan de matching](glossary:TER100) est un objet distinct, construit et géré dans [Availability](glossary:TER112). Le domaine [Demand & Supply Planning](model:domain-plan) reste extérieur à l’orchestration.
+
+        [Availability](glossary:TER112) choisit les propositions de promesse et maintient leur cohérence avec les arbitrages collectifs ; [Availability](glossary:TER112) arbitre les affectations ; [Order Management](model:D04) confirme, porte et révise les engagements. [Fulfilment](glossary:TER085) cherche des solutions locales préservant promesse et grands équilibres. Les exécutants réalisent les prestations et conservent leurs opérations internes.
+
+        Les sources de vérité d’entreprise restent externes ; [Operational References](glossary:TER123) porte les références locales Supply, Policies les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
+
+        [Service Management](model:subdomain-service-orders) porte les exigences et engagements propres des prestations confiées ; [Fulfilment](glossary:TER085) les compose et les coordonne. Les familles d’ordres de services sont des capacités, comme les familles d’[Orders](glossary:TER012) entrants.
+
+        [Integration](model:subdomain-integration) porte les échanges est-ouest avec les autres domaines. Les deux Tracking, les ordres et le pilotage des exécutants gardent leurs périmètres actuels.
+  - id: business-references
+    fields:
+      scope: |-
+        Trois [Business Areas](method:MOD039) portent les références locales : [Partner & Agreement References](model:ba-partner-agreement-references), [Product References](model:ba-product-references), [Service References](model:ba-service-references). Les neuf références restent distinctes et documentaires. Ce sous-domaine porte la composition, l’actualisation et la fourniture de leurs vues utilisables, avec versions, fraîcheur, provenance, validité et incohérences connues. Leur consultation ne justifie pas des capacités autonomes.
+
+        [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+
+        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Policies](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+  - id: D02.c
+    fields:
+      scope: |-
+        Exemple fictif : Un droit exclusif sur 40 peut précéder l’affectation du lot précis.
+
+        U436 : seule la réservation bloque les usages concurrents ; l’affectation seule ne les bloque pas. Créer, conserver ou réviser un lien d’affectation ne crée donc pas implicitement une réservation. Les protections de groupe conservent leurs règles d’admissibilité, et un gel d’affectation sa restriction de modification. Création, révision, consommation, libération et expiration sont couvertes selon les conditions applicables ; aucun déclenchement automatique ni mécanisme technique de concurrence n’est déduit de cette frontière.
+
+        Appliquer les conditions de réservation rendues applicables par [Supply Protection Policy](model:D02.b). [Reservation Policy Optimization](model:D05.h) peut être mobilisée pour déterminer ou réexaminer les conditions utiles ; son résultat n’active pas à lui seul une nouvelle politique. La gestion de chaque réservation conserve sa portée propre et les engagements déjà constitués sont réexaminés selon leurs conditions, sans libération implicite au changement de politique.
+
+        [Availability](glossary:TER112) demande une réservation mais ne la possède pas. Une affectation du plan ne réserve pas implicitement la ressource (U436).
+
+        U733 : tenir création, révision, consommation, libération et expiration selon les conditions applicables ; ce sont des responsabilités communes, pas des Behaviors supplémentaires. Réservation et sortie physique ne sont pas décomptées deux fois. Les parcours rapides d’[Order Management](model:D04) peuvent solliciter cette capacité sans reconstruction systématique du plan collectif.
+
+        Une réservation peut protéger une proposition pendant son attente de confirmation si les règles l’autorisent. Sa disparition ou son expiration impose de réexaminer la disponibilité avant confirmation ; elle ne valide ni ne refuse la commande à elle seule.
+  - id: D12
+    fields:
+      scope: |-
+        L’offre de produits reçue des sources externes : produits et variantes proposés, présentation et conditions commerciales de référence, notamment clientèles, zones ou périodes lorsque ces informations sont fournies.
+
+        [Product Reference](model:D08) porte l’identité du produit. [Assortment](model:D16) porte une sélection affectée à des magasins, canaux ou clients sur une période. Un catalogue peut lui aussi cibler une clientèle : c’est leur fonction qui distingue ces notions, pas la présence d’un seul attribut.
+
+        [Agreement](model:D11) porte les conditions et engagements convenus entre parties. Le catalogue ne prouve ni qu’un article est sélectionné pour tous les magasins ni qu’il est disponible en stock. L’administration commerciale demeure externe à la Supply.
+
+        Les tarifs des produits sont portés par [Product Price Book](model:product-price-book). Les tarifs des prestations relèvent de [Service Price Book](model:service-price-book). Le catalogue conserve les liens tarifaires fournis ; il ne devient pas une seconde tenue indépendante des mêmes tarifs.
+
+        Les offres, produits, périodes, clientèles et zones reçus restent consultables. La consultation ne compose pas l’offre et ne décide pas de l’offre ou du prix applicable à une commande. La référence locale conserve versions, validité, provenance et incohérences connues sous la responsabilité d’[Operational References](model:business-references).
+  - id: D03.i
+    fields:
+      scope: |-
+        Évaluer le stock courant admissible avec On-Hand [ATP](glossary:TER044), puis les disponibilités futures avec Projected [ATP](glossary:TER044) lorsque l’horizon le nécessite. Les deux profondeurs s’appliquent à un lieu ou à un réseau selon le périmètre autorisé.
+
+        Exigences communes : engagements, réservations et protections sans double décompte ; délais de mobilisation, préparation et transport ; calendriers, jours ouvrés, heures limites et fuseaux. Conserver origine, fraîcheur et validité des informations. Un stock après la dernière collecte ne permet pas un départ immédiat ; une donnée manquante ne devient pas certaine.
+
+        Consommer les faits et projections d’Inventory Visibility et les plans pertinents. Éviter le double compte entre prévisions, [Orders](glossary:TER012) et effets réalisés. Une réception à J+7 peut soutenir une promesse à J+60 sous réserve des autres consommations et contraintes. Les protections et droits admissibles restent applicables aux membres autorisés de leurs groupes.
+
+        La décision de promesse ne modifie pas les politiques, ne réserve ni n’affecte et ne confirme pas la promesse. Les exécutants gardent leurs calendriers et opérations internes.
+
+        Choisir une première proposition ou réexaminer une promesse existante lorsque les disponibilités, la demande ou les priorités changent. Expliciter quantités, dates, conditions, hypothèses et part non couverte ; distinguer date demandée, proposée et confirmée, expédition et réception. Les calendriers, fermetures, heures limites et fuseaux proviennent de leurs responsables. Les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068) se composent selon le besoin pour produire une proposition cohérente, sans séquence universelle ni trois réponses finales concurrentes. Si leurs résultats sont incompatibles, réexaminer les options ou expliciter la part non couverte. Respecter les protections et engagements lors du réexamen, y compris collectif : maintenir, reporter ou mettre en attente une demande reste soumis aux règles et autorisations. [Supply Assignment](glossary:TER017) conserve les arbitrages d’affectation dans le [master plan de matching](glossary:TER100). [Order Management](model:D04) porte la confirmation et les révisions autorisées ; aucune proposition ne confirme, ne réserve, ne réaffecte ou ne déclenche un achat automatiquement. Toute promesse ne nécessite pas un nouveau plan et tout changement d’état ne déclenche pas un recalcul. Proposer 60 pièces vendredi et 40 lundi ne crée pas deux commandes : [Order Structuring](model:D04.n) conserve cette responsabilité. [Service Selection Decision](model:D06.e) peut adapter les prestations sans modifier la promesse.
+
+        Un [Planned Purchase Order](glossary:TER033) reçu ne constitue pas à lui seul un apport ferme. Qualifier sa version, sa date, sa quantité et les conditions restant à confirmer. Une entrée planifiée n’est retenue que selon les règles d’admissibilité ; si sa faisabilité reste à établir, mobiliser [CTP](glossary:TER045). À l’affermissement, remplacer la contribution planifiée par celle de l’achat confirmé, avec sa filiation, sans double compte.
+
+        Évaluer aussi la cohérence de la commande entière : une possibilité par ligne ne prouve pas que toutes les lignes peuvent être servies ensemble. Respecter les dépendances entre lignes, la livraison complète ou partielle autorisée et les dates communes attendues. Présenter une proposition cohérente ou expliquer l’impossibilité ; aucun fractionnement de commande n’est implicite. [Order Structuring](model:D04.n) porte les restructurations autorisées.
+
+        Chaque proposition indique les hypothèses et conditions qui la rendent encore valable au moment de la confirmation. Si la ressource, la date ou une condition change pendant l’attente, réévaluer avant de confirmer. Une proposition ne protège aucune quantité par elle-même : une [réservation](model:D02.c), lorsqu’elle est requise et autorisée, possède ses propres conditions de libération ou d’expiration. Aucun délai fixe de validité n’est imposé.
+
+        L’absence de solution admissible est un résultat explicite : quantité non couverte, contrainte bloquante, options écartées et raison de leur rejet, information manquante éventuelle et condition de réexamen. Une information insuffisante ne prouve pas une impossibilité physique. Transmettre ce résultat à [Order Management](model:D04) pour maintenir la demande en attente, proposer une révision ou constater un refus selon les règles ; ne pas confirmer une promesse infaisable.
+  - id: D03.j
+    fields:
+      definition: Choisir une possibilité de promesse en vérifiant la faisabilité d’un apport à obtenir ou à constituer, selon
+        les matières, les capacités et les délais nécessaires.
+      scope: |-
+        Choisir une possibilité de promesse conditionnelle à partir de la faisabilité établie. Le contrôle peut porter sur des capacités déjà existantes ; obtenir un nouvel apport n’impose pas de créer de nouveaux moyens.
+
+        Supply-Based [CTP](glossary:TER045) examine la possibilité d’obtenir ou de constituer un apport selon les sources, matières, composants et délais. Capacity-Constrained [CTP](glossary:TER045) approfondit la faisabilité par les capacités finies, charges, calendriers et dépendances pertinentes. Les capacités contrôlées peuvent déjà exister ; elles ne sont pas nécessairement supplémentaires.
+
+        Une ressource déjà attendue et admissible relève d’[ATP](glossary:TER044). Une simple alternative de stock, de date, de trajet ou de produit ne constitue pas automatiquement du [CTP](glossary:TER045) ; la substitution exige une équivalence autorisée. Une estimation par délai standard ou une disponibilité supposée infinie ne démontre pas une faisabilité contrôlée.
+
+        [Availability](glossary:TER112) propose et arbitre les apports et affectations dans le master plan ; [Purchase Order](glossary:TER070) porte l’achat autorisé et les [Service Orders](glossary:TER066) les prestations. [CTP](glossary:TER045) ne crée ni achat, ni affectation, ni engagement et ne reconstruit pas les plans prévisionnels externes. Les conditions restant à vérifier et les autorisations restant à obtenir accompagnent le résultat.
+
+        Illustration FLOW : un assemblage peut être réalisable au regard des composants, mais son créneau dépend encore d’une capacité d’atelier confirmée. Les prestations logistiques nécessaires peuvent être examinées à partir des capacités communiquées, sans piloter l’organisation interne de l’exécutant.
+
+        Choisir une première proposition ou réexaminer une promesse existante lorsque les disponibilités, la demande ou les priorités changent. Expliciter quantités, dates, conditions, hypothèses et part non couverte ; distinguer date demandée, proposée et confirmée, expédition et réception. Les calendriers, fermetures, heures limites et fuseaux proviennent de leurs responsables. Les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068) se composent selon le besoin pour produire une proposition cohérente, sans séquence universelle ni trois réponses finales concurrentes. Si leurs résultats sont incompatibles, réexaminer les options ou expliciter la part non couverte. Respecter les protections et engagements lors du réexamen, y compris collectif : maintenir, reporter ou mettre en attente une demande reste soumis aux règles et autorisations. [Supply Assignment](glossary:TER017) conserve les arbitrages d’affectation dans le [master plan de matching](glossary:TER100). [Order Management](model:D04) porte la confirmation et les révisions autorisées ; aucune proposition ne confirme, ne réserve, ne réaffecte ou ne déclenche un achat automatiquement. Toute promesse ne nécessite pas un nouveau plan et tout changement d’état ne déclenche pas un recalcul. Proposer 60 pièces vendredi et 40 lundi ne crée pas deux commandes : [Order Structuring](model:D04.n) conserve cette responsabilité. [Service Selection Decision](model:D06.e) peut adapter les prestations sans modifier la promesse.
+
+        Évaluer aussi la cohérence de la commande entière : une possibilité par ligne ne prouve pas que toutes les lignes peuvent être servies ensemble. Respecter les dépendances entre lignes, la livraison complète ou partielle autorisée et les dates communes attendues. Présenter une proposition cohérente ou expliquer l’impossibilité ; aucun fractionnement de commande n’est implicite. [Order Structuring](model:D04.n) porte les restructurations autorisées.
+
+        Chaque proposition indique les hypothèses et conditions qui la rendent encore valable au moment de la confirmation. Si la ressource, la date ou une condition change pendant l’attente, réévaluer avant de confirmer. Une proposition ne protège aucune quantité par elle-même : une [réservation](model:D02.c), lorsqu’elle est requise et autorisée, possède ses propres conditions de libération ou d’expiration. Aucun délai fixe de validité n’est imposé.
+
+        L’absence de solution admissible est un résultat explicite : quantité non couverte, contrainte bloquante, options écartées et raison de leur rejet, information manquante éventuelle et condition de réexamen. Une information insuffisante ne prouve pas une impossibilité physique. Transmettre ce résultat à [Order Management](model:D04) pour maintenir la demande en attente, proposer une révision ou constater un refus selon les règles ; ne pas confirmer une promesse infaisable.
+  - id: D03.k
+    fields:
+      scope: |-
+        Comparer les coûts et conséquences économiques des possibilités [ATP](glossary:TER044) et [CTP](glossary:TER045) : transport, préparation, fractionnement, substitution ou adaptation. Les données tarifaires viennent de [Price Book](glossary:TER097) et des accords applicables, sans transfert de maîtrise commerciale ou comptable. Distinguer contraintes impératives et préférences ; une valeur absente ne vaut pas zéro.
+
+        Choisir une option admissible et expliquer le compromis retenu, les hypothèses et les incertitudes. Aucun objectif de marge, poids économique universel ou primauté du coût sur le service n’est implicite. [Supply Assignment](glossary:TER017) conserve le choix des affectations collectives. La décision de promesse ne modifie pas les prix confirmés et ne déclenche pas de prestation.
+
+        Exemple fictif : comparer une livraison accélérée à 120 et deux livraisons à 80. Retenir la seconde option seulement si les dates, le fractionnement et les règles de service l’autorisent ; sinon choisir une autre option admissible ou expliciter l’absence de solution.
+
+        Fulfilment Cost Evaluation chiffre les postes comparables ; Contextual Economic Impact Evaluation complète le dossier par les conséquences locales utiles. Ces dimensions alimentent la décision [PTP](glossary:TER068).
+
+        Choisir une première proposition ou réexaminer une promesse existante lorsque les disponibilités, la demande ou les priorités changent. Expliciter quantités, dates, conditions, hypothèses et part non couverte ; distinguer date demandée, proposée et confirmée, expédition et réception. Les calendriers, fermetures, heures limites et fuseaux proviennent de leurs responsables. Les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068) se composent selon le besoin pour produire une proposition cohérente, sans séquence universelle ni trois réponses finales concurrentes. Si leurs résultats sont incompatibles, réexaminer les options ou expliciter la part non couverte. Respecter les protections et engagements lors du réexamen, y compris collectif : maintenir, reporter ou mettre en attente une demande reste soumis aux règles et autorisations. [Supply Assignment](glossary:TER017) conserve les arbitrages d’affectation dans le [master plan de matching](glossary:TER100). [Order Management](model:D04) porte la confirmation et les révisions autorisées ; aucune proposition ne confirme, ne réserve, ne réaffecte ou ne déclenche un achat automatiquement. Toute promesse ne nécessite pas un nouveau plan et tout changement d’état ne déclenche pas un recalcul. Proposer 60 pièces vendredi et 40 lundi ne crée pas deux commandes : [Order Structuring](model:D04.n) conserve cette responsabilité. [Service Selection Decision](model:D06.e) peut adapter les prestations sans modifier la promesse.
+
+        Évaluer aussi la cohérence de la commande entière : une possibilité par ligne ne prouve pas que toutes les lignes peuvent être servies ensemble. Respecter les dépendances entre lignes, la livraison complète ou partielle autorisée et les dates communes attendues. Présenter une proposition cohérente ou expliquer l’impossibilité ; aucun fractionnement de commande n’est implicite. [Order Structuring](model:D04.n) porte les restructurations autorisées.
+
+        Chaque proposition indique les hypothèses et conditions qui la rendent encore valable au moment de la confirmation. Si la ressource, la date ou une condition change pendant l’attente, réévaluer avant de confirmer. Une proposition ne protège aucune quantité par elle-même : une [réservation](model:D02.c), lorsqu’elle est requise et autorisée, possède ses propres conditions de libération ou d’expiration. Aucun délai fixe de validité n’est imposé.
+
+        L’absence de solution admissible est un résultat explicite : quantité non couverte, contrainte bloquante, options écartées et raison de leur rejet, information manquante éventuelle et condition de réexamen. Une information insuffisante ne prouve pas une impossibilité physique. Transmettre ce résultat à [Order Management](model:D04) pour maintenir la demande en attente, proposer une révision ou constater un refus selon les règles ; ne pas confirmer une promesse infaisable.
+
+        Construire les options de produit, site, date et prestation à partir des possibilités connues et autorisées. Une substitution exige une équivalence et une autorisation provenant du responsable commercial ; ni le stock disponible ni un meilleur coût ne les créent. [ATP](glossary:TER044) évalue les ressources admissibles, [CTP](glossary:TER045) la faisabilité d’un apport et [PTP](glossary:TER068) les compromis économiques. [Service Selection Decision](model:D06.e) choisit les prestations dans le respect de la promesse. Ces décisions composent une proposition, sans capacité de sélection supplémentaire.
+  - id: D04.j
+    fields:
+      scope: |-
+        Tenir articles ou prestations, quantités et unités, dates, conditions, confirmations et changements d’un achat. Le [Purchase Order](glossary:TER070) est le document métier structuré de commande ; son édition datée, le [Purchase Order Document](glossary:TER086), en représente une version. Ni l’un ni l’autre ne désigne la capacité qui gère l’achat. Achat pour le réseau, livraison directe au client, achat de service et confirmation fournisseur constituent des axes combinables.
+
+        Stock Procurement approvisionne les stocks du réseau ; Direct Delivery Procurement fait livrer le client directement. Une prestation peut être achetée sans créer un mouvement de stock. Le contrat est négocié hors de cette capacité ; réception, transport, facturation et paiement gardent leurs responsabilités. Une prestation confiée ne justifie pas systématiquement un achat.
+
+        Rapprocher les résultats pour tenir le reste à satisfaire. Exemples fictifs : 60 pièces reçues sur 100 commandées, ou 30 heures réalisées sur 50 achetées. La confirmation du fournisseur peut porter sur une partie : 60 pièces vendredi et 40 mardi au lieu de 100 vendredi. Tenir réponse, acceptation ou rejet et conséquences autorisées. Rejeter une réponse ne restaure pas une capacité ; l’accepter ne confirme pas automatiquement la promesse client.
+
+        La consignation ne constitue pas un comportement d’achat supplémentaire. Un achat peut intervenir lors du changement de propriété selon les conditions applicables. Les retours au fournisseur relèvent de [Supplier Return Order](model:D04.m).
+
+        Appliquer le [cycle commun d’Order Management](model:D04) : préparation, révisions, affermissement, protections, autorisation, suspension et reprise, annulation, clôture et conservation. Distinguer demande, proposition, confirmation et réalisé ; rendre le solde consultable dans [Order Visibility](model:order-visibility). Ces dimensions ne créent pas de nouveaux comportements propres à chaque achat.
+
+        [Planned Purchase Order](glossary:TER033) est une proposition d’approvisionnement issue du planning, distincte du [Purchase Order](glossary:TER070) produit à l’affermissement. Conserver les liens de provenance, quantités et échéances entre ces deux objets, sans imposer une identité commune ni un lien un-à-un : plusieurs propositions peuvent être regroupées. La confirmation fournisseur reste une étape distincte. Ne pas compter le même apport comme proposition encore active et comme commande résultante. Ce découpage d’objets ne crée pas deux capacités ; le calcul amont reste sous l’autorité de [Demand & Supply Planning](model:domain-plan).
+
+        Laurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’affermissement ; elle ne garantit pas une identité technique commune.
+
+        La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer.
+
+        Les [Planned Purchase Orders](glossary:TER033) reçus par [Plan Ingestion](model:plans-ingestion) restent des propositions identifiées avant affermissement. Conserver la correspondance entre proposition et achat affermi pour remplacer la couverture planifiée, sans compter les deux comme deux apports. La planification externe reste responsable du calcul de la proposition ; sa prise en compte conditionnelle par [Availability](glossary:TER112) ne vaut pas autorisation d’achat.
+  - id: D05.f
+    fields:
+      definition: Construire, maintenir et réviser le [Matching Master Plan](glossary:TER100), plan interne qui met en cohérence
+        les besoins, les ressources admissibles et leurs affectations, sans remplacer la planification externe.
+  - id: plans-ingestion
+    fields:
+      definition: Recevoir et intégrer les [Supply Plans](glossary:TER098), les [Demand Plans](glossary:TER099) et les [Planned
+        Purchase Orders](glossary:TER033) externes, en préservant leur nature, leurs versions et leur origine, sans les recalculer
+        ni les affermir.
+      scope: |-
+        Une capacité commune reçoit les [Supply Plans](glossary:TER098), les [Demand Plans](glossary:TER099) et les propositions d’achat planifiées, en conservant leur distinction. Reconnaître les nouvelles versions, corrections et rejets ; rapprocher les données de leurs références locales sans calculer les prévisions. Le domaine [Demand & Supply Planning](model:domain-plan) est extérieur à Supply Chain Orchestration et représenté sans décomposition interne. Une projection révisée ne modifie ni un [Order](glossary:TER012) ni un mouvement constaté. Exemple fictif : une prévision d’entrée hors achat passe de 100 à 80 pièces ; intégrer la révision sans enregistrer une réception.
+
+        Cette capacité appartient à [Integration](model:subdomain-integration), Business Area [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+
+        Recevoir aussi les [Planned Purchase Orders](glossary:TER033) transmis par la planification, notamment MAP, avec leur identité, leur version, leurs quantités, dates et statut de proposition. Ce sont des propositions d’achat distinctes des [Supply Plans](glossary:TER098) hors achats. Leur réception ne les affermit pas et ne crée pas une réception physique. [Purchase Order](model:D04.j) conserve leur filiation avec l’achat affermi ; [Availability](glossary:TER112) explicite si et sous quelles conditions cet apport encore planifié peut contribuer à une promesse.
+  - id: service-order-payment-collection
+    fields:
+      definition: Assurer les encaissements et remboursements clients associés aux flux, suivre les montants restant à traiter
+        et les résultats, paiements partiels ou refus.
+  - id: master-data-ingestion
+    fields:
+      name: Reference Ingestion
+      scope: |-
+        Recevoir les apports sourcés, vérifier leur identité, leur portée et leur validité connues, intégrer les versions ou corrections prises en compte et conserver le résultat de cette intégration. Commerce, Finance et Design sont les domaines fournisseurs identifiés ; leurs contrats détaillés ne se déduisent pas de leurs noms.
+
+        Les sujets de référence restent distincts. Les produits et partenaires sont décrits dans : [Product Reference](glossary:TER052) (produits et variantes), Party / Role (personnes, relations et rôles), [Agreement](glossary:TER048) (conditions contractuelles). Les offres et moyens sont décrits dans : [Product Catalog](glossary:TER049) (offres et éligibilité), [Fulfilment Network](glossary:TER054) (lieux et relations), [Service Catalog](glossary:TER094) (prestations de référence), [Assortment](glossary:TER087) (sélections et périodes) [Product Price Book](model:product-price-book) (tarifs produits) et [Service Price Book](model:service-price-book) (tarifs de services). Un sujet peut recevoir plusieurs contributions et un domaine en fournir plusieurs.
+
+        L’ingestion reconnaît les apports et leur prise en compte ; [Operational References](model:business-references) porte la composition et le maintien de la vue locale utilisable de chaque sujet, avec fraîcheur, provenance et incohérences connues. Une donnée reçue mais rejetée ou en attente ne devient pas une référence applicable. Le domaine tient la source de vérité locale Supply ; il ne négocie pas les accords, ne conçoit pas commercialement les offres et ne corrige pas silencieusement les maîtres d’entreprise.
+
+        Les références peuvent être liées sans fusionner leurs autorités : produit dans plusieurs catalogues, assortiment référencé par un accord, offre associée à des tarifs. Le tarif reste dans [Price Book](glossary:TER097) ; son évolution ne modifie pas automatiquement le prix ou le [SLA](glossary:TER076) d’un engagement existant. La consultation du catalogue de services ne remplace pas la captation des faits d’exécution.
+
+        Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
+
+        Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+
+        Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
+  - id: master-data-ingestion-commerce
+    fields: {}
+  - id: master-data-ingestion-finance
+    fields: {}
+  - id: master-data-ingestion-design
+    fields: {}
+  - id: subdomain-integration
+    fields:
+      scope: |-
+        Recevoir les apports des autres domaines et leur fournir les informations opérationnelles convenues. Inbound regroupe [Reference Ingestion](model:master-data-ingestion) et [Plan Ingestion](model:plans-ingestion). Outbound regroupe [Accounting Data Provision](model:accounting-data-provision), [Planning Data Provision](model:planning-data-provision) et [Product Feedback](model:product-feedback). Les catégories ne créent pas de niveau hiérarchique.
+
+        Les échanges sont est-ouest entre domaines. Les appels aux exécutants, leurs retours et leur pilotage restent dans les capacités opérationnelles ; [Inventory Tracking](model:D01.f) et [Operations Tracking](model:D07.d) conservent leur rattachement. Les registres et vues gardent leur responsabilité. La préparation conserve sens, provenance, dates, corrections et conditions d’accès ; aucune plateforme ni centralisation organisationnelle n’est imposée.
+
+        Exemple fictif : une réception corrigée de 100 à 80 pièces fournit un [fait de gestion](glossary:TER120) correctif à Finance et une position révisée à la planification, selon deux contrats distincts.
+  - id: order-workflow-planning
+    fields:
+      definition: Construire ou adapter le parcours de traitement d’une [commande](glossary:TER012) à partir des activités
+        disponibles, de son contexte et des règles applicables, en organisant les attentes et les décisions nécessaires.
+  - id: ba-order-promising
+    fields:
+      scope: |-
+        Proposer ne confirme pas un engagement de commande.
+
+        Bénéficiaire et résultat : Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
+
+        Exemple fictif : Proposer 60 pièces vendredi et 40 lundi ; la proposition ne devient un engagement que lors de sa confirmation dans la commande.
+
+        Construire les options de produit, site, date et prestation à partir des possibilités connues et autorisées. Une substitution exige une équivalence et une autorisation provenant du responsable commercial ; ni le stock disponible ni un meilleur coût ne les créent. [ATP](glossary:TER044) évalue les ressources admissibles, [CTP](glossary:TER045) la faisabilité d’un apport et [PTP](glossary:TER068) les compromis économiques. [Service Selection Decision](model:D06.e) choisit les prestations dans le respect de la promesse. Ces décisions composent une proposition, sans capacité de sélection supplémentaire.
+  required_catalog:
+  - collection: paths
+    id: last-item-concurrency-path
+    content_sha256: 28d1d9357a2c2269c95968023578bb92600040ea8fb195c4364841b07e4ab9c5
+  - collection: paths
+    id: substitution-price-service-path
+    content_sha256: 3c3dd19287febc43f18615fa28e59ee2d88ff3070ed67e82e5e1252fe3820cec
+  - collection: paths
+    id: preorder-future-availability-path
+    content_sha256: 8da919d3cef4931033abebde64cd13f4176b01f8063f3d516c2356f0bddbf5fd
+  - collection: paths
+    id: complete-order-multiline-path
+    content_sha256: 9fea6f29f718736ff15cb2b2fa3a52f09d856149bf5a78d6458dd6574f2e65e9
+  - collection: paths
+    id: no-admissible-promise-path
+    content_sha256: 46b0026e4e70980253bfb42283a9e881a45fcbeb041454b2d486948c32934ec0
+  - collection: scenarios
+    id: complete-order-multiline
+    content_sha256: 0b7809c71d371da795402e80e5e10819e77b2c115ba773282fdf70c4b9d5b327
+  - collection: scenarios
+    id: no-admissible-promise
+    content_sha256: cf42171b897b03c60577698bdf20e58c4e3c533c4fa2fc91658993863b520357
+scope_followup: 'GEN-01 et GEN-02 : frontières appliquées sous U879 ; règles détaillées et autorité commerciale du retour
+  restent à préciser.'

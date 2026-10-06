@@ -71,11 +71,15 @@ class BusinessAreaTests(unittest.TestCase):
         retirement = read(root/'modeles/backlog/visibility-scope-U858.yaml')
         nodes = {n['id']:n for n in m['nodes']}
         caps = {i for i,n in nodes.items() if n['kind']=='capability'}
-        # U846 remains the historical mapping; U858 explicitly retires eight members.
+        # Preserve the historical mapping; each later retirement must be explicit.
         initial_caps = {r['capability_id'] for r in plan['capability_mapping']}
         retired = set(retirement['retirement']['nodes'])
         self.assertEqual(len(initial_caps),81)
         self.assertEqual(len(retired),8)
+        services = read(root/'modeles/backlog/service-management-U874.yaml')
+        service_retirements = set(services['retirement']['node_ids'])
+        self.assertEqual(service_retirements, {'service-order-document-production'})
+        retired.update(service_retirements)
         self.assertLessEqual(retired, initial_caps)
         self.assertEqual(initial_caps - retired, caps)
         self.assertTrue(retired.isdisjoint(nodes))

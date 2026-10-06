@@ -225,10 +225,14 @@ publication_delivery:
   - U858
   - U863
   - U865
+  - U874
+  - U877
   summary: 'Huit capacités de consultation retirées ; huit références préservées ; deux capacités de plan contextualisées
     ; liens et scénarios adaptés. U863 : contrôles adaptés aux trois Areas et à la séparation des tarifs produit/service ;
     preuves historiques conservées. U863 : liens tarifaires des parcours répartis entre produits et prestations. U865 : Plan
-    Visibility dans Availability, Inventory State Management et précommandes ; contrôles courants alignés.'
+    Visibility dans Availability, Inventory State Management et précommandes ; contrôles courants alignés. U874 : services
+    financiers portés par FLOW et retrait de Document Production Order ; attentes courantes alignées, preuves historiques
+    conservées.'
   absent_nodes:
   - D08.e
   - D09.e
@@ -269,7 +273,7 @@ publication_delivery:
       scope: |-
         Trois [Business Areas](method:MOD039) portent les références locales : [Partner & Agreement References](model:ba-partner-agreement-references), [Product References](model:ba-product-references), [Service References](model:ba-service-references). Les neuf références restent distinctes et documentaires. Ce sous-domaine porte la composition, l’actualisation et la fourniture de leurs vues utilisables, avec versions, fraîcheur, provenance, validité et incohérences connues. Leur consultation ne justifie pas des capacités autonomes.
 
-        [Master Data Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+        [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
         Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Policies](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
   - id: plans-visibility
@@ -302,10 +306,10 @@ publication_delivery:
     content_sha256: b0a41f20dfc70a7f5f9e6b61b18ac21251569958f653c3d40fb5bfd9e55b4c8f
   - collection: paths
     id: export-remote-services-path
-    content_sha256: a2cb0f13eea3640b0e0b77f51ff5af85d3166df4ae5cad7d114ddb3215f7b31b
+    content_sha256: 2cfd2f2e1b279d63acffe34d8e9b97e5a02c9c98a00449966bc906df45b92c98
   - collection: paths
     id: substitution-price-service-path
-    content_sha256: 06d862d8970af3b9411d045cfe57acb845513c58b4d5f6e7b3655f1716f9f67e
+    content_sha256: 3c3dd19287febc43f18615fa28e59ee2d88ff3070ed67e82e5e1252fe3820cec
   - collection: paths
     id: reference-plan-correction-path
     content_sha256: 9188d729d092b1d2fc820673beb9a648f41da6c30e30f467e9aa4a9a372205f4

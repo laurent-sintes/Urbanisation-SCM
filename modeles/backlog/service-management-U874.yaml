@@ -1,0 +1,57 @@
+schema_version: 1.0.0
+source_refs:
+- U872
+- U873
+- U874
+status: applied
+scope: Lot cumulatif validé U874 ; noms, services financiers portés, Orders logistiques documentaires, retrait sans remplacement
+  de Document Production Order. Les nouvelles descriptions restent proposées.
+retirement:
+  node_ids:
+  - service-order-document-production
+  relation_ids:
+  - REL-U709-CONTAINS-service-order-document-production
+  history: R49 / 2026-10-06.6 / Git 303a25d
+  no_identifier_reuse: true
+changed_nodes:
+- supply-chain-orchestration
+- D14
+- D07.a
+- D07.c
+- D04
+- D06
+- D06.d
+- subdomain-service-orders
+- service-order-transport-booking
+- service-order-customs-clearance
+- service-order-billing
+- service-order-payment-collection
+- operations-visibility
+- ba-financial-service-order-management
+document_requirements: Exigences conservées dans D07.a, les commandes de transport et dédouanement et le parcours export-remote-services-path
+  ; facture rattachée à Billing.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U874
+  summary: Service Management et Financial Services ; Billing et Payment ; retrait de Document Production Order sans perte
+    des exigences documentaires.
+  required_nodes:
+  - id: subdomain-service-orders
+    fields:
+      name: Service Management
+  - id: ba-financial-service-order-management
+    fields:
+      name: Financial Services
+  - id: service-order-billing
+    fields:
+      name: Billing
+  - id: service-order-payment-collection
+    fields:
+      name: Payment
+  absent_nodes:
+  - service-order-document-production
+  required_catalog:
+  - collection: paths
+    id: export-remote-services-path
+    content_sha256: 2cfd2f2e1b279d63acffe34d8e9b97e5a02c9c98a00449966bc906df45b92c98

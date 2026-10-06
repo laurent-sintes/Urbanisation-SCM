@@ -1886,8 +1886,11 @@ publication_delivery:
   - U771
   - U835
   - U861
+  - U874
   summary: 'Audit lexical appliqué : glossaire et frontières cohérents, appuis marché explicités, Receiving Order et scénario
-    ajoutés. U861 : commandes passives et pilotage par les tâches du workflow explicités ; identités et rattachements conservés.'
+    ajoutés. U861 : commandes passives et pilotage par les tâches du workflow explicités ; identités et rattachements conservés.
+    U874 : services financiers portés par FLOW et retrait de Document Production Order ; attentes courantes alignées, preuves
+    historiques conservées.'
   required_nodes:
   - id: D02.e
     fields:
@@ -1950,9 +1953,9 @@ publication_delivery:
 
         Fournir les écarts aux [Orders](glossary:TER012) et les faits à Inventory ; ne pas tenir à leur place le reliquat commande ou le stock.
 
-        Fournir les faits ou écarts qualifiés à [Service Order Management](model:subdomain-service-orders) pour les suites des ordres de prestation ; ne pas dupliquer la tenue de leurs engagements individuels.
+        Fournir les faits ou écarts qualifiés à [Service Management](model:subdomain-service-orders) pour les suites des ordres de prestation ; ne pas dupliquer la tenue de leurs engagements individuels.
 
-        Pour une prestation d’encaissement, rapprocher la demande du résultat métier communiqué par le service financier : montant confirmé, partiel, rejeté ou non encore qualifié. Ce contrôle du résultat confié ne certifie ni écriture comptable, ni règlement bancaire, ni affectation à une créance. Une notification dupliquée ne produit pas un second résultat.
+        Pour [Payment](glossary:TER154), rapprocher le résultat attendu des faits communiqués par les composants financiers : montant confirmé, partiel, rejeté ou non encore qualifié. Ce contrôle du résultat attendu ne certifie ni écriture comptable, ni règlement bancaire, ni affectation à une créance. Une notification dupliquée ne produit pas un second résultat.
   - id: D06.d
     fields:
       definition: Coordonner le déclenchement, les dépendances et la progression des prestations jusqu’aux résultats attendus,
@@ -1970,7 +1973,7 @@ publication_delivery:
 
         Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Availability](glossary:TER112).
 
-        [Service Order Management](model:subdomain-service-orders) tient le cycle et les engagements des ordres de prestation. L’orchestration utilise leurs réponses et coordonne les conditions d’activation et dépendances ; elle ne recrée pas leur cycle.
+        [Service Management](model:subdomain-service-orders) tient le cycle et les engagements des ordres de prestation. L’orchestration utilise leurs réponses et coordonne les conditions d’activation et dépendances ; elle ne recrée pas leur cycle.
 
         U706/U709 : Coordonner aussi les prestations exécutées à distance : solliciter le service, attendre son résultat métier et poursuivre le flux selon ce résultat. Une acceptation du déclenchement ne vaut pas réalisation.
 

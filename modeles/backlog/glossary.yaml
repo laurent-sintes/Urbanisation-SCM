@@ -32,6 +32,8 @@ source_refs:
 - U626
 - U780
 - U794
+- U877
+- U879
 terms:
 - id: TER001
   name: Capacité métier
@@ -1157,11 +1159,14 @@ terms:
     - U853
 - id: TER012
   name: Commande
-  short_description: Acte ou document métier formalisant une instruction commerciale ou opérationnelle et ses conditions.
-  definition: Acte ou document métier formalisant une instruction commerciale ou opérationnelle et ses conditions.
-  context: Notion locale en cours de consolidation ; consulter les sources et les réserves.
-  notes: 'Qualifier commande client, commande fournisseur ou ordre opérationnel. L’enregistrement ne garantit pas confirmation,
-    réservation ou exécution. Q052 reste ouverte : aucun objet universel Demande n’est adopté. N3/N4.'
+  short_description: Document métier formalisant une commande à une organisation exécutante.
+  definition: Document métier structuré qui formalise une commande adressée à une organisation exécutante, avec ses conditions
+    et son état.
+  context: Dans le vocabulaire FLOW retenu U874, un Order porte identité, contenu, destinataire, engagements et état. Il peut
+    être échangé sous forme de données structurées ; il ne se réduit pas à un fichier imprimable. Un appel technique ou un
+    service interne ne crée pas automatiquement un Order. Les usages natifs des éditeurs peuvent être plus larges.
+  notes: U874 précise la convention FLOW et la responsabilité de service ; les termes natifs des sources peuvent avoir un
+    autre périmètre.
   source_refs:
   - U203
   - U477
@@ -1169,6 +1174,7 @@ terms:
   - U774
   - CMP307
   - ELM789
+  - U874
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -1190,7 +1196,8 @@ terms:
     relationship: Recouvrement partiel
     similarities: Order formalise un achat de biens ou services.
     differences: UBL vise les échanges acheteur–vendeur, pas tous les ordres opérationnels.
-    flow_position: Préciser la famille et ses effets, sans supposer confirmation ni exécution à l’enregistrement.
+    flow_position: Document métier structuré qui formalise une commande adressée à une organisation exécutante, avec ses conditions
+      et son état.
     status: proposed
     source_refs:
     - U477
@@ -1199,6 +1206,7 @@ terms:
     concept_name: Order
     scope_summary: Document d’instruction commerciale.
     approach_summary: Exprimer la commande entre parties.
+    term_choice: 'Commande : convention FLOW, sans équivalence universelle avec les termes natifs.'
   - vendor: Microsoft
     product: Intelligent Order Management
     source_title: Integrate transfer orders
@@ -1212,7 +1220,8 @@ terms:
     relationship: Recouvrement partiel
     similarities: Transfer Order formalise un déplacement demandé.
     differences: Il ne constitue pas nécessairement une vente ou un achat entre deux parties commerciales.
-    flow_position: Préciser la famille et ses effets, sans supposer confirmation ni exécution à l’enregistrement.
+    flow_position: Document métier structuré qui formalise une commande adressée à une organisation exécutante, avec ses conditions
+      et son état.
     status: proposed
     source_refs:
     - U477
@@ -1221,6 +1230,7 @@ terms:
     concept_name: Transfer order
     scope_summary: Déplacement entre dépôts avec dates et quantités.
     approach_summary: Suivre départs, réceptions et liens avec les ventes.
+    term_choice: 'Commande : convention FLOW, sans équivalence universelle avec les termes natifs.'
   - vendor: SAP
     product: SAP S/4HANA — périmètre du cours cité
     element_name: Executing Sales Order Management
@@ -1235,8 +1245,8 @@ terms:
       poursuivent son exécution.
     differences: La structure du document SAP éclaire l’engagement, sans imposer le cycle applicatif ou l’organisation ERP
       à FLOW.
-    flow_position: FLOW conserve le périmètre métier de Commande. La structure du document SAP éclaire l’engagement, sans
-      imposer le cycle applicatif ou l’organisation ERP à FLOW.
+    flow_position: Document métier structuré qui formalise une commande adressée à une organisation exécutante, avec ses conditions
+      et son état.
     source_title: Executing Sales Order Management
     source_url: https://learning.sap.com/courses/executing-basic-erp-processes-with-sap-s-4hana/executing-sales-order-management
     source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -1250,16 +1260,18 @@ terms:
     - U774
     - CMP307
     - ELM789
-    term_choice: Le nom Commande reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement cette appellation
-      ni sa maille.
+    term_choice: 'Commande : convention FLOW, sans équivalence universelle avec les termes natifs.'
     definition_choice: 'Le sales order porte les articles, quantités, dates et conditions convenus ; la livraison et la facturation
       poursuivent son exécution. Frontière conservée : La structure du document SAP éclaire l’engagement, sans imposer le
       cycle applicatif ou l’organisation ERP à FLOW.'
   market_inspiration:
     choice: 'Formaliser une instruction et ses conditions pour pouvoir la suivre. Commande doit être qualifiée par son contexte
       : client, achat ou ordre de déplacement, par exemple.'
-    flow_scope: Acte ou document exprimant une instruction commerciale ou opérationnelle.
-    flow_approach: Préciser la famille et ses effets, sans supposer confirmation ni exécution à l’enregistrement.
+    flow_scope: Document métier structuré qui formalise une commande adressée à une organisation exécutante, avec ses conditions
+      et son état.
+    flow_approach: Dans le vocabulaire FLOW retenu U874, un Order porte identité, contenu, destinataire, engagements et état.
+      Il peut être échangé sous forme de données structurées ; il ne se réduit pas à un fichier imprimable. Un appel technique
+      ou un service interne ne crée pas automatiquement un Order. Les usages natifs des éditeurs peuvent être plus larges.
     synthesis:
     - OASIS donne à Order un sens commercial d’échange ; Microsoft emploie Transfer Order pour un déplacement entre dépôts.
       Le mot Order ne suffit donc pas à déterminer la relation métier.
@@ -3590,7 +3602,7 @@ terms:
 
     Laurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’affermissement ; elle ne garantit pas une identité technique commune.
 
-    La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer.
+    La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer. Recevoir aussi les [Planned Purchase Orders](glossary:TER033) transmis par la planification, notamment MAP, avec leur identité, leur version, leurs quantités, dates et statut de proposition. Ce sont des propositions d’achat distinctes des [Supply Plans](glossary:TER098) hors achats. Leur réception ne les affermit pas et ne crée pas une réception physique. [Purchase Order](model:D04.j) conserve leur filiation avec l’achat affermi ; [Availability](glossary:TER112) explicite si et sous quelles conditions cet apport encore planifié peut contribuer à une promesse.
   notes: Laurent confirme en U871 que MAP envoie des Planned Purchase Orders. Cet apport précise le témoignage initial U48
     et remplace la réserve de correspondance formulée par Codex U868–U870. Planned Purchase Order et Purchase Order restent
     deux objets reliés par l’affermissement ; la conservation d’identité U867 concerne Sales Order au statut Preorder.
@@ -3606,12 +3618,13 @@ terms:
   - U869
   - U870
   - U871
+  - U877
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
   review:
-    state: under_review
-    note: Reprise documentaire ; aucune validation supplémentaire par la migration.
+    state: proposed
+    note: Corrections du lot U877 appliquées ; les formulations détaillées restent proposées, sans extension des accords historiques.
   market_comparisons:
   - vendor: Microsoft
     product: Planning Optimization
@@ -3704,6 +3717,8 @@ terms:
     - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
     source_refs:
     - U853
+  revision: 1
+  last_modified: '2026-10-06T00:00:00Z'
 - id: TER034
   name: OMS — sens fonctionnel du projet
   short_description: Prise en charge des parcours liés à la vente, en coopération avec la Supply.
@@ -7003,7 +7018,7 @@ terms:
     flow_scope: Périmètre d’actions explicitement décrit.
     flow_approach: Décomposer seulement lorsque des responsabilités distinctes le justifient.
     synthesis:
-    - IBM utilise Order Management pour un cycle étendu de commande. TM Forum emploie Service Order Management pour des actions
+    - IBM utilise Order Management pour un cycle étendu de commande. TM Forum emploie Service Management pour des actions
       définies sur les demandes de service. Le même mot management peut donc couvrir des ensembles très différents.
     - FLOW traite Gérer comme une convention de lecture, pas comme une capacité suffisante en soi. Le nom ne permet pas de
       déduire création, décision, validation, exécution ou administration sans description du périmètre.
@@ -7119,9 +7134,20 @@ terms:
   name: Available-to-Promise — ATP
   short_description: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
   definition: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
-  context: Dans FLOW, cette capacité est une décision du groupe Order Promising, au sein d’[Availability](glossary:TER112).
+  context: 'Dans FLOW, cette capacité est une décision du groupe Order Promising, au sein d’[Availability](glossary:TER112).
     Elle inclut les calculs utiles, le choix initial et le réexamen. Les [Orders](glossary:TER012) portent les engagements
-    confirmés ; aucune réservation, affectation ou commande d’achat n’est créée automatiquement.
+    confirmés ; aucune réservation, affectation ou commande d’achat n’est créée automatiquement. Évaluer aussi la cohérence
+    de la commande entière : une possibilité par ligne ne prouve pas que toutes les lignes peuvent être servies ensemble.
+    Respecter les dépendances entre lignes, la livraison complète ou partielle autorisée et les dates communes attendues.
+    Présenter une proposition cohérente ou expliquer l’impossibilité ; aucun fractionnement de commande n’est implicite. [Order
+    Structuring](model:D04.n) porte les restructurations autorisées. Chaque proposition indique les hypothèses et conditions
+    qui la rendent encore valable au moment de la confirmation. Si la ressource, la date ou une condition change pendant l’attente,
+    réévaluer avant de confirmer. Une proposition ne protège aucune quantité par elle-même : une [réservation](model:D02.c),
+    lorsqu’elle est requise et autorisée, possède ses propres conditions de libération ou d’expiration. Aucun délai fixe de
+    validité n’est imposé. L’absence de solution admissible est un résultat explicite : quantité non couverte, contrainte
+    bloquante, options écartées et raison de leur rejet, information manquante éventuelle et condition de réexamen. Une information
+    insuffisante ne prouve pas une impossibilité physique. Transmettre ce résultat à [Order Management](model:D04) pour maintenir
+    la demande en attente, proposer une révision ou constater un refus selon les règles ; ne pas confirmer une promesse infaisable.'
   notes: U835 intègre le choix de proposition à la capacité. Les périmètres natifs des éditeurs restent explicités dans les
     comparaisons ; ils ne définissent pas une taxonomie universelle. Les variantes descriptives existantes sont conservées.
   source_refs:
@@ -7137,12 +7163,13 @@ terms:
   - CMP307
   - ELM783
   - U835
+  - U877
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
   review:
     state: proposed
-    note: Définition alignée sur les formulations validées U835 ; contexte et notes de mise en œuvre proposés.
+    note: Corrections du lot U877 appliquées ; les formulations détaillées restent proposées, sans extension des accords historiques.
   previous_definition: Quantité non engagée disponible pour soutenir une promesse à un horizon donné, dans le périmètre et
     selon les règles considérés. Son calcul et son contrôle contribuent à évaluer une possibilité de fourniture.
   previous_notes_U260: Actualisé selon le modèle courant ; formulation détaillée proposée et périmètre local, pas une définition
@@ -7277,15 +7304,28 @@ terms:
       - U477
       - ELM434
       - CMP191
+  revision: 1
+  last_modified: '2026-10-06T00:00:00Z'
 - id: TER045
   name: Capable-to-Promise — CTP
-  short_description: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en
-    explicitant les conditions de faisabilité.
-  definition: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en explicitant
-    les conditions de faisabilité.
-  context: Dans FLOW, cette capacité est une décision du groupe Order Promising, au sein d’[Availability](glossary:TER112).
+  short_description: Choisir une possibilité de promesse en vérifiant la faisabilité d’un apport à obtenir ou à constituer,
+    selon les matières, les capacités et les délais nécessaires.
+  definition: Choisir une possibilité de promesse en vérifiant la faisabilité d’un apport à obtenir ou à constituer, selon
+    les matières, les capacités et les délais nécessaires.
+  context: 'Dans FLOW, cette capacité est une décision du groupe Order Promising, au sein d’[Availability](glossary:TER112).
     Elle inclut les calculs utiles, le choix initial et le réexamen. Les [Orders](glossary:TER012) portent les engagements
-    confirmés ; aucune réservation, affectation ou commande d’achat n’est créée automatiquement.
+    confirmés ; aucune réservation, affectation ou commande d’achat n’est créée automatiquement. Évaluer aussi la cohérence
+    de la commande entière : une possibilité par ligne ne prouve pas que toutes les lignes peuvent être servies ensemble.
+    Respecter les dépendances entre lignes, la livraison complète ou partielle autorisée et les dates communes attendues.
+    Présenter une proposition cohérente ou expliquer l’impossibilité ; aucun fractionnement de commande n’est implicite. [Order
+    Structuring](model:D04.n) porte les restructurations autorisées. Chaque proposition indique les hypothèses et conditions
+    qui la rendent encore valable au moment de la confirmation. Si la ressource, la date ou une condition change pendant l’attente,
+    réévaluer avant de confirmer. Une proposition ne protège aucune quantité par elle-même : une [réservation](model:D02.c),
+    lorsqu’elle est requise et autorisée, possède ses propres conditions de libération ou d’expiration. Aucun délai fixe de
+    validité n’est imposé. L’absence de solution admissible est un résultat explicite : quantité non couverte, contrainte
+    bloquante, options écartées et raison de leur rejet, information manquante éventuelle et condition de réexamen. Une information
+    insuffisante ne prouve pas une impossibilité physique. Transmettre ce résultat à [Order Management](model:D04) pour maintenir
+    la demande en attente, proposer une révision ou constater un refus selon les règles ; ne pas confirmer une promesse infaisable.'
   notes: U835 intègre le choix de proposition à la capacité. Les périmètres natifs des éditeurs restent explicités dans les
     comparaisons ; ils ne définissent pas une taxonomie universelle. Les variantes descriptives existantes sont conservées.
   source_refs:
@@ -7300,12 +7340,13 @@ terms:
   - CMP306
   - U797
   - U835
+  - U877
   source_locator:
     path: connaissance/33-frontieres-ctp.md
     anchor: ctp
   review:
     state: proposed
-    note: Définition alignée sur les formulations validées U835 ; contexte et notes de mise en œuvre proposés.
+    note: Corrections du lot U877 appliquées ; les formulations détaillées restent proposées, sans extension des accords historiques.
   previous_definition: Raisonnement de faisabilité de promesse prenant en compte les moyens nécessaires pour rendre une fourniture
     disponible, au-delà des ressources déjà présentes ou attendues mobilisables.
   market_comparisons:
@@ -7317,8 +7358,9 @@ terms:
     relationship: Recouvrement partiel
     similarities: CTP tient compte des matières et capacités pour établir une date réaliste.
     differences: FLOW sépare la décision de proposition de son engagement et du déclenchement des moyens.
-    flow_position: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en
-      explicitant les conditions de faisabilité.
+    flow_position: Choisir une possibilité de promesse en vérifiant la faisabilité d’un apport à obtenir ou à constituer,
+      selon les matières, les capacités et les délais nécessaires. Rapprochement partiel ; le périmètre natif de l’éditeur
+      reste celui décrit par la source.
     scope_summary: CTP tient compte des matières et capacités pour établir une date réaliste.
     approach_summary: CTP tient compte des matières et capacités pour établir une date réaliste.
     source_title: Calculate sales order delivery dates using CTP
@@ -7345,8 +7387,9 @@ terms:
     similarities: Les contrôles de disponibilité et alternatives éclairent les réponses possibles à une demande.
     differences: 'Appui voisin, partiel : ces alternatives ne prouvent pas un CTP avec contrôle des capacités de production.
       Aucune équivalence CTP SAP S/4HANA complète établie dans ce lot.'
-    flow_position: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en
-      explicitant les conditions de faisabilité.
+    flow_position: Choisir une possibilité de promesse en vérifiant la faisabilité d’un apport à obtenir ou à constituer,
+      selon les matières, les capacités et les délais nécessaires. Rapprochement partiel ; le périmètre natif de l’éditeur
+      reste celui décrit par la source.
     scope_summary: Les contrôles de disponibilité et alternatives éclairent les réponses possibles à une demande.
     approach_summary: Les contrôles de disponibilité et alternatives éclairent les réponses possibles à une demande.
     source_title: Using Advanced Available-To-Promise (aATP) in SAP S/4HANA
@@ -7368,10 +7411,10 @@ terms:
   market_inspiration:
     choice: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en explicitant
       les conditions de faisabilité.
-    flow_scope: Déterminer une possibilité de satisfaction nécessitant des ressources ou capacités supplémentaires, en explicitant
-      les conditions de faisabilité.
-    flow_approach: Calculer, comparer et choisir dans le périmètre spécialisé ; expliciter les conditions et réexaminer les
-      propositions sans modifier automatiquement les engagements.
+    flow_scope: Choisir une possibilité de promesse en vérifiant la faisabilité d’un apport à obtenir ou à constituer, selon
+      les matières, les capacités et les délais nécessaires.
+    flow_approach: Choisir une possibilité de promesse en vérifiant la faisabilité d’un apport à obtenir ou à constituer,
+      selon les matières, les capacités et les délais nécessaires.
     synthesis:
     - La décision inclut ses évaluations et calculs. Les correspondances éditeurs sont partielles ; aucun ordre ATP–CTP–PTP
       ou objectif économique universel n’est imposé.
@@ -7386,14 +7429,18 @@ terms:
       - U477
       - ELM417
       - CMP191
+  revision: 1
+  last_modified: '2026-10-06T00:00:00Z'
 - id: TER046
   name: Party
   short_description: Personne physique ou morale identifiée, à laquelle les accords et opérations Supply rattachent des rôles,
     des droits ou des obligations métier.
   definition: Personne physique ou morale identifiée, à laquelle les accords et opérations Supply rattachent des rôles, des
     droits ou des obligations métier.
-  context: Une même Party peut être fournisseur dans un accord et cliente dans un autre. Son identité reste commune aux deux
-    contextes.
+  context: |-
+    Une même Party peut être fournisseur dans un accord et cliente dans un autre. Son identité reste commune aux deux contextes.
+
+    Le profil de [crédit client](glossary:TER155) reçu du contrôle de gestion comprend le classement de risque et la limite autorisée, avec leur périmètre, version et validité. Ce profil n’est ni calculé ni révisé financièrement par cette référence. Un classement ne prouve pas qu’une commande est autorisée : l’encours pertinent ou le résultat du contrôle doit provenir de l’autorité financière compétente.
   notes: Périmètre FLOW précisé U505. Party est plus large dans certains modèles du marché ; il peut y inclure des organisations
     sans personnalité juridique. L’identité et les qualifications sont reçues des maîtres externes. Person seul n’est pas
     adopté comme remplacement anglais.
@@ -7408,13 +7455,13 @@ terms:
   - CMP307
   - ELM063
   - ELM804
+  - U879
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
   review:
-    state: under_review
-    note: Reprise éditoriale U505/U506 autour des personnes et rôles contractuels ; rédaction proposée, sans nouvel accord
-      global.
+    state: proposed
+    note: Lot U879 appliqué ; rédaction détaillée proposée, accords explicites capturés séparément.
   market_comparisons:
   - vendor: SAP
     product: S/4HANA — Financial Accounting
@@ -7529,10 +7576,76 @@ terms:
     definition_choice: 'Le carnet d’adresses identifie personnes et organisations avec plusieurs rôles et adresses. Frontière
       conservée : Appui à l’identité commune et aux rôles ; la gouvernance locale Supply n’est pas la maîtrise globale du
       carnet d’adresses de l’entreprise.'
+  - vendor: Microsoft
+    product: Dynamics 365 Finance
+    source_title: Credit holds for sales orders
+    source_url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-sales-order-credit-holds
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Contrôles de crédit et données client
+    element_name: Credit management
+    concept_name: Credit management
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Règles de blocage par client/groupe, groupe de risque et utilisation de limite ; séparation des données
+      client et de la décision sur commande.
+    approach_summary: Règles de blocage par client/groupe, groupe de risque et utilisation de limite ; séparation des données
+      client et de la décision sur commande.
+    similarities: Règles de blocage par client/groupe, groupe de risque et utilisation de limite ; séparation des données
+      client et de la décision sur commande.
+    differences: Ne prescrit pas l’organisation du contrôle de gestion ni le découpage FLOW.
+    evidence_limits: Ne prescrit pas l’organisation du contrôle de gestion ni le découpage FLOW. Aucun déploiement Beaumanoir
+      déduit.
+    flow_position: 'Le profil de [crédit client](glossary:TER155) reçu du contrôle de gestion comprend le classement de risque
+      et la limite autorisée, avec leur périmètre, version et validité. Ce profil n’est ni calculé ni révisé financièrement
+      par cette référence. Un classement ne prouve pas qu’une commande est autorisée : l’encours pertinent ou le résultat
+      du contrôle doit provenir de l’autorité financière compétente.'
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: 'Le profil de [crédit client](glossary:TER155) reçu du contrôle de gestion comprend le classement de
+      risque et la limite autorisée, avec leur périmètre, version et validité. Ce profil n’est ni calculé ni révisé financièrement
+      par cette référence. Un classement ne prouve pas qu’une commande est autorisée : l’encours pertinent ou le résultat
+      du contrôle doit provenir de l’autorité financière compétente.'
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  - vendor: SAP
+    product: SAP S/4HANA
+    source_title: Working with SAP Credit Management
+    source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/working-with-sap-credit-management_d6b177ee-a8bb-4b77-80dc-87c04a9dd3f1
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Contrôles de crédit et données client
+    element_name: Credit management
+    concept_name: Credit management
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Classe de risque et limite du Business Partner utilisées par la gestion du crédit.
+    approach_summary: Classe de risque et limite du Business Partner utilisées par la gestion du crédit.
+    similarities: Classe de risque et limite du Business Partner utilisées par la gestion du crédit.
+    differences: SAP Credit Management couvre plus que les références reçues par FLOW.
+    evidence_limits: SAP Credit Management couvre plus que les références reçues par FLOW. Aucun déploiement Beaumanoir déduit.
+    flow_position: 'Le profil de [crédit client](glossary:TER155) reçu du contrôle de gestion comprend le classement de risque
+      et la limite autorisée, avec leur périmètre, version et validité. Ce profil n’est ni calculé ni révisé financièrement
+      par cette référence. Un classement ne prouve pas qu’une commande est autorisée : l’encours pertinent ou le résultat
+      du contrôle doit provenir de l’autorité financière compétente.'
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: 'Le profil de [crédit client](glossary:TER155) reçu du contrôle de gestion comprend le classement de
+      risque et la limite autorisée, avec leur périmètre, version et validité. Ce profil n’est ni calculé ni révisé financièrement
+      par cette référence. Un classement ne prouve pas qu’une commande est autorisée : l’encours pertinent ou le résultat
+      du contrôle doit provenir de l’autorité financière compétente.'
+    status: proposed
+    source_refs:
+    - U878
+    - U879
   market_inspiration:
     choice: Identifier la personne indépendamment des rôles qu’elle joue.
-    flow_scope: Personnes physiques et morales impliquées dans les accords et processus Supply.
-    flow_approach: Relier identité et contexte sans les confondre.
+    flow_scope: Personne physique ou morale identifiée, à laquelle les accords et opérations Supply rattachent des rôles,
+      des droits ou des obligations métier.
+    flow_approach: |-
+      Une même Party peut être fournisseur dans un accord et cliente dans un autre. Son identité reste commune aux deux contextes.
+
+      Le profil de [crédit client](glossary:TER155) reçu du contrôle de gestion comprend le classement de risque et la limite autorisée, avec leur périmètre, version et validité. Ce profil n’est ni calculé ni révisé financièrement par cette référence. Un classement ne prouve pas qu’une commande est autorisée : l’encours pertinent ou le résultat du contrôle doit provenir de l’autorité financière compétente.
     synthesis:
     - SAP partage l’identité entre plusieurs rôles métier. OMG distingue l’acteur du rôle qu’il joue ; sa notion de Party
       est plus large que notre périmètre des personnes physiques et morales.
@@ -7549,6 +7662,7 @@ terms:
       - U505
       - ELM500
       - CMP203
+  revision: 1
 - id: TER047
   name: Role
   short_description: Qualité dans laquelle une personne intervient dans une relation, un accord ou une opération, par exemple
@@ -7720,8 +7834,10 @@ terms:
     ou en valeur. Sa projection dans la plateforme conserve les identifiants Party et [Product Catalog](glossary:TER049) ;
     les commandes restent distinctes et en consomment les conditions. Il peut référencer ou figer un [assortiment](glossary:TER087)
     convenu, sans que tout assortiment dépende d’un accord.'
-  context: L’accord porte ce qui est convenu entre parties ; l’assortiment précise une sélection de produits et son affectation.
-    Leur lien est explicite lorsque cette sélection est convenue.
+  context: |-
+    L’accord porte ce qui est convenu entre parties ; l’assortiment précise une sélection de produits et son affectation. Leur lien est explicite lorsque cette sélection est convenue.
+
+    Les conditions de paiement et garanties réellement convenues sont des conditions de l’accord. Une limite de [crédit client](glossary:TER155) décidée unilatéralement et une règle générale de blocage ne deviennent pas des clauses contractuelles par leur réception. Le profil du client relève de [Party / Role](model:D09) ; les règles externes restent identifiées dans [Partner & Agreement References](model:ba-partner-agreement-references).
   notes: Actualisé selon le modèle courant ; formulation détaillée proposée et périmètre local, pas une définition éditeur
     universelle.
   source_refs:
@@ -7738,12 +7854,13 @@ terms:
   - ELM819
   - U797
   - U853
+  - U879
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
   review:
-    state: under_review
-    note: Reprise documentaire ; aucune validation supplémentaire par la migration.
+    state: proposed
+    note: Lot U879 appliqué ; rédaction détaillée proposée, accords explicites capturés séparément.
   previous_definition: Contrat de référence client ou fournisseur indiquant le ou les catalogues permettant de commander,
     le Party concerné et les conditions particulières utiles pour honorer la promesse d’une commande.
   market_comparisons:
@@ -7826,16 +7943,57 @@ terms:
     definition_choice: 'Les accords de service définissent travaux, période de validité et modalités de déclenchement. Frontière
       conservée : Les SLA et accords FLOW couvrent plusieurs prestations ; les paramètres d’un service agreement ne démontrent
       pas tous les engagements de performance.'
+  - vendor: Microsoft
+    product: Dynamics 365 Finance
+    source_title: Credit holds for sales orders
+    source_url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-sales-order-credit-holds
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Contrôles de crédit et données client
+    element_name: Credit management
+    concept_name: Credit management
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Règles de blocage par client/groupe, groupe de risque et utilisation de limite ; séparation des données
+      client et de la décision sur commande.
+    approach_summary: Règles de blocage par client/groupe, groupe de risque et utilisation de limite ; séparation des données
+      client et de la décision sur commande.
+    similarities: Règles de blocage par client/groupe, groupe de risque et utilisation de limite ; séparation des données
+      client et de la décision sur commande.
+    differences: Ne prescrit pas l’organisation du contrôle de gestion ni le découpage FLOW.
+    evidence_limits: Ne prescrit pas l’organisation du contrôle de gestion ni le découpage FLOW. Aucun déploiement Beaumanoir
+      déduit.
+    flow_position: Les conditions de paiement et garanties réellement convenues sont des conditions de l’accord. Une limite
+      de [crédit client](glossary:TER155) décidée unilatéralement et une règle générale de blocage ne deviennent pas des clauses
+      contractuelles par leur réception. Le profil du client relève de [Party / Role](model:D09) ; les règles externes restent
+      identifiées dans [Partner & Agreement References](model:ba-partner-agreement-references).
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: Les conditions de paiement et garanties réellement convenues sont des conditions de l’accord. Une limite
+      de [crédit client](glossary:TER155) décidée unilatéralement et une règle générale de blocage ne deviennent pas des clauses
+      contractuelles par leur réception. Le profil du client relève de [Party / Role](model:D09) ; les règles externes restent
+      identifiées dans [Partner & Agreement References](model:ba-partner-agreement-references).
+    status: proposed
+    source_refs:
+    - U878
+    - U879
   market_inspiration:
     choice: Conserver les conditions et engagements applicables entre parties. Agreement désigne le contrat complet projeté
       dans FLOW, distinct des commandes qui l’utilisent.
-    flow_scope: Cadre, conditions particulières, périodes et engagements.
-    flow_approach: Garder le contrat et ses consommations identifiables.
+    flow_scope: 'Contrat complet applicable entre parties : cadre, conditions particulières, périodes et engagements en quantité
+      ou en valeur. Sa projection dans la plateforme conserve les identifiants Party et [Product Catalog](glossary:TER049)
+      ; les commandes restent distinctes et en consomment les conditions. Il peut référencer ou figer un [assortiment](glossary:TER087)
+      convenu, sans que tout assortiment dépende d’un accord.'
+    flow_approach: |-
+      L’accord porte ce qui est convenu entre parties ; l’assortiment précise une sélection de produits et son affectation. Leur lien est explicite lorsque cette sélection est convenue.
+
+      Les conditions de paiement et garanties réellement convenues sont des conditions de l’accord. Une limite de [crédit client](glossary:TER155) décidée unilatéralement et une règle générale de blocage ne deviennent pas des clauses contractuelles par leur réception. Le profil du client relève de [Party / Role](model:D09) ; les règles externes restent identifiées dans [Partner & Agreement References](model:ba-partner-agreement-references).
     synthesis:
     - Microsoft Purchase Agreement décrit des engagements consommés par des commandes. Oracle distingue le contrat de l’accord
       d’achat créé à partir de celui-ci. Les mots se rapprochent, mais leur place dans le produit n’est pas identique.
     - 'FLOW adopte un sens explicite : la projection du contrat complet. L’accord ne se réduit ni au prix, ni à une seule
       demande, et sa gestion maîtresse reste externe.'
+    - 'U879 : les sources de crédit de credit-return-boundaries-U878.yaml étayent la facette ajoutée ; elles ne closent pas
+      les lacunes marché du périmètre complet de cette fiche.'
     examples:
     - title: Illustration FLOW — contrat et commandes
       situation: Un engagement sur une période est utilisé par plusieurs commandes successives.
@@ -7855,6 +8013,7 @@ terms:
     - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
     source_refs:
     - U853
+  revision: 1
 - id: TER049
   name: Product Catalog
   short_description: Catalogue des offres de produits, avec leurs conditions et leurs publics concernés.
@@ -7999,9 +8158,9 @@ terms:
   definition: Aptitude à recevoir les informations de référence et leurs évolutions pour les rendre utilisables dans les opérations,
     en conservant les liens et identifiants du maître externe.
   context: |-
-    Exemple : recevoir une variante de produit créée dans le référentiel maître, avec son identifiant, sa taille et sa couleur. Une correction est reçue depuis cette même autorité ; la Supply ne modifie pas le maître à sa place. Master Data Ingestion est rattachée à Integration, catégorie Inbound ; les références et leurs vues restent dans Operational References.
+    Exemple : recevoir une variante de produit créée dans le référentiel maître, avec son identifiant, sa taille et sa couleur. Une correction est reçue depuis cette même autorité ; la Supply ne modifie pas le maître à sa place. Reference Ingestion est rattachée à Integration, catégorie Inbound ; les références et leurs vues restent dans Operational References.
 
-    L’ingestion reconnaît les apports et leur prise en compte ; [Operational References](model:business-references) conserve la responsabilité des vues locales utilisables. Aucune capacité de consultation par référence ne s’interpose.
+    L’ingestion reconnaît les apports et leur prise en compte ; [Operational References](model:business-references) conserve la responsabilité des vues locales utilisables. Aucune capacité de consultation par référence ne s’interpose. Les références locales comprennent deux périmètres tarifaires distincts : [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book). [Reference Ingestion](model:master-data-ingestion) les reçoit sans déplacer leur autorité métier.
   notes: L’autorité sur les références reste externe à Supply. Recevoir leurs évolutions ne transfère pas la responsabilité
     de créer, corriger ou supprimer les maîtres.
   source_refs:
@@ -8014,12 +8173,13 @@ terms:
   - ELM063
   - ELM281
   - U858
+  - U877
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
   review:
-    state: under_review
-    note: Reprise documentaire ; aucune validation supplémentaire par la migration.
+    state: proposed
+    note: Corrections du lot U877 appliquées ; les formulations détaillées restent proposées, sans extension des accords historiques.
   market_comparisons:
   - vendor: Oracle
     product: Fusion Cloud Product Hub
@@ -8135,6 +8295,8 @@ terms:
       - U477
       - ELM445
       - CMP193
+  revision: 1
+  last_modified: '2026-10-06T00:00:00Z'
 - id: TER051
   name: Movement Authorization
   short_description: Autorisation métier de déplacer une marchandise dans un périmètre et sous des conditions, dont un document
@@ -10036,13 +10198,12 @@ terms:
     - U853
 - id: TER066
   name: Service Order
-  short_description: Commande de prestation portant demande, état et résultat ; son suivi est piloté par les tâches du workflow.
-  definition: Commande passive d’un [Service](glossary:TER075) confié à un [Service Provider](glossary:TER088), portant exigences,
-    engagements, état et résultat. Les [Tasks](glossary:TER089) du workflow pilotent son suivi.
-  context: |-
-    Supply Chain Orchestration ; distinguer intention, engagement, pilotage, résultat et document. [Scrapping Order](glossary:TER104) porte aussi une prestation identifiable de mise au rebut, distincte de la décision de disposition et du résultat inscrit dans le stock.
-
-    Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+  short_description: Commande documentaire d’une prestation à une organisation exécutante.
+  definition: Document métier qui commande un [Service](glossary:TER075) à une organisation exécutante et porte exigences,
+    engagements, état et résultat.
+  context: Les commandes logistiques sont des Service Orders. [Billing](glossary:TER153) et [Payment](glossary:TER154) sont
+    des services portés par FLOW, sans Order financier artificiel. Les [Tasks](glossary:TER089) pilotent les sollicitations
+    et les attentes ; le document ne décide pas lui-même de la suite.
   source_refs:
   - U169
   - U203
@@ -10070,6 +10231,7 @@ terms:
   - U853
   - U859
   - U861
+  - U874
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -10085,9 +10247,8 @@ terms:
     similarities: Le composant reçoit les Service Orders et orchestre leur fourniture, en utilisant notamment le catalogue.
     differences: TM Forum et Oracle distinguent demande de prestation et réalisation ; FLOW ne réduit plus Service Order à
       un document facultatif. Les cycles et canaux natifs ne sont pas transposés.
-    flow_position: Demande de [Service](glossary:TER075) confiée à un [Service Provider](glossary:TER088), tenue avec ses
-      exigences, les conditions acceptées, ses évolutions et ses suites dans Service Order Management. Sa formalisation documentaire
-      et son canal d’échange sont distincts de l’engagement de prestation.
+    flow_position: Document métier qui commande un [Service](glossary:TER075) à une organisation exécutante et porte exigences,
+      engagements, état et résultat.
     source_title: Service Order Management
     source_url: https://www.tmforum.org/oda/directory/components-map/production/TMFC007
     source_version: TMFC007 2.0.0 ; date affichée 2024-02-23
@@ -10103,12 +10264,12 @@ terms:
     concept_name: TMFC007
     scope_summary: Le composant reçoit les Service Orders et orchestre leur fourniture, en utilisant notamment le catalogue.
     approach_summary: Demande de [Service](glossary:TER075) confiée à un [Service Provider](glossary:TER088), tenue avec ses
-      exigences, les conditions acceptées, ses évolutions et ses suites dans Service Order Management. Sa formalisation documentaire
+      exigences, les conditions acceptées, ses évolutions et ses suites dans Service Management. Sa formalisation documentaire
       et son canal d’échange sont distincts de l’engagement de prestation.
-    term_choice: 'Service Order : nom FLOW ; le terme natif et son périmètre restent ceux de la source.'
+    term_choice: 'Service Order : convention FLOW, sans équivalence universelle avec les termes natifs.'
     definition_choice: Demande de [Service](glossary:TER075) confiée à un [Service Provider](glossary:TER088), tenue avec
-      ses exigences, les conditions acceptées, ses évolutions et ses suites dans Service Order Management. Sa formalisation
-      documentaire et son canal d’échange sont distincts de l’engagement de prestation.
+      ses exigences, les conditions acceptées, ses évolutions et ses suites dans Service Management. Sa formalisation documentaire
+      et son canal d’échange sont distincts de l’engagement de prestation.
   - vendor: Oracle
     product: Shipment Request and Shipment Confirmation Processes for External Systems Integration
     element_name: Shipment Request / Shipment Confirmation
@@ -10117,9 +10278,8 @@ terms:
     similarities: Une demande au WMS ou 3PL est suivie du pick, pack et ship, puis d’une confirmation de réalisation.
     differences: TM Forum et Oracle distinguent demande de prestation et réalisation ; FLOW ne réduit plus Service Order à
       un document facultatif. Les cycles et canaux natifs ne sont pas transposés.
-    flow_position: Demande de [Service](glossary:TER075) confiée à un [Service Provider](glossary:TER088), tenue avec ses
-      exigences, les conditions acceptées, ses évolutions et ses suites dans Service Order Management. Sa formalisation documentaire
-      et son canal d’échange sont distincts de l’engagement de prestation.
+    flow_position: Document métier qui commande un [Service](glossary:TER075) à une organisation exécutante et porte exigences,
+      engagements, état et résultat.
     source_title: Shipment Request and Shipment Confirmation Processes for External Systems Integration
     source_url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/faims/shipment-request-and-shipment-confirmation-processes-for.html
     source_version: Fusion Cloud SCM 25D
@@ -10134,12 +10294,12 @@ terms:
     concept_name: Shipment Request / Shipment Confirmation
     scope_summary: Une demande au WMS ou 3PL est suivie du pick, pack et ship, puis d’une confirmation de réalisation.
     approach_summary: Demande de [Service](glossary:TER075) confiée à un [Service Provider](glossary:TER088), tenue avec ses
-      exigences, les conditions acceptées, ses évolutions et ses suites dans Service Order Management. Sa formalisation documentaire
+      exigences, les conditions acceptées, ses évolutions et ses suites dans Service Management. Sa formalisation documentaire
       et son canal d’échange sont distincts de l’engagement de prestation.
-    term_choice: 'Service Order : nom FLOW ; le terme natif et son périmètre restent ceux de la source.'
+    term_choice: 'Service Order : convention FLOW, sans équivalence universelle avec les termes natifs.'
     definition_choice: Demande de [Service](glossary:TER075) confiée à un [Service Provider](glossary:TER088), tenue avec
-      ses exigences, les conditions acceptées, ses évolutions et ses suites dans Service Order Management. Sa formalisation
-      documentaire et son canal d’échange sont distincts de l’engagement de prestation.
+      ses exigences, les conditions acceptées, ses évolutions et ses suites dans Service Management. Sa formalisation documentaire
+      et son canal d’échange sont distincts de l’engagement de prestation.
   - vendor: SAP
     product: SAP S/4HANA — périmètre du cours cité
     element_name: 'Working with Service Order Management: External Service Processin'
@@ -10152,8 +10312,8 @@ terms:
     similarities: Un service externe est demandé, acheté, puis rapproché d’une entrée de service acceptée.
     differences: FLOW distingue exigence de prestation, engagement d’achat et rapprochement opérationnel ; l’entrée de service
       SAP ne couvre pas tous les faits attendus d’une prestation logistique.
-    flow_position: FLOW conserve le périmètre métier de Service Order. FLOW distingue exigence de prestation, engagement d’achat
-      et rapprochement opérationnel ; l’entrée de service SAP ne couvre pas tous les faits attendus d’une prestation logistique.
+    flow_position: Document métier qui commande un [Service](glossary:TER075) à une organisation exécutante et porte exigences,
+      engagements, état et résultat.
     source_title: 'Working with Service Order Management: External Service Processin'
     source_url: https://learning.sap.com/courses/identifying-business-processes-in-sap-s4hana-service/working-with-service-order-management-external-service-processing_ca8699f0-3870-43c2-bb6e-4c68bddda055
     source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -10167,20 +10327,18 @@ terms:
     - U774
     - CMP307
     - ELM814
-    term_choice: Le nom Service Order reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement cette
-      appellation ni sa maille.
+    term_choice: 'Service Order : convention FLOW, sans équivalence universelle avec les termes natifs.'
     definition_choice: 'Un service externe est demandé, acheté, puis rapproché d’une entrée de service acceptée. Frontière
       conservée : FLOW distingue exigence de prestation, engagement d’achat et rapprochement opérationnel ; l’entrée de service
       SAP ne couvre pas tous les faits attendus d’une prestation logistique.'
   market_inspiration:
     choice: Document métier qui formalise et qualifie une demande de [Service](glossary:TER075) adressée à un [Service Provider](glossary:TER088),
       lorsqu’une telle formalisation est nécessaire.
-    flow_scope: Demande de [Service](glossary:TER075) confiée à un [Service Provider](glossary:TER088), tenue avec ses exigences,
-      les conditions acceptées, ses évolutions et ses suites dans Service Order Management. Sa formalisation documentaire
-      et son canal d’échange sont distincts de l’engagement de prestation.
-    flow_approach: Demande de [Service](glossary:TER075) confiée à un [Service Provider](glossary:TER088), tenue avec ses
-      exigences, les conditions acceptées, ses évolutions et ses suites dans Service Order Management. Sa formalisation documentaire
-      et son canal d’échange sont distincts de l’engagement de prestation.
+    flow_scope: Document métier qui commande un [Service](glossary:TER075) à une organisation exécutante et porte exigences,
+      engagements, état et résultat.
+    flow_approach: Les commandes logistiques sont des Service Orders. [Billing](glossary:TER153) et [Payment](glossary:TER154)
+      sont des services portés par FLOW, sans Order financier artificiel. Les [Tasks](glossary:TER089) pilotent les sollicitations
+      et les attentes ; le document ne décide pas lui-même de la suite.
     synthesis:
     - Demande, contribution au processus, engagement, réalisation et document restent distincts.
     examples:
@@ -10196,9 +10354,8 @@ terms:
       source_url: https://tmf-open-api-table-documents.s3.eu-west-1.amazonaws.com/Historic/TMF641_Service_Ordering/3.0.0/user_guides/TMF641_Service_Ordering_Management_API_user_guides_18.5.1.pdf
       source_refs:
       - U626
-  notes: '[Order](glossary:TER012) Management porte la demande à satisfaire ; Service Order Management tient la prestation
-    confiée ; [Fulfilment](glossary:TER085) coordonne sa réalisation. Un acquittement technique ne prouve ni acceptation métier
-    ni réalisation physique. Un ordre peut regrouper plusieurs prestations ; aucune cardinalité universelle imposée.'
+  notes: U874 précise la convention FLOW et la responsabilité de service ; les termes natifs des sources peuvent avoir un
+    autre périmètre.
   market_gaps:
   - family: microsoft_dynamics
     reason: La comparaison existante ne comporte pas encore de source primaire de ce produit justifiant précisément le sens
@@ -10213,9 +10370,20 @@ terms:
     service et des règles applicables.
   definition: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de service
     et des règles applicables.
-  context: Dans FLOW, cette capacité est une décision du groupe Order Promising, au sein d’[Availability](glossary:TER112).
+  context: 'Dans FLOW, cette capacité est une décision du groupe Order Promising, au sein d’[Availability](glossary:TER112).
     Elle inclut les calculs utiles, le choix initial et le réexamen. Les [Orders](glossary:TER012) portent les engagements
-    confirmés ; aucune réservation, affectation ou commande d’achat n’est créée automatiquement.
+    confirmés ; aucune réservation, affectation ou commande d’achat n’est créée automatiquement. Évaluer aussi la cohérence
+    de la commande entière : une possibilité par ligne ne prouve pas que toutes les lignes peuvent être servies ensemble.
+    Respecter les dépendances entre lignes, la livraison complète ou partielle autorisée et les dates communes attendues.
+    Présenter une proposition cohérente ou expliquer l’impossibilité ; aucun fractionnement de commande n’est implicite. [Order
+    Structuring](model:D04.n) porte les restructurations autorisées. Chaque proposition indique les hypothèses et conditions
+    qui la rendent encore valable au moment de la confirmation. Si la ressource, la date ou une condition change pendant l’attente,
+    réévaluer avant de confirmer. Une proposition ne protège aucune quantité par elle-même : une [réservation](model:D02.c),
+    lorsqu’elle est requise et autorisée, possède ses propres conditions de libération ou d’expiration. Aucun délai fixe de
+    validité n’est imposé. L’absence de solution admissible est un résultat explicite : quantité non couverte, contrainte
+    bloquante, options écartées et raison de leur rejet, information manquante éventuelle et condition de réexamen. Une information
+    insuffisante ne prouve pas une impossibilité physique. Transmettre ce résultat à [Order Management](model:D04) pour maintenir
+    la demande en attente, proposer une révision ou constater un refus selon les règles ; ne pas confirmer une promesse infaisable.'
   source_refs:
   - U154
   - U203
@@ -10229,12 +10397,13 @@ terms:
   - ELM720
   - U797
   - U835
+  - U877
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
   review:
     state: proposed
-    note: Définition alignée sur les formulations validées U835 ; contexte et notes de mise en œuvre proposés.
+    note: Corrections du lot U877 appliquées ; les formulations détaillées restent proposées, sans extension des accords historiques.
   market_comparisons:
   - vendor: Oracle
     product: Oracle Fusion Cloud SCM / Order Management / Global Order Promising
@@ -10375,6 +10544,8 @@ terms:
       - CMP191
   notes: U835 intègre le choix de proposition à la capacité. Les périmètres natifs des éditeurs restent explicités dans les
     comparaisons ; ils ne définissent pas une taxonomie universelle. Les variantes descriptives existantes sont conservées.
+  revision: 1
+  last_modified: '2026-10-06T00:00:00Z'
 - id: TER069
   name: Sales Order
   short_description: Commande portant les biens et quantités demandés par un client et leurs conditions applicables.
@@ -10521,7 +10692,7 @@ terms:
 
     Laurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’affermissement ; elle ne garantit pas une identité technique commune.
 
-    La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer.
+    La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer. La version affermie remplace la contribution de sa proposition planifiée dans la couverture ; préserver la filiation pour éviter un double compte.
   notes: 'Famille gérée par [Purchase Order](model:D04.j). Aucune création de nœud objet ni de schéma détaillé ; cycle distinct
     des [Service Orders](glossary:TER066). Le nom de capacité adopté ne vaut pas validation de cette définition lexicale.
     U391 : inclut l’achat de prestations, conformément à Service Procurement ; un apport en consignation sans engagement d’achat
@@ -10546,12 +10717,13 @@ terms:
   - U869
   - U870
   - U871
+  - U877
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
   review:
     state: proposed
-    note: Définition lexicale rédigée par Codex ; pas de validation anticipée.
+    note: Corrections du lot U877 appliquées ; les formulations détaillées restent proposées, sans extension des accords historiques.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 SCM
@@ -10650,6 +10822,8 @@ terms:
       - U477
       - ELM345
       - CMP189
+  revision: 1
+  last_modified: '2026-10-06T00:00:00Z'
 - id: TER071
   name: Transfer Order
   short_description: Demande de déplacement interne de biens entre deux points du réseau, avec quantités, dates et engagements.
@@ -10791,11 +10965,14 @@ terms:
       - CMP189
 - id: TER072
   name: Return Order
-  short_description: Demande portant le retour de marchandises et le résultat attendu de leur prise en charge, avec leurs
-    quantités et conditions, indépendamment d’un contexte B2C ou B2B.
-  definition: Demande portant le retour de marchandises et le résultat attendu de leur prise en charge, avec leurs quantités
-    et conditions, indépendamment d’un contexte B2C ou B2B.
-  context: Supply Chain Orchestration ; distinguer intention, engagement, pilotage, résultat et document.
+  short_description: Demande portant les marchandises retournées, leurs suites physiques et la résolution attendue pour le
+    client, selon les quantités, conditions et autorisations applicables.
+  definition: Demande portant les marchandises retournées, leurs suites physiques et la résolution attendue pour le client,
+    selon les quantités, conditions et autorisations applicables.
+  context: |-
+    Supply Chain Orchestration ; distinguer intention, engagement, pilotage, résultat et document.
+
+    La résolution apportée au client comprend [Credit Resolution](glossary:TER156), [Refund Resolution](glossary:TER157) et [Replacement Resolution](glossary:TER158). Ces variantes se combinent avec les cinq devenirs physiques existants et entre elles : un avoir peut précéder un remboursement pendant que le produit est réparé ou remis en stock. Return Order porte le résultat attendu, les liens et le reste à satisfaire. [Billing](model:service-order-billing) produit ou corrige l’avoir ; [Payment](model:service-order-payment-collection) exécute le service de remboursement ; une [Sales Order](model:D04.i) liée porte le remplacement. L’avoir ne prouve pas un remboursement et la clôture du retour ne prouve aucune de ces réalisations.
   notes: L’intention de retour peut conduire à remise en stock, réparation, renvoi fournisseur, restitution ou rebut selon
     l’accord. Un retour après cession de biens consignés peut être pris en charge ici ; la reprise de biens encore consignés
     relève de [Consignment Pick-up](glossary:TER092). Les parcours ne deviennent pas des familles d’[Orders](glossary:TER012)
@@ -10815,12 +10992,13 @@ terms:
   - CMP307
   - ELM455
   - U797
+  - U879
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u214
   review:
-    state: partial
-    note: Principes issus des décisions citées ; rédaction et comparaisons consolidées U626, sans accord global supplémentaire.
+    state: proposed
+    note: Lot U879 appliqué ; rédaction détaillée proposée, accords explicites capturés séparément.
   market_comparisons:
   - vendor: SAP
     product: SAP S/4HANA — périmètre du cours cité
@@ -10906,12 +11084,77 @@ terms:
     concept_name: Return order
     scope_summary: Demande de retour et suites selon les autorisations.
     approach_summary: Relier intention de retour, choix de traitement et resultats.
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Sales returns
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Résolution du retour et documents de suite
+    element_name: Customer returns
+    concept_name: Customer returns
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order liée
+      distincte.
+    approach_summary: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order
+      liée distincte.
+    similarities: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order liée
+      distincte.
+    differences: Les actions produit ne deviennent pas automatiquement des Behaviors FLOW ; avoir et règlement restent distincts.
+    evidence_limits: Les actions produit ne deviennent pas automatiquement des Behaviors FLOW ; avoir et règlement restent
+      distincts. Aucun déploiement Beaumanoir déduit.
+    flow_position: 'Exemple fictif : un retour de 80 euros donne lieu à un avoir obtenu de Billing puis à un remboursement
+      réalisé par Payment. La remise en stock du produit suit son propre résultat ; elle ne solde pas à elle seule le remboursement
+      attendu.'
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: 'Exemple fictif : un retour de 80 euros donne lieu à un avoir obtenu de Billing puis à un remboursement
+      réalisé par Payment. La remise en stock du produit suit son propre résultat ; elle ne solde pas à elle seule le remboursement
+      attendu.'
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  - vendor: SAP
+    product: SAP S/4HANA
+    source_title: Managing Customer Returns
+    source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Résolution du retour et documents de suite
+    element_name: Customer returns
+    concept_name: Customer returns
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont demande
+      d’avoir.
+    approach_summary: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont
+      demande d’avoir.
+    similarities: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont demande
+      d’avoir.
+    differences: La détermination du remboursement ne prouve pas que le retour exécute lui-même le transfert financier.
+    evidence_limits: La détermination du remboursement ne prouve pas que le retour exécute lui-même le transfert financier.
+      Aucun déploiement Beaumanoir déduit.
+    flow_position: 'Exemple fictif : un retour de 80 euros donne lieu à un avoir obtenu de Billing puis à un remboursement
+      réalisé par Payment. La remise en stock du produit suit son propre résultat ; elle ne solde pas à elle seule le remboursement
+      attendu.'
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: 'Exemple fictif : un retour de 80 euros donne lieu à un avoir obtenu de Billing puis à un remboursement
+      réalisé par Payment. La remise en stock du produit suit son propre résultat ; elle ne solde pas à elle seule le remboursement
+      attendu.'
+    status: proposed
+    source_refs:
+    - U878
+    - U879
   market_inspiration:
-    choice: Demande portant le retour de marchandises et le résultat attendu de leur prise en charge, avec leurs quantités
-      et conditions, indépendamment d’un contexte B2C ou B2B.
-    flow_scope: Demande portant le retour de marchandises et le résultat attendu de leur prise en charge, avec leurs quantités
-      et conditions, indépendamment d’un contexte B2C ou B2B.
-    flow_approach: Conserver le retour, la décision et la suite attendue ; rapprocher les réalisations sans effacer la vente.
+    choice: Demande portant les marchandises retournées, leurs suites physiques et la résolution attendue pour le client,
+      selon les quantités, conditions et autorisations applicables.
+    flow_scope: Demande portant les marchandises retournées, leurs suites physiques et la résolution attendue pour le client,
+      selon les quantités, conditions et autorisations applicables.
+    flow_approach: |-
+      Supply Chain Orchestration ; distinguer intention, engagement, pilotage, résultat et document.
+
+      La résolution apportée au client comprend [Credit Resolution](glossary:TER156), [Refund Resolution](glossary:TER157) et [Replacement Resolution](glossary:TER158). Ces variantes se combinent avec les cinq devenirs physiques existants et entre elles : un avoir peut précéder un remboursement pendant que le produit est réparé ou remis en stock. Return Order porte le résultat attendu, les liens et le reste à satisfaire. [Billing](model:service-order-billing) produit ou corrige l’avoir ; [Payment](model:service-order-payment-collection) exécute le service de remboursement ; une [Sales Order](model:D04.i) liée porte le remplacement. L’avoir ne prouve pas un remboursement et la clôture du retour ne prouve aucune de ces réalisations.
     synthesis:
     - Le retour ouvre plusieurs suites possibles après inspection. Le parcours SAP inclut la compensation financière ; FLOW
       distingue les responsabilités concernées.
@@ -10933,6 +11176,7 @@ terms:
       source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
       source_refs:
       - U626
+  revision: 1
 - id: TER073
   name: Supplier Return Order
   short_description: Commande portant un renvoi de marchandises vers un fournisseur, distincte de l’achat d’origine.
@@ -11209,15 +11453,14 @@ terms:
     - U853
 - id: TER075
   name: Service
-  short_description: Prestation d’un exécutant que l’orchestration mobilise pour réaliser une demande du Domain.
-  definition: Prestation rendue par un exécutant et mobilisée par l’orchestration pour réaliser une demande du Domain. Elle
-    est décrite par son résultat, ses conditions et ses engagements de service ; elle peut être physique, humaine ou numérique.
-  context: Qualification métier locale FLOW du rôle des prestations mobilisées par l’orchestration ; elle ne se limite pas
-    aux services logiciels.
-  notes: L’offre est décrite dans [Service Catalog](model:D14) ; une prestation précise est sollicitée par un [Service Order](glossary:TER066).
-    [Demand Management](model:D04) porte les demandes de travail du Domain. Le service métier est distinct de son accès informatique
-    et de chacune de ses réalisations. Le fournisseur de la prestation est un [Service Provider](glossary:TER088), distinct
-    du Service rendu.
+  short_description: Résultat métier fourni, avec ses conditions et ses engagements.
+  definition: Résultat métier fourni à un bénéficiaire, avec ses conditions et engagements ; sa réalisation peut mobiliser
+    des exécutants ou composants spécialisés.
+  context: FLOW porte notamment [Billing](glossary:TER153) et [Payment](glossary:TER154). Les prestations logistiques sont
+    commandées aux exécutants au moyen de [Service Orders](glossary:TER066). Responsabilité du service et réalisation logicielle
+    restent distinctes.
+  notes: U874 précise la convention FLOW et la responsabilité de service ; les termes natifs des sources peuvent avoir un
+    autre périmètre.
   source_refs:
   - U237
   - U238
@@ -11237,6 +11480,7 @@ terms:
   - U774
   - CMP307
   - ELM814
+  - U874
   source_locator:
     path: connaissance/32-execution-orchestration.md
     anchor: vocabulaire
@@ -11259,8 +11503,8 @@ terms:
     relationship: Recouvrement partiel
     similarities: Prestation nécessaire à une intervention.
     differences: Le terrain est un exemple, pas tout le périmètre des services FLOW.
-    flow_position: Décrire la prestation qu’un exécutant rend pour contribuer à une demande du Domain. Service désigne le
-      rôle de cette prestation dans l’orchestration, qu’elle soit physique, humaine ou numérique.
+    flow_position: Résultat métier fourni à un bénéficiaire, avec ses conditions et engagements ; sa réalisation peut mobiliser
+      des exécutants ou composants spécialisés.
     status: proposed
     source_refs:
     - U477
@@ -11269,6 +11513,7 @@ terms:
     concept_name: Service / Work performed
     scope_summary: Prestation nécessaire à une intervention.
     approach_summary: Faire accomplir un travail identifiable.
+    term_choice: 'Service : convention FLOW, sans équivalence universelle avec les termes natifs.'
   - vendor: Camunda
     product: Process Orchestration
     source_title: The Process Orchestration Handbook
@@ -11282,8 +11527,8 @@ terms:
     relationship: Recouvrement partiel
     similarities: Contributions de personnes et systèmes au processus.
     differences: Le découpage technique des tâches n’impose pas une identité métier de service.
-    flow_position: Décrire la prestation qu’un exécutant rend pour contribuer à une demande du Domain. Service désigne le
-      rôle de cette prestation dans l’orchestration, qu’elle soit physique, humaine ou numérique.
+    flow_position: Résultat métier fourni à un bénéficiaire, avec ses conditions et engagements ; sa réalisation peut mobiliser
+      des exécutants ou composants spécialisés.
     status: proposed
     source_refs:
     - U477
@@ -11292,6 +11537,7 @@ terms:
     concept_name: Service task / Human task
     scope_summary: Contributions de personnes et systèmes au processus.
     approach_summary: Coordonner les intervenants nécessaires.
+    term_choice: 'Service : convention FLOW, sans équivalence universelle avec les termes natifs.'
   - vendor: SAP
     product: SAP S/4HANA — périmètre du cours cité
     element_name: 'Working with Service Order Management: External Service Processin'
@@ -11304,8 +11550,8 @@ terms:
     similarities: Un service externe est demandé, acheté, puis rapproché d’une entrée de service acceptée.
     differences: FLOW distingue exigence de prestation, engagement d’achat et rapprochement opérationnel ; l’entrée de service
       SAP ne couvre pas tous les faits attendus d’une prestation logistique.
-    flow_position: FLOW conserve le périmètre métier de Service. FLOW distingue exigence de prestation, engagement d’achat
-      et rapprochement opérationnel ; l’entrée de service SAP ne couvre pas tous les faits attendus d’une prestation logistique.
+    flow_position: Résultat métier fourni à un bénéficiaire, avec ses conditions et engagements ; sa réalisation peut mobiliser
+      des exécutants ou composants spécialisés.
     source_title: 'Working with Service Order Management: External Service Processin'
     source_url: https://learning.sap.com/courses/identifying-business-processes-in-sap-s4hana-service/working-with-service-order-management-external-service-processing_ca8699f0-3870-43c2-bb6e-4c68bddda055
     source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -11319,16 +11565,18 @@ terms:
     - U774
     - CMP307
     - ELM814
-    term_choice: Le nom Service reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement cette appellation
-      ni sa maille.
+    term_choice: 'Service : convention FLOW, sans équivalence universelle avec les termes natifs.'
     definition_choice: 'Un service externe est demandé, acheté, puis rapproché d’une entrée de service acceptée. Frontière
       conservée : FLOW distingue exigence de prestation, engagement d’achat et rapprochement opérationnel ; l’entrée de service
       SAP ne couvre pas tous les faits attendus d’une prestation logistique.'
   market_inspiration:
     choice: Décrire la prestation qu’un exécutant rend pour contribuer à une demande du Domain. Service désigne le rôle de
       cette prestation dans l’orchestration, qu’elle soit physique, humaine ou numérique.
-    flow_scope: Préparation, transport, réception, documents et autres résultats rendus par les exécutants.
-    flow_approach: Définir résultat, conditions et engagements de la prestation mobilisable.
+    flow_scope: Résultat métier fourni à un bénéficiaire, avec ses conditions et engagements ; sa réalisation peut mobiliser
+      des exécutants ou composants spécialisés.
+    flow_approach: FLOW porte notamment [Billing](glossary:TER153) et [Payment](glossary:TER154). Les prestations logistiques
+      sont commandées aux exécutants au moyen de [Service Orders](glossary:TER066). Responsabilité du service et réalisation
+      logicielle restent distinctes.
     synthesis:
     - Microsoft Field Service décrit des prestations de travail réalisées par un intervenant. Camunda coordonne des tâches
       humaines et des services informatiques. Le mot service couvre ainsi des réalités différentes selon la source.
@@ -12554,7 +12802,7 @@ terms:
     FLOW proposée ; aucune nouvelle capacité agrégée n’est créée par le terme.
   notes: Dans FLOW, Fulfilment est l’orthographe canonique. [Availability](glossary:TER112) propose la couverture ; [Order
     Management](model:D04) tient les commandes, leurs engagements et leur parcours. [Fulfilment Orchestration](model:D06)
-    coordonne les prestations et leurs adaptations locales dans le mandat confié ; [Service Order Management](model:subdomain-service-orders)
+    coordonne les prestations et leurs adaptations locales dans le mandat confié ; [Service Management](model:subdomain-service-orders)
     tient leurs engagements. Le périmètre d’un produit peut regrouper plusieurs de ces responsabilités.
   source_refs:
   - U366
@@ -12671,16 +12919,14 @@ terms:
     - U853
 - id: TER086
   name: Purchase Order Document
-  short_description: 'Bon de commande : document exprimant le contenu d’une commande d’achat à un moment donné.'
-  definition: 'Bon de commande : document exprimant le contenu d’une commande d’achat à un moment donné. Le document, la commande
-    métier et la capacité qui la prend en charge sont des notions distinctes.'
-  context: Se rapporte à l’objet [Purchase Order](glossary:TER070), pris en charge par la capacité [Purchase Order](model:D04.j).
-    Le document ne désigne pas toute l’activité d’achat.
-  notes: 'Ajout lexical proposé pour U458, sans création de nœud documentaire, cardinalité ou règle de correction. Usage français
-    « bon de commande » vérifié dans Microsoft Learn, Vue d’ensemble des approvisionnements, section Accusé de réception de
-    marchandises et facture : https://learn.microsoft.com/fr-fr/dynamics365/supply-chain/procurement/procurement-sourcing-overview
-    (consulté le 19 septembre 2026). Distinction conceptuelle document/objet/capacité issue de U61/U384 ; la terminologie
-    Microsoft n’impose pas cette convention FLOW.'
+  short_description: Édition datée représentant une version de la commande d’achat.
+  definition: Édition datée du [Purchase Order](glossary:TER070), document métier structuré de commande d’achat. Elle représente
+    sa version à un instant donné ; plusieurs éditions ne constituent pas plusieurs achats.
+  context: Le [Purchase Order](glossary:TER070) est lui-même un document métier structuré ; son édition, par exemple un bon
+    transmis, en représente le contenu. La capacité [Purchase Order](model:D04.j) gère son cycle de vie.
+  notes: 'Convention documentaire clarifiée U874–U877 : distinguer le document métier structuré, ses représentations datées
+    et la capacité qui le gère. Une édition archivée peut rester une preuve sans représenter les conditions courantes ; elle
+    ne crée pas une deuxième identité de commande.'
   source_refs:
   - U61
   - U384
@@ -12691,14 +12937,15 @@ terms:
   - U774
   - CMP307
   - ELM790
+  - U877
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u458
   review:
     state: proposed
-    note: Précision lexicale Codex, non validation globale des conventions documentaires.
-  revision: 1
-  last_modified: '2026-09-19'
+    note: Corrections du lot U877 appliquées ; les formulations détaillées restent proposées, sans extension des accords historiques.
+  revision: 2
+  last_modified: '2026-10-06T00:00:00Z'
   market_comparisons:
   - vendor: OASIS
     product: Universal Business Language
@@ -12714,7 +12961,9 @@ terms:
     relationship: Recouvrement partiel
     similarities: Order est explicitement un document échangé.
     differences: Le format UBL ne prescrit pas la séparation conceptuelle objet/capacité choisie par FLOW.
-    flow_position: Identifier la version représentée sans assimiler le document au cycle de vie complet de la commande.
+    flow_position: Édition datée du [Purchase Order](glossary:TER070), document métier structuré de commande d’achat. Elle
+      représente sa version à un instant donné ; plusieurs éditions ne constituent pas plusieurs achats. Rapprochement partiel
+      ; le périmètre natif de l’éditeur reste celui décrit par la source.
     status: proposed
     source_refs:
     - U477
@@ -12736,7 +12985,9 @@ terms:
     relationship: Recouvrement partiel
     similarities: Les documents d’achat peuvent conserver plusieurs versions.
     differences: La restauration dépend du produit ; tout document n’est pas une commande réactivable.
-    flow_position: Identifier la version représentée sans assimiler le document au cycle de vie complet de la commande.
+    flow_position: Édition datée du [Purchase Order](glossary:TER070), document métier structuré de commande d’achat. Elle
+      représente sa version à un instant donné ; plusieurs éditions ne constituent pas plusieurs achats. Rapprochement partiel
+      ; le périmètre natif de l’éditeur reste celui décrit par la source.
     status: proposed
     source_refs:
     - U477
@@ -12758,8 +13009,9 @@ terms:
     similarities: Le purchase order formalise les articles, quantités et conditions de l’achat, éventuellement à partir de
       documents de référence.
     differences: Le document d’achat ne se confond pas avec la prestation logistique confiée pour exécuter cet achat.
-    flow_position: FLOW conserve le périmètre métier de Purchase Order Document. Le document d’achat ne se confond pas avec
-      la prestation logistique confiée pour exécuter cet achat.
+    flow_position: Édition datée du [Purchase Order](glossary:TER070), document métier structuré de commande d’achat. Elle
+      représente sa version à un instant donné ; plusieurs éditions ne constituent pas plusieurs achats. Rapprochement partiel
+      ; le périmètre natif de l’éditeur reste celui décrit par la source.
     source_title: Executing Purchase Order Management
     source_url: https://learning.sap.com/courses/executing-basic-erp-processes-with-sap-s-4hana/executing-purchase-order-management
     source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -12780,8 +13032,10 @@ terms:
   market_inspiration:
     choice: Nommer le bon qui représente la commande d’achat à un moment donné. Purchase Order Document distingue ce support,
       la commande suivie et la capacité qui la gère.
-    flow_scope: Représentation datée du contenu d’une commande d’achat.
-    flow_approach: Identifier la version représentée sans assimiler le document au cycle de vie complet de la commande.
+    flow_scope: Édition datée du [Purchase Order](glossary:TER070), document métier structuré de commande d’achat. Elle représente
+      sa version à un instant donné ; plusieurs éditions ne constituent pas plusieurs achats.
+    flow_approach: Édition datée du [Purchase Order](glossary:TER070), document métier structuré de commande d’achat. Elle
+      représente sa version à un instant donné ; plusieurs éditions ne constituent pas plusieurs achats.
     synthesis:
     - OASIS décrit ce qu’un document Order transmet ; Business Central montre que ses versions peuvent être conservées. Les
       deux éclairent la représentation d’un contenu, avec des objectifs différents.
@@ -13055,17 +13309,15 @@ terms:
     - U853
 - id: TER089
   name: Task
-  short_description: Contribution pilotée par l’orchestration, avec ses conditions et dépendances ; distincte d’un ordre de
-    prestation et d’une tâche opérateur.
-  definition: Contribution pilotée au sein d’un processus d’orchestration, avec ses conditions d’activation et ses dépendances.
-    Elle peut mobiliser des [Service Orders](glossary:TER066) dont [Service Order](glossary:TER066) Management tient les engagements
-    individuels ; elle n’est ni l’ordre lui-même ni une tâche opérateur de l’exécutant.
-  context: |-
-    Supply Chain Orchestration
-
-    Le moteur de [Reactive Workflow Management](glossary:TER125) produit les tâches qui pilotent la sollicitation et le suivi des [Service Orders](glossary:TER066) passifs. Une tâche fait progresser le parcours ; la commande conserve demande, état, engagements et résultat. L’exécutant organise séparément ses tâches opérateur.
+  short_description: Activité du parcours qui déclenche un travail, attend une condition ou vérifie un résultat.
+  definition: Activité pilotée au sein d’un parcours, avec ses conditions d’activation et ses dépendances. Elle peut mobiliser
+    un [Service](glossary:TER075) ou une commande de prestation ; elle ne se confond ni avec le [Service Order](glossary:TER066)
+    ni avec une tâche opérateur de l’exécutant.
+  context: '[Reactive Workflow Management](glossary:TER125) produit et pilote les Tasks ; [Service Management](glossary:TER152)
+    porte les services et commandes concernés. Les Tasks peuvent mobiliser [Billing](glossary:TER153) ou [Payment](glossary:TER154)
+    sans créer un Order financier artificiel. Les commandes logistiques conservent leurs exigences, état et engagements.'
   notes: |-
-    Une Task peut attendre une condition, déclencher une sollicitation et vérifier le résultat de sa contribution. Les réponses et reprises de l’ordre sont tenues par [Service Order](glossary:TER066) Management ; l’orchestration coordonne les dépendances et mobilise les adaptations décidées. Un acquittement ne prouve pas une fin physique.
+    Une Task peut attendre une condition, déclencher une sollicitation et vérifier le résultat de sa contribution. Les réponses et reprises de l’ordre sont tenues par [Service Management](glossary:TER152) ; l’orchestration coordonne les dépendances et mobilise les adaptations décidées. Un acquittement ne prouve pas une fin physique.
 
     [Workflow Definition Management](glossary:TER126) tient les définitions réutilisables des activités et leurs règles de composition. Une définition de Task reste distincte de son occurrence dans un parcours de commande. [Order Workflow Orchestration](glossary:TER129) conduit ce parcours ; [Process Orchestration](model:D06.d) coordonne les prestations confiées. Task n’ajoute aucun niveau de capacité ou de comportement.
   source_refs:
@@ -13086,6 +13338,7 @@ terms:
   - U853
   - U859
   - U861
+  - U874
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u626
@@ -13097,9 +13350,9 @@ terms:
     similarities: CMMN distingue le travail associé et la Task qui peut attendre sa fin.
     differences: La Task FLOW est une contribution à l’orchestration ; U682 sépare la tenue des engagements du Service Order.
       Les tâches natives de la source ne sont pas un cycle universel FLOW.
-    flow_position: Contribution pilotée au sein d’un processus d’orchestration, avec ses conditions d’activation et ses dépendances.
-      Elle peut mobiliser des [Service Orders](glossary:TER066) dont Service Order Management tient les engagements individuels
-      ; elle n’est ni l’ordre lui-même ni une tâche opérateur de l’exécutant.
+    flow_position: Activité pilotée au sein d’un parcours, avec ses conditions d’activation et ses dépendances. Elle peut
+      mobiliser un [Service](glossary:TER075) ou une commande de prestation ; elle ne se confond ni avec le [Service Order](glossary:TER066)
+      ni avec une tâche opérateur de l’exécutant.
     relationship: Recouvrement partiel
     status: proposed
     vendor: OMG
@@ -13113,7 +13366,7 @@ terms:
     concept_name: Case Management Model and Notation 1.1
     scope_summary: CMMN distingue le travail associé et la Task qui peut attendre sa fin.
     approach_summary: Contribution pilotée au sein d’un processus d’orchestration, avec ses conditions d’activation et ses
-      dépendances. Elle peut mobiliser des [Service Orders](glossary:TER066) dont Service Order Management tient les engagements
+      dépendances. Elle peut mobiliser des [Service Orders](glossary:TER066) dont Service Management tient les engagements
       individuels ; elle n’est ni l’ordre lui-même ni une tâche opérateur de l’exécutant.
     evidence_limits: Le standard autorise aussi des Tasks non bloquantes ; il ne prescrit pas tout le contrat de pilotage
       FLOW. Aucune réalisation installée Beaumanoir ni équivalence universelle déduite.
@@ -13125,9 +13378,9 @@ terms:
     similarities: Les jobs disposent de tentatives, d’un délai de reprise et d’une complétion explicite.
     differences: La Task FLOW est une contribution à l’orchestration ; U682 sépare la tenue des engagements du Service Order.
       Les tâches natives de la source ne sont pas un cycle universel FLOW.
-    flow_position: Contribution pilotée au sein d’un processus d’orchestration, avec ses conditions d’activation et ses dépendances.
-      Elle peut mobiliser des [Service Orders](glossary:TER066) dont Service Order Management tient les engagements individuels
-      ; elle n’est ni l’ordre lui-même ni une tâche opérateur de l’exécutant.
+    flow_position: Activité pilotée au sein d’un parcours, avec ses conditions d’activation et ses dépendances. Elle peut
+      mobiliser un [Service](glossary:TER075) ou une commande de prestation ; elle ne se confond ni avec le [Service Order](glossary:TER066)
+      ni avec une tâche opérateur de l’exécutant.
     relationship: Recouvrement partiel
     status: proposed
     vendor: Camunda
@@ -13141,7 +13394,7 @@ terms:
     concept_name: Job workers
     scope_summary: Les jobs disposent de tentatives, d’un délai de reprise et d’une complétion explicite.
     approach_summary: Contribution pilotée au sein d’un processus d’orchestration, avec ses conditions d’activation et ses
-      dépendances. Elle peut mobiliser des [Service Orders](glossary:TER066) dont Service Order Management tient les engagements
+      dépendances. Elle peut mobiliser des [Service Orders](glossary:TER066) dont Service Management tient les engagements
       individuels ; elle n’est ni l’ordre lui-même ni une tâche opérateur de l’exécutant.
     evidence_limits: Fin du job et fin de la prestation métier ne sont pas automatiquement identiques ; service de secours
       à gouverner explicitement. Aucune réalisation installée Beaumanoir ni équivalence universelle déduite.
@@ -13152,12 +13405,12 @@ terms:
   market_inspiration:
     choice: Objet de gouvernance qui pilote la sollicitation d’un [Service](glossary:TER075), son suivi et la vérification
       de son achèvement.
-    flow_scope: Contribution pilotée au sein d’un processus d’orchestration, avec ses conditions d’activation et ses dépendances.
-      Elle peut mobiliser des [Service Orders](glossary:TER066) dont Service Order Management tient les engagements individuels
-      ; elle n’est ni l’ordre lui-même ni une tâche opérateur de l’exécutant.
-    flow_approach: Contribution pilotée au sein d’un processus d’orchestration, avec ses conditions d’activation et ses dépendances.
-      Elle peut mobiliser des [Service Orders](glossary:TER066) dont Service Order Management tient les engagements individuels
-      ; elle n’est ni l’ordre lui-même ni une tâche opérateur de l’exécutant.
+    flow_scope: Activité pilotée au sein d’un parcours, avec ses conditions d’activation et ses dépendances. Elle peut mobiliser
+      un [Service](glossary:TER075) ou une commande de prestation ; elle ne se confond ni avec le [Service Order](glossary:TER066)
+      ni avec une tâche opérateur de l’exécutant.
+    flow_approach: '[Reactive Workflow Management](glossary:TER125) produit et pilote les Tasks ; [Service Management](glossary:TER152)
+      porte les services et commandes concernés. Les Tasks peuvent mobiliser [Billing](glossary:TER153) ou [Payment](glossary:TER154)
+      sans créer un Order financier artificiel. Les commandes logistiques conservent leurs exigences, état et engagements.'
     synthesis:
     - Demande, contribution au processus, engagement, réalisation et document restent distincts.
     examples:
@@ -14710,7 +14963,8 @@ terms:
     hypothèses, conditions et suites d’application.
   context: '[Availability](glossary:TER112) construit et révise ce plan. Le [Supply Assignment Plan](glossary:TER078) en exprime
     les liens ressources-besoins ; les apports, priorités et recommandations de politiques contribuent au plan commun. Aucun
-    moteur ni ordre universel de calcul imposé.'
+    moteur ni ordre universel de calcul imposé. [Master Planning](model:D05.f) coordonne ce plan interne ; le nom ne reprend
+    pas le périmètre complet de la planification ERP Microsoft.'
   notes: Sens local du modèle, distinct des périmètres des produits cités.
   source_refs:
   - U771
@@ -14719,12 +14973,13 @@ terms:
   - CMP307
   - ELM784
   - U797
+  - U877
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u771
   review:
     state: proposed
-    note: Mise en cohérence lexicale U771 ; rédaction nouvelle non présentée comme approuvée mot à mot.
+    note: Corrections du lot U877 appliquées ; les formulations détaillées restent proposées, sans extension des accords historiques.
   market_comparisons:
   - vendor: Oracle
     product: Oracle Fusion Cloud SCM
@@ -14821,6 +15076,8 @@ terms:
     definition_choice: 'Le MRP couvre les besoins nets et produit des propositions de réapprovisionnement selon les règles
       de lotissement. Frontière conservée : Les propositions d’approvisionnement sont un appui partiel ; le master plan FLOW
       porte aussi les affectations, et son optimisation ne se réduit pas au MRP.'
+  revision: 1
+  last_modified: '2026-10-06T00:00:00Z'
 - id: TER101
   name: Inventory Traceability
   definition: Capacité à retrouver l’origine et les destinations de biens à partir des faits et filiations connus.
@@ -15784,7 +16041,7 @@ terms:
   context: |-
     Sous-domaine FLOW regroupant Order Promising, Master Plan Management, Supply Matching et Policy Optimization. Inventory Management tient les faits de stock et les réservations ; Order Management confirme les engagements. Les catégories restent des attributs de présentation.
 
-    [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability : elle interprète les prévisions reçues avant les décisions de couverture et de promesse.
+    [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability : elle interprète les prévisions reçues avant les décisions de couverture et de promesse. Construire les options de produit, site, date et prestation à partir des possibilités connues et autorisées. Une substitution exige une équivalence et une autorisation provenant du responsable commercial ; ni le stock disponible ni un meilleur coût ne les créent. [ATP](glossary:TER044) évalue les ressources admissibles, [CTP](glossary:TER045) la faisabilité d’un apport et [PTP](glossary:TER068) les compromis économiques. [Service Selection Decision](model:D06.e) choisit les prestations dans le respect de la promesse. Ces décisions composent une proposition, sans capacité de sélection supplémentaire.
   notes: Availability exprime le résultat métier recherché. Le matching reste un mécanisme de rapprochement et d’arbitrage
     des besoins et ressources, sans résumer tout le sous-domaine. Plan Visibility conserve demande prévisionnelle et projections
     d’entrées et de sorties.
@@ -15873,12 +16130,13 @@ terms:
   - U797
   - U835
   - U865
+  - U877
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u797
   review:
     state: proposed
-    note: Explication éditoriale du périmètre existant ; aucun nouvel accord métier.
+    note: Corrections du lot U877 appliquées ; les formulations détaillées restent proposées, sans extension des accords historiques.
   market_comparisons:
   - vendor: Oracle
     product: Overview of Backlog Management Processes
@@ -16036,6 +16294,8 @@ terms:
     term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
     definition_choice: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous
       quelles conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
+  revision: 1
+  last_modified: '2026-10-06T00:00:00Z'
 - id: TER113
   name: Integration
   short_description: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres
@@ -16707,19 +16967,20 @@ terms:
   short_description: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en
     portant leur référence locale fiable sans transférer la maîtrise d’entreprise.
   context: |-
-    Les huit sujets de référence restent distincts. [Master Data Ingestion](model:master-data-ingestion) reçoit leurs apports ; [Policies](model:subdomain-policies) porte les règles actives et [Plan Visibility](model:subdomain-plans) les prévisions.
+    Les huit sujets de référence restent distincts. [Reference Ingestion](model:master-data-ingestion) reçoit leurs apports ; [Policies](model:subdomain-policies) porte les règles actives et [Plan Visibility](model:subdomain-plans) les prévisions.
 
     Operational References porte la composition, l’actualisation et la fourniture des vues locales, avec provenance, validité, fraîcheur et incohérences connues. Les huit références restent documentaires ; aucune capacité Visibility par objet n’est nécessaire. Les consommateurs prennent les décisions dans le contexte de leurs demandes.
   notes: Nom et périmètre FLOW issus du lot U835 ; rédaction de glossaire proposée.
   source_refs:
   - U835
   - U858
+  - U877
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u835
   review:
     state: proposed
-    note: Alignement éditorial U835, sans accord mot à mot sur les compléments.
+    note: Corrections du lot U877 appliquées ; les formulations détaillées restent proposées, sans extension des accords historiques.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Supply Chain Management
@@ -16775,6 +17036,8 @@ terms:
     term_choice: Nom et maille FLOW ; la proximité fonctionnelle ne démontre pas une nomenclature commune aux éditeurs.
     definition_choice: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en
       portant leur référence locale fiable sans transférer la maîtrise d’entreprise.
+  revision: 1
+  last_modified: '2026-10-06T00:00:00Z'
 - id: TER124
   name: Order Promising
   definition: Déterminer et réexaminer les propositions de quantités, dates et conditions de satisfaction des demandes.
@@ -17063,8 +17326,10 @@ terms:
       la réaction prévue : poursuivre le parcours, réexaminer son organisation ou solliciter une décision.'
 - id: TER128
   name: Order Workflow Planning
-  definition: Construire ou adapter le parcours.
-  short_description: Construire ou adapter le parcours.
+  definition: Construire ou adapter le parcours de traitement d’une [commande](glossary:TER012) à partir des activités disponibles,
+    de son contexte et des règles applicables, en organisant les attentes et les décisions nécessaires.
+  short_description: Construire ou adapter le parcours de traitement d’une [commande](glossary:TER012) à partir des activités
+    disponibles, de son contexte et des règles applicables, en organisant les attentes et les décisions nécessaires.
   context: |-
     Capacité d’[Order Management](model:D04), dans [Reactive Workflow Management](glossary:TER125). Composer les activités, dépendances et attentes du parcours sans prendre les décisions de promesse ou de choix du prestataire à leur place.
 
@@ -17078,12 +17343,13 @@ terms:
   - U844
   - U859
   - U861
+  - U877
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u843
   review:
     state: proposed
-    note: Documentation et alignement du lot U843 sous délégation U844.
+    note: Corrections du lot U877 appliquées ; les formulations détaillées restent proposées, sans extension des accords historiques.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Intelligent Order Management
@@ -17094,7 +17360,9 @@ terms:
     similarities: Le concepteur assemble actions, conditions, branches et regroupements.
     differences: Le produit regroupe plusieurs responsabilités que FLOW distingue ; aucune capacité portant exactement ce
       nom ni construction dynamique générale n’est démontrée.
-    flow_position: Construire ou adapter le parcours.
+    flow_position: Construire ou adapter le parcours de traitement d’une [commande](glossary:TER012) à partir des activités
+      disponibles, de son contexte et des règles applicables, en organisant les attentes et les décisions nécessaires. Rapprochement
+      partiel ; le périmètre natif de l’éditeur reste celui décrit par la source.
     scope_summary: Le concepteur assemble actions, conditions, branches et regroupements.
     approach_summary: Mécanisme produit rapproché du savoir-faire métier ; aucune équivalence de découpage.
     source_title: Create orchestration flows
@@ -17120,7 +17388,9 @@ terms:
     similarities: L’utilisateur compose les étapes prédéfinies du bloc flexible.
     differences: Le bloc flexible est encadré par un scénario applicatif ; il ne couvre pas à lui seul tout le pilotage adaptatif
       des commandes retenu dans FLOW.
-    flow_position: Construire ou adapter le parcours.
+    flow_position: Construire ou adapter le parcours de traitement d’une [commande](glossary:TER012) à partir des activités
+      disponibles, de son contexte et des règles applicables, en organisant les attentes et les décisions nécessaires. Rapprochement
+      partiel ; le périmètre natif de l’éditeur reste celui décrit par la source.
     scope_summary: L’utilisateur compose les étapes prédéfinies du bloc flexible.
     approach_summary: Mécanisme produit rapproché du savoir-faire métier ; aucune équivalence de découpage.
     source_title: Explaining Flexible Workflow
@@ -17137,6 +17407,8 @@ terms:
     - U843
     term_choice: Order Workflow Planning est le nom FLOW retenu pour ce périmètre.
     definition_choice: Construire ou adapter le parcours.
+  revision: 1
+  last_modified: '2026-10-06T00:00:00Z'
 - id: TER129
   name: Order Workflow Orchestration
   definition: Piloter les activités, attentes et résultats du parcours retenu.
@@ -18058,27 +18330,27 @@ terms:
     source_refs:
     - U853
 - id: TER144
-  name: Financial Service Order Management
-  definition: Tenir les demandes confiées de facturation et d’encaissement et suivre leurs résultats.
-  short_description: Tenir les demandes confiées de facturation et d’encaissement et suivre leurs résultats.
+  name: Financial Services
+  definition: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier, leur progression
+    et leurs résultats.
+  short_description: Services de facturation et de paiement portés par FLOW.
   context: |-
-    Ne reprend ni la responsabilité comptable ni l’exécution des opérations par les services sollicités.
+    [Billing](glossary:TER153) et [Payment](glossary:TER154) sont des services portés par FLOW. Ils peuvent mobiliser des applications ou prestataires spécialisés sans devenir des commandes documentaires adressées à la logistique. Leur responsabilité métier est distincte de la réalisation technique.
 
-    Bénéficiaire et résultat : Permettre au donneur d’ordre de connaître l’état et le résultat des prestations de facturation ou d’encaissement confiées.
+    Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
 
-    Exemple fictif : Confier une facturation et recevoir sa référence de résultat ; les règles fiscales et la tenue des comptes restent sous autorité financière.
+    La comptabilité générale, la trésorerie et le recouvrement des impayés ne sont pas inclus par extension. Les autorités financières compétentes conservent leurs règles et contrôles.
 
-    [Payment Order](model:service-order-payment-collection) désigne la demande d’encaissement confiée ; le nom simplifié ne change pas son périmètre.
-
-    [Billing Order](model:service-order-billing) et [Payment Order](model:service-order-payment-collection) sont des commandes passives de prestations définies. Les [Tasks](glossary:TER089) du workflow pilotent leur suivi ; les services financiers réalisent la facturation et l’encaissement.
-  notes: Périmètre de responsabilité U848 ; les capacités conservent leurs identités et leurs savoir-faire. La fiche détaillée
-    est [Financial Service Order Management](model:ba-financial-service-order-management).
+    Exemple fictif : après une livraison, Billing obtient la facture correspondant aux éléments facturables ; Payment tient le résultat de l’encaissement. Un paiement refusé reste visible et conduit le workflow à traiter la suite autorisée.
+  notes: U874 précise la convention FLOW et la responsabilité de service ; les termes natifs des sources peuvent avoir un
+    autre périmètre.
   source_refs:
   - U848
   - U853
   - U860
   - U859
   - U861
+  - U874
   review:
     state: proposed
     note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
@@ -18096,9 +18368,12 @@ terms:
     relationship: Recouvrement partiel
     similarities: Transmettre une demande au prestataire de facturation.
     differences: Ne démontre pas le cycle d’encaissement ni la maîtrise comptable, qui reste externe.
-    flow_position: Tenir les demandes confiées de facturation et d’encaissement et suivre leurs résultats.
-    definition_choice: Tenir les demandes confiées de facturation et d’encaissement et suivre leurs résultats.
-    term_choice: Financial Service Order Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+    flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier, leur
+      progression et leurs résultats.
+    definition_choice: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
+      leur progression et leurs résultats.
+    term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence de taxonomie
+      éditeur.
     scope_summary: Transmettre une demande au prestataire de facturation.
     approach_summary: Ne démontre pas le cycle d’encaissement ni la maîtrise comptable, qui reste externe.
     evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation installée
@@ -18106,15 +18381,104 @@ terms:
     status: proposed
     source_refs:
     - U853
-  market_gaps:
-  - family: sap_s4hana
-    reason: Le document examiné « Explaining Flexible Workflow » ne permet pas d’établir un appui suffisamment précis pour
-      Financial Service Order Management. Le périmètre FLOW reste documenté ; sa correspondance produit exige une source plus
-      ciblée.
-    investigated_urls:
-    - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+    - U874
+  - vendor: SAP
+    product: SAP S/4HANA — périmètre du cours cité
+    element_name: Describing Omnichannel Convergent Billing (1MC)
+    concept_name: Describing Omnichannel Convergent Billing (1MC)
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: Des demandes de facturation externes sont intégrées puis regroupées ou traitées pour produire les factures.
+    approach_summary: 'Rapprochement avec Billing : Des demandes de facturation externes sont intégrées puis regroupées ou
+      traitées pour produire les factures.'
+    similarities: Des demandes de facturation externes sont intégrées puis regroupées ou traitées pour produire les factures.
+    differences: Le pilotage FLOW reste distinct du moteur de facturation, de la comptabilisation et du recouvrement.
+    flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier, leur
+      progression et leurs résultats.
+    source_title: Describing Omnichannel Convergent Billing (1MC)
+    source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sales-automation-and-analytics/describing-omnichannel-convergent-billing-1mc-_e8281711-58ac-4058-93e3-f9fb65eb4537
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Describing Omnichannel Convergent Billing (1MC) — passages sur le mécanisme rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. Le pilotage FLOW reste distinct du moteur de facturation, de la comptabilisation et du recouvrement.
+    status: proposed
     source_refs:
-    - U853
+    - U774
+    - CMP307
+    - ELM808
+    - U874
+    term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence de taxonomie
+      éditeur.
+    definition_choice: Assurer la facturation des éléments éligibles du flux et tenir la facture obtenue, les rejets et les
+      corrections nécessaires.
+  - vendor: Microsoft
+    product: Microsoft Dynamics 365 — application indiquée par la source
+    element_name: Manage payment authorizations
+    concept_name: Manage payment authorizations
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: La documentation distingue autorisation et capture du paiement, avec un statut retourné par le prestataire.
+    approach_summary: 'Rapprochement avec Payment : La documentation distingue autorisation et capture du paiement, avec un
+      statut retourné par le prestataire.'
+    similarities: La documentation distingue autorisation et capture du paiement, avec un statut retourné par le prestataire.
+    differences: 'Limite explicite : un accusé de capture n’est pas toujours le résultat final asynchrone. Ce document ne
+      prouve pas une notification complète de fin ; FLOW doit suivre ce résultat distant.'
+    flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier, leur
+      progression et leurs résultats.
+    source_title: Manage payment authorizations - Commerce | Dynamics 365 | Microsoft Learn
+    source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/manage-payment-authorizations
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Manage payment authorizations - Commerce | Dynamics 365 | Microsoft Learn — passages sur le mécanisme
+      rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: 'Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. Limite explicite : un accusé de capture n’est pas toujours le résultat final asynchrone. Ce document
+      ne prouve pas une notification complète de fin ; FLOW doit suivre ce résultat distant.'
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM811
+    - U874
+    term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence de taxonomie
+      éditeur.
+    definition_choice: Assurer le service de paiement associé au flux et tenir son résultat, ses refus et ses montants restant
+      à encaisser.
+  - vendor: SAP
+    product: SAP S/4HANA — périmètre du cours cité
+    element_name: Explaining Digital Payments
+    concept_name: Explaining Digital Payments
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: S/4HANA sollicite un prestataire de paiement via Digital Payments et reçoit les résultats pour actualiser
+      le statut.
+    approach_summary: 'Rapprochement avec Payment : S/4HANA sollicite un prestataire de paiement via Digital Payments et reçoit
+      les résultats pour actualiser le statut.'
+    similarities: S/4HANA sollicite un prestataire de paiement via Digital Payments et reçoit les résultats pour actualiser
+      le statut.
+    differences: Le prestataire réalise le paiement ; FLOW orchestre sa demande et son résultat sans absorber les responsabilités
+      financières.
+    flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier, leur
+      progression et leurs résultats.
+    source_title: Explaining Digital Payments
+    source_url: https://learning.sap.com/courses/configuring-additional-settings-in-financial-accounting-in-sap-s-4hana/explaining-digital-payments
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Explaining Digital Payments — passages sur le mécanisme rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. Le prestataire réalise le paiement ; FLOW orchestre sa demande et son résultat sans absorber les
+      responsabilités financières.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM812
+    - U874
+    term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence de taxonomie
+      éditeur.
+    definition_choice: Assurer le service de paiement associé au flux et tenir son résultat, ses refus et ses montants restant
+      à encaisser.
 - id: TER145
   name: Product Price Book
   short_description: Tarifs de référence des produits.
@@ -18325,18 +18689,20 @@ terms:
   label_fr: Références des partenaires et accords
   short_description: Fournir les identités, rôles et accords de référence utiles aux engagements et opérations.
   definition: Fournir les identités, rôles et accords de référence utiles aux engagements et opérations.
-  context: Présente [Party / Role](model:D09), [Agreement](model:D11). Ce périmètre porte la cohérence et la fourniture des
-    vues locales, avec validité, provenance et limites connues. Les références restent documentaires ; aucune capacité de
-    consultation autonome n’est créée. Une responsabilité métier distincte n’impose ni équipe ni composant logiciel séparé.
+  context: |-
+    Présente [Party / Role](model:D09), [Agreement](model:D11). Ce périmètre porte la cohérence et la fourniture des vues locales, avec validité, provenance et limites connues. Les références restent documentaires ; aucune capacité de consultation autonome n’est créée. Une responsabilité métier distincte n’impose ni équipe ni composant logiciel séparé.
+
+    Recevoir du contrôle de gestion les profils et [règles de crédit](glossary:TER155) nécessaires aux opérations, avec leur autorité, leur version, leur portée et leur validité. [Party / Role](model:D09) porte le classement du client et sa limite autorisée ; [Agreement](model:D11) porte les conditions de paiement et garanties réellement convenues. Les règles générales reçues ne sont pas des contrats. Leur référence et leur portée sont conservées ici sans inventer un accord ni une nouvelle référence autonome. Leur autorité reste au contrôle de gestion, y compris lorsque FLOW les applique.
   source_refs:
   - U862
   - U863
+  - U879
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u863
   review:
     state: proposed
-    note: Regroupement U862/U863 ; nom et rédaction proposés.
+    note: Lot U879 appliqué ; rédaction détaillée proposée, accords explicites capturés séparément.
   market_gaps:
   - family: microsoft_dynamics
     reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Accès aux pages
@@ -18354,6 +18720,7 @@ terms:
     source_refs:
     - U862
     - U863
+  revision: 1
 - id: TER148
   name: Product References
   label_fr: Références des produits
@@ -18648,5 +19015,1023 @@ terms:
     definition_choice: 'Les prévisions Supply et Demand sont distinguées et consommées par la planification. Frontière conservée
       : Le Supply Plan FLOW est volontairement limité aux prévisions de mouvements hors achats ; les prévisions Microsoft
       ont une portée plus large. L’APS externe ne devient pas un sous-domaine.'
+- id: TER152
+  name: Service Management
+  definition: Gérer les services nécessaires aux flux supply chain, leurs exigences et leurs résultats, ainsi que les commandes
+    adressées aux organisations logistiques exécutantes.
+  short_description: Gestion des services nécessaires aux flux et des commandes logistiques.
+  context: |-
+    Les prestations logistiques sont commandées par des [Service Orders](glossary:TER066) : documents métier structurés portant destinataire, exigences, engagements, état et résultat. Les capacités correspondantes savent constituer, transmettre et tenir ces commandes ; elles ne décrivent pas seulement un document. Les exécutants organisent leurs opérations internes.
+
+    [Financial Services](glossary:TER144) porte [Billing](glossary:TER153) et [Payment](glossary:TER154) comme services de FLOW, sans commande financière artificielle. La facturation et le paiement restent distincts de la tenue comptable générale et de la trésorerie.
+
+    Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+
+    Les exigences documentaires restent dans les services concernés : justificatifs de transport ou de dédouanement, facture issue de Billing, preuve de prestation. Produire un fichier ou le mettre en forme est un moyen technique, pas une capacité autonome.
+
+    Exemple fictif : une expédition nécessite une commande de préparation, une commande de transport et une facture. FLOW tient les commandes logistiques et le résultat de Billing ; le workflow attend les documents requis avant de poursuivre.
+  notes: U874 précise la convention FLOW et la responsabilité de service ; les termes natifs des sources peuvent avoir un
+    autre périmètre.
+  source_refs:
+  - U874
+  review:
+    state: proposed
+    note: Rédaction détaillée proposée ; accord de nom et périmètre U874.
+  market_comparisons:
+  - vendor: TM Forum
+    product: Service Order Management
+    element_name: TMFC007
+    element_type: Composant ODA
+    relationship: Recouvrement partiel
+    similarities: Le composant reçoit les Service Orders et orchestre leur fourniture, en utilisant notamment le catalogue.
+    differences: TM Forum atteste le nom et inclut de l’orchestration ; Microsoft et Oracle distinguent commandes amont et
+      sollicitations logistiques. Séparer ici engagements de prestation et coordination est un choix FLOW, sans équivalence
+      aux modules. La commande composée et la conservation de ses contraintes dans FLOW sont précisées par U692 ; ces sources
+      ne démontrent pas un contrat universel de liste ordonnée d’ordres logistiques.
+    flow_position: Gérer les services nécessaires aux flux supply chain, leurs exigences et leurs résultats, ainsi que les
+      commandes adressées aux organisations logistiques exécutantes. Le moteur de [Reactive Workflow Management](glossary:TER125)
+      produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée.
+      Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+    source_title: Service Order Management
+    source_url: https://www.tmforum.org/oda/directory/components-map/production/TMFC007
+    source_version: TMFC007 2.0.0 ; date affichée 2024-02-23
+    source_locator: Présentation ; Exposed APIs ; Dependent APIs
+    consulted_on: '2026-09-23'
+    evidence_limits: 'Analogie télécom, pas standard logistique ; inclut de l’orchestration, donc ne prouve pas une séparation
+      nécessaire entre gestion d’ordres et orchestration. U874 : appui antérieur conservé ; ne prouve pas à lui seul le nouveau
+      périmètre de service porté par FLOW.'
+    status: proposed
+    source_refs:
+    - ELM492
+    - CMP273
+    - U682
+    - U692
+    concept_name: TMFC007
+    scope_summary: Le composant reçoit les Service Orders et orchestre leur fourniture, en utilisant notamment le catalogue.
+    approach_summary: Gérer les prestations confiées aux exécutants, leurs exigences, leurs engagements propres et leurs évolutions.
+    term_choice: Service Management désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence
+      de taxonomie.
+    definition_choice: Gérer les services nécessaires aux flux supply chain, leurs exigences et leurs résultats, ainsi que
+      les commandes adressées aux organisations logistiques exécutantes.
+  - vendor: Microsoft
+    product: Warehouse management only mode overview
+    element_name: Inbound Shipment Order / Outbound Shipment Order
+    element_type: Documents et frontière produit
+    relationship: Recouvrement partiel
+    similarities: Documents logistiques séparés des commandes générales amont ; fonctions WMS autonomes.
+    differences: TM Forum atteste le nom et inclut de l’orchestration ; Microsoft et Oracle distinguent commandes amont et
+      sollicitations logistiques. Séparer ici engagements de prestation et coordination est un choix FLOW, sans équivalence
+      aux modules. La commande composée et la conservation de ses contraintes dans FLOW sont précisées par U692 ; ces sources
+      ne démontrent pas un contrat universel de liste ordonnée d’ordres logistiques.
+    flow_position: Gérer les services nécessaires aux flux supply chain, leurs exigences et leurs résultats, ainsi que les
+      commandes adressées aux organisations logistiques exécutantes. Le moteur de [Reactive Workflow Management](glossary:TER125)
+      produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée.
+      Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+    source_title: Warehouse management only mode overview
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-overview
+    source_version: Documentation évolutive ; mise à jour affichée 2025-11-20
+    source_locator: Introduction ; Unsupported processes
+    consulted_on: '2026-09-23'
+    evidence_limits: 'Périmètre entrepôt ; restrictions retours, production et transport. Ne prescrit aucun sous-domaine FLOW.
+      U874 : appui antérieur conservé ; ne prouve pas à lui seul le nouveau périmètre de service porté par FLOW.'
+    status: proposed
+    source_refs:
+    - ELM133
+    - CMP273
+    - U682
+    - U692
+    concept_name: Inbound Shipment Order / Outbound Shipment Order
+    scope_summary: Documents logistiques séparés des commandes générales amont ; fonctions WMS autonomes.
+    approach_summary: Gérer les prestations confiées aux exécutants, leurs exigences, leurs engagements propres et leurs évolutions.
+    term_choice: Service Management désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence
+      de taxonomie.
+    definition_choice: Gérer les services nécessaires aux flux supply chain, leurs exigences et leurs résultats, ainsi que
+      les commandes adressées aux organisations logistiques exécutantes.
+  - vendor: Oracle
+    product: Shipment Request and Shipment Confirmation Processes for External Systems Integration
+    element_name: Shipment Request / Shipment Confirmation
+    element_type: Échanges amont-exécutant
+    relationship: Recouvrement partiel
+    similarities: Une demande au WMS ou 3PL est suivie du pick, pack et ship, puis d’une confirmation de réalisation.
+    differences: TM Forum atteste le nom et inclut de l’orchestration ; Microsoft et Oracle distinguent commandes amont et
+      sollicitations logistiques. Séparer ici engagements de prestation et coordination est un choix FLOW, sans équivalence
+      aux modules. La commande composée et la conservation de ses contraintes dans FLOW sont précisées par U692 ; ces sources
+      ne démontrent pas un contrat universel de liste ordonnée d’ordres logistiques.
+    flow_position: Gérer les services nécessaires aux flux supply chain, leurs exigences et leurs résultats, ainsi que les
+      commandes adressées aux organisations logistiques exécutantes. Le moteur de [Reactive Workflow Management](glossary:TER125)
+      produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée.
+      Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+    source_title: Shipment Request and Shipment Confirmation Processes for External Systems Integration
+    source_url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25d/faims/shipment-request-and-shipment-confirmation-processes-for.html
+    source_version: Fusion Cloud SCM 25D
+    source_locator: Explanation of callouts, étapes 1 à 3
+    consulted_on: '2026-09-23'
+    evidence_limits: 'Contexte sortant ; ne décrit pas un ordre individuel obligatoire par opération ni tout le cycle d’annulation.
+      U874 : appui antérieur conservé ; ne prouve pas à lui seul le nouveau périmètre de service porté par FLOW.'
+    status: proposed
+    source_refs:
+    - ELM659
+    - CMP273
+    - U682
+    - U692
+    concept_name: Shipment Request / Shipment Confirmation
+    scope_summary: Une demande au WMS ou 3PL est suivie du pick, pack et ship, puis d’une confirmation de réalisation.
+    approach_summary: Gérer les prestations confiées aux exécutants, leurs exigences, leurs engagements propres et leurs évolutions.
+    term_choice: Service Management désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence
+      de taxonomie.
+    definition_choice: Gérer les services nécessaires aux flux supply chain, leurs exigences et leurs résultats, ainsi que
+      les commandes adressées aux organisations logistiques exécutantes.
+  - vendor: Microsoft
+    product: Microsoft Dynamics 365 — application indiquée par la source
+    element_name: Overview of the Service to deliver business process areas
+    concept_name: Overview of the Service to deliver business process areas
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: Le processus de service formalise les travaux demandés, les ressources et la progression de leur réalisation.
+    approach_summary: 'Rapprochement avec Service Management : Le processus de service formalise les travaux demandés, les
+      ressources et la progression de leur réalisation.'
+    similarities: Le processus de service formalise les travaux demandés, les ressources et la progression de leur réalisation.
+    differences: Appui transversal au service demandé ; ne démontre pas chaque prestation textile comme fonction native Dynamics.
+    flow_position: Gérer les services nécessaires aux flux supply chain, leurs exigences et leurs résultats, ainsi que les
+      commandes adressées aux organisations logistiques exécutantes. Le moteur de [Reactive Workflow Management](glossary:TER125)
+      produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée.
+      Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+    source_title: Overview of the Service to deliver business process areas - Dynamics 365 | Microsoft Learn
+    source_url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/service-to-cash-areas-overview
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Overview of the Service to deliver business process areas - Dynamics 365 | Microsoft Learn — passages
+      sur le mécanisme rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. Appui transversal au service demandé ; ne démontre pas chaque prestation textile comme fonction native
+      Dynamics.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM809
+    - U874
+    term_choice: Service Management désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence
+      de taxonomie.
+    definition_choice: Gérer les services nécessaires aux flux supply chain, leurs exigences et leurs résultats, ainsi que
+      les commandes adressées aux organisations logistiques exécutantes.
+  - vendor: SAP
+    product: SAP S/4HANA — périmètre du cours cité
+    element_name: 'Working with Service Order Management: External Service Processin'
+    concept_name: 'Working with Service Order Management: External Service Processin'
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: Un service externe est demandé, acheté, puis rapproché d’une entrée de service acceptée.
+    approach_summary: 'Rapprochement avec Service Management : Un service externe est demandé, acheté, puis rapproché d’une
+      entrée de service acceptée.'
+    similarities: Un service externe est demandé, acheté, puis rapproché d’une entrée de service acceptée.
+    differences: FLOW distingue exigence de prestation, engagement d’achat et rapprochement opérationnel ; l’entrée de service
+      SAP ne couvre pas tous les faits attendus d’une prestation logistique.
+    flow_position: Gérer les services nécessaires aux flux supply chain, leurs exigences et leurs résultats, ainsi que les
+      commandes adressées aux organisations logistiques exécutantes. Le moteur de [Reactive Workflow Management](glossary:TER125)
+      produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée.
+      Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+    source_title: 'Working with Service Order Management: External Service Processin'
+    source_url: https://learning.sap.com/courses/identifying-business-processes-in-sap-s4hana-service/working-with-service-order-management-external-service-processing_ca8699f0-3870-43c2-bb6e-4c68bddda055
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: 'Working with Service Order Management: External Service Processin — passages sur le mécanisme rapproché.'
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. FLOW distingue exigence de prestation, engagement d’achat et rapprochement opérationnel ; l’entrée
+      de service SAP ne couvre pas tous les faits attendus d’une prestation logistique.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM814
+    - U874
+    term_choice: Service Management désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence
+      de taxonomie.
+    definition_choice: Gérer les services nécessaires aux flux supply chain, leurs exigences et leurs résultats, ainsi que
+      les commandes adressées aux organisations logistiques exécutantes.
+- id: TER153
+  name: Billing
+  definition: Assurer la facturation des éléments éligibles du flux et tenir la facture obtenue, les rejets et les corrections
+    nécessaires.
+  short_description: 'Service de facturation : facture obtenue, rejets et corrections.'
+  context: |-
+    [Billing](glossary:TER153) porte le service de facturation de FLOW : qualifier les éléments à facturer, les transmettre au composant compétent lorsque nécessaire et tenir le résultat métier, sa référence, les rejets et les corrections. Une demande technique envoyée ne vaut pas facture émise.
+
+    La responsabilité de service ne présume pas que FLOW calcule seul les taxes ou tienne les comptes. Les règles fiscales, les contrôles financiers et la comptabilisation restent sous leurs autorités compétentes. Aucun [Order](glossary:TER012) financier artificiel n’est créé.
+
+    Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+
+    La facture est un résultat métier de Billing. Sa mise en forme ou sa génération de fichier ne crée pas une capacité Document Production.
+
+    Exemple fictif : dix articles sont livrés et facturables. Le service obtient la facture correspondante ou explicite son rejet ; la simple réception de la demande par un composant ne clôt pas la facturation.
+
+    Pour [Credit Resolution](glossary:TER156), obtenir et tenir l’avoir autorisé, sa référence, son montant et ses liens avec la vente et le retour ; gérer les rejets et corrections selon les règles financières. Un avoir corrige la facturation ou la créance ; il ne prouve pas un mouvement d’argent. Le remboursement relève de [Payment](model:service-order-payment-collection).
+  notes: U874 précise la convention FLOW et la responsabilité de service ; les termes natifs des sources peuvent avoir un
+    autre périmètre.
+  source_refs:
+  - U874
+  - U879
+  review:
+    state: proposed
+    note: Lot U879 appliqué ; rédaction détaillée proposée, accords explicites capturés séparément.
+  market_comparisons:
+  - vendor: ASCM
+    product: Your Comprehensive Guide to Supply Chain Solutions for Improved Operations
+    element_name: Your Comprehensive Guide to Supply Chain Solutions for Improved Operations
+    element_type: Processus, service ou documentation produit
+    relationship: Recouvrement partiel
+    similarities: SCOR couvre les interactions depuis la commande jusqu’à la facture payée. Cadre de processus de bout en
+      bout, sans prescription de frontières de domaines.
+    differences: La source décrit un service, un processus ou un produit ; FLOW porte les demandes et engagements. Le découpage
+      en capacités et comportements est une adaptation, sans preuve installée Beaumanoir.
+    flow_position: Assurer la facturation des éléments éligibles du flux et tenir la facture obtenue, les rejets et les corrections
+      nécessaires. Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089).
+      [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution
+      dans un logiciel unique ; aucun déploiement installé n’est déduit.
+    source_title: Your Comprehensive Guide to Supply Chain Solutions for Improved Operations
+    source_url: https://www.ascm.org/ascm-insights/supply-chain-solutions-for-improved-operations/
+    source_version: '2026-07-10'
+    source_locator: What is SCOR?
+    consulted_on: '2026-09-24'
+    evidence_limits: 'Synthèse et lien uniquement. Documentation primaire de processus, produit ou offre ; ne démontre ni
+      taxonomie universelle des Orders ni déploiement Beaumanoir. U874 : appui antérieur conservé ; ne prouve pas à lui seul
+      le nouveau périmètre de service porté par FLOW.'
+    status: proposed
+    source_refs:
+    - ELM698
+    - U709
+    concept_name: Billing Order
+    scope_summary: Demander et suivre la facturation des éléments éligibles d’une commande ou prestation, avec confirmation,
+      rejet et correction.
+    approach_summary: Demander et suivre la facturation des éléments éligibles d’une commande ou prestation, avec confirmation,
+      rejet et correction.
+    term_choice: Billing désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence de taxonomie.
+    definition_choice: Assurer la facturation des éléments éligibles du flux et tenir la facture obtenue, les rejets et les
+      corrections nécessaires.
+  - vendor: Oracle
+    product: How Order-to-Cash Works in Order Management
+    element_name: How Order-to-Cash Works in Order Management
+    element_type: Processus, service ou documentation produit
+    relationship: Recouvrement partiel
+    similarities: L’orchestration demande la facturation à Receivables et attend sa réponse ; Financials crée la facture et
+      traite les paiements. Le processus traverse les responsabilités.
+    differences: La source décrit un service, un processus ou un produit ; FLOW porte les demandes et engagements. Le découpage
+      en capacités et comportements est une adaptation, sans preuve installée Beaumanoir.
+    flow_position: Assurer la facturation des éléments éligibles du flux et tenir la facture obtenue, les rejets et les corrections
+      nécessaires. Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089).
+      [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution
+      dans un logiciel unique ; aucun déploiement installé n’est déduit.
+    source_title: How Order-to-Cash Works in Order Management
+    source_url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26a/faiom/how-order-to-cash-works-in-order-management.html
+    source_version: 26A
+    source_locator: Steps 3–5
+    consulted_on: '2026-09-24'
+    evidence_limits: 'Synthèse et lien uniquement. Documentation primaire de processus, produit ou offre ; ne démontre ni
+      taxonomie universelle des Orders ni déploiement Beaumanoir. U874 : appui antérieur conservé ; ne prouve pas à lui seul
+      le nouveau périmètre de service porté par FLOW.'
+    status: proposed
+    source_refs:
+    - ELM701
+    - U709
+    concept_name: Billing Order
+    scope_summary: Demander et suivre la facturation des éléments éligibles d’une commande ou prestation, avec confirmation,
+      rejet et correction.
+    approach_summary: Demander et suivre la facturation des éléments éligibles d’une commande ou prestation, avec confirmation,
+      rejet et correction.
+    term_choice: Billing désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence de taxonomie.
+    definition_choice: Assurer la facturation des éléments éligibles du flux et tenir la facture obtenue, les rejets et les
+      corrections nécessaires.
+  - vendor: SAP
+    product: SAP S/4HANA — périmètre du cours cité
+    element_name: Describing Omnichannel Convergent Billing (1MC)
+    concept_name: Describing Omnichannel Convergent Billing (1MC)
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: Des demandes de facturation externes sont intégrées puis regroupées ou traitées pour produire les factures.
+    approach_summary: 'Rapprochement avec Billing : Des demandes de facturation externes sont intégrées puis regroupées ou
+      traitées pour produire les factures.'
+    similarities: Des demandes de facturation externes sont intégrées puis regroupées ou traitées pour produire les factures.
+    differences: Le pilotage FLOW reste distinct du moteur de facturation, de la comptabilisation et du recouvrement.
+    flow_position: Assurer la facturation des éléments éligibles du flux et tenir la facture obtenue, les rejets et les corrections
+      nécessaires. Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089).
+      [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution
+      dans un logiciel unique ; aucun déploiement installé n’est déduit.
+    source_title: Describing Omnichannel Convergent Billing (1MC)
+    source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sales-automation-and-analytics/describing-omnichannel-convergent-billing-1mc-_e8281711-58ac-4058-93e3-f9fb65eb4537
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Describing Omnichannel Convergent Billing (1MC) — passages sur le mécanisme rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. Le pilotage FLOW reste distinct du moteur de facturation, de la comptabilisation et du recouvrement.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM808
+    - U874
+    term_choice: Billing désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence de taxonomie.
+    definition_choice: Assurer la facturation des éléments éligibles du flux et tenir la facture obtenue, les rejets et les
+      corrections nécessaires.
+  - vendor: Microsoft
+    product: Dynamics 365 Intelligent Order Management
+    source_title: Create orchestration flows
+    source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+    source_locator: Actions, conditions, publication des parcours et envoi aux prestataires
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+    element_name: Create orchestration flows
+    concept_name: Create orchestration flows
+    element_type: Fonction produit documentée
+    relationship: Recouvrement partiel
+    similarities: Confier des ordres à un prestataire de facturation.
+    differences: L’envoi ne démontre pas tout le cycle de la demande de facturation FLOW.
+    flow_position: Assurer la facturation des éléments éligibles du flux et tenir la facture obtenue, les rejets et les corrections
+      nécessaires. Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089).
+      [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution
+      dans un logiciel unique ; aucun déploiement installé n’est déduit.
+    definition_choice: Assurer la facturation des éléments éligibles du flux et tenir la facture obtenue, les rejets et les
+      corrections nécessaires.
+    term_choice: Billing désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence de taxonomie.
+    scope_summary: Confier des ordres à un prestataire de facturation.
+    approach_summary: L’envoi ne démontre pas tout le cycle de la demande de facturation FLOW.
+    evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation installée
+      chez Beaumanoir.
+    status: proposed
+    source_refs:
+    - U853
+    - U874
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Sales returns
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Résolution du retour et documents de suite
+    element_name: Customer returns
+    concept_name: Customer returns
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order liée
+      distincte.
+    approach_summary: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order
+      liée distincte.
+    similarities: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order liée
+      distincte.
+    differences: Les actions produit ne deviennent pas automatiquement des Behaviors FLOW ; avoir et règlement restent distincts.
+    evidence_limits: Les actions produit ne deviennent pas automatiquement des Behaviors FLOW ; avoir et règlement restent
+      distincts. Aucun déploiement Beaumanoir déduit.
+    flow_position: Pour [Credit Resolution](glossary:TER156), obtenir et tenir l’avoir autorisé, sa référence, son montant
+      et ses liens avec la vente et le retour ; gérer les rejets et corrections selon les règles financières. Un avoir corrige
+      la facturation ou la créance ; il ne prouve pas un mouvement d’argent. Le remboursement relève de [Payment](model:service-order-payment-collection).
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: Pour [Credit Resolution](glossary:TER156), obtenir et tenir l’avoir autorisé, sa référence, son montant
+      et ses liens avec la vente et le retour ; gérer les rejets et corrections selon les règles financières. Un avoir corrige
+      la facturation ou la créance ; il ne prouve pas un mouvement d’argent. Le remboursement relève de [Payment](model:service-order-payment-collection).
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  - vendor: SAP
+    product: SAP S/4HANA
+    source_title: Managing Customer Returns
+    source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Résolution du retour et documents de suite
+    element_name: Customer returns
+    concept_name: Customer returns
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont demande
+      d’avoir.
+    approach_summary: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont
+      demande d’avoir.
+    similarities: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont demande
+      d’avoir.
+    differences: La détermination du remboursement ne prouve pas que le retour exécute lui-même le transfert financier.
+    evidence_limits: La détermination du remboursement ne prouve pas que le retour exécute lui-même le transfert financier.
+      Aucun déploiement Beaumanoir déduit.
+    flow_position: Pour [Credit Resolution](glossary:TER156), obtenir et tenir l’avoir autorisé, sa référence, son montant
+      et ses liens avec la vente et le retour ; gérer les rejets et corrections selon les règles financières. Un avoir corrige
+      la facturation ou la créance ; il ne prouve pas un mouvement d’argent. Le remboursement relève de [Payment](model:service-order-payment-collection).
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: Pour [Credit Resolution](glossary:TER156), obtenir et tenir l’avoir autorisé, sa référence, son montant
+      et ses liens avec la vente et le retour ; gérer les rejets et corrections selon les règles financières. Un avoir corrige
+      la facturation ou la créance ; il ne prouve pas un mouvement d’argent. Le remboursement relève de [Payment](model:service-order-payment-collection).
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  revision: 1
+- id: TER154
+  name: Payment
+  definition: Assurer les encaissements et remboursements clients associés aux flux, suivre les montants restant à traiter
+    et les résultats, paiements partiels ou refus.
+  short_description: Assurer les encaissements et remboursements clients associés aux flux, suivre les montants restant à
+    traiter et les résultats, paiements partiels ou refus.
+  context: |-
+    [Payment](glossary:TER154) porte le service de paiement de FLOW pour les encaissements et remboursements clients : tenir les références et montants concernés, mobiliser le composant ou prestataire compétent et reconnaître les résultats, refus et paiements partiels. Le nom ne crée pas une commande documentaire à une autre organisation et n’étend pas automatiquement le périmètre aux paiements fournisseurs.
+
+    Distinguer autorisation, capture du montant et règlement reçu. Une autorisation permet de solliciter le paiement ; elle ne prouve pas son encaissement. Un acquittement technique ne vaut pas résultat financier. La trésorerie, la tenue comptable générale et le recouvrement des impayés restent hors périmètre.
+
+    Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+
+    Exemple fictif : pour une commande de 100 euros, une autorisation existe mais la capture est refusée. Payment expose le refus et le montant restant ; le workflow traite la suite autorisée sans considérer la commande payée.
+
+    Pour [Refund Resolution](glossary:TER157), prendre en charge le remboursement autorisé, conserver le lien au retour, au paiement et à l’avoir lorsqu’ils sont applicables, puis reconnaître le montant effectivement remboursé, les refus et le reste à traiter. Une demande envoyée ou un avoir émis ne vaut pas remboursement réalisé. Les références de traitement servent à reconnaître les résultats sans compter deux fois un même remboursement. L’extension aux remboursements clients n’inclut pas les paiements fournisseurs ni la décision commerciale d’indemniser.
+  notes: U874 précise la convention FLOW et la responsabilité de service ; les termes natifs des sources peuvent avoir un
+    autre périmètre.
+  source_refs:
+  - U874
+  - U877
+  - U879
+  review:
+    state: proposed
+    note: Lot U879 appliqué ; rédaction détaillée proposée, accords explicites capturés séparément.
+  market_comparisons:
+  - vendor: Oracle
+    product: How Order-to-Cash Works in Order Management
+    element_name: How Order-to-Cash Works in Order Management
+    element_type: Processus, service ou documentation produit
+    relationship: Recouvrement partiel
+    similarities: L’orchestration demande la facturation à Receivables et attend sa réponse ; Financials crée la facture et
+      traite les paiements. Le processus traverse les responsabilités.
+    differences: La source décrit un service, un processus ou un produit ; FLOW porte les demandes et engagements. Le découpage
+      en capacités et comportements est une adaptation, sans preuve installée Beaumanoir.
+    flow_position: FLOW porte les encaissements et remboursements clients ; le périmètre natif décrit par cette source peut
+      ne couvrir qu’une partie de ce service. Une autorisation ou un avoir ne prouve pas le transfert financier.
+    source_title: How Order-to-Cash Works in Order Management
+    source_url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26a/faiom/how-order-to-cash-works-in-order-management.html
+    source_version: 26A
+    source_locator: Steps 3–5
+    consulted_on: '2026-09-24'
+    evidence_limits: 'Synthèse et lien uniquement. Documentation primaire de processus, produit ou offre ; ne démontre ni
+      taxonomie universelle des Orders ni déploiement Beaumanoir. U874 : appui antérieur conservé ; ne prouve pas à lui seul
+      le nouveau périmètre de service porté par FLOW.'
+    status: proposed
+    source_refs:
+    - ELM701
+    - U709
+    concept_name: Payment Order
+    scope_summary: Demander et suivre une opération d’encaissement rattachée à la commande, lorsque FLOW en pilote effectivement
+      le déclenchement et les suites.
+    approach_summary: Demander et suivre une opération d’encaissement rattachée à la commande, lorsque FLOW en pilote effectivement
+      le déclenchement et les suites.
+    term_choice: Payment désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence de taxonomie.
+    definition_choice: Assurer le service de paiement associé au flux et tenir son résultat, ses refus et ses montants restant
+      à encaisser.
+  - vendor: SAP
+    product: Manual Incoming Payments
+    element_name: Manual Incoming Payments
+    element_type: Processus, service ou documentation produit
+    relationship: Recouvrement partiel
+    similarities: Les encaissements relèvent des comptes clients, de la gestion des paiements et de la liquidité ; le rapprochement
+      avec les créances fait partie du traitement financier.
+    differences: La source décrit un service, un processus ou un produit ; FLOW porte les demandes et engagements. Le découpage
+      en capacités et comportements est une adaptation, sans preuve installée Beaumanoir.
+    flow_position: FLOW porte les encaissements et remboursements clients ; le périmètre natif décrit par cette source peut
+      ne couvrir qu’une partie de ce service. Une autorisation ou un avoir ne prouve pas le transfert financier.
+    source_title: Manual Incoming Payments
+    source_url: https://help.sap.com/docs/SAP_BUSINESS_BYDESIGN/2754875d2d2a403f95e58a41a9c7d6de/2c25dd46722d1014880ed85ecdf0cc88.html?locale=en-US
+    source_version: August 2026
+    source_locator: Overview
+    consulted_on: '2026-09-24'
+    evidence_limits: 'Synthèse et lien uniquement. Documentation primaire de processus, produit ou offre ; ne démontre ni
+      taxonomie universelle des Orders ni déploiement Beaumanoir. U874 : appui antérieur conservé ; ne prouve pas à lui seul
+      le nouveau périmètre de service porté par FLOW.'
+    status: proposed
+    source_refs:
+    - ELM702
+    - U709
+    concept_name: Payment Order
+    scope_summary: Demander et suivre une opération d’encaissement rattachée à la commande, lorsque FLOW en pilote effectivement
+      le déclenchement et les suites.
+    approach_summary: Demander et suivre une opération d’encaissement rattachée à la commande, lorsque FLOW en pilote effectivement
+      le déclenchement et les suites.
+    term_choice: Payment désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence de taxonomie.
+    definition_choice: Assurer le service de paiement associé au flux et tenir son résultat, ses refus et ses montants restant
+      à encaisser.
+  - vendor: Oracle
+    product: Overview of Setting Up Credit Cards
+    element_name: Overview of Setting Up Credit Cards
+    element_type: Processus, service ou documentation produit
+    relationship: Recouvrement partiel
+    similarities: Order Management mobilise Oracle Payments pour le traitement carte ; l’autorisation peut venir du système
+      amont avec Financials. Intégration explicite, pas propriété de toute la finance dans Order Management.
+    differences: La source décrit un service, un processus ou un produit ; FLOW porte les demandes et engagements. Le découpage
+      en capacités et comportements est une adaptation, sans preuve installée Beaumanoir.
+    flow_position: FLOW porte les encaissements et remboursements clients ; le périmètre natif décrit par cette source peut
+      ne couvrir qu’une partie de ce service. Une autorisation ou un avoir ne prouve pas le transfert financier.
+    source_title: Overview of Setting Up Credit Cards
+    source_url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26b/faiom/overview-of-setting-up-credit-cards.html
+    source_version: 26B
+    source_locator: Overview and integration
+    consulted_on: '2026-09-24'
+    evidence_limits: 'Synthèse et lien uniquement. Documentation primaire de processus, produit ou offre ; ne démontre ni
+      taxonomie universelle des Orders ni déploiement Beaumanoir. U874 : appui antérieur conservé ; ne prouve pas à lui seul
+      le nouveau périmètre de service porté par FLOW.'
+    status: proposed
+    source_refs:
+    - ELM705
+    - U709
+    concept_name: Payment Order
+    scope_summary: Demander et suivre une opération d’encaissement rattachée à la commande, lorsque FLOW en pilote effectivement
+      le déclenchement et les suites.
+    approach_summary: Demander et suivre une opération d’encaissement rattachée à la commande, lorsque FLOW en pilote effectivement
+      le déclenchement et les suites.
+    term_choice: Payment désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence de taxonomie.
+    definition_choice: Assurer le service de paiement associé au flux et tenir son résultat, ses refus et ses montants restant
+      à encaisser.
+  - vendor: Microsoft
+    product: Microsoft Dynamics 365 — application indiquée par la source
+    element_name: Manage payment authorizations
+    concept_name: Manage payment authorizations
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: La documentation distingue autorisation et capture du paiement, avec un statut retourné par le prestataire.
+    approach_summary: 'Rapprochement avec Payment : La documentation distingue autorisation et capture du paiement, avec un
+      statut retourné par le prestataire.'
+    similarities: La documentation distingue autorisation et capture du paiement, avec un statut retourné par le prestataire.
+    differences: 'Limite explicite : un accusé de capture n’est pas toujours le résultat final asynchrone. Ce document ne
+      prouve pas une notification complète de fin ; FLOW doit suivre ce résultat distant.'
+    flow_position: FLOW porte les encaissements et remboursements clients ; le périmètre natif décrit par cette source peut
+      ne couvrir qu’une partie de ce service. Une autorisation ou un avoir ne prouve pas le transfert financier.
+    source_title: Manage payment authorizations - Commerce | Dynamics 365 | Microsoft Learn
+    source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/manage-payment-authorizations
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Manage payment authorizations - Commerce | Dynamics 365 | Microsoft Learn — passages sur le mécanisme
+      rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: 'Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. Limite explicite : un accusé de capture n’est pas toujours le résultat final asynchrone. Ce document
+      ne prouve pas une notification complète de fin ; FLOW doit suivre ce résultat distant.'
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM811
+    - U874
+    term_choice: Payment désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence de taxonomie.
+    definition_choice: Assurer le service de paiement associé au flux et tenir son résultat, ses refus et ses montants restant
+      à encaisser.
+  - vendor: SAP
+    product: SAP S/4HANA — périmètre du cours cité
+    element_name: Explaining Digital Payments
+    concept_name: Explaining Digital Payments
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: S/4HANA sollicite un prestataire de paiement via Digital Payments et reçoit les résultats pour actualiser
+      le statut.
+    approach_summary: 'Rapprochement avec Payment : S/4HANA sollicite un prestataire de paiement via Digital Payments et reçoit
+      les résultats pour actualiser le statut.'
+    similarities: S/4HANA sollicite un prestataire de paiement via Digital Payments et reçoit les résultats pour actualiser
+      le statut.
+    differences: Le prestataire réalise le paiement ; FLOW orchestre sa demande et son résultat sans absorber les responsabilités
+      financières.
+    flow_position: FLOW porte les encaissements et remboursements clients ; le périmètre natif décrit par cette source peut
+      ne couvrir qu’une partie de ce service. Une autorisation ou un avoir ne prouve pas le transfert financier.
+    source_title: Explaining Digital Payments
+    source_url: https://learning.sap.com/courses/configuring-additional-settings-in-financial-accounting-in-sap-s-4hana/explaining-digital-payments
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Explaining Digital Payments — passages sur le mécanisme rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. Le prestataire réalise le paiement ; FLOW orchestre sa demande et son résultat sans absorber les
+      responsabilités financières.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM812
+    - U874
+    term_choice: Payment désigne le périmètre FLOW ; le terme natif de la source est conservé, sans équivalence de taxonomie.
+    definition_choice: Assurer le service de paiement associé au flux et tenir son résultat, ses refus et ses montants restant
+      à encaisser.
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Sales returns
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Résolution du retour et documents de suite
+    element_name: Customer returns
+    concept_name: Customer returns
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order liée
+      distincte.
+    approach_summary: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order
+      liée distincte.
+    similarities: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order liée
+      distincte.
+    differences: Les actions produit ne deviennent pas automatiquement des Behaviors FLOW ; avoir et règlement restent distincts.
+    evidence_limits: Les actions produit ne deviennent pas automatiquement des Behaviors FLOW ; avoir et règlement restent
+      distincts. Aucun déploiement Beaumanoir déduit.
+    flow_position: FLOW porte les encaissements et remboursements clients ; le périmètre natif décrit par cette source peut
+      ne couvrir qu’une partie de ce service. Une autorisation ou un avoir ne prouve pas le transfert financier.
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: Pour [Refund Resolution](glossary:TER157), prendre en charge le remboursement autorisé, conserver le
+      lien au retour, au paiement et à l’avoir lorsqu’ils sont applicables, puis reconnaître le montant effectivement remboursé,
+      les refus et le reste à traiter. Une demande envoyée ou un avoir émis ne vaut pas remboursement réalisé. Les références
+      de traitement servent à reconnaître les résultats sans compter deux fois un même remboursement. L’extension aux remboursements
+      clients n’inclut pas les paiements fournisseurs ni la décision commerciale d’indemniser.
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  - vendor: SAP
+    product: SAP S/4HANA
+    source_title: Managing Customer Returns
+    source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Résolution du retour et documents de suite
+    element_name: Customer returns
+    concept_name: Customer returns
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont demande
+      d’avoir.
+    approach_summary: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont
+      demande d’avoir.
+    similarities: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont demande
+      d’avoir.
+    differences: La détermination du remboursement ne prouve pas que le retour exécute lui-même le transfert financier.
+    evidence_limits: La détermination du remboursement ne prouve pas que le retour exécute lui-même le transfert financier.
+      Aucun déploiement Beaumanoir déduit.
+    flow_position: FLOW porte les encaissements et remboursements clients ; le périmètre natif décrit par cette source peut
+      ne couvrir qu’une partie de ce service. Une autorisation ou un avoir ne prouve pas le transfert financier.
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: Pour [Refund Resolution](glossary:TER157), prendre en charge le remboursement autorisé, conserver le
+      lien au retour, au paiement et à l’avoir lorsqu’ils sont applicables, puis reconnaître le montant effectivement remboursé,
+      les refus et le reste à traiter. Une demande envoyée ou un avoir émis ne vaut pas remboursement réalisé. Les références
+      de traitement servent à reconnaître les résultats sans compter deux fois un même remboursement. L’extension aux remboursements
+      clients n’inclut pas les paiements fournisseurs ni la décision commerciale d’indemniser.
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  revision: 2
+  last_modified: '2026-10-06T00:00:00Z'
+- id: TER156
+  name: Credit Resolution
+  definition: Tenir l’engagement d’obtenir l’avoir autorisé pour le retour et suivre son émission ou sa correction par [Billing](model:service-order-billing).
+  short_description: Tenir l’engagement d’obtenir l’avoir autorisé pour le retour et suivre son émission ou sa correction
+    par [Billing](model:service-order-billing).
+  context: L’avoir attendu est rapproché de l’avoir émis, de ses quantités et montants. Un rejet laisse un reste à traiter
+    ; ni retour reçu ni remboursement ne remplace cette preuve. Ce comportement appartient à [Return Order](model:D04.l) et
+    se combine avec les autres résolutions et devenirs physiques. Le retour suit la prestation ; il ne réalise pas lui-même
+    le service financier ou la livraison.
+  source_refs:
+  - U878
+  - U879
+  review:
+    state: proposed
+    note: Lot U879 appliqué ; rédaction détaillée proposée, accords explicites capturés séparément.
+  revision: 1
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Sales returns
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Résolution du retour et documents de suite
+    element_name: Customer returns
+    concept_name: Customer returns
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order liée
+      distincte.
+    approach_summary: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order
+      liée distincte.
+    similarities: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order liée
+      distincte.
+    differences: Les actions produit ne deviennent pas automatiquement des Behaviors FLOW ; avoir et règlement restent distincts.
+    evidence_limits: Les actions produit ne deviennent pas automatiquement des Behaviors FLOW ; avoir et règlement restent
+      distincts. Aucun déploiement Beaumanoir déduit.
+    flow_position: Tenir l’engagement d’obtenir l’avoir autorisé pour le retour et suivre son émission ou sa correction par
+      [Billing](model:service-order-billing).
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: Tenir l’engagement d’obtenir l’avoir autorisé pour le retour et suivre son émission ou sa correction
+      par [Billing](model:service-order-billing).
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  - vendor: SAP
+    product: SAP S/4HANA
+    source_title: Managing Customer Returns
+    source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Résolution du retour et documents de suite
+    element_name: Customer returns
+    concept_name: Customer returns
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont demande
+      d’avoir.
+    approach_summary: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont
+      demande d’avoir.
+    similarities: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont demande
+      d’avoir.
+    differences: La détermination du remboursement ne prouve pas que le retour exécute lui-même le transfert financier.
+    evidence_limits: La détermination du remboursement ne prouve pas que le retour exécute lui-même le transfert financier.
+      Aucun déploiement Beaumanoir déduit.
+    flow_position: Tenir l’engagement d’obtenir l’avoir autorisé pour le retour et suivre son émission ou sa correction par
+      [Billing](model:service-order-billing).
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: Tenir l’engagement d’obtenir l’avoir autorisé pour le retour et suivre son émission ou sa correction
+      par [Billing](model:service-order-billing).
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  market_inspiration:
+    choice: Distinguer la résolution client du devenir physique du bien.
+    flow_scope: Tenir l’engagement d’obtenir l’avoir autorisé pour le retour et suivre son émission ou sa correction par [Billing](model:service-order-billing).
+    flow_approach: L’avoir attendu est rapproché de l’avoir émis, de ses quantités et montants. Un rejet laisse un reste à
+      traiter ; ni retour reçu ni remboursement ne remplace cette preuve.
+    synthesis:
+    - SAP et Microsoft relient le retour à ses suites de crédit ou remplacement. FLOW distingue le suivi de la résolution
+      et le service réalisant son résultat.
+    examples:
+    - title: Illustration FLOW — Credit Resolution
+      situation: Un retour client fait l’objet d’une résolution autorisée.
+      outcome: Tenir l’engagement d’obtenir l’avoir autorisé pour le retour et suivre son émission ou sa correction par [Billing](model:service-order-billing).
+      lesson: La preuve du résultat provient du service compétent ; le retour en conserve le suivi.
+      source_title: Sales returns
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+      source_refs:
+      - U878
+      - U879
+- id: TER157
+  name: Refund Resolution
+  definition: Tenir l’engagement de remboursement du retour et suivre sa réalisation, ses refus et son reste à traiter auprès
+    de [Payment](model:service-order-payment-collection).
+  short_description: Tenir l’engagement de remboursement du retour et suivre sa réalisation, ses refus et son reste à traiter
+    auprès de [Payment](model:service-order-payment-collection).
+  context: Le résultat est le montant effectivement remboursé. Un avoir peut être nécessaire selon le cas, mais son émission
+    ne prouve pas le remboursement. Un remboursement partiel ne solde pas automatiquement le montant restant. Ce comportement
+    appartient à [Return Order](model:D04.l) et se combine avec les autres résolutions et devenirs physiques. Le retour suit
+    la prestation ; il ne réalise pas lui-même le service financier ou la livraison.
+  source_refs:
+  - U878
+  - U879
+  review:
+    state: proposed
+    note: Lot U879 appliqué ; rédaction détaillée proposée, accords explicites capturés séparément.
+  revision: 1
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Sales returns
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Résolution du retour et documents de suite
+    element_name: Customer returns
+    concept_name: Customer returns
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order liée
+      distincte.
+    approach_summary: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order
+      liée distincte.
+    similarities: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order liée
+      distincte.
+    differences: Les actions produit ne deviennent pas automatiquement des Behaviors FLOW ; avoir et règlement restent distincts.
+    evidence_limits: Les actions produit ne deviennent pas automatiquement des Behaviors FLOW ; avoir et règlement restent
+      distincts. Aucun déploiement Beaumanoir déduit.
+    flow_position: Tenir l’engagement de remboursement du retour et suivre sa réalisation, ses refus et son reste à traiter
+      auprès de [Payment](model:service-order-payment-collection).
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: Tenir l’engagement de remboursement du retour et suivre sa réalisation, ses refus et son reste à traiter
+      auprès de [Payment](model:service-order-payment-collection).
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  - vendor: SAP
+    product: SAP S/4HANA
+    source_title: Managing Customer Returns
+    source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Résolution du retour et documents de suite
+    element_name: Customer returns
+    concept_name: Customer returns
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont demande
+      d’avoir.
+    approach_summary: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont
+      demande d’avoir.
+    similarities: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont demande
+      d’avoir.
+    differences: La détermination du remboursement ne prouve pas que le retour exécute lui-même le transfert financier.
+    evidence_limits: La détermination du remboursement ne prouve pas que le retour exécute lui-même le transfert financier.
+      Aucun déploiement Beaumanoir déduit.
+    flow_position: Tenir l’engagement de remboursement du retour et suivre sa réalisation, ses refus et son reste à traiter
+      auprès de [Payment](model:service-order-payment-collection).
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: Tenir l’engagement de remboursement du retour et suivre sa réalisation, ses refus et son reste à traiter
+      auprès de [Payment](model:service-order-payment-collection).
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  market_inspiration:
+    choice: Distinguer la résolution client du devenir physique du bien.
+    flow_scope: Tenir l’engagement de remboursement du retour et suivre sa réalisation, ses refus et son reste à traiter auprès
+      de [Payment](model:service-order-payment-collection).
+    flow_approach: Le résultat est le montant effectivement remboursé. Un avoir peut être nécessaire selon le cas, mais son
+      émission ne prouve pas le remboursement. Un remboursement partiel ne solde pas automatiquement le montant restant.
+    synthesis:
+    - SAP et Microsoft relient le retour à ses suites de crédit ou remplacement. FLOW distingue le suivi de la résolution
+      et le service réalisant son résultat.
+    examples:
+    - title: Illustration FLOW — Refund Resolution
+      situation: Un retour client fait l’objet d’une résolution autorisée.
+      outcome: Tenir l’engagement de remboursement du retour et suivre sa réalisation, ses refus et son reste à traiter auprès
+        de [Payment](model:service-order-payment-collection).
+      lesson: La preuve du résultat provient du service compétent ; le retour en conserve le suivi.
+      source_title: Sales returns
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+      source_refs:
+      - U878
+      - U879
+- id: TER158
+  name: Replacement Resolution
+  definition: Tenir l’engagement de remplacement du retour et suivre la satisfaction de la [Sales Order](model:D04.i) liée.
+  short_description: Tenir l’engagement de remplacement du retour et suivre la satisfaction de la [Sales Order](model:D04.i)
+    liée.
+  context: Conserver le produit et la quantité de remplacement autorisés, la promesse acceptée et le résultat de livraison.
+    Un remplacement peut précéder la réception du retour si les conditions l’autorisent ; il ne crée pas une réception fictive.
+    Ce comportement appartient à [Return Order](model:D04.l) et se combine avec les autres résolutions et devenirs physiques.
+    Le retour suit la prestation ; il ne réalise pas lui-même le service financier ou la livraison.
+  source_refs:
+  - U878
+  - U879
+  review:
+    state: proposed
+    note: Lot U879 appliqué ; rédaction détaillée proposée, accords explicites capturés séparément.
+  revision: 1
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Sales returns
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Résolution du retour et documents de suite
+    element_name: Customer returns
+    concept_name: Customer returns
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order liée
+      distincte.
+    approach_summary: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order
+      liée distincte.
+    similarities: Actions de crédit/remplacement dans le processus de retour ; remplacement exécuté par une Sales Order liée
+      distincte.
+    differences: Les actions produit ne deviennent pas automatiquement des Behaviors FLOW ; avoir et règlement restent distincts.
+    evidence_limits: Les actions produit ne deviennent pas automatiquement des Behaviors FLOW ; avoir et règlement restent
+      distincts. Aucun déploiement Beaumanoir déduit.
+    flow_position: Tenir l’engagement de remplacement du retour et suivre la satisfaction de la [Sales Order](model:D04.i)
+      liée.
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: Tenir l’engagement de remplacement du retour et suivre la satisfaction de la [Sales Order](model:D04.i)
+      liée.
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  - vendor: SAP
+    product: SAP S/4HANA
+    source_title: Managing Customer Returns
+    source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Résolution du retour et documents de suite
+    element_name: Customer returns
+    concept_name: Customer returns
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont demande
+      d’avoir.
+    approach_summary: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont
+      demande d’avoir.
+    similarities: Le retour détermine sa résolution, crédit ou remplacement, et déclenche des documents de suite, dont demande
+      d’avoir.
+    differences: La détermination du remboursement ne prouve pas que le retour exécute lui-même le transfert financier.
+    evidence_limits: La détermination du remboursement ne prouve pas que le retour exécute lui-même le transfert financier.
+      Aucun déploiement Beaumanoir déduit.
+    flow_position: Tenir l’engagement de remplacement du retour et suivre la satisfaction de la [Sales Order](model:D04.i)
+      liée.
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: Tenir l’engagement de remplacement du retour et suivre la satisfaction de la [Sales Order](model:D04.i)
+      liée.
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  market_inspiration:
+    choice: Distinguer la résolution client du devenir physique du bien.
+    flow_scope: Tenir l’engagement de remplacement du retour et suivre la satisfaction de la [Sales Order](model:D04.i) liée.
+    flow_approach: Conserver le produit et la quantité de remplacement autorisés, la promesse acceptée et le résultat de livraison.
+      Un remplacement peut précéder la réception du retour si les conditions l’autorisent ; il ne crée pas une réception fictive.
+    synthesis:
+    - SAP et Microsoft relient le retour à ses suites de crédit ou remplacement. FLOW distingue le suivi de la résolution
+      et le service réalisant son résultat.
+    examples:
+    - title: Illustration FLOW — Replacement Resolution
+      situation: Un retour client fait l’objet d’une résolution autorisée.
+      outcome: Tenir l’engagement de remplacement du retour et suivre la satisfaction de la [Sales Order](model:D04.i) liée.
+      lesson: La preuve du résultat provient du service compétent ; le retour en conserve le suivi.
+      source_title: Sales returns
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+      source_refs:
+      - U878
+      - U879
+- id: TER155
+  name: Customer Credit Control
+  definition: Contrôle de l’admissibilité financière d’une commande selon les règles, le profil de risque et les limites du
+    client, ainsi que l’encours pertinent ou un résultat fourni par l’autorité financière.
+  short_description: Contrôle financier pouvant bloquer ou autoriser une commande selon le risque et l’exposition du client.
+  context: 'Recevoir du contrôle de gestion les profils et [règles de crédit](glossary:TER155) nécessaires aux opérations,
+    avec leur autorité, leur version, leur portée et leur validité. [Party / Role](model:D09) porte le classement du client
+    et sa limite autorisée ; [Agreement](model:D11) porte les conditions de paiement et garanties réellement convenues. Les
+    règles générales reçues ne sont pas des contrats. Leur référence et leur portée sont conservées ici sans inventer un accord
+    ni une nouvelle référence autonome. Leur autorité reste au contrôle de gestion, y compris lorsque FLOW les applique. Pour
+    le [crédit client](glossary:TER155), appliquer la règle financière reçue ou consommer le résultat du contrôle externe
+    afin de suspendre ou reprendre la commande selon les autorisations applicables. Conserver motif, portée du blocage, règle
+    et version utilisées, résultat et éventuelle dérogation autorisée. Un classement client seul ne permet pas de calculer
+    un dépassement : utiliser l’encours et l’exposition pertinents fournis par la Finance, ou son résultat de contrôle ; ne
+    pas présumer ces données disponibles. Une information manquante reste explicite. [Sentry](model:order-workflow-sentry)
+    réagit aux changements ; il ne s’accorde pas une dérogation financière.'
+  source_refs:
+  - U878
+  - U879
+  review:
+    state: proposed
+    note: Lot U879 appliqué ; rédaction détaillée proposée, accords explicites capturés séparément.
+  revision: 1
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Finance
+    source_title: Credit holds for sales orders
+    source_url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-sales-order-credit-holds
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Contrôles de crédit et données client
+    element_name: Credit management
+    concept_name: Credit management
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Règles de blocage par client/groupe, groupe de risque et utilisation de limite ; séparation des données
+      client et de la décision sur commande.
+    approach_summary: Règles de blocage par client/groupe, groupe de risque et utilisation de limite ; séparation des données
+      client et de la décision sur commande.
+    similarities: Règles de blocage par client/groupe, groupe de risque et utilisation de limite ; séparation des données
+      client et de la décision sur commande.
+    differences: Ne prescrit pas l’organisation du contrôle de gestion ni le découpage FLOW.
+    evidence_limits: Ne prescrit pas l’organisation du contrôle de gestion ni le découpage FLOW. Aucun déploiement Beaumanoir
+      déduit.
+    flow_position: FLOW reçoit les références financières ; Order Management porte leurs effets autorisés sur les commandes,
+      sans déplacer leur autorité.
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: FLOW reçoit les références financières ; Order Management porte leurs effets autorisés sur les commandes,
+      sans déplacer leur autorité.
+    status: proposed
+    source_refs:
+    - U878
+    - U879
+  - vendor: SAP
+    product: SAP S/4HANA
+    source_title: Working with SAP Credit Management
+    source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/working-with-sap-credit-management_d6b177ee-a8bb-4b77-80dc-87c04a9dd3f1
+    consulted_on: '2026-10-06'
+    source_version: Documentation consultée le 6 octobre 2026
+    source_locator: Contrôles de crédit et données client
+    element_name: Credit management
+    concept_name: Credit management
+    element_type: Mécanisme métier documenté
+    relationship: Recouvrement partiel
+    scope_summary: Classe de risque et limite du Business Partner utilisées par la gestion du crédit.
+    approach_summary: Classe de risque et limite du Business Partner utilisées par la gestion du crédit.
+    similarities: Classe de risque et limite du Business Partner utilisées par la gestion du crédit.
+    differences: SAP Credit Management couvre plus que les références reçues par FLOW.
+    evidence_limits: SAP Credit Management couvre plus que les références reçues par FLOW. Aucun déploiement Beaumanoir déduit.
+    flow_position: FLOW reçoit les références financières ; Order Management porte leurs effets autorisés sur les commandes,
+      sans déplacer leur autorité.
+    term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+    definition_choice: FLOW reçoit les références financières ; Order Management porte leurs effets autorisés sur les commandes,
+      sans déplacer leur autorité.
+    status: proposed
+    source_refs:
+    - U878
+    - U879
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées.

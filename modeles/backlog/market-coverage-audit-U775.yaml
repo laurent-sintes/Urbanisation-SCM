@@ -865,8 +865,12 @@ publication_delivery:
   - U835
   - U853
   - U861
+  - U874
+  - U879
   summary: 'Lot validé transport, rebut, traçabilité et disposition, avec trois scénarios et mapping des capacités. U861 :
-    commandes passives et pilotage par les tâches du workflow explicités ; identités et rattachements conservés.'
+    commandes passives et pilotage par les tâches du workflow explicités ; identités et rattachements conservés. U874 : services
+    financiers portés par FLOW et retrait de Document Production Order ; attentes courantes alignées, preuves historiques
+    conservées.'
   required_nodes:
   - id: supply-chain-orchestration
     fields: {}
@@ -2046,7 +2050,7 @@ publication_delivery:
 
         Exemple fictif : sur dix pièces attendues, six sont reçues et quatre restent attendues. Parmi les six reçues, certaines peuvent être remises en stock et d’autres nécessiter une réparation. Conserver origine, motif, quantités, décisions applicables et preuves de résultat ; aucune réception ou remise en disponibilité ne se déduit du seul état de la commande.
 
-        L’autorisation commerciale du retour, le remboursement et le remplacement client restent à délimiter. Restituer le bien n’est pas envoyer un autre produit ; un règlement sans retour physique ne crée aucune réception fictive. Donation, recyclage et revente secondaire ne sont pas assimilés au rebut. Les règles détaillées, le porteur des décisions commerciales et ces autres axes restent à instruire. Aucun déploiement Beaumanoir présumé.
+        La résolution apportée au client comprend [Credit Resolution](glossary:TER156), [Refund Resolution](glossary:TER157) et [Replacement Resolution](glossary:TER158). Ces variantes se combinent avec les cinq devenirs physiques existants et entre elles : un avoir peut précéder un remboursement pendant que le produit est réparé ou remis en stock. Return Order porte le résultat attendu, les liens et le reste à satisfaire. [Billing](model:service-order-billing) produit ou corrige l’avoir ; [Payment](model:service-order-payment-collection) exécute le service de remboursement ; une [Sales Order](model:D04.i) liée porte le remplacement. L’avoir ne prouve pas un remboursement et la clôture du retour ne prouve aucune de ces réalisations. Restituer le même bien et fournir un remplacement sont distincts. Une résolution sans retour physique ne crée aucune réception fictive. L’autorité d’acceptation commerciale du retour et les règles détaillées restent à préciser ; donation, recyclage et revente secondaire ne sont pas assimilés au rebut. Aucun déploiement installé présumé.
 
         U612 : le périmètre comprend les retours B2C et wholesale, y compris lorsque les marchandises sont vendues sous consignation pour un fournisseur. Les comportements existants restent applicables selon le contrat et les autorisations : un fournisseur peut notamment confier une réparation. Cette possibilité ne crée ni règle automatique ni comportement spécifique par contrat. Le nom du propriétaire et son rôle restent explicites. [Supplier Return Order](glossary:TER073) conserve à ce stade sa responsabilité distincte de renvoi au fournisseur ; aucune fusion n’est déduite du renommage.
 
@@ -2055,10 +2059,12 @@ publication_delivery:
         Cette famille porte le cycle et les engagements de ses [Orders](glossary:TER012) selon le [contrat commun d’Order Management](model:D04) : préparation, révisions, affermissement, protections, autorisation, suspension/reprise, annulation, clôture et conservation. Elle distingue demande, proposition, engagement confirmé et réalisé, rapproche les résultats pour tenir le reste à satisfaire et expose ces informations à [Order Visibility](model:order-visibility). Les variantes décrivent des axes métier combinables ; elles ne recopient pas ce cycle commun.
 
         L’[Order](glossary:TER012) de retour n’efface pas la vente d’origine.
+
+        Exemple fictif : un retour de 80 euros donne lieu à un avoir obtenu de Billing puis à un remboursement réalisé par Payment. La remise en stock du produit suit son propre résultat ; elle ne solde pas à elle seule le remboursement attendu.
   - id: D06
     fields:
       scope: |-
-        Déterminer les prestations requises, choisir les services et exécutants, coordonner leurs contributions et adapter le plan d’exécution. [Service Order Management](model:subdomain-service-orders) tient les exigences, engagements propres et évolutions des prestations confiées. [Fulfilment](glossary:TER085) conserve la visibilité des capacités communiquées, le tracking, le rapprochement des résultats et la décision de devenir logistique des retours.
+        Déterminer les prestations requises, choisir les services et exécutants, coordonner leurs contributions et adapter le plan d’exécution. [Service Management](model:subdomain-service-orders) tient les exigences, engagements propres et évolutions des prestations confiées. [Fulfilment](glossary:TER085) conserve la visibilité des capacités communiquées, le tracking, le rapprochement des résultats et la décision de devenir logistique des retours.
 
         Les [Tasks](glossary:TER089) expriment les contributions et dépendances du processus ; elles ne remplacent pas les [Service Orders](glossary:TER066) comme porteurs des engagements individuels. Une adaptation préserve la promesse d’[Order Management](model:D04) et les grands équilibres du [master plan de Matching](glossary:TER100) ; transmettre les impacts non absorbables à leurs responsables. Les exécutants conservent leurs opérations internes. Exemple fictif : coordonner réétiquetage, préparation et collecte pour tenir une livraison, puis choisir une autre collecte si nécessaire.
 
@@ -2217,23 +2223,15 @@ publication_delivery:
   - id: subdomain-service-orders
     fields:
       scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+        Les prestations logistiques sont commandées par des [Service Orders](glossary:TER066) : documents métier structurés portant destinataire, exigences, engagements, état et résultat. Les capacités correspondantes savent constituer, transmettre et tenir ces commandes ; elles ne décrivent pas seulement un document. Les exécutants organisent leurs opérations internes.
 
-        Tenir les [Service Orders](glossary:TER066) avec les conditions demandées, acceptées et modifiées, les résultats attendus et les suites nécessaires. Les familles de prestations sont des capacités au même niveau que les [Orders](glossary:TER012) entrants. [Transport Order](model:service-order-transport) rend explicites les demandes de déplacement, composables avec les prestations d’entrepôt. Le cycle commun conserve les sollicitations de réception et services humains ou documentaires : la liste des familles explicites n’est pas exhaustive.
+        [Financial Services](glossary:TER144) porte [Billing](glossary:TER153) et [Payment](glossary:TER154) comme services de FLOW, sans commande financière artificielle. La facturation et le paiement restent distincts de la tenue comptable générale et de la trésorerie.
 
-        [Order Management](model:D04) porte la demande à satisfaire et sa promesse. [Fulfilment Orchestration](model:D06) compose les prestations, coordonne leurs dépendances et choisit les adaptations ; ce sous-domaine tient leurs engagements individuels. Le [Service Catalog](model:D14) décrit l’offre, les exécutants réalisent le travail. Un ordre n’impose ni achat, ni document, ni canal technique.
+        Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
 
-        Une commande de prestations logistiques peut porter plusieurs [Service Orders](glossary:TER066), avec l’enchaînement attendu. Une liste ordonnée exprime une séquence simple ; la demande peut aussi préciser des dépendances, des possibilités de réalisation en parallèle et des conditions. [Service Order Management](model:subdomain-service-orders) conserve la demande d’ensemble, les exigences de chaque ordre et les contraintes d’enchaînement demandées, acceptées ou modifiées. [Fulfilment Orchestration](model:D06) organise et pilote leur réalisation en respectant ces engagements. La composition ne crée pas automatiquement une nouvelle famille d’[Order](glossary:TER012) et n’impose pas un ordre distinct pour chaque opération interne.
+        Les exigences documentaires restent dans les services concernés : justificatifs de transport ou de dédouanement, facture issue de Billing, preuve de prestation. Produire un fichier ou le mettre en forme est un moyen technique, pas une capacité autonome.
 
-        Exemple fictif : une commande demande une inspection, puis un réétiquetage et une mise sur cintre. Chaque prestation porte ses exigences ; l’enchaînement convenu est conservé avec la demande et son exécution est coordonnée par [Fulfilment Orchestration](model:D06). Une réparation peut être conditionnée au constat de réparabilité issu de l’inspection.
-
-        les prestations d’entrepôt sont distinguées par dix familles : [Picking Order](model:service-order-picking), [Packing Order](model:service-order-packing) (dont Repacking), [Cross-Docking Order](model:service-order-cross-docking), [Labeling Order](model:service-order-labeling), [Kitting Order](model:service-order-kitting) (dont Dekitting), [Garment Finishing Order](model:service-order-garment-finishing), [Cleaning Order](model:service-order-cleaning), [Repair & Alteration Order](model:service-order-repair-alteration), [Personalization Order](model:service-order-personalization) et [Inspection Order](model:service-order-inspection). Leurs résultats et contraintes peuvent être composés ; [Transport Order](model:service-order-transport) reste une famille distincte. Les exécutants réalisent les opérations.
-
-        le sous-domaine porte aussi [Transport Booking Order](model:service-order-transport-booking), [Document Production Order](model:service-order-document-production), [Customs Clearance Order](model:service-order-customs-clearance), [Billing Order](model:service-order-billing) et [Payment Order](model:service-order-payment-collection). Les demandes peuvent être composées avec les prestations physiques. Le domaine orchestre les services ; leur réalisation financière, documentaire ou douanière peut être confiée ailleurs.
-
-        Chaque famille conserve les états et engagements de ses demandes, mis à jour sous le pilotage du workflow : activation immédiate, différée ou événementielle, sollicitation, acceptation, conditions et engagements, modification, annulation et clôture. Les résultats partiels conservent le reste de prestation ouvert. Une demande d’annulation ne prouve pas l’arrêt du travail ; un acquittement technique ne prouve pas la réalisation. [Fulfilment](glossary:TER085) coordonne les dépendances et capte les faits ; la famille concernée conserve les engagements individuels. [Receiving Order](model:service-order-receiving) porte les réceptions confiées ; les autres services sans famille spécialisée restent dans le périmètre annoncé, sans ordre artificiel par opération interne. Ces invariants ne constituent pas une capacité sœur des familles.
-
-        [Scrapping Order](model:service-order-scrapping) porte les mises au rebut explicitement confiées, lors d’un retour ou pour des biens déjà stockés. Il se compose avec inspection et autres prestations au sein d’un parcours, avec autorisations, dépendances et preuves ; une décision ou une écriture de sortie ne suffit pas à solder le service.
+        Exemple fictif : une expédition nécessite une commande de préparation, une commande de transport et une facture. FLOW tient les commandes logistiques et le résultat de Billing ; le workflow attend les documents requis avant de poursuivre.
   - id: service-order-transport
     fields:
       scope: |-

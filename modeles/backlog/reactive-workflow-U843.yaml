@@ -46,9 +46,14 @@ publication_delivery:
   - U861
   - U865
   - U869
+  - U874
+  - U877
+  - U879
   summary: 'Reactive Workflow Management dans Order Management ; Sentry actif et frontières de pilotage clarifiées. U861 :
     commandes passives et pilotage par les tâches du workflow explicités ; identités et rattachements conservés. U865 : Plan
-    Visibility dans Availability, Inventory State Management et précommandes ; contrôles courants alignés.'
+    Visibility dans Availability, Inventory State Management et précommandes ; contrôles courants alignés. U874 : services
+    financiers portés par FLOW et retrait de Document Production Order ; attentes courantes alignées, preuves historiques
+    conservées.'
   required_nodes:
   - id: workflow-definition-management
     parent: ba-reactive-workflow-management
@@ -68,7 +73,8 @@ publication_delivery:
     kind: capability
     fields:
       name: Order Workflow Planning
-      definition: Construire ou adapter le parcours.
+      definition: Construire ou adapter le parcours de traitement d’une [commande](glossary:TER012) à partir des activités
+        disponibles, de son contexte et des règles applicables, en organisant les attentes et les décisions nécessaires.
   - id: order-workflow-orchestration
     parent: ba-reactive-workflow-management
     kind: capability
@@ -90,15 +96,17 @@ publication_delivery:
 
         [Order Visibility](model:order-visibility) expose demandes, engagements, réalisations rapprochées et restes à satisfaire sans double comptage. Les propositions amont ne sont pas à elles seules commandes fermes, réservations, promesses ou autorisations de démarrage. Réviser un besoin doit préserver ses liens sans en créer un doublon.
 
-        Un achat de service et une prestation confiée restent distincts ; toute prestation ne nécessite pas un [Purchase Order](glossary:TER070). [Service Order Management](model:subdomain-service-orders) tient les engagements de prestation. [Inventory Management](model:D01) porte les faits de stock et les réservations ; [Fulfilment](glossary:TER085) coordonne la réalisation. Les actes nécessaires à un changement de propriété peuvent être demandés ici, mais leur effet reconnu relève d’[Inventory Ownership Transfer Decision](model:D01.h) et du registre de propriété. Clôturer une commande ne prouve pas ce transfert.
+        Un achat de service et une prestation confiée restent distincts ; toute prestation ne nécessite pas un [Purchase Order](glossary:TER070). [Service Management](model:subdomain-service-orders) tient les engagements de prestation. [Inventory Management](model:D01) porte les faits de stock et les réservations ; [Fulfilment](glossary:TER085) coordonne la réalisation. Les actes nécessaires à un changement de propriété peuvent être demandés ici, mais leur effet reconnu relève d’[Inventory Ownership Transfer Decision](model:D01.h) et du registre de propriété. Clôturer une commande ne prouve pas ce transfert.
 
         Le [Reactive Workflow Management](glossary:TER125) organise et conduit le parcours des commandes. Il maintient les activités réutilisables et leurs règles de composition, réagit au contexte, adapte le parcours et en pilote les attentes et résultats. Les familles de commandes conservent leur identité, leur état, leurs engagements et la validité des transitions. [Fulfilment](glossary:TER085) reçoit les travaux autorisés et coordonne les prestations ; il ne définit pas seul la structure du parcours de la commande.
 
         Une demande peut être préparée ou planifiée avant affermissement. [Preorder](glossary:TER150) indique l’anticipation de disponibilité commerciale ; [Planned Purchase Order](glossary:TER033) désigne une proposition d’approvisionnement distincte du Purchase Order résultant. Origine, horizon et degré d’engagement restent trois informations distinctes. Preorder est un statut du Sales Order, dont l’identité est conservée ; l’affermissement d’un Planned Purchase Order relie deux objets distincts sans imposer une identité commune.
+
+        Pour le [crédit client](glossary:TER155), appliquer la règle financière reçue ou consommer le résultat du contrôle externe afin de suspendre ou reprendre la commande selon les autorisations applicables. Conserver motif, portée du blocage, règle et version utilisées, résultat et éventuelle dérogation autorisée. Un classement client seul ne permet pas de calculer un dépassement : utiliser l’encours et l’exposition pertinents fournis par la Finance, ou son résultat de contrôle ; ne pas présumer ces données disponibles. Une information manquante reste explicite. [Sentry](model:order-workflow-sentry) réagit aux changements ; il ne s’accorde pas une dérogation financière.
   - id: D06
     fields:
       scope: |-
-        Déterminer les prestations requises, choisir les services et exécutants, coordonner leurs contributions et adapter le plan d’exécution. [Service Order Management](model:subdomain-service-orders) tient les exigences, engagements propres et évolutions des prestations confiées. [Fulfilment](glossary:TER085) conserve la visibilité des capacités communiquées, le tracking, le rapprochement des résultats et la décision de devenir logistique des retours.
+        Déterminer les prestations requises, choisir les services et exécutants, coordonner leurs contributions et adapter le plan d’exécution. [Service Management](model:subdomain-service-orders) tient les exigences, engagements propres et évolutions des prestations confiées. [Fulfilment](glossary:TER085) conserve la visibilité des capacités communiquées, le tracking, le rapprochement des résultats et la décision de devenir logistique des retours.
 
         Les [Tasks](glossary:TER089) expriment les contributions et dépendances du processus ; elles ne remplacent pas les [Service Orders](glossary:TER066) comme porteurs des engagements individuels. Une adaptation préserve la promesse d’[Order Management](model:D04) et les grands équilibres du [master plan de Matching](glossary:TER100) ; transmettre les impacts non absorbables à leurs responsables. Les exécutants conservent leurs opérations internes. Exemple fictif : coordonner réétiquetage, préparation et collecte pour tenir une livraison, puis choisir une autre collecte si nécessaire.
 
@@ -128,7 +136,7 @@ publication_delivery:
 
         Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Availability](glossary:TER112).
 
-        [Service Order Management](model:subdomain-service-orders) tient le cycle et les engagements des ordres de prestation. L’orchestration utilise leurs réponses et coordonne les conditions d’activation et dépendances ; elle ne recrée pas leur cycle.
+        [Service Management](model:subdomain-service-orders) tient le cycle et les engagements des ordres de prestation. L’orchestration utilise leurs réponses et coordonne les conditions d’activation et dépendances ; elle ne recrée pas leur cycle.
 
         U706/U709 : Coordonner aussi les prestations exécutées à distance : solliciter le service, attendre son résultat métier et poursuivre le flux selon ce résultat. Une acceptation du déclenchement ne vaut pas réalisation.
 
@@ -165,6 +173,8 @@ publication_delivery:
         Conserver les règles actives, leur portée et leur validité. Les décisions de [Availability](glossary:TER112) peuvent recommander des valeurs ou adaptations ; cette recommandation ne change pas implicitement la règle active. Les réservations constituées restent dans Inventory Management. Exemple fictif : protéger une quantité pour un groupe de demandes et limiter temporairement les nouvelles sollicitations d’un prestataire, sans annuler ses travaux déjà engagés.
 
         Porter les contrôles actifs du fonctionnement courant : seuils, limites, protections, désactivations et réactivations temporaires de possibilités métier, avec leur portée et leur validité. Exemple fictif : désactiver temporairement le fractionnement pour de nouvelles sollicitations, sans annuler les engagements existants. Les règles de structure du parcours et de composition des activités relèvent de [Workflow Definition Management](glossary:TER126) dans Order Management. Une modification de contrôle ne vaut ni modification rétroactive des commandes ni nouvel engagement.
+
+        Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par FLOW ne les transforme pas en règles sous autorité de Policies.
   - id: service-order-release-decision
     fields:
       scope: |-

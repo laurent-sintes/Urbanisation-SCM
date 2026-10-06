@@ -260,24 +260,22 @@ publication_delivery:
   source_refs:
   - U709
   - U860
+  - U874
   summary: 'Quatre familles de services documentaires, douaniers et financiers ; réalisation externe possible. U860 : nom
-    courant Payment Order, identité et périmètre conservés ; formulation historique du lot préservée.'
+    courant Payment Order, identité et périmètre conservés ; formulation historique du lot préservée. U874 : services financiers
+    portés par FLOW et retrait de Document Production Order ; attentes courantes alignées, preuves historiques conservées.'
   required_nodes:
-  - id: service-order-document-production
-    fields:
-      name: Document Production Order
-    parent: subdomain-service-orders
   - id: service-order-customs-clearance
     fields:
       name: Customs Clearance Order
     parent: subdomain-service-orders
   - id: service-order-billing
     fields:
-      name: Billing Order
+      name: Billing
     parent: ba-financial-service-order-management
   - id: service-order-payment-collection
     fields:
-      name: Payment Order
+      name: Payment
     parent: ba-financial-service-order-management
   absent_nodes: []
 delivery_updates:

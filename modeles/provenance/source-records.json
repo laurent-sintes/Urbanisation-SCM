@@ -6971,6 +6971,70 @@
       "captured_text": "## U871\n\n**id**\n\nU871\n\n**date**\n\n2026-10-06\n\n**titre**\n\nConfirmer que MAP envoie des Planned Purchase Orders\n\n**texte**\n\nNon non, Map envoie bien des Planned Purchase Order\n\n**contexte et portée**\n\nLaurent confirme explicitement que MAP envoie des Planned Purchase Orders. Cette précision lève la réserve de correspondance formulée par Codex U868–U870. Mettre à jour la description courante sans effacer les échanges historiques : proposition d’achat du planning, puis Purchase Order à l’affermissement. Ne pas déduire d’autres traitements ou applications de cet apport. La distinction avec Sales Order au statut Preorder reste celle exposée U870."
     },
     {
+      "id": "U872",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u872",
+      "line": 21446,
+      "content_sha256": "d2397ad5aa26646122fd9dbe0231e3deeb902fa273ec0bdd708ac4855c395da2",
+      "captured_text": "## U872\n\n**id**\n\nU872\n\n**date**\n\n2026-10-06\n\n**titre**\n\nProposer Service Management et distinguer services FLOW et commandes logistiques\n\n**texte**\n\nJe voudrais revoir le sous domaine \"Service Order Management\".\n\nLa notion d'Order est documentaire : c'est un document qui permet de passer une commande à une autre organisation.\n\nLes Financial Order ne sont pas des order : l'idée est que ce sont des services portés par FLOW.\n\nLes autres sont bien des commandes à passer à la logistique et doivent rester des orders.\n\nDu coup le sous domaine devrait s'appeler \"Service Management\" tout simplement.\n\nQue dis-tu de cette logique ?\n\n**contexte et portée**\n\nProposition soumise à discussion, après R49. Laurent distingue les services financiers portés par FLOW des commandes documentaires adressées à une autre organisation, notamment logistique. Il propose Service Management pour le sous-domaine. Cet apport réexamine la qualification passive commune U859–U861 ; il ne constitue pas une validation des noms de remplacement ni de leurs descriptions. Le cas Document Production Order et la frontière entre service porté et exécution financière doivent être explicités dans la proposition. Aucun changement du modèle canonique ni publication à ce stade.\n\n**Appuis de discussion consultés par Codex le 2026-10-06 — proposition, sans accord ni équivalence**\n\n- Microsoft Dynamics 365 Supply Chain Management, « Service orders », documentation évolutive, mise à jour indiquée 2025-07-11 : https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders ; sections introductive et Monitor the progress of service orders lues. L'objet représente une intervention de technicien avec lignes et étapes : il ne se limite pas à un document interorganisationnel. Appui sémantique partiel ; la convention FLOW proposée serait plus restrictive.\n- SAP S/4HANA, « Billing Document Requests » : https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/ed84b70c199d4470ae2e5ccb93b2e45b/c20d4537df244743804fad278bfb3344.html ; extrait indexé consulté décrivant des objets intermédiaires de données facturables provenant de sources internes et externes. Page directe sans contenu textuel accessible : comparaison limitée à cet extrait, sans revue complète ni équivalence de capacité. Cet appui distingue demande de facturation et processus de facturation ; il ne justifie pas un Billing Order générique.\n- Recommandation discutée : Service Management comme responsabilité des services nécessaires aux flux ; commandes logistiques documentaires conservées, services financiers sans Order artificiel. Distinguer responsabilité de service et réalisation technique ; préserver Reactive Workflow Management et Fulfilment Orchestration. Document Production reste à qualifier selon son destinataire et son résultat attendu. Aucun renommage canonique appliqué."
+    },
+    {
+      "id": "U873",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u873",
+      "line": 21484,
+      "content_sha256": "4e7e7e97c345da9a3582e9479ca52d526fc34617d59d930555115302d6a44a9f",
+      "captured_text": "## U873\n\n**id**\n\nU873\n\n**date**\n\n2026-10-06\n\n**titre**\n\nProposer le retrait de Document Production de la cartographie métier\n\n**texte**\n\nDocument Production, on pourrait le faire sauter : ça fait penser qu'on a un moteur de production de doc, ce qui sera vrai mais dans une carto métier, on n'en fout, non ?\n\n**contexte et portée**\n\nLaurent propose de retirer la capacité générique Document Production Order plutôt que de la renommer Document Production dans la refonte discutée U872. Il distingue moteur de production documentaire et capacité métier. Proposition en discussion : aucune suppression canonique ni publication dans cet échange. Préserver les exigences et résultats documentaires utiles dans les capacités et scénarios concernés ; ne pas inférer une capacité métier autonome de l'existence d'un moteur technique."
+    },
+    {
+      "id": "U874",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u874",
+      "line": 21506,
+      "content_sha256": "85b135ae0d82b5444d79372b2b6231f655ebef0a83a618220ee913d9a9357cd9",
+      "captured_text": "## U874\n\n**id**\n\nU874\n\n**date**\n\n2026-10-06\n\n**titre**\n\nValider Service Management, les services financiers et le retrait de Document Production Order\n\n**texte**\n\nJe valide !\n\n**contexte et portée**\n\nAccord sur le lot cumulatif U872–U873 : Service Management remplace Service Order Management ; Financial Services remplace Financial Service Order Management ; Billing et Payment sont des services portés par FLOW et remplacent Billing Order et Payment Order. Les commandes logistiques restent des Orders documentaires, avec état et engagements, destinées à une organisation exécutante. Document Production Order est retiré sans capacité de remplacement ; ses exigences documentaires restent portées par les responsabilités et scénarios concernés. Le workflow pilote les Tasks ; Fulfilment Orchestration exécute la coordination déléguée. Le service porté ne présume ni réalisation logicielle installée ni absorption de la comptabilité ou de la trésorerie. Les noms discutés sont approuvés ; les formulations détaillées écrites ensuite restent des compléments proposés. Pas de release, commit ou push implicite."
+    },
+    {
+      "id": "U875",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u875",
+      "line": 21528,
+      "content_sha256": "239200c825977d97e445aa69da504e4390a8b6beb8f6d505dae2eecd4dd5d448",
+      "captured_text": "## U875\n\n**id**\n\nU875\n\n**date**\n\n2026-10-06\n\n**titre**\n\nAuditer R50 avant confrontation au client\n\n**texte**\n\nFais un audit du modèle.\n\n- Cohérence des noms et définitions\n- Regarde SAP et Microsoft pour voir si on oublie quelque chose d'important\n\nL'idée est de voir si c'est une version stable pour commencer à confronter au client.\n\n**contexte et portée**\n\nAudit de la publication courante R50 (2026-10-06.7), de sa cohérence lexicale et métier et de sa couverture au regard des sources primaires Microsoft Dynamics et SAP S/4HANA. Distinguer incohérences, responsabilités insuffisamment explicites et questions de périmètre à confronter au client. Ne pas déduire une nouvelle capacité de chaque fonction éditeur ni une réalisation installée. Aucun changement canonique, nouvel accord ou nouvelle publication implicitement autorisé par l’audit."
+    },
+    {
+      "id": "U876",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u876",
+      "line": 21555,
+      "content_sha256": "54d48975d8e846ece7121cad266479e76bfe2ec43ac21197aff9ae3162aa80a5",
+      "captured_text": "## U876\n\n**id**\n\nU876\n\n**date**\n\n2026-10-06\n\n**titre**\n\nPrioriser la complétude d’Availability dans l’audit R50\n\n**texte**\n\nSurtout vérifier si côté Availability on est complet.\n\n**contexte et portée**\n\nPrécision de priorité de l’audit U875 : approfondir les cinq Business Areas et les quinze capacités d’Availability, leurs dépendances à Inventory, Policies, Order Management, Integration et Fulfilment, et leurs scénarios. Conserver l’audit global des noms et définitions. Aucun ajout automatique de capacité ni modification canonique."
+    },
+    {
+      "id": "U877",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u877",
+      "line": 21577,
+      "content_sha256": "3a6eef98d7fa9caaf8df7d932078f20957bef6205c2c834f07ad43a5e0cb1866",
+      "captured_text": "## U877\n\n**id**\n\nU877\n\n**date**\n\n2026-10-06\n\n**titre**\n\nAppliquer les corrections de l’audit R50, notamment Availability\n\n**texte**\n\nOk pour les corrections\n\n**contexte et portée**\n\nAccord sur le lot de corrections proposé à l’issue de l’audit U875–U876 : alignement des sous-domaines et de Plan Visibility, Reference Ingestion et séparation des Price Books, convention documentaire d’Order, définitions autonomes, clarification des achats planifiés, alternatives autorisées, promesse complète, validité avant confirmation, réservation et absence de solution. Compléter les scénarios sans nouvelle capacité. Les frontières de remboursement/remplacement et de crédit restent explicitement à confronter au client ; aucun transfert arbitraire d’autorité à FLOW. L’accord autorise l’application de la proposition cumulative ; les formulations détaillées produites ensuite ne sont pas de nouveaux accords champ par champ. Réutiliser les sources SAP/Microsoft consultées et conservées dans l’audit. Pas de release, commit ou push implicite."
+    },
+    {
+      "id": "U878",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u878",
+      "line": 21599,
+      "content_sha256": "997550064492131f7012585147fa2d1c2b2d5ae51351d362cfd4f2cc11678ce0",
+      "captured_text": "## U878\n\n**id**\n\nU878\n\n**date**\n\n2026-10-06\n\n**titre**\n\nAutorité du contrôle de gestion et suites des retours clients\n\n**texte**\n\n\"les suites financières des retours clients — avoir, remboursement, remplacement — et les blocages pour risque de crédit\". Pour les blocages pour risque crédit, c'est le contrôle de gestion qui émet les règles et les classements des clients. Ces infos doivent être injectées dans Operational Reference, au niveau Partner & Agreement, j'imagine. J'aimerais ton avis là dessus.\n\navoir, remboursement, remplacement : ce ne sont pas des comportement du Return Order ?\n\n**contexte et portée**\n\nPrécision utilisateur sur l’autorité du contrôle de gestion pour les règles et classements de crédit. Proposition de rattachement aux références Partner & Agreement et question sur les comportements de Return Order ; ces deux propositions demandent une analyse, pas une modification canonique implicite. Distinguer informations de référence reçues, conditions contractuelles, règles opérationnelles et décisions de blocage. Distinguer résolution du retour, devenir du bien, émission d’un avoir et exécution d’un remboursement. Le lot U877 reste applicable indépendamment de ces propositions."
+    },
+    {
+      "id": "U879",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u879",
+      "line": 21623,
+      "content_sha256": "ad4f820695b04ca03b6e4777c3c475ea5d73274c36a8ed0eafff027894b63db0",
+      "captured_text": "## U879\n\n**id**\n\nU879\n\n**date**\n\n2026-10-06\n\n**titre**\n\nValider les références de crédit et les résolutions de retour\n\n**texte**\n\nJe valide ta proposition\n\n**contexte et portée**\n\nAccord sur la proposition cumulative U878 : Partner & Agreement References reçoit les références de crédit sous autorité du contrôle de gestion ; Party / Role porte profil, classement et limite autorisée, Agreement les conditions réellement convenues ; les règles générales externes ne sont pas assimilées à des contrats ni placées sous autorité de Policies. Order Management applique ou consomme le contrôle pour suspendre/reprendre, Sentry réagit aux changements ; encours ou résultat du contrôle financier restent nécessaires. Ajouter à Return Order Credit Resolution, Refund Resolution et Replacement Resolution, combinables avec les cinq comportements de devenir physique. Billing porte l’avoir, Payment le remboursement, une Sales Order liée le remplacement. Étendre explicitement Payment de l’encaissement au remboursement. Alignement du glossaire et scénarios ; nouvelles rédactions détaillées proposées, pas de validation globale des formulations ni de réalisation installée. Aucun lancement implicite de release, commit ou push."
+    },
+    {
       "id": "F001",
       "path": "connaissance/02-assertions.md",
       "anchor": "f001",
