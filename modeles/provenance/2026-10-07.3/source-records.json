@@ -18681,6 +18681,110 @@
       "line": 21645,
       "content_sha256": "c30fd8a08ac60782464da281bdc4a2d7fcf9a95cf15195589e48dbcc0050a3eb",
       "captured_text": "## U880\n\n**id**\n\nU880\n\n**date**\n\n2026-10-06\n\n**titre**\n\nBusiness Area obligatoire pour chaque capacité\n\n**texte**\n\nPolicies est le seul sous domaine dont les capacités ne sont pas dans une Area.\n\nC'est dommage.\n\nJe souhaite que toutes les capacités soient dans une Business Area : c'est une règle du méta modèle dorénavant\n\n**contexte et portée**\n\nNouvelle règle générale : toute capacité a une Business Area comme parent métier unique ; celle-ci appartient à un sous-domaine. Les anciennes publications conservent leur contrat. L’inspection identifie six capacités directement rattachées : D02.b, D19.a, D19.b dans Policies, D05.i dans Fulfilment Orchestration, Customs Clearance Order dans Service Management et Accounting Interpretation dans Financial Accounting. La règle est explicitement demandée ; les noms et définitions des cinq nouveaux regroupements sont des propositions d’application, sans accord métier implicite sur leur rédaction. Une Business Area peut conserver une seule capacité. Aucun déplacement de sous-domaine ni nouvelle capacité, aucune release implicite."
+    },
+    {
+      "id": "U881",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u881",
+      "line": 21671,
+      "content_sha256": "def2c025c784775c773739dfd131346ced4d5213f6ebd8703c052e1f5967ba1d",
+      "captured_text": "## U881\n\n**id**\n\nU881\n\n**date**\n\n2026-10-07\n\n**titre**\n\nAuditer le pilotage opérationnel, le travail humain et l’analytics\n\n**texte**\n\nOn a oublié un sous domaine et/ou des capacités.\n\nIl nous manque des choses sur l'analytics opérationnel, un peu comme sur camunda où on a le suivi des processus, les points chauds d'étranglement, d'attente, les erreurs. Il nous manque aussi des choses pour visualiser les processus, les contrôler : arreter / suspendre / démarrer... Il nous manque des bannettes de tâches pour activer / solliciter le travail des gens pour le travail manuel (approbation, vérification, intégration non automatisée). Et enfin il manque des capacités qui permettent de requeter et créer des tableaux de bord. Tout est très orienter \"Solution\" mais derriere il y a des capacités (intention / action) et des domaines (responsabilité / connaissance).\n\nTu peux faire un audit de ce qu'il manque et comparer avec SAP, Microsoft mais aussi les solutions de Case Management du marché afin de découvrir ce pan métier qu'on avait oublié ?\n\n**contexte et portée**\n\nDemande d’audit et de proposition : confronter le modèle et le glossaire courants aux besoins de supervision, intervention sur les processus, coordination du travail humain et analyse opérationnelle. Comparer SAP S/4HANA et Microsoft Dynamics, compléter par Camunda et les solutions de Case Management. Distinguer responsabilités métier et fonctions de réalisation ; examiner les recouvrements avec les capacités existantes avant de proposer des ajouts. Aucun accord implicite sur des noms, rattachements, nouvelles capacités, réalisation installée, release, commit ou push. Cet audit ciblé ne rejoue pas l’audit historique clos U431."
+    },
+    {
+      "id": "U882",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u882",
+      "line": 21697,
+      "content_sha256": "4e91389d5c8eed532d2e90d988ca1c5232a58be91d6c75ca0ac0a48776475520",
+      "captured_text": "## U882\n\n**id**\n\nU882\n\n**date**\n\n2026-10-07\n\n**titre**\n\nQuestionner une entrée par les processus et la place du Process Mining\n\n**texte**\n\nJ'aime beaucoup Process Mining.\n\nD'un point de vue général, on a, dans le modèle, une approche \"Opération\", avec des distinctions Process. Est-ce qu'il ne faudrait pas l'inverse ?\n\n**contexte et portée**\n\nPréférence exprimée pour Process Mining et question sur le point d’entrée du modèle. Discussion à instruire : processus comme objet principal de pilotage et opérations comme contributions, sans inverser implicitement la hiérarchie de responsabilités ni transformer les capacités en étapes. Ni validation globale des sept propositions U881, ni accord sur un renommage ou un déplacement canonique. Distinguer analyse des performances et découverte des parcours réellement suivis à partir de traces."
+    },
+    {
+      "id": "U883",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u883",
+      "line": 21721,
+      "content_sha256": "4d5e9c85d74cecde9d407641acf97082bd0ab76a350ccafa87cf8345915efe6b",
+      "captured_text": "## U883\n\n**id**\n\nU883\n\n**date**\n\n2026-10-07\n\n**titre**\n\nProposer la cible centrée sur Process Management\n\n**texte**\n\nCa donnerait quoi comme évolution ?\n\n**contexte et portée**\n\nDemande de proposition concrète après U881–U882 : structure, déplacements, créations et frontières. Aucun accord d’application, de publication, de commit ou de push. La préférence pour Process Mining ne vaut pas approbation de toutes les capacités candidates."
+    },
+    {
+      "id": "U884",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u884",
+      "line": 21743,
+      "content_sha256": "7681422c53e21156e187c421f509018a55d6d82daa8b3eceb83225308b20788e",
+      "captured_text": "## U884\n\n**id**\n\nU884\n\n**date**\n\n2026-10-07\n\n**titre**\n\nValider la cible Process Management et préparer sa mise à jour\n\n**texte**\n\nPrépare un plan de mise à jour, je valide.\n\n**contexte et portée**\n\nAccord sur la proposition cumulative U881–U883 corrigée par la cible Process Management : quatre Business Areas et douze capacités, dont quatre capacités déplacées et élargies, Process Visibility promue depuis BHV082, sept capacités nouvelles ; renommages locaux Fulfilment Coordination et Fulfilment Adaptation Decision ; responsabilités des Orders, Availability et Fulfilment préservées. La cible Operations Management et la capacité autonome Process Performance Analysis sont remplacées par cette proposition. La demande immédiate porte sur la préparation du plan. Les définitions et comparaisons détaillées rédigées ensuite ne reçoivent pas un accord implicite ; capture champ par champ sur le lot final après application canonique. Aucune release, commit ou push demandé dans ce message."
+    },
+    {
+      "id": "U885",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u885",
+      "line": 21765,
+      "content_sha256": "fe0a5cf004c1291e08a59187ccf486e9441d7dfdf220057b072246419acb2eea",
+      "captured_text": "## U885\n\n**id**\n\nU885\n\n**date**\n\n2026-10-07\n\n**titre**\n\nAppliquer le plan Process Management\n\n**texte**\n\nApplique le plan\n\n**contexte et portée**\n\nAutorisation d’appliquer intégralement la cible cumulative U883 validée U884 et son plan : modèle, glossaires, scénarios, contrôles et capture des accords exacts. Conserver les identités, préserver les publications historiques et les responsabilités d’Order Management, Availability et Fulfilment. Les rédactions détaillées nécessaires sont proposées sous cette autorisation, sans accord global implicite sur leurs valeurs ni réalisation installée. La publication, le commit et le push ne sont pas demandés."
+    },
+    {
+      "id": "U886",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u886",
+      "line": 21788,
+      "content_sha256": "7380d065a11e362cbf12c69d76b696c7fad1ebac896367d2fe766d09c9e70808",
+      "captured_text": "## U886\n\n**id**\n\nU886\n\n**date**\n\n2026-10-07\n\n**titre**\n\nAudit global de cohérence avant release\n\n**texte**\n\nAvant de faire une release, je souhaite un audit de cohérence global, description, périmètres, use case mis à jour, nommage, numérotation des ids.\n\n**contexte et portée**\n\nAudit du backlog après application U885 : descriptions, frontières, scénarios, noms, identités et codes de lecture. Identifier les incohérences et les conditions de publication ; aucune release ni validation implicite des corrections métier."
+    },
+    {
+      "id": "U887",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u887",
+      "line": 21811,
+      "content_sha256": "f6660d50bb32739eb3c519fde02e79bfc12d053d2767fadabad7d62f83984ac9",
+      "captured_text": "## U887\n\n**id**\n\nU887\n\n**date**\n\n2026-10-07\n\n**titre**\n\nPrendre en charge tous les correctifs de cohérence\n\n**texte**\n\nPrends en charge la totalité des correctifs\n\n**contexte et portée**\n\nAutorisation de corriger les neuf constats A01–A09 de l’audit U886, dans le modèle, les glossaires et les scénarios, et de renforcer leurs contrôles. Les variantes de vérification recommandées sont incluses. Préserver les identités, les preuves et les publications historiques. Les formulations détaillées restent qualifiées selon leur portée ; aucune release, commit ou push demandé."
+    },
+    {
+      "id": "U889",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u889",
+      "line": 21863,
+      "content_sha256": "b29a8180caebdeeb574e9e170789b294f5f57af534c2c015c72032e03cfaa6f4",
+      "captured_text": "## U889\n\n**id**\n\nU889\n\n**date**\n\n2026-10-07\n\n**titre**\n\nValider les corrections du candidat avant présentation\n\n**texte**\n\nJe valide\n\n**contexte et portée**\n\nAccord sur le lot cohérent de l’audit U888 : corrections M01–M08, modèle et glossaires alignés, scénarios réalignés et prérequis des scénarios de démonstration allégés. Les conditions de livraison L01–L03 sont incluses : préparer le réexamen des qualifications historiques, conserver l’exigence du guide actualisé et renforcer le contrôle de complétude. Les deux défauts logiciels secondaires identifiés sont corrigés dans le même lot. Cet accord porte sur les corrections proposées ; il ne valide pas globalement les fiches, les nouvelles rédactions détaillées ni les réalisations installées. Préserver identités et publications historiques. Aucune release, commit ou push demandé."
+    },
+    {
+      "id": "U890",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u890",
+      "line": 21885,
+      "content_sha256": "14e8c46b7b13b08db40bd2572caf47c970b83ae572acf4a2cacf6feb3ab3e68f",
+      "captured_text": "## U890\n\n**id**\n\nU890\n\n**date**\n\n2026-10-07\n\n**titre**\n\nInterroger les références produit, packaging et matériel interne, ainsi que le réassort et Supply Matching\n\n**texte**\n\nJe me demande si la problématique de packaging en terme de référentiel est adressé. Tout dépend de ce qu'on entend par \"Produit\". Pour améliorer la lecture, On pourrait imaginer séparer les produits destinés à la vente, le packaging en tant qu'information à passer à la logistique pour demander ce qu'on veut préparer et décrire ce qu'on reçoit, et le matériel et petits accessoires pour la force de vente et le backoffice (stylo, meuble, etc.).\n\nRepleneshiment dans Supply Matching, ça signifie que IRMA est dans FLOW ? Sans doute une bonne idée...\n\nD'autre part, la supply matching est un sous domaine extremement complexe, je suis surpris qu'il soit aussi court. Mais c'est vrai qu'on est dans un scope métier, ça ne présuppose pas de la complexité d'automatisation...\n\n**contexte et portée**\n\nQuestions et pistes à analyser : distinguer les biens destinés à la vente, les informations de conditionnement attendues ou reçues, et les fournitures/équipements internes ; préciser le sens de Replenishment et son rapport possible à IRMA ; examiner la maille métier de Supply Matching. Aucun nouveau découpage adopté, aucune intégration ni migration d’IRMA décidée, aucune modification du modèle canonique ou publication demandée."
+    },
+    {
+      "id": "U891",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u891",
+      "line": 21911,
+      "content_sha256": "dea28d530284e185302502e5ee129752cbe54a7ca0b1c9a383911d9c9ce066a0",
+      "captured_text": "## U891\n\n**id**\n\nU891\n\n**date**\n\n2026-10-07\n\n**titre**\n\nValider la distinction des références de biens et packaging et la clarification du matching\n\n**texte**\n\nJe valide\n\n**contexte et portée**\n\nAccord sur le lot complet construit sous U890 : rendre lisibles Merchandise References, Packaging References et Internal Supplies & Equipment References en conservant une identité commune des biens ; distinguer matières de conditionnement, spécifications réutilisables, résultat demandé et conditionnement annoncé/reçu ; préciser les responsabilités des cibles, paramètres actifs et apports de réassort et la place possible d’IRMA comme moteur spécialisé ; enrichir la synthèse d’Availability/Supply Matching et éprouver les cas exigeants dans les capacités et scénarios. Les choix rédactionnels et de rattachement nécessaires sont appliqués dans cette portée, sans adoption globale des nouvelles fiches détaillées ni des scénarios rédigés ensuite. Aucun composant logiciel, migration d’IRMA ou réalisation installée adopté. Identités existantes et publications historiques conservées. Aucune release, commit ou push demandé."
+    },
+    {
+      "id": "U892",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u892",
+      "line": 21933,
+      "content_sha256": "577cfda388a9d0478d9bc2bb712680c90cfe16fb798216af0a19a5cbcd6cc46e",
+      "captured_text": "## U892\n\n**id**\n\nU892\n\n**date**\n\n2026-10-07\n\n**titre**\n\nRendre explicite Credit Check dans le modèle et construire un use case\n\n**texte**\n\nLe métier me parle souvent de Credit Check : récupérer des infos de la finance pour alimenter une décision d'avancer ou pas dans une vente. Je pense qu'on l'adresse mais je voudrais que ce soit explicite dans le modèle. Qu'en dis-tu ?\nIl faudrait un use case aussi\n\n**contexte et portée**\n\nConstat métier et demande de proposition : expliciter le contrôle de crédit d’une vente à partir d’informations de Finance et préparer un scénario concret. Vérifier la couverture existante et les responsabilités de référence, décision et progression de commande. Aucun nouveau nœud, parent, transfert d’autorité financière ou réalisation installée adopté ; aucune release, commit ou push demandé."
+    },
+    {
+      "id": "U893",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u893",
+      "line": 21956,
+      "content_sha256": "0f7fa736d1724a8723ac120449ddd1048490e52e9568cc5e5c27d00e1ca5c1c7",
+      "captured_text": "## U893\n\n**id**\n\nU893\n\n**date**\n\n2026-10-07\n\n**titre**\n\nProposer le nom Credit Check Decision\n\n**texte**\n\nUne capacité Credit Check Decision  ?\n\n**contexte et portée**\n\nProposition de nom pour rendre explicite la décision d’admissibilité financière d’une vente discutée sous U892. Le nom, le périmètre, le rattachement et le scénario sont présentés ensemble pour arbitrage ; aucun accord global sur une nouvelle fiche ou réalisation installée n’est capturé."
+    },
+    {
+      "id": "U894",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u894",
+      "line": 21978,
+      "content_sha256": "cc41482daa77f67bb98ffb19e1436716141b198a9689916d14c90cdf9dda6608",
+      "captured_text": "## U894\n\n**id**\n\nU894\n\n**date**\n\n2026-10-07\n\n**titre**\n\nValider Credit Check Decision et son scénario\n\n**texte**\n\nJe valide\n\n**contexte et portée**\n\nAccord sur la proposition complète U892–U893 : capacité Credit Check Decision de nature décision dans Order Management / Order Lifecycle Management, déterminant l’admissibilité d’une étape de vente à partir des informations, règles ou résultats de Finance. Finance conserve son autorité financière ; Sales Order applique et trace le résultat ; Process Management conduit le parcours. Les profils de référence restent distincts de l’exposition courante et du résultat propre à la commande. Enrichir le scénario de crédit existant : commande de 3 000 euros, limite de 10 000 euros, exposition préalable hors commande de 8 000 puis 6 000 euros après paiement reconnu par Finance ; résultat indéterminé en cas d’information absente ou périmée, jamais d’autorisation implicite. Aucune release, commit ou push demandé ; les détails rédactionnels nouveaux et les réalisations installées ne bénéficient pas d’un accord global implicite."
     }
   ]
 }
