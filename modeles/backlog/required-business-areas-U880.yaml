@@ -1,0 +1,94 @@
+schema_version: 1.0.0
+source_refs:
+- U880
+status: applied
+rule: Chaque capacité possède exactement un parent métier Business Area par relation contains. Cette Business Area appartient
+  à un sous-domaine. Le rattachement direct d’une capacité à un sous-domaine est interdit dans le modèle courant. Une Business
+  Area peut contenir une seule capacité ; les références restent documentaires et les publications historiques conservent
+  leur contrat.
+mapping:
+  D02.b:
+    from: subdomain-policies
+    to: ba-protection-policies
+    relation_id: REL-MEMBER-D02.b
+  D19.b:
+    from: subdomain-policies
+    to: ba-protection-policies
+    relation_id: REL-MEMBER-D19.b
+  D19.a:
+    from: subdomain-policies
+    to: ba-service-provider-controls
+    relation_id: REL-MEMBER-D19.a
+  D05.i:
+    from: D06
+    to: ba-inventory-disposition
+    relation_id: REL-MEMBER-D05.i
+  service-order-customs-clearance:
+    from: subdomain-service-orders
+    to: ba-customs-services
+    relation_id: REL-U709-CONTAINS-service-order-customs-clearance
+  accounting-interpretation:
+    from: subdomain-financial-accounting
+    to: ba-accounting-translation
+    relation_id: REL-U826-accounting-interpretation
+scope: 72 capacités conservées, cinq Business Areas ajoutées. Noms et détails proposés ; aucune modification de sous-domaine.
+  La règle est propre au modèle FLOW, non présentée comme un standard SAP ou Microsoft.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U880
+  summary: Business Area obligatoire pour chaque capacité ; six rattachements corrigés.
+  required_nodes:
+  - id: ba-protection-policies
+    kind: business_area
+    parent: subdomain-policies
+    fields:
+      name: Protection Policies
+      definition: Maintenir les règles actives de protection des ressources et des demandes dans les arbitrages de couverture.
+      scope: 'Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations.
+        Exemple fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.'
+  - id: D02.b
+    parent: ba-protection-policies
+  - id: D19.b
+    parent: ba-protection-policies
+  - id: ba-service-provider-controls
+    kind: business_area
+    parent: subdomain-policies
+    fields:
+      name: Service Provider Controls
+      definition: Encadrer le recours aux prestataires par des exclusions et limites opérationnelles applicables.
+      scope: 'Les accords externes restent dans Operational References ; la sélection d’une prestation reste dans Fulfilment
+        Orchestration. Exemple fictif : suspendre les nouvelles sollicitations d’un prestataire sans annuler ses travaux engagés.'
+  - id: D19.a
+    parent: ba-service-provider-controls
+  - id: ba-inventory-disposition
+    kind: business_area
+    parent: D06
+    fields:
+      name: Inventory Disposition
+      definition: Déterminer les usages et destinations admissibles des biens selon leur état et les possibilités de récupération
+        de valeur.
+      scope: 'Le choix du devenir est distinct de sa réalisation et de la résolution financière du retour. Exemple fictif
+        : retenir une réparation avant remise en stock, puis confier les prestations aux capacités compétentes.'
+  - id: D05.i
+    parent: ba-inventory-disposition
+  - id: ba-customs-services
+    kind: business_area
+    parent: subdomain-service-orders
+    fields:
+      name: Customs Services
+      definition: Porter les exigences et engagements des prestations de dédouanement confiées aux organisations compétentes.
+      scope: 'Ce périmètre ne se substitue ni à l’autorité douanière ni au référentiel de conformité commerciale d’entreprise.
+        Exemple fictif : demander un dédouanement et suivre les pièces manquantes jusqu’au résultat reconnu.'
+  - id: service-order-customs-clearance
+    parent: ba-customs-services
+  - id: ba-accounting-translation
+    kind: business_area
+    parent: subdomain-financial-accounting
+    fields:
+      name: Accounting Translation
+      definition: Transformer les faits de gestion reconnus en écritures selon les règles comptables applicables.
+      scope: 'Ce périmètre reste dans Financial Accounting, hors Supply Chain Orchestration ; il ne couvre pas toute la comptabilité
+        générale. Exemple fictif : traduire une réception reconnue en écritures selon les comptes applicables.'
+  - id: accounting-interpretation
+    parent: ba-accounting-translation

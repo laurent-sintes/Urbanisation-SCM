@@ -64,6 +64,7 @@ source_refs:
 - U817
 - U821
 - U825
+- U880
 purpose: Vocabulaire de modélisation en support à la définition des objets du modèle ; distinct du glossaire métier.
 boundary:
   business_glossary: modeles/backlog/glossary.yaml
@@ -1676,12 +1677,14 @@ terms:
   label_fr: Périmètre de responsabilité métier
   definition: Partie cohérente de la responsabilité d’un sous-domaine, définie par sa finalité, ses résultats et ses frontières.
     Elle porte des capacités ou un périmètre de références documentaires.
-  short_description: Périmètre de responsabilité au sein d’un sous-domaine, portant des capacités ou des références.
+  short_description: Périmètre de responsabilité obligatoire entre un sous-domaine et ses capacités ; peut aussi porter des
+    références.
   role: Préciser une finalité et des frontières métier avant de détailler les savoir-faire.
   notes:
-  - Niveau facultatif. Une seule capacité est admissible si le périmètre apporte un sens distinct ; aucun regroupement forcé.
+  - Niveau obligatoire entre sous-domaine et capacité. Une seule capacité est admissible ; aucune capacité artificielle n’est
+    créée pour remplir un regroupement.
   - Ne désigne automatiquement ni une équipe, ni un produit, ni une application.
-  - Chaque capacité reste directement rattachée à un sous-domaine ou à une Business Area de ce sous-domaine.
+  - 'Chaque capacité a un parent métier unique : une Business Area de son sous-domaine.'
   - Une Area de références porte leur cohérence et leur fourniture locale. Elle les présente sans les transformer en capacités
     ; chaque référence conserve un parent de présentation unique.
   source_refs:
@@ -1690,6 +1693,7 @@ terms:
   - U847
   - U848
   - U863
+  - U880
   review:
     state: proposed
     note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
@@ -1897,6 +1901,20 @@ methodology_agreements:
   - U806
   scope: Retrait courant de MOD004, dédoublonnage, regroupement des types, séparation des objets, qualificatifs, notions connexes
     et règles de méthode. Les rédactions nouvelles restent éditoriales ; aucune nature de capacité modifiée.
+- id: AGREEMENT-U880
+  source_refs:
+  - U880
+  author: Laurent
+  recorded_by: Codex
+  decided_on: '2026-10-06'
+  interpretation: explicit
+  scope: Toute capacité doit appartenir à une Business Area ; un parent unique dans son sous-domaine.
+  fields:
+  - target: PRINCIPLE-REQUIRED-BUSINESS-AREA
+    field: statement
+    value_sha256: 5823a4d6bed3b943d9a3ffdde94cd9e54a5b76f2d8b460c8d5711652306ecfaa
+  limits: Noms des nouveaux regroupements et descriptions détaillées proposés ; aucune modification des contrats historiques.
+  capture_method: Registre méthodologique ; principes non ciblables par les captures nodes/relations.
 presentation:
   aliases:
     TER001: MOD015

@@ -150,6 +150,9 @@ def validate_urbanism(model, sources, schema=None):
     errors.extend(validate_catalog(model))
     relations = _index(model["relations"], "relations", errors)
     business_areas = any(p.get('id') == 'PRINCIPLE-BUSINESS-AREA' for p in model.get('principles', []))
+    required_business_areas = any(p.get('id') == 'PRINCIPLE-REQUIRED-BUSINESS-AREA' for p in model.get('principles', []))
+    if required_business_areas and not business_areas:
+        errors.append('business-area: required parent policy needs the Business Area principle')
     if any(n.get('kind') == 'business_area' for n in nodes.values()) and not business_areas:
         errors.append('business-area: explicit principle required')
     if business_areas:
@@ -160,6 +163,8 @@ def validate_urbanism(model, sources, schema=None):
             if kind in ('business_area', 'capability'):
                 parents = [r for r in model['relations'] if r.get('type') in ('contains', 'presents') and r.get('target_id') == identifier]
                 allowed = ('area',) if kind == 'business_area' else ('area', 'business_area')
+                if kind == 'capability' and required_business_areas:
+                    allowed = ('business_area',)
                 if len(parents) != 1 or parents[0]['type'] != 'contains' or nodes.get(parents[0]['source_id'], {}).get('kind') not in allowed:
                     errors.append(f'business-area/{identifier}: invalid responsibility parent')
             if kind == 'business_area':

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { adaptPublication, cardChildListOf, childrenOf, lineageOf, parentRelationOf } from './src/model.ts';
+import { adaptPublication, cardChildListOf, cardListedItems, cardContentSummary, childrenOf, lineageOf, parentRelationOf } from './src/model.ts';
 import { kindLabel } from './src/presentation.ts';
 import { scenariosForNode } from './src/scenarioCatalog.ts';
 import { projectDependencies, dependencyLevels, dependencyLevel } from './src/dependencyGraph.ts';
@@ -20,6 +20,16 @@ const raw = () => ({ space:'release',version:'fixture',nodes:[
   {id:'doc',type:'documents-reference',source_id:'direct',target_id:'ref'},
   {id:'cooperation',type:'relates-to',source_id:'cap',target_id:'direct',qualification:{meaning:'Uses'}},
 ],scenario_catalog:{scenarios:[{id:'s',title:'Scenario'}],paths:[{id:'p',scenario_id:'s',steps:[{contributions:[{node_id:'cap'},{node_id:'direct'}]}]}],legacy_links:[]}});
+test('overview counts listed content including direct nodes, excluding Area banners',()=>{
+  const source=raw();
+  source.nodes.push({id:'second',kind:'capability',fields:{name:'Second'}});
+  source.relations.push({id:'extra',type:'contains',source_id:'ba',target_id:'second'});
+  const m=adaptPublication(source), sub=m.nodeById.get('sub');
+  assert.deepEqual(new Set(cardListedItems(cardChildListOf(m,sub)).map(n=>n.id)),new Set(['cap','second','direct','ref']));
+  assert.equal(cardContentSummary(m,sub),'3 capacités · 1 référentiel');
+  assert.equal(cardContentSummary(m,m.nodeById.get('ba')),'2 capacités');
+  assert.equal(cardContentSummary(m,m.nodeById.get('cap')),'');
+});
 test('optional responsibility level remains visible in cards, lineage and labels',()=>{
   const m=adaptPublication(raw());
   assert.equal(kindLabel(m.nodeById.get('ba')),'Business Area');

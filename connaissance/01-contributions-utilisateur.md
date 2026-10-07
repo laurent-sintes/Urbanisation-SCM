@@ -21641,3 +21641,29 @@ Je valide ta proposition
 **contexte et portée**
 
 Accord sur la proposition cumulative U878 : Partner & Agreement References reçoit les références de crédit sous autorité du contrôle de gestion ; Party / Role porte profil, classement et limite autorisée, Agreement les conditions réellement convenues ; les règles générales externes ne sont pas assimilées à des contrats ni placées sous autorité de Policies. Order Management applique ou consomme le contrôle pour suspendre/reprendre, Sentry réagit aux changements ; encours ou résultat du contrôle financier restent nécessaires. Ajouter à Return Order Credit Resolution, Refund Resolution et Replacement Resolution, combinables avec les cinq comportements de devenir physique. Billing porte l’avoir, Payment le remboursement, une Sales Order liée le remplacement. Étendre explicitement Payment de l’encaissement au remboursement. Alignement du glossaire et scénarios ; nouvelles rédactions détaillées proposées, pas de validation globale des formulations ni de réalisation installée. Aucun lancement implicite de release, commit ou push.
+
+## U880
+
+**id**
+
+U880
+
+**date**
+
+2026-10-06
+
+**titre**
+
+Business Area obligatoire pour chaque capacité
+
+**texte**
+
+Policies est le seul sous domaine dont les capacités ne sont pas dans une Area.
+
+C'est dommage.
+
+Je souhaite que toutes les capacités soient dans une Business Area : c'est une règle du méta modèle dorénavant
+
+**contexte et portée**
+
+Nouvelle règle générale : toute capacité a une Business Area comme parent métier unique ; celle-ci appartient à un sous-domaine. Les anciennes publications conservent leur contrat. L’inspection identifie six capacités directement rattachées : D02.b, D19.a, D19.b dans Policies, D05.i dans Fulfilment Orchestration, Customs Clearance Order dans Service Management et Accounting Interpretation dans Financial Accounting. La règle est explicitement demandée ; les noms et définitions des cinq nouveaux regroupements sont des propositions d’application, sans accord métier implicite sur leur rédaction. Une Business Area peut conserver une seule capacité. Aucun déplacement de sous-domaine ni nouvelle capacité, aucune release implicite.

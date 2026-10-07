@@ -1,10 +1,11 @@
-id: flow-methodology-2026-10-06.5
-version: 2026-10-06.5
-as_of: '2026-10-06'
+id: flow-methodology-2026-10-07.1
+version: 2026-10-07.1
+as_of: '2026-10-07'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
 editorial_status: implementation_wording
-scope: Méthodologie de transformation et métamodèle ; Business Area intégré sous U848. Les éditions historiques restent figées.
+scope: Méthodologie de transformation et métamodèle ; Business Area obligatoire entre sous-domaine et capacité (U880). Les
+  éditions historiques restent figées.
 source_refs:
 - U319
 - U320
@@ -56,13 +57,13 @@ source_refs:
 - U858
 - U863
 - U865
+- U880
 lessons:
 - id: business-first
   label: Le métier d’abord
   title: Des responsabilités métier qui coopèrent
   rule: Une capacité décrit ce que l’entreprise sait faire durablement. Business System → Domain → Subdomain → Business Area
-    facultative → Capability → Behavior distingue le grand périmètre, ses responsabilités, les aptitudes et leurs manières
-    d’agir.
+    → Capability → Behavior distingue le grand périmètre, ses responsabilités, les aptitudes et leurs manières d’agir.
   established_at: '2026-09-19'
   scene:
     kind: responsibilities
@@ -282,7 +283,7 @@ lessons:
     caption: Deux vocabulaires complémentaires, consultables séparément.
     items:
     - label: Méta modèle
-      text: Système métier · Domaine · Sous-domaine · Business Area facultative · Capacité · Comportement · Relation
+      text: Système métier · Domaine · Sous-domaine · Business Area · Capacité · Comportement · Relation
     - label: Modèle métier
       text: Stock · Commande · Réservation · Promesse
   question: Où chercher la différence entre une capacité et un comportement ?
@@ -657,7 +658,7 @@ sources:
 - id: U848
   title: Valider la migration Business Area
   excerpt: Je valide
-  scope: 'Plan U846/U847 : Business Area facultative, 16 périmètres, préservation des capacités et des publications historiques.'
+  scope: 'Plan U846/U847 : Business Area, 16 périmètres, préservation des capacités et des publications historiques.'
 - id: U853
   title: Appliquer le plan de correction transversal
   excerpt: Applique le plan totalement
@@ -691,6 +692,10 @@ sources:
   excerpt: '3 : bonne idée. Finalement, c’est comme les Orders d’achat qui peuvent être planned (issues du supply planning).
     4 : Dans Availability, c’est une bonne idée. Pour 1 et 2, ok'
   scope: Plan Visibility devient une Business Area d’Availability ; autres précisions dans le modèle métier.
+- id: U880
+  title: Business Area obligatoire
+  excerpt: 'Je souhaite que toutes les capacités soient dans une Business Area : c’est une règle du méta modèle dorénavant'
+  scope: Parent Business Area obligatoire pour toute capacité, sans réécriture des publications historiques.
 glossary:
   terms:
   - id: MOD001
@@ -1191,9 +1196,9 @@ glossary:
     - short_description
   - id: MOD039
     notes:
-    - Niveau facultatif. Une seule capacité est admissible si le périmètre apporte un sens distinct ; aucun regroupement forcé.
+    - Niveau obligatoire entre sous-domaine et capacité ; une seule capacité reste admissible.
     - Ne désigne automatiquement ni une équipe, ni un produit, ni une application.
-    - Chaque capacité reste directement rattachée à un sous-domaine ou à une Business Area de ce sous-domaine.
+    - Chaque capacité est rattachée à une Business Area de son sous-domaine.
     - Une Area de références porte leur cohérence et leur fourniture locale. Elle les présente sans les transformer en capacités
       ; chaque référence conserve un parent de présentation unique.
     canonical_fields:
@@ -1725,10 +1730,10 @@ chapters:
 
       Son périmètre permet d’identifier sa contribution propre dans des [scénarios](method:MOD027) métier : les informations et conditions qu’elle mobilise, le résultat qu’elle produit et ses limites de responsabilité. Ses [comportements](method:MOD006) précisent les manières significatives dont elle s’exerce.
   - title: Des relations explicites
-    text: Le modèle de responsabilité se lit Business System → Domain → Subdomain → Business Area facultative. Le modèle de
-      capacité précise ensuite les [capacités](method:MOD015) et leurs [comportements](method:MOD006). Une Business Area exprime
-      un résultat et une frontière de responsabilité ; elle ne représente ni une équipe ni une application.
-    detail: Une capacité possède un parent unique, sous-domaine ou Business Area. Une Business Area peut porter une seule
+    text: Le modèle de responsabilité se lit Business System → Domain → Subdomain → Business Area. Le modèle de capacité précise
+      ensuite les [capacités](method:MOD015) et leurs [comportements](method:MOD006). Une Business Area exprime un résultat
+      et une frontière de responsabilité ; elle ne représente ni une équipe ni une application.
+    detail: Une capacité possède un parent unique, obligatoirement une Business Area. Une Business Area peut porter une seule
       capacité lorsque son sens le justifie. Une Business Area peut aussi présenter des références et porter la cohérence
       de leurs vues locales. Ces objets restent documentaires et ne deviennent pas des capacités ni leurs parents. Les scénarios
       mobilisent plusieurs périmètres sans former une autre hiérarchie.

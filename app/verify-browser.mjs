@@ -57,6 +57,17 @@ try {
     const areas = node.kind === 'area' ? children(node.id).filter(id => byId.get(id).kind === 'business_area') : [];
     const expected = children(node.id).flatMap(id => areas.includes(id) ? children(id) : [id]);
     assert.deepEqual(cards.sort(), expected.sort(), `Explicit content of ${node.id}`);
+    for (const id of cards) {
+      const card = page.locator(`.business-card[data-node-id="${id}"]`);
+      const listed = await card.locator('.card-child-link').count();
+      const badge = card.locator('.child-list-heading > span');
+      if (await badge.count()) assert.equal(Number(await badge.innerText()), listed, `Count of listed entries in ${id}`);
+      const members = children(id).flatMap(child => byId.get(child)?.kind === 'business_area' ? children(child) : [child]);
+      if (byId.get(id)?.kind === 'area' && members.length) {
+        const links = await card.locator('.card-child-link').evaluateAll(es => es.map(e => new URLSearchParams(e.hash.slice(1)).get('node')));
+        assert.deepEqual(links.sort(), members.sort(), `Overview must retain direct and grouped children in ${id}`);
+      }
+    }
     assert.deepEqual((await page.locator('.category-banner[data-business-area]').evaluateAll(es=>es.map(e=>e.dataset.businessArea))).sort(), areas.sort(), `Business Area banners of ${node.id}`);
     for (const id of areas) assert.equal(await page.locator(`[data-business-area="${id}"] a[href*="node=${id}"]`).count(), 1);
   }

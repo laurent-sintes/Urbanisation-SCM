@@ -86,6 +86,7 @@ publication_delivery:
   state: applied
   source_refs:
   - U826
+  - U880
   summary: Integration est-ouest, Inbound/Outbound et deux ingestions déplacées ; trois sorties et interprétation dans Finance
     ; Tracking conservés.
   required_nodes:
@@ -129,7 +130,7 @@ publication_delivery:
     kind: capability
     fields:
       name: Accounting Interpretation
-    parent: subdomain-financial-accounting
+    parent: ba-accounting-translation
     parent_type: contains
   - id: master-data-ingestion
     fields: {}

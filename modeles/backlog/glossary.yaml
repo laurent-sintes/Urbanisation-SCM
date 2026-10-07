@@ -34,6 +34,7 @@ source_refs:
 - U794
 - U877
 - U879
+- U880
 terms:
 - id: TER001
   name: Capacité métier
@@ -18031,7 +18032,7 @@ terms:
   definition: Coordonner, libérer et adapter les prestations dans le mandat confié et les engagements applicables.
   short_description: Coordonner, libérer et adapter les prestations dans le mandat confié et les engagements applicables.
   context: |-
-    La décision sur le devenir des biens reste une responsabilité distincte directement rattachée au sous-domaine.
+    La décision sur le devenir des biens appartient à [Inventory Disposition](glossary:TER161), Business Area distincte au sein de Fulfilment Orchestration.
 
     Bénéficiaire et résultat : Faire réaliser les prestations confiées dans les limites de la promesse et des autorisations.
 
@@ -20033,5 +20034,388 @@ terms:
     source_refs:
     - U878
     - U879
+- id: TER159
+  name: Protection Policies
+  definition: Maintenir les règles actives de protection des ressources et des demandes dans les arbitrages de couverture.
+  short_description: Maintenir les règles actives de protection des ressources et des demandes dans les arbitrages de couverture.
+  context: 'Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations.
+    Exemple fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.'
+  source_refs:
+  - U880
+  review:
+    state: proposed
+    note: Application de la règle U880 ; noms et descriptions des regroupements proposés, sans accord implicite.
+  revision: 1
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Inventory Visibility inventory allocation
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+    source_version: Documentation en ligne sans édition affichée
+    source_locator: Business background and purpose ; virtual pool ; Terminology
+    consulted_on: '2026-10-06'
+    concept_name: Inventory allocation
+    scope_summary: Protection de quantités par groupe.
+    approach_summary: Allouer des quantités protégées par groupe.
+    evidence_limits: Protection par groupe seulement ; ne démontre pas toutes les règles de renouvellement FLOW ni une taxonomie
+      de Business Areas.
+    element_name: Inventory allocation
+    element_type: Concept documenté par la source primaire
+    relationship: Recouvrement partiel
+    similarities: Protection de quantités pour des groupes prioritaires et contrôle de leur consommation.
+    differences: Inventory allocation ne couvre pas toute la politique de renouvellement FLOW. La Business Area FLOW ne reprend
+      pas tout le module produit ; le nombre de capacités ne définit pas sa responsabilité.
+    flow_position: 'Maintenir les règles actives de protection des ressources et des demandes dans les arbitrages de couverture.
+      Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations. Exemple
+      fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.'
+    status: proposed
+    source_refs:
+    - U435
+    - U477
+    - ELM410
+    - CMP190
+    - U880
+    term_choice: Protection Policies est un regroupement FLOW proposé ; aucune taxonomie commune aux éditeurs n’est affirmée.
+    definition_choice: Le périmètre regroupe une responsabilité cohérente ; le produit documente seulement le rapprochement
+      décrit et non ce niveau de Business Area.
+  - vendor: SAP
+    product: SAP S/4HANA — périmètre du cours cité
+    element_name: Outlining aATP with Check Against Allocation
+    concept_name: Outlining aATP with Check Against Allocation
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: Protection de ressources par groupe de demandes.
+    approach_summary: Contrôler les quantités protégées dans la confirmation.
+    similarities: Protéger des quantités selon les groupes et priorités.
+    differences: PAL protège des droits de confirmation ; ce n’est pas l’affectation effective ARun. La définition FLOW conserve
+      cette différence de sens d’Allocation. La Business Area FLOW ne reprend pas tout le module produit ; le nombre de capacités
+      ne définit pas sa responsabilité.
+    flow_position: 'Maintenir les règles actives de protection des ressources et des demandes dans les arbitrages de couverture.
+      Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations. Exemple
+      fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.'
+    source_title: Outlining aATP with Supply Protection (SuP)
+    source_url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-aatp-with-supply-protection-sup-
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Outlining aATP with Check Against Allocation — passages sur le mécanisme rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: Appui limité à la protection ; ne démontre pas toutes les règles de renouvellement FLOW ni ce regroupement.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM018
+    - U880
+    term_choice: Protection Policies est un regroupement FLOW proposé ; aucune taxonomie commune aux éditeurs n’est affirmée.
+    definition_choice: Le périmètre regroupe une responsabilité cohérente ; le produit documente seulement le rapprochement
+      décrit et non ce niveau de Business Area.
+- id: TER160
+  name: Service Provider Controls
+  definition: Encadrer le recours aux prestataires par des exclusions et limites opérationnelles applicables.
+  short_description: Encadrer le recours aux prestataires par des exclusions et limites opérationnelles applicables.
+  context: 'Les accords externes restent dans Operational References ; la sélection d’une prestation reste dans Fulfilment
+    Orchestration. Exemple fictif : suspendre les nouvelles sollicitations d’un prestataire sans annuler ses travaux engagés.'
+  source_refs:
+  - U880
+  review:
+    state: proposed
+    note: Application de la règle U880 ; noms et descriptions des regroupements proposés, sans accord implicite.
+  revision: 1
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Service agreements
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-agreements
+    source_locator: Validité des accords et suspension de création des ordres
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+    element_name: Service agreements
+    concept_name: Service agreements
+    element_type: Fonction produit documentée
+    relationship: Recouvrement partiel
+    similarities: Appliquer validité et suspension à la création de prestations.
+    differences: Un accord de service ne démontre pas le classement d’un panel de transporteurs. La Business Area FLOW ne
+      reprend pas tout le module produit ; le nombre de capacités ne définit pas sa responsabilité.
+    flow_position: 'Encadrer le recours aux prestataires par des exclusions et limites opérationnelles applicables. Les accords
+      externes restent dans Operational References ; la sélection d’une prestation reste dans Fulfilment Orchestration. Exemple
+      fictif : suspendre les nouvelles sollicitations d’un prestataire sans annuler ses travaux engagés.'
+    definition_choice: Le périmètre regroupe une responsabilité cohérente ; le produit documente seulement le rapprochement
+      décrit et non ce niveau de Business Area.
+    term_choice: Service Provider Controls est un regroupement FLOW proposé ; aucune taxonomie commune aux éditeurs n’est
+      affirmée.
+    scope_summary: Appliquer validité et suspension à la création de prestations.
+    approach_summary: Un accord de service ne démontre pas le classement d’un panel de transporteurs.
+    evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation installée
+      chez Beaumanoir.
+    status: proposed
+    source_refs:
+    - U853
+    - U880
+  - vendor: SAP
+    product: SAP S/4HANA — périmètre du cours cité
+    element_name: Selecting Carriers and Tendering
+    concept_name: Selecting Carriers and Tendering
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: La sélection du transporteur rapproche coûts, contraintes et capacités disponibles avant sollicitation.
+    approach_summary: 'Rapprochement avec Service Provider Policy : La sélection du transporteur rapproche coûts, contraintes
+      et capacités disponibles avant sollicitation.'
+    similarities: La sélection du transporteur rapproche coûts, contraintes et capacités disponibles avant sollicitation.
+    differences: Le périmètre documenté est le transport ; il ne prouve pas la visibilité de capacité de toutes les prestations.
+      La Business Area FLOW ne reprend pas tout le module produit ; le nombre de capacités ne définit pas sa responsabilité.
+    flow_position: 'Encadrer le recours aux prestataires par des exclusions et limites opérationnelles applicables. Les accords
+      externes restent dans Operational References ; la sélection d’une prestation reste dans Fulfilment Orchestration. Exemple
+      fictif : suspendre les nouvelles sollicitations d’un prestataire sans annuler ses travaux engagés.'
+    source_title: Selecting Carriers and Tendering
+    source_url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-transportation-management/selecting-carriers-and-tendering_d66f6116-ed5d-491f-b91b-e958fdedf2a5
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Selecting Carriers and Tendering — passages sur le mécanisme rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. Le périmètre documenté est le transport ; il ne prouve pas la visibilité de capacité de toutes les
+      prestations.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM793
+    - U880
+    term_choice: Service Provider Controls est un regroupement FLOW proposé ; aucune taxonomie commune aux éditeurs n’est
+      affirmée.
+    definition_choice: Le périmètre regroupe une responsabilité cohérente ; le produit documente seulement le rapprochement
+      décrit et non ce niveau de Business Area.
+- id: TER161
+  name: Inventory Disposition
+  definition: Déterminer les usages et destinations admissibles des biens selon leur état et les possibilités de récupération
+    de valeur.
+  short_description: Déterminer les usages et destinations admissibles des biens selon leur état et les possibilités de récupération
+    de valeur.
+  context: 'Le choix du devenir est distinct de sa réalisation et de la résolution financière du retour. Exemple fictif :
+    retenir une réparation avant remise en stock, puis confier les prestations aux capacités compétentes.'
+  source_refs:
+  - U880
+  review:
+    state: proposed
+    note: Application de la règle U880 ; noms et descriptions des regroupements proposés, sans accord implicite.
+  revision: 1
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Specify how to dispose of returned items
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/specify-how-to-dispose-of-returned-items
+    source_version: Documentation en ligne consultée le 2026-09-19
+    source_locator: Disposition codes and actions
+    consulted_on: '2026-10-06'
+    concept_name: Disposition
+    scope_summary: Orientation d’un produit retourné.
+    approach_summary: Séparer motif de retour et devenir.
+    evidence_limits: Documentation primaire de produit ; aucune preuve de réalisation Beaumanoir ni équivalence de catalogue
+      de capacités.
+    element_name: Disposition
+    element_type: Concept documenté par la source primaire
+    relationship: Recouvrement partiel
+    similarities: Microsoft sépare motif du retour et orientation du bien.
+    differences: Les codes produit comprennent des suites commerciales que FLOW garde distinctes. Appui au cas des retours
+      seulement ; l’extension FLOW aux biens déjà stockés est étayée séparément. La Business Area FLOW ne reprend pas tout
+      le module produit ; le nombre de capacités ne définit pas sa responsabilité.
+    flow_position: 'Déterminer les usages et destinations admissibles des biens selon leur état et les possibilités de récupération
+      de valeur. Le choix du devenir est distinct de sa réalisation et de la résolution financière du retour. Exemple fictif
+      : retenir une réparation avant remise en stock, puis confier les prestations aux capacités compétentes.'
+    status: proposed
+    source_refs:
+    - U379
+    - ELM229
+    - CMP140
+    - U380
+    - U382
+    - U383
+    - ELM230
+    - ELM231
+    - CMP141
+    - CMP142
+    - U477
+    - ELM438
+    - CMP190
+    - U880
+    definition_choice: Le périmètre regroupe une responsabilité cohérente ; le produit documente seulement le rapprochement
+      décrit et non ce niveau de Business Area.
+    term_choice: Inventory Disposition est un regroupement FLOW proposé ; aucune taxonomie commune aux éditeurs n’est affirmée.
+  - vendor: SAP
+    product: SAP S/4HANA — périmètre du cours cité
+    element_name: Managing Customer Returns
+    concept_name: Managing Customer Returns
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: Le retour client articule inspection, décision de suite et traitement ou restitution au client.
+    approach_summary: 'Rapprochement avec Inventory Disposition Decision : Le retour client articule inspection, décision
+      de suite et traitement ou restitution au client.'
+    similarities: Le retour client articule inspection, décision de suite et traitement ou restitution au client.
+    differences: L’inspection de retour est une partie de la famille Inspection Order ; ce parcours ne démontre pas une optimisation
+      financière de la récupération de valeur. Appui au cas des retours seulement ; l’extension FLOW aux biens déjà stockés
+      est étayée séparément. La Business Area FLOW ne reprend pas tout le module produit ; le nombre de capacités ne définit
+      pas sa responsabilité.
+    flow_position: 'Déterminer les usages et destinations admissibles des biens selon leur état et les possibilités de récupération
+      de valeur. Le choix du devenir est distinct de sa réalisation et de la résolution financière du retour. Exemple fictif
+      : retenir une réparation avant remise en stock, puis confier les prestations aux capacités compétentes.'
+    source_title: Managing Customer Returns
+    source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Managing Customer Returns — passages sur le mécanisme rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. L’inspection de retour est une partie de la famille Inspection Order ; ce parcours ne démontre pas
+      une optimisation financière de la récupération de valeur.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM455
+    - U880
+    term_choice: Inventory Disposition est un regroupement FLOW proposé ; aucune taxonomie commune aux éditeurs n’est affirmée.
+    definition_choice: Le périmètre regroupe une responsabilité cohérente ; le produit documente seulement le rapprochement
+      décrit et non ce niveau de Business Area.
+- id: TER162
+  name: Customs Services
+  definition: Porter les exigences et engagements des prestations de dédouanement confiées aux organisations compétentes.
+  short_description: Porter les exigences et engagements des prestations de dédouanement confiées aux organisations compétentes.
+  context: 'Ce périmètre ne se substitue ni à l’autorité douanière ni au référentiel de conformité commerciale d’entreprise.
+    Exemple fictif : demander un dédouanement et suivre les pièces manquantes jusqu’au résultat reconnu.'
+  source_refs:
+  - U880
+  review:
+    state: proposed
+    note: Application de la règle U880 ; noms et descriptions des regroupements proposés, sans accord implicite.
+  revision: 1
+  market_comparisons:
+  - vendor: Microsoft
+    product: Microsoft Dynamics 365 — application indiquée par la source
+    element_name: Work with customs clearance
+    concept_name: Work with customs clearance
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: Le parcours douanier rattache déclaration et intervenants au traitement des importations.
+    approach_summary: 'Rapprochement avec Customs Clearance Order : Le parcours douanier rattache déclaration et intervenants
+      au traitement des importations.'
+    similarities: Le parcours douanier rattache déclaration et intervenants au traitement des importations.
+    differences: 'Localisation Russie : appui documentaire limité, pas preuve d’un processus générique ni d’une réalisation
+      douanière française. La Business Area FLOW ne reprend pas tout le module produit ; le nombre de capacités ne définit
+      pas sa responsabilité.'
+    flow_position: 'Porter les exigences et engagements des prestations de dédouanement confiées aux organisations compétentes.
+      Ce périmètre ne se substitue ni à l’autorité douanière ni au référentiel de conformité commerciale d’entreprise. Exemple
+      fictif : demander un dédouanement et suivre les pièces manquantes jusqu’au résultat reconnu.'
+    source_title: Work with customs clearance - Finance | Dynamics 365 | Microsoft Learn
+    source_url: https://learn.microsoft.com/en-us/dynamics365/finance/localizations/russia/rus-work-with-customs-clearance
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Work with customs clearance - Finance | Dynamics 365 | Microsoft Learn — passages sur le mécanisme rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: 'Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. Localisation Russie : appui documentaire limité, pas preuve d’un processus générique ni d’une réalisation
+      douanière française.'
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM821
+    - U880
+    term_choice: Customs Services est un regroupement FLOW proposé ; aucune taxonomie commune aux éditeurs n’est affirmée.
+    definition_choice: Le périmètre regroupe une responsabilité cohérente ; le produit documente seulement le rapprochement
+      décrit et non ce niveau de Business Area.
+  - vendor: SAP
+    product: SAP S/4HANA — périmètre du cours cité
+    element_name: Describing the Integration into SAP Global Trade Services
+    concept_name: Describing the Integration into SAP Global Trade Services
+    element_type: Mécanisme ou objet documenté dans un produit
+    relationship: Recouvrement partiel
+    scope_summary: S/4HANA transmet des données et documents à GTS pour la prise en charge des opérations de commerce international.
+    approach_summary: 'Rapprochement avec Customs Clearance Order : S/4HANA transmet des données et documents à GTS pour la
+      prise en charge des opérations de commerce international.'
+    similarities: S/4HANA transmet des données et documents à GTS pour la prise en charge des opérations de commerce international.
+    differences: Appui à la délégation depuis S/4HANA ; GTS demeure un exécutant distinct. Aucun Customs Clearance Order FLOW
+      natif ni maîtrise douanière interne n’est déduit. La Business Area FLOW ne reprend pas tout le module produit ; le nombre
+      de capacités ne définit pas sa responsabilité.
+    flow_position: 'Porter les exigences et engagements des prestations de dédouanement confiées aux organisations compétentes.
+      Ce périmètre ne se substitue ni à l’autorité douanière ni au référentiel de conformité commerciale d’entreprise. Exemple
+      fictif : demander un dédouanement et suivre les pièces manquantes jusqu’au résultat reconnu.'
+    source_title: Describing the Integration into SAP Global Trade Services
+    source_url: https://learning.sap.com/courses/introducing-the-sap-s-4hana-for-international-trade/describing-the-integration-into-sap-global-trade-services_a4529c6b-0cb6-4361-944a-a5c0b540745b
+    source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+    source_locator: Describing the Integration into SAP Global Trade Services — passages sur le mécanisme rapproché.
+    consulted_on: '2026-10-06'
+    evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
+      Beaumanoir déduit. Appui à la délégation depuis S/4HANA ; GTS demeure un exécutant distinct. Aucun Customs Clearance
+      Order FLOW natif ni maîtrise douanière interne n’est déduit.
+    status: proposed
+    source_refs:
+    - U774
+    - CMP307
+    - ELM813
+    - U880
+    term_choice: Customs Services est un regroupement FLOW proposé ; aucune taxonomie commune aux éditeurs n’est affirmée.
+    definition_choice: Le périmètre regroupe une responsabilité cohérente ; le produit documente seulement le rapprochement
+      décrit et non ce niveau de Business Area.
+- id: TER163
+  name: Accounting Translation
+  definition: Transformer les faits de gestion reconnus en écritures selon les règles comptables applicables.
+  short_description: Transformer les faits de gestion reconnus en écritures selon les règles comptables applicables.
+  context: 'Ce périmètre reste dans Financial Accounting, hors Supply Chain Orchestration ; il ne couvre pas toute la comptabilité
+    générale. Exemple fictif : traduire une réception reconnue en écritures selon les comptes applicables.'
+  source_refs:
+  - U880
+  review:
+    state: proposed
+    note: Application de la règle U880 ; noms et descriptions des regroupements proposés, sans accord implicite.
+  revision: 1
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Finance
+    element_name: Accounting distributions
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Les montants des documents sources sont répartis sur les comptes ; les corrections restent identifiables.
+    differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable. La Business Area FLOW ne reprend pas tout le module produit ; le nombre de capacités ne
+      définit pas sa responsabilité.
+    flow_position: 'Transformer les faits de gestion reconnus en écritures selon les règles comptables applicables. Ce périmètre
+      reste dans Financial Accounting, hors Supply Chain Orchestration ; il ne couvre pas toute la comptabilité générale.
+      Exemple fictif : traduire une réception reconnue en écritures selon les comptes applicables.'
+    source_title: Accounting distributions
+    source_url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-payable/accounting-distributions
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-10-06'
+    source_locator: Introduction et Distribute amounts
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM848
+    - U826
+    - U880
+    term_choice: Accounting Translation est un regroupement FLOW proposé ; aucune taxonomie commune aux éditeurs n’est affirmée.
+    definition_choice: Le périmètre regroupe une responsabilité cohérente ; le produit documente seulement le rapprochement
+      décrit et non ce niveau de Business Area.
+  - vendor: SAP
+    product: SAP S/4HANA Materials Management
+    element_name: Describing Automatic Account Determination
+    element_type: Fonction ou processus documenté
+    relationship: Recouvrement partiel
+    similarities: Les comptes sont déterminés pour les transactions pertinentes comptablement.
+    differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+      et enregistrement comptable. La Business Area FLOW ne reprend pas tout le module produit ; le nombre de capacités ne
+      définit pas sa responsabilité.
+    flow_position: 'Transformer les faits de gestion reconnus en écritures selon les règles comptables applicables. Ce périmètre
+      reste dans Financial Accounting, hors Supply Chain Orchestration ; il ne couvre pas toute la comptabilité générale.
+      Exemple fictif : traduire une réception reconnue en écritures selon les comptes applicables.'
+    source_title: Describing Automatic Account Determination
+    source_url: https://learning.sap.com/courses/cross-functional-customizing-in-sap-s-4hana-materials-management/describing-automatic-account-determination
+    source_version: Documentation évolutive ; édition globale non indiquée
+    consulted_on: '2026-10-06'
+    source_locator: Automatic Account Determination
+    evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+    status: proposed
+    source_refs:
+    - ELM851
+    - U826
+    - U880
+    term_choice: Accounting Translation est un regroupement FLOW proposé ; aucune taxonomie commune aux éditeurs n’est affirmée.
+    definition_choice: Le périmètre regroupe une responsabilité cohérente ; le produit documente seulement le rapprochement
+      décrit et non ce niveau de Business Area.
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées.

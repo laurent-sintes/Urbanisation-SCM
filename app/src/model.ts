@@ -199,6 +199,24 @@ export interface CardChildList {
   businessAreaChildren?: Record<string, AtlasNode[]>;
 }
 
+/** Count listed entries, not the Business Area banners above them. */
+export function cardListedItems(list: CardChildList): AtlasNode[] {
+  return list.items.flatMap(item => list.businessAreaChildren?.[item.id] ?? [item]);
+}
+
+export function cardContentSummary(model: PublishedModel, node: AtlasNode): string {
+  const list = cardChildListOf(model, node);
+  const items = list ? cardListedItems(list) : childrenOf(model, node.id);
+  const labels: Record<string, [string, string]> = {
+    domain: ['domaine', 'domaines'], area: ['sous-domaine', 'sous-domaines'],
+    business_area: ['Business Area', 'Business Areas'], capability: ['capacité', 'capacités'],
+    reference: ['référentiel', 'référentiels'], behavior: ['comportement', 'comportements'],
+  };
+  const counts = new Map<string, number>();
+  for (const item of items) counts.set(item.kind, (counts.get(item.kind) || 0) + 1);
+  return [...counts].map(([kind, count]) => `${count} ${(labels[kind] || ['élément', 'éléments'])[count === 1 ? 0 : 1]}`).join(' · ');
+}
+
 /** Preserve explicit reference boundaries inside an Area or a historical presentation group. */
 export function cardChildListOf(model: PublishedModel, node: AtlasNode): CardChildList | undefined {
   const children = childrenOf(model, node.id);

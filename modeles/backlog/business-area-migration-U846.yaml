@@ -1045,6 +1045,7 @@ publication_delivery:
   - U865
   - U874
   - U877
+  - U880
   summary: '16 Business Areas, 64 capacités regroupées et 17 directes ; aucun savoir-faire supprimé. U858 : contrôles courants
     adaptés au retrait des huit Visibility de références et à la conservation de l’interprétation des plans ; état antérieur
     conservé dans Git (745813e). U861 : commandes passives et pilotage par les tâches du workflow explicités ; identités et
@@ -1205,7 +1206,7 @@ publication_delivery:
       definition: Coordonner, libérer et adapter les prestations dans le mandat confié et les engagements applicables.
       finality: Faire réaliser les prestations confiées dans les limites de la promesse et des autorisations.
       scope: |-
-        La décision sur le devenir des biens reste une responsabilité distincte directement rattachée au sous-domaine.
+        La décision sur le devenir des biens appartient à [Inventory Disposition](glossary:TER161), Business Area distincte au sein de Fulfilment Orchestration.
 
         Bénéficiaire et résultat : Faire réaliser les prestations confiées dans les limites de la promesse et des autorisations.
 
@@ -1290,7 +1291,7 @@ publication_delivery:
   - id: D01.d
     parent: ba-inventory-position-management
   - id: D02.b
-    parent: subdomain-policies
+    parent: ba-protection-policies
   - id: D02.c
     parent: ba-inventory-position-management
   - id: D02.e
@@ -1346,15 +1347,15 @@ publication_delivery:
   - id: D03.o
     parent: ba-supply-matching
   - id: D05.i
-    parent: D06
+    parent: ba-inventory-disposition
   - id: D04.r
     parent: ba-order-lifecycle-management
   - id: D01.h
     parent: ba-inventory-ownership-management
   - id: D19.a
-    parent: subdomain-policies
+    parent: ba-service-provider-controls
   - id: D19.b
-    parent: subdomain-policies
+    parent: ba-protection-policies
   - id: D04.t
     parent: ba-order-lifecycle-management
   - id: plans-ingestion
@@ -1386,7 +1387,7 @@ publication_delivery:
   - id: service-order-transport-booking
     parent: ba-transport-order-management
   - id: service-order-customs-clearance
-    parent: subdomain-service-orders
+    parent: ba-customs-services
   - id: service-order-billing
     parent: ba-financial-service-order-management
   - id: service-order-payment-collection
@@ -1416,7 +1417,7 @@ publication_delivery:
   - id: product-feedback
     parent: ba-outbound-information-provision
   - id: accounting-interpretation
-    parent: subdomain-financial-accounting
+    parent: ba-accounting-translation
   - id: workflow-definition-management
     parent: ba-reactive-workflow-management
   - id: order-workflow-sentry

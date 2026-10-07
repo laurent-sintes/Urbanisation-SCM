@@ -22,6 +22,21 @@ class BusinessAreaTests(unittest.TestCase):
     def test_one_capability_and_optional_depth_are_valid(self):
         self.assertEqual(validate_urbanism(self.model(), {}), [])
 
+    def test_required_area_rejects_direct_capability_but_preserves_history(self):
+        m = self.model()
+        self.assertEqual(validate_urbanism(m, {}), [])
+        m['principles'].append({'id': 'PRINCIPLE-REQUIRED-BUSINESS-AREA'})
+        self.assertIn('business-area/direct: invalid responsibility parent', validate_urbanism(m, {}))
+        m['relations'][2]['source_id'] = 'ba'
+        self.assertEqual(validate_urbanism(m, {}), [])
+        m['relations'][2]['type'] = 'presents'
+        self.assertIn('business-area/direct: invalid responsibility parent', validate_urbanism(m, {}))
+
+    def test_required_area_policy_cannot_bypass_parent_validation(self):
+        m = self.model()
+        m['principles'] = [{'id': 'PRINCIPLE-REQUIRED-BUSINESS-AREA'}]
+        self.assertIn('business-area: required parent policy needs the Business Area principle', validate_urbanism(m, {}))
+
     def test_empty_nested_and_duplicate_ownership_are_rejected(self):
         for mode in ('empty', 'nested', 'duplicate', 'category'):
             m = self.model()
@@ -96,7 +111,12 @@ class BusinessAreaTests(unittest.TestCase):
                           if r['type']=='contains' and r['source_id']=='business-references'}, reference_areas)
         self.assertEqual({r['target_id'] for r in m['relations']
                           if r['type']=='presents' and r['source_id'] in reference_areas}, references)
-        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),17+len(reference_areas))
+        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),22+len(reference_areas))
+        for ident in caps:
+            parents = [r for r in m['relations'] if r['target_id']==ident and r['type'] in ('contains','presents')]
+            self.assertEqual(len(parents), 1, ident)
+            self.assertEqual(parents[0]['type'], 'contains', ident)
+            self.assertEqual(nodes[parents[0]['source_id']]['kind'], 'business_area', ident)
         self.assertEqual(nodes['subdomain-plans']['kind'],'business_area')
         self.assertTrue(any(r['type']=='contains' and r['source_id']=='D03' and r['target_id']=='subdomain-plans' for r in m['relations']))
         self.assertFalse(any(r['type']=='documents-reference' for r in m['relations']))

@@ -7,12 +7,12 @@ import { categoryCaption, categoryOf, startsCategorySection } from './categories
 import { roleOf } from './subdomainRoles';
 import { businessAreaSections } from './mapSections';
 import { ReferenceLink, ModelText } from './components/ModelLinks';
-import { childrenOf, rootsOf, hasCapabilityCards, cardChildListOf, type CardChildList } from './model';
+import { childrenOf, rootsOf, hasCapabilityCards, cardChildListOf, cardListedItems, cardContentSummary, type CardChildList } from './model';
 import { kindLabel, modelingDepthLabel, shortText } from './presentation';
 import type { AtlasNode, PublishedModel } from './types';
 import '@xyflow/react/dist/style.css';
 
-type Card = Node<{ item: AtlasNode; count: number; childList?: CardChildList; onHeight: (id: string, height: number) => void; onExplore: (id: string) => void; onRead: (id: string) => void; highlighted: boolean; muted: boolean }, 'business'>;
+type Card = Node<{ item: AtlasNode; count: number; summary: string; childList?: CardChildList; onHeight: (id: string, height: number) => void; onExplore: (id: string) => void; onRead: (id: string) => void; highlighted: boolean; muted: boolean }, 'business'>;
 type Container = Node<{ item: AtlasNode }, 'container'>;
 function OverviewName({ item }: { item: AtlasNode }) {
   if (item.kind !== 'business_system' && item.kind !== 'domain' && item.kind !== 'area' && item.kind !== 'business_area' && item.groupRole !== 'urbanism_level') return <>{item.name}</>;
@@ -23,7 +23,8 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
   const presentation = data.item.kind === 'group' && data.item.groupRole !== 'urbanism_level';
   const card = useRef<HTMLElement>(null);
   const expanded = data.childList !== undefined;
-  const listLabel = data.childList?.kind === 'domain' ? 'Domaines' : data.childList?.kind === 'mixed' ? 'Périmètres et éléments' : data.childList?.kind === 'reference' ? 'Référentiels' : data.childList?.kind === 'behavior' ? 'Comportements' : 'Capacités';
+  const listed = data.childList ? cardListedItems(data.childList) : [];
+  const listLabel = data.childList?.businessAreaChildren && listed.every(item => item.kind === 'capability') ? 'Capacités' : data.childList?.businessAreaChildren && listed.every(item => item.kind === 'reference') ? 'Référentiels' : data.childList?.kind === 'domain' ? 'Domaines' : data.childList?.kind === 'mixed' ? 'Périmètres et éléments' : data.childList?.kind === 'reference' ? 'Référentiels' : data.childList?.kind === 'behavior' ? 'Comportements' : 'Capacités';
   useLayoutEffect(() => {
     if (!card.current) return;
     // Measure unscaled content, including wrapped names, instead of clipping a growing list.
@@ -40,12 +41,12 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
     {dominantRole && <span className="subdomain-role" data-role={dominantRole.id} title="Finalité dominante ; les autres responsabilités du sous-domaine restent applicables.">{dominantRole.display_name}</span>}
     <p>{shortText(data.item.purpose || data.item.definition || 'Description non renseignée dans cette publication.', 115)}</p>
     {data.childList && <div className="card-child-list nodrag nopan nowheel" onClick={event => event.stopPropagation()} onDoubleClick={event => event.stopPropagation()} onKeyDown={event => { if (['Enter', ' '].includes(event.key)) event.stopPropagation(); }}>
-      <div className="child-list-heading">{listLabel} <span>{data.childList.items.length}</span></div>
+      <div className="child-list-heading">{listLabel} <span>{listed.length}</span></div>
       {data.childList.items.length ? <ul aria-label={`${listLabel} de ${data.item.name}`}>
-        {data.childList.items.map((child, index) => child.kind === 'business_area' && data.childList?.businessAreaChildren ? <li key={child.id} className="business-area-list-group"><div className="category-list-banner" data-business-area-summary={child.id}><ReferenceLink target={child.id} fullDefinition>{child.name}</ReferenceLink></div><ul>{data.childList.businessAreaChildren[child.id].map(capability => <li key={capability.id}><ReferenceLink target={capability.id} showBehaviors={capability.kind === 'capability'} className={`card-child-link ${capability.kind === 'reference' ? 'reference-link' : 'capacity-link'}`}><NodeIcon node={capability} size={16}/><span>{capability.name}</span><ArrowUpRight size={12}/></ReferenceLink></li>)}</ul></li> : <li key={child.id} className={startsCapabilityTypeSection(data.childList!.items, index) ? 'capability-type-section-start' : undefined}>{data.item.kind === 'area' && startsCategorySection(data.childList!.items, index) && <div className="category-list-banner">{categoryCaption(child)}</div>}<ReferenceLink target={child.id} showBehaviors={child.kind === 'capability'} className={`card-child-link ${child.kind === 'reference' ? 'reference-link' : child.kind === 'behavior' ? 'behavior-link' : 'capacity-link'}`}><NodeIcon node={child} size={16}/><span>{child.name}</span><ArrowUpRight size={12} className="child-arrow"/></ReferenceLink>{data.childList?.kind === 'domain' && <span className="domain-card-summary">{shortText(child.purpose || child.definition, 120)}{child.fields.modeling_depth === 'behaviors' && <strong> · Capacités et comportements</strong>}</span>}</li>)}
+        {data.childList.items.map((child, index) => child.kind === 'business_area' && data.childList?.businessAreaChildren ? <li key={child.id} className="business-area-list-group"><div className="category-list-banner" data-business-area-summary={child.id}><ReferenceLink target={child.id} fullDefinition>{child.name}</ReferenceLink></div><ul>{data.childList.businessAreaChildren[child.id].map(capability => <li key={capability.id}><ReferenceLink target={capability.id} showBehaviors={capability.kind === 'capability'} className={`card-child-link ${capability.kind === 'reference' ? 'reference-link' : 'capacity-link'}`}><NodeIcon node={capability} size={16}/><span>{capability.name}</span><ArrowUpRight size={12}/></ReferenceLink></li>)}</ul></li> : <li key={child.id} className={startsCapabilityTypeSection(data.childList!.items, index) ? 'capability-type-section-start' : undefined}>{data.childList?.businessAreaChildren && (index === 0 || data.childList.items[index - 1].kind === 'business_area') && <div className="category-list-banner">Rattachement direct au sous-domaine</div>}{data.item.kind === 'area' && startsCategorySection(data.childList!.items, index) && <div className="category-list-banner">{categoryCaption(child)}</div>}<ReferenceLink target={child.id} showBehaviors={child.kind === 'capability'} className={`card-child-link ${child.kind === 'reference' ? 'reference-link' : child.kind === 'behavior' ? 'behavior-link' : 'capacity-link'}`}><NodeIcon node={child} size={16}/><span>{child.name}</span><ArrowUpRight size={12} className="child-arrow"/></ReferenceLink>{data.childList?.kind === 'domain' && <span className="domain-card-summary">{shortText(child.purpose || child.definition, 120)}{child.fields.modeling_depth === 'behaviors' && <strong> · Capacités et comportements</strong>}</span>}</li>)}
       </ul> : <p>Aucune capacité publiée.</p>}
     </div>}
-    <div className="card-bottom"><span>{data.count ? `${data.count} éléments` : kindLabel(data.item)}</span><button className="nodrag nopan" aria-label={`${data.count ? 'Explorer' : 'Lire'} ${data.item.name}`} onClick={e => { e.stopPropagation(); (data.count ? data.onExplore : data.onRead)(data.item.id); }}>{data.count ? 'Explorer' : 'Fiche'}<ArrowUpRight size={13}/></button></div>
+    <div className="card-bottom"><span>{data.summary || kindLabel(data.item)}</span><button className="nodrag nopan" aria-label={`${data.count ? 'Explorer' : 'Lire'} ${data.item.name}`} onClick={e => { e.stopPropagation(); (data.count ? data.onExplore : data.onRead)(data.item.id); }}>{data.count ? 'Explorer' : 'Fiche'}<ArrowUpRight size={13}/></button></div>
   </article>;
 }
 function GroupCard({ data }: NodeProps<Container>) {
@@ -170,7 +171,7 @@ function Canvas(props: ReactFlowPaneProps) {
     observer.observe(container.current);
     return () => observer.disconnect();
   }, [fitView, scopeId]);
-  const nodes = useMemo(() => layout.nodes.map(n => n.type !== 'business' ? n : { ...n, selected: n.id === selectedId, data: { ...n.data, onHeight, count: childrenOf(model, n.id).length, onExplore: props.onExplore, onRead: props.onRead, highlighted: Boolean(perspective && model.nodeById.get(n.id)?.status === perspective), muted: Boolean(perspective && model.nodeById.get(n.id)?.status !== perspective) } }), [layout, selectedId, model, props.onExplore, props.onRead, perspective, onHeight]);
+  const nodes = useMemo(() => layout.nodes.map(n => n.type !== 'business' ? n : { ...n, selected: n.id === selectedId, data: { ...n.data, onHeight, count: childrenOf(model, n.id).length, summary: cardContentSummary(model, model.nodeById.get(n.id)!), onExplore: props.onExplore, onRead: props.onRead, highlighted: Boolean(perspective && model.nodeById.get(n.id)?.status === perspective), muted: Boolean(perspective && model.nodeById.get(n.id)?.status !== perspective) } }), [layout, selectedId, model, props.onExplore, props.onRead, perspective, onHeight]);
   const select = useCallback((_event: unknown, node: Node) => { if (node.type === 'business') props.onSelect(node.id); }, [props.onSelect]);
   const emptyScope = scopeId ? model.nodeById.get(scopeId) : undefined;
   const referenceCapabilities = emptyScope?.kind === 'reference' ? model.relations.filter(r => r.type === 'documents-reference' && r.targetId === emptyScope.id).map(r => model.nodeById.get(r.sourceId)!) : [];
