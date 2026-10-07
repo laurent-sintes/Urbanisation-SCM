@@ -1902,7 +1902,7 @@ publication_delivery:
 
         Exemples fictifs : réaffecter 40 pièces d’une arrivée ; relier 300 pièces à un besoin prévisionnel de novembre ; appliquer un partage de 150 pièces en lots de 50 et 100. Ce partage n’impose ni règle universelle ni réduction des besoins non couverts.
 
-        Les familles de commandes portent leurs engagements et changements autorisés, y compris achat, transfert et consignation. [Reservation](model:D02.c) bloque les usages concurrents ; [Policies](model:subdomain-policies) rend les règles applicables. Plan Application ne confirme pas à leur place une commande, un engagement fournisseur ou une nouvelle politique. Les décisions de promesse et de programmation restent chez leurs responsables.
+        Les familles de commandes portent leurs engagements et changements autorisés, y compris achat, transfert et consignation. [Reservation](model:D02.c) bloque les usages concurrents ; [Control Plane](model:subdomain-policies) rend les règles applicables. Plan Application ne confirme pas à leur place une commande, un engagement fournisseur ou une nouvelle politique. Les décisions de promesse et de programmation restent chez leurs responsables.
 
         Suivre les changements acceptés, refusés et encore attendus. Une acceptation technique ne prouve pas l’effet métier ni l’exécution physique. Exemple fictif : un transfert de 30 pièces est accepté, un achat de 70 est rejeté ; conserver ce résultat partiel et traiter les 70 restantes. Le suivi permet d’ajuster la suite sans rollback global implicite ni redéfinition silencieuse du plan.
 
@@ -3272,3 +3272,13 @@ superseded_delivery_U887:
         [Fulfilment Orchestration](model:D06) coordonne les prestations. Operations Tracking capte leur résultat et Service Reconciliation qualifie l’écart ; [Receiving Order](model:service-order-receiving) tient le solde de sa prestation. Inventory Tracking et [Inventory Ledger](glossary:TER056) prennent en compte les faits de stock reconnus. L’instruction de réception ne crée ni mouvement, ni changement automatique de propriété, ni nouvel achat.
 
         Créer cet [Order](glossary:TER012) lorsqu’une réception est explicitement confiée et suivie comme prestation. Recevoir seulement une notification ne justifie pas un ordre artificiel. Aucune famille supplémentaire de rangement ou de stockage ni réalisation Beaumanoir n’est déduite.
+delivery_reconciliation_U908:
+  source_refs:
+  - U908
+  note: Contrôles de livraison courants réalignés sur le backlog. Les attentes précédentes restent traçables par leurs empreintes
+    et dans Git ; cette réconciliation technique ne crée aucun accord métier.
+  changed_checks:
+  - id: D02.e
+    check: fields.scope
+    previous_sha256: fdf91128c46ca68c03057db15468b6072e5dd01135e859387e1e9bebb39c86c6
+    current_sha256: 21e51c74a613967302e63ee976c978a5ede05fa0722e8234c5fe369a200f24e9

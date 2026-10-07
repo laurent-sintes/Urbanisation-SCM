@@ -405,7 +405,7 @@ publication_delivery:
       definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
         conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
       scope: |-
-        Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Policies. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
+        Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Control Plane. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
 
         Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
 
@@ -839,13 +839,13 @@ publication_delivery:
         et apports, faire appliquer les changements autorisés aux commandes et engagements, puis coordonner les prestations
         et suivre leurs résultats.
       scope: |-
-        Le domaine réunit [Operational References](model:business-references), [Policies](model:subdomain-policies), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) [Integration](model:subdomain-integration) et [Process Management](model:subdomain-process-management). [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability. Ces périmètres coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
+        Le domaine réunit [Operational References](model:business-references), [Control Plane](model:subdomain-policies), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) [Integration](model:subdomain-integration) et [Process Management](model:subdomain-process-management). [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability. Ces périmètres coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
 
         [Integration](model:subdomain-integration) reçoit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) du domaine [Demand & Supply Planning](model:domain-plan), par [Plan Ingestion](model:plans-ingestion) ; [Plan Visibility](model:subdomain-plans) les interprète dans le contexte des demandes. [Supply Plan](glossary:TER098) porte les prévisions d’entrées ou de sorties de stock hors achats. Le [master plan de matching](glossary:TER100) est un objet distinct, construit et géré dans [Availability](glossary:TER112). Le domaine [Demand & Supply Planning](model:domain-plan) reste extérieur à l’orchestration.
 
         [Availability](glossary:TER112) choisit les propositions de promesse et maintient leur cohérence avec les arbitrages collectifs ; [Availability](glossary:TER112) arbitre les affectations ; [Order Management](model:D04) confirme, porte et révise les engagements. [Fulfilment](glossary:TER085) cherche des solutions locales préservant promesse et grands équilibres. Les exécutants réalisent les prestations et conservent leurs opérations internes.
 
-        Les sources de vérité d’entreprise restent externes ; [Operational References](glossary:TER123) porte les références locales Supply, Policies les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
+        Les sources de vérité d’entreprise restent externes ; [Operational References](glossary:TER123) porte les références locales Supply, Control Plane les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
 
         [Service Management](model:subdomain-service-orders) porte les exigences et engagements propres des prestations confiées ; [Fulfilment](glossary:TER085) les compose et les coordonne. Les familles d’ordres de services sont des capacités, comme les familles d’[Orders](glossary:TER012) entrants.
 
@@ -888,3 +888,17 @@ publication_delivery:
     Aucun accord métier étendu.
   supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
     sans extension des accords.
+delivery_reconciliation_U908:
+  source_refs:
+  - U908
+  note: Contrôles de livraison courants réalignés sur le backlog. Les attentes précédentes restent traçables par leurs empreintes
+    et dans Git ; cette réconciliation technique ne crée aucun accord métier.
+  changed_checks:
+  - id: D03
+    check: fields.scope
+    previous_sha256: 0d3964c4ca2bdd31020260fc129126a6b878e6885c7caa945b9f59234c59aae3
+    current_sha256: 171f452d18fcc71da62d2846f2db9a3d4c29e6a6e7850b3bdd2f8bd926db42c0
+  - id: supply-chain-orchestration
+    check: fields.scope
+    previous_sha256: c995fc4db1051eec34e6e801c78b84af3add28e554cfd8da801f8d735bb3b041
+    current_sha256: b1dbf122e2415365a66b8deb3f6aeb9d6cc7b823b278605fafcd1795e47ee171

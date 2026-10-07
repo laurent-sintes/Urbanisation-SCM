@@ -26,7 +26,7 @@ publication_delivery:
       scope: |-
         Quatre mécanismes se combinent : protéger l’accès d’un groupe, plafonner sa consommation, définir un stock de sécurité et encadrer le réassort. Les décisions de [Availability](model:D03) recommandent les valeurs. Supply Protection Policy tient les règles actives, leur portée, leur validité et leurs dérogations. Une recommandation ne devient pas automatiquement une règle applicable.
 
-        La capacité crée les enveloppes, transfère des droits entre groupes, libère les droits inutilisés et tient les consommations et corrections. Elle rend consultables les quantités allouées, consommées et restantes. L’application peut être individuelle, groupée ou en masse ; écran, traitement par lots ou flux continu ne changent pas cette responsabilité.
+        La référence décrit les enveloppes et droits de groupe ainsi que leurs valeurs actives et leurs corrections. Elle rend consultables les quantités allouées, consommées et restantes. L’application peut être individuelle, groupée ou en masse ; écran, traitement par lots ou flux continu ne changent pas cette responsabilité.
 
         L’[allocation de stock par groupe](glossary:TER018) protège une enveloppe pour un usage, sans garantir à elle seule une disponibilité absolue. Un plafond de consommation n’est pas un minimum protégé. Un seuil de réassort ne rend pas automatiquement le stock restant invendable. La priorité d’une demande relève de [Demand Protection Policy](model:D19.b) ; les deux règles s’appliquent sans compter deux fois la même protection.
 
@@ -37,7 +37,7 @@ publication_delivery:
     fields:
       name: Group Supply Protection
       scope: |-
-        Critère différenciant : politique. Bénéfice ciblé : Éviter qu’une demande précoce épuise les ressources d’un autre groupe.
+        Le référentiel précise les groupes, les ressources protégées, les droits, la portée et la validité des protections pour éviter qu’une demande précoce épuise les ressources d’un autre groupe.
 
         Protection mutuelle ou priorisée décrites ensemble ; D05.d décide les quantités.
 
@@ -72,3 +72,17 @@ delivery_updates:
   - target: D02.b
     change: Alignement du contrôle sur le lot U835
     previous_check_sha256: 7ab4e649213dcc8d9f30985a99d6d7e698d6386b330abb4d28eb2861cb5c8169
+delivery_reconciliation_U908:
+  source_refs:
+  - U908
+  note: Contrôles de livraison courants réalignés sur le backlog. Les attentes précédentes restent traçables par leurs empreintes
+    et dans Git ; cette réconciliation technique ne crée aucun accord métier.
+  changed_checks:
+  - id: D02.b
+    check: fields.scope
+    previous_sha256: 75f87fbc65f296699bec07bcdfd87f472dfcf8ccd7ce74649cc2ea2f60d50d5e
+    current_sha256: fba6e4d3916050e5f5ab4467d874e3f8f90793e1fa0cd3729cd9f6360cddb58a
+  - id: BHV017
+    check: fields.scope
+    previous_sha256: 207accfd172f21d1ed26af23cb2425367e881c8af8c58389bebba4d673f8165a
+    current_sha256: 9a729f101469c9a4fecdf5a395160db9a93ce0a3e899b70306a456ee9627fccf

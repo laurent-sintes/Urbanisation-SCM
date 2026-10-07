@@ -1026,7 +1026,7 @@ publication_delivery:
       finality: Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins
         restent découverts.
       scope: |-
-        Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Policies](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+        Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Control Plane](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
 
         [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
 
@@ -1164,11 +1164,11 @@ publication_delivery:
     fields:
       finality: Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
       scope: |-
-        Les règles actives et leur validité demeurent dans Policies.
+        Les règles actives et leur validité demeurent dans Control Plane.
 
         Bénéficiaire et résultat : Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
 
-        Exemple fictif : Recommander une protection de 20 pièces après comparaison des ruptures et surstocks ; Policies conserve la mise en vigueur de la règle.
+        Exemple fictif : Recommander une protection de 20 pièces après comparaison des ruptures et surstocks ; Control Plane conserve la mise en vigueur de la règle.
       market_comparisons:
       - vendor: Microsoft
         product: Dynamics 365 Supply Chain Management
@@ -1952,3 +1952,17 @@ superseded_delivery_U887:
         Exemple fictif : Demander un nouvel étiquetage sur 40 pièces et suivre son acceptation puis son résultat ; la réalisation physique appartient au prestataire.
 
         Les familles sont des commandes passives adressées à la logistique selon une offre de service définie. Elles portent les exigences et résultats ; les [Tasks](glossary:TER089) du moteur de [Reactive Workflow Management](glossary:TER125) pilotent leur suivi. Aucune décision autonome n’est attachée à ces familles.
+delivery_reconciliation_U908:
+  source_refs:
+  - U908
+  note: Contrôles de livraison courants réalignés sur le backlog. Les attentes précédentes restent traçables par leurs empreintes
+    et dans Git ; cette réconciliation technique ne crée aucun accord métier.
+  changed_checks:
+  - id: ba-supply-matching
+    check: fields.scope
+    previous_sha256: 7d551a8df2790252471ea0d8126dcd2cb6ebd71c9aae4fb5ac37faa8f80c3a79
+    current_sha256: a41ad220a7938f1145824936fec65500655d2b94fd43cc7c2ca6d7cfeb72c9f3
+  - id: ba-policy-optimization
+    check: fields.scope
+    previous_sha256: 1a6fdf3205d3931b52a17c2319d21fff225d2f8747ecf95aeafd2c77108f9a17
+    current_sha256: 94c9907690924d205b91084bf3b5767ba29e8ecafbc471b8ace3c95413735df3

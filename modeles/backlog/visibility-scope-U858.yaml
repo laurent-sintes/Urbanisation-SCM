@@ -280,7 +280,7 @@ publication_delivery:
 
         [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
-        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Policies](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Control Plane](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
   - id: plans-visibility
     fields:
       name: Supply Plan Visibility
@@ -344,3 +344,13 @@ superseded_delivery_U887:
       collection: paths
       id: reference-plan-correction-path
       content_sha256: 9188d729d092b1d2fc820673beb9a648f41da6c30e30f467e9aa4a9a372205f4
+delivery_reconciliation_U908:
+  source_refs:
+  - U908
+  note: Contrôles de livraison courants réalignés sur le backlog. Les attentes précédentes restent traçables par leurs empreintes
+    et dans Git ; cette réconciliation technique ne crée aucun accord métier.
+  changed_checks:
+  - id: business-references
+    check: fields.scope
+    previous_sha256: d606cf6a59380ea9a174e651b9124c985baf227ec58c334b530febc5b22cf5ba
+    current_sha256: 861e4b167b287fa794c186efc806cc617f0554493997619d545c38065a12ec26

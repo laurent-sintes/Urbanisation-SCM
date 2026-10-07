@@ -754,7 +754,7 @@ nodes:
     note: Accords explicites limités dans decision-intents ; descriptions et qualifications détaillées proposées.
   last_modified: '2026-10-06T00:00:00Z'
 - id: supply-chain-orchestration
-  revision: 17
+  revision: 18
   kind: domain
   fields:
     name: Supply Chain Orchestration
@@ -1079,13 +1079,13 @@ nodes:
     finality: Satisfaire les besoins de la chaîne d’approvisionnement avec des engagements explicites et une utilisation cohérente
       des ressources.
     scope: |-
-      Le domaine réunit [Operational References](model:business-references), [Policies](model:subdomain-policies), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) [Integration](model:subdomain-integration) et [Process Management](model:subdomain-process-management). [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability. Ces périmètres coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
+      Le domaine réunit [Operational References](model:business-references), [Control Plane](model:subdomain-policies), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) [Integration](model:subdomain-integration) et [Process Management](model:subdomain-process-management). [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability. Ces périmètres coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
 
       [Integration](model:subdomain-integration) reçoit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) du domaine [Demand & Supply Planning](model:domain-plan), par [Plan Ingestion](model:plans-ingestion) ; [Plan Visibility](model:subdomain-plans) les interprète dans le contexte des demandes. [Supply Plan](glossary:TER098) porte les prévisions d’entrées ou de sorties de stock hors achats. Le [master plan de matching](glossary:TER100) est un objet distinct, construit et géré dans [Availability](glossary:TER112). Le domaine [Demand & Supply Planning](model:domain-plan) reste extérieur à l’orchestration.
 
       [Availability](glossary:TER112) choisit les propositions de promesse et maintient leur cohérence avec les arbitrages collectifs ; [Availability](glossary:TER112) arbitre les affectations ; [Order Management](model:D04) confirme, porte et révise les engagements. [Fulfilment](glossary:TER085) cherche des solutions locales préservant promesse et grands équilibres. Les exécutants réalisent les prestations et conservent leurs opérations internes.
 
-      Les sources de vérité d’entreprise restent externes ; [Operational References](glossary:TER123) porte les références locales Supply, Policies les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
+      Les sources de vérité d’entreprise restent externes ; [Operational References](glossary:TER123) porte les références locales Supply, Control Plane les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
 
       [Service Management](model:subdomain-service-orders) porte les exigences et engagements propres des prestations confiées ; [Fulfilment](glossary:TER085) les compose et les coordonne. Les familles d’ordres de services sont des capacités, comme les familles d’[Orders](glossary:TER012) entrants.
 
@@ -1101,13 +1101,13 @@ nodes:
         et apports, faire appliquer les changements autorisés aux commandes et engagements, puis coordonner les prestations
         et suivre leurs résultats.
       flow_approach: |-
-        Le domaine réunit [Operational References](model:business-references), [Policies](model:subdomain-policies), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) [Integration](model:subdomain-integration) et [Process Management](model:subdomain-process-management). [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability. Ces périmètres coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
+        Le domaine réunit [Operational References](model:business-references), [Control Plane](model:subdomain-policies), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) [Integration](model:subdomain-integration) et [Process Management](model:subdomain-process-management). [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability. Ces périmètres coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
 
         [Integration](model:subdomain-integration) reçoit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) du domaine [Demand & Supply Planning](model:domain-plan), par [Plan Ingestion](model:plans-ingestion) ; [Plan Visibility](model:subdomain-plans) les interprète dans le contexte des demandes. [Supply Plan](glossary:TER098) porte les prévisions d’entrées ou de sorties de stock hors achats. Le [master plan de matching](glossary:TER100) est un objet distinct, construit et géré dans [Availability](glossary:TER112). Le domaine [Demand & Supply Planning](model:domain-plan) reste extérieur à l’orchestration.
 
         [Availability](glossary:TER112) choisit les propositions de promesse et maintient leur cohérence avec les arbitrages collectifs ; [Availability](glossary:TER112) arbitre les affectations ; [Order Management](model:D04) confirme, porte et révise les engagements. [Fulfilment](glossary:TER085) cherche des solutions locales préservant promesse et grands équilibres. Les exécutants réalisent les prestations et conservent leurs opérations internes.
 
-        Les sources de vérité d’entreprise restent externes ; [Operational References](glossary:TER123) porte les références locales Supply, Policies les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
+        Les sources de vérité d’entreprise restent externes ; [Operational References](glossary:TER123) porte les références locales Supply, Control Plane les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
 
         [Service Management](model:subdomain-service-orders) porte les exigences et engagements propres des prestations confiées ; [Fulfilment](glossary:TER085) les compose et les coordonne. Les familles d’ordres de services sont des capacités, comme les familles d’[Orders](glossary:TER012) entrants.
 
@@ -1211,13 +1211,13 @@ nodes:
   - U896
   - U897
   - U898
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u373
   review:
-    state: proposed
-    note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite.'
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   adoption_ids: []
   lifecycle:
     state: ai_proposed
@@ -1239,7 +1239,7 @@ nodes:
   - market_inspiration
   approved_fields: []
 - id: business-references
-  revision: 16
+  revision: 17
   kind: area
   fields:
     name: Operational References
@@ -1442,7 +1442,7 @@ nodes:
 
         [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
-        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Policies](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Control Plane](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
       synthesis:
       - Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant leur
         référence locale fiable sans transférer la maîtrise d’entreprise.
@@ -1472,9 +1472,9 @@ nodes:
 
       [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
-      Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Policies](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+      Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Control Plane](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
     mastership: Source de vérité locale du domaine pour les sujets de référence ; maîtrise d’entreprise externe. Les règles
-      actives relèvent de Policies ; les prévisions de demande et de mouvements relèvent de Plan Visibility.
+      actives relèvent de Control Plane ; les prévisions de demande et de mouvements relèvent de Plan Visibility.
     dominant_role:
       id: data-state
       display_name: Données et état
@@ -1538,13 +1538,13 @@ nodes:
   - U896
   - U897
   - U898
+  - U908
   source_locator:
     path: connaissance/25-domaines-coeur-et-epreuve-recits.md
     anchor: business-references
   review:
-    state: proposed
-    note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite.'
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   adoption_ids:
   - ADOPT-042
   lifecycle:
@@ -2965,7 +2965,7 @@ nodes:
   - market_inspiration
   approved_fields: []
 - id: D01.d
-  revision: 6
+  revision: 7
   kind: capability
   fields:
     name: Stocktaking
@@ -2979,7 +2979,7 @@ nodes:
 
       Exemples : inventorier un magasin, contrôler régulièrement les articles sensibles, demander un contrôle lorsqu’un article annoncé disponible reste introuvable. Les règles détaillées d’acceptation, de recomptage et d’application restent à préciser ; aucune obligation de contrôle manuel ou de logiciel distinct n’est introduite.
 
-      Le protocole de comptage reste partie de la capacité. Si une règle devient partagée, Policies la gouverne ; aucune scission systématique par règle.
+      Le protocole de comptage reste partie de la capacité. Si une règle devient partagée, Control Plane la gouverne ; aucune scission systématique par règle.
     decomposition_rationale: Établir une référence complète sur un périmètre, entretenir la fiabilité par contrôles récurrents
       et répondre rapidement à une situation ciblée correspondent à trois politiques ou variantes métier, avec des bénéfices
       distincts. Les mêmes responsabilités de rapprochement et de correction justifiée sont mobilisées ; les interfaces et
@@ -3088,7 +3088,7 @@ nodes:
 
         Exemples : inventorier un magasin, contrôler régulièrement les articles sensibles, demander un contrôle lorsqu’un article annoncé disponible reste introuvable. Les règles détaillées d’acceptation, de recomptage et d’application restent à préciser ; aucune obligation de contrôle manuel ou de logiciel distinct n’est introduite.
 
-        Frontière U673 : Le protocole de comptage reste partie de la capacité. Si une règle devient partagée, Policies la gouverne ; aucune scission systématique par règle.
+        Frontière U673 : Le protocole de comptage reste partie de la capacité. Si une règle devient partagée, Control Plane la gouverne ; aucune scission systématique par règle.
       synthesis:
       - Comparaison et frontière réexaminées U726–U733 ; le classement FLOW ne reproduit pas les produits.
       examples:
@@ -3123,14 +3123,14 @@ nodes:
   - ELM787
   - U797
   - U848
+  - U908
   source_locator:
     path: connaissance/25-domaines-coeur-et-epreuve-recits.md
     anchor: d01-stocks
     line: 61
   review:
-    state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   adoption_ids:
   - ADOPT-021
   lifecycle:
@@ -3156,26 +3156,23 @@ nodes:
   last_modified: '2026-10-06T00:00:00Z'
   approved_fields: []
 - id: D02.b
-  revision: 13
-  kind: capability
+  revision: 14
+  kind: reference
   fields:
     name: Supply Protection Policy
-    definition: Définir et appliquer les règles qui protègent l’accès aux stocks, limitent leur consommation et encadrent
-      leur renouvellement.
+    definition: 'Référentiel des règles de protection des ressources Supply : droits des groupes, plafonds de consommation,
+      stocks de sécurité et paramètres de réassort applicables.'
     finality: Encadrer l’usage et le renouvellement des ressources pour réduire pénurie, surstock et déséquilibre.
-    decomposition_rationale: Préserver un accès, limiter une consommation, absorber l’incertitude et réguler les apports répondent
-      à des risques différents ; mécanismes combinables, pas étapes d’un cycle.
     scope: |-
       Quatre mécanismes se combinent : protéger l’accès d’un groupe, plafonner sa consommation, définir un stock de sécurité et encadrer le réassort. Les décisions de [Availability](model:D03) recommandent les valeurs. Supply Protection Policy tient les règles actives, leur portée, leur validité et leurs dérogations. Une recommandation ne devient pas automatiquement une règle applicable.
 
-      La capacité crée les enveloppes, transfère des droits entre groupes, libère les droits inutilisés et tient les consommations et corrections. Elle rend consultables les quantités allouées, consommées et restantes. L’application peut être individuelle, groupée ou en masse ; écran, traitement par lots ou flux continu ne changent pas cette responsabilité.
+      La référence décrit les enveloppes et droits de groupe ainsi que leurs valeurs actives et leurs corrections. Elle rend consultables les quantités allouées, consommées et restantes. L’application peut être individuelle, groupée ou en masse ; écran, traitement par lots ou flux continu ne changent pas cette responsabilité.
 
       L’[allocation de stock par groupe](glossary:TER018) protège une enveloppe pour un usage, sans garantir à elle seule une disponibilité absolue. Un plafond de consommation n’est pas un minimum protégé. Un seuil de réassort ne rend pas automatiquement le stock restant invendable. La priorité d’une demande relève de [Demand Protection Policy](model:D19.b) ; les deux règles s’appliquent sans compter deux fois la même protection.
 
       [Reservation Policy Optimization](model:D05.h) recommande les conditions de réservation. Supply Protection Policy les rend applicables ; [Reservation](model:D02.c) les applique aux engagements individuels. Changer la politique ne modifie pas silencieusement les réservations déjà constituées. Cette gouvernance reste distincte de la planification et ne réserve aucune quantité par elle-même.
 
       Exemple fictif : protéger 200 pièces pour le web, plafonner sa consommation à 500, prévoir une sécurité de 40 et déclencher un réassort sous 60 vers 100. Ces paramètres ont des rôles distincts et ne s’additionnent pas automatiquement. Une valeur commune à la sécurité et au seuil n’est pas décomptée deux fois. Prévenir un surstock futur reste distinct de redistribuer un excès déjà présent.
-    nature: policy
     market_comparisons:
     - vendor: Microsoft
       product: Dynamics 365 Supply Chain Management
@@ -3202,7 +3199,7 @@ nodes:
       - U477
       - ELM410
       - CMP190
-      term_choice: Supply Protection Policy précise la responsabilité de politique portée par Policies ; les termes natifs
+      term_choice: Supply Protection Policy précise la responsabilité de politique portée par Control Plane ; les termes natifs
         des sources et le périmètre de protection restent inchangés.
       definition_choice: 'Appui de Inventory allocation : Des enveloppes protègent les groupes et suivent leur consommation.
         Limite de reprise dans FLOW : Inventory allocation ne couvre pas toute la politique de renouvellement FLOW.'
@@ -3230,7 +3227,7 @@ nodes:
       - U477
       - ELM422
       - CMP190
-      term_choice: Supply Protection Policy précise la responsabilité de politique portée par Policies ; les termes natifs
+      term_choice: Supply Protection Policy précise la responsabilité de politique portée par Control Plane ; les termes natifs
         des sources et le périmètre de protection restent inchangés.
       definition_choice: 'Appui de Safety stock : Le tampon et son droit d’utilisation sont explicités. Limite de reprise
         dans FLOW : La sécurité n’est ni une réservation individuelle ni une enveloppe de canal.'
@@ -3258,7 +3255,7 @@ nodes:
       - U477
       - ELM414
       - CMP190
-      term_choice: Supply Protection Policy précise la responsabilité de politique portée par Policies ; les termes natifs
+      term_choice: Supply Protection Policy précise la responsabilité de politique portée par Control Plane ; les termes natifs
         des sources et le périmètre de protection restent inchangés.
       definition_choice: 'Appui de Requirement / Period / Min-Max : Les seuils et modes encadrent le réassort. Limite de reprise
         dans FLOW : Microsoft regroupe configuration et calcul ; FLOW garde la décision d’apport distincte.'
@@ -3295,7 +3292,7 @@ nodes:
       - CMP190
       - U560
       - CMP234
-      term_choice: Supply Protection Policy précise la responsabilité de politique portée par Policies ; les termes natifs
+      term_choice: Supply Protection Policy précise la responsabilité de politique portée par Control Plane ; les termes natifs
         des sources et le périmètre de protection restent inchangés.
       definition_choice: 'Appui de Inventory reservation policies : Une politique applicable encadre les modalités des réservations.
         Limite de reprise dans FLOW : Le document produit ne prescrit pas le propriétaire de la gouvernance dans FLOW. Déterminer
@@ -3332,7 +3329,7 @@ nodes:
       - CMP190
       - U560
       - CMP234
-      term_choice: Supply Protection Policy précise la responsabilité de politique portée par Policies ; les termes natifs
+      term_choice: Supply Protection Policy précise la responsabilité de politique portée par Control Plane ; les termes natifs
         des sources et le périmètre de protection restent inchangés.
       definition_choice: 'Appui de ReserveOnCart / ReserveOnOrder : Une politique applicable encadre les modalités des réservations.
         Limite de reprise dans FLOW : Le document produit ne prescrit pas le propriétaire de la gouvernance dans FLOW. Déterminer
@@ -3424,9 +3421,8 @@ nodes:
         - U560
         - CMP234
     data_governance: Domain-managed
-    mastership: Le Domain Supply Chain Orchestration porte la création, la lecture, la modification et la suppression des
-      politiques et paramètres de protection dans leur cycle autorisé. Les décisions spécialisées peuvent en proposer les
-      valeurs ; leur administration reste une responsabilité du domaine, distincte du type de la capacité.
+    mastership: Référence de contrôle locale sous autorité de Supply Chain Orchestration ; les sources externes citées gardent
+      leur propre autorité.
   source_refs:
   - P81
   - U67
@@ -3473,34 +3469,34 @@ nodes:
   - U797
   - U835
   - U848
+  - U908
   source_locator:
     path: connaissance/25-domaines-coeur-et-epreuve-recits.md
     anchor: d01-stocks
     line: 62
   review:
     state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
   adoption_ids:
   - ADOPT-023
   lifecycle:
     state: ai_proposed
-    recorded_at: '2026-09-25T07:32:47.515317Z'
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U749
-    - U750
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Accords de structure capturés séparément sur le lot final ; aucun accord global sur les descriptions.
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
     antérieurs conservés seulement sur valeurs inchangées. Historique : audits/2026-09-17-refonte-appliquee/model-before.yaml.'
-  last_modified: '2026-10-06T00:00:00Z'
+  last_modified: '2026-10-07T00:00:00Z'
   proposed_fields:
   - market_comparisons
   - market_inspiration
   - mastership
-  - nature
   - scope
   approved_fields: []
 - id: D02.c
@@ -4505,7 +4501,7 @@ nodes:
   proposed_fields:
   - market_comparisons
 - id: D02.e
-  revision: 29
+  revision: 30
   kind: capability
   fields:
     name: Plan Application
@@ -4520,7 +4516,7 @@ nodes:
 
       Exemples fictifs : réaffecter 40 pièces d’une arrivée ; relier 300 pièces à un besoin prévisionnel de novembre ; appliquer un partage de 150 pièces en lots de 50 et 100. Ce partage n’impose ni règle universelle ni réduction des besoins non couverts.
 
-      Les familles de commandes portent leurs engagements et changements autorisés, y compris achat, transfert et consignation. [Reservation](model:D02.c) bloque les usages concurrents ; [Policies](model:subdomain-policies) rend les règles applicables. Plan Application ne confirme pas à leur place une commande, un engagement fournisseur ou une nouvelle politique. Les décisions de promesse et de programmation restent chez leurs responsables.
+      Les familles de commandes portent leurs engagements et changements autorisés, y compris achat, transfert et consignation. [Reservation](model:D02.c) bloque les usages concurrents ; [Control Plane](model:subdomain-policies) rend les règles applicables. Plan Application ne confirme pas à leur place une commande, un engagement fournisseur ou une nouvelle politique. Les décisions de promesse et de programmation restent chez leurs responsables.
 
       Suivre les changements acceptés, refusés et encore attendus. Une acceptation technique ne prouve pas l’effet métier ni l’exécution physique. Exemple fictif : un transfert de 30 pièces est accepté, un achat de 70 est rejeté ; conserver ce résultat partiel et traiter les 70 restantes. Le suivi permet d’ajuster la suite sans rollback global implicite ni redéfinition silencieuse du plan.
 
@@ -5286,7 +5282,7 @@ nodes:
 
         Exemples fictifs : réaffecter 40 pièces d’une arrivée ; relier 300 pièces à un besoin prévisionnel de novembre ; appliquer un partage de 150 pièces en lots de 50 et 100. Ce partage n’impose ni règle universelle ni réduction des besoins non couverts.
 
-        Les familles de commandes portent leurs engagements et changements autorisés, y compris achat, transfert et consignation. [Reservation](model:D02.c) bloque les usages concurrents ; [Policies](model:subdomain-policies) rend les règles applicables. Plan Application ne confirme pas à leur place une commande, un engagement fournisseur ou une nouvelle politique. Les décisions de promesse et de programmation restent chez leurs responsables.
+        Les familles de commandes portent leurs engagements et changements autorisés, y compris achat, transfert et consignation. [Reservation](model:D02.c) bloque les usages concurrents ; [Control Plane](model:subdomain-policies) rend les règles applicables. Plan Application ne confirme pas à leur place une commande, un engagement fournisseur ou une nouvelle politique. Les décisions de promesse et de programmation restent chez leurs responsables.
 
         Suivre les changements acceptés, refusés et encore attendus. Une acceptation technique ne prouve pas l’effet métier ni l’exécution physique. Exemple fictif : un transfert de 30 pièces est accepté, un achat de 70 est rejeté ; conserver ce résultat partiel et traiter les 70 restantes. Le suivi permet d’ajuster la suite sans rollback global implicite ni redéfinition silencieuse du plan.
 
@@ -5493,13 +5489,14 @@ nodes:
   - U883
   - U884
   - U885
+  - U908
   source_locator:
     path: connaissance/25-domaines-coeur-et-epreuve-recits.md
     anchor: d03-promesse-de-fourniture
     line: 176
   review:
-    state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   adoption_ids:
   - ADOPT-007
   lifecycle:
@@ -6374,7 +6371,7 @@ nodes:
   - market_inspiration
   approved_fields: []
 - id: D03.m
-  revision: 11
+  revision: 12
   kind: capability
   fields:
     name: Demand Prioritization
@@ -6391,7 +6388,7 @@ nodes:
 
       Exemple fictif : deux commandes demandent chacune 60 pièces pour 80 admissibles. Une obligation contractuelle peut donner priorité à la première ; cette priorité ne détermine pas à elle seule la répartition des 20 restantes, une dérogation ni une promesse au second client.
 
-      Les règles sont dans Policies ; leur application contextualisée participe à l’arbitrage du plan.
+      Les règles sont dans Control Plane ; leur application contextualisée participe à l’arbitrage du plan.
 
       U750 : Demand Prioritization conserve le classement des [Orders](glossary:TER012) et explicite aussi les priorités des besoins prévisionnels résiduels présents dans le périmètre. Une prévision ne devient pas un [Order](glossary:TER012) ; aucune priorité automatique des commandes sur les prévisions n’est introduite. Les obligations, règles de protection et égalités restent explicites.
     market_comparisons:
@@ -6543,13 +6540,13 @@ nodes:
   - U797
   - U835
   - U848
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u163
   review:
-    state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   adoption_ids: []
   lifecycle:
     state: ai_proposed
@@ -9019,7 +9016,7 @@ nodes:
   - market_inspiration
   approved_fields: []
 - id: D05.a
-  revision: 14
+  revision: 15
   kind: capability
   fields:
     name: Inventory Target Optimization
@@ -9037,7 +9034,7 @@ nodes:
 
       Frontière : Cible haute différente d’un plafond de groupe ou d’une capacité physique.
 
-      Conserver les arbitrages de cibles nécessaires au [Availability](glossary:TER112) ; consommer les cibles de planification reçues sans reconstruire sa planification. Policies gouverne les valeurs activées.
+      Conserver les arbitrages de cibles nécessaires au [Availability](glossary:TER112) ; consommer les cibles de planification reçues sans reconstruire sa planification. Control Plane gouverne les valeurs activées.
 
       Un moteur spécialisé peut calculer ces cibles et seuils sans changer cette responsabilité métier. [Supply Protection Policy](model:D02.b) tient les valeurs rendues actives ; [Replenishment](model:D05.e) décide les apports nets. Le choix, le maintien ou l’intégration d’un moteur relève de l’architecture et du produit. Une cible fournie par [Demand & Supply Planning](model:domain-plan) garde sa provenance et son autorité ; l’horizon du calcul ne suffit pas à déterminer son propriétaire.
     market_comparisons:
@@ -9286,13 +9283,13 @@ nodes:
   - U853
   - U890
   - U891
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u329
   review:
-    state: proposed
-    note: Application du lot U890 validé U891 ; noms et frontières acceptés, détails de rédaction et de comparaison proposés.
-      Aucune réalisation installée déduite.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   adoption_ids: []
   lifecycle:
     state: ai_proposed
@@ -9313,7 +9310,7 @@ nodes:
   - market_comparisons
   approved_fields: []
 - id: D05.d
-  revision: 9
+  revision: 10
   kind: capability
   fields:
     name: Group Protection Optimization
@@ -9327,7 +9324,7 @@ nodes:
 
       [Supply Protection Policy](model:D02.b) gouverne et applique les droits retenus. [Plan Application](model:D02.e) affecte des ressources aux commandes. La [Reservation](model:D02.c) porte ses effets d’engagement propres, à articuler sans double décompte. Le nom historique Stock Allocation Decision désignait cette même décision sur les groupes ; l’ancien identifiant est conservé.
 
-      Le calcul est une décision d’[Availability](glossary:TER112) ; la règle active et ses périodes sont gouvernées par Policies. Ce n’est pas une réservation individuelle.
+      Le calcul est une décision d’[Availability](glossary:TER112) ; la règle active et ses périodes sont gouvernées par Control Plane. Ce n’est pas une réservation individuelle.
     market_comparisons:
     - vendor: Microsoft
       product: Dynamics 365 Supply Chain Management
@@ -9402,7 +9399,7 @@ nodes:
 
         [Supply Protection Policy](model:D02.b) gouverne et applique les droits retenus. [Plan Application](model:D02.e) affecte des ressources aux commandes. La [Reservation](model:D02.c) porte ses effets d’engagement propres, à articuler sans double décompte. Le nom historique Stock Allocation Decision désignait cette même décision sur les groupes ; l’ancien identifiant est conservé.
 
-        Frontière U673 : Le calcul est une décision du Matching ; la règle active et ses périodes sont gouvernées par Policies. Ce n’est pas une réservation individuelle.
+        Frontière U673 : Le calcul est une décision du Matching ; la règle active et ses périodes sont gouvernées par Control Plane. Ce n’est pas une réservation individuelle.
       synthesis:
       - Microsoft met en avant une enveloppe préservée ; SAP PAL limite ce qu’un groupe peut consommer. Ces leviers se ressemblent
         dans leurs nombres mais diffèrent dans leur garantie.
@@ -9448,13 +9445,13 @@ nodes:
   - U797
   - U835
   - U848
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u235
   review:
-    state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   adoption_ids: []
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
     antérieurs conservés seulement sur valeurs inchangées. Historique : audits/2026-09-17-refonte-appliquee/model-before.yaml.'
@@ -13152,7 +13149,7 @@ nodes:
   - dominant_role
   approved_fields: []
 - id: D03
-  revision: 26
+  revision: 27
   kind: area
   fields:
     name: Availability
@@ -13160,7 +13157,7 @@ nodes:
       conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
     finality: Assurer une couverture cohérente des commandes et de la demande prévisionnelle résiduelle selon une valeur multidimensionnelle.
     scope: |-
-      Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Policies. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
+      Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Control Plane. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
 
       Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
 
@@ -13407,7 +13404,7 @@ nodes:
       flow_scope: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
         conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
       flow_approach: |-
-        Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Policies. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
+        Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Control Plane. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
 
         Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
 
@@ -13523,13 +13520,13 @@ nodes:
   - U887
   - U890
   - U891
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u219
   review:
-    state: proposed
-    note: Application du lot U890 validé U891 ; noms et frontières acceptés, détails de rédaction et de comparaison proposés.
-      Aucune réalisation installée déduite.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   editorial_basis: Clarification U218 et accord U219 ; finalités des domaines reprises de l’explication acceptée, nouvelles
     descriptions et noms proposés. État antérieur dans history/pre-U219.yaml.
   adoption_ids:
@@ -15309,20 +15306,19 @@ nodes:
   last_modified: '2026-10-06T00:00:00Z'
   approved_fields: []
 - id: BHV017
-  revision: 2
-  kind: behavior
+  revision: 3
+  kind: reference
   fields:
     name: Group Supply Protection
-    definition: Configurer les droits préservant l’accès d’un groupe à des ressources face aux usages concurrents.
+    definition: Règles et droits actifs qui préservent l’accès d’un groupe à des ressources face aux usages concurrents.
     scope: |-
-      Critère différenciant : politique. Bénéfice ciblé : Éviter qu’une demande précoce épuise les ressources d’un autre groupe.
+      Le référentiel précise les groupes, les ressources protégées, les droits, la portée et la validité des protections pour éviter qu’une demande précoce épuise les ressources d’un autre groupe.
 
       Protection mutuelle ou priorisée décrites ensemble ; D05.d décide les quantités.
 
       Exemple fictif : Préserver 200 pièces pour le web avant sa demande.
 
       Vocabulaire U795 : [allocation de stock par groupe](glossary:TER018), ou Group Inventory Allocation, est autorisé pour décrire les enveloppes de protection. Une allocation de stock par groupe préserve une enveloppe pour un usage selon les règles applicables ; elle ne garantit pas à elle seule une disponibilité absolue. Un plafond de consommation ne constitue pas automatiquement un minimum protégé. Un seuil Min/Max de réassort ne rend pas automatiquement le stock restant invendable.
-    nature: intervention_mechanism
     market_comparisons:
     - vendor: Microsoft
       product: Dynamics 365 Supply Chain Management
@@ -15407,6 +15403,9 @@ nodes:
         - U477
         - ELM410
         - CMP190
+    data_governance: Domain-managed
+    mastership: Référence de contrôle locale sous autorité de Supply Chain Orchestration ; les sources externes citées gardent
+      leur propre autorité.
   source_refs:
   - U290
   - U450
@@ -15418,45 +15417,43 @@ nodes:
   - U771
   - CMP306
   - U795
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u290
   adoption_ids: []
   lifecycle:
-    state: urbanist_validated
-    recorded_at: '2026-09-17T13:29:45.653508Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U290
-    validated_fields:
-    - name
-    value_sha256:
-      name: 4562a2ee9c7b15cf840efb8c95b4f0d956e408071802aa18d22205a36b8f9730
-    note: Intégration U290 ; détails éditoriaux proposés.
+    - U908
+    validated_fields: []
+    value_sha256: {}
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
   review:
     state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
   editorial_basis: 'Comportement de la cible U286–U289 appliqué U290 ; définition détaillée, exemple et périmètre éditoriaux.
     Marché et justification : modeles/backlog/refactoring-target.yaml, PROTECT-GROUP.'
   proposed_fields:
-  - nature
   - market_comparisons
-  last_modified: '2026-09-25T13:24:25Z'
+  last_modified: '2026-10-07T00:00:00Z'
   approved_fields: []
 - id: BHV018
-  revision: 2
-  kind: behavior
+  revision: 3
+  kind: reference
   fields:
     name: Consumption Capping
-    definition: Configurer les limites de consommation d’un groupe sur le périmètre et la période retenus.
+    definition: Limites de consommation applicables à un groupe sur un périmètre et une période définis.
     scope: |-
-      Critère différenciant : politique. Bénéfice ciblé : Empêcher la surconsommation même si du stock reste accessible.
+      Le référentiel précise le groupe, le plafond, la période et les corrections applicables pour empêcher la surconsommation même si du stock reste accessible.
 
       Préserver un minimum et limiter un maximum diffèrent ; imputation et correction sont fonctions.
 
       Exemple fictif : Un groupe ne dépasse pas 500 malgré un stock supérieur.
-    nature: intervention_mechanism
     market_comparisons:
     - vendor: SAP
       product: SAP S/4HANA
@@ -15535,6 +15532,9 @@ nodes:
         - U477
         - ELM448
         - CMP190
+    data_governance: Domain-managed
+    mastership: Référence de contrôle locale sous autorité de Supply Chain Orchestration ; les sources externes citées gardent
+      leur propre autorité.
   source_refs:
   - U290
   - U450
@@ -15545,45 +15545,43 @@ nodes:
   - CMP190
   - U771
   - CMP306
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u290
   adoption_ids: []
   lifecycle:
-    state: urbanist_validated
-    recorded_at: '2026-09-17T13:29:45.653508Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U290
-    validated_fields:
-    - name
-    value_sha256:
-      name: f3fd339ee07c149324072378abf40aad012606e4072a83490b3f79c0c842ed0a
-    note: Intégration U290 ; détails éditoriaux proposés.
+    - U908
+    validated_fields: []
+    value_sha256: {}
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
   review:
     state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
   editorial_basis: 'Comportement de la cible U286–U289 appliqué U290 ; définition détaillée, exemple et périmètre éditoriaux.
     Marché et justification : modeles/backlog/refactoring-target.yaml, PROTECT-CAP.'
   proposed_fields:
-  - nature
   - market_comparisons
-  last_modified: '2026-09-25T13:24:25Z'
+  last_modified: '2026-10-07T00:00:00Z'
   approved_fields: []
 - id: BHV019
-  revision: 3
-  kind: behavior
+  revision: 4
+  kind: reference
   fields:
     name: Safety Stock Policy
-    definition: Configurer le stock tampon et ses conditions d’utilisation pour absorber les incertitudes.
+    definition: Stock tampon de référence et conditions de son utilisation pour absorber les incertitudes.
     scope: |-
-      Critère différenciant : mécanisme. Bénéfice ciblé : Expliciter le rôle de sécurité sans le confondre avec réservation ou déclenchement.
+      Le référentiel précise la valeur de sécurité, son périmètre, sa période et ses conditions d’utilisation sans la confondre avec une réservation ou un seuil de déclenchement.
 
       D05.a décide le niveau ; ne pas additionner deux fois le tampon et le minimum de réassort.
 
       Exemple fictif : Sécurité 40 pour absorber retard fournisseur ; préciser quand elle peut être consommée.
-    nature: intervention_mechanism
     market_comparisons:
     - vendor: Microsoft
       product: Dynamics 365 Supply Chain Management
@@ -15685,6 +15683,9 @@ nodes:
         - U477
         - ELM422
         - CMP190
+    data_governance: Domain-managed
+    mastership: Référence de contrôle locale sous autorité de Supply Chain Orchestration ; les sources externes citées gardent
+      leur propre autorité.
   source_refs:
   - U290
   - U450
@@ -15699,44 +15700,43 @@ nodes:
   - U771
   - CMP306
   - U853
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u290
   adoption_ids: []
   lifecycle:
     state: ai_proposed
-    recorded_at: '2026-09-25T07:32:47.515317Z'
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U749
-    - U750
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Accords de structure capturés séparément sur le lot final ; aucun accord global sur les descriptions.
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
   review:
     state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
   editorial_basis: 'Comportement de la cible U286–U289 appliqué U290 ; définition détaillée, exemple et périmètre éditoriaux.
     Marché et justification : modeles/backlog/refactoring-target.yaml, PROTECT-BUFFER.'
   proposed_fields:
-  - nature
   - market_comparisons
-  last_modified: '2026-09-25T13:24:25Z'
+  last_modified: '2026-10-07T00:00:00Z'
   approved_fields: []
 - id: BHV020
-  revision: 3
-  kind: behavior
+  revision: 4
+  kind: reference
   fields:
     name: Replenishment Regulation
-    definition: Configurer les règles de déclenchement et de limitation du réassort qui encadrent le renouvellement du stock.
+    definition: Règles de déclenchement et de limitation du réassort qui encadrent le renouvellement du stock.
     scope: |-
-      Critère différenciant : mécanisme. Bénéfice ciblé : Prévenir manque et excès par des règles cohérentes de renouvellement.
+      Le référentiel précise les seuils, cibles, périodes et limites applicables pour prévenir manque et excès par des règles cohérentes de renouvellement.
 
-      Min/Max et revue périodique décrites comme modalités, sans sous-comportements ; D05.e décide et D04 gère les apports.
+      Min/Max et revue périodique sont des modalités de la règle ; D05.e décide et D04 gère les apports.
 
       Exemple fictif : Sous 60 viser 100 ; appliquer la baisse de cible décidée en fin de vie.
-    nature: intervention_mechanism
     market_comparisons:
     - vendor: Microsoft
       product: Dynamics 365 Supply Chain Management
@@ -15841,6 +15841,9 @@ nodes:
         - U477
         - ELM414
         - CMP190
+    data_governance: Domain-managed
+    mastership: Référence de contrôle locale sous autorité de Supply Chain Orchestration ; les sources externes citées gardent
+      leur propre autorité.
   source_refs:
   - U290
   - U450
@@ -15855,30 +15858,30 @@ nodes:
   - U771
   - CMP306
   - U853
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u290
   adoption_ids: []
   lifecycle:
     state: ai_proposed
-    recorded_at: '2026-09-25T07:32:47.515317Z'
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U749
-    - U750
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Accords de structure capturés séparément sur le lot final ; aucun accord global sur les descriptions.
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
   review:
     state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
   editorial_basis: 'Comportement de la cible U286–U289 appliqué U290 ; définition détaillée, exemple et périmètre éditoriaux.
     Marché et justification : modeles/backlog/refactoring-target.yaml, PROTECT-REPLENISH.'
   proposed_fields:
-  - nature
   - market_comparisons
-  last_modified: '2026-09-25T13:24:25Z'
+  last_modified: '2026-10-07T00:00:00Z'
   approved_fields: []
 - id: BHV024
   revision: 5
@@ -17258,7 +17261,7 @@ nodes:
   last_modified: '2026-09-25T13:53:06Z'
   approved_fields: []
 - id: D05.h
-  revision: 11
+  revision: 12
   kind: capability
   fields:
     name: Reservation Policy Optimization
@@ -17280,7 +17283,7 @@ nodes:
 
       Rattachement adopté U343 à [Availability](glossary:TER112) : optimiser le compromis entre disponibilité pour les ventes, immobilisation et risque. Le résultat peut être mobilisé lors d’une promesse ou d’un parcours de vente sans transférer à [Availability](model:D03) la satisfaction des [Orders](glossary:TER012). Ce parent proposé après U342 est adopté U343 ; les contrats détaillés restent proposés.
 
-      Conserver dans [Availability](glossary:TER112) car la fiche recommande des conditions selon les tensions ; Policies les active et Inventory tient les réservations. Le mot Policy ne suffit pas à changer le propriétaire.
+      Conserver dans [Availability](glossary:TER112) car la fiche recommande des conditions selon les tensions ; Control Plane les active et Inventory tient les réservations. Le mot Policy ne suffit pas à changer le propriétaire.
     decomposition_rationale: Le jalon du parcours, la proximité du besoin, la différenciation des engagements de service et
       l’adaptation au risque changent chacun la façon de sécuriser une promesse et le coût d’immobilisation. Quatre mécanismes
       combinables sont retenus U343 ; durées, seuils, canaux et interfaces restent des paramètres ou des contextes. La complexité
@@ -17408,7 +17411,7 @@ nodes:
 
         Rattachement adopté U343 à Availability : optimiser le compromis entre disponibilité pour les ventes, immobilisation et risque. Le résultat peut être mobilisé lors d’une promesse ou d’un parcours de vente sans transférer à D03 la satisfaction des Orders. Ce parent proposé après U342 est adopté U343 ; les contrats détaillés restent proposés.
 
-        Frontière U673 : Conserver dans Matching car la fiche recommande des conditions selon les tensions ; Policies les active et Inventory tient les réservations. Le mot Policy ne suffit pas à changer le propriétaire.
+        Frontière U673 : Conserver dans Matching car la fiche recommande des conditions selon les tensions ; Control Plane les active et Inventory tient les réservations. Le mot Policy ne suffit pas à changer le propriétaire.
       synthesis:
       - commercetools compare panier et commande ; Oracle fournit un horizon avant expédition ; Microsoft illustre des motifs
         et stades de réservation. Les sources éclairent des dimensions complémentaires, pas une politique universelle.
@@ -17462,14 +17465,14 @@ nodes:
   - U835
   - U848
   - U853
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u342
   adoption_ids: []
   review:
-    state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   editorial_basis: Accord U342 sur la proposition U341. Recensement mécanismes/paramètres/frontières documenté dans reservation-policy-review.yaml.
   lifecycle:
     state: ai_proposed
@@ -25414,15 +25417,14 @@ nodes:
   - nature
   - market_comparisons
 - id: D19.a
-  revision: 6
-  kind: capability
+  revision: 7
+  kind: reference
   fields:
     name: Service Provider Policy
-    nature: policy
-    definition: Définir, maintenir et rendre applicables les règles de recours aux fournisseurs et à leurs Services, notamment
-      les exclusions et les limites de sollicitation, afin de tenir compte de leur fiabilité et de leur situation opérationnelle.
-    mastership: Supply Chain Orchestration maîtrise ces règles locales de recours ; l’offre de référence et les capacités
-      opérationnelles communiquées restent distinctes.
+    definition: Référentiel des autorisations, restrictions et exclusions applicables au recours aux prestataires et à leurs
+      services, avec portée et validité.
+    mastership: Référence de contrôle locale sous autorité de Supply Chain Orchestration ; les sources externes citées gardent
+      leur propre autorité.
     scope: |-
       Porter les autorisations, restrictions et exclusions applicables à un fournisseur ou une prestation, avec leur contexte, leur période et les conditions de révision. Des difficultés observées peuvent conduire à limiter les nouvelles sollicitations ou à suspendre le recours à un fournisseur selon les règles applicables. Les prestations sont surtout logistiques, sans restriction à ce secteur dans le Domain courant.
 
@@ -25578,23 +25580,25 @@ nodes:
   - U797
   - U848
   - U853
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u626
   review:
     state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
   lifecycle:
     state: ai_proposed
-    recorded_at: '2026-09-22T17:09:50.704739Z'
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U626
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Proposition U626 ; aucune validation globale des nouveaux champs ou rattachements.
-  last_modified: '2026-10-06T00:00:00Z'
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
+  last_modified: '2026-10-07T00:00:00Z'
   adoption_ids: []
   proposed_fields:
   - mastership
@@ -25602,14 +25606,13 @@ nodes:
   - market_comparisons
   approved_fields: []
 - id: D19.b
-  revision: 5
-  kind: capability
+  revision: 6
+  kind: reference
   fields:
     name: Demand Protection Policy
-    nature: policy
     data_governance: Domain-managed
-    definition: Définir, maintenir et rendre applicables les règles qui protègent ou priorisent certaines demandes dans les
-      arbitrages de couverture et de révision.
+    definition: Référentiel des critères actifs qui protègent ou priorisent certaines demandes dans les arbitrages de couverture
+      et de révision.
     finality: Préserver les exigences et engagements des demandes selon le cadre métier applicable.
     scope: |-
       Décrire les critères d’éligibilité, protections contre réoptimisation et priorités applicables avec leur portée et validité. [Demand Prioritization](model:D03.m) détermine le classement dans la situation considérée. Le plan peut proposer une révision de policy ; sa mise en vigueur respecte l’autorité prévue. Une protection ne réserve pas du stock et ne garantit pas la satisfaction. Exemple fictif : préserver les commandes déjà promises lors d’une campagne, sauf dérogation autorisée avant leur début d’exécution.
@@ -25676,6 +25679,8 @@ nodes:
         FLOW : BOP applique aussi des changements de confirmation.'
       term_choice: Le repère natif « Reprioritization » étaye le rapprochement décrit ci-dessous. « Demand Protection Policy
         » nomme la responsabilité FLOW à cette maille ; la proximité des termes ne prouve pas une nomenclature commune.
+    mastership: Référence de contrôle locale sous autorité de Supply Chain Orchestration ; les sources externes citées gardent
+      leur propre autorité.
   source_refs:
   - U585
   - U586
@@ -25691,24 +25696,25 @@ nodes:
   - CMP306
   - U797
   - U848
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u626
   review:
     state: proposed
-    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle.
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
   lifecycle:
     state: ai_proposed
-    recorded_at: '2026-09-25T07:32:47.515317Z'
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U749
-    - U750
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Accords de structure capturés séparément sur le lot final ; aucun accord global sur les descriptions.
-  last_modified: '2026-10-06T00:00:00Z'
+    note: Conversion en référentiel sous Control Plane acceptée U908 ; détail rédactionnel proposé. Identité conservée, code
+      de lecture recalculé à la publication.
+  last_modified: '2026-10-07T00:00:00Z'
   adoption_ids: []
   proposed_fields:
   - scope
@@ -26675,21 +26681,17 @@ nodes:
   - market_comparisons
   - market_inspiration
 - id: subdomain-policies
-  revision: 5
+  revision: 6
   kind: area
   fields:
-    name: Policies
-    definition: 'Définir, maintenir et rendre applicables les contrôles actifs qui encadrent le fonctionnement courant : seuils,
-      limites, protections et autorisations temporaires.'
+    name: Control Plane
+    definition: Tenir les référentiels de contrôle sous autorité Supply qui configurent les protections, limites et autorisations
+      applicables au fonctionnement courant.
     scope: |-
-      Conserver les règles actives, leur portée et leur validité. Les décisions de [Availability](glossary:TER112) peuvent recommander des valeurs ou adaptations ; cette recommandation ne change pas implicitement la règle active. Les réservations constituées restent dans Inventory Management. Exemple fictif : protéger une quantité pour un groupe de demandes et limiter temporairement les nouvelles sollicitations d’un prestataire, sans annuler ses travaux déjà engagés.
+      Control Plane tient les références locales de contrôle dont Supply Chain Orchestration a la maîtrise : règles de protection des ressources et des demandes, limites de recours aux prestataires, seuils et activations temporaires. Chaque version précise sa portée, sa validité, son autorité et ses dérogations. Les capacités consommatrices utilisent la version applicable ; une recommandation d’Availability ne la modifie pas automatiquement.
 
-      Porter les contrôles actifs du fonctionnement courant : seuils, limites, protections, désactivations et réactivations temporaires de possibilités métier, avec leur portée et leur validité. Exemple fictif : désactiver temporairement le fractionnement pour de nouvelles sollicitations, sans annuler les engagements existants. Les règles de structure du parcours et de composition des activités relèvent de [Process Definition Management](glossary:TER126) dans [Process Management](model:subdomain-process-management). Une modification de contrôle ne vaut ni modification rétroactive des commandes ni nouvel engagement.
-
-      Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par FLOW ne les transforme pas en règles sous autorité de [Policies](glossary:TER130).
-
-      [Process Management](glossary:TER164) porte le parcours complet ; les commandes et les capacités spécialisées conservent leurs engagements, leurs décisions et leur autorité.
-    finality: Donner aux décisions et à la réalisation un cadre applicable et explicite.
+      Exemple fictif : activer une protection de stock pour un groupe de demandes ou suspendre les nouvelles sollicitations d’un prestataire, sans annuler les engagements déjà pris. Les réservations et faits opérationnels restent dans Inventory Management ; les parcours et leurs règles de structure relèvent de Process Management. Les règles de crédit reçues du contrôle de gestion restent sous autorité externe et sont documentées dans [Partner & Agreement References](model:ba-partner-agreement-references). Control Plane désigne ici une responsabilité métier de gouvernance par configuration, sans présumer d’une plateforme technique unique ni d’une réalisation installée.
+    finality: Donner aux décisions et à la réalisation un cadre de contrôle applicable, explicite et versionné.
     market_comparisons:
     - vendor: Microsoft
       product: DOM rules
@@ -26699,7 +26701,7 @@ nodes:
       similarities: Règles distinctes avec validité, activation, contraintes, protection de stock, priorités de lieux et limites
         de fractionnement.
       differences: Les règles DOM et protections SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas
-        un sous-domaine autonome Policies.
+        un sous-domaine autonome Control Plane.
       flow_position: |-
         Définir, maintenir et rendre applicables les règles qui encadrent les protections, les priorités et le recours aux ressources et prestataires Supply.
 
@@ -26711,7 +26713,7 @@ nodes:
       source_locator: Common attributes ; Minimum inventory rule ; Fulfillment location priority ; Partial orders rule
       evidence_limits: Règles propres au solveur DOM ; ne prouve pas un sous-domaine autonome réunissant toutes les policies
         Supply. Les règles DOM et protections SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas un
-        sous-domaine autonome Policies.
+        sous-domaine autonome Control Plane.
       status: proposed
       source_refs:
       - ELM394
@@ -26723,7 +26725,7 @@ nodes:
         éditeurs.
       definition_choice: 'Appui de DOM rules : Règles distinctes avec validité, activation, contraintes, protection de stock,
         priorités de lieux et limites de fractionnement. Limite de reprise dans FLOW : Les règles DOM et protections SAP étayent
-        l’encadrement des décisions. Ces produits ne prescrivent pas un sous-domaine autonome Policies.'
+        l’encadrement des décisions. Ces produits ne prescrivent pas un sous-domaine autonome Control Plane.'
       concept_name: DOM rules
       scope_summary: Règles distinctes avec validité, activation, contraintes, protection de stock, priorités de lieux et
         limites de fractionnement.
@@ -26737,7 +26739,7 @@ nodes:
       similarities: ARun affecte des ressources présentes ou futures aux commandes selon priorités et pénuries ; affectations
         et contrôle de release sont distingués.
       differences: Les règles DOM et protections SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas
-        un sous-domaine autonome Policies.
+        un sous-domaine autonome Control Plane.
       flow_position: |-
         Définir, maintenir et rendre applicables les règles qui encadrent les protections, les priorités et le recours aux ressources et prestataires Supply.
 
@@ -26749,7 +26751,7 @@ nodes:
       source_locator: Supply Assignment Basics ; Scenarios ; Copying Assignments ; Online Features
       evidence_limits: L’affectation SAP peut empêcher d’autres demandes de consommer la ressource ; cela ne prouve pas l’équivalence
         avec l’affectation FLOW distincte de la réservation. ARun est intégré au portefeuille aATP. Les règles DOM et protections
-        SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas un sous-domaine autonome Policies.
+        SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas un sous-domaine autonome Control Plane.
       status: proposed
       source_refs:
       - ELM452
@@ -26762,7 +26764,7 @@ nodes:
       definition_choice: 'Appui de Explaining Supply Assignment : ARun affecte des ressources présentes ou futures aux commandes
         selon priorités et pénuries ; affectations et contrôle de release sont distingués. Limite de reprise dans FLOW : Les
         règles DOM et protections SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas un sous-domaine
-        autonome Policies.'
+        autonome Control Plane.'
       concept_name: Explaining Supply Assignment
       scope_summary: ARun affecte des ressources présentes ou futures aux commandes selon priorités et pénuries ; affectations
         et contrôle de release sont distingués.
@@ -26790,11 +26792,11 @@ nodes:
         déduit.
       flow_position: Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité et
         sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par FLOW
-        ne les transforme pas en règles sous autorité de Policies.
+        ne les transforme pas en règles sous autorité de Control Plane.
       term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
       definition_choice: Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité
         et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par
-        FLOW ne les transforme pas en règles sous autorité de Policies.
+        FLOW ne les transforme pas en règles sous autorité de Control Plane.
       status: proposed
       source_refs:
       - U878
@@ -26818,18 +26820,18 @@ nodes:
         déduit.
       flow_position: Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité et
         sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par FLOW
-        ne les transforme pas en règles sous autorité de Policies.
+        ne les transforme pas en règles sous autorité de Control Plane.
       term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
       definition_choice: Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité
         et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par
-        FLOW ne les transforme pas en règles sous autorité de Policies.
+        FLOW ne les transforme pas en règles sous autorité de Control Plane.
       status: proposed
       source_refs:
       - U878
       - U879
     market_inspiration:
-      choice: Policies porte la responsabilité décrite ; les produits apportent des correspondances partielles, sans taxonomie
-        commune.
+      choice: Control Plane porte la responsabilité décrite ; les produits apportent des correspondances partielles, sans
+        taxonomie commune.
       flow_scope: 'Définir, maintenir et rendre applicables les contrôles actifs qui encadrent le fonctionnement courant :
         seuils, limites, protections et autorisations temporaires.'
       flow_approach: |-
@@ -26837,14 +26839,17 @@ nodes:
 
         Porter les contrôles actifs du fonctionnement courant : seuils, limites, protections, désactivations et réactivations temporaires de possibilités métier, avec leur portée et leur validité. Exemple fictif : désactiver temporairement le fractionnement pour de nouvelles sollicitations, sans annuler les engagements existants. Les règles de structure du parcours et de composition des activités relèvent de [Process Definition Management](glossary:TER126) dans [Process Management](model:subdomain-process-management). Une modification de contrôle ne vaut ni modification rétroactive des commandes ni nouvel engagement.
 
-        Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par FLOW ne les transforme pas en règles sous autorité de [Policies](glossary:TER130).
+        Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par FLOW ne les transforme pas en règles sous autorité de [Control Plane](glossary:TER130).
 
         [Process Management](glossary:TER164) porte le parcours complet ; les commandes et les capacités spécialisées conservent leurs engagements, leurs décisions et leur autorité.
       synthesis:
       - Les règles DOM et protections SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas un sous-domaine
-        autonome Policies.
+        autonome Control Plane.
+      - Le nom Control Plane est un choix métier FLOW validé U908. Dans la [documentation Microsoft Azure](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/control-plane-and-data-plane),
+        ce terme désigne une couche technique de gestion des ressources ; cette analogie n'établit pas une équivalence avec
+        le sous-domaine Supply. Source consultée le 7 octobre 2026.
       examples:
-      - title: Illustration FLOW — Policies
+      - title: Illustration FLOW — Control Plane
         situation: protéger une quantité pour un groupe de demandes et limiter temporairement les nouvelles sollicitations
           d’un prestataire, sans annuler ses travaux déjà engagés.
         outcome: Définir, maintenir et rendre applicables les règles qui encadrent les protections, les priorités et le recours
@@ -26858,7 +26863,7 @@ nodes:
         source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom-rules
     dominant_role:
       id: policies
-      display_name: Politiques
+      display_name: Contrôle par configuration
   source_refs:
   - U673
   - U711
@@ -26876,22 +26881,24 @@ nodes:
   - U883
   - U884
   - U885
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u673
   review:
     state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: Nom et nature référentielle acceptés U908 ; formulation détaillée proposée. Les accords antérieurs restent dans
+      les publications.
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U884
-    - U885
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: Nom et nature référentielle acceptés U908 ; formulation détaillée proposée. Les accords antérieurs restent dans
+      les publications.
   last_modified: '2026-10-07T00:00:00Z'
   adoption_ids: []
   proposed_fields:
@@ -36174,7 +36181,7 @@ nodes:
     note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
   last_modified: '2026-10-06T00:00:00Z'
 - id: workflow-definition-management
-  revision: 3
+  revision: 4
   kind: capability
   fields:
     name: Process Definition Management
@@ -36186,7 +36193,7 @@ nodes:
 
       Exemple fictif : définir une activité de demande de confirmation client, son résultat attendu et les conditions permettant ensuite de solliciter une prestation. Une nouvelle version ne modifie pas silencieusement les parcours déjà engagés.
 
-      Les contrôles actifs de fonctionnement relèvent de [Policies](glossary:TER130). La tenue des commandes conserve la validité de leurs changements d’état. Cette capacité n’impose ni un outil, ni un langage de règles, ni un référentiel informatique partagé par toute l’entreprise.
+      Les contrôles actifs de fonctionnement relèvent de [Control Plane](glossary:TER130). La tenue des commandes conserve la validité de leurs changements d’état. Cette capacité n’impose ni un outil, ni un langage de règles, ni un référentiel informatique partagé par toute l’entreprise.
 
       Le périmètre relève de [Process Management](glossary:TER164) et peut relier plusieurs demandes ; [Order Management](model:D04) conserve les engagements et la validité des transitions des commandes. Les activités humaines passent par [Human Task Management](glossary:TER170) ; leur attribution et leurs échéances restent explicites. Le parcours ne se réduit pas à la succession des prestations logistiques.
     market_comparisons:
@@ -36250,7 +36257,7 @@ nodes:
 
         Exemple fictif : définir une activité de demande de confirmation client, son résultat attendu et les conditions permettant ensuite de solliciter une prestation. Une nouvelle version ne modifie pas silencieusement les parcours déjà engagés.
 
-        Les contrôles actifs de fonctionnement relèvent de [Policies](glossary:TER130). La tenue des commandes conserve la validité de leurs changements d’état. Cette capacité n’impose ni un outil, ni un langage de règles, ni un référentiel informatique partagé par toute l’entreprise.
+        Les contrôles actifs de fonctionnement relèvent de [Control Plane](glossary:TER130). La tenue des commandes conserve la validité de leurs changements d’état. Cette capacité n’impose ni un outil, ni un langage de règles, ni un référentiel informatique partagé par toute l’entreprise.
 
         Le périmètre relève de [Process Management](glossary:TER164) et peut relier plusieurs demandes ; [Order Management](model:D04) conserve les engagements et la validité des transitions des commandes. Les activités humaines passent par [Human Task Management](glossary:TER170) ; leur attribution et leurs échéances restent explicites. Le parcours ne se réduit pas à la succession des prestations logistiques.
       synthesis:
@@ -36275,12 +36282,13 @@ nodes:
   - U883
   - U884
   - U885
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u843
   review:
-    state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   adoption_ids: []
   last_modified: '2026-10-07T00:00:00Z'
   proposed_fields:
@@ -37245,7 +37253,7 @@ nodes:
   - scope
   approved_fields: []
 - id: ba-supply-matching
-  revision: 1
+  revision: 2
   kind: business_area
   fields:
     name: Supply Matching
@@ -37254,7 +37262,7 @@ nodes:
     finality: Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins restent
       découverts.
     scope: |-
-      Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Policies](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+      Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Control Plane](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
 
       [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
 
@@ -37396,13 +37404,13 @@ nodes:
   - U853
   - U890
   - U891
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u848
   review:
-    state: proposed
-    note: Application du lot U890 validé U891 ; noms et frontières acceptés, détails de rédaction et de comparaison proposés.
-      Aucune réalisation installée déduite.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-10-06T00:00:00Z'
@@ -37421,18 +37429,18 @@ nodes:
   - scope
   approved_fields: []
 - id: ba-policy-optimization
-  revision: 1
+  revision: 2
   kind: business_area
   fields:
     name: Policy Optimization
     definition: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
     finality: Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
     scope: |-
-      Les règles actives et leur validité demeurent dans Policies.
+      Les règles actives et leur validité demeurent dans Control Plane.
 
       Bénéficiaire et résultat : Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
 
-      Exemple fictif : Recommander une protection de 20 pièces après comparaison des ruptures et surstocks ; Policies conserve la mise en vigueur de la règle.
+      Exemple fictif : Recommander une protection de 20 pièces après comparaison des ruptures et surstocks ; Control Plane conserve la mise en vigueur de la règle.
     market_comparisons:
     - vendor: Microsoft
       product: Dynamics 365 Supply Chain Management
@@ -37486,12 +37494,13 @@ nodes:
   - U847
   - U848
   - U853
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u848
   review:
-    state: proposed
-    note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-10-06T00:00:00Z'
@@ -39754,12 +39763,12 @@ nodes:
     value_sha256: {}
     note: Noms et rattachements validés via les captures U879 ; nouvelles formulations proposées.
 - id: ba-protection-policies
-  revision: 1
+  revision: 2
   kind: business_area
   fields:
     name: Protection Policies
-    definition: Maintenir les règles actives de protection des ressources et des demandes dans les arbitrages de couverture.
-    finality: Protéger les usages prioritaires sans confondre règle active, affectation et réservation.
+    definition: Présenter les référentiels de protection des ressources et des demandes applicables aux arbitrages de couverture.
+    finality: Rendre lisibles les contrôles actifs de protection sans confondre règle, affectation et réservation.
     scope: 'Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations.
       Exemple fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.'
     market_comparisons:
@@ -39826,28 +39835,30 @@ nodes:
         décrit et non ce niveau de Business Area.
   source_refs:
   - U880
+  - U908
   review:
     state: proposed
-    note: Application de la règle U880 ; noms et descriptions des regroupements proposés, sans accord implicite.
+    note: Regroupement documentaire des références Control Plane accepté U908 ; formulation détaillée proposée.
   lifecycle:
     state: ai_proposed
-    recorded_at: '2026-10-06T00:00:00Z'
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U880
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Règle générale explicite ; détail du regroupement proposé.
+    note: Regroupement documentaire des références Control Plane accepté U908 ; formulation détaillée proposée.
   adoption_ids: []
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u880
+  last_modified: '2026-10-07T00:00:00Z'
 - id: ba-service-provider-controls
-  revision: 1
+  revision: 2
   kind: business_area
   fields:
     name: Service Provider Controls
-    definition: Encadrer le recours aux prestataires par des exclusions et limites opérationnelles applicables.
+    definition: Présenter les référentiels qui encadrent le recours aux prestataires par des exclusions et limites opérationnelles.
     finality: Éviter de solliciter un prestataire au-delà des conditions autorisées.
     scope: 'Les accords externes restent dans Operational References ; la sélection d’une prestation reste dans Fulfilment
       Orchestration. Exemple fictif : suspendre les nouvelles sollicitations d’un prestataire sans annuler ses travaux engagés.'
@@ -39916,22 +39927,24 @@ nodes:
         décrit et non ce niveau de Business Area.
   source_refs:
   - U880
+  - U908
   review:
     state: proposed
-    note: Application de la règle U880 ; noms et descriptions des regroupements proposés, sans accord implicite.
+    note: Regroupement documentaire des références Control Plane accepté U908 ; formulation détaillée proposée.
   lifecycle:
     state: ai_proposed
-    recorded_at: '2026-10-06T00:00:00Z'
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U880
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Règle générale explicite ; détail du regroupement proposé.
+    note: Regroupement documentaire des références Control Plane accepté U908 ; formulation détaillée proposée.
   adoption_ids: []
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u880
+  last_modified: '2026-10-07T00:00:00Z'
 - id: ba-inventory-disposition
   revision: 1
   kind: business_area
@@ -41409,7 +41422,7 @@ nodes:
     note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
 - id: work-deadline-management
   kind: capability
-  revision: 1
+  revision: 2
   fields:
     name: Work Deadline Management
     definition: Établir et surveiller les échéances de traitement puis déclencher les relances ou [escalades](glossary:TER182)
@@ -41418,7 +41431,7 @@ nodes:
     scope: |-
       Distinguer objectif, échéance, temps en file, travail actif, attente extérieure et pause autorisée. Appliquer calendriers et conditions de début, pause et fin aux activités ou dossiers concernés. Qualifier le dépassement et solliciter la réaction via [Process Sentry](glossary:TER127) ; [Work Assignment](glossary:TER171) traite les réaffectations.
 
-      [Agreement](glossary:TER048) porte les engagements convenus ; [Process Definition Management](glossary:TER126) les règles structurelles ; [Policies](glossary:TER130) les contrôles actifs. Un retard ne donne pas une autorisation de dérogation ni ne vaut rejet automatique. Aucun délai d’exemple n’est imposé à FLOW.
+      [Agreement](glossary:TER048) porte les engagements convenus ; [Process Definition Management](glossary:TER126) les règles structurelles ; [Control Plane](glossary:TER130) les contrôles actifs. Un retard ne donne pas une autorisation de dérogation ni ne vaut rejet automatique. Aucun délai d’exemple n’est imposé à FLOW.
 
       Exemple fictif : une vérification dépasse son échéance ouvrée ; notifier le responsable puis solliciter un remplaçant selon la règle prévue.
     nature: management
@@ -41504,13 +41517,14 @@ nodes:
   - U883
   - U884
   - U885
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
   adoption_ids: []
   review:
-    state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   last_modified: '2026-10-07T00:00:00Z'
   proposed_fields:
   - name
@@ -42460,7 +42474,7 @@ nodes:
     note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
       restent proposés ; aucune réalisation installée déduite.'
 - id: customer-credit-profile
-  revision: 1
+  revision: 2
   kind: reference
   fields:
     name: Customer Credit Profile
@@ -42472,7 +42486,7 @@ nodes:
 
       Le contrôle de gestion ou l’autorité [Finance](glossary:TER117) concernée fournit ces informations par [Reference Ingestion](model:master-data-ingestion), avec son comportement [Reference Ingestion from Finance](model:master-data-ingestion-finance). Le Core porte la référence locale utilisable ; Finance conserve l’autorité sur le risque, les limites et les dérogations. Ce flux est une cible métier, sans interface installée présumée.
 
-      Le [Case](glossary:TER064) de [Wholesale](model:subdomain-sales-wholesale) utilise ce profil pour son [Credit Check](glossary:TER155). L’exposition courante et le résultat propre à une commande ne sont pas des paramètres de référence : ils doivent être obtenus et contextualisés pour le contrôle. Un profil valide ne vaut pas autorisation de vente. [Policies](model:subdomain-policies) ne prend pas la maîtrise des règles financières reçues.
+      Le [Case](glossary:TER064) de [Wholesale](model:subdomain-sales-wholesale) utilise ce profil pour son [Credit Check](glossary:TER155). L’exposition courante et le résultat propre à une commande ne sont pas des paramètres de référence : ils doivent être obtenus et contextualisés pour le contrôle. Un profil valide ne vaut pas autorisation de vente. [Control Plane](model:subdomain-policies) ne prend pas la maîtrise des règles financières reçues.
 
       Exemple fictif : une limite de 10 000 euros valable pour un payeur sur un périmètre donné ; une commande de 3 000 euros doit encore être évaluée avec son exposition pertinente.
 
@@ -42553,10 +42567,10 @@ nodes:
   - U896
   - U897
   - U898
+  - U908
   review:
-    state: proposed
-    note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite.'
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   last_modified: '2026-10-07T00:00:00Z'
   lifecycle:
     state: ai_proposed
@@ -42572,32 +42586,6 @@ nodes:
     note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
       restent proposés ; aucune réalisation installée déduite.'
 relations:
-- id: REL-MEMBER-D02.b
-  revision: 4
-  type: contains
-  source_id: ba-protection-policies
-  target_id: D02.b
-  source_refs:
-  - P81
-  - U67
-  - U74
-  - C49
-  - U626
-  - U673
-  - U880
-  review:
-    state: proposed
-    note: Application de la règle U880 ; noms et descriptions des regroupements proposés, sans accord implicite.
-  lifecycle:
-    state: ai_proposed
-    recorded_at: '2026-10-06T00:00:00Z'
-    recorded_by: Codex
-    source_refs:
-    - U880
-    validated_fields: []
-    value_sha256: {}
-    note: Règle générale explicite ; détail du regroupement proposé.
-  last_modified: '2026-09-23T20:35:38.517366Z'
 - id: REL-ILL-004
   revision: 1
   type: represents
@@ -43715,106 +43703,6 @@ relations:
     state: partial
     note: 'U633 : noms, définitions, frontières, type et parents adoptés ; compléments éditoriaux proposés.'
   last_modified: '2026-09-23T12:36:53.055461Z'
-- id: REL-MEMBER-BHV017
-  revision: 1
-  type: contains
-  source_id: D02.b
-  target_id: BHV017
-  source_refs:
-  - U290
-  lifecycle:
-    state: urbanist_validated
-    recorded_at: '2026-09-17T13:29:45.653508Z'
-    recorded_by: Codex
-    source_refs:
-    - U290
-    validated_fields:
-    - type
-    - source_id
-    - target_id
-    value_sha256:
-      type: dde0e3dc0ad9a0daf42c9d0ab5a9a1c466093b12ccae1ca4c613754a34526930
-      source_id: ebd4a98424d6ec2240c8e2546c670eb0aa1860e9123f7d9c5ef87bfedd1d2ef8
-      target_id: 058c839fbf1ef33a61aa02ffb1fbe69314e810d1cca3f358c7666c1b42721195
-    note: Structure de la refonte demandée U290 ; formulations détaillées qualifiées sur chaque nœud.
-  review:
-    state: partial
-    note: Structure de la refonte demandée U290 ; formulations détaillées qualifiées sur chaque nœud.
-- id: REL-MEMBER-BHV018
-  revision: 1
-  type: contains
-  source_id: D02.b
-  target_id: BHV018
-  source_refs:
-  - U290
-  lifecycle:
-    state: urbanist_validated
-    recorded_at: '2026-09-17T13:29:45.653508Z'
-    recorded_by: Codex
-    source_refs:
-    - U290
-    validated_fields:
-    - type
-    - source_id
-    - target_id
-    value_sha256:
-      type: dde0e3dc0ad9a0daf42c9d0ab5a9a1c466093b12ccae1ca4c613754a34526930
-      source_id: ebd4a98424d6ec2240c8e2546c670eb0aa1860e9123f7d9c5ef87bfedd1d2ef8
-      target_id: 40d43a4e0c0ba6a09f6bde7cdb73404fb3d7e67353ca1e7c62afa821d5a2a7d6
-    note: Structure de la refonte demandée U290 ; formulations détaillées qualifiées sur chaque nœud.
-  review:
-    state: partial
-    note: Structure de la refonte demandée U290 ; formulations détaillées qualifiées sur chaque nœud.
-- id: REL-MEMBER-BHV019
-  revision: 1
-  type: contains
-  source_id: D02.b
-  target_id: BHV019
-  source_refs:
-  - U290
-  lifecycle:
-    state: urbanist_validated
-    recorded_at: '2026-09-17T13:29:45.653508Z'
-    recorded_by: Codex
-    source_refs:
-    - U290
-    validated_fields:
-    - type
-    - source_id
-    - target_id
-    value_sha256:
-      type: dde0e3dc0ad9a0daf42c9d0ab5a9a1c466093b12ccae1ca4c613754a34526930
-      source_id: ebd4a98424d6ec2240c8e2546c670eb0aa1860e9123f7d9c5ef87bfedd1d2ef8
-      target_id: 9bab1e8988e6364a354953420fc4c5eead3352f3877283f20a250aa18916398a
-    note: Structure de la refonte demandée U290 ; formulations détaillées qualifiées sur chaque nœud.
-  review:
-    state: partial
-    note: Structure de la refonte demandée U290 ; formulations détaillées qualifiées sur chaque nœud.
-- id: REL-MEMBER-BHV020
-  revision: 1
-  type: contains
-  source_id: D02.b
-  target_id: BHV020
-  source_refs:
-  - U290
-  lifecycle:
-    state: urbanist_validated
-    recorded_at: '2026-09-17T13:29:45.653508Z'
-    recorded_by: Codex
-    source_refs:
-    - U290
-    validated_fields:
-    - type
-    - source_id
-    - target_id
-    value_sha256:
-      type: dde0e3dc0ad9a0daf42c9d0ab5a9a1c466093b12ccae1ca4c613754a34526930
-      source_id: ebd4a98424d6ec2240c8e2546c670eb0aa1860e9123f7d9c5ef87bfedd1d2ef8
-      target_id: 65a3396c10cc15fb40105262a63d054077610847c445a6634a6900fb1c5b2212
-    note: Structure de la refonte demandée U290 ; formulations détaillées qualifiées sur chaque nœud.
-  review:
-    state: partial
-    note: Structure de la refonte demandée U290 ; formulations détaillées qualifiées sur chaque nœud.
 - id: REL-NEEDS-U290-002
   revision: 2
   type: relates-to
@@ -43995,64 +43883,62 @@ relations:
   review:
     state: under_review
     note: Intégration U290 ; détails éditoriaux proposés.
-- id: REL-NEEDS-U290-008
+- id: REL-U908-supplies-reference-D05.a-42
   revision: 1
-  type: relates-to
-  source_id: D02.b
-  target_id: D05.a
+  type: supplies-reference
+  source_id: D05.a
+  target_id: D02.b
   source_refs:
   - U286
   - U290
-  qualification:
-    role: needs
-    meaning: A besoin de cibles et seuils proposés ou retenus.
-    conditions:
-    - Si pertinent dans le cas ; pas d’appel systématique ni de séquence universelle.
-    effects:
-    - Résultat consommé sans transfert de responsabilité du fournisseur.
-    scope: 'Contrat métier proposé : consommateur → fournisseur de résultat. Aucun appel technique systématique ; sources
-      de données et conditions à éprouver.'
+  - U908
+  review:
+    state: proposed
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
   lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-17T13:29:45.653508Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U290
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Intégration U290 ; détails éditoriaux proposés.
-  review:
-    state: under_review
-    note: Intégration U290 ; détails éditoriaux proposés.
-- id: REL-NEEDS-U290-009
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_supply
+    meaning: Fournir des valeurs recommandées ou réexaminées pour la référence de protection.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
+- id: REL-U908-supplies-reference-D05.d-43
   revision: 1
-  type: relates-to
-  source_id: D02.b
-  target_id: D05.d
+  type: supplies-reference
+  source_id: D05.d
+  target_id: D02.b
   source_refs:
   - U286
   - U290
-  qualification:
-    role: needs
-    meaning: A besoin de droits de groupes et limites proposés ou retenus.
-    conditions:
-    - Si pertinent dans le cas ; pas d’appel systématique ni de séquence universelle.
-    effects:
-    - Résultat consommé sans transfert de responsabilité du fournisseur.
-    scope: 'Contrat métier proposé : consommateur → fournisseur de résultat. Aucun appel technique systématique ; sources
-      de données et conditions à éprouver.'
+  - U908
+  review:
+    state: proposed
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
   lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-17T13:29:45.653508Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U290
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Intégration U290 ; détails éditoriaux proposés.
-  review:
-    state: under_review
-    note: Intégration U290 ; détails éditoriaux proposés.
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_supply
+    meaning: Fournir des valeurs recommandées ou réexaminées pour la référence de protection.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
 - id: REL-NEEDS-U290-010
   revision: 1
   type: relates-to
@@ -44082,9 +43968,9 @@ relations:
   review:
     state: under_review
     note: Intégration U290 ; détails éditoriaux proposés.
-- id: REL-NEEDS-U290-011
-  revision: 2
-  type: relates-to
+- id: REL-U908-uses-reference-D02.c-45
+  revision: 1
+  type: uses-reference
   source_id: D02.c
   target_id: D02.b
   source_refs:
@@ -44094,33 +43980,26 @@ relations:
   - ELM412
   - U560
   - CMP234
-  qualification:
-    role: needs
-    meaning: Utilise les protections, droits et limites ainsi que la politique de réservation rendue applicable par Supply
-      Protection.
-    conditions:
-    - Lors de l’établissement ou du réexamen d’une réservation, selon le périmètre et la validité des règles.
-    effects:
-    - Respecte les conditions actives sans confondre enveloppe de groupe et réservation individuelle ; aucune activation implicite
-      d’une recommandation.
-    scope: Coopération métier entre responsables distincts ; aucun appel technique, ordre universel de traitement ou flux
-      installé présumé.
-  lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-17T13:29:45.653508Z'
-    recorded_by: Codex
-    source_refs:
-    - U290
-    validated_fields: []
-    value_sha256: {}
-    note: Intégration U290 ; détails éditoriaux proposés.
+  - U908
   review:
     state: proposed
-    note: Coopération métier qualifiée dans la consolidation autonome U560 ; pas de contrat technique ni de preuve de flux
-      installé.
-  fields:
-    label: Applique les protections et politiques actives
-  last_modified: '2026-09-21T12:36:42.783025Z'
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U908
+    validated_fields: []
+    value_sha256: {}
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_use
+    meaning: Utiliser les protections et limites actives dans la responsabilité de la capacité.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
 - id: REL-NEEDS-U290-023
   revision: 1
   type: relates-to
@@ -44150,35 +44029,34 @@ relations:
   review:
     state: under_review
     note: Intégration U290 ; détails éditoriaux proposés.
-- id: REL-NEEDS-U290-024
+- id: REL-U908-uses-reference-D02.e-47
   revision: 1
-  type: relates-to
+  type: uses-reference
   source_id: D02.e
   target_id: D02.b
   source_refs:
   - U286
   - U290
-  qualification:
-    role: needs
-    meaning: A besoin de protections applicables, droits et limites par période.
-    conditions:
-    - Si pertinent dans le cas ; pas d’appel systématique ni de séquence universelle.
-    effects:
-    - Résultat consommé sans transfert de responsabilité du fournisseur.
-    scope: 'Contrat métier proposé : consommateur → fournisseur de résultat. Aucun appel technique systématique ; sources
-      de données et conditions à éprouver.'
+  - U908
+  review:
+    state: proposed
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
   lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-17T13:29:45.653508Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U290
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Intégration U290 ; détails éditoriaux proposés.
-  review:
-    state: under_review
-    note: Intégration U290 ; détails éditoriaux proposés.
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_use
+    meaning: Utiliser les protections et limites actives dans la responsabilité de la capacité.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
 - id: REL-NEEDS-U290-025
   revision: 2
   type: relates-to
@@ -44275,35 +44153,34 @@ relations:
   review:
     state: under_review
     note: Intégration U290 ; détails éditoriaux proposés.
-- id: REL-NEEDS-U290-028
+- id: REL-U908-uses-reference-D03.i-51
   revision: 1
-  type: relates-to
+  type: uses-reference
   source_id: D03.i
   target_id: D02.b
   source_refs:
   - U286
   - U290
-  qualification:
-    role: needs
-    meaning: A besoin de protections applicables, droits et limites par période.
-    conditions:
-    - Si pertinent dans le cas ; pas d’appel systématique ni de séquence universelle.
-    effects:
-    - Résultat consommé sans transfert de responsabilité du fournisseur.
-    scope: 'Contrat métier proposé : consommateur → fournisseur de résultat. Aucun appel technique systématique ; sources
-      de données et conditions à éprouver.'
+  - U908
+  review:
+    state: proposed
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
   lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-17T13:29:45.653508Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U290
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Intégration U290 ; détails éditoriaux proposés.
-  review:
-    state: under_review
-    note: Intégration U290 ; détails éditoriaux proposés.
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_use
+    meaning: Utiliser les protections et limites actives dans la responsabilité de la capacité.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
 - id: REL-NEEDS-U290-029
   revision: 2
   type: relates-to
@@ -45560,35 +45437,34 @@ relations:
   review:
     state: under_review
     note: Intégration U290 ; détails éditoriaux proposés.
-- id: REL-NEEDS-U290-083
+- id: REL-U908-uses-reference-D05.d-93
   revision: 1
-  type: relates-to
+  type: uses-reference
   source_id: D05.d
   target_id: D02.b
   source_refs:
   - U286
   - U290
-  qualification:
-    role: needs
-    meaning: A besoin de protections applicables, droits et limites par période.
-    conditions:
-    - Si pertinent dans le cas ; pas d’appel systématique ni de séquence universelle.
-    effects:
-    - Résultat consommé sans transfert de responsabilité du fournisseur.
-    scope: 'Contrat métier proposé : consommateur → fournisseur de résultat. Aucun appel technique systématique ; sources
-      de données et conditions à éprouver.'
+  - U908
+  review:
+    state: proposed
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
   lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-17T13:29:45.653508Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U290
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Intégration U290 ; détails éditoriaux proposés.
-  review:
-    state: under_review
-    note: Intégration U290 ; détails éditoriaux proposés.
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_use
+    meaning: Utiliser les protections et limites actives dans la responsabilité de la capacité.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
 - id: REL-NEEDS-U290-084
   revision: 1
   type: relates-to
@@ -45647,35 +45523,34 @@ relations:
   review:
     state: under_review
     note: Intégration U290 ; détails éditoriaux proposés.
-- id: REL-NEEDS-U290-086
+- id: REL-U908-uses-reference-D05.e-96
   revision: 1
-  type: relates-to
+  type: uses-reference
   source_id: D05.e
   target_id: D02.b
   source_refs:
   - U286
   - U290
-  qualification:
-    role: needs
-    meaning: A besoin de protections applicables, droits et limites par période.
-    conditions:
-    - Si pertinent dans le cas ; pas d’appel systématique ni de séquence universelle.
-    effects:
-    - Résultat consommé sans transfert de responsabilité du fournisseur.
-    scope: 'Contrat métier proposé : consommateur → fournisseur de résultat. Aucun appel technique systématique ; sources
-      de données et conditions à éprouver.'
+  - U908
+  review:
+    state: proposed
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
   lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-17T13:29:45.653508Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U290
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Intégration U290 ; détails éditoriaux proposés.
-  review:
-    state: under_review
-    note: Intégration U290 ; détails éditoriaux proposés.
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_use
+    meaning: Utiliser les protections et limites actives dans la responsabilité de la capacité.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
 - id: REL-NEEDS-U290-087
   revision: 1
   type: relates-to
@@ -45821,35 +45696,34 @@ relations:
   review:
     state: under_review
     note: Intégration U290 ; détails éditoriaux proposés.
-- id: REL-NEEDS-U290-092
+- id: REL-U908-uses-reference-D05.c-102
   revision: 1
-  type: relates-to
+  type: uses-reference
   source_id: D05.c
   target_id: D02.b
   source_refs:
   - U286
   - U290
-  qualification:
-    role: needs
-    meaning: A besoin de protections applicables, droits et limites par période.
-    conditions:
-    - Si pertinent dans le cas ; pas d’appel systématique ni de séquence universelle.
-    effects:
-    - Résultat consommé sans transfert de responsabilité du fournisseur.
-    scope: 'Contrat métier proposé : consommateur → fournisseur de résultat. Aucun appel technique systématique ; sources
-      de données et conditions à éprouver.'
+  - U908
+  review:
+    state: proposed
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
   lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-17T13:29:45.653508Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U290
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Intégration U290 ; détails éditoriaux proposés.
-  review:
-    state: under_review
-    note: Intégration U290 ; détails éditoriaux proposés.
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_use
+    meaning: Utiliser les protections et limites actives dans la responsabilité de la capacité.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
 - id: REL-U858-REFERENCE-020
   revision: 1
   type: uses-reference
@@ -45968,35 +45842,34 @@ relations:
   review:
     state: under_review
     note: Intégration U290 ; détails éditoriaux proposés.
-- id: REL-NEEDS-U290-101
+- id: REL-U908-uses-reference-D05.f-107
   revision: 1
-  type: relates-to
+  type: uses-reference
   source_id: D05.f
   target_id: D02.b
   source_refs:
   - U286
   - U290
-  qualification:
-    role: needs
-    meaning: A besoin de résultat de mise à jour des protections et des règles retenues, y compris refus/prise en compte partielle.
-    conditions:
-    - Pour la mise en action des choix autorisés et le suivi de leur prise en compte ; aucune réalisation physique par Planning.
-    effects:
-    - Résultat consommé sans transfert de responsabilité du fournisseur.
-    scope: 'Contrat métier proposé : consommateur → fournisseur de résultat. Aucun appel technique systématique ; sources
-      de données et conditions à éprouver.'
+  - U908
+  review:
+    state: proposed
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
   lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-17T13:29:45.653508Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U290
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Intégration U290 ; détails éditoriaux proposés.
-  review:
-    state: under_review
-    note: Intégration U290 ; détails éditoriaux proposés.
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_use
+    meaning: Utiliser les protections et limites actives dans la responsabilité de la capacité.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
 - id: REL-NEEDS-U290-102
   revision: 2
   type: relates-to
@@ -46713,9 +46586,9 @@ relations:
     value_sha256: {}
     note: Accords de structure capturés séparément sur le lot final ; aucun accord global sur les descriptions.
   last_modified: '2026-09-25T07:32:47.515317Z'
-- id: REL-INITIAL-STOCKING-PROTECTION
-  revision: 2
-  type: relates-to
+- id: REL-U908-uses-reference-D05.e-131
+  revision: 1
+  type: uses-reference
   source_id: D05.e
   target_id: D02.b
   source_refs:
@@ -46724,27 +46597,26 @@ relations:
   - U749
   - U750
   - CMP294
+  - U908
   review:
-    state: partial
-    note: Structure U749 appliquée U750 ; rédactions complémentaires proposées, preuves historiques conservées.
-  qualification:
-    role: needs
-    meaning: A besoin des protections et droits d’usage applicables au périmètre et à la période du lancement.
-    conditions:
-    - Lorsque nécessaire au scénario ; pas de séquence ni d’appel technique systématique.
-    effects:
-    - Consommer le résultat sans transférer la responsabilité métier de la capacité fournisseur.
+    state: proposed
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
   lifecycle:
     state: ai_proposed
-    recorded_at: '2026-09-25T07:32:47.515317Z'
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U749
-    - U750
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Accords de structure capturés séparément sur le lot final ; aucun accord global sur les descriptions.
-  last_modified: '2026-09-25T07:32:47.515317Z'
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_use
+    meaning: Utiliser les protections et limites actives dans la responsabilité de la capacité.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
 - id: REL-INITIAL-STOCKING-PURCHASE
   revision: 2
   type: relates-to
@@ -47262,33 +47134,33 @@ relations:
     value_sha256: {}
     note: U342 adopte le nom et la définition de la capacité ; les comportements et rattachements nouvellement documentés
       restent proposés.
-- id: REL-RESERVATION-POLICY-PROTECTION
+- id: REL-U908-uses-reference-D05.h-151
   revision: 1
-  type: relates-to
+  type: uses-reference
   source_id: D05.h
   target_id: D02.b
   source_refs:
   - U342
+  - U908
   review:
     state: proposed
-    note: Rattachement ou contrat proposé lors du recensement U342.
-  qualification:
-    role: needs
-    meaning: A besoin des droits et restrictions actifs qui encadrent les réservations possibles.
-    conditions:
-    - Selon le contexte utile à la décision ou à son application ; aucun appel systématique ni ordre d’exécution imposé.
-    effects:
-    - Utiliser les informations ou conditions sans transférer la responsabilité métier du fournisseur.
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
   lifecycle:
     state: ai_proposed
-    recorded_at: '2026-09-18T13:47:37.709618Z'
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U342
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: U342 adopte le nom et la définition de la capacité ; les comportements et rattachements nouvellement documentés
-      restent proposés.
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_use
+    meaning: Utiliser les protections et limites actives dans la responsabilité de la capacité.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
 - id: REL-U858-REFERENCE-032
   revision: 1
   type: uses-reference
@@ -47546,9 +47418,9 @@ relations:
     validated_fields: []
     value_sha256: {}
     note: Accord limité aux champs indiqués ; détails éditoriaux et contrats qualifiés séparément.
-- id: REL-NEEDS-U378-06
+- id: REL-U908-uses-reference-D03.o-160
   revision: 1
-  type: relates-to
+  type: uses-reference
   source_id: D03.o
   target_id: D02.b
   source_refs:
@@ -47556,26 +47428,26 @@ relations:
   - U378
   - ELM228
   - CMP139
-  qualification:
-    role: needs
-    meaning: A besoin des protections actives encadrant les usages admissibles des ressources.
-    conditions:
-    - Selon le cas et les hypothèses du scénario ; aucune séquence ou invocation systématique imposée.
-    effects:
-    - Résultat mobilisé sans transférer la responsabilité de la capacité fournisseur.
-    scope: Relation et contrat détaillés proposés ; dépendance métier, pas hiérarchie ni appel technique.
+  - U908
   review:
-    state: under_review
-    note: Principe de composition acquis ; qualification précise proposée.
+    state: proposed
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
   lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-18T17:34:59.156111Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U378
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Accord limité aux champs indiqués ; détails éditoriaux et contrats qualifiés séparément.
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_use
+    meaning: Utiliser les protections et limites actives dans la responsabilité de la capacité.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
 - id: REL-NEEDS-U378-07
   revision: 2
   type: relates-to
@@ -49352,23 +49224,11 @@ relations:
       source_id: 730537331e56c94b2f53a912667fd9bb3ce637bbda1b3ddf348fab55b09a932f
       target_id: 55087f95d8506157973d49f04bbdaa448a7a9ee6992fc083bcd9a967817d3fdd
     note: 'U509 : seuls les champs indiqués et le sens présenté sont adoptés ; détails éditoriaux et nouvelles capacités proposés.'
-- id: REL-U560-PROTECTION-RESERVATION-POLICY
-  revision: 2
-  type: relates-to
-  source_id: D02.b
-  target_id: D05.h
-  fields:
-    label: Met en vigueur les conditions retenues
-  qualification:
-    role: needs
-    meaning: Utilise les conditions produites par Reservation Policy Optimization pour configurer et maintenir la politique
-      de réservation applicable.
-    conditions:
-    - Lorsqu’une politique est définie ou révisée et que les conditions retenues sont autorisées pour leur périmètre.
-    effects:
-    - Distingue recommandation et politique active ; la mise en vigueur ne réalise aucune réservation individuelle.
-    scope: Coopération métier entre responsables distincts ; aucun appel technique, ordre universel de traitement ou flux
-      installé présumé.
+- id: REL-U908-supplies-reference-D05.h-217
+  revision: 1
+  type: supplies-reference
+  source_id: D05.h
+  target_id: D02.b
   source_refs:
   - U538
   - ELM334
@@ -49378,20 +49238,26 @@ relations:
   - U749
   - U750
   - CMP294
-  last_modified: '2026-09-25T07:32:47.515317Z'
+  - U908
   review:
-    state: partial
-    note: Structure U749 appliquée U750 ; rédactions complémentaires proposées, preuves historiques conservées.
+    state: proposed
+    note: Requalification du lien vers le référentiel de protection U908 ; sens détaillé proposé.
   lifecycle:
     state: ai_proposed
-    recorded_at: '2026-09-25T07:32:47.515317Z'
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U749
-    - U750
+    - U908
     validated_fields: []
     value_sha256: {}
-    note: Accords de structure capturés séparément sur le lot final ; aucun accord global sur les descriptions.
+    note: Requalification documentaire U908 ; aucun accord sur les modalités techniques.
+  qualification:
+    role: reference_supply
+    meaning: Fournir des valeurs recommandées ou réexaminées pour la référence de protection.
+    conditions:
+    - Selon la portée et la validité de la règle ou de la recommandation ; aucun flux installé présumé.
+    effects:
+    - Conserver la distinction entre recommandation, référence active et décision transactionnelle.
 - id: REL-BEHAVIOR-BHV096
   revision: 1
   type: contains
@@ -49418,50 +49284,6 @@ relations:
       source_id: b2af10dd0ea6927169e2b1c5c3b097d5077a706fdec6f17b09e63fd799959cd2
       target_id: 2c0f399efb5714a08ec219a90f6ad7c6a56eec6f3309400028d6a445e278e462
     note: Accord U607 limité au nom, à la nature comportement et au rattachement ; descriptions détaillées exclues.
-- id: REL-MEMBER-D19.a
-  revision: 3
-  type: contains
-  source_id: ba-service-provider-controls
-  target_id: D19.a
-  source_refs:
-  - U626
-  - U673
-  - U880
-  review:
-    state: proposed
-    note: Application de la règle U880 ; noms et descriptions des regroupements proposés, sans accord implicite.
-  lifecycle:
-    state: ai_proposed
-    recorded_at: '2026-10-06T00:00:00Z'
-    recorded_by: Codex
-    source_refs:
-    - U880
-    validated_fields: []
-    value_sha256: {}
-    note: Règle générale explicite ; détail du regroupement proposé.
-  last_modified: '2026-09-23T20:35:38.517366Z'
-- id: REL-MEMBER-D19.b
-  revision: 3
-  type: contains
-  source_id: ba-protection-policies
-  target_id: D19.b
-  source_refs:
-  - U626
-  - U673
-  - U880
-  review:
-    state: proposed
-    note: Application de la règle U880 ; noms et descriptions des regroupements proposés, sans accord implicite.
-  lifecycle:
-    state: ai_proposed
-    recorded_at: '2026-10-06T00:00:00Z'
-    recorded_by: Codex
-    source_refs:
-    - U880
-    validated_fields: []
-    value_sha256: {}
-    note: Règle générale explicite ; détail du regroupement proposé.
-  last_modified: '2026-09-23T20:35:38.517366Z'
 - id: REL-SUPPLY-PLAN-VISIBILITY
   revision: 3
   type: provides-knowledge
@@ -55736,6 +55558,139 @@ relations:
     - Selon la portée et la validité des informations reçues ; aucun flux installé présumé.
     effects:
     - Conserver provenance et contexte sans transférer l’autorité financière ni créer un parent métier.
+- id: REL-U908-PRESENTS-D02.b
+  revision: 1
+  type: presents
+  source_id: ba-protection-policies
+  target_id: D02.b
+  source_refs:
+  - U908
+  review:
+    state: accepted
+    note: Nature référentielle et présentation dans Control Plane acceptées U908 ; regroupement documentaire de mise en œuvre.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U908
+    validated_fields: []
+    value_sha256: {}
+    note: Accord U908 à capturer sur le lot final.
+- id: REL-U908-PRESENTS-BHV017
+  revision: 1
+  type: presents
+  source_id: ba-protection-policies
+  target_id: BHV017
+  source_refs:
+  - U908
+  review:
+    state: accepted
+    note: Nature référentielle et présentation dans Control Plane acceptées U908 ; regroupement documentaire de mise en œuvre.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U908
+    validated_fields: []
+    value_sha256: {}
+    note: Accord U908 à capturer sur le lot final.
+- id: REL-U908-PRESENTS-BHV018
+  revision: 1
+  type: presents
+  source_id: ba-protection-policies
+  target_id: BHV018
+  source_refs:
+  - U908
+  review:
+    state: accepted
+    note: Nature référentielle et présentation dans Control Plane acceptées U908 ; regroupement documentaire de mise en œuvre.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U908
+    validated_fields: []
+    value_sha256: {}
+    note: Accord U908 à capturer sur le lot final.
+- id: REL-U908-PRESENTS-BHV019
+  revision: 1
+  type: presents
+  source_id: ba-protection-policies
+  target_id: BHV019
+  source_refs:
+  - U908
+  review:
+    state: accepted
+    note: Nature référentielle et présentation dans Control Plane acceptées U908 ; regroupement documentaire de mise en œuvre.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U908
+    validated_fields: []
+    value_sha256: {}
+    note: Accord U908 à capturer sur le lot final.
+- id: REL-U908-PRESENTS-BHV020
+  revision: 1
+  type: presents
+  source_id: ba-protection-policies
+  target_id: BHV020
+  source_refs:
+  - U908
+  review:
+    state: accepted
+    note: Nature référentielle et présentation dans Control Plane acceptées U908 ; regroupement documentaire de mise en œuvre.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U908
+    validated_fields: []
+    value_sha256: {}
+    note: Accord U908 à capturer sur le lot final.
+- id: REL-U908-PRESENTS-D19.b
+  revision: 1
+  type: presents
+  source_id: ba-protection-policies
+  target_id: D19.b
+  source_refs:
+  - U908
+  review:
+    state: accepted
+    note: Nature référentielle et présentation dans Control Plane acceptées U908 ; regroupement documentaire de mise en œuvre.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U908
+    validated_fields: []
+    value_sha256: {}
+    note: Accord U908 à capturer sur le lot final.
+- id: REL-U908-PRESENTS-D19.a
+  revision: 1
+  type: presents
+  source_id: ba-service-provider-controls
+  target_id: D19.a
+  source_refs:
+  - U908
+  review:
+    state: accepted
+    note: Nature référentielle et présentation dans Control Plane acceptées U908 ; regroupement documentaire de mise en œuvre.
+  lifecycle:
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
+    recorded_by: Codex
+    source_refs:
+    - U908
+    validated_fields: []
+    value_sha256: {}
+    note: Accord U908 à capturer sur le lot final.
 alternatives: []
 principles:
 - id: PRINCIPLE-REFERENCE-PROJECTIONS

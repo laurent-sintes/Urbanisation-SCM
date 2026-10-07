@@ -222,8 +222,8 @@ publication_delivery:
       definition: 0528af4396549cdbf01fdc5c869328d56ac2b5fa330bc215249e6c94195c56ba
       market_comparisons: c4927076709372008534abdd4b01e081a43c5d05e75e4c5599e2bfc2c4a59ab9
       finality: f6218a716be887eec94cd2ce4a49c155c739373da9e5936bf1811091da30c279
-      scope: c995fc4db1051eec34e6e801c78b84af3add28e554cfd8da801f8d735bb3b041
-      market_inspiration: d18e7728b5bc1c4073a9f5724d043495485cb612feb86738a79b14e4485f6661
+      scope: b1dbf122e2415365a66b8deb3f6aeb9d6cc7b823b278605fafcd1795e47ee171
+      market_inspiration: 0a45c5be4ccdf2fc31dbe6412b150c1925378ded096b5c9f72f86b1c850c8e6f
     parent: system-business-operations
     parent_type: presents
   - id: business-references
@@ -232,10 +232,10 @@ publication_delivery:
       name: Operational References
     field_sha256:
       market_comparisons: d24f1c9e53559cf4123eff9873ffaf518bd9dc07cf9ec5d32c3cacdacca1705f
-      market_inspiration: ef53ce6422e885cbb40c479e5f6a0da230bb1892d92a359dab1aea9d8f7adb75
+      market_inspiration: 8fc79a4b85201b034f564a227c70d3761de3156db7b4357c1629e3c731ddf9ed
       finality: abb3a5cf11d05aec01400c0b73fc0e570aa89a3d080d503fcca473b795a270c7
       definition: 7437a6fcea4650f38205f907d3278b10d6b061ad1dd1c2e3cd3169e2035fcc05
-      scope: d606cf6a59380ea9a174e651b9124c985baf227ec58c334b530febc5b22cf5ba
+      scope: 861e4b167b287fa794c186efc806cc617f0554493997619d545c38065a12ec26
     parent: supply-chain-orchestration
     parent_type: presents
   - id: D08
@@ -472,7 +472,7 @@ publication_delivery:
     field_sha256:
       definition: 84af38ade416494951c78954096b0f3b84ee93860d465a9213f08e9bbd5b75c6
       finality: 112aa0cdc2bfa233cabcc24e67deba189ba026d09974e57bdac7707c5b1ce229
-      scope: 01d20751482c7ff2eb3e9b9317d568bbb873aee453dba1e0fabd7877929abf28
+      scope: 20820fc41e4fe051aa1b891da432dd3aaf65d94f1e0e88ad6538415d54f9456f
       market_comparisons: 1a1bdba2fac47c531f5885603c389f049b1ccc7f18965862cb9a08cee38f187f
     parent: ba-partner-agreement-references
     parent_type: presents
@@ -2458,3 +2458,29 @@ application_U898:
     - 'Navigateur : 223 fiches, 39 scénarios, 42 parcours, 136 étapes ; aucun lien non résolu.'
     - 'Navigateur : cinq bandeaux de références, treize fiches, totaux et navigation conformes.'
     published_version_unchanged: 2026-10-07.4
+delivery_reconciliation_U908:
+  source_refs:
+  - U908
+  note: Contrôles de livraison courants réalignés sur le backlog. Les attentes précédentes restent traçables par leurs empreintes
+    et dans Git ; cette réconciliation technique ne crée aucun accord métier.
+  changed_checks:
+  - id: supply-chain-orchestration
+    check: field_sha256.scope
+    previous_sha256: c995fc4db1051eec34e6e801c78b84af3add28e554cfd8da801f8d735bb3b041
+    current_sha256: b1dbf122e2415365a66b8deb3f6aeb9d6cc7b823b278605fafcd1795e47ee171
+  - id: supply-chain-orchestration
+    check: field_sha256.market_inspiration
+    previous_sha256: d18e7728b5bc1c4073a9f5724d043495485cb612feb86738a79b14e4485f6661
+    current_sha256: 0a45c5be4ccdf2fc31dbe6412b150c1925378ded096b5c9f72f86b1c850c8e6f
+  - id: business-references
+    check: field_sha256.market_inspiration
+    previous_sha256: ef53ce6422e885cbb40c479e5f6a0da230bb1892d92a359dab1aea9d8f7adb75
+    current_sha256: 8fc79a4b85201b034f564a227c70d3761de3156db7b4357c1629e3c731ddf9ed
+  - id: business-references
+    check: field_sha256.scope
+    previous_sha256: d606cf6a59380ea9a174e651b9124c985baf227ec58c334b530febc5b22cf5ba
+    current_sha256: 861e4b167b287fa794c186efc806cc617f0554493997619d545c38065a12ec26
+  - id: customer-credit-profile
+    check: field_sha256.scope
+    previous_sha256: 01d20751482c7ff2eb3e9b9317d568bbb873aee453dba1e0fabd7877929abf28
+    current_sha256: 20820fc41e4fe051aa1b891da432dd3aaf65d94f1e0e88ad6538415d54f9456f

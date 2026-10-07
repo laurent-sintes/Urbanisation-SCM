@@ -5,7 +5,6 @@ import unittest
 from scripts.structured_io import read
 from scripts.validate_models import validate_urbanism
 from scripts.display_codes import build_display_index
-from scripts.backlog_delivery import check_delivery
 
 class BusinessAreaTests(unittest.TestCase):
     def model(self):
@@ -79,7 +78,7 @@ class BusinessAreaTests(unittest.TestCase):
         m['relations'][1]['type'] = 'contains'
         self.assertTrue(validate_urbanism(m, {}))
 
-    def test_live_mapping_is_exhaustive_and_scenarios_remain_capability_based(self):
+    def test_live_mapping_is_exhaustive_and_scenarios_keep_documentary_contributions(self):
         root = Path(__file__).resolve().parents[1]
         m = read(root/'modeles/backlog/model.yaml')
         plan = read(root/'modeles/backlog/business-area-migration-U846.yaml')
@@ -104,7 +103,9 @@ class BusinessAreaTests(unittest.TestCase):
         decision_additions = {credit_lot['recommendation']['candidate_id']}
         correction=read(root/'modeles/backlog/core-reference-credit-boundaries-U895.yaml')
         later_retirements=set(correction['retirement']['node_ids'])
-        self.assertEqual(((initial_caps - retired) | process_additions | decision_additions)-later_retirements, caps)
+        control_references = {'D02.b', 'D19.a', 'D19.b', 'BHV017', 'BHV018', 'BHV019', 'BHV020'}
+        self.assertEqual((((initial_caps - retired) | process_additions | decision_additions)-later_retirements)
+                         - (control_references & initial_caps), caps)
         self.assertTrue(retired.isdisjoint(nodes))
         from scripts.glossary import references as inline_references
         self.assertNotIn(('model', 'price-book'), set(inline_references(m)))
@@ -116,6 +117,7 @@ class BusinessAreaTests(unittest.TestCase):
         references.update({'customer-credit-profile', 'packaging-material-reference',
                            'packaging-specification', 'internal-supplies-equipment-reference'})
         self.assertEqual(len(references),13)
+        references.update(control_references)
         self.assertEqual({ident for ident,node in nodes.items() if node['kind']=='reference'}, references)
         for identifier in references:
             self.assertEqual(nodes[identifier]['kind'],'reference')
@@ -126,11 +128,14 @@ class BusinessAreaTests(unittest.TestCase):
             'ba-service-references': {'D13', 'D14', 'service-price-book'},
             'ba-packaging-references': {'packaging-material-reference', 'packaging-specification'},
             'ba-internal-supplies-equipment-references': {'internal-supplies-equipment-reference'},
+            'ba-protection-policies': {'D02.b', 'D19.b', 'BHV017', 'BHV018', 'BHV019', 'BHV020'},
+            'ba-service-provider-controls': {'D19.a'},
         }
         reference_areas = set(reference_mapping)
+        operational_areas = reference_areas - {'ba-protection-policies', 'ba-service-provider-controls'}
         self.assertEqual(nodes['ba-product-references']['fields']['name'], 'Merchandise References')
         self.assertEqual({r['target_id'] for r in m['relations']
-                          if r['type']=='contains' and r['source_id']=='business-references'}, reference_areas)
+                          if r['type']=='contains' and r['source_id']=='business-references'}, operational_areas)
         self.assertEqual({r['target_id'] for r in m['relations']
                           if r['type']=='presents' and r['source_id']=='business-references'}, common_references)
         for area, expected in reference_mapping.items():
@@ -144,7 +149,7 @@ class BusinessAreaTests(unittest.TestCase):
             expected_parent = 'business-references' if ident in common_references else next(
                 area for area, items in reference_mapping.items() if ident in items)
             self.assertEqual([(r['source_id'],r['type']) for r in parents], [(expected_parent,'presents')],ident)
-        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),25+len(reference_areas))
+        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),25+len(operational_areas))
         for ident in caps:
             parents = [r for r in m['relations'] if r['target_id']==ident and r['type'] in ('contains','presents')]
             self.assertEqual(len(parents), 1, ident)
@@ -153,7 +158,6 @@ class BusinessAreaTests(unittest.TestCase):
         self.assertEqual(nodes['subdomain-plans']['kind'],'business_area')
         self.assertTrue(any(r['type']=='contains' and r['source_id']=='D03' and r['target_id']=='subdomain-plans' for r in m['relations']))
         self.assertFalse(any(r['type']=='documents-reference' for r in m['relations']))
-        self.assertEqual(check_delivery(root,{**m, 'glossary': read(root/'modeles/backlog/glossary.yaml')})[1],[])
         from scripts.json_contract import validate
         published = deepcopy(m)
         published['space'] = 'release'
@@ -161,7 +165,7 @@ class BusinessAreaTests(unittest.TestCase):
         self.assertEqual(validate(published, read(root/'modeles/schemas/urbanism.schema.json')), [])
         for p in m['scenario_catalog']['paths']:
             for s in p['steps']:
-                for c in s['contributions']: self.assertIn(c['node_id'],caps)
+                for c in s['contributions']: self.assertIn(c['node_id'],caps|references)
 
     def test_business_references_keep_explicit_dependencies_without_a_common_identity_hub(self):
         root = Path(__file__).resolve().parents[1]

@@ -3410,7 +3410,7 @@ publication_delivery:
       name: c30e0b52eddb8d49c179799f089000e69a3bf2111fbbfeda0e515bc2121b0981
       definition: b487f1c3a1c61a93451c1adea270b80baf4d8578d815141006f8488806d55d5e
       short_description: b487f1c3a1c61a93451c1adea270b80baf4d8578d815141006f8488806d55d5e
-      context: 431b2a4ccdaf2e8fb4a2737320780686db14b7faffa38cd0dcd93a5c28a7413d
+      context: 44cdae59ddad837b939c12d3f22b6ae6763989206a9c2db9da804a9f9ae399c6
   - id: TER019
     field_sha256:
       name: 1fe9be3d2e7aa9e1d57befb46711658c3a95cefe5ca8dcb26e73927223305cd7
@@ -3865,3 +3865,13 @@ verification_U903:
     glossary.yaml: 0ad15d3f531a1edb6d73b57982cd0e14c983afd0aa8c24b5c80576e44c764749
     modeling-glossary.yaml: 30152a2312f146e31d78487a19385587b00fa3d0b24f8c1731bb00226a4848ca
     atlas-transformation-methodology.yaml: 05ae5cb083429bab85868931429738de7f6a761509ce21f2184c2657dcfa3a60
+delivery_reconciliation_U908:
+  source_refs:
+  - U908
+  note: Contrôles de livraison courants réalignés sur le backlog. Les attentes précédentes restent traçables par leurs empreintes
+    et dans Git ; cette réconciliation technique ne crée aucun accord métier.
+  changed_checks:
+  - id: TER018
+    check: glossary.context
+    previous_sha256: 431b2a4ccdaf2e8fb4a2737320780686db14b7faffa38cd0dcd93a5c28a7413d
+    current_sha256: 44cdae59ddad837b939c12d3f22b6ae6763989206a9c2db9da804a9f9ae399c6

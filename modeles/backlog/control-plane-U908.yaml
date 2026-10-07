@@ -1,0 +1,67 @@
+id: CONTROL-PLANE-U908
+source_refs:
+- U907
+- U908
+status: applied_to_backlog
+decision:
+  accepted:
+  - Policies devient Control Plane, sans changer l'identité persistante du sous-domaine.
+  - Les trois anciennes capacités D02.b, D19.a et D19.b deviennent des référentiels sous autorité Supply.
+  implementation:
+  - Les deux Business Areas existantes présentent les référentiels ; elles restent des regroupements documentaires.
+  - Les quatre anciens comportements BHV017–BHV020 deviennent des références spécialisées, afin de conserver leurs fiches et leurs sources sans créer de comportement sous une référence. Cette maille reste proposée.
+  - Les anciens liens entre capacités et D02.b sont remplacés par des usages ou des apports de référence selon leur sens.
+  - Les scénarios peuvent citer une référence comme apport documentaire, distinct d'une capacité exercée.
+  boundaries:
+  - Control Plane tient les règles locales de Supply ; les règles financières reçues gardent l'autorité du contrôle de gestion.
+  - Process Management conserve les règles de structure des parcours ; Inventory Management conserve les réservations et faits opérationnels.
+  - Aucune plateforme technique unique ni réalisation installée n'est déduite du nom.
+market_position:
+  microsoft_dynamics: Les règles DOM documentent validité, activation, protection de stock et limites de fractionnement ; elles ne décrivent pas un sous-domaine général Control Plane.
+  sap_s4hana: Supply Protection documente des protections actives par groupes et périodes ; elle ne couvre pas toute la gouvernance par configuration FLOW.
+  terminology: La documentation Microsoft Azure utilise control plane pour gérer des ressources techniques. Le nom FLOW est un choix métier de Laurent, sans équivalence ERP établie.
+  sources:
+  - https://learn.microsoft.com/en-us/dynamics365/commerce/dom-rules
+  - https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9905622a5c1f49ba84e9076fc83a9c2c/9a62c143add0423c8567d6e105f9fe7d.html
+  - https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/control-plane-and-data-plane
+publication_delivery:
+  state: applied
+  source_refs:
+  - U907
+  - U908
+  summary: Nom Control Plane et nature documentaire des trois anciens objets de capacité appliqués au backlog ; quatre spécialisations proposées comme références.
+  required_nodes:
+  - id: subdomain-policies
+    kind: area
+    fields:
+      name: Control Plane
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: D02.b
+    kind: reference
+    parent: ba-protection-policies
+    parent_type: presents
+  - id: D19.b
+    kind: reference
+    parent: ba-protection-policies
+    parent_type: presents
+  - id: D19.a
+    kind: reference
+    parent: ba-service-provider-controls
+    parent_type: presents
+  - id: BHV017
+    kind: reference
+    parent: ba-protection-policies
+    parent_type: presents
+  - id: BHV018
+    kind: reference
+    parent: ba-protection-policies
+    parent_type: presents
+  - id: BHV019
+    kind: reference
+    parent: ba-protection-policies
+    parent_type: presents
+  - id: BHV020
+    kind: reference
+    parent: ba-protection-policies
+    parent_type: presents

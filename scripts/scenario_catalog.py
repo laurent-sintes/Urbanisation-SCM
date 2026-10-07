@@ -62,8 +62,8 @@ def validate_catalog(model):
             if not contributions or len(set(contributions)) != len(contributions):
                 errors.append(f'{path["id"]}/{step["id"]}: empty or duplicate contributions')
             for target in contributions:
-                if nodes.get(target, {}).get('kind') != 'capability':
-                    errors.append(f'{path["id"]}: contribution must reference a published capability: {target}')
+                if nodes.get(target, {}).get('kind') not in {'capability', 'reference'}:
+                    errors.append(f'{path["id"]}: contribution must reference a published capability or reference: {target}')
         for edge in path['dependencies']:
             if edge['from'] not in ids or edge['to'] not in ids:
                 errors.append(f'{path["id"]}: missing dependency endpoint')

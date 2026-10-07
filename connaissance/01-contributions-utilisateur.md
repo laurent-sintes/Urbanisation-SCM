@@ -22268,3 +22268,52 @@ Operational References, Policies et Intégration proches et en premier en haut
 **contexte et portée**
 
 Demande portant sur l’ordre de présentation des neuf sous-domaines de Supply Chain Orchestration. Application au backlog : Operational References, Policies, Integration, Inventory Management, Availability, Order Management, Process Management, Fulfilment Orchestration, Service Management. Codex place les trois couples après le socle transverse dans cet ordre pour faciliter la lecture des ressources, des commandes et de la réalisation. Cette disposition est un choix de lecture ; elle ne décrit pas une séquence d’exécution. Les rapprochements et la position initiale du socle sont demandés par Laurent ; l’ordre détaillé est une interprétation de Codex. Aucun changement de nom, de responsabilité ou de rattachement, ni accord supplémentaire sur les fiches. La publication reste une opération distincte.
+
+## U907
+
+**id**
+
+U907
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Policies comme contrôle de la Supply par configuration
+
+**texte**
+
+Dans Policies, on décrit des référentiels sous authorité Supply Chain permettant de contrôler / maitriser les comportements généraux de la supply : une sorte de gouvernance par configuration. C'est un Control Plane. D'ailleurs, je me demande si on ne devrait l'appeler comme ça.
+
+**contexte et portée**
+
+Proposition de Laurent sur la nature des objets gouvernés par Policies et sur son nom. « Control Plane » est une piste à comparer, sans adoption du renommage à ce stade. La distinction avec Operational References, les règles reçues sous autorité externe et Process Management reste à qualifier avant modification canonique.
+
+## U908
+
+**id**
+
+U908
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Valider Control Plane et qualifier les objets du sous-domaine
+
+**texte**
+
+Je valide :&#x20;
+
+- Control Plane
+- Les capacity dans ce sous domaine sont des référentiels
+
+Attention dans l'ihm, tu as retiré le bouton "organiser" mais il reste un espace vide inutile
+
+**contexte et portée**
+
+Accord explicite sur le nom Control Plane et sur la nature référentielle des trois objets actuellement présentés comme capacités dans ce sous-domaine. Laurent a précisé qu’il faut remplacer ces capacités par des objets Référentiel. La conversion des quatre anciens comportements de Supply Protection Policy en références spécialisées est un choix de mise en œuvre de Codex pour conserver leurs contenus sans maintenir une hiérarchie de comportements sous un référentiel ; elle ne vaut pas accord sur leur nouvelle maille. Les liens et accords historiques restent conservés dans les publications. Correction demandée dans Atlas pour supprimer l’espace vide restant sur la carte après retrait du bouton de réorganisation. Aucune release, aucun commit ni push demandés.

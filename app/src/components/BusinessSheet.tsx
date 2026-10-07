@@ -48,7 +48,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
   const fields = businessFields(node.fields);
   const examples = examplesForNode(model, node);
   const scenarios = scenariosForNode(model,node.id);
-  const scenarioSection = !!catalogOf(model) && ['domain', 'area', 'business_area', 'capability'].includes(node.kind);
+  const scenarioSection = !!catalogOf(model) && ['domain', 'area', 'business_area', 'capability', 'reference'].includes(node.kind);
   const relations = relatedTo(model, node.id);
   const [scopeSummary, ...scopeDetails] = (fields.scope || '').trim().split(/\n\s*\n/);
   const sections = [examples.length > 0 && ['illustrations', catalogOf(model) ? 'Illustrations métier' : 'Scénarios métier'], otherChildren.length > 0 && ['children','Explorer ce périmètre'], fields.scope && ['scope','Périmètre'], behaviors.length > 0 && ['behaviors','Comportements'], (scenarioSection || scenarios.length > 0) && ['scenarios','Scénarios mobilisant ce périmètre'], relations.length > 0 && ['interactions','Responsabilités liées']].filter(Boolean) as string[][];

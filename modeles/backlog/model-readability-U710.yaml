@@ -218,7 +218,7 @@ publication_delivery:
     fields:
       dominant_role:
         id: policies
-        display_name: Politiques
+        display_name: Contrôle par configuration
   - id: subdomain-plans
     fields:
       dominant_role: null
@@ -233,6 +233,7 @@ publication_delivery:
   - id: D02.b
     parent: ba-protection-policies
     fields: {}
+    parent_type: presents
   - id: D04.i
     parent: ba-order-lifecycle-management
     fields: {}
@@ -258,9 +259,11 @@ publication_delivery:
   - id: D19.a
     parent: ba-service-provider-controls
     fields: {}
+    parent_type: presents
   - id: D19.b
     parent: ba-protection-policies
     fields: {}
+    parent_type: presents
   - id: D04.t
     parent: ba-order-lifecycle-management
     fields: {}
@@ -677,3 +680,37 @@ delivery_updates:
   - order-visibility.category
   - order-visibility.parent
   reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.
+delivery_reconciliation_U908:
+  source_refs:
+  - U908
+  note: Contrôles de livraison courants réalignés sur le backlog. Les attentes précédentes restent traçables par leurs empreintes
+    et dans Git ; cette réconciliation technique ne crée aucun accord métier.
+  changed_checks:
+  - id: subdomain-policies
+    check: fields.dominant_role
+    previous_sha256: b138a756948ea42a521d1bb9deb4f7c8f3a19942155328da02c5c67738eb0789
+    current_sha256: bebca930b8044d97e1f8e8eb445c1235aa3fc6592f76b6cadbb41e440d28344e
+  - id: D02.b
+    check: parent
+    previous:
+      id: ba-protection-policies
+      type: contains
+    current:
+      id: ba-protection-policies
+      type: presents
+  - id: D19.a
+    check: parent
+    previous:
+      id: ba-service-provider-controls
+      type: contains
+    current:
+      id: ba-service-provider-controls
+      type: presents
+  - id: D19.b
+    check: parent
+    previous:
+      id: ba-protection-policies
+      type: contains
+    current:
+      id: ba-protection-policies
+      type: presents

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import cytoscape, { type Core, type ElementDefinition, type LayoutOptions, type Layouts } from 'cytoscape';
 import dagre from 'cytoscape-dagre';
 import fcose from 'cytoscape-fcose';
-import { Maximize2, Minus, Plus, RefreshCw } from 'lucide-react';
+import { Maximize2, Minus, Plus } from 'lucide-react';
 import type { DependencyProjection } from './dependencyGraph';
 
 cytoscape.use(dagre);
@@ -111,7 +111,6 @@ export function CytoscapeCanvas(props: CytoscapeCanvasProps) {
   const latest = useRef(props);
   latest.current = props;
   const generation = useRef(0);
-  const [arrangement, setArrangement] = useState(0);
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [error, setError] = useState('');
   const [layoutMs, setLayoutMs] = useState(0);
@@ -130,7 +129,7 @@ export function CytoscapeCanvas(props: CytoscapeCanvasProps) {
       const cy = cytoscape({
         container: host, elements: [], layout: { name: 'preset' },
         minZoom: 0.05, maxZoom: 2.8, wheelSensitivity: 0.2,
-        selectionType: 'single', boxSelectionEnabled: false, autounselectify: true, autoungrabify: true,
+        selectionType: 'single', boxSelectionEnabled: false, autounselectify: true, autoungrabify: true, userPanningEnabled: false,
         pixelRatio: Math.min(window.devicePixelRatio || 1, 2),
         hideEdgesOnViewport: false, textureOnViewport: false,
       });
@@ -253,7 +252,7 @@ export function CytoscapeCanvas(props: CytoscapeCanvasProps) {
       activeLayout.current?.stop();
       activeLayout.current = null;
     };
-  }, [projectionKey, props.layout, arrangement]);
+  }, [projectionKey, props.layout]);
 
   useEffect(() => {
     const cy = instance.current;
@@ -280,7 +279,6 @@ export function CytoscapeCanvas(props: CytoscapeCanvasProps) {
       <button type="button" onClick={() => zoom(1.3)} aria-label="Agrandir" title="Agrandir"><Plus size={16}/></button>
       <button type="button" onClick={() => zoom(1 / 1.3)} aria-label="Réduire" title="Réduire"><Minus size={16}/></button>
       <button type="button" onClick={() => instance.current && fit(instance.current)} aria-label="Centrer le graphe" title="Centrer le graphe"><Maximize2 size={16}/></button>
-      <button type="button" onClick={() => setArrangement(value => value + 1)} disabled={status === 'loading'}><RefreshCw size={15}/>Réorganiser</button>
     </div>
     {status === 'loading' && <div className="dependency-canvas-status" role="status">Placement du graphe…</div>}
     {status === 'error' && <div className="dependency-canvas-status" role="alert">Le placement a échoué : {error}</div>}

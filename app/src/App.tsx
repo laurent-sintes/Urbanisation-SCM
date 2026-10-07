@@ -64,6 +64,7 @@ export function App() {
   const validScope = route.scope && model?.nodeById.has(route.scope) ? route.scope : '';
   const scopeId = route.scope === '@root' ? undefined : validScope || (selected ? (childrenOf(model!, selected.id).length || ['business_system', 'group', 'domain', 'area', 'business_area', 'reference'].includes(selected.kind) ? selected.id : parentRelationOf(model!, selected.id)?.sourceId) : undefined);
   const scope = scopeId ? model?.nodeById.get(scopeId) : undefined;
+  const parentScope = scope && model ? model.nodeById.get(parentRelationOf(model, scope.id)?.sourceId || '') : undefined;
   // Keep the map context stable on selection, including between double-clicks.
   const referenceView = view === 'scenarios' || view === 'glossary' || view === 'principles';
   const headingNode = referenceView ? undefined : view === 'map' ? scope : selected;
@@ -210,11 +211,11 @@ export function App() {
             {!scopeId && model.nodes.some(node => node.kind === 'business_system') ? <Overview model={model} onExplore={explore} onRead={read}/> : <section className="map-panel" ref={mapPanel} aria-label="Carte du modèle">
               <div className="map-toolbar"><div><strong>{scope?.name || 'Vue d’ensemble'}</strong><span className="toolbar-note">Entre dans une carte pour explorer son contenu.</span></div>
                 <div className="map-actions">
-                  {scope && <button onClick={() => navigate(parentRelationOf(model, scope.id)?.sourceId || '')}><ArrowLeft size={14} />Remonter</button>}
+                  {scope && <button onClick={() => navigate(parentScope?.id || '')}><ArrowLeft size={14} />Remonter vers {parentScope?.name || 'la vue d’ensemble'}</button>}
                 <button aria-label="Afficher la carte en plein écran" title="Plein écran" onClick={() => { if (document.fullscreenElement) void document.exitFullscreen(); else void mapPanel.current?.requestFullscreen().catch(() => setAnnouncement('Le plein écran est indisponible dans ce navigateur.')); }}><Maximize2 size={16} /></button></div>
               </div>
               <Suspense fallback={<div className="graph-canvas empty-state">Ouverture de la carte…</div>}><ReactFlowPane model={model} selectedId={selected?.id || ''} scopeId={scopeId} onSelect={select} onExplore={explore} onRead={read} perspective="" /></Suspense>
-              <div className="map-footer"><span>{hasCapabilityCards(model, scopeId) ? 'Cliquer sur un lien pour lire sa fiche · Faire défiler pour parcourir' : 'Molette pour zoomer · Glisser pour parcourir'}</span><span>Lecture seule</span></div>
+              <div className="map-footer"><span>{hasCapabilityCards(model, scopeId) ? 'Cliquer sur un lien pour lire sa fiche · Faire défiler pour parcourir' : 'Molette pour zoomer · Utiliser les commandes pour centrer'}</span><span>Lecture seule</span></div>
             </section>}
           </>}
         </div>

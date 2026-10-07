@@ -1944,7 +1944,7 @@ terms:
   short_description: Attribution d’une enveloppe à un usage ou une population, avec des règles d’horizon et de consommation.
   definition: Attribution d’une enveloppe à un usage ou une population, avec des règles d’horizon et de consommation.
   context: |-
-    Terme qualifié utilisable dans FLOW sous la formulation « allocation de stock par groupe » ; formulation anglaise : Group Inventory Allocation. Désigne une enveloppe destinée à un usage ou à une population, avec droits, horizon et règles de consommation explicites. Le comportement concerné reste [Group Supply Protection](model:BHV017), sous [Supply Protection Policy](model:D02.b).
+    Terme qualifié utilisable dans FLOW sous la formulation « allocation de stock par groupe » ; formulation anglaise : Group Inventory Allocation. Désigne une enveloppe destinée à un usage ou à une population, avec droits, horizon et règles de consommation explicites. Le référentiel spécialisé est [Group Supply Protection](model:BHV017), présenté avec [Supply Protection Policy](model:D02.b) dans Control Plane.
 
     Allouer à un groupe : Attribuer une enveloppe à un usage ou une population. Qualifier l’objet ; éviter « allouer » comme synonyme indifférencié de réserver ou affecter.
   notes: 'U795 assouplit la restriction U289 : le terme qualifié est autorisé au-delà des citations éditeur. Allocation seul
@@ -1966,12 +1966,13 @@ terms:
   - U796
   - U797
   - U903
+  - U908
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
   review:
-    state: proposed
-    note: Corrections de l’audit acceptées U903 ; rédaction mise en œuvre par Codex, sans extension des accords historiques.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Supply Chain Management
@@ -2065,7 +2066,7 @@ terms:
       Assignment.'
     flow_scope: Attribution d’une enveloppe à un usage ou une population, avec des règles d’horizon et de consommation.
     flow_approach: |-
-      Terme qualifié utilisable dans FLOW sous la formulation « allocation de stock par groupe » ; formulation anglaise : Group Inventory Allocation. Désigne une enveloppe destinée à un usage ou à une population, avec droits, horizon et règles de consommation explicites. Le comportement concerné reste [Group Supply Protection](model:BHV017), sous [Supply Protection Policy](model:D02.b).
+      Terme qualifié utilisable dans FLOW sous la formulation « allocation de stock par groupe » ; formulation anglaise : Group Inventory Allocation. Désigne une enveloppe destinée à un usage ou à une population, avec droits, horizon et règles de consommation explicites. Le référentiel spécialisé est [Group Supply Protection](model:BHV017), présenté avec [Supply Protection Policy](model:D02.b) dans Control Plane.
 
       Allouer à un groupe : Attribuer une enveloppe à un usage ou une population. Qualifier l’objet ; éviter « allouer » comme synonyme indifférencié de réserver ou affecter.
     synthesis:
@@ -16923,7 +16924,7 @@ terms:
   definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
     conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
   context: |-
-    Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Policies. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
+    Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Control Plane. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
 
     Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
 
@@ -17022,13 +17023,13 @@ terms:
   - U887
   - U890
   - U891
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u797
   review:
-    state: proposed
-    note: Application du lot U890 validé U891 ; noms et frontières acceptés, détails de rédaction et de comparaison proposés.
-      Aucune réalisation installée déduite.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   market_comparisons:
   - vendor: Oracle
     product: Overview of Backlog Management Processes
@@ -17260,7 +17261,7 @@ terms:
     - U891
     term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
     definition_choice: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
-  revision: 1
+  revision: 2
   last_modified: '2026-10-07T00:00:00Z'
   market_inspiration:
     choice: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles conditions
@@ -17268,7 +17269,7 @@ terms:
     flow_scope: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
       conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
     flow_approach: |-
-      Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Policies. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
+      Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Control Plane. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
 
       Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
 
@@ -17980,7 +17981,7 @@ terms:
 
     [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
-    Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Policies](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+    Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Control Plane](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
   notes: Nom et périmètre FLOW issus du lot U835 ; rédaction de glossaire proposée.
   source_refs:
   - U835
@@ -17993,13 +17994,13 @@ terms:
   - U896
   - U897
   - U898
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u835
   review:
-    state: proposed
-    note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite.'
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   market_comparisons:
   - vendor: Microsoft
     product: Data management
@@ -18183,7 +18184,7 @@ terms:
     term_choice: Operational References désigne le sujet métier ; aucun référentiel technique commun n’est imposé.
     definition_choice: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en
       portant leur référence locale fiable sans transférer la maîtrise d’entreprise.
-  revision: 1
+  revision: 2
   last_modified: '2026-10-07T00:00:00Z'
   market_inspiration:
     choice: Porter une référence locale fiable et partagée pour interpréter les opérations Supply.
@@ -18198,7 +18199,7 @@ terms:
 
       [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
-      Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Policies](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+      Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Control Plane](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
     synthesis:
     - Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant leur référence
       locale fiable sans transférer la maîtrise d’entreprise.
@@ -18398,7 +18399,7 @@ terms:
 
     Exemple fictif : définir une activité de demande de confirmation client, son résultat attendu et les conditions permettant ensuite de solliciter une prestation. Une nouvelle version ne modifie pas silencieusement les parcours déjà engagés.
 
-    Les contrôles actifs de fonctionnement relèvent de [Policies](glossary:TER130). La tenue des commandes conserve la validité de leurs changements d’état. Cette capacité n’impose ni un outil, ni un langage de règles, ni un référentiel informatique partagé par toute l’entreprise.
+    Les contrôles actifs de fonctionnement relèvent de [Control Plane](glossary:TER130). La tenue des commandes conserve la validité de leurs changements d’état. Cette capacité n’impose ni un outil, ni un langage de règles, ni un référentiel informatique partagé par toute l’entreprise.
 
     Le périmètre relève de [Process Management](glossary:TER164) et peut relier plusieurs demandes ; [Order Management](model:D04) conserve les engagements et la validité des transitions des commandes. Les activités humaines passent par [Human Task Management](glossary:TER170) ; leur attribution et leurs échéances restent explicites. Le parcours ne se réduit pas à la succession des prestations logistiques.
   notes: Périmètre aligné avec la fiche [référente](model:workflow-definition-management). Cible U884 appliquée U885 ; rédaction
@@ -18413,12 +18414,13 @@ terms:
   - U883
   - U884
   - U885
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
   review:
-    state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   market_comparisons:
   - vendor: SAP
     product: SAP S/4HANA — Flexible Workflow
@@ -18924,26 +18926,27 @@ terms:
       source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/0f18dddf28764f5b807ecd80549044cc/8827801c655c498d960af209bb59ce6e.html
   last_modified: '2026-10-07T00:00:00Z'
 - id: TER130
-  name: Policies
-  definition: 'Règles actives qui encadrent le fonctionnement courant : seuils, limites, protections et autorisations temporaires.'
-  short_description: 'Règles actives qui encadrent le fonctionnement courant : seuils, limites, protections et autorisations
-    temporaires.'
-  context: 'Sous-domaine [Policies](model:subdomain-policies). Exemple fictif : limiter les sollicitations d’un prestataire
-    ou désactiver temporairement une possibilité de fractionnement. Les règles de structure et de composition du parcours
-    relèvent de [Process Definition Management](glossary:TER126). Le terme policy peut avoir un sens plus large chez les éditeurs
-    ; aucune équivalence systématique.'
+  name: Control Plane
+  definition: Référentiels de contrôle sous autorité Supply qui définissent les protections, limites et autorisations applicables
+    au fonctionnement courant.
+  short_description: Référentiels Supply de protections, limites et autorisations actives.
+  context: Sous-domaine [Control Plane](model:subdomain-policies). Ses références ont une portée, une version et une validité
+    ; elles peuvent limiter les nouvelles sollicitations d’un prestataire ou protéger un groupe de demandes. Les règles de
+    structure des parcours relèvent de [Process Definition Management](glossary:TER126) ; les règles financières reçues gardent
+    leur autorité externe. « Control Plane » est ici un nom métier, pas une plateforme technique.
   notes: Alignement U843 ; rédaction détaillée proposée.
   source_refs:
   - U839
   - U842
   - U843
   - U844
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u843
   review:
     state: proposed
-    note: Documentation et alignement du lot U843 sous délégation U844.
+    note: Nom accepté U908 ; définition détaillée proposée.
 - id: TER131
   name: Inventory State Management
   definition: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits, vérifications
@@ -19157,7 +19160,7 @@ terms:
   short_description: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
     de ressources.
   context: |-
-    Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Policies](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+    Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Control Plane](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
 
     [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
 
@@ -19171,10 +19174,10 @@ terms:
   - U853
   - U890
   - U891
+  - U908
   review:
-    state: proposed
-    note: Application du lot U890 validé U891 ; noms et frontières acceptés, détails de rédaction et de comparaison proposés.
-      Aucune réalisation installée déduite.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Supply Chain Management
@@ -19306,19 +19309,20 @@ terms:
   definition: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
   short_description: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
   context: |-
-    Les règles actives et leur validité demeurent dans Policies.
+    Les règles actives et leur validité demeurent dans Control Plane.
 
     Bénéficiaire et résultat : Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
 
-    Exemple fictif : Recommander une protection de 20 pièces après comparaison des ruptures et surstocks ; Policies conserve la mise en vigueur de la règle.
+    Exemple fictif : Recommander une protection de 20 pièces après comparaison des ruptures et surstocks ; Control Plane conserve la mise en vigueur de la règle.
   notes: Périmètre de responsabilité U848 ; les capacités conservent leurs identités et leurs savoir-faire. La fiche détaillée
     est [Policy Optimization](model:ba-policy-optimization).
   source_refs:
   - U848
   - U853
+  - U908
   review:
-    state: proposed
-    note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Supply Chain Management
@@ -21670,7 +21674,7 @@ terms:
 
     Le contrôle de gestion ou l’autorité [Finance](glossary:TER117) concernée fournit ces informations par [Reference Ingestion](model:master-data-ingestion), avec son comportement [Reference Ingestion from Finance](model:master-data-ingestion-finance). Le Core porte la référence locale utilisable ; Finance conserve l’autorité sur le risque, les limites et les dérogations. Ce flux est une cible métier, sans interface installée présumée.
 
-    Le [Case](glossary:TER064) de [Wholesale](model:subdomain-sales-wholesale) utilise ce profil pour son [Credit Check](glossary:TER155). L’exposition courante et le résultat propre à une commande ne sont pas des paramètres de référence : ils doivent être obtenus et contextualisés pour le contrôle. Un profil valide ne vaut pas autorisation de vente. [Policies](model:subdomain-policies) ne prend pas la maîtrise des règles financières reçues.
+    Le [Case](glossary:TER064) de [Wholesale](model:subdomain-sales-wholesale) utilise ce profil pour son [Credit Check](glossary:TER155). L’exposition courante et le résultat propre à une commande ne sont pas des paramètres de référence : ils doivent être obtenus et contextualisés pour le contrôle. Un profil valide ne vaut pas autorisation de vente. [Control Plane](model:subdomain-policies) ne prend pas la maîtrise des règles financières reçues.
 
     Exemple fictif : une limite de 10 000 euros valable pour un payeur sur un périmètre donné ; une commande de 3 000 euros doit encore être évaluée avec son exposition pertinente.
   source_refs:
@@ -21683,11 +21687,11 @@ terms:
   - U896
   - U897
   - U898
+  - U908
   review:
-    state: proposed
-    note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite.'
-  revision: 1
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
+  revision: 2
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Finance
@@ -23170,7 +23174,7 @@ terms:
   context: |-
     Distinguer objectif, échéance, temps en file, travail actif, attente extérieure et pause autorisée. Appliquer calendriers et conditions de début, pause et fin aux activités ou dossiers concernés. Qualifier le dépassement et solliciter la réaction via [Process Sentry](glossary:TER127) ; [Work Assignment](glossary:TER171) traite les réaffectations.
 
-    [Agreement](glossary:TER048) porte les engagements convenus ; [Process Definition Management](glossary:TER126) les règles structurelles ; [Policies](glossary:TER130) les contrôles actifs. Un retard ne donne pas une autorisation de dérogation ni ne vaut rejet automatique. Aucun délai d’exemple n’est imposé à FLOW.
+    [Agreement](glossary:TER048) porte les engagements convenus ; [Process Definition Management](glossary:TER126) les règles structurelles ; [Control Plane](glossary:TER130) les contrôles actifs. Un retard ne donne pas une autorisation de dérogation ni ne vaut rejet automatique. Aucun délai d’exemple n’est imposé à FLOW.
 
     Exemple fictif : une vérification dépasse son échéance ouvrée ; notifier le responsable puis solliciter un remplaçant selon la règle prévue.
   notes: Périmètre aligné avec la fiche [référente](model:work-deadline-management). Cible U884 appliquée U885 ; rédaction
@@ -23252,14 +23256,15 @@ terms:
       native commune.
     definition_choice: Établir et surveiller les échéances de traitement puis déclencher les relances ou escalades autorisées.
   review:
-    state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   source_refs:
   - U881
   - U882
   - U883
   - U884
   - U885
+  - U908
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
@@ -25651,7 +25656,7 @@ terms:
 
     Le contrôle de gestion ou l’autorité [Finance](glossary:TER117) concernée fournit ces informations par [Reference Ingestion](model:master-data-ingestion), avec son comportement [Reference Ingestion from Finance](model:master-data-ingestion-finance). Le Core porte la référence locale utilisable ; Finance conserve l’autorité sur le risque, les limites et les dérogations. Ce flux est une cible métier, sans interface installée présumée.
 
-    Le [Case](glossary:TER064) de [Wholesale](model:subdomain-sales-wholesale) utilise ce profil pour son [Credit Check](glossary:TER155). L’exposition courante et le résultat propre à une commande ne sont pas des paramètres de référence : ils doivent être obtenus et contextualisés pour le contrôle. Un profil valide ne vaut pas autorisation de vente. [Policies](model:subdomain-policies) ne prend pas la maîtrise des règles financières reçues.
+    Le [Case](glossary:TER064) de [Wholesale](model:subdomain-sales-wholesale) utilise ce profil pour son [Credit Check](glossary:TER155). L’exposition courante et le résultat propre à une commande ne sont pas des paramètres de référence : ils doivent être obtenus et contextualisés pour le contrôle. Un profil valide ne vaut pas autorisation de vente. [Control Plane](model:subdomain-policies) ne prend pas la maîtrise des règles financières reçues.
 
     Exemple fictif : une limite de 10 000 euros valable pour un payeur sur un périmètre donné ; une commande de 3 000 euros doit encore être évaluée avec son exposition pertinente.
   market_comparisons:
@@ -25727,10 +25732,10 @@ terms:
   - U896
   - U897
   - U898
+  - U908
   review:
-    state: proposed
-    note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite.'
+    state: partial
+    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
   last_modified: '2026-10-07T00:00:00Z'
   lifecycle:
     state: ai_proposed

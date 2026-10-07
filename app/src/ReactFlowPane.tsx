@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useMemo, useState, useCallback, useRef } from 'react';
 import { ReactFlow, ReactFlowProvider, Background, Controls, useReactFlow, type Node, type NodeProps } from '@xyflow/react';
-import { ArrowUpRight, FileText, LayoutGrid } from 'lucide-react';
+import { ArrowUpRight, FileText } from 'lucide-react';
 import { NodeIcon } from './icons';
 import { startsCapabilityTypeSection } from './capabilityTypes';
 import { categoryCaption, categoryOf, startsCategorySection } from './categories';
@@ -72,7 +72,6 @@ function Canvas(props: ReactFlowPaneProps) {
   const [touch, setTouch] = useState(() => matchMedia('(pointer: coarse)').matches);
   const [fullscreen, setFullscreen] = useState(() => Boolean(document.fullscreenElement));
   const [error, setError] = useState('');
-  const [arrangement, setArrangement] = useState(0);
   const { fitView } = useReactFlow();
   const container = useRef<HTMLDivElement>(null);
   const capabilityOverview = hasCapabilityCards(model, scopeId);
@@ -161,7 +160,7 @@ function Canvas(props: ReactFlowPaneProps) {
       setLayout({ nodes, ms: Math.round(performance.now() - start), width: (result.width || 380) + (group ? 28 : 0), height: (result.height || 250) + (group ? 70 : 0) });
     }).catch(e => current && setError(String(e)));
     return () => { current = false; };
-  }, [graph, model, scopeId, areaSections, arrangement, capabilityOverview, cardHeights, capabilityOverview ? canvasWidth : 0]);
+  }, [graph, model, scopeId, areaSections, capabilityOverview, cardHeights, capabilityOverview ? canvasWidth : 0]);
   useEffect(() => { const id = setTimeout(() => fitView({ padding: 0.06, maxZoom: 1, duration: matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 220 }), 80); return () => clearTimeout(id); }, [layout, fitView]);
   useEffect(() => {
     if (!container.current) return;
@@ -179,14 +178,13 @@ function Canvas(props: ReactFlowPaneProps) {
   if (emptyScope && referenceCapabilities.length) return <div className="graph-canvas empty-state"><NodeIcon node={emptyScope} size={38}/><h2>{emptyScope.name}</h2><p><ModelText text={emptyScope.definition}/></p><h3>Capacités liées à ce référentiel</h3><ul>{referenceCapabilities.map(capability => <li key={capability.id}><ReferenceLink target={capability.id}>{capability.name}</ReferenceLink></li>)}</ul></div>;
   if (emptyScope && ['group', 'domain', 'area', 'business_area', 'reference'].includes(emptyScope.kind) && !childrenOf(model, emptyScope.id).length) return <div className="graph-canvas empty-state"><NodeIcon node={emptyScope} size={38}/><h2>{emptyScope.name}</h2><p>Aucun élément publié dans ce périmètre.</p></div>;
   if (error) return <div className="empty-state" role="alert">Le placement a échoué : {error}</div>;
-  // Let the page grow with capability lists, keeping text near its natural size.
-  const canvasHeight = capabilityOverview && layout.width && canvasWidth ? Math.max(420, Math.ceil(layout.height * Math.min(1, canvasWidth / layout.width)) + 70) : undefined;
+  // Size the map to its content so a small scope does not leave a large empty canvas.
+  const canvasHeight = layout.width && canvasWidth ? Math.max(240, Math.ceil(layout.height * Math.min(1, canvasWidth / layout.width)) + 40) : undefined;
   return <div ref={container} className={`graph-canvas ${capabilityOverview ? 'capabilities-canvas' : ''} ${nativeTouchScroll ? 'touch-scroll' : ''}`} style={canvasHeight ? { height: canvasHeight } : undefined} data-testid="react-flow-canvas" data-layout-ms={layout.ms}>
-    <ReactFlow nodes={nodes} edges={[]} nodeTypes={nodeTypes} nodesDraggable={false} nodesConnectable={false} edgesReconnectable={false} deleteKeyCode={null} onNodeClick={select} onNodeDoubleClick={(_e, node) => node.type === 'business' && (childrenOf(model, node.id).length ? props.onExplore : props.onRead)(node.id)} zoomOnDoubleClick={false} panOnDrag={!nativeTouchScroll} zoomOnPinch={!nativeTouchScroll} zoomOnScroll={!capabilityOverview} preventScrolling={!capabilityOverview} minZoom={0.2} maxZoom={1.6} fitView proOptions={{ hideAttribution: false }} ariaLabelConfig={{ 'controls.zoomIn.ariaLabel': 'Agrandir', 'controls.zoomOut.ariaLabel': 'Réduire', 'controls.fitView.ariaLabel': 'Centrer la carte' }}>
+    <ReactFlow nodes={nodes} edges={[]} nodeTypes={nodeTypes} nodesDraggable={false} nodesConnectable={false} edgesReconnectable={false} deleteKeyCode={null} onNodeClick={select} onNodeDoubleClick={(_e, node) => node.type === 'business' && (childrenOf(model, node.id).length ? props.onExplore : props.onRead)(node.id)} zoomOnDoubleClick={false} panOnDrag={false} zoomOnPinch={!nativeTouchScroll} zoomOnScroll={!capabilityOverview} preventScrolling={!capabilityOverview} minZoom={0.2} maxZoom={1.6} fitView proOptions={{ hideAttribution: false }} ariaLabelConfig={{ 'controls.zoomIn.ariaLabel': 'Agrandir', 'controls.zoomOut.ariaLabel': 'Réduire', 'controls.fitView.ariaLabel': 'Centrer la carte' }}>
       <Background gap={24} size={1} color="#d8e3df"/>
       <Controls showInteractive={false}/>
     </ReactFlow>
-    <button className="arrange-button" onClick={() => setArrangement(v => v + 1)}><LayoutGrid size={14}/>Réorganiser</button>
     {!graph.nodes.length && <div className="empty-state"><FileText/>Ce périmètre est réservé.</div>}
   </div>;
 }

@@ -44,23 +44,26 @@ publication_delivery:
     parent: subdomain-policies
     fields:
       name: Protection Policies
-      definition: Maintenir les règles actives de protection des ressources et des demandes dans les arbitrages de couverture.
+      definition: Présenter les référentiels de protection des ressources et des demandes applicables aux arbitrages de couverture.
       scope: 'Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations.
         Exemple fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.'
   - id: D02.b
     parent: ba-protection-policies
+    parent_type: presents
   - id: D19.b
     parent: ba-protection-policies
+    parent_type: presents
   - id: ba-service-provider-controls
     kind: business_area
     parent: subdomain-policies
     fields:
       name: Service Provider Controls
-      definition: Encadrer le recours aux prestataires par des exclusions et limites opérationnelles applicables.
+      definition: Présenter les référentiels qui encadrent le recours aux prestataires par des exclusions et limites opérationnelles.
       scope: 'Les accords externes restent dans Operational References ; la sélection d’une prestation reste dans Fulfilment
         Orchestration. Exemple fictif : suspendre les nouvelles sollicitations d’un prestataire sans annuler ses travaux engagés.'
   - id: D19.a
     parent: ba-service-provider-controls
+    parent_type: presents
   - id: ba-inventory-disposition
     kind: business_area
     parent: D06
@@ -92,3 +95,41 @@ publication_delivery:
         générale. Exemple fictif : traduire une réception reconnue en écritures selon les comptes applicables.'
   - id: accounting-interpretation
     parent: ba-accounting-translation
+delivery_reconciliation_U908:
+  source_refs:
+  - U908
+  note: Contrôles de livraison courants réalignés sur le backlog. Les attentes précédentes restent traçables par leurs empreintes
+    et dans Git ; cette réconciliation technique ne crée aucun accord métier.
+  changed_checks:
+  - id: ba-protection-policies
+    check: fields.definition
+    previous_sha256: 7783b98f86b44283ce58202d973604732bce8ff345f127ccf0b8caab9d2b7e54
+    current_sha256: 78a79107288ed863bf3cb55aacf88661cc27a3edc627a7908a386f9fdeb02526
+  - id: D02.b
+    check: parent
+    previous:
+      id: ba-protection-policies
+      type: contains
+    current:
+      id: ba-protection-policies
+      type: presents
+  - id: D19.b
+    check: parent
+    previous:
+      id: ba-protection-policies
+      type: contains
+    current:
+      id: ba-protection-policies
+      type: presents
+  - id: ba-service-provider-controls
+    check: fields.definition
+    previous_sha256: 968019068928ac14ac8c904a8bdd72e4345eeefa2d8cdcc6d34f52d80a512729
+    current_sha256: 862677f3db0f1936811f23dc72fa44c7c92058d0f4e4adfef4872019bcdf0447
+  - id: D19.a
+    check: parent
+    previous:
+      id: ba-service-provider-controls
+      type: contains
+    current:
+      id: ba-service-provider-controls
+      type: presents

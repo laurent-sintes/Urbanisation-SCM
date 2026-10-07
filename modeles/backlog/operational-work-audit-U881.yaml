@@ -1523,7 +1523,7 @@ publication_delivery:
 
         Exemples fictifs : réaffecter 40 pièces d’une arrivée ; relier 300 pièces à un besoin prévisionnel de novembre ; appliquer un partage de 150 pièces en lots de 50 et 100. Ce partage n’impose ni règle universelle ni réduction des besoins non couverts.
 
-        Les familles de commandes portent leurs engagements et changements autorisés, y compris achat, transfert et consignation. [Reservation](model:D02.c) bloque les usages concurrents ; [Policies](model:subdomain-policies) rend les règles applicables. Plan Application ne confirme pas à leur place une commande, un engagement fournisseur ou une nouvelle politique. Les décisions de promesse et de programmation restent chez leurs responsables.
+        Les familles de commandes portent leurs engagements et changements autorisés, y compris achat, transfert et consignation. [Reservation](model:D02.c) bloque les usages concurrents ; [Control Plane](model:subdomain-policies) rend les règles applicables. Plan Application ne confirme pas à leur place une commande, un engagement fournisseur ou une nouvelle politique. Les décisions de promesse et de programmation restent chez leurs responsables.
 
         Suivre les changements acceptés, refusés et encore attendus. Une acceptation technique ne prouve pas l’effet métier ni l’exécution physique. Exemple fictif : un transfert de 30 pièces est accepté, un achat de 70 est rejeté ; conserver ce résultat partiel et traiter les 70 restantes. Le suivi permet d’ajuster la suite sans rollback global implicite ni redéfinition silencieuse du plan.
 
@@ -5454,18 +5454,14 @@ publication_delivery:
   - id: subdomain-policies
     kind: area
     fields:
-      name: Policies
-      definition: 'Définir, maintenir et rendre applicables les contrôles actifs qui encadrent le fonctionnement courant :
-        seuils, limites, protections et autorisations temporaires.'
-      finality: Donner aux décisions et à la réalisation un cadre applicable et explicite.
+      name: Control Plane
+      definition: Tenir les référentiels de contrôle sous autorité Supply qui configurent les protections, limites et autorisations
+        applicables au fonctionnement courant.
+      finality: Donner aux décisions et à la réalisation un cadre de contrôle applicable, explicite et versionné.
       scope: |-
-        Conserver les règles actives, leur portée et leur validité. Les décisions de [Availability](glossary:TER112) peuvent recommander des valeurs ou adaptations ; cette recommandation ne change pas implicitement la règle active. Les réservations constituées restent dans Inventory Management. Exemple fictif : protéger une quantité pour un groupe de demandes et limiter temporairement les nouvelles sollicitations d’un prestataire, sans annuler ses travaux déjà engagés.
+        Control Plane tient les références locales de contrôle dont Supply Chain Orchestration a la maîtrise : règles de protection des ressources et des demandes, limites de recours aux prestataires, seuils et activations temporaires. Chaque version précise sa portée, sa validité, son autorité et ses dérogations. Les capacités consommatrices utilisent la version applicable ; une recommandation d’Availability ne la modifie pas automatiquement.
 
-        Porter les contrôles actifs du fonctionnement courant : seuils, limites, protections, désactivations et réactivations temporaires de possibilités métier, avec leur portée et leur validité. Exemple fictif : désactiver temporairement le fractionnement pour de nouvelles sollicitations, sans annuler les engagements existants. Les règles de structure du parcours et de composition des activités relèvent de [Process Definition Management](glossary:TER126) dans [Process Management](model:subdomain-process-management). Une modification de contrôle ne vaut ni modification rétroactive des commandes ni nouvel engagement.
-
-        Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par FLOW ne les transforme pas en règles sous autorité de [Policies](glossary:TER130).
-
-        [Process Management](glossary:TER164) porte le parcours complet ; les commandes et les capacités spécialisées conservent leurs engagements, leurs décisions et leur autorité.
+        Exemple fictif : activer une protection de stock pour un groupe de demandes ou suspendre les nouvelles sollicitations d’un prestataire, sans annuler les engagements déjà pris. Les réservations et faits opérationnels restent dans Inventory Management ; les parcours et leurs règles de structure relèvent de Process Management. Les règles de crédit reçues du contrôle de gestion restent sous autorité externe et sont documentées dans [Partner & Agreement References](model:ba-partner-agreement-references). Control Plane désigne ici une responsabilité métier de gouvernance par configuration, sans présumer d’une plateforme technique unique ni d’une réalisation installée.
       market_comparisons:
       - vendor: Microsoft
         product: DOM rules
@@ -5475,7 +5471,7 @@ publication_delivery:
         similarities: Règles distinctes avec validité, activation, contraintes, protection de stock, priorités de lieux et
           limites de fractionnement.
         differences: Les règles DOM et protections SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas
-          un sous-domaine autonome Policies.
+          un sous-domaine autonome Control Plane.
         flow_position: |-
           Définir, maintenir et rendre applicables les règles qui encadrent les protections, les priorités et le recours aux ressources et prestataires Supply.
 
@@ -5487,7 +5483,7 @@ publication_delivery:
         source_locator: Common attributes ; Minimum inventory rule ; Fulfillment location priority ; Partial orders rule
         evidence_limits: Règles propres au solveur DOM ; ne prouve pas un sous-domaine autonome réunissant toutes les policies
           Supply. Les règles DOM et protections SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas un
-          sous-domaine autonome Policies.
+          sous-domaine autonome Control Plane.
         status: proposed
         source_refs:
         - ELM394
@@ -5499,7 +5495,7 @@ publication_delivery:
           éditeurs.
         definition_choice: 'Appui de DOM rules : Règles distinctes avec validité, activation, contraintes, protection de stock,
           priorités de lieux et limites de fractionnement. Limite de reprise dans FLOW : Les règles DOM et protections SAP
-          étayent l’encadrement des décisions. Ces produits ne prescrivent pas un sous-domaine autonome Policies.'
+          étayent l’encadrement des décisions. Ces produits ne prescrivent pas un sous-domaine autonome Control Plane.'
         concept_name: DOM rules
         scope_summary: Règles distinctes avec validité, activation, contraintes, protection de stock, priorités de lieux et
           limites de fractionnement.
@@ -5513,7 +5509,7 @@ publication_delivery:
         similarities: ARun affecte des ressources présentes ou futures aux commandes selon priorités et pénuries ; affectations
           et contrôle de release sont distingués.
         differences: Les règles DOM et protections SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas
-          un sous-domaine autonome Policies.
+          un sous-domaine autonome Control Plane.
         flow_position: |-
           Définir, maintenir et rendre applicables les règles qui encadrent les protections, les priorités et le recours aux ressources et prestataires Supply.
 
@@ -5526,7 +5522,7 @@ publication_delivery:
         evidence_limits: L’affectation SAP peut empêcher d’autres demandes de consommer la ressource ; cela ne prouve pas
           l’équivalence avec l’affectation FLOW distincte de la réservation. ARun est intégré au portefeuille aATP. Les règles
           DOM et protections SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas un sous-domaine autonome
-          Policies.
+          Control Plane.
         status: proposed
         source_refs:
         - ELM452
@@ -5539,7 +5535,7 @@ publication_delivery:
         definition_choice: 'Appui de Explaining Supply Assignment : ARun affecte des ressources présentes ou futures aux commandes
           selon priorités et pénuries ; affectations et contrôle de release sont distingués. Limite de reprise dans FLOW :
           Les règles DOM et protections SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas un sous-domaine
-          autonome Policies.'
+          autonome Control Plane.'
         concept_name: Explaining Supply Assignment
         scope_summary: ARun affecte des ressources présentes ou futures aux commandes selon priorités et pénuries ; affectations
           et contrôle de release sont distingués.
@@ -5567,11 +5563,11 @@ publication_delivery:
           déduit.
         flow_position: Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité
           et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par
-          FLOW ne les transforme pas en règles sous autorité de Policies.
+          FLOW ne les transforme pas en règles sous autorité de Control Plane.
         term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
         definition_choice: Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité
           et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par
-          FLOW ne les transforme pas en règles sous autorité de Policies.
+          FLOW ne les transforme pas en règles sous autorité de Control Plane.
         status: proposed
         source_refs:
         - U878
@@ -5595,11 +5591,11 @@ publication_delivery:
           déduit.
         flow_position: Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité
           et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par
-          FLOW ne les transforme pas en règles sous autorité de Policies.
+          FLOW ne les transforme pas en règles sous autorité de Control Plane.
         term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
         definition_choice: Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité
           et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par
-          FLOW ne les transforme pas en règles sous autorité de Policies.
+          FLOW ne les transforme pas en règles sous autorité de Control Plane.
         status: proposed
         source_refs:
         - U878
@@ -5985,7 +5981,7 @@ publication_delivery:
       scope: |-
         Distinguer objectif, échéance, temps en file, travail actif, attente extérieure et pause autorisée. Appliquer calendriers et conditions de début, pause et fin aux activités ou dossiers concernés. Qualifier le dépassement et solliciter la réaction via [Process Sentry](glossary:TER127) ; [Work Assignment](glossary:TER171) traite les réaffectations.
 
-        [Agreement](glossary:TER048) porte les engagements convenus ; [Process Definition Management](glossary:TER126) les règles structurelles ; [Policies](glossary:TER130) les contrôles actifs. Un retard ne donne pas une autorisation de dérogation ni ne vaut rejet automatique. Aucun délai d’exemple n’est imposé à FLOW.
+        [Agreement](glossary:TER048) porte les engagements convenus ; [Process Definition Management](glossary:TER126) les règles structurelles ; [Control Plane](glossary:TER130) les contrôles actifs. Un retard ne donne pas une autorisation de dérogation ni ne vaut rejet automatique. Aucun délai d’exemple n’est imposé à FLOW.
 
         Exemple fictif : une vérification dépasse son échéance ouvrée ; notifier le responsable puis solliciter un remplaçant selon la règle prévue.
       market_comparisons:
@@ -6077,7 +6073,7 @@ publication_delivery:
 
         Exemple fictif : définir une activité de demande de confirmation client, son résultat attendu et les conditions permettant ensuite de solliciter une prestation. Une nouvelle version ne modifie pas silencieusement les parcours déjà engagés.
 
-        Les contrôles actifs de fonctionnement relèvent de [Policies](glossary:TER130). La tenue des commandes conserve la validité de leurs changements d’état. Cette capacité n’impose ni un outil, ni un langage de règles, ni un référentiel informatique partagé par toute l’entreprise.
+        Les contrôles actifs de fonctionnement relèvent de [Control Plane](glossary:TER130). La tenue des commandes conserve la validité de leurs changements d’état. Cette capacité n’impose ni un outil, ni un langage de règles, ni un référentiel informatique partagé par toute l’entreprise.
 
         Le périmètre relève de [Process Management](glossary:TER164) et peut relier plusieurs demandes ; [Order Management](model:D04) conserve les engagements et la validité des transitions des commandes. Les activités humaines passent par [Human Task Management](glossary:TER170) ; leur attribution et leurs échéances restent explicites. Le parcours ne se réduit pas à la succession des prestations logistiques.
       market_comparisons:
@@ -6346,3 +6342,41 @@ superseded_delivery_U887:
         Le comportement Scrapping de [Return Order](glossary:TER072) continue à porter l’issue du retour et ses obligations ; [Scrapping Order](glossary:TER104) porte la prestation confiée, liée au retour lorsqu’il existe. Le rebut peut aussi concerner un stock abîmé hors retour. Aucune extension automatique aux dons, déstockages commerciaux ou à toutes les filières de recyclage.
 
         Exemple fictif : vingt vestes sont autorisées au rebut. Le prestataire prouve le traitement de dix-huit ; deux restent en attente. L’[Order](glossary:TER012) conserve ce solde tant qu’une autre clôture n’est pas autorisée. Aucun comportement supplémentaire n’est créé pour chaque motif de rebut.
+delivery_reconciliation_U908:
+  source_refs:
+  - U908
+  note: Contrôles de livraison courants réalignés sur le backlog. Les attentes précédentes restent traçables par leurs empreintes
+    et dans Git ; cette réconciliation technique ne crée aucun accord métier.
+  changed_checks:
+  - id: D02.e
+    check: fields.scope
+    previous_sha256: fdf91128c46ca68c03057db15468b6072e5dd01135e859387e1e9bebb39c86c6
+    current_sha256: 21e51c74a613967302e63ee976c978a5ede05fa0722e8234c5fe369a200f24e9
+  - id: subdomain-policies
+    check: fields.name
+    previous_sha256: f391ed1d73bbf7312439b0ee265cf54c44955a548ae3c61d863e9865b57dc13d
+    current_sha256: 9e94617f678a1d5a364ea679198d512338fc1c51d5f0dacd90675f828fcd4aef
+  - id: subdomain-policies
+    check: fields.definition
+    previous_sha256: 3e3175370b4794eff5bc9760e68d2b94bde5ea04360212bfd25eb0de8c1e5d41
+    current_sha256: 777df7af75a325db2a76ecfce5d2ade9eda535068f7354b2f601b41a650b2548
+  - id: subdomain-policies
+    check: fields.finality
+    previous_sha256: 99bdfd15f335d8c76f076f1d4e674944388555f171f576584a3e753846686106
+    current_sha256: cf8e84f78bb0a71b6469c607f997ced043f85b90d4e059322169bb382b24ef76
+  - id: subdomain-policies
+    check: fields.scope
+    previous_sha256: 01ebe52dcf40de013290d824b055f0d28aca5bb4fc8fdbae30e9c05105c556df
+    current_sha256: 97689b5e00d9145892a13219d53fdb08aa323f4cecd3cee9b07ae5fe511aec25
+  - id: subdomain-policies
+    check: fields.market_comparisons
+    previous_sha256: d85f1ebb1795b700f007dd0dd279fdb0f49ab0181eda80ab473b101bd173997e
+    current_sha256: 76ad0dc6898a7fa86242b105573144e4332ddcb79f75843a628c3ee2474d03f3
+  - id: work-deadline-management
+    check: fields.scope
+    previous_sha256: 2df563088fc281a3ffaf27e1eb4f9a92ac75685db9d63f06904af81df229770a
+    current_sha256: 694c2f98dac9f060b44f9633b4ecbb9dbdd8ed0a964231cf8e560bc037875a27
+  - id: workflow-definition-management
+    check: fields.scope
+    previous_sha256: 17ea9c19c4969cbc318719ba505921667b32da5d3259a9d3df4f76ae97641dff
+    current_sha256: c386efa145bbff1438fa4bb25c4e575f46ebb952a19901ef319e33df95f4cbb2

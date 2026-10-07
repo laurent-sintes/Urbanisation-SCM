@@ -18,12 +18,12 @@ class ScenarioCatalogTests(unittest.TestCase):
         self.assertEqual(len(report['items']),49)
         self.assertEqual(sum(i['action']=='migrate_scenario' for i in report['items']),26)
 
-    def test_missing_endpoints_and_wrong_capability_rejected(self):
+    def test_missing_endpoints_and_wrong_contributor_rejected(self):
         path=self.model['scenario_catalog']['paths'][0]
         path['steps'][0]['contributions'][0]['node_id']='missing'
         path['dependencies'].append({'from':'absent','to':'step-1','condition':'Test'})
         errors=validate_catalog(self.model)
-        self.assertTrue(any('published capability' in e for e in errors))
+        self.assertTrue(any('published capability or reference' in e for e in errors))
         self.assertTrue(any('endpoint' in e for e in errors))
 
     def test_multiple_paths_streams_and_repeated_capabilities_allowed(self):

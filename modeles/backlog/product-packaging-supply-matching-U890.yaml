@@ -252,10 +252,10 @@ publication_delivery:
       name: Operational References
     field_sha256:
       market_comparisons: d24f1c9e53559cf4123eff9873ffaf518bd9dc07cf9ec5d32c3cacdacca1705f
-      market_inspiration: ef53ce6422e885cbb40c479e5f6a0da230bb1892d92a359dab1aea9d8f7adb75
+      market_inspiration: 8fc79a4b85201b034f564a227c70d3761de3156db7b4357c1629e3c731ddf9ed
       definition: 7437a6fcea4650f38205f907d3278b10d6b061ad1dd1c2e3cd3169e2035fcc05
-      scope: d606cf6a59380ea9a174e651b9124c985baf227ec58c334b530febc5b22cf5ba
-      mastership: 2426d975812a3d2dbeb0488b4d6a0a339cef5dc17e438f7afe47b07b8ee32153
+      scope: 861e4b167b287fa794c186efc806cc617f0554493997619d545c38065a12ec26
+      mastership: 6584db79b1eeddee79937b843a11997f48aa6480ac14af02aa30ea93e75d3a6a
     parent: supply-chain-orchestration
     parent_type: presents
   - id: D08
@@ -298,9 +298,9 @@ publication_delivery:
       name: Availability
     field_sha256:
       definition: ad10e7f1b5476152211de9c036fe0507cf891ff7a048d1c1fab19a870ca03e60
-      scope: 0d3964c4ca2bdd31020260fc129126a6b878e6885c7caa945b9f59234c59aae3
+      scope: 171f452d18fcc71da62d2846f2db9a3d4c29e6a6e7850b3bdd2f8bd926db42c0
       market_comparisons: d2896f5dff00f08e47b94c5e9a8d534bb62cd71f7dffa3d8e7e7faf18c574102
-      market_inspiration: 39a11505085177f1ba0010be58d5c9fd729bce08c29096855aa4fd11190a7b8a
+      market_inspiration: c8f5b7524797aeb81ac229878b8e9c6adb07b9d21831ac27b12a5fd8fe967307
     parent: supply-chain-orchestration
     parent_type: presents
   - id: ba-supply-matching
@@ -309,7 +309,7 @@ publication_delivery:
       name: Supply Matching
     field_sha256:
       definition: 4eb018ae05b2bc9244c34f6217ca7b530d849a885c93770ca2eb726c02237dce
-      scope: 7d551a8df2790252471ea0d8126dcd2cb6ebd71c9aae4fb5ac37faa8f80c3a79
+      scope: a41ad220a7938f1145824936fec65500655d2b94fd43cc7c2ca6d7cfeb72c9f3
       market_comparisons: ef9e2d23e0e2aa3c4d6e3b0b7f3250a34178e6699b3ea8518f019afcf574fa23
     parent: D03
     parent_type: contains
@@ -330,7 +330,7 @@ publication_delivery:
       name: Inventory Target Optimization
     field_sha256:
       definition: e0cc6dcabc7ab5d0879178f868051112d90b3969e81b4f8f3007d7ed517ec19a
-      scope: 06ffcfa4f454ad34d8e6b9eb9af7e90931b5d8756480161cacb7607cbf0bf145
+      scope: 4df503bd82e4931bf8e745a36911c0bc803a29b99552e49bcc1b28d3d97f87a1
       market_comparisons: 9e7800ef982d2333c198ebceb6dd399b992fdb7ca9f8b7a729b8df71d4d097b1
       market_inspiration: 62727750684f61059c44af55a30e309ad7ab4ab6d497663d7e793461d9195a45
     parent: ba-policy-optimization
@@ -1580,3 +1580,37 @@ superseded_delivery_checks:
         [Master Planning](model:D05.f) mobilise cette décision dans ses scénarios. Les commandes portent les apports et changements autorisés ; [Supply Assignment](model:D03.o) choisit les affectations et [Plan Application](model:D02.e) les matérialise. [Fulfilment Orchestration](model:D06) coordonne la réalisation. Le résultat exprime quantités, dates, ajustements et manques ; il ne crée pas à lui seul une commande, une promesse ou une livraison. Une application automatique reste possible selon les règles et responsabilités autorisées. Le choix de l’assortiment, la planification commerciale, la prévision amont et la mise en rayon gardent leurs propres responsabilités.
 
         Les unités et contraintes reçues dans [Product Reference](model:D08) et [Packaging Specification](model:packaging-specification) peuvent empêcher un apport exact. Examiner le multiple admissible, l’excédent, le délai et les engagements ; signaler une donnée périmée ou inconnue. Le moteur de calcul éventuel ne devient pas propriétaire des paramètres actifs ni des commandes qu’il recommande de modifier. Le périmètre [Supply Matching](model:ba-supply-matching) expose ces arbitrages avec priorités, protections et affectations.
+delivery_reconciliation_U908:
+  source_refs:
+  - U908
+  note: Contrôles de livraison courants réalignés sur le backlog. Les attentes précédentes restent traçables par leurs empreintes
+    et dans Git ; cette réconciliation technique ne crée aucun accord métier.
+  changed_checks:
+  - id: business-references
+    check: field_sha256.market_inspiration
+    previous_sha256: ef53ce6422e885cbb40c479e5f6a0da230bb1892d92a359dab1aea9d8f7adb75
+    current_sha256: 8fc79a4b85201b034f564a227c70d3761de3156db7b4357c1629e3c731ddf9ed
+  - id: business-references
+    check: field_sha256.scope
+    previous_sha256: d606cf6a59380ea9a174e651b9124c985baf227ec58c334b530febc5b22cf5ba
+    current_sha256: 861e4b167b287fa794c186efc806cc617f0554493997619d545c38065a12ec26
+  - id: business-references
+    check: field_sha256.mastership
+    previous_sha256: 2426d975812a3d2dbeb0488b4d6a0a339cef5dc17e438f7afe47b07b8ee32153
+    current_sha256: 6584db79b1eeddee79937b843a11997f48aa6480ac14af02aa30ea93e75d3a6a
+  - id: D03
+    check: field_sha256.scope
+    previous_sha256: 0d3964c4ca2bdd31020260fc129126a6b878e6885c7caa945b9f59234c59aae3
+    current_sha256: 171f452d18fcc71da62d2846f2db9a3d4c29e6a6e7850b3bdd2f8bd926db42c0
+  - id: D03
+    check: field_sha256.market_inspiration
+    previous_sha256: 39a11505085177f1ba0010be58d5c9fd729bce08c29096855aa4fd11190a7b8a
+    current_sha256: c8f5b7524797aeb81ac229878b8e9c6adb07b9d21831ac27b12a5fd8fe967307
+  - id: ba-supply-matching
+    check: field_sha256.scope
+    previous_sha256: 7d551a8df2790252471ea0d8126dcd2cb6ebd71c9aae4fb5ac37faa8f80c3a79
+    current_sha256: a41ad220a7938f1145824936fec65500655d2b94fd43cc7c2ca6d7cfeb72c9f3
+  - id: D05.a
+    check: field_sha256.scope
+    previous_sha256: 06ffcfa4f454ad34d8e6b9eb9af7e90931b5d8756480161cacb7607cbf0bf145
+    current_sha256: 4df503bd82e4931bf8e745a36911c0bc803a29b99552e49bcc1b28d3d97f87a1

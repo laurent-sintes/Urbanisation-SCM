@@ -892,8 +892,8 @@ publication_delivery:
     kind: area
     field_sha256:
       market_comparisons: d24f1c9e53559cf4123eff9873ffaf518bd9dc07cf9ec5d32c3cacdacca1705f
-      market_inspiration: ef53ce6422e885cbb40c479e5f6a0da230bb1892d92a359dab1aea9d8f7adb75
-      mastership: 2426d975812a3d2dbeb0488b4d6a0a339cef5dc17e438f7afe47b07b8ee32153
+      market_inspiration: 8fc79a4b85201b034f564a227c70d3761de3156db7b4357c1629e3c731ddf9ed
+      mastership: 6584db79b1eeddee79937b843a11997f48aa6480ac14af02aa30ea93e75d3a6a
   - id: master-data-ingestion
     kind: capability
     field_sha256:
@@ -1011,3 +1011,17 @@ audit_initial_verification:
     prior_decisions_with_changed_approved_fields: 13
     meaning: 421 anciennes qualifications à réexaminer dans le contexte modifié, dont 408 sans changement des champs approuvés.
       Cela ne signifie pas 421 nouveaux arbitrages. Les 36 captures nouvelles ne sont pas un accord global sur les fiches.
+delivery_reconciliation_U908:
+  source_refs:
+  - U908
+  note: Contrôles de livraison courants réalignés sur le backlog. Les attentes précédentes restent traçables par leurs empreintes
+    et dans Git ; cette réconciliation technique ne crée aucun accord métier.
+  changed_checks:
+  - id: business-references
+    check: field_sha256.market_inspiration
+    previous_sha256: ef53ce6422e885cbb40c479e5f6a0da230bb1892d92a359dab1aea9d8f7adb75
+    current_sha256: 8fc79a4b85201b034f564a227c70d3761de3156db7b4357c1629e3c731ddf9ed
+  - id: business-references
+    check: field_sha256.mastership
+    previous_sha256: 2426d975812a3d2dbeb0488b4d6a0a339cef5dc17e438f7afe47b07b8ee32153
+    current_sha256: 6584db79b1eeddee79937b843a11997f48aa6480ac14af02aa30ea93e75d3a6a
