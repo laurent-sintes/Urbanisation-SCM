@@ -21,7 +21,9 @@ const raw = JSON.parse(generated.stdout), model = adaptPublication(raw);
 // The isolated candidate has its own payload fingerprint, not the source file's.
 catalog.versions.find(item=>item.version===version).model_sha256=createHash('sha256').update(JSON.stringify(raw)).digest('hex');
 assert.deepEqual(raw.nodes, JSON.parse(source).nodes, 'The fixture preserves all French text and persistent IDs');
-const area = model.nodes.find(n => n.kind === 'area' && childrenOf(model, n.id).some(c => c.kind === 'capability') && !childrenOf(model, n.id).some(c=>c.kind==='business_area'));
+// Exercise a real capability container: current Business Area or historical Subdomain.
+const area = model.nodes.find(n => ['business_area', 'area'].includes(n.kind) && childrenOf(model, n.id).some(c => c.kind === 'capability') && !childrenOf(model, n.id).some(c=>c.kind==='business_area'));
+assert.ok(area, 'The publication must provide a container with capabilities to verify reading codes');
 const capacity = childrenOf(model, area.id).find(n => n.kind === 'capability');
 const base = 'https://atlas.test/Urbanisation-SCM/';
 const browser = await chromium.launch(browserOptions);

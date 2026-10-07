@@ -22,11 +22,17 @@ class SupplyIdentityTests(unittest.TestCase):
         self.assertEqual([(r['source_id'], r['type']) for r in parents], [('system-business-operations', 'presents')])
         self.assertCountEqual(
             [r['target_id'] for r in model['relations'] if r['source_id'] == identifier and r['type'] == 'presents'],
-            ['business-references', 'subdomain-policies', 'subdomain-plans',
+            ['business-references', 'subdomain-policies',
              'D04', 'D01', 'D03', 'D06', 'subdomain-service-orders',
              'subdomain-integration'],
         )
         nodes = {n['id']: n for n in model['nodes']}
+        self.assertEqual(nodes['subdomain-plans']['kind'], 'business_area')
+        self.assertEqual(
+            [(r['source_id'], r['type']) for r in model['relations']
+             if r['target_id'] == 'subdomain-plans' and r['type'] in ('contains', 'presents')],
+            [('D03', 'contains')],
+        )
         self.assertEqual(nodes['D03']['fields']['name'], 'Availability')
         self.assertEqual(nodes['business-references']['fields']['name'], 'Operational References')
         for removed in ('subdomain-order-promising', 'D03.l', 'BHV109', 'BHV110'):
