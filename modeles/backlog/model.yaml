@@ -42773,41 +42773,25 @@ relations:
       ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
       ; autres valeurs et portées inchangées.
   last_modified: '2026-09-23T20:35:38.517366Z'
-- id: REL-UNIVERSE-SUPPLY-D04
+- id: REL-U826-subdomain-integration
   revision: 1
   type: presents
   source_id: supply-chain-orchestration
-  target_id: D04
+  target_id: subdomain-integration
   source_refs:
-  - U141
-  - C78
-  - CMP066
+  - U826
   review:
-    state: accepted
-    note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension.
+    state: proposed
+    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
   lifecycle:
-    state: urbanist_validated
-    recorded_at: '2026-09-28T06:38:19.526970Z'
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U141
-    - C78
-    - CMP066
-    - U667
-    - U673
-    - U804
-    validated_fields:
-    - source_id
-    - target_id
-    - type
-    value_sha256:
-      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
-      target_id: 0096bde465541109b5bce54d49a5c56a6b5a8c77c79d7ed9d49996276ee29b00
-      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
-    note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
-      ; autres valeurs et portées inchangées.
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
 - id: REL-UNIVERSE-SUPPLY-D01
   revision: 1
   type: presents
@@ -49674,11 +49658,11 @@ relations:
     note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
       ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
       ; autres valeurs et portées inchangées.
-- id: REL-UNIVERSE-SUPPLY-D06
+- id: REL-UNIVERSE-SUPPLY-D04
   revision: 1
   type: presents
   source_id: supply-chain-orchestration
-  target_id: D06
+  target_id: D04
   source_refs:
   - U141
   - C78
@@ -49689,7 +49673,7 @@ relations:
       ni des liens de coopération par extension.
   lifecycle:
     state: urbanist_validated
-    recorded_at: '2026-09-28T06:38:19.527215Z'
+    recorded_at: '2026-09-28T06:38:19.526970Z'
     recorded_by: Codex
     source_refs:
     - U141
@@ -49704,7 +49688,7 @@ relations:
     - type
     value_sha256:
       source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
-      target_id: 17c128fc100f3fa90ffc5f6acdd8a736b5c1f6ceefffc66da48cb4529e9a55d4
+      target_id: 0096bde465541109b5bce54d49a5c56a6b5a8c77c79d7ed9d49996276ee29b00
       type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
     note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
       ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
@@ -50035,39 +50019,26 @@ relations:
     - Respecter les règles, engagements et versions applicables ; données inconnues ou périmées explicites.
     effects:
     - Fournir le résultat au responsable consommateur sans transférer sa responsabilité.
-- id: REL-U682-PRESENTS-SERVICE-ORDERS
+- id: REL-U885-PARENT-subdomain-process-management
   revision: 1
   type: presents
   source_id: supply-chain-orchestration
-  target_id: subdomain-service-orders
+  target_id: subdomain-process-management
   source_refs:
-  - U679
-  - U681
-  - U682
-  last_modified: '2026-09-24T07:34:47.738310Z'
+  - U884
+  - U885
   review:
-    state: partial
-    note: Application U682 ; accords U679/U681 limités aux valeurs présentées. Descriptions, comparaisons et choix de redistribution
-      détaillés proposés.
+    state: proposed
+    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
   lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-28T06:38:19.527266Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U679
-    - U681
-    - U682
-    - U804
-    validated_fields:
-    - source_id
-    - target_id
-    - type
-    value_sha256:
-      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
-      target_id: 6d3edae0d62dce73fff2944ac79533e34e9d390ac0a7f5765a50958e11a0cba7
-      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
-    note: Portée des accords capturée séparément ; aucun accord global sur les détails. U804 autorise uniquement la substitution
-      technique de l’identité du domaine ; autres valeurs et portées inchangées.
+    - U885
+    validated_fields: []
+    value_sha256: {}
+    note: Relation du lot U885 ; accord structurel capturé séparément, qualification proposée.
 - id: REL-U682-ORCHESTRATION-SERVICE-ORDERS
   revision: 2
   type: provides-knowledge
@@ -51699,25 +51670,41 @@ relations:
     validated_fields: []
     value_sha256: {}
     note: Accords explicites limités dans decision-intents ; descriptions et qualifications détaillées proposées.
-- id: REL-U826-subdomain-integration
+- id: REL-UNIVERSE-SUPPLY-D06
   revision: 1
   type: presents
   source_id: supply-chain-orchestration
-  target_id: subdomain-integration
+  target_id: D06
   source_refs:
-  - U826
+  - U141
+  - C78
+  - CMP066
   review:
-    state: proposed
-    note: Lien de structure ou de coopération appliqué ; accord capturé seulement sur les rattachements discutés.
+    state: accepted
+    note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
+      ni des liens de coopération par extension.
   lifecycle:
-    state: ai_proposed
-    recorded_at: '2026-09-28T12:00:00Z'
+    state: urbanist_validated
+    recorded_at: '2026-09-28T06:38:19.527215Z'
     recorded_by: Codex
     source_refs:
-    - U826
-    validated_fields: []
-    value_sha256: {}
-    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+    - U141
+    - C78
+    - CMP066
+    - U667
+    - U673
+    - U804
+    validated_fields:
+    - source_id
+    - target_id
+    - type
+    value_sha256:
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
+      target_id: 17c128fc100f3fa90ffc5f6acdd8a736b5c1f6ceefffc66da48cb4529e9a55d4
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
+      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
+      ; autres valeurs et portées inchangées.
 - id: REL-U826-domain-finance
   revision: 1
   type: presents
@@ -54415,26 +54402,39 @@ relations:
     validated_fields: []
     value_sha256: {}
     note: Règle générale explicite ; détail du regroupement proposé.
-- id: REL-U885-PARENT-subdomain-process-management
+- id: REL-U682-PRESENTS-SERVICE-ORDERS
   revision: 1
   type: presents
   source_id: supply-chain-orchestration
-  target_id: subdomain-process-management
+  target_id: subdomain-service-orders
   source_refs:
-  - U884
-  - U885
+  - U679
+  - U681
+  - U682
+  last_modified: '2026-09-24T07:34:47.738310Z'
   review:
-    state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    state: partial
+    note: Application U682 ; accords U679/U681 limités aux valeurs présentées. Descriptions, comparaisons et choix de redistribution
+      détaillés proposés.
   lifecycle:
-    state: ai_proposed
-    recorded_at: '2026-10-07T00:00:00Z'
+    state: under_instruction
+    recorded_at: '2026-09-28T06:38:19.527266Z'
     recorded_by: Codex
     source_refs:
-    - U885
-    validated_fields: []
-    value_sha256: {}
-    note: Relation du lot U885 ; accord structurel capturé séparément, qualification proposée.
+    - U679
+    - U681
+    - U682
+    - U804
+    validated_fields:
+    - source_id
+    - target_id
+    - type
+    value_sha256:
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
+      target_id: 6d3edae0d62dce73fff2944ac79533e34e9d390ac0a7f5765a50958e11a0cba7
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    note: Portée des accords capturée séparément ; aucun accord global sur les détails. U804 autorise uniquement la substitution
+      technique de l’identité du domaine ; autres valeurs et portées inchangées.
 - id: REL-U885-PARENT-ba-process-supervision
   revision: 1
   type: contains

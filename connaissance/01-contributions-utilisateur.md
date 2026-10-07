@@ -22241,3 +22241,30 @@ release
 **contexte et portée**
 
 Publication locale du backlog final et du guide méthodologique associés, après application de l’audit des glossaires U903 et précision Firming U904. Inclure les lots antérieurs appliqués depuis la publication courante. La demande autorise la publication ; elle ne donne aucun accord métier supplémentaire, ni autorisation de commit ou push.
+
+## U906
+
+**id**
+
+U906
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Rapprocher les sous-domaines dans l’ordre de lecture
+
+**texte**
+
+Je souhaite revoir l'ordre des sous domaines pour créer une logique.
+
+Inventory Management et Availability proches
+Process Management proche de Order Managerment
+Fulfillment Orchestration proche de Service Management
+Operational References, Policies et Intégration proches et en premier en haut
+
+**contexte et portée**
+
+Demande portant sur l’ordre de présentation des neuf sous-domaines de Supply Chain Orchestration. Application au backlog : Operational References, Policies, Integration, Inventory Management, Availability, Order Management, Process Management, Fulfilment Orchestration, Service Management. Codex place les trois couples après le socle transverse dans cet ordre pour faciliter la lecture des ressources, des commandes et de la réalisation. Cette disposition est un choix de lecture ; elle ne décrit pas une séquence d’exécution. Les rapprochements et la position initiale du socle sont demandés par Laurent ; l’ordre détaillé est une interprétation de Codex. Aucun changement de nom, de responsabilité ou de rattachement, ni accord supplémentaire sur les fiches. La publication reste une opération distincte.

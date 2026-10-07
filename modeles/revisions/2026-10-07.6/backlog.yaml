@@ -1,6 +1,6 @@
 schema_version: 1.0.0
 model_id: flow-urbanism
-version: 2026-10-07.5
+version: 2026-10-07.6
 as_of: '2026-10-07'
 source_version: P81 0.9 + P82/U116 + libellés P84/P86 retenus en U118 + séparation D01 U125 (vocabulaire U126 ouvert) + nom
   D01.g adopté U129 + U141 univers Supply/Case et refonte D04 + U145 retrait D02 sans renumérotation + U154 D03 recomposé
@@ -41906,46 +41906,30 @@ relations:
       ; autres valeurs et portées inchangées.
   last_modified: '2026-09-28T07:25:14.288096Z'
   content_sha256: ff29f20abb7928efa6ca5a8651cd5519c1c81e94015ec975e80bd4aac11b4f48
-- id: REL-UNIVERSE-SUPPLY-D04
-  revision: 3
+- id: REL-U826-subdomain-integration
+  revision: 1
   type: presents
   source_id: supply-chain-orchestration
-  target_id: D04
+  target_id: subdomain-integration
   source_refs:
-  - U141
-  - C78
-  - CMP066
+  - U826
   review:
-    state: accepted
+    state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-74deff9deae34de92cb106b4,
-      ADOPT-REASSESS-744824189e1ee43956da1810. Note antérieure, qui ne qualifie pas cette révision : « U673 autorise l’application
-      du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments ni des liens de coopération
-      par extension. »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-df871ed073113deb60609bb1.
+      Note antérieure, qui ne qualifie pas cette révision : « Lien de structure ou de coopération appliqué ; accord capturé
+      seulement sur les rattachements discutés. »'
   lifecycle:
-    state: urbanist_validated
-    recorded_at: '2026-09-28T06:38:19.526970Z'
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U141
-    - C78
-    - CMP066
-    - U667
-    - U673
-    - U804
-    validated_fields:
-    - source_id
-    - target_id
-    - type
-    value_sha256:
-      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
-      target_id: 0096bde465541109b5bce54d49a5c56a6b5a8c77c79d7ed9d49996276ee29b00
-      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
-    note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
-      ; autres valeurs et portées inchangées.
-  last_modified: '2026-09-28T07:25:14.288096Z'
-  content_sha256: e74ab223f6536dfd2920fb98056735668a20cef8b539ad75366842e5ccd317ff
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+  last_modified: '2026-09-28T09:55:24.071459Z'
+  content_sha256: f9b0b5e2d54253273119b5ceb02fe7af04c688a582693a6fe85ca80116ddaca7
 - id: REL-UNIVERSE-SUPPLY-D01
   revision: 3
   type: presents
@@ -49411,11 +49395,11 @@ relations:
       ; autres valeurs et portées inchangées.
   last_modified: '2026-09-28T07:25:14.288096Z'
   content_sha256: f7262cdae7ddb8112d539a7683c9d9da302bd37c84a0c3decebc010a4a1e78c9
-- id: REL-UNIVERSE-SUPPLY-D06
+- id: REL-UNIVERSE-SUPPLY-D04
   revision: 3
   type: presents
   source_id: supply-chain-orchestration
-  target_id: D06
+  target_id: D04
   source_refs:
   - U141
   - C78
@@ -49423,13 +49407,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e3de981fbe47d4d63c9127c8,
-      ADOPT-REASSESS-e3754d4da5d5ba53d30cbc64. Note antérieure, qui ne qualifie pas cette révision : « U673 autorise l’application
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-74deff9deae34de92cb106b4,
+      ADOPT-REASSESS-744824189e1ee43956da1810. Note antérieure, qui ne qualifie pas cette révision : « U673 autorise l’application
       du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments ni des liens de coopération
       par extension. »'
   lifecycle:
     state: urbanist_validated
-    recorded_at: '2026-09-28T06:38:19.527215Z'
+    recorded_at: '2026-09-28T06:38:19.526970Z'
     recorded_by: Codex
     source_refs:
     - U141
@@ -49444,13 +49428,13 @@ relations:
     - type
     value_sha256:
       source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
-      target_id: 17c128fc100f3fa90ffc5f6acdd8a736b5c1f6ceefffc66da48cb4529e9a55d4
+      target_id: 0096bde465541109b5bce54d49a5c56a6b5a8c77c79d7ed9d49996276ee29b00
       type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
     note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
       ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
       ; autres valeurs et portées inchangées.
   last_modified: '2026-09-28T07:25:14.288096Z'
-  content_sha256: c87aa5d3442c4071264265f719e4b30d9fdf36d13c1bd1467aed37f588a5484a
+  content_sha256: e74ab223f6536dfd2920fb98056735668a20cef8b539ad75366842e5ccd317ff
 - id: REL-U673-CONTAINS-plans-visibility
   revision: 1
   type: contains
@@ -49810,43 +49794,31 @@ relations:
     effects:
     - Fournir le résultat au responsable consommateur sans transférer sa responsabilité.
   content_sha256: 185cc1340fca95be7bdfa338359de01e25d5e9ef812d96281d53ce3606be720a
-- id: REL-U682-PRESENTS-SERVICE-ORDERS
-  revision: 2
+- id: REL-U885-PARENT-subdomain-process-management
+  revision: 1
   type: presents
   source_id: supply-chain-orchestration
-  target_id: subdomain-service-orders
+  target_id: subdomain-process-management
   source_refs:
-  - U679
-  - U681
-  - U682
-  last_modified: '2026-09-28T07:25:14.288096Z'
+  - U884
+  - U885
   review:
-    state: partial
+    state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5e13d447e2b9f68c397e052f,
-      ADOPT-REASSESS-0d738d9a5939597f59585cf4. Note antérieure, qui ne qualifie pas cette révision : « Application U682 ;
-      accords U679/U681 limités aux valeurs présentées. Descriptions, comparaisons et choix de redistribution détaillés proposés.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : DEC-U894-FINAL-12722bfc7bdcd6bcec987258.
+      Note antérieure, qui ne qualifie pas cette révision : « Cible U883 validée U884 et appliquée U885 ; accords exacts capturés
+      séparément, détails rédactionnels proposés. »'
   lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-28T06:38:19.527266Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U679
-    - U681
-    - U682
-    - U804
-    validated_fields:
-    - source_id
-    - target_id
-    - type
-    value_sha256:
-      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
-      target_id: 6d3edae0d62dce73fff2944ac79533e34e9d390ac0a7f5765a50958e11a0cba7
-      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
-    note: Portée des accords capturée séparément ; aucun accord global sur les détails. U804 autorise uniquement la substitution
-      technique de l’identité du domaine ; autres valeurs et portées inchangées.
-  content_sha256: e928d7372df97037000ae712cd3977326eb8982049c49f0aebf588a730cac1e2
+    - U885
+    validated_fields: []
+    value_sha256: {}
+    note: Relation du lot U885 ; accord structurel capturé séparément, qualification proposée.
+  last_modified: '2026-10-07T09:44:31.492410Z'
+  content_sha256: bb9bb27514317d5508307bd2ec099e0cbef067b2ad5f81bee34da19bddb46461
 - id: REL-U682-ORCHESTRATION-SERVICE-ORDERS
   revision: 2
   type: provides-knowledge
@@ -51666,30 +51638,46 @@ relations:
     note: Accords explicites limités dans decision-intents ; descriptions et qualifications détaillées proposées.
   last_modified: '2026-09-27T20:30:01.143583Z'
   content_sha256: 06cefeaeca4b8e921e1ef637ddaa770df44fc93ac87d30f0a6173ef237b179ce
-- id: REL-U826-subdomain-integration
-  revision: 1
+- id: REL-UNIVERSE-SUPPLY-D06
+  revision: 3
   type: presents
   source_id: supply-chain-orchestration
-  target_id: subdomain-integration
+  target_id: D06
   source_refs:
-  - U826
+  - U141
+  - C78
+  - CMP066
   review:
-    state: proposed
+    state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-df871ed073113deb60609bb1.
-      Note antérieure, qui ne qualifie pas cette révision : « Lien de structure ou de coopération appliqué ; accord capturé
-      seulement sur les rattachements discutés. »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e3de981fbe47d4d63c9127c8,
+      ADOPT-REASSESS-e3754d4da5d5ba53d30cbc64. Note antérieure, qui ne qualifie pas cette révision : « U673 autorise l’application
+      du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments ni des liens de coopération
+      par extension. »'
   lifecycle:
-    state: ai_proposed
-    recorded_at: '2026-09-28T12:00:00Z'
+    state: urbanist_validated
+    recorded_at: '2026-09-28T06:38:19.527215Z'
     recorded_by: Codex
     source_refs:
-    - U826
-    validated_fields: []
-    value_sha256: {}
-    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
-  last_modified: '2026-09-28T09:55:24.071459Z'
-  content_sha256: f9b0b5e2d54253273119b5ceb02fe7af04c688a582693a6fe85ca80116ddaca7
+    - U141
+    - C78
+    - CMP066
+    - U667
+    - U673
+    - U804
+    validated_fields:
+    - source_id
+    - target_id
+    - type
+    value_sha256:
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
+      target_id: 17c128fc100f3fa90ffc5f6acdd8a736b5c1f6ceefffc66da48cb4529e9a55d4
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
+      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
+      ; autres valeurs et portées inchangées.
+  last_modified: '2026-09-28T07:25:14.288096Z'
+  content_sha256: c87aa5d3442c4071264265f719e4b30d9fdf36d13c1bd1467aed37f588a5484a
 - id: REL-U826-domain-finance
   revision: 1
   type: presents
@@ -54897,31 +54885,43 @@ relations:
     note: Règle générale explicite ; détail du regroupement proposé.
   last_modified: '2026-10-07T06:21:09.771564Z'
   content_sha256: bff2fda4d6c64b97aca95411101c879d99819cf5e946a7db0b7678d35262383e
-- id: REL-U885-PARENT-subdomain-process-management
-  revision: 1
+- id: REL-U682-PRESENTS-SERVICE-ORDERS
+  revision: 2
   type: presents
   source_id: supply-chain-orchestration
-  target_id: subdomain-process-management
+  target_id: subdomain-service-orders
   source_refs:
-  - U884
-  - U885
+  - U679
+  - U681
+  - U682
+  last_modified: '2026-09-28T07:25:14.288096Z'
   review:
-    state: proposed
+    state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : DEC-U894-FINAL-12722bfc7bdcd6bcec987258.
-      Note antérieure, qui ne qualifie pas cette révision : « Cible U883 validée U884 et appliquée U885 ; accords exacts capturés
-      séparément, détails rédactionnels proposés. »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5e13d447e2b9f68c397e052f,
+      ADOPT-REASSESS-0d738d9a5939597f59585cf4. Note antérieure, qui ne qualifie pas cette révision : « Application U682 ;
+      accords U679/U681 limités aux valeurs présentées. Descriptions, comparaisons et choix de redistribution détaillés proposés.
+      »'
   lifecycle:
-    state: ai_proposed
-    recorded_at: '2026-10-07T00:00:00Z'
+    state: under_instruction
+    recorded_at: '2026-09-28T06:38:19.527266Z'
     recorded_by: Codex
     source_refs:
-    - U885
-    validated_fields: []
-    value_sha256: {}
-    note: Relation du lot U885 ; accord structurel capturé séparément, qualification proposée.
-  last_modified: '2026-10-07T09:44:31.492410Z'
-  content_sha256: bb9bb27514317d5508307bd2ec099e0cbef067b2ad5f81bee34da19bddb46461
+    - U679
+    - U681
+    - U682
+    - U804
+    validated_fields:
+    - source_id
+    - target_id
+    - type
+    value_sha256:
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
+      target_id: 6d3edae0d62dce73fff2944ac79533e34e9d390ac0a7f5765a50958e11a0cba7
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    note: Portée des accords capturée séparément ; aucun accord global sur les détails. U804 autorise uniquement la substitution
+      technique de l’identité du domaine ; autres valeurs et portées inchangées.
+  content_sha256: e928d7372df97037000ae712cd3977326eb8982049c49f0aebf588a730cac1e2
 - id: REL-U885-PARENT-ba-process-supervision
   revision: 1
   type: contains
@@ -90460,6 +90460,6 @@ glossary:
   last_modified: '2026-10-07T10:46:23.694754Z'
   content_sha256: 22bc30f6723823872eac0013be3af9fc74a10a983485cf345a665eab434940d7
 element_versioning: 1
-revision: 54
-content_sha256: 28b71f2a74c13c209bb7224ea1fdc69a5b5dbf5d2a09cc0ba07a366937c91d7f
-last_modified: '2026-10-07T10:46:23.694754Z'
+revision: 55
+content_sha256: 0a0c1031c2b7a044091b7209021b2ca43da993406e9452989a4c7a034cbc2a78
+last_modified: '2026-10-07T12:43:05.701838Z'

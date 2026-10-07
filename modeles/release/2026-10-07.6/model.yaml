@@ -1,6 +1,6 @@
 schema_version: 1.0.0
 model_id: flow-urbanism
-version: 2026-10-07.5
+version: 2026-10-07.6
 as_of: '2026-10-07'
 source_version: P81 0.9 + P82/U116 + libellés P84/P86 retenus en U118 + séparation D01 U125 (vocabulaire U126 ouvert) + nom
   D01.g adopté U129 + U141 univers Supply/Case et refonte D04 + U145 retrait D02 sans renumérotation + U154 D03 recomposé
@@ -34139,13 +34139,13 @@ glossary:
   last_modified: '2026-10-07T10:46:23.694754Z'
   content_sha256: 22bc30f6723823872eac0013be3af9fc74a10a983485cf345a665eab434940d7
 element_versioning: 1
-revision: 54
-content_sha256: 28b71f2a74c13c209bb7224ea1fdc69a5b5dbf5d2a09cc0ba07a366937c91d7f
-last_modified: '2026-10-07T10:46:23.694754Z'
+revision: 55
+content_sha256: 0a0c1031c2b7a044091b7209021b2ca43da993406e9452989a4c7a034cbc2a78
+last_modified: '2026-10-07T12:43:05.701838Z'
 release_kind: published_snapshot
 publication:
   source_refs:
-  - U905
+  - U906
   note: Publication complète demandée par Laurent ; publier ne vaut pas valider.
 nodes:
 - id: system-design-development
@@ -78191,49 +78191,32 @@ relations:
   adoption_ids:
   - ADOPT-REASSESS-61a71387cd225dbcf358f888
   - ADOPT-REASSESS-963b7d648f59da34648ef359
-- id: REL-UNIVERSE-SUPPLY-D04
-  revision: 3
+- id: REL-U826-subdomain-integration
+  revision: 1
   type: presents
   source_id: supply-chain-orchestration
-  target_id: D04
+  target_id: subdomain-integration
   source_refs:
-  - U141
-  - C78
-  - CMP066
+  - U826
   review:
-    state: accepted
+    state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-74deff9deae34de92cb106b4,
-      ADOPT-REASSESS-744824189e1ee43956da1810. Note antérieure, qui ne qualifie pas cette révision : « U673 autorise l’application
-      du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments ni des liens de coopération
-      par extension. »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-df871ed073113deb60609bb1.
+      Note antérieure, qui ne qualifie pas cette révision : « Lien de structure ou de coopération appliqué ; accord capturé
+      seulement sur les rattachements discutés. »'
   lifecycle:
-    state: urbanist_validated
-    recorded_at: '2026-09-28T06:38:19.526970Z'
+    state: ai_proposed
+    recorded_at: '2026-09-28T12:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U141
-    - C78
-    - CMP066
-    - U667
-    - U673
-    - U804
-    validated_fields:
-    - source_id
-    - target_id
-    - type
-    value_sha256:
-      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
-      target_id: 0096bde465541109b5bce54d49a5c56a6b5a8c77c79d7ed9d49996276ee29b00
-      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
-    note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
-      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
-      ; autres valeurs et portées inchangées.
-  last_modified: '2026-09-28T07:25:14.288096Z'
-  content_sha256: e74ab223f6536dfd2920fb98056735668a20cef8b539ad75366842e5ccd317ff
+    - U826
+    validated_fields: []
+    value_sha256: {}
+    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
+  last_modified: '2026-09-28T09:55:24.071459Z'
+  content_sha256: f9b0b5e2d54253273119b5ceb02fe7af04c688a582693a6fe85ca80116ddaca7
   adoption_ids:
-  - ADOPT-REASSESS-e26315b4582c098bfaf19576
-  - ADOPT-REASSESS-d6a0fa259f8b9fb62dba6271
+  - ADOPT-REASSESS-783a55d35e533c34d9ee76f8
 - id: REL-UNIVERSE-SUPPLY-D01
   revision: 3
   type: presents
@@ -85975,11 +85958,11 @@ relations:
   adoption_ids:
   - ADOPT-REASSESS-8de46504f45098a7b8bf5c2c
   - ADOPT-REASSESS-d31a4016f30c4194d3030cf2
-- id: REL-UNIVERSE-SUPPLY-D06
+- id: REL-UNIVERSE-SUPPLY-D04
   revision: 3
   type: presents
   source_id: supply-chain-orchestration
-  target_id: D06
+  target_id: D04
   source_refs:
   - U141
   - C78
@@ -85987,13 +85970,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e3de981fbe47d4d63c9127c8,
-      ADOPT-REASSESS-e3754d4da5d5ba53d30cbc64. Note antérieure, qui ne qualifie pas cette révision : « U673 autorise l’application
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-74deff9deae34de92cb106b4,
+      ADOPT-REASSESS-744824189e1ee43956da1810. Note antérieure, qui ne qualifie pas cette révision : « U673 autorise l’application
       du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments ni des liens de coopération
       par extension. »'
   lifecycle:
     state: urbanist_validated
-    recorded_at: '2026-09-28T06:38:19.527215Z'
+    recorded_at: '2026-09-28T06:38:19.526970Z'
     recorded_by: Codex
     source_refs:
     - U141
@@ -86008,16 +85991,16 @@ relations:
     - type
     value_sha256:
       source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
-      target_id: 17c128fc100f3fa90ffc5f6acdd8a736b5c1f6ceefffc66da48cb4529e9a55d4
+      target_id: 0096bde465541109b5bce54d49a5c56a6b5a8c77c79d7ed9d49996276ee29b00
       type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
     note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
       ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
       ; autres valeurs et portées inchangées.
   last_modified: '2026-09-28T07:25:14.288096Z'
-  content_sha256: c87aa5d3442c4071264265f719e4b30d9fdf36d13c1bd1467aed37f588a5484a
+  content_sha256: e74ab223f6536dfd2920fb98056735668a20cef8b539ad75366842e5ccd317ff
   adoption_ids:
-  - ADOPT-REASSESS-0a529b26742fda93bf9ce8a5
-  - ADOPT-REASSESS-fe2b75120eaff23a50b2fbe8
+  - ADOPT-REASSESS-e26315b4582c098bfaf19576
+  - ADOPT-REASSESS-d6a0fa259f8b9fb62dba6271
 - id: REL-U673-CONTAINS-plans-visibility
   revision: 1
   type: contains
@@ -86389,46 +86372,33 @@ relations:
     - Fournir le résultat au responsable consommateur sans transférer sa responsabilité.
   content_sha256: 185cc1340fca95be7bdfa338359de01e25d5e9ef812d96281d53ce3606be720a
   adoption_ids: []
-- id: REL-U682-PRESENTS-SERVICE-ORDERS
-  revision: 2
+- id: REL-U885-PARENT-subdomain-process-management
+  revision: 1
   type: presents
   source_id: supply-chain-orchestration
-  target_id: subdomain-service-orders
+  target_id: subdomain-process-management
   source_refs:
-  - U679
-  - U681
-  - U682
-  last_modified: '2026-09-28T07:25:14.288096Z'
+  - U884
+  - U885
   review:
-    state: partial
+    state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5e13d447e2b9f68c397e052f,
-      ADOPT-REASSESS-0d738d9a5939597f59585cf4. Note antérieure, qui ne qualifie pas cette révision : « Application U682 ;
-      accords U679/U681 limités aux valeurs présentées. Descriptions, comparaisons et choix de redistribution détaillés proposés.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : DEC-U894-FINAL-12722bfc7bdcd6bcec987258.
+      Note antérieure, qui ne qualifie pas cette révision : « Cible U883 validée U884 et appliquée U885 ; accords exacts capturés
+      séparément, détails rédactionnels proposés. »'
   lifecycle:
-    state: under_instruction
-    recorded_at: '2026-09-28T06:38:19.527266Z'
+    state: ai_proposed
+    recorded_at: '2026-10-07T00:00:00Z'
     recorded_by: Codex
     source_refs:
-    - U679
-    - U681
-    - U682
-    - U804
-    validated_fields:
-    - source_id
-    - target_id
-    - type
-    value_sha256:
-      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
-      target_id: 6d3edae0d62dce73fff2944ac79533e34e9d390ac0a7f5765a50958e11a0cba7
-      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
-    note: Portée des accords capturée séparément ; aucun accord global sur les détails. U804 autorise uniquement la substitution
-      technique de l’identité du domaine ; autres valeurs et portées inchangées.
-  content_sha256: e928d7372df97037000ae712cd3977326eb8982049c49f0aebf588a730cac1e2
+    - U885
+    validated_fields: []
+    value_sha256: {}
+    note: Relation du lot U885 ; accord structurel capturé séparément, qualification proposée.
+  last_modified: '2026-10-07T09:44:31.492410Z'
+  content_sha256: bb9bb27514317d5508307bd2ec099e0cbef067b2ad5f81bee34da19bddb46461
   adoption_ids:
-  - ADOPT-REASSESS-6ca730e53afb5893b329d860
-  - ADOPT-REASSESS-3fa12de946c3d889830f6752
+  - ADOPT-REASSESS-37976a09be0589c06826a0bc
 - id: REL-U682-ORCHESTRATION-SERVICE-ORDERS
   revision: 2
   type: provides-knowledge
@@ -88263,32 +88233,49 @@ relations:
   content_sha256: 06cefeaeca4b8e921e1ef637ddaa770df44fc93ac87d30f0a6173ef237b179ce
   adoption_ids:
   - ADOPT-REASSESS-7496407cbefc7949d98ca6c4
-- id: REL-U826-subdomain-integration
-  revision: 1
+- id: REL-UNIVERSE-SUPPLY-D06
+  revision: 3
   type: presents
   source_id: supply-chain-orchestration
-  target_id: subdomain-integration
+  target_id: D06
   source_refs:
-  - U826
+  - U141
+  - C78
+  - CMP066
   review:
-    state: proposed
+    state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-df871ed073113deb60609bb1.
-      Note antérieure, qui ne qualifie pas cette révision : « Lien de structure ou de coopération appliqué ; accord capturé
-      seulement sur les rattachements discutés. »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e3de981fbe47d4d63c9127c8,
+      ADOPT-REASSESS-e3754d4da5d5ba53d30cbc64. Note antérieure, qui ne qualifie pas cette révision : « U673 autorise l’application
+      du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments ni des liens de coopération
+      par extension. »'
   lifecycle:
-    state: ai_proposed
-    recorded_at: '2026-09-28T12:00:00Z'
+    state: urbanist_validated
+    recorded_at: '2026-09-28T06:38:19.527215Z'
     recorded_by: Codex
     source_refs:
-    - U826
-    validated_fields: []
-    value_sha256: {}
-    note: Accords de champs capturés séparément ; aucun accord implicite sur les compléments.
-  last_modified: '2026-09-28T09:55:24.071459Z'
-  content_sha256: f9b0b5e2d54253273119b5ceb02fe7af04c688a582693a6fe85ca80116ddaca7
+    - U141
+    - C78
+    - CMP066
+    - U667
+    - U673
+    - U804
+    validated_fields:
+    - source_id
+    - target_id
+    - type
+    value_sha256:
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
+      target_id: 17c128fc100f3fa90ffc5f6acdd8a736b5c1f6ceefffc66da48cb4529e9a55d4
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    note: U673 autorise l’application du rattachement présenté dans l’audit ; aucune validation des descriptions des éléments
+      ni des liens de coopération par extension. U804 autorise uniquement la substitution technique de l’identité du domaine
+      ; autres valeurs et portées inchangées.
+  last_modified: '2026-09-28T07:25:14.288096Z'
+  content_sha256: c87aa5d3442c4071264265f719e4b30d9fdf36d13c1bd1467aed37f588a5484a
   adoption_ids:
-  - ADOPT-REASSESS-783a55d35e533c34d9ee76f8
+  - ADOPT-REASSESS-0a529b26742fda93bf9ce8a5
+  - ADOPT-REASSESS-fe2b75120eaff23a50b2fbe8
 - id: REL-U826-domain-finance
   revision: 1
   type: presents
@@ -91727,33 +91714,46 @@ relations:
   last_modified: '2026-10-07T06:21:09.771564Z'
   content_sha256: bff2fda4d6c64b97aca95411101c879d99819cf5e946a7db0b7678d35262383e
   adoption_ids: []
-- id: REL-U885-PARENT-subdomain-process-management
-  revision: 1
+- id: REL-U682-PRESENTS-SERVICE-ORDERS
+  revision: 2
   type: presents
   source_id: supply-chain-orchestration
-  target_id: subdomain-process-management
+  target_id: subdomain-service-orders
   source_refs:
-  - U884
-  - U885
+  - U679
+  - U681
+  - U682
+  last_modified: '2026-09-28T07:25:14.288096Z'
   review:
-    state: proposed
+    state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : DEC-U894-FINAL-12722bfc7bdcd6bcec987258.
-      Note antérieure, qui ne qualifie pas cette révision : « Cible U883 validée U884 et appliquée U885 ; accords exacts capturés
-      séparément, détails rédactionnels proposés. »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5e13d447e2b9f68c397e052f,
+      ADOPT-REASSESS-0d738d9a5939597f59585cf4. Note antérieure, qui ne qualifie pas cette révision : « Application U682 ;
+      accords U679/U681 limités aux valeurs présentées. Descriptions, comparaisons et choix de redistribution détaillés proposés.
+      »'
   lifecycle:
-    state: ai_proposed
-    recorded_at: '2026-10-07T00:00:00Z'
+    state: under_instruction
+    recorded_at: '2026-09-28T06:38:19.527266Z'
     recorded_by: Codex
     source_refs:
-    - U885
-    validated_fields: []
-    value_sha256: {}
-    note: Relation du lot U885 ; accord structurel capturé séparément, qualification proposée.
-  last_modified: '2026-10-07T09:44:31.492410Z'
-  content_sha256: bb9bb27514317d5508307bd2ec099e0cbef067b2ad5f81bee34da19bddb46461
+    - U679
+    - U681
+    - U682
+    - U804
+    validated_fields:
+    - source_id
+    - target_id
+    - type
+    value_sha256:
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
+      target_id: 6d3edae0d62dce73fff2944ac79533e34e9d390ac0a7f5765a50958e11a0cba7
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    note: Portée des accords capturée séparément ; aucun accord global sur les détails. U804 autorise uniquement la substitution
+      technique de l’identité du domaine ; autres valeurs et portées inchangées.
+  content_sha256: e928d7372df97037000ae712cd3977326eb8982049c49f0aebf588a730cac1e2
   adoption_ids:
-  - ADOPT-REASSESS-37976a09be0589c06826a0bc
+  - ADOPT-REASSESS-6ca730e53afb5893b329d860
+  - ADOPT-REASSESS-3fa12de946c3d889830f6752
 - id: REL-U885-PARENT-ba-process-supervision
   revision: 1
   type: contains
@@ -93291,13 +93291,13 @@ display_index:
     supply-chain-orchestration:
     - business-references
     - subdomain-policies
-    - D04
+    - subdomain-integration
     - D01
     - D03
+    - D04
+    - subdomain-process-management
     - D06
     - subdomain-service-orders
-    - subdomain-integration
-    - subdomain-process-management
     business-references:
     - ba-partner-agreement-references
     - ba-product-references
@@ -93755,185 +93755,185 @@ display_index:
     D19.b: CAP-002
     ba-service-provider-controls: BA-007
     D19.a: CAP-003
-    D04: SUB-006
-    ba-order-lifecycle-management: BA-008
-    D04.i: CAP-004
-    BHV066: BHV-005
-    BHV067: BHV-006
-    BHV068: BHV-007
-    BHV069: BHV-008
-    BHV096: BHV-009
-    sales-order-preorder: BHV-010
-    D04.j: CAP-005
-    BHV058: BHV-011
-    BHV059: BHV-012
-    BHV060: BHV-013
-    BHV078: BHV-014
-    D04.k: CAP-006
-    D04.l: CAP-007
-    BHV050: BHV-015
-    BHV051: BHV-016
-    BHV052: BHV-017
-    BHV053: BHV-018
-    BHV054: BHV-019
-    return-credit-resolution: BHV-020
-    return-refund-resolution: BHV-021
-    return-replacement-resolution: BHV-022
-    D04.m: CAP-008
-    BHV055: BHV-023
-    BHV056: BHV-024
-    BHV057: BHV-025
-    D04.n: CAP-009
-    BHV044: BHV-026
-    BHV086: BHV-027
-    BHV087: BHV-028
-    D04.r: CAP-010
-    D04.t: CAP-011
-    order-visibility: CAP-012
+    subdomain-integration: SUB-006
+    ba-inbound-information-integration: BA-008
+    plans-ingestion: CAP-004
+    master-data-ingestion: CAP-005
+    master-data-ingestion-commerce: BHV-005
+    master-data-ingestion-finance: BHV-006
+    master-data-ingestion-design: BHV-007
+    ba-outbound-information-provision: BA-009
+    accounting-data-provision: CAP-006
+    planning-data-provision: CAP-007
+    product-feedback: CAP-008
     D01: SUB-007
-    ba-inventory-position-management: BA-009
-    D01.f: CAP-013
-    D01.d: CAP-014
-    BHV029: BHV-029
-    BHV030: BHV-030
-    BHV031: BHV-031
-    D02.c: CAP-015
-    D01.g: CAP-016
-    D01.c: CAP-017
-    ba-inventory-ownership-management: BA-010
-    inventory-ownership-ledger: CAP-018
-    D01.h: CAP-019
-    BHV063: BHV-032
-    BHV064: BHV-033
-    BHV104: BHV-034
+    ba-inventory-position-management: BA-010
+    D01.f: CAP-009
+    D01.d: CAP-010
+    BHV029: BHV-008
+    BHV030: BHV-009
+    BHV031: BHV-010
+    D02.c: CAP-011
+    D01.g: CAP-012
+    D01.c: CAP-013
+    ba-inventory-ownership-management: BA-011
+    inventory-ownership-ledger: CAP-014
+    D01.h: CAP-015
+    BHV063: BHV-011
+    BHV064: BHV-012
+    BHV104: BHV-013
     D03: SUB-008
-    ba-master-plan-management: BA-011
-    D02.e: CAP-020
-    D05.f: CAP-021
-    BHV016: BHV-035
-    D04.s: BHV-036
-    BHV097: BHV-037
-    BHV098: BHV-038
-    BHV099: BHV-039
-    BHV100: BHV-040
-    BHV101: BHV-041
-    BHV006: CAP-022
-    ba-order-promising: BA-012
-    D03.i: CAP-023
-    BHV002: BHV-042
-    BHV004: BHV-043
-    D03.j: CAP-024
-    BHV075: BHV-044
-    BHV076: BHV-045
-    D03.k: CAP-025
-    BHV107: BHV-046
-    BHV108: BHV-047
-    ba-supply-matching: BA-013
-    D03.m: CAP-026
-    D05.e: CAP-027
-    BHV083: BHV-048
-    BHV084: BHV-049
-    BHV085: BHV-050
-    D05.c: CAP-028
-    BHV024: BHV-051
-    BHV025: BHV-052
-    D03.o: CAP-029
-    BHV102: BHV-053
-    BHV103: BHV-054
-    ba-policy-optimization: BA-014
-    D05.a: CAP-030
-    BHV026: BHV-055
-    BHV027: BHV-056
-    BHV028: BHV-057
-    D05.d: CAP-031
-    D05.h: CAP-032
-    BHV032: BHV-058
-    BHV033: BHV-059
-    BHV034: BHV-060
-    BHV035: BHV-061
-    subdomain-plans: BA-015
-    plans-visibility: CAP-033
-    demand-plan-visibility: CAP-034
-    D06: SUB-009
-    ba-service-planning: BA-016
-    D06.b: CAP-035
-    D07.a: CAP-036
-    D06.e: CAP-037
-    transport-plan-decision: CAP-038
-    transport-load-consolidation: BHV-062
-    transport-routing-scheduling: BHV-063
-    ba-execution-assurance: BA-017
-    D07.d: CAP-039
-    D07.c: CAP-040
-    operations-visibility: CAP-041
-    BHV079: BHV-064
-    BHV080: BHV-065
-    BHV081: BHV-066
-    ba-execution-coordination: BA-018
-    D06.d: CAP-042
-    D06.f: CAP-043
-    service-order-release-decision: CAP-044
-    BHV105: BHV-067
-    BHV106: BHV-068
-    ba-inventory-disposition: BA-019
-    D05.i: CAP-045
-    BHV048: BHV-069
-    BHV049: BHV-070
-    subdomain-service-orders: SUB-010
-    ba-goods-processing-order-management: BA-020
-    service-order-picking: CAP-046
-    service-order-packing: CAP-047
-    service-order-cross-docking: CAP-048
-    service-order-labeling: CAP-049
-    service-order-kitting: CAP-050
-    service-order-garment-finishing: CAP-051
-    service-order-cleaning: CAP-052
-    service-order-repair-alteration: CAP-053
-    service-order-personalization: CAP-054
-    service-order-inspection: CAP-055
-    service-order-receiving: CAP-056
-    service-order-scrapping: CAP-057
-    ba-transport-order-management: BA-021
-    service-order-transport: CAP-058
-    transport-multi-stop: BHV-071
-    transport-multi-leg: BHV-072
-    transport-scheduled: BHV-073
-    transport-appointments: BHV-074
-    transport-rescheduling-redirection: BHV-075
-    service-order-transport-booking: CAP-059
-    ba-financial-service-order-management: BA-022
-    service-order-billing: CAP-060
-    service-order-payment-collection: CAP-061
-    ba-customs-services: BA-023
-    service-order-customs-clearance: CAP-062
-    subdomain-integration: SUB-011
-    ba-inbound-information-integration: BA-024
-    plans-ingestion: CAP-063
-    master-data-ingestion: CAP-064
-    master-data-ingestion-commerce: BHV-076
-    master-data-ingestion-finance: BHV-077
-    master-data-ingestion-design: BHV-078
-    ba-outbound-information-provision: BA-025
-    accounting-data-provision: CAP-065
-    planning-data-provision: CAP-066
-    product-feedback: CAP-067
-    subdomain-process-management: SUB-012
-    ba-reactive-workflow-management: BA-026
-    workflow-definition-management: CAP-068
-    order-workflow-orchestration: CAP-069
-    order-workflow-planning: CAP-070
-    order-workflow-sentry: CAP-071
-    ba-process-supervision: BA-027
-    process-intervention: CAP-072
-    process-exception-management: CAP-073
-    BHV082: CAP-074
-    ba-human-work-management: BA-028
-    human-task-management: CAP-075
-    work-deadline-management: CAP-076
-    work-assignment: CAP-077
-    ba-process-intelligence: BA-029
-    process-mining: CAP-078
-    operational-analysis-reporting: CAP-079
+    ba-master-plan-management: BA-012
+    D02.e: CAP-016
+    D05.f: CAP-017
+    BHV016: BHV-014
+    D04.s: BHV-015
+    BHV097: BHV-016
+    BHV098: BHV-017
+    BHV099: BHV-018
+    BHV100: BHV-019
+    BHV101: BHV-020
+    BHV006: CAP-018
+    ba-order-promising: BA-013
+    D03.i: CAP-019
+    BHV002: BHV-021
+    BHV004: BHV-022
+    D03.j: CAP-020
+    BHV075: BHV-023
+    BHV076: BHV-024
+    D03.k: CAP-021
+    BHV107: BHV-025
+    BHV108: BHV-026
+    ba-supply-matching: BA-014
+    D03.m: CAP-022
+    D05.e: CAP-023
+    BHV083: BHV-027
+    BHV084: BHV-028
+    BHV085: BHV-029
+    D05.c: CAP-024
+    BHV024: BHV-030
+    BHV025: BHV-031
+    D03.o: CAP-025
+    BHV102: BHV-032
+    BHV103: BHV-033
+    ba-policy-optimization: BA-015
+    D05.a: CAP-026
+    BHV026: BHV-034
+    BHV027: BHV-035
+    BHV028: BHV-036
+    D05.d: CAP-027
+    D05.h: CAP-028
+    BHV032: BHV-037
+    BHV033: BHV-038
+    BHV034: BHV-039
+    BHV035: BHV-040
+    subdomain-plans: BA-016
+    plans-visibility: CAP-029
+    demand-plan-visibility: CAP-030
+    D04: SUB-009
+    ba-order-lifecycle-management: BA-017
+    D04.i: CAP-031
+    BHV066: BHV-041
+    BHV067: BHV-042
+    BHV068: BHV-043
+    BHV069: BHV-044
+    BHV096: BHV-045
+    sales-order-preorder: BHV-046
+    D04.j: CAP-032
+    BHV058: BHV-047
+    BHV059: BHV-048
+    BHV060: BHV-049
+    BHV078: BHV-050
+    D04.k: CAP-033
+    D04.l: CAP-034
+    BHV050: BHV-051
+    BHV051: BHV-052
+    BHV052: BHV-053
+    BHV053: BHV-054
+    BHV054: BHV-055
+    return-credit-resolution: BHV-056
+    return-refund-resolution: BHV-057
+    return-replacement-resolution: BHV-058
+    D04.m: CAP-035
+    BHV055: BHV-059
+    BHV056: BHV-060
+    BHV057: BHV-061
+    D04.n: CAP-036
+    BHV044: BHV-062
+    BHV086: BHV-063
+    BHV087: BHV-064
+    D04.r: CAP-037
+    D04.t: CAP-038
+    order-visibility: CAP-039
+    subdomain-process-management: SUB-010
+    ba-reactive-workflow-management: BA-018
+    workflow-definition-management: CAP-040
+    order-workflow-orchestration: CAP-041
+    order-workflow-planning: CAP-042
+    order-workflow-sentry: CAP-043
+    ba-process-supervision: BA-019
+    process-intervention: CAP-044
+    process-exception-management: CAP-045
+    BHV082: CAP-046
+    ba-human-work-management: BA-020
+    human-task-management: CAP-047
+    work-deadline-management: CAP-048
+    work-assignment: CAP-049
+    ba-process-intelligence: BA-021
+    process-mining: CAP-050
+    operational-analysis-reporting: CAP-051
+    D06: SUB-011
+    ba-service-planning: BA-022
+    D06.b: CAP-052
+    D07.a: CAP-053
+    D06.e: CAP-054
+    transport-plan-decision: CAP-055
+    transport-load-consolidation: BHV-065
+    transport-routing-scheduling: BHV-066
+    ba-execution-assurance: BA-023
+    D07.d: CAP-056
+    D07.c: CAP-057
+    operations-visibility: CAP-058
+    BHV079: BHV-067
+    BHV080: BHV-068
+    BHV081: BHV-069
+    ba-execution-coordination: BA-024
+    D06.d: CAP-059
+    D06.f: CAP-060
+    service-order-release-decision: CAP-061
+    BHV105: BHV-070
+    BHV106: BHV-071
+    ba-inventory-disposition: BA-025
+    D05.i: CAP-062
+    BHV048: BHV-072
+    BHV049: BHV-073
+    subdomain-service-orders: SUB-012
+    ba-goods-processing-order-management: BA-026
+    service-order-picking: CAP-063
+    service-order-packing: CAP-064
+    service-order-cross-docking: CAP-065
+    service-order-labeling: CAP-066
+    service-order-kitting: CAP-067
+    service-order-garment-finishing: CAP-068
+    service-order-cleaning: CAP-069
+    service-order-repair-alteration: CAP-070
+    service-order-personalization: CAP-071
+    service-order-inspection: CAP-072
+    service-order-receiving: CAP-073
+    service-order-scrapping: CAP-074
+    ba-transport-order-management: BA-027
+    service-order-transport: CAP-075
+    transport-multi-stop: BHV-074
+    transport-multi-leg: BHV-075
+    transport-scheduled: BHV-076
+    transport-appointments: BHV-077
+    transport-rescheduling-redirection: BHV-078
+    service-order-transport-booking: CAP-076
+    ba-financial-service-order-management: BA-028
+    service-order-billing: CAP-077
+    service-order-payment-collection: CAP-078
+    ba-customs-services: BA-029
+    service-order-customs-clearance: CAP-079
     domain-logistics-execution: DOM-005
     system-enterprise-management-control: SYS-003
     domain-finance: DOM-006
