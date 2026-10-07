@@ -94,6 +94,7 @@ select { border: 1px solid var(--line); background: white; border-radius: 6px; p
 .workspace { grid-column: 2; grid-row: 2; min-width: 0; min-height: 0; display: flex; flex-direction: column; overflow: hidden; padding: 0 var(--workspace-inset); max-width: 1770px; width: 100%; margin: 0 auto; }
 .workspace-header, .workspace > .notice { flex: 0 0 auto; }
 .workspace-content { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; scrollbar-gutter: stable; scroll-padding: 16px; padding: 4px 4px 24px; margin: 0 -4px; }
+.map-workspace .workspace-content { padding-top: 0; }
 .workspace-content:focus-visible { outline: 2px solid var(--green); outline-offset: -2px; }
 .workspace.without-model { overflow: auto; }
 .view-context { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; min-width: 0; }
@@ -123,6 +124,7 @@ select { border: 1px solid var(--line); background: white; border-radius: 6px; p
 .pill.proposed { background: #e9edf5; color: #536183; }
 .pill.under_review { background: #f5e9df; color: #8b592d; }
 .view-bar { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-bottom: 1px solid #d5e0d8; margin-bottom: 22px; }
+.map-workspace .workspace-header .view-bar { margin-bottom: 0; }
 .view-tabs { display: flex; flex-wrap: wrap; gap: 0 22px; }
 .view-tabs button { padding: 12px 3px 14px; font-size: 12px; color: #708778; border-bottom: 2px solid transparent; margin-bottom: -1px; }
 .view-tabs button[aria-selected=true] { color: #276b58; border-color: #347c61; font-weight: 650; }

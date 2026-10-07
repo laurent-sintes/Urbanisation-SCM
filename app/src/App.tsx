@@ -184,7 +184,7 @@ export function App() {
       onPointerMove={e => { if (e.currentTarget.hasPointerCapture(e.pointerId)) setWidth(clampWidth(e.clientX)); }}
       onPointerUp={e => e.currentTarget.releasePointerCapture(e.pointerId)} />}
     {drawer && mobile && <button className="drawer-scrim" tabIndex={-1} aria-label="Fermer l’arbre" onClick={closeDrawer} />}
-    <main id="fa-main" className={`workspace ${!model ? 'without-model' : ''}`} inert={mobile && drawer} aria-busy={loading}>
+    <main id="fa-main" className={`workspace ${!model ? 'without-model' : ''} ${view === 'map' ? 'map-workspace' : ''}`} inert={mobile && drawer} aria-busy={loading}>
       {(error || notice || announcement) && <div className={`notice ${error ? 'error' : ''}`} role={error ? 'alert' : 'status'}>{error || notice || announcement}<button aria-label="Masquer le message" onClick={() => setAnnouncement('')} hidden={!announcement}><X size={14} /></button></div>}
       {!model ? <div className="empty-state"><Compass size={34} /><h1>{loading ? 'Ouverture du modèle…' : 'Publication indisponible'}</h1><p>{loading ? 'Chargement de la cartographie publiée.' : 'Réessaie de charger la publication.'}</p>{!loading && <button className="secondary-button" onClick={reload}>Réessayer</button>}</div> : <>
         <div className="workspace-header">
