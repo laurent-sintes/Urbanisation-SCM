@@ -96,22 +96,55 @@ class BusinessAreaTests(unittest.TestCase):
         self.assertEqual(service_retirements, {'service-order-document-production'})
         retired.update(service_retirements)
         self.assertLessEqual(retired, initial_caps)
-        self.assertEqual(initial_caps - retired, caps)
+        process_additions = {'BHV082', 'process-intervention', 'process-exception-management',
+                             'human-task-management', 'work-assignment', 'work-deadline-management',
+                             'process-mining', 'operational-analysis-reporting'}
+        credit_lot = read(root/'modeles/backlog/credit-check-decision-U892.yaml')
+        self.assertTrue(credit_lot['canonical_model_modified'])
+        decision_additions = {credit_lot['recommendation']['candidate_id']}
+        correction=read(root/'modeles/backlog/core-reference-credit-boundaries-U895.yaml')
+        later_retirements=set(correction['retirement']['node_ids'])
+        self.assertEqual(((initial_caps - retired) | process_additions | decision_additions)-later_retirements, caps)
         self.assertTrue(retired.isdisjoint(nodes))
         from scripts.glossary import references as inline_references
         self.assertNotIn(('model', 'price-book'), set(inline_references(m)))
         split = read(root/'modeles/backlog/operational-reference-areas-U863.yaml')
         references = set(retirement['reference_mapping'].values()) - set(split['retirement']['nodes'])
         references.update(split['replacement']['price-book'])
+        # U863 remains evidence of the original nine documentary subjects.
         self.assertEqual(len(references),9)
+        references.update({'customer-credit-profile', 'packaging-material-reference',
+                           'packaging-specification', 'internal-supplies-equipment-reference'})
+        self.assertEqual(len(references),13)
+        self.assertEqual({ident for ident,node in nodes.items() if node['kind']=='reference'}, references)
         for identifier in references:
             self.assertEqual(nodes[identifier]['kind'],'reference')
-        reference_areas = {a['id'] for a in split['areas']}
+        common_references = set()
+        reference_mapping = {
+            'ba-partner-agreement-references': {'D09', 'D11', 'customer-credit-profile'},
+            'ba-product-references': {'D08', 'product-price-book', 'D12', 'D16'},
+            'ba-service-references': {'D13', 'D14', 'service-price-book'},
+            'ba-packaging-references': {'packaging-material-reference', 'packaging-specification'},
+            'ba-internal-supplies-equipment-references': {'internal-supplies-equipment-reference'},
+        }
+        reference_areas = set(reference_mapping)
+        self.assertEqual(nodes['ba-product-references']['fields']['name'], 'Merchandise References')
         self.assertEqual({r['target_id'] for r in m['relations']
                           if r['type']=='contains' and r['source_id']=='business-references'}, reference_areas)
         self.assertEqual({r['target_id'] for r in m['relations']
-                          if r['type']=='presents' and r['source_id'] in reference_areas}, references)
-        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),22+len(reference_areas))
+                          if r['type']=='presents' and r['source_id']=='business-references'}, common_references)
+        for area, expected in reference_mapping.items():
+            self.assertEqual({r['target_id'] for r in m['relations']
+                              if r['type']=='presents' and r['source_id']==area}, expected)
+        self.assertEqual({r['target_id'] for r in m['relations']
+                          if r['type']=='presents' and r['source_id'] in reference_areas}, references-common_references)
+        self.assertEqual(len(m['nodes']),len(nodes), 'An identity must never be copied into another reference group')
+        for ident in references:
+            parents = [r for r in m['relations'] if r['target_id']==ident and r['type'] in ('contains','presents')]
+            expected_parent = 'business-references' if ident in common_references else next(
+                area for area, items in reference_mapping.items() if ident in items)
+            self.assertEqual([(r['source_id'],r['type']) for r in parents], [(expected_parent,'presents')],ident)
+        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),25+len(reference_areas))
         for ident in caps:
             parents = [r for r in m['relations'] if r['target_id']==ident and r['type'] in ('contains','presents')]
             self.assertEqual(len(parents), 1, ident)
@@ -120,7 +153,7 @@ class BusinessAreaTests(unittest.TestCase):
         self.assertEqual(nodes['subdomain-plans']['kind'],'business_area')
         self.assertTrue(any(r['type']=='contains' and r['source_id']=='D03' and r['target_id']=='subdomain-plans' for r in m['relations']))
         self.assertFalse(any(r['type']=='documents-reference' for r in m['relations']))
-        self.assertEqual(check_delivery(root,m)[1],[])
+        self.assertEqual(check_delivery(root,{**m, 'glossary': read(root/'modeles/backlog/glossary.yaml')})[1],[])
         from scripts.json_contract import validate
         published = deepcopy(m)
         published['space'] = 'release'
@@ -129,6 +162,52 @@ class BusinessAreaTests(unittest.TestCase):
         for p in m['scenario_catalog']['paths']:
             for s in p['steps']:
                 for c in s['contributions']: self.assertIn(c['node_id'],caps)
+
+    def test_business_references_keep_explicit_dependencies_without_a_common_identity_hub(self):
+        root = Path(__file__).resolve().parents[1]
+        model = read(root/'modeles/backlog/model.yaml')
+        nodes = {node['id']:node for node in model['nodes']}
+        new_references = {'customer-credit-profile', 'packaging-material-reference',
+                          'packaging-specification', 'internal-supplies-equipment-reference'}
+        required = {
+            ('relates-to','customer-credit-profile','D09'),
+            ('relates-to','packaging-specification','D08'),
+            ('relates-to','packaging-specification','packaging-material-reference'),
+            *(('supplies-reference','master-data-ingestion',ident) for ident in new_references),
+            ('uses-reference','service-order-packing','packaging-material-reference'),
+            ('uses-reference','service-order-packing','packaging-specification'),
+            ('uses-reference','service-order-receiving','packaging-specification'),
+        }
+        self.assertNotIn('merchandise-reference',nodes)
+        self.assertFalse(any(edge['type']=='relates-to' and edge['source_id'] in
+            {'packaging-material-reference','internal-supplies-equipment-reference'} and edge['target_id']=='D08'
+            for edge in model['relations']))
+        for kind,source,target in required:
+            with self.subTest(kind=kind,source=source,target=target):
+                links = [edge for edge in model['relations']
+                         if (edge['type'],edge['source_id'],edge['target_id'])==(kind,source,target)]
+                self.assertEqual(len(links),1,'The dependency must exist once, without a copied link')
+                edge = links[0]
+                self.assertEqual(nodes[source]['kind'],'reference' if kind=='relates-to' else 'capability')
+                self.assertEqual(nodes[target]['kind'],'reference')
+                qualification = edge['qualification']
+                self.assertEqual(qualification['role'],'needs' if kind=='uses-reference' else 'information')
+                self.assertIsInstance(qualification['meaning'],str)
+                self.assertTrue(qualification['meaning'].strip())
+                for field in ('conditions','effects'):
+                    self.assertIsInstance(qualification[field],list)
+                    self.assertTrue(qualification[field])
+                    self.assertTrue(all(isinstance(value,str) and value.strip() for value in qualification[field]))
+        # Knowledge and consumption links must never create extra business parents.
+        for ident in new_references|{'D08'}:
+            parents = [edge for edge in model['relations']
+                       if edge['target_id']==ident and edge['type'] in ('contains','presents')]
+            self.assertEqual(len(parents),1,ident)
+            self.assertEqual(parents[0]['type'],'presents',ident)
+        structural_only = deepcopy(model)
+        structural_only['relations'] = [edge for edge in model['relations']
+                                       if edge['type'] in ('contains','presents')]
+        self.assertEqual(build_display_index(model),build_display_index(structural_only))
 
     def test_historical_categories_still_validate(self):
         m=self.model();m['nodes']=[n for n in m['nodes'] if n['id']!='ba']

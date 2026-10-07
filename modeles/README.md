@@ -14,6 +14,10 @@ compilé, sur une fixture isolée, et produit un aperçu HTML et les SVG sous
 
 ### Une seule source de travail par information
 
+Les entrées du glossaire métier peuvent porter `alias_of` vers une entrée canonique de la même publication. Les alias restent accessibles par les anciens liens et par la recherche, sans doubler la liste. `presentation: historical` conserve une définition hors de la liste courante ; `presentation: method` avec `guide_section: method` déplace les conseils de rédaction vers la méthode. Les cibles absentes, cycles et alias vers des entrées masquées bloquent la validation. Aucun repli vers le backlog ou une autre publication. `as_of` désigne la date du dernier lot éditorial du brouillon ; les dates des snapshots sont conservées.
+
+Une déclaration de livraison peut exiger `required_glossary`, avec `id` et `field_sha256`, pour contrôler la présence et le contenu des définitions, contextes et renvois dans le candidat. Ce contrôle ne confère aucun accord métier. `node app/verify-glossary-audit.mjs` vérifie les routes du candidat en mémoire, les anciens liens, la recherche et l’isolation historique. Les liens `guide:references#method-section-N` renvoient aux notices de l’édition méthodologique associée.
+
 `backlog/atlas-transformation-methodology.yaml` est la seule source de travail du guide. Les noms, libellés, définitions et descriptions courtes des notions sont référencés par identifiant dans `backlog/modeling-glossary.yaml`, via `glossary.canonical_source` et `canonical_fields`. Les notes pédagogiques propres au guide restent dans le guide. Un champ référencé ne peut pas être redéfini localement.
 
 `scripts.guide_candidate.load_draft(root, source)` assemble le candidat pour les aperçus et contrôles. La préparation avec `--guide` matérialise un guide complet et fige les empreintes du brouillon, du glossaire canonique et, lorsque le guide déclare `model_examples`, du modèle dont ces exemples vérifient les noms, types et parents ; leur modification bloque l’activation. Atlas lit uniquement les éditions publiées, autonomes et immuables. Ne pas lire le brouillon brut comme une édition publiable.

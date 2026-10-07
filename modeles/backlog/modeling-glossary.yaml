@@ -1,6 +1,6 @@
 id: flow-modeling-glossary
 kind: modeling_glossary
-as_of: '2026-09-28'
+as_of: '2026-10-07'
 source_refs:
 - U229
 - U230
@@ -65,6 +65,7 @@ source_refs:
 - U821
 - U825
 - U880
+- U903
 purpose: Vocabulaire de modélisation en support à la définition des objets du modèle ; distinct du glossaire métier.
 boundary:
   business_glossary: modeles/backlog/glossary.yaml
@@ -453,6 +454,7 @@ terms:
   - U624
   - U626
   - U767
+  - U887
   review:
     state: partial
     adopted_scope: 'Typage exhaustif, icônes associées, décisions en fin de liste et séparation légère U449. U586 : nouveau
@@ -492,7 +494,8 @@ terms:
       la maîtrise, avec leur portée, leur validité et leurs conditions d’usage.
     Connaissance / visibilité: Établir, actualiser et rendre accessible une connaissance fiable des états, faits et résultats
       attendus.
-    Orchestration: Coordonner les prestations, leurs dépendances et leur progression dans un processus.
+    Orchestration: Conduire les activités et attentes d’un parcours, solliciter les contributions autorisées et suivre leurs
+      résultats. La coordination des prestations confiées en constitue un périmètre spécialisé.
     Planification: Construire et réviser un plan en mobilisant les décisions nécessaires.
     Décision: Déterminer une réponse métier à partir des faits, règles, objectifs et contraintes applicables, en incluant
       les calculs nécessaires.
@@ -505,8 +508,9 @@ terms:
 - id: MOD008
   name: Domain
   label_fr: Domaine
-  definition: Grand périmètre cohérent de responsabilités métier au sein d’un Business System. Il peut être détaillé en Subdomains,
-    éventuellement Business Areas, puis en capacités et comportements selon la profondeur utile à FLOW.
+  definition: Grand périmètre cohérent de responsabilités métier au sein d’un [Business System](method:MOD022). La profondeur
+    de description dépend du périmètre. Lorsqu’un domaine est détaillé jusqu’aux [capacités](method:MOD015), ses [sous-domaines](method:MOD013)
+    les regroupent obligatoirement dans des [Business Areas](method:MOD039).
   role: Délimiter une responsabilité métier et ses coopérations. Sales, Sourcing and Procurement, Supply Chain Orchestration
     et Logistics appartiennent à Business Operations.
   source_refs:
@@ -521,6 +525,8 @@ terms:
   - U780
   - U848
   - U853
+  - U880
+  - U889
   review:
     state: partial
     adopted_scope: 'U482 : nom Domain et position au-dessus des Areas.'
@@ -534,11 +540,13 @@ terms:
 - id: MOD013
   name: Subdomain
   label_fr: Sous-domaine
-  definition: Périmètre cohérent de responsabilités métier au sein d’un Domain, détaillé en Business Areas lorsque cela est
-    utile et en capacités.
+  definition: Périmètre cohérent de responsabilités métier au sein d’un [Domain](method:MOD008). Ses [capacités](method:MOD015)
+    appartiennent chacune à une [Business Area](method:MOD039) de ce sous-domaine.
   role: Organiser le modèle entre Domain et Capability, sans représenter une application ni une équipe.
   notes:
-  - Une capacité possède un seul sous-domaine de rattachement, directement ou via une Business Area.
+  - 'Chaque [capacité](method:MOD015) possède exactement un parent métier : une [Business Area](method:MOD039) de son [sous-domaine](method:MOD013).
+    Le rattachement direct au sous-domaine est interdit dans le modèle courant ; les publications historiques conservent leur
+    structure.'
   - Les référentiels d’Operational References restent des objets documentaires, liés aux capacités sans former un niveau de
     responsabilité.
   - La structure métier ne prescrit ni équipe, ni application, ni découpage logiciel.
@@ -561,6 +569,8 @@ terms:
   - U673
   - U848
   - U853
+  - U880
+  - U889
   review:
     state: partial
     adopted_scope: Nom et niveau Subdomain demandés U655 et mis en œuvre U673.
@@ -569,8 +579,8 @@ terms:
     comparison_ref: CMP269
     common: Le découpage distingue des périmètres métier cohérents.
     difference: Un sous-domaine métier ne constitue pas automatiquement un bounded context logiciel.
-    flow_position: Huit sous-domaines décrivent Supply Chain Orchestration dans le modèle courant ; ce découpage propre à
-      FLOW ne prétend pas être une taxonomie universelle.
+    flow_position: Le découpage de [Supply Chain Orchestration](model:supply-chain-orchestration) en sous-domaines est propre
+      à FLOW ; il ne prétend pas être une taxonomie universelle.
     sources:
     - ref: ELM635
       url: https://learn.microsoft.com/en-us/azure/architecture/microservices/model/domain-analysis
@@ -588,7 +598,7 @@ terms:
 - id: MOD009
   name: Business Reference
   label_fr: Référentiel métier
-  definition: Ensemble de données de référence partagées dont les capacités ont besoin pour exercer leurs responsabilités.
+  definition: Données de référence décrivant un sujet métier et nécessaires aux capacités pour exercer leurs responsabilités.
   role: Distinguer les références des commandes, décisions et réalisations.
   source_refs:
   - U450
@@ -602,7 +612,7 @@ terms:
   review:
     state: proposed
     proposed_scope: Formulation méthodologique de présentation ; aucun accord individuel déduit.
-  short_description: Ensemble de données de référence partagées dont les capacités ont besoin pour exercer leurs responsabilités.
+  short_description: Données de référence décrivant un sujet métier, avec responsabilités de source et d’usage explicites.
   editorial_notes: []
   notes:
   - 'La responsabilité sur ces données est précisée séparément : qui les tient, qui les fournit et qui construit les vues
@@ -610,6 +620,8 @@ terms:
   - Une capacité peut utiliser une référence (uses-reference) ou l’alimenter avec des apports sourcés (supplies-reference).
     Ces liens portent conditions et effets, sans rattachement hiérarchique ni transfert de maîtrise ; les associations entre
     références restent distinctes.
+  - Un sujet partagé n’impose pas un référentiel technique commun. Une source extérieure peut garder l’autorité d’entreprise
+    tandis que le domaine tient une référence locale utilisable et justifiée.
 - id: MOD010
   name: Model Relationship
   label_fr: Relation du modèle
@@ -711,7 +723,8 @@ terms:
     vue utile aux capacités.
   values:
     Domain-managed: 'Le domaine tient les données : il les crée, les consulte, les modifie et les retire.'
-    Projection: Le domaine reçoit des données dont une source extérieure porte la vérité.
+    Projection: Le domaine reçoit des données sous autorité d’une source extérieure et tient une référence locale utilisable,
+      avec provenance et validité ; cette responsabilité ne se réduit pas à une copie passive.
     Domain-View: Le domaine construit et actualise une vue à partir des données disponibles.
   boundary: Un sujet peut associer données projetées et vue construite. Qualifier les responsabilités concernées séparément
     ; aucune technologie ni nouveau niveau hiérarchique imposé.
@@ -756,9 +769,14 @@ terms:
     des responsabilités métier distinctes. Une décomposition supplémentaire se justifie lorsqu’elle rend identifiable un résultat
     ou une responsabilité utile au pilotage ; une étape, un paramètre, un document ou une fonction d’outil ne suffit pas à
     créer une capacité.
-  - 'U787 : TOGAF et BIZBOK constituent les appuis méthodologiques. Le niveau 4 FLOW, les comportements terminaux et la finesse
-    des décisions restent des conventions locales ; les numéros de niveau ne prouvent pas une équivalence de granularité.
-    Voir MOD027 et MOD028 ; MOD026 conserve la notion historique retirée sous U791.'
+  - 'U787 : [TOGAF](guide:references#method-section-1) et [BIZBOK](guide:references#method-section-0) constituent les appuis
+    méthodologiques. Le niveau 4 FLOW, les comportements terminaux et la finesse des décisions restent des conventions locales
+    ; les numéros de niveau ne prouvent pas une équivalence de granularité. Voir MOD027 et MOD028 ; MOD026 conserve la notion
+    historique retirée sous U791.'
+  - 'Le parcours mobilise des capacités et traverse leurs responsabilités ; il ne devient pas leur parent dans la hiérarchie.
+    [Process Management](model:subdomain-process-management) porte le savoir-faire de définition, conduite, supervision et
+    analyse de ces parcours. [Process Visibility](model:BHV082) est une capacité : son identité persistante BHV082 ne détermine
+    pas sa nature ni son code de lecture.'
   source_refs:
   - U33
   - U624
@@ -770,6 +788,7 @@ terms:
   - U786
   - U787
   - U791
+  - U885
   review:
     state: partial
     adopted_scope: 'U787 : définition et règle de granularité présentées après U786 ; choix des appuis TOGAF et BIZBOK. Les
@@ -1353,8 +1372,8 @@ terms:
     FLOW.'
   - Le cas d’usage expose l’objectif et l’ensemble des chemins possibles ; un scénario décrit un chemin particulier.
   - 'Exemple illustratif : réexaminer la satisfaction d’une commande après une rupture d’approvisionnement.'
-  - Le Business Scenario TOGAF peut inclure l’environnement organisationnel et technique ; il est plus large que cette convention
-    FLOW. Aucun synonyme exact ni conformité UML revendiqués.
+  - Le Business Scenario [TOGAF](guide:references#method-section-1) peut inclure l’environnement organisationnel et technique
+    ; il est plus large que cette convention FLOW. Aucun synonyme exact ni conformité UML revendiqués.
   source_refs:
   - U786
   - U787
@@ -1401,8 +1420,9 @@ terms:
     pas de la réponse retenue.
   - 'Exemple illustratif : une réception retardée menace une livraison promise ; rechercher un stock alternatif ou réviser
     la promesse constituent deux réponses à examiner.'
-  - 'Convention FLOW : ce scénario n’est pas une reprise exacte du Business Scenario TOGAF, qui peut aussi décrire organisation
-    et technologie, ni du Scenario BIZBOK, qui désigne une application de l’architecture métier à une problématique d’entreprise.'
+  - 'Convention FLOW : ce scénario n’est pas une reprise exacte du Business Scenario [TOGAF](guide:references#method-section-1),
+    qui peut aussi décrire organisation et technologie, ni du Scenario [BIZBOK](guide:references#method-section-0), qui désigne
+    une application de l’architecture métier à une problématique d’entreprise.'
   - 'U792 : navigation principale du catalogue autonome par flux de valeur, avec filtres transverses (événement, objet métier,
     situation nominale/exception/reprise, capacités mobilisées). Identité unique, rattachements multiples possibles. Les flux
     doivent être formalisés avant qualification ; leur liste n’est pas encore adoptée. U793 : scenario_catalog porte les scénarios
@@ -1463,8 +1483,8 @@ terms:
     une valeur identifiable. Il précise le bénéficiaire, la valeur attendue, le déclencheur, les frontières et les étapes
     de valeur ; il peut traverser plusieurs domaines.
   notes:
-  - 'Convention FLOW mise en œuvre sous U793. Flux et étapes de valeur : appui BIZBOK/TOGAF ; étape de mobilisation : convention
-    locale. Aucun alignement automatique entre niveaux ou étapes.'
+  - 'Convention FLOW mise en œuvre sous U793. Flux et étapes de valeur : appui [BIZBOK](guide:references#method-section-0)/[TOGAF](guide:references#method-section-1)
+    ; étape de mobilisation : convention locale. Aucun alignement automatique entre niveaux ou étapes.'
   source_refs:
   - U792
   - U793
@@ -1479,8 +1499,8 @@ terms:
     le résultat de valeur et les conditions d’entrée et de sortie ; elle ne correspond pas automatiquement à une étape d’un
     parcours particulier.
   notes:
-  - 'Convention FLOW mise en œuvre sous U793. Flux et étapes de valeur : appui BIZBOK/TOGAF ; étape de mobilisation : convention
-    locale. Aucun alignement automatique entre niveaux ou étapes.'
+  - 'Convention FLOW mise en œuvre sous U793. Flux et étapes de valeur : appui [BIZBOK](guide:references#method-section-0)/[TOGAF](guide:references#method-section-1)
+    ; étape de mobilisation : convention locale. Aucun alignement automatique entre niveaux ou étapes.'
   source_refs:
   - U792
   - U793
@@ -1495,8 +1515,8 @@ terms:
     les informations et conditions nécessaires et le résultat intermédiaire. Elle ne constitue pas un niveau de décomposition
     des capacités.
   notes:
-  - 'Convention FLOW mise en œuvre sous U793. Flux et étapes de valeur : appui BIZBOK/TOGAF ; étape de mobilisation : convention
-    locale. Aucun alignement automatique entre niveaux ou étapes.'
+  - 'Convention FLOW mise en œuvre sous U793. Flux et étapes de valeur : appui [BIZBOK](guide:references#method-section-0)/[TOGAF](guide:references#method-section-1)
+    ; étape de mobilisation : convention locale. Aucun alignement automatique entre niveaux ou étapes.'
   source_refs:
   - U792
   - U793
@@ -1753,6 +1773,41 @@ terms:
         une taxonomie Visibility universelle.'
     source_refs:
     - U856
+- id: MOD041
+  name: Business Core and Operational Context
+  label_fr: Core métier et contexte opérationnel
+  definition: Le Core porte des aptitudes génériques ; le contexte opérationnel combine ces aptitudes et les règles propres
+    à une activité pour traiter ses demandes.
+  short_description: Le Core porte des aptitudes génériques ; le contexte opérationnel combine ces aptitudes et les règles
+    propres à une activité pour traiter ses demandes.
+  notes:
+  - Cette frontière ne crée aucun niveau hiérarchique ni composant logiciel obligatoire. Dans FLOW, Supply Chain Orchestration
+    approfondit les aptitudes génériques ; Achat et Vente portent les Cases contextualisés.
+  - 'Exemple : le Case Wholesale applique le contrôle de crédit à une vente avec des données financières sourcées ; il ne
+    transforme pas cette règle en capacité générique du Core.'
+  source_refs:
+  - U902
+  - U903
+  review:
+    state: proposed
+    note: Complément méthodologique de mise en œuvre de l’audit accepté U903.
+- id: MOD042
+  name: Decision Mandate
+  label_fr: Mandat de décision
+  definition: Périmètre explicite des décisions qu’un rôle ou une instance peut prendre, avec limites, conditions et modalités
+    d’escalade.
+  short_description: Périmètre explicite des décisions qu’un rôle ou une instance peut prendre, avec limites, conditions et
+    modalités d’escalade.
+  notes:
+  - Préciser l’objet de la décision, les limites d’autorité, les preuves nécessaires et le destinataire d’une escalade. Un
+    rôle de coordination ne donne pas automatiquement le pouvoir d’engager l’entreprise.
+  - La méthode aide à expliciter ce mandat ; elle ne prétend pas que le mandat réel du programme est déjà arrêté.
+  source_refs:
+  - U902
+  - U903
+  review:
+    state: proposed
+    note: Complément méthodologique de mise en œuvre de l’audit accepté U903.
 methodology_agreements:
 - id: AGREEMENT-U787
   source_refs:
@@ -1956,3 +2011,5 @@ presentation:
     - TER025
     - MOD016
     - MOD018
+    - MOD041
+date_semantics: 'as_of : date du dernier lot éditorial appliqué au brouillon ; les publications figées conservent leur date.'

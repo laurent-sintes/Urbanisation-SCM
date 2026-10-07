@@ -1,0 +1,922 @@
+schema_version: 1.0.0
+id: credit-check-decision-U892
+recorded_on: '2026-10-07'
+source_refs:
+- U892
+- U893
+- U894
+status: applied_verified
+scope: Rendre visible la décision de crédit d’une vente et enrichir le scénario existant, sans déplacer l’autorité financière.
+canonical_model_modified: true
+existing_coverage:
+  nodes:
+  - id: D04
+    meaning: Contrat de contrôle financier, de suspension et de reprise des commandes.
+  - id: D04.i
+    meaning: Sales Order tient le résultat applicable, le blocage et la transition autorisée.
+  - id: D09
+    meaning: Party / Role conserve le profil de référence et la limite reçus, avec leur portée.
+  - id: D11
+    meaning: Agreement conserve les conditions de paiement et les garanties réellement convenues.
+  - id: ba-partner-agreement-references
+    meaning: Profils et règles de référence sous autorité du contrôle de gestion.
+  - id: master-data-ingestion
+    meaning: Réception des apports de référence financiers avec provenance et version.
+  - id: order-workflow-sentry
+    meaning: Réagir à une information ou échéance et solliciter le réexamen prévu.
+  glossary_term: TER155
+  glossary_name: Customer Credit Control
+  scenario_id: customer-credit-hold
+  path_ids:
+  - customer-credit-hold-path
+  - credit-review-no-response-path
+  finding: Le contrôle existe dans les textes et parcours, mais aucune capacité nommée Credit Check ne matérialise le résultat
+    décisionnel.
+  limits: Le scénario principal décrit surtout le blocage et la reprise ; les données nécessaires et le contrôle favorable
+    avant progression sont peu visibles.
+recommendation:
+  candidate_id: credit-check-decision
+  kind: capability
+  name: Credit Check Decision
+  nature: decision
+  parent_id: ba-order-lifecycle-management
+  parent_name: Order Lifecycle Management
+  subdomain_id: D04
+  subdomain_name: Order Management
+  definition: Déterminer si une commande client peut franchir une étape soumise au contrôle de crédit, selon les informations
+    et les règles fournies ou le résultat rendu par Finance.
+  finality: Autoriser ou retenir la progression d’une vente avec un résultat financier explicable et applicable à cette commande.
+  scope:
+  - Identifier la commande et sa version, le client ou payeur concerné, le montant, la devise, l’étape et le périmètre financier
+    contrôlés.
+  - Obtenir les informations financières nécessaires, ou un résultat de contrôle fourni par Finance ; conserver leur origine,
+    date et validité.
+  - Appliquer les règles financières autorisées lorsque les informations suffisantes sont disponibles ; sinon consommer le
+    résultat de Finance, sans lui substituer une appréciation de risque inventée.
+  - Rendre une autorisation, un blocage, une demande de réexamen ou un résultat indéterminé, avec motif, portée, règle et
+    version utilisées.
+  - Vérifier la validité du résultat pour l’étape et la version de commande concernées ; une modification pertinente peut
+    nécessiter un nouveau contrôle.
+  - Distinguer information manquante, périmée ou réponse indisponible d’un refus financier ; aucune de ces absences ne constitue
+    une autorisation implicite.
+  - Les calculs nécessaires à cette décision en font partie ; aucune capacité supplémentaire de récupération ou de Visibility
+    n’est créée par défaut.
+  behaviors: []
+  decomposition_rationale: Une responsabilité décisionnelle distincte suffit. Calcul local sur règles autorisées et consommation
+    d’un résultat externe sont des modes de réalisation, pas deux comportements métier imposés.
+  benefits:
+  - Montrer au métier le savoir-faire qu’il nomme Credit Check.
+  - Séparer le résultat financier du registre de commandes et du moteur de processus.
+  - Distinguer la couverture physique d’Availability de l’admissibilité financière.
+  boundaries:
+    finance: Finance conserve l’autorité sur le risque, les limites, l’encours et l’exposition d’entreprise, ainsi que les
+      dérogations. Le calcul financier peut rester chez elle.
+    references: Party / Role et Agreement portent les profils, règles et conditions de référence. L’encours courant et le
+      résultat relatif à une commande ne deviennent pas automatiquement des références maîtres.
+    sales_order: Sales Order conserve identité, engagements, blocage et validité de la transition ; il applique seulement
+      le résultat utilisable et autorisé.
+    process_management: Le processus sollicite la décision, organise l’attente ou le travail humain et conduit la suite. Sentry
+      ne se donne pas de dérogation financière.
+    availability: Une autorisation de crédit ne prouve ni disponibilité, ni promesse, ni réservation de stock.
+    fulfilment: La coordination ne reçoit de suite que dans la portée autorisée et après vérification des autres conditions
+      ; un contrôle favorable ne vaut pas réalisation physique.
+  integration_limit: Les données nécessaires et le résultat peuvent être obtenus à la demande ; aucun appel technique, fournisseur,
+    interface ou réalisation installée n’est présumé. Reference Ingestion conserve son rôle sur les seules références.
+  pending_choice: Capacité et rattachement appliqués sous U894 ; les nouvelles rédactions restent proposées et la publication
+    est distincte.
+glossary_alignment_plan:
+  term_id: TER155
+  preserve_current_identity: true
+  current_name: Customer Credit Control
+  business_phrase: Credit Check
+  capability_name: Credit Check Decision
+  changes:
+  - Rendre Credit Check découvrable depuis le terme existant et expliciter le résultat décisionnel dans sa définition courte
+    et son contexte.
+  - Conserver le lien avec les règles et profils de référence sans assimiler l’encours ou le résultat de commande à un référentiel.
+  - Relier les nouvelles rédactions au terme métier et aux responsabilités du modèle ; préserver les publications historiques.
+use_case_proposal:
+  existing_scenario_id: customer-credit-hold
+  proposed_name: Customer Credit Check and Hold
+  proposed_title: Contrôler le crédit avant d’avancer dans une vente
+  existing_main_path_id: customer-credit-hold-path
+  preserve_no_response_path_id: credit-review-no-response-path
+  purpose: Éprouver la décision financière et ses effets sur la progression d’une commande, sans créer un scénario concurrent.
+  nature: illustrative
+  situation: Une commande client de 3 000 euros doit franchir une étape soumise au contrôle de crédit. La limite est de 10
+    000 euros et l’exposition avant cette commande est de 8 000 euros, selon le périmètre fourni par Finance.
+  assumptions:
+  - Cas fictif ; ces montants et ce calcul ne constituent ni une règle universelle ni une observation Beaumanoir.
+  - La règle financière du cas porte sur l’exposition projetée et la limite ; l’exposition préalable exclut explicitement
+    cette commande pour éviter un double compte.
+  - Montants, devise, parties, périmètre et validité sont compatibles et communiqués ; d’autres règles peuvent exister dans
+    d’autres cas.
+  steps:
+  - title: Obtenir la base du contrôle
+    action: Disposer de la version de commande et des profils ou règles valides ; obtenir l’exposition courante de Finance
+      ou son résultat corrélé à cette commande.
+    result: Informations identifiées et suffisantes pour ce contrôle, sans inventer l’encours à partir du seul classement
+      client.
+    capability_ids:
+    - master-data-ingestion
+    - credit-check-decision
+    - D04.i
+    boundary: Reference Ingestion reçoit les profils et règles ; Credit Check Decision obtient les données ou le résultat
+      nécessaires à la décision particulière.
+  - title: Déterminer si la vente peut avancer
+    action: Dans le cas décrit, l’exposition projetée est de 11 000 euros. Le contrôle ne permet pas le franchissement de
+      l’étape ; le résultat garde son motif et sa portée.
+    result: Sales Order conserve le blocage correspondant ; Process Management maintient l’attente ou sollicite la suite prévue.
+    capability_ids:
+    - credit-check-decision
+    - D04.i
+    - order-workflow-orchestration
+  - title: Réexaminer sur une information financière reconnue
+    action: Finance reconnaît un paiement et fournit une exposition préalable révisée à 6 000 euros. Process Sentry sollicite
+      le nouveau contrôle.
+    result: Une nouvelle décision est demandée pour la version et l’étape concernées ; l’information seule ne lève pas le
+      blocage.
+    capability_ids:
+    - order-workflow-sentry
+    - credit-check-decision
+  - title: Appliquer le résultat autorisé
+    action: Avec 9 000 euros projetés et les autres règles du cas satisfaites, le contrôle autorise l’étape. Sales Order enregistre
+      la levée dans cette portée.
+    result: Process Orchestration peut poursuivre lorsque les autres conditions sont remplies, sans créer de nouvelle commande
+      ni déduire une disponibilité physique.
+    capability_ids:
+    - credit-check-decision
+    - D04.i
+    - order-workflow-orchestration
+  variants:
+  - Une dérogation est nécessaire: le travail humain recueille la décision d’une personne habilitée, son auteur, son motif
+      et sa portée. La seule sollicitation ne vaut pas accord.
+  - La réponse manque ou les données sont périmées: le contrôle reste indéterminé et l’étape n’est pas autorisée par défaut.
+      Conserver le parcours existant sans réponse.
+  - Le montant, le payeur ou une autre donnée pertinente change: vérifier si le contrôle précédent couvre encore la version
+      de commande ; sinon demander un nouveau résultat.
+  - Plusieurs commandes sont traitées: Finance reste responsable de l’exposition dans son périmètre ; un montant disponible
+      ancien n’autorise pas silencieusement toutes les ventes concurrentes.
+  invariant: Une même commande continue après la décision autorisée. Autorisation financière, engagement commercial, disponibilité
+    physique et exécution restent distincts.
+market_comparison:
+- vendor: Microsoft
+  product: Dynamics 365 Finance
+  concept: Credit management blocking rules and sales order release
+  similarities: Les règles financières confrontent la commande aux informations de crédit et peuvent retenir sa progression,
+    puis permettre une reprise contrôlée.
+  differences: Le produit couvre aussi la gestion des limites et d’autres fonctions financières. La capacité FLOW proposée
+    porte seulement l’admissibilité d’une étape de vente.
+  flow_choice: Credit Check Decision matérialise ce résultat ; les données de référence, la transition de commande et le parcours
+    gardent leurs responsables.
+  source_id: S01
+  evidence_limits: Recouvrement fonctionnel partiel ; la documentation ne prescrit ni ce nom de capacité ni sa Business Area
+    FLOW.
+- vendor: SAP
+  product: SAP S/4HANA Sales / SAP Credit Management
+  concept: Credit check in sales order processing
+  similarities: Le contrôle intégré à la vente peut conduire au blocage, à l’examen financier puis à la libération de la commande.
+  differences: La solution comprend aussi notation et calcul de limites, qui restent hors de la capacité opérationnelle FLOW
+    proposée.
+  flow_choice: Faire apparaître la décision de passage au contrôle financier, tout en conservant l’autorité de Finance sur
+    le risque et les dérogations.
+  source_id: S02
+  evidence_limits: Recouvrement partiel ; l’intégration dans un produit ne démontre pas un placement organisationnel identique
+    ni une réalisation Beaumanoir.
+primary_sources:
+- id: S01
+  vendor: Microsoft
+  product: Dynamics 365 Finance
+  title: Credit holds for sales orders
+  url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-sales-order-credit-holds
+  consulted_on: '2026-10-07'
+  consulted_sections:
+  - Set up blocking rules and exclusion rules
+  - Credit limit used
+  - Releasing orders from the hold list for processing
+  - Automatically releasing credit management holds
+  - Credit management approval workflow
+- id: S02
+  vendor: SAP
+  product: SAP S/4HANA Sales
+  title: Working with SAP Credit Management
+  url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/working-with-sap-credit-management_d6b177ee-a8bb-4b77-80dc-87c04a9dd3f1
+  consulted_on: '2026-10-07'
+  consulted_sections:
+  - An Example Business Process Using SAP Credit Management
+  - Credit Management in SAP S/4HANA
+- id: S03
+  vendor: Microsoft
+  product: Dynamics 365 Finance
+  title: Credit and collections overview
+  url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-credit-and-collections-overview
+  consulted_on: '2026-10-07'
+  consulted_sections:
+  - Credit management
+source_limits: Pages primaires réellement consultées. La page SAP Help rendue sans contenu n’est pas utilisée comme appui.
+  Aucun consensus de taxonomie, déploiement ou interface installé allégué.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U892
+  - U893
+  - U894
+  summary: Credit Check Decision et scénario existant intégrés sous U894 ; Finance conserve son autorité.
+  required_nodes:
+  - id: D04.i
+    kind: capability
+    fields:
+      name: Sales Order
+    field_sha256:
+      definition: be5b55964061f635cefd74790f122b12bd4ef9e21ebf95daa7445bea67d583f2
+      finality: b4d51ece93b62b52d8fc48a10386c25125978e76f9fb7e734908b510bef82643
+      scope: a4282c42fd9c8158fe3fe7abcb18e0ed7520cbc12a964f169a12ee6809a59cd1
+      market_comparisons: a27672b632eef92f68bc84c8a92c7515df1f94db8240a514cf628d3a407a8249
+      nature: 6b6fdce2c6f9762666c2e6dd00b3a89831d3b2f9ec0bfa4054bf88fa9b45fad6
+      market_inspiration: 0cc7b2dfdfbd89ac10a84542abb9590f602ce616d229c23a1a589560374e70b3
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+  - id: D04
+    kind: area
+    fields:
+      name: Order Management
+    field_sha256:
+      definition: eb34b6f9e60caee2787e3eccbb45de756edd5038f141cc62448d333d6d1c87ae
+      finality: d9af5441aacd1cf6acd5f0b871fb86776ee6e0e32aa326e9935d0ee8736c2b69
+      scope: 45062ab855ecffa557ff4134cc35ba6105be1fd16f140498c67ea80d337118af
+      market_comparisons: 0bc573070a0ebb15b60fd519cfdc4c89ab3377a1af77850a3863e85dd16b5565
+      market_inspiration: edce1e8ea4eaa0db151cc88be7e4eea4808bc4a7286f789ea2ba8ec1821299f0
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: order-workflow-orchestration
+    kind: capability
+    fields:
+      name: Process Orchestration
+    field_sha256:
+      definition: dae583cf0928df44b5f25a2835869cdb2aa537b429ff935b938b02c60d8b3cbe
+      finality: de9047289c135b1ebd3d534a7dc990262288e1998f4de62589e9f727af30c4a1
+      nature: 47b33d8bb8868bf6e76b20eb2067c099ac843e0847be6b0384f76dafe8175cea
+      scope: b2a754b590ee8c11d5ec4f2a66c34f908e60001b9193864738c7ab3acd51c010
+      market_comparisons: 59a229ca8edca5bc71dd4d4ee3757a8fbe4e1dd430d991affd094043fb3852e8
+      market_inspiration: 939a5b58378f67bbce2087324446428afce5943c2a19ae7d3568b336aa788ceb
+    parent: ba-reactive-workflow-management
+    parent_type: contains
+  - id: ba-order-lifecycle-management
+    kind: business_area
+    fields:
+      name: Order Lifecycle Management
+    field_sha256:
+      definition: e45be25d98e2dab3d53927756ca8470f4901c1df61f852d732c7e98bebb9d048
+      finality: 3ee980e2c9de6389488ed11ad3244c7547083cae64238075ab79868fa21703a4
+      scope: 18366d33d673f9c0f966b3425d5737e710f3915f89ba615a9404a534a8c496cd
+      market_comparisons: 0c4493e10214b2d88cd37ea5a93fe854255413c9b0c6f2e800801b4ed0e5ba59
+    parent: D04
+    parent_type: contains
+  - id: ba-partner-agreement-references
+    kind: business_area
+    fields:
+      name: Partner & Agreement References
+    field_sha256:
+      definition: 2be6e6506061040c26bb8c092ddd06bbc88bfea1dc6941ba55fcf9a3c79ac7b0
+      finality: 2b63cce0cb87a0906a34bef3c4bcb26850511abf846ed36ef0c0b129b96f0c8a
+      scope: 4209e1b7b90eab29e8f88357f162c32d19a38126c8e4b52249e0de5e33660b73
+      market_comparisons: 8e2e15aa58a155cc51403aefbefb0728c2113669aa9aa1934fb44882e3925101
+    parent: business-references
+    parent_type: contains
+  required_catalog:
+  - collection: scenarios
+    id: customer-credit-hold
+    content_sha256: 2d7eaa632b2aba94d28c219fa719f61ca9df28eae47352e563333e690012ca4c
+  - collection: paths
+    id: customer-credit-hold-path
+    content_sha256: e5055e559ba98012ef79a0dfd77fcf1b7ce85115e432837d47576c04a3a7a397
+  - collection: paths
+    id: credit-review-no-response-path
+    content_sha256: 876078767f6f29597999bc336b280a79606e1c0fafaad557dd18afd99c08083e
+  absent_nodes:
+  - credit-check-decision
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
+superseded_market_gaps:
+  ba-order-lifecycle-management:
+  - family: sap_s4hana
+    reason: Le document examiné « Explaining Flexible Workflow » ne permet pas d’établir un appui suffisamment précis pour
+      Order Lifecycle Management. Le périmètre FLOW reste documenté ; sa correspondance produit exige une source plus ciblée.
+    investigated_urls:
+    - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+    source_refs:
+    - U853
+  ba-partner-agreement-references:
+  - family: microsoft_dynamics
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Accès aux pages
+      partenaires insuffisant pour une comparaison complète de l’Area et des accords.
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/overview-global-address-book
+    source_refs:
+    - U862
+    - U863
+  - family: sap_s4hana
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Accès aux pages
+      partenaires insuffisant pour une comparaison complète de l’Area et des accords.
+    investigated_urls:
+    - https://help.sap.com/docs/SAP_S4HANA_CLOUD/f86dc2eb1f8b48c880a7607213104b27/45efed579120bc12e10000000a4450e5.html?locale=en-US
+    source_refs:
+    - U862
+    - U863
+  TER136:
+  - family: sap_s4hana
+    reason: Le document examiné « Explaining Flexible Workflow » ne permet pas d’établir un appui suffisamment précis pour
+      Order Lifecycle Management. Le périmètre FLOW reste documenté ; sa correspondance produit exige une source plus ciblée.
+    investigated_urls:
+    - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+    source_refs:
+    - U853
+  TER147:
+  - family: microsoft_dynamics
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Accès aux pages
+      partenaires insuffisant pour une comparaison complète de l’Area et des accords.
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/overview-global-address-book
+    source_refs:
+    - U862
+    - U863
+  - family: sap_s4hana
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Accès aux pages
+      partenaires insuffisant pour une comparaison complète de l’Area et des accords.
+    investigated_urls:
+    - https://help.sap.com/docs/SAP_S4HANA_CLOUD/f86dc2eb1f8b48c880a7607213104b27/45efed579120bc12e10000000a4450e5.html?locale=en-US
+    source_refs:
+    - U862
+    - U863
+application_U894:
+  applied_on: '2026-10-07'
+  changed_fields:
+    D04.i:
+    - scope
+    - market_comparisons
+    - market_inspiration
+    D04:
+    - scope
+    - market_comparisons
+    - market_inspiration
+    order-workflow-orchestration:
+    - scope
+    - market_comparisons
+    - market_inspiration
+    ba-order-lifecycle-management:
+    - scope
+    - market_comparisons
+    ba-partner-agreement-references:
+    - scope
+    - market_comparisons
+    credit-check-decision:
+    - name
+    - definition
+    - finality
+    - nature
+    - scope
+    - decomposition_rationale
+    - market_comparisons
+    - market_inspiration
+  new_relation_ids:
+  - REL-U894-PARENT-credit-check-decision
+  - REL-U894-NEEDS-sales-credit
+  - REL-U894-NEEDS-process-credit
+  - REL-U894-REFERENCE-credit-party
+  - REL-U894-REFERENCE-credit-agreement
+  scenario_ids:
+  - customer-credit-hold
+  path_ids:
+  - customer-credit-hold-path
+  - credit-review-no-response-path
+  agreement_limit: Nom, nature, définition, finalité, parent et cas proposés acceptés ; pas d’accord global sur les nouvelles
+    rédactions ou réalisations installées.
+  publication: Backlog uniquement ; aucune release, commit ou push déclenché.
+  intent_capture:
+    method: record_intents, une écriture atomique sur le lot final
+    existing_scopes_reexamined: 45
+    new_scopes: 2
+    ids:
+    - DEC-U894-REVIEW-ff20d603d3ec45963808f31e
+    - DEC-U894-REVIEW-9e69f3af5767683ee6c94fe9
+    - DEC-U894-REVIEW-f7a3e97fb0c3299297fa9407
+    - DEC-U894-REVIEW-bbbffa8263f80ad80e1b6a6f
+    - DEC-U894-REVIEW-9654594bdb4593318c280a9c
+    - DEC-U894-REVIEW-710e8a47aa38592fae9732c9
+    - DEC-U894-REVIEW-c04f499abc86070a750c18f9
+    - DEC-U894-REVIEW-b9d61d8f4a7d8d973f1a308b
+    - DEC-U894-REVIEW-59d57475c37ce2c422bf2115
+    - DEC-U894-REVIEW-fc2314af5a7c3235d47a2bdc
+    - DEC-U894-REVIEW-6c2784879f183eab5b8ab2f1
+    - DEC-U894-REVIEW-d9f930305173d33e0c33e4a5
+    - DEC-U894-REVIEW-a083a8c2d71fedc9ccf60ade
+    - DEC-U894-REVIEW-b4a34f9b7ae66df0f79dd288
+    - DEC-U894-REVIEW-5fe433042763376eda07e51b
+    - DEC-U894-REVIEW-2c150d1b2a689fd06404df9c
+    - DEC-U894-REVIEW-6d990a15ec7ea97269b8d3c7
+    - DEC-U894-REVIEW-82a0862242e6545f644f540e
+    - DEC-U894-REVIEW-c22dacf4b5f712e5cbc391f5
+    - DEC-U894-REVIEW-fcf03d044c57ca038d847083
+    - DEC-U894-REVIEW-ee4846df09bb79e3eac08ab6
+    - DEC-U894-REVIEW-8be92ef3f02dc6d4c8e01991
+    - DEC-U894-REVIEW-fb3822055d5737c4453f5a23
+    - DEC-U894-REVIEW-6ffd6697cc308d2e598ec556
+    - DEC-U894-REVIEW-03cff6469a033ed1c23c4cba
+    - DEC-U894-REVIEW-3b8004a837c015af63f8aa24
+    - DEC-U894-REVIEW-90d1ef6e18c0bd29f0dd3d99
+    - DEC-U894-REVIEW-caeb8e4205237e5d9d3acf62
+    - DEC-U894-REVIEW-f4a1f476d94920e82339134f
+    - DEC-U894-REVIEW-588c7957aeaa5657a11046b2
+    - DEC-U894-REVIEW-ce8cac379f66d15427b205a3
+    - DEC-U894-REVIEW-289ac6c2dbfea886074bd0d7
+    - DEC-U894-REVIEW-39d05aa755d5d29aedb48f54
+    - DEC-U894-REVIEW-90fcf6117d98959eb785e372
+    - DEC-U894-REVIEW-bb1da36f07e20ddaf4251ea3
+    - DEC-U894-REVIEW-7a35cb41eff16734cc57a928
+    - DEC-U894-REVIEW-b786e19ab8fc1d06751faa33
+    - DEC-U894-REVIEW-1bfba7b27525e7a6f6db842c
+    - DEC-U894-REVIEW-6b8fae19bdbbd0845fa38db8
+    - DEC-U894-REVIEW-36395e9820f3961354cf182c
+    - DEC-U894-REVIEW-1fcdd0371e3c0f93418372e2
+    - DEC-U894-REVIEW-0c3a1542c15eb355de2f9c0d
+    - DEC-U894-REVIEW-8a20b1690ed5587b445e3f2b
+    - DEC-U894-REVIEW-51088a74575262a3208231a9
+    - DEC-U894-REVIEW-7542fea89727a65d1be74c92
+    - DEC-U894-credit-check-decision
+    - DEC-U894-parent-credit-check-decision
+    scenario_fields_accepted:
+    - name
+    - title
+    - situation
+    limit: 'Scénario : seuls les champs présentés sont capturés ; les nouvelles descriptions des étapes restent proposées.'
+    final_context_corrections: 4
+    market_context_corrections: 47
+  market_limits: Les sources Dynamics et SAP appuient la frontière de crédit uniquement. La couverture complète des Business
+    Areas et leur équivalence de taxonomie restent non établies ; les réserves antérieures sont conservées dans superseded_market_gaps,
+    sans conformité globale annoncée.
+  verification:
+    delivery_contracts: 40
+    delivery_errors: 0
+    active_scoped_approvals: 47
+    candidate_nodes: 221
+    business_area: 30
+    reference: 13
+    capability: 81
+    scenarios: 39
+    paths: 42
+    published_version_unchanged: 2026-10-07.2
+    checks: Validation globale ; 29 tests ciblés ; rendu backlog ; contrôle navigateur des 221 fiches et des 42 parcours candidats.
+superseded_delivery_checks:
+- path: modeles/backlog/credit-return-boundaries-U878.yaml
+  previous:
+    id: ba-partner-agreement-references
+    fields:
+      scope: |-
+        Présente [Party / Role](model:D09), [Agreement](model:D11). Ce périmètre porte la cohérence et la fourniture des vues locales, avec validité, provenance et limites connues. Les références restent documentaires ; aucune capacité de consultation autonome n’est créée. Une responsabilité métier distincte n’impose ni équipe ni composant logiciel séparé.
+
+        Recevoir du contrôle de gestion les profils et [règles de crédit](glossary:TER155) nécessaires aux opérations, avec leur autorité, leur version, leur portée et leur validité. [Party / Role](model:D09) porte le classement du client et sa limite autorisée ; [Agreement](model:D11) porte les conditions de paiement et garanties réellement convenues. Les règles générales reçues ne sont pas des contrats. Leur référence et leur portée sont conservées ici sans inventer un accord ni une nouvelle référence autonome. Leur autorité reste au contrôle de gestion, y compris lorsque FLOW les applique.
+- path: modeles/backlog/model-coherence-audit-U886.yaml
+  previous:
+    id: D04.i
+    fields:
+      name: Sales Order
+      definition: 'Gérer les commandes clients à satisfaire : enregistrer ce qui est demandé, maintenir les quantités, destinations
+        et échéances applicables, suivre les évolutions autorisées et déterminer ce qui reste à servir.'
+      scope: |-
+        Tenir les lignes, quantités, destinations, échéances et prix applicables de la commande client. Distinguer demandé, proposé, confirmé et réalisé ; suivre le reste à satisfaire et les évolutions autorisées selon le [cycle commun d’Order Management](model:D04#scope). Les conditions de l’[Agreement](glossary:TER048) restent sous leur autorité ; leur consultation n’autorise pas à les négocier.
+
+        Exemple fictif : sur 100 pièces, 60 sont livrées et 40 restent à servir. Une demande de report des 40 ne change pas automatiquement la date promise. Un retour ultérieur crée une [Return Order](glossary:TER072) distincte, liée à la vente lorsque connue ; il n’efface pas la livraison.
+
+        [Availability](glossary:TER112) détermine les propositions de promesse et les affectations ; la commande conserve les engagements effectivement acceptés. [Process Management](glossary:TER164) conduit le parcours ; [Service Management](glossary:TER152) porte les prestations confiées et [Fulfilment Coordination](glossary:TER176) les coordonne. Les exécutants réalisent les opérations. Les règles détaillées d’imputation, tolérances et autorisations restent à instruire.
+
+        [Ship to Customer](model:BHV066), [Customer Pickup](model:BHV067), [Direct Delivery](model:BHV068) et [Intercompany Sales](model:BHV069) décrivent des axes combinables. Intercompany qualifie la relation commerciale ; les autres précisent le mode de satisfaction. Identifier les quantités concernées sans les compter deux fois.
+
+        [Preorder](glossary:TER150) est un statut de la commande existante avant disponibilité commerciale. Suivre l’attente, le degré d’engagement et les révisions autorisées ; la sortie de précommande conserve la même identité. Une précommande peut déjà être ferme. La [distinction avec les propositions d’achat planifiées](model:D04#scope) dépend de la nature des objets, pas d’une règle générale achat/vente.
+
+        Les demandes et précommandes connues peuvent éclairer [Plan Visibility](model:subdomain-plans) selon leur horizon. Leur prise en compte ne crée pas une seconde commande ni une addition automatique à la prévision ; les ventes observées constituent un apport distinct.
+
+        Appliquer les [contrôles de crédit client](glossary:TER155) selon le [contrat commun](model:D04#scope), avec motif, portée, version et résultat. Une information absente ou une échéance dépassée ne lève pas le blocage ; la dérogation reste sous autorité financière.
+
+        La vue [Merchandise Reference](model:merchandise-reference) aide à comprendre les biens demandés à la vente ; leur identité reste commune dans [Product Reference](model:D08). Leurs offres et sélections ne deviennent pas de nouvelles identités produit.
+- path: modeles/backlog/model-coherence-audit-U886.yaml
+  previous:
+    id: ba-order-lifecycle-management
+    fields:
+      name: Order Lifecycle Management
+      definition: Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer leur
+        état.
+      scope: |-
+        La structuration et la visibilité restent des capacités distinctes ; le pilotage du parcours relève de [Reactive Workflow Management](glossary:TER125).
+
+        Bénéficiaire et résultat : Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
+
+        Exemple fictif : Une commande est fractionnée avec accord du client : conserver les engagements et la filiation des parties sans choisir leur transporteur.
+- path: modeles/backlog/model-coherence-audit-U886.yaml
+  previous:
+    collection: paths
+    id: credit-review-no-response-path
+    content_sha256: 899845b9e9e713c1cfb20aeb573321f97f82724deab94792d6f07c6dc4ceb029
+- path: modeles/backlog/operational-work-audit-U881.yaml
+  previous:
+    id: D04
+    kind: area
+    fields:
+      name: Order Management
+      definition: Gérer les commandes, leurs engagements et leurs évolutions, en distinguant ce qui est demandé, proposé,
+        confirmé et réalisé.
+      finality: Maintenir pour chaque commande un contenu applicable et un engagement explicite, avec le reste à satisfaire.
+      scope: |-
+        Chaque famille tient l’origine, les parties, biens ou services, quantités, dates et conditions de ses commandes. Conserver les versions et les liens entre commandes structurées, y compris les propositions provenant des plans amont. Une proposition retirée n’efface pas une commande affermie. Affermir une demande ne confirme pas automatiquement sa quantité et sa date.
+
+        Les décisions de promesse d’[Availability](glossary:TER112) proposent une réponse ; les familles de commandes portent la confirmation et ses révisions autorisées. Distinguer demandé, proposé, confirmé et réalisé par ligne, quantité ou groupe pertinent. Exemple fictif : pour 100 pièces demandées vendredi, une proposition de 60 vendredi et 40 lundi peut conduire à ne confirmer que les 60 premières. La promesse fournisseur et la promesse client restent distinctes. Affecter une ressource ne réserve pas automatiquement le stock.
+
+        Préparation, engagement, protection contre réoptimisation, autorisation de prise en charge, suspension et terminaison sont des dimensions distinctes. Leur combinaison dépend du périmètre et des règles applicables, sans état global ni séquence unique. Libérer une commande ne prouve pas le début de réalisation. Les modifications respectent les engagements, dépendances et dérogations autorisées.
+
+        Annuler retire le besoin dans la portée autorisée ; clôturer règle le reste à traiter en conservant les faits. Exemple fictif : sur 100 pièces, 40 sont préparées et 60 ne le sont pas. Les 60 ne sont ni automatiquement modifiables ni automatiquement bloquées : les engagements et une éventuelle exigence de livraison complète comptent. [Fulfilment Orchestration](model:D06) traite les conséquences sur le travail engagé.
+
+        Conserver prix et versions ; consulter l’historique sans réactiver la commande. Restaurer, rouvrir et purger sont des opérations distinctes, soumises à leurs règles sans durée légale ou solution technique présumée. Supprimer un brouillon se distingue d’annuler une commande engagée. Copier une commande ne copie pas ses engagements ou réalisations ; une substitution ne change pas silencieusement son prix.
+
+        [Order Visibility](model:order-visibility) expose demandes, engagements, réalisations rapprochées et restes à satisfaire sans double comptage. Les propositions amont ne sont pas à elles seules commandes fermes, réservations, promesses ou autorisations de démarrage. Réviser un besoin doit préserver ses liens sans en créer un doublon.
+
+        Un achat de service et une prestation confiée restent distincts ; toute prestation ne nécessite pas un [Purchase Order](glossary:TER070). [Service Management](model:subdomain-service-orders) tient les engagements de prestation. [Inventory Management](model:D01) porte les faits de stock et les réservations ; [Fulfilment](glossary:TER085) coordonne la réalisation. Les actes nécessaires à un changement de propriété peuvent être demandés ici, mais leur effet reconnu relève d’[Inventory Ownership Transfer Decision](model:D01.h) et du registre de propriété. Clôturer une commande ne prouve pas ce transfert.
+
+        Le parcours est défini et conduit par [Process Management](glossary:TER164). [Order Management](model:D04) conserve les commandes, leurs engagements, leur état et la validité de leurs transitions ; une sollicitation du processus ne vaut pas autorisation de modifier un engagement.
+
+        Une demande peut être préparée ou planifiée avant affermissement. [Preorder](glossary:TER150) indique l’anticipation de disponibilité commerciale ; [Planned Purchase Order](glossary:TER033) désigne une proposition d’approvisionnement distincte du Purchase Order résultant. Origine, horizon et degré d’engagement restent trois informations distinctes. Preorder est un statut du Sales Order, dont l’identité est conservée ; l’affermissement d’un Planned Purchase Order relie deux objets distincts sans imposer une identité commune.
+
+        Pour le [crédit client](glossary:TER155), appliquer la règle financière reçue ou consommer le résultat du contrôle externe afin de suspendre ou reprendre la commande selon les autorisations applicables. Conserver motif, portée du blocage, règle et version utilisées, résultat et éventuelle dérogation autorisée. Un classement client seul ne permet pas de calculer un dépassement : utiliser l’encours et l’exposition pertinents fournis par la Finance, ou son résultat de contrôle ; ne pas présumer ces données disponibles. Une information manquante reste explicite. [Sentry](model:order-workflow-sentry) réagit aux changements ; il ne s’accorde pas une dérogation financière.
+      market_comparisons:
+      - vendor: IBM
+        product: Document types
+        element_name: Document types
+        element_type: Concept ou fonction documenté dans un produit
+        relationship: Recouvrement partiel
+        similarities: La famille Order comporte Sales, Planned, Return, Purchase, Transfer et Master Order ; vente et achat
+          couvrent aussi des services.
+        differences: Les types d’Orders et leur traitement sont attestés ; FLOW sépare recommandation de promesse et orchestration
+          de réalisation, souvent réunies dans les offres OMS.
+        flow_position: |-
+          Gérer les commandes, leurs exigences et leurs évolutions, et porter les engagements de satisfaction jusqu’à leur conclusion.
+
+          Le [Reactive Workflow Management](glossary:TER125) organise et conduit le parcours des commandes. Il maintient les activités réutilisables et leurs règles de composition, réagit au contexte, adapte le parcours et en pilote les attentes et résultats. Les familles de commandes conservent leur identité, leur état, leurs engagements et la validité des transitions. [Fulfilment](glossary:TER085) reçoit les travaux autorisés et coordonne les prestations ; il ne définit pas seul la structure du parcours de la commande.
+        source_title: Document types
+        source_url: https://www.ibm.com/docs/en/order-management?topic=configuration-document-types
+        source_version: Documentation Sterling OMS évolutive ; édition précise non affichée
+        consulted_on: '2026-09-23'
+        source_locator: Table 1, famille Order
+        evidence_limits: Types documentaires de produit, pas preuve d’un objet universel unique ni d’une représentation FLOW
+          centrée sur les documents. Les types d’Orders et leur traitement sont attestés ; FLOW sépare recommandation de promesse
+          et orchestration de réalisation, souvent réunies dans les offres OMS.
+        status: proposed
+        source_refs:
+        - ELM112
+        - CMP269
+        - CMP270
+        - U673
+        - U843
+        term_choice: Nom du sous-domaine retenu pour la responsabilité FLOW ; pas de correspondance universelle aux modules
+          éditeurs.
+        definition_choice: 'Appui de Document types : La famille Order comporte Sales, Planned, Return, Purchase, Transfer
+          et Master Order ; vente et achat couvrent aussi des services. Limite de reprise dans FLOW : Les types d’Orders et
+          leur traitement sont attestés ; FLOW sépare recommandation de promesse et orchestration de réalisation, souvent
+          réunies dans les offres OMS.'
+        concept_name: Document types
+        scope_summary: La famille Order comporte Sales, Planned, Return, Purchase, Transfer et Master Order ; vente et achat
+          couvrent aussi des services.
+        approach_summary: Gérer les commandes, leurs exigences et leurs évolutions, et porter les engagements de satisfaction
+          jusqu’à leur conclusion.
+      - vendor: Oracle
+        product: How Order-to-Cash Works in Order Management
+        element_name: How Order-to-Cash Works in Order Management
+        element_type: Concept ou fonction documenté dans un produit
+        relationship: Recouvrement partiel
+        similarities: Order Management utilise Product Management et Supply Chain Planning puis sollicite les systèmes de
+          réalisation et reçoit leur progression.
+        differences: Les types d’Orders et leur traitement sont attestés ; FLOW sépare recommandation de promesse et orchestration
+          de réalisation, souvent réunies dans les offres OMS.
+        flow_position: |-
+          Gérer les commandes, leurs exigences et leurs évolutions, et porter les engagements de satisfaction jusqu’à leur conclusion.
+
+          Le [Reactive Workflow Management](glossary:TER125) organise et conduit le parcours des commandes. Il maintient les activités réutilisables et leurs règles de composition, réagit au contexte, adapte le parcours et en pilote les attentes et résultats. Les familles de commandes conservent leur identité, leur état, leurs engagements et la validité des transitions. [Fulfilment](glossary:TER085) reçoit les travaux autorisés et coordonne les prestations ; il ne définit pas seul la structure du parcours de la commande.
+        source_title: How Order-to-Cash Works in Order Management
+        source_url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26a/faiom/how-order-to-cash-works-in-order-management.html
+        source_version: Fusion Cloud SCM 26A
+        consulted_on: '2026-09-23'
+        source_locator: 'Étapes 1 à 4 : données produit, règles, promesse et interfaces'
+        evidence_limits: Parcours de vente plus large que FLOW, avec prix et finance ; ne généralise pas Sales Order à tous
+          les besoins. Les types d’Orders et leur traitement sont attestés ; FLOW sépare recommandation de promesse et orchestration
+          de réalisation, souvent réunies dans les offres OMS.
+        status: proposed
+        source_refs:
+        - ELM652
+        - CMP269
+        - CMP270
+        - U673
+        - U843
+        term_choice: Nom du sous-domaine retenu pour la responsabilité FLOW ; pas de correspondance universelle aux modules
+          éditeurs.
+        definition_choice: 'Appui de How Order-to-Cash Works in Order Management : Order Management utilise Product Management
+          et Supply Chain Planning puis sollicite les systèmes de réalisation et reçoit leur progression. Limite de reprise
+          dans FLOW : Les types d’Orders et leur traitement sont attestés ; FLOW sépare recommandation de promesse et orchestration
+          de réalisation, souvent réunies dans les offres OMS.'
+        concept_name: How Order-to-Cash Works in Order Management
+        scope_summary: Order Management utilise Product Management et Supply Chain Planning puis sollicite les systèmes de
+          réalisation et reçoit leur progression.
+        approach_summary: Gérer les commandes, leurs exigences et leurs évolutions, et porter les engagements de satisfaction
+          jusqu’à leur conclusion.
+      - vendor: SAP
+        product: SAP S/4HANA — périmètre du cours cité
+        element_name: Executing Sales Order Management
+        concept_name: Executing Sales Order Management
+        element_type: Mécanisme ou objet documenté dans un produit
+        relationship: Recouvrement partiel
+        scope_summary: Le sales order porte les articles, quantités, dates et conditions convenus ; la livraison et la facturation
+          poursuivent son exécution.
+        approach_summary: 'Rapprochement avec Order Management : Le sales order porte les articles, quantités, dates et conditions
+          convenus ; la livraison et la facturation poursuivent son exécution.'
+        similarities: Le sales order porte les articles, quantités, dates et conditions convenus ; la livraison et la facturation
+          poursuivent son exécution.
+        differences: La structure du document SAP éclaire l’engagement, sans imposer le cycle applicatif ou l’organisation
+          ERP à FLOW.
+        flow_position: |-
+          FLOW conserve le périmètre métier de Order Management. La structure du document SAP éclaire l’engagement, sans imposer le cycle applicatif ou l’organisation ERP à FLOW.
+
+          Le [Reactive Workflow Management](glossary:TER125) organise et conduit le parcours des commandes. Il maintient les activités réutilisables et leurs règles de composition, réagit au contexte, adapte le parcours et en pilote les attentes et résultats. Les familles de commandes conservent leur identité, leur état, leurs engagements et la validité des transitions. [Fulfilment](glossary:TER085) reçoit les travaux autorisés et coordonne les prestations ; il ne définit pas seul la structure du parcours de la commande.
+        source_title: Executing Sales Order Management
+        source_url: https://learning.sap.com/courses/executing-basic-erp-processes-with-sap-s-4hana/executing-sales-order-management
+        source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+        source_locator: Executing Sales Order Management — passages sur le mécanisme rapproché.
+        consulted_on: '2026-09-25'
+        evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou
+          déploiement Beaumanoir déduit. La structure du document SAP éclaire l’engagement, sans imposer le cycle applicatif
+          ou l’organisation ERP à FLOW.
+        status: proposed
+        source_refs:
+        - U774
+        - CMP307
+        - ELM789
+        - U843
+        term_choice: Le nom Order Management reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
+          cette appellation ni sa maille.
+        definition_choice: 'Le sales order porte les articles, quantités, dates et conditions convenus ; la livraison et la
+          facturation poursuivent son exécution. Frontière conservée : La structure du document SAP éclaire l’engagement,
+          sans imposer le cycle applicatif ou l’organisation ERP à FLOW.'
+      - vendor: Microsoft
+        product: Microsoft Dynamics 365 — application indiquée par la source
+        element_name: Intelligent Order Management overview | Microsoft Learn
+        concept_name: Intelligent Order Management overview | Microsoft Learn
+        element_type: Mécanisme ou objet documenté dans un produit
+        relationship: Recouvrement partiel
+        scope_summary: Intelligent Order Management orchestre des commandes entre systèmes et prestataires avec des retours
+          d’exécution.
+        approach_summary: 'Rapprochement avec Order Management : Intelligent Order Management orchestre des commandes entre
+          systèmes et prestataires avec des retours d’exécution.'
+        similarities: Intelligent Order Management orchestre des commandes entre systèmes et prestataires avec des retours
+          d’exécution.
+        differences: Une offre logicielle ne prescrit pas le découpage FLOW et ne prouve aucune installation Beaumanoir ;
+          les capacités dépassent la couverture d’un seul produit.
+        flow_position: |-
+          FLOW conserve le périmètre métier de Order Management. Une offre logicielle ne prescrit pas le découpage FLOW et ne prouve aucune installation Beaumanoir ; les capacités dépassent la couverture d’un seul produit.
+
+          Le [Reactive Workflow Management](glossary:TER125) organise et conduit le parcours des commandes. Il maintient les activités réutilisables et leurs règles de composition, réagit au contexte, adapte le parcours et en pilote les attentes et résultats. Les familles de commandes conservent leur identité, leur état, leurs engagements et la validité des transitions. [Fulfilment](glossary:TER085) reçoit les travaux autorisés et coordonne les prestations ; il ne définit pas seul la structure du parcours de la commande.
+        source_title: Intelligent Order Management overview | Microsoft Learn
+        source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/overview
+        source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+        source_locator: Intelligent Order Management overview | Microsoft Learn — passages sur le mécanisme rapproché.
+        consulted_on: '2026-09-25'
+        evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou
+          déploiement Beaumanoir déduit. Une offre logicielle ne prescrit pas le découpage FLOW et ne prouve aucune installation
+          Beaumanoir ; les capacités dépassent la couverture d’un seul produit.
+        status: proposed
+        source_refs:
+        - U774
+        - CMP307
+        - ELM279
+        - U843
+        term_choice: Le nom Order Management reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
+          cette appellation ni sa maille.
+        definition_choice: 'Intelligent Order Management orchestre des commandes entre systèmes et prestataires avec des retours
+          d’exécution. Frontière conservée : Une offre logicielle ne prescrit pas le découpage FLOW et ne prouve aucune installation
+          Beaumanoir ; les capacités dépassent la couverture d’un seul produit.'
+      - vendor: Microsoft
+        product: Dynamics 365 Finance
+        source_title: Credit holds for sales orders
+        source_url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-sales-order-credit-holds
+        consulted_on: '2026-10-06'
+        source_version: Documentation consultée le 6 octobre 2026
+        source_locator: Contrôles de crédit et données client
+        element_name: Credit management
+        concept_name: Credit management
+        element_type: Mécanisme métier documenté
+        relationship: Recouvrement partiel
+        scope_summary: Règles de blocage par client/groupe, groupe de risque et utilisation de limite ; séparation des données
+          client et de la décision sur commande.
+        approach_summary: Règles de blocage par client/groupe, groupe de risque et utilisation de limite ; séparation des
+          données client et de la décision sur commande.
+        similarities: Règles de blocage par client/groupe, groupe de risque et utilisation de limite ; séparation des données
+          client et de la décision sur commande.
+        differences: Ne prescrit pas l’organisation du contrôle de gestion ni le découpage FLOW.
+        evidence_limits: Ne prescrit pas l’organisation du contrôle de gestion ni le découpage FLOW. Aucun déploiement Beaumanoir
+          déduit.
+        flow_position: 'Pour le [crédit client](glossary:TER155), appliquer la règle financière reçue ou consommer le résultat
+          du contrôle externe afin de suspendre ou reprendre la commande selon les autorisations applicables. Conserver motif,
+          portée du blocage, règle et version utilisées, résultat et éventuelle dérogation autorisée. Un classement client
+          seul ne permet pas de calculer un dépassement : utiliser l’encours et l’exposition pertinents fournis par la Finance,
+          ou son résultat de contrôle ; ne pas présumer ces données disponibles. Une information manquante reste explicite.
+          [Sentry](model:order-workflow-sentry) réagit aux changements ; il ne s’accorde pas une dérogation financière.'
+        term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+        definition_choice: 'Pour le [crédit client](glossary:TER155), appliquer la règle financière reçue ou consommer le
+          résultat du contrôle externe afin de suspendre ou reprendre la commande selon les autorisations applicables. Conserver
+          motif, portée du blocage, règle et version utilisées, résultat et éventuelle dérogation autorisée. Un classement
+          client seul ne permet pas de calculer un dépassement : utiliser l’encours et l’exposition pertinents fournis par
+          la Finance, ou son résultat de contrôle ; ne pas présumer ces données disponibles. Une information manquante reste
+          explicite. [Sentry](model:order-workflow-sentry) réagit aux changements ; il ne s’accorde pas une dérogation financière.'
+        status: proposed
+        source_refs:
+        - U878
+        - U879
+      - vendor: SAP
+        product: SAP S/4HANA
+        source_title: Working with SAP Credit Management
+        source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/working-with-sap-credit-management_d6b177ee-a8bb-4b77-80dc-87c04a9dd3f1
+        consulted_on: '2026-10-06'
+        source_version: Documentation consultée le 6 octobre 2026
+        source_locator: Contrôles de crédit et données client
+        element_name: Credit management
+        concept_name: Credit management
+        element_type: Mécanisme métier documenté
+        relationship: Recouvrement partiel
+        scope_summary: Classe de risque et limite du Business Partner utilisées par la gestion du crédit.
+        approach_summary: Classe de risque et limite du Business Partner utilisées par la gestion du crédit.
+        similarities: Classe de risque et limite du Business Partner utilisées par la gestion du crédit.
+        differences: SAP Credit Management couvre plus que les références reçues par FLOW.
+        evidence_limits: SAP Credit Management couvre plus que les références reçues par FLOW. Aucun déploiement Beaumanoir
+          déduit.
+        flow_position: 'Pour le [crédit client](glossary:TER155), appliquer la règle financière reçue ou consommer le résultat
+          du contrôle externe afin de suspendre ou reprendre la commande selon les autorisations applicables. Conserver motif,
+          portée du blocage, règle et version utilisées, résultat et éventuelle dérogation autorisée. Un classement client
+          seul ne permet pas de calculer un dépassement : utiliser l’encours et l’exposition pertinents fournis par la Finance,
+          ou son résultat de contrôle ; ne pas présumer ces données disponibles. Une information manquante reste explicite.
+          [Sentry](model:order-workflow-sentry) réagit aux changements ; il ne s’accorde pas une dérogation financière.'
+        term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
+        definition_choice: 'Pour le [crédit client](glossary:TER155), appliquer la règle financière reçue ou consommer le
+          résultat du contrôle externe afin de suspendre ou reprendre la commande selon les autorisations applicables. Conserver
+          motif, portée du blocage, règle et version utilisées, résultat et éventuelle dérogation autorisée. Un classement
+          client seul ne permet pas de calculer un dépassement : utiliser l’encours et l’exposition pertinents fournis par
+          la Finance, ou son résultat de contrôle ; ne pas présumer ces données disponibles. Une information manquante reste
+          explicite. [Sentry](model:order-workflow-sentry) réagit aux changements ; il ne s’accorde pas une dérogation financière.'
+        status: proposed
+        source_refs:
+        - U878
+        - U879
+    parent: supply-chain-orchestration
+    parent_type: presents
+- path: modeles/backlog/operational-work-audit-U881.yaml
+  previous:
+    id: order-workflow-orchestration
+    kind: capability
+    fields:
+      name: Process Orchestration
+      definition: Piloter les activités, attentes et résultats du parcours Supply retenu.
+      finality: Conduire les contributions autorisées jusqu’aux résultats attendus.
+      scope: |-
+        Conduire le parcours Supply : solliciter l’activité autorisée, matérialiser les attentes, recevoir les résultats et poursuivre selon les conditions retenues. Mobiliser les capacités responsables de la promesse, de la tenue des commandes et des prestations ; distinguer leur sollicitation de leur résultat métier.
+
+        Exemple fictif : demander une confirmation client, attendre sa réponse puis confier la réalisation autorisée à [Fulfilment](glossary:TER085). [Fulfilment Coordination](model:D06.d) coordonne alors les prestations de préparation et de collecte ; leur résultat permet de poursuivre le parcours de la commande.
+
+        Les familles de commandes restent responsables de leur identité, de leur état, de leurs engagements et de la validité des transitions. [Process Sentry](glossary:TER127) déclenche la réaction pertinente ; [Process Planning](glossary:TER128) réorganise le parcours si nécessaire. Un résultat partiel ou un simple accusé de réception ne vaut pas achèvement. Cette capacité ne dirige pas les opérations internes des exécutants.
+
+        Piloter les [Service Orders](glossary:TER066) passifs au moyen des [Tasks](glossary:TER089) produites pour le parcours : solliciter la prestation, organiser ses attentes, exploiter les résultats et appliquer les suites autorisées. La commande conserve son état, ses engagements et ses invariants ; elle ne décide ni ne s’orchestre elle-même. [Fulfilment Orchestration](model:D06) réalise la coordination d’exécution confiée, sans produire un parcours autonome concurrent.
+
+        Le périmètre relève de [Process Management](glossary:TER164) et peut relier plusieurs demandes ; [Order Management](model:D04) conserve les engagements et la validité des transitions des commandes. Les activités humaines passent par [Human Task Management](glossary:TER170) ; leur attribution et leurs échéances restent explicites. Le parcours ne se réduit pas à la succession des prestations logistiques.
+      market_comparisons:
+      - vendor: SAP
+        product: SAP S/4HANA — Flexible Workflow
+        element_name: Flexible Workflow Components
+        concept_name: Flexible Workflow Components
+        element_type: Mécanisme ou concept documenté par une source primaire
+        relationship: Recouvrement partiel
+        similarities: Intégration avec Process Visibility pour performance et étranglements ; définitions standard et ad hoc.
+        differences: La documentation décrit une intégration avec un service distinct ; ne pas présenter toute cette analyse
+          comme native de tout S/4HANA.
+        flow_position: Piloter les activités, attentes et résultats du parcours Supply retenu.
+        scope_summary: Intégration avec Process Visibility pour performance et étranglements ; définitions standard et ad
+          hoc.
+        approach_summary: Appui à une responsabilité métier indépendante du produit ; pas de nomenclature commune présumée.
+        source_title: Flexible Workflow Components
+        source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/0f18dddf28764f5b807ecd80549044cc/8827801c655c498d960af209bb59ce6e.html
+        source_version: Documentation évolutive, édition non établie
+        source_locator: Process Visibility Capability / Workflow Definitions
+        consulted_on: '2026-10-07'
+        evidence_limits: La documentation décrit une intégration avec un service distinct ; ne pas présenter toute cette analyse
+          comme native de tout S/4HANA. Passages indexés du site officiel consultés ; ouverture directe SAP Help parfois vide.
+        status: proposed
+        source_refs:
+        - U881
+        - U885
+        term_choice: Process Orchestration nomme le résultat et le périmètre FLOW ; le nom n’est pas présenté comme une appellation
+          native commune.
+        definition_choice: Piloter les activités, attentes et résultats du parcours Supply retenu.
+      - vendor: Microsoft
+        product: Dynamics 365 Finance & Operations
+        element_name: View workflow history
+        concept_name: View workflow history
+        element_type: Mécanisme ou concept documenté par une source primaire
+        relationship: Recouvrement partiel
+        similarities: Historique, état, temps écoulé, reprise et rappel du workflow ; tâches et réaffectation.
+        differences: Workflow documentaire ; le rappel n’est pas équivalent à toute annulation métier.
+        flow_position: Piloter les activités, attentes et résultats du parcours Supply retenu.
+        scope_summary: Historique, état, temps écoulé, reprise et rappel du workflow ; tâches et réaffectation.
+        approach_summary: Appui à une responsabilité métier indépendante du produit ; pas de nomenclature commune présumée.
+        source_title: View workflow history
+        source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/tasks/view-workflow-history
+        source_version: Page évolutive, mise à jour affichée 2026-03-11
+        source_locator: Étapes 1 et 2
+        consulted_on: '2026-10-07'
+        evidence_limits: Workflow documentaire ; le rappel n’est pas équivalent à toute annulation métier. Passages de documentation
+          primaire consultés.
+        status: proposed
+        source_refs:
+        - U881
+        - U885
+        term_choice: Process Orchestration nomme le résultat et le périmètre FLOW ; le nom n’est pas présenté comme une appellation
+          native commune.
+        definition_choice: Piloter les activités, attentes et résultats du parcours Supply retenu.
+      - vendor: Microsoft
+        product: Dynamics 365 Finance & Operations
+        element_name: Configure manual tasks in a workflow
+        concept_name: Configure manual tasks in a workflow
+        element_type: Mécanisme ou concept documenté par une source primaire
+        relationship: Recouvrement partiel
+        similarities: Tâches manuelles avec instructions, affectations individuelles ou files, calendriers, délais et escalades.
+        differences: Les files conditionnelles sont limitées à certains workflows ; aucune disponibilité universelle présumée.
+        flow_position: Piloter les activités, attentes et résultats du parcours Supply retenu.
+        scope_summary: Tâches manuelles avec instructions, affectations individuelles ou files, calendriers, délais et escalades.
+        approach_summary: Appui à une responsabilité métier indépendante du produit ; pas de nomenclature commune présumée.
+        source_title: Configure manual tasks in a workflow
+        source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/configure-manual-task-workflow
+        source_version: Documentation évolutive
+        source_locator: Assign the task / Time limit / Escalation
+        consulted_on: '2026-10-07'
+        evidence_limits: Les files conditionnelles sont limitées à certains workflows ; aucune disponibilité universelle présumée.
+          Passages de documentation primaire consultés.
+        status: proposed
+        source_refs:
+        - U881
+        - U885
+        term_choice: Process Orchestration nomme le résultat et le périmètre FLOW ; le nom n’est pas présenté comme une appellation
+          native commune.
+        definition_choice: Piloter les activités, attentes et résultats du parcours Supply retenu.
+    parent: ba-reactive-workflow-management
+    parent_type: contains
+- path: modeles/backlog/operational-work-audit-U881.yaml
+  previous:
+    collection: scenarios
+    id: customer-credit-hold
+    content_sha256: b31a9dd3d37f6c5efefa79fc764e791b5b8a098b9be4624bceea9fd7ffbfc683
+- path: modeles/backlog/operational-work-audit-U881.yaml
+  previous:
+    collection: paths
+    id: customer-credit-hold-path
+    content_sha256: 5995bea6c1cce6830fe4da9ea4670a7261fe14e1e7a9b230e489bbef331932c2
+- path: modeles/backlog/presentation-readiness-audit-U888.yaml
+  previous:
+    collection: paths
+    id: credit-review-no-response-path
+    content_sha256: 899845b9e9e713c1cfb20aeb573321f97f82724deab94792d6f07c6dc4ceb029
+- path: modeles/backlog/presentation-readiness-audit-U888.yaml
+  previous:
+    collection: paths
+    id: customer-credit-hold-path
+    content_sha256: 5995bea6c1cce6830fe4da9ea4670a7261fe14e1e7a9b230e489bbef331932c2
+- path: modeles/backlog/transversal-remediation-U853.yaml
+  previous:
+    id: ba-order-lifecycle-management
+    fields:
+      finality: Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Intelligent Order Management
+        source_title: Create orchestration flows
+        source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+        source_locator: Actions, conditions, publication des parcours et envoi aux prestataires
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Create orchestration flows
+        concept_name: Create orchestration flows
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Valider les commandes puis transmettre leurs résultats aux prestataires.
+        differences: Le parcours n’est pas le registre d’engagements FLOW.
+        flow_position: Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer
+          leur état.
+        definition_choice: Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer
+          leur état.
+        term_choice: Order Lifecycle Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Valider les commandes puis transmettre leurs résultats aux prestataires.
+        approach_summary: Le parcours n’est pas le registre d’engagements FLOW.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853

@@ -21,12 +21,12 @@ from hashlib import sha256
 try:
     from .element_versions import assign_versions
     from .glossary import reference_impacts
-    from .structured_io import working_path
+    from .structured_io import working_path, _PARSER_SIGNATURE
     from .modeling_guide_publication import capture_association, verify_association, carry_association
     from .release_catalog import resolve_release, register
     from . import publish_release as publisher
-    from . import decision_review
-    from .decision_carry import classify_context
+    from . import decision_review, parsed_cache
+    from .decision_carry import classify_context, ContextIndex
     from .record_decision import compile_intents
     from .decision_registry import read_registry, read_consumed_registry, is_index, shard_path
     from . import guide_candidate
@@ -36,12 +36,12 @@ try:
 except ImportError:
     from element_versions import assign_versions
     from glossary import reference_impacts
-    from structured_io import working_path
+    from structured_io import working_path, _PARSER_SIGNATURE
     from modeling_guide_publication import capture_association, verify_association, carry_association
     from release_catalog import resolve_release, register
     import publish_release as publisher
-    import decision_review
-    from decision_carry import classify_context
+    import decision_review, parsed_cache
+    from decision_carry import classify_context, ContextIndex
     from record_decision import compile_intents
     from decision_registry import read_registry, read_consumed_registry, is_index, shard_path
     import guide_candidate
@@ -165,6 +165,7 @@ def reconcile_decisions(old_document, snapshot, additional=None, previous_snapsh
     previous_targets = {c: {item['id']: item for item in (previous_snapshot or {}).get(c, [])} for c in targets}
     kept, deferred = [], []
     context_cache = {}
+    indexes = (ContextIndex(previous_snapshot), ContextIndex(snapshot)) if previous_snapshot is not None else None
     for original in old_document['decisions']:
         target = original['target']
         item = targets[target['collection']].get(target['id'])
@@ -179,7 +180,7 @@ def reconcile_decisions(old_document, snapshot, additional=None, previous_snapsh
             key = canonical_sha256(target)
             context = context_cache.setdefault(key, None)
             if context is None:
-                context = classify_context(original, previous_snapshot, snapshot)
+                context = classify_context(original, previous_snapshot, snapshot, indexes=indexes)
                 context_cache[key] = context
             if not context['safe']:
                 reason = 'context_changed_requires_explicit_reassessment'
@@ -222,8 +223,14 @@ def reconcile_decisions(old_document, snapshot, additional=None, previous_snapsh
             decision = copy.deepcopy(original)
             decision['target']['import_version'] = snapshot['version']
             kept.append(decision)
+    append_additional_decisions(kept, old_document, snapshot['version'], additional)
+    return {'schema_version': '1.0.0', 'version': snapshot['version'], 'decisions': kept}, deferred
+
+
+def append_additional_decisions(kept, old_document, version, additional):
+    """Append new scopes after reconciliation without repeating unchanged context work."""
     if additional:
-        if additional['version'] != snapshot['version']:
+        if additional['version'] != version:
             raise ValueError('Additional decisions must target the prepared version')
         # A new decision gets a new stable identifier. No existing decision is rewritten.
         old_ids = {item['id'] for item in old_document['decisions']}
@@ -231,7 +238,6 @@ def reconcile_decisions(old_document, snapshot, additional=None, previous_snapsh
             if decision['id'] in old_ids or decision['id'] in {item['id'] for item in kept}:
                 raise ValueError('Additional decision must use a new id: ' + decision['id'])
             kept.append(copy.deepcopy(decision))
-    return {'schema_version': '1.0.0', 'version': snapshot['version'], 'decisions': kept}, deferred
 
 
 def explain_deferred_validations(snapshot, decisions, deferred, previous_release=None):
@@ -354,12 +360,9 @@ def revision_errors(previous_snapshot, snapshot):
     return errors
 
 
-def build_candidate(root=ROOT, version=None, source_refs=None, additional_path=None, *,
-                    review_path=None, include_review=False, current=None, lightweight=False):
-    lightweight = lightweight or (Path(root) / 'modeles/git-history.json').is_file()
-    state = decision_review.input_state(root)
-    models, pointer, previous, inputs, manifest_path = current or load_current(root)
-    version = valid_version(version or suggested_version(models))
+def _prepare_draft(root, models, pointer, previous, inputs, manifest_path, version, source_refs,
+                   additional_path, state, include_review, lightweight):
+    """Pure preparation before assessment; no cached validation or approval."""
     live_path = working_path(models / 'backlog')
     live = read(live_path)
     snapshot = copy.deepcopy(live)
@@ -395,16 +398,70 @@ def build_candidate(root=ROOT, version=None, source_refs=None, additional_path=N
             intent_errors.append('decision-intents: ' + str(exc))
     decisions, deferred_decisions = reconcile_decisions(inputs['decisions'], snapshot, additional, inputs['input_revision'], stable_ids=lightweight)
     publication_refs = source_refs or previous.get('publication', {}).get('source_refs', [])
-    review, review_evidence = None, {}
-    if include_review or review_path:
+    review = None
+    if include_review:
         review = decision_review.make_review(snapshot, inputs['input_revision'], previous,
             inputs['decisions'], deferred_decisions, pointer, digest(manifest_path), state,
             publication_refs, changes)
+    return {
+        'snapshot': snapshot,
+        'element_changes': element_changes,
+        'additional': additional,
+        'intent_errors': intent_errors,
+        'live_registry': live_registry,
+        'consumed_registry': consumed_registry,
+        'decisions': decisions,
+        'deferred_decisions': deferred_decisions,
+        'publication_refs': publication_refs,
+        'review': review
+    }
+
+
+def build_candidate(root=ROOT, version=None, source_refs=None, additional_path=None, *,
+                    review_path=None, include_review=False, current=None, lightweight=False):
+    lightweight = lightweight or (Path(root) / 'modeles/git-history.json').is_file()
+    state = decision_review.input_state(root)
+    models, pointer, previous, inputs, manifest_path = current or load_current(root)
+    version = valid_version(version or suggested_version(models))
+    live_path = working_path(models / 'backlog')
+    glossary_path = working_path(models / 'backlog', 'glossary')
+    intent_path = models / 'backlog/decision-intents.yaml'
+    # All sources, baseline evidence and Python tool bytes participate. The cache
+    # freezes only pre-assessment inputs; assessment and release validation run
+    # afresh, and input_state is checked again before returning the candidate.
+    cache_key = canonical_sha256({'purpose': 'release-draft-v1', 'root': str(Path(root).resolve()),
+        'state': state, 'version': version, 'source_refs': source_refs, 'lightweight': lightweight,
+        'base_pointer': pointer, 'base_manifest_sha256': digest(manifest_path),
+        'parser': _PARSER_SIGNATURE.hex(),
+        'include_review': bool(include_review or review_path),
+        'additional': digest(additional_path) if additional_path else None})
+    cache_directory = Path(root).resolve() / '.runtime/release-drafts'
+    draft = parsed_cache.get(cache_key, directory=cache_directory)
+    draft_cache_hit = draft is not parsed_cache.MISSING
+    if not draft_cache_hit:
+        draft = _prepare_draft(root, models, pointer, previous, inputs, manifest_path, version, source_refs,
+                               additional_path, state, bool(include_review or review_path), lightweight)
+        parsed_cache.put(cache_key, draft, directory=cache_directory)
+    snapshot = draft['snapshot']
+    element_changes = draft['element_changes']
+    additional = draft['additional']
+    intent_errors = draft['intent_errors']
+    live_registry = draft['live_registry']
+    consumed_registry = draft['consumed_registry']
+    decisions = draft['decisions']
+    deferred_decisions = draft['deferred_decisions']
+    publication_refs = draft['publication_refs']
+    review = draft['review']
+    review_evidence = {}
     if review_path:
         transcribed, review_evidence = decision_review.apply_assessment(review_path, review)
-        if additional:
-            transcribed['decisions'].extend(additional['decisions'])
-        decisions, deferred_decisions = reconcile_decisions(inputs['decisions'], snapshot, transcribed, inputs['input_revision'], stable_ids=lightweight)
+        # The assessment adds transcriptions; it changes neither the snapshot nor
+        # the previous scopes already reconciled above. Keep historical ordering.
+        additions = len(additional['decisions']) if additional else 0
+        kept = decisions['decisions'][:-additions] if additions else decisions['decisions'][:]
+        append_additional_decisions(kept, inputs['decisions'], version, transcribed)
+        append_additional_decisions(kept, inputs['decisions'], version, additional)
+        decisions = {**decisions, 'decisions': kept}
     explain_deferred_validations(snapshot, decisions, deferred_decisions, previous)
     # Working proposals and research remain in the knowledge base, not in every release.
     deferred_paths = [intent_path] if intent_path.exists() and not lightweight else []
@@ -479,7 +536,7 @@ def build_candidate(root=ROOT, version=None, source_refs=None, additional_path=N
             'provenance': provenance, 'candidate': candidate, 'report': report,
             'backlog_sha256': digest(live_path), 'glossary_sha256': digest(glossary_path) if glossary_path.exists() else None, 'base_manifest_sha256': digest(manifest_path),
             'publication_refs': publication_refs, 'input_state': state,
-            'review': review, 'review_evidence': review_evidence}
+            'review': review, 'review_evidence': review_evidence, 'draft_cache_hit': draft_cache_hit}
 
 
 def prepare(root, version, source_refs, additional_path=None, *, review_path=None, guide_path=None):

@@ -13,6 +13,16 @@ DRAFT = 'modeles/backlog/atlas-transformation-methodology.yaml'
 
 
 class GuideSourceTests(unittest.TestCase):
+    def test_reference_notice_links_use_existing_chapters_and_sections(self):
+        from app.modeling_guide import _validate_guide
+        document = deepcopy(self.expected)
+        document['glossary']['terms'][0]['notes'] = ['[Source](guide:references#method-section-0)']
+        _validate_guide(document, document['version'])
+        for link in ('guide:missing', 'guide:references#method-section-99'):
+            document['glossary']['terms'][0]['notes'] = ['[Source](' + link + ')']
+            with self.subTest(link=link), self.assertRaises(ValueError):
+                _validate_guide(document, document['version'])
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)

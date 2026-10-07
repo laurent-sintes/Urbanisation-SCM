@@ -8,6 +8,7 @@ import { sortCapabilitiesByType } from './capabilityTypes.ts';
 import { categorySections } from './categories.ts';
 import { searchPublication } from './search.ts';
 import { validateDisplayIndex } from './displayCodes.ts';
+import { resolveGlossaryTerm } from './glossary.ts';
 const structuralTypes = new Set<string>(['contains', 'presents']);
 export const isStructural = (relation: AtlasRelation): boolean => structuralTypes.has(relation.type);
 
@@ -72,6 +73,11 @@ export function adaptPublication(input: RawPublication): PublishedModel {
   const glossary = raw.glossary?.terms ?? [];
   if (!Array.isArray(glossary)) throw new Error('Glossaire publié invalide.');
   const glossaryById = uniqueMap(glossary, 'Terme');
+  for (const term of glossary) {
+    if (term.alias_of && (!resolveGlossaryTerm(glossaryById, term.id) || resolveGlossaryTerm(glossaryById, term.id)?.presentation)) throw new Error(`Alias de glossaire invalide : ${term.id}`);
+    if (term.presentation && !['historical', 'method'].includes(term.presentation)) throw new Error(`Présentation de glossaire invalide : ${term.id}`);
+    if ((term.presentation === 'method' || term.guide_section) && (term.presentation !== 'method' || term.guide_section !== 'method')) throw new Error(`Destination méthodologique invalide : ${term.id}`);
+  }
   const catalogue = raw.information_catalog;
   if (catalogue !== undefined && (!catalogue || !Array.isArray(catalogue.items) || !Array.isArray(catalogue.links))) {
     throw new Error('Catalogue d’informations publié invalide.');
@@ -191,6 +197,37 @@ export function hasAreaLevels(model: PublishedModel): boolean {
 
 export function isCapabilityContainer(model: PublishedModel, node: AtlasNode): boolean {
   return node.kind === 'area' || node.kind === 'business_area' || node.kind === 'reference' || (node.kind === 'domain' && !hasAreaLevels(model));
+}
+
+/** Totals for the displayed scope, independent of card layout and search filters. */
+export function scopeStatistics(model: PublishedModel, node: AtlasNode): { kind: string; count: number; label: string }[] {
+  const areaLabel = model.nodes.find(item => item.kind === 'area')?.hierarchyLabel;
+  const labels: Record<string, [string, string]> = {
+    domain: ['domaine', 'domaines'],
+    area: areaLabel === 'Sous-domaine' ? ['sous-domaine', 'sous-domaines']
+      : areaLabel === 'Purpose' ? ['Purpose', 'Purposes'] : ['Area', 'Areas'],
+    business_area: ['Business Area', 'Business Areas'], reference: ['référentiel', 'référentiels'],
+    capability: ['capacité', 'capacités'], behavior: ['comportement', 'comportements'],
+  };
+  const counts = new Map<string, number>();
+  const seen = new Set([node.id]);
+  const queue = childrenOf(model, node.id);
+  for (let index = 0; index < queue.length; index++) {
+    const child = queue[index];
+    if (seen.has(child.id)) continue;
+    seen.add(child.id);
+    counts.set(child.kind, (counts.get(child.kind) ?? 0) + 1);
+    queue.push(...childrenOf(model, child.id));
+  }
+  // Zero is useful for the expected levels, without inventing levels in old snapshots.
+  const expected = node.kind === 'area' ? ['business_area', 'capability', 'behavior']
+    : node.kind === 'business_area' ? ['capability', 'behavior']
+    : node.kind === 'capability' ? ['behavior'] : [];
+  return Object.entries(labels).flatMap(([kind, names]) => {
+    const count = counts.get(kind) ?? 0;
+    return count || (expected.includes(kind) && model.nodes.some(item => item.kind === kind))
+      ? [{ kind, count, label: names[count === 1 ? 0 : 1] }] : [];
+  });
 }
 
 export interface CardChildList {

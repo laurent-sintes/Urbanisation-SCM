@@ -1992,122 +1992,36 @@ publication_delivery:
       name: Cleaning Order
       definition: Porter les demandes de nettoyage des vêtements, chaussures et accessoires confiées aux exécutants, leurs
         exigences, engagements et résultats.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Nettoyage et détachage des vêtements, chaussures et accessoires.
-
-        Résultat de propreté ; techniques au catalogue.
-
-        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
-
-        Exemple fictif : Détacher des chaussures retournées et distinguer les résultats complets et partiels.
   - id: service-order-cross-docking
     fields:
       name: Cross-Docking Order
       definition: Porter les demandes de transit confiées aux exécutants et les engagements de passage des marchandises reçues
         vers les départs prévus.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Tenir les arrivées et sorties concernées, les quantités, fenêtres attendues, prises en charge et changements de prestation. [Availability](glossary:TER112) arbitre la couverture et les affectations partagées ; [Fulfilment](glossary:TER085) coordonne le passage et les adaptations locales. Une arrivée tardive ou un départ manqué produit des faits et suites explicites, sans réaffectation implicite d’autres commandes. L’instruction peut être autonome ou liée aux ordres entrants et sortants ; le cross-docking évite le stockage conventionnel sans imposer le même parcours à toutes les unités.
-
-        Exemple fictif : Un lot attendu doit rejoindre un départ magasin ; le retard d’arrivée exige une suite de prestation et un arbitrage si la promesse est affectée.
-
-        La prestation est décrite dans le [Service Catalog](model:D14) ; le [Service Order](glossary:TER066) en porte les exigences et engagements individuels auprès du [Service Provider](glossary:TER088).
   - id: service-order-garment-finishing
     fields:
       name: Garment Finishing Order
       definition: Porter les demandes de finition d’aspect des vêtements confiées aux exécutants, leurs exigences, engagements
         et résultats.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Finition d’aspect textile : repassage, défroissage, remise en forme.
-
-        Se distingue du support de présentation et du nettoyage.
-
-        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
-
-        Exemple fictif : Défroisser des chemises et signaler les pièces dont l’aspect reste non conforme.
   - id: service-order-inspection
     fields:
       name: Inspection Order
       definition: Porter les demandes d’inspection des vêtements, chaussures et accessoires confiées aux exécutants, leurs
         exigences, engagements et résultats.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Inspection autonome, contrôle de conformité et classement d’état des articles.
-
-        Le contrôle intégré à une autre prestation reste dans cette prestation ; le constat ne décide pas du devenir du stock.
-
-        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
-
-        Exemple fictif : Examiner un lot retourné et livrer un constat d’état sans décider de sa destination.
   - id: service-order-kitting
     fields:
       name: Kitting Order
       definition: Porter les demandes de constitution, séparation et recomposition d’ensembles confiées aux exécutants, leurs
         exigences, engagements et résultats.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Constitution, séparation et recomposition d’ensembles ou assortiments spécifiés.
-
-        Kitting / Dekitting regroupés ; ne décide pas des affectations de stock aux magasins.
-
-        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
-
-        Exemple fictif : Défaire des assortiments tailles/couleurs et constituer les ensembles spécifiés.
   - id: service-order-labeling
     fields:
       name: Labeling Order
       definition: Porter les demandes de marquage et d’étiquetage confiées aux exécutants, leurs exigences, engagements et
         résultats.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Étiquetage et réétiquetage, RFID et pose d’antivols ; information, identification ou protection attendue.
-
-        Regroupe des variantes ; pas un ordre distinct pour chaque technologie.
-
-        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
-
-        Exemple fictif : Réétiqueter 200 vestes selon le tarif accepté et vérifier la version appliquée.
-
-        Qualifier et suivre la prestation d’étiquetage ou de réétiquetage confiée, en tenant la spécification attendue et la conformité du résultat communiqué.
-
-        La conformité porte sur l’information appliquée et sa version, pas seulement sur une quantité traitée. Les références des consignes relèvent du catalogue ; les exigences et engagements individuels sont tenus dans l’ordre. Le tracking et le rapprochement fournissent les constats et écarts ; l’exécutant réalise le geste physique.
-
-        Exemple fictif : Un changement d’étiquette exige la version attendue pour le lot concerné ; une confirmation de traitement ne suffit pas si elle concerne une autre version.
-
-        L’étiquetage et le réétiquetage relèvent de [Labeling Order](model:service-order-labeling). La consigne distingue version précédente, version cible et conformité du réétiquetage.
   - id: service-order-packing
     fields:
       name: Packing Order
       definition: Porter les demandes de conditionnement et de reconditionnement confiées aux exécutants, leurs exigences,
         engagements et résultats.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Conditionnement initial, Repacking, pliage, mise sur cintre, présentation cadeau.
-
-        Repacking est une variante descriptive de [Packing Order](model:service-order-packing) ; son identifiant est conservé.
-
-        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
-
-        Exemple fictif : Passer un lot de vêtements pliés sur cintres, sans changer la composition des articles.
-
-        Porter la prestation de reconditionnement confiée, en précisant la transformation attendue du conditionnement et en conservant les écarts signalés.
-
-        Modifier un conditionnement existant ; clarifier la frontière avec [Packing Order](model:service-order-packing) sans créer deux demandes pour la même prestation. Les références des consignes relèvent du catalogue ; les exigences et engagements individuels sont tenus dans l’ordre. Le tracking et le rapprochement fournissent les constats et écarts ; l’exécutant réalise le geste physique.
-
-        Exemple fictif : Reconditionner un lot déjà emballé selon une nouvelle consigne ; distinguer quantité traitée et quantité conforme.
-
-        Le reconditionnement relève de [Packing Order](model:service-order-packing). La mise sur cintre, le changement de cintre et le retour à une présentation pliée relèvent du conditionnement, sans changer la composition d’un kit.
-
-        Porter les exigences de conditionnement commun, par exemple préparer les biens compatibles d’une commande B2B sur une palette lorsque cela est réalisable. La libération simultanée des ordres ne garantit pas ce résultat ; tenir la consigne, la prise en charge et le résultat effectif. L’exécutant conserve la palettisation détaillée.
   - id: service-order-payment-collection
     fields:
       name: Payment
@@ -2128,76 +2042,26 @@ publication_delivery:
       name: Personalization Order
       definition: Porter les demandes de personnalisation des vêtements, chaussures et accessoires confiées aux exécutants,
         leurs exigences, engagements et résultats.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Personnalisation du produit : broderie, monogramme, gravure sur accessoires.
-
-        La carte cadeau jointe relève de la présentation, pas d’une transformation du produit.
-
-        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
-
-        Exemple fictif : Broder les initiales demandées sur les articles désignés.
   - id: service-order-picking
     fields:
       name: Picking Order
       definition: Porter les demandes de prélèvement confiées aux exécutants, leurs exigences de quantité et de référence,
         leurs engagements et les manquants constatés.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Préciser les biens à prélever, les quantités, le lieu et l’échéance demandés ; tenir la prise en charge, les changements et le reste de prestation à traiter. Les constats proviennent du tracking et les écarts qualifiés du rapprochement. L’exécutant organise les emplacements, parcours et opérateurs. Aucun prélèvement ne réaffecte de lui-même les ressources d’une autre commande. La prestation peut appartenir à un ordre composite de préparation sans perdre ses exigences propres.
-
-        Exemple fictif : Sur 100 pièces demandées, 96 sont prélevées : tenir la suite des quatre manquantes sans confondre le reliquat de prestation avec celui de la commande.
-
-        La prestation est décrite dans le [Service Catalog](model:D14) ; le [Service Order](glossary:TER066) en porte les exigences et engagements individuels auprès du [Service Provider](glossary:TER088).
-
-        Porter les exigences de préparation commune lorsque des ordres sont libérés ensemble pour une commande ou un client. Conserver les quantités et engagements propres de chaque ordre ; le regroupement décidé par [Fulfilment](glossary:TER085) ne prescrit pas les vagues, parcours ou opérateurs internes.
   - id: service-order-receiving
     fields:
       name: Receiving Order
       definition: Porter les demandes de réception de marchandises confiées aux exécutants, leurs quantités et conditions
         attendues, leurs engagements et les résultats des réceptions partielles, refusées ou non conformes.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Porter l’origine attendue, les articles et quantités, le lieu, les créneaux, les consignes de prise en charge et les preuves attendues. Suivre acceptation, révisions, annulation, réception partielle et clôture avec le reste à réaliser. Une annonce d’arrivée ou un document ne prouve pas la réception.
-
-        Une demande de réception peut être liée à un [Purchase Order](glossary:TER070), [Transfer Order](glossary:TER071), [Return Order](glossary:TER072) ou apport consigné ; elle ne remplace pas leurs engagements. Le prestataire reçoit physiquement et organise ses tâches internes. Une inspection autonome peut être confiée à [Inspection Order](model:service-order-inspection) ; un contrôle intégré demeure dans la réception. [Receiving Order](model:service-order-receiving) ne décide pas du devenir d’un retour et ne garantit pas que le stock est vendable.
-
-        [Fulfilment Orchestration](model:D06) coordonne les prestations. Operations Tracking capte leur résultat et Service Reconciliation qualifie l’écart ; [Receiving Order](model:service-order-receiving) tient le solde de sa prestation. Inventory Tracking et [Inventory Ledger](glossary:TER056) prennent en compte les faits de stock reconnus. L’instruction de réception ne crée ni mouvement, ni changement automatique de propriété, ni nouvel achat.
-
-        Créer cet [Order](glossary:TER012) lorsqu’une réception est explicitement confiée et suivie comme prestation. Recevoir seulement une notification ne justifie pas un ordre artificiel. Aucune famille supplémentaire de rangement ou de stockage ni réalisation Beaumanoir n’est déduite.
   - id: service-order-repair-alteration
     fields:
       name: Repair & Alteration Order
       definition: Porter les demandes de réparation et de retouche des vêtements, chaussures et accessoires confiées aux exécutants,
         leurs exigences, engagements et résultats.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Correction de défauts et retouches confiées sur vêtements, chaussures et accessoires.
-
-        Distinguer restauration et modification demandée dans les exigences.
-
-        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
-
-        Exemple fictif : Remplacer des boutons sur un lot de manteaux selon les retouches autorisées.
   - id: service-order-scrapping
     fields:
       name: Scrapping Order
       definition: Porter une demande de mise au rebut de biens, ses autorisations, quantités, consignes et preuves attendues
         jusqu’à son résultat reconnu.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Un [Scrapping Order](glossary:TER104) permet de confier et suivre la mise au rebut comme prestation logistique identifiable. Préciser les biens, quantités, autorisations, consignes de traitement et preuves exigées. L’[Order](glossary:TER012) conserve le réalisé, le reliquat et les écarts ; une clôture partielle doit être explicitement autorisée. Le traitement peut être exécuté par un prestataire externe et durer dans le temps.
-
-        [Inventory Disposition Decision](model:D05.i) détermine le devenir autorisé ; l’[Order](glossary:TER012) ne décide pas de détruire au seul motif d’un écart de stock. [Process Orchestration](model:D06.d) coordonne la prestation ; [Operations Tracking](model:D07.d) reçoit les faits d’exécution et [Service Reconciliation](model:D07.c) les rapproche de l’attendu. [Inventory Tracking](model:D01.f) et [Inventory Ledger](model:D01.g) intègrent et conservent les effets reconnus sur le stock. Une instruction ou une écriture comptable ne prouve pas une destruction physique.
-
-        Le comportement Scrapping de [Return Order](glossary:TER072) continue à porter l’issue du retour et ses obligations ; [Scrapping Order](glossary:TER104) porte la prestation confiée, liée au retour lorsqu’il existe. Le rebut peut aussi concerner un stock abîmé hors retour. Aucune extension automatique aux dons, déstockages commerciaux ou à toutes les filières de recyclage.
-
-        Exemple fictif : vingt vestes sont autorisées au rebut. Le prestataire prouve le traitement de dix-huit ; deux restent en attente. L’[Order](glossary:TER012) conserve ce solde tant qu’une autre clôture n’est pas autorisée. Aucun comportement supplémentaire n’est créé pour chaque motif de rebut.
   absent_nodes:
   - D08.e
   - D09.e
@@ -2217,3 +2081,174 @@ evolution_U874:
   - service-order-payment-collection
   note: 'Réexamen explicite : Billing et Payment sont des services portés, non des Orders passifs ; les 81 constats historiques
     et la clôture U861 sont conservés.'
+superseded_delivery_U885:
+- id: service-order-scrapping
+  previous_expectations:
+    fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Un [Scrapping Order](glossary:TER104) permet de confier et suivre la mise au rebut comme prestation logistique identifiable. Préciser les biens, quantités, autorisations, consignes de traitement et preuves exigées. L’[Order](glossary:TER012) conserve le réalisé, le reliquat et les écarts ; une clôture partielle doit être explicitement autorisée. Le traitement peut être exécuté par un prestataire externe et durer dans le temps.
+
+        [Inventory Disposition Decision](model:D05.i) détermine le devenir autorisé ; l’[Order](glossary:TER012) ne décide pas de détruire au seul motif d’un écart de stock. [Process Orchestration](model:D06.d) coordonne la prestation ; [Operations Tracking](model:D07.d) reçoit les faits d’exécution et [Service Reconciliation](model:D07.c) les rapproche de l’attendu. [Inventory Tracking](model:D01.f) et [Inventory Ledger](model:D01.g) intègrent et conservent les effets reconnus sur le stock. Une instruction ou une écriture comptable ne prouve pas une destruction physique.
+
+        Le comportement Scrapping de [Return Order](glossary:TER072) continue à porter l’issue du retour et ses obligations ; [Scrapping Order](glossary:TER104) porte la prestation confiée, liée au retour lorsqu’il existe. Le rebut peut aussi concerner un stock abîmé hors retour. Aucune extension automatique aux dons, déstockages commerciaux ou à toutes les filières de recyclage.
+
+        Exemple fictif : vingt vestes sont autorisées au rebut. Le prestataire prouve le traitement de dix-huit ; deux restent en attente. L’[Order](glossary:TER012) conserve ce solde tant qu’une autre clôture n’est pas autorisée. Aucun comportement supplémentaire n’est créé pour chaque motif de rebut.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+superseded_delivery_U887:
+  source_refs:
+  - U887
+  replacement: model-coherence-audit-U886.yaml#publication_delivery
+  assertions:
+  - id: service-order-cleaning
+    previous_fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Nettoyage et détachage des vêtements, chaussures et accessoires.
+
+        Résultat de propreté ; techniques au catalogue.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Détacher des chaussures retournées et distinguer les résultats complets et partiels.
+  - id: service-order-cross-docking
+    previous_fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Tenir les arrivées et sorties concernées, les quantités, fenêtres attendues, prises en charge et changements de prestation. [Availability](glossary:TER112) arbitre la couverture et les affectations partagées ; [Fulfilment](glossary:TER085) coordonne le passage et les adaptations locales. Une arrivée tardive ou un départ manqué produit des faits et suites explicites, sans réaffectation implicite d’autres commandes. L’instruction peut être autonome ou liée aux ordres entrants et sortants ; le cross-docking évite le stockage conventionnel sans imposer le même parcours à toutes les unités.
+
+        Exemple fictif : Un lot attendu doit rejoindre un départ magasin ; le retard d’arrivée exige une suite de prestation et un arbitrage si la promesse est affectée.
+
+        La prestation est décrite dans le [Service Catalog](model:D14) ; le [Service Order](glossary:TER066) en porte les exigences et engagements individuels auprès du [Service Provider](glossary:TER088).
+  - id: service-order-garment-finishing
+    previous_fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Finition d’aspect textile : repassage, défroissage, remise en forme.
+
+        Se distingue du support de présentation et du nettoyage.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Défroisser des chemises et signaler les pièces dont l’aspect reste non conforme.
+  - id: service-order-inspection
+    previous_fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Inspection autonome, contrôle de conformité et classement d’état des articles.
+
+        Le contrôle intégré à une autre prestation reste dans cette prestation ; le constat ne décide pas du devenir du stock.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Examiner un lot retourné et livrer un constat d’état sans décider de sa destination.
+  - id: service-order-kitting
+    previous_fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Constitution, séparation et recomposition d’ensembles ou assortiments spécifiés.
+
+        Kitting / Dekitting regroupés ; ne décide pas des affectations de stock aux magasins.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Défaire des assortiments tailles/couleurs et constituer les ensembles spécifiés.
+  - id: service-order-labeling
+    previous_fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Étiquetage et réétiquetage, RFID et pose d’antivols ; information, identification ou protection attendue.
+
+        Regroupe des variantes ; pas un ordre distinct pour chaque technologie.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Réétiqueter 200 vestes selon le tarif accepté et vérifier la version appliquée.
+
+        Qualifier et suivre la prestation d’étiquetage ou de réétiquetage confiée, en tenant la spécification attendue et la conformité du résultat communiqué.
+
+        La conformité porte sur l’information appliquée et sa version, pas seulement sur une quantité traitée. Les références des consignes relèvent du catalogue ; les exigences et engagements individuels sont tenus dans l’ordre. Le tracking et le rapprochement fournissent les constats et écarts ; l’exécutant réalise le geste physique.
+
+        Exemple fictif : Un changement d’étiquette exige la version attendue pour le lot concerné ; une confirmation de traitement ne suffit pas si elle concerne une autre version.
+
+        L’étiquetage et le réétiquetage relèvent de [Labeling Order](model:service-order-labeling). La consigne distingue version précédente, version cible et conformité du réétiquetage.
+  - id: service-order-packing
+    previous_fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Conditionnement initial, Repacking, pliage, mise sur cintre, présentation cadeau.
+
+        Repacking est une variante descriptive de [Packing Order](model:service-order-packing) ; son identifiant est conservé.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Passer un lot de vêtements pliés sur cintres, sans changer la composition des articles.
+
+        Porter la prestation de reconditionnement confiée, en précisant la transformation attendue du conditionnement et en conservant les écarts signalés.
+
+        Modifier un conditionnement existant ; clarifier la frontière avec [Packing Order](model:service-order-packing) sans créer deux demandes pour la même prestation. Les références des consignes relèvent du catalogue ; les exigences et engagements individuels sont tenus dans l’ordre. Le tracking et le rapprochement fournissent les constats et écarts ; l’exécutant réalise le geste physique.
+
+        Exemple fictif : Reconditionner un lot déjà emballé selon une nouvelle consigne ; distinguer quantité traitée et quantité conforme.
+
+        Le reconditionnement relève de [Packing Order](model:service-order-packing). La mise sur cintre, le changement de cintre et le retour à une présentation pliée relèvent du conditionnement, sans changer la composition d’un kit.
+
+        Porter les exigences de conditionnement commun, par exemple préparer les biens compatibles d’une commande B2B sur une palette lorsque cela est réalisable. La libération simultanée des ordres ne garantit pas ce résultat ; tenir la consigne, la prise en charge et le résultat effectif. L’exécutant conserve la palettisation détaillée.
+  - id: service-order-personalization
+    previous_fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Personnalisation du produit : broderie, monogramme, gravure sur accessoires.
+
+        La carte cadeau jointe relève de la présentation, pas d’une transformation du produit.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Broder les initiales demandées sur les articles désignés.
+  - id: service-order-picking
+    previous_fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Préciser les biens à prélever, les quantités, le lieu et l’échéance demandés ; tenir la prise en charge, les changements et le reste de prestation à traiter. Les constats proviennent du tracking et les écarts qualifiés du rapprochement. L’exécutant organise les emplacements, parcours et opérateurs. Aucun prélèvement ne réaffecte de lui-même les ressources d’une autre commande. La prestation peut appartenir à un ordre composite de préparation sans perdre ses exigences propres.
+
+        Exemple fictif : Sur 100 pièces demandées, 96 sont prélevées : tenir la suite des quatre manquantes sans confondre le reliquat de prestation avec celui de la commande.
+
+        La prestation est décrite dans le [Service Catalog](model:D14) ; le [Service Order](glossary:TER066) en porte les exigences et engagements individuels auprès du [Service Provider](glossary:TER088).
+
+        Porter les exigences de préparation commune lorsque des ordres sont libérés ensemble pour une commande ou un client. Conserver les quantités et engagements propres de chaque ordre ; le regroupement décidé par [Fulfilment](glossary:TER085) ne prescrit pas les vagues, parcours ou opérateurs internes.
+  - id: service-order-receiving
+    previous_fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Porter l’origine attendue, les articles et quantités, le lieu, les créneaux, les consignes de prise en charge et les preuves attendues. Suivre acceptation, révisions, annulation, réception partielle et clôture avec le reste à réaliser. Une annonce d’arrivée ou un document ne prouve pas la réception.
+
+        Une demande de réception peut être liée à un [Purchase Order](glossary:TER070), [Transfer Order](glossary:TER071), [Return Order](glossary:TER072) ou apport consigné ; elle ne remplace pas leurs engagements. Le prestataire reçoit physiquement et organise ses tâches internes. Une inspection autonome peut être confiée à [Inspection Order](model:service-order-inspection) ; un contrôle intégré demeure dans la réception. [Receiving Order](model:service-order-receiving) ne décide pas du devenir d’un retour et ne garantit pas que le stock est vendable.
+
+        [Fulfilment Orchestration](model:D06) coordonne les prestations. Operations Tracking capte leur résultat et Service Reconciliation qualifie l’écart ; [Receiving Order](model:service-order-receiving) tient le solde de sa prestation. Inventory Tracking et [Inventory Ledger](glossary:TER056) prennent en compte les faits de stock reconnus. L’instruction de réception ne crée ni mouvement, ni changement automatique de propriété, ni nouvel achat.
+
+        Créer cet [Order](glossary:TER012) lorsqu’une réception est explicitement confiée et suivie comme prestation. Recevoir seulement une notification ne justifie pas un ordre artificiel. Aucune famille supplémentaire de rangement ou de stockage ni réalisation Beaumanoir n’est déduite.
+  - id: service-order-repair-alteration
+    previous_fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Correction de défauts et retouches confiées sur vêtements, chaussures et accessoires.
+
+        Distinguer restauration et modification demandée dans les exigences.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Remplacer des boutons sur un lot de manteaux selon les retouches autorisées.

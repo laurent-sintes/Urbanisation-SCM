@@ -164,6 +164,7 @@ publication_delivery:
     parent: ba-order-lifecycle-management
     fields:
       name: Sales Order
+    parent_type: contains
   - id: D04.j
     parent: ba-order-lifecycle-management
     fields:
@@ -178,6 +179,8 @@ publication_delivery:
     field: modeling_depth
     previous_value: context
     reason: U826 remplace cette attente dans le courant ; preuves historiques préservées.
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
 delivery_updates:
 - source_ref: U848
   fields:

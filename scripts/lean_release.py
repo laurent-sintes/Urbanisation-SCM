@@ -27,8 +27,14 @@ def archive_plan(root, version):
             continue
         files = [path] if path.is_file() else list(path.rglob('*'))
         for item in files:
-            if item.is_file() and git_history.blob(str(root), commit, item.relative_to(root).as_posix()) != item.read_bytes():
-                raise ValueError('Commit the current publication before replacing it: ' + str(item))
+            if item.is_file():
+                message = 'Commit the current publication before replacing it: ' + str(item)
+                try:
+                    archived = git_history.blob(str(root), commit, item.relative_to(root).as_posix())
+                except ValueError as exc:
+                    raise ValueError(message) from exc
+                if archived != item.read_bytes():
+                    raise ValueError(message)
         entries.append({'path': prefix, 'commit': commit})
     return entries
 
@@ -202,6 +208,10 @@ def _run(root, version, source_refs, *, activate, review_path, decisions_path, g
         if not activate or review_path or decisions_path or guide_path or set(source_refs) != set(current[2].get('publication', {}).get('source_refs', [])):
             raise ValueError('Version already published with another requested scope')
         return finish(root, {'status': 'published', 'version': version, 'already_published': True}, verify_site, atlas_url, started, timings=timings)
+    if activate and not (root / '.runtime/publication' / version).exists():
+        # Fail before constructing/reviewing a candidate. Publication still checks
+        # again at retirement: this early diagnostic is not an integrity waiver.
+        measured('git_preflight', lambda: archive_plan(root, current[1]['version']))
     stage = root / '.runtime/publication' / version
     if stage.exists():
         if review_path or decisions_path or guide_path:

@@ -1,0 +1,1013 @@
+schema_version: 1.0.0
+id: presentation-readiness-audit-U888
+source_refs:
+- U888
+audited_on: '2026-10-07'
+presentation_on: '2026-10-08'
+status: corrected_verified
+verdict: Corrections M01–M08 appliquées sous U889 et vérifiées sur le candidat complet. Le candidat est prêt pour une publication
+  avec le dossier de réexamen explicite et le guide actualisé. Les lacunes documentaires restent explicites ; aucune réalisation
+  installée ni validation client n’est déduite.
+scope:
+  authority: Backlog courant ; guide assemblé depuis les YAML canoniques.
+  comparison_only: R52 / 2026-10-07.2
+  fixture_version: 2026-10-07.999 ; identifiant technique de test, aucune publication.
+  dimensions:
+  - Modèle, noms, définitions, responsabilités, Availability
+  - Glossaires et méthode de transformation
+  - Scénarios et couverture explicite
+  - Identités et codes de lecture
+  - Restitution complète du candidat et gates de publication
+  limits:
+  - Aucune réalisation installée déduite ; Sarenza reste non évalué.
+  - Audit des comportements clos U431 non réouvert ; invariants seulement contrôlés.
+  - Réexamen marché ciblé sur frontières à risque ; aucune certification ni équivalence exhaustive.
+  - Les scénarios restent illustratifs ; un lien vers 80 capacités ne démontre pas exhaustivité ni validation client.
+basis_sha256:
+  modeles/backlog/model.yaml: 15540ea25c301e6a950316bf965753f9f6a27ef5cd3a33781c07f458af814491
+  modeles/backlog/glossary.yaml: 2407596dea0030ea0fd64b360009d8708052c384f6fee39976fc665e8d5f9e1a
+  modeles/backlog/modeling-glossary.yaml: 909bafcf171b0e43d48325959af2e72c151f9b9f2ba1238f5b3d3d76e6221302
+  modeles/backlog/atlas-transformation-methodology.yaml: 40cdc95c7ec09b66fed9ea9ee1a14b182b8c2f03556ed65b2d07737d90de47c3
+  modeles/backlog/decision-intents.yaml: ccfa9997e3d4ee739c837a9c5d1083f56bb549c479fdd2fc88ad7b295f2f6100
+  modeles/release/index.json: 748f22e6ef1068739e2b59c93893526dc4e81c2310a1ca2177675b51de370d0d
+  modeles/provenance/source-records.json: 0d4fe99bf83743a7ff8927b5aee4799fa8303e66135159d4999f7d21f0a302b4
+  app/src/model.ts: 1eeada99a91371a0e447adf592981df0590e8fd77dc1a836503f10cf3cbb334b
+  scripts/release.py: 9819878cc11d79929d736014446b65f462a9ece8a04e3f9cd309201a5184702e
+  scripts/prepare_release.py: 0718535296069bfa8917ed7f0658d7d699eb8386773e80d1219e2e92905afc2c
+  app/verify-published-content.mjs: a62b5ddc508b61f0cd58d927c27fa1653462cf54c6bcd12638b408d7f804dd0c
+  app/candidate-fixture.mjs: 0ec40a2e39202042d1935605d6bb1216d00a751039d79814e3debd7ade85a1b3
+inventory:
+  raw_nodes: 218
+  publishable_nodes: 214
+  capabilities: 80
+  business_areas: 28
+  behaviors: 78
+  scm_subdomains: 9
+  documentary_references: 9
+  scenarios: 38
+  paths: 41
+  steps: 130
+findings:
+- id: M01
+  priority: P1
+  status: corrected_verified
+  title: ATP assimile affermissement et confirmation fournisseur
+  locations:
+  - modeles/backlog/model.yaml / D03.i.fields.scope et copies market_inspiration
+  - modeles/backlog/glossary.yaml / TER044.context et copies market_inspiration
+  - modeles/backlog/model.yaml / preorder-future-availability-path / coverage
+  evidence: À l’affermissement, le texte remplace le Planned Purchase Order par un achat confirmé. Purchase Order distingue
+    pourtant création/affermissement et confirmation fournisseur.
+  impact: Un apport peut être lu comme certain avant confirmation de sa date et de sa quantité ; contradiction au cœur d’Availability.
+  proposed_correction: Remplacer la contribution planifiée par celle du Purchase Order résultant, selon son engagement et
+    sa confirmation réels, en conservant filiation et conditions. L’affermissement ne confirme pas automatiquement date et
+    quantité fournisseur.
+  primary_sources:
+  - vendor: Microsoft Dynamics 365
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-order-approval-confirmation
+    passage: Approval of purchase orders / Confirming purchase orders
+    consulted_on: '2026-10-07'
+  - vendor: SAP S/4HANA
+    url: https://learning.sap.com/courses/purchasing-in-sap-s-4hana/monitoring-purchase-orders
+    passage: Order Confirmation Monitoring / Working with Different Confirmation Types
+    consulted_on: '2026-10-07'
+- id: M02
+  priority: P1
+  status: corrected_verified
+  title: Le guide et le métamodèle enseignent encore une Business Area facultative
+  locations:
+  - modeles/backlog/atlas-transformation-methodology.yaml / method / Regrouper par responsabilité et note MOD013
+  - modeles/backlog/modeling-glossary.yaml / MOD008 et MOD013
+  evidence: Le guide autorise un rattachement direct au sous-domaine et cite Policies. MOD013 et MOD008 conservent la facultativité
+    du niveau BA ; MOD013 annonce huit sous-domaines SCM.
+  impact: Le lecteur apprend une règle interdite par U880, alors que l’arbre et MOD039 appliquent correctement une BA obligatoire.
+  proposed_correction: Toute capacité possède exactement une Business Area dans son sous-domaine. Adapter les notes et exemples
+    au modèle courant. La profondeur des domaines de contexte reste limitée comme convenu ; actualiser ou supprimer le compteur
+    daté.
+- id: M03
+  priority: P2
+  status: corrected_verified
+  title: Les textes des références locales conservent des nombres obsolètes
+  locations:
+  - modeles/backlog/glossary.yaml / TER123.context et comparaisons FLOW
+  - modeles/backlog/model.yaml / master-data-ingestion-finance.fields.scope
+  - modeles/backlog/model.yaml / business-references.fields.market_comparisons, market_inspiration et mastership
+  - modeles/backlog/model.yaml / comparaisons des ingestions
+  evidence: L’arbre et le scope Operational References comportent neuf références ; le glossaire en annonce huit et une ingestion
+    évoque sept référentiels.
+  impact: Contradictions de synthèse après séparation des Price Books produit/service.
+  proposed_correction: Employer les références du périmètre courant et aligner les copies rédactionnelles locales. Préférer
+    une formulation sans compteur manuel lorsque le nombre n’apporte pas d’information métier.
+- id: M04
+  priority: P2
+  status: corrected_verified
+  title: Consignment Pick-up Order attribue encore les Tasks à un périmètre ancien
+  locations:
+  - modeles/backlog/model.yaml / D04.t.fields.scope et copies locales concernées
+  evidence: Le texte dit Demand suit la demande et Fulfilment les Tasks de collecte et transport.
+  impact: Demand n’est plus un périmètre canonique ; le pilotage du parcours et du travail humain revient à Process Management.
+  proposed_correction: 'Nommer les responsabilités courantes : Order Management conserve la commande et sa validité ; Process
+    Management conduit les Tasks ; Fulfilment conserve sa coordination spécialisée et les exécutants leur exécution locale.'
+- id: M05
+  priority: P2
+  status: corrected_verified
+  title: Packing Order laisse croire que Repacking possède encore un identifiant courant
+  locations:
+  - modeles/backlog/model.yaml / service-order-packing.fields.scope et copies market_inspiration
+  - modeles/backlog/model.yaml / retrait vas-repacking sous U711
+  evidence: La fiche affirme que l’identifiant Repacking est conservé ; vas-repacking est retiré du catalogue courant.
+  impact: Confusion entre connaissance conservée dans Packing et objet métier publié ; risque de réintroduire un objet retiré.
+  proposed_correction: Conserver la modalité de repacking dans Packing Order, préciser le retrait du nœud autonome et son
+    historique, sans réutiliser son identifiant.
+- id: M06
+  priority: P2
+  status: corrected_verified
+  title: Deux scénarios de retour client sont absents du flux de récupération de valeur
+  locations:
+  - modeles/backlog/model.yaml / scenario_catalog.scenarios / return-credit-refund et return-customer-replacement
+  evidence: Les deux scénarios ne portent que obtain-products ; le filtre recover-value les exclut.
+  impact: Le lecteur explorant les retours ne retrouve pas avoir/remboursement et remplacement.
+  proposed_correction: Ajouter recover-value à leurs value_stream_ids, conserver obtain-products lorsqu’il exprime aussi la
+    satisfaction de la demande, sans dupliquer scénario ni parcours.
+- id: M07
+  priority: P2
+  status: corrected_verified
+  title: Un parcours de transport confond décision et coordination
+  locations:
+  - modeles/backlog/model.yaml / transport-loads-six-stores-path / step-4 / contribution D06.f
+  evidence: Fulfilment Adaptation Decision doit Choisir et coordonner l’adaptation locale admissible.
+  impact: Le scénario contredit la séparation D06.f décision / D06.d coordination.
+  proposed_correction: Choisir l’adaptation locale admissible et transmettre les conditions de mise en œuvre à Fulfilment
+    Coordination. Ajouter D06.d seulement si sa mobilisation doit être explicitement portée par cette étape.
+- id: M08
+  priority: P2
+  status: corrected_verified
+  title: Les informations nécessaires rendent certains scénarios inutilement longs et peu éprouvables
+  locations:
+  - modeles/backlog/model.yaml / scenario_catalog.paths[*].steps[*].inputs
+  - preorder-future-availability-path / firm
+  evidence: 75 des 130 étapes portent un input générique ; 16 recopient la description entière, dont 1 095 caractères répétés
+    pour l’affermissement de précommande. Quatre inputs vides.
+  impact: Les prérequis métier ne sont pas faciles à examiner et la lecture des scénarios de démonstration s’allonge.
+  proposed_correction: 'Décrire des inputs concrets et courts sur les scénarios présentés : identité/version, quantités/dates,
+    validité, autorité, preuve du résultat précédent. Retirer les répétitions sans inventer de dépendances ni réécrire tout
+    le catalogue.'
+strengths:
+- 80 capacités, chacune sous une seule Business Area ; comportements terminaux sans singleton.
+- Order Management conserve identité et validité ; Process Management conduit les parcours ; Fulfilment conserve son mandat
+  local.
+- Availability traite présent/futur, conditions de promesse, concurrence, protections/réservations, multi-lignes, capacités
+  de service et absence de solution admissible.
+- Précommande de vente et achat planifié distingués ; intercompany présenté comme usage sans stock fictif.
+- Travail humain, habilitations, échéances, erreurs, intervention contrôlée, mining et reporting sont matérialisés sans nouveau
+  domaine Case artificiel.
+- Transformation multidimensionnelle, produit, DDD, technologie, architecture et décisions progressives ; les deux SVG d’ensemble
+  sont conservés.
+- Aucun identifiant R52 perdu ; codes de lecture prévisionnels changent par parcours d’arbre, identités conservées.
+documentary_limits:
+  model_nodes_with_market_gaps: 45
+  explicit_market_gaps: 65
+  gap_families:
+    microsoft_dynamics: 28
+    sap_s4hana: 37
+  glossary_entries_with_market_gaps: 76
+  meaning: Lacunes explicites conservées, distinctes d’un défaut métier. Ne pas présenter le modèle comme intégralement validé
+    par SAP ou Microsoft.
+  scenarios_without_separate_conditions: 25
+  paths_without_explicit_dependency: 31
+  meaning_scenarios: Ne pas inventer des dépendances à partir d’un ordre de lecture ; éprouver les conditions sur les cas
+    présentés.
+market_review:
+  consulted_on: '2026-10-07'
+  scope: Réexamen ciblé des références primaires à leur maille ; rapprochements partiels, sans taxonomie imposée.
+  availability:
+  - https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-advanced-available-to-promise-aatp-in-sap-s-4hana
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+  process_and_case_management:
+  - https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/configure-manual-task-workflow
+  - https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/0f18dddf28764f5b807ecd80549044cc/8827801c655c498d960af209bb59ce6e.html
+  - https://academy.pega.com/topic/assignment-routing/v2/in/80671
+  - https://documentation.flowable.com/latest/reactmodel/cmmn/introduction/part2-tasks-and-plan-items
+  - https://learn.microsoft.com/en-us/power-automate/process-mining-overview
+  transformation:
+  - https://learning.businessarchitectureguild.org/products/domain-2-core-mapping-knowledge
+  - https://help.opengroup.org/hc/en-us/articles/32115987894930-How-the-ArchiMate-Language-and-the-TOGAF-Standard-Complement-Each-Other
+  - https://www.domainlanguage.com/wp-content/uploads/2016/05/DDD_Reference_2015-03.pdf
+  - https://www.svpg.com/discovery-vs-delivery/
+  - https://www.svpg.com/the-product-operating-model-an-introduction/
+  - https://agilemanifesto.org/iso/fr/principles.html
+  - https://learn.microsoft.com/en-us/azure/well-architected/architect-role/collaboration
+  - https://www.prosci.com/methodology/adkar
+  limits:
+  - Accès public limité à BIZBOK ; aucun audit intégral du guide sous licence.
+  - Power Automate Process Mining constitue un appui Microsoft complémentaire ; il ne vaut pas preuve Dynamics.
+  - Process Mining est une capacité cible ; corrélation, qualité des traces et réalisation installée demeurent distinctes.
+delivery_conditions:
+- id: L01
+  priority: P1
+  topic: Report des accords
+  required: Traiter le dossier de réexamen explicite après correction du lot final ; conserver seulement les portées historiques
+    justifiées et les captures exactes applicables.
+  status: explicit_review_prepared
+  dossier: .runtime/release-reviews/presentation-U889-2026-10-07.3
+  result: 408 reprises de portées inchangées et 6 reprises partielles ; 7 anciennes portées modifiées non transcrites. Les
+    36 captures exactes courantes sont traitées séparément.
+- id: L02
+  priority: P1
+  topic: Guide associé
+  required: Fournir explicitement atlas-transformation-methodology.yaml au parcours release via --guide, avec une nouvelle
+    version ; sinon le guide R52 reste associé.
+  status: guide_ready_explicit_selection_required
+  guide: modeles/backlog/atlas-transformation-methodology.yaml
+  guide_version: 2026-10-07.3
+- id: L03
+  priority: P1
+  topic: Contrôle de complétude après release
+  evidence: verify_atlas accepte une réponse simulée privée de scenario_catalog, display_index et principles.
+  location: scripts/release.py / verify_atlas
+  required: Comparer le document exporté intégralement et ses empreintes, avec tests négatifs de retrait des catalogues ;
+    garder la recette complète sur artefacts réels.
+  status: control_strengthened_verified
+  result: Comparaison intégrale du modèle, du catalogue et du guide ; empreintes des octets exportés. Neuf tests ciblés, dont
+    retraits de contenu, altérations et compatibilité.
+  execution: Le contrôle des artefacts de la prochaine publication sera exécuté par le parcours release après activation.
+secondary_software_findings:
+- priority: P2
+  location: app/server.py / BUILT_ROOT_FILES et app/src/useBuildUpdate.ts
+  evidence: delivery.json existe dans dist mais est refusé par le serveur local ; l’indicateur de mise à jour du logiciel
+    échoue.
+  scope: Interface locale, extérieur au sens métier du candidat.
+  status: corrected_verified
+- priority: P2
+  location: app/src/model.ts / scopeStatistics
+  evidence: kind area est libellé sous-domaine même dans un historique dont hierarchyLabel est Purpose.
+  scope: Vocabulaire historique ; compteurs du candidat vérifiés sans erreur.
+  status: corrected_verified
+recommended_presentation:
+  route:
+  - Vue globale de Supply Chain Orchestration et frontières
+  - Availability avec précommande et concurrence
+  - Intercompany pour usage et engagements
+  - Crédit/paiement avec intervention humaine et reprise contrôlée
+  - Process Mining puis méthode de transformation et gouvernance
+  positioning: Modèle cible proposé pour confrontation client ; adopter des responsabilités et éprouver des cas, sans revendiquer
+    couverture documentaire intégrale ni réalisation installée.
+actions_performed:
+- Audit indépendant par trois périmètres, en lecture seule du contenu canonique.
+- Recette réutilisable verify:candidate ajoutée, toutes les fiches contrôlées avec compteurs et contenu.
+- Verbatim U888 et index des sources enregistrés.
+business_changes_applied: true
+release_activated: false
+commit_created: false
+push_performed: false
+application_U889:
+  source_refs:
+  - U889
+  approved_scope: Corrections M01–M08 et contrôles de livraison, sans accord global sur les fiches.
+  changed_fields:
+    business-references:
+    - market_comparisons
+    - market_inspiration
+    - mastership
+    D03.i:
+    - market_inspiration
+    - scope
+    D04.t:
+    - market_inspiration
+    - scope
+    service-order-packing:
+    - market_inspiration
+    - scope
+    master-data-ingestion:
+    - market_comparisons
+    master-data-ingestion-commerce:
+    - market_comparisons
+    master-data-ingestion-finance:
+    - market_comparisons
+    - scope
+    master-data-ingestion-design:
+    - market_comparisons
+  changed_catalog:
+  - collection: paths
+    id: b2b-partial-stock-path
+  - collection: paths
+    id: b2b-partial-stock-split-path
+  - collection: paths
+    id: b2b-release-deadline-path
+  - collection: paths
+    id: credit-review-no-response-path
+  - collection: paths
+    id: customer-credit-hold-path
+  - collection: paths
+    id: intercompany-direct-delivery-path
+  - collection: paths
+    id: payment-resumption-not-confirmed-path
+  - collection: paths
+    id: preorder-future-availability-path
+  - collection: paths
+    id: process-approval-bottleneck-path
+  - collection: paths
+    id: remote-payment-ambiguous-path
+  - collection: paths
+    id: service-policy-deactivation-path
+  - collection: paths
+    id: transport-loads-six-stores-path
+  - collection: paths
+    id: transport-missed-connection-path
+  - collection: paths
+    id: workflow-version-change-path
+  - collection: scenarios
+    id: return-credit-refund
+  - collection: scenarios
+    id: return-customer-replacement
+  changed_glossary_terms:
+  - TER044
+  - TER092
+  - TER123
+  - TER085
+  changed_method_terms:
+  - MOD008
+  - MOD013
+  updated_delivery_contracts:
+  - path: modeles/backlog/credit-return-boundaries-U878.yaml
+    checks_updated:
+    - scenarios/return-credit-refund
+    - scenarios/return-customer-replacement
+  - path: modeles/backlog/intercompany-scenario-U831.yaml
+    checks_updated:
+    - paths/intercompany-direct-delivery-path
+  - path: modeles/backlog/model-coherence-audit-U886.yaml
+    checks_updated:
+    - D03.i.scope
+    - service-order-packing.scope
+    - paths/b2b-partial-stock-path
+    - paths/preorder-future-availability-path
+    - paths/credit-review-no-response-path
+    - paths/payment-resumption-not-confirmed-path
+  - path: modeles/backlog/operational-work-audit-U881.yaml
+    checks_updated:
+    - paths/remote-payment-ambiguous-path
+    - paths/workflow-version-change-path
+    - paths/customer-credit-hold-path
+    - paths/process-approval-bottleneck-path
+  - path: modeles/backlog/reactive-workflow-U843.yaml
+    checks_updated:
+    - paths/transport-missed-connection-path
+  - path: modeles/backlog/scenario-migration-U793.yaml
+    checks_updated:
+    - paths/transport-missed-connection-path
+    - paths/b2b-release-deadline-path
+    - paths/b2b-partial-stock-split-path
+  - path: modeles/backlog/transversal-remediation-U853.yaml
+    checks_updated:
+    - paths/service-policy-deactivation-path
+  correction_proofs:
+  - path: model/nodes/business-references/fields/market_comparisons/0/differences
+    before_sha256: 758a9afbae1a454493cbbe5bec603371020e4bc7943dcc8444694cf2b0cdac1d
+    after_sha256: 2aa09af72815060478d873e92da1ebe0af4ea88f8a45673a535462f78cef6050
+  - path: model/nodes/business-references/fields/market_comparisons/0/evidence_limits
+    before_sha256: 4cb9ace34733be733c2e5a439d471040b904bc8ee01b47a61e1e3ab3ffc1c185
+    after_sha256: fd9f42fb854479d9d906531ecc03297766e6a4e31d2f3df7f02e4f449bf6080a
+  - path: model/nodes/business-references/fields/market_comparisons/1/differences
+    before_sha256: 758a9afbae1a454493cbbe5bec603371020e4bc7943dcc8444694cf2b0cdac1d
+    after_sha256: 2aa09af72815060478d873e92da1ebe0af4ea88f8a45673a535462f78cef6050
+  - path: model/nodes/business-references/fields/market_comparisons/1/evidence_limits
+    before_sha256: e4b13812469b25688e4448e3a372fd2da3e09cbd81d4e27e0d26a4dcb43dcd7d
+    after_sha256: 81de8650656414a3f67dc8163e5c8ccfd1d8f083a30f940dff30081d8ba69526
+  - path: model/nodes/business-references/fields/market_comparisons/4/differences
+    before_sha256: a6fc7e4197881fb6d9e7409550ba0f713806d7de0291d29117ca569286c059fb
+    after_sha256: 2c4fc021c6deb8465e698eaee248b8d4f4e560b191c822d5320225b08bc4218e
+  - path: model/nodes/business-references/fields/market_comparisons/4/evidence_limits
+    before_sha256: a1426c920a549de2e1244e1a0b61f127fb30a8610929c7890c628a5be80dfb46
+    after_sha256: c1d77b8be5c2784d5eff32dce0b5087ebe189b7528c12c252a9a3523bd2e6c29
+  - path: model/nodes/business-references/fields/market_inspiration/synthesis
+    before_sha256: 07e857f8a8cc565d0ad63b959113067a4fb2a781b7ce80db69840a4f87812c33
+    after_sha256: 0dfe65242b0b446448d39f5f81aa45175a57071fce202a525a589368f04c9cb8
+  - path: model/nodes/business-references/fields/mastership
+    before_sha256: a3d135ff92f46cf930d94c3f331fa26a31a3b8e6b94a7a3893c99cb35f59463f
+    after_sha256: 2426d975812a3d2dbeb0488b4d6a0a339cef5dc17e438f7afe47b07b8ee32153
+  - path: model/nodes/business-references/source_refs
+    before_sha256: 461a2945eba371e33b75ec496659ee3de546740c1933571b89e9f7dc0801c0ae
+    after_sha256: bc7ee85b0322feaceeeaf87b8f44fcc52901d869058e7e261d0eaa04a0f76fa2
+  - path: model/nodes/D03.i/fields/scope
+    before_sha256: 8ccab403867a83240c2cbc9157c852dd022932a8fa308094edf46bc3b2a909e6
+    after_sha256: c563b3d16058f8b600706c27f01f30b826ef273507846667ffa6b494e5c6da85
+  - path: model/nodes/D03.i/fields/market_inspiration/flow_approach
+    before_sha256: 8ccab403867a83240c2cbc9157c852dd022932a8fa308094edf46bc3b2a909e6
+    after_sha256: c563b3d16058f8b600706c27f01f30b826ef273507846667ffa6b494e5c6da85
+  - path: model/nodes/D03.i/source_refs
+    before_sha256: e50bb25364f1d95b1f062e028732aaba0c3f31d48b29cf48ad3f17ae1803a522
+    after_sha256: c49e8a21c4b5800d59fc787013bc53e8e28d9f482f8ade999b26b08c55903a58
+  - path: model/nodes/D04.t/fields/scope
+    before_sha256: 7fd5f5dc9c5f61f3e0a48d6a8d81729775ee250215115f720d2a5db2ec114b85
+    after_sha256: 2df55652736e9f1a92f586f6acc9220c291ead1da2d46238ddb581cf4574469f
+  - path: model/nodes/D04.t/fields/market_inspiration/flow_approach
+    before_sha256: 26172fb84d59dcad72af4414e51335e3acabeae15a8f4d3506d19ba592654faa
+    after_sha256: d40abda9db2e7877faa9e616c0f72a87d50f53b8ba9cc41ebacb06023a5ea1cd
+  - path: model/nodes/D04.t/source_refs
+    before_sha256: 06957cad3cb1f5160815647b58228a82d1feade4d06c976e08f2633cd89b897e
+    after_sha256: 88679cc1180304d43a6889d9324da1e2f156fb8c98ab9efe9fa377dd6cf43ae9
+  - path: model/nodes/service-order-packing/fields/scope
+    before_sha256: 75ff8b766731f358a2fe48b96f8533a983eba9ad033a51cdcbb97e439602997b
+    after_sha256: e71e182603c59c8cd1d9e79fd7d1eecca7079be59c63480749464d41854173a2
+  - path: model/nodes/service-order-packing/fields/market_inspiration/flow_approach
+    before_sha256: 75ff8b766731f358a2fe48b96f8533a983eba9ad033a51cdcbb97e439602997b
+    after_sha256: e71e182603c59c8cd1d9e79fd7d1eecca7079be59c63480749464d41854173a2
+  - path: model/nodes/service-order-packing/fields/market_inspiration/synthesis
+    before_sha256: bc5e2ba6df9c403d5039b6756dd93095a3f0aa41a84943fc3bc6968d5f4d82d2
+    after_sha256: 18f275387ce07c8906e87962746d5310858d1fe96c5afc5e09a6dfdaa3a1a6ec
+  - path: model/nodes/service-order-packing/source_refs
+    before_sha256: 3b4f1a86860e0b2c0afeaf563a4af4deed96b08ada92b4e3352d9e52384fb51c
+    after_sha256: 347394529eacce51b48216f5c19fc6ffdb21eb6caab09470669f599d0e6f2d5e
+  - path: model/nodes/master-data-ingestion/fields/market_comparisons/0/differences
+    before_sha256: 4d81de325987bd4c989f5489c6a76b5738e927e2da6723e6c8d24f1ed53f0a67
+    after_sha256: 29f70bb39ace3aac333111b9bc9cabf7b3ec079062e7941b3ede202768c3f6a3
+  - path: model/nodes/master-data-ingestion/fields/market_comparisons/0/definition_choice
+    before_sha256: de0d1c600f4f54e4c5f80d3d2dc1b06c40dfb55a78bfe6eae9a9959e89d23d1b
+    after_sha256: c9fa16a11af5d6e9f7ef5aa0b576f5a47b10063af9ecb604c009c70070f511b5
+  - path: model/nodes/master-data-ingestion/fields/market_comparisons/1/differences
+    before_sha256: 4d81de325987bd4c989f5489c6a76b5738e927e2da6723e6c8d24f1ed53f0a67
+    after_sha256: 29f70bb39ace3aac333111b9bc9cabf7b3ec079062e7941b3ede202768c3f6a3
+  - path: model/nodes/master-data-ingestion/fields/market_comparisons/1/definition_choice
+    before_sha256: a04a1965d113673f72f7b46b7911dc898322a096d723b87b8bc64dcc87ced091
+    after_sha256: 2fa697f4a9c8d4912b186b7eae44dc4fef8942eadfae1199e4617e97f9c8801e
+  - path: model/nodes/master-data-ingestion/source_refs
+    before_sha256: 85ffa162ab8349e2d3e7e0b7214dd9af14404a04cc42ad72f6d1819b630c3d48
+    after_sha256: 7e6304f3acdaa336412fb91bda1d55990940edaad94507ab3eb8975c170f281f
+  - path: model/nodes/master-data-ingestion-commerce/fields/market_comparisons/0/differences
+    before_sha256: 4d81de325987bd4c989f5489c6a76b5738e927e2da6723e6c8d24f1ed53f0a67
+    after_sha256: 29f70bb39ace3aac333111b9bc9cabf7b3ec079062e7941b3ede202768c3f6a3
+  - path: model/nodes/master-data-ingestion-commerce/fields/market_comparisons/0/definition_choice
+    before_sha256: de0d1c600f4f54e4c5f80d3d2dc1b06c40dfb55a78bfe6eae9a9959e89d23d1b
+    after_sha256: c9fa16a11af5d6e9f7ef5aa0b576f5a47b10063af9ecb604c009c70070f511b5
+  - path: model/nodes/master-data-ingestion-commerce/fields/market_comparisons/1/differences
+    before_sha256: 4d81de325987bd4c989f5489c6a76b5738e927e2da6723e6c8d24f1ed53f0a67
+    after_sha256: 29f70bb39ace3aac333111b9bc9cabf7b3ec079062e7941b3ede202768c3f6a3
+  - path: model/nodes/master-data-ingestion-commerce/fields/market_comparisons/1/definition_choice
+    before_sha256: a04a1965d113673f72f7b46b7911dc898322a096d723b87b8bc64dcc87ced091
+    after_sha256: 2fa697f4a9c8d4912b186b7eae44dc4fef8942eadfae1199e4617e97f9c8801e
+  - path: model/nodes/master-data-ingestion-commerce/source_refs
+    before_sha256: fa0ca8eccfdb9ea7e91c25ba8beeed6ef40ff149eb699270020a88a1e5946ba1
+    after_sha256: 9cc7c43b51035da50dedefa59ec2216e9c91b9188d29853cf875bf2b686f672e
+  - path: model/nodes/master-data-ingestion-finance/fields/scope
+    before_sha256: 45356f3445c8c96c1b675d1211093057f9f81248d885648eeb96676e97df15eb
+    after_sha256: 760cf4ddeb24a02f256d65d94dd36a9cef83807d4745d908b4f68985f380aaa2
+  - path: model/nodes/master-data-ingestion-finance/fields/market_comparisons/0/differences
+    before_sha256: 4d81de325987bd4c989f5489c6a76b5738e927e2da6723e6c8d24f1ed53f0a67
+    after_sha256: 29f70bb39ace3aac333111b9bc9cabf7b3ec079062e7941b3ede202768c3f6a3
+  - path: model/nodes/master-data-ingestion-finance/fields/market_comparisons/0/definition_choice
+    before_sha256: de0d1c600f4f54e4c5f80d3d2dc1b06c40dfb55a78bfe6eae9a9959e89d23d1b
+    after_sha256: c9fa16a11af5d6e9f7ef5aa0b576f5a47b10063af9ecb604c009c70070f511b5
+  - path: model/nodes/master-data-ingestion-finance/fields/market_comparisons/1/differences
+    before_sha256: 4d81de325987bd4c989f5489c6a76b5738e927e2da6723e6c8d24f1ed53f0a67
+    after_sha256: 29f70bb39ace3aac333111b9bc9cabf7b3ec079062e7941b3ede202768c3f6a3
+  - path: model/nodes/master-data-ingestion-finance/fields/market_comparisons/1/definition_choice
+    before_sha256: a04a1965d113673f72f7b46b7911dc898322a096d723b87b8bc64dcc87ced091
+    after_sha256: 2fa697f4a9c8d4912b186b7eae44dc4fef8942eadfae1199e4617e97f9c8801e
+  - path: model/nodes/master-data-ingestion-finance/source_refs
+    before_sha256: 74a8b4cf88bc6ee3a0c49f1968c358f980e153f6ce7b823e2111450afdbaa055
+    after_sha256: eaccce00430ab8f4386f7fcf5c082f31c8bcff15ac7fd118dbec700419f2e297
+  - path: model/nodes/master-data-ingestion-design/fields/market_comparisons/0/differences
+    before_sha256: 4d81de325987bd4c989f5489c6a76b5738e927e2da6723e6c8d24f1ed53f0a67
+    after_sha256: 29f70bb39ace3aac333111b9bc9cabf7b3ec079062e7941b3ede202768c3f6a3
+  - path: model/nodes/master-data-ingestion-design/fields/market_comparisons/0/definition_choice
+    before_sha256: de0d1c600f4f54e4c5f80d3d2dc1b06c40dfb55a78bfe6eae9a9959e89d23d1b
+    after_sha256: c9fa16a11af5d6e9f7ef5aa0b576f5a47b10063af9ecb604c009c70070f511b5
+  - path: model/nodes/master-data-ingestion-design/fields/market_comparisons/1/differences
+    before_sha256: 4d81de325987bd4c989f5489c6a76b5738e927e2da6723e6c8d24f1ed53f0a67
+    after_sha256: 29f70bb39ace3aac333111b9bc9cabf7b3ec079062e7941b3ede202768c3f6a3
+  - path: model/nodes/master-data-ingestion-design/fields/market_comparisons/1/definition_choice
+    before_sha256: a04a1965d113673f72f7b46b7911dc898322a096d723b87b8bc64dcc87ced091
+    after_sha256: 2fa697f4a9c8d4912b186b7eae44dc4fef8942eadfae1199e4617e97f9c8801e
+  - path: model/nodes/master-data-ingestion-design/source_refs
+    before_sha256: fa0ca8eccfdb9ea7e91c25ba8beeed6ef40ff149eb699270020a88a1e5946ba1
+    after_sha256: 9cc7c43b51035da50dedefa59ec2216e9c91b9188d29853cf875bf2b686f672e
+  - path: model/scenario_catalog/scenarios/return-credit-refund/value_stream_ids
+    before_sha256: 450e763c1313dfd0c4c1587fc9948619c7ee318cc40e36dff3c7fa3745c5cba6
+    after_sha256: 6b2391943502c09b3cd9035299c702bdcfd005449c232f3b82170cc2b55b6f26
+  - path: model/scenario_catalog/scenarios/return-credit-refund/source_refs
+    before_sha256: 3c5bf007a5c52802f2db8ddfa96495f06c3d892be0d2ae40975a6e833295a41f
+    after_sha256: fe208a48cce293e02441e9a3c5c9caba536c8ff3d29c7eb3cb475076b89877b4
+  - path: model/scenario_catalog/scenarios/return-customer-replacement/value_stream_ids
+    before_sha256: 450e763c1313dfd0c4c1587fc9948619c7ee318cc40e36dff3c7fa3745c5cba6
+    after_sha256: 6b2391943502c09b3cd9035299c702bdcfd005449c232f3b82170cc2b55b6f26
+  - path: model/scenario_catalog/scenarios/return-customer-replacement/source_refs
+    before_sha256: 3c5bf007a5c52802f2db8ddfa96495f06c3d892be0d2ae40975a6e833295a41f
+    after_sha256: fe208a48cce293e02441e9a3c5c9caba536c8ff3d29c7eb3cb475076b89877b4
+  - path: model/scenario_catalog/paths/b2b-partial-stock-path/source_refs
+    before_sha256: 18f78d29e1132fadf9df9be08f1684698a2a2dee320bfe6be0f998b49a229a37
+    after_sha256: 82d19124e69599f2d215699c1f969dd849e5d30b1f2cb395dd12f07c9e63a75a
+  - path: model/scenario_catalog/paths/b2b-partial-stock-path/steps/step-1/inputs
+    before_sha256: 3c64f5688bae5c0ff78c2d3ae5d0d25f25128835392bcf0ec7ac2427e1db1b60
+    after_sha256: c34421942db960003d719138ff56481a26bbc23a17dd5fe9e7f929df3913b0cc
+  - path: model/scenario_catalog/paths/b2b-partial-stock-path/steps/step-2/inputs
+    before_sha256: 6f1ccb6888512eb148ff040d771d207dfd6e01d22a57703bf7f9962a694be6cb
+    after_sha256: 7320459d354b72ecfcefc47c981d7f3131e55a2d890327f5061d9dc550cc8ee6
+  - path: model/scenario_catalog/paths/b2b-partial-stock-path/steps/step-3/inputs
+    before_sha256: 983d79959b6a85f62021db3ddcd0f3ef8f19abed967eb1114ba7a1e40d8e9517
+    after_sha256: 313082d90228c3cd28cc99beeacd9f012d2bfa329be2e7ab5ece0f8502ee8cf0
+  - path: model/scenario_catalog/paths/b2b-partial-stock-path/steps/step-4/inputs
+    before_sha256: bed429dac6581d36e2d08b28185aac22cc1d69dd71843e886b2918e2a29b70d3
+    after_sha256: da45627f77a88d505b1790dea1d530afc429d91ffbbd0178106fdc65cdcfe1e9
+  - path: model/scenario_catalog/paths/transport-missed-connection-path/source_refs
+    before_sha256: 6b49ed397c1ad5908f00fd7f203b5a78547778e6c2bab75e5fc98ff3301ca4e1
+    after_sha256: f7d760a02d144768a5fc77a295b2ee629acf2a7624421c94bae9e71f97a6b689
+  - path: model/scenario_catalog/paths/transport-missed-connection-path/steps/step-1/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: b084aab898d0f8ac90221e30cf4b81a9607d7bf2b2e719e09af629198c5abcb5
+  - path: model/scenario_catalog/paths/transport-missed-connection-path/steps/step-2/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: e51147ce4cf0e17b04fa643963fea8539e6ea3bf06ae50507391e1979d9d17c2
+  - path: model/scenario_catalog/paths/transport-missed-connection-path/steps/step-3/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: c163ac69abd358361a57aa07c1070362c77770fa6f9c08fb82d42d73698d93a9
+  - path: model/scenario_catalog/paths/remote-payment-ambiguous-path/source_refs
+    before_sha256: 1444552102d7e9bdbf6efa6dfe1f4b7feb141ad5f1a7029f03d4d86ecce9d300
+    after_sha256: d7fc0e3bc71e6173fb51eee8991c5df33a08f16a7e3478186de0327a67c0a30c
+  - path: model/scenario_catalog/paths/remote-payment-ambiguous-path/steps/step-1/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: 04caf9d0e456017f60ef18e519d884c196ed8cf88bd41b511e5a274a51eef39b
+  - path: model/scenario_catalog/paths/remote-payment-ambiguous-path/steps/step-2/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: 5c4692cb7580435590377ed300b48b9132e6b031a7294c70a5d945b745808c55
+  - path: model/scenario_catalog/paths/remote-payment-ambiguous-path/steps/investigate/inputs
+    before_sha256: 751bed2d338570b0e1c9c63d5d9c6515d4a173fda6957f043ca95db4c703249a
+    after_sha256: b1a409d30d588234de848e2ee57c9f367fbab8beff67c9ea06dc2e682edb85d9
+  - path: model/scenario_catalog/paths/remote-payment-ambiguous-path/steps/step-3/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: dfda6831a926ce0c8b619a4c127590f6b69387b1c34d9fa83b795b1d356100e0
+  - path: model/scenario_catalog/paths/b2b-release-deadline-path/source_refs
+    before_sha256: eacc4958c987786033d6d9b1a56d6fd9270c7f06bb855073a6a58c3c18b940be
+    after_sha256: 64b126d08a5971a66356ee7e63af787b9b874a5f59fb0d9ae2f560a3f353af09
+  - path: model/scenario_catalog/paths/b2b-release-deadline-path/steps/step-1/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: f736c4588e0971f94e3aa94a3467dd2b3f62a30935c0b3c8847ad5b964918b33
+  - path: model/scenario_catalog/paths/b2b-release-deadline-path/steps/step-2/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: 6bdcc6c1a8ce146cc109f4ccb00dc1ae49ddf5d418f429148d4a1b515dec8007
+  - path: model/scenario_catalog/paths/b2b-release-deadline-path/steps/step-3/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: 00e6bdcef63f15940410825dd8231f412ef1c0caee863f8d6243b647a2786a60
+  - path: model/scenario_catalog/paths/transport-loads-six-stores-path/source_refs
+    before_sha256: 520e738156a6ddb27916e4a3f80abdc2fca0081b4bd976fd2ff6f37051162ef3
+    after_sha256: b773b089775096869103f9fd3d9d46c6bfd2514cb019c134abc91fbaabd88b32
+  - path: model/scenario_catalog/paths/transport-loads-six-stores-path/steps/step-1/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: e5182c4370cb418c6cdae1896aff91895a177da6535371eeb18500e486fd5b92
+  - path: model/scenario_catalog/paths/transport-loads-six-stores-path/steps/step-2/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: 7abbb85f2eee9d952e5cbd6dff41bddad3aabc831ab924d739885d3fa057b0b8
+  - path: model/scenario_catalog/paths/transport-loads-six-stores-path/steps/step-3/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: 0eebdbdbaef91c0c7cd948dca95863b9769b654b07dbe81dbe8c74af6b1394b7
+  - path: model/scenario_catalog/paths/transport-loads-six-stores-path/steps/step-4/contributions/1/role
+    before_sha256: e73db793359ed3034025dd7b570b66b7c9a9d4677a4751163828eb266b38f0b1
+    after_sha256: f52f9f5603010d59fe96ddbb50e117f6f1025903a7a7af541795ceee53b655d4
+  - path: model/scenario_catalog/paths/transport-loads-six-stores-path/steps/step-4/inputs
+    before_sha256: 0e09b5fb1576b9f46f0927ddc59a588d7800478861b60dddf8859924b50accc9
+    after_sha256: 756649986108fdcad73e2f67a1a2ed782cbf93511d4944f2ab4779e2c06e89ce
+  - path: model/scenario_catalog/paths/b2b-partial-stock-split-path/source_refs
+    before_sha256: c55f240dcdbdc5aac77c2d8efe32ecc7d8c60749d77fc98d24482daa5327480b
+    after_sha256: f2c29a9aa264b5b0ca080aed0ba505171f09acf65b554d60694388e90bd5d9d3
+  - path: model/scenario_catalog/paths/b2b-partial-stock-split-path/steps/step-1/inputs
+    before_sha256: 3c64f5688bae5c0ff78c2d3ae5d0d25f25128835392bcf0ec7ac2427e1db1b60
+    after_sha256: c34421942db960003d719138ff56481a26bbc23a17dd5fe9e7f929df3913b0cc
+  - path: model/scenario_catalog/paths/b2b-partial-stock-split-path/steps/step-2/inputs
+    before_sha256: 6f1ccb6888512eb148ff040d771d207dfd6e01d22a57703bf7f9962a694be6cb
+    after_sha256: 7320459d354b72ecfcefc47c981d7f3131e55a2d890327f5061d9dc550cc8ee6
+  - path: model/scenario_catalog/paths/b2b-partial-stock-split-path/steps/step-3/inputs
+    before_sha256: 983d79959b6a85f62021db3ddcd0f3ef8f19abed967eb1114ba7a1e40d8e9517
+    after_sha256: b638286976f27885fc3449e8671cbb9e4d75e407ff963580ef931516551f31ba
+  - path: model/scenario_catalog/paths/b2b-partial-stock-split-path/steps/step-4/inputs
+    before_sha256: bed429dac6581d36e2d08b28185aac22cc1d69dd71843e886b2918e2a29b70d3
+    after_sha256: 7334ea23d8d852d1c2fca21af1902205cd63f0fcc496e5d2fb73a528deb43ffd
+  - path: model/scenario_catalog/paths/intercompany-direct-delivery-path/steps/commercial-commitments/inputs
+    before_sha256: 6fba0a7a1b4f555a8013c899ef0edd6a5e0a506e1028fd4651289a7768db344a
+    after_sha256: f8b7dfd7a97b265ecc3fd09cf388164b1642535baaa724276e35b3f0fb664ea0
+  - path: model/scenario_catalog/paths/intercompany-direct-delivery-path/steps/promise-and-assignment/inputs
+    before_sha256: 425aeb77a5c810e7065c84a31cf950fa39873dc9edfdfb59a62de1835b7e6cbc
+    after_sha256: 31e5028ed0d5fa36233ee002381b6eabfa1cacc51b355219cbfd09cf31fced71
+  - path: model/scenario_catalog/paths/intercompany-direct-delivery-path/steps/direct-delivery/inputs
+    before_sha256: b3502d2a49622c89c2430ec1a0bbb097e5e5cc2ea266b90e2f7a13b007ea4378
+    after_sha256: a1430f9f677b0c00083aee318ec25f235e897cea05426fd248d567ec0e64797c
+  - path: model/scenario_catalog/paths/intercompany-direct-delivery-path/steps/physical-and-ownership-facts/inputs
+    before_sha256: 644c1e08d54c1a6b2cb4a939ea903c55c432a87035c6bba159e85e8c778ff5a3
+    after_sha256: 8cae9917da8f1a7f98b60d5d12b96c179333d401b3a201454cdff7b056e54ebe
+  - path: model/scenario_catalog/paths/intercompany-direct-delivery-path/steps/order-follow-up/inputs
+    before_sha256: 45ed44a215d67186255dae99b59e4289fdba30e18973078f010d0f881eb666c5
+    after_sha256: d41c372b5572f871b01323d4af843e0d4081af6e87c6ac88c0d83e35ecb5109f
+  - path: model/scenario_catalog/paths/intercompany-direct-delivery-path/steps/accounting-facts/inputs
+    before_sha256: 7eb9945eab231dcea5fc8bac8de4a0fccc7a13b4932cada1253f739400ce0437
+    after_sha256: 4960591b95afe62ec9fb9d9b5a1d5ff120cd32deb9d7874817440cdb912594d3
+  - path: model/scenario_catalog/paths/intercompany-direct-delivery-path/source_refs
+    before_sha256: 1017b20c97c5ac353b3e28f7e3e2d32fbeeb91d27c316025bff0cdf961b95a99
+    after_sha256: 6f7b2550f981576a8a2c33106f6531c593f1e4c3eb330866fbf8e10d840afda7
+  - path: model/scenario_catalog/paths/workflow-version-change-path/steps/version/inputs
+    before_sha256: 3972328ab9ee733cb0632a8ae67e4c782bbf60000a7ac28f680006e1672435e6
+    after_sha256: 03d6458e0da7fbf50059084ecf3859d7060dc002a065d9e52f5162e1c58c8817
+  - path: model/scenario_catalog/paths/workflow-version-change-path/steps/sentry/inputs
+    before_sha256: 05e6f3c67bcb5ef6078429cb75c54865b1f171dd72e2c121467db356aa2fcc86
+    after_sha256: bc55038e8626f8c8144c7120aa00163d7d554abe07c5297ef61c52bc7098b9e0
+  - path: model/scenario_catalog/paths/workflow-version-change-path/steps/plan/inputs
+    before_sha256: 8c88ec89ba4d5e19932b49af8c23e1661db8ff08e0e36fd53a310d6bcfb043cb
+    after_sha256: c28ca204637ae10b5384718223283d2ca6fe2e27066e54659d3bbd29ced7b957
+  - path: model/scenario_catalog/paths/workflow-version-change-path/steps/run/inputs
+    before_sha256: 1afd00fbba8d9c19f5f4c4e21935017a6b6c86e95adb27f083174177353ec4e3
+    after_sha256: 4662429152a8824297e3a10be267cf36565b44b03d41b7e2585be29918b0d6b2
+  - path: model/scenario_catalog/paths/workflow-version-change-path/source_refs
+    before_sha256: 210e73ac392bd7657492bfaf50f5981691e75b697d96f202434fb7c8908c2e05
+    after_sha256: 34eeb5eb405397f322c357a010b5aeef31d1a4f4d8a1c3cf80e7d1d92c6269f6
+  - path: model/scenario_catalog/paths/service-policy-deactivation-path/steps/policy/inputs
+    before_sha256: ab9cb80f4ad705e7658596a3eec1699f819cf518e5b3e9463591a27a1f244315
+    after_sha256: cb6548a78b4d2a835bb29f56a0ae3ad3dee74a91f81040bb20707a4b31106fa7
+  - path: model/scenario_catalog/paths/service-policy-deactivation-path/steps/local/inputs
+    before_sha256: d74de47966305c3406c7a35d2238a8ede6f9fc6fab1f5bc440b7b1bdbbd56e4d
+    after_sha256: fdda414d6e12e4b61f5f72876f4381cdad5cd16d7712559da3a6aebed5e0b78e
+  - path: model/scenario_catalog/paths/service-policy-deactivation-path/steps/escalate/inputs
+    before_sha256: 3785728194d52b94aac95fe7ca9c7f8273ed5f94037e1ad9dcba5ee1ef2fd9b1
+    after_sha256: 306b3c92308679e174a219de75f4e494eac2eaaac2154744988d71f69bf3cd3d
+  - path: model/scenario_catalog/paths/service-policy-deactivation-path/source_refs
+    before_sha256: 1e60a7a75c082e2f66393ad41df1d29c670268a288d49152437a199408474ece
+    after_sha256: d635542d35c93d4d0e78cf9a9a1b557c453f5e38df7eab0fef65ef7fa2d22f3c
+  - path: model/scenario_catalog/paths/preorder-future-availability-path/steps/request/inputs
+    before_sha256: 73ac1980794f999018bf43ff26edee6b0c559d939c8db6f4c25949d081904aa5
+    after_sha256: 7c78728f5f7d8fc4f2a6abcd43a99fa2b9fad0782662527f2d1d0d7eabc2d0a4
+  - path: model/scenario_catalog/paths/preorder-future-availability-path/steps/coverage/description
+    before_sha256: 5b65d57282e82f9d0100fa54fb90119f761f9612a57b976feb7ccbd5ad5d774a
+    after_sha256: 95bcad10cf225168a7f78312ed5e5a4fab3a608029415782381ba10f5b887a6a
+  - path: model/scenario_catalog/paths/preorder-future-availability-path/steps/coverage/inputs
+    before_sha256: 3e6d7dd8bd49f62ada1e3a3c55813ccba12cd839f3289cd43267535baf13aa69
+    after_sha256: 2fae92537637bbb817d0289d2de01b244ce84251e6e8b1fe648a5169cf526d65
+  - path: model/scenario_catalog/paths/preorder-future-availability-path/steps/firm/inputs
+    before_sha256: 28aaa5393175a96acf62d913e091bd1b3006f7dad4f1f7ed0af4d79955677f54
+    after_sha256: 3b6400d12f1f9f19fec1387ac799fa16a36edf7148ac3cc312cefa8f6a5dcb04
+  - path: model/scenario_catalog/paths/preorder-future-availability-path/steps/wait/inputs
+    before_sha256: 645b64be238faba44d48bf01c09b6fc3b6a797ac9222c3755ad25852fa6109e0
+    after_sha256: afb9e13647db55d1030c3d14ba229a76a9ee3667c70f59307fc246da74bb1574
+  - path: model/scenario_catalog/paths/preorder-future-availability-path/steps/execute/inputs
+    before_sha256: c9fe10fffcba04a15d251a0987a269f817b84703272fc44db127fb2974ba42ce
+    after_sha256: 015d2b85ef433fb7b1f87f2f7de9c5b69dd901924c35f1aeaf2fce88f30dfae7
+  - path: model/scenario_catalog/paths/preorder-future-availability-path/source_refs
+    before_sha256: 0d045183a776d206b2dca7907a15b4183b4c46ba9f1377e42c4a76f80626d7fd
+    after_sha256: c6f5f45b60b0cace1c2d474236250adec03797b40a2785e6ca87068f9b79eee8
+  - path: model/scenario_catalog/paths/customer-credit-hold-path/steps/step-1/inputs
+    before_sha256: 42902b3dbe614c95049a20f38d322e8f739965578873a35dfddc2433c3eeed37
+    after_sha256: a9c972dec34f431a7c68aad4dfd2dcbcd4601662a2cd0eef009299e3488a4881
+  - path: model/scenario_catalog/paths/customer-credit-hold-path/steps/step-2/inputs
+    before_sha256: c458b529ae8e317f6833583005e98163e7ec4a4653a790700f7d5306ab64fd28
+    after_sha256: 042392cc5ee84a9913ea4a7e8e2164252e89d6b9a70ffd4478f966108682b7e5
+  - path: model/scenario_catalog/paths/customer-credit-hold-path/steps/human-review/inputs
+    before_sha256: 751bed2d338570b0e1c9c63d5d9c6515d4a173fda6957f043ca95db4c703249a
+    after_sha256: 148837b55703673d4dc7ebf5c5f92c7fa66770664b4a17c8f025714a93e97bb6
+  - path: model/scenario_catalog/paths/customer-credit-hold-path/steps/step-3/inputs
+    before_sha256: 40a6fbeffef5abf806e73480dec596344dcbbca09ca661f4d6741bb29206b9d9
+    after_sha256: 36e7a7bd52066bd963f9babf8502276cb37e73d23ceef7b495c641443b12c4d4
+  - path: model/scenario_catalog/paths/customer-credit-hold-path/source_refs
+    before_sha256: 2192ac1e9df3630d3ae40d7bbdc3cea510cd4bfda3c55568401afb3a88c838b0
+    after_sha256: 6516232fcbd0c9aab69f57d3d7ffce500feede83038abb0628ccae33c6a9dba5
+  - path: model/scenario_catalog/paths/process-approval-bottleneck-path/steps/observe/inputs
+    before_sha256: 751bed2d338570b0e1c9c63d5d9c6515d4a173fda6957f043ca95db4c703249a
+    after_sha256: aa92cd5090e71d80b63c4a49d8501dce0714ef216af90f1cc2d27c94c18d55a9
+  - path: model/scenario_catalog/paths/process-approval-bottleneck-path/steps/adapt/inputs
+    before_sha256: 751bed2d338570b0e1c9c63d5d9c6515d4a173fda6957f043ca95db4c703249a
+    after_sha256: b389ac1dd5ed5c2585b2fccf6dfad80fe322ce476406a5176d430b7b015fc1f7
+  - path: model/scenario_catalog/paths/process-approval-bottleneck-path/steps/act/inputs
+    before_sha256: 751bed2d338570b0e1c9c63d5d9c6515d4a173fda6957f043ca95db4c703249a
+    after_sha256: 46d5a711ca2de62e704aacd49d0ee8b2cec5a84d7cd6d9ae1c14dadedd2fd54a
+  - path: model/scenario_catalog/paths/process-approval-bottleneck-path/steps/measure/inputs
+    before_sha256: 751bed2d338570b0e1c9c63d5d9c6515d4a173fda6957f043ca95db4c703249a
+    after_sha256: 2c86eb0956cd2e36e0033b2b00384cbc2540cc6e68749473460ac8fedbfd4b86
+  - path: model/scenario_catalog/paths/process-approval-bottleneck-path/source_refs
+    before_sha256: b7cee9549608f356591d38ff6f1d74877a8ece986bbb8a320d6e6e843315f1b4
+    after_sha256: 6d87a69afba068c22ab46f2453bfbca446d2fd2b170c0c8eace46b49d8590ba9
+  - path: model/scenario_catalog/paths/credit-review-no-response-path/steps/wait/inputs
+    before_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    after_sha256: f3a5f19a33ee7f6dd1682688ca1e85f242ca5dcd7a593873d4fdbf85e4d43e6c
+  - path: model/scenario_catalog/paths/credit-review-no-response-path/steps/escalate/inputs
+    before_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    after_sha256: 33c43b1439a3677f4d1ab7d4f8cd9dcf07a02ed2a4d8d40cee930ec04740698a
+  - path: model/scenario_catalog/paths/credit-review-no-response-path/source_refs
+    before_sha256: ee13f7f400dd142447c882d5ea5128b563a460b8ab642e8ce8184ca8fe6f17fd
+    after_sha256: a10d61c4bd8058b83e31534e0ce5ef6c08ec266396cb88db84227affcb82a6c3
+  - path: model/scenario_catalog/paths/payment-resumption-not-confirmed-path/source_refs
+    before_sha256: ee13f7f400dd142447c882d5ea5128b563a460b8ab642e8ce8184ca8fe6f17fd
+    after_sha256: a10d61c4bd8058b83e31534e0ce5ef6c08ec266396cb88db84227affcb82a6c3
+  - path: model/scenario_catalog/paths/payment-resumption-not-confirmed-path/steps/authorize/inputs
+    before_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    after_sha256: ca61357252e390ee30319da90679c2f9c5604262906a0d01f8668d86f1366725
+  - path: model/scenario_catalog/paths/payment-resumption-not-confirmed-path/steps/effect/inputs
+    before_sha256: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    after_sha256: 09ca902bbc585ca96d0e5ce1e4a7686cb01814fff4448acd692c3d7d4140118d
+  - path: glossary/terms/TER044/context
+    before_sha256: 8ccab403867a83240c2cbc9157c852dd022932a8fa308094edf46bc3b2a909e6
+    after_sha256: c563b3d16058f8b600706c27f01f30b826ef273507846667ffa6b494e5c6da85
+  - path: glossary/terms/TER044/source_refs
+    before_sha256: 3f9c2b9ea7179aefd60b5002de50f96786f3b7d16e4925aa912606484048ae64
+    after_sha256: 896ba853c40aa38e59397807af4c862fae54d1e84c7807a9f5716b48323fba9d
+  - path: glossary/terms/TER044/market_inspiration/flow_approach
+    before_sha256: 8ccab403867a83240c2cbc9157c852dd022932a8fa308094edf46bc3b2a909e6
+    after_sha256: c563b3d16058f8b600706c27f01f30b826ef273507846667ffa6b494e5c6da85
+  - path: glossary/terms/TER092/notes
+    before_sha256: 1461f79f14222f81b03cc3a452737ba4e6d799e69e89d6d2576e150f8c4d1266
+    after_sha256: 7c3894678498eabfcb48006b0e336d9b06016c94dfaf4461986a177167b08310
+  - path: glossary/terms/TER092/source_refs
+    before_sha256: 3868552e430043e217f3ec250896aa27a6bdaa6d26a5b3099994a196ba454035
+    after_sha256: aae19abaca673cd27416e43d78d71996deedc1c2c6240cf8e240ce59d6006686
+  - path: glossary/terms/TER092/market_inspiration/examples/0/outcome
+    before_sha256: b71bcd61175332c4c9daf9a142eee5765f29489da710aeb9c8d1efb5b18e5e0c
+    after_sha256: 7c3894678498eabfcb48006b0e336d9b06016c94dfaf4461986a177167b08310
+  - path: glossary/terms/TER123/context
+    before_sha256: ea01faa0506a4a2f11178ecbb403c7f7e979dea0c6b717076fdbe86bc03418fd
+    after_sha256: 51b142e859d6c457e682411e872e32d002f29534a5b4d0c0cf540c4bb80f33d6
+  - path: glossary/terms/TER123/source_refs
+    before_sha256: b1e4ae981964642ac5b658ae627b41080ad04725f592dda684fa134b585cb7cb
+    after_sha256: 63c3cbd828d1aa2565a3a467fbc7f03abbed3cd96f24bc7a2d15cf30d14bd752
+  - path: glossary/terms/TER123/market_comparisons/0/differences
+    before_sha256: a6fc7e4197881fb6d9e7409550ba0f713806d7de0291d29117ca569286c059fb
+    after_sha256: 2c4fc021c6deb8465e698eaee248b8d4f4e560b191c822d5320225b08bc4218e
+  - path: glossary/terms/TER123/market_comparisons/0/evidence_limits
+    before_sha256: a1426c920a549de2e1244e1a0b61f127fb30a8610929c7890c628a5be80dfb46
+    after_sha256: c1d77b8be5c2784d5eff32dce0b5087ebe189b7528c12c252a9a3523bd2e6c29
+  unchanged_identity_and_hierarchy: true
+  required_guide:
+    path: modeles/backlog/atlas-transformation-methodology.yaml
+    version: 2026-10-07.3
+  intent_capture:
+    method: record_intents / supersedes, écriture atomique du lot final
+    count: 36
+    active_scopes_preserved: true
+    ids:
+    - DEC-U889-REVIEW-ee540ae8593542b95d6ec43a
+    - DEC-U889-REVIEW-86a73cbe7a336c7fa4c92a1e
+    - DEC-U889-REVIEW-88b75864534480be0bb2bec9
+    - DEC-U889-REVIEW-5912fb728ae015541ff41228
+    - DEC-U889-REVIEW-6a9cbd22cff78fd2b3f17d46
+    - DEC-U889-REVIEW-46bce09a1d7b4e24e074fac9
+    - DEC-U889-REVIEW-14d334d6a931f66a9134ab1a
+    - DEC-U889-REVIEW-28683277faf89e2e82c0ac6e
+    - DEC-U889-REVIEW-ebbe56632bd6a04a3c97ef09
+    - DEC-U889-REVIEW-84607ed78c24de06dbd78bb8
+    - DEC-U889-REVIEW-8623e04aa776959966079a5d
+    - DEC-U889-REVIEW-dde4ba345c87cf8f688321ce
+    - DEC-U889-REVIEW-80957d8759e84bbb37b7c79d
+    - DEC-U889-REVIEW-b0b7b3be075bb018bc2941fb
+    - DEC-U889-REVIEW-3c68f1eca26ad0bd842f1be4
+    - DEC-U889-REVIEW-4a0d264733a870c1acf4a571
+    - DEC-U889-REVIEW-3a47cbfbd0f37919d6a03f8f
+    - DEC-U889-REVIEW-999fd296fd0ffc7ed8ea5aae
+    - DEC-U889-REVIEW-b8ea1d691091489a8db55b7f
+    - DEC-U889-REVIEW-6ab17663d92dcdce165f1b12
+    - DEC-U889-REVIEW-4aad268d0373dbaa607dc829
+    - DEC-U889-REVIEW-ed62c1cfbb3362a51dd89f2d
+    - DEC-U889-REVIEW-8a3fa426cda6efc1bb4ed051
+    - DEC-U889-REVIEW-92559379b42314c70baeb7d5
+    - DEC-U889-REVIEW-cd391d40ba75e5262bf6265d
+    - DEC-U889-REVIEW-c524aa04c66a74d08cfcb30a
+    - DEC-U889-REVIEW-a132ba76e3eb244f6e914f79
+    - DEC-U889-REVIEW-f808f1d2d0e6b85b1118bab5
+    - DEC-U889-REVIEW-7ff5a2ba41e83e8cb0febaf0
+    - DEC-U889-REVIEW-14ef352a76d0efc5c56914c7
+    - DEC-U889-REVIEW-a1703a96cbea66512bb739f6
+    - DEC-U889-REVIEW-eb5b861e71399a2a8bc0d023
+    - DEC-U889-REVIEW-27edf199b973ddb71104648b
+    - DEC-U889-REVIEW-fa9496b1ac8288472c0e223b
+    - DEC-U889-REVIEW-262d9e258829af75ba086aa0
+    - DEC-U889-REVIEW-a72a0d5093b4b903644f6a0a
+    meaning: '36 portées existantes réexaminées : 19 noms et 17 rattachements explicites. Les corrections ponctuelles sont
+      acceptées sous U889 sans approbation globale des champs scope.'
+  final_glossary_alignment:
+    term: TER085
+    field: notes
+    reason: Alignement rédactionnel sur la séparation Order / Process déjà adoptée sous U885 ; aucun changement de responsabilité.
+    before_sha256: 97e79ea3e56e797e15ac5867e3926f74ffadc43dea5f3905575cf3929b1a813b
+    after_sha256: 6d9ec7b316e338e7caa006c09e0b227c2a4032ed360983dc0961f9b4715922d4
+    source_refs:
+    - U885
+    - U889
+  historical_definition_review:
+    unchanged_definitions_examined: 63
+    unchanged_scopes_examined: 5
+    group_counts:
+      Availability: 21
+      Order Management: 11
+      Service Management: 10
+      Fulfilment Orchestration: 7
+      Inventory Management: 6
+      Integration: 5
+      Operational References: 2
+      Financial Accounting: 1
+    changed_neighbor_scopes_examined: 10
+    result: Sens conservé pour les 68 valeurs historiques ; aucun parent direct modifié. Les scopes de Master Planning restent
+      distincts du pilotage du processus Supply.
+  historical_review:
+    directory: .runtime/release-reviews/presentation-U889-2026-10-07.3
+    version: 2026-10-07.3
+    prior_scopes_examined: 421
+    retained: 408
+    retained_partial: 6
+    deferred_changed_prior_scopes: 7
+    method: Lecture des valeurs et de leur contexte métier ; reprise limitée aux champs historiques inchangés. Aucune approbation
+      nouvelle des définitions, scopes ou parents modifiés.
+    new_exact_intents: 36
+    note: Le dossier est lié aux empreintes finales des sources et du code. Toute modification pertinente exige un nouveau
+      réexamen ; ces preuves sont préparées sans publier.
+  verification:
+    model_validation_errors: 0
+    python_scripts:
+      run: 413
+      failures: 0
+      errors: 0
+      skipped: 1
+    python_app:
+      run: 33
+      failures: 0
+      errors: 0
+      skipped: 2
+    atlas_unit:
+      passed: 141
+    final_glossary_alignment_tests:
+      run: 21
+      failures: 0
+      errors: 0
+    frontend_build: passed
+    candidate_browser:
+      version: 2026-10-07.999
+      base: https://atlas.test/Urbanisation-SCM/
+      counts:
+        streams: 5
+        scenarios: 38
+        paths: 41
+        steps: 130
+        chapters: 8
+        sections: 43
+        visuals: 2
+        sheets: 214
+        lessons: 6
+        terms: 30
+      missing: []
+      errors: []
+    backlog_render: passed
+    diff_check: passed
+    local_server:
+      url: http://127.0.0.1:8765/
+      identity_verified: true
+      delivery_manifest_http_status: 200
+      current_publication: 2026-10-07.2
+  final_basis_sha256:
+    modeles/backlog/model.yaml: ac373a8074af9379d978dfc3483c9fdc14e2724c268c43b1e10cb0958d14d7b0
+    modeles/backlog/glossary.yaml: 3b3918728f4d975a439b867f9c8a763ca4ed39522bc7adbf277c7618952f7f83
+    modeles/backlog/modeling-glossary.yaml: c4628490115f23c83165cc16a827b11bd2892889239e7ca747a13224c974d374
+    modeles/backlog/atlas-transformation-methodology.yaml: e4378c53e3d2eeaf9cdb9a357d1d6bb233ecd1356f4774e86e8ea9864940f2d6
+    modeles/backlog/decision-intents.yaml: b3a0f287671c8cf74089203123c9e5824a8b72562e945b5038c360fd3c2fe132
+    modeles/provenance/source-records.json: e500924b6e1f276928e18edad76144a7b8a16703ac519c43e2d4f7106186a632
+    modeles/release/index.json: 748f22e6ef1068739e2b59c93893526dc4e81c2310a1ca2177675b51de370d0d
+    scripts/release.py: f150d2bc6d60bb8bd938b94586d6567151b58b7b997e418db992dadcd3b810a5
+    scripts/backlog_delivery.py: 9b24b1e41ca590a429fda3d8f16411bf16edc533e1e5e70a02f4884bfbf6ee76
+    app/server.py: 2a2f3c955e2703df63067075e4959f30d10b07620616a6b223f7685c3f9c0d86
+    app/src/model.ts: 703c8bc15af069f6b3ca7a100c82c8d4dc619fea9aeff9fb1e16836ff4892106
+    app/verify-published-content.mjs: a62b5ddc508b61f0cd58d927c27fa1653462cf54c6bcd12638b408d7f804dd0c
+    app/candidate-fixture.mjs: 0ec40a2e39202042d1935605d6bb1216d00a751039d79814e3debd7ade85a1b3
+  release_activated: false
+  commit_created: false
+  push_performed: false
+publication_delivery:
+  state: applied
+  source_refs:
+  - U889
+  - U891
+  summary: 'Corrections du candidat pour présentation : frontières de promesse, références et responsabilités, parcours et
+    prérequis.'
+  required_nodes:
+  - id: D03.i
+    kind: capability
+    field_sha256:
+      market_inspiration: 78843f14b50120f26c32b0f9e776584c152266624dd832b47b164ecec16b3dcd
+      scope: 63c917a9703eef8a7cc2d94bc49683cb6a365a7f0e293cf241b9c31fa2f237db
+  - id: D04.t
+    kind: capability
+    field_sha256:
+      market_inspiration: 1c2de84545b5875c328f9fa01d09545d00b268bd0befa4d060bdb8b1b296d1c3
+      scope: 3ab4aa234e69a0ef9f381ff7b55cd02eb12fdde0329a636c0da72637a1b5b869
+  - id: business-references
+    kind: area
+    field_sha256:
+      market_comparisons: d24f1c9e53559cf4123eff9873ffaf518bd9dc07cf9ec5d32c3cacdacca1705f
+      market_inspiration: ef53ce6422e885cbb40c479e5f6a0da230bb1892d92a359dab1aea9d8f7adb75
+      mastership: 2426d975812a3d2dbeb0488b4d6a0a339cef5dc17e438f7afe47b07b8ee32153
+  - id: master-data-ingestion
+    kind: capability
+    field_sha256:
+      market_comparisons: 559d0b3515738ff0a081efb4ded8a2f0cdaa9e744f8b5284fbad2757be5c80cc
+  - id: master-data-ingestion-commerce
+    kind: behavior
+    field_sha256:
+      market_comparisons: e1607866aa5b57d842cf3dcfbc1d0bcc7168d0c953e903794e85de7167725e43
+  - id: master-data-ingestion-design
+    kind: behavior
+    field_sha256:
+      market_comparisons: 5d4e0c2df3dce4f46f9e7b234872bdde037cc9fe4c285e9d76ccf340524745de
+  - id: master-data-ingestion-finance
+    kind: behavior
+    field_sha256:
+      market_comparisons: b27753b7ec7ef307532b15584eb71a30aae5525dc14ce5a208291c5703ad2104
+      scope: 5cb5f898d9ae0f91cc64d2a3fac8ff8c1e9ef2f0fff95332947eac1db3bffc6b
+  - id: service-order-packing
+    kind: capability
+    field_sha256:
+      market_inspiration: cff9e7f8e7a01ca3ada1ab450a1b7d4cd8705b16c321f94ab24dfb9b40e1186b
+      scope: 0ce99335f22016ca7771073dfead40027311596e8f986a465bd28af6235e91c2
+  required_catalog:
+  - collection: paths
+    id: b2b-partial-stock-path
+    content_sha256: 1efb2a347de04f2d8336cfee58456c61cc35b8a93e6c860e5f068e03a90ed404
+  - collection: paths
+    id: b2b-partial-stock-split-path
+    content_sha256: 7ee9f5aeb412d5668ded767d73bfa362ccdb7177c0be1e3b5df8b12c2296d2d3
+  - collection: paths
+    id: b2b-release-deadline-path
+    content_sha256: 71d8155a91167ee70d4ae3a4f7f8b21ed50710cfd6c286a415dbcc6c7d46a5cb
+  - collection: paths
+    id: credit-review-no-response-path
+    content_sha256: 876078767f6f29597999bc336b280a79606e1c0fafaad557dd18afd99c08083e
+  - collection: paths
+    id: customer-credit-hold-path
+    content_sha256: e5055e559ba98012ef79a0dfd77fcf1b7ce85115e432837d47576c04a3a7a397
+  - collection: paths
+    id: intercompany-direct-delivery-path
+    content_sha256: 4a5e165bcf416e32cb2263dce5f6750ca16693df1ad89fc39fd6db9b6ac9a980
+  - collection: paths
+    id: payment-resumption-not-confirmed-path
+    content_sha256: 2ec94858d4004a4b6d6c91e722281936f5a11130a3e140436aa53f261dc18391
+  - collection: paths
+    id: preorder-future-availability-path
+    content_sha256: 4c2d3799d5f4705ae6c22313f45555cca04146597253356546f377c4591564c7
+  - collection: paths
+    id: process-approval-bottleneck-path
+    content_sha256: 3081b521231ac6d63258c2bca842dae610a50fa4021c394c8bfc1b48017c179e
+  - collection: paths
+    id: remote-payment-ambiguous-path
+    content_sha256: e6af7a8faab28a9d141683075030ae200d8f23cd895e8b0dfd113bd2125a5a37
+  - collection: paths
+    id: service-policy-deactivation-path
+    content_sha256: 89576a7fc262eee1e481dbb939c58174d1bb5a522ff179408e0d5c34f428bddf
+  - collection: paths
+    id: transport-loads-six-stores-path
+    content_sha256: aef16b8caab40d9a9606d7edc81e19a168b31873c86552a0fa6e99535ca1dabf
+  - collection: paths
+    id: transport-missed-connection-path
+    content_sha256: 9d3b80d99a8b0e3f787fa374ad27509ba667b2e1639c3909f4b12ecfa36c29d8
+  - collection: paths
+    id: workflow-version-change-path
+    content_sha256: 224485c40b84561a8385c063b2969b1b0a99acda89535fa58bb8bd44820effc1
+  - collection: scenarios
+    id: return-credit-refund
+    content_sha256: ecc174f0fdcd11aa68c204fdef1ea3af8cc8adf8f0572e37e16311abee678bc9
+  - collection: scenarios
+    id: return-customer-replacement
+    content_sha256: 3a57a261539490e6dfc5c24dd6586b9f67a98b872e31b0ae857f07bbabca1f18
+  supersession_U891: Les contrôles ciblés suivent le lot U891 ; leurs valeurs antérieures sont conservées dans product-packaging-supply-matching-U890.yaml.
+    Ceci ne modifie aucun accord historique.
+  supersession_U894: Seuls les contrôles de livraison des champs modifiés sont actualisés ; ancien contrat conservé dans credit-check-decision-U892.yaml.
+    Aucun accord métier étendu.
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
+audit_initial_verification:
+  model_validation_errors: 0
+  python_scripts:
+    run: 393
+    failures: 0
+    errors: 0
+    skipped: 1
+  python_app:
+    run: 32
+    failures: 0
+    errors: 0
+    skipped: 2
+  atlas_unit:
+    passed: 140
+    reuse: Suite validée avant cet audit ; code produit inchangé pendant cet audit. 27 tests pertinents réexécutés indépendamment.
+  candidate_browser:
+    version: 2026-10-07.999
+    base: https://atlas.test/Urbanisation-SCM/
+    counts:
+      streams: 5
+      scenarios: 38
+      paths: 41
+      steps: 130
+      chapters: 8
+      sections: 43
+      visuals: 2
+      sheets: 214
+      lessons: 6
+      terms: 30
+    missing: []
+    errors: []
+  candidate_gate:
+    validation_errors: []
+    applied_delivery_contracts: 37
+    new_exact_decisions: 36
+    prior_decisions_requiring_review: 421
+    unchanged_approved_fields_with_context_changed: 408
+    prior_decisions_with_changed_approved_fields: 13
+    meaning: 421 anciennes qualifications à réexaminer dans le contexte modifié, dont 408 sans changement des champs approuvés.
+      Cela ne signifie pas 421 nouveaux arbitrages. Les 36 captures nouvelles ne sont pas un accord global sur les fiches.

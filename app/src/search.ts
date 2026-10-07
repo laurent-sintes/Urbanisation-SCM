@@ -4,6 +4,7 @@ import { examplesForNode, readerExamplesSearchText } from './examples.ts';
 import { plainInlineText } from './inlineLinks.ts';
 import { publicText } from './publicText.ts';
 import type { AtlasNode, GlossaryTerm, PublishedModel, MarketComparison, MarketInspiration } from './types.ts';
+import { isCurrentGlossaryTerm, glossaryAliases } from './glossary.ts';
 import { marketSearchText } from './marketContent.ts';
 import { requestMetadataSearchText } from './requestMetadata.ts';
 import type { ModelingGuide } from './modelingGuide.ts';
@@ -32,8 +33,8 @@ function index(model: PublishedModel): SearchResult[] {
     ...(catalog?.value_streams || []).map(s => ({id:s.id,kind:'value_stream' as const,name:s.label_fr,excerpt:valueStreamSearchText(s),score:0})),
     ...model.nodes.map(node => ({ id: node.id, kind: 'model' as const, name: node.name,
       excerpt: [Object.values(businessFields(node.fields)).join('\n'), requestMetadataSearchText(node), ancestry(node.id), readerExamplesSearchText(examplesForNode(model, node)), marketSearchText(node.fields.market_comparisons as readonly MarketComparison[] | undefined, node.fields.market_inspiration as MarketInspiration | undefined)].join('\n'), score: 0, node })),
-    ...model.glossary.map(term => ({ id: term.id, kind: 'glossary' as const, name: plainInlineText(term.name),
-      excerpt: [term.short_description, term.definition, term.context, marketSearchText(term.market_comparisons, term.market_inspiration)].filter(Boolean).map(text => publicText(String(text))).join('\n'), score: 0, term })),
+    ...model.glossary.filter(isCurrentGlossaryTerm).map(term => ({ id: term.id, kind: 'glossary' as const, name: plainInlineText(term.name),
+      excerpt: [term.label_fr, ...glossaryAliases(model.glossary, term.id), term.short_description, term.definition, term.context, marketSearchText(term.market_comparisons, term.market_inspiration)].filter(Boolean).map(text => publicText(String(text))).join('\n'), score: 0, term })),
   ];
   caches.set(model, entries);
   return entries;

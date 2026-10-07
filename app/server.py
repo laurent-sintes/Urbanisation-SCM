@@ -22,6 +22,7 @@ BUILT_ROOT_FILES = {
     "/index.html": ("index.html", "text/html; charset=utf-8"),
     "/icon.svg": ("icon.svg", "image/svg+xml"),
     "/manifest.webmanifest": ("manifest.webmanifest", "application/manifest+json"),
+    "/delivery.json": ("delivery.json", "application/json; charset=utf-8"),
 }
 BUILT_ASSET_TYPES = {
     ".js": "text/javascript; charset=utf-8",

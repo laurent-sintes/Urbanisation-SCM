@@ -18785,6 +18785,86 @@
       "line": 21978,
       "content_sha256": "cc41482daa77f67bb98ffb19e1436716141b198a9689916d14c90cdf9dda6608",
       "captured_text": "## U894\n\n**id**\n\nU894\n\n**date**\n\n2026-10-07\n\n**titre**\n\nValider Credit Check Decision et son scénario\n\n**texte**\n\nJe valide\n\n**contexte et portée**\n\nAccord sur la proposition complète U892–U893 : capacité Credit Check Decision de nature décision dans Order Management / Order Lifecycle Management, déterminant l’admissibilité d’une étape de vente à partir des informations, règles ou résultats de Finance. Finance conserve son autorité financière ; Sales Order applique et trace le résultat ; Process Management conduit le parcours. Les profils de référence restent distincts de l’exposition courante et du résultat propre à la commande. Enrichir le scénario de crédit existant : commande de 3 000 euros, limite de 10 000 euros, exposition préalable hors commande de 8 000 puis 6 000 euros après paiement reconnu par Finance ; résultat indéterminé en cas d’information absente ou périmée, jamais d’autorisation implicite. Aucune release, commit ou push demandé ; les détails rédactionnels nouveaux et les réalisations installées ne bénéficient pas d’un accord global implicite."
+    },
+    {
+      "id": "U895",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u895",
+      "line": 22000,
+      "content_sha256": "d333a42acc121f74ed3d145b870df865fd3f6eb306b1ab209f00ddb70615f445",
+      "captured_text": "## U895\n\n**id**\n\nU895\n\n**date**\n\n2026-10-07\n\n**titre**\n\nRecentrer les références et le contrôle de crédit sur le périmètre du Core\n\n**texte**\n\nMon feedback :\n\n- Je n'aime pas l'approche référentiel commun, ça fait trop \"archi solution\"\n- Credit check Decision est finalement mal placé. On concoit un \"Core System\", le credit check sera intégré aux implémentations des Cases dans le cadre du B2B. Je ne pense pas que ce soit pertinent ici. Par contre, il faut un flux du controle de gestion qui alimente un référentiel : Party / Role ou une entité Customer Policy ?\n\n**contexte et portée**\n\nCorrection de la proposition U890–U894 : Laurent écarte la présentation d’un référentiel commun perçue comme une architecture de solution et replace le Credit Check dans les implémentations des Cases B2B. Le Core doit recevoir les informations de référence émises par le contrôle de gestion. Party / Role ou une référence distincte Customer Policy sont les options soumises à analyse ; le nom et le périmètre d’une éventuelle nouvelle référence ne sont pas encore arbitrés. Conserver les publications historiques et l’accord U894 dans leur contexte ; aucune nouvelle publication demandée."
+    },
+    {
+      "id": "U896",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u896",
+      "line": 22025,
+      "content_sha256": "1ac332fc7ab542d22599be96af27167c69b7f6ecaf3e17d444c1b31cff904930",
+      "captured_text": "## U896\n\n**id**\n\nU896\n\n**date**\n\n2026-10-07\n\n**titre**\n\nSituer les implémentations opérationnelles dans Achat et Vente\n\n**texte**\n\nEn fait, la plupart des implémentations opérationnelles seront dans les domaines Achat et Vente avec dans vente un sous domaine B2C/eCom, un sous domaine B2C/Store et un sous domaine Wholesale. C'est pour ça que le domaine Supply Chain MAnagement semble générique.\n\n**contexte et portée**\n\nPrécision du périmètre U895 : les domaines Achat et Vente portent la plupart des implémentations opérationnelles ; Vente distingue les sous-domaines B2C/eCom, B2C/Store et Wholesale. Cette organisation explique le caractère générique du domaine Supply évoqué par Laurent. Le nom canonique courant Supply Chain Orchestration n’est pas automatiquement renommé à partir de la formulation Supply Chain Management. Les noms anglais exacts, le détail des capacités spécialisées et les correspondances aux réalisations restent à préciser ; aucune architecture logicielle ni réalisation installée n’est déduite."
+    },
+    {
+      "id": "U897",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u897",
+      "line": 22047,
+      "content_sha256": "6048e56210f4cd833d9994be192d2dca4b70e30d4d521e9fe9e3d334c6291729",
+      "captured_text": "## U897\n\n**id**\n\nU897\n\n**date**\n\n2026-10-07\n\n**titre**\n\nExpliquer l’absence de B2C et B2B dans le Core\n\n**texte**\n\nEt voilà pourquoi B2C et B2B n'apparaissement pas dans ce core system\n\n**contexte et portée**\n\nLaurent confirme l’explication de périmètre apportée sous U896 : B2C et B2B qualifient les contextes opérationnels de Vente qui mobilisent le Core. Leur absence dans sa décomposition est intentionnelle. Cette précision ne valide pas encore le nom Customer Credit Profile proposé par Codex, ni une nouvelle nomenclature ou décomposition détaillée des domaines Achat et Vente."
+    },
+    {
+      "id": "U898",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u898",
+      "line": 22069,
+      "content_sha256": "92492ba914cc8970e70c75cee470a93e4dc450cb1c283bd66e88af6161d2789a",
+      "captured_text": "## U898\n\n**id**\n\nU898\n\n**date**\n\n2026-10-07\n\n**titre**\n\nValider le recentrage du Core et les références métier\n\n**texte**\n\nJe valide\n\n**contexte et portée**\n\nAccord sur le lot cohérent U895–U897 : Achat et Vente portent les parcours opérationnels spécifiques ; Vente distingue B2C/eCom, B2C/Store et Wholesale, qui mobilisent les capacités génériques du Core Supply. Corriger les descriptions des domaines en conséquence. Retirer Credit Check Decision du Core et conserver le scénario comme usage Wholesale, sans réattribuer la décision financière à une capacité générique. Ajouter Customer Credit Profile, référence financière reçue du contrôle de gestion, reliée à Party / Role dans Partner & Agreement References ; Finance conserve son autorité. Présenter marchandises, packaging, fournitures et équipements par leur sens métier, abandonner le socle commun et résoudre les doublons de références. Aligner modèle, glossaire et scénarios dans le même lot. Les nouveaux détails rédactionnels et les réalisations installées ne reçoivent pas d’accord global implicite. Aucune release, commit ou push demandé."
+    },
+    {
+      "id": "U899",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u899",
+      "line": 22091,
+      "content_sha256": "5375f6a9666672b30d63d2e74b9580b683f1d1cb2bddc2d38ad6f18fdfcf10d2",
+      "captured_text": "## U899\n\n**id**\n\nU899\n\n**date**\n\n2026-10-07\n\n**titre**\n\nQuestionner Packaging au regard du vocabulaire Microsoft Container\n\n**texte**\n\nPackaging, c'est le bon nom ? Je crois que microsoft l'appelle Container\n\n**contexte et portée**\n\nQuestion sur le nom du périmètre de références de conditionnement et sur sa correspondance avec Microsoft. Comparer les concepts avant de recommander un nom ; aucune demande de renommage ni validation nouvelle du modèle à ce stade."
+    },
+    {
+      "id": "U900",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u900",
+      "line": 22113,
+      "content_sha256": "23f66d4469154b8843f100b94eb8ef798181e5748a12e36cb64af6d0fdb91ef6",
+      "captured_text": "## U900\n\n**id**\n\nU900\n\n**date**\n\n2026-10-07\n\n**titre**\n\nConserver Packaging References et distinguer les notions de contenant\n\n**texte**\n\nJe valide\n\n**contexte et portée**\n\nAccord sur la proposition U899 : conserver Packaging References, qui couvre les matières et supports de conditionnement ainsi que les spécifications réutilisables. Container Type précise le type de contenant dans ce périmètre ; Container désigne le contenant et Handling Unit l’unité logistique identifiée avec son contenu. Conserver Packaging Material Reference et Packaging Specification, sans créer automatiquement une nouvelle référence ou capacité. Documenter les rapprochements partiels Microsoft et SAP, sans assimiler leurs objets ni leur réalisation au modèle FLOW. Aucun accord global sur les nouveaux détails rédactionnels ; aucune publication demandée."
+    },
+    {
+      "id": "U902",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u902",
+      "line": 22157,
+      "content_sha256": "b5d3b84466b383168761c51216400b491792b9a104c8aa6a20951108b334004f",
+      "captured_text": "## U902\n\n**id**\n\nU902\n\n**date**\n\n2026-10-07\n\n**titre**\n\nAuditer les excès et les manques des glossaires\n\n**texte**\n\nFais une passe sur les glossaires pour savoir ce qui est en trop ou ce qui manque\n\n**contexte et portée**\n\nAudit du glossaire métier et du glossaire méthodologique courants : pertinence, doublons, frontières, alignement avec le modèle et couverture des termes employés. Distinguer les entrées inutiles, les notions utiles mais mal définies et les manques ; l’absence de lien ne prouve pas l’inutilité. Aucun retrait global ni nouvelle publication implicitement validés. Le lot documentaire U900 reste à finaliser avec ses contrôles et accords ciblés."
+    },
+    {
+      "id": "U903",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u903",
+      "line": 22179,
+      "content_sha256": "d70ac5f3ec675045e792989d48d34c437dffffa217368968e5967944ce60152d",
+      "captured_text": "## U903\n\n**id**\n\nU903\n\n**date**\n\n2026-10-07\n\n**titre**\n\nAppliquer l’audit des glossaires\n\n**texte**\n\nApplique l’audit\n\n**contexte et portée**\n\nMettre en œuvre les corrections G01–G14 et les compléments M01–M09 du rapport glossary-audit-U902.yaml : clarifier les définitions, regrouper les doublons avec conservation des liens, alléger les listes, compléter les notions manquantes et aligner le modèle et la présentation Atlas. L’accord porte sur ce lot cohérent, avec conservation des distinctions et des preuves. Les formulations nouvelles restent identifiées comme rédaction de mise en œuvre. Aucune release, aucun commit ni push demandés."
+    },
+    {
+      "id": "U904",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u904",
+      "line": 22201,
+      "content_sha256": "62c41ed0466ac8a83e8c4cad75a1f88a62f25bbded3803ca5df7140e4e0db146",
+      "captured_text": "## U904\n\n**id**\n\nU904\n\n**date**\n\n2026-10-07\n\n**titre**\n\nDéfinir Firming par son sens métier\n\n**texte**\n\nFirming = rendre ferme une proposition\n\n**contexte et portée**\n\nLa définition générique est rendre ferme une proposition. Le passage Planned Purchase Order vers Purchase Order en est l’application FLOW ; le mécanisme de conversion ne doit pas remplacer le sens général du terme. Distinguer les effets et mécanismes selon l’objet et le système."
+    },
+    {
+      "id": "U905",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u905",
+      "line": 22223,
+      "content_sha256": "9625e707ffbd84b24dd5f2a9b036447f68e3655f6c1c335d62cb1273a5aff34a",
+      "captured_text": "## U905\n\n**id**\n\nU905\n\n**date**\n\n2026-10-07\n\n**titre**\n\nPublier le lot des glossaires et du modèle courant\n\n**texte**\n\nrelease\n\n**contexte et portée**\n\nPublication locale du backlog final et du guide méthodologique associés, après application de l’audit des glossaires U903 et précision Firming U904. Inclure les lots antérieurs appliqués depuis la publication courante. La demande autorise la publication ; elle ne donne aucun accord métier supplémentaire, ni autorisation de commit ou push."
     }
   ]
 }

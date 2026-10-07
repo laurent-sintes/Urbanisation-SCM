@@ -14,15 +14,16 @@ import uuid
 DIRECTORY = Path(__file__).resolve().parents[1] / '.runtime/parsed-models'
 MAX_BYTES = 256 * 1024 * 1024
 MAX_ENTRY_BYTES = 64 * 1024 * 1024
-MAX_ENTRIES = 128
+MAX_ENTRIES = 1024
 MISSING = object()
 
 
-def get(key):
+def get(key, *, directory=None):
+    directory = DIRECTORY if directory is None else Path(directory)
     try:
-        if DIRECTORY.resolve() != DIRECTORY:
+        if directory.resolve() != directory:
             return MISSING
-        path = DIRECTORY / (key + '.json')
+        path = directory / (key + '.json')
         if path.resolve() != path or path.stat().st_size > min(MAX_BYTES, MAX_ENTRY_BYTES):
             return MISSING
         header, payload = path.read_bytes().split(b'\n', 1)
@@ -33,24 +34,25 @@ def get(key):
         return MISSING
 
 
-def put(key, value):
+def put(key, value, *, directory=None):
+    directory = DIRECTORY if directory is None else Path(directory)
     temporary = None
     try:
-        if DIRECTORY.resolve() != DIRECTORY:
+        if directory.resolve() != directory:
             return
         payload = json.dumps(value, ensure_ascii=False, allow_nan=False, separators=(',', ':')).encode('utf-8')
         header = json.dumps({'key': key, 'sha256': sha256(payload).hexdigest()}).encode('ascii')
         content = header + b'\n' + payload
         if len(content) > min(MAX_BYTES, MAX_ENTRY_BYTES):
             return
-        DIRECTORY.mkdir(parents=True, exist_ok=True)
-        temporary = DIRECTORY / (uuid.uuid4().hex + '.tmp')
+        directory.mkdir(parents=True, exist_ok=True)
+        temporary = directory / (uuid.uuid4().hex + '.tmp')
         with temporary.open('xb') as stream:
             stream.write(content)
-        os.replace(temporary, DIRECTORY / (key + '.json'))
+        os.replace(temporary, directory / (key + '.json'))
         # Only our own regular cache entries can be evicted. No recursive cleanup.
         entries = []
-        for path in DIRECTORY.iterdir():
+        for path in directory.iterdir():
             if re.fullmatch(r'[a-f0-9]{64}\.json', path.name) and path.resolve() == path and path.is_file():
                 stamp = path.stat()
                 entries.append((stamp.st_mtime_ns, stamp.st_size, path))

@@ -1,7 +1,7 @@
-export type InlinePart = { text: string; kind?: 'glossary' | 'model' | 'method'; target?: string; anchor?: string };
+export type InlinePart = { text: string; kind?: 'glossary' | 'model' | 'method' | 'guide'; target?: string; anchor?: string };
 const unescape = (text: string) => text.replace(/\\([\[\]\\()])/g, '$1');
 export function inlineParts(text: string): InlinePart[] {
-  const pattern = /(?<!\\)\[((?:\\.|[^\]\\\n])+)\]\((glossary|model|method):([A-Za-z0-9_.-]+)(?:#([A-Za-z0-9_-]+))?\)/g;
+  const pattern = /(?<!\\)\[((?:\\.|[^\]\\\n])+)\]\((glossary|model|method|guide):([A-Za-z0-9_.-]+)(?:#([A-Za-z0-9_-]+))?\)/g;
   const parts: InlinePart[] = [];
   let from = 0;
   for (const match of text.matchAll(pattern)) {

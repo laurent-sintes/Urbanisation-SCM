@@ -227,6 +227,7 @@ publication_delivery:
   - U865
   - U874
   - U877
+  - U891
   summary: 'Huit capacités de consultation retirées ; huit références préservées ; deux capacités de plan contextualisées
     ; liens et scénarios adaptés. U863 : contrôles adaptés aux trois Areas et à la séparation des tarifs produit/service ;
     preuves historiques conservées. U863 : liens tarifaires des parcours répartis entre produits et prestations. U865 : Plan
@@ -271,7 +272,11 @@ publication_delivery:
       definition: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant
         leur référence locale fiable sans transférer la maîtrise d’entreprise.
       scope: |-
-        Trois [Business Areas](method:MOD039) portent les références locales : [Partner & Agreement References](model:ba-partner-agreement-references), [Product References](model:ba-product-references), [Service References](model:ba-service-references). Les neuf références restent distinctes et documentaires. Ce sous-domaine porte la composition, l’actualisation et la fourniture de leurs vues utilisables, avec versions, fraîcheur, provenance, validité et incohérences connues. Leur consultation ne justifie pas des capacités autonomes.
+        [Partner & Agreement References](model:ba-partner-agreement-references) porte les parties, accords et profils de crédit ; [Merchandise References](model:ba-product-references) les produits destinés à la vente, catalogues, assortiments et tarifs ; [Packaging References](model:ba-packaging-references) les matières et consignes de conditionnement ; [Internal Supplies & Equipment References](model:ba-internal-supplies-equipment-references) les fournitures et équipements internes ; [Service References](model:ba-service-references) les offres et moyens de prestation.
+
+        Un même bien peut avoir plusieurs usages. Les correspondances connues entre références conservent leur provenance ; aucun référentiel technique commun n’est imposé. La destination du bien ne détermine pas à elle seule son stockage ou son traitement comptable.
+
+        Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
         [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
@@ -305,22 +310,37 @@ publication_delivery:
     id: consignment-sale-pickup-path
     content_sha256: b0a41f20dfc70a7f5f9e6b61b18ac21251569958f653c3d40fb5bfd9e55b4c8f
   - collection: paths
-    id: export-remote-services-path
-    content_sha256: 2cfd2f2e1b279d63acffe34d8e9b97e5a02c9c98a00449966bc906df45b92c98
-  - collection: paths
     id: substitution-price-service-path
     content_sha256: 3c3dd19287febc43f18615fa28e59ee2d88ff3070ed67e82e5e1252fe3820cec
-  - collection: paths
-    id: reference-plan-correction-path
-    content_sha256: 9188d729d092b1d2fc820673beb9a648f41da6c30e30f467e9aa4a9a372205f4
   - collection: paths
     id: ownership-transit-deadline-path
     content_sha256: 74c4425a03cbf66c03ee069c1073918243eb04b6f629e7baf63a75f057a6c4bd
   - collection: paths
     id: product-quality-feedback-path
     content_sha256: 6421019fc6cf59e9bf383d2530c2286c4f9776354cef1f81542fec02baa8eb23
+  supersession_U891: Les contrôles ciblés suivent le lot U891 ; leurs valeurs antérieures sont conservées dans product-packaging-supply-matching-U890.yaml.
+    Ceci ne modifie aucun accord historique.
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
 relation_contract:
   uses-reference: Capacité consommatrice → référence documentaire ; dépendance qualifiée sans nouveau parent.
   supplies-reference: Capacité d’ingestion → référence documentaire ; apport sourcé, sans transfert de responsabilité de la
     vue locale.
   relates-to: Association qualifiée entre deux références, contrat historique conservé.
+superseded_delivery_U885:
+- catalog:
+    collection: paths
+    id: export-remote-services-path
+    content_sha256: 2cfd2f2e1b279d63acffe34d8e9b97e5a02c9c98a00449966bc906df45b92c98
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U885
+superseded_delivery_U887:
+  source_refs:
+  - U887
+  replacement: model-coherence-audit-U886.yaml#publication_delivery
+  assertions:
+  - catalog:
+      collection: paths
+      id: reference-plan-correction-path
+      content_sha256: 9188d729d092b1d2fc820673beb9a648f41da6c30e30f467e9aa4a9a372205f4

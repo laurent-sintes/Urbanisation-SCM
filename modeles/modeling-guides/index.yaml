@@ -63,6 +63,12 @@ guides:
 - version: 2026-10-07.2
   path: versions/2026-10-07.2.yaml
   sha256: 8c0cecca5b9f7905589f74469316a39204e9892cf026330e5f7061b18df2b822
+- version: 2026-10-07.3
+  path: versions/2026-10-07.3.yaml
+  sha256: de286f61361ee0b95eff8bf53ac5519b62013417ac14219c8a9ad4fb6a1c92d0
+- version: 2026-10-07.4
+  path: versions/2026-10-07.4.yaml
+  sha256: 5160692505772aeaab154817ca14ac612a75b4669df44d69f7cce215f929bd3e
 associations:
 - publication_version: 2026-09-16.2
   guide_version: 2026-09-18.1
@@ -262,3 +268,11 @@ associations:
   guide_version: 2026-10-07.2
   scope: carried_frozen_methodology
   note: Édition méthodologique figée reprise explicitement depuis 2026-10-07.2 ; aucune lecture du backlog.
+- publication_version: 2026-10-07.4
+  guide_version: 2026-10-07.3
+  scope: explicit_prepared_methodology
+  note: Édition méthodologique explicitement préparée et contrôlée avec cette publication ; aucune validation métier supplémentaire.
+- publication_version: 2026-10-07.5
+  guide_version: 2026-10-07.4
+  scope: explicit_prepared_methodology
+  note: Édition méthodologique explicitement préparée et contrôlée avec cette publication ; aucune validation métier supplémentaire.

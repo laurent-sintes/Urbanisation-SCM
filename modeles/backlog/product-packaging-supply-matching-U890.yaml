@@ -1,0 +1,1582 @@
+schema_version: 1.0.0
+id: product-packaging-supply-matching-U890
+source_refs:
+- U890
+- U891
+recorded_on: '2026-10-07'
+status: applied_verified
+scope: Lot U890 validé U891 appliqué au modèle, aux glossaires et aux scénarios ; publications historiques conservées.
+observations:
+- id: O01
+  targets:
+  - D08
+  - TER052
+  - TER057
+  - TER061
+  - service-order-packing
+  finding: Product Reference reçoit les Product et variantes avec rôles Article ou Container. Packing Order tient les exigences
+    et résultats individuels. Le catalogue ne matérialise pas de référentiel de spécifications de conditionnement distinct.
+  meaning: Couverture partielle du packaging ; le rôle Container ne remplace pas une spécification réutilisable.
+- id: O02
+  targets:
+  - D01.f
+  - D01.g
+  - D01.c
+  finding: Tracking, Ledger et Visibility traitent faits, positions et filiations, sans description explicite des structures
+    de conditionnement attendues, annoncées et réellement reçues.
+  meaning: Ces capacités peuvent être précisées et éprouvées avant de créer automatiquement une nouvelle capacité.
+- id: O03
+  targets:
+  - D03
+  - ba-supply-matching
+  finding: 'Supply Matching est une Business Area d’Availability : quatre capacités et sept comportements. Availability comporte
+    cinq Business Areas, quinze capacités et vingt-sept comportements.'
+  meaning: Le nombre d’objets de la seule Business Area ne mesure ni la couverture totale d’Availability ni la complexité
+    du calcul.
+proposals:
+- id: P01
+  topic: Séparer les périmètres de lecture des références
+  candidate_scopes:
+  - name: Merchandise References
+    meaning: Biens destinés à la vente, leurs variantes et leurs liens aux offres, assortiments et tarifs.
+  - name: Packaging References
+    meaning: Contenants, supports et autres matières de conditionnement ; spécifications réutilisables décrivant composition,
+      quantités, niveaux, unités et contraintes utiles aux échanges logistiques.
+  - name: Internal Supplies & Equipment References
+    meaning: Fournitures et équipements utilisés par les magasins, la force de vente et le backoffice ; le traitement des
+      actifs et leur comptabilité gardent leurs responsabilités propres.
+  boundary: 'Les usages peuvent se combiner : un même bien peut être vendu, utilisé en interne ou servir d’emballage. Conserver
+    l’identité commune sans recopier trois maîtres ni présumer trois composants logiciels. La finalité d’usage ne décide pas
+    à elle seule si le bien est stocké ou immobilisé.'
+  tradeoff: Lecture plus claire, au prix de liens explicites entre les vues et l’identité commune. Le sort de D08 et le placement
+    exact des nouvelles références restent à construire avant application.
+  application_U891: Appliqué et contrôlé ; les formulations initiales restent conservées comme proposition source. Résultat
+    final et limites dans application_U891.
+- id: P02
+  topic: Distinguer modèle, demande et réalité du conditionnement
+  candidate_reference_names:
+  - Packaging Material Reference
+  - Packaging Specification
+  boundary: Le référentiel décrit les modèles et consignes réutilisables. Packing Order porte le résultat demandé pour une
+    prestation. Les structures annoncées et réellement reçues sont des informations d’opération et d’inventaire avec identifiants,
+    contenu, provenance et écarts ; elles ne deviennent pas des références maîtres.
+  example: Consigne fictive de douze pièces par carton ; ordre de préparer cent vingt pièces ; annonce de dix cartons ; réception
+    de neuf cartons complets et un carton de dix pièces. Conserver les cent dix-huit pièces reconnues et l’écart de deux,
+    sans remplacer le modèle de douze par la réception de dix.
+  benefit: Exprimer précisément le besoin adressé à la logistique et interpréter ce qu’elle annonce ou retourne, en gardant
+    sa responsabilité sur le geste et la préparation détaillée.
+  application_U891: Appliqué et contrôlé ; les formulations initiales restent conservées comme proposition source. Résultat
+    final et limites dans application_U891.
+- id: P03
+  topic: Expliquer les responsabilités de réassort et la place possible d’IRMA
+  existing_evidence_refs:
+  - U06
+  - APP-IRM
+  - INF04
+  - DEC02
+  - DEC03
+  - C11
+  interpretation: IRMA contribue principalement à Inventory Target Optimization (D05.a) pour les cibles et seuils déclarés.
+    Supply Protection Policy (D02.b) tient les paramètres actifs ; Replenishment (D05.e) détermine les apports et ajustements,
+    à partir des besoins, cibles et ressources présentes ou attendues.
+  architecture_option: Une responsabilité métier de FLOW peut être réalisée par un moteur spécialisé tel qu’IRMA. Maintenir,
+    intégrer ou remplacer ce moteur relève d’une décision d’architecture et de produit distincte.
+  limits: Aucune interface cible installée ni migration décidée. Le déclenchement Storeland est documenté séparément ; quantité,
+    couverture du déploiement et actualité restent à éprouver. L’horizon ou la plateforme ne suffisent pas à classer un calcul
+    comme amont ou opérationnel.
+  application_U891: Appliqué et contrôlé ; les formulations initiales restent conservées comme proposition source. Résultat
+    final et limites dans application_U891.
+- id: P04
+  topic: Rendre visible la profondeur d’Availability sans gonfler le catalogue
+  existing_siblings:
+  - Plan Visibility
+  - Policy Optimization
+  - Order Promising
+  - Supply Matching
+  - Master Plan Management
+  interpretation: Les décisions intègrent leurs calculs et arbitrages. Le matching mobilise priorités, besoins, protections,
+    quantités présentes et attendues, contraintes et engagements ; Master Planning compose et révise les scénarios et Plan
+    Application matérialise les choix autorisés.
+  recommended_changes:
+  - Enrichir la synthèse de Supply Matching par les entrées, arbitrages, résultats et coopérations.
+  - Montrer où se trouvent promesse, optimisation de cibles, protections et conduite du plan.
+  - Éprouver les cas difficiles dans les capacités et scénarios existants avant de proposer de nouveaux savoir-faire.
+  cases_to_examine:
+  - Pénurie entre plusieurs demandes et prévisions résiduelles, sans double compte.
+  - Seuils reçus périmés ou objectifs locaux incompatibles.
+  - Conditionnements et tailles de lot empêchant un réassort exact.
+  - Arrivées retardées et engagements protégés.
+  - Réduction, report ou annulation d’apports déjà fermes.
+  - Aucune solution admissible pour satisfaire toutes les demandes.
+  limits: L’audit clos U431 n’est pas réouvert. Un objectif, mécanisme ou résultat métier distinct doit justifier toute nouvelle
+    capacité ou décomposition.
+  application_U891: Appliqué et contrôlé ; les formulations initiales restent conservées comme proposition source. Résultat
+    final et limites dans application_U891.
+market_comparison:
+- topic: Conditionnement
+  sources:
+  - S01
+  - S02
+  - S03
+  common_ground: SAP distingue matières d’emballage, consignes ou spécifications et unités logistiques concrètes ; Dynamics
+    distingue types de contenants, profils ou politiques de packing et containers physiques.
+  flow_choice: Séparer références, consignes individuelles et faits reçus, sans reprendre la configuration WMS ni son moteur
+    de cartonisation comme taxonomie métier.
+  limits: Recouvrement partiel ; aucune équivalence unique entre les objets éditeurs et les capacités FLOW.
+- topic: Fournitures internes
+  sources:
+  - S04
+  - S05
+  common_ground: SAP et Microsoft documentent les achats pour consommation directe, avec référence possible ou désignation
+    adaptée à l’achat.
+  flow_choice: Rendre visible la destination interne, tout en gardant indépendants l’identité du bien, sa gestion physique
+    en stock et son éventuelle immobilisation.
+  limits: Ces sources n’établissent ni un référentiel unique d’équipements internes ni un fonctionnement installé chez Beaumanoir.
+- topic: Réassort et matching
+  sources:
+  - S06
+  - S07
+  - S08
+  common_ground: SAP retail et Dynamics documentent besoins, seuils, cibles, stocks et apports ; Dynamics explicite également
+    les arbitrages de priorité.
+  flow_choice: Conserver les frontières entre choix des cibles, paramètres actifs, décision d’apports, affectation, mise en
+    œuvre et planification amont.
+  limits: Les périmètres MRP/retail des éditeurs sont plus larges ou différents ; ces pages ne fixent pas la frontière de
+    FLOW et ne prouvent rien sur IRMA.
+primary_sources:
+- id: S01
+  vendor: SAP
+  product: SAP S/4HANA Cloud Public Edition
+  title: Maintaining Packaging Information
+  url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-warehouse-management/maintaining-packaging-information_d0d86e60-5eb5-4b2f-9ad8-1277f3fc3dd1
+  consulted_sections:
+  - Packaging Material
+  - Packing Instruction
+  consulted_on: '2026-10-07'
+- id: S02
+  vendor: SAP
+  product: SAP S/4HANA Transportation Management / EWM
+  title: Managing Packaging Information
+  url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-transportation-management/managing-packaging-information_dec53742-711f-43fc-9bd8-18abe1bf0d3e
+  consulted_sections:
+  - Handling Units
+  - Packaging Specifications in Extended Warehouse Management
+  - Package Building
+  consulted_on: '2026-10-07'
+- id: S03
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Pack containers for shipment
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/packing-containers
+  consulted_sections:
+  - Containers
+  - Set up container types
+  - Set up packing profiles
+  consulted_on: '2026-10-07'
+- id: S04
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Describing Indirect Materials Procurement Process in SAP S/4HANA
+  url: https://learning.sap.com/courses/procurement-process-overview/describing-indirect-materials-procurement-process-in-sap-s-4hana
+  consulted_sections:
+  - Stock Materials and Consumable Materials
+  - Creation of Procurement Documents for Indirect Material
+  consulted_on: '2026-10-07'
+- id: S05
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Create purchase orders
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-order-creation
+  consulted_sections:
+  - Adding purchase order lines
+  consulted_on: '2026-10-07'
+- id: S06
+  vendor: SAP
+  product: SAP S/4HANA Retail
+  title: Performing Requirements Planning
+  url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/performing-requirements-planning_bbf9e421-fee4-4c82-bb13-5cf8ad7d7121
+  consulted_sections:
+  - Reorder Point Planning
+  - Time-Phased Planning
+  - Forecast-Based Requirements Planning
+  consulted_on: '2026-10-07'
+- id: S07
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Replenishment methods and quantity modification
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/replenishment-methods-quantity-modification
+  consulted_sections:
+  - Coverage codes
+  - Examples of Min./Max. coverage
+  consulted_on: '2026-10-07'
+- id: S08
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Priority-based planning
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/priority-based-planning
+  consulted_sections:
+  - Where and how planning priorities are assigned
+  - Priority calculation methods
+  consulted_on: '2026-10-07'
+- id: S09
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Product information overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information
+  consulted_sections:
+  - Product definition
+  - Distribution, export, and import of product data
+  - Product masters and product variants
+  consulted_on: '2026-10-07'
+- id: S10
+  vendor: SAP
+  product: SAP S/4HANA Cloud Private Edition
+  title: Maintaining Materials and Business Partners
+  url: https://learning.sap.com/courses/exploring-business-processes-for-supply-chain-execution-in-sap-s-4hana-cloud-private-edition/maintaining-materials-and-business-partners
+  consulted_sections:
+  - The Warehouse Product
+  consulted_on: '2026-10-07'
+source_limits: Pages primaires consultées ; synthèses reformulées. Les pages SAP Help rendues sans contenu ne sont pas utilisées
+  comme appui de fond. Aucune reproduction substantielle, certification ou consensus de marché allégué.
+canonical_model_modified: true
+publication_delivery:
+  state: applied
+  source_refs:
+  - U890
+  - U891
+  summary: Références par usage, packaging et profondeur Supply Matching intégrés sous U891 ; aucune migration IRMA.
+  required_nodes:
+  - id: business-references
+    kind: area
+    fields:
+      name: Operational References
+    field_sha256:
+      market_comparisons: d24f1c9e53559cf4123eff9873ffaf518bd9dc07cf9ec5d32c3cacdacca1705f
+      market_inspiration: ef53ce6422e885cbb40c479e5f6a0da230bb1892d92a359dab1aea9d8f7adb75
+      definition: 7437a6fcea4650f38205f907d3278b10d6b061ad1dd1c2e3cd3169e2035fcc05
+      scope: d606cf6a59380ea9a174e651b9124c985baf227ec58c334b530febc5b22cf5ba
+      mastership: 2426d975812a3d2dbeb0488b4d6a0a339cef5dc17e438f7afe47b07b8ee32153
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: D08
+    kind: reference
+    fields:
+      name: Product Reference
+    field_sha256:
+      definition: 6575891271fcff7716b9a59fc8ac1b305dbe38a6d0246b4f249a6a2428418c80
+      market_comparisons: 00272346bd2bd882b7f6636137f63b06ff8edd7b15d35ad2a87ee954b0de5032
+      market_inspiration: 9a5170741ca11ea8bea6fcab1fd83f5bf7846cc709724fb77dc3b344bebe9a8e
+      mastership: f9857b4d5a7dcce48c236d8ad895d6201743373afbb940e06e32f89b1eb0d656
+      scope: 65a4c50be8a52ce1267fb46d79980e1a691627acc1f625b5d3b727bf6afef9a3
+    parent: ba-product-references
+    parent_type: presents
+  - id: product-price-book
+    kind: reference
+    fields:
+      name: Product Price Book
+    field_sha256:
+      definition: 5d908dc2cc4546bc46c3c19f32b36e5aab89b9200bbb811168e254971d2f5347
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+      scope: e477d123d3a04e37e59845b9ce058bb2d14f178659adfa5abbea0f88c3db5247
+      market_comparisons: 6f3f9fc8cf0d38cec4faed1c0a7c49318b8c279d4c5aac2a82202052d15dd34a
+      market_inspiration: d1772da1b077d3aed89b9ce59b8b218e55b909f879fa69df6e4cbc4aeecfc95a
+    parent: ba-product-references
+    parent_type: presents
+  - id: ba-product-references
+    kind: business_area
+    fields:
+      name: Merchandise References
+    field_sha256:
+      definition: fa0053a0b8333fcbfa1af2b7bfd31532c6648f6d570cdce4718e20da8c88e34a
+      scope: 216f1833857b4e9eee9c487d14a4e36ee43807a76deb06edb543c912e4c2f489
+      market_comparisons: 7fd558f83971f5f7e2b477e0946d3177df156eaf258893414c7e077d56e91274
+    parent: business-references
+    parent_type: contains
+  - id: D03
+    kind: area
+    fields:
+      name: Availability
+    field_sha256:
+      definition: ad10e7f1b5476152211de9c036fe0507cf891ff7a048d1c1fab19a870ca03e60
+      scope: 0d3964c4ca2bdd31020260fc129126a6b878e6885c7caa945b9f59234c59aae3
+      market_comparisons: d2896f5dff00f08e47b94c5e9a8d534bb62cd71f7dffa3d8e7e7faf18c574102
+      market_inspiration: 39a11505085177f1ba0010be58d5c9fd729bce08c29096855aa4fd11190a7b8a
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: ba-supply-matching
+    kind: business_area
+    fields:
+      name: Supply Matching
+    field_sha256:
+      definition: 4eb018ae05b2bc9244c34f6217ca7b530d849a885c93770ca2eb726c02237dce
+      scope: 7d551a8df2790252471ea0d8126dcd2cb6ebd71c9aae4fb5ac37faa8f80c3a79
+      market_comparisons: ef9e2d23e0e2aa3c4d6e3b0b7f3250a34178e6699b3ea8518f019afcf574fa23
+    parent: D03
+    parent_type: contains
+  - id: D05.e
+    kind: capability
+    fields:
+      name: Replenishment
+    field_sha256:
+      definition: 9f77525afa4869ab3f3760fc2734958fbde5a973dfffa3081944ee63d35accb1
+      scope: 25ca8966b88938a5459a6b34210cd0dc2ef1ad46bc2edc1587100cc85fc2694b
+      market_comparisons: 10daaa70228b7a28244e1eb88fb8c68245d9df19649a258d745362236b84688b
+      market_inspiration: 1492c225ce6d3001a2609b347c79cb926525896c644de775e1f4d9d9375984d2
+    parent: ba-supply-matching
+    parent_type: contains
+  - id: D05.a
+    kind: capability
+    fields:
+      name: Inventory Target Optimization
+    field_sha256:
+      definition: e0cc6dcabc7ab5d0879178f868051112d90b3969e81b4f8f3007d7ed517ec19a
+      scope: 06ffcfa4f454ad34d8e6b9eb9af7e90931b5d8756480161cacb7607cbf0bf145
+      market_comparisons: 9e7800ef982d2333c198ebceb6dd399b992fdb7ca9f8b7a729b8df71d4d097b1
+      market_inspiration: 62727750684f61059c44af55a30e309ad7ab4ab6d497663d7e793461d9195a45
+    parent: ba-policy-optimization
+    parent_type: contains
+  - id: service-order-packing
+    kind: capability
+    fields:
+      name: Packing Order
+    field_sha256:
+      definition: c080b2e36c16336b5c6d0aa106de71a8b05c766ed4056cb1a8c18b30c3ae332f
+      scope: 0ce99335f22016ca7771073dfead40027311596e8f986a465bd28af6235e91c2
+      market_comparisons: 20edbc2df2c026621f0827f1840f9dd54c828b17a479831ea31e7fe5745e45da
+      market_inspiration: cff9e7f8e7a01ca3ada1ab450a1b7d4cd8705b16c321f94ab24dfb9b40e1186b
+    parent: ba-goods-processing-order-management
+    parent_type: contains
+  - id: service-order-receiving
+    kind: capability
+    fields:
+      name: Receiving Order
+    field_sha256:
+      definition: 8ab67ef48b771e9c4f48abaaa0ab07596610c7b02e9fbd5c187d7089d01b8a8f
+      scope: f94d23d2ac587fb92f11ac650de479426fb11488838ed10e8cacafaff70f39cb
+      market_comparisons: c2db3fb7ecedbd82e2aae7d374820cb8f97a714ff5a60870727203ecf3a75c98
+    parent: ba-goods-processing-order-management
+    parent_type: contains
+  - id: D01.f
+    kind: capability
+    fields:
+      name: Inventory Tracking
+    field_sha256:
+      definition: becf2bd59895cd78fce99fdf2347f289fa250033a2b408bc9ec4623fe3958433
+      scope: 4e9197719f28607ef3949d101dc84ed037516aa8e3bf75a2e78d57163feef72a
+      market_comparisons: d4ae11b1927beeb8cde5978ddf808d1f2847a920eb28c6c9d66a9b47267a0d04
+      market_inspiration: 7442ce045d1d1032e214ae23c58420b2d8cf14f946cb684bcd019defa88d22a7
+    parent: ba-inventory-position-management
+    parent_type: contains
+  - id: D01.g
+    kind: capability
+    fields:
+      name: Inventory Ledger
+    field_sha256:
+      definition: 152c339e355af712855d8f8c98096618b080e500a67feab17bad37a6b1ecb083
+      scope: 9421cb56b98563e96a7b2e1cee4b6a79e41432e071d064ecd423f9ebcd69f7eb
+      market_comparisons: a70cd19cdd786bc66a30485654f930636044ee2ab2a30dc2a645886f6d08798d
+      market_inspiration: c5b9bd2923d17910f9b90edbe6b0463ca2da741437a25ae3c0935ee51354055d
+    parent: ba-inventory-position-management
+    parent_type: contains
+  - id: D01.c
+    kind: capability
+    fields:
+      name: Inventory Visibility
+    field_sha256:
+      definition: 0c9c6e61f6a0a37f794b8bb0c108f7d35919f7c2f5baaf3ea053d94d2aa28b6b
+      scope: 138bb6f2ebf6396ba655ff6a89cfb0d59527ff1aee3d6072907c4c5e8bcf925f
+      market_comparisons: 5d089c19cf1c5e8609be522b0174277f2fff5889048e9ae32b41b2ac8dbebe7c
+      market_inspiration: 310ad4c39f14c6a900e8ce45b077cff928a24440eb2fae3d317f7ddcc672d58b
+    parent: ba-inventory-position-management
+    parent_type: contains
+  - id: master-data-ingestion
+    kind: capability
+    fields:
+      name: Reference Ingestion
+    field_sha256:
+      definition: 128d789e75343e2739f526fe314beb5cdaa326c20d091c37ec63fd53c6500c21
+      scope: be1fe94e9520d588639ccc3021508a31f3f2ff4ca1665c56763038ff0c5a2f22
+      market_comparisons: 559d0b3515738ff0a081efb4ded8a2f0cdaa9e744f8b5284fbad2757be5c80cc
+      market_inspiration: f36aa9d8ca7ad6a1fc94316928a10e60ca4015ce9e2c5e85499ac0c716ebbfca
+      mastership: f9857b4d5a7dcce48c236d8ad895d6201743373afbb940e06e32f89b1eb0d656
+    parent: ba-inbound-information-integration
+    parent_type: contains
+  - id: ba-packaging-references
+    kind: business_area
+    fields:
+      name: Packaging References
+    field_sha256:
+      definition: 775c078388e4bddb09bf12604c6735018eccf6ac6707e0173145289899ee721a
+      scope: 83d6fc6fbf9bfbbfe2fc2dd69d358126af8b50b023cc1aec44ba043e87d7e1c1
+      market_comparisons: 456d17184c2f757e6317533cf7027ae5e33d8921bd79e2674e020cd4a10d6eaa
+    parent: business-references
+    parent_type: contains
+  - id: ba-internal-supplies-equipment-references
+    kind: business_area
+    fields:
+      name: Internal Supplies & Equipment References
+    field_sha256:
+      definition: 7aaf400997af15df50bc11a519c87594f73949ae7986b24d18a8ad2db83c2c69
+      scope: d8d1894bbea18bdf215ba4f2509f3e08b2f9a3224cbd4bc1f16bbd327c74dd7e
+      market_comparisons: 5a76044a05b01842b8c37944b0176251ee0c95fb2527570ca1020fd425c20460
+    parent: business-references
+    parent_type: contains
+  - id: packaging-material-reference
+    kind: reference
+    fields:
+      name: Packaging Material Reference
+    field_sha256:
+      definition: fe5f52ee51dad212d5a56990ed7e73c7badfbe25f6f9e1e40fa0ee56dbd62652
+      scope: a4443ad7274d42624473a57dd33fa906676731954ea8cc6f09f3b1a772ccf5b2
+      market_comparisons: ded6ae98de1f2a4e1f4533ed4a7181476be1552f96e19dac2876ae87aa1eee27
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+    parent: ba-packaging-references
+    parent_type: presents
+  - id: packaging-specification
+    kind: reference
+    fields:
+      name: Packaging Specification
+    field_sha256:
+      definition: 2752296ff52cafea2f21cfc5177d5a453cbd88f20920e8ab5ca6c1861d49adf6
+      scope: 641c386272fed04876fa090b3ad7d5580f11ee6d489e0eba910cb1c16142b459
+      market_comparisons: 757f1b8b998f698116683364fc2bba36c33bcc797e32e360b77da0889f46ed10
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+    parent: ba-packaging-references
+    parent_type: presents
+  - id: internal-supplies-equipment-reference
+    kind: reference
+    fields:
+      name: Internal Supplies & Equipment Reference
+    field_sha256:
+      definition: 65347b1c49d8858e99aad6a8508b662c5d2df3453b4a16d69637a204eac4f00c
+      scope: 5928921449a624c315486f3dac9411af41cd2666ed323e513a9a95d7cacbad55
+      market_comparisons: 5716820c6e9da339c4b87ed0d206e308d1957b86f0a09b2551bca5fdc705f088
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+    parent: ba-internal-supplies-equipment-references
+    parent_type: presents
+  - id: service-price-book
+    kind: reference
+    fields:
+      name: Service Price Book
+    field_sha256:
+      market_comparisons: 822ea400e36c2f17a9aed6963ea437f3b3b7a357eda8b30499928baa899f9cc3
+  absent_nodes:
+  - merchandise-reference
+  required_catalog:
+  - collection: scenarios
+    id: packaging-receipt-variance
+    content_sha256: 47366e9715de948840d8e4f30587ee6831e1df393a8bce2916419a60ba30c0f8
+  - collection: paths
+    id: packaging-receipt-variance-path
+    content_sha256: 3f937f2a593cd9d87e0e372359fc7266175205f6b33136849b03404d45f52a36
+  - collection: scenarios
+    id: shortage-reassessment
+    content_sha256: ef9178d7228b0c0e3a0be285a72942affc0448f219bc1f6fe34ec7bff38cccb1
+  - collection: paths
+    id: shortage-reassessment-path
+    content_sha256: dd8a91dd9b839df93883622b5307c285e2f64d938e6320d61f915ff0cd4baaa6
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
+  supersession_U900: Précisions Packaging / Container acceptées U900 ; contrats antérieurs conservés dans packaging-container-vocabulary-U899.yaml,
+    sans extension des accords.
+superseded_market_gaps:
+  ba-product-references:
+  - family: microsoft_dynamics
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Les passages
+      tarifaires ne couvrent pas l’ensemble des références de cette Area.
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/sales/create-price-lists-price-list-items-define-pricing-products
+    source_refs:
+    - U862
+    - U863
+  - family: sap_s4hana
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Les passages
+      tarifaires ne couvrent pas l’ensemble des références de cette Area.
+    investigated_urls:
+    - https://learning.sap.com/courses/performing-basic-customizing-for-service-in-sap-s-4hana-and-sap-s-4hana-cloud-private-edition/configuring-pricing-for-service-transactions_c9d5bd5a-5032-410b-8632-579a947eedcc
+    source_refs:
+    - U862
+    - U863
+  TER148:
+  - family: microsoft_dynamics
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Les passages
+      tarifaires ne couvrent pas l’ensemble des références de cette Area.
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/sales/create-price-lists-price-list-items-define-pricing-products
+    source_refs:
+    - U862
+    - U863
+  - family: sap_s4hana
+    reason: Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Les passages
+      tarifaires ne couvrent pas l’ensemble des références de cette Area.
+    investigated_urls:
+    - https://learning.sap.com/courses/performing-basic-customizing-for-service-in-sap-s-4hana-and-sap-s-4hana-cloud-private-edition/configuring-pricing-for-service-transactions_c9d5bd5a-5032-410b-8632-579a947eedcc
+    source_refs:
+    - U862
+    - U863
+  TER074:
+  - family: microsoft_dynamics
+    reason: La comparaison existante ne comporte pas encore de source primaire de ce produit justifiant précisément le sens
+      de Replenishment. La documentation de parcours examinée ne suffit pas à établir cette correspondance.
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+    source_refs:
+    - U853
+application_U891:
+  applied_on: '2026-10-07'
+  accepted_scope: Trois périmètres d’usage, identité commune, consigne/annonce/réception distinctes, responsabilités de réassort,
+    profondeur de matching et cas exigeants.
+  tree_choice: D08 et Product Price Book restent visibles comme références communes. ba-product-references conserve son identité
+    et devient Merchandise References. Quatre références et deux Business Areas ajoutées.
+  new_node_ids:
+  - ba-packaging-references
+  - ba-internal-supplies-equipment-references
+  - merchandise-reference
+  - packaging-material-reference
+  - packaging-specification
+  - internal-supplies-equipment-reference
+  preserved_node_ids:
+  - D08
+  - ba-product-references
+  - product-price-book
+  changed_fields:
+    business-references:
+    - market_comparisons
+    - market_inspiration
+    - scope
+    D08:
+    - definition
+    - finality
+    - market_comparisons
+    - market_inspiration
+    - scope
+    D01.f:
+    - scope
+    - market_comparisons
+    - market_inspiration
+    D01.g:
+    - scope
+    - market_comparisons
+    - market_inspiration
+    D01.c:
+    - scope
+    - market_comparisons
+    - market_inspiration
+    D04.i:
+    - scope
+    D04.j:
+    - scope
+    D04.k:
+    - scope
+    D05.a:
+    - scope
+    - market_comparisons
+    - market_inspiration
+    D05.e:
+    - scope
+    - market_comparisons
+    - market_inspiration
+    D03:
+    - scope
+    - market_comparisons
+    - market_inspiration
+    service-order-packing:
+    - market_comparisons
+    - market_inspiration
+    - scope
+    master-data-ingestion:
+    - scope
+    service-order-receiving:
+    - scope
+    - market_comparisons
+    ba-supply-matching:
+    - scope
+    - market_comparisons
+    product-price-book:
+    - market_comparisons
+    - market_inspiration
+    - scope
+    ba-product-references:
+    - name
+    - definition
+    - finality
+    - scope
+    - market_comparisons
+    ba-packaging-references:
+    - name
+    - definition
+    - finality
+    - scope
+    - market_comparisons
+    ba-internal-supplies-equipment-references:
+    - name
+    - definition
+    - finality
+    - scope
+    - market_comparisons
+    merchandise-reference:
+    - name
+    - definition
+    - finality
+    - scope
+    - market_comparisons
+    - mastership
+    - data_governance
+    packaging-material-reference:
+    - name
+    - definition
+    - finality
+    - scope
+    - market_comparisons
+    - mastership
+    - data_governance
+    packaging-specification:
+    - name
+    - definition
+    - finality
+    - scope
+    - market_comparisons
+    - mastership
+    - data_governance
+    internal-supplies-equipment-reference:
+    - name
+    - definition
+    - finality
+    - scope
+    - market_comparisons
+    - mastership
+    - data_governance
+    service-price-book:
+    - market_comparisons
+  new_relation_ids:
+  - REL-U891-PARENT-ba-packaging-references
+  - REL-U891-PARENT-ba-internal-supplies-equipment-references
+  - REL-U891-PARENT-merchandise-reference
+  - REL-U891-INGEST-merchandise-reference
+  - REL-U891-PARENT-packaging-material-reference
+  - REL-U891-INGEST-packaging-material-reference
+  - REL-U891-PARENT-packaging-specification
+  - REL-U891-INGEST-packaging-specification
+  - REL-U891-PARENT-internal-supplies-equipment-reference
+  - REL-U891-INGEST-internal-supplies-equipment-reference
+  - REL-U891-IDENTITY-merchandise-reference
+  - REL-U891-IDENTITY-packaging-material-reference
+  - REL-U891-IDENTITY-internal-supplies-equipment-reference
+  - REL-U891-SPEC-GOODS
+  - REL-U891-SPEC-MATERIAL
+  - REL-U891-USE-01
+  - REL-U891-USE-02
+  - REL-U891-USE-03
+  - REL-U891-USE-04
+  - REL-U891-USE-05
+  - REL-U891-USE-06
+  - REL-U891-USE-07
+  - REL-U891-USE-08
+  - REL-U891-USE-09
+  - REL-U891-USE-10
+  scenario_patch_ids:
+  - packaging-receipt-variance
+  - packaging-receipt-variance-path
+  - shortage-reassessment
+  - shortage-reassessment-path
+  architecture_limit: La responsabilité de cibles peut être réalisée par un moteur tel qu’IRMA ; ni migration, remplacement,
+    interface installée ni nouvelle maîtrise adoptés.
+  agreement_limit: Les noms et frontières du lot sont acceptés. Les nouveaux détails rédigés, scénarios et comparaisons ne
+    reçoivent aucun accord global implicite.
+  publication: Backlog uniquement ; aucune publication, commit ou push déclenché.
+  independent_review: 'Revue des frontières et scénarios : corrections du lien tarif/identité commune, des deux périmètres
+    tarifaires et du reliquat Repacking ; aucun autre écart relevé.'
+  intent_capture:
+    method: record_intents, une écriture atomique sur le lot final
+    count: 45
+    existing_scopes_reexamined: 36
+    new_scopes: 9
+    newly_approved_fields: Cinq noms proposés sous U890 et quatre rattachements de ces périmètres de packaging ; aucun champ
+      scope approuvé globalement.
+    proposed_details_preserved:
+    - Merchandise Reference et Internal Supplies & Equipment Reference comme vues documentaires
+    - placement direct de D08 et Product Price Book
+    - nouvelles rédactions et scénarios
+    - comparaisons détaillées
+    - choix de composants et réalisation installée
+    ids:
+    - DEC-U891-REVIEW-609ca7e7ee835923d38ff076
+    - DEC-U891-REVIEW-76523a9899bc67b38984eb20
+    - DEC-U891-REVIEW-8975703a89b23854f80e7a5d
+    - DEC-U891-REVIEW-11fad72ddd602af385f45fb0
+    - DEC-U891-REVIEW-8545872c4a314dde1da37626
+    - DEC-U891-REVIEW-74cfca7b77ff9a3ccc4af2b1
+    - DEC-U891-REVIEW-1124aadca6e80d0a976089e8
+    - DEC-U891-REVIEW-6b41822170484f3a95166509
+    - DEC-U891-REVIEW-e61588f33d5e28e50180b31a
+    - DEC-U891-REVIEW-ee0d22b963ba8d7c0f2cb25a
+    - DEC-U891-REVIEW-b9f197ae354005b65fc0d6d3
+    - DEC-U891-REVIEW-5363aa8ea6349571faa06541
+    - DEC-U891-REVIEW-9681e386425309a5d1257f84
+    - DEC-U891-REVIEW-61138c9fe5e4aab9bef72d9b
+    - DEC-U891-REVIEW-c405e3cc702b3085e9ca09b0
+    - DEC-U891-REVIEW-b12ebaaf33cb6b110467f60c
+    - DEC-U891-REVIEW-d1f4d3606968a3cefcbbdbb7
+    - DEC-U891-REVIEW-94c1b4b0e42a97a92a3a2153
+    - DEC-U891-REVIEW-a2310879eb65051ded50966c
+    - DEC-U891-REVIEW-72c1ef8cc78339088ac8e60f
+    - DEC-U891-REVIEW-85b9859ea97b49cf92772981
+    - DEC-U891-REVIEW-3e19e33a17aa34834ef019bd
+    - DEC-U891-REVIEW-c89cbe5c7707bbdf2ae2d82d
+    - DEC-U891-REVIEW-68382b47cafe29018f78dd33
+    - DEC-U891-REVIEW-de52b661f2a5d510516c6360
+    - DEC-U891-REVIEW-92e4d165f3591121fae015b2
+    - DEC-U891-REVIEW-66b998de5ccb685ab7fe20ef
+    - DEC-U891-REVIEW-c1f755e1d90d19ee441dee8c
+    - DEC-U891-REVIEW-cba096583a0213fd90fa10b8
+    - DEC-U891-REVIEW-31778e631a440c8bdec29791
+    - DEC-U891-REVIEW-4b167729e43c3efa027faa56
+    - DEC-U891-REVIEW-ee19345d3c8aca1f59cbc6c0
+    - DEC-U891-REVIEW-73c3e5f126e8c48d4614b41f
+    - DEC-U891-REVIEW-377393be6bd7b1af7334a006
+    - DEC-U891-REVIEW-af560a0a2da7a2a1c9d5282f
+    - DEC-U891-REVIEW-8eaed0df2cc4041d2887f98e
+    - DEC-U891-ba-product-references
+    - DEC-U891-ba-packaging-references
+    - DEC-U891-ba-internal-supplies-equipment-references
+    - DEC-U891-packaging-material-reference
+    - DEC-U891-packaging-specification
+    - DEC-U891-REL-U891-PARENT-ba-packaging-references
+    - DEC-U891-REL-U891-PARENT-ba-internal-supplies-equipment-references
+    - DEC-U891-REL-U891-PARENT-packaging-material-reference
+    - DEC-U891-REL-U891-PARENT-packaging-specification
+    final_context_alignment: 4
+    active_ids:
+    - DEC-U891-REVIEW-609ca7e7ee835923d38ff076
+    - DEC-U891-REVIEW-76523a9899bc67b38984eb20
+    - DEC-U891-REVIEW-8975703a89b23854f80e7a5d
+    - DEC-U891-REVIEW-11fad72ddd602af385f45fb0
+    - DEC-U891-REVIEW-8545872c4a314dde1da37626
+    - DEC-U891-REVIEW-74cfca7b77ff9a3ccc4af2b1
+    - DEC-U891-REVIEW-1124aadca6e80d0a976089e8
+    - DEC-U891-REVIEW-6b41822170484f3a95166509
+    - DEC-U891-REVIEW-e61588f33d5e28e50180b31a
+    - DEC-U891-REVIEW-ee0d22b963ba8d7c0f2cb25a
+    - DEC-U891-REVIEW-b9f197ae354005b65fc0d6d3
+    - DEC-U891-REVIEW-5363aa8ea6349571faa06541
+    - DEC-U891-REVIEW-9681e386425309a5d1257f84
+    - DEC-U891-REVIEW-61138c9fe5e4aab9bef72d9b
+    - DEC-U891-REVIEW-c405e3cc702b3085e9ca09b0
+    - DEC-U891-REVIEW-b12ebaaf33cb6b110467f60c
+    - DEC-U891-REVIEW-d1f4d3606968a3cefcbbdbb7
+    - DEC-U891-REVIEW-94c1b4b0e42a97a92a3a2153
+    - DEC-U891-REVIEW-a2310879eb65051ded50966c
+    - DEC-U891-REVIEW-72c1ef8cc78339088ac8e60f
+    - DEC-U891-REVIEW-85b9859ea97b49cf92772981
+    - DEC-U891-REVIEW-3e19e33a17aa34834ef019bd
+    - DEC-U891-REVIEW-c89cbe5c7707bbdf2ae2d82d
+    - DEC-U891-REVIEW-68382b47cafe29018f78dd33
+    - DEC-U891-REVIEW-de52b661f2a5d510516c6360
+    - DEC-U891-REVIEW-92e4d165f3591121fae015b2
+    - DEC-U891-REVIEW-66b998de5ccb685ab7fe20ef
+    - DEC-U891-REVIEW-c1f755e1d90d19ee441dee8c
+    - DEC-U891-REVIEW-cba096583a0213fd90fa10b8
+    - DEC-U891-REVIEW-31778e631a440c8bdec29791
+    - DEC-U891-REVIEW-4b167729e43c3efa027faa56
+    - DEC-U891-REVIEW-ee19345d3c8aca1f59cbc6c0
+    - DEC-U891-REVIEW-73c3e5f126e8c48d4614b41f
+    - DEC-U891-REVIEW-377393be6bd7b1af7334a006
+    - DEC-U891-REVIEW-af560a0a2da7a2a1c9d5282f
+    - DEC-U891-REVIEW-8eaed0df2cc4041d2887f98e
+    - DEC-U891-ba-product-references
+    - DEC-U891-ba-packaging-references
+    - DEC-U891-ba-internal-supplies-equipment-references
+    - DEC-U891-REL-U891-PARENT-ba-packaging-references
+    - DEC-U891-REL-U891-PARENT-ba-internal-supplies-equipment-references
+    - DEC-U891-FINAL-5e18e89984b0375edbda7fff
+    - DEC-U891-FINAL-9a58ba795b76b0e5bb18792e
+    - DEC-U891-FINAL-922ccbe667e857f4931157af
+    - DEC-U891-FINAL-f4bf159bb2bf93b43799cd96
+    active_count: 45
+  reading_order: Socle commun visible en premier, puis partenaires, les trois périmètres d’usage adjacents et services. Les
+    relations, identités et portées d’accord restent identiques.
+  verification:
+    model_validation: 'scripts/validate_models.py : 0 erreur ; identités et publications historiques conservées.'
+    python_tests: Contrats Business Areas, modèle, identité, présentation, processus et livraison vérifiés ; tests corrigés
+      après échecs de contrat, aucun échec restant.
+    frontend_tests: 143 tests réussis, dont coexistence références communes / Business Areas et affichage historique des capacités
+      directes.
+    build: 'pnpm --dir app build : réussi ; données exclusivement issues de la publication active.'
+    candidate_browser: '220 fiches, 39 scénarios, 42 parcours et 136 étapes : contrôles de contenu et de liens réussis.'
+    reference_browser: 5 Business Areas documentaires, 13 références dont 2 communes ; cartes, parents, fiches, compteurs
+      et liens contrôlés.
+    mobile_accessibility: 2 scénarios et 7 nouveaux termes contrôlés ; aucune référence non résolue ni débordement, aide Handling
+      Unit au clavier.
+    delivery: 39 déclarations de livraison contrôlées ; aucun écart et 45 accords actifs à portée limitée compilables dans
+      le contexte final.
+    render: Vue backlog régénérée sur le lot final.
+    publication: R52 / 2026-10-07.2 reste active ; ce lot de travail n’est pas encore publié.
+  final_basis_sha256:
+    modeles/backlog/model.yaml: 6d07ed3b34cdd018e410a51c65d3c21a4e8e92d5895b78cdee2a4ea86530b2bf
+    modeles/backlog/glossary.yaml: 5ef23056cde8e470f2458397bf8764a11cbe39d62e374ca5e8212072470f89d1
+    modeles/backlog/decision-intents.yaml: a163a3df34be2f6ca6f10a496187000cd0b7dd98b4cbc670adda3dcd1208eca5
+    modeles/provenance/source-records.json: ef57c33f0abd10301ef1e1948f5fb4da60f7802feda9d5d3af269d3e87e152ac
+    app/src/mapSections.ts: 04a5d3e7fa80162267538f77ce661f5277eebbec919e07d9f40a6bf195d6b0bf
+    app/src/ReactFlowPane.tsx: 9625e3aa77a93207f0fe4b5fc7d9048a49aedeb21f98f9860dd1449a2809c6d4
+    app/test-business-areas.mjs: 6fc6ba6660fa9f820280db12d118fccee1b7c99b42e878558003bfd76e579a01
+    scripts/test_business_areas.py: 43704de022cd0b05868eabe678394ada06b1a7bcfdc2019f326b150456d1ab3e
+    scripts/test_presentation_business.py: a536ec8863d08ca2d663122f0c0d3461cae0795aba1c6419245a8a2847e93a23
+superseded_delivery_checks:
+- path: modeles/backlog/availability-stabilization-U877.yaml
+  target: business-references
+  previous:
+    id: business-references
+    fields:
+      scope: |-
+        Trois [Business Areas](method:MOD039) portent les références locales : [Partner & Agreement References](model:ba-partner-agreement-references), [Product References](model:ba-product-references), [Service References](model:ba-service-references). Les neuf références restent distinctes et documentaires. Ce sous-domaine porte la composition, l’actualisation et la fourniture de leurs vues utilisables, avec versions, fraîcheur, provenance, validité et incohérences connues. Leur consultation ne justifie pas des capacités autonomes.
+
+        [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+
+        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Policies](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+  replacement:
+    id: business-references
+    fields:
+      scope: |-
+        Les références communes [Product Reference](model:D08) et [Product Price Book](model:product-price-book) portent l’identité des biens et leurs tarifs. Les périmètres d’usage rendent lisibles [Merchandise References](model:ba-product-references), [Packaging References](model:ba-packaging-references) et [Internal Supplies & Equipment References](model:ba-internal-supplies-equipment-references). [Partner & Agreement References](model:ba-partner-agreement-references) porte parties et accords ; [Service References](model:ba-service-references) les offres et moyens de prestation. Les références restent documentaires. Un même bien peut relever de plusieurs usages avec son identité commune.
+
+        Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
+
+        [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+
+        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Policies](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+- path: modeles/backlog/availability-stabilization-U877.yaml
+  target: D04.j
+  previous:
+    id: D04.j
+    fields:
+      scope: |-
+        Tenir articles ou prestations, quantités et unités, dates, conditions, confirmations et changements d’un achat. Le [Purchase Order](glossary:TER070) est le document métier structuré de commande ; son édition datée, le [Purchase Order Document](glossary:TER086), en représente une version. Ni l’un ni l’autre ne désigne la capacité qui gère l’achat. Achat pour le réseau, livraison directe au client, achat de service et confirmation fournisseur constituent des axes combinables.
+
+        Stock Procurement approvisionne les stocks du réseau ; Direct Delivery Procurement fait livrer le client directement. Une prestation peut être achetée sans créer un mouvement de stock. Le contrat est négocié hors de cette capacité ; réception, transport, facturation et paiement gardent leurs responsabilités. Une prestation confiée ne justifie pas systématiquement un achat.
+
+        Rapprocher les résultats pour tenir le reste à satisfaire. Exemples fictifs : 60 pièces reçues sur 100 commandées, ou 30 heures réalisées sur 50 achetées. La confirmation du fournisseur peut porter sur une partie : 60 pièces vendredi et 40 mardi au lieu de 100 vendredi. Tenir réponse, acceptation ou rejet et conséquences autorisées. Rejeter une réponse ne restaure pas une capacité ; l’accepter ne confirme pas automatiquement la promesse client.
+
+        La consignation ne constitue pas un comportement d’achat supplémentaire. Un achat peut intervenir lors du changement de propriété selon les conditions applicables. Les retours au fournisseur relèvent de [Supplier Return Order](model:D04.m).
+
+        Appliquer le [cycle commun d’Order Management](model:D04) : préparation, révisions, affermissement, protections, autorisation, suspension et reprise, annulation, clôture et conservation. Distinguer demande, proposition, confirmation et réalisé ; rendre le solde consultable dans [Order Visibility](model:order-visibility). Ces dimensions ne créent pas de nouveaux comportements propres à chaque achat.
+
+        [Planned Purchase Order](glossary:TER033) est une proposition d’approvisionnement issue du planning, distincte du [Purchase Order](glossary:TER070) produit à l’affermissement. Conserver les liens de provenance, quantités et échéances entre ces deux objets, sans imposer une identité commune ni un lien un-à-un : plusieurs propositions peuvent être regroupées. La confirmation fournisseur reste une étape distincte. Ne pas compter le même apport comme proposition encore active et comme commande résultante. Ce découpage d’objets ne crée pas deux capacités ; le calcul amont reste sous l’autorité de [Demand & Supply Planning](model:domain-plan).
+
+        Laurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’affermissement ; elle ne garantit pas une identité technique commune.
+
+        La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer.
+
+        Les [Planned Purchase Orders](glossary:TER033) reçus par [Plan Ingestion](model:plans-ingestion) restent des propositions identifiées avant affermissement. Conserver la correspondance entre proposition et achat affermi pour remplacer la couverture planifiée, sans compter les deux comme deux apports. La planification externe reste responsable du calcul de la proposition ; sa prise en compte conditionnelle par [Availability](glossary:TER112) ne vaut pas autorisation d’achat.
+  replacement:
+    id: D04.j
+    fields:
+      scope: |-
+        Tenir articles ou prestations, quantités et unités, dates, conditions, confirmations et changements d’un achat. Le [Purchase Order](glossary:TER070) est le document métier structuré de commande ; son édition datée, le [Purchase Order Document](glossary:TER086), en représente une version. Ni l’un ni l’autre ne désigne la capacité qui gère l’achat. Achat pour le réseau, livraison directe au client, achat de service et confirmation fournisseur constituent des axes combinables.
+
+        Stock Procurement approvisionne les stocks du réseau ; Direct Delivery Procurement fait livrer le client directement. Une prestation peut être achetée sans créer un mouvement de stock. Le contrat est négocié hors de cette capacité ; réception, transport, facturation et paiement gardent leurs responsabilités. Une prestation confiée ne justifie pas systématiquement un achat.
+
+        Rapprocher les résultats pour tenir le reste à satisfaire. Exemples fictifs : 60 pièces reçues sur 100 commandées, ou 30 heures réalisées sur 50 achetées. La confirmation du fournisseur peut porter sur une partie : 60 pièces vendredi et 40 mardi au lieu de 100 vendredi. Tenir réponse, acceptation ou rejet et conséquences autorisées. Rejeter une réponse ne restaure pas une capacité ; l’accepter ne confirme pas automatiquement la promesse client.
+
+        La consignation ne constitue pas un comportement d’achat supplémentaire. Un achat peut intervenir lors du changement de propriété selon les conditions applicables. Les retours au fournisseur relèvent de [Supplier Return Order](model:D04.m).
+
+        Appliquer le [cycle commun d’Order Management](model:D04) : préparation, révisions, affermissement, protections, autorisation, suspension et reprise, annulation, clôture et conservation. Distinguer demande, proposition, confirmation et réalisé ; rendre le solde consultable dans [Order Visibility](model:order-visibility). Ces dimensions ne créent pas de nouveaux comportements propres à chaque achat.
+
+        [Planned Purchase Order](glossary:TER033) est une proposition d’approvisionnement issue du planning, distincte du [Purchase Order](glossary:TER070) produit à l’affermissement. Conserver les liens de provenance, quantités et échéances entre ces deux objets, sans imposer une identité commune ni un lien un-à-un : plusieurs propositions peuvent être regroupées. La confirmation fournisseur reste une étape distincte. Ne pas compter le même apport comme proposition encore active et comme commande résultante. Ce découpage d’objets ne crée pas deux capacités ; le calcul amont reste sous l’autorité de [Demand & Supply Planning](model:domain-plan).
+
+        Laurent confirme que MAP envoie des Planned Purchase Orders (U871). Ils représentent les propositions d’achat issues du planning, distinctes des Purchase Orders produits à l’affermissement. La documentation Microsoft SCM décrit une génération des commandes opérationnelles à l’affermissement ; elle ne garantit pas une identité technique commune.
+
+        La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer.
+
+        Les [Planned Purchase Orders](glossary:TER033) reçus par [Plan Ingestion](model:plans-ingestion) restent des propositions identifiées avant affermissement. Conserver la correspondance entre proposition et achat affermi pour remplacer la couverture planifiée, sans compter les deux comme deux apports. La planification externe reste responsable du calcul de la proposition ; sa prise en compte conditionnelle par [Availability](glossary:TER112) ne vaut pas autorisation d’achat.
+
+        Un achat peut porter des marchandises, des matières de conditionnement ou des biens destinés au travail interne. [Internal Supplies & Equipment Reference](model:internal-supplies-equipment-reference) et [Packaging Material Reference](model:packaging-material-reference) précisent l’usage lorsque documenté ; cet usage ne décide pas à lui seul du stockage ou de la comptabilisation.
+- path: modeles/backlog/business-area-migration-U846.yaml
+  target: ba-supply-matching
+  previous:
+    id: ba-supply-matching
+    kind: business_area
+    parent: D03
+    fields:
+      name: Supply Matching
+      definition: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+        de ressources.
+      finality: Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins
+        restent découverts.
+      scope: |-
+        Les familles de commandes portent les demandes et leurs engagements ; les registres portent les effets reconnus.
+
+        Bénéficiaire et résultat : Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins restent découverts.
+
+        Exemple fictif : Deux demandes se partagent 80 pièces : arbitrer selon leurs priorités et expliciter la part non couverte sans réécrire les commandes.
+  replacement:
+    id: ba-supply-matching
+    kind: business_area
+    parent: D03
+    fields:
+      name: Supply Matching
+      definition: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+        de ressources.
+      finality: Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins
+        restent découverts.
+      scope: |-
+        Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Policies](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+
+        [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
+
+        [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Policy Optimization](model:ba-policy-optimization) recommande cibles et paramètres ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+
+        Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
+- path: modeles/backlog/market-coverage-audit-U775.yaml
+  target: D01.f
+  previous:
+    id: D01.f
+    fields:
+      definition: Capter et intégrer les faits et états de stock transmis par les sources, ainsi que les origines et liens
+        de filiation des biens, avec leurs dates et corrections.
+      scope: |-
+        Intégrer événements, états transmis et corrections avec origine, portée, date du fait et date de connaissance. Rapprocher produits, lieux, propriétaires et détenteurs et reconnaître les doublons sans appliquer deux fois un effet. Un solde externe peut être reçu comme référence datée sans inventer les mouvements inconnus. Une estimation ou une demande ne vaut pas un fait réalisé.
+
+        Fournir les faits intégrés à [Inventory Ledger](model:D01.g), qui tient leur historique métier ; [Inventory Visibility](model:D01.c) compose les positions. Operations Tracking peut fournir les effets de prestations, mais ne constitue pas un passage obligatoire pour toutes les sources. Un même fait commun aux deux Tracking ne produit qu’un effet de stock. Une correction documentaire n’est pas une sortie physique.
+
+        Intégrer également les faits de processus utiles à la propriété et les transferts déjà établis par des sources autorisées. Operations Tracking fournit les résultats des prestations ; les échéances convenues peuvent déclencher un examen distinct. Inventory Ownership Transfer Decision applique les conditions de l’accord ; [Inventory Ownership Ledger](model:inventory-ownership-ledger) conserve les changements reconnus. Ne pas déduire automatiquement un transfert de tout événement reçu.
+
+        La traçabilité exige aussi des faits reliant les biens : lot d’origine, composants consommés, coffrets produits, fractionnements et destinations. L’origine technique du message ne remplace pas l’origine métier du produit. Intégrer les liens communiqués sans inventer ceux que les sources ne fournissent pas ; transmettre corrections et identifiants à [Inventory Ledger](model:D01.g). Reconstituer un parcours pour répondre à une question relève de [Inventory Visibility](model:D01.c), pas d’un nouveau comportement isolé de Tracking. Exemple fictif : intégrer que les accessoires du lot A17 ont été incorporés aux coffrets K1 et K2.
+  replacement:
+    id: D01.f
+    fields:
+      definition: Capter et intégrer les faits et états de stock transmis par les sources, ainsi que les origines et liens
+        de filiation des biens, avec leurs dates et corrections.
+      scope: |-
+        Intégrer événements, états transmis et corrections avec origine, portée, date du fait et date de connaissance. Rapprocher produits, lieux, propriétaires et détenteurs et reconnaître les doublons sans appliquer deux fois un effet. Un solde externe peut être reçu comme référence datée sans inventer les mouvements inconnus. Une estimation ou une demande ne vaut pas un fait réalisé.
+
+        Fournir les faits intégrés à [Inventory Ledger](model:D01.g), qui tient leur historique métier ; [Inventory Visibility](model:D01.c) compose les positions. Operations Tracking peut fournir les effets de prestations, mais ne constitue pas un passage obligatoire pour toutes les sources. Un même fait commun aux deux Tracking ne produit qu’un effet de stock. Une correction documentaire n’est pas une sortie physique.
+
+        Intégrer également les faits de processus utiles à la propriété et les transferts déjà établis par des sources autorisées. Operations Tracking fournit les résultats des prestations ; les échéances convenues peuvent déclencher un examen distinct. Inventory Ownership Transfer Decision applique les conditions de l’accord ; [Inventory Ownership Ledger](model:inventory-ownership-ledger) conserve les changements reconnus. Ne pas déduire automatiquement un transfert de tout événement reçu.
+
+        La traçabilité exige aussi des faits reliant les biens : lot d’origine, composants consommés, coffrets produits, fractionnements et destinations. L’origine technique du message ne remplace pas l’origine métier du produit. Intégrer les liens communiqués sans inventer ceux que les sources ne fournissent pas ; transmettre corrections et identifiants à [Inventory Ledger](model:D01.g). Reconstituer un parcours pour répondre à une question relève de [Inventory Visibility](model:D01.c), pas d’un nouveau comportement isolé de Tracking. Exemple fictif : intégrer que les accessoires du lot A17 ont été incorporés aux coffrets K1 et K2.
+
+        Intégrer les [Handling Units](glossary:TER189) annoncées ou constatées, leurs identifiants, contenu, niveaux et unités, lorsque les sources les fournissent. Distinguer annonce et réception reconnue, relier les corrections sans créer deux effets de stock et sans déduire un contenu manquant de la seule [Packaging Specification](model:packaging-specification). La consigne décrit le modèle ; le fait décrit les biens réellement connus.
+- path: modeles/backlog/market-coverage-audit-U775.yaml
+  target: D01.g
+  previous:
+    id: D01.g
+    fields:
+      scope: |-
+        Conserver les réceptions, sorties, déplacements, changements de statut et ajustements reconnus, avec quantités, dimensions, date du fait, date de connaissance et preuves. Le registre constitue une référence métier durable ; [Ledger](glossary:TER056) qualifie sa tenue, indépendamment des outils.
+
+        [Inventory Tracking](model:D01.f) fournit les faits intégrés et [Stocktaking](model:D01.d) les corrections de comptage justifiées. [Inventory Ownership Ledger](model:inventory-ownership-ledger) tient les changements de propriétaire ; les écritures correspondantes sont reliées aux positions de stock sans constituer un second registre de propriété. Un transfert de propriété seul ne crée ni réception physique ni sortie physique supplémentaire.
+
+        [Inventory Visibility](model:D01.c) compose les positions à partir des deux registres et des engagements de quantité. Un solde initial ou externe conserve sa portée sans fabriquer son historique. Une réception corrigée de 100 à 80 garde la justification de la correction ; elle ne devient pas 180 pièces. Valorisation et comptabilité générale restent sous leur responsabilité propre.
+
+        Conserver les filiations reconnues entre entrées, transformations et sorties : origines, lots, composants consommés, produits obtenus, fractionnements et destinations. Une [traçabilité](glossary:TER101) utile ne se réduit pas au fournisseur initial ni à l’origine technique d’un message. Conserver références, quantités, dates et corrections permettant de relier ces faits, avec leurs limites de connaissance ; ne pas fabriquer une généalogie complète à partir d’un simple solde. Inventory Visibility exploite ces liens ; le registre ne prend ni décision de rappel ni décision d’usage. Exemple fictif : conserver le lien entre un lot d’accessoires et les coffrets assemblés, puis leurs sorties vers les magasins.
+  replacement:
+    id: D01.g
+    fields:
+      scope: |-
+        Conserver les réceptions, sorties, déplacements, changements de statut et ajustements reconnus, avec quantités, dimensions, date du fait, date de connaissance et preuves. Le registre constitue une référence métier durable ; [Ledger](glossary:TER056) qualifie sa tenue, indépendamment des outils.
+
+        [Inventory Tracking](model:D01.f) fournit les faits intégrés et [Stocktaking](model:D01.d) les corrections de comptage justifiées. [Inventory Ownership Ledger](model:inventory-ownership-ledger) tient les changements de propriétaire ; les écritures correspondantes sont reliées aux positions de stock sans constituer un second registre de propriété. Un transfert de propriété seul ne crée ni réception physique ni sortie physique supplémentaire.
+
+        [Inventory Visibility](model:D01.c) compose les positions à partir des deux registres et des engagements de quantité. Un solde initial ou externe conserve sa portée sans fabriquer son historique. Une réception corrigée de 100 à 80 garde la justification de la correction ; elle ne devient pas 180 pièces. Valorisation et comptabilité générale restent sous leur responsabilité propre.
+
+        Conserver les filiations reconnues entre entrées, transformations et sorties : origines, lots, composants consommés, produits obtenus, fractionnements et destinations. Une [traçabilité](glossary:TER101) utile ne se réduit pas au fournisseur initial ni à l’origine technique d’un message. Conserver références, quantités, dates et corrections permettant de relier ces faits, avec leurs limites de connaissance ; ne pas fabriquer une généalogie complète à partir d’un simple solde. Inventory Visibility exploite ces liens ; le registre ne prend ni décision de rappel ni décision d’usage. Exemple fictif : conserver le lien entre un lot d’accessoires et les coffrets assemblés, puis leurs sorties vers les magasins.
+
+        Conserver les structures et contenus des [Handling Units](glossary:TER189) reconnus, avec leurs liens aux biens, dates et corrections. Une [Packaging Specification](model:packaging-specification) peut qualifier une attente ; elle ne remplace pas une preuve du contenu reçu. Exemple fictif : conserver une réception reconnue de 118 pièces, puis sa correction éventuelle, sans comptabiliser les 120 annoncées comme une réception supplémentaire.
+- path: modeles/backlog/market-coverage-audit-U775.yaml
+  target: D01.c
+  previous:
+    id: D01.c
+    fields:
+      scope: |-
+        Composer les positions par article, lieu, état, propriétaire et détenteur, à partir des faits intégrés par Inventory Tracking, des mouvements reconnus dans [Inventory Ledger](glossary:TER056) et des changements de propriété dans [Inventory Ownership Ledger](model:inventory-ownership-ledger). Une correction tardive actualise la représentation à la date pertinente ; un changement de propriétaire seul ne change pas la quantité physique totale.
+
+        Rapprocher achats, transferts entrants, retours, consignation et prévisions de mouvements de stock. Pour chaque apport attendu, conserver origine, confirmation, échéance, avancement, reliquat, engagements, incertitude et fraîcheur. Distinguer proposition, apport engagé, expédition et réception. Les [Orders](glossary:TER012) et Plans restent maîtres de leurs données ; la planification externe demeure externe.
+
+        Un apport reconnu comme reçu devient un fait de stock et cesse d’être compté comme attente pour la même quantité. Éviter le double compte entre [Orders](glossary:TER012), plans et réalisations. Une donnée absente ou périmée ne vaut ni zéro ni certitude. Propriété, détention, statut douanier, état logique et disponibilité physique restent distincts.
+
+        La projection ne prouve pas qu’une quantité est promettable : les décisions de promesse d’[Availability](glossary:TER112) appliquent les évaluations contextuelles. Cette capacité ne corrige pas les mouvements, ne réserve pas et ne confirme aucun engagement. La visibilité des capacités de production, transport ou prestation reste chez ses responsables.
+
+        Illustration FLOW : un achat de 100 pièces est expédié pour 80 ; la vue expose 80 en transit et un reliquat de 20 à confirmer, avec leurs échéances. Après réception de 60, elle distingue ces 60 présentes des 20 encore en transit et des 20 non expédiées.
+
+        Exploiter la [traçabilité](glossary:TER101) conservée dans [Inventory Ledger](glossary:TER056) pour reconstituer l’origine amont d’un bien ou les destinations aval des biens issus d’un lot, y compris après assemblage ou fractionnement. Signaler les liens manquants et le périmètre réellement documenté ; absence de lien ne prouve pas absence d’impact. La restitution peut éclairer une décision sur un lot défectueux sans décider elle-même de bloquer le stock ou d’organiser un rappel. Exemple fictif : retrouver les coffrets contenant un accessoire défectueux et les magasins qui les ont reçus.
+  replacement:
+    id: D01.c
+    fields:
+      scope: |-
+        Composer les positions par article, lieu, état, propriétaire et détenteur, à partir des faits intégrés par Inventory Tracking, des mouvements reconnus dans [Inventory Ledger](glossary:TER056) et des changements de propriété dans [Inventory Ownership Ledger](model:inventory-ownership-ledger). Une correction tardive actualise la représentation à la date pertinente ; un changement de propriétaire seul ne change pas la quantité physique totale.
+
+        Rapprocher achats, transferts entrants, retours, consignation et prévisions de mouvements de stock. Pour chaque apport attendu, conserver origine, confirmation, échéance, avancement, reliquat, engagements, incertitude et fraîcheur. Distinguer proposition, apport engagé, expédition et réception. Les [Orders](glossary:TER012) et Plans restent maîtres de leurs données ; la planification externe demeure externe.
+
+        Un apport reconnu comme reçu devient un fait de stock et cesse d’être compté comme attente pour la même quantité. Éviter le double compte entre [Orders](glossary:TER012), plans et réalisations. Une donnée absente ou périmée ne vaut ni zéro ni certitude. Propriété, détention, statut douanier, état logique et disponibilité physique restent distincts.
+
+        La projection ne prouve pas qu’une quantité est promettable : les décisions de promesse d’[Availability](glossary:TER112) appliquent les évaluations contextuelles. Cette capacité ne corrige pas les mouvements, ne réserve pas et ne confirme aucun engagement. La visibilité des capacités de production, transport ou prestation reste chez ses responsables.
+
+        Illustration FLOW : un achat de 100 pièces est expédié pour 80 ; la vue expose 80 en transit et un reliquat de 20 à confirmer, avec leurs échéances. Après réception de 60, elle distingue ces 60 présentes des 20 encore en transit et des 20 non expédiées.
+
+        Exploiter la [traçabilité](glossary:TER101) conservée dans [Inventory Ledger](glossary:TER056) pour reconstituer l’origine amont d’un bien ou les destinations aval des biens issus d’un lot, y compris après assemblage ou fractionnement. Signaler les liens manquants et le périmètre réellement documenté ; absence de lien ne prouve pas absence d’impact. La restitution peut éclairer une décision sur un lot défectueux sans décider elle-même de bloquer le stock ou d’organiser un rappel. Exemple fictif : retrouver les coffrets contenant un accessoire défectueux et les magasins qui les ont reçus.
+
+        Restituer le conditionnement attendu, annoncé et reçu lorsque documenté, avec les [Handling Units](glossary:TER189), leur contenu et les limites de connaissance. Rapprocher les quantités dans leurs unités connues, sans convertir un nombre de cartons en pièces par hypothèse silencieuse. Exemple fictif : afficher 120 pièces annoncées, 118 reçues et un écart de deux à clarifier ; la spécification de douze pièces par carton demeure distincte du contenu réel.
+- path: modeles/backlog/model-coherence-audit-U886.yaml
+  target: D03
+  previous:
+    id: D03
+    fields:
+      name: Availability
+      definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
+        conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
+      scope: |-
+        Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Policies. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
+
+        Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
+
+        Cinq [Business Areas](method:MOD039) structurent ce sous-domaine : [Plan Visibility](model:subdomain-plans), [Order Promising](glossary:TER124), [Master Plan Management](glossary:TER133), [Supply Matching](glossary:TER134) et [Policy Optimization](glossary:TER135). [Plan Visibility](glossary:TER151) interprète les prévisions reçues ; les autres périmètres évaluent les promesses, arbitrent les affectations et adaptations et maintiennent le plan commun. Les capacités restent distinctes et conservent leurs responsabilités.
+
+        Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
+  replacement:
+    id: D03
+    fields:
+      name: Availability
+      definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
+        conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
+      scope: |-
+        Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Policies. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
+
+        Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
+
+        Les [Business Areas](method:MOD039) se répondent : [Plan Visibility](model:subdomain-plans) interprète les prévisions ; [Policy Optimization](model:ba-policy-optimization) recommande cibles et paramètres ; [Order Promising](model:ba-order-promising) évalue les promesses ; [Supply Matching](model:ba-supply-matching) arbitre la couverture et ses adaptations ; [Master Plan Management](model:ba-master-plan-management) compose, révise et applique le plan commun. Leur lecture forme un ensemble de responsabilités, sans imposer une suite d’étapes. La profondeur métier se mesure aux décisions et aux cas couverts, pas au nombre de nœuds.
+
+        Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
+- path: modeles/backlog/model-coherence-audit-U886.yaml
+  target: D04.i
+  previous:
+    id: D04.i
+    fields:
+      name: Sales Order
+      definition: 'Gérer les commandes clients à satisfaire : enregistrer ce qui est demandé, maintenir les quantités, destinations
+        et échéances applicables, suivre les évolutions autorisées et déterminer ce qui reste à servir.'
+      scope: |-
+        Tenir les lignes, quantités, destinations, échéances et prix applicables de la commande client. Distinguer demandé, proposé, confirmé et réalisé ; suivre le reste à satisfaire et les évolutions autorisées selon le [cycle commun d’Order Management](model:D04#scope). Les conditions de l’[Agreement](glossary:TER048) restent sous leur autorité ; leur consultation n’autorise pas à les négocier.
+
+        Exemple fictif : sur 100 pièces, 60 sont livrées et 40 restent à servir. Une demande de report des 40 ne change pas automatiquement la date promise. Un retour ultérieur crée une [Return Order](glossary:TER072) distincte, liée à la vente lorsque connue ; il n’efface pas la livraison.
+
+        [Availability](glossary:TER112) détermine les propositions de promesse et les affectations ; la commande conserve les engagements effectivement acceptés. [Process Management](glossary:TER164) conduit le parcours ; [Service Management](glossary:TER152) porte les prestations confiées et [Fulfilment Coordination](glossary:TER176) les coordonne. Les exécutants réalisent les opérations. Les règles détaillées d’imputation, tolérances et autorisations restent à instruire.
+
+        [Ship to Customer](model:BHV066), [Customer Pickup](model:BHV067), [Direct Delivery](model:BHV068) et [Intercompany Sales](model:BHV069) décrivent des axes combinables. Intercompany qualifie la relation commerciale ; les autres précisent le mode de satisfaction. Identifier les quantités concernées sans les compter deux fois.
+
+        [Preorder](glossary:TER150) est un statut de la commande existante avant disponibilité commerciale. Suivre l’attente, le degré d’engagement et les révisions autorisées ; la sortie de précommande conserve la même identité. Une précommande peut déjà être ferme. La [distinction avec les propositions d’achat planifiées](model:D04#scope) dépend de la nature des objets, pas d’une règle générale achat/vente.
+
+        Les demandes et précommandes connues peuvent éclairer [Plan Visibility](model:subdomain-plans) selon leur horizon. Leur prise en compte ne crée pas une seconde commande ni une addition automatique à la prévision ; les ventes observées constituent un apport distinct.
+
+        Appliquer les [contrôles de crédit client](glossary:TER155) selon le [contrat commun](model:D04#scope), avec motif, portée, version et résultat. Une information absente ou une échéance dépassée ne lève pas le blocage ; la dérogation reste sous autorité financière.
+  replacement:
+    id: D04.i
+    fields:
+      name: Sales Order
+      definition: 'Gérer les commandes clients à satisfaire : enregistrer ce qui est demandé, maintenir les quantités, destinations
+        et échéances applicables, suivre les évolutions autorisées et déterminer ce qui reste à servir.'
+      scope: |-
+        Tenir les lignes, quantités, destinations, échéances et prix applicables de la commande client. Distinguer demandé, proposé, confirmé et réalisé ; suivre le reste à satisfaire et les évolutions autorisées selon le [cycle commun d’Order Management](model:D04#scope). Les conditions de l’[Agreement](glossary:TER048) restent sous leur autorité ; leur consultation n’autorise pas à les négocier.
+
+        Exemple fictif : sur 100 pièces, 60 sont livrées et 40 restent à servir. Une demande de report des 40 ne change pas automatiquement la date promise. Un retour ultérieur crée une [Return Order](glossary:TER072) distincte, liée à la vente lorsque connue ; il n’efface pas la livraison.
+
+        [Availability](glossary:TER112) détermine les propositions de promesse et les affectations ; la commande conserve les engagements effectivement acceptés. [Process Management](glossary:TER164) conduit le parcours ; [Service Management](glossary:TER152) porte les prestations confiées et [Fulfilment Coordination](glossary:TER176) les coordonne. Les exécutants réalisent les opérations. Les règles détaillées d’imputation, tolérances et autorisations restent à instruire.
+
+        [Ship to Customer](model:BHV066), [Customer Pickup](model:BHV067), [Direct Delivery](model:BHV068) et [Intercompany Sales](model:BHV069) décrivent des axes combinables. Intercompany qualifie la relation commerciale ; les autres précisent le mode de satisfaction. Identifier les quantités concernées sans les compter deux fois.
+
+        [Preorder](glossary:TER150) est un statut de la commande existante avant disponibilité commerciale. Suivre l’attente, le degré d’engagement et les révisions autorisées ; la sortie de précommande conserve la même identité. Une précommande peut déjà être ferme. La [distinction avec les propositions d’achat planifiées](model:D04#scope) dépend de la nature des objets, pas d’une règle générale achat/vente.
+
+        Les demandes et précommandes connues peuvent éclairer [Plan Visibility](model:subdomain-plans) selon leur horizon. Leur prise en compte ne crée pas une seconde commande ni une addition automatique à la prévision ; les ventes observées constituent un apport distinct.
+
+        Appliquer les [contrôles de crédit client](glossary:TER155) selon le [contrat commun](model:D04#scope), avec motif, portée, version et résultat. Une information absente ou une échéance dépassée ne lève pas le blocage ; la dérogation reste sous autorité financière.
+
+        La vue [Merchandise Reference](model:merchandise-reference) aide à comprendre les biens demandés à la vente ; leur identité reste commune dans [Product Reference](model:D08). Leurs offres et sélections ne deviennent pas de nouvelles identités produit.
+- path: modeles/backlog/model-coherence-audit-U886.yaml
+  target: master-data-ingestion
+  previous:
+    id: master-data-ingestion
+    fields:
+      name: Reference Ingestion
+      definition: Recevoir et intégrer les référentiels fournis par les domaines sources pour maintenir les références locales
+        utilisées par la Supply.
+      scope: |-
+        Recevoir les apports sourcés, vérifier leur identité, leur portée et leur validité connues, intégrer les versions ou corrections prises en compte et conserver le résultat de cette intégration. Les contributions commerciales, celles de [Finance](glossary:TER117) et celles de [Design & Development](glossary:TER105) gardent leur provenance. La répartition des sources commerciales entre [Sales](model:domain-sales) et [Sourcing and Procurement](model:domain-sourcing-procurement) reste à documenter ; aucune autorité ni alimentation installée n’est déduite de ce regroupement.
+
+        Les sujets de référence restent distincts. Les produits et partenaires sont décrits dans : [Product Reference](glossary:TER052) (produits et variantes), Party / Role (personnes, relations et rôles), [Agreement](glossary:TER048) (conditions contractuelles). Les offres et moyens sont décrits dans : [Product Catalog](glossary:TER049) (offres et éligibilité), [Fulfilment Network](glossary:TER054) (lieux et relations), [Service Catalog](glossary:TER094) (prestations de référence), [Assortment](glossary:TER087) (sélections et périodes) [Product Price Book](model:product-price-book) (tarifs produits) et [Service Price Book](model:service-price-book) (tarifs de services). Un sujet peut recevoir plusieurs contributions et un domaine en fournir plusieurs.
+
+        L’ingestion reconnaît les apports et leur prise en compte ; [Operational References](model:business-references) porte la composition et le maintien de la vue locale utilisable de chaque sujet, avec fraîcheur, provenance et incohérences connues. Une donnée reçue mais rejetée ou en attente ne devient pas une référence applicable. Le domaine tient la source de vérité locale Supply ; il ne négocie pas les accords, ne conçoit pas commercialement les offres et ne corrige pas silencieusement les maîtres d’entreprise.
+
+        Les références peuvent être liées sans fusionner leurs autorités : produit dans plusieurs catalogues, assortiment référencé par un accord, offre associée à des tarifs. Le tarif reste dans [Price Book](glossary:TER097) ; son évolution ne modifie pas automatiquement le prix ou le [SLA](glossary:TER076) d’un engagement existant. La consultation du catalogue de services ne remplace pas la captation des faits d’exécution.
+
+        Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
+
+        Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+
+        Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
+  replacement:
+    id: master-data-ingestion
+    fields:
+      name: Reference Ingestion
+      definition: Recevoir et intégrer les référentiels fournis par les domaines sources pour maintenir les références locales
+        utilisées par la Supply.
+      scope: |-
+        Recevoir les apports sourcés, vérifier leur identité, leur portée et leur validité connues, intégrer les versions ou corrections prises en compte et conserver le résultat de cette intégration. Les contributions commerciales, celles de [Finance](glossary:TER117) et celles de [Design & Development](glossary:TER105) gardent leur provenance. La répartition des sources commerciales entre [Sales](model:domain-sales) et [Sourcing and Procurement](model:domain-sourcing-procurement) reste à documenter ; aucune autorité ni alimentation installée n’est déduite de ce regroupement.
+
+        Les sujets de référence restent distincts. Les produits et partenaires sont décrits dans : [Product Reference](glossary:TER052) (produits et variantes), Party / Role (personnes, relations et rôles), [Agreement](glossary:TER048) (conditions contractuelles). Les offres et moyens sont décrits dans : [Product Catalog](glossary:TER049) (offres et éligibilité), [Fulfilment Network](glossary:TER054) (lieux et relations), [Service Catalog](glossary:TER094) (prestations de référence), [Assortment](glossary:TER087) (sélections et périodes) [Product Price Book](model:product-price-book) (tarifs produits) et [Service Price Book](model:service-price-book) (tarifs de services). Un sujet peut recevoir plusieurs contributions et un domaine en fournir plusieurs.
+
+        L’ingestion reconnaît les apports et leur prise en compte ; [Operational References](model:business-references) porte la composition et le maintien de la vue locale utilisable de chaque sujet, avec fraîcheur, provenance et incohérences connues. Une donnée reçue mais rejetée ou en attente ne devient pas une référence applicable. Le domaine tient la source de vérité locale Supply ; il ne négocie pas les accords, ne conçoit pas commercialement les offres et ne corrige pas silencieusement les maîtres d’entreprise.
+
+        Les références peuvent être liées sans fusionner leurs autorités : produit dans plusieurs catalogues, assortiment référencé par un accord, offre associée à des tarifs. Le tarif reste dans [Price Book](glossary:TER097) ; son évolution ne modifie pas automatiquement le prix ou le [SLA](glossary:TER076) d’un engagement existant. La consultation du catalogue de services ne remplace pas la captation des faits d’exécution.
+
+        Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
+
+        Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+
+        Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
+
+        Recevoir également les données des vues [Merchandise Reference](model:merchandise-reference), [Packaging Material Reference](model:packaging-material-reference), [Packaging Specification](model:packaging-specification) et [Internal Supplies & Equipment Reference](model:internal-supplies-equipment-reference). Préserver les liens à l’identité commune, les versions et les conversions d’unités reçues. Distinguer une consigne réutilisable des structures de conditionnement annoncées ou réalisées, qui sont des informations d’opération. Les maîtres de ces apports restent à qualifier sur preuve ; aucun flux installé n’est déduit de cette couverture cible.
+- path: modeles/backlog/model-coherence-audit-U886.yaml
+  target: service-order-packing
+  previous:
+    id: service-order-packing
+    fields:
+      name: Packing Order
+      definition: Porter les demandes de conditionnement et de reconditionnement confiées aux exécutants, leurs exigences,
+        engagements et résultats.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Conditionnement initial, Repacking, pliage, mise sur cintre, présentation cadeau.
+
+        Le reconditionnement (Repacking) est une modalité de [Packing Order](model:service-order-packing). Le nœud autonome vas-repacking est retiré du catalogue courant ; son identifiant reste réservé à l’historique et ne peut pas être réutilisé.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Passer un lot de vêtements pliés sur cintres, sans changer la composition des articles.
+
+        Porter la prestation de reconditionnement confiée, en précisant la transformation attendue du conditionnement et en conservant les écarts signalés.
+
+        Modifier un conditionnement existant ; clarifier la frontière avec [Packing Order](model:service-order-packing) sans créer deux demandes pour la même prestation. Les références des consignes relèvent du catalogue ; les exigences et engagements individuels sont tenus dans l’ordre. Le tracking et le rapprochement fournissent les constats et écarts ; l’exécutant réalise le geste physique.
+
+        Exemple fictif : Reconditionner un lot déjà emballé selon une nouvelle consigne ; distinguer quantité traitée et quantité conforme.
+
+        Le reconditionnement relève de [Packing Order](model:service-order-packing). La mise sur cintre, le changement de cintre et le retour à une présentation pliée relèvent du conditionnement, sans changer la composition d’un kit.
+
+        Porter les exigences de conditionnement commun, par exemple préparer les biens compatibles d’une commande B2B sur une palette lorsque cela est réalisable. La libération simultanée des ordres ne garantit pas ce résultat ; tenir la consigne, la prise en charge et le résultat effectif. L’exécutant conserve la palettisation détaillée.
+  replacement:
+    id: service-order-packing
+    fields:
+      name: Packing Order
+      definition: Porter les demandes de conditionnement et de reconditionnement confiées aux exécutants, leurs exigences,
+        engagements et résultats.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Conditionnement initial, Repacking, pliage, mise sur cintre, présentation cadeau.
+
+        Le reconditionnement est une modalité du même [Packing Order](model:service-order-packing).
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Passer un lot de vêtements pliés sur cintres, sans changer la composition des articles.
+
+        Porter la prestation de reconditionnement confiée, en précisant la transformation attendue du conditionnement et en conservant les écarts signalés.
+
+        Modifier un conditionnement existant est une modalité du même [Packing Order](model:service-order-packing), sans créer deux demandes pour la même prestation. Les consignes réutilisables relèvent de [Packaging Specification](model:packaging-specification) ; les exigences et engagements individuels sont tenus dans l’ordre. Le tracking et le rapprochement fournissent les constats et écarts ; l’exécutant réalise le geste physique.
+
+        Exemple fictif : Reconditionner un lot déjà emballé selon une nouvelle consigne ; distinguer quantité traitée et quantité conforme.
+
+        Le reconditionnement relève de [Packing Order](model:service-order-packing). La mise sur cintre, le changement de cintre et le retour à une présentation pliée relèvent du conditionnement, sans changer la composition d’un kit.
+
+        Porter les exigences de conditionnement commun, par exemple préparer les biens compatibles d’une commande B2B sur une palette lorsque cela est réalisable. La libération simultanée des ordres ne garantit pas ce résultat ; tenir la consigne, la prise en charge et le résultat effectif. L’exécutant conserve la palettisation détaillée.
+
+        Référencer la version de [Packaging Specification](model:packaging-specification) et les matières de [Packaging Material Reference](model:packaging-material-reference) lorsqu’elles sont nécessaires. Le [Service Catalog](model:D14) décrit la prestation offerte ; la spécification décrit son résultat de conditionnement. Conserver séparément exigences particulières et résultat annoncé. Exemple fictif : demander 120 pièces par cartons de douze ; les dix cartons annoncés ne prouvent ni la réception de 120 pièces ni leur conformité à destination.
+- path: modeles/backlog/model-coherence-audit-U886.yaml
+  target: service-order-receiving
+  previous:
+    id: service-order-receiving
+    fields:
+      name: Receiving Order
+      definition: Porter les demandes de réception de marchandises confiées aux exécutants, leurs quantités et conditions
+        attendues, leurs engagements et les résultats des réceptions partielles, refusées ou non conformes.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Porter l’origine attendue, les articles et quantités, le lieu, les créneaux, les consignes de prise en charge et les preuves attendues. Suivre acceptation, révisions, annulation, réception partielle et clôture avec le reste à réaliser. Une annonce d’arrivée ou un document ne prouve pas la réception.
+
+        Une demande de réception peut être liée à un [Purchase Order](glossary:TER070), [Transfer Order](glossary:TER071), [Return Order](glossary:TER072) ou apport consigné ; elle ne remplace pas leurs engagements. Le prestataire reçoit physiquement et organise ses tâches internes. Une inspection autonome peut être confiée à [Inspection Order](model:service-order-inspection) ; un contrôle intégré demeure dans la réception. [Receiving Order](model:service-order-receiving) ne décide pas du devenir d’un retour et ne garantit pas que le stock est vendable.
+
+        [Fulfilment Orchestration](model:D06) coordonne les prestations. [Operations Tracking](glossary:TER179) capte leur résultat et Service Reconciliation qualifie l’écart ; [Receiving Order](model:service-order-receiving) tient le solde de sa prestation. Inventory Tracking et [Inventory Ledger](glossary:TER056) prennent en compte les faits de stock reconnus. L’instruction de réception ne crée ni mouvement, ni changement automatique de propriété, ni nouvel achat.
+
+        Créer cet [Order](glossary:TER012) lorsqu’une réception est explicitement confiée et suivie comme prestation. Recevoir seulement une notification ne justifie pas un ordre artificiel. Aucune famille supplémentaire de rangement ou de stockage ni réalisation Beaumanoir n’est déduite.
+  replacement:
+    id: service-order-receiving
+    fields:
+      name: Receiving Order
+      definition: Porter les demandes de réception de marchandises confiées aux exécutants, leurs quantités et conditions
+        attendues, leurs engagements et les résultats des réceptions partielles, refusées ou non conformes.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Porter l’origine attendue, les articles et quantités, le lieu, les créneaux, les consignes de prise en charge et les preuves attendues. Suivre acceptation, révisions, annulation, réception partielle et clôture avec le reste à réaliser. Une annonce d’arrivée ou un document ne prouve pas la réception.
+
+        Une demande de réception peut être liée à un [Purchase Order](glossary:TER070), [Transfer Order](glossary:TER071), [Return Order](glossary:TER072) ou apport consigné ; elle ne remplace pas leurs engagements. Le prestataire reçoit physiquement et organise ses tâches internes. Une inspection autonome peut être confiée à [Inspection Order](model:service-order-inspection) ; un contrôle intégré demeure dans la réception. [Receiving Order](model:service-order-receiving) ne décide pas du devenir d’un retour et ne garantit pas que le stock est vendable.
+
+        [Fulfilment Orchestration](model:D06) coordonne les prestations. [Operations Tracking](glossary:TER179) capte leur résultat et Service Reconciliation qualifie l’écart ; [Receiving Order](model:service-order-receiving) tient le solde de sa prestation. Inventory Tracking et [Inventory Ledger](glossary:TER056) prennent en compte les faits de stock reconnus. L’instruction de réception ne crée ni mouvement, ni changement automatique de propriété, ni nouvel achat.
+
+        Créer cet [Order](glossary:TER012) lorsqu’une réception est explicitement confiée et suivie comme prestation. Recevoir seulement une notification ne justifie pas un ordre artificiel. Aucune famille supplémentaire de rangement ou de stockage ni réalisation Beaumanoir n’est déduite.
+
+        Porter le conditionnement attendu et la version de [Packaging Specification](model:packaging-specification) utile à la réception. Conserver les [Handling Units](glossary:TER189) annoncées et reçues avec identifiants, contenu et écarts, sans transformer l’annonce en fait de stock. Exemple fictif : neuf cartons de douze pièces et un carton de dix font 118 pièces reçues face à 120 annoncées ; la cause de l’écart reste à établir.
+- path: modeles/backlog/operational-reference-areas-U863.yaml
+  target: ba-product-references
+  previous:
+    id: ba-product-references
+    kind: business_area
+    parent: business-references
+    fields:
+      name: Product References
+  replacement:
+    id: ba-product-references
+    kind: business_area
+    parent: business-references
+    fields:
+      name: Merchandise References
+- path: modeles/backlog/operational-reference-areas-U863.yaml
+  target: D08
+  previous:
+    id: D08
+    kind: reference
+    parent: ba-product-references
+    parent_type: presents
+    fields:
+      name: Product Reference
+  replacement:
+    id: D08
+    kind: reference
+    parent: business-references
+    parent_type: presents
+    fields:
+      name: Product Reference
+- path: modeles/backlog/operational-reference-areas-U863.yaml
+  target: product-price-book
+  previous:
+    id: product-price-book
+    kind: reference
+    parent: ba-product-references
+    parent_type: presents
+    fields:
+      name: Product Price Book
+  replacement:
+    id: product-price-book
+    kind: reference
+    parent: business-references
+    parent_type: presents
+    fields:
+      name: Product Price Book
+- path: modeles/backlog/presentation-readiness-audit-U888.yaml
+  target: business-references
+  previous:
+    id: business-references
+    kind: area
+    field_sha256:
+      market_comparisons: 67b66d6ee910462dc62802f74e46fa72adcb15180dab6d01f96b7fc035f23278
+      market_inspiration: 83c6753a8621b916bbb7e6f710c5b257fa4918a017fa04e055c517e1a01756fb
+      mastership: 2426d975812a3d2dbeb0488b4d6a0a339cef5dc17e438f7afe47b07b8ee32153
+  replacement:
+    id: business-references
+    kind: area
+    field_sha256:
+      market_comparisons: 31d4497f464d82e7427ab9351db9d01020fc6e58f65d7aeadc9cf1052a235f86
+      market_inspiration: 070f939d542ba9e261aab0b01e254e2895bec7b177b29688a6982eef61436246
+      mastership: 2426d975812a3d2dbeb0488b4d6a0a339cef5dc17e438f7afe47b07b8ee32153
+- path: modeles/backlog/presentation-readiness-audit-U888.yaml
+  target: service-order-packing
+  previous:
+    id: service-order-packing
+    kind: capability
+    field_sha256:
+      market_inspiration: 585d9f601d5a729c7880126ca78416f90e9934038b04cc79d5e88a5d7d0b954f
+      scope: e71e182603c59c8cd1d9e79fd7d1eecca7079be59c63480749464d41854173a2
+  replacement:
+    id: service-order-packing
+    kind: capability
+    field_sha256:
+      market_inspiration: cff9e7f8e7a01ca3ada1ab450a1b7d4cd8705b16c321f94ab24dfb9b40e1186b
+      scope: 0ce99335f22016ca7771073dfead40027311596e8f986a465bd28af6235e91c2
+- path: modeles/backlog/transversal-remediation-U853.yaml
+  target: ba-supply-matching
+  previous:
+    id: ba-supply-matching
+    fields:
+      finality: Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins
+        restent découverts.
+      scope: |-
+        Les familles de commandes portent les demandes et leurs engagements ; les registres portent les effets reconnus.
+
+        Bénéficiaire et résultat : Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins restent découverts.
+
+        Exemple fictif : Deux demandes se partagent 80 pièces : arbitrer selon leurs priorités et expliciter la part non couverte sans réécrire les commandes.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        source_title: Master planning home page
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+        source_locator: Besoins nets, ordres planifiés et distinction des prévisions
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Master planning home page
+        concept_name: Master planning home page
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Rapprocher les besoins et apports nécessaires.
+        differences: Des ordres planifiés ne valent pas affectation ni engagement confirmé.
+        flow_position: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        term_choice: Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Rapprocher les besoins et apports nécessaires.
+        approach_summary: Des ordres planifiés ne valent pas affectation ni engagement confirmé.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Fashion
+        source_title: Explaining Supply Assignment
+        source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+        source_locator: Affectation, statuts, libération et retrait des affectations
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Explaining Supply Assignment
+        concept_name: Explaining Supply Assignment
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Affecter les ressources aux demandes selon des priorités.
+        differences: La Business Area FLOW englobe plusieurs décisions, pas uniquement la fonction d’affectation SAP.
+        flow_position: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        term_choice: Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Affecter les ressources aux demandes selon des priorités.
+        approach_summary: La Business Area FLOW englobe plusieurs décisions, pas uniquement la fonction d’affectation SAP.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  replacement:
+    id: ba-supply-matching
+    fields:
+      finality: Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins
+        restent découverts.
+      scope: |-
+        Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Policies](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+
+        [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
+
+        [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Policy Optimization](model:ba-policy-optimization) recommande cibles et paramètres ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+
+        Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        source_title: Master planning home page
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+        source_locator: Besoins nets, ordres planifiés et distinction des prévisions
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Master planning home page
+        concept_name: Master planning home page
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Rapprocher les besoins et apports nécessaires.
+        differences: Des ordres planifiés ne valent pas affectation ni engagement confirmé.
+        flow_position: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        term_choice: Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Rapprocher les besoins et apports nécessaires.
+        approach_summary: Des ordres planifiés ne valent pas affectation ni engagement confirmé.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Fashion
+        source_title: Explaining Supply Assignment
+        source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+        source_locator: Affectation, statuts, libération et retrait des affectations
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Explaining Supply Assignment
+        concept_name: Explaining Supply Assignment
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Affecter les ressources aux demandes selon des priorités.
+        differences: La Business Area FLOW englobe plusieurs décisions, pas uniquement la fonction d’affectation SAP.
+        flow_position: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        term_choice: Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Affecter les ressources aux demandes selon des priorités.
+        approach_summary: La Business Area FLOW englobe plusieurs décisions, pas uniquement la fonction d’affectation SAP.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Retail
+        element_name: Reorder point, targets and forecast requirements
+        concept_name: Reorder point, targets and forecast requirements
+        element_type: Objet ou mécanisme documenté dans un produit
+        relationship: Recouvrement partiel
+        similarities: SAP retail confronte besoins, stocks, seuils, sécurité et prévisions pour proposer les apports.
+        differences: Le processus retail et MRP dépasse le périmètre FLOW ; ses calculs ne décident pas du placement ni de
+          l’intégration d’IRMA.
+        flow_position: Distinguer choix des cibles, paramètres actifs, décision d’apports et application autorisée.
+        scope_summary: SAP retail confronte besoins, stocks, seuils, sécurité et prévisions pour proposer les apports.
+        approach_summary: Distinguer choix des cibles, paramètres actifs, décision d’apports et application autorisée.
+        source_title: Performing Requirements Planning
+        source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/performing-requirements-planning_bbf9e421-fee4-4c82-bb13-5cf8ad7d7121
+        source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+        consulted_on: '2026-10-07'
+        source_locator: Reorder Point Planning ; Time-Phased Planning ; Forecast-Based Requirements Planning
+        evidence_limits: Le processus retail et MRP dépasse le périmètre FLOW ; ses calculs ne décident pas du placement ni
+          de l’intégration d’IRMA. Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+        status: proposed
+        source_refs:
+        - U890
+        - U891
+        term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
+        definition_choice: Distinguer choix des cibles, paramètres actifs, décision d’apports et application autorisée.
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        element_name: Net requirements and quantity modification
+        concept_name: Net requirements and quantity modification
+        element_type: Objet ou mécanisme documenté dans un produit
+        relationship: Recouvrement partiel
+        similarities: Dynamics calcule des besoins nets et applique des contraintes de quantité, dont des multiples de lot.
+        differences: Les réglages de master planning ne définissent pas les capacités FLOW ; un calcul n’est pas un engagement
+          de commande.
+        flow_position: Conserver besoins, ressources, contraintes, résultats et limites explicités dans les décisions de couverture.
+        scope_summary: Dynamics calcule des besoins nets et applique des contraintes de quantité, dont des multiples de lot.
+        approach_summary: Conserver besoins, ressources, contraintes, résultats et limites explicités dans les décisions de
+          couverture.
+        source_title: Replenishment methods and quantity modification
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/replenishment-methods-quantity-modification
+        source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+        consulted_on: '2026-10-07'
+        source_locator: Coverage codes ; Examples of Min./Max. coverage
+        evidence_limits: Les réglages de master planning ne définissent pas les capacités FLOW ; un calcul n’est pas un engagement
+          de commande. Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+        status: proposed
+        source_refs:
+        - U890
+        - U891
+        term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
+        definition_choice: Conserver besoins, ressources, contraintes, résultats et limites explicités dans les décisions
+          de couverture.
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        element_name: Priority-based planning
+        concept_name: Priority-based planning
+        element_type: Objet ou mécanisme documenté dans un produit
+        relationship: Recouvrement partiel
+        similarities: Dynamics utilise priorités, stock projeté et apports pour répartir la couverture sous contraintes.
+        differences: Ce mécanisme produit ne prouve ni une taxonomie universelle ni un scénario installé chez Beaumanoir.
+        flow_position: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
+        scope_summary: Dynamics utilise priorités, stock projeté et apports pour répartir la couverture sous contraintes.
+        approach_summary: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
+        source_title: Priority-based planning
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/priority-based-planning
+        source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+        consulted_on: '2026-10-07'
+        source_locator: Where and how planning priorities are assigned ; Priority calculation methods
+        evidence_limits: Ce mécanisme produit ne prouve ni une taxonomie universelle ni un scénario installé chez Beaumanoir.
+          Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+        status: proposed
+        source_refs:
+        - U890
+        - U891
+        term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
+        definition_choice: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
+- path: modeles/backlog/visibility-scope-U858.yaml
+  target: business-references
+  previous:
+    id: business-references
+    fields:
+      name: Operational References
+      definition: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant
+        leur référence locale fiable sans transférer la maîtrise d’entreprise.
+      scope: |-
+        Trois [Business Areas](method:MOD039) portent les références locales : [Partner & Agreement References](model:ba-partner-agreement-references), [Product References](model:ba-product-references), [Service References](model:ba-service-references). Les neuf références restent distinctes et documentaires. Ce sous-domaine porte la composition, l’actualisation et la fourniture de leurs vues utilisables, avec versions, fraîcheur, provenance, validité et incohérences connues. Leur consultation ne justifie pas des capacités autonomes.
+
+        [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+
+        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Policies](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+  replacement:
+    id: business-references
+    fields:
+      name: Operational References
+      definition: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant
+        leur référence locale fiable sans transférer la maîtrise d’entreprise.
+      scope: |-
+        Les références communes [Product Reference](model:D08) et [Product Price Book](model:product-price-book) portent l’identité des biens et leurs tarifs. Les périmètres d’usage rendent lisibles [Merchandise References](model:ba-product-references), [Packaging References](model:ba-packaging-references) et [Internal Supplies & Equipment References](model:ba-internal-supplies-equipment-references). [Partner & Agreement References](model:ba-partner-agreement-references) porte parties et accords ; [Service References](model:ba-service-references) les offres et moyens de prestation. Les références restent documentaires. Un même bien peut relever de plusieurs usages avec son identité commune.
+
+        Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
+
+        [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+
+        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Policies](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+- path: modeles/backlog/vocabulary-boundary-audit-U770.yaml
+  target: D05.e
+  previous:
+    id: D05.e
+    fields:
+      scope: |-
+        Couvrir l’implantation initiale et le réassort pendant la commercialisation, à partir du réseau de stocks et des compléments fournisseurs possibles. Dans le contexte Beaumanoir documenté, le réassort continu des magasins utilise des seuils ; cela ne fixe ni formule, ni cadence, ni automatisation universelle.
+
+        Le calcul fondé sur les besoins déduit les quantités admissibles et attendues à temps. Exemple fictif : un besoin de 120 pièces à J+7, avec 70 disponibles et 20 attendues, laisse 30 pièces à couvrir avant contraintes de lot et de délai. Les besoins peuvent être regroupés par période sans créer un comportement par cadence.
+
+        Le calcul fondé sur une cible détermine l’apport nécessaire quand la position passe sous le seuil. Exemple fictif : avec 50 pièces projetées, un seuil de 60 et une cible de 100, l’apport calculé est de 50. Un conditionnement par 12 conduit à examiner 60 pièces et leur excédent. Ce mécanisme n’impose pas une règle seuil de déclenchement et cible de réassort à toutes les situations.
+
+        [Inventory Target Optimization](model:D05.a) détermine les cibles et seuils ; [Supply Protection Policy](model:D02.b) tient les valeurs applicables ; [Replenishment](glossary:TER074) détermine les apports. Tenir compte des produits, lieux, périodes, stocks admissibles, arrivées à temps, engagements, protections et contraintes. Ne pas déduire deux fois une arrivée ni recompter un besoin déjà intégré dans la cible. Le calcul net fait partie de cette décision.
+
+        Ajuster aussi les apports existants : augmenter, réduire, avancer, reporter ou annuler ce qui peut l’être. Exemple fictif : la cible passe de 100 à 80, avec 30 pièces présentes et 70 attendues. Examiner une réduction ou un report de 20 ; si l’engagement fournisseur l’interdit, rendre l’excédent visible. La décision ne modifie pas automatiquement une commande ferme.
+
+        Les trois comportements — calcul par besoins, calcul par cible et ajustement — peuvent se combiner sans séquence obligatoire. Préserver les apports déjà engagés. [Stock Redistribution](model:D05.c) arbitre la redistribution du stock existant ; un transfert peut servir les deux finalités, sans doubler l’apport. Les propositions d’achat du domaine [Demand & Supply Planning](model:domain-plan) sont prises en compte ; une révision du calcul amont retourne à ce domaine.
+
+        Pour une implantation, déterminer produits, variantes, quantités, dates et besoins non couverts de chaque point. Les assortiments et cibles sont des entrées, non des choix refaits ici. Le contexte documenté distingue saisons été et hiver ; il ne suffit pas à conclure à un fonctionnement par capsules. Tailles, couleurs et conditionnements contraignent le résultat sans créer automatiquement des comportements.
+
+        Exemple fictif : au 1er mars, une cible de 100 pièces, 20 présentes et 30 attendues laissent 50 à apporter. Si seules 40 sont accessibles, expliciter les 10 manquantes et les options, sans changer la cible ni annoncer une promesse. Un complément tardif destiné à achever l’implantation reste qualifié par cette finalité. Les apports initiaux engagés restent visibles pour le réassort ultérieur.
+
+        [Master Planning](model:D05.f) mobilise cette décision dans ses scénarios. Les commandes portent les apports et changements autorisés ; [Supply Assignment](model:D03.o) choisit les affectations et [Plan Application](model:D02.e) les matérialise. [Fulfilment Orchestration](model:D06) coordonne la réalisation. Le résultat exprime quantités, dates, ajustements et manques ; il ne crée pas à lui seul une commande, une promesse ou une livraison. Une application automatique reste possible selon les règles et responsabilités autorisées. Le choix de l’assortiment, la planification commerciale, la prévision amont et la mise en rayon gardent leurs propres responsabilités.
+  replacement:
+    id: D05.e
+    fields:
+      scope: |-
+        Couvrir l’implantation initiale et le réassort pendant la commercialisation, à partir du réseau de stocks et des compléments fournisseurs possibles. Dans le contexte Beaumanoir documenté, le réassort continu des magasins utilise des seuils ; cela ne fixe ni formule, ni cadence, ni automatisation universelle.
+
+        Le calcul fondé sur les besoins déduit les quantités admissibles et attendues à temps. Exemple fictif : un besoin de 120 pièces à J+7, avec 70 disponibles et 20 attendues, laisse 30 pièces à couvrir avant contraintes de lot et de délai. Les besoins peuvent être regroupés par période sans créer un comportement par cadence.
+
+        Le calcul fondé sur une cible détermine l’apport nécessaire quand la position passe sous le seuil. Exemple fictif : avec 50 pièces projetées, un seuil de 60 et une cible de 100, l’apport calculé est de 50. Un conditionnement par 12 conduit à examiner 60 pièces et leur excédent. Ce mécanisme n’impose pas une règle seuil de déclenchement et cible de réassort à toutes les situations.
+
+        [Inventory Target Optimization](model:D05.a) détermine les cibles et seuils ; [Supply Protection Policy](model:D02.b) tient les valeurs applicables ; [Replenishment](glossary:TER074) détermine les apports. Tenir compte des produits, lieux, périodes, stocks admissibles, arrivées à temps, engagements, protections et contraintes. Ne pas déduire deux fois une arrivée ni recompter un besoin déjà intégré dans la cible. Le calcul net fait partie de cette décision.
+
+        Ajuster aussi les apports existants : augmenter, réduire, avancer, reporter ou annuler ce qui peut l’être. Exemple fictif : la cible passe de 100 à 80, avec 30 pièces présentes et 70 attendues. Examiner une réduction ou un report de 20 ; si l’engagement fournisseur l’interdit, rendre l’excédent visible. La décision ne modifie pas automatiquement une commande ferme.
+
+        Les trois comportements — calcul par besoins, calcul par cible et ajustement — peuvent se combiner sans séquence obligatoire. Préserver les apports déjà engagés. [Stock Redistribution](model:D05.c) arbitre la redistribution du stock existant ; un transfert peut servir les deux finalités, sans doubler l’apport. Les propositions d’achat du domaine [Demand & Supply Planning](model:domain-plan) sont prises en compte ; une révision du calcul amont retourne à ce domaine.
+
+        Pour une implantation, déterminer produits, variantes, quantités, dates et besoins non couverts de chaque point. Les assortiments et cibles sont des entrées, non des choix refaits ici. Le contexte documenté distingue saisons été et hiver ; il ne suffit pas à conclure à un fonctionnement par capsules. Tailles, couleurs et conditionnements contraignent le résultat sans créer automatiquement des comportements.
+
+        Exemple fictif : au 1er mars, une cible de 100 pièces, 20 présentes et 30 attendues laissent 50 à apporter. Si seules 40 sont accessibles, expliciter les 10 manquantes et les options, sans changer la cible ni annoncer une promesse. Un complément tardif destiné à achever l’implantation reste qualifié par cette finalité. Les apports initiaux engagés restent visibles pour le réassort ultérieur.
+
+        [Master Planning](model:D05.f) mobilise cette décision dans ses scénarios. Les commandes portent les apports et changements autorisés ; [Supply Assignment](model:D03.o) choisit les affectations et [Plan Application](model:D02.e) les matérialise. [Fulfilment Orchestration](model:D06) coordonne la réalisation. Le résultat exprime quantités, dates, ajustements et manques ; il ne crée pas à lui seul une commande, une promesse ou une livraison. Une application automatique reste possible selon les règles et responsabilités autorisées. Le choix de l’assortiment, la planification commerciale, la prévision amont et la mise en rayon gardent leurs propres responsabilités.
+
+        Les unités et contraintes reçues dans [Product Reference](model:D08) et [Packaging Specification](model:packaging-specification) peuvent empêcher un apport exact. Examiner le multiple admissible, l’excédent, le délai et les engagements ; signaler une donnée périmée ou inconnue. Le moteur de calcul éventuel ne devient pas propriétaire des paramètres actifs ni des commandes qu’il recommande de modifier. Le périmètre [Supply Matching](model:ba-supply-matching) expose ces arbitrages avec priorités, protections et affectations.

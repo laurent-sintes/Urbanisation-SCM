@@ -49,6 +49,7 @@ publication_delivery:
   - U874
   - U877
   - U879
+  - U889
   summary: 'Reactive Workflow Management dans Order Management ; Sentry actif et frontières de pilotage clarifiées. U861 :
     commandes passives et pilotage par les tâches du workflow explicités ; identités et rattachements conservés. U865 : Plan
     Visibility dans Availability, Inventory State Management et précommandes ; contrôles courants alignés. U874 : services
@@ -58,30 +59,106 @@ publication_delivery:
   - id: workflow-definition-management
     parent: ba-reactive-workflow-management
     kind: capability
-    fields:
-      name: Workflow Definition Management
-      definition: Maintenir les activités réutilisables et leurs règles de composition.
+    fields: {}
   - id: order-workflow-sentry
     parent: ba-reactive-workflow-management
     kind: capability
+    fields: {}
+  - id: order-workflow-planning
+    parent: ba-reactive-workflow-management
+    kind: capability
+    fields: {}
+  - id: order-workflow-orchestration
+    parent: ba-reactive-workflow-management
+    kind: capability
+    fields: {}
+    parent_type: contains
+  - id: D04
+    fields: {}
+  - id: D06
+    fields: {}
+  - id: D06.d
+    fields: {}
+  - id: D06.f
+    fields: {}
+  - id: subdomain-policies
+    fields: {}
+  - id: service-order-release-decision
+    fields: {}
+  required_catalog:
+  - collection: paths
+    id: transport-missed-connection-path
+    content_sha256: 9d3b80d99a8b0e3f787fa374ad27509ba667b2e1639c3909f4b12ecfa36c29d8
+  absent_nodes: []
+  editorial_alignment_U853:
+    fields:
+    - D06.scope
+    - D06.f.scope
+    - service-order-release-decision.scope
+    - paths/transport-missed-connection-path
+    scope: Finalités et exemples de Business Areas, corrections de noms et de grammaire ; aucune modification de parent ni
+      extension des accords historiques.
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
+editorial_delegation:
+  source_ref: U844
+  scope: Documentation complète des responsabilités, frontières, exemples, comparaisons et scénarios sans arbitrage rédactionnel
+    supplémentaire.
+behavior_policy: 'Aucun comportement créé : les quatre savoir-faire sont distincts ; les variantes sont décrites dans leur
+  périmètre sans décomposition artificielle.'
+delivery_updates:
+- source_ref: U848
+  fields:
+  - workflow-definition-management.category
+  - workflow-definition-management.parent
+  - order-workflow-sentry.category
+  - order-workflow-sentry.parent
+  - order-workflow-planning.category
+  - order-workflow-planning.parent
+  - order-workflow-orchestration.category
+  - order-workflow-orchestration.parent
+  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.
+superseded_delivery_U885:
+- id: workflow-definition-management
+  previous_expectations:
+    fields:
+      name: Workflow Definition Management
+      definition: Maintenir les activités réutilisables et leurs règles de composition.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: order-workflow-sentry
+  previous_expectations:
     fields:
       name: Order Workflow Sentry
       definition: 'Détecter les événements et conditions pertinents dans le contexte d’une commande, puis déclencher la réaction
         prévue : poursuivre le parcours, réexaminer son organisation ou solliciter une décision.'
-  - id: order-workflow-planning
-    parent: ba-reactive-workflow-management
-    kind: capability
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: order-workflow-planning
+  previous_expectations:
     fields:
       name: Order Workflow Planning
       definition: Construire ou adapter le parcours de traitement d’une [commande](glossary:TER012) à partir des activités
         disponibles, de son contexte et des règles applicables, en organisant les attentes et les décisions nécessaires.
-  - id: order-workflow-orchestration
-    parent: ba-reactive-workflow-management
-    kind: capability
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: order-workflow-orchestration
+  previous_expectations:
     fields:
       name: Order Workflow Orchestration
       definition: Piloter les activités, attentes et résultats du parcours retenu.
-  - id: D04
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: D04
+  previous_expectations:
     fields:
       scope: |-
         Chaque famille tient l’origine, les parties, biens ou services, quantités, dates et conditions de ses commandes. Conserver les versions et les liens entre commandes structurées, y compris les propositions provenant des plans amont. Une proposition retirée n’efface pas une commande affermie. Affermir une demande ne confirme pas automatiquement sa quantité et sa date.
@@ -103,7 +180,12 @@ publication_delivery:
         Une demande peut être préparée ou planifiée avant affermissement. [Preorder](glossary:TER150) indique l’anticipation de disponibilité commerciale ; [Planned Purchase Order](glossary:TER033) désigne une proposition d’approvisionnement distincte du Purchase Order résultant. Origine, horizon et degré d’engagement restent trois informations distinctes. Preorder est un statut du Sales Order, dont l’identité est conservée ; l’affermissement d’un Planned Purchase Order relie deux objets distincts sans imposer une identité commune.
 
         Pour le [crédit client](glossary:TER155), appliquer la règle financière reçue ou consommer le résultat du contrôle externe afin de suspendre ou reprendre la commande selon les autorisations applicables. Conserver motif, portée du blocage, règle et version utilisées, résultat et éventuelle dérogation autorisée. Un classement client seul ne permet pas de calculer un dépassement : utiliser l’encours et l’exposition pertinents fournis par la Finance, ou son résultat de contrôle ; ne pas présumer ces données disponibles. Une information manquante reste explicite. [Sentry](model:order-workflow-sentry) réagit aux changements ; il ne s’accorde pas une dérogation financière.
-  - id: D06
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: D06
+  previous_expectations:
     fields:
       scope: |-
         Déterminer les prestations requises, choisir les services et exécutants, coordonner leurs contributions et adapter le plan d’exécution. [Service Management](model:subdomain-service-orders) tient les exigences, engagements propres et évolutions des prestations confiées. [Fulfilment](glossary:TER085) conserve la visibilité des capacités communiquées, le tracking, le rapprochement des résultats et la décision de devenir logistique des retours.
@@ -121,7 +203,12 @@ publication_delivery:
         [Transport Plan Decision](model:transport-plan-decision) construit les chargements et parcours des transports confiés. [Inventory Disposition Decision](model:D05.i) détermine les usages autorisés et le devenir des biens, y compris hors retour. Ces décisions peuvent déclencher des prestations externes ; leurs résultats sont suivis sans absorber [Availability](glossary:TER112) ni la tenue des registres de stock.
 
         Agir comme pilote exécutant dans le mandat confié par [Order Workflow Orchestration](glossary:TER129). Conserver les décisions spécialisées et la latitude d’adaptation locale autorisée. La structure du parcours de la commande relève d’[Order Management](model:D04) ; un changement de ce parcours ou des engagements dépasse la seule adaptation des prestations. Transmettre les faits et impacts utiles à [Order Workflow Sentry](glossary:TER127), qui déclenche la réaction appropriée sans imposer un réexamen pour chaque événement.
-  - id: D06.d
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: D06.d
+  previous_expectations:
     fields:
       scope: |-
         Coordonner le déclenchement et l’enchaînement des prestations du plan retenu, en tenant compte de leurs dépendances, des prises en charge et des faits d’exécution. Mobiliser les familles de [Service Orders](glossary:TER066) pour tenir les demandes et leurs évolutions.
@@ -145,7 +232,12 @@ publication_delivery:
         Coordonner les prestations dans le mandat reçu d’[Order Workflow Orchestration](glossary:TER129), qui conduit le parcours de la commande. Une dépendance entre préparation et collecte ne se confond pas avec une attente de confirmation client dans ce parcours. Retourner les résultats et aléas utiles à [Order Workflow Sentry](glossary:TER127) ; ne pas modifier seul les engagements de la commande.
 
         Exécuter les tâches de coordination confiées par le moteur de [Reactive Workflow Management](glossary:TER125). Les [Service Orders](glossary:TER066) restent des commandes passives ; leurs états et résultats alimentent le suivi conduit par les tâches du workflow. La coordination locale ne choisit pas un nouveau parcours de commande hors du mandat reçu.
-  - id: D06.f
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: D06.f
+  previous_expectations:
     fields:
       scope: |-
         Déterminer la variation à retenir lorsqu’un fait, un retard ou un échec remet en cause le plan d’exécution. Mobiliser les décisions de service, les capacités communiquées et les informations sur les demandes et réalisations.
@@ -167,7 +259,12 @@ publication_delivery:
         [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
 
         Adapter localement les prestations dans le mandat confié, en préservant les engagements et les autorisations. Si la réponse nécessite de réorganiser le parcours de la commande, transmettre le contexte à [Order Workflow Sentry](glossary:TER127), qui peut solliciter [Order Workflow Planning](glossary:TER128). Une adaptation locale autorisée ne nécessite pas systématiquement cette réorganisation.
-  - id: subdomain-policies
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: subdomain-policies
+  previous_expectations:
     fields:
       scope: |-
         Conserver les règles actives, leur portée et leur validité. Les décisions de [Availability](glossary:TER112) peuvent recommander des valeurs ou adaptations ; cette recommandation ne change pas implicitement la règle active. Les réservations constituées restent dans Inventory Management. Exemple fictif : protéger une quantité pour un groupe de demandes et limiter temporairement les nouvelles sollicitations d’un prestataire, sans annuler ses travaux déjà engagés.
@@ -175,7 +272,12 @@ publication_delivery:
         Porter les contrôles actifs du fonctionnement courant : seuils, limites, protections, désactivations et réactivations temporaires de possibilités métier, avec leur portée et leur validité. Exemple fictif : désactiver temporairement le fractionnement pour de nouvelles sollicitations, sans annuler les engagements existants. Les règles de structure du parcours et de composition des activités relèvent de [Workflow Definition Management](glossary:TER126) dans Order Management. Une modification de contrôle ne vaut ni modification rétroactive des commandes ni nouvel engagement.
 
         Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par FLOW ne les transforme pas en règles sous autorité de Policies.
-  - id: service-order-release-decision
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: service-order-release-decision
+  previous_expectations:
     fields:
       scope: |-
         Déterminer les ordres et quantités éligibles à libérer ensemble, leur moment ou condition de libération et les éléments à maintenir en attente, avec leur justification. Mobiliser exigences de livraison, dates de préparation et d’expédition, complétude attendue, compatibilité des regroupements et capacités communiquées par les exécutants. Comparer les bénéfices du regroupement aux conséquences de l’attente ; aucune optimisation mathématique universelle n’est promise.
@@ -193,37 +295,16 @@ publication_delivery:
         [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
 
         Décider du moment et du regroupement des prestations dans l’autorisation reçue d’[Order Workflow Orchestration](glossary:TER129). Cette décision ne remplace pas l’autorisation de poursuivre le parcours de la commande. Si une confirmation client reste requise, l’éligibilité logistique ne permet pas à elle seule de la contourner.
-  required_catalog:
-  - collection: paths
-    id: b2b-partial-stock-path
-    content_sha256: cd18ae4491eb07fe1ff344bcbb4d9005c29dc2fdbb3f3d5139c91442cb7f1a37
-  - collection: paths
-    id: transport-missed-connection-path
-    content_sha256: 00e6a39d60df52be7cfd0b722162a995cb50743610c1cfcbfce9af370206555c
-  absent_nodes: []
-  editorial_alignment_U853:
-    fields:
-    - D06.scope
-    - D06.f.scope
-    - service-order-release-decision.scope
-    - paths/transport-missed-connection-path
-    scope: Finalités et exemples de Business Areas, corrections de noms et de grammaire ; aucune modification de parent ni
-      extension des accords historiques.
-editorial_delegation:
-  source_ref: U844
-  scope: Documentation complète des responsabilités, frontières, exemples, comparaisons et scénarios sans arbitrage rédactionnel
-    supplémentaire.
-behavior_policy: 'Aucun comportement créé : les quatre savoir-faire sont distincts ; les variantes sont décrites dans leur
-  périmètre sans décomposition artificielle.'
-delivery_updates:
-- source_ref: U848
-  fields:
-  - workflow-definition-management.category
-  - workflow-definition-management.parent
-  - order-workflow-sentry.category
-  - order-workflow-sentry.parent
-  - order-workflow-planning.category
-  - order-workflow-planning.parent
-  - order-workflow-orchestration.category
-  - order-workflow-orchestration.parent
-  reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+superseded_delivery_U887:
+  source_refs:
+  - U887
+  replacement: model-coherence-audit-U886.yaml#publication_delivery
+  assertions:
+  - catalog:
+      collection: paths
+      id: b2b-partial-stock-path
+      content_sha256: cd18ae4491eb07fe1ff344bcbb4d9005c29dc2fdbb3f3d5139c91442cb7f1a37

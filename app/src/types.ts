@@ -107,6 +107,7 @@ export interface GlossaryTerm extends JsonRecord {
   market_inspiration?: MarketInspiration;
   id: string; name: string; short_description: string; definition: string;
   context?: string; notes?: string; source_refs: string[]; historical?: boolean;
+  alias_of?: string; presentation?: 'historical' | 'method'; guide_section?: 'method'; label_fr?: string;
   review: { state: 'proposed' | 'under_review' | 'accepted' | 'partial'; note?: string };
   revision?: number; last_modified?: string;
 }

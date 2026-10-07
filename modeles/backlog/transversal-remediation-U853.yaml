@@ -810,6 +810,8 @@ publication_delivery:
   - U865
   - U874
   - U877
+  - U889
+  - U891
   summary: '16 Business Areas documentées, 42 appuis partiels ajoutés, lacunes explicites et quatre scénarios de retour et
     réaction. U858 : contrôles courants adaptés au retrait des huit Visibility de références et à la conservation de l’interprétation
     des plans ; état antérieur conservé dans Git (745813e). U861 : commandes passives et pilotage par les tâches du workflow
@@ -820,14 +822,6 @@ publication_delivery:
   - id: ba-inventory-position-management
     fields:
       finality: Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
-      scope: |-
-        Les changements de propriétaire sont portés par Inventory Ownership Management ; aucune fusion des registres ou de la réservation.
-
-        Bénéficiaire et résultat : Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
-
-        Exemple fictif : Une réception annoncée de 100 pièces est constatée à 80 : restituer la correction et les engagements concernés sans confondre disponibilité et propriété.
-
-        State désigne la situation quantitative datée : quantités par produit, lieu et état, mouvements reconnus, contrôles et engagements de [Reservation](model:D02.c). Ce périmètre reste distinct de la propriété des biens.
       market_comparisons:
       - vendor: Microsoft
         product: Dynamics 365 Supply Chain Management
@@ -1002,14 +996,6 @@ publication_delivery:
   - id: ba-order-promising
     fields:
       finality: Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
-      scope: |-
-        Proposer ne confirme pas un engagement de commande.
-
-        Bénéficiaire et résultat : Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
-
-        Exemple fictif : Proposer 60 pièces vendredi et 40 lundi ; la proposition ne devient un engagement que lors de sa confirmation dans la commande.
-
-        Construire les options de produit, site, date et prestation à partir des possibilités connues et autorisées. Une substitution exige une équivalence et une autorisation provenant du responsable commercial ; ni le stock disponible ni un meilleur coût ne les créent. [ATP](glossary:TER044) évalue les ressources admissibles, [CTP](glossary:TER045) la faisabilité d’un apport et [PTP](glossary:TER068) les compromis économiques. [Service Selection Decision](model:D06.e) choisit les prestations dans le respect de la promesse. Ces décisions composent une proposition, sans capacité de sélection supplémentaire.
       market_comparisons:
       - vendor: SAP
         product: SAP S/4HANA Manufacturing for planning and scheduling
@@ -1040,11 +1026,13 @@ publication_delivery:
       finality: Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins
         restent découverts.
       scope: |-
-        Les familles de commandes portent les demandes et leurs engagements ; les registres portent les effets reconnus.
+        Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Policies](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
 
-        Bénéficiaire et résultat : Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins restent découverts.
+        [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
 
-        Exemple fictif : Deux demandes se partagent 80 pièces : arbitrer selon leurs priorités et expliciter la part non couverte sans réécrire les commandes.
+        [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Policy Optimization](model:ba-policy-optimization) recommande cibles et paramètres ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+
+        Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
       market_comparisons:
       - vendor: Microsoft
         product: Dynamics 365 Supply Chain Management
@@ -1096,6 +1084,82 @@ publication_delivery:
         status: proposed
         source_refs:
         - U853
+      - vendor: SAP
+        product: SAP S/4HANA Retail
+        element_name: Reorder point, targets and forecast requirements
+        concept_name: Reorder point, targets and forecast requirements
+        element_type: Objet ou mécanisme documenté dans un produit
+        relationship: Recouvrement partiel
+        similarities: SAP retail confronte besoins, stocks, seuils, sécurité et prévisions pour proposer les apports.
+        differences: Le processus retail et MRP dépasse le périmètre FLOW ; ses calculs ne décident pas du placement ni de
+          l’intégration d’IRMA.
+        flow_position: Distinguer choix des cibles, paramètres actifs, décision d’apports et application autorisée.
+        scope_summary: SAP retail confronte besoins, stocks, seuils, sécurité et prévisions pour proposer les apports.
+        approach_summary: Distinguer choix des cibles, paramètres actifs, décision d’apports et application autorisée.
+        source_title: Performing Requirements Planning
+        source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/performing-requirements-planning_bbf9e421-fee4-4c82-bb13-5cf8ad7d7121
+        source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+        consulted_on: '2026-10-07'
+        source_locator: Reorder Point Planning ; Time-Phased Planning ; Forecast-Based Requirements Planning
+        evidence_limits: Le processus retail et MRP dépasse le périmètre FLOW ; ses calculs ne décident pas du placement ni
+          de l’intégration d’IRMA. Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+        status: proposed
+        source_refs:
+        - U890
+        - U891
+        term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
+        definition_choice: Distinguer choix des cibles, paramètres actifs, décision d’apports et application autorisée.
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        element_name: Net requirements and quantity modification
+        concept_name: Net requirements and quantity modification
+        element_type: Objet ou mécanisme documenté dans un produit
+        relationship: Recouvrement partiel
+        similarities: Dynamics calcule des besoins nets et applique des contraintes de quantité, dont des multiples de lot.
+        differences: Les réglages de master planning ne définissent pas les capacités FLOW ; un calcul n’est pas un engagement
+          de commande.
+        flow_position: Conserver besoins, ressources, contraintes, résultats et limites explicités dans les décisions de couverture.
+        scope_summary: Dynamics calcule des besoins nets et applique des contraintes de quantité, dont des multiples de lot.
+        approach_summary: Conserver besoins, ressources, contraintes, résultats et limites explicités dans les décisions de
+          couverture.
+        source_title: Replenishment methods and quantity modification
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/replenishment-methods-quantity-modification
+        source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+        consulted_on: '2026-10-07'
+        source_locator: Coverage codes ; Examples of Min./Max. coverage
+        evidence_limits: Les réglages de master planning ne définissent pas les capacités FLOW ; un calcul n’est pas un engagement
+          de commande. Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+        status: proposed
+        source_refs:
+        - U890
+        - U891
+        term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
+        definition_choice: Conserver besoins, ressources, contraintes, résultats et limites explicités dans les décisions
+          de couverture.
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        element_name: Priority-based planning
+        concept_name: Priority-based planning
+        element_type: Objet ou mécanisme documenté dans un produit
+        relationship: Recouvrement partiel
+        similarities: Dynamics utilise priorités, stock projeté et apports pour répartir la couverture sous contraintes.
+        differences: Ce mécanisme produit ne prouve ni une taxonomie universelle ni un scénario installé chez Beaumanoir.
+        flow_position: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
+        scope_summary: Dynamics utilise priorités, stock projeté et apports pour répartir la couverture sous contraintes.
+        approach_summary: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
+        source_title: Priority-based planning
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/priority-based-planning
+        source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+        consulted_on: '2026-10-07'
+        source_locator: Where and how planning priorities are assigned ; Priority calculation methods
+        evidence_limits: Ce mécanisme produit ne prouve ni une taxonomie universelle ni un scénario installé chez Beaumanoir.
+          Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+        status: proposed
+        source_refs:
+        - U890
+        - U891
+        term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
+        definition_choice: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
   - id: ba-policy-optimization
     fields:
       finality: Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
@@ -1155,12 +1219,6 @@ publication_delivery:
   - id: ba-order-lifecycle-management
     fields:
       finality: Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
-      scope: |-
-        La structuration et la visibilité restent des capacités distinctes ; le pilotage du parcours relève de Reactive Workflow Management.
-
-        Bénéficiaire et résultat : Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
-
-        Exemple fictif : Une commande est fractionnée avec accord du client : conserver les engagements et la filiation des parties sans choisir leur transporteur.
       market_comparisons:
       - vendor: Microsoft
         product: Dynamics 365 Intelligent Order Management
@@ -1187,70 +1245,71 @@ publication_delivery:
         status: proposed
         source_refs:
         - U853
-  - id: ba-reactive-workflow-management
-    fields:
-      finality: Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
-      scope: |-
-        Fulfilment conserve la coordination et les adaptations locales des prestations dans le mandat confié.
-
-        Bénéficiaire et résultat : Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
-
-        Exemple fictif : Un paiement confirmé débloque la suite de la commande ; un événement répété ne déclenche pas une seconde prestation. Une adaptation locale reste confiée à Fulfilment Orchestration.
-
-        Le moteur produit les [Tasks](glossary:TER089) qui pilotent le suivi des [Service Orders](glossary:TER066) passifs. La demande et son état restent dans l’Order ; le pilotage est dans les tâches ; la réalisation est chez le prestataire.
-      market_comparisons:
       - vendor: Microsoft
-        product: Dynamics 365 Intelligent Order Management
-        source_title: Create orchestration flows
-        source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
-        source_locator: Actions, conditions, publication des parcours et envoi aux prestataires
-        source_version: Documentation en ligne consultée le 2026-10-06
-        consulted_on: '2026-10-06'
-        element_name: Create orchestration flows
-        concept_name: Create orchestration flows
-        element_type: Fonction produit documentée
+        product: Dynamics 365 Finance
+        element_name: Credit management blocking rules and sales order release
+        concept_name: Credit management blocking rules and sales order release
+        element_type: Mécanisme métier documenté dans un produit
         relationship: Recouvrement partiel
-        similarities: Composer un parcours à partir d’actions et de conditions.
-        differences: FLOW sépare sentinelle, planification et conduite ; le produit ne prescrit pas ce découpage.
-        flow_position: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant leurs
-          engagements. Commandes passives, pilotage par les tâches du workflow et réalisation du prestataire restent distincts
-          dans FLOW.
-        definition_choice: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant
-          leurs engagements.
-        term_choice: Reactive Workflow Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
-        scope_summary: Composer un parcours à partir d’actions et de conditions.
-        approach_summary: FLOW sépare sentinelle, planification et conduite ; le produit ne prescrit pas ce découpage.
-        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
-          installée chez Beaumanoir.
+        similarities: Les règles financières confrontent la commande aux informations de crédit et peuvent retenir sa progression,
+          puis permettre une reprise contrôlée.
+        differences: FLOW retire la décision financière du Core ; les suites éditeurs réunissent ces fonctions dans leurs
+          parcours intégrés.
+        flow_position: Le Case Wholesale porte le contrôle de crédit ; le Core fournit les références, conduit le parcours
+          et applique les transitions autorisées.
+        scope_summary: Les règles financières confrontent la commande aux informations de crédit et peuvent retenir sa progression,
+          puis permettre une reprise contrôlée.
+        approach_summary: Séparer décision du Case, référence financière et application du résultat à la commande.
+        source_title: Credit holds for sales orders
+        source_url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-sales-order-credit-holds
+        source_version: Documentation évolutive consultée le 7 octobre 2026 ; version globale non présumée.
+        consulted_on: '2026-10-07'
+        source_locator: Set up blocking rules and exclusion rules ; Credit limit used ; Releasing orders from the hold list
+          for processing ; Automatically releasing credit management holds ; Credit management approval workflow
+        evidence_limits: Recouvrement fonctionnel partiel ; la documentation ne prescrit ni ce nom de capacité ni sa Business
+          Area FLOW. Aucun déploiement Beaumanoir déduit. Appui limité au contrôle de crédit, sans couverture complète de
+          ce périmètre.
         status: proposed
         source_refs:
-        - U853
+        - U892
+        - U893
+        - U894
+        term_choice: Order Lifecycle Management conserve sa responsabilité générique.
+        definition_choice: Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer
+          leur état.
       - vendor: SAP
-        product: SAP S/4HANA Flexible Workflow
-        source_title: Explaining Flexible Workflow
-        source_url: https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
-        source_locator: Scénarios applicatifs, conditions et activités prédéfinies
-        source_version: Documentation en ligne consultée le 2026-10-06
-        consulted_on: '2026-10-06'
-        element_name: Explaining Flexible Workflow
-        concept_name: Explaining Flexible Workflow
-        element_type: Fonction produit documentée
+        product: SAP S/4HANA Sales / SAP Credit Management
+        element_name: Credit check in sales order processing
+        concept_name: Credit check in sales order processing
+        element_type: Mécanisme métier documenté dans un produit
         relationship: Recouvrement partiel
-        similarities: Choisir des activités applicatives selon des conditions.
-        differences: Un scénario SAP prédéfini ne prouve pas un moteur général de composition dynamique.
-        flow_position: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant leurs
-          engagements. Commandes passives, pilotage par les tâches du workflow et réalisation du prestataire restent distincts
-          dans FLOW.
-        definition_choice: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant
-          leurs engagements.
-        term_choice: Reactive Workflow Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
-        scope_summary: Choisir des activités applicatives selon des conditions.
-        approach_summary: Un scénario SAP prédéfini ne prouve pas un moteur général de composition dynamique.
-        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
-          installée chez Beaumanoir.
+        similarities: Le contrôle intégré à la vente peut conduire au blocage, à l’examen financier puis à la libération de
+          la commande.
+        differences: FLOW retire la décision financière du Core ; les suites éditeurs réunissent ces fonctions dans leurs
+          parcours intégrés.
+        flow_position: Le Case Wholesale porte le contrôle de crédit ; le Core fournit les références, conduit le parcours
+          et applique les transitions autorisées.
+        scope_summary: Le contrôle intégré à la vente peut conduire au blocage, à l’examen financier puis à la libération
+          de la commande.
+        approach_summary: Séparer décision du Case, référence financière et application du résultat à la commande.
+        source_title: Working with SAP Credit Management
+        source_url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/working-with-sap-credit-management_d6b177ee-a8bb-4b77-80dc-87c04a9dd3f1
+        source_version: Documentation évolutive consultée le 7 octobre 2026 ; version globale non présumée.
+        consulted_on: '2026-10-07'
+        source_locator: An Example Business Process Using SAP Credit Management ; Credit Management in SAP S/4HANA
+        evidence_limits: Recouvrement partiel ; l’intégration dans un produit ne démontre pas un placement organisationnel
+          identique ni une réalisation Beaumanoir. Aucun déploiement Beaumanoir déduit. Appui limité au contrôle de crédit,
+          sans couverture complète de ce périmètre.
         status: proposed
         source_refs:
-        - U853
+        - U892
+        - U893
+        - U894
+        term_choice: Order Lifecycle Management conserve sa responsabilité générique.
+        definition_choice: Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer
+          leur état.
+  - id: ba-reactive-workflow-management
+    fields: {}
   - id: ba-service-planning
     fields:
       finality: Fournir aux responsables de la réalisation un ensemble de prestations réalisables et compatibles avec les
@@ -1315,12 +1374,6 @@ publication_delivery:
   - id: ba-execution-assurance
     fields:
       finality: Permettre aux responsables de la coordination de distinguer réalisation attestée, attente et écart à traiter.
-      scope: |-
-        Ne décide pas seule des adaptations et ne se substitue pas à Order Workflow Sentry.
-
-        Bénéficiaire et résultat : Permettre aux responsables de la coordination de distinguer réalisation attestée, attente et écart à traiter.
-
-        Exemple fictif : Une collecte est annoncée mais non attestée : rapprocher les faits et rendre visible l’écart sans choisir seul une autre prestation.
       market_comparisons:
       - vendor: SAP
         product: SAP S/4HANA Transportation Management
@@ -1351,7 +1404,7 @@ publication_delivery:
     fields:
       finality: Faire réaliser les prestations confiées dans les limites de la promesse et des autorisations.
       scope: |-
-        La décision sur le devenir des biens appartient à [Inventory Disposition](glossary:TER161), Business Area distincte au sein de Fulfilment Orchestration.
+        La décision sur le devenir des biens appartient à [Inventory Disposition](glossary:TER102), Business Area distincte au sein de Fulfilment Orchestration.
 
         Bénéficiaire et résultat : Faire réaliser les prestations confiées dans les limites de la promesse et des autorisations.
 
@@ -1475,14 +1528,6 @@ publication_delivery:
   - id: ba-goods-processing-order-management
     fields:
       finality: Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
-      scope: |-
-        Couvre préparation, réception, transit, conditionnement, finition, entretien, contrôle et rebut ; ne présume pas leur réalisation dans un entrepôt et ne pilote pas les opérations internes.
-
-        Bénéficiaire et résultat : Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
-
-        Exemple fictif : Demander un nouvel étiquetage sur 40 pièces et suivre son acceptation puis son résultat ; la réalisation physique appartient au prestataire.
-
-        Les familles sont des commandes passives adressées à la logistique selon une offre de service définie. Elles portent les exigences et résultats ; les [Tasks](glossary:TER089) du moteur de [Reactive Workflow Management](glossary:TER125) pilotent leur suivi. Aucune décision autonome n’est attachée à ces familles.
       market_comparisons:
       - vendor: Microsoft
         product: Dynamics 365 Supply Chain Management
@@ -1733,9 +1778,6 @@ publication_delivery:
     id: product-quality-feedback
     content_sha256: f3dc6bb425de6fb92196508951726392777951c74e800ad97d77fd0cd40f0e2f
   - collection: scenarios
-    id: workflow-version-change
-    content_sha256: 4cfdf5e6e18f1df041976148774a56a54eee43f24251d84c55a456871cd23641
-  - collection: scenarios
     id: service-policy-deactivation
     content_sha256: 28025e6df4f4e9b86a81c8fa12b8f9810d188a56a07c5febb0697a26a22b7783
   - collection: paths
@@ -1745,11 +1787,14 @@ publication_delivery:
     id: product-quality-feedback-path
     content_sha256: 6421019fc6cf59e9bf383d2530c2286c4f9776354cef1f81542fec02baa8eb23
   - collection: paths
-    id: workflow-version-change-path
-    content_sha256: e013b532355e5129fc702f1b19bab8efc77d15cfd34d23b8b2e83a9950fe2d2a
-  - collection: paths
     id: service-policy-deactivation-path
-    content_sha256: c959cb79170c05893e9f1333db224e753552ada1f4d9dea7203bd927c4c38b48
+    content_sha256: 89576a7fc262eee1e481dbb939c58174d1bb5a522ff179408e0d5c34f428bddf
+  supersession_U891: Les contrôles ciblés suivent le lot U891 ; leurs valeurs antérieures sont conservées dans product-packaging-supply-matching-U890.yaml.
+    Ceci ne modifie aucun accord historique.
+  supersession_U894: Seuls les contrôles de livraison des champs modifiés sont actualisés ; ancien contrat conservé dans credit-check-decision-U892.yaml.
+    Aucun accord métier étendu.
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
 verification:
   python_full_suite:
     total: 378
@@ -1767,3 +1812,143 @@ verification:
   validation: 0 errors before preparation; frozen candidate has its own validation gate
 review_scope: Conserver uniquement les champs historiques inchangés après examen du contexte. Les scopes enrichis des 16 Business
   Areas sont exclus de la reprise des accords.
+superseded_delivery_U885:
+- id: ba-reactive-workflow-management
+  previous_expectations:
+    fields:
+      finality: Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
+      scope: |-
+        Fulfilment conserve la coordination et les adaptations locales des prestations dans le mandat confié.
+
+        Bénéficiaire et résultat : Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
+
+        Exemple fictif : Un paiement confirmé débloque la suite de la commande ; un événement répété ne déclenche pas une seconde prestation. Une adaptation locale reste confiée à Fulfilment Orchestration.
+
+        Le moteur produit les [Tasks](glossary:TER089) qui pilotent le suivi des [Service Orders](glossary:TER066) passifs. La demande et son état restent dans l’Order ; le pilotage est dans les tâches ; la réalisation est chez le prestataire.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Intelligent Order Management
+        source_title: Create orchestration flows
+        source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+        source_locator: Actions, conditions, publication des parcours et envoi aux prestataires
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Create orchestration flows
+        concept_name: Create orchestration flows
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Composer un parcours à partir d’actions et de conditions.
+        differences: FLOW sépare sentinelle, planification et conduite ; le produit ne prescrit pas ce découpage.
+        flow_position: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant leurs
+          engagements. Commandes passives, pilotage par les tâches du workflow et réalisation du prestataire restent distincts
+          dans FLOW.
+        definition_choice: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant
+          leurs engagements.
+        term_choice: Reactive Workflow Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Composer un parcours à partir d’actions et de conditions.
+        approach_summary: FLOW sépare sentinelle, planification et conduite ; le produit ne prescrit pas ce découpage.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Flexible Workflow
+        source_title: Explaining Flexible Workflow
+        source_url: https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+        source_locator: Scénarios applicatifs, conditions et activités prédéfinies
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Explaining Flexible Workflow
+        concept_name: Explaining Flexible Workflow
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Choisir des activités applicatives selon des conditions.
+        differences: Un scénario SAP prédéfini ne prouve pas un moteur général de composition dynamique.
+        flow_position: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant leurs
+          engagements. Commandes passives, pilotage par les tâches du workflow et réalisation du prestataire restent distincts
+          dans FLOW.
+        definition_choice: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant
+          leurs engagements.
+        term_choice: Reactive Workflow Management désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Choisir des activités applicatives selon des conditions.
+        approach_summary: Un scénario SAP prédéfini ne prouve pas un moteur général de composition dynamique.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: ba-execution-assurance
+  previous_expectations:
+    fields:
+      scope: |-
+        Ne décide pas seule des adaptations et ne se substitue pas à Order Workflow Sentry.
+
+        Bénéficiaire et résultat : Permettre aux responsables de la coordination de distinguer réalisation attestée, attente et écart à traiter.
+
+        Exemple fictif : Une collecte est annoncée mais non attestée : rapprocher les faits et rendre visible l’écart sans choisir seul une autre prestation.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- catalog:
+    collection: scenarios
+    id: workflow-version-change
+    content_sha256: 4cfdf5e6e18f1df041976148774a56a54eee43f24251d84c55a456871cd23641
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U885
+- catalog:
+    collection: paths
+    id: workflow-version-change-path
+    content_sha256: e013b532355e5129fc702f1b19bab8efc77d15cfd34d23b8b2e83a9950fe2d2a
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U885
+superseded_delivery_U887:
+  source_refs:
+  - U887
+  replacement: model-coherence-audit-U886.yaml#publication_delivery
+  assertions:
+  - id: ba-inventory-position-management
+    previous_fields:
+      scope: |-
+        Les changements de propriétaire sont portés par Inventory Ownership Management ; aucune fusion des registres ou de la réservation.
+
+        Bénéficiaire et résultat : Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
+
+        Exemple fictif : Une réception annoncée de 100 pièces est constatée à 80 : restituer la correction et les engagements concernés sans confondre disponibilité et propriété.
+
+        State désigne la situation quantitative datée : quantités par produit, lieu et état, mouvements reconnus, contrôles et engagements de [Reservation](model:D02.c). Ce périmètre reste distinct de la propriété des biens.
+  - id: ba-order-promising
+    previous_fields:
+      scope: |-
+        Proposer ne confirme pas un engagement de commande.
+
+        Bénéficiaire et résultat : Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
+
+        Exemple fictif : Proposer 60 pièces vendredi et 40 lundi ; la proposition ne devient un engagement que lors de sa confirmation dans la commande.
+
+        Construire les options de produit, site, date et prestation à partir des possibilités connues et autorisées. Une substitution exige une équivalence et une autorisation provenant du responsable commercial ; ni le stock disponible ni un meilleur coût ne les créent. [ATP](glossary:TER044) évalue les ressources admissibles, [CTP](glossary:TER045) la faisabilité d’un apport et [PTP](glossary:TER068) les compromis économiques. [Service Selection Decision](model:D06.e) choisit les prestations dans le respect de la promesse. Ces décisions composent une proposition, sans capacité de sélection supplémentaire.
+  - id: ba-order-lifecycle-management
+    previous_fields:
+      scope: |-
+        La structuration et la visibilité restent des capacités distinctes ; le pilotage du parcours relève de Reactive Workflow Management.
+
+        Bénéficiaire et résultat : Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
+
+        Exemple fictif : Une commande est fractionnée avec accord du client : conserver les engagements et la filiation des parties sans choisir leur transporteur.
+  - id: ba-goods-processing-order-management
+    previous_fields:
+      scope: |-
+        Couvre préparation, réception, transit, conditionnement, finition, entretien, contrôle et rebut ; ne présume pas leur réalisation dans un entrepôt et ne pilote pas les opérations internes.
+
+        Bénéficiaire et résultat : Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
+
+        Exemple fictif : Demander un nouvel étiquetage sur 40 pièces et suivre son acceptation puis son résultat ; la réalisation physique appartient au prestataire.
+
+        Les familles sont des commandes passives adressées à la logistique selon une offre de service définie. Elles portent les exigences et résultats ; les [Tasks](glossary:TER089) du moteur de [Reactive Workflow Management](glossary:TER125) pilotent leur suivi. Aucune décision autonome n’est attachée à ces familles.

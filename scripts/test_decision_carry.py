@@ -2,7 +2,7 @@
 from copy import deepcopy
 import unittest
 
-from scripts.decision_carry import classify_context
+from scripts.decision_carry import classify_context, ContextIndex
 from scripts.validate_models import canonical_sha256
 
 
@@ -46,6 +46,53 @@ class DecisionCarryTests(unittest.TestCase):
 
     def classify(self):
         return classify_context(self.decision, self.before, self.after)
+
+    def test_indexed_context_matches_independent_calls_and_does_not_leak(self):
+        indexes = ContextIndex(self.before), ContextIndex(self.after)
+        self.assertEqual(self.classify(), classify_context(self.decision, self.before, self.after, indexes=indexes))
+        self.after = deepcopy(self.after)
+        self.after['nodes'][2]['fields']['scope'] = 'Changed after the prior operation'
+        self.assertFalse(self.classify()['safe'])
+        self.assertIn('invalid_context', classify_context(self.decision, self.before, self.after, indexes=indexes)['reasons'])
+
+    def test_editorial_glossary_note_but_not_unknown_header_can_change(self):
+        self.after['glossary']['note'] = 'Index updated.'
+        self.assertTrue(self.classify()['safe'])
+        self.after['glossary']['unknown_business_header'] = 'New rule'
+        self.assertIn('glossary_context_changed', self.classify()['reasons'])
+
+    def test_alias_target_semantics_missing_target_and_cycles_are_not_hidden(self):
+        self.before['glossary']['terms'][0] = {'id': 'T1', 'alias_of': 'T2'}
+        self.after = deepcopy(self.before)
+        self.after['glossary']['terms'][1]['definition'] = 'Different meaning'
+        self.assertIn('referenced_glossary_changed', self.classify()['reasons'])
+        self.after['glossary']['terms'].pop(1)
+        self.assertIn('referenced_glossary_missing', self.classify()['reasons'])
+        self.after = deepcopy(self.before)
+        self.after['glossary']['terms'][1]['alias_of'] = 'T1'
+        self.assertIn('invalid_context', self.classify()['reasons'])
+
+    def test_scenario_edits_follow_contributors_ancestors_and_glossary(self):
+        self.before['nodes'].append({'id': 'unrelated', 'kind': 'capability', 'fields': {'name': 'Elsewhere'}})
+        catalog = {'paths': [], 'scenarios': [], 'value_streams': []}
+        for identifier, node in [('linked', 'cap'), ('other', 'unrelated')]:
+            catalog['paths'].append({'id': 'p-' + identifier, 'scenario_id': identifier,
+                'steps': [{'contributions': [{'node_id': node}]}]})
+            catalog['scenarios'].append({'id': identifier, 'objective': 'An objective', 'value_stream_ids': []})
+        self.before['scenario_catalog'] = catalog
+        self.after = deepcopy(self.before)
+        self.after['scenario_catalog']['scenarios'][1]['objective'] = 'Unrelated update'
+        self.assertTrue(self.classify()['safe'])
+        self.after['scenario_catalog']['scenarios'][0]['objective'] = 'Changed linked use'
+        self.assertIn('mobilizing_scenario_changed', self.classify()['reasons'])
+        self.after = deepcopy(self.before)
+        self.after['scenario_catalog']['paths'][0]['steps'][0]['contributions'][0]['node_id'] = 'unrelated'
+        self.assertIn('mobilizing_scenario_changed', self.classify()['reasons'])
+        self.decision['target'].update(id='root', approved_fields=['name'], value_sha256={'name': canonical_sha256('Supply')})
+        self.assertIn('mobilizing_scenario_changed', self.classify()['reasons'])
+        self.after = deepcopy(self.before)
+        self.after['scenario_catalog']['unknown_rule'] = 'New global meaning'
+        self.assertIn('global_business_context_changed', self.classify()['reasons'])
 
     def test_known_editorial_metadata_and_market_changes_are_safe(self):
         cap = self.after['nodes'][2]

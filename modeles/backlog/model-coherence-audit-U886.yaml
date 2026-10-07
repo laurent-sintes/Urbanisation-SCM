@@ -1,0 +1,890 @@
+schema_version: 1.0.0
+id: model-coherence-audit-U886
+source_refs:
+- U886
+audited_on: '2026-10-07'
+status: corrected_verified
+verdict: Les neuf constats A01–A09 sont corrigés et contrôlés. Aucun défaut technique restant identifié sur ce lot ; publication
+  non demandée.
+basis:
+  modeles/backlog/model.yaml: bdf45fe57cfd16620a72154b9bda92c7a591e86199e447b8796a371d54364e3d
+  modeles/backlog/glossary.yaml: 56d320bb0e590129c25948f2d74a057dae9444a4a9fa3777c73c211f229a6590
+  modeles/backlog/modeling-glossary.yaml: 63512e98777ec66bebe6c3033ef8b5de9be84766e7a82f5d302df1154296c171
+  modeles/backlog/atlas-transformation-methodology.yaml: 054a5a2a70de911833072e628c780d9aea45b7e106bfc1c4232fbbc734691f20
+  modeles/backlog/decision-intents.yaml: bbeb8817a605c1d0fe764f9e998cb16d7eea8c3116d9fef854438769f981a7a8
+  modeles/release/index.json: 748f22e6ef1068739e2b59c93893526dc4e81c2310a1ca2177675b51de370d0d
+scope:
+  reviewed:
+  - Noms et définitions des éléments métier
+  - Périmètres des domaines, sous-domaines, Business Areas, références et capacités
+  - Définitions des comportements et invariants de leur décomposition, sans réouverture de l’audit clos U431
+  - Les 39 parcours, contributions, résultats et scénarios associés
+  - Glossaires, guide assemblé et commentaires FLOW affectés
+  - Identités, arbre, codes générés et comparaison R52
+  limits:
+  - Pas de nouvel audit exhaustif des passages éditeurs ; les références documentaires existantes et leurs lacunes sont conservées.
+  - Pas de simulation de tous les cas métier possibles ni certification de déploiement installé.
+  - Le candidat est compilé uniquement en mémoire ; ni préparation de release ni activation.
+inventory:
+  raw_nodes: 218
+  publishable_nodes: 214
+  excluded_internal_illustrations: 4
+  kinds:
+    business_system: 3
+    domain: 6
+    area: 10
+    reference: 9
+    capability: 80
+    behavior: 78
+    business_area: 28
+  scenarios: 38
+  paths: 39
+  capabilities_with_explicit_scenario: 80
+  scm_subdomains: 9
+structural_checks:
+  status: passed
+  capability_parent: '80 sur 80 : exactement une Business Area par contains'
+  behavior_decomposition: Aucun singleton ; justification présente pour chaque décomposition
+  identities: Aucun doublon ; aucun élément R52 supprimé ; retraits déclarés contrôlés par les contrats actifs
+  delivery_and_scenario_contracts: Aucune erreur
+  guide: Assemblage du brouillon et exemples contrôlés
+  display_index: 214 codes uniques ; séquences contiguës par type ; validation du candidat réussie
+reading_codes:
+  status: conformant
+  persisted_in_backlog: false
+  changed_existing_codes: 93
+  explanation: Les déplacements changent le parcours d’arbre de la prochaine publication. Cela ne renumérote aucune identité
+    et ne réécrit aucun code R52. Les valeurs ci-dessous sont des prévisions du candidat courant, pas une publication.
+  examples:
+  - id: BHV006
+    previous: CAP-026
+    candidate: CAP-022
+    candidate_after_U891: CAP-022
+    candidate_after_U894: CAP-023
+    candidate_after_U898: CAP-022
+  - id: BHV082
+    previous: BHV-067
+    candidate: CAP-074
+    candidate_after_U891: CAP-074
+    candidate_after_U894: CAP-075
+    candidate_after_U898: CAP-074
+  - id: subdomain-plans
+    previous: BA-014
+    candidate: BA-013
+    candidate_after_U891: BA-015
+    candidate_after_U894: BA-015
+    candidate_after_U898: BA-015
+  - id: D06.d
+    previous: CAP-046
+    candidate: CAP-042
+    candidate_after_U891: CAP-042
+    candidate_after_U894: CAP-043
+    candidate_after_U898: CAP-042
+  - id: order-workflow-orchestration
+    previous: CAP-014
+    candidate: CAP-069
+    candidate_after_U891: CAP-069
+    candidate_after_U894: CAP-070
+    candidate_after_U898: CAP-069
+  - id: subdomain-process-management
+    previous: null
+    candidate: SUB-009
+    candidate_after_U891: SUB-009
+    candidate_after_U894: SUB-009
+    candidate_after_U898: SUB-012
+findings:
+- id: A01
+  priority: P1
+  status: corrected_verified
+  title: La présentation du domaine omet Process Management
+  evidence:
+  - 'model.yaml / supply-chain-orchestration.fields.scope : liste huit sous-domaines sans Process Management ; arbre courant
+    : neuf sous-domaines SCM.'
+  impact: La fiche de synthèse donne une image incomplète de la cible nouvellement appliquée.
+  recommended_correction: Intégrer Process Management dans la synthèse, ses coopérations et le positionnement FLOW ; conserver
+    les responsabilités spécialisées.
+  resolution: Process Management et ses coopérations figurent dans la synthèse du domaine et le commentaire FLOW.
+  resolved_under: U887
+- id: A02
+  priority: P1
+  status: corrected_verified
+  title: Le glossaire Orchestration explique encore les anciennes capacités
+  evidence:
+  - 'glossary.yaml / TER031.market_inspiration.synthesis[1] : Process Orchestration coordonne le plan retenu et Process Adaptation
+    Decision choisit ses variations.'
+  - 'Modèle courant : D06.d = Fulfilment Coordination ; D06.f = Fulfilment Adaptation Decision ; order-workflow-orchestration
+    = Process Orchestration.'
+  impact: Le même nom Process Orchestration désigne deux responsabilités selon la fiche consultée.
+  recommended_correction: Réécrire le commentaire FLOW de TER031 avec les responsabilités actuelles et leurs liens ; préserver
+    les formulations natives des sources éditeurs.
+  resolution: TER031 distingue les trois responsabilités actuelles ; MOD007 définit aussi la conduite des activités et attentes
+    au-delà des prestations. Le lien historique vers la méthode a été vérifié dans Atlas.
+  resolved_under: U887
+- id: A03
+  priority: P1
+  status: corrected_verified
+  title: Des fiches courantes contredisent le statut hiérarchique des Business Areas
+  evidence:
+  - 'model.yaml / subdomain-integration.fields.scope : Les catégories ne créent pas de niveau hiérarchique.'
+  - 'glossary.yaml / TER113.context : Inbound et Outbound sont des catégories de présentation.'
+  - 'glossary.yaml / TER112.context : Les catégories restent des attributs de présentation.'
+  impact: Le glossaire et la fiche Integration enseignent une règle remplacée par U848/U880, alors que les rattachements structurés
+    sont corrects.
+  recommended_correction: Nommer Inbound Information Integration et Outbound Information Provision comme Business Areas ;
+    aligner Availability et ses cinq Business Areas dans le glossaire.
+  resolution: Integration et Availability présentent leurs Business Areas comme périmètres hiérarchiques de responsabilité
+    dans le modèle et le glossaire.
+  resolved_under: U887
+- id: A04
+  priority: P1
+  status: corrected_verified
+  title: Le scénario de lancement attribue le cintre à la mauvaise capacité
+  evidence:
+  - 'model.yaml / scenario_catalog.paths.fashion-launch-path.steps.step-3.contributions : service-order-garment-finishing
+    porte la mise sur cintre.'
+  - service-order-packing.fields.scope attribue mise et changement de cintre au conditionnement ; Garment Finishing distingue
+    finition textile et support de présentation.
+  impact: Le scénario transmet une frontière contraire aux deux fiches ; la présence du lien donne une fausse preuve de couverture.
+  recommended_correction: Rattacher la mise sur cintre à Packing Order. Si Garment Finishing doit rester mobilisée, ajouter
+    un résultat réel de finition textile, par exemple un défroissage explicitement nécessaire, sans créer artificiellement
+    une étape pour couvrir un compteur.
+  resolution: Le lancement précise le besoin de défroissage des robes froissées ; Garment Finishing porte cette finition,
+    Packing porte cintres et conditionnement.
+  resolved_under: U887
+- id: A05
+  priority: P2
+  status: corrected_verified
+  title: Le résultat global du parcours B2B ne décrit plus son aboutissement
+  evidence:
+  - 'model.yaml / b2b-partial-stock-path.outcome : dossier présentant les options, aucun gagnant présumé.'
+  - steps.step-3 choisit une proposition ; step-4 affecte puis libère les prestations sous condition de son acceptation.
+  impact: Le résumé laisse croire que le parcours s’arrête à l’étude alors que son déroulé va jusqu’à la libération.
+  recommended_correction: Exprimer le résultat conditionnel du parcours Livraison regroupée et les cas sans accord ; aligner
+    objectif, résultat et étapes sans présumer une acceptation.
+  resolution: Le résultat B2B décrit la libération conditionnelle après acceptation et la poursuite de l’examen en absence
+    d’accord.
+  resolved_under: U887
+- id: A06
+  priority: P2
+  status: corrected_verified
+  title: CTP est mentionnée mais absente des contributions du parcours de précommande
+  evidence:
+  - 'model.yaml / preorder-future-availability-path.steps.coverage.description : mobiliser CTP si la faisabilité reste à établir.'
+  - Aucune contribution D03.j dans ce parcours ; app/src/scenarioCatalog.ts calcule les liens de fiches à partir des contributions
+    explicites.
+  impact: La fiche CTP ne présente pas ce scénario alors que le récit décrit son intervention conditionnelle.
+  recommended_correction: Déclarer la contribution conditionnelle de CTP, puis vérifier le lien dans les deux sens. Distinguer
+    les capacités citées comme frontière de celles réellement mobilisées.
+  resolution: La contribution conditionnelle D03.j est explicite ; le lien depuis la fiche CTP est vérifié au navigateur.
+  resolved_under: U887
+- id: A07
+  priority: P2
+  status: corrected_verified
+  title: Des noms de périmètre retirés restent utilisés comme noms courants
+  evidence:
+  - 'model.yaml / D01.fields.scope et market_inspiration.flow_approach : Inventory Foundation au lieu du nom courant Inventory
+    Management.'
+  - master-data-ingestion et ses comportements invoquent les domaines Commerce et Design ; la hiérarchie courante expose Sales,
+    Sourcing and Procurement et le Business System Design & Development.
+  - reference-plan-correction réutilise ces noms dans la situation et les contributions.
+  impact: Le lecteur ne peut pas retrouver certains responsables annoncés dans l’arbre ; le texte mélange un ancien repère
+    et une autorité établie.
+  recommended_correction: Corriger Inventory Foundation. Pour les ingestions, employer les noms canoniques lorsque le lien
+    est établi ; qualifier les sources commerciales restant à préciser sans attribuer arbitrairement toutes les données à
+    Sales ni inventer des flux installés.
+  resolution: Inventory Management remplace le nom retiré dans les textes courants. Les ingestions désignent les sources commerciales
+    à qualifier et Design & Development ; leurs identités sont conservées.
+  resolved_under: U887
+- id: A08
+  priority: P2
+  status: corrected_verified
+  title: La frontière entre faits de prestations et parcours reste ambiguë dans le résumé du suivi
+  evidence:
+  - 'D07.d.fields.definition : faits des prestations et processus Supply ; son scope est centré sur les faits de prestations
+    et services distants.'
+  - operations-visibility.fields.scope évoque les attentes du processus ; BHV082 porte désormais explicitement la corrélation
+    du parcours complet.
+  impact: Les fiches détaillées permettent la distinction, mais leurs résumés peuvent encore faire lire Operations Tracking/Visibility
+    comme un second suivi global des processus.
+  recommended_correction: Préciser que les faits de prestations contribuent au parcours ; réserver la vue corrélée complète
+    à Process Visibility, sans réduire les faits de prestation aux seuls gestes physiques.
+  resolution: Operations Tracking capte les faits de prestations ; Operations Visibility expose leur résultat ; Process Visibility
+    corrèle le parcours complet. Glossaire aligné.
+  resolved_under: U887
+- id: A09
+  priority: P2
+  status: corrected_verified
+  title: Les descriptions accumulent des répétitions et du vocabulaire sans aide
+  evidence:
+  - Un paragraphe de 194 mots est identique dans D03, D03.i, D03.j et D03.k.
+  - Le périmètre de Sales Order atteint 662 mots ; ATP/CTP/PTP dépassent chacun 600 mots selon le décompte whitespace du YAML.
+  - Un paragraphe de 88 mots est identique dans les douze familles de commandes de traitement de biens.
+  - 'Exemples de jargon non lié : Service Capacity Visibility cite VAS ; les périmètres des Business Areas citent notamment
+    Reactive Workflow Management et Inventory Ownership Management sans lien vers leur explication. Ce relevé ne prétend pas
+    compter toutes les occurrences.'
+  impact: La règle utile est noyée ; les copies favorisent les désalignements constatés et les aides de lecture restent inégales.
+    Ce constat n’est pas un comptage exhaustif du jargon.
+  recommended_correction: Conserver les invariants communs dans le périmètre propriétaire ; donner dans chaque fiche le résumé
+    autonome nécessaire et le lien utile. Réviser les occurrences spécialisées dans les fiches touchées, sans supprimer les
+    nuances ni réécrire les preuves historiques.
+  resolution: Contraintes communes de promesse et contrat des commandes de traitement mutualisés chez leurs responsables ;
+    résumés autonomes et liens conservés. Sales Order allégé ; vocabulaire spécialisé relié ou explicité dans les passages
+    corrigés.
+  resolved_under: U887
+non_defects:
+- Les identifiants BHV006 et BHV082 sont des identités historiques de capacités ; D04.s est un comportement. Le préfixe historique
+  ne détermine pas la nature.
+- Les deux comportements Direct Delivery ont des parents achat et vente distincts ; ce n’est pas un doublon d’identité.
+- Les trois Business Areas documentaires d’Operational References peuvent ne contenir que des références ; elles ne justifient
+  pas de recréer les capacités de consultation supprimées.
+documentary_limits:
+  nodes_with_explicit_market_gaps: 45
+  terms_with_explicit_market_gaps: 76
+  node_kinds:
+    capability: 9
+    behavior: 28
+    business_area: 8
+  meaning: Lacunes déclarées, distinctes d’une erreur de schéma. La validation ne certifie pas une couverture documentaire
+    SAP/Dynamics complète.
+additional_recommendations:
+- Éprouver un parcours de suspension/reprise refusée ou sans effet confirmé, et une tâche humaine dont l’échéance dépasse
+  sans réponse. Les fiches posent les principes ; les scénarios actuels ne constituent pas une validation exhaustive de ces
+  variantes.
+- Ajouter des contrôles sémantiques ciblés sur les frontières validées et une alerte de vocabulaire retiré dans les textes
+  courants. Ne pas déduire automatiquement une contribution de toute mention de capacité.
+verification:
+  prior_same_session:
+    python: 386 tests sans échec, 1 ignoré
+    atlas_unit: 137 réussis
+    browser: Quatre Business Areas, douze capacités, liens, recherche, mobile, guide et BHV082 historique vérifiés
+  reuse_reason: Aucun code, modèle, glossaire ni guide modifié pendant cet audit. Résultats de la fin du lot U885 réutilisés
+    ; contrôles structurels et compilation en mémoire complétés pour U886.
+  project_validation: 'validate_models.py : 0 erreur ; index des sources actualisé ; git diff --check sans erreur.'
+recommended_sequence:
+- Corriger A01–A08 ensemble dans modèle, glossaires et parcours, avec leurs commentaires concernés.
+- Alléger les passages touchés selon A09 sans modification de sens ; préserver les accords historiques.
+- Mettre à jour les contrats de livraison concernés et réexaminer seulement les champs/contextes réellement modifiés.
+- Revalider structure, liens de scénarios, guide, codes et affichage ; release uniquement sur demande.
+canonical_changes_applied: true
+release_requested: false
+application_U887:
+  source_refs:
+  - U887
+  changed_nodes:
+  - D01
+  - D03
+  - D03.i
+  - D03.j
+  - D03.k
+  - D04.i
+  - D06.b
+  - D07.d
+  - ba-goods-processing-order-management
+  - ba-inventory-position-management
+  - ba-order-lifecycle-management
+  - ba-order-promising
+  - master-data-ingestion
+  - master-data-ingestion-commerce
+  - master-data-ingestion-design
+  - operations-visibility
+  - service-order-cleaning
+  - service-order-cross-docking
+  - service-order-garment-finishing
+  - service-order-inspection
+  - service-order-kitting
+  - service-order-labeling
+  - service-order-packing
+  - service-order-personalization
+  - service-order-picking
+  - service-order-receiving
+  - service-order-repair-alteration
+  - service-order-scrapping
+  - subdomain-integration
+  - supply-chain-orchestration
+  changed_terms:
+  - TER031
+  - TER044
+  - TER045
+  - TER068
+  - TER112
+  - TER113
+  - TER124
+  - TER178
+  - TER179
+  superseded_delivery_contracts:
+  - availability-stabilization-U877.yaml
+  - business-area-migration-U846.yaml
+  - capability-relevance-U856.yaml
+  - credit-return-boundaries-U878.yaml
+  - integration-type-U712.yaml
+  - operational-work-audit-U881.yaml
+  - preorder-plan-inventory-U865.yaml
+  - reactive-workflow-U843.yaml
+  - scenario-migration-U793.yaml
+  - transversal-remediation-U853.yaml
+  - visibility-scope-U858.yaml
+  - vocabulary-boundary-audit-U770.yaml
+  identity_policy: Identités et rattachements conservés ; nouveaux noms des ingestions proposés pour supprimer les faux noms
+    de domaines.
+  market_basis: Corrections de cohérence internes ; sources existantes conservées, sans nouvelle équivalence éditeur ni autorité
+    source inventée. Les lacunes documentaires restent explicites.
+  agreement_policy: Autorisation du lot de corrections U887 ; aucune réécriture des accords ni adoption globale des rédactions.
+    Les contextes modifiés seront réexaminés par le parcours de publication.
+  reexamined_unpublished_agreements:
+    count: 36
+    scope: Mêmes cibles, mêmes champs et mêmes valeurs de noms et rattachements ; contexte final réexaminé, antécédents préservés.
+    method: record_intents / supersedes
+    published_agreements: Inchangés ; leur contexte sera examiné lors de la préparation de publication.
+  completed_on: '2026-10-07'
+  final_inventory:
+    scenarios: 38
+    paths: 41
+    capabilities: 80
+    business_areas: 28
+    identities_and_parents: Conservés ; codes identiques au candidat audité U886.
+  verification:
+    model_validation: 0 erreur
+    python_full:
+      run: 393
+      failures: 0
+      errors: 0
+      skipped: 1
+    final_targeted:
+      run: 41
+      failures: 0
+      errors: 0
+      scope: Derniers ajustements du guide et réexamen des accords inclus.
+    atlas_unit:
+      passed: 137
+    browser: Fiches corrigées, CTP vers précommande, variantes sans réponse/reprise non confirmée, guide et ancien lien Orchestration,
+      mobile et publication historique vérifiés.
+    backlog_render: Régénérée
+    diff_check: Sans erreur
+    release: R52 conservée ; aucun artefact publié modifié.
+  final_fingerprints:
+    modeles/backlog/model.yaml: 15540ea25c301e6a950316bf965753f9f6a27ef5cd3a33781c07f458af814491
+    modeles/backlog/glossary.yaml: 2407596dea0030ea0fd64b360009d8708052c384f6fee39976fc665e8d5f9e1a
+    modeles/backlog/modeling-glossary.yaml: 909bafcf171b0e43d48325959af2e72c151f9b9f2ba1238f5b3d3d76e6221302
+    modeles/backlog/atlas-transformation-methodology.yaml: 40cdc95c7ec09b66fed9ea9ee1a14b182b8c2f03556ed65b2d07737d90de47c3
+    modeles/backlog/decision-intents.yaml: ccfa9997e3d4ee739c837a9c5d1083f56bb549c479fdd2fc88ad7b295f2f6100
+    modeles/release/index.json: 748f22e6ef1068739e2b59c93893526dc4e81c2310a1ca2177675b51de370d0d
+  word_counts_scope:
+    D03.i: 265
+    D03.j: 259
+    D03.k: 286
+    D04.i: 308
+  additional_recommendations_delivery:
+  - 'Deux variantes ajoutées aux scénarios existants : crédit sans réponse et reprise de paiement refusée/non confirmée.'
+  - Sept tests de cohérence ajoutés ; tests navigateur étendus aux corrections et à leurs liens.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U887
+  - U889
+  - U891
+  summary: Corrections A01–A09, alignement des récits et variantes de non-réponse/reprise non confirmée.
+  required_nodes:
+  - id: D01
+    fields:
+      name: Inventory Management
+      definition: Établir et fiabiliser la référence de stock, ses mouvements, sa propriété, ses disponibilités et ses engagements
+        de quantité.
+      scope: |-
+        [Inventory Management](model:D01) tient la source de vérité locale du domaine : faits reconnus, historique, positions de référence, contrôles et corrections justifiées, engagements de quantité et changements de propriétaire autorisés. Les maîtres et responsabilités des domaines externes ne sont pas absorbés. Propriété, détention, emplacement, état qualitatif, droit d’usage, réservation et affectation restent distincts.
+
+        Inventory Visibility compose les positions physiques, logiques et projetées et qualifie les apports attendus. Cette connaissance alimente [Availability](glossary:TER112), les [Orders](glossary:TER012) et [Fulfilment](glossary:TER085). Les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068) du groupe [Order Promising](glossary:TER124) intègrent leurs évaluations et le choix de proposition.
+
+        [Availability](glossary:TER112) arbitre les affectations et les conflits entre demandes ; [Order Management](model:D04) confirme et porte la promesse. Une réponse locale peut utiliser les affectations et règles déjà applicables sans reconstruire le master plan. Une promesse calculée ne réserve pas automatiquement ; Reservation tient les engagements opposables aux usages concurrents. Les vues peuvent répondre directement au parcours de commande, sans garantie de latence déduite du modèle.
+
+        Exemple fictif : 70 pièces présentes, dont 20 réservées, et 30 attendues vendredi. [Ledger](glossary:TER056) explique les faits, Inventory Visibility expose les positions et réservations, Inventory Visibility qualifie l’apport. [ATP](glossary:TER044)/[CTP](glossary:TER045) évaluent les possibilités et délais ; [PTP](glossary:TER068) expose leurs conséquences économiques. La somme des quantités ne garantit ni la réception ni la livraison au client. [Fulfilment](glossary:TER085) coordonne les prestations et fournit leurs résultats ; seuls les effets reconnus alimentent le stock.
+
+        [Inventory Management](model:D01) distingue réception des faits, détermination du transfert selon les accords et tenue des deux registres. Inventory Ownership Transfer Decision couvre consommation, échéances et autres jalons contractuels, avec ou sans consignation. [Inventory Ownership Ledger](model:inventory-ownership-ledger) conserve le fondement des changements reconnus ; [Inventory Ledger](glossary:TER056) conserve les mouvements et états. Les faits douaniers sont qualifiés sans transfert automatique déduit de leur seul statut.
+  - id: D03
+    fields:
+      name: Availability
+      definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
+        conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
+      scope: |-
+        Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Policies. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
+
+        Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
+
+        Les [Business Areas](method:MOD039) se répondent : [Plan Visibility](model:subdomain-plans) interprète les prévisions ; [Policy Optimization](model:ba-policy-optimization) recommande cibles et paramètres ; [Order Promising](model:ba-order-promising) évalue les promesses ; [Supply Matching](model:ba-supply-matching) arbitre la couverture et ses adaptations ; [Master Plan Management](model:ba-master-plan-management) compose, révise et applique le plan commun. Leur lecture forme un ensemble de responsabilités, sans imposer une suite d’étapes. La profondeur métier se mesure aux décisions et aux cas couverts, pas au nombre de nœuds.
+
+        Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
+  - id: D03.i
+    fields:
+      name: Available-to-Promise (ATP)
+      definition: Déterminer les quantités et dates promettables à partir des ressources présentes ou futures admissibles.
+      scope: |-
+        Évaluer le stock courant admissible avec On-Hand [ATP](glossary:TER044), puis les disponibilités futures avec Projected [ATP](glossary:TER044) lorsque l’horizon le nécessite. Les deux profondeurs s’appliquent à un lieu ou à un réseau selon le périmètre autorisé.
+
+        Exigences communes : engagements, réservations et protections sans double décompte ; délais de mobilisation, préparation et transport ; calendriers, jours ouvrés, heures limites et fuseaux. Conserver origine, fraîcheur et validité des informations. Un stock après la dernière collecte ne permet pas un départ immédiat ; une donnée manquante ne devient pas certaine.
+
+        Consommer les faits et projections d’Inventory Visibility et les plans pertinents. Éviter le double compte entre prévisions, [Orders](glossary:TER012) et effets réalisés. Une réception à J+7 peut soutenir une promesse à J+60 sous réserve des autres consommations et contraintes. Les protections et droits admissibles restent applicables aux membres autorisés de leurs groupes.
+
+        La décision de promesse ne modifie pas les politiques, ne réserve ni n’affecte et ne confirme pas la promesse. Les exécutants gardent leurs calendriers et opérations internes.
+
+        Un [Planned Purchase Order](glossary:TER033) reçu ne constitue pas à lui seul un apport ferme. Qualifier sa version, sa date, sa quantité et les conditions restant à confirmer. Une entrée planifiée n’est retenue que selon les règles d’admissibilité ; si sa faisabilité reste à établir, mobiliser [CTP](glossary:TER045). À l’[affermissement](glossary:TER197), remplacer la contribution planifiée par celle du [Purchase Order](glossary:TER070) résultant, selon son engagement et sa confirmation fournisseur réels, en conservant la filiation et les conditions d’admissibilité, sans double compte. L’[affermissement](glossary:TER197) ne confirme pas automatiquement la date ni la quantité du fournisseur.
+
+        Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
+  - id: D03.j
+    fields:
+      name: Capable-to-Promise (CTP)
+      definition: Choisir une possibilité de promesse en vérifiant la faisabilité d’un apport à obtenir ou à constituer, selon
+        les matières, les capacités et les délais nécessaires.
+      scope: |-
+        Choisir une possibilité de promesse conditionnelle à partir de la faisabilité établie. Le contrôle peut porter sur des capacités déjà existantes ; obtenir un nouvel apport n’impose pas de créer de nouveaux moyens.
+
+        Supply-Based [CTP](glossary:TER045) examine la possibilité d’obtenir ou de constituer un apport selon les sources, matières, composants et délais. Capacity-Constrained [CTP](glossary:TER045) approfondit la faisabilité par les capacités finies, charges, calendriers et dépendances pertinentes. Les capacités contrôlées peuvent déjà exister ; elles ne sont pas nécessairement supplémentaires.
+
+        Une ressource déjà attendue et admissible relève d’[ATP](glossary:TER044). Une simple alternative de stock, de date, de trajet ou de produit ne constitue pas automatiquement du [CTP](glossary:TER045) ; la substitution exige une équivalence autorisée. Une estimation par délai standard ou une disponibilité supposée infinie ne démontre pas une faisabilité contrôlée.
+
+        [Availability](glossary:TER112) propose et arbitre les apports et affectations dans le master plan ; [Purchase Order](glossary:TER070) porte l’achat autorisé et les [Service Orders](glossary:TER066) les prestations. [CTP](glossary:TER045) ne crée ni achat, ni affectation, ni engagement et ne reconstruit pas les plans prévisionnels externes. Les conditions restant à vérifier et les autorisations restant à obtenir accompagnent le résultat.
+
+        Illustration FLOW : un assemblage peut être réalisable au regard des composants, mais son créneau dépend encore d’une capacité d’atelier confirmée. Les prestations logistiques nécessaires peuvent être examinées à partir des capacités communiquées, sans piloter l’organisation interne de l’exécutant.
+
+        Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
+  - id: D03.k
+    fields:
+      name: Profitable-to-Promise (PTP)
+      definition: Choisir une option de promesse selon ses conséquences économiques, dans le respect des contraintes de service
+        et des règles applicables.
+      scope: |-
+        Comparer les coûts et conséquences économiques des possibilités [ATP](glossary:TER044) et [CTP](glossary:TER045) : transport, préparation, fractionnement, substitution ou adaptation. Les données tarifaires viennent de [Price Book](glossary:TER097) et des accords applicables, sans transfert de maîtrise commerciale ou comptable. Distinguer contraintes impératives et préférences ; une valeur absente ne vaut pas zéro.
+
+        Choisir une option admissible et expliquer le compromis retenu, les hypothèses et les incertitudes. Aucun objectif de marge, poids économique universel ou primauté du coût sur le service n’est implicite. [Supply Assignment](glossary:TER017) conserve le choix des affectations collectives. La décision de promesse ne modifie pas les prix confirmés et ne déclenche pas de prestation.
+
+        Exemple fictif : comparer une livraison accélérée à 120 et deux livraisons à 80. Retenir la seconde option seulement si les dates, le fractionnement et les règles de service l’autorisent ; sinon choisir une autre option admissible ou expliciter l’absence de solution.
+
+        Fulfilment Cost Evaluation chiffre les postes comparables ; Contextual Economic Impact Evaluation complète le dossier par les conséquences locales utiles. Ces dimensions alimentent la décision [PTP](glossary:TER068).
+
+        Construire les options de produit, site, date et prestation à partir des possibilités connues et autorisées. Une substitution exige une équivalence et une autorisation provenant du responsable commercial ; ni le stock disponible ni un meilleur coût ne les créent. [ATP](glossary:TER044) évalue les ressources admissibles, [CTP](glossary:TER045) la faisabilité d’un apport et [PTP](glossary:TER068) les compromis économiques. [Service Selection Decision](model:D06.e) choisit les prestations dans le respect de la promesse. Ces décisions composent une proposition, sans capacité de sélection supplémentaire.
+
+        Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
+  - id: D04.i
+    fields:
+      name: Sales Order
+      definition: 'Gérer les commandes clients à satisfaire : enregistrer ce qui est demandé, maintenir les quantités, destinations
+        et échéances applicables, suivre les évolutions autorisées et déterminer ce qui reste à servir.'
+      scope: |-
+        Tenir les lignes, quantités, destinations, échéances et prix applicables de la commande client. Distinguer demandé, proposé, confirmé et réalisé ; suivre le reste à satisfaire et les évolutions autorisées selon le [cycle commun d’Order Management](model:D04#scope). Les conditions de l’[Agreement](glossary:TER048) restent sous leur autorité ; leur consultation n’autorise pas à les négocier.
+
+        Exemple fictif : sur 100 pièces, 60 sont livrées et 40 restent à servir. Une demande de report des 40 ne change pas automatiquement la date promise. Un retour ultérieur crée une [Return Order](glossary:TER072) distincte, liée à la vente lorsque connue ; il n’efface pas la livraison.
+
+        [Availability](glossary:TER112) détermine les propositions de promesse et les affectations ; la commande conserve les engagements effectivement acceptés. [Process Management](glossary:TER164) conduit le parcours ; [Service Management](glossary:TER152) porte les prestations confiées et [Fulfilment Coordination](glossary:TER176) les coordonne. Les exécutants réalisent les opérations. Les règles détaillées d’imputation, tolérances et autorisations restent à instruire.
+
+        [Ship to Customer](model:BHV066), [Customer Pickup](model:BHV067), [Direct Delivery](model:BHV068) et [Intercompany Sales](model:BHV069) décrivent des axes combinables. Intercompany qualifie la relation commerciale ; les autres précisent le mode de satisfaction. Identifier les quantités concernées sans les compter deux fois.
+
+        [Preorder](glossary:TER150) est un statut de la commande existante avant disponibilité commerciale. Suivre l’attente, le degré d’engagement et les révisions autorisées ; la sortie de précommande conserve la même identité. Une précommande peut déjà être ferme. La [distinction avec les propositions d’achat planifiées](model:D04#scope) dépend de la nature des objets, pas d’une règle générale achat/vente.
+
+        Les demandes et précommandes connues peuvent éclairer [Plan Visibility](model:subdomain-plans) selon leur horizon. Leur prise en compte ne crée pas une seconde commande ni une addition automatique à la prévision ; les ventes observées constituent un apport distinct.
+
+        Appliquer le résultat du [Credit Check](glossary:TER155) conduit par le [Case](glossary:TER064) de [Wholesale](model:subdomain-sales-wholesale) selon le [contrat commun](model:D04#scope), avec motif, portée, version et validité. Tenir la suspension ou la reprise autorisée ; une information absente, périmée ou une échéance dépassée ne lève pas le blocage. La dérogation reste sous autorité de [Finance](glossary:TER117).
+
+        La vue [Product Reference](model:D08) aide à comprendre les biens demandés à la vente ; leur identité reste commune dans [Product Reference](model:D08). Leurs offres et sélections ne deviennent pas de nouvelles identités produit.
+  - id: D06.b
+    fields:
+      name: Service Capacity Visibility
+      definition: Interpréter et qualifier les informations communiquées par les exécutants pour établir une connaissance
+        exploitable des capacités de service, de leur portée et de leurs incertitudes.
+      scope: |-
+        Interpréter les informations de capacité communiquées par les [Service Providers](glossary:TER088), sans présumer leur contenu ni une signification commune. Distinguer plafond, charge et disponibilité annoncée ; qualifier le service, l’unité, la période, l’origine et la fraîcheur. Cette [Visibility](method:MOD040) construit une connaissance métier, au-delà de la consultation des données reçues.
+
+        Signaler les informations manquantes, ambiguës ou non comparables et les précisions nécessaires au fournisseur. Une donnée absente reste inconnue, et ne signifie ni zéro ni capacité illimitée. Illustration fictive : 1 000 pièces par jour et 200 commandes par créneau ne sont pas comparables sans connaître la composition des commandes et les règles de conversion.
+
+        Exemple : l’entrepôt annonce un plafond de 1 000 préparations sur un créneau ; si une charge ou un disponible sont également communiqués, les présenter avec leur sens et leur date de connaissance. Ne pas transformer sans règle connue ce plafond en capacité encore disponible.
+
+        Cette visibilité ne décide pas d’augmenter les ressources de l’exécutant, ne calcule pas implicitement un disponible à partir d’une formule non convenue et ne réserve pas la capacité. Les décisions de promesse d’[Availability](glossary:TER112) l’utilisent pour calculer la promesse recommandée ; [Service](glossary:TER075) Selection Decision et [Fulfilment Adaptation Decision](glossary:TER177) peuvent la mobiliser. Le nom est adopté U246 ; les détails de représentation et contrats restent proposés.
+
+        Précision éditoriale U435 : contextualiser les créneaux et dates communiqués avec leur calendrier applicable, fuseau et éventuelle heure limite. Une fermeture ou une information périmée doit rester visible aux décisions consommatrices ; aucun disponible ni engagement de capacité n’est déduit d’un plafond communiqué.
+
+        Conserver chez [Fulfilment](glossary:TER085), responsable du dialogue avec les exécutants ; [Availability](glossary:TER112), pour les promesses et les arbitrages collectifs la consomment. Un plafond communiqué n’est pas un disponible calculé.
+
+        Distinguer les capacités communiquées de picking, packing, services complémentaires de traitement des biens, tels que l’étiquetage ou le reconditionnement et cross-docking avec leur unité et leurs contraintes. Deux plafonds partageant les mêmes équipes ne sont pas nécessairement additifs.
+
+        La [capacité opérationnelle](glossary:TER199) est une mesure sur un horizon donné, distincte d’une aptitude métier.
+  - id: D07.d
+    fields:
+      name: Operations Tracking
+      definition: Capter et intégrer les faits, jalons, estimations et résultats des prestations Supply, physiques, humaines
+        ou numériques, en les reliant à la demande et à la prestation concernées.
+      scope: |-
+        Reconnaître origine, date, prestation, résultat métier et corrections ; distinguer estimation, engagement et constat. Capter les retours des opérations physiques et services distants, y compris documentaires et d’encaissement. Une fin technique ne prouve pas un résultat métier réussi. Alimenter [Operations Visibility](model:operations-visibility) pour l’avancement et les résultats et [Inventory Visibility](model:D01.c) pour les ressources futures. Les doublons, retours tardifs, réalisations partielles et échecs restent identifiables. Exemple fictif : recevoir deux notifications identiques de fin de transport et n’intégrer qu’un fait métier. La restitution, la coordination, l’adaptation et la tenue des engagements restent distinctes.
+
+        Ces faits contribuent au suivi du parcours. [Process Visibility](glossary:TER175) les rapproche des activités et attentes du processus ; leur captation ne crée pas un second état global du parcours.
+  - id: ba-goods-processing-order-management
+    fields:
+      name: Goods Processing Order Management
+      definition: Tenir les demandes et engagements de prestations portant sur le traitement des biens.
+      scope: |-
+        Couvre préparation, réception, transit, conditionnement, finition, entretien, contrôle et rebut ; ne présume pas leur réalisation dans un entrepôt et ne pilote pas les opérations internes.
+
+        Bénéficiaire et résultat : Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
+
+        Exemple fictif : Demander un nouvel étiquetage sur 40 pièces et suivre son acceptation puis son résultat ; la réalisation physique appartient au prestataire.
+
+        Les familles sont des commandes passives adressées à la logistique selon une offre de service définie. Elles portent les exigences et résultats ; les [Tasks](glossary:TER089) du moteur de [Reactive Workflow Management](glossary:TER125) pilotent leur suivi. Aucune décision autonome n’est attachée à ces familles.
+
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+  - id: ba-inventory-position-management
+    fields:
+      name: Inventory State Management
+      definition: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits, vérifications
+        et corrections.
+      scope: |-
+        Les changements de propriétaire sont portés par [Inventory Ownership Management](glossary:TER132) ; aucune fusion des registres ou de la réservation.
+
+        Bénéficiaire et résultat : Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
+
+        Exemple fictif : Une réception annoncée de 100 pièces est constatée à 80 : restituer la correction et les engagements concernés sans confondre disponibilité et propriété.
+
+        State désigne la situation quantitative datée : quantités par produit, lieu et état, mouvements reconnus, contrôles et engagements de [Reservation](model:D02.c). Ce périmètre reste distinct de la propriété des biens.
+  - id: ba-order-lifecycle-management
+    fields:
+      name: Order Lifecycle Management
+      definition: Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer leur
+        état.
+      scope: |-
+        La structuration et la visibilité restent des capacités distinctes ; le pilotage du parcours relève de [Reactive Workflow Management](glossary:TER125).
+
+        Bénéficiaire et résultat : Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
+
+        Exemple fictif : Une commande est fractionnée avec accord du client : conserver les engagements et la filiation des parties sans choisir leur transporteur.
+
+        Les commandes appliquent les résultats autorisés des contrôles propres aux [Cases](glossary:TER064). Le [Credit Check](glossary:TER155) relève du parcours de [Wholesale](model:subdomain-sales-wholesale) et des règles financières compétentes ; ce périmètre ne porte pas une capacité de décision financière autonome.
+  - id: ba-order-promising
+    fields:
+      name: Order Promising
+      definition: Déterminer et réexaminer les propositions de quantités, dates et conditions de satisfaction des demandes.
+      scope: |-
+        Proposer ne confirme pas un engagement de commande.
+
+        Bénéficiaire et résultat : Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
+
+        Exemple fictif : Proposer 60 pièces vendredi et 40 lundi ; la proposition ne devient un engagement que lors de sa confirmation dans la commande.
+
+        Construire les options de produit, site, date et prestation à partir des possibilités connues et autorisées. Une substitution exige une équivalence et une autorisation provenant du responsable commercial ; ni le stock disponible ni un meilleur coût ne les créent. [ATP](glossary:TER044) évalue les ressources admissibles, [CTP](glossary:TER045) la faisabilité d’un apport et [PTP](glossary:TER068) les compromis économiques. [Service Selection Decision](model:D06.e) choisit les prestations dans le respect de la promesse. Ces décisions composent une proposition, sans capacité de sélection supplémentaire.
+
+        Choisir une première proposition ou réexaminer une promesse existante lorsque les disponibilités, la demande ou les priorités changent. Expliciter quantités, dates, conditions, hypothèses et part non couverte ; distinguer date demandée, proposée et confirmée, expédition et réception. Les calendriers, fermetures, heures limites et fuseaux proviennent de leurs responsables. Les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068) se composent selon le besoin pour produire une proposition cohérente, sans séquence universelle ni trois réponses finales concurrentes. Si leurs résultats sont incompatibles, réexaminer les options ou expliciter la part non couverte. Respecter les protections et engagements lors du réexamen, y compris collectif : maintenir, reporter ou mettre en attente une demande reste soumis aux règles et autorisations. [Supply Assignment](glossary:TER017) conserve les arbitrages d’affectation dans le [master plan de matching](glossary:TER100). [Order Management](model:D04) porte la confirmation et les révisions autorisées ; aucune proposition ne confirme, ne réserve, ne réaffecte ou ne déclenche un achat automatiquement. Toute promesse ne nécessite pas un nouveau plan et tout changement d’état ne déclenche pas un recalcul. Proposer 60 pièces vendredi et 40 lundi ne crée pas deux commandes : [Order Structuring](model:D04.n) conserve cette responsabilité. [Service Selection Decision](model:D06.e) peut adapter les prestations sans modifier la promesse.
+
+        Évaluer aussi la cohérence de la commande entière : une possibilité par ligne ne prouve pas que toutes les lignes peuvent être servies ensemble. Respecter les dépendances entre lignes, la livraison complète ou partielle autorisée et les dates communes attendues. Présenter une proposition cohérente ou expliquer l’impossibilité ; aucun fractionnement de commande n’est implicite. [Order Structuring](model:D04.n) porte les restructurations autorisées.
+
+        Chaque proposition indique les hypothèses et conditions qui la rendent encore valable au moment de la confirmation. Si la ressource, la date ou une condition change pendant l’attente, réévaluer avant de confirmer. Une proposition ne protège aucune quantité par elle-même : une [réservation](model:D02.c), lorsqu’elle est requise et autorisée, possède ses propres conditions de libération ou d’expiration. Aucun délai fixe de validité n’est imposé.
+
+        L’absence de solution admissible est un résultat explicite : quantité non couverte, contrainte bloquante, options écartées et raison de leur rejet, information manquante éventuelle et condition de réexamen. Une information insuffisante ne prouve pas une impossibilité physique. Transmettre ce résultat à [Order Management](model:D04) pour maintenir la demande en attente, proposer une révision ou constater un refus selon les règles ; ne pas confirmer une promesse infaisable.
+  - id: master-data-ingestion
+    fields:
+      name: Reference Ingestion
+      definition: Recevoir et intégrer les référentiels fournis par les domaines sources pour maintenir les références locales
+        utilisées par la Supply.
+      scope: |-
+        Recevoir les apports sourcés, vérifier leur identité, leur portée et leur validité connues, intégrer les versions ou corrections prises en compte et conserver le résultat de cette intégration. Les contributions commerciales, celles de [Finance](glossary:TER117) et celles de [Design & Development](glossary:TER105) gardent leur provenance. La répartition des sources commerciales entre [Sales](model:domain-sales) et [Sourcing and Procurement](model:domain-sourcing-procurement) reste à documenter ; aucune autorité ni alimentation installée n’est déduite de ce regroupement.
+
+        Les sujets de référence restent distincts. Les produits et partenaires sont décrits dans : [Product Reference](glossary:TER052) (produits et variantes), Party / Role (personnes, relations et rôles), [Agreement](glossary:TER048) (conditions contractuelles). Les offres et moyens sont décrits dans : [Product Catalog](glossary:TER049) (offres et éligibilité), [Fulfilment Network](glossary:TER054) (lieux et relations), [Service Catalog](glossary:TER094) (prestations de référence), [Assortment](glossary:TER087) (sélections et périodes) [Product Price Book](model:product-price-book) (tarifs produits) et [Service Price Book](model:service-price-book) (tarifs de services). Un sujet peut recevoir plusieurs contributions et un domaine en fournir plusieurs.
+
+        L’ingestion reconnaît les apports et leur prise en compte ; [Operational References](model:business-references) porte la composition et le maintien de la vue locale utilisable de chaque sujet, avec fraîcheur, provenance et incohérences connues. Une donnée reçue mais rejetée ou en attente ne devient pas une référence applicable. Le domaine tient la source de vérité locale Supply ; il ne négocie pas les accords, ne conçoit pas commercialement les offres et ne corrige pas silencieusement les maîtres d’entreprise.
+
+        Les références peuvent être liées sans fusionner leurs autorités : produit dans plusieurs catalogues, assortiment référencé par un accord, offre associée à des tarifs. Le tarif reste dans [Price Book](glossary:TER097) ; son évolution ne modifie pas automatiquement le prix ou le [SLA](glossary:TER076) d’un engagement existant. La consultation du catalogue de services ne remplace pas la captation des faits d’exécution.
+
+        Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
+
+        Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+
+        Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
+
+        Recevoir également les données de [Product Reference](model:D08), [Packaging Material Reference](model:packaging-material-reference), [Packaging Specification](model:packaging-specification) et [Internal Supplies & Equipment Reference](model:internal-supplies-equipment-reference). Préserver les correspondances connues entre références, les versions et les conversions d’unités reçues. Distinguer une consigne réutilisable des structures de conditionnement annoncées ou réalisées, qui sont des informations d’opération. Les maîtres de ces apports restent à qualifier sur preuve ; aucun flux installé n’est déduit de cette couverture cible.
+
+        L’apport du contrôle de gestion alimente [Customer Credit Profile](model:customer-credit-profile) dans [Partner & Agreement References](model:ba-partner-agreement-references), selon le comportement [Reference Ingestion from Finance](model:master-data-ingestion-finance). [Party / Role](model:D09) reste la référence d’identité liée au profil.
+  - id: master-data-ingestion-commerce
+    fields:
+      name: Commercial Reference Ingestion
+      definition: Intégrer les données de référence provenant des sources commerciales dont les responsabilités restent à
+        documenter, en conservant leur contrat et leur provenance.
+      scope: Conserver identification, validité, version et corrections selon le contrat source. Le repère historique Commerce
+        ne désigne pas un domaine courant. Les responsabilités de [Sales](model:domain-sales) et de [Sourcing and Procurement](glossary:TER109)
+        restent à établir selon les données ; ne pas attribuer toutes les références commerciales à [Sales](model:domain-sales).
+        Aucun maître, contrat détaillé ni flux installé n’est présumé.
+  - id: master-data-ingestion-design
+    fields:
+      name: Design & Development Reference Ingestion
+      definition: Intégrer les données de référence provenant de [Design & Development](glossary:TER105), en conservant leur
+        contrat et leur provenance.
+      scope: Conserver identification, validité, version et corrections selon le contrat source. [Design & Development](glossary:TER105)
+        est un système métier de contexte, pas un domaine fictif nommé Design. Le responsable précis de chaque référence reste
+        à documenter. Aucun maître, contrat détaillé ni flux installé n’est présumé.
+  - id: operations-visibility
+    fields:
+      name: Operations Visibility
+      definition: Rendre visibles l’avancement, les résultats et les attentes des prestations Supply à partir des faits intégrés.
+      scope: |-
+        Consolider les faits, jalons, estimations et résultats acquis, partiels ou en échec reçus par [Operations Tracking](model:D07.d). Distinguer fait, engagement et estimation, expliciter origine, fraîcheur et informations absentes. Présenter les perspectives entrepôt, transport et magasin sans imposer un cycle commun aux services. Les exécutants conservent leurs opérations internes ; Orchestration coordonne, Adaptation Decision choisit les adaptations et [Service Management](model:subdomain-service-orders) tient les engagements. [Inventory Visibility](model:D01.c) restitue les positions de stock et les ressources attendues. Exemple fictif : une prestation documentaire est en échec tandis que le transport est achevé ; exposer séparément leurs résultats et les attentes propres aux prestations. Leur effet sur la suite du parcours est expliqué par [Process Visibility](glossary:TER175).
+
+        [Process Visibility](glossary:TER175) porte désormais le parcours complet dans [Process Supervision](glossary:TER165). [Operations Visibility](glossary:TER178) conserve la connaissance de réalisation des prestations et la transmet pour cette lecture. Un résultat de prestation ne prouve pas que toutes les conditions du parcours sont remplies.
+  - id: service-order-cleaning
+    fields:
+      name: Cleaning Order
+      definition: Porter les demandes de nettoyage des vêtements, chaussures et accessoires confiées aux exécutants, leurs
+        exigences, engagements et résultats.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Nettoyage et détachage des vêtements, chaussures et accessoires.
+
+        Résultat de propreté ; techniques au catalogue.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Détacher des chaussures retournées et distinguer les résultats complets et partiels.
+  - id: service-order-cross-docking
+    fields:
+      name: Cross-Docking Order
+      definition: Porter les demandes de transit confiées aux exécutants et les engagements de passage des marchandises reçues
+        vers les départs prévus.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Tenir les arrivées et sorties concernées, les quantités, fenêtres attendues, prises en charge et changements de prestation. [Availability](glossary:TER112) arbitre la couverture et les affectations partagées ; [Fulfilment](glossary:TER085) coordonne le passage et les adaptations locales. Une arrivée tardive ou un départ manqué produit des faits et suites explicites, sans réaffectation implicite d’autres commandes. L’instruction peut être autonome ou liée aux ordres entrants et sortants ; le cross-docking évite le stockage conventionnel sans imposer le même parcours à toutes les unités.
+
+        Exemple fictif : Un lot attendu doit rejoindre un départ magasin ; le retard d’arrivée exige une suite de prestation et un arbitrage si la promesse est affectée.
+
+        La prestation est décrite dans le [Service Catalog](model:D14) ; le [Service Order](glossary:TER066) en porte les exigences et engagements individuels auprès du [Service Provider](glossary:TER088).
+  - id: service-order-garment-finishing
+    fields:
+      name: Garment Finishing Order
+      definition: Porter les demandes de finition d’aspect des vêtements confiées aux exécutants, leurs exigences, engagements
+        et résultats.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Finition d’aspect textile : repassage, défroissage, remise en forme.
+
+        Se distingue du support de présentation et du nettoyage.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Défroisser des chemises et signaler les pièces dont l’aspect reste non conforme.
+  - id: service-order-inspection
+    fields:
+      name: Inspection Order
+      definition: Porter les demandes d’inspection des vêtements, chaussures et accessoires confiées aux exécutants, leurs
+        exigences, engagements et résultats.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Inspection autonome, contrôle de conformité et classement d’état des articles.
+
+        Le contrôle intégré à une autre prestation reste dans cette prestation ; le constat ne décide pas du devenir du stock.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Examiner un lot retourné et livrer un constat d’état sans décider de sa destination.
+  - id: service-order-kitting
+    fields:
+      name: Kitting Order
+      definition: Porter les demandes de constitution, séparation et recomposition d’ensembles confiées aux exécutants, leurs
+        exigences, engagements et résultats.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Constitution, séparation et recomposition d’ensembles ou assortiments spécifiés.
+
+        Kitting / Dekitting regroupés ; ne décide pas des affectations de stock aux magasins.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Défaire des assortiments tailles/couleurs et constituer les ensembles spécifiés.
+  - id: service-order-labeling
+    fields:
+      name: Labeling Order
+      definition: Porter les demandes de marquage et d’étiquetage confiées aux exécutants, leurs exigences, engagements et
+        résultats.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Étiquetage et réétiquetage, RFID et pose d’antivols ; information, identification ou protection attendue.
+
+        Regroupe des variantes ; pas un ordre distinct pour chaque technologie.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Réétiqueter 200 vestes selon le tarif accepté et vérifier la version appliquée.
+
+        Qualifier et suivre la prestation d’étiquetage ou de réétiquetage confiée, en tenant la spécification attendue et la conformité du résultat communiqué.
+
+        La conformité porte sur l’information appliquée et sa version, pas seulement sur une quantité traitée. Les références des consignes relèvent du catalogue ; les exigences et engagements individuels sont tenus dans l’ordre. Le tracking et le rapprochement fournissent les constats et écarts ; l’exécutant réalise le geste physique.
+
+        Exemple fictif : Un changement d’étiquette exige la version attendue pour le lot concerné ; une confirmation de traitement ne suffit pas si elle concerne une autre version.
+
+        L’étiquetage et le réétiquetage relèvent de [Labeling Order](model:service-order-labeling). La consigne distingue version précédente, version cible et conformité du réétiquetage.
+  - id: service-order-packing
+    fields:
+      name: Packing Order
+      definition: Porter les demandes de conditionnement et de reconditionnement confiées aux exécutants, leurs exigences,
+        engagements et résultats.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Conditionnement initial, Repacking, pliage, mise sur cintre, présentation cadeau.
+
+        Le reconditionnement est une modalité du même [Packing Order](model:service-order-packing).
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Passer un lot de vêtements pliés sur cintres, sans changer la composition des articles.
+
+        Porter la prestation de reconditionnement confiée, en précisant la transformation attendue du conditionnement et en conservant les écarts signalés.
+
+        Modifier un conditionnement existant est une modalité du même [Packing Order](model:service-order-packing), sans créer deux demandes pour la même prestation. Les consignes réutilisables relèvent de [Packaging Specification](model:packaging-specification) ; les exigences et engagements individuels sont tenus dans l’ordre. Le tracking et le rapprochement fournissent les constats et écarts ; l’exécutant réalise le geste physique.
+
+        Exemple fictif : Reconditionner un lot déjà emballé selon une nouvelle consigne ; distinguer quantité traitée et quantité conforme.
+
+        Le reconditionnement relève de [Packing Order](model:service-order-packing). La mise sur cintre, le changement de cintre et le retour à une présentation pliée relèvent du conditionnement, sans changer la composition d’un kit.
+
+        Porter les exigences de conditionnement commun, par exemple préparer les biens compatibles d’une commande B2B sur une palette lorsque cela est réalisable. La libération simultanée des ordres ne garantit pas ce résultat ; tenir la consigne, la prise en charge et le résultat effectif. L’exécutant conserve la palettisation détaillée.
+
+        Référencer la version de [Packaging Specification](model:packaging-specification) et les matières de [Packaging Material Reference](model:packaging-material-reference) lorsqu’elles sont nécessaires. Le [Service Catalog](model:D14) décrit la prestation offerte ; la spécification décrit son résultat de conditionnement. Conserver séparément exigences particulières et résultat annoncé. Exemple fictif : demander 120 pièces par cartons de douze ; les dix cartons annoncés ne prouvent ni la réception de 120 pièces ni leur conformité à destination.
+  - id: service-order-personalization
+    fields:
+      name: Personalization Order
+      definition: Porter les demandes de personnalisation des vêtements, chaussures et accessoires confiées aux exécutants,
+        leurs exigences, engagements et résultats.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Personnalisation du produit : broderie, monogramme, gravure sur accessoires.
+
+        La carte cadeau jointe relève de la présentation, pas d’une transformation du produit.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Broder les initiales demandées sur les articles désignés.
+  - id: service-order-picking
+    fields:
+      name: Picking Order
+      definition: Porter les demandes de prélèvement confiées aux exécutants, leurs exigences de quantité et de référence,
+        leurs engagements et les manquants constatés.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Préciser les biens à prélever, les quantités, le lieu et l’échéance demandés ; tenir la prise en charge, les changements et le reste de prestation à traiter. Les constats proviennent du tracking et les écarts qualifiés du rapprochement. L’exécutant organise les emplacements, parcours et opérateurs. Aucun prélèvement ne réaffecte de lui-même les ressources d’une autre commande. La prestation peut appartenir à un ordre composite de préparation sans perdre ses exigences propres.
+
+        Exemple fictif : Sur 100 pièces demandées, 96 sont prélevées : tenir la suite des quatre manquantes sans confondre le reliquat de prestation avec celui de la commande.
+
+        La prestation est décrite dans le [Service Catalog](model:D14) ; le [Service Order](glossary:TER066) en porte les exigences et engagements individuels auprès du [Service Provider](glossary:TER088).
+
+        Porter les exigences de préparation commune lorsque des ordres sont libérés ensemble pour une commande ou un client. Conserver les quantités et engagements propres de chaque ordre ; le regroupement décidé par [Fulfilment](glossary:TER085) ne prescrit pas les vagues, parcours ou opérateurs internes.
+  - id: service-order-receiving
+    fields:
+      name: Receiving Order
+      definition: Porter les demandes de réception de marchandises confiées aux exécutants, leurs quantités et conditions
+        attendues, leurs engagements et les résultats des réceptions partielles, refusées ou non conformes.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Porter l’origine attendue, les articles et quantités, le lieu, les créneaux, les consignes de prise en charge et les preuves attendues. Suivre acceptation, révisions, annulation, réception partielle et clôture avec le reste à réaliser. Une annonce d’arrivée ou un document ne prouve pas la réception.
+
+        Une demande de réception peut être liée à un [Purchase Order](glossary:TER070), [Transfer Order](glossary:TER071), [Return Order](glossary:TER072) ou apport consigné ; elle ne remplace pas leurs engagements. Le prestataire reçoit physiquement et organise ses tâches internes. Une inspection autonome peut être confiée à [Inspection Order](model:service-order-inspection) ; un contrôle intégré demeure dans la réception. [Receiving Order](model:service-order-receiving) ne décide pas du devenir d’un retour et ne garantit pas que le stock est vendable.
+
+        [Fulfilment Orchestration](model:D06) coordonne les prestations. [Operations Tracking](glossary:TER179) capte leur résultat et Service Reconciliation qualifie l’écart ; [Receiving Order](model:service-order-receiving) tient le solde de sa prestation. Inventory Tracking et [Inventory Ledger](glossary:TER056) prennent en compte les faits de stock reconnus. L’instruction de réception ne crée ni mouvement, ni changement automatique de propriété, ni nouvel achat.
+
+        Créer cet [Order](glossary:TER012) lorsqu’une réception est explicitement confiée et suivie comme prestation. Recevoir seulement une notification ne justifie pas un ordre artificiel. Aucune famille supplémentaire de rangement ou de stockage ni réalisation Beaumanoir n’est déduite.
+
+        Porter le conditionnement attendu et la version de [Packaging Specification](model:packaging-specification) utile à la réception. Conserver les [Handling Units](glossary:TER189) annoncées et reçues avec identifiants, contenu et écarts, sans transformer l’annonce en fait de stock. Exemple fictif : neuf cartons de douze pièces et un carton de dix font 118 pièces reçues face à 120 annoncées ; la cause de l’écart reste à établir.
+  - id: service-order-repair-alteration
+    fields:
+      name: Repair & Alteration Order
+      definition: Porter les demandes de réparation et de retouche des vêtements, chaussures et accessoires confiées aux exécutants,
+        leurs exigences, engagements et résultats.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Correction de défauts et retouches confiées sur vêtements, chaussures et accessoires.
+
+        Distinguer restauration et modification demandée dans les exigences.
+
+        Préciser articles, quantités, consignes, résultat attendu et échéance ; conserver acceptation, modifications et écarts reçus.
+
+        Exemple fictif : Remplacer des boutons sur un lot de manteaux selon les retouches autorisées.
+  - id: service-order-scrapping
+    fields:
+      name: Scrapping Order
+      definition: Porter une demande de mise au rebut de biens, ses autorisations, quantités, consignes et preuves attendues
+        jusqu’à son résultat reconnu.
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Un [Scrapping Order](glossary:TER104) permet de confier et suivre la mise au rebut comme prestation logistique identifiable. Préciser les biens, quantités, autorisations, consignes de traitement et preuves exigées. L’[Order](glossary:TER012) conserve le réalisé, le reliquat et les écarts ; une clôture partielle doit être explicitement autorisée. Le traitement peut être exécuté par un prestataire externe et durer dans le temps.
+
+        [Inventory Disposition Decision](model:D05.i) détermine le devenir autorisé ; l’[Order](glossary:TER012) ne décide pas de détruire au seul motif d’un écart de stock. [Fulfilment Coordination](model:D06.d) coordonne la prestation ; [Operations Tracking](model:D07.d) reçoit les faits d’exécution et [Service Reconciliation](model:D07.c) les rapproche de l’attendu. [Inventory Tracking](model:D01.f) et [Inventory Ledger](model:D01.g) intègrent et conservent les effets reconnus sur le stock. Une instruction ou une écriture comptable ne prouve pas une destruction physique.
+
+        Le comportement Scrapping de [Return Order](glossary:TER072) continue à porter l’issue du retour et ses obligations ; [Scrapping Order](glossary:TER104) porte la prestation confiée, liée au retour lorsqu’il existe. Le rebut peut aussi concerner un stock abîmé hors retour. Aucune extension automatique aux dons, déstockages commerciaux ou à toutes les filières de recyclage.
+
+        Exemple fictif : vingt vestes sont autorisées au rebut. Le prestataire prouve le traitement de dix-huit ; deux restent en attente. L’[Order](glossary:TER012) conserve ce solde tant qu’une autre clôture n’est pas autorisée. Aucun comportement supplémentaire n’est créé pour chaque motif de rebut.
+  - id: subdomain-integration
+    fields:
+      name: Integration
+      definition: Recevoir et fournir les informations métier échangées entre [Supply Chain](glossary:TER084) Orchestration
+        et les autres domaines, selon les contrats convenus, sans reprendre le pilotage des exécutants.
+      scope: |-
+        Recevoir les apports des autres domaines et leur fournir les informations opérationnelles convenues. [Inbound Information Integration](model:ba-inbound-information-integration) regroupe [Reference Ingestion](model:master-data-ingestion) et [Plan Ingestion](model:plans-ingestion). [Outbound Information Provision](model:ba-outbound-information-provision) regroupe [Accounting Data Provision](model:accounting-data-provision), [Planning Data Provision](model:planning-data-provision) et [Product Feedback](model:product-feedback). Ces deux [Business Areas](method:MOD039) portent des responsabilités distinctes et constituent le niveau métier entre ce sous-domaine et ses capacités.
+
+        Les échanges sont est-ouest entre domaines. Les appels aux exécutants, leurs retours et leur pilotage restent dans les capacités opérationnelles ; [Inventory Tracking](model:D01.f) et [Operations Tracking](model:D07.d) conservent leur rattachement. Les registres et vues gardent leur responsabilité. La préparation conserve sens, provenance, dates, corrections et conditions d’accès ; aucune plateforme ni centralisation organisationnelle n’est imposée.
+
+        Exemple fictif : une réception corrigée de 100 à 80 pièces fournit un [fait de gestion](glossary:TER120) correctif à Finance et une position révisée à la planification, selon deux contrats distincts.
+  - id: supply-chain-orchestration
+    fields:
+      name: Supply Chain Orchestration
+      definition: Organiser et adapter les ressources et les prestations pour satisfaire la demande. Arbitrer priorités, affectations
+        et apports, faire appliquer les changements autorisés aux commandes et engagements, puis coordonner les prestations
+        et suivre leurs résultats.
+      scope: |-
+        Le domaine réunit [Operational References](model:business-references), [Policies](model:subdomain-policies), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) [Integration](model:subdomain-integration) et [Process Management](model:subdomain-process-management). [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability. Ces périmètres coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
+
+        [Integration](model:subdomain-integration) reçoit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) du domaine [Demand & Supply Planning](model:domain-plan), par [Plan Ingestion](model:plans-ingestion) ; [Plan Visibility](model:subdomain-plans) les interprète dans le contexte des demandes. [Supply Plan](glossary:TER098) porte les prévisions d’entrées ou de sorties de stock hors achats. Le [master plan de matching](glossary:TER100) est un objet distinct, construit et géré dans [Availability](glossary:TER112). Le domaine [Demand & Supply Planning](model:domain-plan) reste extérieur à l’orchestration.
+
+        [Availability](glossary:TER112) choisit les propositions de promesse et maintient leur cohérence avec les arbitrages collectifs ; [Availability](glossary:TER112) arbitre les affectations ; [Order Management](model:D04) confirme, porte et révise les engagements. [Fulfilment](glossary:TER085) cherche des solutions locales préservant promesse et grands équilibres. Les exécutants réalisent les prestations et conservent leurs opérations internes.
+
+        Les sources de vérité d’entreprise restent externes ; [Operational References](glossary:TER123) porte les références locales Supply, Policies les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
+
+        [Service Management](model:subdomain-service-orders) porte les exigences et engagements propres des prestations confiées ; [Fulfilment](glossary:TER085) les compose et les coordonne. Les familles d’ordres de services sont des capacités, comme les familles d’[Orders](glossary:TER012) entrants.
+
+        [Integration](model:subdomain-integration) porte les échanges est-ouest avec les autres domaines. Les deux Tracking, les ordres et le pilotage des exécutants gardent leurs périmètres actuels.
+
+        [Process Management](glossary:TER164) définit et conduit les parcours, organise le travail humain, supervise les interventions et analyse les résultats. Les commandes conservent leurs engagements ; les décisions spécialisées et la coordination des prestations restent chez leurs responsables. Un parcours mobilise les capacités sans modifier leur rattachement métier.
+
+        Le cœur métier décrit ici fournit les capacités génériques de gestion des demandes, de disponibilité et de conduite des processus. Les [Cases](glossary:TER064) opérationnels et leurs règles propres relèvent principalement de [Sourcing and Procurement](model:domain-sourcing-procurement) et de [Sales](model:domain-sales). Les contextes [B2C](glossary:TER194) et [B2B](glossary:TER195) se situent dans ces parcours ; ils ne subdivisent pas ce domaine. Les commandes gardent leurs invariants et leurs transitions autorisées dans [Order Management](model:D04). Cette frontière métier ne prescrit ni composants partagés ni stockage commun.
+  required_catalog:
+  - collection: scenarios
+    id: b2b-partial-stock
+    content_sha256: f31e9ddfedc92bfca65ad36c597328089e1b8d0f5e2d3a05a829e0f9320cb011
+  - collection: scenarios
+    id: fashion-launch
+    content_sha256: da4eec4c564c1cc9c4d23301c94ac34f99566c7f924bc6a5d26e3658e64d45fa
+  - collection: scenarios
+    id: reference-plan-correction
+    content_sha256: 4ef8321904b56dc9c859ff29fdfc11b1d52b83a1208723f9f50157800b82495e
+  - collection: paths
+    id: b2b-partial-stock-path
+    content_sha256: 1efb2a347de04f2d8336cfee58456c61cc35b8a93e6c860e5f068e03a90ed404
+  - collection: paths
+    id: fashion-launch-path
+    content_sha256: 35bb070f52aad39da0fb1af6664d32102ad89adfa6196fbe2c1190c391db2202
+  - collection: paths
+    id: reference-plan-correction-path
+    content_sha256: d723e04966dd322aae6b86acf2b22a2212c60386d91831456e7224c351558991
+  - collection: paths
+    id: preorder-future-availability-path
+    content_sha256: 4c2d3799d5f4705ae6c22313f45555cca04146597253356546f377c4591564c7
+  - collection: paths
+    id: credit-review-no-response-path
+    content_sha256: 876078767f6f29597999bc336b280a79606e1c0fafaad557dd18afd99c08083e
+  - collection: paths
+    id: payment-resumption-not-confirmed-path
+    content_sha256: 2ec94858d4004a4b6d6c91e722281936f5a11130a3e140436aa53f261dc18391
+  supersession_U891: Les contrôles ciblés suivent le lot U891 ; leurs valeurs antérieures sont conservées dans product-packaging-supply-matching-U890.yaml.
+    Ceci ne modifie aucun accord historique.
+  supersession_U894: Seuls les contrôles de livraison des champs modifiés sont actualisés ; ancien contrat conservé dans credit-check-decision-U892.yaml.
+    Aucun accord métier étendu.
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.

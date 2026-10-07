@@ -576,6 +576,8 @@ publication_delivery:
   - U863
   - U874
   - U877
+  - U889
+  - U891
   required_catalog:
   - collection: value_streams
     id: obtain-products
@@ -593,23 +595,14 @@ publication_delivery:
     id: reliable-basis
     content_sha256: 1dd50cf82c5d333f3a3f54ad31e59afe308a16e859c4444dda26e6b42dad110b
   - collection: scenarios
-    id: b2b-partial-stock
-    content_sha256: 5ae2787331ae18ed5c519fd1cabab82b3babe3832daef92cc6741e505d33ef60
-  - collection: scenarios
     id: return-fashion-recovery
     content_sha256: 440b4b9ac213c631fcb8514cfccbb986f19f32449a6af020eb7db02fa2f91ffc
   - collection: scenarios
     id: consignment-sale-pickup
     content_sha256: f9c930d6381bad370c13822aac0667720191c166a857f89e891c8d3d5dcbe6e9
   - collection: scenarios
-    id: fashion-launch
-    content_sha256: 298c03b74b6ef9fa928718b3269a7b93ef16584ccd88a2c92cb6900c375318ef
-  - collection: scenarios
     id: shortage-reassessment
-    content_sha256: 34d765370042077847392415c4d64ab2b54349344ea4d43cc749f6d129464e3e
-  - collection: scenarios
-    id: export-remote-services
-    content_sha256: 92dd02316ae506a5274796138e8a68d5cf1e6d46b75411b2ba38b5449ec8b6ef
+    content_sha256: ef9178d7228b0c0e3a0be285a72942affc0448f219bc1f6fe34ec7bff38cccb1
   - collection: scenarios
     id: stocktaking-variance
     content_sha256: ebc68ad5baaa2e313d785a7893838f366002adbdb4cb577042a2f1862a623192
@@ -628,12 +621,6 @@ publication_delivery:
   - collection: scenarios
     id: transport-missed-connection
     content_sha256: f678fcd2dcb6f9f0f1ecdaef359c99e185f5b2f9cea9ba7013d04336514927c3
-  - collection: scenarios
-    id: remote-payment-ambiguous
-    content_sha256: 0b27cb3404bdf168234fb53438ae6d24447dede90d2a47b12a1741b8b95315f6
-  - collection: scenarios
-    id: reference-plan-correction
-    content_sha256: 7e3c9a41602951f8178e321049cf022dddcfac1829250f13a000f3d6a3cc28bf
   - collection: scenarios
     id: redistribute-protected-stock
     content_sha256: 30e38009543b085684500be3d522f17396a93b3f888c5fbdd5af620888ab7df3
@@ -671,23 +658,14 @@ publication_delivery:
     id: partial-receiving
     content_sha256: 5acb003d9a93725b4f9290aaa23a7ba61b3441a3e9686ed9cc41c2d2c9b8a918
   - collection: paths
-    id: b2b-partial-stock-path
-    content_sha256: cd18ae4491eb07fe1ff344bcbb4d9005c29dc2fdbb3f3d5139c91442cb7f1a37
-  - collection: paths
     id: return-fashion-recovery-path
     content_sha256: 4c1d77cca3b14485168a6a055cf8c66f1e24d71304bc01f44ea6d9eff2ea8984
   - collection: paths
     id: consignment-sale-pickup-path
     content_sha256: b0a41f20dfc70a7f5f9e6b61b18ac21251569958f653c3d40fb5bfd9e55b4c8f
   - collection: paths
-    id: fashion-launch-path
-    content_sha256: a2efe69e1221ec182b1e108a24a825c794666ba3d9afbd81ecc041a4ad7c7a7c
-  - collection: paths
     id: shortage-reassessment-path
-    content_sha256: 7ca5626dadae0e2a9a963091246c6c749c0e9fe4b0350779958d93e699bb782b
-  - collection: paths
-    id: export-remote-services-path
-    content_sha256: 2cfd2f2e1b279d63acffe34d8e9b97e5a02c9c98a00449966bc906df45b92c98
+    content_sha256: dd8a91dd9b839df93883622b5307c285e2f64d938e6320d61f915ff0cd4baaa6
   - collection: paths
     id: stocktaking-variance-path
     content_sha256: 79358b23bcc3f05e5ad434bf25113679074d031dc66c6ad2c986546104adeb86
@@ -705,13 +683,7 @@ publication_delivery:
     content_sha256: cf7cfe1b650cc0f8b69038754b4a64fddc98ccaf6dedacd93d99a070266803af
   - collection: paths
     id: transport-missed-connection-path
-    content_sha256: 00e6a39d60df52be7cfd0b722162a995cb50743610c1cfcbfce9af370206555c
-  - collection: paths
-    id: remote-payment-ambiguous-path
-    content_sha256: ea3e85c64b8cacdd6daa0671874a5e41885a5a55ab91060621f77ebdedd09509
-  - collection: paths
-    id: reference-plan-correction-path
-    content_sha256: 9188d729d092b1d2fc820673beb9a648f41da6c30e30f467e9aa4a9a372205f4
+    content_sha256: 9d3b80d99a8b0e3f787fa374ad27509ba667b2e1639c3909f4b12ecfa36c29d8
   - collection: paths
     id: redistribute-protected-stock-path
     content_sha256: 7b049ca30e7fae9d3382993eb6a6439310dcaa66858d1b3f4f2252032ff5da89
@@ -729,16 +701,13 @@ publication_delivery:
     content_sha256: 79fde9661db0ea74ad57089a15bc8fc2fafcc2bab2727ac80e7b4ee22f9f4441
   - collection: paths
     id: b2b-release-deadline-path
-    content_sha256: 907f2482f5b83b359c51b625b8537ec0183b28ec21effa7bd133d2ef38c33c54
+    content_sha256: 71d8155a91167ee70d4ae3a4f7f8b21ed50710cfd6c286a415dbcc6c7d46a5cb
   - collection: paths
     id: trace-accessory-kits-path
     content_sha256: 99ad67906f718498a5a94a2b20fb6e5c6b91d9251a7f41a11a852175ed69b167
   - collection: paths
     id: damaged-stock-disposition-path
     content_sha256: f03b99fe3ffd01058ea50d55bf72c74bde451fb1f836319eddbf6707680b6064
-  - collection: paths
-    id: transport-loads-six-stores-path
-    content_sha256: 41ee5035b6be28047dda2ccab819e9d4a9633bf16a6ddc820b2ba5200c585597
   - collection: paths
     id: transfer-replenishment-order-driven-path
     content_sha256: 08212ed78c4f9a16372971770adffba43f727ca16ee776646df78a44c7fc4626
@@ -750,7 +719,7 @@ publication_delivery:
     content_sha256: 47bb461a97312b4249a9beb2c240c363d2e3961e98847cf3eb48405aa3929d7a
   - collection: paths
     id: b2b-partial-stock-split-path
-    content_sha256: 6d67b6c65fd399799b30d949c9576b33321e08421c6e92a8c61a6871617707d8
+    content_sha256: 7ee9f5aeb412d5668ded767d73bfa362ccdb7177c0be1e3b5df8b12c2296d2d3
   editorial_superseded_catalog_U797:
   - collection: scenarios
     id: b2b-partial-stock
@@ -813,6 +782,8 @@ publication_delivery:
     scope: Finalités et exemples de Business Areas, corrections de noms et de grammaire ; aucune modification de parent ni
       extension des accords historiques.
   required_nodes: []
+  supersession_U891: Les contrôles ciblés suivent le lot U891 ; leurs valeurs antérieures sont conservées dans product-packaging-supply-matching-U890.yaml.
+    Ceci ne modifie aucun accord historique.
 content_review:
   pilot:
   - b2b-partial-stock
@@ -899,3 +870,68 @@ delivery_updates:
 - source_ref: U844
   reason: Compléter le récit des parcours sous délégation éditoriale, sans modifier leurs dépendances ni étendre les accords
     historiques.
+superseded_delivery_U885:
+- catalog:
+    collection: scenarios
+    id: export-remote-services
+    content_sha256: 92dd02316ae506a5274796138e8a68d5cf1e6d46b75411b2ba38b5449ec8b6ef
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U885
+- catalog:
+    collection: scenarios
+    id: remote-payment-ambiguous
+    content_sha256: 0b27cb3404bdf168234fb53438ae6d24447dede90d2a47b12a1741b8b95315f6
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U885
+- catalog:
+    collection: paths
+    id: export-remote-services-path
+    content_sha256: 2cfd2f2e1b279d63acffe34d8e9b97e5a02c9c98a00449966bc906df45b92c98
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U885
+- catalog:
+    collection: paths
+    id: remote-payment-ambiguous-path
+    content_sha256: ea3e85c64b8cacdd6daa0671874a5e41885a5a55ab91060621f77ebdedd09509
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U885
+- catalog:
+    collection: paths
+    id: transport-loads-six-stores-path
+    content_sha256: 41ee5035b6be28047dda2ccab819e9d4a9633bf16a6ddc820b2ba5200c585597
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U885
+superseded_delivery_U887:
+  source_refs:
+  - U887
+  replacement: model-coherence-audit-U886.yaml#publication_delivery
+  assertions:
+  - catalog:
+      collection: scenarios
+      id: b2b-partial-stock
+      content_sha256: 5ae2787331ae18ed5c519fd1cabab82b3babe3832daef92cc6741e505d33ef60
+  - catalog:
+      collection: scenarios
+      id: fashion-launch
+      content_sha256: 298c03b74b6ef9fa928718b3269a7b93ef16584ccd88a2c92cb6900c375318ef
+  - catalog:
+      collection: scenarios
+      id: reference-plan-correction
+      content_sha256: 7e3c9a41602951f8178e321049cf022dddcfac1829250f13a000f3d6a3cc28bf
+  - catalog:
+      collection: paths
+      id: b2b-partial-stock-path
+      content_sha256: cd18ae4491eb07fe1ff344bcbb4d9005c29dc2fdbb3f3d5139c91442cb7f1a37
+  - catalog:
+      collection: paths
+      id: fashion-launch-path
+      content_sha256: a2efe69e1221ec182b1e108a24a825c794666ba3d9afbd81ecc041a4ad7c7a7c
+  - catalog:
+      collection: paths
+      id: reference-plan-correction-path
+      content_sha256: 9188d729d092b1d2fc820673beb9a648f41da6c30e30f467e9aa4a9a372205f4

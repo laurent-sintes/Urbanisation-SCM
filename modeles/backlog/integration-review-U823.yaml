@@ -135,6 +135,7 @@ publication_delivery:
   - id: master-data-ingestion
     fields: {}
     parent: ba-inbound-information-integration
+    parent_type: contains
   - id: plans-ingestion
     fields: {}
     parent: ba-inbound-information-integration
@@ -142,6 +143,8 @@ publication_delivery:
     parent: ba-inventory-position-management
   - id: D07.d
     parent: ba-execution-assurance
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
 delivery_updates:
 - source_ref: U848
   fields:

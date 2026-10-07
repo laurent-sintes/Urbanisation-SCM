@@ -1046,6 +1046,7 @@ publication_delivery:
   - U874
   - U877
   - U880
+  - U891
   summary: '16 Business Areas, 64 capacités regroupées et 17 directes ; aucun savoir-faire supprimé. U858 : contrôles courants
     adaptés au retrait des huit Visibility de références et à la conservation de l’interprétation des plans ; état antérieur
     conservé dans Git (745813e). U861 : commandes passives et pilotage par les tâches du workflow explicités ; identités et
@@ -1061,14 +1062,6 @@ publication_delivery:
       definition: Établir et restituer les positions de stock fiables et les quantités engagées, avec leurs faits, vérifications
         et corrections.
       finality: Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
-      scope: |-
-        Les changements de propriétaire sont portés par Inventory Ownership Management ; aucune fusion des registres ou de la réservation.
-
-        Bénéficiaire et résultat : Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
-
-        Exemple fictif : Une réception annoncée de 100 pièces est constatée à 80 : restituer la correction et les engagements concernés sans confondre disponibilité et propriété.
-
-        State désigne la situation quantitative datée : quantités par produit, lieu et état, mouvements reconnus, contrôles et engagements de [Reservation](model:D02.c). Ce périmètre reste distinct de la propriété des biens.
   - id: ba-inventory-ownership-management
     kind: business_area
     parent: D01
@@ -1104,14 +1097,6 @@ publication_delivery:
       name: Order Promising
       definition: Déterminer et réexaminer les propositions de quantités, dates et conditions de satisfaction des demandes.
       finality: Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
-      scope: |-
-        Proposer ne confirme pas un engagement de commande.
-
-        Bénéficiaire et résultat : Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
-
-        Exemple fictif : Proposer 60 pièces vendredi et 40 lundi ; la proposition ne devient un engagement que lors de sa confirmation dans la commande.
-
-        Construire les options de produit, site, date et prestation à partir des possibilités connues et autorisées. Une substitution exige une équivalence et une autorisation provenant du responsable commercial ; ni le stock disponible ni un meilleur coût ne les créent. [ATP](glossary:TER044) évalue les ressources admissibles, [CTP](glossary:TER045) la faisabilité d’un apport et [PTP](glossary:TER068) les compromis économiques. [Service Selection Decision](model:D06.e) choisit les prestations dans le respect de la promesse. Ces décisions composent une proposition, sans capacité de sélection supplémentaire.
   - id: ba-supply-matching
     kind: business_area
     parent: D03
@@ -1122,11 +1107,13 @@ publication_delivery:
       finality: Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins
         restent découverts.
       scope: |-
-        Les familles de commandes portent les demandes et leurs engagements ; les registres portent les effets reconnus.
+        Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Policies](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
 
-        Bénéficiaire et résultat : Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins restent découverts.
+        [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
 
-        Exemple fictif : Deux demandes se partagent 80 pièces : arbitrer selon leurs priorités et expliciter la part non couverte sans réécrire les commandes.
+        [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Policy Optimization](model:ba-policy-optimization) recommande cibles et paramètres ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+
+        Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
   - id: ba-policy-optimization
     kind: business_area
     parent: D03
@@ -1148,27 +1135,11 @@ publication_delivery:
       definition: Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer leur
         état.
       finality: Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
-      scope: |-
-        La structuration et la visibilité restent des capacités distinctes ; le pilotage du parcours relève de Reactive Workflow Management.
-
-        Bénéficiaire et résultat : Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
-
-        Exemple fictif : Une commande est fractionnée avec accord du client : conserver les engagements et la filiation des parties sans choisir leur transporteur.
+    parent_type: contains
   - id: ba-reactive-workflow-management
     kind: business_area
-    parent: D04
     fields:
       name: Reactive Workflow Management
-      definition: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant leurs engagements.
-      finality: Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
-      scope: |-
-        Fulfilment conserve la coordination et les adaptations locales des prestations dans le mandat confié.
-
-        Bénéficiaire et résultat : Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
-
-        Exemple fictif : Un paiement confirmé débloque la suite de la commande ; un événement répété ne déclenche pas une seconde prestation. Une adaptation locale reste confiée à Fulfilment Orchestration.
-
-        Le moteur produit les [Tasks](glossary:TER089) qui pilotent le suivi des [Service Orders](glossary:TER066) passifs. La demande et son état restent dans l’Order ; le pilotage est dans les tâches ; la réalisation est chez le prestataire.
   - id: ba-service-planning
     kind: business_area
     parent: D06
@@ -1192,12 +1163,6 @@ publication_delivery:
       definition: Établir une connaissance fiable de la réalisation des prestations, rapprocher leurs résultats et rendre
         visibles les écarts.
       finality: Permettre aux responsables de la coordination de distinguer réalisation attestée, attente et écart à traiter.
-      scope: |-
-        Ne décide pas seule des adaptations et ne se substitue pas à Order Workflow Sentry.
-
-        Bénéficiaire et résultat : Permettre aux responsables de la coordination de distinguer réalisation attestée, attente et écart à traiter.
-
-        Exemple fictif : Une collecte est annoncée mais non attestée : rapprocher les faits et rendre visible l’écart sans choisir seul une autre prestation.
   - id: ba-execution-coordination
     kind: business_area
     parent: D06
@@ -1206,7 +1171,7 @@ publication_delivery:
       definition: Coordonner, libérer et adapter les prestations dans le mandat confié et les engagements applicables.
       finality: Faire réaliser les prestations confiées dans les limites de la promesse et des autorisations.
       scope: |-
-        La décision sur le devenir des biens appartient à [Inventory Disposition](glossary:TER161), Business Area distincte au sein de Fulfilment Orchestration.
+        La décision sur le devenir des biens appartient à [Inventory Disposition](glossary:TER102), Business Area distincte au sein de Fulfilment Orchestration.
 
         Bénéficiaire et résultat : Faire réaliser les prestations confiées dans les limites de la promesse et des autorisations.
 
@@ -1245,14 +1210,6 @@ publication_delivery:
       name: Goods Processing Order Management
       definition: Tenir les demandes et engagements de prestations portant sur le traitement des biens.
       finality: Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
-      scope: |-
-        Couvre préparation, réception, transit, conditionnement, finition, entretien, contrôle et rebut ; ne présume pas leur réalisation dans un entrepôt et ne pilote pas les opérations internes.
-
-        Bénéficiaire et résultat : Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
-
-        Exemple fictif : Demander un nouvel étiquetage sur 40 pièces et suivre son acceptation puis son résultat ; la réalisation physique appartient au prestataire.
-
-        Les familles sont des commandes passives adressées à la logistique selon une offre de service définie. Elles portent les exigences et résultats ; les [Tasks](glossary:TER089) du moteur de [Reactive Workflow Management](glossary:TER125) pilotent leur suivi. Aucune décision autonome n’est attachée à ces familles.
   - id: ba-transport-order-management
     kind: business_area
     parent: subdomain-service-orders
@@ -1306,6 +1263,7 @@ publication_delivery:
     parent: ba-supply-matching
   - id: D04.i
     parent: ba-order-lifecycle-management
+    parent_type: contains
   - id: D04.j
     parent: ba-order-lifecycle-management
   - id: D04.k
@@ -1396,6 +1354,7 @@ publication_delivery:
     parent: subdomain-plans
   - id: master-data-ingestion
     parent: ba-inbound-information-integration
+    parent_type: contains
   - id: operations-visibility
     parent: ba-execution-assurance
   - id: order-visibility
@@ -1426,6 +1385,7 @@ publication_delivery:
     parent: ba-reactive-workflow-management
   - id: order-workflow-orchestration
     parent: ba-reactive-workflow-management
+    parent_type: contains
   editorial_alignment_U853:
     fields:
     - ba-inventory-position-management.finality
@@ -1462,3 +1422,82 @@ publication_delivery:
     - ba-financial-service-order-management.scope
     scope: Finalités et exemples de Business Areas, corrections de noms et de grammaire ; aucune modification de parent ni
       extension des accords historiques.
+  supersession_U891: Les contrôles ciblés suivent le lot U891 ; leurs valeurs antérieures sont conservées dans product-packaging-supply-matching-U890.yaml.
+    Ceci ne modifie aucun accord historique.
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
+superseded_delivery_U885:
+- id: ba-reactive-workflow-management
+  previous_expectations:
+    fields:
+      definition: Organiser et conduire le parcours des commandes en réagissant à leur contexte tout en préservant leurs engagements.
+      finality: Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
+      scope: |-
+        Fulfilment conserve la coordination et les adaptations locales des prestations dans le mandat confié.
+
+        Bénéficiaire et résultat : Faire progresser les commandes malgré les changements de contexte, selon des activités et transitions autorisées.
+
+        Exemple fictif : Un paiement confirmé débloque la suite de la commande ; un événement répété ne déclenche pas une seconde prestation. Une adaptation locale reste confiée à Fulfilment Orchestration.
+
+        Le moteur produit les [Tasks](glossary:TER089) qui pilotent le suivi des [Service Orders](glossary:TER066) passifs. La demande et son état restent dans l’Order ; le pilotage est dans les tâches ; la réalisation est chez le prestataire.
+    parent: D04
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: ba-execution-assurance
+  previous_expectations:
+    fields:
+      scope: |-
+        Ne décide pas seule des adaptations et ne se substitue pas à Order Workflow Sentry.
+
+        Bénéficiaire et résultat : Permettre aux responsables de la coordination de distinguer réalisation attestée, attente et écart à traiter.
+
+        Exemple fictif : Une collecte est annoncée mais non attestée : rapprocher les faits et rendre visible l’écart sans choisir seul une autre prestation.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+superseded_delivery_U887:
+  source_refs:
+  - U887
+  replacement: model-coherence-audit-U886.yaml#publication_delivery
+  assertions:
+  - id: ba-inventory-position-management
+    previous_fields:
+      scope: |-
+        Les changements de propriétaire sont portés par Inventory Ownership Management ; aucune fusion des registres ou de la réservation.
+
+        Bénéficiaire et résultat : Permettre aux responsables des commandes de s’appuyer sur une position de stock expliquée et datée.
+
+        Exemple fictif : Une réception annoncée de 100 pièces est constatée à 80 : restituer la correction et les engagements concernés sans confondre disponibilité et propriété.
+
+        State désigne la situation quantitative datée : quantités par produit, lieu et état, mouvements reconnus, contrôles et engagements de [Reservation](model:D02.c). Ce périmètre reste distinct de la propriété des biens.
+  - id: ba-order-promising
+    previous_fields:
+      scope: |-
+        Proposer ne confirme pas un engagement de commande.
+
+        Bénéficiaire et résultat : Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
+
+        Exemple fictif : Proposer 60 pièces vendredi et 40 lundi ; la proposition ne devient un engagement que lors de sa confirmation dans la commande.
+
+        Construire les options de produit, site, date et prestation à partir des possibilités connues et autorisées. Une substitution exige une équivalence et une autorisation provenant du responsable commercial ; ni le stock disponible ni un meilleur coût ne les créent. [ATP](glossary:TER044) évalue les ressources admissibles, [CTP](glossary:TER045) la faisabilité d’un apport et [PTP](glossary:TER068) les compromis économiques. [Service Selection Decision](model:D06.e) choisit les prestations dans le respect de la promesse. Ces décisions composent une proposition, sans capacité de sélection supplémentaire.
+  - id: ba-order-lifecycle-management
+    previous_fields:
+      scope: |-
+        La structuration et la visibilité restent des capacités distinctes ; le pilotage du parcours relève de Reactive Workflow Management.
+
+        Bénéficiaire et résultat : Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
+
+        Exemple fictif : Une commande est fractionnée avec accord du client : conserver les engagements et la filiation des parties sans choisir leur transporteur.
+  - id: ba-goods-processing-order-management
+    previous_fields:
+      scope: |-
+        Couvre préparation, réception, transit, conditionnement, finition, entretien, contrôle et rebut ; ne présume pas leur réalisation dans un entrepôt et ne pilote pas les opérations internes.
+
+        Bénéficiaire et résultat : Donner au donneur d’ordre et au prestataire un engagement explicite sur le traitement demandé aux biens.
+
+        Exemple fictif : Demander un nouvel étiquetage sur 40 pièces et suivre son acceptation puis son résultat ; la réalisation physique appartient au prestataire.
+
+        Les familles sont des commandes passives adressées à la logistique selon une offre de service définie. Elles portent les exigences et résultats ; les [Tasks](glossary:TER089) du moteur de [Reactive Workflow Management](glossary:TER125) pilotent leur suivi. Aucune décision autonome n’est attachée à ces familles.

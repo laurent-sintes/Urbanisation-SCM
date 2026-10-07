@@ -5,7 +5,7 @@ import { ArrowLeft, BookOpen, ChevronRight, Compass, Copy, FileText, GitBranch, 
 import { usePublication } from './usePublication';
 import { useBuildUpdate } from './useBuildUpdate';
 import { useModelingGuide } from './useModelingGuide';
-import { childrenOf, hasCapabilityCards, lineageOf, parentRelationOf, relatedTo } from './model';
+import { childrenOf, hasCapabilityCards, lineageOf, parentRelationOf, relatedTo, scopeStatistics } from './model';
 import { kindLabel } from './presentation';
 import { NodeIcon } from './icons';
 import { Overview } from './components/Overview';
@@ -164,9 +164,10 @@ export function App() {
     } catch { setAnnouncement('La copie est indisponible. Tu peux copier l’adresse dans le navigateur.'); }
   };
   const atMapHome = view === 'map' && !headingNode;
+  const statistics = model && headingNode ? scopeStatistics(model, headingNode) : [];
   const breadcrumbs = <nav className="breadcrumb" aria-label="Fil d’Ariane"><>{atMapHome ? <span aria-current="page">Cartographie</span> : <button onClick={() => navigate('')}>Cartographie</button>}</>{headingNode && model && lineageOf(model, headingNode.id).map(node => <span key={node.id}><ChevronRight size={12} /><button title={node.name} onClick={() => navigate(node.id)} aria-current={headingNode.id === node.id ? 'page' : undefined}>{node.name}</button></span>)}{referenceView && <span><ChevronRight size={12}/><span aria-current="page">{view === 'scenarios' ? 'Scénarios métier' : view === 'principles' ? `${methodTitle}${methodCrumb ? ' / ' + methodCrumb : ''}` : glossaryTitle}</span></span>}</nav>;
   const shareButton = <button className="share-button" aria-label="Copier le lien" title="Copier le lien" onClick={copyLink}><Copy size={16} /><span>Copier le lien</span></button>;
-  return <ModelLinksProvider value={{ model: model || null, metaGlossary, route, onFollow: followReference }}><div className="atlas-shell" style={{ '--sidebar': `${width}px` } as CSSProperties}>
+  return <ModelLinksProvider value={{ model: model || null, metaGlossary, guide: activeGuide, route, onFollow: followReference }}><div className="atlas-shell" style={{ '--sidebar': `${width}px` } as CSSProperties}>
     <header className="topbar" inert={mobile && drawer}>
       <div className="app-brand-area">
         {model && mobile && <button id="fa-tree-open" className="mobile-menu" aria-label="Ouvrir l’arbre" title="Ouvrir l’arbre" aria-expanded={drawer} aria-controls="atlas-tree-panel" onClick={() => setDrawer(true)}><PanelLeft size={20} /></button>}
@@ -193,6 +194,7 @@ export function App() {
           <div className="eyebrow"><span>{headingNode ? kindLabel(headingNode) : view === 'principles' ? (isTransformationGuide(activeGuide) ? 'LA DÉMARCHE DE TRANSFORMATION' : 'LES REPÈRES MÉTHODOLOGIQUES') : view === 'glossary' ? 'LE VOCABULAIRE PUBLIÉ' : 'LE MODÈLE PUBLIÉ'}</span>{headingNode && view !== 'map' && <span title={`Identité persistante : ${headingNode.id}`}>{headingNode.displayCode ?? headingNode.id}</span>}</div>
           <h1 id="page-title" ref={heading} tabIndex={-1}>{view === 'scenarios' ? 'Scénarios métier' : view === 'principles' ? methodTitle : view === 'glossary' ? glossaryTitle : headingNode?.name || 'Cartographie'}</h1>
           {view !== 'sheet' && <p><ModelText text={view === 'scenarios' ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.' : view === 'principles' ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.' : view === 'glossary' ? 'Les notions et leurs définitions dans la publication consultée.' : headingNode?.purpose || (headingNode ? 'Explore cet élément et ses relations dans le modèle publié.' : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')}/></p>}
+          {statistics.length > 0 && <ul className="scope-statistics" aria-label="Contenu du périmètre" title="Totaux des objets contenus dans ce périmètre, tous niveaux confondus, dans la publication consultée.">{statistics.map(stat => <li key={stat.kind}><strong>{stat.count}</strong> {stat.label}</li>)}</ul>}
         </div></header>
         {!referenceView && <div className="view-bar"><div className="view-tabs" role="tablist" aria-label="Vue du modèle">{([{ id: 'map', label: 'Carte', Icon: LayoutGrid }, { id: 'sheet', label: 'Fiche', Icon: FileText }, { id: 'relations', label: 'Relations', Icon: GitBranch }, { id: 'market', label: 'Sources d’inspiration', Icon: BookOpen }] as const).filter(tab => selected || !['sheet', 'market'].includes(tab.id)).map(tab => <button key={tab.id} role="tab" id={`tab-${tab.id}`} aria-controls="atlas-view" tabIndex={view === tab.id ? 0 : -1} aria-selected={view === tab.id} onClick={() => changeRoute({ view: tab.id, relation: '', section: '' })} onKeyDown={e => {
           if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;

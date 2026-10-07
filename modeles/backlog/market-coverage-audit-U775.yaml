@@ -867,6 +867,7 @@ publication_delivery:
   - U861
   - U874
   - U879
+  - U891
   summary: 'Lot validé transport, rebut, traçabilité et disposition, avec trois scénarios et mapping des capacités. U861 :
     commandes passives et pilotage par les tâches du workflow explicités ; identités et rattachements conservés. U874 : services
     financiers portés par FLOW et retrait de Document Production Order ; attentes courantes alignées, preuves historiques
@@ -2015,6 +2016,8 @@ publication_delivery:
         Intégrer également les faits de processus utiles à la propriété et les transferts déjà établis par des sources autorisées. Operations Tracking fournit les résultats des prestations ; les échéances convenues peuvent déclencher un examen distinct. Inventory Ownership Transfer Decision applique les conditions de l’accord ; [Inventory Ownership Ledger](model:inventory-ownership-ledger) conserve les changements reconnus. Ne pas déduire automatiquement un transfert de tout événement reçu.
 
         La traçabilité exige aussi des faits reliant les biens : lot d’origine, composants consommés, coffrets produits, fractionnements et destinations. L’origine technique du message ne remplace pas l’origine métier du produit. Intégrer les liens communiqués sans inventer ceux que les sources ne fournissent pas ; transmettre corrections et identifiants à [Inventory Ledger](model:D01.g). Reconstituer un parcours pour répondre à une question relève de [Inventory Visibility](model:D01.c), pas d’un nouveau comportement isolé de Tracking. Exemple fictif : intégrer que les accessoires du lot A17 ont été incorporés aux coffrets K1 et K2.
+
+        Intégrer les [Handling Units](glossary:TER189) annoncées ou constatées, leurs identifiants, contenu, niveaux et unités, lorsque les sources les fournissent. Distinguer annonce et réception reconnue, relier les corrections sans créer deux effets de stock et sans déduire un contenu manquant de la seule [Packaging Specification](model:packaging-specification). La consigne décrit le modèle ; le fait décrit les biens réellement connus.
   - id: D01.g
     fields:
       scope: |-
@@ -2025,6 +2028,8 @@ publication_delivery:
         [Inventory Visibility](model:D01.c) compose les positions à partir des deux registres et des engagements de quantité. Un solde initial ou externe conserve sa portée sans fabriquer son historique. Une réception corrigée de 100 à 80 garde la justification de la correction ; elle ne devient pas 180 pièces. Valorisation et comptabilité générale restent sous leur responsabilité propre.
 
         Conserver les filiations reconnues entre entrées, transformations et sorties : origines, lots, composants consommés, produits obtenus, fractionnements et destinations. Une [traçabilité](glossary:TER101) utile ne se réduit pas au fournisseur initial ni à l’origine technique d’un message. Conserver références, quantités, dates et corrections permettant de relier ces faits, avec leurs limites de connaissance ; ne pas fabriquer une généalogie complète à partir d’un simple solde. Inventory Visibility exploite ces liens ; le registre ne prend ni décision de rappel ni décision d’usage. Exemple fictif : conserver le lien entre un lot d’accessoires et les coffrets assemblés, puis leurs sorties vers les magasins.
+
+        Conserver les structures et contenus des [Handling Units](glossary:TER189) reconnus, avec leurs liens aux biens, dates et corrections. Une [Packaging Specification](model:packaging-specification) peut qualifier une attente ; elle ne remplace pas une preuve du contenu reçu. Exemple fictif : conserver une réception reconnue de 118 pièces, puis sa correction éventuelle, sans comptabiliser les 120 annoncées comme une réception supplémentaire.
   - id: D01.c
     fields:
       scope: |-
@@ -2039,6 +2044,8 @@ publication_delivery:
         Illustration FLOW : un achat de 100 pièces est expédié pour 80 ; la vue expose 80 en transit et un reliquat de 20 à confirmer, avec leurs échéances. Après réception de 60, elle distingue ces 60 présentes des 20 encore en transit et des 20 non expédiées.
 
         Exploiter la [traçabilité](glossary:TER101) conservée dans [Inventory Ledger](glossary:TER056) pour reconstituer l’origine amont d’un bien ou les destinations aval des biens issus d’un lot, y compris après assemblage ou fractionnement. Signaler les liens manquants et le périmètre réellement documenté ; absence de lien ne prouve pas absence d’impact. La restitution peut éclairer une décision sur un lot défectueux sans décider elle-même de bloquer le stock ou d’organiser un rappel. Exemple fictif : retrouver les coffrets contenant un accessoire défectueux et les magasins qui les ont reçus.
+
+        Restituer le conditionnement attendu, annoncé et reçu lorsque documenté, avec les [Handling Units](glossary:TER189), leur contenu et les limites de connaissance. Rapprocher les quantités dans leurs unités connues, sans convertir un nombre de cartons en pièces par hypothèse silencieuse. Exemple fictif : afficher 120 pièces annoncées, 118 reçues et un écart de deux à clarifier ; la spécification de douze pièces par carton demeure distincte du contenu réel.
   - id: D04.l
     fields:
       scope: |-
@@ -2056,82 +2063,22 @@ publication_delivery:
 
         Conserver les parcours spécifiques ; le choix du devenir et les prestations sont mobilisés auprès de [Fulfilment](glossary:TER085), pas exécutés par l’[Order](glossary:TER012).
 
-        Cette famille porte le cycle et les engagements de ses [Orders](glossary:TER012) selon le [contrat commun d’Order Management](model:D04) : préparation, révisions, affermissement, protections, autorisation, suspension/reprise, annulation, clôture et conservation. Elle distingue demande, proposition, engagement confirmé et réalisé, rapproche les résultats pour tenir le reste à satisfaire et expose ces informations à [Order Visibility](model:order-visibility). Les variantes décrivent des axes métier combinables ; elles ne recopient pas ce cycle commun.
+        Cette famille porte le cycle et les engagements de ses [Orders](glossary:TER012) selon le [contrat commun d’Order Management](model:D04) : préparation, révisions, [affermissement](glossary:TER197), protections, autorisation, suspension/reprise, annulation, clôture et conservation. Elle distingue demande, proposition, engagement confirmé et réalisé, rapproche les résultats pour tenir le reste à satisfaire et expose ces informations à [Order Visibility](model:order-visibility). Les variantes décrivent des axes métier combinables ; elles ne recopient pas ce cycle commun.
 
         L’[Order](glossary:TER012) de retour n’efface pas la vente d’origine.
 
         Exemple fictif : un retour de 80 euros donne lieu à un avoir obtenu de Billing puis à un remboursement réalisé par Payment. La remise en stock du produit suit son propre résultat ; elle ne solde pas à elle seule le remboursement attendu.
   - id: D06
-    fields:
-      scope: |-
-        Déterminer les prestations requises, choisir les services et exécutants, coordonner leurs contributions et adapter le plan d’exécution. [Service Management](model:subdomain-service-orders) tient les exigences, engagements propres et évolutions des prestations confiées. [Fulfilment](glossary:TER085) conserve la visibilité des capacités communiquées, le tracking, le rapprochement des résultats et la décision de devenir logistique des retours.
-
-        Les [Tasks](glossary:TER089) expriment les contributions et dépendances du processus ; elles ne remplacent pas les [Service Orders](glossary:TER066) comme porteurs des engagements individuels. Une adaptation préserve la promesse d’[Order Management](model:D04) et les grands équilibres du [master plan de Matching](glossary:TER100) ; transmettre les impacts non absorbables à leurs responsables. Les exécutants conservent leurs opérations internes. Exemple fictif : coordonner réétiquetage, préparation et collecte pour tenir une livraison, puis choisir une autre collecte si nécessaire.
-
-        Un changement de trajet ou de prestation peut modifier coûts et tarifs : obtenir leur évaluation pour choisir les solutions locales. Respecter les engagements de la commande et transmettre les effets qui nécessitent leur révision à [Order Management](model:D04) ; aucun surcoût automatiquement refacturé.
-
-        Pour les actes nécessaires à un changement de propriétaire, coordonner la réalisation et capter son résultat, y compris distant. Inventory reçoit les faits utiles ; une demande ou un lancement de processus ne vaut pas changement de propriétaire réalisé.
-
-        [Service Order Release Decision](model:service-order-release-decision) détermine les ensembles et moments de libération des ordres logistiques, y compris leur rétention en fonctionnement normal. Process Orchestration applique le choix ; les exécutants conservent leurs vagues et leur organisation interne.
-
-        Solliciter les décisions de promesse d’[Availability](glossary:TER112) pour les évaluations utiles aux adaptations locales : disponibilités, faisabilité ou dossier économique des options. Une réponse recalculée ne modifie pas automatiquement la promesse confirmée.
-
-        [Transport Plan Decision](model:transport-plan-decision) construit les chargements et parcours des transports confiés. [Inventory Disposition Decision](model:D05.i) détermine les usages autorisés et le devenir des biens, y compris hors retour. Ces décisions peuvent déclencher des prestations externes ; leurs résultats sont suivis sans absorber [Availability](glossary:TER112) ni la tenue des registres de stock.
-
-        Agir comme pilote exécutant dans le mandat confié par [Order Workflow Orchestration](glossary:TER129). Conserver les décisions spécialisées et la latitude d’adaptation locale autorisée. La structure du parcours de la commande relève d’[Order Management](model:D04) ; un changement de ce parcours ou des engagements dépasse la seule adaptation des prestations. Transmettre les faits et impacts utiles à [Order Workflow Sentry](glossary:TER127), qui déclenche la réaction appropriée sans imposer un réexamen pour chaque événement.
+    fields: {}
   - id: D06.e
-    fields:
-      scope: |-
-        Comparer les options de prestation et vérifier leur admissibilité. Exploiter le catalogue des services, les lieux et relations du réseau, les conditions applicables et la visibilité sur la capacité. Déterminer les services utilisables, puis les moyens à mobiliser.
-
-        Exemple : identifier les transporteurs desservant une destination, compatibles avec les marchandises et les horaires, puis déterminer le service à solliciter.
-
-        La décision reste dans le besoin Supply et les contraintes issus des choix de satisfaction [Availability](model:D03) et des possibilités évaluées par les décisions de promesse d’[Availability](glossary:TER112) et des engagements [Order Management](model:D04). Elle ne reprend pas la décision de couverture de l’[Order](glossary:TER012) ou la révision de sa promesse. Elle peut être mobilisée pour le plan initial ou par Adaptation Decision.
-
-        Choisir les moyens initiaux ou alternatifs en préservant promesse et grands équilibres. Consulter cette décision pendant une étude de faisabilité reste possible.
-
-        Le résultat est le service et l’exécutant proposés ou retenus, avec leurs conditions. Les décisions de promesse [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068) choisissent une proposition de quantité et de date pour la demande ; Process Adaptation Decision détermine une révision locale du plan d’exécution ; [Service Order Release Decision](model:service-order-release-decision) détermine quels ordres libérer et quand. Ces décisions peuvent se solliciter selon le cas, sans ordre universel ni transfert de leurs engagements.
-
-        [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
+    fields: {}
   - id: D06.f
-    fields:
-      scope: |-
-        Déterminer la variation à retenir lorsqu’un fait, un retard ou un échec remet en cause le plan d’exécution. Mobiliser les décisions de service, les capacités communiquées et les informations sur les demandes et réalisations.
-
-        Exemple : un [SLA](glossary:TER076) était compatible avec la collecte, mais une panne retarde la préparation. Déterminer une autre collecte, un autre transporteur ou une réalisation partielle selon les possibilités ; Orchestration coordonne ensuite les prestations du plan retenu.
-
-        Si la variation remet la promesse Supply en cause, fournir à [Order Management](model:D04) les faits et variantes utiles à son réexamen. Cette capacité ne décide pas seule d’une nouvelle promesse. La latitude d’adaptation relève des règles de fonctionnement et ne conditionne pas le catalogue.
-
-        Decision détermine une réponse métier ; Planning conserve le sens reconfigurer, simuler et valider en mobilisant des décisions. La séparation demandée n’ajoute pas automatiquement une capacité Planning ou un contrôle humain obligatoire.
-
-        Frontière : Remonter effet promesse à [Order Management](model:D04) ; [Availability](model:D03) peut revoir son scénario sans décider le transporteur.
-
-        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; [Operations Tracking](model:D07.d) recueille les faits de réalisation ; [Operations Visibility](model:operations-visibility) restitue leur progression et leurs écarts. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
-
-        Le plan concerné est le plan d’exécution. Préserver promesse et grands équilibres ; transmettre les impacts non absorbables à [Availability](glossary:TER112) et [Order Management](model:D04), sans seuils à définir ici.
-
-        La rétention anticipée et le regroupement en fonctionnement normal relèvent de [Service Order Release Decision](model:service-order-release-decision). Une adaptation peut modifier les conditions de libération, qui sont alors réévaluées ; ne pas dupliquer la décision de choix des lots.
-
-        [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
-
-        Adapter localement les prestations dans le mandat confié, en préservant les engagements et les autorisations. Si la réponse nécessite de réorganiser le parcours de la commande, transmettre le contexte à [Order Workflow Sentry](glossary:TER127), qui peut solliciter [Order Workflow Planning](glossary:TER128). Une adaptation locale autorisée ne nécessite pas systématiquement cette réorganisation.
+    fields: {}
   - id: D05.i
     fields:
       name: Inventory Disposition Decision
       definition: Déterminer les usages autorisés et le devenir logistique de biens selon leur état constaté, les politiques
         applicables et les possibilités de récupération de valeur, lors d’un retour ou en cours de stockage.
-      scope: |-
-        La [disposition](glossary:TER102) consiste à déterminer, pour les biens et quantités concernés, si un usage est autorisé, interdit ou soumis à condition et vers quel traitement logistique les orienter. Les issues comprennent : remise en stock utilisable, maintien bloqué, réparation, reconditionnement, renvoi fournisseur ou rebut autorisé. Les produits peuvent provenir d’un retour, d’une réception ou d’un incident constaté sur un stock déjà présent. Le motif du retour n’est pas à lui seul une décision sur le devenir du bien.
-
-        L’inspection fournit les faits ; les politiques fixent les critères ; la décision applique ces critères au cas concret et, si nécessaire, compare les devenirs admissibles. [Policy-based Disposition](model:BHV048) et [Value Recovery Optimization](model:BHV049) restent les deux stratégies combinables, sans séquence obligatoire. Blocage, libération, réparation ou rebut sont des résultats, pas autant de comportements. Une décision peut porter sur une partie du lot. Si les informations manquent, préciser les conditions à lever sans rendre implicitement le stock utilisable.
-
-        L’interdiction d’usage pour non-conformité se distingue de [Reservation](model:D02.c), qui protège une ressource pour un engagement. [Inventory Tracking](model:D01.f) intègre les résultats reconnus ; [Inventory Ledger](model:D01.g) conserve les états et justifications. [Inventory Visibility](model:D01.c) expose les positions selon ces états. Décider une libération ne prouve pas une opération physique, une écriture ou une disponibilité confirmée.
-
-        [Inspection Order](model:service-order-inspection) porte une inspection confiée ; [Scrapping Order](model:service-order-scrapping), les prestations de rebut ; les [Orders](glossary:TER012) de réparation ou de retour fournisseur portent leurs engagements propres. [Process Orchestration](model:D06.d) coordonne les prestations et reçoit leurs résultats via Operations Tracking. La décision peut être exécutée ailleurs ; la capacité ne prescrit ni organisation ni logiciel interne.
-
-        L’autorisation commerciale du retour, le remboursement, le remplacement client et l’avoir fournisseur restent distincts. Stock Redistribution conserve les déplacements entre sites ; [Availability](glossary:TER112) traite l’impact sur les ressources partagées. Une décision locale ne doit pas masquer un effet sur les affectations ou promesses : solliciter les capacités responsables. Ce n’est pas une seconde planification générale des usages du stock.
-
-        Exemple fictif : cent vestes ont subi un dégât dans l’entrepôt. L’inspection justifie quatre-vingts remises à disposition et vingt maintenues bloquées. Pour ces vingt, la décision examine une remise en état ou un rebut selon les politiques et la valeur récupérable. Les prestations sont ensuite confiées et leurs résultats reconnus séparément.
   - id: BHV048
     fields:
       definition: Déterminer les usages autorisés et l’orientation logistique de biens en appliquant une politique établie
@@ -2263,23 +2210,7 @@ publication_delivery:
 
         [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par Transport Order.
   - id: service-order-release-decision
-    fields:
-      scope: |-
-        Déterminer les ordres et quantités éligibles à libérer ensemble, leur moment ou condition de libération et les éléments à maintenir en attente, avec leur justification. Mobiliser exigences de livraison, dates de préparation et d’expédition, complétude attendue, compatibilité des regroupements et capacités communiquées par les exécutants. Comparer les bénéfices du regroupement aux conséquences de l’attente ; aucune optimisation mathématique universelle n’est promise.
-
-        [Process Orchestration](model:D06.d) matérialise l’attente et la libération décidées, puis suit la prise en charge. Les familles de [Service Orders](glossary:TER066) conservent leur identité, leurs exigences et engagements. Une transmission anticipée pour visibilité peut être distincte de l’autorisation de lancement ; aucun protocole ou fichier unique n’est imposé.
-
-        La décision intervient aussi en fonctionnement normal. [Process Adaptation Decision](model:D06.f) traite les aléas remettant le plan d’exécution en cause ; la libération peut ensuite être réévaluée. Les fenêtres, délais maximaux, seuils et exceptions sont des règles ; ne pas créer une capacité par paramètre.
-
-        Respecter la promesse portée par [Order Management](model:D04) et les affectations d’[Availability](glossary:TER112). Si la rétention compromet ces engagements, transmettre les impacts à leurs responsables ; ne pas modifier silencieusement dates, quantités ou affectations. Les ordres attendus et capacités communiquées sont des informations datées, sans certitude d’arrivée inventée.
-
-        Libérer ensemble ne garantit pas préparer ensemble ni obtenir une seule palette. Les [Picking Order](model:service-order-picking) et [Packing Order](model:service-order-packing) portent les exigences de traitement commun ; les exécutants conservent vagues, parcours, tâches et palettisation détaillée.
-
-        Exemple fictif : une commande B2B de 300 pièces devient éligible en trois ensembles. Retenir les premiers pour une libération commune compatible avec la promesse, puis demander un packing commun. Le nombre réel de palettes dépend des biens, des exigences et des capacités physiques.
-
-        [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
-
-        Décider du moment et du regroupement des prestations dans l’autorisation reçue d’[Order Workflow Orchestration](glossary:TER129). Cette décision ne remplace pas l’autorisation de poursuivre le parcours de la commande. Si une confirmation client reste requise, l’éligibilité logistique ne permet pas à elle seule de la contourner.
+    fields: {}
   - id: transport-plan-decision
     fields:
       name: Transport Plan Decision
@@ -2309,10 +2240,6 @@ publication_delivery:
     fields:
       name: Routing & Scheduling
       definition: Déterminer les étapes, arrêts et échéances du plan de transport selon les trajets et contraintes admissibles.
-      scope: |-
-        Définir ou réviser le parcours des chargements confiés, leurs étapes et horaires, en fonction des correspondances, durées et créneaux connus. Les hypothèses ou confirmations manquantes restent visibles. Un trajet moins coûteux ne justifie pas de modifier silencieusement la promesse.
-
-        Exemple fictif : desservir d’abord le magasin qui réceptionne avant 10 h, puis deux magasins ouverts l’après-midi. Si le parcours devient impossible, examiner une autre solution locale avec Process Adaptation Decision, ou solliciter le réexamen des engagements. Les variantes Multi-Stop Transport et Multi-Leg Transport décrivent les engagements du Transport Order ; ce comportement construit le plan qui les motive.
       nature: planning_practice
     parent_id: transport-plan-decision
   - id: service-order-scrapping
@@ -2320,16 +2247,6 @@ publication_delivery:
       name: Scrapping Order
       definition: Porter une demande de mise au rebut de biens, ses autorisations, quantités, consignes et preuves attendues
         jusqu’à son résultat reconnu.
-      scope: |-
-        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
-
-        Un [Scrapping Order](glossary:TER104) permet de confier et suivre la mise au rebut comme prestation logistique identifiable. Préciser les biens, quantités, autorisations, consignes de traitement et preuves exigées. L’[Order](glossary:TER012) conserve le réalisé, le reliquat et les écarts ; une clôture partielle doit être explicitement autorisée. Le traitement peut être exécuté par un prestataire externe et durer dans le temps.
-
-        [Inventory Disposition Decision](model:D05.i) détermine le devenir autorisé ; l’[Order](glossary:TER012) ne décide pas de détruire au seul motif d’un écart de stock. [Process Orchestration](model:D06.d) coordonne la prestation ; [Operations Tracking](model:D07.d) reçoit les faits d’exécution et [Service Reconciliation](model:D07.c) les rapproche de l’attendu. [Inventory Tracking](model:D01.f) et [Inventory Ledger](model:D01.g) intègrent et conservent les effets reconnus sur le stock. Une instruction ou une écriture comptable ne prouve pas une destruction physique.
-
-        Le comportement Scrapping de [Return Order](glossary:TER072) continue à porter l’issue du retour et ses obligations ; [Scrapping Order](glossary:TER104) porte la prestation confiée, liée au retour lorsqu’il existe. Le rebut peut aussi concerner un stock abîmé hors retour. Aucune extension automatique aux dons, déstockages commerciaux ou à toutes les filières de recyclage.
-
-        Exemple fictif : vingt vestes sont autorisées au rebut. Le prestataire prouve le traitement de dix-huit ; deux restent en attente. L’[Order](glossary:TER012) conserve ce solde tant qu’une autre clôture n’est pas autorisée. Aucun comportement supplémentaire n’est créé pour chaque motif de rebut.
       nature: action
     parent_id: subdomain-service-orders
   editorial_superseded_checks_U797:
@@ -2537,6 +2454,8 @@ publication_delivery:
     - transport-plan-decision.scope
     scope: Finalités et exemples de Business Areas, corrections de noms et de grammaire ; aucune modification de parent ni
       extension des accords historiques.
+  supersession_U891: Les contrôles ciblés suivent le lot U891 ; leurs valeurs antérieures sont conservées dans product-packaging-supply-matching-U890.yaml.
+    Ceci ne modifie aucun accord historique.
 delivery_updates:
 - source_refs:
   - U835
@@ -2578,3 +2497,143 @@ delivery_updates:
   - transport-plan-decision.category
   - service-order-scrapping.category
   reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.
+superseded_delivery_U885:
+- id: D06
+  previous_expectations:
+    fields:
+      scope: |-
+        Déterminer les prestations requises, choisir les services et exécutants, coordonner leurs contributions et adapter le plan d’exécution. [Service Management](model:subdomain-service-orders) tient les exigences, engagements propres et évolutions des prestations confiées. [Fulfilment](glossary:TER085) conserve la visibilité des capacités communiquées, le tracking, le rapprochement des résultats et la décision de devenir logistique des retours.
+
+        Les [Tasks](glossary:TER089) expriment les contributions et dépendances du processus ; elles ne remplacent pas les [Service Orders](glossary:TER066) comme porteurs des engagements individuels. Une adaptation préserve la promesse d’[Order Management](model:D04) et les grands équilibres du [master plan de Matching](glossary:TER100) ; transmettre les impacts non absorbables à leurs responsables. Les exécutants conservent leurs opérations internes. Exemple fictif : coordonner réétiquetage, préparation et collecte pour tenir une livraison, puis choisir une autre collecte si nécessaire.
+
+        Un changement de trajet ou de prestation peut modifier coûts et tarifs : obtenir leur évaluation pour choisir les solutions locales. Respecter les engagements de la commande et transmettre les effets qui nécessitent leur révision à [Order Management](model:D04) ; aucun surcoût automatiquement refacturé.
+
+        Pour les actes nécessaires à un changement de propriétaire, coordonner la réalisation et capter son résultat, y compris distant. Inventory reçoit les faits utiles ; une demande ou un lancement de processus ne vaut pas changement de propriétaire réalisé.
+
+        [Service Order Release Decision](model:service-order-release-decision) détermine les ensembles et moments de libération des ordres logistiques, y compris leur rétention en fonctionnement normal. Process Orchestration applique le choix ; les exécutants conservent leurs vagues et leur organisation interne.
+
+        Solliciter les décisions de promesse d’[Availability](glossary:TER112) pour les évaluations utiles aux adaptations locales : disponibilités, faisabilité ou dossier économique des options. Une réponse recalculée ne modifie pas automatiquement la promesse confirmée.
+
+        [Transport Plan Decision](model:transport-plan-decision) construit les chargements et parcours des transports confiés. [Inventory Disposition Decision](model:D05.i) détermine les usages autorisés et le devenir des biens, y compris hors retour. Ces décisions peuvent déclencher des prestations externes ; leurs résultats sont suivis sans absorber [Availability](glossary:TER112) ni la tenue des registres de stock.
+
+        Agir comme pilote exécutant dans le mandat confié par [Order Workflow Orchestration](glossary:TER129). Conserver les décisions spécialisées et la latitude d’adaptation locale autorisée. La structure du parcours de la commande relève d’[Order Management](model:D04) ; un changement de ce parcours ou des engagements dépasse la seule adaptation des prestations. Transmettre les faits et impacts utiles à [Order Workflow Sentry](glossary:TER127), qui déclenche la réaction appropriée sans imposer un réexamen pour chaque événement.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: D06.e
+  previous_expectations:
+    fields:
+      scope: |-
+        Comparer les options de prestation et vérifier leur admissibilité. Exploiter le catalogue des services, les lieux et relations du réseau, les conditions applicables et la visibilité sur la capacité. Déterminer les services utilisables, puis les moyens à mobiliser.
+
+        Exemple : identifier les transporteurs desservant une destination, compatibles avec les marchandises et les horaires, puis déterminer le service à solliciter.
+
+        La décision reste dans le besoin Supply et les contraintes issus des choix de satisfaction [Availability](model:D03) et des possibilités évaluées par les décisions de promesse d’[Availability](glossary:TER112) et des engagements [Order Management](model:D04). Elle ne reprend pas la décision de couverture de l’[Order](glossary:TER012) ou la révision de sa promesse. Elle peut être mobilisée pour le plan initial ou par Adaptation Decision.
+
+        Choisir les moyens initiaux ou alternatifs en préservant promesse et grands équilibres. Consulter cette décision pendant une étude de faisabilité reste possible.
+
+        Le résultat est le service et l’exécutant proposés ou retenus, avec leurs conditions. Les décisions de promesse [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068) choisissent une proposition de quantité et de date pour la demande ; Process Adaptation Decision détermine une révision locale du plan d’exécution ; [Service Order Release Decision](model:service-order-release-decision) détermine quels ordres libérer et quand. Ces décisions peuvent se solliciter selon le cas, sans ordre universel ni transfert de leurs engagements.
+
+        [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: D06.f
+  previous_expectations:
+    fields:
+      scope: |-
+        Déterminer la variation à retenir lorsqu’un fait, un retard ou un échec remet en cause le plan d’exécution. Mobiliser les décisions de service, les capacités communiquées et les informations sur les demandes et réalisations.
+
+        Exemple : un [SLA](glossary:TER076) était compatible avec la collecte, mais une panne retarde la préparation. Déterminer une autre collecte, un autre transporteur ou une réalisation partielle selon les possibilités ; Orchestration coordonne ensuite les prestations du plan retenu.
+
+        Si la variation remet la promesse Supply en cause, fournir à [Order Management](model:D04) les faits et variantes utiles à son réexamen. Cette capacité ne décide pas seule d’une nouvelle promesse. La latitude d’adaptation relève des règles de fonctionnement et ne conditionne pas le catalogue.
+
+        Decision détermine une réponse métier ; Planning conserve le sens reconfigurer, simuler et valider en mobilisant des décisions. La séparation demandée n’ajoute pas automatiquement une capacité Planning ou un contrôle humain obligatoire.
+
+        Frontière : Remonter effet promesse à [Order Management](model:D04) ; [Availability](model:D03) peut revoir son scénario sans décider le transporteur.
+
+        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. Process Orchestration coordonne la progression ; Process Adaptation Decision choisit les adaptations ; [Operations Tracking](model:D07.d) recueille les faits de réalisation ; [Operations Visibility](model:operations-visibility) restitue leur progression et leurs écarts. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
+
+        Le plan concerné est le plan d’exécution. Préserver promesse et grands équilibres ; transmettre les impacts non absorbables à [Availability](glossary:TER112) et [Order Management](model:D04), sans seuils à définir ici.
+
+        La rétention anticipée et le regroupement en fonctionnement normal relèvent de [Service Order Release Decision](model:service-order-release-decision). Une adaptation peut modifier les conditions de libération, qui sont alors réévaluées ; ne pas dupliquer la décision de choix des lots.
+
+        [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
+
+        Adapter localement les prestations dans le mandat confié, en préservant les engagements et les autorisations. Si la réponse nécessite de réorganiser le parcours de la commande, transmettre le contexte à [Order Workflow Sentry](glossary:TER127), qui peut solliciter [Order Workflow Planning](glossary:TER128). Une adaptation locale autorisée ne nécessite pas systématiquement cette réorganisation.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: D05.i
+  previous_expectations:
+    fields:
+      scope: |-
+        La [disposition](glossary:TER102) consiste à déterminer, pour les biens et quantités concernés, si un usage est autorisé, interdit ou soumis à condition et vers quel traitement logistique les orienter. Les issues comprennent : remise en stock utilisable, maintien bloqué, réparation, reconditionnement, renvoi fournisseur ou rebut autorisé. Les produits peuvent provenir d’un retour, d’une réception ou d’un incident constaté sur un stock déjà présent. Le motif du retour n’est pas à lui seul une décision sur le devenir du bien.
+
+        L’inspection fournit les faits ; les politiques fixent les critères ; la décision applique ces critères au cas concret et, si nécessaire, compare les devenirs admissibles. [Policy-based Disposition](model:BHV048) et [Value Recovery Optimization](model:BHV049) restent les deux stratégies combinables, sans séquence obligatoire. Blocage, libération, réparation ou rebut sont des résultats, pas autant de comportements. Une décision peut porter sur une partie du lot. Si les informations manquent, préciser les conditions à lever sans rendre implicitement le stock utilisable.
+
+        L’interdiction d’usage pour non-conformité se distingue de [Reservation](model:D02.c), qui protège une ressource pour un engagement. [Inventory Tracking](model:D01.f) intègre les résultats reconnus ; [Inventory Ledger](model:D01.g) conserve les états et justifications. [Inventory Visibility](model:D01.c) expose les positions selon ces états. Décider une libération ne prouve pas une opération physique, une écriture ou une disponibilité confirmée.
+
+        [Inspection Order](model:service-order-inspection) porte une inspection confiée ; [Scrapping Order](model:service-order-scrapping), les prestations de rebut ; les [Orders](glossary:TER012) de réparation ou de retour fournisseur portent leurs engagements propres. [Process Orchestration](model:D06.d) coordonne les prestations et reçoit leurs résultats via Operations Tracking. La décision peut être exécutée ailleurs ; la capacité ne prescrit ni organisation ni logiciel interne.
+
+        L’autorisation commerciale du retour, le remboursement, le remplacement client et l’avoir fournisseur restent distincts. Stock Redistribution conserve les déplacements entre sites ; [Availability](glossary:TER112) traite l’impact sur les ressources partagées. Une décision locale ne doit pas masquer un effet sur les affectations ou promesses : solliciter les capacités responsables. Ce n’est pas une seconde planification générale des usages du stock.
+
+        Exemple fictif : cent vestes ont subi un dégât dans l’entrepôt. L’inspection justifie quatre-vingts remises à disposition et vingt maintenues bloquées. Pour ces vingt, la décision examine une remise en état ou un rebut selon les politiques et la valeur récupérable. Les prestations sont ensuite confiées et leurs résultats reconnus séparément.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: service-order-release-decision
+  previous_expectations:
+    fields:
+      scope: |-
+        Déterminer les ordres et quantités éligibles à libérer ensemble, leur moment ou condition de libération et les éléments à maintenir en attente, avec leur justification. Mobiliser exigences de livraison, dates de préparation et d’expédition, complétude attendue, compatibilité des regroupements et capacités communiquées par les exécutants. Comparer les bénéfices du regroupement aux conséquences de l’attente ; aucune optimisation mathématique universelle n’est promise.
+
+        [Process Orchestration](model:D06.d) matérialise l’attente et la libération décidées, puis suit la prise en charge. Les familles de [Service Orders](glossary:TER066) conservent leur identité, leurs exigences et engagements. Une transmission anticipée pour visibilité peut être distincte de l’autorisation de lancement ; aucun protocole ou fichier unique n’est imposé.
+
+        La décision intervient aussi en fonctionnement normal. [Process Adaptation Decision](model:D06.f) traite les aléas remettant le plan d’exécution en cause ; la libération peut ensuite être réévaluée. Les fenêtres, délais maximaux, seuils et exceptions sont des règles ; ne pas créer une capacité par paramètre.
+
+        Respecter la promesse portée par [Order Management](model:D04) et les affectations d’[Availability](glossary:TER112). Si la rétention compromet ces engagements, transmettre les impacts à leurs responsables ; ne pas modifier silencieusement dates, quantités ou affectations. Les ordres attendus et capacités communiquées sont des informations datées, sans certitude d’arrivée inventée.
+
+        Libérer ensemble ne garantit pas préparer ensemble ni obtenir une seule palette. Les [Picking Order](model:service-order-picking) et [Packing Order](model:service-order-packing) portent les exigences de traitement commun ; les exécutants conservent vagues, parcours, tâches et palettisation détaillée.
+
+        Exemple fictif : une commande B2B de 300 pièces devient éligible en trois ensembles. Retenir les premiers pour une libération commune compatible avec la promesse, puis demander un packing commun. Le nombre réel de palettes dépend des biens, des exigences et des capacités physiques.
+
+        [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
+
+        Décider du moment et du regroupement des prestations dans l’autorisation reçue d’[Order Workflow Orchestration](glossary:TER129). Cette décision ne remplace pas l’autorisation de poursuivre le parcours de la commande. Si une confirmation client reste requise, l’éligibilité logistique ne permet pas à elle seule de la contourner.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: transport-routing-scheduling
+  previous_expectations:
+    fields:
+      scope: |-
+        Définir ou réviser le parcours des chargements confiés, leurs étapes et horaires, en fonction des correspondances, durées et créneaux connus. Les hypothèses ou confirmations manquantes restent visibles. Un trajet moins coûteux ne justifie pas de modifier silencieusement la promesse.
+
+        Exemple fictif : desservir d’abord le magasin qui réceptionne avant 10 h, puis deux magasins ouverts l’après-midi. Si le parcours devient impossible, examiner une autre solution locale avec Process Adaptation Decision, ou solliciter le réexamen des engagements. Les variantes Multi-Stop Transport et Multi-Leg Transport décrivent les engagements du Transport Order ; ce comportement construit le plan qui les motive.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: service-order-scrapping
+  previous_expectations:
+    fields:
+      scope: |-
+        Commande passive d’une prestation définie dans le [Service Catalog](model:D14) : elle porte les exigences, paramètres, engagements acceptés, état, résultat et reste à réaliser. Elle ne prend aucune décision et ne produit pas elle-même les activités de suivi. Le moteur de [Reactive Workflow Management](glossary:TER125) produit les [Tasks](glossary:TER089) qui pilotent sa sollicitation, ses attentes et les suites autorisées ; [Fulfilment Orchestration](model:D06) exécute le mandat de coordination confié. Le prestataire réalise la prestation et organise ses opérations internes. Passif ne signifie ni sans état ni sans règles de validité des transitions.
+
+        Un [Scrapping Order](glossary:TER104) permet de confier et suivre la mise au rebut comme prestation logistique identifiable. Préciser les biens, quantités, autorisations, consignes de traitement et preuves exigées. L’[Order](glossary:TER012) conserve le réalisé, le reliquat et les écarts ; une clôture partielle doit être explicitement autorisée. Le traitement peut être exécuté par un prestataire externe et durer dans le temps.
+
+        [Inventory Disposition Decision](model:D05.i) détermine le devenir autorisé ; l’[Order](glossary:TER012) ne décide pas de détruire au seul motif d’un écart de stock. [Process Orchestration](model:D06.d) coordonne la prestation ; [Operations Tracking](model:D07.d) reçoit les faits d’exécution et [Service Reconciliation](model:D07.c) les rapproche de l’attendu. [Inventory Tracking](model:D01.f) et [Inventory Ledger](model:D01.g) intègrent et conservent les effets reconnus sur le stock. Une instruction ou une écriture comptable ne prouve pas une destruction physique.
+
+        Le comportement Scrapping de [Return Order](glossary:TER072) continue à porter l’issue du retour et ses obligations ; [Scrapping Order](glossary:TER104) porte la prestation confiée, liée au retour lorsqu’il existe. Le rebut peut aussi concerner un stock abîmé hors retour. Aucune extension automatique aux dons, déstockages commerciaux ou à toutes les filières de recyclage.
+
+        Exemple fictif : vingt vestes sont autorisées au rebut. Le prestataire prouve le traitement de dix-huit ; deux restent en attente. L’[Order](glossary:TER012) conserve ce solde tant qu’une autre clôture n’est pas autorisée. Aucun comportement supplémentaire n’est créé pour chaque motif de rebut.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885

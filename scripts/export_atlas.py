@@ -17,6 +17,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.atlas_lock import atlas_lock
 from scripts.release_catalog import PublicationReader
+from scripts.git_history import batch_reader
 from app.modeling_guide import _load_associated_guide
 
 
@@ -39,7 +40,7 @@ def atomic_write(path, content):
 
 def export_atlas(root=ROOT, destinations=None):
     root = Path(root).resolve()
-    with atlas_lock(root):
+    with atlas_lock(root), batch_reader(root):
         return _export_atlas(root, destinations)
 
 

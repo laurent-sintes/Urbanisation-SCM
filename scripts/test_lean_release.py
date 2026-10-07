@@ -32,6 +32,13 @@ class GitPublicationTests(unittest.TestCase):
         next(n for n in model['nodes'] if n['id'] == 'D03.a')['review']['note'] += ' Précision éditoriale.'
         save(self.backlog_path, model)
 
+    def test_uncommitted_publication_fails_before_candidate_work(self):
+        path = self.models / 'release' / self.base / 'uncommitted-proof.json'
+        path.write_text('{}')
+        with patch.object(workflow, 'build_candidate', side_effect=AssertionError('Too late')):
+            with self.assertRaisesRegex(ValueError, 'Commit the current publication'):
+                self.run_release(activate=True)
+
     def run_release(self, **options):
         return release.run(self.root, self.version, ['PUB-TEST-NEW'], verify_site=False, **options)
 

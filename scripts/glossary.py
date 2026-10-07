@@ -38,7 +38,10 @@ def reference_impacts(previous, candidate):
             seen.add(target)
             if target in changed:
                 found.add(target)
-            found.update(affected(after.get(target, {}), seen))
+            term = after.get(target, {})
+            found.update(affected(term, seen))
+            if term.get('alias_of'):
+                found.update(affected('[alias](glossary:' + term['alias_of'] + ')', seen))
         return found
     result = []
     for collection in ('nodes', 'relations'):
@@ -83,6 +86,28 @@ def validate(model):
         if not isinstance(review, dict) or review.get('state') not in ('proposed', 'under_review', 'accepted', 'partial'):
             errors.append(f'glossary/{identifier}: review state required')
     nodes = {node['id']: node for node in model.get('nodes', [])}
+    by_id = {term['id']: term for term in terms if isinstance(term, dict) and isinstance(term.get('id'), str)}
+    for identifier, term in by_id.items():
+        if 'presentation' in term and term['presentation'] not in ('historical', 'method'):
+            errors.append(f'glossary/{identifier}: invalid presentation')
+        if term.get('presentation') == 'method' and term.get('guide_section') != 'method':
+            errors.append(f'glossary/{identifier}: method destination required')
+        if 'guide_section' in term and (term['guide_section'] != 'method' or term.get('presentation') != 'method'):
+            errors.append(f'glossary/{identifier}: invalid method destination')
+        current, seen = term, {identifier}
+        while 'alias_of' in current:
+            target = current['alias_of']
+            if not isinstance(target, str) or target not in by_id:
+                errors.append(f'glossary/{identifier}: unresolved alias')
+                break
+            if target in seen:
+                errors.append(f'glossary/{identifier}: cyclic alias')
+                break
+            seen.add(target)
+            current = by_id[target]
+        else:
+            if 'alias_of' in term and current.get('presentation'):
+                errors.append(f'glossary/{identifier}: alias must resolve to a current term')
     # Current statements only; historical verbatim/provenance is not rewritten.
     texts = [n.get('fields', {}) for n in model.get('nodes', [])]
     texts += [{k: r.get(k) for k in ('fields', 'qualification')} for r in model.get('relations', [])]

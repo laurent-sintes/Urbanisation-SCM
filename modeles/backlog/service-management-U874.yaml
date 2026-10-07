@@ -51,7 +51,12 @@ publication_delivery:
       name: Payment
   absent_nodes:
   - service-order-document-production
-  required_catalog:
-  - collection: paths
+  required_catalog: []
+superseded_delivery_U885:
+- catalog:
+    collection: paths
     id: export-remote-services-path
     content_sha256: 2cfd2f2e1b279d63acffe34d8e9b97e5a02c9c98a00449966bc906df45b92c98
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U885

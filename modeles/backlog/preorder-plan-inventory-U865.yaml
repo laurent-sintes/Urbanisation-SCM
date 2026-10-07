@@ -59,10 +59,7 @@ publication_delivery:
   required_catalog:
   - collection: scenarios
     id: preorder-future-availability
-    content_sha256: 18fbe84fca2bada3852365a92621fec2283bdbad484c85d56e36b15727a1033b
-  - collection: paths
-    id: preorder-future-availability-path
-    content_sha256: 8da919d3cef4931033abebde64cd13f4176b01f8063f3d516c2356f0bddbf5fd
+    content_sha256: 1f5269aeda8515bb97829c40d1add188c9aad4d52164653f3f4c191393b14513
 order_identity: Sales Order conserve son identité en sortant de Preorder. MAP envoie des Planned Purchase Orders (U871), distincts
   des Purchase Orders produits à l’affermissement ; filiation conservée sans identité commune imposée.
 asymmetry_explanation: 'La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase
@@ -71,3 +68,12 @@ asymmetry_explanation: 'La distinction vient de la nature des objets, pas d’un
   porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité.
   Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement
   restent distincts : un Sales Order existant peut encore être à confirmer.'
+superseded_delivery_U887:
+  source_refs:
+  - U887
+  replacement: model-coherence-audit-U886.yaml#publication_delivery
+  assertions:
+  - catalog:
+      collection: paths
+      id: preorder-future-availability-path
+      content_sha256: 8da919d3cef4931033abebde64cd13f4176b01f8063f3d516c2356f0bddbf5fd

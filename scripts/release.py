@@ -4,6 +4,7 @@ Without --activate this only prepares. A semantic reassessment returns needs_rev
 and a bounded dossier; it never answers that review or grants an approval.
 """
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -22,36 +23,66 @@ except ImportError:
 
 
 def verify_atlas(root, version, base_url='http://127.0.0.1:8765'):
+    root = Path(root).resolve()
     repository = str(Path(__file__).resolve().parents[1])
     if repository not in sys.path:
         sys.path.insert(0, repository)
     address = urlsplit(base_url)
     if address.scheme != 'http' or address.hostname not in ('127.0.0.1', 'localhost', '::1') or address.path not in ('', '/') or address.query or address.fragment or address.username:
         raise ValueError('Atlas verification requires a local HTTP origin')
-    def get(route):
+    from scripts.export_atlas import encoded
+    from scripts.release_catalog import PublicationReader
+    from app.modeling_guide import _load_associated_guide
+
+    def document(route):
         with urlopen(base_url.rstrip('/') + route, timeout=10) as response:
-            return json.load(response)
+            payload = response.read()
+        return json.loads(payload), payload
+
+    def get(route):
+        return document(route)[0]
+
     status = get('/__atlas__/identity.json')
     if status.get('appName') != 'FLOW Atlas' or Path(status.get('repositoryRoot', '')).resolve() != Path(root).resolve() or status.get('mode') != 'static':
         raise ValueError('The local service is not this project’s FLOW Atlas')
-    pointer = workflow.resolve_release(Path(root) / 'modeles/release', version)
-    expected = workflow.read(Path(root) / 'modeles/release' / pointer['path'])
-    actual = get('/data/' + version + '/model.json')
-    if actual.get('version') != version or actual.get('sourcePath') != 'modeles/release/' + pointer['path']:
+    reader = PublicationReader(root / 'modeles/release')
+    pointer, raw = reader.load(version)
+    expected = {**raw, 'sourcePath': 'modeles/release/' + pointer['path']}
+    actual, model_payload = document('/data/' + version + '/model.json')
+    if not isinstance(actual, dict) or actual.get('version') != version or actual.get('sourcePath') != expected['sourcePath']:
         raise ValueError('Atlas serves another publication')
-    for collection in ('nodes', 'relations'):
-        items = {v['id']: v for v in actual.get(collection, [])}
-        if len(items) != len(expected[collection]) or len(actual.get(collection, [])) != len(items):
-            raise ValueError('Atlas collection differs: ' + collection)
-        for item in expected[collection]:
-            if any(items.get(item['id'], {}).get(k) != v for k, v in item.items()):
-                raise ValueError('Atlas content differs: ' + item['id'])
-    if actual.get('glossary') != expected.get('glossary') or get('/data/index.json').get('current_version') != version:
-        raise ValueError('Atlas glossary or catalog differs')
-    if (Path(root) / 'modeles/modeling-guides/index.yaml').exists():
-        from app.modeling_guide import load_modeling_guide
-        if get('/data/' + version + '/guide.json') != load_modeling_guide(root, version):
-            raise ValueError('Atlas methodology differs')
+    # Every published root participates, including catalogs and future fields.
+    # List order is part of the frozen export, just as values and identities are.
+    if actual != expected:
+        changed = sorted(key for key in actual.keys() | expected.keys()
+                         if key not in actual or key not in expected or actual[key] != expected[key])
+        raise ValueError('Atlas model differs: ' + ', '.join(changed))
+
+    catalog = get('/data/index.json')
+    expected_catalog = reader.catalog()
+    if not isinstance(catalog, dict) or reader.current_version != version or catalog.get('current_version') != version:
+        raise ValueError('Atlas catalog differs')
+    entries = catalog.get('versions')
+    if not isinstance(entries, list) or any(not isinstance(entry, dict) for entry in entries):
+        raise ValueError('Atlas catalog differs')
+    metadata = {**catalog, 'versions': [
+        {key: value for key, value in entry.items() if key not in ('model_sha256', 'guide_sha256')}
+        for entry in entries]}
+    if metadata != expected_catalog:
+        raise ValueError('Atlas catalog differs')
+    entry = next(item for item in entries if item['version'] == version)
+    if (hashlib.sha256(model_payload).hexdigest() != entry.get('model_sha256')
+            or entry.get('model_sha256') != hashlib.sha256(encoded(expected)).hexdigest()):
+        raise ValueError('Atlas model hash differs')
+
+    guide, guide_payload = document('/data/' + version + '/guide.json')
+    expected_guide = _load_associated_guide(root, version)
+    if guide != expected_guide:
+        raise ValueError('Atlas methodology differs')
+    if (hashlib.sha256(guide_payload).hexdigest() != entry.get('guide_sha256')
+            or entry.get('guide_sha256') != hashlib.sha256(encoded(expected_guide)).hexdigest()):
+        raise ValueError('Atlas methodology hash differs')
+    reader.verify_descriptors()
     return {'verified': True, 'version': version, 'sourcePath': actual['sourcePath']}
 
 

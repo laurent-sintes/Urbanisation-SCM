@@ -136,5 +136,20 @@ class HTTPTests(unittest.TestCase):
         for route in ['/api/model', '/api/releases', '/api/source', '/api/modeling-guide', '/data/../AGENTS.md', '/data/2026-09-26.2/secret.json']:
             self.assertEqual(self.request(route)[0], 404, route)
 
+    def test_static_delivery_manifest_is_served_for_build_update_detection(self):
+        payload = b'{"schema_version":1,"files":{"index.html":"verified-build-hash"}}'
+        (self.dist / 'delivery.json').write_bytes(payload)
+        status, headers, body = self.request('/delivery.json')
+        self.assertEqual(status, 200)
+        self.assertEqual(headers['Content-Type'], 'application/json; charset=utf-8')
+        self.assertEqual(body, payload)
+        status, headers, body = self.request('/delivery.json', method='HEAD')
+        self.assertEqual(status, 200)
+        self.assertEqual(int(headers['Content-Length']), len(payload))
+        self.assertEqual(body, b'')
+        for route in ['/data/delivery.json', '/data/2026-09-26.2/delivery.json',
+                      '/assets/delivery.json', '/report.json']:
+            self.assertEqual(self.request(route)[0], 404, route)
+
 if __name__ == '__main__':
     unittest.main()

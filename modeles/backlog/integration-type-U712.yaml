@@ -216,16 +216,15 @@ publication_delivery:
       nature: knowledge
   - id: master-data-ingestion-commerce
     parent: master-data-ingestion
-    fields:
-      name: Commerce Ingestion
+    fields: {}
   - id: master-data-ingestion-finance
     parent: master-data-ingestion
     fields:
       name: Reference Ingestion from Finance
+    parent_type: contains
   - id: master-data-ingestion-design
     parent: master-data-ingestion
-    fields:
-      name: Design Ingestion
+    fields: {}
   superseded_checks_U826:
   - id: master-data-ingestion
     field: category
@@ -238,6 +237,8 @@ publication_delivery:
     field: name
     previous_value: Finance Ingestion
     reason: U826 remplace cette attente ; preuve historique conservée.
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
 category_confirmation_U757:
   status: applied
   capability: master-data-ingestion
@@ -252,3 +253,14 @@ delivery_updates:
   fields:
   - master-data-ingestion.category
   reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.
+superseded_delivery_U887:
+  source_refs:
+  - U887
+  replacement: model-coherence-audit-U886.yaml#publication_delivery
+  assertions:
+  - id: master-data-ingestion-commerce
+    previous_fields:
+      name: Commerce Ingestion
+  - id: master-data-ingestion-design
+    previous_fields:
+      name: Design Ingestion

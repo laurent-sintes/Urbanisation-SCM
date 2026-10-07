@@ -1,0 +1,512 @@
+schema_version: 1.0.0
+id: packaging-container-vocabulary-U899
+status: applied_verified
+source_refs:
+- U899
+- U900
+canonical_model_modified: true
+current_scope:
+  business_area: ba-packaging-references
+  references:
+  - packaging-material-reference
+  - packaging-specification
+  glossary_terms:
+  - TER061
+  - TER183
+  - TER185
+  - TER186
+  - TER189
+findings:
+  microsoft: Container est bien un terme utilisé, mais ne nomme pas à lui seul tout le périmètre de conditionnement. Container
+    type, container physique et règles de constitution sont distincts.
+  sap: Packaging Material et Handling Unit distinguent référence de conditionnement et unité concrète ; les instructions constituent
+    un autre objet.
+  local: TER061 définit Container comme rôle de bien contenant ou supportant des unités. TER189 définit Handling Unit avec
+    contenu annoncé ou constaté. La Business Area couvre aussi les consignes réutilisables.
+recommendation:
+  name: Packaging References
+  reason: Conserver un nom qui couvre matières, supports et consignes, sans réduire le périmètre aux contenants.
+  container_type: Employer Container Type pour préciser les types de contenants au sein du périmètre documentaire existant,
+    sans créer automatiquement une nouvelle référence.
+  clarification: Rendre explicite dans la documentation le rapprochement partiel avec Container Type de Dynamics et la distinction
+    entre Container, Packaging Specification et Handling Unit.
+  tradeoff: Packaging est moins centré sur les objets que Container ; le libellé français références de conditionnement et
+    les exemples carton, palette, consigne et unité reçue précisent le sens.
+market_comparisons:
+- vendor: Microsoft
+  source_ids:
+  - MS1
+  - MS2
+  relationship: Recouvrement partiel
+  similarity: Types de contenants et règles pour constituer les unités à expédier.
+  difference: Packaging References FLOW inclut plus largement matières, supports et consignes ; la fonction de cartonisation
+    reste chez l’exécutant.
+  limit: Container type ne couvre pas à lui seul toute matière de conditionnement ni une spécification produit ; aucune équivalence
+    un-à-un.
+- vendor: SAP
+  source_ids:
+  - SAP1
+  - SAP2
+  relationship: Appui sémantique partiel
+  similarity: Séparation matière de référence, instruction et unité concrète.
+  difference: FLOW décrit les informations nécessaires à l’orchestration, pas le moteur d’exécution d’entrepôt.
+  limit: La documentation SAP ne prescrit pas le nom ou la maille de la Business Area FLOW.
+primary_sources:
+- id: MS1
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Containerization
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wave-containerization
+  sections:
+  - Create container types
+  - Create container build templates
+  finding: Container type décrit caractéristiques physiques et capacité ; les templates portent des règles de constitution.
+  consulted_on: '2026-10-07'
+  source_version: Documentation évolutive ; version globale non présumée.
+- id: MS2
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Pack containers for shipment
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/packing-containers
+  sections:
+  - Introduction
+  finding: Container représente la structure physique dans laquelle les articles sont emballés ; le processus suit son contenu,
+    sa fermeture et son expédition.
+  consulted_on: '2026-10-07'
+  source_version: Documentation évolutive ; version globale non présumée.
+- id: SAP1
+  vendor: SAP
+  product: SAP S/4HANA Cloud Public Edition Warehouse Management
+  title: Maintaining Packaging Information
+  url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-warehouse-management/maintaining-packaging-information_d0d86e60-5eb5-4b2f-9ad8-1277f3fc3dd1
+  sections:
+  - Create Master Data and Configuration for Packaging
+  - Packaging Material
+  finding: Distingue les matières de conditionnement et les instructions ; les matières peuvent contenir ou supporter les
+    biens.
+  consulted_on: '2026-10-07'
+  source_version: Documentation évolutive ; version globale non présumée.
+- id: SAP2
+  vendor: SAP
+  product: SAP S/4HANA Cloud Public Edition Warehouse Management
+  title: Maintaining Handling Units (HU)
+  url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-warehouse-management/maintaining-handling-units-hu-_dcf41902-7052-4c3c-bbc0-2bab1a918e69
+  sections:
+  - Features and Master Data Required
+  - Handling Unit Structure
+  finding: La Handling Unit associe conditionnement et biens, avec identifiant, contenu et possibilités d’imbrication.
+  consulted_on: '2026-10-07'
+  source_version: Documentation évolutive ; version globale non présumée.
+decision: U900 confirme Packaging References et la distinction des objets ; compléments explicatifs appliqués au modèle et
+  au glossaire, sans publication.
+previous_market_comparisons:
+  ba-packaging-references:
+  - vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition
+    element_name: Packaging material and packing instruction
+    concept_name: Packaging material and packing instruction
+    element_type: Objet ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: SAP distingue les matières de conditionnement et les consignes décrivant produits, quantités et matières.
+    differences: FLOW distingue marchandises, conditionnement et fournitures internes par leur sens métier. Les fonctions
+      éditeurs peuvent réunir ces données ; cette réalisation ne prescrit pas le découpage de responsabilité FLOW.
+    flow_position: Fournir les références des matières de conditionnement et les spécifications réutilisables nécessaires
+      aux échanges logistiques.
+    scope_summary: SAP distingue les matières de conditionnement et les consignes décrivant produits, quantités et matières.
+    approach_summary: Fournir les références des matières de conditionnement et les spécifications réutilisables nécessaires
+      aux échanges logistiques.
+    source_title: Maintaining Packaging Information
+    source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-warehouse-management/maintaining-packaging-information_d0d86e60-5eb5-4b2f-9ad8-1277f3fc3dd1
+    source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+    consulted_on: '2026-10-07'
+    source_locator: Packaging Material ; Packing Instruction
+    evidence_limits: FLOW décrit les références utiles à la demande de prestation ; le paramétrage et le calcul détaillé de
+      préparation restent chez la logistique. Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+    status: proposed
+    source_refs:
+    - U890
+    - U891
+    term_choice: Packaging References désigne le sujet métier ; aucun référentiel technique commun n’est imposé.
+    definition_choice: Fournir les références des matières de conditionnement et les spécifications réutilisables nécessaires
+      aux échanges logistiques.
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Container types and packing profiles
+    concept_name: Container types and packing profiles
+    element_type: Objet ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Dynamics distingue les types de contenants, les profils de packing et les containers physiques.
+    differences: FLOW distingue marchandises, conditionnement et fournitures internes par leur sens métier. Les fonctions
+      éditeurs peuvent réunir ces données ; cette réalisation ne prescrit pas le découpage de responsabilité FLOW.
+    flow_position: Fournir les références des matières de conditionnement et les spécifications réutilisables nécessaires
+      aux échanges logistiques.
+    scope_summary: Dynamics distingue les types de contenants, les profils de packing et les containers physiques.
+    approach_summary: Fournir les références des matières de conditionnement et les spécifications réutilisables nécessaires
+      aux échanges logistiques.
+    source_title: Pack containers for shipment
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/packing-containers
+    source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+    consulted_on: '2026-10-07'
+    source_locator: Containers ; Set up container types ; Set up packing profiles
+    evidence_limits: Ces objets produits ne constituent pas une équivalence exacte avec Packaging Specification ni une taxonomie
+      métier commune. Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+    status: proposed
+    source_refs:
+    - U890
+    - U891
+    term_choice: Packaging References désigne le sujet métier ; aucun référentiel technique commun n’est imposé.
+    definition_choice: Fournir les références des matières de conditionnement et les spécifications réutilisables nécessaires
+      aux échanges logistiques.
+  packaging-material-reference:
+  - vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition
+    element_name: Packaging material and packing instruction
+    concept_name: Packaging material and packing instruction
+    element_type: Objet ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: SAP distingue les matières de conditionnement et les consignes décrivant produits, quantités et matières.
+    differences: FLOW distingue marchandises, conditionnement et fournitures internes par leur sens métier. Les fonctions
+      éditeurs peuvent réunir ces données ; cette réalisation ne prescrit pas le découpage de responsabilité FLOW.
+    flow_position: Décrire les matières et supports de conditionnement utilisables, avec leurs caractéristiques et contraintes
+      connues.
+    scope_summary: SAP distingue les matières de conditionnement et les consignes décrivant produits, quantités et matières.
+    approach_summary: Décrire les matières et supports de conditionnement utilisables, avec leurs caractéristiques et contraintes
+      connues.
+    source_title: Maintaining Packaging Information
+    source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-warehouse-management/maintaining-packaging-information_d0d86e60-5eb5-4b2f-9ad8-1277f3fc3dd1
+    source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+    consulted_on: '2026-10-07'
+    source_locator: Packaging Material ; Packing Instruction
+    evidence_limits: FLOW décrit les références utiles à la demande de prestation ; le paramétrage et le calcul détaillé de
+      préparation restent chez la logistique. Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+    status: proposed
+    source_refs:
+    - U890
+    - U891
+    term_choice: Packaging Material Reference désigne le sujet métier ; aucun référentiel technique commun n’est imposé.
+    definition_choice: Décrire les matières et supports de conditionnement utilisables, avec leurs caractéristiques et contraintes
+      connues.
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Container types and packing profiles
+    concept_name: Container types and packing profiles
+    element_type: Objet ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Dynamics distingue les types de contenants, les profils de packing et les containers physiques.
+    differences: FLOW distingue marchandises, conditionnement et fournitures internes par leur sens métier. Les fonctions
+      éditeurs peuvent réunir ces données ; cette réalisation ne prescrit pas le découpage de responsabilité FLOW.
+    flow_position: Décrire les matières et supports de conditionnement utilisables, avec leurs caractéristiques et contraintes
+      connues.
+    scope_summary: Dynamics distingue les types de contenants, les profils de packing et les containers physiques.
+    approach_summary: Décrire les matières et supports de conditionnement utilisables, avec leurs caractéristiques et contraintes
+      connues.
+    source_title: Pack containers for shipment
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/packing-containers
+    source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+    consulted_on: '2026-10-07'
+    source_locator: Containers ; Set up container types ; Set up packing profiles
+    evidence_limits: Ces objets produits ne constituent pas une équivalence exacte avec Packaging Specification ni une taxonomie
+      métier commune. Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+    status: proposed
+    source_refs:
+    - U890
+    - U891
+    term_choice: Packaging Material Reference désigne le sujet métier ; aucun référentiel technique commun n’est imposé.
+    definition_choice: Décrire les matières et supports de conditionnement utilisables, avec leurs caractéristiques et contraintes
+      connues.
+  packaging-specification:
+  - vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition
+    element_name: Packaging material and packing instruction
+    concept_name: Packaging material and packing instruction
+    element_type: Objet ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: SAP distingue les matières de conditionnement et les consignes décrivant produits, quantités et matières.
+    differences: FLOW distingue marchandises, conditionnement et fournitures internes par leur sens métier. Les fonctions
+      éditeurs peuvent réunir ces données ; cette réalisation ne prescrit pas le découpage de responsabilité FLOW.
+    flow_position: 'Décrire une consigne réutilisable de conditionnement : biens, matières, quantités, niveaux, unités et
+      contraintes.'
+    scope_summary: SAP distingue les matières de conditionnement et les consignes décrivant produits, quantités et matières.
+    approach_summary: 'Décrire une consigne réutilisable de conditionnement : biens, matières, quantités, niveaux, unités
+      et contraintes.'
+    source_title: Maintaining Packaging Information
+    source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-warehouse-management/maintaining-packaging-information_d0d86e60-5eb5-4b2f-9ad8-1277f3fc3dd1
+    source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+    consulted_on: '2026-10-07'
+    source_locator: Packaging Material ; Packing Instruction
+    evidence_limits: FLOW décrit les références utiles à la demande de prestation ; le paramétrage et le calcul détaillé de
+      préparation restent chez la logistique. Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+    status: proposed
+    source_refs:
+    - U890
+    - U891
+    term_choice: Packaging Specification désigne le sujet métier ; aucun référentiel technique commun n’est imposé.
+    definition_choice: 'Décrire une consigne réutilisable de conditionnement : biens, matières, quantités, niveaux, unités
+      et contraintes.'
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Container types and packing profiles
+    concept_name: Container types and packing profiles
+    element_type: Objet ou mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Dynamics distingue les types de contenants, les profils de packing et les containers physiques.
+    differences: FLOW distingue marchandises, conditionnement et fournitures internes par leur sens métier. Les fonctions
+      éditeurs peuvent réunir ces données ; cette réalisation ne prescrit pas le découpage de responsabilité FLOW.
+    flow_position: 'Décrire une consigne réutilisable de conditionnement : biens, matières, quantités, niveaux, unités et
+      contraintes.'
+    scope_summary: Dynamics distingue les types de contenants, les profils de packing et les containers physiques.
+    approach_summary: 'Décrire une consigne réutilisable de conditionnement : biens, matières, quantités, niveaux, unités
+      et contraintes.'
+    source_title: Pack containers for shipment
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/packing-containers
+    source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+    consulted_on: '2026-10-07'
+    source_locator: Containers ; Set up container types ; Set up packing profiles
+    evidence_limits: Ces objets produits ne constituent pas une équivalence exacte avec Packaging Specification ni une taxonomie
+      métier commune. Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+    status: proposed
+    source_refs:
+    - U890
+    - U891
+    term_choice: Packaging Specification désigne le sujet métier ; aucun référentiel technique commun n’est imposé.
+    definition_choice: 'Décrire une consigne réutilisable de conditionnement : biens, matières, quantités, niveaux, unités
+      et contraintes.'
+  TER061:
+  - vendor: GS1
+    product: Logistic Label Guideline
+    source_title: GS1 Logistic Label Guideline
+    source_url: https://www.gs1.org/standards/gs1-logistic-label-guideline/1-3
+    source_version: '1.3'
+    source_locator: §1.2 ; §3 ; §4.1 ; §10.5
+    consulted_on: '2026-09-19'
+    evidence_limits: Passages primaires indexés consultés ; ouverture directe bloquée. Les règles d’étiquetage ne définissent
+      pas à elles seules les objets FLOW.
+    element_name: Logistic unit
+    element_type: Concept documenté par la source primaire
+    relationship: Recouvrement partiel
+    similarities: Ensemble constitué pour le transport ou le stockage.
+    differences: L’unité constituée n’est pas toujours le contenant physique seul.
+    flow_position: Rôle porté par Product pour les biens destinés à contenir ou supporter d’autres unités, sous des règles
+      de composition.
+    status: proposed
+    source_refs:
+    - U477
+    - ELM470
+    - CMP193
+    concept_name: Logistic unit
+    scope_summary: Ensemble constitué pour le transport ou le stockage.
+    approach_summary: Identifier l’unité logistique et son contenu.
+    definition_choice: Rôle porté par Product pour les biens destinés à contenir ou supporter d’autres unités, sous des règles
+      de composition.
+  - vendor: GS1
+    product: GS1 System Architecture
+    source_title: GS1 System Architecture Document
+    source_url: https://www.gs1.org/standards/gs1-system-architecture-document/current-standard
+    source_version: Page courante ; édition non vérifiée dans le passage disponible
+    source_locator: Table 4-1 ; Identification of objects ; Communication of business data
+    consulted_on: '2026-09-19'
+    evidence_limits: Passages primaires indexés consultés ; ouverture directe bloquée (403). Pas de reprise exhaustive du
+      standard.
+    element_name: Logistic unit / Asset
+    element_type: Concept documenté par la source primaire
+    relationship: Recouvrement partiel
+    similarities: Unités logistiques et biens réutilisables identifiés.
+    differences: FLOW définit un rôle métier sans imposer un identifiant particulier.
+    flow_position: Rôle porté par Product pour les biens destinés à contenir ou supporter d’autres unités, sous des règles
+      de composition.
+    status: proposed
+    source_refs:
+    - U477
+    - ELM471
+    - CMP193
+    concept_name: Logistic unit / Asset
+    scope_summary: Unités logistiques et biens réutilisables identifiés.
+    approach_summary: Choisir la clé selon la nature de l’objet.
+    definition_choice: Rôle porté par Product pour les biens destinés à contenir ou supporter d’autres unités, sous des règles
+      de composition.
+superseded_delivery_checks:
+- path: modeles/backlog/core-reference-credit-boundaries-U895.yaml
+  previous:
+    id: ba-packaging-references
+    kind: business_area
+    fields:
+      name: Packaging References
+    field_sha256:
+      definition: 775c078388e4bddb09bf12604c6735018eccf6ac6707e0173145289899ee721a
+      finality: ad21c53b7f4d98b78d04a90d47eca2d846a9971823875bcda93dc2722c8872f8
+      scope: 8cf339a8de62b97f89a9291e510084bb9a91254c3baa97f3e3d76fd07f596d7a
+      market_comparisons: 47b66a39b77f2a532bc41ba7fc532fafb274c54a1cbfb3ed595c748d14bf5f87
+    parent: business-references
+    parent_type: contains
+- path: modeles/backlog/core-reference-credit-boundaries-U895.yaml
+  previous:
+    id: packaging-material-reference
+    kind: reference
+    fields:
+      name: Packaging Material Reference
+    field_sha256:
+      definition: fe5f52ee51dad212d5a56990ed7e73c7badfbe25f6f9e1e40fa0ee56dbd62652
+      finality: 1d227b90730c20b3b13c3dfb73de53f2c7a4c2bfe7d890e869aac4d43fe880d9
+      scope: 36e35c60473b559e174996caf479e65a2746704872cb7ebda6402885e685dc5c
+      market_comparisons: aedb9d491b60467b58ba575e7878d2bf13276cdb33b2cba16a46a25cb86d30e4
+    parent: ba-packaging-references
+    parent_type: presents
+- path: modeles/backlog/core-reference-credit-boundaries-U895.yaml
+  previous:
+    id: packaging-specification
+    kind: reference
+    fields:
+      name: Packaging Specification
+    field_sha256:
+      definition: 2752296ff52cafea2f21cfc5177d5a453cbd88f20920e8ab5ca6c1861d49adf6
+      finality: 57c6ed4c9c8d7e5c0e5b6e8130b2143753952d876daf568bace1161c60bd3be3
+      scope: d54a9ff22fe9355becca5adf386674448b013a3103c7045ca13083cbbe7691f6
+      market_comparisons: fb83063da2773f3cebf507c775bf49eaecd83a74dd4781b54e407261252f6a1a
+    parent: ba-packaging-references
+    parent_type: presents
+- path: modeles/backlog/product-packaging-supply-matching-U890.yaml
+  previous:
+    id: ba-packaging-references
+    kind: business_area
+    fields:
+      name: Packaging References
+    field_sha256:
+      definition: 775c078388e4bddb09bf12604c6735018eccf6ac6707e0173145289899ee721a
+      scope: 8cf339a8de62b97f89a9291e510084bb9a91254c3baa97f3e3d76fd07f596d7a
+      market_comparisons: 47b66a39b77f2a532bc41ba7fc532fafb274c54a1cbfb3ed595c748d14bf5f87
+    parent: business-references
+    parent_type: contains
+- path: modeles/backlog/product-packaging-supply-matching-U890.yaml
+  previous:
+    id: packaging-material-reference
+    kind: reference
+    fields:
+      name: Packaging Material Reference
+    field_sha256:
+      definition: fe5f52ee51dad212d5a56990ed7e73c7badfbe25f6f9e1e40fa0ee56dbd62652
+      scope: 36e35c60473b559e174996caf479e65a2746704872cb7ebda6402885e685dc5c
+      market_comparisons: aedb9d491b60467b58ba575e7878d2bf13276cdb33b2cba16a46a25cb86d30e4
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+    parent: ba-packaging-references
+    parent_type: presents
+- path: modeles/backlog/product-packaging-supply-matching-U890.yaml
+  previous:
+    id: packaging-specification
+    kind: reference
+    fields:
+      name: Packaging Specification
+    field_sha256:
+      definition: 2752296ff52cafea2f21cfc5177d5a453cbd88f20920e8ab5ca6c1861d49adf6
+      scope: d54a9ff22fe9355becca5adf386674448b013a3103c7045ca13083cbbe7691f6
+      market_comparisons: fb83063da2773f3cebf507c775bf49eaecd83a74dd4781b54e407261252f6a1a
+      mastership: ee080af1a91e2ac0b1a3e90232b58afc809221288b8b3555033d4deb77dcf3f9
+    parent: ba-packaging-references
+    parent_type: presents
+application_U900:
+  changed_nodes:
+  - ba-packaging-references
+  - packaging-material-reference
+  - packaging-specification
+  changed_terms:
+  - TER061
+  - TER183
+  - TER185
+  - TER186
+  - TER189
+  - TER196
+  hierarchy_changed: false
+  scenario_change: 'Aucune : les parcours de conditionnement gardent leurs capacités et contributions ; clarification documentaire
+    uniquement.'
+  agreement_limit: Capturer les trois noms présentés ; le détail des scopes et les correspondances marché restent proposés.
+  container_clarification:
+    previous_definition: Rôle porté par Product pour les biens destinés à contenir ou supporter d’autres unités, sous des
+      règles de composition.
+    source_refs:
+    - U900
+    - U901
+    - U902
+    reason: Rendre la définition cohérente avec la distinction des contenants acceptée U900 ; conserver le terme demandé à
+      examiner U901, sans nouvelle entité.
+  intent_capture:
+    reexamined: 10
+    new_name_scopes: 3
+    ids:
+    - DEC-U900-REVIEW-b54efe2423df059202d5b332
+    - DEC-U900-REVIEW-226485d2080fc9b4091a3bc6
+    - DEC-U900-REVIEW-bdba78143576fd6e2add1365
+    - DEC-U900-REVIEW-17f7bae5f44aad6b53f489b2
+    - DEC-U900-REVIEW-4a88750238d08b0dfe0d9c7d
+    - DEC-U900-REVIEW-7d9a151dc0f3e13c6ef632a6
+    - DEC-U900-REVIEW-b90a78d9962e91eda8ea10e1
+    - DEC-U900-REVIEW-dcff85d744ce833bf08f9dff
+    - DEC-U900-REVIEW-9dcc03ba090029c45e0602d2
+    - DEC-U900-REVIEW-a7dd9b9665bae769eee8e620
+    - DEC-U900-ba-packaging-references
+    - DEC-U900-packaging-material-reference
+    - DEC-U900-packaging-specification
+    method: record_intents, capture groupée après les dernières écritures du modèle et du glossaire.
+    source_marker_repair:
+    - DEC-U900-SOURCES-e9f183d7fb56488755a61c1c
+    - DEC-U900-SOURCES-f7e7380457301c6214b1a72f
+    - DEC-U900-SOURCES-0c91780301924f3b54199e70
+    - DEC-U900-SOURCES-10ea2590701d6e662da7c6ae
+    - DEC-U900-SOURCES-abd922f4bae9b62876a175a1
+    - DEC-U900-SOURCES-3120daf3e694099918904dfa
+    - DEC-U900-SOURCES-9103d3c2aabf9246e22a132c
+    - DEC-U900-SOURCES-149218d94192183376adef8f
+    - DEC-U900-SOURCES-b70b1332ea6c4ebb1ad37bcd
+    - DEC-U900-SOURCES-3fbee739d05035d7d1143add
+    - DEC-U900-SOURCES-8b21e318e283634390e150d0
+    - DEC-U900-SOURCES-23dd3055ab42914052f2e528
+    - DEC-U900-SOURCES-f8e7c2e3af2c593ace912b48
+  verification:
+    validation_errors: 0
+    tests_passed: 23
+    delivery_contracts: 42
+    delivery_errors: 0
+    active_approval_scopes: 13
+    render: backlog actualisé
+    publication_unchanged: 2026-10-07.4
+publication_delivery:
+  state: applied
+  source_refs:
+  - U899
+  - U900
+  summary: Packaging References conservé ; distinction type de contenant, consigne et unité physique explicitée.
+  required_nodes:
+  - id: ba-packaging-references
+    kind: business_area
+    fields:
+      name: Packaging References
+    field_sha256:
+      scope: 83d6fc6fbf9bfbbfe2fc2dd69d358126af8b50b023cc1aec44ba043e87d7e1c1
+      market_comparisons: 456d17184c2f757e6317533cf7027ae5e33d8921bd79e2674e020cd4a10d6eaa
+  - id: packaging-material-reference
+    kind: reference
+    fields:
+      name: Packaging Material Reference
+    field_sha256:
+      scope: a4443ad7274d42624473a57dd33fa906676731954ea8cc6f09f3b1a772ccf5b2
+      market_comparisons: ded6ae98de1f2a4e1f4533ed4a7181476be1552f96e19dac2876ae87aa1eee27
+  - id: packaging-specification
+    kind: reference
+    fields:
+      name: Packaging Specification
+    field_sha256:
+      scope: 641c386272fed04876fa090b3ad7d5580f11ee6d489e0eba910cb1c16142b459
+      market_comparisons: 757f1b8b998f698116683364fc2bba36c33bcc797e32e360b77da0889f46ed10
+superseded_market_gaps_TER061:
+- family: microsoft_dynamics
+  reason: La comparaison existante ne comporte pas encore de source primaire de ce produit justifiant précisément le sens
+    de Container. La documentation de parcours examinée ne suffit pas à établir cette correspondance.
+  investigated_urls:
+  - https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+  source_refs:
+  - U853
+- family: sap_s4hana
+  reason: La comparaison existante ne comporte pas encore de source primaire de ce produit justifiant précisément le sens
+    de Container. La documentation de parcours examinée ne suffit pas à établir cette correspondance.
+  investigated_urls:
+  - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+  source_refs:
+  - U853

@@ -707,6 +707,7 @@ publication_delivery:
     fields:
       name: Sales Order
       nature: action
+    parent_type: contains
   - id: D04.j
     parent: ba-order-lifecycle-management
     fields:
@@ -747,6 +748,8 @@ publication_delivery:
     fields:
       name: Order Visibility
       nature: knowledge
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
 migration:
   retired_node_ids:
   - BHV021

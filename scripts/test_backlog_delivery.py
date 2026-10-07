@@ -6,6 +6,19 @@ from scripts.backlog_delivery import check_delivery
 
 
 class DeliveryTests(unittest.TestCase):
+    def test_glossary_delivery_preserves_definitions_and_aliases(self):
+        from scripts.record_decision import canonical_sha256
+        item = {'id': 'OLD', 'definition': 'A preserved definition.', 'alias_of': 'CURRENT'}
+        self.model['glossary'] = {'terms': [item]}
+        declaration = {'state': 'applied', 'required_glossary': [{'id': 'OLD', 'field_sha256': {
+            k: canonical_sha256(item[k]) for k in ('definition', 'alias_of')}}]}
+        (self.folder / 'glossary.yaml').write_text(dumps({'publication_delivery': declaration}), encoding='utf-8')
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+        item['alias_of'] = 'WRONG'
+        self.assertTrue(any('glossary field mismatch' in e for e in check_delivery(self.root, self.model)[1]))
+        self.model['glossary']['terms'] = []
+        self.assertTrue(any('glossary term missing' in e for e in check_delivery(self.root, self.model)[1]))
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
@@ -48,6 +61,19 @@ class DeliveryTests(unittest.TestCase):
     def test_empty_applied_declaration_blocks(self):
         (self.folder / 'study.yaml').write_text(dumps({'publication_delivery': {'state': 'applied'}}), encoding='utf-8')
         self.assertTrue(check_delivery(self.root, self.model)[1])
+
+    def test_field_fingerprint_rejects_changed_or_missing_content(self):
+        from scripts.record_decision import canonical_sha256
+        fields = self.model['nodes'][0]['fields']
+        fields['scope'] = 'Tenir la commande sans confirmer automatiquement son exécution.'
+        declaration = {'state': 'applied', 'required_nodes': [{'id': 'packing',
+            'field_sha256': {'scope': canonical_sha256(fields['scope'])}}]}
+        (self.folder / 'scope.yaml').write_text(dumps({'publication_delivery': declaration}), encoding='utf-8')
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+        fields['scope'] += ' Une confirmation artificielle est ajoutée.'
+        self.assertIn('field hash mismatch', check_delivery(self.root, self.model)[1][0])
+        del fields['scope']
+        self.assertIn('field hash mismatch', check_delivery(self.root, self.model)[1][0])
 
     def test_catalog_delivery_checks_exact_content_without_approval(self):
         from scripts.element_versions import content_hash

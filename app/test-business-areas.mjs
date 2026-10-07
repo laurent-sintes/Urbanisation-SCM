@@ -5,7 +5,7 @@ import { kindLabel } from './src/presentation.ts';
 import { scenariosForNode } from './src/scenarioCatalog.ts';
 import { projectDependencies, dependencyLevels, dependencyLevel } from './src/dependencyGraph.ts';
 import { readRoute } from './src/navigation.ts';
-import { businessAreaSections } from './src/mapSections.ts';
+import { businessAreaSections, directSectionCaption, startsDirectSection } from './src/mapSections.ts';
 const raw = () => ({ space:'release',version:'fixture',nodes:[
   {id:'sub',kind:'area',fields:{name:'Subdomain'}},
   {id:'ba',kind:'business_area',fields:{name:'Responsibility'}},
@@ -68,6 +68,33 @@ test('map banners group actual children without changing parents or losing direc
   assert.deepEqual(new Set(sections.flatMap(s=>s.items.map(n=>n.id))),new Set(['cap','direct','ref']));
   assert.equal(parentRelationOf(m,'cap').sourceId,'ba');
   assert.equal(businessAreaSections(m,'ba'),undefined);
+});
+test('common reference headings coexist with Business Areas without hiding or duplicating references',()=>{
+  const source=raw();
+  source.nodes=source.nodes.filter(n=>n.id!=='direct');
+  source.relations=source.relations.filter(r=>!['c','doc','cooperation'].includes(r.id));
+  source.nodes.push({id:'price',kind:'reference',fields:{name:'Product Price Book'}});
+  source.relations.push({id:'price-parent',type:'presents',source_id:'sub',target_id:'price'});
+  const m=adaptPublication(source), sub=m.nodeById.get('sub');
+  const sections=businessAreaSections(m,'sub');
+  assert.deepEqual(sections.map(s=>s.area?.name || directSectionCaption(s.items)),['Responsibility','Référentiels communs']);
+  assert.deepEqual(sections[1].items.map(n=>n.id),['ref','price']);
+  const list=cardChildListOf(m,sub);
+  const headings=list.items.flatMap((item,i)=>startsDirectSection(list.items,i)?[directSectionCaption([item])]:[]);
+  assert.deepEqual(headings,['Référentiels communs']);
+  assert.deepEqual(cardListedItems(list).map(n=>n.id),['cap','ref','price']);
+  assert.equal(cardContentSummary(m,sub),'1 capacité · 2 référentiels');
+  assert.deepEqual(lineageOf(m,'ref').map(n=>n.id),['sub','ref']);
+});
+test('historical direct capabilities keep their label beside common references',()=>{
+  const m=adaptPublication(raw()), list=cardChildListOf(m,m.nodeById.get('sub'));
+  const sections=businessAreaSections(m,'sub');
+  assert.deepEqual(sections.map(s=>s.area?.name || directSectionCaption(s.items)),
+    ['Responsibility','Référentiels communs','Rattachement direct au sous-domaine']);
+  const headings=list.items.flatMap((item,i)=>startsDirectSection(list.items,i)?[directSectionCaption([item])]:[]);
+  assert.deepEqual(headings,['Référentiels communs','Rattachement direct au sous-domaine']);
+  assert.deepEqual(sections.flatMap(s=>s.items.map(n=>n.id)),['cap','ref','direct']);
+  assert.equal(parentRelationOf(m,'direct').sourceId,'sub');
 });
 test('relationship projection retains direct capabilities and reference links',()=>{
   const m=adaptPublication(raw());

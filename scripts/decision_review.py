@@ -1,5 +1,6 @@
 """Prepare evidence for explicit reassessment; never infer a business approval."""
 from copy import deepcopy
+from collections import Counter, defaultdict
 from hashlib import sha256
 from pathlib import Path
 import os
@@ -147,6 +148,7 @@ def save_review(destination, review, report):
     try:
         write(temporary / 'review.json', review)
         write(temporary / 'report.json', report)
+        write(temporary / 'summary.json', summarize_review(review, report))
         write(temporary / 'assessment.yaml', {
             'schema_version': '1.0.0', 'version': review['candidate_version'],
             'review_sha256': canonical_sha256(review), 'reviewer': '',
@@ -161,7 +163,22 @@ def save_review(destination, review, report):
             shutil.rmtree(temporary)
     return {'review_directory': str(destination), 'assessment': str(destination / 'assessment.yaml'),
             'decisions_to_examine': len(review['items']),
-            'unchanged_values_to_reassess': sum(i['eligible_for_reassessment'] for i in review['items'])}
+            'unchanged_values_to_reassess': sum(i['eligible_for_reassessment'] for i in review['items']),
+            'review_summary': str(destination / 'summary.json')}
+
+
+def summarize_review(review, report):
+    """Small navigation index; the complete dossier remains the review authority."""
+    groups = defaultdict(list)
+    for item in review['items']:
+        groups[(item['target']['collection'], item['target']['id'])].append(item['decision_id'])
+    return {'decisions': len(review['items']), 'targets': len(groups),
+            'reasons': dict(Counter(item['reason'] for item in review['items'])),
+            'context_reasons': dict(Counter(reason for item in report.get('deferred_decisions', [])
+                                           for reason in item.get('context_reasons', []))),
+            'per_target': [{'collection': collection, 'id': identifier, 'decision_ids': ids}
+                           for (collection, identifier), ids in sorted(groups.items())],
+            'note': 'Index de lecture ; aucune décision ni extension d’accord.'}
 
 
 def apply_assessment(directory, current):

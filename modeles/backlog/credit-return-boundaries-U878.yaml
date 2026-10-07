@@ -49,6 +49,7 @@ publication_delivery:
   state: applied
   source_refs:
   - U879
+  - U889
   summary: Références de crédit et effets sur commandes ; trois résolutions de retour et remboursement par Payment.
   required_nodes:
   - id: D09
@@ -64,7 +65,7 @@ publication_delivery:
 
         Les identités, relations, rôles et contextes reçus restent consultables. Un rôle de contact ne suffit pas à désigner un cocontractant ; la consultation ne crée ni identité, ni habilitation. La référence locale conserve versions, validité, provenance et incohérences connues sous la responsabilité d’[Operational References](model:business-references).
 
-        Le profil de [crédit client](glossary:TER155) reçu du contrôle de gestion comprend le classement de risque et la limite autorisée, avec leur périmètre, version et validité. Ce profil n’est ni calculé ni révisé financièrement par cette référence. Un classement ne prouve pas qu’une commande est autorisée : l’encours pertinent ou le résultat du contrôle doit provenir de l’autorité financière compétente.
+        Le [Customer Credit Profile](model:customer-credit-profile) lié au client ou payeur porte le classement, la limite et les restrictions financières reçus. Party / Role conserve l’identité et les rôles ; il ne détermine pas l’autorisation financière d’une commande.
   - id: D11
     fields:
       scope: |-
@@ -78,31 +79,7 @@ publication_delivery:
 
         Les conditions de paiement et garanties réellement convenues sont des conditions de l’accord. Une limite de [crédit client](glossary:TER155) décidée unilatéralement et une règle générale de blocage ne deviennent pas des clauses contractuelles par leur réception. Le profil du client relève de [Party / Role](model:D09) ; les règles externes restent identifiées dans [Partner & Agreement References](model:ba-partner-agreement-references).
   - id: D04.i
-    fields:
-      scope: |-
-        Type de commande : [Sales Order](glossary:TER069).
-
-        Une commande client peut comporter plusieurs lignes et échéances. Exemple fictif : sur 100 pièces commandées, 60 sont livrées et 40 restent à servir, avant prise en compte des annulations ou ajustements autorisés. Une demande de report des 40 pièces doit préciser la date demandée ; elle ne change pas automatiquement la promesse confirmée. Un retour ultérieur donne lieu à une commande de retour distincte, reliée à l’origine lorsque connue, et non à l’effacement de la livraison.
-
-        Les conditions contractuelles restent des références ; cette capacité ne confère pas l’autorité de négocier ou de modifier un [Agreement](glossary:TER048). Les priorités et le plan de satisfaction relèvent de [Availability](glossary:TER112) ; les possibilités de promesse relèvent du groupe [Order Promising](glossary:TER124) et les engagements d’[Order Management](model:D04) ; prestations, engagements et faits d’exécution dans [Fulfilment Orchestration](model:D06) et chez les exécutants. Les règles d’imputation, tolérances, autorisations et effets sur les réservations sont à instruire. Les exemples sont fictifs et ne prouvent aucun déploiement.
-
-        U401 : comportements adoptés — [Ship to Customer](model:BHV066), [Customer Pickup](model:BHV067), [Direct Delivery](model:BHV068), [Intercompany Sales](model:BHV069). Les comportements ne sont ni une séquence obligatoire ni tous exclusifs. Intercompany est un axe de relation commerciale ; les autres parcours décrivent principalement le mode de satisfaction. Identifier les quantités concernées et ne pas additionner des stocks ou attendus deux fois.
-
-        Les demandes et précommandes connues peuvent éclairer [Plan Visibility](model:subdomain-plans), selon leur horizon et leur qualification. Leur prise en compte dans une prévision ne change pas leur contenu ou leurs engagements, et ne crée pas une seconde commande. Les ventes observées sont un autre apport au plan, dont la source n’est pas assimilée automatiquement au carnet des commandes.
-
-        Les décisions de promesse d’[Availability](glossary:TER112) déterminent les possibilités de promesse ; [Order Management](model:D04) porte l’engagement.
-
-        Cette famille porte le cycle et les engagements de ses [Orders](glossary:TER012) selon le [contrat commun d’Order Management](model:D04) : préparation, révisions, affermissement, protections, autorisation, suspension/reprise, annulation, clôture et conservation. Elle distingue demande, proposition, engagement confirmé et réalisé, rapproche les résultats pour tenir le reste à satisfaire et expose ces informations à [Order Visibility](model:order-visibility). Les variantes décrivent des axes métier combinables ; elles ne recopient pas ce cycle commun.
-
-        [Preorder](model:sales-order-preorder) explicite la prise de commande avant disponibilité commerciale : attente, degré d’engagement, réexamen et passage autorisé à l’exécution. Cette anticipation se combine avec les autres variantes ; une précommande peut déjà être ferme.
-
-        Le statut Preorder et son cycle appartiennent au Sales Order existant. La sortie de précommande est une transition de statut sur la même identité ; elle ne crée ni une nouvelle commande ni une copie de sa demande.
-
-        La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer.
-
-        Pour le [crédit client](glossary:TER155), appliquer la règle financière reçue ou consommer le résultat du contrôle externe afin de suspendre ou reprendre la commande selon les autorisations applicables. Conserver motif, portée du blocage, règle et version utilisées, résultat et éventuelle dérogation autorisée. Un classement client seul ne permet pas de calculer un dépassement : utiliser l’encours et l’exposition pertinents fournis par la Finance, ou son résultat de contrôle ; ne pas présumer ces données disponibles. Une information manquante reste explicite. [Sentry](model:order-workflow-sentry) réagit aux changements ; il ne s’accorde pas une dérogation financière.
-
-        Une commande de remplacement liée à un [Return Order](model:D04.l) porte ses propres quantités, promesse et résultats. [Replacement Resolution](glossary:TER158) en suit la satisfaction depuis le retour ; la création de la commande de remplacement ne prouve pas la livraison et ne duplique pas la vente d’origine.
+    fields: {}
   - id: D04.l
     fields:
       definition: Prendre en charge les retours clients, leurs suites logistiques et leur résolution par avoir, remboursement
@@ -122,7 +99,7 @@ publication_delivery:
 
         Conserver les parcours spécifiques ; le choix du devenir et les prestations sont mobilisés auprès de [Fulfilment](glossary:TER085), pas exécutés par l’[Order](glossary:TER012).
 
-        Cette famille porte le cycle et les engagements de ses [Orders](glossary:TER012) selon le [contrat commun d’Order Management](model:D04) : préparation, révisions, affermissement, protections, autorisation, suspension/reprise, annulation, clôture et conservation. Elle distingue demande, proposition, engagement confirmé et réalisé, rapproche les résultats pour tenir le reste à satisfaire et expose ces informations à [Order Visibility](model:order-visibility). Les variantes décrivent des axes métier combinables ; elles ne recopient pas ce cycle commun.
+        Cette famille porte le cycle et les engagements de ses [Orders](glossary:TER012) selon le [contrat commun d’Order Management](model:D04) : préparation, révisions, [affermissement](glossary:TER197), protections, autorisation, suspension/reprise, annulation, clôture et conservation. Elle distingue demande, proposition, engagement confirmé et réalisé, rapproche les résultats pour tenir le reste à satisfaire et expose ces informations à [Order Visibility](model:order-visibility). Les variantes décrivent des axes métier combinables ; elles ne recopient pas ce cycle commun.
 
         L’[Order](glossary:TER012) de retour n’efface pas la vente d’origine.
 
@@ -133,35 +110,9 @@ publication_delivery:
         pas des étapes obligatoires ; un avoir peut précéder un remboursement, et les lignes ou quantités peuvent recevoir
         des résolutions différentes. Aucun sous-comportement ni transfert de l’exécution financière dans Return Order.'
   - id: D04
-    fields:
-      scope: |-
-        Chaque famille tient l’origine, les parties, biens ou services, quantités, dates et conditions de ses commandes. Conserver les versions et les liens entre commandes structurées, y compris les propositions provenant des plans amont. Une proposition retirée n’efface pas une commande affermie. Affermir une demande ne confirme pas automatiquement sa quantité et sa date.
-
-        Les décisions de promesse d’[Availability](glossary:TER112) proposent une réponse ; les familles de commandes portent la confirmation et ses révisions autorisées. Distinguer demandé, proposé, confirmé et réalisé par ligne, quantité ou groupe pertinent. Exemple fictif : pour 100 pièces demandées vendredi, une proposition de 60 vendredi et 40 lundi peut conduire à ne confirmer que les 60 premières. La promesse fournisseur et la promesse client restent distinctes. Affecter une ressource ne réserve pas automatiquement le stock.
-
-        Préparation, engagement, protection contre réoptimisation, autorisation de prise en charge, suspension et terminaison sont des dimensions distinctes. Leur combinaison dépend du périmètre et des règles applicables, sans état global ni séquence unique. Libérer une commande ne prouve pas le début de réalisation. Les modifications respectent les engagements, dépendances et dérogations autorisées.
-
-        Annuler retire le besoin dans la portée autorisée ; clôturer règle le reste à traiter en conservant les faits. Exemple fictif : sur 100 pièces, 40 sont préparées et 60 ne le sont pas. Les 60 ne sont ni automatiquement modifiables ni automatiquement bloquées : les engagements et une éventuelle exigence de livraison complète comptent. [Fulfilment Orchestration](model:D06) traite les conséquences sur le travail engagé.
-
-        Conserver prix et versions ; consulter l’historique sans réactiver la commande. Restaurer, rouvrir et purger sont des opérations distinctes, soumises à leurs règles sans durée légale ou solution technique présumée. Supprimer un brouillon se distingue d’annuler une commande engagée. Copier une commande ne copie pas ses engagements ou réalisations ; une substitution ne change pas silencieusement son prix.
-
-        [Order Visibility](model:order-visibility) expose demandes, engagements, réalisations rapprochées et restes à satisfaire sans double comptage. Les propositions amont ne sont pas à elles seules commandes fermes, réservations, promesses ou autorisations de démarrage. Réviser un besoin doit préserver ses liens sans en créer un doublon.
-
-        Un achat de service et une prestation confiée restent distincts ; toute prestation ne nécessite pas un [Purchase Order](glossary:TER070). [Service Management](model:subdomain-service-orders) tient les engagements de prestation. [Inventory Management](model:D01) porte les faits de stock et les réservations ; [Fulfilment](glossary:TER085) coordonne la réalisation. Les actes nécessaires à un changement de propriété peuvent être demandés ici, mais leur effet reconnu relève d’[Inventory Ownership Transfer Decision](model:D01.h) et du registre de propriété. Clôturer une commande ne prouve pas ce transfert.
-
-        Le [Reactive Workflow Management](glossary:TER125) organise et conduit le parcours des commandes. Il maintient les activités réutilisables et leurs règles de composition, réagit au contexte, adapte le parcours et en pilote les attentes et résultats. Les familles de commandes conservent leur identité, leur état, leurs engagements et la validité des transitions. [Fulfilment](glossary:TER085) reçoit les travaux autorisés et coordonne les prestations ; il ne définit pas seul la structure du parcours de la commande.
-
-        Une demande peut être préparée ou planifiée avant affermissement. [Preorder](glossary:TER150) indique l’anticipation de disponibilité commerciale ; [Planned Purchase Order](glossary:TER033) désigne une proposition d’approvisionnement distincte du Purchase Order résultant. Origine, horizon et degré d’engagement restent trois informations distinctes. Preorder est un statut du Sales Order, dont l’identité est conservée ; l’affermissement d’un Planned Purchase Order relie deux objets distincts sans imposer une identité commune.
-
-        Pour le [crédit client](glossary:TER155), appliquer la règle financière reçue ou consommer le résultat du contrôle externe afin de suspendre ou reprendre la commande selon les autorisations applicables. Conserver motif, portée du blocage, règle et version utilisées, résultat et éventuelle dérogation autorisée. Un classement client seul ne permet pas de calculer un dépassement : utiliser l’encours et l’exposition pertinents fournis par la Finance, ou son résultat de contrôle ; ne pas présumer ces données disponibles. Une information manquante reste explicite. [Sentry](model:order-workflow-sentry) réagit aux changements ; il ne s’accorde pas une dérogation financière.
+    fields: {}
   - id: subdomain-policies
-    fields:
-      scope: |-
-        Conserver les règles actives, leur portée et leur validité. Les décisions de [Availability](glossary:TER112) peuvent recommander des valeurs ou adaptations ; cette recommandation ne change pas implicitement la règle active. Les réservations constituées restent dans Inventory Management. Exemple fictif : protéger une quantité pour un groupe de demandes et limiter temporairement les nouvelles sollicitations d’un prestataire, sans annuler ses travaux déjà engagés.
-
-        Porter les contrôles actifs du fonctionnement courant : seuils, limites, protections, désactivations et réactivations temporaires de possibilités métier, avec leur portée et leur validité. Exemple fictif : désactiver temporairement le fractionnement pour de nouvelles sollicitations, sans annuler les engagements existants. Les règles de structure du parcours et de composition des activités relèvent de [Workflow Definition Management](glossary:TER126) dans Order Management. Une modification de contrôle ne vaut ni modification rétroactive des commandes ni nouvel engagement.
-
-        Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par FLOW ne les transforme pas en règles sous autorité de Policies.
+    fields: {}
   - id: service-order-billing
     fields:
       scope: |-
@@ -191,37 +142,15 @@ publication_delivery:
 
         Pour [Refund Resolution](glossary:TER157), prendre en charge le remboursement autorisé, conserver le lien au retour, au paiement et à l’avoir lorsqu’ils sont applicables, puis reconnaître le montant effectivement remboursé, les refus et le reste à traiter. Une demande envoyée ou un avoir émis ne vaut pas remboursement réalisé. Les références de traitement servent à reconnaître les résultats sans compter deux fois un même remboursement. L’extension aux remboursements clients n’inclut pas les paiements fournisseurs ni la décision commerciale d’indemniser.
   - id: master-data-ingestion
-    fields:
-      scope: |-
-        Recevoir les apports sourcés, vérifier leur identité, leur portée et leur validité connues, intégrer les versions ou corrections prises en compte et conserver le résultat de cette intégration. Commerce, Finance et Design sont les domaines fournisseurs identifiés ; leurs contrats détaillés ne se déduisent pas de leurs noms.
-
-        Les sujets de référence restent distincts. Les produits et partenaires sont décrits dans : [Product Reference](glossary:TER052) (produits et variantes), Party / Role (personnes, relations et rôles), [Agreement](glossary:TER048) (conditions contractuelles). Les offres et moyens sont décrits dans : [Product Catalog](glossary:TER049) (offres et éligibilité), [Fulfilment Network](glossary:TER054) (lieux et relations), [Service Catalog](glossary:TER094) (prestations de référence), [Assortment](glossary:TER087) (sélections et périodes) [Product Price Book](model:product-price-book) (tarifs produits) et [Service Price Book](model:service-price-book) (tarifs de services). Un sujet peut recevoir plusieurs contributions et un domaine en fournir plusieurs.
-
-        L’ingestion reconnaît les apports et leur prise en compte ; [Operational References](model:business-references) porte la composition et le maintien de la vue locale utilisable de chaque sujet, avec fraîcheur, provenance et incohérences connues. Une donnée reçue mais rejetée ou en attente ne devient pas une référence applicable. Le domaine tient la source de vérité locale Supply ; il ne négocie pas les accords, ne conçoit pas commercialement les offres et ne corrige pas silencieusement les maîtres d’entreprise.
-
-        Les références peuvent être liées sans fusionner leurs autorités : produit dans plusieurs catalogues, assortiment référencé par un accord, offre associée à des tarifs. Le tarif reste dans [Price Book](glossary:TER097) ; son évolution ne modifie pas automatiquement le prix ou le [SLA](glossary:TER076) d’un engagement existant. La consultation du catalogue de services ne remplace pas la captation des faits d’exécution.
-
-        Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
-
-        Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
-
-        Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
+    fields: {}
   - id: order-workflow-sentry
-    fields:
-      scope: |-
-        Qualifier un événement à partir de la commande concernée, des attentes en cours et des conditions applicables. Déterminer puis déclencher la réaction prévue dans la portée autorisée : continuer, attendre un résultat manquant, demander une décision ou solliciter la réorganisation du parcours. Un événement sans effet pertinent ne déclenche pas une nouvelle planification.
-
-        Exemple fictif : une confirmation client autorise la suite du parcours ; un retard rapproché d’une prestation peut au contraire nécessiter une nouvelle proposition et une nouvelle confirmation. [Process Adaptation Decision](model:D06.f) conserve les adaptations locales d’exécution qui respectent les engagements.
-
-        Utiliser les faits rapprochés par [Service Reconciliation](model:D07.c), sans dupliquer leur captation ni leur imputation. Les familles de commandes gardent la validité de leurs transitions. Le nom Sentry souligne le déclenchement d’une réaction ; il ne présume ni réponse instantanée, ni automatisation de toutes les décisions, ni suppression des interventions humaines.
-
-        Un changement du profil de [crédit client](glossary:TER155), d’une règle applicable ou d’un résultat de contrôle peut déclencher le réexamen prévu. La reprise reste soumise aux autorisations et aux transitions de la commande ; recevoir un événement ne lève pas automatiquement son blocage financier.
+    fields: {}
   - id: ba-partner-agreement-references
     fields:
       scope: |-
-        Présente [Party / Role](model:D09), [Agreement](model:D11). Ce périmètre porte la cohérence et la fourniture des vues locales, avec validité, provenance et limites connues. Les références restent documentaires ; aucune capacité de consultation autonome n’est créée. Une responsabilité métier distincte n’impose ni équipe ni composant logiciel séparé.
+        [Party / Role](model:D09) identifie les parties et leurs rôles ; [Agreement](model:D11) porte les conditions et engagements convenus ; [Customer Credit Profile](model:customer-credit-profile) porte les informations de crédit reçues de l’autorité financière. Une limite décidée unilatéralement ne devient pas un accord contractuel.
 
-        Recevoir du contrôle de gestion les profils et [règles de crédit](glossary:TER155) nécessaires aux opérations, avec leur autorité, leur version, leur portée et leur validité. [Party / Role](model:D09) porte le classement du client et sa limite autorisée ; [Agreement](model:D11) porte les conditions de paiement et garanties réellement convenues. Les règles générales reçues ne sont pas des contrats. Leur référence et leur portée sont conservées ici sans inventer un accord ni une nouvelle référence autonome. Leur autorité reste au contrôle de gestion, y compris lorsque FLOW les applique.
+        Ce périmètre porte la cohérence des références locales, leur provenance, leur version et leur validité. L’exposition courante et le résultat propre à une commande restent contextualisés au contrôle du [Case](glossary:TER064), sans devenir des références statiques. Exemple fictif : relier un payeur, ses conditions convenues et sa limite reçue sans confondre ces trois sujets.
   - id: return-credit-resolution
     fields:
       name: Credit Resolution
@@ -257,20 +186,135 @@ publication_delivery:
     kind: behavior
   required_catalog:
   - collection: scenarios
-    id: customer-credit-hold
-    content_sha256: da1cadb5769eb0e9bd9a981a2ac537e5ed0d53724f144b1bae4fccb693d22d8c
-  - collection: paths
-    id: customer-credit-hold-path
-    content_sha256: 6e263b3ac94e2dd8f19916990da7f6f1ee0e9bf24f0396d70051a5e66558c51c
-  - collection: scenarios
     id: return-credit-refund
-    content_sha256: bb1c5d4f73e85448aec2acb3d6a61cd6d0d0233217089060b4d2f5a35345ecac
+    content_sha256: ecc174f0fdcd11aa68c204fdef1ea3af8cc8adf8f0572e37e16311abee678bc9
   - collection: paths
     id: return-credit-refund-path
     content_sha256: 53bb1406e7e2f3bc78a13ec30446d3a37a16b413b3e94111e8c2664e5b093a51
   - collection: scenarios
     id: return-customer-replacement
-    content_sha256: d6541d341cf4e774c16c1e0344daa2ff3ff85ad95bf850cd138da8954f82243d
+    content_sha256: 3a57a261539490e6dfc5c24dd6586b9f67a98b872e31b0ae857f07bbabca1f18
   - collection: paths
     id: return-customer-replacement-path
     content_sha256: 9905de1818e91672074a945d8aa4eb6e3b241d81bda96ae0f6b51b503feece71
+  supersession_U894: Seuls les contrôles de livraison des champs modifiés sont actualisés ; ancien contrat conservé dans credit-check-decision-U892.yaml.
+    Aucun accord métier étendu.
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
+superseded_delivery_U885:
+- id: D04
+  previous_expectations:
+    fields:
+      scope: |-
+        Chaque famille tient l’origine, les parties, biens ou services, quantités, dates et conditions de ses commandes. Conserver les versions et les liens entre commandes structurées, y compris les propositions provenant des plans amont. Une proposition retirée n’efface pas une commande affermie. Affermir une demande ne confirme pas automatiquement sa quantité et sa date.
+
+        Les décisions de promesse d’[Availability](glossary:TER112) proposent une réponse ; les familles de commandes portent la confirmation et ses révisions autorisées. Distinguer demandé, proposé, confirmé et réalisé par ligne, quantité ou groupe pertinent. Exemple fictif : pour 100 pièces demandées vendredi, une proposition de 60 vendredi et 40 lundi peut conduire à ne confirmer que les 60 premières. La promesse fournisseur et la promesse client restent distinctes. Affecter une ressource ne réserve pas automatiquement le stock.
+
+        Préparation, engagement, protection contre réoptimisation, autorisation de prise en charge, suspension et terminaison sont des dimensions distinctes. Leur combinaison dépend du périmètre et des règles applicables, sans état global ni séquence unique. Libérer une commande ne prouve pas le début de réalisation. Les modifications respectent les engagements, dépendances et dérogations autorisées.
+
+        Annuler retire le besoin dans la portée autorisée ; clôturer règle le reste à traiter en conservant les faits. Exemple fictif : sur 100 pièces, 40 sont préparées et 60 ne le sont pas. Les 60 ne sont ni automatiquement modifiables ni automatiquement bloquées : les engagements et une éventuelle exigence de livraison complète comptent. [Fulfilment Orchestration](model:D06) traite les conséquences sur le travail engagé.
+
+        Conserver prix et versions ; consulter l’historique sans réactiver la commande. Restaurer, rouvrir et purger sont des opérations distinctes, soumises à leurs règles sans durée légale ou solution technique présumée. Supprimer un brouillon se distingue d’annuler une commande engagée. Copier une commande ne copie pas ses engagements ou réalisations ; une substitution ne change pas silencieusement son prix.
+
+        [Order Visibility](model:order-visibility) expose demandes, engagements, réalisations rapprochées et restes à satisfaire sans double comptage. Les propositions amont ne sont pas à elles seules commandes fermes, réservations, promesses ou autorisations de démarrage. Réviser un besoin doit préserver ses liens sans en créer un doublon.
+
+        Un achat de service et une prestation confiée restent distincts ; toute prestation ne nécessite pas un [Purchase Order](glossary:TER070). [Service Management](model:subdomain-service-orders) tient les engagements de prestation. [Inventory Management](model:D01) porte les faits de stock et les réservations ; [Fulfilment](glossary:TER085) coordonne la réalisation. Les actes nécessaires à un changement de propriété peuvent être demandés ici, mais leur effet reconnu relève d’[Inventory Ownership Transfer Decision](model:D01.h) et du registre de propriété. Clôturer une commande ne prouve pas ce transfert.
+
+        Le [Reactive Workflow Management](glossary:TER125) organise et conduit le parcours des commandes. Il maintient les activités réutilisables et leurs règles de composition, réagit au contexte, adapte le parcours et en pilote les attentes et résultats. Les familles de commandes conservent leur identité, leur état, leurs engagements et la validité des transitions. [Fulfilment](glossary:TER085) reçoit les travaux autorisés et coordonne les prestations ; il ne définit pas seul la structure du parcours de la commande.
+
+        Une demande peut être préparée ou planifiée avant affermissement. [Preorder](glossary:TER150) indique l’anticipation de disponibilité commerciale ; [Planned Purchase Order](glossary:TER033) désigne une proposition d’approvisionnement distincte du Purchase Order résultant. Origine, horizon et degré d’engagement restent trois informations distinctes. Preorder est un statut du Sales Order, dont l’identité est conservée ; l’affermissement d’un Planned Purchase Order relie deux objets distincts sans imposer une identité commune.
+
+        Pour le [crédit client](glossary:TER155), appliquer la règle financière reçue ou consommer le résultat du contrôle externe afin de suspendre ou reprendre la commande selon les autorisations applicables. Conserver motif, portée du blocage, règle et version utilisées, résultat et éventuelle dérogation autorisée. Un classement client seul ne permet pas de calculer un dépassement : utiliser l’encours et l’exposition pertinents fournis par la Finance, ou son résultat de contrôle ; ne pas présumer ces données disponibles. Une information manquante reste explicite. [Sentry](model:order-workflow-sentry) réagit aux changements ; il ne s’accorde pas une dérogation financière.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: subdomain-policies
+  previous_expectations:
+    fields:
+      scope: |-
+        Conserver les règles actives, leur portée et leur validité. Les décisions de [Availability](glossary:TER112) peuvent recommander des valeurs ou adaptations ; cette recommandation ne change pas implicitement la règle active. Les réservations constituées restent dans Inventory Management. Exemple fictif : protéger une quantité pour un groupe de demandes et limiter temporairement les nouvelles sollicitations d’un prestataire, sans annuler ses travaux déjà engagés.
+
+        Porter les contrôles actifs du fonctionnement courant : seuils, limites, protections, désactivations et réactivations temporaires de possibilités métier, avec leur portée et leur validité. Exemple fictif : désactiver temporairement le fractionnement pour de nouvelles sollicitations, sans annuler les engagements existants. Les règles de structure du parcours et de composition des activités relèvent de [Workflow Definition Management](glossary:TER126) dans Order Management. Une modification de contrôle ne vaut ni modification rétroactive des commandes ni nouvel engagement.
+
+        Les [règles de crédit](glossary:TER155) émises par le contrôle de gestion restent sous son autorité et sont reçues dans [Partner & Agreement References](model:ba-partner-agreement-references). Leur application par FLOW ne les transforme pas en règles sous autorité de Policies.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- id: order-workflow-sentry
+  previous_expectations:
+    fields:
+      scope: |-
+        Qualifier un événement à partir de la commande concernée, des attentes en cours et des conditions applicables. Déterminer puis déclencher la réaction prévue dans la portée autorisée : continuer, attendre un résultat manquant, demander une décision ou solliciter la réorganisation du parcours. Un événement sans effet pertinent ne déclenche pas une nouvelle planification.
+
+        Exemple fictif : une confirmation client autorise la suite du parcours ; un retard rapproché d’une prestation peut au contraire nécessiter une nouvelle proposition et une nouvelle confirmation. [Process Adaptation Decision](model:D06.f) conserve les adaptations locales d’exécution qui respectent les engagements.
+
+        Utiliser les faits rapprochés par [Service Reconciliation](model:D07.c), sans dupliquer leur captation ni leur imputation. Les familles de commandes gardent la validité de leurs transitions. Le nom Sentry souligne le déclenchement d’une réaction ; il ne présume ni réponse instantanée, ni automatisation de toutes les décisions, ni suppression des interventions humaines.
+
+        Un changement du profil de [crédit client](glossary:TER155), d’une règle applicable ou d’un résultat de contrôle peut déclencher le réexamen prévu. La reprise reste soumise aux autorisations et aux transitions de la commande ; recevoir un événement ne lève pas automatiquement son blocage financier.
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U884
+  - U885
+- catalog:
+    collection: scenarios
+    id: customer-credit-hold
+    content_sha256: da1cadb5769eb0e9bd9a981a2ac537e5ed0d53724f144b1bae4fccb693d22d8c
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U885
+- catalog:
+    collection: paths
+    id: customer-credit-hold-path
+    content_sha256: 6e263b3ac94e2dd8f19916990da7f6f1ee0e9bf24f0396d70051a5e66558c51c
+  replaced_by: operational-work-audit-U881.yaml#publication_delivery
+  source_refs:
+  - U885
+superseded_delivery_U887:
+  source_refs:
+  - U887
+  replacement: model-coherence-audit-U886.yaml#publication_delivery
+  assertions:
+  - id: D04.i
+    previous_fields:
+      scope: |-
+        Type de commande : [Sales Order](glossary:TER069).
+
+        Une commande client peut comporter plusieurs lignes et échéances. Exemple fictif : sur 100 pièces commandées, 60 sont livrées et 40 restent à servir, avant prise en compte des annulations ou ajustements autorisés. Une demande de report des 40 pièces doit préciser la date demandée ; elle ne change pas automatiquement la promesse confirmée. Un retour ultérieur donne lieu à une commande de retour distincte, reliée à l’origine lorsque connue, et non à l’effacement de la livraison.
+
+        Les conditions contractuelles restent des références ; cette capacité ne confère pas l’autorité de négocier ou de modifier un [Agreement](glossary:TER048). Les priorités et le plan de satisfaction relèvent de [Availability](glossary:TER112) ; les possibilités de promesse relèvent du groupe [Order Promising](glossary:TER124) et les engagements d’[Order Management](model:D04) ; prestations, engagements et faits d’exécution dans [Fulfilment Orchestration](model:D06) et chez les exécutants. Les règles d’imputation, tolérances, autorisations et effets sur les réservations sont à instruire. Les exemples sont fictifs et ne prouvent aucun déploiement.
+
+        U401 : comportements adoptés — [Ship to Customer](model:BHV066), [Customer Pickup](model:BHV067), [Direct Delivery](model:BHV068), [Intercompany Sales](model:BHV069). Les comportements ne sont ni une séquence obligatoire ni tous exclusifs. Intercompany est un axe de relation commerciale ; les autres parcours décrivent principalement le mode de satisfaction. Identifier les quantités concernées et ne pas additionner des stocks ou attendus deux fois.
+
+        Les demandes et précommandes connues peuvent éclairer [Plan Visibility](model:subdomain-plans), selon leur horizon et leur qualification. Leur prise en compte dans une prévision ne change pas leur contenu ou leurs engagements, et ne crée pas une seconde commande. Les ventes observées sont un autre apport au plan, dont la source n’est pas assimilée automatiquement au carnet des commandes.
+
+        Les décisions de promesse d’[Availability](glossary:TER112) déterminent les possibilités de promesse ; [Order Management](model:D04) porte l’engagement.
+
+        Cette famille porte le cycle et les engagements de ses [Orders](glossary:TER012) selon le [contrat commun d’Order Management](model:D04) : préparation, révisions, affermissement, protections, autorisation, suspension/reprise, annulation, clôture et conservation. Elle distingue demande, proposition, engagement confirmé et réalisé, rapproche les résultats pour tenir le reste à satisfaire et expose ces informations à [Order Visibility](model:order-visibility). Les variantes décrivent des axes métier combinables ; elles ne recopient pas ce cycle commun.
+
+        [Preorder](model:sales-order-preorder) explicite la prise de commande avant disponibilité commerciale : attente, degré d’engagement, réexamen et passage autorisé à l’exécution. Cette anticipation se combine avec les autres variantes ; une précommande peut déjà être ferme.
+
+        Le statut Preorder et son cycle appartiennent au Sales Order existant. La sortie de précommande est une transition de statut sur la même identité ; elle ne crée ni une nouvelle commande ni une copie de sa demande.
+
+        La distinction vient de la nature des objets, pas d’une règle générale achat/vente. Un [Planned Purchase Order](glossary:TER033) est une proposition calculée par le planning ; son affermissement produit un [Purchase Order](glossary:TER070), avec une filiation qui permet les regroupements sans double comptage. Un [Sales Order](glossary:TER069) au statut [Preorder](glossary:TER150) porte déjà une demande client identifiée avant disponibilité et progresse par changement de statut avec la même identité. Le parallèle côté demande de la proposition d’achat est le besoin prévisionnel, pas la précommande client. Identité et engagement restent distincts : un Sales Order existant peut encore être à confirmer.
+
+        Pour le [crédit client](glossary:TER155), appliquer la règle financière reçue ou consommer le résultat du contrôle externe afin de suspendre ou reprendre la commande selon les autorisations applicables. Conserver motif, portée du blocage, règle et version utilisées, résultat et éventuelle dérogation autorisée. Un classement client seul ne permet pas de calculer un dépassement : utiliser l’encours et l’exposition pertinents fournis par la Finance, ou son résultat de contrôle ; ne pas présumer ces données disponibles. Une information manquante reste explicite. [Sentry](model:order-workflow-sentry) réagit aux changements ; il ne s’accorde pas une dérogation financière.
+
+        Une commande de remplacement liée à un [Return Order](model:D04.l) porte ses propres quantités, promesse et résultats. [Replacement Resolution](glossary:TER158) en suit la satisfaction depuis le retour ; la création de la commande de remplacement ne prouve pas la livraison et ne duplique pas la vente d’origine.
+  - id: master-data-ingestion
+    previous_fields:
+      scope: |-
+        Recevoir les apports sourcés, vérifier leur identité, leur portée et leur validité connues, intégrer les versions ou corrections prises en compte et conserver le résultat de cette intégration. Commerce, Finance et Design sont les domaines fournisseurs identifiés ; leurs contrats détaillés ne se déduisent pas de leurs noms.
+
+        Les sujets de référence restent distincts. Les produits et partenaires sont décrits dans : [Product Reference](glossary:TER052) (produits et variantes), Party / Role (personnes, relations et rôles), [Agreement](glossary:TER048) (conditions contractuelles). Les offres et moyens sont décrits dans : [Product Catalog](glossary:TER049) (offres et éligibilité), [Fulfilment Network](glossary:TER054) (lieux et relations), [Service Catalog](glossary:TER094) (prestations de référence), [Assortment](glossary:TER087) (sélections et périodes) [Product Price Book](model:product-price-book) (tarifs produits) et [Service Price Book](model:service-price-book) (tarifs de services). Un sujet peut recevoir plusieurs contributions et un domaine en fournir plusieurs.
+
+        L’ingestion reconnaît les apports et leur prise en compte ; [Operational References](model:business-references) porte la composition et le maintien de la vue locale utilisable de chaque sujet, avec fraîcheur, provenance et incohérences connues. Une donnée reçue mais rejetée ou en attente ne devient pas une référence applicable. Le domaine tient la source de vérité locale Supply ; il ne négocie pas les accords, ne conçoit pas commercialement les offres et ne corrige pas silencieusement les maîtres d’entreprise.
+
+        Les références peuvent être liées sans fusionner leurs autorités : produit dans plusieurs catalogues, assortiment référencé par un accord, offre associée à des tarifs. Le tarif reste dans [Price Book](glossary:TER097) ; son évolution ne modifie pas automatiquement le prix ou le [SLA](glossary:TER076) d’un engagement existant. La consultation du catalogue de services ne remplace pas la captation des faits d’exécution.
+
+        Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
+
+        Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+
+        Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.

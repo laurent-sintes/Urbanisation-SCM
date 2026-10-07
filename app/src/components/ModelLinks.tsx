@@ -8,9 +8,10 @@ import { publicText } from '../publicText';
 import { childrenOf } from '../model';
 import type { ModelingGuide } from '../modelingGuide';
 import './glossary.css';
+import { resolveGlossaryTerm } from '../glossary';
 
-type Kind = 'model' | 'glossary' | 'method';
-type LinksContext = { model: PublishedModel | null; metaGlossary?: ModelingGuide['glossary']; route: RouteState; onFollow: (kind: 'model' | 'glossary', id: string, section?: string) => void };
+type Kind = 'model' | 'glossary' | 'method' | 'guide';
+type LinksContext = { model: PublishedModel | null; metaGlossary?: ModelingGuide['glossary']; guide?: ModelingGuide; route: RouteState; onFollow: (kind: 'model' | 'glossary', id: string, section?: string) => void };
 const Context = createContext<LinksContext | null>(null);
 export const ModelLinksProvider = Context.Provider;
 
@@ -46,9 +47,14 @@ export function ReferenceLink({ kind = 'model', target, anchor, children, classN
   const model = context?.model;
   const alias = kind !== 'model' ? context?.metaGlossary?.aliases?.[target] : undefined;
   if (alias) { target = alias; kind = 'method'; }
+  if (kind === 'glossary' && model) target = resolveGlossaryTerm(model.glossaryById, target)?.id || target;
 
   const method = kind === 'method' ? context?.metaGlossary?.terms.find(term => term.id === target) : undefined;
-  const item = kind === 'method' ? method : kind === 'model' ? model?.nodeById.get(target) : model?.glossaryById.get(target);
+  const chapter = kind === 'guide' ? context?.guide?.chapters?.find(item => item.id === target) : undefined;
+  const sectionIndex = /^method-section-(\d+)$/.exec(anchor || '')?.[1];
+  const notice = chapter && sectionIndex !== undefined ? chapter.sections[Number(sectionIndex)] : undefined;
+  const guideItem = notice ? { name: notice.title, definition: notice.text } : chapter && !anchor ? { name: chapter.title, definition: chapter.intro } : undefined;
+  const item = kind === 'guide' ? guideItem : kind === 'method' ? method : kind === 'model' ? model?.nodeById.get(target) : model?.glossaryById.get(target);
   const id = useId();
   const [open, setOpen] = useState(false);
   const [position, setPosition] = useState({ left: 0, top: 0 });
@@ -98,9 +104,9 @@ export function ReferenceLink({ kind = 'model', target, anchor, children, classN
   const term = kind === 'glossary' ? model.glossaryById.get(target) : undefined;
   const node = kind === 'model' ? model.nodeById.get(target) : undefined;
   const behaviors = showBehaviors && node?.kind === 'capability' ? childrenOf(model, node.id).filter(child => child.kind === 'behavior') : [];
-  const description = plainInlineText(publicText(method?.short_description || method?.definition || ((showBehaviors || fullDefinition) && node ? node.definition : term?.short_description || term?.definition || String(node?.fields.short_description || node?.purpose || node?.definition || 'Description non renseignée.'))));
+  const description = plainInlineText(publicText(guideItem?.definition || method?.short_description || method?.definition || ((showBehaviors || fullDefinition) && node ? node.definition : term?.short_description || term?.definition || String(node?.fields.short_description || node?.purpose || node?.definition || 'Description non renseignée.'))));
   const href = routeHash({ ...context.route, node: kind === 'method' ? context.route.node : kind === 'model' ? target : '',
-    view: method?.guide_section ? 'principles' : kind === 'model' ? 'sheet' : 'glossary', principle: method?.guide_section || '', glossary: kind === 'method' || context.metaGlossary?.model_term_ids.includes(target) ? 'meta' : 'model', term: method?.guide_section ? '' : kind !== 'model' ? method?.parent_term || target : '', section: anchor || '',
+    view: kind === 'guide' || method?.guide_section || term?.guide_section ? 'principles' : kind === 'model' ? 'sheet' : 'glossary', principle: kind === 'guide' ? target : method?.guide_section || term?.guide_section || '', glossary: kind === 'method' || context.metaGlossary?.model_term_ids.includes(target) ? 'meta' : 'model', term: kind === 'guide' || method?.guide_section || term?.guide_section ? '' : kind !== 'model' ? method?.parent_term || target : '', section: anchor || '',
     returnTo: readingOrigin(context.route,model.version), scroll:'', scope: '', relation: '', source: '', anchor: '', sourceId: '', query: '', status: '' });
   return <><a ref={link} className={`model-reference ${className || ''}`} href={href} aria-describedby={open ? id : undefined}
     onMouseEnter={show} onMouseLeave={() => { dismissed.current = false; hide(); }} onFocus={() => { dismissed.current = false; show(); }} onBlur={() => { dismissed.current = false; hide(); }} onClick={event => {
@@ -110,7 +116,7 @@ export function ReferenceLink({ kind = 'model', target, anchor, children, classN
     }}>{children}</a>{open && createPortal(<div ref={tooltip} id={id} role="tooltip" className="reference-tooltip" style={{ ...position, maxHeight: 'calc(100vh - 16px)' }} onMouseEnter={clear} onMouseLeave={hide}>
       <strong>{plainInlineText(item.name)}</strong><span>{description}</span>
       {behaviors.length > 0 && <div className="tooltip-behaviors"><b>Comportements</b><ul>{behaviors.map(behavior => <li key={behavior.id}>{behavior.name}</li>)}</ul></div>}
-      <small>{node?.displayCode ?? target} · {kind === 'method' ? 'Glossaire méthodologique' : kind === 'glossary' ? 'Glossaire' : 'Fiche du modèle'}</small>
+      <small>{node?.displayCode ?? target} · {kind === 'guide' ? 'Référence méthodologique' : kind === 'method' ? 'Glossaire méthodologique' : kind === 'glossary' ? 'Glossaire' : 'Fiche du modèle'}</small>
     </div>, document.body)}</>;
 }
 

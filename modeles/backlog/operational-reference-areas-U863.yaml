@@ -53,6 +53,7 @@ publication_delivery:
   source_refs:
   - U862
   - U863
+  - U891
   summary: Trois Areas de références, séparation des tarifs produits/prestations, aucun ajout de capacité.
   absent_nodes:
   - price-book
@@ -62,11 +63,13 @@ publication_delivery:
     parent: business-references
     fields:
       name: Partner & Agreement References
+    parent_type: contains
   - id: ba-product-references
     kind: business_area
     parent: business-references
     fields:
-      name: Product References
+      name: Merchandise References
+    parent_type: contains
   - id: ba-service-references
     kind: business_area
     parent: business-references
@@ -126,3 +129,7 @@ publication_delivery:
     parent_type: presents
     fields:
       name: Service Price Book
+  supersession_U891: Les contrôles ciblés suivent le lot U891 ; leurs valeurs antérieures sont conservées dans product-packaging-supply-matching-U890.yaml.
+    Ceci ne modifie aucun accord historique.
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.

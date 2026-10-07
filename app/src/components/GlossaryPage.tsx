@@ -7,6 +7,7 @@ import { ModelText, MethodLink, MethodReturn } from './ModelLinks';
 import { plainInlineText } from '../inlineLinks';
 import { publicText } from '../publicText';
 import { MarketComparisons } from './MarketComparisons';
+import { resolveGlossaryTerm, glossaryAliases } from '../glossary';
 
 export function GlossaryPage({ model, selected, mode, routeVersion, guideState, onSelect, onRetry }: {
   model: PublishedModel; selected?: string; routeVersion?: string; mode: 'model' | 'meta'; guideState: GuideState;
@@ -15,6 +16,7 @@ export function GlossaryPage({ model, selected, mode, routeVersion, guideState, 
   const [query, setQuery] = useState('');
   const detail = useRef<HTMLElement>(null);
   const glossary = guideState.status === 'ready' ? guideState.response.guide?.glossary : undefined;
+  if (mode === 'model' && selected) selected = resolveGlossaryTerm(model.glossaryById, selected)?.id || selected;
   if (mode === 'meta' && selected) {
     selected = glossary?.aliases?.[selected] || selected;
     selected = glossary?.terms.find(t => t.id === selected)?.parent_term || selected;
@@ -22,12 +24,12 @@ export function GlossaryPage({ model, selected, mode, routeVersion, guideState, 
   const methodIds = new Set(glossary?.model_term_ids ?? []);
   const modelTerms = model.glossary.filter(term => mode === 'meta' ? methodIds.has(term.id) && !glossary?.aliases?.[term.id] : !methodIds.has(term.id));
   const terms = [
-    ...modelTerms.map(term => ({ ...term, label_fr: '', role: '', examples: [] as readonly string[] })),
-    ...(mode === 'meta' ? (glossary?.terms ?? []).filter(term => (!term.parent_term && !term.guide_section && term.status !== 'retired') || term.id === selected).map(term => ({ ...term, short_description: term.short_description ?? '', context: '', notes: '', historical: term.status === 'retired', market_comparisons: undefined, market_gaps: undefined, market_inspiration: undefined })) : []),
+    ...modelTerms.map(term => ({ ...term, label_fr: term.label_fr || '', historical: term.presentation === 'historical', role: '', examples: [] as readonly string[] })),
+    ...(mode === 'meta' ? (glossary?.terms ?? []).filter(term => (!term.parent_term && !term.guide_section && term.status !== 'retired') || term.id === selected).map(term => ({ ...term, alias_of: undefined, presentation: undefined, short_description: term.short_description ?? '', context: '', notes: '', historical: term.status === 'retired', market_comparisons: undefined, market_gaps: undefined, market_inspiration: undefined })) : []),
   ].sort((a, b) => (a.label_fr || a.name).localeCompare(b.label_fr || b.name, 'fr'));
   const normalize = (text: string) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr');
   const showReadingHelp = mode === 'meta' && Boolean(model.raw.display_index) && (!query || ['code', 'identifiant', 'identite', 'ordre', 'lecture', 'prefixe'].some(word => word.includes(normalize(query)) || normalize(query).includes(word)));
-  const matches = terms.filter(term => normalize(`${term.label_fr} ${plainInlineText(term.name)} ${plainInlineText(term.definition)}`).includes(normalize(query)));
+  const matches = terms.filter(term => !term.historical && !term.alias_of && !term.presentation && normalize(`${term.label_fr} ${plainInlineText(term.name)} ${plainInlineText(term.definition)} ${glossaryAliases(model.glossary, term.id).join(' ')}`).includes(normalize(query)));
   const relocated = glossary?.terms.find(t=>t.id===selected)?.guide_section;
   const term = selected ? terms.find(term => term.id === selected) : matches[0];
   useEffect(() => setQuery(''), [mode, model.version]);
@@ -52,7 +54,9 @@ export function GlossaryPage({ model, selected, mode, routeVersion, guideState, 
     </section>
     {relocated ? <section className="glossary-empty"><h2>Cette règle appartient à la méthode</h2><MethodLink term={selected}>Consulter cette règle</MethodLink></section> : showReadingHelp && query ? <ReadingHelp model={model}/> : term ? <article className="glossary-term" id={`term-${term.id}`} ref={detail} tabIndex={0} aria-label={`Définition de ${term.label_fr || term.name}`}>
       <h2>{plainInlineText(term.label_fr || term.name)}</h2>
-      {term.historical && <p className="historical-notice">Notion historique : elle ne fait plus partie du métamodèle actif de cette publication.</p>}
+      {term.historical && <p className="historical-notice">Notion historique : elle est conservée pour les anciens liens et retirée de la liste courante de cette publication.</p>}
+      {'presentation' in term && term.presentation === 'method' && <p>Ce verbe appartient aux conseils de rédaction. <a href={`#${routeVersion ? `version=${routeVersion}&` : ''}view=principles&principle=method`}>Consulter la méthode de modélisation</a>.</p>}
+      {mode === 'model' && glossaryAliases(model.glossary, term.id).length > 0 && <p className="term-origin">Également recherché sous : {glossaryAliases(model.glossary, term.id).join(', ')}.</p>}
       {mode === 'meta' && <p className="term-origin">{term.id.startsWith('MOD') ? 'Notion méthodologique' : 'Vocabulaire du modèle'} · {term.id}</p>}
       {term.label_fr && term.label_fr !== term.name && <p className="glossary-english">{term.name}</p>}
       <section id={`term-${term.id}-definition`}><h3>Définition</h3><p><ModelText text={term.definition}/></p></section>

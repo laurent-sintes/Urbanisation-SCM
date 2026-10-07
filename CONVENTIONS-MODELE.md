@@ -38,6 +38,14 @@ Les identifiants des capacités conservées restent stables. D17.a et BHV095 sor
 
 U679/U681 appliqués U682 : Service Order Management tient les exigences et engagements des prestations confiées ; Fulfilment Orchestration les compose, les coordonne et les adapte. Picking Order, Packing Order, Value-Added Service Order et Cross-Docking Order sont des capacités, comme les familles d’Orders entrants. D07.b conserve le cycle commun sous le nom proposé Service Order Lifecycle, sans absorber les particularités de ces familles. Détermination des prestations, visibilité des capacités, tracking et rapprochement restent dans Fulfilment ; ces choix d’application ne constituent pas de nouveaux accords détaillés. Correction U707 : Value-Added Service Order est retiré au profit des dix familles fashion. Labeling / Relabeling relève de Labeling Order, Repacking de Packing Order ; Kitting Order inclut Dekitting. U711 intègre les descriptions de Repacking et Labeling / Relabeling aux capacités et retire leurs nœuds isolés ; les identifiants restent historiques. Service Order est une demande métier suivie, distincte du document éventuel ; Task est une contribution au processus, distincte du porteur des engagements individuels.
 
+## Frontière du Core et des parcours opérationnels — U898
+
+Sales et Sourcing and Procurement portent les Cases opérationnels et leurs règles propres. Sales distingue B2C E-commerce, B2C Store et Wholesale, situés sans décomposition en capacités. Supply Chain Orchestration fournit les capacités génériques mobilisées par ces parcours ; Order Management conserve les identités, états et transitions autorisées des commandes, sans cycle concurrent.
+
+Le Credit Check appartient au Case Wholesale concerné et aux règles autorisées de Finance. Customer Credit Profile est une référence reçue du contrôle de gestion, liée à Party / Role dans Partner & Agreement References. L’exposition courante et le résultat d’un contrôle de commande restent contextualisés au Case. Process Orchestration conduit le parcours sans devenir une décision financière.
+
+Operational References distingue les sujets métier. Product Reference et Product Price Book sont présentés dans Merchandise References ; Packaging References et Internal Supplies & Equipment References portent leurs sujets propres. Les correspondances connues entre biens restent possibles, sans imposer un référentiel technique commun. Les identifiants retirés `credit-check-decision` et `merchandise-reference` ne sont pas réutilisables. [Lot, preuves et contrôles](modeles/backlog/core-reference-credit-boundaries-U895.yaml).
+
 ## Consolidation historique — U626
 
 **Nom courant du Domain — U650 : Supply Chain Orchestration.** Organe de régulation qui organise et adapte les ressources et les prestations pour satisfaire la demande : arbitrages, changements aux commandes et engagements, coordination des prestations et suivi des résultats. Six Purposes conservés ; identifiant `universe-supply` inchangé. Remplace le nom et la définition U646. [Accord et portée](modeles/backlog/domain-regulation-U646.yaml).
@@ -469,3 +477,6 @@ Document Production Order est retiré sans remplacement ; exigences et résultat
 
 
 U880 : Chaque capacité possède exactement un parent métier Business Area par relation contains. Cette Business Area appartient à un sous-domaine. Le rattachement direct d’une capacité à un sous-domaine est interdit dans le modèle courant. Une Business Area peut contenir une seule capacité ; les références restent documentaires et les publications historiques conservent leur contrat.
+
+
+U885 : Process Management porte la définition, la conduite, la supervision, le travail humain et l’analyse des parcours Supply. Reactive Workflow Management y est rattaché ; Order Management conserve identité, engagements et validité des transitions. Fulfilment Coordination (D06.d) et Fulfilment Adaptation Decision (D06.f) gardent leur mandat local. Process Visibility (BHV082) est une capacité de Process Supervision ; son préfixe historique ne détermine pas sa nature. Operations Visibility conserve les trois perspectives physiques. Les processus mobilisent les capacités sans devenir leur parent dans la hiérarchie. Cible et preuves : `modeles/backlog/operational-work-audit-U881.yaml`.

@@ -1,5 +1,5 @@
-/** Content acceptance against the actual build, without injected backlog fixtures.
- * Run locally against dist, or against a served site with --url URL.
+/** Content acceptance against the build, served site, or isolated candidate.
+ * --candidate tests backlog in memory without changing publications.
  */
 import assert from 'node:assert/strict';
 import {readFile, mkdir, writeFile} from 'node:fs/promises';
@@ -9,15 +9,20 @@ import {chromium, browserOptions} from './browser-runtime.mjs';
 import {plainInlineText} from './src/inlineLinks.ts';
 import {lessonForPublication} from './src/modelingGuide.ts';
 import {adaptPublication} from './src/model.ts';
+import {publicText} from './src/publicText.ts';
+import {candidateFixture} from './candidate-fixture.mjs';
 
 const dist=resolve(import.meta.dirname,'dist');
-const output=resolve(import.meta.dirname,'.runtime/qa-published-content');
+const preview=process.argv.includes('--candidate');
+const output=resolve(import.meta.dirname,preview ? '.runtime/qa-candidate-content' : '.runtime/qa-published-content');
 const urlIndex=process.argv.indexOf('--url');
+assert.ok(!(preview && urlIndex>=0),'Candidate acceptance must stay isolated from served sites');
 const base=urlIndex<0 ? 'https://atlas.test/Urbanisation-SCM/' : process.argv[urlIndex+1].replace(/\/?$/, '/');
-const index=JSON.parse(await readFile(resolve(dist,'data/index.json'),'utf8'));
+const fixture=preview ? await candidateFixture(dist) : undefined;
+const index=fixture?.index ?? JSON.parse(await readFile(resolve(dist,'data/index.json'),'utf8'));
 const version=index.current_version;
-const bytes=await readFile(resolve(dist,`data/${version}/model.json`));
-const guideBytes=await readFile(resolve(dist,`data/${version}/guide.json`));
+const bytes=fixture?.bytes ?? await readFile(resolve(dist,`data/${version}/model.json`));
+const guideBytes=fixture?.guideBytes ?? await readFile(resolve(dist,`data/${version}/guide.json`));
 const entry=index.versions.find(v=>v.version===version);
 assert.equal(createHash('sha256').update(bytes).digest('hex'),entry.model_sha256);
 assert.equal(createHash('sha256').update(guideBytes).digest('hex'),entry.guide_sha256);
@@ -34,6 +39,10 @@ try {
   if(urlIndex<0) await page.route('**/*',async route=>{
     const url=new URL(route.request().url());
     if(!url.href.startsWith(base)) return route.abort();
+    const rel=decodeURIComponent(url.pathname.slice(new URL(base).pathname.length));
+    if(fixture && rel==='data/index.json')return route.fulfill({json:index});
+    if(fixture && rel===`data/${version}/model.json`)return route.fulfill({body:bytes,contentType:'application/json'});
+    if(fixture && rel===`data/${version}/guide.json`)return route.fulfill({body:guideBytes,contentType:'application/json'});
     const path=resolve(dist,decodeURIComponent(url.pathname.slice(new URL(base).pathname.length))||'index.html');
     if(!path.startsWith(dist+sep))return route.abort();
     try{return await route.fulfill({body:await readFile(path),contentType:({'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.png':'image/png','.svg':'image/svg+xml','.webmanifest':'application/manifest+json'})[extname(path)]||'application/octet-stream'});}
@@ -96,17 +105,26 @@ try {
       await cleanReferences(path.id);counts.paths++;
     }counts.scenarios++;
   }
-  // Every participating capability and its hierarchy parents retain scenario access.
-  for(const node of model.nodes.filter(n=>['capability','business_area','area','domain'].includes(n.kind))){
+  // Every fiche preserves its definition and scope, including terminal behaviors.
+  for(const node of model.nodes){
     const descendants=new Set([node.id]);let size=-1;
     while(size!==descendants.size){size=descendants.size;for(const r of model.relations)if(['contains','presents'].includes(r.type)&&descendants.has(r.source_id))descendants.add(r.target_id);}
     const expected=catalog.scenarios.filter(s=>catalog.paths.some(p=>p.scenario_id===s.id&&p.steps.some(step=>step.contributions.some(c=>descendants.has(c.node_id))))||catalog.legacy_links.some(a=>a.owner_id===node.id&&a.scenario_id===s.id));
     await visit({view:'sheet',node:node.id});await page.getByTestId('business-sheet').waitFor();
+    const actual=await content('[data-testid="business-sheet"]');
+    for(const key of ['definition','scope','finality'])contains(actual,publicText(node.fields[key]||''),`${node.id}/${key}`);
+    await cleanReferences(node.id);
+    const statisticCounts=await page.locator('.scope-statistics li').allTextContents();
+    for(const [kind,label] of [['domain','domaine'],['area','sous-domaine'],['business_area','Business Area'],['reference','référentiel'],['capability','capacité'],['behavior','comportement']]){
+      const count=model.nodes.filter(n=>n.id!==node.id&&n.kind===kind&&descendants.has(n.id)).length;
+      if(count)assert.ok(statisticCounts.includes(`${count} ${label}${count===1?'':'s'}`),`${node.id} header ${kind}`);
+    }
+    counts.sheets++;
+    if(!['capability','business_area','area','domain'].includes(node.kind))continue;
     const links=page.locator('.scenario-links');await links.waitFor();
     assert.equal(await links.locator('li>a').count(),expected.length,`Scenario access for ${node.id}`);
     for(const s of expected)assert.ok(await links.locator(`a[href*="scenario=${s.id}"]`).count(),`Missing ${s.id} from ${node.id}`);
     if(!expected.length)await links.getByText('Aucun scénario documenté pour ce périmètre.',{exact:true}).waitFor();
-    counts.sheets++;
   }
   for(const chapter of guide.chapters){
     await visit({view:'principles',principle:chapter.id});

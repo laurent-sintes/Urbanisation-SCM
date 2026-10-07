@@ -21667,3 +21667,577 @@ Je souhaite que toutes les capacités soient dans une Business Area : c'est une 
 **contexte et portée**
 
 Nouvelle règle générale : toute capacité a une Business Area comme parent métier unique ; celle-ci appartient à un sous-domaine. Les anciennes publications conservent leur contrat. L’inspection identifie six capacités directement rattachées : D02.b, D19.a, D19.b dans Policies, D05.i dans Fulfilment Orchestration, Customs Clearance Order dans Service Management et Accounting Interpretation dans Financial Accounting. La règle est explicitement demandée ; les noms et définitions des cinq nouveaux regroupements sont des propositions d’application, sans accord métier implicite sur leur rédaction. Une Business Area peut conserver une seule capacité. Aucun déplacement de sous-domaine ni nouvelle capacité, aucune release implicite.
+
+## U881
+
+**id**
+
+U881
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Auditer le pilotage opérationnel, le travail humain et l’analytics
+
+**texte**
+
+On a oublié un sous domaine et/ou des capacités.
+
+Il nous manque des choses sur l'analytics opérationnel, un peu comme sur camunda où on a le suivi des processus, les points chauds d'étranglement, d'attente, les erreurs. Il nous manque aussi des choses pour visualiser les processus, les contrôler : arreter / suspendre / démarrer... Il nous manque des bannettes de tâches pour activer / solliciter le travail des gens pour le travail manuel (approbation, vérification, intégration non automatisée). Et enfin il manque des capacités qui permettent de requeter et créer des tableaux de bord. Tout est très orienter "Solution" mais derriere il y a des capacités (intention / action) et des domaines (responsabilité / connaissance).
+
+Tu peux faire un audit de ce qu'il manque et comparer avec SAP, Microsoft mais aussi les solutions de Case Management du marché afin de découvrir ce pan métier qu'on avait oublié ?
+
+**contexte et portée**
+
+Demande d’audit et de proposition : confronter le modèle et le glossaire courants aux besoins de supervision, intervention sur les processus, coordination du travail humain et analyse opérationnelle. Comparer SAP S/4HANA et Microsoft Dynamics, compléter par Camunda et les solutions de Case Management. Distinguer responsabilités métier et fonctions de réalisation ; examiner les recouvrements avec les capacités existantes avant de proposer des ajouts. Aucun accord implicite sur des noms, rattachements, nouvelles capacités, réalisation installée, release, commit ou push. Cet audit ciblé ne rejoue pas l’audit historique clos U431.
+
+## U882
+
+**id**
+
+U882
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Questionner une entrée par les processus et la place du Process Mining
+
+**texte**
+
+J'aime beaucoup Process Mining.
+
+D'un point de vue général, on a, dans le modèle, une approche "Opération", avec des distinctions Process. Est-ce qu'il ne faudrait pas l'inverse ?
+
+**contexte et portée**
+
+Préférence exprimée pour Process Mining et question sur le point d’entrée du modèle. Discussion à instruire : processus comme objet principal de pilotage et opérations comme contributions, sans inverser implicitement la hiérarchie de responsabilités ni transformer les capacités en étapes. Ni validation globale des sept propositions U881, ni accord sur un renommage ou un déplacement canonique. Distinguer analyse des performances et découverte des parcours réellement suivis à partir de traces.
+
+## U883
+
+**id**
+
+U883
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Proposer la cible centrée sur Process Management
+
+**texte**
+
+Ca donnerait quoi comme évolution ?
+
+**contexte et portée**
+
+Demande de proposition concrète après U881–U882 : structure, déplacements, créations et frontières. Aucun accord d’application, de publication, de commit ou de push. La préférence pour Process Mining ne vaut pas approbation de toutes les capacités candidates.
+
+## U884
+
+**id**
+
+U884
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Valider la cible Process Management et préparer sa mise à jour
+
+**texte**
+
+Prépare un plan de mise à jour, je valide.
+
+**contexte et portée**
+
+Accord sur la proposition cumulative U881–U883 corrigée par la cible Process Management : quatre Business Areas et douze capacités, dont quatre capacités déplacées et élargies, Process Visibility promue depuis BHV082, sept capacités nouvelles ; renommages locaux Fulfilment Coordination et Fulfilment Adaptation Decision ; responsabilités des Orders, Availability et Fulfilment préservées. La cible Operations Management et la capacité autonome Process Performance Analysis sont remplacées par cette proposition. La demande immédiate porte sur la préparation du plan. Les définitions et comparaisons détaillées rédigées ensuite ne reçoivent pas un accord implicite ; capture champ par champ sur le lot final après application canonique. Aucune release, commit ou push demandé dans ce message.
+
+## U885
+
+**id**
+
+U885
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Appliquer le plan Process Management
+
+**texte**
+
+Applique le plan
+
+**contexte et portée**
+
+Autorisation d’appliquer intégralement la cible cumulative U883 validée U884 et son plan : modèle, glossaires, scénarios, contrôles et capture des accords exacts. Conserver les identités, préserver les publications historiques et les responsabilités d’Order Management, Availability et Fulfilment. Les rédactions détaillées nécessaires sont proposées sous cette autorisation, sans accord global implicite sur leurs valeurs ni réalisation installée. La publication, le commit et le push ne sont pas demandés.
+
+
+## U886
+
+**id**
+
+U886
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Audit global de cohérence avant release
+
+**texte**
+
+Avant de faire une release, je souhaite un audit de cohérence global, description, périmètres, use case mis à jour, nommage, numérotation des ids.
+
+**contexte et portée**
+
+Audit du backlog après application U885 : descriptions, frontières, scénarios, noms, identités et codes de lecture. Identifier les incohérences et les conditions de publication ; aucune release ni validation implicite des corrections métier.
+
+
+## U887
+
+**id**
+
+U887
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Prendre en charge tous les correctifs de cohérence
+
+**texte**
+
+Prends en charge la totalité des correctifs
+
+**contexte et portée**
+
+Autorisation de corriger les neuf constats A01–A09 de l’audit U886, dans le modèle, les glossaires et les scénarios, et de renforcer leurs contrôles. Les variantes de vérification recommandées sont incluses. Préserver les identités, les preuves et les publications historiques. Les formulations détaillées restent qualifiées selon leur portée ; aucune release, commit ou push demandé.
+
+
+## U888
+
+**id**
+
+U888
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Audit approfondi du candidat avant présentation
+
+**texte**
+
+Je vais augmenter ta puissance de raisonnement au maximum.
+
+Je souhaite un audit profond et multidimensionnel pour valider une version à présenter demain.
+
+Précision pendant l’audit :
+
+Il faut auditer le modèle que je m'apprête à releaser
+
+**contexte et portée**
+
+Auditer le candidat courant du backlog après U885 et U887 : modèle métier, Availability, périmètres, vocabulaire, scénarios, méthode, cohérence des identités et restitution du candidat. Les contrôles de publication servent à sa livraison ; R52 fournit seulement une comparaison historique. Présentation visée le 8 octobre 2026. Cette demande n’adopte aucun nouveau contenu, ne publie pas le candidat et ne demande ni commit ni push. Les corrections trouvées restent identifiées et proposées dans l’audit.
+
+
+## U889
+
+**id**
+
+U889
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Valider les corrections du candidat avant présentation
+
+**texte**
+
+Je valide
+
+**contexte et portée**
+
+Accord sur le lot cohérent de l’audit U888 : corrections M01–M08, modèle et glossaires alignés, scénarios réalignés et prérequis des scénarios de démonstration allégés. Les conditions de livraison L01–L03 sont incluses : préparer le réexamen des qualifications historiques, conserver l’exigence du guide actualisé et renforcer le contrôle de complétude. Les deux défauts logiciels secondaires identifiés sont corrigés dans le même lot. Cet accord porte sur les corrections proposées ; il ne valide pas globalement les fiches, les nouvelles rédactions détaillées ni les réalisations installées. Préserver identités et publications historiques. Aucune release, commit ou push demandé.
+
+## U890
+
+**id**
+
+U890
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Interroger les références produit, packaging et matériel interne, ainsi que le réassort et Supply Matching
+
+**texte**
+
+Je me demande si la problématique de packaging en terme de référentiel est adressé. Tout dépend de ce qu'on entend par "Produit". Pour améliorer la lecture, On pourrait imaginer séparer les produits destinés à la vente, le packaging en tant qu'information à passer à la logistique pour demander ce qu'on veut préparer et décrire ce qu'on reçoit, et le matériel et petits accessoires pour la force de vente et le backoffice (stylo, meuble, etc.).
+
+Repleneshiment dans Supply Matching, ça signifie que IRMA est dans FLOW ? Sans doute une bonne idée...
+
+D'autre part, la supply matching est un sous domaine extremement complexe, je suis surpris qu'il soit aussi court. Mais c'est vrai qu'on est dans un scope métier, ça ne présuppose pas de la complexité d'automatisation...
+
+**contexte et portée**
+
+Questions et pistes à analyser : distinguer les biens destinés à la vente, les informations de conditionnement attendues ou reçues, et les fournitures/équipements internes ; préciser le sens de Replenishment et son rapport possible à IRMA ; examiner la maille métier de Supply Matching. Aucun nouveau découpage adopté, aucune intégration ni migration d’IRMA décidée, aucune modification du modèle canonique ou publication demandée.
+
+## U891
+
+**id**
+
+U891
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Valider la distinction des références de biens et packaging et la clarification du matching
+
+**texte**
+
+Je valide
+
+**contexte et portée**
+
+Accord sur le lot complet construit sous U890 : rendre lisibles Merchandise References, Packaging References et Internal Supplies & Equipment References en conservant une identité commune des biens ; distinguer matières de conditionnement, spécifications réutilisables, résultat demandé et conditionnement annoncé/reçu ; préciser les responsabilités des cibles, paramètres actifs et apports de réassort et la place possible d’IRMA comme moteur spécialisé ; enrichir la synthèse d’Availability/Supply Matching et éprouver les cas exigeants dans les capacités et scénarios. Les choix rédactionnels et de rattachement nécessaires sont appliqués dans cette portée, sans adoption globale des nouvelles fiches détaillées ni des scénarios rédigés ensuite. Aucun composant logiciel, migration d’IRMA ou réalisation installée adopté. Identités existantes et publications historiques conservées. Aucune release, commit ou push demandé.
+
+## U892
+
+**id**
+
+U892
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Rendre explicite Credit Check dans le modèle et construire un use case
+
+**texte**
+
+Le métier me parle souvent de Credit Check : récupérer des infos de la finance pour alimenter une décision d'avancer ou pas dans une vente. Je pense qu'on l'adresse mais je voudrais que ce soit explicite dans le modèle. Qu'en dis-tu ?
+Il faudrait un use case aussi
+
+**contexte et portée**
+
+Constat métier et demande de proposition : expliciter le contrôle de crédit d’une vente à partir d’informations de Finance et préparer un scénario concret. Vérifier la couverture existante et les responsabilités de référence, décision et progression de commande. Aucun nouveau nœud, parent, transfert d’autorité financière ou réalisation installée adopté ; aucune release, commit ou push demandé.
+
+## U893
+
+**id**
+
+U893
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Proposer le nom Credit Check Decision
+
+**texte**
+
+Une capacité Credit Check Decision  ?
+
+**contexte et portée**
+
+Proposition de nom pour rendre explicite la décision d’admissibilité financière d’une vente discutée sous U892. Le nom, le périmètre, le rattachement et le scénario sont présentés ensemble pour arbitrage ; aucun accord global sur une nouvelle fiche ou réalisation installée n’est capturé.
+
+## U894
+
+**id**
+
+U894
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Valider Credit Check Decision et son scénario
+
+**texte**
+
+Je valide
+
+**contexte et portée**
+
+Accord sur la proposition complète U892–U893 : capacité Credit Check Decision de nature décision dans Order Management / Order Lifecycle Management, déterminant l’admissibilité d’une étape de vente à partir des informations, règles ou résultats de Finance. Finance conserve son autorité financière ; Sales Order applique et trace le résultat ; Process Management conduit le parcours. Les profils de référence restent distincts de l’exposition courante et du résultat propre à la commande. Enrichir le scénario de crédit existant : commande de 3 000 euros, limite de 10 000 euros, exposition préalable hors commande de 8 000 puis 6 000 euros après paiement reconnu par Finance ; résultat indéterminé en cas d’information absente ou périmée, jamais d’autorisation implicite. Aucune release, commit ou push demandé ; les détails rédactionnels nouveaux et les réalisations installées ne bénéficient pas d’un accord global implicite.
+
+## U895
+
+**id**
+
+U895
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Recentrer les références et le contrôle de crédit sur le périmètre du Core
+
+**texte**
+
+Mon feedback :
+
+- Je n'aime pas l'approche référentiel commun, ça fait trop "archi solution"
+- Credit check Decision est finalement mal placé. On concoit un "Core System", le credit check sera intégré aux implémentations des Cases dans le cadre du B2B. Je ne pense pas que ce soit pertinent ici. Par contre, il faut un flux du controle de gestion qui alimente un référentiel : Party / Role ou une entité Customer Policy ?
+
+**contexte et portée**
+
+Correction de la proposition U890–U894 : Laurent écarte la présentation d’un référentiel commun perçue comme une architecture de solution et replace le Credit Check dans les implémentations des Cases B2B. Le Core doit recevoir les informations de référence émises par le contrôle de gestion. Party / Role ou une référence distincte Customer Policy sont les options soumises à analyse ; le nom et le périmètre d’une éventuelle nouvelle référence ne sont pas encore arbitrés. Conserver les publications historiques et l’accord U894 dans leur contexte ; aucune nouvelle publication demandée.
+
+## U896
+
+**id**
+
+U896
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Situer les implémentations opérationnelles dans Achat et Vente
+
+**texte**
+
+En fait, la plupart des implémentations opérationnelles seront dans les domaines Achat et Vente avec dans vente un sous domaine B2C/eCom, un sous domaine B2C/Store et un sous domaine Wholesale. C'est pour ça que le domaine Supply Chain MAnagement semble générique.
+
+**contexte et portée**
+
+Précision du périmètre U895 : les domaines Achat et Vente portent la plupart des implémentations opérationnelles ; Vente distingue les sous-domaines B2C/eCom, B2C/Store et Wholesale. Cette organisation explique le caractère générique du domaine Supply évoqué par Laurent. Le nom canonique courant Supply Chain Orchestration n’est pas automatiquement renommé à partir de la formulation Supply Chain Management. Les noms anglais exacts, le détail des capacités spécialisées et les correspondances aux réalisations restent à préciser ; aucune architecture logicielle ni réalisation installée n’est déduite.
+
+## U897
+
+**id**
+
+U897
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Expliquer l’absence de B2C et B2B dans le Core
+
+**texte**
+
+Et voilà pourquoi B2C et B2B n'apparaissement pas dans ce core system
+
+**contexte et portée**
+
+Laurent confirme l’explication de périmètre apportée sous U896 : B2C et B2B qualifient les contextes opérationnels de Vente qui mobilisent le Core. Leur absence dans sa décomposition est intentionnelle. Cette précision ne valide pas encore le nom Customer Credit Profile proposé par Codex, ni une nouvelle nomenclature ou décomposition détaillée des domaines Achat et Vente.
+
+## U898
+
+**id**
+
+U898
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Valider le recentrage du Core et les références métier
+
+**texte**
+
+Je valide
+
+**contexte et portée**
+
+Accord sur le lot cohérent U895–U897 : Achat et Vente portent les parcours opérationnels spécifiques ; Vente distingue B2C/eCom, B2C/Store et Wholesale, qui mobilisent les capacités génériques du Core Supply. Corriger les descriptions des domaines en conséquence. Retirer Credit Check Decision du Core et conserver le scénario comme usage Wholesale, sans réattribuer la décision financière à une capacité générique. Ajouter Customer Credit Profile, référence financière reçue du contrôle de gestion, reliée à Party / Role dans Partner & Agreement References ; Finance conserve son autorité. Présenter marchandises, packaging, fournitures et équipements par leur sens métier, abandonner le socle commun et résoudre les doublons de références. Aligner modèle, glossaire et scénarios dans le même lot. Les nouveaux détails rédactionnels et les réalisations installées ne reçoivent pas d’accord global implicite. Aucune release, commit ou push demandé.
+
+## U899
+
+**id**
+
+U899
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Questionner Packaging au regard du vocabulaire Microsoft Container
+
+**texte**
+
+Packaging, c'est le bon nom ? Je crois que microsoft l'appelle Container
+
+**contexte et portée**
+
+Question sur le nom du périmètre de références de conditionnement et sur sa correspondance avec Microsoft. Comparer les concepts avant de recommander un nom ; aucune demande de renommage ni validation nouvelle du modèle à ce stade.
+
+## U900
+
+**id**
+
+U900
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Conserver Packaging References et distinguer les notions de contenant
+
+**texte**
+
+Je valide
+
+**contexte et portée**
+
+Accord sur la proposition U899 : conserver Packaging References, qui couvre les matières et supports de conditionnement ainsi que les spécifications réutilisables. Container Type précise le type de contenant dans ce périmètre ; Container désigne le contenant et Handling Unit l’unité logistique identifiée avec son contenu. Conserver Packaging Material Reference et Packaging Specification, sans créer automatiquement une nouvelle référence ou capacité. Documenter les rapprochements partiels Microsoft et SAP, sans assimiler leurs objets ni leur réalisation au modèle FLOW. Aucun accord global sur les nouveaux détails rédactionnels ; aucune publication demandée.
+
+## U901
+
+**id**
+
+U901
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Questionner la pertinence de Container dans le glossaire
+
+**texte**
+
+Du container dans le glossaire est il pertinent ?
+
+**contexte et portée**
+
+Réexaminer l’utilité et le sens de l’entrée Container après la clarification Packaging / Container acceptée U900. Cette question n’ordonne pas une suppression.
+
+## U902
+
+**id**
+
+U902
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Auditer les excès et les manques des glossaires
+
+**texte**
+
+Fais une passe sur les glossaires pour savoir ce qui est en trop ou ce qui manque
+
+**contexte et portée**
+
+Audit du glossaire métier et du glossaire méthodologique courants : pertinence, doublons, frontières, alignement avec le modèle et couverture des termes employés. Distinguer les entrées inutiles, les notions utiles mais mal définies et les manques ; l’absence de lien ne prouve pas l’inutilité. Aucun retrait global ni nouvelle publication implicitement validés. Le lot documentaire U900 reste à finaliser avec ses contrôles et accords ciblés.
+
+## U903
+
+**id**
+
+U903
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Appliquer l’audit des glossaires
+
+**texte**
+
+Applique l’audit
+
+**contexte et portée**
+
+Mettre en œuvre les corrections G01–G14 et les compléments M01–M09 du rapport glossary-audit-U902.yaml : clarifier les définitions, regrouper les doublons avec conservation des liens, alléger les listes, compléter les notions manquantes et aligner le modèle et la présentation Atlas. L’accord porte sur ce lot cohérent, avec conservation des distinctions et des preuves. Les formulations nouvelles restent identifiées comme rédaction de mise en œuvre. Aucune release, aucun commit ni push demandés.
+
+## U904
+
+**id**
+
+U904
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Définir Firming par son sens métier
+
+**texte**
+
+Firming = rendre ferme une proposition
+
+**contexte et portée**
+
+La définition générique est rendre ferme une proposition. Le passage Planned Purchase Order vers Purchase Order en est l’application FLOW ; le mécanisme de conversion ne doit pas remplacer le sens général du terme. Distinguer les effets et mécanismes selon l’objet et le système.
+
+## U905
+
+**id**
+
+U905
+
+**date**
+
+2026-10-07
+
+**titre**
+
+Publier le lot des glossaires et du modèle courant
+
+**texte**
+
+release
+
+**contexte et portée**
+
+Publication locale du backlog final et du guide méthodologique associés, après application de l’audit des glossaires U903 et précision Firming U904. Inclure les lots antérieurs appliqués depuis la publication courante. La demande autorise la publication ; elle ne donne aucun accord métier supplémentaire, ni autorisation de commit ou push.

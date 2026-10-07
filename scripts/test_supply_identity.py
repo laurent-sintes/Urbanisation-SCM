@@ -12,6 +12,7 @@ class SupplyIdentityTests(unittest.TestCase):
     def test_current_references_and_delivery_use_canonical_identity(self):
         model = read(ROOT / 'modeles/backlog/model.yaml')
         glossary = read(ROOT / 'modeles/backlog/glossary.yaml')
+        model['glossary'] = glossary
         identifier = 'supply-chain-orchestration'
         self.assertNotIn('universe-supply', dumps(model))
         self.assertNotIn('universe-supply', dumps(glossary))
@@ -24,7 +25,7 @@ class SupplyIdentityTests(unittest.TestCase):
             [r['target_id'] for r in model['relations'] if r['source_id'] == identifier and r['type'] == 'presents'],
             ['business-references', 'subdomain-policies',
              'D04', 'D01', 'D03', 'D06', 'subdomain-service-orders',
-             'subdomain-integration'],
+             'subdomain-integration', 'subdomain-process-management'],
         )
         nodes = {n['id']: n for n in model['nodes']}
         self.assertEqual(nodes['subdomain-plans']['kind'], 'business_area')

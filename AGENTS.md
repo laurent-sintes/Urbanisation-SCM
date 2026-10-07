@@ -92,3 +92,6 @@ Utiliser `inspect_model.py` avec des champs ciblés ; une omission de champ ne p
 
 
 U880 : Chaque capacité possède exactement un parent métier Business Area par relation contains. Cette Business Area appartient à un sous-domaine. Le rattachement direct d’une capacité à un sous-domaine est interdit dans le modèle courant. Une Business Area peut contenir une seule capacité ; les références restent documentaires et les publications historiques conservent leur contrat.
+
+
+U885 : Process Management porte la définition, la conduite, la supervision, le travail humain et l’analyse des parcours Supply. Reactive Workflow Management y est rattaché ; Order Management conserve identité, engagements et validité des transitions. Fulfilment Coordination (D06.d) et Fulfilment Adaptation Decision (D06.f) gardent leur mandat local. Process Visibility (BHV082) est une capacité de Process Supervision ; son préfixe historique ne détermine pas sa nature. Operations Visibility conserve les trois perspectives physiques. Les processus mobilisent les capacités sans devenir leur parent dans la hiérarchie. Cible et preuves : `modeles/backlog/operational-work-audit-U881.yaml`.

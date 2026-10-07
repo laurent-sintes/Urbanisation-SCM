@@ -12,6 +12,40 @@ def catalog():
 
 
 class GlossaryTests(unittest.TestCase):
+    def test_alias_contract_rejects_missing_targets_cycles_and_hidden_destinations(self):
+        model = self.model()
+        alias = deepcopy(model['glossary']['terms'][0])
+        alias.update(id='OLD', alias_of='TER1')
+        model['glossary']['terms'].append(alias)
+        self.assertEqual(validate(model), [])
+        alias['alias_of'] = 'absent'
+        self.assertTrue(any('unresolved alias' in e for e in validate(model)))
+        alias['alias_of'] = 'OLD'
+        self.assertTrue(any('cyclic alias' in e for e in validate(model)))
+        alias['alias_of'] = 'TER1'
+        model['glossary']['terms'][0]['presentation'] = 'historical'
+        self.assertTrue(any('current term' in e for e in validate(model)))
+
+    def test_relocated_verbs_require_a_valid_method_destination(self):
+        model = self.model()
+        term = model['glossary']['terms'][0]
+        term['presentation'] = 'method'
+        self.assertTrue(validate(model))
+        term['guide_section'] = 'method'
+        self.assertEqual(validate(model), [])
+        term['guide_section'] = 'missing'
+        self.assertTrue(validate(model))
+
+    def test_alias_target_changes_trigger_review_of_old_links(self):
+        before = self.model()
+        alias = deepcopy(before['glossary']['terms'][0])
+        alias.update(id='OLD', alias_of='TER1')
+        before['glossary']['terms'].append(alias)
+        before['nodes'][0]['fields']['definition'] = '[Old label](glossary:OLD)'
+        after = deepcopy(before)
+        after['glossary']['terms'][0]['definition'] = 'Changed canonical meaning.'
+        self.assertEqual(reference_impacts(before, after)[0]['changed_terms'], ['TER1'])
+
     def model(self):
         return {'model_id': 'test', 'nodes': [{'id': 'D01', 'fields': {'definition':
                 'The [reference](glossary:TER1) in [Inventory](model:D01#definition).'}}],

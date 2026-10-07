@@ -236,6 +236,7 @@ publication_delivery:
   - id: D04.i
     parent: ba-order-lifecycle-management
     fields: {}
+    parent_type: contains
   - id: D04.j
     parent: ba-order-lifecycle-management
     fields: {}
@@ -275,6 +276,7 @@ publication_delivery:
   - id: master-data-ingestion
     parent: ba-inbound-information-integration
     fields: {}
+    parent_type: contains
   - id: order-visibility
     parent: ba-order-lifecycle-management
     fields: {}
@@ -305,6 +307,8 @@ publication_delivery:
     field: parent
     previous_value: business-references
     reason: U826 applique le nouveau rattachement à Integration.
+  supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
+    sans extension des accords.
 superseded_U733: D18 retiré et ses capacités réintégrées à D01 ; son rôle dominant historique ne devient pas une exigence
   de présence.
 superseded_U750:

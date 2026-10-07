@@ -54,6 +54,53 @@ class DecisionReviewTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'already exists'):
             review.save_review(self.folder, self.bundle['review'], self.bundle['report'])
 
+    def test_review_resume_reuses_draft_but_checks_assessment_and_validation(self):
+        self.dossier()
+        self.assess()
+        current = workflow.load_current(self.root)
+        with patch.object(workflow, '_prepare_draft', side_effect=AssertionError('Unexpected reconstruction')), \
+                patch.object(workflow, 'validate_release', wraps=workflow.validate_release) as gate:
+            warm = workflow.build_candidate(self.root, self.version, ['PUB-TEST-NEW'], review_path=self.folder, current=current)
+        self.assertTrue(warm['draft_cache_hit'])
+        self.assertEqual(gate.call_count, 1)
+        # An independent rebuild receives the same preparation clock. Generated
+        # timestamps are frozen by the draft, rather than renewed on every resume.
+        assign = workflow.assign_versions
+        with patch.object(workflow.parsed_cache, 'get', return_value=workflow.parsed_cache.MISSING), \
+                patch.object(workflow, 'assign_versions', side_effect=lambda *args, **kwargs:
+                             assign(*args, now=self.bundle['snapshot']['last_modified'], **kwargs)):
+            cold = workflow.build_candidate(self.root, self.version, ['PUB-TEST-NEW'], review_path=self.folder)
+        for key in ('candidate', 'snapshot', 'decisions', 'report', 'review_evidence'):
+            self.assertEqual(warm[key], cold[key], key)
+        self.assess(retain=())
+        deferred = workflow.build_candidate(self.root, self.version, ['PUB-TEST-NEW'], review_path=self.folder)
+        self.assertTrue(deferred['draft_cache_hit'])
+        self.assertFalse(deferred['review_evidence']['transcriptions.json']['items'])
+        summary = workflow.read(self.folder / 'summary.json')
+        self.assertEqual(summary['decisions'], len(self.bundle['review']['items']))
+
+    def test_corrupt_draft_cache_rebuilds_and_still_validates(self):
+        self.dossier()
+        cache = self.root / '.runtime/release-drafts'
+        for path in cache.glob('*.json'):
+            path.write_bytes(b'corrupted cache')
+        with patch.object(workflow, '_prepare_draft', wraps=workflow._prepare_draft) as build:
+            bundle = workflow.build_candidate(self.root, self.version, ['PUB-TEST-NEW'], include_review=True)
+        self.assertEqual(build.call_count, 1)
+        self.assertFalse(bundle['draft_cache_hit'])
+
+    def test_legacy_baseline_manifest_change_invalidates_cached_review(self):
+        self.dossier()
+        self.assess()
+        manifest_path = workflow.load_current(self.root)[-1]
+        manifest = workflow.read(manifest_path)
+        manifest['note'] = 'Baseline evidence changed after preparation'
+        save(manifest_path, manifest)
+        with patch.object(workflow, '_prepare_draft', wraps=workflow._prepare_draft) as build:
+            with self.assertRaisesRegex(ValueError, 'stale or altered'):
+                self.prepare_reviewed()
+        self.assertEqual(build.call_count, 1)
+
     def test_one_final_build_preserves_scope_and_publishes_reassessment_evidence(self):
         item = self.dossier()
         self.assess()

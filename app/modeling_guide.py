@@ -147,6 +147,12 @@ def _validate_guide(guide, version):
             _require(len(set(grouped)) == len(grouped) and set(grouped) == visible, 'Groupes méthodologiques incomplets ou dupliqués.')
         def method_links(value):
             if isinstance(value, str):
+                for chapter_id, section in re.findall(r'\]\(guide:([^#)]+)(?:#([^)]*))?\)', value):
+                    chapter = next((c for c in guide.get('chapters', []) if c['id'] == chapter_id), None)
+                    _require(chapter is not None, 'Rubrique méthodologique non résolue : ' + chapter_id)
+                    if section:
+                        match = re.fullmatch(r'method-section-(\d+)', section)
+                        _require(match is not None and int(match[1]) < len(chapter['sections']), 'Section méthodologique non résolue : ' + section)
                 for ident in re.findall(r'\]\(method:([^)#]+)(?:#[^)]*)?\)', value):
                     _require(ident in ids, 'Notion méthodologique non résolue : ' + ident)
             elif isinstance(value, list):
@@ -156,6 +162,8 @@ def _validate_guide(guide, version):
                 for item in value.values():
                     method_links(item)
         method_links(guide.get('chapters', []))
+        method_links(glossary.get('terms', []))
+        method_links(guide.get('lessons', []))
     _require(isinstance(guide.get("lessons"), list) and len(guide["lessons"]) == 6)
     lesson_ids = set()
     for lesson in guide["lessons"]:
