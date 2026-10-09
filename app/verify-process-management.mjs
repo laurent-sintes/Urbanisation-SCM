@@ -41,11 +41,11 @@ try {
   return route.fulfill({body:await readFile(file),contentType:({'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.svg':'image/svg+xml','.png':'image/png'})[extname(file)]||'application/octet-stream'});
  });
  const visit=async params=>page.goto(base+'#'+new URLSearchParams({version,...params}));
- await visit({node:'subdomain-process-management',view:'map'});
- await page.locator('.category-banner').first().waitFor();
- assert.equal(await page.locator('.category-banner').count(),4);
- assert.equal(await page.locator('.business-card').count(),12);
- assert.deepEqual(await page.locator('.scope-statistics li').allTextContents(),['4 Business Areas','12 capacités','0 comportements']);
+ await visit({scope:'supply-chain-orchestration',node:'subdomain-process-management',view:'map',mapDepth:'3',mapFocus:'subdomain-process-management'});
+ const processCard=page.locator('.business-card[data-node-id="subdomain-process-management"]');
+ await processCard.waitFor();
+ assert.equal(await processCard.locator('[data-business-area-summary]').count(),4);
+ assert.equal(await processCard.locator('[data-map-item-id]').count(),12);
  const output=resolve(app,'.runtime/qa-process-management');await mkdir(output,{recursive:true});
  await page.screenshot({path:resolve(output,'overview.png')});
  const reviewed=[...caps,...['supply-chain-orchestration','subdomain-integration','D01','D03.i','D03.j','D03.k','D04.i','D07.d','operations-visibility'].map(id=>model.nodeById.get(id))];
@@ -62,6 +62,8 @@ try {
  }
  for(const query of ['BHV082',model.nodeById.get('BHV082').displayCode,'Process Mining']){
   const target=query==='Process Mining'?'process-mining':'BHV082';
+  const panelToggle=page.locator('#fa-tree-open');
+  if(await panelToggle.getAttribute('aria-expanded')==='false')await panelToggle.click();
   await page.getByRole('textbox',{name:'Rechercher dans le modèle publié'}).fill(query);
   await page.locator(`[data-search-result="${target}"]`).click();
   await page.getByRole('heading',{level:1,name:model.nodeById.get(target).name,exact:true}).waitFor();

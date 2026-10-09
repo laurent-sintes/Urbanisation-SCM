@@ -49,11 +49,14 @@ class MethodResponsibilityTests(unittest.TestCase):
         self.assertNotRegex(self.canonical['MOD013']['market_comparison']['flow_position'],
                             r'(?i)\b(huit|8) sous-domaines')
 
-    def test_policy_example_uses_existing_areas_including_the_singleton(self):
+    def test_control_plane_example_uses_existing_areas_and_references(self):
         example = self.responsibility['example']
         links = set(re.findall(r'\]\(model:([^\)]+)\)', example))
         areas = {'ba-protection-policies', 'ba-service-provider-controls'}
         self.assertTrue(areas <= links)
+        self.assertIn('subdomain-policies', links)
+        self.assertIn('D19.a', links)
+        self.assertIn('objets documentaires', example)
         nodes = {node['id']: node for node in self.model['nodes']}
         self.assertTrue(links <= nodes.keys())
         contracts = {item['node_id']: item for item in self.guide['model_examples']}
@@ -63,7 +66,8 @@ class MethodResponsibilityTests(unittest.TestCase):
                 self.assertEqual(contracts[area]['parent_id'], 'subdomain-policies')
                 self.assertEqual(contracts[area]['name'], nodes[area]['fields']['name'])
         children = [rel['target_id'] for rel in self.model['relations']
-                    if rel['type'] == 'contains'
+                    if rel['type'] == 'presents'
                     and rel['source_id'] == 'ba-service-provider-controls']
         self.assertEqual(len(children), 1)
-        self.assertEqual(nodes[children[0]]['kind'], 'capability')
+        self.assertEqual(children, ['D19.a'])
+        self.assertEqual(nodes[children[0]]['kind'], 'reference')

@@ -220,7 +220,7 @@ def describe_metamodel(model, guide_response, snapshot_schema=None):
              if term.get('status') != 'retired'}
     publication_terms = {term['name']: term for term in model.get('glossary', {}).get('terms', [])
                          if not term.get('historical')}
-    kinds = Counter(node['kind'] for node in model['nodes'])
+    kinds = Counter(node['kind'] for node in model.get('nodes', []))
     node_types = []
     for kind in sorted(kinds):
         term = terms.get(GUIDE_TERMS.get(kind))
@@ -235,9 +235,9 @@ def describe_metamodel(model, guide_response, snapshot_schema=None):
                                   f"glossary:{publication_term['id']}" if publication_term else None),
         })
 
-    by_id = {node['id']: node['kind'] for node in model['nodes']}
+    by_id = {node['id']: node['kind'] for node in model.get('nodes', [])}
     relations = defaultdict(Counter)
-    for relation in model['relations']:
+    for relation in model.get('relations', []):
         source = by_id.get(relation['source_id'], 'external')
         target = by_id.get(relation['target_id'], 'external')
         relations[relation['type']][(source, target)] += 1

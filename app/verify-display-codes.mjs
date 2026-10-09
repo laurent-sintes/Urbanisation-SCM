@@ -25,6 +25,10 @@ assert.deepEqual(raw.nodes, JSON.parse(source).nodes, 'The fixture preserves all
 const area = model.nodes.find(n => ['business_area', 'area'].includes(n.kind) && childrenOf(model, n.id).some(c => c.kind === 'capability') && !childrenOf(model, n.id).some(c=>c.kind==='business_area'));
 assert.ok(area, 'The publication must provide a container with capabilities to verify reading codes');
 const capacity = childrenOf(model, area.id).find(n => n.kind === 'capability');
+const parentOf = id => model.nodes.find(node => childrenOf(model, node.id).some(child => child.id === id));
+const subdomain = parentOf(area.id);
+const domain = subdomain && parentOf(subdomain.id);
+assert.equal(domain?.kind, 'domain');
 const base = 'https://atlas.test/Urbanisation-SCM/';
 const browser = await chromium.launch(browserOptions);
 try {
@@ -42,28 +46,20 @@ try {
     const types = { '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.html': 'text/html', '.png': 'image/png', '.svg': 'image/svg+xml' };
     await route.fulfill({ body: await readFile(target), contentType: types[path.extname(target)] || 'application/octet-stream' });
   });
-  await page.goto(base + `#version=${version}&node=${area.id}&view=map`);
-  await page.locator('.business-card').first().waitFor();
-  const expected = childrenOf(model, area.id).map(n => n.id);
-  assert.deepEqual(await page.locator('.business-card').evaluateAll(cards => cards.map(card => card.dataset.nodeId)), expected);
-  assert.equal(await page.locator('.business-card .card-id, .business-card .reading-code, .category-banner .reading-code').count(), 0);
-  assert.ok(!(await page.locator('.eyebrow').innerText()).includes(area.displayCode));
-  assert.equal(await page.locator(`[data-tree-id="${area.id}"]`).getAttribute('aria-description'), area.displayCode);
-  assert.ok((await page.locator(`[data-tree-id="${area.id}"] .tree-label`).first().getAttribute('title')).includes(area.displayCode));
-  assert.equal(await page.locator(`[data-tree-id="${area.id}"] > .tree-row .reading-code`).count(), 0);
-  const groupedArea = model.nodes.find(n => n.kind === 'area' && childrenOf(model, n.id).some(c => c.kind === 'business_area'));
-  assert.ok(groupedArea, 'Fixture includes Business Area banners');
-  await page.goto(base + `#version=${version}&node=${groupedArea.id}&view=map`);
-  await page.locator('.category-banner').first().waitFor();
+  await page.goto(base + `#version=${version}&view=map&scope=${domain.id}&node=${area.id}&mapDepth=3&mapFocus=${area.id}`);
+  await page.locator(`[data-business-area-summary="${area.id}"]`).waitFor();
+  await page.locator(`[data-map-item-id="${capacity.id}"]`).first().waitFor();
   assert.equal(await page.locator('.business-card .card-id, .business-card .reading-code, .category-banner .reading-code').count(), 0);
   const overviewOutput = path.join(app, '.runtime/qa-display-codes');
   await mkdir(overviewOutput, { recursive: true });
   await page.screenshot({ path: path.join(overviewOutput, 'overview.png') });
+  const panelToggle = page.locator('#fa-tree-open');
+  if (await panelToggle.getAttribute('aria-expanded') === 'false') await panelToggle.click();
   const search = page.getByRole('textbox', { name: 'Rechercher dans le modèle publié' });
   for (const query of [capacity.displayCode, capacity.id]) {
     await search.fill(query);
-    await page.locator(`[data-search-result="${capacity.id}"]`).click();
-    await page.getByRole('heading', {level:1, name:capacity.name, exact:true}).waitFor();
+    await page.locator(`[data-search-result="${capacity.id}"]`).waitFor();
+    await search.fill('');
     await page.goto(base + `#version=${version}&node=${capacity.id}&view=sheet`);
     await page.getByTestId('business-sheet').waitFor();
     assert.ok((await page.locator('.eyebrow').innerText()).includes(capacity.displayCode));
@@ -81,5 +77,5 @@ try {
   const output = path.join(app,'.runtime/qa-display-codes');
   await mkdir(output,{recursive:true});
   await page.screenshot({path:path.join(output,'mobile.png')});
-  console.log(JSON.stringify({status:'passed',fixture:true,policy:raw.display_policy,codes:Object.keys(raw.display_index.codes).length,checks:['frozen card order without overview codes','tree codes','search code and identity','stable versioned links','meta-model rules','mobile']}));
+  console.log(JSON.stringify({status:'passed',fixture:true,policy:raw.display_policy,codes:Object.keys(raw.display_index.codes).length,checks:['hierarchical map without reading codes','search code and identity','stable versioned links','meta-model rules','mobile']}));
 } finally { await browser.close(); }

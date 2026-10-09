@@ -1849,9 +1849,10 @@ chapters:
       Définir ce périmètre par le service rendu, le bénéficiaire et une frontière utile. Une Business Area peut porter une
       seule capacité. Les types, filtres et codes de lecture ne changent ni les identités ni les parents.
     example: '[Order Promising](model:ba-order-promising) regroupe [ATP](model:D03.i), [CTP](model:D03.j) et [PTP](model:D03.k)
-      dans [Availability](model:D03). Dans [Policies](model:subdomain-policies), les capacités appartiennent à [Protection
-      Policies](model:ba-protection-policies) ou à [Service Provider Controls](model:ba-service-provider-controls). Le bandeau
-      de la carte rend chaque Business Area visible et ouvre sa fiche.'
+      dans [Availability](model:D03). Dans [Control Plane](model:subdomain-policies), [Protection Policies](model:ba-protection-policies)
+      présente des référentiels de protection et [Service Provider Controls](model:ba-service-provider-controls) présente
+      [Service Provider Policy](model:D19.a). Les référentiels restent des objets documentaires ; le bandeau de la carte
+      rend chaque Business Area visible et ouvre sa fiche.'
   - title: Justifier une capacité, au-delà d’un accès aux données
     text: Une [capacité](method:MOD015) doit produire un résultat métier identifiable, avec une responsabilité propre. Un
       objet de données, une opération technique ou une fonctionnalité d’écran ne suffisent pas. Pour [Visibility](method:MOD040),

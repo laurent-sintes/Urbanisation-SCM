@@ -80,6 +80,8 @@ try {
 
   await visit({ view: 'sheet', node: current.nodes.find(node => node.kind === 'capability').id });
   await page.getByTestId('business-sheet').waitFor();
+  const panelToggle = page.locator('#fa-tree-open');
+  if (await panelToggle.getAttribute('aria-expanded') === 'false') await panelToggle.click();
   await page.getByRole('button', { name: guide.title, exact: true }).click();
   if (guide.chapters) {
     const chapters = page.locator('.method-chapters');
