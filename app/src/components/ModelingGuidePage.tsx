@@ -77,7 +77,7 @@ function GuideContent({ model, selected, routeVersion, onSelect, state, retry }:
   const current = activeMethod(guide, selected);
   const home = current === 'home';
   const codes = current === 'codes';
-  const chapter = guide.chapters?.find(item => item.id === (selected || (isTransformationGuide(guide) ? 'home' : 'start')));
+  const chapter = guide.chapters?.find(item => item.id === activeMethod(guide, selected));
   const reading = guide.chapters?.filter(c=>!['metamodel','method','references'].includes(c.id)) || [];
   const readingIndex = reading.findIndex(c=>c.id===chapter?.id);
   const mapHref = `#${routeVersion ? 'version='+encodeURIComponent(routeVersion)+'&' : ''}view=map`;
@@ -102,7 +102,7 @@ function GuideContent({ model, selected, routeVersion, onSelect, state, retry }:
       : !chapter && <section className="guide-status"><h2>Principe absent de ce guide</h2><p>La référence « {selected} » ne figure pas dans cette version. Choisis l’un des repères ci-dessus.</p></section>}
     </>}
     {readingIndex >= 0 && <nav className="method-reading-path" aria-label="Parcours de lecture">{readingIndex>0 && <button onClick={()=>onSelect(reading[readingIndex-1].id)}>← {reading[readingIndex-1].title}</button>}{readingIndex<reading.length-1 && <button onClick={()=>onSelect(reading[readingIndex+1].id)}>Continuer : {reading[readingIndex+1].title} →</button>}</nav>}
-    <p className="guide-footer"><button onClick={()=>onSelect(isTransformationGuide(guide)?'home':'start')}>Retour à l’accueil de la {isTransformationGuide(guide) ? 'méthodologie de transformation' : 'méthode'}</button></p>
+    <p className="guide-footer"><button onClick={()=>onSelect(guide.id === 'flow-atlas-metamodel' ? 'metamodel' : isTransformationGuide(guide)?'home':'start')}>Retour à l’accueil {guide.id === 'flow-atlas-metamodel' ? 'du métamodèle' : isTransformationGuide(guide) ? 'de la méthodologie de transformation' : 'de la méthode'}</button></p>
     <p className="guide-footer"><button onClick={() => onSelect('codes')}>Comprendre les codes et identifiants</button></p>
   </div>;
 }

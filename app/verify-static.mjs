@@ -64,7 +64,7 @@ try {
   assert.equal(await panelToggle.getAttribute('aria-expanded'), 'false', 'A saved collapse is respected');
   await panelToggle.click();
   await page.locator('.download-menu summary').click();
-  const modelDownload = page.getByRole('link', { name: /Modèle \(JSON\)/ });
+  const modelDownload = page.getByRole('link', { name: /Modèle \(JSON compact\)/ });
   assert.equal(new URL(await modelDownload.getAttribute('href'), base).pathname, `${prefix}data/${version}/model.json`);
   const downloadPending = page.waitForEvent('download');
   await modelDownload.click();
@@ -86,7 +86,7 @@ try {
   await page.goto(base + '#version=' + historical + '&view=glossary');
   await page.locator(`#fa-version[data-version="${historical}"]`).waitFor({ state: 'attached' });
   await page.locator('.download-menu summary').click();
-  assert.equal(new URL(await page.getByRole('link', { name: /Modèle \(JSON\)/ }).getAttribute('href'), base).pathname, `${prefix}data/${historical}/model.json`);
+  assert.equal(new URL(await page.getByRole('link', { name: /Modèle \(JSON compact\)/ }).getAttribute('href'), base).pathname, `${prefix}data/${historical}/model.json`);
   const historicYamlPending = page.waitForEvent('download');
   const historicYamlLink = page.getByRole('link', { name: /Modèle \(YAML lisible\)/ });
   assert.equal(new URL(await historicYamlLink.getAttribute('href'), base).pathname, `${prefix}data/${historical}/model.yaml`);

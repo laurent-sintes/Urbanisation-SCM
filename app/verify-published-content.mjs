@@ -26,9 +26,13 @@ const guideBytes=fixture?.guideBytes ?? await readFile(resolve(dist,`data/${vers
 const entry=index.versions.find(v=>v.version===version);
 assert.equal(createHash('sha256').update(bytes).digest('hex'),entry.model_sha256);
 assert.equal(createHash('sha256').update(guideBytes).digest('hex'),entry.guide_sha256);
-const model=JSON.parse(bytes), guide=JSON.parse(guideBytes).guide, catalog=model.scenario_catalog;
-assert.ok(catalog && guide?.chapters, 'Current publication must expose scenarios and methodology');
-assert.deepEqual(guide.chapters.map(c=>c.id),['start','explore','decisions','transform','sustain','metamodel','method','references'],'The approved transformation journey must not regress to the old mapping-only guide');
+const model=JSON.parse(bytes), guide=JSON.parse(guideBytes).guide, metamodel=model.metamodel?.documentation, catalog=model.scenario_catalog;
+assert.ok(catalog && guide?.chapters && metamodel?.chapters, 'Current publication must expose scenarios and both documents');
+assert.deepEqual(guide.chapters.map(c=>c.id),['start','explore','decisions','transform','sustain','references']);
+assert.deepEqual(metamodel.chapters.map(c=>c.id),['metamodel','method']);
+assert.equal(guide.lessons.length,0);
+assert.equal(metamodel.lessons.length,6);
+assert.equal(new Set([...metamodel.glossary.terms,...guide.glossary.terms].map(term=>term.id)).size,metamodel.glossary.terms.length+guide.glossary.terms.length,'Document glossaries must be disjoint');
 const browser=await chromium.launch(browserOptions), errors=[], missing=[], counts={streams:0,scenarios:0,paths:0,steps:0,chapters:0,sections:0,visuals:0,sheets:0,lessons:0,terms:0};
 // Ignore typographic case (CSS small labels are uppercase), never omit words.
 const normalize=text=>plainInlineText(text).replace(/\s+/g,' ').trim().toLocaleLowerCase('fr');
@@ -126,9 +130,9 @@ try {
     for(const s of expected)assert.ok(await links.locator(`a[href*="scenario=${s.id}"]`).count(),`Missing ${s.id} from ${node.id}`);
     if(!expected.length)await links.getByText('Aucun scénario documenté pour ce périmètre.',{exact:true}).waitFor();
   }
-  for(const chapter of guide.chapters){
-    await visit({view:'principles',principle:chapter.id});
-    await page.getByRole('heading',{name:chapter.title,exact:true}).waitFor();
+  for(const [view,document] of [['principles',guide],['metamodel',metamodel]])for(const chapter of document.chapters){
+    await visit({view,principle:chapter.id});
+    await page.locator('.method-chapter').getByRole('heading',{name:chapter.title,exact:true}).waitFor();
     const actual=await content('.method-chapter');
     contains(actual,chapter.intro,`${chapter.id}/intro`);
     for(const section of chapter.sections){
@@ -139,11 +143,11 @@ try {
     if(chapter.visual){await page.locator('.method-overview-image').evaluate(img=>img.decode());counts.visuals++;}
     await cleanReferences(chapter.id);counts.chapters++;
   }
-  for(const original of guide.lessons){
+  for(const original of metamodel.lessons){
     const lesson=lessonForPublication(original,adaptPublication(model));
-    await visit({view:'principles',principle:lesson.id});
+    await visit({view:'metamodel',principle:lesson.id});
     await page.getByRole('heading',{name:lesson.title,exact:true}).waitFor();
-    const actual=await content('.guide-lesson');
+    const actual=await content('.guide-lesson:not(.method-chapter)');
     for(const field of ['title','rule','question','explanation'])contains(actual,lesson[field],`${lesson.id}/${field}`);
     for(const field of ['criterion','boundary'])contains(actual,lesson.contributor[field],`${lesson.id}/${field}`);
     for(const field of ['parent','connector','caption'])contains(actual,lesson.scene[field],`${lesson.id}/scene/${field}`);
@@ -154,11 +158,16 @@ try {
     }
     await cleanReferences(lesson.id);counts.lessons++;
   }
-  const visibleTerms=guide.glossary.groups?.flatMap(g=>g.term_ids) || guide.glossary.terms.filter(t=>t.status!=='retired'&&!t.parent_term&&!t.guide_section).map(t=>t.id);
-  for(const id of visibleTerms){
-    const term=guide.glossary.terms.find(t=>t.id===id)||model.glossary.terms.find(t=>t.id===id);
+  const visibleTerms=[
+    ...metamodel.glossary.groups.flatMap(group=>group.term_ids).map(id=>['meta',id]),
+    ...metamodel.glossary.business_terms.filter(term=>!metamodel.glossary.aliases?.[term.id]&&!metamodel.glossary.groups.some(group=>group.term_ids.includes(term.id))).map(term=>['meta',term.id]),
+    ...guide.glossary.groups.flatMap(group=>group.term_ids).map(id=>['transformation',id]),
+  ];
+  for(const [glossary,id] of visibleTerms){
+    const document=glossary==='meta'?metamodel:guide;
+    const term=document.glossary.terms.find(t=>t.id===id)||metamodel.glossary.business_terms.find(t=>t.id===id);
     assert.ok(term,`Missing published term ${id}`);
-    await visit({view:'glossary',glossary:'meta',term:id});
+    await visit({view:'glossary',glossary,term:id});
     const actual=await content(`#term-${id}`);
     contains(actual,term.definition,`${id}/definition`);
     for(const value of term.examples||[])contains(actual,value,`${id}/example`);
@@ -173,8 +182,8 @@ try {
   await page.getByRole('heading',{name:guide.title,exact:true}).waitFor();
   assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).has('version'),false);
   // Current navigation must remain current, even through glossary detours.
-  await page.locator('.method-chapters').getByRole('link',{name:'Glossaire méthodologique',exact:true}).click();
-  await page.getByRole('heading',{name:'Glossaire méthodologique',exact:true}).waitFor();
+  await page.locator('.method-chapters').getByRole('link',{name:'Glossaire de transformation',exact:true}).click();
+  await page.getByRole('heading',{name:'Glossaire de transformation',exact:true}).waitFor();
   assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).has('version'),false);
   // Layout smoke checks include the actual publication on a narrow viewport.
   await mkdir(output,{recursive:true});

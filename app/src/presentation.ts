@@ -1,6 +1,7 @@
 import type { AtlasNode, AtlasRelation } from './types';
 import { capabilityTypeLabel } from './capabilityTypes.ts';
 import { behaviorTypeLabel } from './behaviorTypes.ts';
+import { plainInlineText } from './inlineLinks.ts';
 export function kindLabel(node: AtlasNode) {
   if (node.kind === 'universe') return node.name === 'Enterprise Architecture' || node.name === 'Univers' ? node.name : 'Universe';
   if (node.kind === 'business_system') return 'Business System';
@@ -17,4 +18,7 @@ export function modelingDepthLabel(node: AtlasNode): string {
 export function statusLabel(element: AtlasNode | AtlasRelation) {
   return ({ accepted: 'Validé dans sa portée', partial: 'Partiellement validé', proposed: 'Proposé', under_review: 'En réexamen' } as Record<string,string>)[element.status] || 'À qualifier';
 }
-export function shortText(text: string, length = 145) { return text.length > length ? `${text.slice(0, length).replace(/\s+\S*$/, '')}…` : text; }
+export function shortText(text: string, length = 145) {
+  const readable = plainInlineText(text).replace(/\s+/g, ' ').trim();
+  return readable.length > length ? `${readable.slice(0, length).replace(/\s+\S*$/, '')}…` : readable;
+}

@@ -1,5 +1,5 @@
 import type { PublishedModel } from './types.ts';
-export type View = 'map' | 'sheet' | 'relations' | 'market' | 'glossary' | 'principles' | 'information' | 'scenarios';
+export type View = 'map' | 'sheet' | 'relations' | 'market' | 'glossary' | 'principles' | 'metamodel' | 'information' | 'scenarios';
 export interface GraphRoute {
   graphLevel?: 'capability' | 'business_area' | 'area' | 'domain' | 'business_system' | 'universe';
   graphDepth?: 0 | 1 | 2 | 3;
@@ -15,7 +15,7 @@ export interface RouteState extends GraphRoute {
   query: string; status: string; relation: string;
   source: string; anchor: string; sourceId: string;
   term?: string; section?: string;
-  glossary?: 'model' | 'meta';
+  glossary?: 'model' | 'meta' | 'transformation';
   principle?: string;
   information?: string;
   returnTo?: string; catalogReturn?: string; scroll?: string;
@@ -40,14 +40,14 @@ export function readRoute(hash: string): RouteState {
   if (p.get('neighbors') === 'all') graph.graphNeighbors = true;
   return {
     ...((view === 'relations' || view === 'links') ? graph : {}),
-    node: view === 'principles' || legacyRoots.includes(node) ? '' : node,
-    scope: view === 'principles' ? '' : p.get('scope') || '',
+    node: view === 'principles' || view === 'metamodel' || legacyRoots.includes(node) ? '' : node,
+    scope: view === 'principles' || view === 'metamodel' ? '' : p.get('scope') || '',
     ...(p.has('mapDepth') && ['0','1','2','3','4'].includes(p.get('mapDepth')!) ? { mapDepth: Number(p.get('mapDepth')) as RouteState['mapDepth'] } : {}),
     ...(p.has('mapFocus') ? { mapFocus: p.get('mapFocus') || '' } : {}),
-    view: view === 'links' ? 'relations' : ['map', 'sheet', 'relations', 'market', 'glossary', 'principles', 'information', 'scenarios'].includes(view || '') ? view as View : undefined,
-    ...(view === 'principles' && p.has('principle') ? { principle: p.get('principle') || '' } : {}),
+    view: view === 'links' ? 'relations' : ['map', 'sheet', 'relations', 'market', 'glossary', 'principles', 'metamodel', 'information', 'scenarios'].includes(view || '') ? view as View : undefined,
+    ...((view === 'principles' || view === 'metamodel') && p.has('principle') ? { principle: p.get('principle') || '' } : {}),
     ...(p.has('term') ? { term: p.get('term') || '' } : {}),
-    ...(p.get('glossary') === 'meta' ? { glossary: 'meta' as const } : {}),
+    ...(['meta', 'transformation'].includes(p.get('glossary') || '') ? { glossary: p.get('glossary') as 'meta' | 'transformation' } : {}),
     ...(p.has('section') ? { section: p.get('section') || '' } : {}),
     ...Object.fromEntries(['returnTo','catalogReturn'].filter(k => p.get(k)?.startsWith('#') && p.get(k)!.length < 12000).map(k => [k,p.get(k)!])),
     ...(p.has('scroll') && /^\d{1,7}$/.test(p.get('scroll')!) ? {scroll:p.get('scroll')!} : {}),
@@ -68,7 +68,7 @@ export function routeHash(route: RouteState, model?: PublishedModel | null): str
     term: route.term, section: route.section,
     returnTo: route.returnTo, catalogReturn: route.catalogReturn, scroll: route.scroll,
     glossary: route.view === 'glossary' ? route.glossary : undefined,
-    principle: route.view === 'principles' ? route.principle : undefined,
+    principle: route.view === 'principles' || route.view === 'metamodel' ? route.principle : undefined,
     information: route.view === 'information' ? route.information : undefined,
     ...(route.view === 'relations' ? { level: model?.nodes.some(n => n.hierarchyLabel === 'Sous-domaine') && route.graphLevel === 'area' ? 'subdomain' : model?.nodes.some(n => n.kind === 'area') && route.graphLevel === 'universe' ? 'domain' : route.graphLevel, depth: route.graphDepth, direction: route.graphDirection, qualification: route.graphFamily, layout: route.graphLayout, labels: route.graphLabels, neighbors: route.graphNeighbors ? 'all' : undefined } : {}),
   })) if (value !== undefined && value !== '') p.set(key, String(value));

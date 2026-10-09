@@ -32,6 +32,7 @@ def verify_atlas(root, version, base_url='http://127.0.0.1:8765'):
         raise ValueError('Atlas verification requires a local HTTP origin')
     from scripts.export_atlas import encoded
     from scripts.atlas_metamodel import describe_metamodel
+    from scripts.atlas_documentation import separate_documentation
     from scripts.release_catalog import PublicationReader
     from scripts.structured_io import read as read_document
     from app.modeling_guide import _load_associated_guide
@@ -49,11 +50,14 @@ def verify_atlas(root, version, base_url='http://127.0.0.1:8765'):
         raise ValueError('The local service is not this project’s FLOW Atlas')
     reader = PublicationReader(root / 'modeles/release')
     pointer, raw = reader.load(version)
-    expected_guide = _load_associated_guide(root, version)
+    complete_guide = _load_associated_guide(root, version)
+    metamodel_document, expected_guide = separate_documentation(complete_guide, raw)
     schema_path = root / 'modeles/schemas/urbanism.schema.json'
     snapshot_schema = read_document(schema_path) if schema_path.is_file() else None
     expected = {**raw, 'sourcePath': 'modeles/release/' + pointer['path'],
-                'metamodel': describe_metamodel(raw, expected_guide, snapshot_schema)}
+                'metamodel': describe_metamodel(raw, complete_guide, snapshot_schema)}
+    if metamodel_document:
+        expected['metamodel']['documentation'] = metamodel_document
     actual, model_payload = document('/data/' + version + '/model.json')
     if not isinstance(actual, dict) or actual.get('version') != version or actual.get('sourcePath') != expected['sourcePath']:
         raise ValueError('Atlas serves another publication')

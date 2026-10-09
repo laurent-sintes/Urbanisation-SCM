@@ -1,12 +1,13 @@
-import { activeMethod, methodEntries, isTransformationGuide } from './methodNavigation';
+import { activeMethod, methodEntries } from './methodNavigation';
 import { staticUrl } from './publication';
 import { lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { ArrowLeft, BookOpen, ChevronRight, Compass, Copy, FileText, GitBranch, LayoutGrid, Lightbulb, Maximize2, Minimize2, PanelLeft, PanelLeftClose, RefreshCw, X } from 'lucide-react';
 import { usePublication } from './usePublication';
 import { useBuildUpdate } from './useBuildUpdate';
 import { useModelingGuide } from './useModelingGuide';
+import type { GuideState } from './useModelingGuide';
 import { childrenOf, lineageOf, parentRelationOf, relatedTo, scopeStatistics } from './model';
-import { mapDepthLimit } from './mapProjection';
+import { defaultMapDepth, mapDepthLimit } from './mapProjection';
 import { type MapZoomChoice } from './mapZoom';
 import { NodeIcon } from './icons';
 import { Overview } from './components/Overview';
@@ -45,12 +46,18 @@ export function App() {
   const { model, catalog, loading, error, notice, reload } = usePublication(route.version || undefined);
   const { state: guideState, retry: retryGuide } = useModelingGuide(model?.version, catalog?.releases.find(entry => entry.version === model?.version)?.guide_sha256);
   const activeGuide = guideState.status === 'ready' ? guideState.response.guide : undefined;
+  const metaGuide = model?.raw.metamodel?.documentation;
+  const metaState: GuideState = model && metaGuide
+    ? { status: 'ready', version: model.version, response: { schema_version: '1.0.0', publication_version: model.version, status: 'available', message: '', guide: metaGuide } }
+    : { status: 'ready', version: model?.version || '', response: { schema_version: '1.0.0', publication_version: model?.version || '', status: 'unavailable', message: 'Aucun document de métamodèle associé à cette publication.' } };
   const methodTitle = activeGuide?.title || 'Méthodologie';
   const methodCrumb = methodEntries(activeGuide).find(item=>item.id===activeMethod(activeGuide,route.principle))?.title;
-  const metaGlossary = guideState.status === 'ready' ? guideState.response.guide?.glossary : undefined;
+  const metaGlossary = metaGuide?.glossary || (guideState.status === 'ready' ? guideState.response.guide?.glossary : undefined);
+  const transformationGlossary = activeGuide?.glossary;
   const isMetaTerm = (id: string) => metaGlossary?.model_term_ids.includes(id) || metaGlossary?.terms.some(term => term.id === id);
-  const glossaryMode = route.term && isMetaTerm(route.term) ? 'meta' : route.glossary || 'model';
-  const glossaryTitle = glossaryMode === 'meta' ? 'Glossaire méthodologique' : 'Glossaire métier';
+  const isTransformationTerm = (id: string) => transformationGlossary?.terms.some(term => term.id === id);
+  const glossaryMode = route.term ? isMetaTerm(route.term) ? 'meta' : isTransformationTerm(route.term) ? 'transformation' : 'model' : route.glossary || 'model';
+  const glossaryTitle = glossaryMode === 'meta' ? 'Glossaire du métamodèle' : glossaryMode === 'transformation' ? 'Glossaire de transformation' : 'Glossaire métier';
   const mobile = useMobile();
   const [drawer, setDrawer] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(() => preference('sidebar-open', true));
@@ -76,8 +83,8 @@ export function App() {
   const scopeId = model && requestedScope ? [...lineageOf(model, requestedScope)].reverse().find(node => node.kind === 'domain' || node.kind === 'business_system')?.id || (validScope || (selected && (childrenOf(model, selected.id).length || ['group','area','business_area','reference'].includes(selected.kind) ? selected.id : parentRelationOf(model, selected.id)?.sourceId))) : undefined;
   const scope = scopeId ? model?.nodeById.get(scopeId) : undefined;
   const mapMaxDepth = model ? mapDepthLimit(model, scopeId) : 0;
-  const mapDepth = Math.min(route.mapDepth ?? (scope?.kind === 'domain' && mapMaxDepth > 0 ? 1 : 0), mapMaxDepth);
-  const universeDepth = Math.min(route.mapDepth ?? 1, 2);
+  const mapDepth = Math.min(route.mapDepth ?? defaultMapDepth(scope?.kind), mapMaxDepth);
+  const universeDepth = Math.min(route.mapDepth ?? defaultMapDepth('universe'), 2);
   const detailLabels = scope?.kind === 'domain' ? ['Domaine', 'Sous-domaines', 'Business Areas', 'Capacités', 'Comportements'] : ['Domaines', 'Sous-domaines', 'Business Areas', 'Capacités', 'Comportements'];
   const parentScope = scope && model ? model.nodeById.get(parentRelationOf(model, scope.id)?.sourceId || '') : undefined;
   useEffect(() => {
@@ -86,7 +93,7 @@ export function App() {
     return () => document.removeEventListener('fullscreenchange', update);
   }, []);
   // Keep the map context stable on selection, including between double-clicks.
-  const referenceView = view === 'scenarios' || view === 'glossary' || view === 'principles';
+  const referenceView = view === 'scenarios' || view === 'glossary' || view === 'principles' || view === 'metamodel';
   const headingNode = referenceView ? undefined : view === 'map' ? scope : selected;
   const contentScope = view === 'map' ? scopeId : route.node;
   useLayoutEffect(() => {
@@ -105,13 +112,13 @@ export function App() {
   }, [model]);
   const closeDrawer = useCallback(() => setDrawer(false), []);
   const followReference = useCallback((kind: 'glossary' | 'model', id: string, section = '') => {
-    changeRoute({ view: kind === 'glossary' ? 'glossary' : section === 'market_comparisons' ? 'market' : 'sheet', glossary: isMetaTerm(id) ? 'meta' : 'model',
+    changeRoute({ view: kind === 'glossary' ? 'glossary' : section === 'market_comparisons' ? 'market' : 'sheet', glossary: isMetaTerm(id) ? 'meta' : isTransformationTerm(id) ? 'transformation' : 'model',
       node: kind === 'model' ? id : '', term: kind === 'glossary' ? id : '', section, principle: '',
       scope: '', relation: '', source: '', anchor: '', sourceId: '', query: '', status: '' });
     setDrawer(false);
     if (!section && kind === 'model') setTimeout(() => heading.current?.focus({ preventScroll: true }), 30);
-  }, [changeRoute, model?.version, route.version, metaGlossary]);
-  const openGlossary = useCallback((glossary: 'model' | 'meta' = 'model') => {
+  }, [changeRoute, model?.version, route.version, metaGlossary, transformationGlossary]);
+  const openGlossary = useCallback((glossary: 'model' | 'meta' | 'transformation' = 'model') => {
     changeRoute({ returnTo:'',catalogReturn:'',scroll:'', view: 'glossary', glossary, node: '', term: '', principle: '', section: '', scope: '', relation: '', source: '', anchor: '', sourceId: '' });
     setDrawer(false);
     setTimeout(() => heading.current?.focus({ preventScroll: true }), 30);
@@ -121,8 +128,13 @@ export function App() {
     setDrawer(false);
     setTimeout(() => heading.current?.focus({ preventScroll: true }), 30);
   }, [changeRoute]);
+  const openMetamodel = useCallback(() => {
+    changeRoute({ returnTo:'',catalogReturn:'',scroll:'',view:'metamodel',principle:'',node:'',term:'',section:'',scope:'',relation:'',source:'',anchor:'',sourceId:'',query:'',status:'' });
+    setDrawer(false);
+    setTimeout(() => heading.current?.focus({ preventScroll: true }), 30);
+  }, [changeRoute]);
   useEffect(() => {
-    if (!route.section || !model || view === 'principles') return;
+    if (!route.section || !model || view === 'principles' || view === 'metamodel') return;
     const timer = requestAnimationFrame(() => {
       const section = view === 'glossary' && route.section === 'short-description' ? 'definition' : route.section;
       const target = document.getElementById(view === 'glossary' ? `term-${route.term}-${section}` : `field-${route.node}-${section}`);
@@ -168,7 +180,7 @@ export function App() {
     const item = model?.nodeById.get(id);
     const domain = item && model ? lineageOf(model, id).find(node => node.kind === 'domain') : undefined;
     const businessArea = item && model ? [...lineageOf(model, id)].reverse().find(node => node.kind === 'business_area') : undefined;
-    const depth = item?.kind === 'domain' ? 1 : item?.kind === 'area' ? 2 : item?.kind === 'business_area' ? 3 : 0;
+    const depth = item?.kind === 'area' ? 2 : item?.kind === 'business_area' ? 3 : defaultMapDepth(item?.kind);
     changeRoute({ returnTo:'',catalogReturn:'',scroll:'', node: id, scope: domain?.id || (item?.kind === 'business_system' ? id : ''), view: undefined, mapDepth: depth as 0 | 1 | 2 | 3, mapFocus: depth === 3 ? businessArea?.id || '' : '', term: '', principle: '', section: '', query: '', status: '', relation: '', source: '', anchor: '', sourceId: '' });
     setDrawer(false);
     if (focusHeading) setTimeout(() => heading.current?.focus({ preventScroll: true }), 50);
@@ -179,7 +191,7 @@ export function App() {
   }, [changeRoute]);
   const select = useCallback((id: string) => {
     const item = model?.nodeById.get(id);
-    if (item?.kind === 'domain') { changeRoute({ node: id, scope: id, view: 'map', mapDepth: 1, mapFocus: '', relation: '' }); return; }
+    if (item?.kind === 'domain') { changeRoute({ node: id, scope: id, view: 'map', mapDepth: defaultMapDepth('domain'), mapFocus: '', relation: '' }); return; }
     if (item?.kind === 'area') {
       const domain = model && lineageOf(model, id).find(node => node.kind === 'domain');
       if (domain) { changeRoute({ node: id, scope: domain.id, view: 'map', mapDepth: Math.max(1, mapDepth) as 1 | 2 | 3 | 4, mapFocus: id, relation: '' }); return; }
@@ -187,18 +199,18 @@ export function App() {
     changeRoute({ node: id, scope: scopeId || '@root', view: 'map', mapFocus: id, relation: '' });
   }, [changeRoute, model, scopeId, mapDepth]);
   const openOverviewNode = useCallback((id: string) => {
-    if (model?.nodeById.get(id)?.kind === 'business_system') changeRoute({ node: id, scope: id, view: 'map', mapDepth: 0, mapFocus: '', relation: '', section: '' });
+    if (model?.nodeById.get(id)?.kind === 'business_system') changeRoute({ node: id, scope: id, view: 'map', mapDepth: defaultMapDepth('business_system'), mapFocus: '', relation: '', section: '' });
     else select(id);
   }, [changeRoute, model, select]);
-  const openMapLevel = useCallback((id: string) => changeRoute({ node: id, scope: id || '@root', view: 'map', mapDepth: id && model?.nodeById.get(id)?.kind === 'domain' ? 1 : 0, mapFocus: '', relation: '', section: '' }), [changeRoute, model]);
+  const openMapLevel = useCallback((id: string) => changeRoute({ node: id, scope: id || '@root', view: 'map', mapDepth: defaultMapDepth(model?.nodeById.get(id)?.kind), mapFocus: '', relation: '', section: '' }), [changeRoute, model]);
   const showSelectedOnMap = useCallback(() => {
-    if (selected?.kind === 'universe') { changeRoute({ view: 'map', node: '', scope: '@root', mapDepth: 1, mapFocus: '', relation: '', section: '' }); return; }
-    if (!model || !selected) { changeRoute({ view: 'map', node: '', scope: '@root', mapDepth: 0, mapFocus: '', relation: '', section: '' }); return; }
+    if (selected?.kind === 'universe') { changeRoute({ view: 'map', node: '', scope: '@root', mapDepth: defaultMapDepth('universe'), mapFocus: '', relation: '', section: '' }); return; }
+    if (!model || !selected) { changeRoute({ view: 'map', node: '', scope: '@root', mapDepth: defaultMapDepth('universe'), mapFocus: '', relation: '', section: '' }); return; }
     const path = lineageOf(model, selected.id);
     const domain = path.find(node => node.kind === 'domain');
     const system = path.find(node => node.kind === 'business_system');
     const businessArea = [...path].reverse().find(node => node.kind === 'business_area');
-    const depth = selected.kind === 'behavior' ? 4 : ['capability','reference','business_area'].includes(selected.kind) && businessArea ? 3 : domain ? 1 : 0;
+    const depth = selected.kind === 'behavior' ? 4 : ['capability','reference','business_area'].includes(selected.kind) && businessArea ? 3 : defaultMapDepth(domain ? 'domain' : system ? 'business_system' : 'universe');
     changeRoute({ view: 'map', scope: domain?.id || system?.id || selected.id, mapDepth: depth as 0 | 1 | 3 | 4, mapFocus: depth >= 3 ? selected.id : '', relation: '', section: '' });
   }, [changeRoute, model, selected]);
   const links = selected && model ? relatedTo(model, selected.id) : [];
@@ -212,9 +224,9 @@ export function App() {
   };
   const atMapHome = view === 'map' && !headingNode;
   const statistics = model && headingNode ? scopeStatistics(model, headingNode) : [];
-  const breadcrumbs = <nav className="breadcrumb" aria-label="Fil d’Ariane"><>{atMapHome || view === 'sheet' && selected?.kind === 'universe' ? <span aria-current="page">{rootName}</span> : <button onClick={() => navigate('')}>{rootName}</button>}</>{headingNode && model && lineageOf(model, headingNode.id).filter(node => node.kind !== 'universe').map(node => <span key={node.id}><ChevronRight size={12} /><button title={node.name} onClick={() => view === 'map' ? openMapLevel(node.id) : navigate(node.id)} aria-current={headingNode.id === node.id ? 'page' : undefined}>{node.name}</button></span>)}{referenceView && <span><ChevronRight size={12}/><span aria-current="page">{view === 'scenarios' ? 'Scénarios métier' : view === 'principles' ? `${methodTitle}${methodCrumb ? ' / ' + methodCrumb : ''}` : glossaryTitle}</span></span>}</nav>;
+  const breadcrumbs = <nav className="breadcrumb" aria-label="Fil d’Ariane"><>{atMapHome || view === 'sheet' && selected?.kind === 'universe' ? <span aria-current="page">{rootName}</span> : <button onClick={() => navigate('')}>{rootName}</button>}</>{headingNode && model && lineageOf(model, headingNode.id).filter(node => node.kind !== 'universe').map(node => <span key={node.id}><ChevronRight size={12} /><button title={node.name} onClick={() => view === 'map' ? openMapLevel(node.id) : navigate(node.id)} aria-current={headingNode.id === node.id ? 'page' : undefined}>{node.name}</button></span>)}{referenceView && <span><ChevronRight size={12}/><span aria-current="page">{view === 'scenarios' ? 'Scénarios métier' : view === 'metamodel' ? 'Métamodèle FLOW' : view === 'principles' ? `${methodTitle}${methodCrumb ? ' / ' + methodCrumb : ''}` : glossaryTitle}</span></span>}</nav>;
   const shareButton = <button className="share-button" aria-label="Copier le lien" title="Copier le lien" onClick={copyLink}><Copy size={16} /><span>Copier le lien</span></button>;
-  return <ModelLinksProvider value={{ model: model || null, metaGlossary, guide: activeGuide, route, onFollow: followReference }}><div className={`atlas-shell ${!sidebarOpen && !mobile ? 'sidebar-collapsed' : ''}`} style={{ '--sidebar': `${sidebarOpen ? width : 0}px` } as CSSProperties}>
+  return <ModelLinksProvider value={{ model: model || null, metaGlossary, metaGuide, guide: activeGuide, route, onFollow: followReference }}><div className={`atlas-shell ${!sidebarOpen && !mobile ? 'sidebar-collapsed' : ''}`} style={{ '--sidebar': `${sidebarOpen ? width : 0}px` } as CSSProperties}>
     <header className="topbar" inert={mobile && drawer}>
       <div className="app-brand-area">
         {model && <button id="fa-tree-open" className="mobile-menu" aria-label={mobile || !sidebarOpen ? 'Ouvrir le panneau' : 'Replier le panneau'} title={mobile || !sidebarOpen ? 'Ouvrir le panneau' : 'Replier le panneau'} aria-expanded={mobile ? drawer : sidebarOpen} aria-controls="atlas-tree-panel" onClick={() => mobile ? setDrawer(true) : setSidebarOpen(open => !open)}>{mobile || !sidebarOpen ? <PanelLeft size={20}/> : <PanelLeftClose size={20}/>}</button>}
@@ -223,7 +235,7 @@ export function App() {
       {model && !mobile && <div className="topbar-navigation">{breadcrumbs}{shareButton}</div>}
       <button id="fa-refresh" className={`topbar-icon ${loading ? 'loading' : ''}`} aria-label="Actualiser la publication" title="Actualiser" disabled={loading} onClick={reload}><RefreshCw size={17} /></button>
     </header>
-    {model && <Sidebar model={model} route={{ ...route, glossary: glossaryMode }} open={drawer} mobile={mobile} guide={guideState.status === 'ready' ? guideState.response.guide : undefined} searchRef={search} onClose={closeDrawer} onNavigate={navigate} onOpenGlossary={openGlossary} onOpenTerm={id => followReference('glossary', id)} onOpenPrinciples={openPrinciples} onSearch={changes => changeRoute(changes, true)} />}
+    {model && <Sidebar model={model} route={{ ...route, glossary: glossaryMode }} open={drawer} mobile={mobile} guide={guideState.status === 'ready' ? guideState.response.guide : undefined} searchRef={search} onClose={closeDrawer} onNavigate={navigate} onOpenGlossary={openGlossary} onOpenTerm={id => followReference('glossary', id)} onOpenPrinciples={openPrinciples} onOpenMetamodel={openMetamodel} onSearch={changes => changeRoute(changes, true)} />}
     {model && sidebarOpen && <div className="rail-resizer" role="separator" tabIndex={0} aria-label="Largeur du panneau" aria-orientation="vertical" aria-valuemin={240} aria-valuemax={420} aria-valuenow={width}
       onKeyDown={e => { if (['ArrowLeft','ArrowRight','Home','End'].includes(e.key)) { e.preventDefault(); setWidth(value => e.key === 'Home' ? 240 : e.key === 'End' ? 420 : clampWidth(value + (e.key === 'ArrowRight' ? 10 : -10))); } }}
       onPointerDown={e => { e.currentTarget.setPointerCapture(e.pointerId); }}
@@ -235,12 +247,12 @@ export function App() {
       {!model ? <div className="empty-state"><Compass size={34} /><h1>{loading ? 'Ouverture du modèle…' : 'Publication indisponible'}</h1><p>{loading ? 'Chargement de la cartographie publiée.' : 'Réessaie de charger la publication.'}</p>{!loading && <button className="secondary-button" onClick={reload}>Réessayer</button>}</div> : <>
         <div className="workspace-header">
         {softwareUpdate && <aside className="publication-selection" role="status"><span>Une nouvelle version de l’interface Atlas est disponible.</span><button onClick={()=>window.location.reload()}>Recharger l’application</button></aside>}
-        {route.version && <aside className="publication-selection" aria-label="Publication consultée"><span><strong>Publication figée · {route.version}</strong> — {catalog?.current !== route.version ? 'Une version plus récente est disponible.' : 'Ce lien restera sur cette édition.'}</span><button onClick={() => changeRoute({version:'',returnTo:'',catalogReturn:'',scroll:'',...(view === 'principles' ? {principle:''} : {})})}>Suivre la version courante</button></aside>}
+        {route.version && <aside className="publication-selection" aria-label="Publication consultée"><span><strong>Publication figée · {route.version}</strong> — {catalog?.current !== route.version ? 'Une version plus récente est disponible.' : 'Ce lien restera sur cette édition.'}</span><button onClick={() => changeRoute({version:'',returnTo:'',catalogReturn:'',scroll:'',...(['principles', 'metamodel'].includes(view) ? {principle:''} : {})})}>Suivre la version courante</button></aside>}
         {mobile && <div className="breadcrumb-row"><div className={`mobile-path ${fullPath ? 'expanded' : ''}`}><button className="path-toggle" aria-expanded={fullPath} onClick={() => setFullPath(!fullPath)}>Chemin {fullPath ? '−' : '…'}</button>{breadcrumbs}</div>{shareButton}</div>}
-        {view === 'map' ? <h1 id="page-title" className="sr-only" ref={heading} tabIndex={-1}>{scope?.name || rootName}</h1> : <header className="page-heading"><div className="heading-icon">{headingNode ? <NodeIcon node={headingNode} size={30} framed /> : <span className="node-icon framed tone-context">{view === 'principles' ? <Lightbulb size={30} /> : <Compass size={30} />}</span>}</div><div>
-          <div className="eyebrow">{headingNode ? <MetaTypeLabel node={headingNode}/> : <span>{view === 'principles' ? (isTransformationGuide(activeGuide) ? 'LA DÉMARCHE DE TRANSFORMATION' : 'LES REPÈRES MÉTHODOLOGIQUES') : view === 'glossary' ? 'LE VOCABULAIRE PUBLIÉ' : 'LE MODÈLE PUBLIÉ'}</span>}{headingNode && <span title={`Identité persistante : ${headingNode.id}`}>{headingNode.displayCode ?? headingNode.id}</span>}</div>
-          <h1 id="page-title" ref={heading} tabIndex={-1}>{view === 'scenarios' ? 'Scénarios métier' : view === 'principles' ? methodTitle : view === 'glossary' ? glossaryTitle : headingNode?.name || 'Cartographie'}</h1>
-          {view !== 'sheet' && <p><ModelText text={view === 'scenarios' ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.' : view === 'principles' ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.' : view === 'glossary' ? 'Les notions et leurs définitions dans la publication consultée.' : headingNode?.purpose || (headingNode ? 'Explore cet élément et ses relations dans le modèle publié.' : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')}/></p>}
+        {view === 'map' ? <h1 id="page-title" className="sr-only" ref={heading} tabIndex={-1}>{scope?.name || rootName}</h1> : <header className="page-heading"><div className="heading-icon">{headingNode ? <NodeIcon node={headingNode} size={30} framed /> : <span className="node-icon framed tone-context">{view === 'principles' || view === 'metamodel' ? <Lightbulb size={30} /> : <Compass size={30} />}</span>}</div><div>
+          <div className="eyebrow">{headingNode ? <MetaTypeLabel node={headingNode}/> : <span>{view === 'metamodel' ? 'LE MÉTAMODÈLE' : view === 'principles' ? 'LA DÉMARCHE DE TRANSFORMATION' : view === 'glossary' ? 'LE VOCABULAIRE PUBLIÉ' : 'LE MODÈLE PUBLIÉ'}</span>}{headingNode && <span title={`Identité persistante : ${headingNode.id}`}>{headingNode.displayCode ?? headingNode.id}</span>}</div>
+          <h1 id="page-title" ref={heading} tabIndex={-1}>{view === 'scenarios' ? 'Scénarios métier' : view === 'metamodel' ? 'Métamodèle FLOW' : view === 'principles' ? methodTitle : view === 'glossary' ? glossaryTitle : headingNode?.name || 'Cartographie'}</h1>
+          {view !== 'sheet' && <p><ModelText text={view === 'scenarios' ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.' : view === 'metamodel' ? metaGuide?.subtitle || 'Comprendre les objets et règles du modèle.' : view === 'principles' ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.' : view === 'glossary' ? 'Les notions et leurs définitions dans la publication consultée.' : headingNode?.purpose || (headingNode ? 'Explore cet élément et ses relations dans le modèle publié.' : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')}/></p>}
           {statistics.length > 0 && <ul className="scope-statistics" aria-label="Contenu du périmètre" title="Totaux des objets contenus dans ce périmètre, tous niveaux confondus, dans la publication consultée.">{statistics.map(stat => <li key={stat.kind}><strong>{stat.count}</strong> {stat.label}</li>)}</ul>}
         </div></header>}
         {!referenceView && <div className="view-bar"><div className="view-tabs" role="tablist" aria-label="Vue du modèle">{([{ id: 'map', label: 'Carte', Icon: LayoutGrid }, { id: 'sheet', label: 'Fiche', Icon: FileText }, { id: 'relations', label: 'Relations', Icon: GitBranch }, { id: 'market', label: 'Sources d’inspiration', Icon: BookOpen }] as const).filter(tab => selected || !['sheet', 'market'].includes(tab.id)).map(tab => <button key={tab.id} role="tab" id={`tab-${tab.id}`} aria-controls="atlas-view" tabIndex={view === tab.id ? 0 : -1} aria-selected={view === tab.id} onClick={() => tab.id === 'map' && view !== 'map' ? showSelectedOnMap() : changeRoute({ view: tab.id, relation: '', section: '' })} onKeyDown={e => {
@@ -253,7 +265,7 @@ export function App() {
         <div className="workspace-content" ref={content} tabIndex={0} role="region" aria-label="Contenu de la vue" onScroll={event => history.replaceState({ ...history.state, atlasScroll: event.currentTarget.scrollTop }, '', location.href)}>
           <ContextReturn/>
         <div id="atlas-view" role={referenceView ? 'region' : 'tabpanel'} aria-labelledby={referenceView ? 'page-title' : `tab-${['sheet', 'market'].includes(view) && !selected ? 'map' : view}`}>
-          {view === 'scenarios' ? <ScenarioCatalogPage model={model} route={route} onChange={changeRoute}/> : view === 'principles' ? <Suspense fallback={<p role="status">Ouverture de la méthodologie…</p>}><ModelingGuidePage key={model.version} model={model} selected={route.principle} routeVersion={route.version} state={guideState} retry={retryGuide} onSelect={principle => changeRoute({ principle })} /></Suspense> : view === 'glossary' ? <GlossaryPage model={model} routeVersion={route.version} selected={route.term} mode={glossaryMode} guideState={guideState} onRetry={retryGuide} onSelect={term => changeRoute({ view: 'glossary', glossary: glossaryMode, term, section: '' })}/> : view === 'sheet' && selected ? <BusinessSheet model={model} node={selected} onShowMarket={() => changeRoute({ view: 'market', relation: '', section: '' })} /> : view === 'market' && selected ? <article className="market-page" key={selected.id}><MarketComparisons id={`field-${selected.id}-market_comparisons`} entries={selected.fields.market_comparisons as readonly MarketComparison[] | undefined} inspiration={selected.fields.market_inspiration as MarketInspiration | undefined} modelName={selected.name} gaps={selected.fields.market_gaps as readonly MarketGap[] | undefined}/></article> : view === 'relations' ? <Suspense fallback={<div className="graph-canvas empty-state">Ouverture des relations…</div>}><DependenciesPane key={`${model.version}:${route.node}`} model={model} focusId={selected?.id} relationId={route.relation} settings={route} onSettings={changes => changeRoute(changes)} onSelectRelation={relation => changeRoute({ relation }, true)} onFocus={node => changeRoute({ node, scope: '', relation: '', view: 'relations', graphDepth: node ? 1 : 0 })} onRead={read}/></Suspense> : <>
+          {view === 'scenarios' ? <ScenarioCatalogPage model={model} route={route} onChange={changeRoute}/> : view === 'metamodel' ? <Suspense fallback={<p role="status">Ouverture du métamodèle…</p>}><ModelingGuidePage key={`${model.version}:metamodel`} model={model} selected={route.principle} routeVersion={route.version} state={metaState} retry={retryGuide} onSelect={principle => changeRoute({ principle })} /></Suspense> : view === 'principles' ? <Suspense fallback={<p role="status">Ouverture de la méthodologie…</p>}><ModelingGuidePage key={model.version} model={model} selected={route.principle} routeVersion={route.version} state={guideState} retry={retryGuide} onSelect={principle => changeRoute({ principle })} /></Suspense> : view === 'glossary' ? <GlossaryPage model={model} routeVersion={route.version} selected={route.term} mode={glossaryMode} guideState={guideState} metaGlossary={metaGlossary} onRetry={retryGuide} onSelect={term => changeRoute({ view: 'glossary', glossary: glossaryMode, term, section: '' })}/> : view === 'sheet' && selected ? <BusinessSheet model={model} node={selected} onShowMarket={() => changeRoute({ view: 'market', relation: '', section: '' })} /> : view === 'market' && selected ? <article className="market-page" key={selected.id}><MarketComparisons id={`field-${selected.id}-market_comparisons`} entries={selected.fields.market_comparisons as readonly MarketComparison[] | undefined} inspiration={selected.fields.market_inspiration as MarketInspiration | undefined} modelName={selected.name} gaps={selected.fields.market_gaps as readonly MarketGap[] | undefined}/></article> : view === 'relations' ? <Suspense fallback={<div className="graph-canvas empty-state">Ouverture des relations…</div>}><DependenciesPane key={`${model.version}:${route.node}`} model={model} focusId={selected?.id} relationId={route.relation} settings={route} onSettings={changes => changeRoute(changes)} onSelectRelation={relation => changeRoute({ relation }, true)} onFocus={node => changeRoute({ node, scope: '', relation: '', view: 'relations', graphDepth: node ? 1 : 0 })} onRead={read}/></Suspense> : <>
             {!scopeId && model.nodes.some(node => node.kind === 'business_system') ? <Overview model={model} detail={universeDepth} onOpen={openOverviewNode}/> : <section className="map-panel" ref={mapPanel} aria-label="Carte du modèle">
               <div className="map-toolbar"><div><strong>{scope?.name || rootName}</strong>{scope?.kind === 'domain' && mapMaxDepth === 0 && <span className="toolbar-note">Aucun sous-domaine publié pour ce domaine.</span>}</div>
                 <div className="map-actions">

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { publicText } from './src/publicText.ts';
 import { businessFields } from './src/businessContent.ts';
+import { shortText } from './src/presentation.ts';
 test('data governance and capability type remain independent explicit public fields', () => {
   assert.deepEqual(businessFields({ nature: 'knowledge', data_governance: 'Domain-View', internal: 'hidden' }),
     { nature: 'knowledge', data_governance: 'Domain-View' });
@@ -23,4 +24,10 @@ test('Business reservation, proposed dates, approval of scenarios and links are 
 
 test('frontier annotations retain business restrictions without contribution codes', () => {
   assert.equal(publicText('Frontière U673 : Le protocole reste dans la capacité.'), 'Frontière : Le protocole reste dans la capacité.');
+});
+
+test('map previews show glossary labels without technical references before shortening', () => {
+  const text = 'Recevoir les échanges entre [Supply Chain](glossary:TER084) Orchestration et les autres domaines.';
+  assert.equal(shortText(text), 'Recevoir les échanges entre Supply Chain Orchestration et les autres domaines.');
+  assert.equal(shortText(text, 50), 'Recevoir les échanges entre Supply Chain…');
 });

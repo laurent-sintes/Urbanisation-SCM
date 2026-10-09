@@ -51,6 +51,7 @@ export interface ModelingGuide {
     readonly groups?: readonly { id: string; label: string; term_ids: readonly string[] }[];
     readonly terms: readonly { id: string; name: string; status?: string; parent_term?: string; guide_section?: string; values?: Readonly<Record<string,string>>; label_fr?: string; short_description?: string; definition: string; role?: string; notes?: readonly string[]; editorial_notes?: readonly string[]; examples?: readonly string[] }[];
     readonly model_term_ids: readonly string[];
+    readonly business_terms?: readonly import('./types.ts').GlossaryTerm[];
   };
   readonly id: string;
   readonly version: string;
@@ -90,7 +91,9 @@ export async function fetchModelingGuide(version: string, signal?: AbortSignal, 
   const raw = await fetchJson(guideUrl(version), signal, fetcher, 15000, expectedSha256) as GuideResponse;
   if (!raw || raw.schema_version !== '1.0.0' || raw.publication_version !== version
     || !['available', 'unavailable'].includes(raw.status) || typeof raw.message !== 'string'
-    || (raw.status === 'available' && (!raw.guide?.version || !Array.isArray(raw.guide.lessons) || !raw.guide.lessons.length || !Array.isArray(raw.guide.sources)))) {
+    || (raw.status === 'available' && (!raw.guide?.version || !raw.guide.id || !raw.guide.title
+      || !Array.isArray(raw.guide.lessons) || !Array.isArray(raw.guide.sources)
+      || !Array.isArray(raw.guide.glossary?.terms) || !Array.isArray(raw.guide.glossary?.model_term_ids)))) {
     throw new Error('Le guide reçu ne correspond pas à cette publication.');
   }
   return raw;

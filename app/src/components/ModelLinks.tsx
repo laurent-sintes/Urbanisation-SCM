@@ -12,7 +12,7 @@ import { resolveGlossaryTerm } from '../glossary';
 import { kindLabel } from '../presentation';
 
 type Kind = 'model' | 'glossary' | 'method' | 'guide';
-type LinksContext = { model: PublishedModel | null; metaGlossary?: ModelingGuide['glossary']; guide?: ModelingGuide; route: RouteState; onFollow: (kind: 'model' | 'glossary', id: string, section?: string) => void };
+type LinksContext = { model: PublishedModel | null; metaGlossary?: ModelingGuide['glossary']; metaGuide?: ModelingGuide; guide?: ModelingGuide; route: RouteState; onFollow: (kind: 'model' | 'glossary', id: string, section?: string) => void };
 const Context = createContext<LinksContext | null>(null);
 export const ModelLinksProvider = Context.Provider;
 
@@ -39,7 +39,7 @@ export function ContextReturn() {
   if(!context?.model || !context.route.returnTo) return null;
   const origin=readRoute(context.route.returnTo);
   if(origin.version && origin.version!==context.model.version) return null;
-  const label=origin.view==='scenarios' ? (origin.scenario ? 'Retour au scénario' : 'Retour au catalogue') : origin.view==='principles' ? 'Retour à la méthode' : origin.view==='glossary' ? 'Retour au glossaire' : 'Retour à la fiche : '+(context.model.nodeById.get(origin.node)?.name || origin.node);
+  const label=origin.view==='scenarios' ? (origin.scenario ? 'Retour au scénario' : 'Retour au catalogue') : origin.view==='metamodel' ? 'Retour au métamodèle' : origin.view==='principles' ? context.metaGuide ? 'Retour à la transformation' : 'Retour à la méthode' : origin.view==='glossary' ? 'Retour au glossaire' : 'Retour à la fiche : '+(context.model.nodeById.get(origin.node)?.name || origin.node);
   return <p className="context-return"><a href={context.route.returnTo}>{label}</a></p>;
 }
 
@@ -97,8 +97,10 @@ export function ReferenceLink({ kind = 'model', target, anchor, children, classN
   if (alias) { target = alias; kind = 'method'; }
   if (kind === 'glossary' && model) target = resolveGlossaryTerm(model.glossaryById, target)?.id || target;
 
-  const method = kind === 'method' ? context?.metaGlossary?.terms.find(term => term.id === target) : undefined;
-  const chapter = kind === 'guide' ? context?.guide?.chapters?.find(item => item.id === target) : undefined;
+  const metaTerm = kind === 'method' ? context?.metaGlossary?.terms.find(term => term.id === target) : undefined;
+  const method = metaTerm || (kind === 'method' ? context?.guide?.glossary?.terms.find(term => term.id === target) : undefined);
+  const metaChapter = kind === 'guide' ? context?.metaGuide?.chapters?.find(item => item.id === target) : undefined;
+  const chapter = metaChapter || (kind === 'guide' ? context?.guide?.chapters?.find(item => item.id === target) : undefined);
   const sectionIndex = /^method-section-(\d+)$/.exec(anchor || '')?.[1];
   const notice = chapter && sectionIndex !== undefined ? chapter.sections[Number(sectionIndex)] : undefined;
   const guideItem = notice ? { name: notice.title, definition: notice.text } : chapter && !anchor ? { name: chapter.title, definition: chapter.intro } : undefined;
@@ -154,7 +156,7 @@ export function ReferenceLink({ kind = 'model', target, anchor, children, classN
   const behaviors = showBehaviors && node?.kind === 'capability' ? childrenOf(model, node.id).filter(child => child.kind === 'behavior') : [];
   const description = plainInlineText(publicText(guideItem?.definition || method?.short_description || method?.definition || ((showBehaviors || fullDefinition) && node ? node.definition : term?.short_description || term?.definition || String(node?.fields.short_description || node?.purpose || node?.definition || 'Description non renseignée.'))));
   const href = routeHash({ ...context.route, node: kind === 'method' ? context.route.node : kind === 'model' ? target : '',
-    view: kind === 'guide' || method?.guide_section || term?.guide_section ? 'principles' : kind === 'model' ? 'sheet' : 'glossary', principle: kind === 'guide' ? target : method?.guide_section || term?.guide_section || '', glossary: kind === 'method' || context.metaGlossary?.model_term_ids.includes(target) ? 'meta' : 'model', term: kind === 'guide' || method?.guide_section || term?.guide_section ? '' : kind !== 'model' ? method?.parent_term || target : '', section: anchor || '',
+    view: kind === 'guide' || method?.guide_section || term?.guide_section ? context.metaGuide && (metaChapter || metaTerm) ? 'metamodel' : 'principles' : kind === 'model' ? 'sheet' : 'glossary', principle: kind === 'guide' ? target : method?.guide_section || term?.guide_section || '', glossary: kind === 'method' ? metaTerm ? 'meta' : 'transformation' : context.metaGlossary?.model_term_ids.includes(target) ? 'meta' : 'model', term: kind === 'guide' || method?.guide_section || term?.guide_section ? '' : kind !== 'model' ? method?.parent_term || target : '', section: anchor || '',
     returnTo: readingOrigin(context.route,model.version), scroll:'', scope: '', relation: '', source: '', anchor: '', sourceId: '', query: '', status: '' });
   return <><a ref={link} className={`model-reference ${className || ''}`} href={href} aria-describedby={open ? id : undefined}
     onMouseEnter={show} onMouseLeave={() => { dismissed.current = false; hide(); }} onFocus={() => { dismissed.current = false; show(); }} onBlur={() => { dismissed.current = false; hide(); }} onClick={event => {
@@ -178,9 +180,10 @@ export function ModelText({ text }: { text: string }) {
 export function MethodLink({ term, index, children }: { term?: string; index?: boolean; children: ReactNode }) {
   const context = useContext(Context);
   if (!context?.model) return null;
-  if (term && context.metaGlossary?.terms.some(item => item.id === term)) return <ReferenceLink kind="method" target={term} className="method-link">{children}</ReferenceLink>;
-  const href = routeHash({ ...context.route, view: term || index ? 'glossary' : 'principles',
-    glossary: 'meta', term: term || '', principle: '', section: '', scope: '', query: '', relation: '' });
+  if (term && (context.metaGlossary?.terms.some(item => item.id === term) || context.guide?.glossary?.terms.some(item => item.id === term))) return <ReferenceLink kind="method" target={term} className="method-link">{children}</ReferenceLink>;
+  const owner = context.route.view === 'principles' && context.metaGuide ? 'transformation' : 'meta';
+  const href = routeHash({ ...context.route, view: term || index ? 'glossary' : owner === 'meta' ? 'metamodel' : 'principles',
+    glossary: owner, term: term || '', principle: '', section: '', scope: '', query: '', relation: '' });
   return <a className="method-link" href={href}>{children}</a>;
 }
 export function MethodReturn() {

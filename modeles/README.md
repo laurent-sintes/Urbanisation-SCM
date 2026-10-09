@@ -8,6 +8,7 @@ figurent dans le glossaire méthodologique canonique. Ses deux schémas sont dé
 dans l’édition elle-même, sans ressource mutable partagée entre publications.
 Elle est publiée avec le modèle `2026-09-28.3` (v041). Les éditions suivantes restent
 associées explicitement par `--guide modeles/backlog/atlas-transformation-methodology.yaml`.
+Dans Atlas, les éditions qui portent un groupe explicite de notions de transformation sont exposées sous deux documents distincts : le métamodèle est intégré à l’en-tête du modèle exporté avec son glossaire, et la transformation est exportée dans `guide.json` avec le sien. La répartition est faite depuis l’édition figée associée à la publication, jamais depuis le brouillon courant. La source de travail et le format historique des guides figés restent combinés à ce stade ; la séparation concerne les documents consultables et téléchargeables dans Atlas.
 `node app/verify-transformation-method.mjs` vérifie le candidat dans le frontend
 compilé, sur une fixture isolée, et produit un aperçu HTML et les SVG sous
 `app/.runtime/qa-transformation-method/`. Aucun serveur ni publication n’est modifié.

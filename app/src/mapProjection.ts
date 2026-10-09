@@ -6,6 +6,11 @@ export interface StructuralMap {
   group?: AtlasNode;
 }
 
+/** Detail shown when opening a scope without an explicit detail in its URL. */
+export function defaultMapDepth(kind?: AtlasNode['kind']): 0 | 1 {
+  return kind === 'business_system' ? 0 : 1;
+}
+
 export function mapDepthLimit(model: PublishedModel, scopeId?: string): number {
   const scope = model.nodeById.get(scopeId || '');
   if (!scope || !['business_system', 'domain'].includes(scope.kind)) return 0;
