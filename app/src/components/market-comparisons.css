@@ -1,63 +1,285 @@
-.market-comparisons { min-width: 0; }
-.market-intro { color: #52635f; line-height: 1.55; }
-.market-cards { display: grid; gap: 18px; margin-top: 18px; }
-.market-card { border: 1px solid #d4e1dc; border-radius: 14px; padding: clamp(16px, 3vw, 26px); background: #fcfdfd; overflow-wrap: anywhere; }
-.market-card header { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; }
-.market-card h3 { margin: 4px 0 8px; color: #236159; font-size: 1.08rem; }
-.market-card .market-vendor { margin: 0; font-size: .85rem; color: #52635f; }
-.market-card > summary { cursor: pointer; color: #236159; }
-.market-card > summary > span, .market-card > summary > strong { display: block; margin: 5px 0; }
-.market-card > summary > strong { font-size: 1rem; }
-.market-card > summary:focus-visible { outline: 2px solid #236159; outline-offset: 6px; }
-.market-position { background: #eff5f3; padding: 10px 12px; border-radius: 6px; line-height: 1.6; }
-.market-status { border-radius: 6px; padding: 5px 9px; background: #e9edf7; font-size: .78rem; color: #374866; }
-.market-relationship { font-size: .86rem; color: #52635f; }
-.market-content { display: grid; gap: 16px; margin: 20px 0; }
-.market-content dt { font-weight: 650; color: #263e38; margin-bottom: 5px; }
-.market-content dd { margin: 0; white-space: pre-line; line-height: 1.65; }
-.market-choice { border-left: 3px solid #236159; padding-left: 14px; }
-.market-evidence { border-top: 1px solid #d4e1dc; padding-top: 14px; font-size: .86rem; line-height: 1.6; }
-.market-evidence summary { cursor: pointer; color: #236159; font-weight: 600; }
-.market-evidence a { color: #236159; text-decoration: underline; }
-.market-evidence a:focus-visible, .market-evidence summary:focus-visible { outline: 2px solid #236159; outline-offset: 4px; }
-.market-refs { color: #52635f; }
-.market-page { max-width: 1100px; padding-bottom: 24px; }
-.market-choice { margin: 16px 0; line-height: 1.65; white-space: pre-line; }
-.market-choice p { margin: 8px 0; }
-.market-source { font-size: .88rem; line-height: 1.6; }
-.market-source span { display: block; color: #52635f; }
-.market-source a { color: #236159; text-decoration: underline; text-underline-offset: 3px; }
-.market-detail { border-top: 1px solid #d4e1dc; padding-top: 14px; }
-.market-detail > summary { cursor: pointer; color: #236159; font-size: .9rem; }
-.market-detail > summary:focus-visible, .market-source a:focus-visible { outline: 2px solid #236159; outline-offset: 4px; }
-.market-inspiration { line-height: 1.65; overflow-wrap: anywhere; }
-.inspiration-choice { margin: 18px 0 28px; padding: 18px 22px; background: #eff5f3; border-left: 4px solid #236159; border-radius: 0 8px 8px 0; color: #263e38; font-size: 1.08rem; }
-.inspiration-table-scroll { max-width: 100%; overflow-x: auto; border: 1px solid #d4e1dc; border-radius: 10px; }
-.inspiration-table-scroll:focus-visible { outline: 2px solid #236159; outline-offset: 4px; }
-.inspiration-table { width: 100%; min-width: 660px; border-collapse: collapse; text-align: left; font-size: .94rem; }
-.inspiration-table caption { padding: 16px 18px; text-align: left; color: #263e38; font-weight: 650; }
-.inspiration-table th, .inspiration-table td { padding: 15px 18px; vertical-align: top; border-top: 1px solid #d4e1dc; }
-.inspiration-table thead { background: #f3f6f4; color: #263e38; }
-.inspiration-table th[scope="row"] { width: 19%; font-weight: 600; }
-.inspiration-table td:nth-child(2) { width: 21%; }
-.inspiration-table td:nth-child(3), .inspiration-table td:nth-child(4) { width: 30%; }
-.inspiration-table small { display: block; color: #52635f; font-size: .83rem; font-weight: 400; margin-top: 5px; }
-.inspiration-table a { color: #236159; text-underline-offset: 3px; }
-.inspiration-table a:focus-visible { outline: 2px solid #236159; outline-offset: 3px; }
-.inspiration-flow { background: #eff5f3; }
-.inspiration-synthesis, .inspiration-examples, .inspiration-sources { margin-top: 30px; }
-.market-inspiration h3 { color: #263e38; font-size: 1.1rem; margin: 0 0 12px; }
-.inspiration-synthesis p { margin: 10px 0; }
-.inspiration-example { margin: 14px 0; padding: 20px 24px; border: 1px solid #d4e1dc; border-radius: 10px; background: #fcfdfd; }
-.inspiration-example h4 { color: #236159; font-size: 1rem; margin: 0 0 8px; }
-.inspiration-example p { margin: 10px 0; }
-.inspiration-lesson { border-left: 3px solid #236159; padding-left: 14px; }
-.inspiration-source { padding: 12px 0; border-top: 1px solid #d4e1dc; }
-.inspiration-source .market-source { margin: 0 0 10px; }
-.inspiration-source .market-detail { border: 0; padding: 0; }
-.inspiration-source .market-content { margin: 12px 0; gap: 12px; }
+.market-comparisons {
+  min-width: 0;
+}
+.market-intro {
+  color: #52635f;
+  line-height: 1.55;
+}
+.market-cards {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+.market-card {
+  border: 1px solid #d4e1dc;
+  border-radius: 14px;
+  padding: clamp(16px, 3vw, 26px);
+  background: #fcfdfd;
+  overflow-wrap: anywhere;
+}
+.market-card header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.market-card h3 {
+  margin: 4px 0 8px;
+  color: #236159;
+  font-size: 1.08rem;
+}
+.market-card .market-vendor {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #52635f;
+}
+.market-card > summary {
+  cursor: pointer;
+  color: #236159;
+}
+.market-card > summary > span,
+.market-card > summary > strong {
+  display: block;
+  margin: 5px 0;
+}
+.market-card > summary > strong {
+  font-size: 1rem;
+}
+.market-card > summary:focus-visible {
+  outline: 2px solid #236159;
+  outline-offset: 6px;
+}
+.market-position {
+  background: #eff5f3;
+  padding: 10px 12px;
+  border-radius: 6px;
+  line-height: 1.6;
+}
+.market-status {
+  border-radius: 6px;
+  padding: 5px 9px;
+  background: #e9edf7;
+  font-size: 0.78rem;
+  color: #374866;
+}
+.market-relationship {
+  font-size: 0.86rem;
+  color: #52635f;
+}
+.market-content {
+  display: grid;
+  gap: 16px;
+  margin: 20px 0;
+}
+.market-content dt {
+  font-weight: 650;
+  color: #263e38;
+  margin-bottom: 5px;
+}
+.market-content dd {
+  margin: 0;
+  white-space: pre-line;
+  line-height: 1.65;
+}
+.market-choice {
+  border-left: 3px solid #236159;
+  padding-left: 14px;
+}
+.market-evidence {
+  border-top: 1px solid #d4e1dc;
+  padding-top: 14px;
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+.market-evidence summary {
+  cursor: pointer;
+  color: #236159;
+  font-weight: 600;
+}
+.market-evidence a {
+  color: #236159;
+  text-decoration: underline;
+}
+.market-evidence a:focus-visible,
+.market-evidence summary:focus-visible {
+  outline: 2px solid #236159;
+  outline-offset: 4px;
+}
+.market-refs {
+  color: #52635f;
+}
+.market-page {
+  max-width: 1100px;
+  padding-bottom: 24px;
+}
+.market-choice {
+  margin: 16px 0;
+  line-height: 1.65;
+  white-space: pre-line;
+}
+.market-choice p {
+  margin: 8px 0;
+}
+.market-source {
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+.market-source span {
+  display: block;
+  color: #52635f;
+}
+.market-source a {
+  color: #236159;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.market-detail {
+  border-top: 1px solid #d4e1dc;
+  padding-top: 14px;
+}
+.market-detail > summary {
+  cursor: pointer;
+  color: #236159;
+  font-size: 0.9rem;
+}
+.market-detail > summary:focus-visible,
+.market-source a:focus-visible {
+  outline: 2px solid #236159;
+  outline-offset: 4px;
+}
+.market-inspiration {
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.inspiration-choice {
+  margin: 18px 0 28px;
+  padding: 18px 22px;
+  background: #eff5f3;
+  border-left: 4px solid #236159;
+  border-radius: 0 8px 8px 0;
+  color: #263e38;
+  font-size: 1.08rem;
+}
+.inspiration-table-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  border: 1px solid #d4e1dc;
+  border-radius: 10px;
+}
+.inspiration-table-scroll:focus-visible {
+  outline: 2px solid #236159;
+  outline-offset: 4px;
+}
+.inspiration-table {
+  width: 100%;
+  min-width: 660px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.94rem;
+}
+.inspiration-table caption {
+  padding: 16px 18px;
+  text-align: left;
+  color: #263e38;
+  font-weight: 650;
+}
+.inspiration-table th,
+.inspiration-table td {
+  padding: 15px 18px;
+  vertical-align: top;
+  border-top: 1px solid #d4e1dc;
+}
+.inspiration-table thead {
+  background: #f3f6f4;
+  color: #263e38;
+}
+.inspiration-table th[scope="row"] {
+  width: 19%;
+  font-weight: 600;
+}
+.inspiration-table td:nth-child(2) {
+  width: 21%;
+}
+.inspiration-table td:nth-child(3),
+.inspiration-table td:nth-child(4) {
+  width: 30%;
+}
+.inspiration-table small {
+  display: block;
+  color: #52635f;
+  font-size: 0.83rem;
+  font-weight: 400;
+  margin-top: 5px;
+}
+.inspiration-table a {
+  color: #236159;
+  text-underline-offset: 3px;
+}
+.inspiration-table a:focus-visible {
+  outline: 2px solid #236159;
+  outline-offset: 3px;
+}
+.inspiration-flow {
+  background: #eff5f3;
+}
+.inspiration-synthesis,
+.inspiration-examples,
+.inspiration-sources {
+  margin-top: 30px;
+}
+.market-inspiration h3 {
+  color: #263e38;
+  font-size: 1.1rem;
+  margin: 0 0 12px;
+}
+.inspiration-synthesis p {
+  margin: 10px 0;
+}
+.inspiration-example {
+  margin: 14px 0;
+  padding: 20px 24px;
+  border: 1px solid #d4e1dc;
+  border-radius: 10px;
+  background: #fcfdfd;
+}
+.inspiration-example h4 {
+  color: #236159;
+  font-size: 1rem;
+  margin: 0 0 8px;
+}
+.inspiration-example p {
+  margin: 10px 0;
+}
+.inspiration-lesson {
+  border-left: 3px solid #236159;
+  padding-left: 14px;
+}
+.inspiration-source {
+  padding: 12px 0;
+  border-top: 1px solid #d4e1dc;
+}
+.inspiration-source .market-source {
+  margin: 0 0 10px;
+}
+.inspiration-source .market-detail {
+  border: 0;
+  padding: 0;
+}
+.inspiration-source .market-content {
+  margin: 12px 0;
+  gap: 12px;
+}
 @media (max-width: 700px) {
-  .inspiration-choice { padding: 14px 16px; font-size: 1rem; }
-  .inspiration-table th, .inspiration-table td { padding: 12px; }
-  .inspiration-example { padding: 16px; }
+  .inspiration-choice {
+    padding: 14px 16px;
+    font-size: 1rem;
+  }
+  .inspiration-table th,
+  .inspiration-table td {
+    padding: 12px;
+  }
+  .inspiration-example {
+    padding: 16px;
+  }
 }

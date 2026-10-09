@@ -4,5 +4,8 @@ export function revealSection(target: HTMLElement, behavior: ScrollBehavior = 'i
   if (!pane) return;
   target.tabIndex = -1;
   target.focus({ preventScroll: true });
-  pane.scrollTo({ top: pane.scrollTop + target.getBoundingClientRect().top - pane.getBoundingClientRect().top, behavior });
+  pane.scrollTo({
+    top: pane.scrollTop + target.getBoundingClientRect().top - pane.getBoundingClientRect().top,
+    behavior,
+  });
 }

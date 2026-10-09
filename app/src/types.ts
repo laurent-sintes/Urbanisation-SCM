@@ -2,61 +2,115 @@
 export type JsonRecord = Record<string, unknown>;
 
 export interface MarketComparison {
-  vendor: string; product: string; element_name: string; element_type: string;
-  relationship: string; similarities: string; differences: string; flow_position: string;
-  term_choice?: string; definition_choice?: string;
-  concept_name?: string; scope_summary?: string; approach_summary?: string;
-  source_title: string; source_url: string; source_version: string; consulted_on: string;
-  source_locator: string; evidence_limits: string; source_refs: string[];
+  vendor: string;
+  product: string;
+  element_name: string;
+  element_type: string;
+  relationship: string;
+  similarities: string;
+  differences: string;
+  flow_position: string;
+  term_choice?: string;
+  definition_choice?: string;
+  concept_name?: string;
+  scope_summary?: string;
+  approach_summary?: string;
+  source_title: string;
+  source_url: string;
+  source_version: string;
+  consulted_on: string;
+  source_locator: string;
+  evidence_limits: string;
+  source_refs: string[];
   status: 'proposed' | 'under_review' | 'validated';
 }
 
 export interface MarketGap {
   family: 'microsoft_dynamics' | 'sap_s4hana';
-  reason: string; investigated_urls: string[]; source_refs: string[];
+  reason: string;
+  investigated_urls: string[];
+  source_refs: string[];
 }
 
 export interface BusinessExample {
-  title: string; situation: string; outcome?: string; lesson?: string;
+  title: string;
+  situation: string;
+  outcome?: string;
+  lesson?: string;
   steps?: { title: string; description: string; contributions: { node_id: string; role: string }[]; outcome: string }[];
   validation_points?: string[];
-  id?: string; trigger?: string; objective?: string; constraints?: string[];
+  id?: string;
+  trigger?: string;
+  objective?: string;
+  constraints?: string[];
   options?: { title: string; description: string }[];
   contributions?: { node_id: string; role: string }[];
   source_refs: string[];
 }
 
 export interface MarketInspiration {
-  choice: string; flow_scope: string; flow_approach: string;
+  choice: string;
+  flow_scope: string;
+  flow_approach: string;
   synthesis: string[];
   examples: (BusinessExample & { source_title: string; source_url: string })[];
 }
 
 export interface BusinessInformation {
-  id: string; name: string; label_fr: string; question: string; definition: string; context: string;
-  essential_elements: string[]; granularity_rationale: string; boundaries: string[];
+  id: string;
+  name: string;
+  label_fr: string;
+  question: string;
+  definition: string;
+  context: string;
+  essential_elements: string[];
+  granularity_rationale: string;
+  boundaries: string[];
   document_and_fact_boundary: string;
   capability_roles: { capability_ref: string; role: string; meaning: string; source_refs: string[] }[];
-  examples: BusinessExample[]; market_comparisons: MarketComparison[];
-  source_refs: string[]; review: Review; revision?: number; last_modified?: string;
+  examples: BusinessExample[];
+  market_comparisons: MarketComparison[];
+  source_refs: string[];
+  review: Review;
+  revision?: number;
+  last_modified?: string;
 }
 export interface InformationLink {
-  id: string; from_ref: string; to_ref: string; meaning: string; condition: string; effect: string;
-  source_refs: string[]; review: Review; revision?: number; last_modified?: string;
+  id: string;
+  from_ref: string;
+  to_ref: string;
+  meaning: string;
+  condition: string;
+  effect: string;
+  source_refs: string[];
+  review: Review;
+  revision?: number;
+  last_modified?: string;
 }
 export interface InformationCatalogue {
-  id: string; items: BusinessInformation[]; links: InformationLink[]; source_refs: string[];
-  revision?: number; last_modified?: string;
+  id: string;
+  items: BusinessInformation[];
+  links: InformationLink[];
+  source_refs: string[];
+  revision?: number;
+  last_modified?: string;
 }
 
-export interface Review extends JsonRecord { state?: string; note?: string }
+export interface Review extends JsonRecord {
+  state?: string;
+  note?: string;
+}
 export interface Lifecycle extends JsonRecord {
   state?: string;
   note?: string;
   validated_fields?: string[];
   source_refs?: string[];
 }
-export interface SourceLocator extends JsonRecord { path?: string; anchor?: string; line?: number }
+export interface SourceLocator extends JsonRecord {
+  path?: string;
+  anchor?: string;
+  line?: number;
+}
 export interface Qualification extends JsonRecord {
   meaning?: string;
   role?: string;
@@ -103,18 +157,37 @@ export interface RawRelation extends JsonRecord {
   last_modified?: string;
 }
 export interface GlossaryTerm extends JsonRecord {
-  market_comparisons?: MarketComparison[]; market_gaps?: MarketGap[];
+  market_comparisons?: MarketComparison[];
+  market_gaps?: MarketGap[];
   market_inspiration?: MarketInspiration;
-  id: string; name: string; short_description: string; definition: string;
-  context?: string; notes?: string; source_refs: string[]; historical?: boolean;
-  alias_of?: string; presentation?: 'historical' | 'method'; guide_section?: 'method'; label_fr?: string;
+  id: string;
+  name: string;
+  short_description: string;
+  definition: string;
+  context?: string;
+  notes?: string;
+  source_refs: string[];
+  historical?: boolean;
+  alias_of?: string;
+  presentation?: 'historical' | 'method';
+  guide_section?: 'method';
+  label_fr?: string;
   review: { state: 'proposed' | 'under_review' | 'accepted' | 'partial'; note?: string };
-  revision?: number; last_modified?: string;
+  revision?: number;
+  last_modified?: string;
 }
 export interface RawPublication extends JsonRecord {
-  metamodel?: { node_types?: { kind: string; label: string; definition?: string | null }[]; documentation?: import('./modelingGuide').ModelingGuide };
+  metamodel?: {
+    node_types?: { kind: string; label: string; definition?: string | null }[];
+    documentation?: import('./modelingGuide').ModelingGuide;
+  };
   display_policy?: 'typed-tree-v1';
-  display_index?: { policy: 'typed-tree-v1'; roots: string[]; children: Record<string, string[]>; codes: Record<string, string> };
+  display_index?: {
+    policy: 'typed-tree-v1';
+    roots: string[];
+    children: Record<string, string[]>;
+    codes: Record<string, string>;
+  };
   information_catalog?: InformationCatalogue;
   glossary?: { terms: GlossaryTerm[] };
   space: string;

@@ -1,8 +1,8 @@
-import test from 'node:test';
 import assert from 'node:assert/strict';
+import test from 'node:test';
 import { inlineParts, plainInlineText } from './src/inlineLinks.ts';
-import { readRoute, routeHash } from './src/navigation.ts';
 import { adaptPublication } from './src/model.ts';
+import { readRoute, routeHash } from './src/navigation.ts';
 
 test('explicit links retain their label and target without interpreting HTML', () => {
   const text = 'Le [produit](glossary:TER057#definition) : [Stock](model:D01).';

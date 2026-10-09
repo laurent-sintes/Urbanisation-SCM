@@ -16,7 +16,9 @@ export function usePublication(version?: string): PublicationState & { reload: (
       setState(client.getState());
     });
     void client.setVersion(versionRef.current);
-    const check = () => { if (!document.hidden) void client.check(); };
+    const check = () => {
+      if (!document.hidden) void client.check();
+    };
     const timer = window.setInterval(check, 60000);
     document.addEventListener('visibilitychange', check);
     window.addEventListener('online', check);
@@ -29,8 +31,13 @@ export function usePublication(version?: string): PublicationState & { reload: (
       if (clientRef.current === client) clientRef.current = null;
     };
   }, []);
-  useEffect(() => { void clientRef.current?.setVersion(version); }, [version]);
-  const reload = useCallback(() => { void clientRef.current?.reload(); }, []);
-  const visibleState = stateVersion.current === version ? state : { catalog: state.catalog, loading: true, error: '', notice: '' };
+  useEffect(() => {
+    void clientRef.current?.setVersion(version);
+  }, [version]);
+  const reload = useCallback(() => {
+    void clientRef.current?.reload();
+  }, []);
+  const visibleState =
+    stateVersion.current === version ? state : { catalog: state.catalog, loading: true, error: '', notice: '' };
   return { ...visibleState, reload };
 }

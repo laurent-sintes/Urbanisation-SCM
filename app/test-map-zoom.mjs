@@ -1,5 +1,5 @@
-import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { test } from 'node:test';
 import { resolveMapZoom, widthFit } from './src/mapZoom.ts';
 
 test('automatic framing preserves readable text while manual choices stay fixed', () => {
@@ -12,13 +12,13 @@ test('automatic framing preserves readable text while manual choices stay fixed'
   assert.equal(resolveMapZoom('width', 0), 'width');
 });
 
-test('width framing gives tall maps scrollable height and caps sparse-map enlargement', () => {
+test('width framing gives tall maps scrollable height without enlarging the grid', () => {
   const tall = widthFit(1000, 2400, 1200, 600);
-  assert.ok(tall.zoom > 1);
+  assert.equal(tall.zoom, 1);
   assert.ok(tall.height > 2400);
   assert.equal(tall.y, 16);
   const sparse = widthFit(300, 220, 1920, 600);
-  assert.equal(sparse.zoom, 2);
+  assert.equal(sparse.zoom, 1);
   assert.ok(sparse.x > 16);
   assert.equal(sparse.height, 600);
 });

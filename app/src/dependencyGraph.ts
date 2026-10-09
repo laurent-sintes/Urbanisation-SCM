@@ -1,5 +1,5 @@
-import type { AtlasNode, AtlasRelation, PublishedModel } from './types.ts';
 import { hasAreaLevels, isStructural } from './model.ts';
+import type { AtlasNode, AtlasRelation, PublishedModel } from './types.ts';
 
 export type DependencyLevel = 'capability' | 'business_area' | 'area' | 'domain' | 'business_system' | 'universe';
 export type DependencyFamily = 'needs' | 'other';
@@ -51,22 +51,45 @@ export interface DependencyProjection {
 
 type EndpointRelation = { relation: AtlasRelation; source: string; target: string; family: DependencyFamily };
 const isUniverse = (node: AtlasNode): boolean => node.levelRef === 'universe';
-const isGrouping = (node: AtlasNode): boolean => ['business_system', 'group', 'domain', 'area', 'business_area', 'reference'].includes(node.kind) || isUniverse(node);
-const familyOf = (relation: AtlasRelation): DependencyFamily => relation.qualification.role === 'needs' ? 'needs' : 'other';
+const isGrouping = (node: AtlasNode): boolean =>
+  ['business_system', 'group', 'domain', 'area', 'business_area', 'reference'].includes(node.kind) || isUniverse(node);
+const familyOf = (relation: AtlasRelation): DependencyFamily =>
+  relation.qualification.role === 'needs' ? 'needs' : 'other';
 
 export function dependencyLevels(model: PublishedModel): { value: DependencyLevel; label: string }[] {
-  const systems = model.nodes.some(node => node.kind === 'business_system');
-  const purposeLabel = model.nodes.some(node => node.kind === 'area' && node.hierarchyLabel === 'Purpose')
-    ? 'Purposes et référentiels' : model.nodes.some(node => node.kind === 'area' && node.hierarchyLabel === 'Sous-domaine') ? 'Sous-domaines et référentiels' : 'Areas et référentiels';
+  const systems = model.nodes.some((node) => node.kind === 'business_system');
+  const purposeLabel = model.nodes.some((node) => node.kind === 'area' && node.hierarchyLabel === 'Purpose')
+    ? 'Purposes et référentiels'
+    : model.nodes.some((node) => node.kind === 'area' && node.hierarchyLabel === 'Sous-domaine')
+      ? 'Sous-domaines et référentiels'
+      : 'Areas et référentiels';
   return hasAreaLevels(model)
-    ? [{ value: 'capability', label: 'Capacités' }, ...(model.nodes.some(n => n.kind === 'business_area') ? [{ value: 'business_area' as const, label: 'Business Areas et capacités directes' }] : []), { value: 'area', label: purposeLabel }, { value: 'domain', label: 'Domaines' }, ...(systems ? [{ value: 'business_system' as const, label: 'Systèmes métier' }] : [])]
-    : [{ value: 'capability', label: 'Capacités' }, { value: 'domain', label: 'Domaines et référentiels' }, { value: 'universe', label: 'Univers' }];
+    ? [
+        { value: 'capability', label: 'Capacités' },
+        ...(model.nodes.some((n) => n.kind === 'business_area')
+          ? [{ value: 'business_area' as const, label: 'Business Areas et capacités directes' }]
+          : []),
+        { value: 'area', label: purposeLabel },
+        { value: 'domain', label: 'Domaines' },
+        ...(systems ? [{ value: 'business_system' as const, label: 'Systèmes métier' }] : []),
+      ]
+    : [
+        { value: 'capability', label: 'Capacités' },
+        { value: 'domain', label: 'Domaines et référentiels' },
+        { value: 'universe', label: 'Univers' },
+      ];
 }
 
 /** Retain shareable links when changing publication without relabeling its objects. */
 export function dependencyLevel(model: PublishedModel, requested: DependencyLevel): DependencyLevel {
-  if (requested === 'business_area') return model.nodes.some(n => n.kind === 'business_area') ? requested : 'capability';
-  if (requested === 'business_system') return model.nodes.some(node => node.kind === 'business_system') ? requested : hasAreaLevels(model) ? 'domain' : 'universe';
+  if (requested === 'business_area')
+    return model.nodes.some((n) => n.kind === 'business_area') ? requested : 'capability';
+  if (requested === 'business_system')
+    return model.nodes.some((node) => node.kind === 'business_system')
+      ? requested
+      : hasAreaLevels(model)
+        ? 'domain'
+        : 'universe';
   if (hasAreaLevels(model)) return requested === 'universe' ? 'domain' : requested;
   return requested === 'area' ? 'domain' : requested;
 }
@@ -78,17 +101,25 @@ export function dependencyLevel(model: PublishedModel, requested: DependencyLeve
  * default; additional links between neighbors require the explicit option.
  */
 export function projectDependencies(model: PublishedModel, options: DependencyOptions): DependencyProjection {
-  if (!['capability', 'business_area', 'area', 'domain', 'business_system', 'universe'].includes(options.level)) throw new Error('Niveau de dépendances inconnu.');
+  if (!['capability', 'business_area', 'area', 'domain', 'business_system', 'universe'].includes(options.level))
+    throw new Error('Niveau de dépendances inconnu.');
   if (![0, 1, 2, 3].includes(options.depth)) throw new Error('La profondeur doit être 0, 1, 2 ou 3.');
   if (!['both', 'incoming', 'outgoing'].includes(options.direction)) throw new Error('Sens de parcours inconnu.');
   if (!['all', 'needs', 'other'].includes(options.family)) throw new Error('Famille de relations inconnue.');
-  if (options.focusId && !model.nodeById.has(options.focusId)) throw new Error(`Nœud de focalisation absent : ${options.focusId}.`);
+  if (options.focusId && !model.nodeById.has(options.focusId))
+    throw new Error(`Nœud de focalisation absent : ${options.focusId}.`);
   const level = dependencyLevel(model, options.level);
   const areaLevels = hasAreaLevels(model);
-  const atLevel = (item: AtlasNode): boolean => level === 'business_area' ? item.kind === 'business_area'
-    : level === 'area' ? item.kind === 'area' || item.kind === 'reference'
-    : level === 'domain' ? item.kind === 'domain' || (!areaLevels && item.kind === 'reference')
-    : level === 'business_system' ? item.kind === 'business_system' : level === 'universe' && isUniverse(item);
+  const atLevel = (item: AtlasNode): boolean =>
+    level === 'business_area'
+      ? item.kind === 'business_area'
+      : level === 'area'
+        ? item.kind === 'area' || item.kind === 'reference'
+        : level === 'domain'
+          ? item.kind === 'domain' || (!areaLevels && item.kind === 'reference')
+          : level === 'business_system'
+            ? item.kind === 'business_system'
+            : level === 'universe' && isUniverse(item);
 
   // adaptPublication already guarantees an unambiguous, acyclic structural hierarchy.
   const parents = new Map<string, AtlasRelation>();
@@ -133,15 +164,23 @@ export function projectDependencies(model: PublishedModel, options: DependencyOp
     return ancestor(id, atLevel) ?? id;
   }
 
-  const allRelations: EndpointRelation[] = model.relations.filter(relation => !isStructural(relation)).map(relation => ({
-    relation, source: endpoint(relation.sourceId), target: endpoint(relation.targetId), family: familyOf(relation),
-  }));
-  const endpointIds = new Set(allRelations.flatMap(relation => [relation.source, relation.target]));
+  const allRelations: EndpointRelation[] = model.relations
+    .filter((relation) => !isStructural(relation))
+    .map((relation) => ({
+      relation,
+      source: endpoint(relation.sourceId),
+      target: endpoint(relation.targetId),
+      family: familyOf(relation),
+    }));
+  const endpointIds = new Set(allRelations.flatMap((relation) => [relation.source, relation.target]));
   // Direct historical links between domains/references retain those endpoints. They
   // must never be copied onto their capabilities. Other leaf kinds retain their nature.
-  const allNodeIds = new Set(model.nodes.filter(item => item.kind !== 'behavior'
-    && (!isGrouping(item) || endpointIds.has(item.id))).map(item => item.id));
-  const filtered = allRelations.filter(relation => options.family === 'all' || relation.family === options.family);
+  const allNodeIds = new Set(
+    model.nodes
+      .filter((item) => item.kind !== 'behavior' && (!isGrouping(item) || endpointIds.has(item.id)))
+      .map((item) => item.id),
+  );
+  const filtered = allRelations.filter((relation) => options.family === 'all' || relation.family === options.family);
   let visible = new Set(allNodeIds);
   const traversed = new Set<string>();
   const focus = options.focusId ? node(options.focusId) : undefined;
@@ -153,11 +192,12 @@ export function projectDependencies(model: PublishedModel, options: DependencyOp
       const pending = [focus.id];
       const seen = new Set<string>();
       while (pending.length) {
-        const id = pending.shift()!;
+        const id = pending.shift();
+        if (!id) break;
         if (seen.has(id)) continue;
         seen.add(id);
         if (allNodeIds.has(id)) seeds.add(id);
-        pending.push(...children.get(id) ?? []);
+        pending.push(...(children.get(id) ?? []));
       }
       // Selecting an empty group still gives a visible, inspectable focus.
       if (!seeds.size) seeds.add(focus.id);
@@ -169,19 +209,30 @@ export function projectDependencies(model: PublishedModel, options: DependencyOp
     for (let step = 0; step < options.depth; step += 1) {
       const next = new Set<string>();
       for (const relation of filtered) {
-        if ((options.direction !== 'incoming' && frontier.has(relation.source))
-          || (options.direction !== 'outgoing' && frontier.has(relation.target))) traversed.add(relation.relation.id);
-        if (options.direction !== 'incoming' && frontier.has(relation.source) && !visible.has(relation.target)) next.add(relation.target);
-        if (options.direction !== 'outgoing' && frontier.has(relation.target) && !visible.has(relation.source)) next.add(relation.source);
+        if (
+          (options.direction !== 'incoming' && frontier.has(relation.source)) ||
+          (options.direction !== 'outgoing' && frontier.has(relation.target))
+        )
+          traversed.add(relation.relation.id);
+        if (options.direction !== 'incoming' && frontier.has(relation.source) && !visible.has(relation.target))
+          next.add(relation.target);
+        if (options.direction !== 'outgoing' && frontier.has(relation.target) && !visible.has(relation.source))
+          next.add(relation.source);
       }
-      next.forEach(id => visible.add(id));
+      next.forEach((id) => {
+        visible.add(id);
+      });
       frontier = next;
       if (!frontier.size) break;
     }
   }
 
-  const chosen = filtered.filter(relation => visible.has(relation.source) && visible.has(relation.target)
-    && (full || options.includeNeighborLinks || traversed.has(relation.relation.id)));
+  const chosen = filtered.filter(
+    (relation) =>
+      visible.has(relation.source) &&
+      visible.has(relation.target) &&
+      (full || options.includeNeighborLinks || traversed.has(relation.relation.id)),
+  );
   const display = new Map<string, DependencyNode>();
   function ensureNode(id: string): DependencyNode {
     const current = display.get(id);
@@ -215,9 +266,12 @@ export function projectDependencies(model: PublishedModel, options: DependencyOp
       bucket = {
         edge: {
           id: `dependency:${encodeURIComponent(source)}|${encodeURIComponent(target)}|${entry.family}`,
-          source, target, family: entry.family,
+          source,
+          target,
+          family: entry.family,
           label: entry.family === 'needs' ? 'A besoin de' : 'Relation métier',
-          count: 0, relationIds: [],
+          count: 0,
+          relationIds: [],
         },
         relations: [],
       };
@@ -233,19 +287,20 @@ export function projectDependencies(model: PublishedModel, options: DependencyOp
     // An explicit business expression also describes a needs relation without
     // changing its consumer-to-provider direction or its semantic family.
     const label = relations[0].label;
-    if (label && relations.every(relation => relation.label === label && relation.label !== relation.type)) edge.label = label;
+    if (label && relations.every((relation) => relation.label === label && relation.label !== relation.type))
+      edge.label = label;
     return edge;
   });
   return {
     nodes: [...display.values()],
     edges,
-    relations: chosen.map(entry => entry.relation),
+    relations: chosen.map((entry) => entry.relation),
     stats: {
       totalRelations: allRelations.length,
       visibleRelations: chosen.length,
       internalRelations,
       totalNodes: allNodeIds.size,
-      visibleNodes: [...visible].filter(id => allNodeIds.has(id)).length,
+      visibleNodes: [...visible].filter((id) => allNodeIds.has(id)).length,
     },
     hiddenRelationCount: allRelations.length - chosen.length,
   };

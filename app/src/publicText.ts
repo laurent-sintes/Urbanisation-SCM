@@ -24,7 +24,10 @@ export function publicText(text: string = ''): string {
   for (const sentence of editorialSentences) result = result.replaceAll(sentence, '');
   result = result
     .replace(/Frontière U\d+(?:\/U\d+)*\s*:/g, 'Frontière :')
-    .replace(/(?:Ce (?:placement|choix|déplacement|rattachement de domaine)|L’ancienne distinction)[^.\n]*\bU\d+[^.\n]*\./g, '')
+    .replace(
+      /(?:Ce (?:placement|choix|déplacement|rattachement de domaine)|L’ancienne distinction)[^.\n]*\bU\d+[^.\n]*\./g,
+      '',
+    )
     .replace(/La définition développée et les contrats restent proposés ; /g, '')
     .replace(/Identité et définition U\d+ conservées ; /g, '')
     .replace(/Cette décomposition remplace la conclusion de non-décomposition U\d+ ; /g, '')
@@ -33,23 +36,29 @@ export function publicText(text: string = ''): string {
     .replace(/Exemple fictif présenté et adopté :/g, 'Exemple fictif :')
     .replace(/Le périmètre adopté /g, 'Le périmètre ')
     .replace(/U\d+ adopte trois comportements :/g, 'Trois comportements :')
-    .replace(new RegExp('^(?:Précision éditoriale |Nommage |Convention )?' + refs + '\\s*:\\s*', 'gm'), '')
-    .replace(new RegExp('\\b(?:Depuis|Selon) ' + refs + ',\\s*', 'g'), '')
-    .replace(new RegExp('(?: sont)? adopté[es]* ' + refs, 'g'), '')
+    .replace(new RegExp(`^(?:Précision éditoriale |Nommage |Convention )?${refs}\\s*:\\s*`, 'gm'), '')
+    .replace(new RegExp(`\\b(?:Depuis|Selon) ${refs},\\s*`, 'g'), '')
+    .replace(new RegExp(`(?: sont)? adopté[es]* ${refs}`, 'g'), '')
     .replace(/comportements adoptés —/g, 'comportements —')
-    .replace(new RegExp(' demandé[es]* ' + refs, 'g'), '')
-    .replace(new RegExp(' retenus ' + refs, 'g'), ' retenus')
-    .replace(new RegExp(', (?:intégré[es]*|précisée? par) ' + refs, 'g'), '')
-    .replace(new RegExp(' (?:selon|depuis|en) ' + refs, 'g'), '')
-    .replace(new RegExp('\\s*\\(' + refs + '\\)', 'g'), '')
+    .replace(new RegExp(` demandé[es]* ${refs}`, 'g'), '')
+    .replace(new RegExp(` retenus ${refs}`, 'g'), ' retenus')
+    .replace(new RegExp(`, (?:intégré[es]*|précisée? par) ${refs}`, 'g'), '')
+    .replace(new RegExp(` (?:selon|depuis|en) ${refs}`, 'g'), '')
+    .replace(new RegExp(`\\s*\\(${refs}\\)`, 'g'), '')
     .replace(/ : U\d+ demeure applicable/g, '')
     .replace(/Sens métier précisé[^;]*;\s*/g, '')
     .replace(/; choix lexical Assignment confirmé[^.]*\./g, '.')
     .replace(/; convention de vocabulaire U\d+/g, '')
     .replace(/Terme métier Beaumanoir défini par Laurent U\d+\./g, 'Terme métier Beaumanoir.')
-    .replace(/^(?:Sens de travail (?:dans le contexte Supply|proposé)|Définition métier proposée|Sens métier proposé|Convention U\d+)[^\n]*$/gm, '')
+    .replace(
+      /^(?:Sens de travail (?:dans le contexte Supply|proposé)|Définition métier proposée|Sens métier proposé|Convention U\d+)[^\n]*$/gm,
+      '',
+    )
     .replace(/Libellé FLOW adopté U\d+ ; /g, '')
     .replace(/Proposition FLOW issue de U\d+, /g, '')
     .replace(/Stock Protection désigne la gouvernance\/management discutée U\d+(?:\/U\d+)* ; /g, '');
-  return result.replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+  return result
+    .replace(/[ \t]+\n/g, '\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }

@@ -13,7 +13,8 @@ export type BehaviorNature = keyof typeof behaviorTypes;
 export function behaviorNature(node: AtlasNode): BehaviorNature | undefined {
   const value = node.fields.nature;
   return node.kind === 'behavior' && typeof value === 'string' && Object.hasOwn(behaviorTypes, value)
-    ? value as BehaviorNature : undefined;
+    ? (value as BehaviorNature)
+    : undefined;
 }
 export function behaviorTypeLabel(node: AtlasNode): string {
   const nature = behaviorNature(node);

@@ -17,6 +17,8 @@ export function isCurrentGlossaryTerm(term: GlossaryTerm): boolean {
 }
 
 export function glossaryAliases(terms: readonly GlossaryTerm[], id: string): string[] {
-  const byId = new Map(terms.map(term => [term.id, term]));
-  return terms.filter(term => term.alias_of && resolveGlossaryTerm(byId, term.id)?.id === id).map(term => term.name);
+  const byId = new Map(terms.map((term) => [term.id, term]));
+  return terms
+    .filter((term) => term.alias_of && resolveGlossaryTerm(byId, term.id)?.id === id)
+    .map((term) => term.name);
 }
