@@ -29,7 +29,7 @@ assert.ok(model.nodeById.get('BHV082').displayCode.startsWith('CAP-'));
 const base='https://atlas.test/Urbanisation-SCM/';
 const browser=await chromium.launch(browserOptions);
 try {
- const page=await browser.newPage({viewport:{width:1440,height:1000}}), errors=[];
+ const page=await browser.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'}), errors=[];
  page.on('pageerror',e=>errors.push(e.message));
  await page.route('**/*',async route=>{
   const url=new URL(route.request().url());if(!url.href.startsWith(base))return route.abort();
@@ -52,6 +52,9 @@ try {
  assert.ok(stats.includes('12 capacités'));
  const subdomainType=processCard.locator('.subdomain-card-heading .metamodel-type');
  assert.equal(await subdomainType.textContent(),'Subdomain');
+ await subdomainType.scrollIntoViewIfNeeded();
+ // The map applies its fit after layout; hover once that scroll has settled.
+ await page.waitForTimeout(150);
  await subdomainType.hover();
  const typeHelp=page.locator('.metamodel-tooltip');
  await typeHelp.waitFor();
@@ -65,6 +68,7 @@ try {
  await visit({node:areas[0].id,view:'sheet'});
  const businessAreaType=page.locator('.page-heading .metamodel-type').first();
  assert.equal(await businessAreaType.textContent(),'Business Area');
+ await businessAreaType.scrollIntoViewIfNeeded();
  await businessAreaType.hover();
  await typeHelp.waitFor();
  assert.ok((await typeHelp.innerText()).includes('Périmètre de responsabilité obligatoire'));
