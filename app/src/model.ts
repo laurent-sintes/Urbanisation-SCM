@@ -203,6 +203,7 @@ export function isCapabilityContainer(model: PublishedModel, node: AtlasNode): b
 export function scopeStatistics(model: PublishedModel, node: AtlasNode): { kind: string; count: number; label: string }[] {
   const areaLabel = model.nodes.find(item => item.kind === 'area')?.hierarchyLabel;
   const labels: Record<string, [string, string]> = {
+    business_system: ['système métier', 'systèmes métier'],
     domain: ['domaine', 'domaines'],
     area: areaLabel === 'Sous-domaine' ? ['sous-domaine', 'sous-domaines']
       : areaLabel === 'Purpose' ? ['Purpose', 'Purposes'] : ['Area', 'Areas'],

@@ -17,7 +17,7 @@ Les deux PNG de `public/assets/` sont les médias originaux extraits, sans modif
 
 L’en-tête cadre uniquement l’emblème FLOW en CSS, près du nom FLOW Atlas. Depuis la revue du 19 septembre 2026, le logo Groupe Beaumanoir reste intégral en petite signature de 76 px dans le pied de la navigation, près des statistiques. Sur mobile, il est accessible dans le volet de navigation. Le logo FLOW intégral sert aussi d’icône de page et de manifeste. Les fichiers sources conservent leurs marges et leur signature d’origine.
 
-La barre haute mesure 52 px. Sur grand écran, elle accueille le fil d’Ariane et les actions, en supprimant la rangée de navigation auparavant placée au-dessus du titre. Sur mobile, l’ouverture du volet rejoint FLOW dans cette barre et le fil d’Ariane reste sous celle-ci. Les titres, descriptions et onglets demeurent fixes ; le contenu défile.
+La barre haute mesure 52 px. Elle accueille le bouton du panneau latéral ; sur grand écran, elle affiche aussi le fil d’Ariane et les actions. Sur mobile, le fil d’Ariane reste sous cette barre. Les titres, descriptions et onglets demeurent fixes ; le contenu défile.
 
 Repères consultés le 19 septembre 2026 : [Carbon — UI shell header](https://carbondesignsystem.com/components/UI-shell-header/usage/) (identité, navigation persistante et actions) et [Fluent 2 — Layout](https://fluent2.microsoft.design/layout) (proximité, espacement et adaptation aux écrans). Ce sont des guides de design, pas une certification de conformité d’Atlas ; le placement de la signature Beaumanoir est un choix local demandé par Laurent.
 

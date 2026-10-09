@@ -22317,3 +22317,64 @@ Attention dans l'ihm, tu as retiré le bouton "organiser" mais il reste un espac
 **contexte et portée**
 
 Accord explicite sur le nom Control Plane et sur la nature référentielle des trois objets actuellement présentés comme capacités dans ce sous-domaine. Laurent a précisé qu’il faut remplacer ces capacités par des objets Référentiel. La conversion des quatre anciens comportements de Supply Protection Policy en références spécialisées est un choix de mise en œuvre de Codex pour conserver leurs contenus sans maintenir une hiérarchie de comportements sous un référentiel ; elle ne vaut pas accord sur leur nouvelle maille. Les liens et accords historiques restent conservés dans les publications. Correction demandée dans Atlas pour supprimer l’espace vide restant sur la carte après retrait du bouton de réorganisation. Aucune release, aucun commit ni push demandés.
+
+## U909
+
+**id**
+
+U909
+
+**date**
+
+2026-10-09
+
+**titre**
+
+Fusionner les visibilités Order et Process
+
+**texte**
+
+Order Visibility doit être fusionné avec Process Visibility qui doit être renommé Process, Tasks & Order Visibility
+
+**contexte et portée**
+
+Demande explicite de fusion d’Order Visibility dans Process Visibility et de renommage de la capacité résultante. Les responsabilités, liens, fiches de glossaire et scénarios touchés sont à aligner dans le même lot ; la formulation ne valide pas par anticipation les nouvelles descriptions détaillées ni une réalisation installée. Aucune release, aucun commit ni push demandés.
+## U910
+
+Date : 2026-10-09. Source : Laurent, échange sur l’ordre de lecture et les frontières du stock.
+
+Verbatim :
+
+> - Plan Application doit être positionné après Simulation & Analysis
+> - Dans la description de Order Promising, on ne voit pas trop que le scope est une demande alors que supply matching, le scope est plus global : les seuils magasins, le carnet de commande etc.
+> - Stock Redistribution : on parle de site au sens large, j'aimerais qu'on précise qu'un site est un noeud de stockage dans le fulfillment Network et que ce noeud est un magasin, un ensemble d'entrepots ou tout lieu de stockage.
+> - Supply Matching : renommer en Demand / Supply Matching
+> - Inventory Target Optimization vs Group Protection Optimization : finalement, on optimise le physique et le logique. La notion de stock physique et de stock logique devrait être dans le glossaire et ne serait-ce pas plus clair d'avoir une optimisation de la configuration du stock physique vs une optimisation de la configuration du stock logique ?
+> - Réservation Policy Optimization me semble mal placé car la notion de réservation est dans Inventory State Management alors que la gestion du stock logique est dans le control plane.
+> - Policy Optimization ne déborde pas sur Protection Policies ?
+>
+> Avant modif, je veux ton avis
+
+Après présentation des frontières et d’une recommandation de mise en œuvre par Codex, Laurent répond : « Go ».
+
+Portée : accord sur le lot recommandé, à appliquer au backlog. Les formulations détaillées de Codex, les correspondances de marché et toute réalisation installée ne sont pas approuvées mot à mot. Aucune publication ni opération Git demandée.
+
+## U911
+
+Date : 2026-10-09. Source : Laurent, correction de la mise en œuvre U910.
+
+Verbatim :
+
+> Le pb est que "Stock Configuration Optimization", on ne sait pas si ça joue sur le "logique", la protection ou le physique. Il faut trouver une cohérence.
+
+Portée : demande de corriger l’ambiguïté du regroupement U910 dans le backlog. La recommandation de Codex est de distinguer deux Business Areas, l’une pour les cibles physiques et l’autre pour les droits d’usage logiques ; les règles actives demeurent dans Control Plane et les réservations effectives dans Inventory State Management. Cette formulation de mise en œuvre reste proposée jusqu’à son éventuelle validation par Laurent. Aucune publication ni opération Git demandée.
+
+## U912
+
+Date : 2026-10-09. Source : Laurent, retour sur la navigation Atlas.
+
+Verbatim :
+
+> L'objet "Univers" doit faire partie du modèle et doit avoir sa fiche description. Il représente le SI Beaumanoir cible.
+
+Portée : ajout demandé d’un objet racine Univers dans le modèle cible et d’une fiche consultable dans Atlas après publication. Sa place est au-dessus des systèmes métier déjà modélisés. La description détaillée et la comparaison au marché sont des rédactions proposées ; cette demande ne prouve aucune réalisation installée et ne demande ni release ni opération Git.

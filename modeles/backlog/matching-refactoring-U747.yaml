@@ -1627,9 +1627,9 @@ publication_delivery:
     fields:
       name: Stock Consolidation
   - id: D05.a
-    parent: ba-policy-optimization
+    parent: ba-physical-stock-configuration-optimization
     fields:
-      name: Inventory Target Optimization
+      name: Physical Stock Target Optimization
       nature: decision
   - id: BHV026
     parent: D05.a
@@ -1646,12 +1646,12 @@ publication_delivery:
   - id: D05.d
     parent: ba-policy-optimization
     fields:
-      name: Group Protection Optimization
+      name: Logical Stock Protection Optimization
       nature: decision
   - id: D05.h
     parent: ba-policy-optimization
     fields:
-      name: Reservation Policy Optimization
+      name: Reservation Rule Optimization
       nature: decision
   - id: BHV032
     parent: D05.h
@@ -1693,3 +1693,31 @@ delivery_updates:
   - D05.h.category
   - D05.h.parent
   reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.
+delivery_reconciliation_U910:
+  source_refs:
+  - U910
+  note: Attentes de livraison courante réalignées après les clarifications U910. Les attentes précédentes sont conservées
+    par leurs empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D05.a
+    check: fields.name
+    previous_sha256: a44f65f2f600e1634c5042946043b6c7cdf3f37211d60f0bc2b2055c60475bbc
+    current_sha256: 4e43e6525b6de3a2e01309e0c8acf5b4197fd3bf0f155faa84bc83acf7c27171
+  - id: D05.d
+    check: fields.name
+    previous_sha256: f0521fad2aa94a62c107b30b6569833c1179972ba96a48dfe1d648f845a105d9
+    current_sha256: 971f1e179fbeec8f0d1cd59d4190a68146a88604ace22d6d8e977181d641cb37
+  - id: D05.h
+    check: fields.name
+    previous_sha256: b87ce357151ed25f02935ef9ff14db43caef1c716dd82587b094f0cb68b9e0de
+    current_sha256: 33f44a2a4524928857d51d3aab88b9d67cdc8b1bf91860c44cd1ac90a1a41b37
+delivery_reconciliation_U911:
+  source_refs:
+  - U911
+  note: Attentes de livraison courante réalignées après la séparation U911. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D05.a
+    check: parent
+    previous_sha256: 183027039067157b38b94216244fff34bd8d651acc86360d5be47075a3dd0530
+    current: ba-physical-stock-configuration-optimization

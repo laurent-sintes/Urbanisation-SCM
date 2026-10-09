@@ -62,36 +62,52 @@ reading_codes:
     candidate_after_U891: CAP-022
     candidate_after_U894: CAP-023
     candidate_after_U898: CAP-022
+    candidate_after_U910: CAP-014
+    candidate_after_U911: CAP-014
   - id: BHV082
     previous: BHV-067
     candidate: CAP-074
     candidate_after_U891: CAP-074
     candidate_after_U894: CAP-075
     candidate_after_U898: CAP-074
+    candidate_after_U910: CAP-042
+    candidate_after_U911: CAP-042
   - id: subdomain-plans
     previous: BA-014
     candidate: BA-013
     candidate_after_U891: BA-015
     candidate_after_U894: BA-015
     candidate_after_U898: BA-015
+    candidate_after_U910: BA-016
+    candidate_after_U911: BA-017
   - id: D06.d
     previous: CAP-046
     candidate: CAP-042
     candidate_after_U891: CAP-042
     candidate_after_U894: CAP-043
     candidate_after_U898: CAP-042
+    candidate_after_U910: CAP-055
+    candidate_after_U911: CAP-055
   - id: order-workflow-orchestration
     previous: CAP-014
     candidate: CAP-069
     candidate_after_U891: CAP-069
     candidate_after_U894: CAP-070
     candidate_after_U898: CAP-069
+    candidate_after_U910: CAP-037
+    candidate_after_U911: CAP-037
   - id: subdomain-process-management
     previous: null
     candidate: SUB-009
     candidate_after_U891: SUB-009
     candidate_after_U894: SUB-009
     candidate_after_U898: SUB-012
+    candidate_after_U910: SUB-010
+    candidate_after_U911: SUB-010
+  note_U910: Nouvel ordre de lecture de Master Plan Management validé U910 ; les codes restent des prévisions du prochain
+    snapshot, sans renumérotation des identités ni réouverture de l’audit U886.
+  note_U911: La séparation en deux Business Areas U911 modifie les codes candidats de la prochaine publication ; l’audit U886
+    et les codes des publications existantes restent figés.
 findings:
 - id: A01
   priority: P1
@@ -409,7 +425,7 @@ publication_delivery:
 
         Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
 
-        Les [Business Areas](method:MOD039) se répondent : [Plan Visibility](model:subdomain-plans) interprète les prévisions ; [Policy Optimization](model:ba-policy-optimization) recommande cibles et paramètres ; [Order Promising](model:ba-order-promising) évalue les promesses ; [Supply Matching](model:ba-supply-matching) arbitre la couverture et ses adaptations ; [Master Plan Management](model:ba-master-plan-management) compose, révise et applique le plan commun. Leur lecture forme un ensemble de responsabilités, sans imposer une suite d’étapes. La profondeur métier se mesure aux décisions et aux cas couverts, pas au nombre de nœuds.
+        Les [Business Areas](method:MOD039) se répondent : [Plan Visibility](model:subdomain-plans) interprète les prévisions ; [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles ; [Logical Stock Configuration Optimization](model:ba-policy-optimization) recommande les droits d’usage ; [Order Promising](model:ba-order-promising) évalue les promesses ; [Demand / Supply Matching](model:ba-supply-matching) arbitre la couverture et ses adaptations ; [Master Plan Management](model:ba-master-plan-management) compose, révise et applique le plan commun. Leur lecture forme un ensemble de responsabilités, sans imposer une suite d’étapes. La profondeur métier se mesure aux décisions et aux cas couverts, pas au nombre de nœuds.
 
         Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
   - id: D03.i
@@ -512,7 +528,7 @@ publication_delivery:
       scope: |-
         Reconnaître origine, date, prestation, résultat métier et corrections ; distinguer estimation, engagement et constat. Capter les retours des opérations physiques et services distants, y compris documentaires et d’encaissement. Une fin technique ne prouve pas un résultat métier réussi. Alimenter [Operations Visibility](model:operations-visibility) pour l’avancement et les résultats et [Inventory Visibility](model:D01.c) pour les ressources futures. Les doublons, retours tardifs, réalisations partielles et échecs restent identifiables. Exemple fictif : recevoir deux notifications identiques de fin de transport et n’intégrer qu’un fait métier. La restitution, la coordination, l’adaptation et la tenue des engagements restent distinctes.
 
-        Ces faits contribuent au suivi du parcours. [Process Visibility](glossary:TER175) les rapproche des activités et attentes du processus ; leur captation ne crée pas un second état global du parcours.
+        Ces faits contribuent au suivi du parcours. [Process, Tasks & Order Visibility](glossary:TER175) les rapproche des activités et attentes du processus ; leur captation ne crée pas un second état global du parcours.
   - id: ba-goods-processing-order-management
     fields:
       name: Goods Processing Order Management
@@ -556,8 +572,11 @@ publication_delivery:
   - id: ba-order-promising
     fields:
       name: Order Promising
-      definition: Déterminer et réexaminer les propositions de quantités, dates et conditions de satisfaction des demandes.
+      definition: Déterminer et réexaminer, pour une demande identifiée, les quantités, dates et conditions de satisfaction
+        qui peuvent être proposées sans confirmer encore un engagement.
       scope: |-
+        Le périmètre de chaque décision est une demande identifiée : demande initiale, commande à confirmer ou demande dont la promesse doit être réexaminée. Ses lignes et ses contraintes sont appréciées ensemble. Exemple fictif : pour une demande de 100 pièces, proposer 60 pièces vendredi et 40 lundi, ou expliciter pourquoi une livraison complète est impossible. Cette réponse ne confirme pas la commande.
+
         Proposer ne confirme pas un engagement de commande.
 
         Bénéficiaire et résultat : Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
@@ -618,9 +637,9 @@ publication_delivery:
       name: Operations Visibility
       definition: Rendre visibles l’avancement, les résultats et les attentes des prestations Supply à partir des faits intégrés.
       scope: |-
-        Consolider les faits, jalons, estimations et résultats acquis, partiels ou en échec reçus par [Operations Tracking](model:D07.d). Distinguer fait, engagement et estimation, expliciter origine, fraîcheur et informations absentes. Présenter les perspectives entrepôt, transport et magasin sans imposer un cycle commun aux services. Les exécutants conservent leurs opérations internes ; Orchestration coordonne, Adaptation Decision choisit les adaptations et [Service Management](model:subdomain-service-orders) tient les engagements. [Inventory Visibility](model:D01.c) restitue les positions de stock et les ressources attendues. Exemple fictif : une prestation documentaire est en échec tandis que le transport est achevé ; exposer séparément leurs résultats et les attentes propres aux prestations. Leur effet sur la suite du parcours est expliqué par [Process Visibility](glossary:TER175).
+        Consolider les faits, jalons, estimations et résultats acquis, partiels ou en échec reçus par [Operations Tracking](model:D07.d). Distinguer fait, engagement et estimation, expliciter origine, fraîcheur et informations absentes. Présenter les perspectives entrepôt, transport et magasin sans imposer un cycle commun aux services. Les exécutants conservent leurs opérations internes ; Orchestration coordonne, Adaptation Decision choisit les adaptations et [Service Management](model:subdomain-service-orders) tient les engagements. [Inventory Visibility](model:D01.c) restitue les positions de stock et les ressources attendues. Exemple fictif : une prestation documentaire est en échec tandis que le transport est achevé ; exposer séparément leurs résultats et les attentes propres aux prestations. Leur effet sur la suite du parcours est expliqué par [Process, Tasks & Order Visibility](glossary:TER175).
 
-        [Process Visibility](glossary:TER175) porte désormais le parcours complet dans [Process Supervision](glossary:TER165). [Operations Visibility](glossary:TER178) conserve la connaissance de réalisation des prestations et la transmet pour cette lecture. Un résultat de prestation ne prouve pas que toutes les conditions du parcours sont remplies.
+        [Process, Tasks & Order Visibility](glossary:TER175) porte désormais le parcours complet dans [Process Supervision](glossary:TER165). [Operations Visibility](glossary:TER178) conserve la connaissance de réalisation des prestations et la transmet pour cette lecture. Un résultat de prestation ne prouve pas que toutes les conditions du parcours sont remplies.
   - id: service-order-cleaning
     fields:
       name: Cleaning Order
@@ -902,3 +921,45 @@ delivery_reconciliation_U908:
     check: fields.scope
     previous_sha256: c995fc4db1051eec34e6e801c78b84af3add28e554cfd8da801f8d735bb3b041
     current_sha256: b1dbf122e2415365a66b8deb3f6aeb9d6cc7b823b278605fafcd1795e47ee171
+delivery_reconciliation_U909:
+  source_refs:
+  - U909
+  note: Attentes de livraison courante réalignées après la fusion U909. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D07.d
+    check: fields.scope
+    previous_sha256: 46984ec5ca4fe7cd1c9124838820afee9eafc2bada04080ec201107591681723
+    current_sha256: 0afc09b12a44e2200a043850fb7580353ad758d58f3cf1297cdeb15e7251f9bb
+  - id: operations-visibility
+    check: fields.scope
+    previous_sha256: 2f3891d0d886925d353ea943cd2d036e045001e3c6bb53f445e6352970e306ae
+    current_sha256: 6ccffacd283c28f36313a44c5ba2a0049614c94c5ced7f6e63fc1f155176132a
+delivery_reconciliation_U910:
+  source_refs:
+  - U910
+  note: Attentes de livraison courante réalignées après les clarifications U910. Les attentes précédentes sont conservées
+    par leurs empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D03
+    check: fields.scope
+    previous_sha256: 171f452d18fcc71da62d2846f2db9a3d4c29e6a6e7850b3bdd2f8bd926db42c0
+    current_sha256: aa5109c221a52022973913d75af881339cd85683263fb59e51410f2e4fbb4fd9
+  - id: ba-order-promising
+    check: fields.definition
+    previous_sha256: 57e19ffb7b451cdf4970fc77f1189ec4792c0a558239f3c04d7b2f27ab0f59fc
+    current_sha256: e49839d1183d6013b0c9b039f7828fb633a1fbccf818965fc708a4e93011360d
+  - id: ba-order-promising
+    check: fields.scope
+    previous_sha256: 3c8c0d6dce9d93884224bbe90925478cdc600fd72532dd693ae0f7f9da64a61a
+    current_sha256: 9412ab3ec557e15deb90b523977a3a4e16738f3f86be7f66912399b274a703cf
+delivery_reconciliation_U911:
+  source_refs:
+  - U911
+  note: Attentes de livraison courante réalignées après la séparation U911. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D03
+    check: fields.scope
+    previous_sha256: aa5109c221a52022973913d75af881339cd85683263fb59e51410f2e4fbb4fd9
+    current_sha256: 6cd87bdf4323fb7ca8525f41d43f3ee8cd78e13763b7a548c057166ca4a75c8c

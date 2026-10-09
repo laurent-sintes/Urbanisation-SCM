@@ -30,7 +30,7 @@ publication_delivery:
 
         L’[allocation de stock par groupe](glossary:TER018) protège une enveloppe pour un usage, sans garantir à elle seule une disponibilité absolue. Un plafond de consommation n’est pas un minimum protégé. Un seuil de réassort ne rend pas automatiquement le stock restant invendable. La priorité d’une demande relève de [Demand Protection Policy](model:D19.b) ; les deux règles s’appliquent sans compter deux fois la même protection.
 
-        [Reservation Policy Optimization](model:D05.h) recommande les conditions de réservation. Supply Protection Policy les rend applicables ; [Reservation](model:D02.c) les applique aux engagements individuels. Changer la politique ne modifie pas silencieusement les réservations déjà constituées. Cette gouvernance reste distincte de la planification et ne réserve aucune quantité par elle-même.
+        [Reservation Rule Optimization](model:D05.h) recommande les conditions de réservation. Supply Protection Policy les rend applicables ; [Reservation](model:D02.c) les applique aux engagements individuels. Changer la politique ne modifie pas silencieusement les réservations déjà constituées. Cette gouvernance reste distincte de la planification et ne réserve aucune quantité par elle-même.
 
         Exemple fictif : protéger 200 pièces pour le web, plafonner sa consommation à 500, prévoir une sécurité de 40 et déclencher un réassort sous 60 vers 100. Ces paramètres ont des rôles distincts et ne s’additionnent pas automatiquement. Une valeur commune à la sécurité et au seuil n’est pas décomptée deux fois. Prévenir un surstock futur reste distinct de redistribuer un excès déjà présent.
   - id: BHV017
@@ -86,3 +86,13 @@ delivery_reconciliation_U908:
     check: fields.scope
     previous_sha256: 207accfd172f21d1ed26af23cb2425367e881c8af8c58389bebba4d673f8165a
     current_sha256: 9a729f101469c9a4fecdf5a395160db9a93ce0a3e899b70306a456ee9627fccf
+delivery_reconciliation_U910:
+  source_refs:
+  - U910
+  note: Attentes de livraison courante réalignées après les clarifications U910. Les attentes précédentes sont conservées
+    par leurs empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D02.b
+    check: fields.scope
+    previous_sha256: fba6e4d3916050e5f5ab4467d874e3f8f90793e1fa0cd3729cd9f6360cddb58a
+    current_sha256: 876477f1a9436d6dc12e60b44f180fca1420456e823b9de3228021509db853ee

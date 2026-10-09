@@ -99,7 +99,7 @@ publication_delivery:
 
         Conserver les parcours spécifiques ; le choix du devenir et les prestations sont mobilisés auprès de [Fulfilment](glossary:TER085), pas exécutés par l’[Order](glossary:TER012).
 
-        Cette famille porte le cycle et les engagements de ses [Orders](glossary:TER012) selon le [contrat commun d’Order Management](model:D04) : préparation, révisions, [affermissement](glossary:TER197), protections, autorisation, suspension/reprise, annulation, clôture et conservation. Elle distingue demande, proposition, engagement confirmé et réalisé, rapproche les résultats pour tenir le reste à satisfaire et expose ces informations à [Order Visibility](model:order-visibility). Les variantes décrivent des axes métier combinables ; elles ne recopient pas ce cycle commun.
+        Cette famille porte le cycle et les engagements de ses [Orders](glossary:TER012) selon le [contrat commun d’Order Management](model:D04) : préparation, révisions, [affermissement](glossary:TER197), protections, autorisation, suspension/reprise, annulation, clôture et conservation. Elle distingue demande, proposition, engagement confirmé et réalisé, rapproche les résultats pour tenir le reste à satisfaire et expose ces informations à [Process, Tasks & Order Visibility](model:BHV082). Les variantes décrivent des axes métier combinables ; elles ne recopient pas ce cycle commun.
 
         L’[Order](glossary:TER012) de retour n’efface pas la vente d’origine.
 
@@ -318,3 +318,13 @@ superseded_delivery_U887:
         Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
 
         Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
+delivery_reconciliation_U909:
+  source_refs:
+  - U909
+  note: Attentes de livraison courante réalignées après la fusion U909. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D04.l
+    check: fields.scope
+    previous_sha256: 5c23140657a9c1d1c1b791dbd29feae2e9f59493e3b1bd711ffeea173670a922
+    current_sha256: e86569a1c05ec5626bb5e02128c650bc2957c4162119b7458994d369f0a461a5

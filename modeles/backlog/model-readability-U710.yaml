@@ -280,13 +280,11 @@ publication_delivery:
     parent: ba-inbound-information-integration
     fields: {}
     parent_type: contains
-  - id: order-visibility
-    parent: ba-order-lifecycle-management
-    fields: {}
   absent_nodes:
   - D07.b
   - vas-repacking
   - vas-labeling-relabeling
+  - order-visibility
   superseded_checks_U826:
   - id: plans-ingestion
     field: category
@@ -714,3 +712,13 @@ delivery_reconciliation_U908:
     current:
       id: ba-protection-policies
       type: presents
+delivery_reconciliation_U909:
+  source_refs:
+  - U909
+  note: Attentes de livraison courante réalignées après la fusion U909. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: order-visibility
+    check: required_node
+    previous_sha256: 00cd08a1a21768ce79f26615eee74f49ae4d2924714201fd5c95d4ce42ba05a5
+    current: absent by U909

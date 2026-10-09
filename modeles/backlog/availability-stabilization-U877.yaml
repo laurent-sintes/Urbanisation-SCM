@@ -56,7 +56,7 @@ publication_delivery:
 
         U436 : seule la réservation bloque les usages concurrents ; l’affectation seule ne les bloque pas. Créer, conserver ou réviser un lien d’affectation ne crée donc pas implicitement une réservation. Les protections de groupe conservent leurs règles d’admissibilité, et un gel d’affectation sa restriction de modification. Création, révision, consommation, libération et expiration sont couvertes selon les conditions applicables ; aucun déclenchement automatique ni mécanisme technique de concurrence n’est déduit de cette frontière.
 
-        Appliquer les conditions de réservation rendues applicables par [Supply Protection Policy](model:D02.b). [Reservation Policy Optimization](model:D05.h) peut être mobilisée pour déterminer ou réexaminer les conditions utiles ; son résultat n’active pas à lui seul une nouvelle politique. La gestion de chaque réservation conserve sa portée propre et les engagements déjà constitués sont réexaminés selon leurs conditions, sans libération implicite au changement de politique.
+        Appliquer les conditions de réservation rendues applicables par [Supply Protection Policy](model:D02.b). [Reservation Rule Optimization](model:D05.h) peut être mobilisée pour déterminer ou réexaminer les conditions utiles ; son résultat n’active pas à lui seul une nouvelle politique. La gestion de chaque réservation conserve sa portée propre et les engagements déjà constitués sont réexaminés selon leurs conditions, sans libération implicite au changement de politique.
 
         [Availability](glossary:TER112) demande une réservation mais ne la possède pas. Une affectation du plan ne réserve pas implicitement la ressource (U436).
 
@@ -94,7 +94,7 @@ publication_delivery:
 
         La consignation ne constitue pas un comportement d’achat supplémentaire. Un achat peut intervenir lors du changement de propriété selon les conditions applicables. Les retours au fournisseur relèvent de [Supplier Return Order](model:D04.m).
 
-        Appliquer le [cycle commun d’Order Management](model:D04) : préparation, révisions, [affermissement](glossary:TER197), protections, autorisation, suspension et reprise, annulation, clôture et conservation. Distinguer demande, proposition, confirmation et réalisé ; rendre le solde consultable dans [Order Visibility](model:order-visibility). Ces dimensions ne créent pas de nouveaux comportements propres à chaque achat.
+        Appliquer le [cycle commun d’Order Management](model:D04) : préparation, révisions, [affermissement](glossary:TER197), protections, autorisation, suspension et reprise, annulation, clôture et conservation. Distinguer demande, proposition, confirmation et réalisé ; rendre le solde consultable dans [Process, Tasks & Order Visibility](model:BHV082). Ces dimensions ne créent pas de nouveaux comportements propres à chaque achat.
 
         [Planned Purchase Order](glossary:TER033) est une proposition d’approvisionnement issue du planning, distincte du [Purchase Order](glossary:TER070) produit à l’[affermissement](glossary:TER197). Conserver les liens de provenance, quantités et échéances entre ces deux objets, sans imposer une identité commune ni un lien un-à-un : plusieurs propositions peuvent être regroupées. La confirmation fournisseur reste une étape distincte. Ne pas compter le même apport comme proposition encore active et comme commande résultante. Ce découpage d’objets ne crée pas deux capacités ; le calcul amont reste sous l’autorité de [Demand & Supply Planning](model:domain-plan).
 
@@ -301,3 +301,23 @@ delivery_reconciliation_U908:
     check: fields.scope
     previous_sha256: d606cf6a59380ea9a174e651b9124c985baf227ec58c334b530febc5b22cf5ba
     current_sha256: 861e4b167b287fa794c186efc806cc617f0554493997619d545c38065a12ec26
+delivery_reconciliation_U909:
+  source_refs:
+  - U909
+  note: Attentes de livraison courante réalignées après la fusion U909. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D04.j
+    check: fields.scope
+    previous_sha256: 6d644d4c93ad3793fe27089ac16ac81b56865281732a2b5d9a764b3f00d78bdf
+    current_sha256: 93b02c8453664e222a59f244b54467fa5155cb73fc2c729df5666cd9a8169985
+delivery_reconciliation_U910:
+  source_refs:
+  - U910
+  note: Attentes de livraison courante réalignées après les clarifications U910. Les attentes précédentes sont conservées
+    par leurs empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D02.c
+    check: fields.scope
+    previous_sha256: 2f2ec927aed40b1436650a20f541dbaeab7befab4ccb3424ba2d5fcccb18a4c5
+    current_sha256: e6799edf339df5b2e2006952e29a689d4b7dd8ebf63b0e22ccf32693295e1245

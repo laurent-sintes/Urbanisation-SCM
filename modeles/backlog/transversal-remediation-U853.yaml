@@ -995,7 +995,8 @@ publication_delivery:
         - U853
   - id: ba-order-promising
     fields:
-      finality: Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
+      finality: Répondre à la demande examinée par une proposition admissible, complète ou partielle, avec ses conditions
+        et sa part non couverte.
       market_comparisons:
       - vendor: SAP
         product: SAP S/4HANA Manufacturing for planning and scheduling
@@ -1023,14 +1024,16 @@ publication_delivery:
         - U853
   - id: ba-supply-matching
     fields:
-      finality: Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins
-        restent découverts.
+      finality: Rendre cohérents les besoins à couvrir et les ressources du réseau, puis montrer les affectations retenues
+        et les besoins encore découverts.
       scope: |-
+        La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Control Plane](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
+
         Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Control Plane](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
 
         [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
 
-        [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Policy Optimization](model:ba-policy-optimization) recommande cibles et paramètres ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+        [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles et [Logical Stock Configuration Optimization](model:ba-policy-optimization) les droits d’usage ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
 
         Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
       market_comparisons:
@@ -1051,7 +1054,7 @@ publication_delivery:
           de ressources.
         definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
           de ressources.
-        term_choice: Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        term_choice: Demand / Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
         scope_summary: Rapprocher les besoins et apports nécessaires.
         approach_summary: Des ordres planifiés ne valent pas affectation ni engagement confirmé.
         evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
@@ -1076,7 +1079,7 @@ publication_delivery:
           de ressources.
         definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
           de ressources.
-        term_choice: Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        term_choice: Demand / Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
         scope_summary: Affecter les ressources aux demandes selon des priorités.
         approach_summary: La Business Area FLOW englobe plusieurs décisions, pas uniquement la fonction d’affectation SAP.
         evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
@@ -1162,60 +1165,70 @@ publication_delivery:
         definition_choice: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
   - id: ba-policy-optimization
     fields:
-      finality: Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
-      scope: |-
-        Les règles actives et leur validité demeurent dans Control Plane.
-
-        Bénéficiaire et résultat : Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
-
-        Exemple fictif : Recommander une protection de 20 pièces après comparaison des ruptures et surstocks ; Control Plane conserve la mise en vigueur de la règle.
+      finality: Proposer des droits d’usage cohérents avant leur éventuelle mise en vigueur.
+      scope: '[Logical Stock Protection Optimization](model:D05.d) recommande des enveloppes et limites d’usage par groupe.
+        [Reservation Rule Optimization](model:D05.h) recommande dans quelles conditions une quantité peut être réservée pour
+        une demande. Ces deux décisions concernent les droits d’usage du **même stock physique**, sans créer un second stock.
+        [Protection Policies](model:ba-protection-policies) présente les règles rendues applicables par [Control Plane](model:subdomain-policies)
+        ; [Inventory State Management](model:ba-inventory-position-management) tient les quantités et réservations effectives.
+        Exemple fictif : proposer une protection de 20 pièces pour le web et une règle de réservation au paiement, sans activer
+        ces règles ni réserver une pièce.'
       market_comparisons:
       - vendor: Microsoft
         product: Dynamics 365 Supply Chain Management
-        source_title: Master planning home page
-        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
-        source_locator: Besoins nets, ordres planifiés et distinction des prévisions
-        source_version: Documentation en ligne consultée le 2026-10-06
-        consulted_on: '2026-10-06'
-        element_name: Master planning home page
-        concept_name: Master planning home page
+        source_title: Inventory Visibility inventory allocation
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+        source_version: Documentation en ligne, édition non indiquée
+        source_locator: Allocation virtual pool ; allocation group ; oversell control
+        consulted_on: '2026-10-09'
+        element_name: Virtual allocation by group
+        concept_name: Virtual allocation by group
         element_type: Fonction produit documentée
         relationship: Recouvrement partiel
-        similarities: Calculer les besoins selon les paramètres de protection.
-        differences: Le réglage des paramètres ne prouve pas leur optimisation ; la recommandation FLOW reste distincte.
-        flow_position: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
-        definition_choice: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
-        term_choice: Policy Optimization désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
-        scope_summary: Calculer les besoins selon les paramètres de protection.
-        approach_summary: Le réglage des paramètres ne prouve pas leur optimisation ; la recommandation FLOW reste distincte.
-        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
-          installée chez Beaumanoir.
+        similarities: Des quantités accessibles à des canaux ou groupes sont suivies sans constituer de stocks physiques séparés.
+        differences: La source couvre aussi l’application et la consommation des allocations ; FLOW isole la recommandation
+          des droits.
+        flow_position: FLOW recommande les droits de groupe ; Control Plane les rend applicables et Inventory tient les engagements
+          individuels.
+        term_choice: Logical Stock Configuration Optimization désigne le périmètre FLOW ; aucune taxonomie commune aux éditeurs
+          n’est revendiquée.
+        definition_choice: FLOW recommande les droits de groupe ; Control Plane les rend applicables et Inventory tient les
+          engagements individuels.
+        scope_summary: Des quantités accessibles à des canaux ou groupes sont suivies sans constituer de stocks physiques
+          séparés.
+        approach_summary: La source couvre aussi l’application et la consommation des allocations ; FLOW isole la recommandation
+          des droits.
+        evidence_limits: Documentation primaire de produit ; elle ne démontre ni toute la décision FLOW ni une réalisation
+          installée.
         status: proposed
         source_refs:
-        - U853
+        - U911
       - vendor: SAP
-        product: SAP S/4HANA Retail
-        source_title: Running Replenishment Planning
-        source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/running-replenishment-planning_e456b0ed-3094-4056-9ba8-aa56cf6833ed
-        source_locator: Réapprovisionnement magasin, stock cible statique ou dynamique ; hors SAP CAR et F&R
-        source_version: Documentation en ligne consultée le 2026-10-06
-        consulted_on: '2026-10-06'
-        element_name: Running Replenishment Planning
-        concept_name: Running Replenishment Planning
+        product: SAP S/4HANA aATP
+        source_title: Outlining aATP with Supply Protection (SuP)
+        source_url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-aatp-with-supply-protection-sup-
+        source_version: Documentation en ligne, édition non indiquée
+        source_locator: Protected quantities ; supply protection group ; product availability check
+        consulted_on: '2026-10-09'
+        element_name: Supply Protection
+        concept_name: Supply Protection
         element_type: Fonction produit documentée
         relationship: Recouvrement partiel
-        similarities: Calculer des cibles de stock.
-        differences: Appui limité aux cibles ; pas de preuve d’une optimisation des politiques de réservation.
-        flow_position: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
-        definition_choice: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
-        term_choice: Policy Optimization désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
-        scope_summary: Calculer des cibles de stock.
-        approach_summary: Appui limité aux cibles ; pas de preuve d’une optimisation des politiques de réservation.
-        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
-          installée chez Beaumanoir.
+        similarities: Des quantités sont protégées pour des groupes et prises en compte dans le contrôle de disponibilité.
+        differences: Le document décrit la protection et son usage dans aATP, pas une optimisation autonome des règles de
+          réservation.
+        flow_position: FLOW distingue les droits recommandés, les règles actives et les réservations individuelles.
+        term_choice: Logical Stock Configuration Optimization désigne le périmètre FLOW ; aucune taxonomie commune aux éditeurs
+          n’est revendiquée.
+        definition_choice: FLOW distingue les droits recommandés, les règles actives et les réservations individuelles.
+        scope_summary: Des quantités sont protégées pour des groupes et prises en compte dans le contrôle de disponibilité.
+        approach_summary: Le document décrit la protection et son usage dans aATP, pas une optimisation autonome des règles
+          de réservation.
+        evidence_limits: Documentation primaire de produit ; elle ne démontre ni toute la décision FLOW ni une réalisation
+          installée.
         status: proposed
         source_refs:
-        - U853
+        - U911
   - id: ba-order-lifecycle-management
     fields:
       finality: Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
@@ -1966,3 +1979,59 @@ delivery_reconciliation_U908:
     check: fields.scope
     previous_sha256: 1a6fdf3205d3931b52a17c2319d21fff225d2f8747ecf95aeafd2c77108f9a17
     current_sha256: 94c9907690924d205b91084bf3b5767ba29e8ecafbc471b8ace3c95413735df3
+delivery_reconciliation_U910:
+  source_refs:
+  - U910
+  note: Attentes de livraison courante réalignées après les clarifications U910. Les attentes précédentes sont conservées
+    par leurs empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: ba-order-promising
+    check: fields.finality
+    previous_sha256: f3db7a22e5ba817bb1bbbbbb2a8ed9bf806e503dc91bf7d5af13990600e6ee17
+    current_sha256: 998e42e154c4c73d49271c431093d553314cfc6e3af23b7c335c4c2fc411679f
+  - id: ba-supply-matching
+    check: fields.finality
+    previous_sha256: b8ab8f8291783729db7c17edc46f6067c1904ae212143b83fb5d4df9ecb00370
+    current_sha256: 1bd9c227786d321ce3bdbc84615b0ae58076a19ce3afb5fae81ec64678961a74
+  - id: ba-supply-matching
+    check: fields.scope
+    previous_sha256: a41ad220a7938f1145824936fec65500655d2b94fd43cc7c2ca6d7cfeb72c9f3
+    current_sha256: d23c959c4c5e594aa1b15ba52c583f7bd2a7c4db2021dc27ede0dd73c25a80bf
+  - id: ba-supply-matching
+    check: fields.market_comparisons
+    previous_sha256: ef9e2d23e0e2aa3c4d6e3b0b7f3250a34178e6699b3ea8518f019afcf574fa23
+    current_sha256: 4dee067e5835f375bcb0e84d67613a7ba6ad2805f053112c282345e0d6aae247
+  - id: ba-policy-optimization
+    check: fields.finality
+    previous_sha256: 286af1f7a5644ccfd5d5013db34447d4809987306f9388283ab37bd5d40c98d2
+    current_sha256: be2d8c6ff253a0c815e320a41619484d0b50e919ee0bd20500a45879ac1a04bb
+  - id: ba-policy-optimization
+    check: fields.scope
+    previous_sha256: 94c9907690924d205b91084bf3b5767ba29e8ecafbc471b8ace3c95413735df3
+    current_sha256: 085ea3ad1c8e06f88aef0b9d5c3570380150c15b0caa1d9c2670e05081d9dee7
+  - id: ba-policy-optimization
+    check: fields.market_comparisons
+    previous_sha256: 229824acc6f1574b011d7fb4537f7022bac9df6c9b625fae137060fd27b5c776
+    current_sha256: 76e7a86a615b55207892ae121c86e0ef399263161860b1d33b5713574770c8c9
+delivery_reconciliation_U911:
+  source_refs:
+  - U911
+  note: Attentes de livraison courante réalignées après la séparation U911. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: ba-supply-matching
+    check: fields.scope
+    previous_sha256: d23c959c4c5e594aa1b15ba52c583f7bd2a7c4db2021dc27ede0dd73c25a80bf
+    current_sha256: b2b1a65c40bfe2675fc453b3b1730a82e5e34e5e4837b33962dabd3143435079
+  - id: ba-policy-optimization
+    check: fields.finality
+    previous_sha256: be2d8c6ff253a0c815e320a41619484d0b50e919ee0bd20500a45879ac1a04bb
+    current_sha256: 66f5b9ab17f2ef69c21650ef02e1d87e4e26a39cb1ec10aabd4275a8475ae178
+  - id: ba-policy-optimization
+    check: fields.scope
+    previous_sha256: 085ea3ad1c8e06f88aef0b9d5c3570380150c15b0caa1d9c2670e05081d9dee7
+    current_sha256: 50ddf929da819cdf9e0d99f98d4c136282f6151f1dd99a4b203f144bb1311c97
+  - id: ba-policy-optimization
+    check: fields.market_comparisons
+    previous_sha256: 76e7a86a615b55207892ae121c86e0ef399263161860b1d33b5713574770c8c9
+    current_sha256: 1450057fbf239847cfae946368cba5815eef591a66afa9c55a499e3a190b9871

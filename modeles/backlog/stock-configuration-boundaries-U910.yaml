@@ -1,0 +1,113 @@
+id: STOCK-CONFIGURATION-BOUNDARIES-U910
+source_refs:
+- U910
+status: applied_to_backlog
+decision:
+  accepted:
+  - Lire Plan Application après Simulation & Analysis dans Master Plan Management.
+  - Expliciter la demande identifiée comme maille de Order Promising et le carnet, la prévision résiduelle et les seuils magasins
+    comme contexte global de Demand / Supply Matching.
+  - Définir le site de Stock Redistribution comme nœud de stockage du Fulfilment Network, pouvant être magasin, ensemble d’entrepôts
+    ou autre lieu de stockage.
+  - Renommer Supply Matching en Demand / Supply Matching.
+  - Exposer les notions déjà présentes de stock physique et stock logique dans le glossaire et les lier aux optimisations
+    concernées.
+  - Distinguer recommandations de configuration physique et logique, règles actives du Control Plane et réservations effectives
+    d’Inventory State Management.
+  implementation:
+  - Les identifiants persistants et les parents des capacités sont conservés.
+  - Policy Optimization est renommée Stock Configuration Optimization ; ses trois capacités deviennent Physical Stock Target
+    Optimization, Logical Stock Protection Optimization et Reservation Rule Optimization.
+  - Les descriptions détaillées, exemples, noms concrets de mise en œuvre et rapprochements marché rédigés par Codex restent
+    proposés ; le Go n’en approuve pas chaque mot.
+  boundaries:
+  - Une cible physique recommandée ne déplace pas le stock ; Stock Redistribution décide des transferts, sans les réaliser.
+  - Le stock logique qualifie les états et droits d’usage des mêmes biens physiques ; les droits de groupe ne sont pas des
+    réservations individuelles.
+  - Les règles de protection et de réservation actives sont maintenues dans Control Plane ; Inventory State Management tient
+    les états et réservations effectifs.
+  - Aucun type de site d’un progiciel, stock supplémentaire ou déploiement Beaumanoir n’est présumé.
+market_position:
+  microsoft_dynamics: La documentation distingue le stock physique, la disponibilité calculée, les réservations et des allocations
+    virtuelles par groupe. Les transferts entre entrepôts sont documentés ; ces fonctions ne définissent pas la taxonomie
+    FLOW.
+  sap_s4hana: La documentation distingue les types de stock et les transferts entre lieux ; aATP distingue la protection de
+    supply des contrôles de disponibilité. La création d’une réservation ne prouve pas une optimisation autonome de ses règles.
+  terminology: Physical Stock Target Optimization et Logical Stock Protection Optimization sont des noms FLOW qui explicitent
+    deux objets de décision différents ; leur symétrie est limitée par le rôle distinct de Stock Redistribution et des réservations.
+  sources:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-on-hand-list
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/transfer-orders-warehouse
+  - https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/91b21005dded4984bcccf4a69ae1300c/fc62bd534f22b44ce10000000a174cb4.html
+  - https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/91b21005dded4984bcccf4a69ae1300c/9e64bd534f22b44ce10000000a174cb4.html
+  - https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f132c385e0234fe68ae9ff35b2da178c/e541e617043545a0bb60e5067d037046.html
+publication_delivery:
+  state: applied
+  source_refs:
+  - U910
+  summary: Ordre de lecture et frontières Order Promising, Demand / Supply Matching, Stock Redistribution, configuration physique/logique
+    et politiques actives alignés.
+  required_nodes:
+  - id: D05.f
+    kind: capability
+    fields:
+      reading_order: 1
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: BHV006
+    kind: capability
+    fields:
+      reading_order: 2
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: D02.e
+    kind: capability
+    fields:
+      reading_order: 3
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: ba-supply-matching
+    kind: business_area
+    fields:
+      name: Demand / Supply Matching
+    parent: D03
+    parent_type: contains
+  - id: ba-policy-optimization
+    kind: business_area
+    fields:
+      name: Logical Stock Configuration Optimization
+    parent: D03
+    parent_type: contains
+  - id: D05.a
+    kind: capability
+    fields:
+      name: Physical Stock Target Optimization
+    parent: ba-physical-stock-configuration-optimization
+    parent_type: contains
+  - id: D05.d
+    kind: capability
+    fields:
+      name: Logical Stock Protection Optimization
+    parent: ba-policy-optimization
+    parent_type: contains
+  - id: D05.h
+    kind: capability
+    fields:
+      name: Reservation Rule Optimization
+    parent: ba-policy-optimization
+    parent_type: contains
+delivery_reconciliation_U911:
+  source_refs:
+  - U911
+  note: Attentes de livraison courante réalignées après la séparation U911. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: ba-policy-optimization
+    check: fields.name
+    previous_sha256: ffcf8de35e4c98e2a6a22aa0a7ce430e015dd7bf78c4db070c066ff3c8ae7f6c
+    current_sha256: c640255c012d9b6a570e2ada79f63ad01bae37a31e34b6791a3bb13bb6069fb7
+  - id: D05.a
+    check: parent
+    previous_sha256: 183027039067157b38b94216244fff34bd8d651acc86360d5be47075a3dd0530
+    current: ba-physical-stock-configuration-optimization

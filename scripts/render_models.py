@@ -81,19 +81,19 @@ def render(model, label):
     if any(node['fields'].get('request_origins') for node in model['nodes']):
         lines += ['Origine des demandes : **Frontoffice** désigne une sollicitation externe au Domain ; **Backoffice**, une sollicitation interne. Une famille peut porter les deux origines. La provenance de l’événement déclencheur est distincte.', '']
     nodes = {n['id']:n for n in model['nodes']}
-    levels = [n for n in model['nodes'] if n.get('group_role') == 'urbanism_level'
+    levels = [n for n in model['nodes'] if n.get('kind') == 'universe' or n.get('group_role') == 'urbanism_level'
               or n.get('kind') == 'business_system'
               or (n.get('kind') == 'domain' and any(
                   r['type'] == 'presents' and r['source_id'] == n['id'] for r in model['relations']))]
     if levels:
         lines += ['## Niveaux d’urbanisation', '', '| Repère | Nom | Niveau | Contenu direct | Statut |', '| --- | --- | --- | --- | --- |']
         for level in levels:
-            children = [nodes[r['target_id']]['fields'].get('name', r['target_id']) for r in model['relations'] if r['type'] == 'presents' and r['source_id'] == level['id']]
-            level_name = level['level_ref'] if level.get('group_role') == 'urbanism_level' else 'Business System' if level['kind'] == 'business_system' else 'Domain'
+            children = [nodes[r['target_id']]['fields'].get('name', r['target_id']) for r in model['relations'] if r['type'] in ('contains', 'presents') and r['source_id'] == level['id']]
+            level_name = 'Universe' if level['kind'] == 'universe' else level['level_ref'] if level.get('group_role') == 'urbanism_level' else 'Business System' if level['kind'] == 'business_system' else 'Domain'
             lines.append('| ' + ' | '.join(cell(v) for v in [level['id'], level['fields'].get('name', ''), level_name, ', '.join(children) or 'Exploration différée', status(level)]) + ' |')
         lines += ['', 'Les groupes de présentation conservent leur rôle distinct des niveaux de décomposition métier.', '']
     for domain in model['nodes']:
-        if domain['kind'] not in ('business_system', 'domain', 'area', 'business_area', 'reference'):
+        if domain['kind'] not in ('universe', 'business_system', 'domain', 'area', 'business_area', 'reference'):
             continue
         lines += [f'## {domain["id"]} — {domain["fields"].get("name", "Libellé à préciser")}', '', f'Statut : **{status(domain)}**.', '', domain['fields'].get('definition','Définition à préciser.'), '']
         if domain['fields'].get('data_governance'):

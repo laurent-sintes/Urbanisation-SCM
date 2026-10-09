@@ -7,6 +7,17 @@ from scripts.validate_models import validate_urbanism
 from scripts.display_codes import build_display_index
 
 class BusinessAreaTests(unittest.TestCase):
+    def test_physical_targets_and_logical_usage_have_distinct_responsibility_parents(self):
+        root = Path(__file__).resolve().parents[1]
+        model = read(root/'modeles/backlog/model.yaml')
+        index = build_display_index(model)
+        physical = 'ba-physical-stock-configuration-optimization'
+        logical = 'ba-policy-optimization'
+        self.assertEqual(index['children'][physical], ['D05.a'])
+        self.assertEqual(set(index['children'][logical]), {'D05.d', 'D05.h'})
+        self.assertIn('D05.c', index['children']['ba-supply-matching'])
+        self.assertNotIn('D05.c', index['children'][physical])
+
     def model(self):
         fields = dict(name='Area', definition='Responsibility', finality='Result', scope='Boundary')
         return {'nodes': [dict(id='sub', kind='area', fields=fields),
@@ -103,6 +114,9 @@ class BusinessAreaTests(unittest.TestCase):
         decision_additions = {credit_lot['recommendation']['candidate_id']}
         correction=read(root/'modeles/backlog/core-reference-credit-boundaries-U895.yaml')
         later_retirements=set(correction['retirement']['node_ids'])
+        visibility_fusion=read(root/'modeles/backlog/process-tasks-order-visibility-U909.yaml')
+        self.assertEqual(visibility_fusion['publication_delivery']['absent_nodes'], ['order-visibility'])
+        later_retirements.update(visibility_fusion['publication_delivery']['absent_nodes'])
         control_references = {'D02.b', 'D19.a', 'D19.b', 'BHV017', 'BHV018', 'BHV019', 'BHV020'}
         self.assertEqual((((initial_caps - retired) | process_additions | decision_additions)-later_retirements)
                          - (control_references & initial_caps), caps)
@@ -149,7 +163,7 @@ class BusinessAreaTests(unittest.TestCase):
             expected_parent = 'business-references' if ident in common_references else next(
                 area for area, items in reference_mapping.items() if ident in items)
             self.assertEqual([(r['source_id'],r['type']) for r in parents], [(expected_parent,'presents')],ident)
-        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),25+len(operational_areas))
+        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),26+len(operational_areas))  # U911 adds the physical target area.
         for ident in caps:
             parents = [r for r in m['relations'] if r['target_id']==ident and r['type'] in ('contains','presents')]
             self.assertEqual(len(parents), 1, ident)

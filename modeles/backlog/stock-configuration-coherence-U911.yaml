@@ -1,0 +1,67 @@
+id: STOCK-CONFIGURATION-COHERENCE-U911
+source_refs:
+- U911
+status: applied_to_backlog
+user_correction:
+  verbatim: Le pb est que "Stock Configuration Optimization", on ne sait pas si ça joue sur le "logique", la protection ou le physique. Il faut trouver une cohérence.
+  interpretation: Le regroupement U910 est ambigu ; séparer explicitement la recommandation des cibles physiques de celle des droits d’usage logiques.
+implementation_proposal:
+  physical_area:
+    id: ba-physical-stock-configuration-optimization
+    name: Physical Stock Configuration Optimization
+    capability: D05.a
+    boundary: Recommande des niveaux cibles et seuils ; Stock Redistribution décide les mouvements physiques et Control Plane tient les paramètres applicables.
+  logical_area:
+    id: ba-policy-optimization
+    name: Logical Stock Configuration Optimization
+    capabilities:
+    - D05.d
+    - D05.h
+    boundary: Recommande les droits de groupe et conditions de réservation ; Control Plane tient les règles actives et Inventory State Management les engagements effectifs.
+  identity: D05.a, D05.d, D05.h et ba-policy-optimization conservent leurs identifiants ; seule la nouvelle aire physique reçoit un identifiant neuf.
+  status: Noms des deux aires et formulations détaillées proposés par Codex en réponse à U911 ; Laurent n’a pas encore approuvé ces valeurs exactes.
+market_position:
+  microsoft_dynamics: Dynamics 365 distingue les minima ou maxima de stock par article et lieu des allocations virtuelles par groupe.
+  sap_s4hana: S/4HANA Retail documente les stocks cibles des magasins ; aATP documente les protections par groupe de demande.
+  limit: Ces sources appuient la séparation des objets, sans établir la taxonomie des deux Business Areas FLOW ni une réalisation installée.
+  sources:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/safety-stock-replenishment
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+  - https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/running-replenishment-planning_e456b0ed-3094-4056-9ba8-aa56cf6833ed
+  - https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-aatp-with-supply-protection-sup-
+publication_delivery:
+  state: applied
+  source_refs:
+  - U911
+  summary: Deux Business Areas séparent désormais les cibles de stock physique et les droits d’usage du stock logique.
+  required_nodes:
+  - id: ba-physical-stock-configuration-optimization
+    kind: business_area
+    fields:
+      name: Physical Stock Configuration Optimization
+    parent: D03
+    parent_type: contains
+  - id: ba-policy-optimization
+    kind: business_area
+    fields:
+      name: Logical Stock Configuration Optimization
+    parent: D03
+    parent_type: contains
+  - id: D05.a
+    kind: capability
+    fields:
+      name: Physical Stock Target Optimization
+    parent: ba-physical-stock-configuration-optimization
+    parent_type: contains
+  - id: D05.d
+    kind: capability
+    fields:
+      name: Logical Stock Protection Optimization
+    parent: ba-policy-optimization
+    parent_type: contains
+  - id: D05.h
+    kind: capability
+    fields:
+      name: Reservation Rule Optimization
+    parent: ba-policy-optimization
+    parent_type: contains

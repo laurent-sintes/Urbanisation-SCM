@@ -4518,6 +4518,8 @@ terms:
   - CMP190
   - U853
   - U903
+  - U910
+  - U911
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -4603,6 +4605,10 @@ terms:
     - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
     source_refs:
     - U853
+  context: Le [stock physique](model:D01) est la quantité réellement présente, indépendamment des droits d’usage. [Physical
+    Stock Target Optimization](model:D05.a) recommande des niveaux à viser ; [Stock Redistribution](model:D05.c) recommande
+    des transferts. Une cible ou un transfert décidé ne prouve pas un mouvement réalisé. La recommandation des cibles relève
+    de [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization).
 - id: TER041
   name: Stock logique
   short_description: Description des états métier du stock physique considéré.
@@ -4615,6 +4621,8 @@ terms:
   - U477
   - CMP190
   - U903
+  - U910
+  - U911
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -4693,6 +4701,11 @@ terms:
       - U477
       - ELM409
       - CMP190
+  context: 'Le stock logique décrit les états et droits d’usage du même stock physique : disponible, réservé, protégé ou bloqué
+    selon les règles et faits reconnus. [Logical Stock Protection Optimization](model:D05.d) et [Reservation Rule Optimization](model:D05.h)
+    recommandent des paramètres ; [Control Plane](model:subdomain-policies) tient les règles actives et [Inventory State Management](model:ba-inventory-position-management)
+    les quantités et réservations effectives. Ce n’est pas un second stock physique. La recommandation des droits d’usage
+    relève de [Logical Stock Configuration Optimization](model:ba-policy-optimization).'
 - id: TER042
   name: Stock virtuel
   short_description: Quantité considérée comme disponible selon un calcul.
@@ -11978,7 +11991,7 @@ terms:
 
     Le calcul fondé sur une cible détermine l’apport nécessaire quand la position passe sous le seuil. Exemple fictif : avec 50 pièces projetées, un seuil de 60 et une cible de 100, l’apport calculé est de 50. Un conditionnement par 12 conduit à examiner 60 pièces et leur excédent. Ce mécanisme n’impose pas une règle seuil de déclenchement et cible de réassort à toutes les situations.
 
-    [Inventory Target Optimization](model:D05.a) détermine les cibles et seuils ; [Supply Protection Policy](model:D02.b) tient les valeurs applicables ; [Replenishment](glossary:TER074) détermine les apports. Tenir compte des produits, lieux, périodes, stocks admissibles, arrivées à temps, engagements, protections et contraintes. Ne pas déduire deux fois une arrivée ni recompter un besoin déjà intégré dans la cible. Le calcul net fait partie de cette décision.
+    [Physical Stock Target Optimization](model:D05.a) détermine les cibles et seuils ; [Supply Protection Policy](model:D02.b) tient les valeurs applicables ; [Replenishment](glossary:TER074) détermine les apports. Tenir compte des produits, lieux, périodes, stocks admissibles, arrivées à temps, engagements, protections et contraintes. Ne pas déduire deux fois une arrivée ni recompter un besoin déjà intégré dans la cible. Le calcul net fait partie de cette décision.
 
     Ajuster aussi les apports existants : augmenter, réduire, avancer, reporter ou annuler ce qui peut l’être. Exemple fictif : la cible passe de 100 à 80, avec 30 pièces présentes et 70 attendues. Examiner une réduction ou un report de 20 ; si l’engagement fournisseur l’interdit, rendre l’excédent visible. La décision ne modifie pas automatiquement une commande ferme.
 
@@ -11990,7 +12003,7 @@ terms:
 
     [Master Planning](model:D05.f) mobilise cette décision dans ses scénarios. Les commandes portent les apports et changements autorisés ; [Supply Assignment](model:D03.o) choisit les affectations et [Plan Application](model:D02.e) les matérialise. [Fulfilment Orchestration](model:D06) coordonne la réalisation. Le résultat exprime quantités, dates, ajustements et manques ; il ne crée pas à lui seul une commande, une promesse ou une livraison. Une application automatique reste possible selon les règles et responsabilités autorisées. Le choix de l’assortiment, la planification commerciale, la prévision amont et la mise en rayon gardent leurs propres responsabilités.
 
-    Les unités et contraintes reçues dans [Product Reference](model:D08) et [Packaging Specification](model:packaging-specification) peuvent empêcher un apport exact. Examiner le multiple admissible, l’excédent, le délai et les engagements ; signaler une donnée périmée ou inconnue. Le moteur de calcul éventuel ne devient pas propriétaire des paramètres actifs ni des commandes qu’il recommande de modifier. Le périmètre [Supply Matching](model:ba-supply-matching) expose ces arbitrages avec priorités, protections et affectations.
+    Les unités et contraintes reçues dans [Product Reference](model:D08) et [Packaging Specification](model:packaging-specification) peuvent empêcher un apport exact. Examiner le multiple admissible, l’excédent, le délai et les engagements ; signaler une donnée périmée ou inconnue. Le moteur de calcul éventuel ne devient pas propriétaire des paramètres actifs ni des commandes qu’il recommande de modifier. Le périmètre [Demand / Supply Matching](model:ba-supply-matching) expose ces arbitrages avec priorités, protections et affectations.
   notes: |-
     [Replenishment](model:D05.e) intègre les calculs des besoins nets et détermine les quantités et dates à retenir. La décision, la mise à jour transactionnelle, les [Orders](glossary:TER012) nécessaires, leurs promesses et les mouvements physiques restent distincts. Une application automatique est possible ; aucune création directe de [Purchase Order](glossary:TER070) ni validation humaine systématique n’est présumée.
 
@@ -12014,6 +12027,7 @@ terms:
   - U853
   - U890
   - U891
+  - U910
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u221
@@ -12240,7 +12254,7 @@ terms:
 
       **Politique selon un seuil et une cible.** Déterminer l’apport lorsqu’une position de stock projetée passe sous le seuil applicable, pour retrouver la cible retenue. Exemple fictif : position projetée de 50, seuil de 60 et cible de 100 conduisent à proposer 50 en l’absence d’autres besoins ou restrictions. Si les apports doivent être des multiples de 12, examiner 60 et l’excédent associé. Il ne s’agit pas d’une formule Min/Max universelle.
 
-      [Inventory Target Optimization](model:D05.a) détermine les objectifs et seuils, qui peuvent dépendre des besoins et varier par produit, lieu et période ; ils ne sont pas présumés stables ou indépendants de la demande. [Supply Protection Policy](model:D02.b) gouverne et applique les versions opérationnelles de ces paramètres. Replenishment les utilise pour déterminer les quantités et dates d’apport. Les deux politiques ci-dessus ne forment pas une chaîne où les apports calculés par la première détermineraient les seuils de la seconde.
+      [Physical Stock Target Optimization](model:D05.a) détermine les objectifs et seuils, qui peuvent dépendre des besoins et varier par produit, lieu et période ; ils ne sont pas présumés stables ou indépendants de la demande. [Supply Protection Policy](model:D02.b) gouverne et applique les versions opérationnelles de ces paramètres. Replenishment les utilise pour déterminer les quantités et dates d’apport. Les deux politiques ci-dessus ne forment pas une chaîne où les apports calculés par la première détermineraient les seuils de la seconde.
 
       Dans les deux politiques, évaluer le stock admissible, les entrées attendues à temps, les actions déjà engagées et les contraintes. Préciser l’horizon, la maille et les règles d’admissibilité ; ne pas déduire deux fois des demandes déjà intégrées à une cible ou couvrir deux fois le même manque. Une décision intègre ses calculs ; aucune capacité Calculation autonome.
 
@@ -12256,7 +12270,7 @@ terms:
 
       Implantation initiale : Décider les apports d’[implantation](glossary:TER079) destinés à constituer le stock de départ de chaque magasin à la date de lancement. Chez Beaumanoir, les deux saisons été/hiver constituent le contexte rapporté ; collections, capsules ou périodes plus fines sont des extensions possibles, pas des pratiques actuelles déduites. Le résultat précise produits ou variantes, magasins, quantités, dates et éventuels besoins non couverts.
 
-      L’assortiment retenu, les objectifs de stock et les contraintes constituent les entrées. [Inventory Target Optimization](model:D05.a) conserve la détermination des cibles ; cette décision détermine les apports pour les atteindre au lancement. Examiner stock déjà présent et admissible, apports attendus à temps, conditionnements, protections et contraintes de disponibilité. Le calcul net fait partie de la décision ; ne pas compter deux fois les mêmes entrées.
+      L’assortiment retenu, les objectifs de stock et les contraintes constituent les entrées. [Physical Stock Target Optimization](model:D05.a) conserve la détermination des cibles ; cette décision détermine les apports pour les atteindre au lancement. Examiner stock déjà présent et admissible, apports attendus à temps, conditionnements, protections et contraintes de disponibilité. Le calcul net fait partie de la décision ; ne pas compter deux fois les mêmes entrées.
 
       Exemple fictif : pour un lancement au 1er mars, une cible de 100 pièces, 20 pièces admissibles déjà présentes et 30 attendues à temps laissent 50 pièces à apporter. Si seulement 40 peuvent être disponibles, expliciter le manque de 10 et les options à examiner ; ne pas annoncer implicitement une promesse ni modifier la cible sans mobiliser la décision responsable. Les tailles, couleurs et conditionnements peuvent contraindre le résultat sans constituer automatiquement des comportements supplémentaires.
 
@@ -16928,7 +16942,7 @@ terms:
 
     Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
 
-    Les [Business Areas](method:MOD039) se répondent : [Plan Visibility](model:subdomain-plans) interprète les prévisions ; [Policy Optimization](model:ba-policy-optimization) recommande cibles et paramètres ; [Order Promising](model:ba-order-promising) évalue les promesses ; [Supply Matching](model:ba-supply-matching) arbitre la couverture et ses adaptations ; [Master Plan Management](model:ba-master-plan-management) compose, révise et applique le plan commun. Leur lecture forme un ensemble de responsabilités, sans imposer une suite d’étapes. La profondeur métier se mesure aux décisions et aux cas couverts, pas au nombre de nœuds.
+    Les [Business Areas](method:MOD039) se répondent : [Plan Visibility](model:subdomain-plans) interprète les prévisions ; [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles ; [Logical Stock Configuration Optimization](model:ba-policy-optimization) recommande les droits d’usage ; [Order Promising](model:ba-order-promising) évalue les promesses ; [Demand / Supply Matching](model:ba-supply-matching) arbitre la couverture et ses adaptations ; [Master Plan Management](model:ba-master-plan-management) compose, révise et applique le plan commun. Leur lecture forme un ensemble de responsabilités, sans imposer une suite d’étapes. La profondeur métier se mesure aux décisions et aux cas couverts, pas au nombre de nœuds.
 
     Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
   notes: Availability exprime le résultat métier recherché. Le matching reste un mécanisme de rapprochement et d’arbitrage
@@ -17024,6 +17038,8 @@ terms:
   - U890
   - U891
   - U908
+  - U910
+  - U911
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u797
@@ -17273,7 +17289,7 @@ terms:
 
       Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
 
-      Cinq [Business Areas](method:MOD039) structurent ce sous-domaine : [Plan Visibility](model:subdomain-plans), [Order Promising](glossary:TER124), [Master Plan Management](glossary:TER133), [Supply Matching](glossary:TER134) et [Policy Optimization](glossary:TER135). [Plan Visibility](glossary:TER151) interprète les prévisions reçues ; les autres périmètres évaluent les promesses, arbitrent les affectations et adaptations et maintiennent le plan commun. Les capacités restent distinctes et conservent leurs responsabilités.
+      Six [Business Areas](method:MOD039) structurent ce sous-domaine : [Plan Visibility](model:subdomain-plans), [Order Promising](glossary:TER124), [Master Plan Management](glossary:TER133), [Demand / Supply Matching](glossary:TER134), [Physical Stock Configuration Optimization](glossary:TER202) et [Logical Stock Configuration Optimization](glossary:TER135). [Plan Visibility](glossary:TER151) interprète les prévisions reçues ; les autres périmètres évaluent les promesses, arbitrent les affectations et adaptations et maintiennent le plan commun. Les capacités restent distinctes et conservent leurs responsabilités.
 
       Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
     synthesis:
@@ -18219,24 +18235,12 @@ terms:
       source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information
 - id: TER124
   name: Order Promising
-  definition: Déterminer et réexaminer les propositions de quantités, dates et conditions de satisfaction des demandes.
-  short_description: Déterminer et réexaminer les propositions de quantités, dates et conditions de satisfaction des demandes.
-  context: |-
-    Proposer ne confirme pas un engagement de commande.
-
-    Bénéficiaire et résultat : Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
-
-    Exemple fictif : Proposer 60 pièces vendredi et 40 lundi ; la proposition ne devient un engagement que lors de sa confirmation dans la commande.
-
-    Construire les options de produit, site, date et prestation à partir des possibilités connues et autorisées. Une substitution exige une équivalence et une autorisation provenant du responsable commercial ; ni le stock disponible ni un meilleur coût ne les créent. [ATP](glossary:TER044) évalue les ressources admissibles, [CTP](glossary:TER045) la faisabilité d’un apport et [PTP](glossary:TER068) les compromis économiques. [Service Selection Decision](model:D06.e) choisit les prestations dans le respect de la promesse. Ces décisions composent une proposition, sans capacité de sélection supplémentaire.
-
-    Choisir une première proposition ou réexaminer une promesse existante lorsque les disponibilités, la demande ou les priorités changent. Expliciter quantités, dates, conditions, hypothèses et part non couverte ; distinguer date demandée, proposée et confirmée, expédition et réception. Les calendriers, fermetures, heures limites et fuseaux proviennent de leurs responsables. Les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068) se composent selon le besoin pour produire une proposition cohérente, sans séquence universelle ni trois réponses finales concurrentes. Si leurs résultats sont incompatibles, réexaminer les options ou expliciter la part non couverte. Respecter les protections et engagements lors du réexamen, y compris collectif : maintenir, reporter ou mettre en attente une demande reste soumis aux règles et autorisations. [Supply Assignment](glossary:TER017) conserve les arbitrages d’affectation dans le [master plan de matching](glossary:TER100). [Order Management](model:D04) porte la confirmation et les révisions autorisées ; aucune proposition ne confirme, ne réserve, ne réaffecte ou ne déclenche un achat automatiquement. Toute promesse ne nécessite pas un nouveau plan et tout changement d’état ne déclenche pas un recalcul. Proposer 60 pièces vendredi et 40 lundi ne crée pas deux commandes : [Order Structuring](model:D04.n) conserve cette responsabilité. [Service Selection Decision](model:D06.e) peut adapter les prestations sans modifier la promesse.
-
-    Évaluer aussi la cohérence de la commande entière : une possibilité par ligne ne prouve pas que toutes les lignes peuvent être servies ensemble. Respecter les dépendances entre lignes, la livraison complète ou partielle autorisée et les dates communes attendues. Présenter une proposition cohérente ou expliquer l’impossibilité ; aucun fractionnement de commande n’est implicite. [Order Structuring](model:D04.n) porte les restructurations autorisées.
-
-    Chaque proposition indique les hypothèses et conditions qui la rendent encore valable au moment de la confirmation. Si la ressource, la date ou une condition change pendant l’attente, réévaluer avant de confirmer. Une proposition ne protège aucune quantité par elle-même : une [réservation](model:D02.c), lorsqu’elle est requise et autorisée, possède ses propres conditions de libération ou d’expiration. Aucun délai fixe de validité n’est imposé.
-
-    L’absence de solution admissible est un résultat explicite : quantité non couverte, contrainte bloquante, options écartées et raison de leur rejet, information manquante éventuelle et condition de réexamen. Une information insuffisante ne prouve pas une impossibilité physique. Transmettre ce résultat à [Order Management](model:D04) pour maintenir la demande en attente, proposer une révision ou constater un refus selon les règles ; ne pas confirmer une promesse infaisable.
+  definition: Déterminer et réexaminer, pour une demande identifiée, les quantités, dates et conditions de satisfaction qui
+    peuvent être proposées sans confirmer encore un engagement.
+  short_description: Déterminer et réexaminer, pour une demande identifiée, les quantités, dates et conditions de satisfaction
+    qui peuvent être proposées sans confirmer encore un engagement.
+  context: '[Order Promising](model:ba-order-promising) répond à une demande identifiée ; [Demand / Supply Matching](model:ba-supply-matching)
+    arbitre la couverture globale des demandes connues et prévisionnelles.'
   notes: Périmètre de responsabilité U848 ; les capacités conservent leurs identités et leurs savoir-faire. La fiche détaillée
     est [Order Promising](model:ba-order-promising).
   source_refs:
@@ -18244,6 +18248,7 @@ terms:
   - U848
   - U853
   - U887
+  - U910
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u835
@@ -19155,26 +19160,23 @@ terms:
     source_refs:
     - U853
 - id: TER134
-  name: Supply Matching
-  definition: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations de ressources.
-  short_description: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
-    de ressources.
-  context: |-
-    Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Control Plane](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
-
-    [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
-
-    [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Policy Optimization](model:ba-policy-optimization) recommande cibles et paramètres ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
-
-    Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
+  name: Demand / Supply Matching
+  definition: Arbitrer la couverture de l’ensemble des demandes et besoins prévisionnels par les ressources présentes ou attendues,
+    la priorisation, les apports, les transferts et les affectations.
+  short_description: Arbitrer la couverture de l’ensemble des demandes et besoins prévisionnels par les ressources présentes
+    ou attendues, la priorisation, les apports, les transferts et les affectations.
+  context: '[Demand / Supply Matching](model:ba-supply-matching) rapproche le carnet de commandes, la prévision restante,
+    les ressources du réseau et les seuils actifs des magasins. [Order Promising](model:ba-order-promising) traite la proposition
+    pour une demande identifiée.'
   notes: Périmètre de responsabilité U848 ; les capacités conservent leurs identités et leurs savoir-faire. La fiche détaillée
-    est [Supply Matching](model:ba-supply-matching).
+    est [Demand / Supply Matching](model:ba-supply-matching).
   source_refs:
   - U848
   - U853
   - U890
   - U891
   - U908
+  - U910
   review:
     state: partial
     note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
@@ -19196,7 +19198,7 @@ terms:
       de ressources.
     definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
       de ressources.
-    term_choice: Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+    term_choice: Demand / Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
     scope_summary: Rapprocher les besoins et apports nécessaires.
     approach_summary: Des ordres planifiés ne valent pas affectation ni engagement confirmé.
     evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation installée
@@ -19221,7 +19223,7 @@ terms:
       de ressources.
     definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
       de ressources.
-    term_choice: Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+    term_choice: Demand / Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
     scope_summary: Affecter les ressources aux demandes selon des priorités.
     approach_summary: La Business Area FLOW englobe plusieurs décisions, pas uniquement la fonction d’affectation SAP.
     evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation installée
@@ -19304,72 +19306,142 @@ terms:
     term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
     definition_choice: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
   last_modified: '2026-10-07T00:00:00Z'
-- id: TER135
-  name: Policy Optimization
-  definition: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
-  short_description: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
-  context: |-
-    Les règles actives et leur validité demeurent dans Control Plane.
-
-    Bénéficiaire et résultat : Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
-
-    Exemple fictif : Recommander une protection de 20 pièces après comparaison des ruptures et surstocks ; Control Plane conserve la mise en vigueur de la règle.
-  notes: Périmètre de responsabilité U848 ; les capacités conservent leurs identités et leurs savoir-faire. La fiche détaillée
-    est [Policy Optimization](model:ba-policy-optimization).
+- id: TER202
+  name: Physical Stock Configuration Optimization
+  short_description: Recommander les niveaux cibles et seuils du stock physique par produit, nœud de stockage et période,
+    selon le service, les délais, les coûts et les risques.
+  definition: Recommander les niveaux cibles et seuils du stock physique par produit, nœud de stockage et période, selon le
+    service, les délais, les coûts et les risques.
+  context: '[Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les
+    cibles ; [Physical Stock Target Optimization](model:D05.a) les détermine. [Stock Redistribution](model:D05.c) décide des
+    transferts physiques et [Control Plane](model:subdomain-policies) tient les seuils actifs.'
+  notes: Aire proposée U911 pour rendre explicite la configuration cible du stock physique.
   source_refs:
-  - U848
-  - U853
-  - U908
+  - U911
   review:
-    state: partial
-    note: Libellé Control Plane aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
+    state: proposed
+    note: Terme proposé avec la nouvelle Business Area U911.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Supply Chain Management
-    source_title: Master planning home page
-    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
-    source_locator: Besoins nets, ordres planifiés et distinction des prévisions
-    source_version: Documentation en ligne consultée le 2026-10-06
-    consulted_on: '2026-10-06'
-    element_name: Master planning home page
-    concept_name: Master planning home page
+    source_title: Safety stock fulfillment for items
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/safety-stock-replenishment
+    source_version: Documentation en ligne, édition non indiquée
+    source_locator: 'Set the safety stock level for an item ; Example: Min/max coverage code'
+    consulted_on: '2026-10-09'
+    element_name: Minimum and maximum stock levels
+    concept_name: Minimum and maximum stock levels
     element_type: Fonction produit documentée
     relationship: Recouvrement partiel
-    similarities: Calculer les besoins selon les paramètres de protection.
-    differences: Le réglage des paramètres ne prouve pas leur optimisation ; la recommandation FLOW reste distincte.
-    flow_position: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
-    definition_choice: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
-    term_choice: Policy Optimization désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
-    scope_summary: Calculer les besoins selon les paramètres de protection.
-    approach_summary: Le réglage des paramètres ne prouve pas leur optimisation ; la recommandation FLOW reste distincte.
-    evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation installée
-      chez Beaumanoir.
+    similarities: Les minima et maxima sont définis par article et lieu et orientent la planification.
+    differences: La source décrit le réglage et le réapprovisionnement, pas une aire autonome d’optimisation physique.
+    flow_position: FLOW isole la recommandation des cibles physiques de leur activation et du déplacement des biens.
+    term_choice: Physical Stock Configuration Optimization désigne le périmètre FLOW ; aucune taxonomie commune aux éditeurs
+      n’est revendiquée.
+    definition_choice: FLOW isole la recommandation des cibles physiques de leur activation et du déplacement des biens.
+    scope_summary: Les minima et maxima sont définis par article et lieu et orientent la planification.
+    approach_summary: La source décrit le réglage et le réapprovisionnement, pas une aire autonome d’optimisation physique.
+    evidence_limits: Documentation primaire de produit ; elle ne démontre ni toute la décision FLOW ni une réalisation installée.
     status: proposed
     source_refs:
-    - U853
+    - U911
   - vendor: SAP
     product: SAP S/4HANA Retail
     source_title: Running Replenishment Planning
     source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/running-replenishment-planning_e456b0ed-3094-4056-9ba8-aa56cf6833ed
-    source_locator: Réapprovisionnement magasin, stock cible statique ou dynamique ; hors SAP CAR et F&R
-    source_version: Documentation en ligne consultée le 2026-10-06
-    consulted_on: '2026-10-06'
-    element_name: Running Replenishment Planning
-    concept_name: Running Replenishment Planning
+    source_version: Documentation en ligne, édition non indiquée
+    source_locator: Static and dynamic target stock determination ; requirement groups
+    consulted_on: '2026-10-09'
+    element_name: Target stock and reorder point
+    concept_name: Target stock and reorder point
     element_type: Fonction produit documentée
     relationship: Recouvrement partiel
-    similarities: Calculer des cibles de stock.
-    differences: Appui limité aux cibles ; pas de preuve d’une optimisation des politiques de réservation.
-    flow_position: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
-    definition_choice: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
-    term_choice: Policy Optimization désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
-    scope_summary: Calculer des cibles de stock.
-    approach_summary: Appui limité aux cibles ; pas de preuve d’une optimisation des politiques de réservation.
-    evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation installée
-      chez Beaumanoir.
+    similarities: Des cibles statiques ou dynamiques sont définies pour des articles et magasins.
+    differences: Le calcul de cible est intégré à un parcours de réapprovisionnement ; FLOW distingue la recommandation et
+      la règle active.
+    flow_position: FLOW recommande les cibles physiques sans attribuer à cette aire les transferts ni le réapprovisionnement.
+    term_choice: Physical Stock Configuration Optimization désigne le périmètre FLOW ; aucune taxonomie commune aux éditeurs
+      n’est revendiquée.
+    definition_choice: FLOW recommande les cibles physiques sans attribuer à cette aire les transferts ni le réapprovisionnement.
+    scope_summary: Des cibles statiques ou dynamiques sont définies pour des articles et magasins.
+    approach_summary: Le calcul de cible est intégré à un parcours de réapprovisionnement ; FLOW distingue la recommandation
+      et la règle active.
+    evidence_limits: Documentation primaire de produit ; elle ne démontre ni toute la décision FLOW ni une réalisation installée.
     status: proposed
     source_refs:
-    - U853
+    - U911
+- id: TER135
+  name: Logical Stock Configuration Optimization
+  definition: 'Recommander les droits d’usage du stock logique : protections de groupe et conditions de réservation, selon
+    les demandes, les engagements et les risques.'
+  short_description: 'Recommander les droits d’usage du stock logique : protections de groupe et conditions de réservation,
+    selon les demandes, les engagements et les risques.'
+  context: '[Logical Stock Configuration Optimization](model:ba-policy-optimization) recommande les protections de groupe
+    et les conditions de réservation. [Protection Policies](model:ba-protection-policies) présente les règles actives ; [Inventory
+    State Management](model:ba-inventory-position-management) tient les réservations effectives.'
+  notes: L’ancienne aire Stock Configuration Optimization couvrait physique et logique après U910 ; U911 sépare ces deux responsabilités.
+    La fiche détaillée est [Logical Stock Configuration Optimization](model:ba-policy-optimization).
+  source_refs:
+  - U848
+  - U853
+  - U908
+  - U910
+  - U911
+  review:
+    state: proposed
+    note: Périmètre logique séparé de la cible physique après U911.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    source_title: Inventory Visibility inventory allocation
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+    source_version: Documentation en ligne, édition non indiquée
+    source_locator: Allocation virtual pool ; allocation group ; oversell control
+    consulted_on: '2026-10-09'
+    element_name: Virtual allocation by group
+    concept_name: Virtual allocation by group
+    element_type: Fonction produit documentée
+    relationship: Recouvrement partiel
+    similarities: Des quantités accessibles à des canaux ou groupes sont suivies sans constituer de stocks physiques séparés.
+    differences: La source couvre aussi l’application et la consommation des allocations ; FLOW isole la recommandation des
+      droits.
+    flow_position: FLOW recommande les droits de groupe ; Control Plane les rend applicables et Inventory tient les engagements
+      individuels.
+    term_choice: Logical Stock Configuration Optimization désigne le périmètre FLOW ; aucune taxonomie commune aux éditeurs
+      n’est revendiquée.
+    definition_choice: FLOW recommande les droits de groupe ; Control Plane les rend applicables et Inventory tient les engagements
+      individuels.
+    scope_summary: Des quantités accessibles à des canaux ou groupes sont suivies sans constituer de stocks physiques séparés.
+    approach_summary: La source couvre aussi l’application et la consommation des allocations ; FLOW isole la recommandation
+      des droits.
+    evidence_limits: Documentation primaire de produit ; elle ne démontre ni toute la décision FLOW ni une réalisation installée.
+    status: proposed
+    source_refs:
+    - U911
+  - vendor: SAP
+    product: SAP S/4HANA aATP
+    source_title: Outlining aATP with Supply Protection (SuP)
+    source_url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-aatp-with-supply-protection-sup-
+    source_version: Documentation en ligne, édition non indiquée
+    source_locator: Protected quantities ; supply protection group ; product availability check
+    consulted_on: '2026-10-09'
+    element_name: Supply Protection
+    concept_name: Supply Protection
+    element_type: Fonction produit documentée
+    relationship: Recouvrement partiel
+    similarities: Des quantités sont protégées pour des groupes et prises en compte dans le contrôle de disponibilité.
+    differences: Le document décrit la protection et son usage dans aATP, pas une optimisation autonome des règles de réservation.
+    flow_position: FLOW distingue les droits recommandés, les règles actives et les réservations individuelles.
+    term_choice: Logical Stock Configuration Optimization désigne le périmètre FLOW ; aucune taxonomie commune aux éditeurs
+      n’est revendiquée.
+    definition_choice: FLOW distingue les droits recommandés, les règles actives et les réservations individuelles.
+    scope_summary: Des quantités sont protégées pour des groupes et prises en compte dans le contrôle de disponibilité.
+    approach_summary: Le document décrit la protection et son usage dans aATP, pas une optimisation autonome des règles de
+      réservation.
+    evidence_limits: Documentation primaire de produit ; elle ne démontre ni toute la décision FLOW ni une réalisation installée.
+    status: proposed
+    source_refs:
+    - U911
 - id: TER136
   name: Order Lifecycle Management
   definition: Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer leur état.
@@ -21762,10 +21834,14 @@ terms:
   name: Protection Policies
   definition: Maintenir les règles actives de protection des ressources et des demandes dans les arbitrages de couverture.
   short_description: Maintenir les règles actives de protection des ressources et des demandes dans les arbitrages de couverture.
-  context: 'Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations.
-    Exemple fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.'
+  context: '[Protection Policies](model:ba-protection-policies) présente les règles applicables sous autorité du [Control
+    Plane](model:subdomain-policies). [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization)
+    et [Logical Stock Configuration Optimization](model:ba-policy-optimization) recommandent des changements, sans modifier
+    les règles actives.'
   source_refs:
   - U880
+  - U910
+  - U911
   review:
     state: proposed
     note: Application de la règle U880 ; noms et descriptions des regroupements proposés, sans accord implicite.
@@ -23278,7 +23354,7 @@ terms:
 
     Distinguer événement survenu et événement reçu, tentative et résultat, zéro et donnée absente. Un chemin non observé ne peut être reconstitué avec certitude ; une corrélation n’établit pas une causalité. Une [Task](glossary:TER089) peut mobiliser plusieurs services et un dossier plusieurs commandes, sans correspondance un pour un. Les identifiants et dates exploitables sont un préalable.
 
-    [Process Visibility](glossary:TER175) explique un parcours courant ; [Process Mining](glossary:TER173) analyse les parcours observés et inclut leurs mesures de performance. Aucune capacité Process Performance Analysis concurrente. Les décisions d’amélioration et leurs autorisations restent chez leurs responsables.
+    [Process, Tasks & Order Visibility](glossary:TER175) explique un parcours courant ; [Process Mining](glossary:TER173) analyse les parcours observés et inclut leurs mesures de performance. Aucune capacité Process Performance Analysis concurrente. Les décisions d’amélioration et leurs autorisations restent chez leurs responsables.
 
     Exemple fictif : découvrir deux variantes de validation, isoler l’attente avant prise en charge et vérifier si une réaffectation autorisée réduit cette attente.
   notes: Périmètre aligné avec la fiche [référente](model:process-mining). Cible U884 appliquée U885 ; rédaction détaillée
@@ -23404,6 +23480,7 @@ terms:
   - U883
   - U884
   - U885
+  - U909
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
@@ -23414,7 +23491,7 @@ terms:
   short_description: Explorer les informations opérationnelles et partager des restitutions de pilotage fondées sur des indicateurs
     explicites.
   context: |-
-    Filtrer, regrouper et comparer commandes, prestations, parcours et travail humain ; enregistrer et partager les vues utiles. Consommer les mesures de [Process Mining](glossary:TER173) et les connaissances d’[Order Visibility](model:order-visibility) et [Operations Visibility](glossary:TER178). Donner la population, la formule, la période, la fraîcheur et la version des indicateurs ; revenir aux dossiers à l’origine d’un résultat.
+    Filtrer, regrouper et comparer commandes, prestations, parcours et travail humain ; enregistrer et partager les vues utiles. Consommer les mesures de [Process Mining](glossary:TER173) et les connaissances d’[Process, Tasks & Order Visibility](model:BHV082) et [Operations Visibility](glossary:TER178). Donner la population, la formule, la période, la fraîcheur et la version des indicateurs ; revenir aux dossiers à l’origine d’un résultat.
 
     Préserver les droits d’accès et éviter le double comptage des contributions liées. Distinguer information absente et absence de retard. La responsabilité métier ne se réduit ni à un éditeur de graphiques ni à une requête technique ; l’administration de la plateforme de données reste distincte.
 
@@ -23540,26 +23617,29 @@ terms:
   - U883
   - U884
   - U885
+  - U909
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
 - id: TER175
-  name: Process Visibility
-  definition: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et blocages à partir
-    des faits corrélés.
-  short_description: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et blocages
-    à partir des faits corrélés.
+  name: Process, Tasks & Order Visibility
+  definition: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+    en distinguant faits, engagements, attentes et restes à satisfaire.
+  short_description: Voir ensemble la progression d’un parcours Supply, ses tâches et ses commandes encore à satisfaire.
   context: |-
-    Relier les activités du parcours, les contributions humaines, les commandes et les prestations pour rendre explicites les résultats acquis, les attentes, les échecs et les conditions de poursuite. Une [Task](glossary:TER089) peut mobiliser plusieurs services ; la corrélation ne suppose ni un appel unique ni une correspondance un pour un. Le suivi concerne aussi la progression normale et les décisions attendues.
+    Relier les activités du parcours, les [Tasks](glossary:TER089), les [Orders](glossary:TER012) et les prestations pour expliquer ce qui a abouti, ce qui attend une contribution humaine ou externe et ce qui bloque la suite. Une Task peut mobiliser plusieurs services ; un parcours peut relier plusieurs commandes. La corrélation n’impose ni appel unique ni correspondance un pour un.
 
-    Distinguer un appel accepté, une prestation terminée, un résultat métier reconnu et un parcours achevé. Une nouvelle tentative reste liée à sa demande d’origine. Une absence de réponse ne prouve ni refus ni absence de réalisation. Conserver origine, dates, fraîcheur, corrections et inconnues, sans inventer l’état d’un service externe.
+    Pour chaque Order et pour le carnet, restituer le demandé, le proposé, le confirmé, le réalisé imputé et le reste à satisfaire, avec version, origine et fraîcheur. Distinguer [affermissement](glossary:TER197), gel, autorisation, suspension et clôture. Les familles d’Orders et [Order Management](model:D04) tiennent ces états, engagements et transitions ; cette visibilité les lit sans modifier les commandes, rapprocher à nouveau les faits, recalculer la promesse ou enregistrer un mouvement de stock. L’historique reste consultable sans réactiver une demande.
 
-    Exemple fictif : une pièce d’expédition est produite, mais son dépôt reste en attente ; la préparation physique est achevée et une vérification humaine demeure nécessaire. Présenter séparément chaque résultat et son effet sur la suite. Un contrôle antifraude techniquement terminé peut aussi laisser une décision métier attendue ; la visibilité ne décide pas d’accepter le risque.
+    Distinguer une tâche prise en charge, un appel accepté, une prestation achevée, un résultat métier reconnu et un parcours terminé. Une nouvelle tentative garde le lien avec sa demande d’origine. L’absence de réponse ne prouve ni refus ni absence de réalisation. Montrer origine, dates, corrections et inconnues sans inventer l’état d’un service externe.
 
-    [Operations Visibility](glossary:TER178) décrit les prestations via les perspectives entrepôt, transport et magasin. [Process Orchestration](glossary:TER129) fournit les activités et attentes connues ; [Human Task Management](glossary:TER170) fournit leur prise en charge et leurs résultats humains. [Operations Tracking](glossary:TER179) conserve la captation des faits de prestation. Les faits sont corrélés, sans créer un registre concurrent.
+    Exemples fictifs : une commande de 100 pièces comporte 60 confirmées, dont 40 réalisées ; afficher séparément les 20 confirmées encore à servir et les 40 non confirmées. Dans le même parcours, la préparation physique peut être terminée alors qu’une pièce d’expédition et une vérification humaine restent attendues. Ces situations ne donnent pas à la visibilité le pouvoir de confirmer la commande ou d’accepter un risque.
 
-    La capacité appartient à [Process Supervision](glossary:TER165), dans [Process Management](glossary:TER164). Elle peut expliquer un parcours reliant plusieurs demandes, sans prendre la responsabilité de leurs engagements. [Fulfilment Coordination](glossary:TER176) coordonne les prestations confiées et [Fulfilment Adaptation Decision](glossary:TER177) choisit les adaptations locales ; la visibilité ne les décide pas. Le suivi de tous les processus de l’entreprise reste hors périmètre. Aucun moteur, instrumentation uniforme ou temps réel général n’est imposé.
-  notes: Périmètre aligné avec la fiche [référente](model:BHV082). Cible U884 appliquée U885 ; rédaction détaillée proposée.
+    [Process Orchestration](glossary:TER129) fournit les activités et attentes connues ; [Human Task Management](glossary:TER170) fournit la prise en charge et les résultats humains ; [Operations Visibility](glossary:TER178) décrit les prestations physiques et [Operations Tracking](glossary:TER179) capte leurs faits. La capacité corrèle ces apports sans créer un registre concurrent. [Fulfilment Coordination](glossary:TER176) coordonne les prestations confiées et [Fulfilment Adaptation Decision](glossary:TER177) choisit leurs adaptations locales.
+
+    La capacité appartient à [Process Supervision](glossary:TER165), dans [Process Management](glossary:TER164). Elle expose aussi les attentes et engagements des commandes sans en prendre l’autorité. Le suivi de tous les processus de l’entreprise reste hors périmètre. Aucun moteur, instrumentation uniforme ou temps réel général n’est imposé.
+  notes: Périmètre aligné avec la fiche [référente](model:BHV082). U909 fusionne Order Visibility dans cette capacité ; les
+    anciens accords restent historiques.
   market_comparisons:
   - vendor: SAP
     product: SAP S/4HANA — Flexible Workflow
@@ -23570,8 +23650,8 @@ terms:
     similarities: Intégration avec Process Visibility pour performance et étranglements ; définitions standard et ad hoc.
     differences: La documentation décrit une intégration avec un service distinct ; ne pas présenter toute cette analyse comme
       native de tout S/4HANA.
-    flow_position: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et blocages
-      à partir des faits corrélés.
+    flow_position: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+      en distinguant faits, engagements, attentes et restes à satisfaire.
     scope_summary: Intégration avec Process Visibility pour performance et étranglements ; définitions standard et ad hoc.
     approach_summary: Appui à une responsabilité métier indépendante du produit ; pas de nomenclature commune présumée.
     source_title: Flexible Workflow Components
@@ -23585,10 +23665,9 @@ terms:
     source_refs:
     - U881
     - U885
-    term_choice: Process Visibility nomme le résultat et le périmètre FLOW ; le nom n’est pas présenté comme une appellation
-      native commune.
-    definition_choice: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et blocages
-      à partir des faits corrélés.
+    term_choice: Nom choisi par Laurent pour FLOW ; comparaison partielle, sans taxonomie commune.
+    definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+      en distinguant faits, engagements, attentes et restes à satisfaire.
   - vendor: Microsoft
     product: Dynamics 365 Finance & Operations
     element_name: View workflow history
@@ -23597,8 +23676,8 @@ terms:
     relationship: Recouvrement partiel
     similarities: Historique, état, temps écoulé, reprise et rappel du workflow ; tâches et réaffectation.
     differences: Workflow documentaire ; le rappel n’est pas équivalent à toute annulation métier.
-    flow_position: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et blocages
-      à partir des faits corrélés.
+    flow_position: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+      en distinguant faits, engagements, attentes et restes à satisfaire.
     scope_summary: Historique, état, temps écoulé, reprise et rappel du workflow ; tâches et réaffectation.
     approach_summary: Appui à une responsabilité métier indépendante du produit ; pas de nomenclature commune présumée.
     source_title: View workflow history
@@ -23612,10 +23691,9 @@ terms:
     source_refs:
     - U881
     - U885
-    term_choice: Process Visibility nomme le résultat et le périmètre FLOW ; le nom n’est pas présenté comme une appellation
-      native commune.
-    definition_choice: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et blocages
-      à partir des faits corrélés.
+    term_choice: Nom choisi par Laurent pour FLOW ; comparaison partielle, sans taxonomie commune.
+    definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+      en distinguant faits, engagements, attentes et restes à satisfaire.
   - vendor: Camunda
     product: Camunda Optimize
     element_name: What is Optimize?
@@ -23625,8 +23703,8 @@ terms:
     similarities: Analyser les données d’exécution, les étranglements et les rapports pour améliorer les processus.
     differences: Composant produit, pas modèle de responsabilités métier ; pas de garantie de couverture des activités externes
       non instrumentées.
-    flow_position: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et blocages
-      à partir des faits corrélés.
+    flow_position: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+      en distinguant faits, engagements, attentes et restes à satisfaire.
     scope_summary: Analyser les données d’exécution, les étranglements et les rapports pour améliorer les processus.
     approach_summary: Appui à une responsabilité métier indépendante du produit ; pas de nomenclature commune présumée.
     source_title: What is Optimize?
@@ -23640,19 +23718,72 @@ terms:
     source_refs:
     - U881
     - U885
-    term_choice: Process Visibility nomme le résultat et le périmètre FLOW ; le nom n’est pas présenté comme une appellation
-      native commune.
-    definition_choice: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et blocages
-      à partir des faits corrélés.
+    term_choice: Nom choisi par Laurent pour FLOW ; comparaison partielle, sans taxonomie commune.
+    definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+      en distinguant faits, engagements, attentes et restes à satisfaire.
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Procurement and sourcing workflows
+    concept_name: Procurement and sourcing workflows
+    element_type: Mécanisme ou concept documenté par une source primaire
+    relationship: Recouvrement partiel
+    similarities: Les workflows de commande d’achat relient document, tâches, approbations, statut et historique.
+    differences: Périmètre des workflows d’approvisionnement ; pas une vue unique de tous les Orders et parcours Supply FLOW.
+    flow_position: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+      en distinguant faits, engagements, attentes et restes à satisfaire.
+    scope_summary: Les workflows de commande d’achat relient document, tâches, approbations, statut et historique.
+    approach_summary: Appui partiel à une lecture conjointe ; aucune équivalence de capacité ou réalisation FLOW déduite.
+    source_title: Procurement and sourcing workflows
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-workflows
+    source_version: Documentation consultée le 2026-10-09
+    source_locator: Benefits of using the workflow system ; purchase order workflow
+    consulted_on: '2026-10-09'
+    evidence_limits: Périmètre des workflows d’approvisionnement ; pas une vue unique de tous les Orders et parcours Supply
+      FLOW.
+    status: proposed
+    source_refs:
+    - U909
+    term_choice: Nom choisi par Laurent pour FLOW ; pas de dénomination commune établie chez les éditeurs.
+    definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+      en distinguant faits, engagements, attentes et restes à satisfaire.
+  - vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition
+    element_name: Using Sales Order Fulfillment Monitoring and Operations (BKK)
+    concept_name: Using Sales Order Fulfillment Monitoring and Operations (BKK)
+    element_type: Mécanisme ou concept documenté par une source primaire
+    relationship: Recouvrement partiel
+    similarities: Le flux de traitement montre les étapes, documents liés, statuts et problèmes de satisfaction de la commande
+      client.
+    differences: Cas de vente et suivi des exceptions ; ne couvre pas à lui seul toutes les familles d’Orders ni les Tasks
+      FLOW.
+    flow_position: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+      en distinguant faits, engagements, attentes et restes à satisfaire.
+    scope_summary: Le flux de traitement montre les étapes, documents liés, statuts et problèmes de satisfaction de la commande
+      client.
+    approach_summary: Appui partiel à une lecture conjointe ; aucune équivalence de capacité ou réalisation FLOW déduite.
+    source_title: Using Sales Order Fulfillment Monitoring and Operations (BKK)
+    source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sales-automation-and-analytics/using-sales-order-fulfillment-monitoring-and-operations-bkk-_bc5cf72d-0812-4352-a6d6-e5a8e4fa6513
+    source_version: Documentation consultée le 2026-10-09
+    source_locator: Issues with the process flow ; Key process steps ; Monitoring process
+    consulted_on: '2026-10-09'
+    evidence_limits: Cas de vente et suivi des exceptions ; ne couvre pas à lui seul toutes les familles d’Orders ni les Tasks
+      FLOW.
+    status: proposed
+    source_refs:
+    - U909
+    term_choice: Nom choisi par Laurent pour FLOW ; pas de dénomination commune établie chez les éditeurs.
+    definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+      en distinguant faits, engagements, attentes et restes à satisfaire.
   review:
     state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: 'U909 : fusion et nom demandés ; rédaction détaillée proposée.'
   source_refs:
   - U881
   - U882
   - U883
   - U884
   - U885
+  - U909
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
@@ -23671,7 +23802,7 @@ terms:
 
     Frontière : Décision [Fulfilment Adaptation Decision](model:D06.f) séparée ; pas de rollback physique ni seconde promesse.
 
-    Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. [Fulfilment Coordination](glossary:TER176) coordonne la progression ; [Fulfilment Adaptation Decision](glossary:TER177) choisit les adaptations ; [Operations Tracking](glossary:TER179) intègre les faits d’exécution ; [Operations Visibility](glossary:TER178) restitue leur avancement et [Process Visibility](glossary:TER175) en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun produit logiciel particulier ou nouveau niveau descriptif imposé.
+    Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. [Fulfilment Coordination](glossary:TER176) coordonne la progression ; [Fulfilment Adaptation Decision](glossary:TER177) choisit les adaptations ; [Operations Tracking](glossary:TER179) intègre les faits d’exécution ; [Operations Visibility](glossary:TER178) restitue leur avancement et [Process, Tasks & Order Visibility](glossary:TER175) en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun produit logiciel particulier ou nouveau niveau descriptif imposé.
 
     Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Availability](glossary:TER112).
 
@@ -23829,6 +23960,7 @@ terms:
   - U883
   - U884
   - U885
+  - U909
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
@@ -23985,9 +24117,9 @@ terms:
   short_description: Rendre visibles l’avancement, les résultats et les attentes des prestations Supply à partir des faits
     intégrés.
   context: |-
-    Consolider les faits, jalons, estimations et résultats acquis, partiels ou en échec reçus par [Operations Tracking](model:D07.d). Distinguer fait, engagement et estimation, expliciter origine, fraîcheur et informations absentes. Présenter les perspectives entrepôt, transport et magasin sans imposer un cycle commun aux services. Les exécutants conservent leurs opérations internes ; Orchestration coordonne, Adaptation Decision choisit les adaptations et [Service Management](model:subdomain-service-orders) tient les engagements. [Inventory Visibility](model:D01.c) restitue les positions de stock et les ressources attendues. Exemple fictif : une prestation documentaire est en échec tandis que le transport est achevé ; exposer séparément leurs résultats et les attentes propres aux prestations. Leur effet sur la suite du parcours est expliqué par [Process Visibility](glossary:TER175).
+    Consolider les faits, jalons, estimations et résultats acquis, partiels ou en échec reçus par [Operations Tracking](model:D07.d). Distinguer fait, engagement et estimation, expliciter origine, fraîcheur et informations absentes. Présenter les perspectives entrepôt, transport et magasin sans imposer un cycle commun aux services. Les exécutants conservent leurs opérations internes ; Orchestration coordonne, Adaptation Decision choisit les adaptations et [Service Management](model:subdomain-service-orders) tient les engagements. [Inventory Visibility](model:D01.c) restitue les positions de stock et les ressources attendues. Exemple fictif : une prestation documentaire est en échec tandis que le transport est achevé ; exposer séparément leurs résultats et les attentes propres aux prestations. Leur effet sur la suite du parcours est expliqué par [Process, Tasks & Order Visibility](glossary:TER175).
 
-    [Process Visibility](glossary:TER175) porte désormais le parcours complet dans [Process Supervision](glossary:TER165). [Operations Visibility](glossary:TER178) conserve la connaissance de réalisation des prestations et la transmet pour cette lecture. Un résultat de prestation ne prouve pas que toutes les conditions du parcours sont remplies.
+    [Process, Tasks & Order Visibility](glossary:TER175) porte désormais le parcours complet dans [Process Supervision](glossary:TER165). [Operations Visibility](glossary:TER178) conserve la connaissance de réalisation des prestations et la transmet pour cette lecture. Un résultat de prestation ne prouve pas que toutes les conditions du parcours sont remplies.
   notes: Périmètre aligné avec la fiche [référente](model:operations-visibility). Cible U884 appliquée U885 ; rédaction détaillée
     proposée.
   market_comparisons:
@@ -24233,6 +24365,7 @@ terms:
   - U884
   - U885
   - U887
+  - U909
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
@@ -24245,7 +24378,7 @@ terms:
   context: |-
     Reconnaître origine, date, prestation, résultat métier et corrections ; distinguer estimation, engagement et constat. Capter les retours des opérations physiques et services distants, y compris documentaires et d’encaissement. Une fin technique ne prouve pas un résultat métier réussi. Alimenter [Operations Visibility](model:operations-visibility) pour l’avancement et les résultats et [Inventory Visibility](model:D01.c) pour les ressources futures. Les doublons, retours tardifs, réalisations partielles et échecs restent identifiables. Exemple fictif : recevoir deux notifications identiques de fin de transport et n’intégrer qu’un fait métier. La restitution, la coordination, l’adaptation et la tenue des engagements restent distinctes.
 
-    Ces faits contribuent au suivi du parcours. [Process Visibility](glossary:TER175) les rapproche des activités et attentes du processus ; leur captation ne crée pas un second état global du parcours.
+    Ces faits contribuent au suivi du parcours. [Process, Tasks & Order Visibility](glossary:TER175) les rapproche des activités et attentes du processus ; leur captation ne crée pas un second état global du parcours.
   notes: Périmètre aligné avec la fiche [référente](model:D07.d). Cible U884 appliquée U885 ; rédaction détaillée proposée.
   market_comparisons:
   - vendor: GS1
@@ -24491,6 +24624,7 @@ terms:
   - U884
   - U885
   - U887
+  - U909
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
@@ -26468,11 +26602,12 @@ terms:
   short_description: Occurrence identifiée d’un processus en cours ou terminé, avec état, activités et événements corrélés.
   context: La définition décrit comment travailler ; l’instance décrit une exécution particulière. Un [Case](glossary:TER064)
     peut mobiliser plusieurs instances et évolutions de parcours ; aucune identité commune obligatoire. Le [parcours de mobilisation](method:MOD028)
-    d’un scénario Atlas décrit un usage, sans constituer une exécution. [Process Visibility](model:BHV082) rapproche les états
-    et les traces ; les actes restent sous leur mandat.
+    d’un scénario Atlas décrit un usage, sans constituer une exécution. [Process, Tasks & Order Visibility](model:BHV082)
+    rapproche les états et les traces ; les actes restent sous leur mandat.
   source_refs:
   - U902
   - U903
+  - U909
   review:
     state: proposed
     note: Complément rédigé pour appliquer l’audit accepté U903 ; appuis primaires partiels explicités.
@@ -26504,8 +26639,8 @@ terms:
     term_choice: Process Instance précise le sens FLOW ; les limites du rapprochement figurent dans chaque comparaison.
     approach_summary: La définition décrit comment travailler ; l’instance décrit une exécution particulière. Un [Case](glossary:TER064)
       peut mobiliser plusieurs instances et évolutions de parcours ; aucune identité commune obligatoire. Le [parcours de
-      mobilisation](method:MOD028) d’un scénario Atlas décrit un usage, sans constituer une exécution. [Process Visibility](model:BHV082)
-      rapproche les états et les traces ; les actes restent sous leur mandat.
+      mobilisation](method:MOD028) d’un scénario Atlas décrit un usage, sans constituer une exécution. [Process, Tasks & Order
+      Visibility](model:BHV082) rapproche les états et les traces ; les actes restent sous leur mandat.
   - vendor: SAP
     product: SAP S/4HANA Cloud Public Edition
     element_name: Workflow Administration
@@ -26532,8 +26667,8 @@ terms:
     term_choice: Process Instance précise le sens FLOW ; les limites du rapprochement figurent dans chaque comparaison.
     approach_summary: La définition décrit comment travailler ; l’instance décrit une exécution particulière. Un [Case](glossary:TER064)
       peut mobiliser plusieurs instances et évolutions de parcours ; aucune identité commune obligatoire. Le [parcours de
-      mobilisation](method:MOD028) d’un scénario Atlas décrit un usage, sans constituer une exécution. [Process Visibility](model:BHV082)
-      rapproche les états et les traces ; les actes restent sous leur mandat.
+      mobilisation](method:MOD028) d’un scénario Atlas décrit un usage, sans constituer une exécution. [Process, Tasks & Order
+      Visibility](model:BHV082) rapproche les états et les traces ; les actes restent sous leur mandat.
 - id: TER201
   name: Process Measures
   label_fr: Mesures de processus
@@ -26680,6 +26815,22 @@ terms:
       élément encore ouvert. Ces mesures ne s’additionnent pas automatiquement : activités parallèles et événements manquants
       peuvent invalider le calcul. [Process Mining](model:process-mining) analyse les [instances](glossary:TER200) documentées
       ; il distingue résultat mesuré et inconnue.'
+- id: TER203
+  name: Univers
+  short_description: Vue d’ensemble du SI Beaumanoir cible et de ses systèmes métier.
+  definition: Représentation du SI Beaumanoir cible qui réunit les systèmes métier et permet de parcourir leurs responsabilités,
+    domaines, sous-domaines, capacités et comportements documentés.
+  context: L’Univers décrit une cible. Il ne recense pas les applications déjà installées et ne prouve pas leur couverture.
+    Les trois systèmes métier qui le composent sont Design & Development, Business Operations et Enterprise Management & Control.
+  source_refs:
+  - U912
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u912
+  review:
+    state: partial
+    adopted_scope: Existence et sens de l’Univers comme SI Beaumanoir cible.
+    proposed_scope: Formulation de la définition et du contexte.
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées. as_of indique la date du dernier lot éditorial appliqué
   au brouillon, sans modifier les dates des publications figées.

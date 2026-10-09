@@ -17,7 +17,7 @@ export function usePublication(version?: string): PublicationState & { reload: (
     });
     void client.setVersion(versionRef.current);
     const check = () => { if (!document.hidden) void client.check(); };
-    const timer = window.setInterval(check, 5000);
+    const timer = window.setInterval(check, 60000);
     document.addEventListener('visibilitychange', check);
     window.addEventListener('online', check);
     return () => {

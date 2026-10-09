@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { adaptPublication, rootsOf, cardChildListOf, lineageOf, hasCapabilityCards } from './src/model.ts';
+import { adaptPublication, rootsOf, childrenOf, cardChildListOf, lineageOf, hasCapabilityCards } from './src/model.ts';
 import { dependencyLevels, dependencyLevel, projectDependencies } from './src/dependencyGraph.ts';
 import { kindLabel, modelingDepthLabel } from './src/presentation.ts';
 import { readRoute, routeHash } from './src/navigation.ts';
@@ -53,4 +53,15 @@ test('historical publications keep roots and fallback for a shared system-level 
   assert.equal(rootsOf(historical)[0].id, 'domain');
   assert.equal(dependencyLevels(historical).some(l => l.value === 'business_system'), false);
   assert.equal(dependencyLevel(historical, 'business_system'), 'domain');
+});
+
+test('published Universe is the navigable root above the systems', () => {
+  const model = adaptPublication({ space: 'release', version: 'universe-fixture',
+    nodes: [node('universe', 'universe'), node('design', 'business_system'), node('operations', 'business_system'), node('control', 'business_system'), node('orchestration', 'domain'), node('orders', 'area'), node('order', 'capability')],
+    relations: [edge('u-design', 'contains', 'universe', 'design'), edge('u-operations', 'contains', 'universe', 'operations'), edge('u-control', 'contains', 'universe', 'control'), edge('o-domain', 'presents', 'operations', 'orchestration'), edge('domain-area', 'presents', 'orchestration', 'orders'), edge('area-cap', 'contains', 'orders', 'order')],
+  });
+  assert.deepEqual(rootsOf(model).map(n => n.id), ['universe']);
+  assert.deepEqual(childrenOf(model, 'universe').map(n => n.id), ['design', 'operations', 'control']);
+  assert.deepEqual(lineageOf(model, 'order').map(n => n.id), ['universe', 'operations', 'orchestration', 'orders', 'order']);
+  assert.equal(kindLabel(model.nodeById.get('universe')), 'Univers');
 });

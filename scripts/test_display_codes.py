@@ -17,6 +17,17 @@ def fixture():
 
 
 class DisplayCodeTests(unittest.TestCase):
+    def test_universe_receives_its_own_stable_code(self):
+        model = fixture()
+        model['nodes'].insert(0, dict(id='universe', kind='universe', fields=dict(name='Univers'), revision=1,
+                                      source_refs=[], review=dict(state='proposed', note='fixture')))
+        model['relations'].append(dict(id='universe-root', type='contains', source_id='universe', target_id='root',
+                                       revision=1, source_refs=[], review=dict(state='proposed', note='fixture')))
+        index = build_display_index(model)
+        self.assertEqual(index['roots'], ['universe'])
+        self.assertEqual(index['codes']['universe'], 'UNI-001')
+        self.assertEqual(index['codes']['root'], 'DOM-001')
+
     def test_compilation_freezes_order_without_changing_identity(self):
         model = fixture(); before = deepcopy(model)
         result = compile_snapshot(model, {'decisions': []}, '2026-09-26.99', [])
@@ -54,3 +65,14 @@ class DisplayCodeTests(unittest.TestCase):
         new = build_display_index(model)
         self.assertEqual(new['codes']['action'], 'CAP-001')
         self.assertEqual(old['codes']['decision'], 'CAP-001')
+
+    def test_explicit_sibling_order_overrides_nature_without_changing_old_snapshots(self):
+        model = fixture()
+        model['nodes'][1]['kind'] = 'business_area'
+        self.assertEqual(build_display_index(model)['children']['area'], ['action', 'decision'])
+        model['nodes'][2]['fields']['reading_order'] = 1
+        model['nodes'][3]['fields']['reading_order'] = 2
+        self.assertEqual(build_display_index(model)['children']['area'], ['decision', 'action'])
+        del model['nodes'][3]['fields']['reading_order']
+        with self.assertRaisesRegex(ValueError, 'incomplete reading order'):
+            build_display_index(model)

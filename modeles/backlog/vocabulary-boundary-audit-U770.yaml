@@ -1918,7 +1918,7 @@ publication_delivery:
 
         Le calcul fondé sur une cible détermine l’apport nécessaire quand la position passe sous le seuil. Exemple fictif : avec 50 pièces projetées, un seuil de 60 et une cible de 100, l’apport calculé est de 50. Un conditionnement par 12 conduit à examiner 60 pièces et leur excédent. Ce mécanisme n’impose pas une règle seuil de déclenchement et cible de réassort à toutes les situations.
 
-        [Inventory Target Optimization](model:D05.a) détermine les cibles et seuils ; [Supply Protection Policy](model:D02.b) tient les valeurs applicables ; [Replenishment](glossary:TER074) détermine les apports. Tenir compte des produits, lieux, périodes, stocks admissibles, arrivées à temps, engagements, protections et contraintes. Ne pas déduire deux fois une arrivée ni recompter un besoin déjà intégré dans la cible. Le calcul net fait partie de cette décision.
+        [Physical Stock Target Optimization](model:D05.a) détermine les cibles et seuils ; [Supply Protection Policy](model:D02.b) tient les valeurs applicables ; [Replenishment](glossary:TER074) détermine les apports. Tenir compte des produits, lieux, périodes, stocks admissibles, arrivées à temps, engagements, protections et contraintes. Ne pas déduire deux fois une arrivée ni recompter un besoin déjà intégré dans la cible. Le calcul net fait partie de cette décision.
 
         Ajuster aussi les apports existants : augmenter, réduire, avancer, reporter ou annuler ce qui peut l’être. Exemple fictif : la cible passe de 100 à 80, avec 30 pièces présentes et 70 attendues. Examiner une réduction ou un report de 20 ; si l’engagement fournisseur l’interdit, rendre l’excédent visible. La décision ne modifie pas automatiquement une commande ferme.
 
@@ -1930,13 +1930,13 @@ publication_delivery:
 
         [Master Planning](model:D05.f) mobilise cette décision dans ses scénarios. Les commandes portent les apports et changements autorisés ; [Supply Assignment](model:D03.o) choisit les affectations et [Plan Application](model:D02.e) les matérialise. [Fulfilment Orchestration](model:D06) coordonne la réalisation. Le résultat exprime quantités, dates, ajustements et manques ; il ne crée pas à lui seul une commande, une promesse ou une livraison. Une application automatique reste possible selon les règles et responsabilités autorisées. Le choix de l’assortiment, la planification commerciale, la prévision amont et la mise en rayon gardent leurs propres responsabilités.
 
-        Les unités et contraintes reçues dans [Product Reference](model:D08) et [Packaging Specification](model:packaging-specification) peuvent empêcher un apport exact. Examiner le multiple admissible, l’excédent, le délai et les engagements ; signaler une donnée périmée ou inconnue. Le moteur de calcul éventuel ne devient pas propriétaire des paramètres actifs ni des commandes qu’il recommande de modifier. Le périmètre [Supply Matching](model:ba-supply-matching) expose ces arbitrages avec priorités, protections et affectations.
+        Les unités et contraintes reçues dans [Product Reference](model:D08) et [Packaging Specification](model:packaging-specification) peuvent empêcher un apport exact. Examiner le multiple admissible, l’excédent, le délai et les engagements ; signaler une donnée périmée ou inconnue. Le moteur de calcul éventuel ne devient pas propriétaire des paramètres actifs ni des commandes qu’il recommande de modifier. Le périmètre [Demand / Supply Matching](model:ba-supply-matching) expose ces arbitrages avec priorités, protections et affectations.
   - id: D05.f
     fields:
       scope: |-
         Cadrer le périmètre, l’horizon et les objectifs du master plan commun, puis coordonner sa construction, son suivi et ses révisions. Couvrir commandes et prévision résiduelle sans double compte, à partir des plans externes et ressources admissibles.
 
-        [Demand Prioritization](model:D03.m) établit les priorités ; [Supply Assignment](model:D03.o) détermine les liens ressources-besoins ; [Replenishment](model:D05.e) recommande les apports et [Stock Redistribution](model:D05.c) les transferts utiles. Les capacités de Policy Optimization recommandent les cibles et protections, sans activer les politiques.
+        [Demand Prioritization](model:D03.m) établit les priorités ; [Supply Assignment](model:D03.o) détermine les liens ressources-besoins ; [Replenishment](model:D05.e) recommande les apports et [Stock Redistribution](model:D05.c) les transferts utiles. [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles de stock ; [Logical Stock Configuration Optimization](model:ba-policy-optimization) recommande les droits d’usage, sans activer les politiques.
 
         [Simulation & Analysis](model:BHV006) compare les scénarios ; [Plan Application](model:D02.e) fait appliquer les changements autorisés. Ces capacités coopèrent au même plan sans être des sous-capacités de Master Planning. Aucun moteur unique ni ordre universel des calculs n’est imposé.
 
@@ -3282,3 +3282,27 @@ delivery_reconciliation_U908:
     check: fields.scope
     previous_sha256: fdf91128c46ca68c03057db15468b6072e5dd01135e859387e1e9bebb39c86c6
     current_sha256: 21e51c74a613967302e63ee976c978a5ede05fa0722e8234c5fe369a200f24e9
+delivery_reconciliation_U910:
+  source_refs:
+  - U910
+  note: Attentes de livraison courante réalignées après les clarifications U910. Les attentes précédentes sont conservées
+    par leurs empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D05.e
+    check: fields.scope
+    previous_sha256: 25ca8966b88938a5459a6b34210cd0dc2ef1ad46bc2edc1587100cc85fc2694b
+    current_sha256: ebc78e4950ba48172b81ccaad7bf1c7c3ac4049be35c6fca0763b680168c96c0
+  - id: D05.f
+    check: fields.scope
+    previous_sha256: 1888920c0e1cde0fedb877b617591df9449c66d247650d3479a9433b48c1a880
+    current_sha256: 8bd381d29c14498b0ea215b1671803b9220c9bf8b62b0d48f525fb189fb35044
+delivery_reconciliation_U911:
+  source_refs:
+  - U911
+  note: Attentes de livraison courante réalignées après la séparation U911. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D05.f
+    check: fields.scope
+    previous_sha256: 8bd381d29c14498b0ea215b1671803b9220c9bf8b62b0d48f525fb189fb35044
+    current_sha256: 1127b556d084e3e16ca74db6f6e1b5d3dd6f1f082f89999b4ad1e901cd560f5b

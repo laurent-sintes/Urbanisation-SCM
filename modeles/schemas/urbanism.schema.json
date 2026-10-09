@@ -348,7 +348,7 @@
           "type": "object",
           "additionalProperties": {
             "type": "string",
-            "pattern": "^(SYS|DOM|SUB|BA|REF|CAP|BHV)-[0-9]{3,}$"
+            "pattern": "^(UNI|SYS|DOM|SUB|BA|REF|CAP|BHV)-[0-9]{3,}$"
           }
         }
       },
@@ -1102,6 +1102,7 @@
         },
         "kind": {
           "enum": [
+            "universe",
             "business_system",
             "domain",
             "area",
@@ -1173,6 +1174,10 @@
             },
             "nature": {
               "type": "string"
+            },
+            "reading_order": {
+              "description": "Ordre explicite des enfants d’un même parent, figé avec le code de lecture à la publication.",
+              "type": "integer"
             },
             "independence": {
               "type": "string"
@@ -1414,6 +1419,7 @@
           "properties": {
             "kind": {
               "enum": [
+                "universe",
                 "business_system",
                 "domain",
                 "area",

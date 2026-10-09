@@ -77,11 +77,11 @@ class ModelCoherenceTests(unittest.TestCase):
         self.assertIn('valeur absente', self.nodes['D03.k']['fields']['scope'])
         self.assertLess(len(plain(self.nodes['D04.i']['fields']['scope']).split()),450)
 
-    def test_identity_and_reading_order_are_unaffected_by_editorial_changes(self):
+    def test_identity_and_reading_order_follow_current_business_changes(self):
         audit=read(ROOT/'modeles/backlog/model-coherence-audit-U886.yaml')
         index=build_display_index(self.model)
         for example in audit['reading_codes']['examples']:
-            self.assertEqual(index['codes'][example['id']],example.get('candidate_after_U898', example.get('candidate_after_U894', example.get('candidate_after_U891', example['candidate']))))
+            self.assertEqual(index['codes'][example['id']], example.get('candidate_after_U911', example.get('candidate_after_U910', example.get('candidate_after_U898', example.get('candidate_after_U894', example.get('candidate_after_U891', example['candidate']))))))
         for ident in ['master-data-ingestion-commerce','master-data-ingestion-design']:
             self.assertIn(ident,self.nodes)
 

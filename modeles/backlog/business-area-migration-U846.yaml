@@ -1095,38 +1095,44 @@ publication_delivery:
     parent: D03
     fields:
       name: Order Promising
-      definition: Déterminer et réexaminer les propositions de quantités, dates et conditions de satisfaction des demandes.
-      finality: Donner au responsable de la commande une proposition admissible de quantité et de date, avec ses conditions.
+      definition: Déterminer et réexaminer, pour une demande identifiée, les quantités, dates et conditions de satisfaction
+        qui peuvent être proposées sans confirmer encore un engagement.
+      finality: Répondre à la demande examinée par une proposition admissible, complète ou partielle, avec ses conditions
+        et sa part non couverte.
   - id: ba-supply-matching
     kind: business_area
     parent: D03
     fields:
-      name: Supply Matching
-      definition: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
-        de ressources.
-      finality: Permettre aux responsables des demandes de savoir quelles ressources leur sont affectées et quels besoins
-        restent découverts.
+      name: Demand / Supply Matching
+      definition: Arbitrer la couverture de l’ensemble des demandes et besoins prévisionnels par les ressources présentes
+        ou attendues, la priorisation, les apports, les transferts et les affectations.
+      finality: Rendre cohérents les besoins à couvrir et les ressources du réseau, puis montrer les affectations retenues
+        et les besoins encore découverts.
       scope: |-
+        La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Control Plane](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
+
         Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Control Plane](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
 
         [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
 
-        [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Policy Optimization](model:ba-policy-optimization) recommande cibles et paramètres ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+        [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles et [Logical Stock Configuration Optimization](model:ba-policy-optimization) les droits d’usage ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
 
         Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
   - id: ba-policy-optimization
     kind: business_area
     parent: D03
     fields:
-      name: Policy Optimization
-      definition: Recommander les cibles et règles de protection ou de réservation adaptées aux objectifs et contraintes.
-      finality: Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
-      scope: |-
-        Les règles actives et leur validité demeurent dans Control Plane.
-
-        Bénéficiaire et résultat : Fournir aux responsables des règles une recommandation justifiée avant toute modification de la règle active.
-
-        Exemple fictif : Recommander une protection de 20 pièces après comparaison des ruptures et surstocks ; Control Plane conserve la mise en vigueur de la règle.
+      name: Logical Stock Configuration Optimization
+      definition: 'Recommander les droits d’usage du stock logique : protections de groupe et conditions de réservation, selon
+        les demandes, les engagements et les risques.'
+      finality: Proposer des droits d’usage cohérents avant leur éventuelle mise en vigueur.
+      scope: '[Logical Stock Protection Optimization](model:D05.d) recommande des enveloppes et limites d’usage par groupe.
+        [Reservation Rule Optimization](model:D05.h) recommande dans quelles conditions une quantité peut être réservée pour
+        une demande. Ces deux décisions concernent les droits d’usage du **même stock physique**, sans créer un second stock.
+        [Protection Policies](model:ba-protection-policies) présente les règles rendues applicables par [Control Plane](model:subdomain-policies)
+        ; [Inventory State Management](model:ba-inventory-position-management) tient les quantités et réservations effectives.
+        Exemple fictif : proposer une protection de 20 pièces pour le web et une règle de réservation au paiement, sans activer
+        ces règles ni réserver une pièce.'
   - id: ba-order-lifecycle-management
     kind: business_area
     parent: D04
@@ -1276,7 +1282,7 @@ publication_delivery:
   - id: D04.n
     parent: ba-order-lifecycle-management
   - id: D05.a
-    parent: ba-policy-optimization
+    parent: ba-physical-stock-configuration-optimization
   - id: D05.d
     parent: ba-policy-optimization
   - id: D05.e
@@ -1360,8 +1366,6 @@ publication_delivery:
     parent_type: contains
   - id: operations-visibility
     parent: ba-execution-assurance
-  - id: order-visibility
-    parent: ba-order-lifecycle-management
   - id: inventory-ownership-ledger
     parent: ba-inventory-ownership-management
   - id: service-order-release-decision
@@ -1429,6 +1433,8 @@ publication_delivery:
     Ceci ne modifie aucun accord historique.
   supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
     sans extension des accords.
+  absent_nodes:
+  - order-visibility
 superseded_delivery_U885:
 - id: ba-reactive-workflow-management
   previous_expectations:
@@ -1542,3 +1548,89 @@ delivery_reconciliation_U908:
     current:
       id: ba-protection-policies
       type: presents
+delivery_reconciliation_U909:
+  source_refs:
+  - U909
+  note: Attentes de livraison courante réalignées après la fusion U909. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: order-visibility
+    check: required_node
+    previous_sha256: c43d1e655ce56d7fb0fd9d61d500f98560f1b38688de3805402f6fabedc4ffd8
+    current: absent by U909
+delivery_reconciliation_U910:
+  source_refs:
+  - U910
+  note: Attentes de livraison courante réalignées après les clarifications U910. Les attentes précédentes sont conservées
+    par leurs empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: ba-order-promising
+    check: fields.definition
+    previous_sha256: 57e19ffb7b451cdf4970fc77f1189ec4792c0a558239f3c04d7b2f27ab0f59fc
+    current_sha256: e49839d1183d6013b0c9b039f7828fb633a1fbccf818965fc708a4e93011360d
+  - id: ba-order-promising
+    check: fields.finality
+    previous_sha256: f3db7a22e5ba817bb1bbbbbb2a8ed9bf806e503dc91bf7d5af13990600e6ee17
+    current_sha256: 998e42e154c4c73d49271c431093d553314cfc6e3af23b7c335c4c2fc411679f
+  - id: ba-supply-matching
+    check: fields.name
+    previous_sha256: 5133b07e4630e133058f024829910cfd0e730feef8acd6622a5cb15b34908faa
+    current_sha256: f09b32035eff1d6c1d12c2a46ca2a39ccbb6d6eb09745fe0d180a652f18427c1
+  - id: ba-supply-matching
+    check: fields.definition
+    previous_sha256: 4eb018ae05b2bc9244c34f6217ca7b530d849a885c93770ca2eb726c02237dce
+    current_sha256: 432acbf6b3360b687b6f13997443d8260e2e326deae92c58583f87e18503aff5
+  - id: ba-supply-matching
+    check: fields.finality
+    previous_sha256: b8ab8f8291783729db7c17edc46f6067c1904ae212143b83fb5d4df9ecb00370
+    current_sha256: 1bd9c227786d321ce3bdbc84615b0ae58076a19ce3afb5fae81ec64678961a74
+  - id: ba-supply-matching
+    check: fields.scope
+    previous_sha256: a41ad220a7938f1145824936fec65500655d2b94fd43cc7c2ca6d7cfeb72c9f3
+    current_sha256: d23c959c4c5e594aa1b15ba52c583f7bd2a7c4db2021dc27ede0dd73c25a80bf
+  - id: ba-policy-optimization
+    check: fields.name
+    previous_sha256: 6363f84e8caa93fedd6eee729bdaefda049d445309261845acdb39b087add7a9
+    current_sha256: ffcf8de35e4c98e2a6a22aa0a7ce430e015dd7bf78c4db070c066ff3c8ae7f6c
+  - id: ba-policy-optimization
+    check: fields.definition
+    previous_sha256: 77000a359ec834d86b94a3494ae655c556315c6e98cec1105730b9b380bebb21
+    current_sha256: b636831e610d88a071dcd78a5f40c0670b294fed285fff50cdaf37c105380c29
+  - id: ba-policy-optimization
+    check: fields.finality
+    previous_sha256: 286af1f7a5644ccfd5d5013db34447d4809987306f9388283ab37bd5d40c98d2
+    current_sha256: be2d8c6ff253a0c815e320a41619484d0b50e919ee0bd20500a45879ac1a04bb
+  - id: ba-policy-optimization
+    check: fields.scope
+    previous_sha256: 94c9907690924d205b91084bf3b5767ba29e8ecafbc471b8ace3c95413735df3
+    current_sha256: 085ea3ad1c8e06f88aef0b9d5c3570380150c15b0caa1d9c2670e05081d9dee7
+delivery_reconciliation_U911:
+  source_refs:
+  - U911
+  note: Attentes de livraison courante réalignées après la séparation U911. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: ba-supply-matching
+    check: fields.scope
+    previous_sha256: d23c959c4c5e594aa1b15ba52c583f7bd2a7c4db2021dc27ede0dd73c25a80bf
+    current_sha256: b2b1a65c40bfe2675fc453b3b1730a82e5e34e5e4837b33962dabd3143435079
+  - id: ba-policy-optimization
+    check: fields.name
+    previous_sha256: ffcf8de35e4c98e2a6a22aa0a7ce430e015dd7bf78c4db070c066ff3c8ae7f6c
+    current_sha256: c640255c012d9b6a570e2ada79f63ad01bae37a31e34b6791a3bb13bb6069fb7
+  - id: ba-policy-optimization
+    check: fields.definition
+    previous_sha256: b636831e610d88a071dcd78a5f40c0670b294fed285fff50cdaf37c105380c29
+    current_sha256: 6c5336bf4fe4b880972259b26d5daccbe6d72c703407cc8e4e1ef8f9706845b3
+  - id: ba-policy-optimization
+    check: fields.finality
+    previous_sha256: be2d8c6ff253a0c815e320a41619484d0b50e919ee0bd20500a45879ac1a04bb
+    current_sha256: 66f5b9ab17f2ef69c21650ef02e1d87e4e26a39cb1ec10aabd4275a8475ae178
+  - id: ba-policy-optimization
+    check: fields.scope
+    previous_sha256: 085ea3ad1c8e06f88aef0b9d5c3570380150c15b0caa1d9c2670e05081d9dee7
+    current_sha256: 50ddf929da819cdf9e0d99f98d4c136282f6151f1dd99a4b203f144bb1311c97
+  - id: D05.a
+    check: parent
+    previous_sha256: 183027039067157b38b94216244fff34bd8d651acc86360d5be47075a3dd0530
+    current: ba-physical-stock-configuration-optimization

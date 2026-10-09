@@ -45,8 +45,10 @@ publication_delivery:
     fields:
       name: Protection Policies
       definition: Présenter les référentiels de protection des ressources et des demandes applicables aux arbitrages de couverture.
-      scope: 'Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations.
-        Exemple fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.'
+      scope: |-
+        Les référentiels présentés tiennent les règles de protection et de réservation applicables, leur version, leur portée et leur validité. [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande des seuils et [Logical Stock Configuration Optimization](model:ba-policy-optimization) des droits et conditions ; ce résultat ne les active pas. Inventory tient les positions et réservations individuelles.
+
+        Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations. Exemple fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.
   - id: D02.b
     parent: ba-protection-policies
     parent_type: presents
@@ -133,3 +135,23 @@ delivery_reconciliation_U908:
     current:
       id: ba-service-provider-controls
       type: presents
+delivery_reconciliation_U910:
+  source_refs:
+  - U910
+  note: Attentes de livraison courante réalignées après les clarifications U910. Les attentes précédentes sont conservées
+    par leurs empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: ba-protection-policies
+    check: fields.scope
+    previous_sha256: 04b1d3c1e7ba2657a93b9188574720f425558a1de0044b13b11a69cc7bd28f4c
+    current_sha256: d6141cba259319322fa414e7beb17de05850acd79a7532a4cd629049ae05398c
+delivery_reconciliation_U911:
+  source_refs:
+  - U911
+  note: Attentes de livraison courante réalignées après la séparation U911. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: ba-protection-policies
+    check: fields.scope
+    previous_sha256: d6141cba259319322fa414e7beb17de05850acd79a7532a4cd629049ae05398c
+    current_sha256: 51a3ac8f054d15b1996dae82a11b57b3849c1c5f3856bf2891e7d8b1812bde76

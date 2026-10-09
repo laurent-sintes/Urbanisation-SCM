@@ -886,8 +886,8 @@ publication_delivery:
   - id: D04.t
     kind: capability
     field_sha256:
-      market_inspiration: 1c2de84545b5875c328f9fa01d09545d00b268bd0befa4d060bdb8b1b296d1c3
-      scope: 3ab4aa234e69a0ef9f381ff7b55cd02eb12fdde0329a636c0da72637a1b5b869
+      market_inspiration: 29620260319bd0d764cf245b1b796c33c2c66adf104c4b1f4075f1337359ba7b
+      scope: edabc25bc38cc952c26749450dfa04d11a3073d0c04ba2443f85e53d8319fe7c
   - id: business-references
     kind: area
     field_sha256:
@@ -1025,3 +1025,17 @@ delivery_reconciliation_U908:
     check: field_sha256.mastership
     previous_sha256: 2426d975812a3d2dbeb0488b4d6a0a339cef5dc17e438f7afe47b07b8ee32153
     current_sha256: 6584db79b1eeddee79937b843a11997f48aa6480ac14af02aa30ea93e75d3a6a
+delivery_reconciliation_U909:
+  source_refs:
+  - U909
+  note: Attentes de livraison courante réalignées après la fusion U909. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D04.t
+    check: field_sha256.market_inspiration
+    previous_sha256: 1c2de84545b5875c328f9fa01d09545d00b268bd0befa4d060bdb8b1b296d1c3
+    current_sha256: 29620260319bd0d764cf245b1b796c33c2c66adf104c4b1f4075f1337359ba7b
+  - id: D04.t
+    check: field_sha256.scope
+    previous_sha256: 3ab4aa234e69a0ef9f381ff7b55cd02eb12fdde0329a636c0da72637a1b5b869
+    current_sha256: edabc25bc38cc952c26749450dfa04d11a3073d0c04ba2443f85e53d8319fe7c

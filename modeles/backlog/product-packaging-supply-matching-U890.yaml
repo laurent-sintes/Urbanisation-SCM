@@ -298,19 +298,19 @@ publication_delivery:
       name: Availability
     field_sha256:
       definition: ad10e7f1b5476152211de9c036fe0507cf891ff7a048d1c1fab19a870ca03e60
-      scope: 171f452d18fcc71da62d2846f2db9a3d4c29e6a6e7850b3bdd2f8bd926db42c0
+      scope: 6cd87bdf4323fb7ca8525f41d43f3ee8cd78e13763b7a548c057166ca4a75c8c
       market_comparisons: d2896f5dff00f08e47b94c5e9a8d534bb62cd71f7dffa3d8e7e7faf18c574102
-      market_inspiration: c8f5b7524797aeb81ac229878b8e9c6adb07b9d21831ac27b12a5fd8fe967307
+      market_inspiration: 5d8c432edf47317b2a34caebc7d0624741cac492978ac8763c67e27306b88eb7
     parent: supply-chain-orchestration
     parent_type: presents
   - id: ba-supply-matching
     kind: business_area
     fields:
-      name: Supply Matching
+      name: Demand / Supply Matching
     field_sha256:
-      definition: 4eb018ae05b2bc9244c34f6217ca7b530d849a885c93770ca2eb726c02237dce
-      scope: a41ad220a7938f1145824936fec65500655d2b94fd43cc7c2ca6d7cfeb72c9f3
-      market_comparisons: ef9e2d23e0e2aa3c4d6e3b0b7f3250a34178e6699b3ea8518f019afcf574fa23
+      definition: 432acbf6b3360b687b6f13997443d8260e2e326deae92c58583f87e18503aff5
+      scope: b2b1a65c40bfe2675fc453b3b1730a82e5e34e5e4837b33962dabd3143435079
+      market_comparisons: 4dee067e5835f375bcb0e84d67613a7ba6ad2805f053112c282345e0d6aae247
     parent: D03
     parent_type: contains
   - id: D05.e
@@ -319,21 +319,21 @@ publication_delivery:
       name: Replenishment
     field_sha256:
       definition: 9f77525afa4869ab3f3760fc2734958fbde5a973dfffa3081944ee63d35accb1
-      scope: 25ca8966b88938a5459a6b34210cd0dc2ef1ad46bc2edc1587100cc85fc2694b
+      scope: ebc78e4950ba48172b81ccaad7bf1c7c3ac4049be35c6fca0763b680168c96c0
       market_comparisons: 10daaa70228b7a28244e1eb88fb8c68245d9df19649a258d745362236b84688b
-      market_inspiration: 1492c225ce6d3001a2609b347c79cb926525896c644de775e1f4d9d9375984d2
+      market_inspiration: 9a26e4e18d7ea26959d2ddb4c4f43f30515b7173501d9b5396c0be38544ffdcb
     parent: ba-supply-matching
     parent_type: contains
   - id: D05.a
     kind: capability
     fields:
-      name: Inventory Target Optimization
+      name: Physical Stock Target Optimization
     field_sha256:
-      definition: e0cc6dcabc7ab5d0879178f868051112d90b3969e81b4f8f3007d7ed517ec19a
-      scope: 4df503bd82e4931bf8e745a36911c0bc803a29b99552e49bcc1b28d3d97f87a1
-      market_comparisons: 9e7800ef982d2333c198ebceb6dd399b992fdb7ca9f8b7a729b8df71d4d097b1
-      market_inspiration: 62727750684f61059c44af55a30e309ad7ab4ab6d497663d7e793461d9195a45
-    parent: ba-policy-optimization
+      definition: 4edf0d60ad42465ed757f3b21a16b5675146f75a08c51a3ec722c98feb70e18f
+      scope: 117cad1976abfb779d6b69f176abe6761c2cfbd7f6e0dc337282193247e8c138
+      market_comparisons: cbd42879496403e7300f1960d08a6eeda8c1dfa2d8bfa3717e208f650fbe9acb
+      market_inspiration: aba3dc3d9612fd0fdff0a0ca4c7c569b822eda864196d0ca8d31924749958537
+    parent: ba-physical-stock-configuration-optimization
     parent_type: contains
   - id: service-order-packing
     kind: capability
@@ -474,7 +474,7 @@ publication_delivery:
     content_sha256: ef9178d7228b0c0e3a0be285a72942affc0448f219bc1f6fe34ec7bff38cccb1
   - collection: paths
     id: shortage-reassessment-path
-    content_sha256: dd8a91dd9b839df93883622b5307c285e2f64d938e6320d61f915ff0cd4baaa6
+    content_sha256: 3483ab62e11fa68627eae62e224fe92d672d66025a2abed90505d60df4e2790c
   supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
     sans extension des accords.
   supersession_U900: Précisions Packaging / Container acceptées U900 ; contrats antérieurs conservés dans packaging-container-vocabulary-U899.yaml,
@@ -1614,3 +1614,93 @@ delivery_reconciliation_U908:
     check: field_sha256.scope
     previous_sha256: 06ffcfa4f454ad34d8e6b9eb9af7e90931b5d8756480161cacb7607cbf0bf145
     current_sha256: 4df503bd82e4931bf8e745a36911c0bc803a29b99552e49bcc1b28d3d97f87a1
+delivery_reconciliation_U909:
+  source_refs:
+  - U909
+  note: Attentes de livraison courante réalignées après la fusion U909. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: shortage-reassessment-path
+    check: catalog.content_sha256
+    previous_sha256: dd8a91dd9b839df93883622b5307c285e2f64d938e6320d61f915ff0cd4baaa6
+    current_sha256: 3483ab62e11fa68627eae62e224fe92d672d66025a2abed90505d60df4e2790c
+delivery_reconciliation_U910:
+  source_refs:
+  - U910
+  note: Attentes de livraison courante réalignées après les clarifications U910. Les attentes précédentes sont conservées
+    par leurs empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D03
+    check: field_sha256.scope
+    previous_sha256: 171f452d18fcc71da62d2846f2db9a3d4c29e6a6e7850b3bdd2f8bd926db42c0
+    current_sha256: aa5109c221a52022973913d75af881339cd85683263fb59e51410f2e4fbb4fd9
+  - id: D03
+    check: field_sha256.market_inspiration
+    previous_sha256: c8f5b7524797aeb81ac229878b8e9c6adb07b9d21831ac27b12a5fd8fe967307
+    current_sha256: 675edeb3797a2c226b49101b08790f25810de936c1bfb635491efce9e82296c7
+  - id: ba-supply-matching
+    check: fields.name
+    previous_sha256: 5133b07e4630e133058f024829910cfd0e730feef8acd6622a5cb15b34908faa
+    current_sha256: f09b32035eff1d6c1d12c2a46ca2a39ccbb6d6eb09745fe0d180a652f18427c1
+  - id: ba-supply-matching
+    check: field_sha256.definition
+    previous_sha256: 4eb018ae05b2bc9244c34f6217ca7b530d849a885c93770ca2eb726c02237dce
+    current_sha256: 432acbf6b3360b687b6f13997443d8260e2e326deae92c58583f87e18503aff5
+  - id: ba-supply-matching
+    check: field_sha256.scope
+    previous_sha256: a41ad220a7938f1145824936fec65500655d2b94fd43cc7c2ca6d7cfeb72c9f3
+    current_sha256: d23c959c4c5e594aa1b15ba52c583f7bd2a7c4db2021dc27ede0dd73c25a80bf
+  - id: ba-supply-matching
+    check: field_sha256.market_comparisons
+    previous_sha256: ef9e2d23e0e2aa3c4d6e3b0b7f3250a34178e6699b3ea8518f019afcf574fa23
+    current_sha256: 4dee067e5835f375bcb0e84d67613a7ba6ad2805f053112c282345e0d6aae247
+  - id: D05.e
+    check: field_sha256.scope
+    previous_sha256: 25ca8966b88938a5459a6b34210cd0dc2ef1ad46bc2edc1587100cc85fc2694b
+    current_sha256: ebc78e4950ba48172b81ccaad7bf1c7c3ac4049be35c6fca0763b680168c96c0
+  - id: D05.e
+    check: field_sha256.market_inspiration
+    previous_sha256: 1492c225ce6d3001a2609b347c79cb926525896c644de775e1f4d9d9375984d2
+    current_sha256: 9a26e4e18d7ea26959d2ddb4c4f43f30515b7173501d9b5396c0be38544ffdcb
+  - id: D05.a
+    check: fields.name
+    previous_sha256: a44f65f2f600e1634c5042946043b6c7cdf3f37211d60f0bc2b2055c60475bbc
+    current_sha256: 4e43e6525b6de3a2e01309e0c8acf5b4197fd3bf0f155faa84bc83acf7c27171
+  - id: D05.a
+    check: field_sha256.definition
+    previous_sha256: e0cc6dcabc7ab5d0879178f868051112d90b3969e81b4f8f3007d7ed517ec19a
+    current_sha256: 4edf0d60ad42465ed757f3b21a16b5675146f75a08c51a3ec722c98feb70e18f
+  - id: D05.a
+    check: field_sha256.scope
+    previous_sha256: 4df503bd82e4931bf8e745a36911c0bc803a29b99552e49bcc1b28d3d97f87a1
+    current_sha256: 117cad1976abfb779d6b69f176abe6761c2cfbd7f6e0dc337282193247e8c138
+  - id: D05.a
+    check: field_sha256.market_comparisons
+    previous_sha256: 9e7800ef982d2333c198ebceb6dd399b992fdb7ca9f8b7a729b8df71d4d097b1
+    current_sha256: cbd42879496403e7300f1960d08a6eeda8c1dfa2d8bfa3717e208f650fbe9acb
+  - id: D05.a
+    check: field_sha256.market_inspiration
+    previous_sha256: 62727750684f61059c44af55a30e309ad7ab4ab6d497663d7e793461d9195a45
+    current_sha256: aba3dc3d9612fd0fdff0a0ca4c7c569b822eda864196d0ca8d31924749958537
+delivery_reconciliation_U911:
+  source_refs:
+  - U911
+  note: Attentes de livraison courante réalignées après la séparation U911. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D03
+    check: field_sha256.scope
+    previous_sha256: aa5109c221a52022973913d75af881339cd85683263fb59e51410f2e4fbb4fd9
+    current_sha256: 6cd87bdf4323fb7ca8525f41d43f3ee8cd78e13763b7a548c057166ca4a75c8c
+  - id: D03
+    check: field_sha256.market_inspiration
+    previous_sha256: 675edeb3797a2c226b49101b08790f25810de936c1bfb635491efce9e82296c7
+    current_sha256: 5d8c432edf47317b2a34caebc7d0624741cac492978ac8763c67e27306b88eb7
+  - id: ba-supply-matching
+    check: field_sha256.scope
+    previous_sha256: d23c959c4c5e594aa1b15ba52c583f7bd2a7c4db2021dc27ede0dd73c25a80bf
+    current_sha256: b2b1a65c40bfe2675fc453b3b1730a82e5e34e5e4837b33962dabd3143435079
+  - id: D05.a
+    check: parent
+    previous_sha256: 183027039067157b38b94216244fff34bd8d651acc86360d5be47075a3dd0530
+    current: ba-physical-stock-configuration-optimization

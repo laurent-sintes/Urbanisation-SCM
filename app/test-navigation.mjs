@@ -69,3 +69,10 @@ test('area links round-trip without changing historical domain and universe leve
     assert.deepEqual(readRoute(routeHash(route)), route);
   }
 });
+
+test('map detail and selected Business Area survive a shared publication link', () => {
+  const route = { ...readRoute(''), view: 'map', node: 'BA-EXAMPLE', scope: 'D04', version: 'fixed-publication', mapDepth: 4, mapFocus: 'BA-EXAMPLE' };
+  assert.deepEqual(readRoute(routeHash(route)), route);
+  assert.equal(readRoute('#view=map&mapDepth=9').mapDepth, undefined);
+  assert.ok(!routeHash({ ...route, view: 'sheet' }).includes('mapDepth='));
+});

@@ -701,6 +701,7 @@ publication_delivery:
   - D03.n
   - D04.o
   - D04.q
+  - order-visibility
   required_nodes:
   - id: D04.i
     parent: ba-order-lifecycle-management
@@ -743,11 +744,6 @@ publication_delivery:
     fields:
       name: Order Structuring
       nature: action
-  - id: order-visibility
-    parent: ba-order-lifecycle-management
-    fields:
-      name: Order Visibility
-      nature: knowledge
   supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
     sans extension des accords.
 migration:
@@ -830,3 +826,13 @@ delivery_updates:
   - D04.n.parent
   - order-visibility.parent
   reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.
+delivery_reconciliation_U909:
+  source_refs:
+  - U909
+  note: Attentes de livraison courante réalignées après la fusion U909. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: order-visibility
+    check: required_node
+    previous_sha256: b48f6ddf6d22b1797db72b2256b2db6147fccb06d15faa5ccf2d87e2e0af1c07
+    current: absent by U909

@@ -25,7 +25,17 @@ class BusinessSystemTests(unittest.TestCase):
     def test_complete_structure_and_delivery(self):
         self.assertEqual(self.errors(self.model), [])
         self.assertEqual(check_delivery(ROOT, self.model)[1], [])
+        self.assertIn('| beaumanoir-target-universe | Univers | Universe |', render(self.model, 'Fixture'))
         self.assertIn('| system-business-operations | Business Operations | Business System |', render(self.model, 'Fixture'))
+
+    def test_universe_is_single_root_of_the_three_business_systems(self):
+        model = deepcopy(self.model)
+        universe = next(n for n in model['nodes'] if n['kind'] == 'universe')
+        systems = {n['id'] for n in model['nodes'] if n['kind'] == 'business_system'}
+        children = {r['target_id'] for r in model['relations'] if r['type'] == 'contains' and r['source_id'] == universe['id']}
+        self.assertEqual(children, systems)
+        model['relations'] = [r for r in model['relations'] if not (r['source_id'] == universe['id'] and r['target_id'] == 'system-business-operations')]
+        self.assertTrue(any('invalid parent for business system' in e for e in self.errors(model)))
 
     def test_domain_requires_one_explicit_system_parent(self):
         for variant in ('orphan', 'duplicate', 'wrong-kind'):

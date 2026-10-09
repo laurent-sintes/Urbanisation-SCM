@@ -665,7 +665,7 @@ publication_delivery:
     content_sha256: b0a41f20dfc70a7f5f9e6b61b18ac21251569958f653c3d40fb5bfd9e55b4c8f
   - collection: paths
     id: shortage-reassessment-path
-    content_sha256: dd8a91dd9b839df93883622b5307c285e2f64d938e6320d61f915ff0cd4baaa6
+    content_sha256: 3483ab62e11fa68627eae62e224fe92d672d66025a2abed90505d60df4e2790c
   - collection: paths
     id: stocktaking-variance-path
     content_sha256: 79358b23bcc3f05e5ad434bf25113679074d031dc66c6ad2c986546104adeb86
@@ -935,3 +935,13 @@ superseded_delivery_U887:
       collection: paths
       id: reference-plan-correction-path
       content_sha256: 9188d729d092b1d2fc820673beb9a648f41da6c30e30f467e9aa4a9a372205f4
+delivery_reconciliation_U909:
+  source_refs:
+  - U909
+  note: Attentes de livraison courante réalignées après la fusion U909. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: shortage-reassessment-path
+    check: catalog.content_sha256
+    previous_sha256: dd8a91dd9b839df93883622b5307c285e2f64d938e6320d61f915ff0cd4baaa6
+    current_sha256: 3483ab62e11fa68627eae62e224fe92d672d66025a2abed90505d60df4e2790c

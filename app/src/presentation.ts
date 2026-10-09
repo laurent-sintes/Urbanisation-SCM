@@ -2,6 +2,7 @@ import type { AtlasNode, AtlasRelation } from './types';
 import { capabilityTypeLabel } from './capabilityTypes.ts';
 import { behaviorTypeLabel } from './behaviorTypes.ts';
 export function kindLabel(node: AtlasNode) {
+  if (node.kind === 'universe') return 'Univers';
   if (node.kind === 'business_system') return 'Système métier';
   if (node.groupRole === 'urbanism_level') return node.levelRef === 'universe' ? 'Univers' : 'Niveau d’urbanisme';
   if (node.kind === 'capability') return `Capacité · ${capabilityTypeLabel(node)}`;

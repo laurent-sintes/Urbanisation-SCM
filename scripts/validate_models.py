@@ -37,7 +37,7 @@ REQUEST_ORIGINS = {'frontoffice', 'backoffice'}
 BEHAVIOR_ASPECTS = {'trigger', 'activity'}
 RELATION_KINDS = {
     # The former lower-level domain remains supported in frozen publications.
-    "contains": ({"domain", "area", "business_area", "reference", "capability"}, {"business_area", "capability", "behavior"}),
+    "contains": ({"universe", "domain", "area", "business_area", "reference", "capability"}, {"business_system", "business_area", "capability", "behavior"}),
     "documents-reference": ({"capability"}, {"reference"}),
     "uses-reference": ({"capability"}, {"reference"}),
     "supplies-reference": ({"capability"}, {"reference"}),
@@ -257,6 +257,8 @@ def validate_urbanism(model, sources, schema=None):
             errors.append(f"relations/{identifier}: incompatible endpoint kinds for {rel.get('type')}")
         if source.get('kind') == 'business_system' and rel.get('type') == 'presents' and target.get('kind') != 'domain':
             errors.append(f'relations/{identifier}: business system presents only domains')
+        if source.get('kind') == 'universe' and (rel.get('type'), target.get('kind')) != ('contains', 'business_system'):
+            errors.append(f'relations/{identifier}: universe contains only business systems')
         if (rel.get("type") == "presents" and source.get("kind") == "domain"
                 and target.get("kind") not in {"area", "reference", "group"}):
             errors.append(f"relations/{identifier}: domain presents only areas, references or presentation groups")
@@ -319,10 +321,24 @@ def validate_urbanism(model, sources, schema=None):
                 for field in ('name', 'definition', 'finality', 'scope', 'modeling_depth'):
                     if not node.get('fields', {}).get(field):
                         errors.append(f'business-system/{identifier}: {field} must be nonempty')
-            if node.get('kind') == 'business_system' and parents[identifier]:
-                errors.append(f'business-system/{identifier}: business system must be a root')
+            if node.get('kind') == 'business_system':
+                universe_enabled = any(p.get('id') == 'PRINCIPLE-TARGET-UNIVERSE' for p in model.get('principles', []))
+                invalid_parent = (len(parents[identifier]) != 1 or nodes[parents[identifier][0]].get('kind') != 'universe') if universe_enabled else bool(parents[identifier])
+                if invalid_parent:
+                    errors.append(f'business-system/{identifier}: invalid parent for business system')
             if node.get('kind') == 'domain' and (len(parents[identifier]) != 1 or nodes[parents[identifier][0]].get('kind') != 'business_system'):
                 errors.append(f'business-system/{identifier}: domain requires exactly one business system parent')
+        if any(p.get('id') == 'PRINCIPLE-TARGET-UNIVERSE' for p in model.get('principles', [])):
+            universes = [identifier for identifier, node in nodes.items() if node.get('kind') == 'universe']
+            if len(universes) != 1:
+                errors.append('universe: exactly one target universe is required')
+            else:
+                universe = universes[0]
+                if parents[universe] or set(graph[universe]) != {identifier for identifier, node in nodes.items() if node.get('kind') == 'business_system'}:
+                    errors.append('universe: root must contain every business system exactly once')
+                for field in ('name', 'definition', 'finality', 'scope'):
+                    if not nodes[universe].get('fields', {}).get(field):
+                        errors.append(f'universe/{universe}: {field} must be nonempty')
     # U624/U626 is an opt-in contract; old snapshots keep their own hierarchy.
     if any(p.get('id') in ('PRINCIPLE-DOMAIN-PURPOSE', 'PRINCIPLE-DOMAIN-SUBDOMAIN') for p in model.get('principles', [])):
         structural_parents = {identifier: set() for identifier in nodes}

@@ -1,0 +1,38 @@
+id: PROCESS-TASKS-ORDER-VISIBILITY-U909
+source_refs:
+- U909
+status: applied_to_backlog
+decision:
+  accepted:
+  - Fusionner Order Visibility dans Process Visibility.
+  - Nommer la capacité résultante Process, Tasks & Order Visibility.
+  implementation:
+  - BHV082 conserve son identité de capacité sous Process Supervision ; order-visibility quitte le modèle courant sans réutilisation de son identité.
+  - Les apports des familles d’Orders et le parcours de scénario qui citaient order-visibility pointent vers BHV082.
+  - La définition, les exemples et les comparaisons rédigés pour la capacité fusionnée restent proposés ; l’accord U909 ne les valide pas mot à mot.
+  boundaries:
+  - Order Management et les familles d’Orders tiennent l’identité, les états, les transitions et les engagements des commandes.
+  - Human Task Management tient le travail humain et Operations Visibility les résultats des prestations physiques ; la capacité fusionnée les restitue dans le parcours sans les gouverner.
+  - Process Mining analyse les parcours observés ; la capacité fusionnée expose leur situation courante sans créer de registre de faits concurrent.
+  - Aucune réalisation installée ni plateforme unique n’est déduite.
+market_position:
+  microsoft_dynamics: Les workflows d’approvisionnement relient documents, tâches, approbations, statut et historique ; ils ne couvrent pas tous les parcours et Orders Supply de FLOW.
+  sap_s4hana: Le suivi de satisfaction des commandes clients montre étapes, documents, statuts et incidents dans un flux ; il ne prouve pas une capacité unique pour toutes les commandes et Tasks FLOW.
+  terminology: Le nom est choisi par Laurent pour FLOW. Les deux sources étayent un rapprochement partiel, sans taxonomie commune établie.
+  sources:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-workflows
+  - https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sales-automation-and-analytics/using-sales-order-fulfillment-monitoring-and-operations-bkk-_bc5cf72d-0812-4352-a6d6-e5a8e4fa6513
+publication_delivery:
+  state: applied
+  source_refs:
+  - U909
+  summary: Capacité BHV082 renommée et élargie aux Orders ; ancienne capacité autonome retirée, liens et glossaire alignés.
+  required_nodes:
+  - id: BHV082
+    kind: capability
+    fields:
+      name: Process, Tasks & Order Visibility
+    parent: ba-process-supervision
+    parent_type: contains
+  absent_nodes:
+  - order-visibility

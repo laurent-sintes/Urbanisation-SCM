@@ -11,6 +11,7 @@ export interface GraphRoute {
 }
 export interface RouteState extends GraphRoute {
   node: string; scope: string; view?: View; version: string;
+  mapDepth?: 0 | 1 | 2 | 3 | 4; mapFocus?: string;
   query: string; status: string; relation: string;
   source: string; anchor: string; sourceId: string;
   term?: string; section?: string;
@@ -41,6 +42,8 @@ export function readRoute(hash: string): RouteState {
     ...((view === 'relations' || view === 'links') ? graph : {}),
     node: view === 'principles' || legacyRoots.includes(node) ? '' : node,
     scope: view === 'principles' ? '' : p.get('scope') || '',
+    ...(p.has('mapDepth') && ['0','1','2','3','4'].includes(p.get('mapDepth')!) ? { mapDepth: Number(p.get('mapDepth')) as RouteState['mapDepth'] } : {}),
+    ...(p.has('mapFocus') ? { mapFocus: p.get('mapFocus') || '' } : {}),
     view: view === 'links' ? 'relations' : ['map', 'sheet', 'relations', 'market', 'glossary', 'principles', 'information', 'scenarios'].includes(view || '') ? view as View : undefined,
     ...(view === 'principles' && p.has('principle') ? { principle: p.get('principle') || '' } : {}),
     ...(p.has('term') ? { term: p.get('term') || '' } : {}),
@@ -59,6 +62,7 @@ export function routeHash(route: RouteState, model?: PublishedModel | null): str
   for (const [key, value] of Object.entries({
     ...(route.view === 'scenarios' ? {scenario:route.scenario,stream:route.stream,path:route.path,event:route.event,object:route.object,situation:route.situation,capability:route.capability,scenarioQuery:route.scenarioQuery} : {}),
     version: route.version, node: route.node, scope: route.scope, view: route.view,
+    ...(route.view === 'map' ? { mapDepth: route.mapDepth, mapFocus: route.mapFocus } : {}),
     q: route.query, status: route.status, relation: route.relation,
     source: route.source, anchor: route.anchor, sourceId: route.sourceId,
     term: route.term, section: route.section,

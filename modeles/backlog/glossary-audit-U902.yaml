@@ -3808,7 +3808,7 @@ publication_delivery:
       name: 3d60b6fa1b6210907d19f8d604442f6436bb34e3166e8d392b120719dffdbc36
       definition: 38cb24a60bc2051394832bd250028ed9ebc09576ecbea090b9b574685c4db7d7
       short_description: 38cb24a60bc2051394832bd250028ed9ebc09576ecbea090b9b574685c4db7d7
-      context: c914c95372030a7f638448f3fa8246b5c5c174159d1b279b78bec36b5ab7a6f8
+      context: 614533fadaae0f6f70f5097e1c5f558cd4149efcd5b47ac09a9cfb6f47f3d8d4
   - id: TER201
     field_sha256:
       name: f29699582eca3edceb181aeed37e36e66f095131c1617c8c203e0921e59bdee5
@@ -3875,3 +3875,13 @@ delivery_reconciliation_U908:
     check: glossary.context
     previous_sha256: 431b2a4ccdaf2e8fb4a2737320780686db14b7faffa38cd0dcd93a5c28a7413d
     current_sha256: 44cdae59ddad837b939c12d3f22b6ae6763989206a9c2db9da804a9f9ae399c6
+delivery_reconciliation_U909:
+  source_refs:
+  - U909
+  note: Attentes de livraison courante réalignées après la fusion U909. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: TER200
+    check: glossary.context
+    previous_sha256: c914c95372030a7f638448f3fa8246b5c5c174159d1b279b78bec36b5ab7a6f8
+    current_sha256: 614533fadaae0f6f70f5097e1c5f558cd4149efcd5b47ac09a9cfb6f47f3d8d4

@@ -80,8 +80,10 @@ identification_rules:
   - U782
   - U783
   - U848
+  - U912
   persistent_identity: id immuable, sans réutilisation après retrait ; porte les relations, accords et liens historiques.
   prefixes:
+    universe: UNI
     business_system: SYS
     domain: DOM
     area: SUB
@@ -775,8 +777,8 @@ terms:
     historique retirée sous U791.'
   - 'Le parcours mobilise des capacités et traverse leurs responsabilités ; il ne devient pas leur parent dans la hiérarchie.
     [Process Management](model:subdomain-process-management) porte le savoir-faire de définition, conduite, supervision et
-    analyse de ces parcours. [Process Visibility](model:BHV082) est une capacité : son identité persistante BHV082 ne détermine
-    pas sa nature ni son code de lecture.'
+    analyse de ces parcours. [Process, Tasks & Order Visibility](model:BHV082) est une capacité : son identité persistante
+    BHV082 ne détermine pas sa nature ni son code de lecture.'
   source_refs:
   - U33
   - U624
@@ -1808,6 +1810,19 @@ terms:
   review:
     state: proposed
     note: Complément méthodologique de mise en œuvre de l’audit accepté U903.
+- id: MOD043
+  name: Universe
+  label_fr: Univers
+  short_description: Racine de lecture du SI Beaumanoir cible, au-dessus des systèmes métier.
+  definition: Niveau racine du modèle cible. Il réunit les Business Systems par des relations explicites et permet de situer
+    chaque responsabilité dans la cible, sans décrire à lui seul les applications qui les réaliseront.
+  role: Donner un point de départ unique à la navigation et une fiche expliquant la portée de la cible.
+  source_refs:
+  - U912
+  review:
+    state: partial
+    adopted_scope: Niveau racine au-dessus des systèmes métier.
+    proposed_scope: Rédaction pédagogique.
 methodology_agreements:
 - id: AGREEMENT-U787
   source_refs:

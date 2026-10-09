@@ -281,9 +281,9 @@ publication_delivery:
     field_sha256:
       definition: eb34b6f9e60caee2787e3eccbb45de756edd5038f141cc62448d333d6d1c87ae
       finality: d9af5441aacd1cf6acd5f0b871fb86776ee6e0e32aa326e9935d0ee8736c2b69
-      scope: 45062ab855ecffa557ff4134cc35ba6105be1fd16f140498c67ea80d337118af
+      scope: 53f53837677c4c16ba928355dbe5397185ddac5f391b6e489289177ea5574dea
       market_comparisons: 0bc573070a0ebb15b60fd519cfdc4c89ab3377a1af77850a3863e85dd16b5565
-      market_inspiration: edce1e8ea4eaa0db151cc88be7e4eea4808bc4a7286f789ea2ba8ec1821299f0
+      market_inspiration: 59c5666cd72ef14114aafbefff27eb6e09401c01e95bd43fbe602329bafb2940
     parent: supply-chain-orchestration
     parent_type: presents
   - id: master-data-ingestion
@@ -2484,3 +2484,17 @@ delivery_reconciliation_U908:
     check: field_sha256.scope
     previous_sha256: 01d20751482c7ff2eb3e9b9317d568bbb873aee453dba1e0fabd7877929abf28
     current_sha256: 20820fc41e4fe051aa1b891da432dd3aaf65d94f1e0e88ad6538415d54f9456f
+delivery_reconciliation_U909:
+  source_refs:
+  - U909
+  note: Attentes de livraison courante réalignées après la fusion U909. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: D04
+    check: field_sha256.scope
+    previous_sha256: 45062ab855ecffa557ff4134cc35ba6105be1fd16f140498c67ea80d337118af
+    current_sha256: 53f53837677c4c16ba928355dbe5397185ddac5f391b6e489289177ea5574dea
+  - id: D04
+    check: field_sha256.market_inspiration
+    previous_sha256: edce1e8ea4eaa0db151cc88be7e4eea4808bc4a7286f789ea2ba8ec1821299f0
+    current_sha256: 59c5666cd72ef14114aafbefff27eb6e09401c01e95bd43fbe602329bafb2940

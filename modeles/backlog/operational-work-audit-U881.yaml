@@ -935,7 +935,7 @@ publication_delivery:
 
         Exemple fictif : sur 100 pièces attendues, 80 sont préparées et 20 restent à traiter ; la préparation partielle ne signifie pas que les 80 pièces ont déjà quitté le site. Les retards et anomalies sont visibles avec la progression normale.
 
-        Les trois comportements physiques sont directement rattachés à [Operations Visibility](glossary:TER178). La capacité [Process Visibility](glossary:TER175), dans [Process Supervision](glossary:TER165), explique le parcours complet à partir des contributions connues. Logistics Visibility reste une notion englobante, sans niveau supplémentaire. Les faits, estimations et engagements restent distincts, avec origine et fraîcheur. Le suivi porte aussi sur la progression normale, pas seulement les exceptions. Une information manquante ne prouve pas qu’une opération n’a pas eu lieu. Les exécutants gardent leurs opérations internes ; Inventory Management enregistre les effets sur le stock. Orchestration coordonne la suite et [Fulfilment Adaptation Decision](glossary:TER177) détermine les adaptations ; le tracking ne les décide pas. Aucun temps réel uniforme ni architecture d’instrumentation imposés.
+        Les trois comportements physiques sont directement rattachés à [Operations Visibility](glossary:TER178). La capacité [Process, Tasks & Order Visibility](glossary:TER175), dans [Process Supervision](glossary:TER165), explique le parcours complet à partir des contributions connues. Logistics Visibility reste une notion englobante, sans niveau supplémentaire. Les faits, estimations et engagements restent distincts, avec origine et fraîcheur. Le suivi porte aussi sur la progression normale, pas seulement les exceptions. Une information manquante ne prouve pas qu’une opération n’a pas eu lieu. Les exécutants gardent leurs opérations internes ; Inventory Management enregistre les effets sur le stock. Orchestration coordonne la suite et [Fulfilment Adaptation Decision](glossary:TER177) détermine les adaptations ; le tracking ne les décide pas. Aucun temps réel uniforme ni architecture d’instrumentation imposés.
       market_comparisons:
       - vendor: Microsoft
         product: Dynamics 365 Supply Chain Management
@@ -1043,7 +1043,7 @@ publication_delivery:
 
         Exemple fictif : un camion est en route avec une arrivée estimée à 14 h ; cette estimation n’est ni une preuve de livraison ni une réception magasin réalisée. La suite des opérations au magasin est visible dans Store Visibility.
 
-        Les trois comportements physiques sont directement rattachés à [Operations Visibility](glossary:TER178). La capacité [Process Visibility](glossary:TER175), dans [Process Supervision](glossary:TER165), explique le parcours complet à partir des contributions connues. Logistics Visibility reste une notion englobante, sans niveau supplémentaire. Les faits, estimations et engagements restent distincts, avec origine et fraîcheur. Le suivi porte aussi sur la progression normale, pas seulement les exceptions. Une information manquante ne prouve pas qu’une opération n’a pas eu lieu. Les exécutants gardent leurs opérations internes ; Inventory Management enregistre les effets sur le stock. Orchestration coordonne la suite et [Fulfilment Adaptation Decision](glossary:TER177) détermine les adaptations ; le tracking ne les décide pas. Aucun temps réel uniforme ni architecture d’instrumentation imposés.
+        Les trois comportements physiques sont directement rattachés à [Operations Visibility](glossary:TER178). La capacité [Process, Tasks & Order Visibility](glossary:TER175), dans [Process Supervision](glossary:TER165), explique le parcours complet à partir des contributions connues. Logistics Visibility reste une notion englobante, sans niveau supplémentaire. Les faits, estimations et engagements restent distincts, avec origine et fraîcheur. Le suivi porte aussi sur la progression normale, pas seulement les exceptions. Une information manquante ne prouve pas qu’une opération n’a pas eu lieu. Les exécutants gardent leurs opérations internes ; Inventory Management enregistre les effets sur le stock. Orchestration coordonne la suite et [Fulfilment Adaptation Decision](glossary:TER177) détermine les adaptations ; le tracking ne les décide pas. Aucun temps réel uniforme ni architecture d’instrumentation imposés.
       market_comparisons:
       - vendor: project44
         product: Transportation Visibility
@@ -1192,7 +1192,7 @@ publication_delivery:
 
         Exemple fictif : 100 pièces sont reçues, 60 restent en réserve et 40 sont mises en rayon. Livré au magasin ne signifie pas accessible au client ; une rupture en rayon peut coexister avec du stock en réserve. La vue décrit les opérations et leur progression, sans remplacer Inventory Visibility ni décider les seuils de réassort.
 
-        Les trois comportements physiques sont directement rattachés à [Operations Visibility](glossary:TER178). La capacité [Process Visibility](glossary:TER175), dans [Process Supervision](glossary:TER165), explique le parcours complet à partir des contributions connues. Logistics Visibility reste une notion englobante, sans niveau supplémentaire. Les faits, estimations et engagements restent distincts, avec origine et fraîcheur. Le suivi porte aussi sur la progression normale, pas seulement les exceptions. Une information manquante ne prouve pas qu’une opération n’a pas eu lieu. Les exécutants gardent leurs opérations internes ; Inventory Management enregistre les effets sur le stock. Orchestration coordonne la suite et [Fulfilment Adaptation Decision](glossary:TER177) détermine les adaptations ; le tracking ne les décide pas. Aucun temps réel uniforme ni architecture d’instrumentation imposés.
+        Les trois comportements physiques sont directement rattachés à [Operations Visibility](glossary:TER178). La capacité [Process, Tasks & Order Visibility](glossary:TER175), dans [Process Supervision](glossary:TER165), explique le parcours complet à partir des contributions connues. Logistics Visibility reste une notion englobante, sans niveau supplémentaire. Les faits, estimations et engagements restent distincts, avec origine et fraîcheur. Le suivi porte aussi sur la progression normale, pas seulement les exceptions. Une information manquante ne prouve pas qu’une opération n’a pas eu lieu. Les exécutants gardent leurs opérations internes ; Inventory Management enregistre les effets sur le stock. Orchestration coordonne la suite et [Fulfilment Adaptation Decision](glossary:TER177) détermine les adaptations ; le tracking ne les décide pas. Aucun temps réel uniforme ni architecture d’instrumentation imposés.
       market_comparisons:
       - vendor: Microsoft
         product: Dynamics 365 Commerce
@@ -1298,20 +1298,23 @@ publication_delivery:
   - id: BHV082
     kind: capability
     fields:
-      name: Process Visibility
-      definition: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et blocages
-        à partir des faits corrélés.
-      finality: Comprendre ce qui a abouti et ce qui conditionne encore la progression.
+      name: Process, Tasks & Order Visibility
+      definition: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+        en distinguant faits, engagements, attentes et restes à satisfaire.
+      finality: Comprendre dans une même lecture où en sont le parcours, les tâches et les commandes, et ce qui reste à faire
+        ou à satisfaire.
       scope: |-
-        Relier les activités du parcours, les contributions humaines, les commandes et les prestations pour rendre explicites les résultats acquis, les attentes, les échecs et les conditions de poursuite. Une [Task](glossary:TER089) peut mobiliser plusieurs services ; la corrélation ne suppose ni un appel unique ni une correspondance un pour un. Le suivi concerne aussi la progression normale et les décisions attendues.
+        Relier les activités du parcours, les [Tasks](glossary:TER089), les [Orders](glossary:TER012) et les prestations pour expliquer ce qui a abouti, ce qui attend une contribution humaine ou externe et ce qui bloque la suite. Une Task peut mobiliser plusieurs services ; un parcours peut relier plusieurs commandes. La corrélation n’impose ni appel unique ni correspondance un pour un.
 
-        Distinguer un appel accepté, une prestation terminée, un résultat métier reconnu et un parcours achevé. Une nouvelle tentative reste liée à sa demande d’origine. Une absence de réponse ne prouve ni refus ni absence de réalisation. Conserver origine, dates, fraîcheur, corrections et inconnues, sans inventer l’état d’un service externe.
+        Pour chaque Order et pour le carnet, restituer le demandé, le proposé, le confirmé, le réalisé imputé et le reste à satisfaire, avec version, origine et fraîcheur. Distinguer [affermissement](glossary:TER197), gel, autorisation, suspension et clôture. Les familles d’Orders et [Order Management](model:D04) tiennent ces états, engagements et transitions ; cette visibilité les lit sans modifier les commandes, rapprocher à nouveau les faits, recalculer la promesse ou enregistrer un mouvement de stock. L’historique reste consultable sans réactiver une demande.
 
-        Exemple fictif : une pièce d’expédition est produite, mais son dépôt reste en attente ; la préparation physique est achevée et une vérification humaine demeure nécessaire. Présenter séparément chaque résultat et son effet sur la suite. Un contrôle antifraude techniquement terminé peut aussi laisser une décision métier attendue ; la visibilité ne décide pas d’accepter le risque.
+        Distinguer une tâche prise en charge, un appel accepté, une prestation achevée, un résultat métier reconnu et un parcours terminé. Une nouvelle tentative garde le lien avec sa demande d’origine. L’absence de réponse ne prouve ni refus ni absence de réalisation. Montrer origine, dates, corrections et inconnues sans inventer l’état d’un service externe.
 
-        [Operations Visibility](glossary:TER178) décrit les prestations via les perspectives entrepôt, transport et magasin. [Process Orchestration](glossary:TER129) fournit les activités et attentes connues ; [Human Task Management](glossary:TER170) fournit leur prise en charge et leurs résultats humains. [Operations Tracking](glossary:TER179) conserve la captation des faits de prestation. Les faits sont corrélés, sans créer un registre concurrent.
+        Exemples fictifs : une commande de 100 pièces comporte 60 confirmées, dont 40 réalisées ; afficher séparément les 20 confirmées encore à servir et les 40 non confirmées. Dans le même parcours, la préparation physique peut être terminée alors qu’une pièce d’expédition et une vérification humaine restent attendues. Ces situations ne donnent pas à la visibilité le pouvoir de confirmer la commande ou d’accepter un risque.
 
-        La capacité appartient à [Process Supervision](glossary:TER165), dans [Process Management](glossary:TER164). Elle peut expliquer un parcours reliant plusieurs demandes, sans prendre la responsabilité de leurs engagements. [Fulfilment Coordination](glossary:TER176) coordonne les prestations confiées et [Fulfilment Adaptation Decision](glossary:TER177) choisit les adaptations locales ; la visibilité ne les décide pas. Le suivi de tous les processus de l’entreprise reste hors périmètre. Aucun moteur, instrumentation uniforme ou temps réel général n’est imposé.
+        [Process Orchestration](glossary:TER129) fournit les activités et attentes connues ; [Human Task Management](glossary:TER170) fournit la prise en charge et les résultats humains ; [Operations Visibility](glossary:TER178) décrit les prestations physiques et [Operations Tracking](glossary:TER179) capte leurs faits. La capacité corrèle ces apports sans créer un registre concurrent. [Fulfilment Coordination](glossary:TER176) coordonne les prestations confiées et [Fulfilment Adaptation Decision](glossary:TER177) choisit leurs adaptations locales.
+
+        La capacité appartient à [Process Supervision](glossary:TER165), dans [Process Management](glossary:TER164). Elle expose aussi les attentes et engagements des commandes sans en prendre l’autorité. Le suivi de tous les processus de l’entreprise reste hors périmètre. Aucun moteur, instrumentation uniforme ou temps réel général n’est imposé.
 
         Une [instance de processus](glossary:TER200) est une occurrence suivie ; le parcours descriptif d’un scénario ne constitue pas une exécution.
       market_comparisons:
@@ -1324,8 +1327,8 @@ publication_delivery:
         similarities: Intégration avec Process Visibility pour performance et étranglements ; définitions standard et ad hoc.
         differences: La documentation décrit une intégration avec un service distinct ; ne pas présenter toute cette analyse
           comme native de tout S/4HANA.
-        flow_position: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et blocages
-          à partir des faits corrélés.
+        flow_position: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+          en distinguant faits, engagements, attentes et restes à satisfaire.
         scope_summary: Intégration avec Process Visibility pour performance et étranglements ; définitions standard et ad
           hoc.
         approach_summary: Appui à une responsabilité métier indépendante du produit ; pas de nomenclature commune présumée.
@@ -1340,10 +1343,9 @@ publication_delivery:
         source_refs:
         - U881
         - U885
-        term_choice: Process Visibility nomme le résultat et le périmètre FLOW ; le nom n’est pas présenté comme une appellation
-          native commune.
-        definition_choice: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et
-          blocages à partir des faits corrélés.
+        term_choice: Nom choisi par Laurent pour FLOW ; comparaison partielle, sans taxonomie commune.
+        definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des
+          commandes, en distinguant faits, engagements, attentes et restes à satisfaire.
       - vendor: Microsoft
         product: Dynamics 365 Finance & Operations
         element_name: View workflow history
@@ -1352,8 +1354,8 @@ publication_delivery:
         relationship: Recouvrement partiel
         similarities: Historique, état, temps écoulé, reprise et rappel du workflow ; tâches et réaffectation.
         differences: Workflow documentaire ; le rappel n’est pas équivalent à toute annulation métier.
-        flow_position: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et blocages
-          à partir des faits corrélés.
+        flow_position: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+          en distinguant faits, engagements, attentes et restes à satisfaire.
         scope_summary: Historique, état, temps écoulé, reprise et rappel du workflow ; tâches et réaffectation.
         approach_summary: Appui à une responsabilité métier indépendante du produit ; pas de nomenclature commune présumée.
         source_title: View workflow history
@@ -1367,10 +1369,9 @@ publication_delivery:
         source_refs:
         - U881
         - U885
-        term_choice: Process Visibility nomme le résultat et le périmètre FLOW ; le nom n’est pas présenté comme une appellation
-          native commune.
-        definition_choice: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et
-          blocages à partir des faits corrélés.
+        term_choice: Nom choisi par Laurent pour FLOW ; comparaison partielle, sans taxonomie commune.
+        definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des
+          commandes, en distinguant faits, engagements, attentes et restes à satisfaire.
       - vendor: Camunda
         product: Camunda Optimize
         element_name: What is Optimize?
@@ -1380,8 +1381,8 @@ publication_delivery:
         similarities: Analyser les données d’exécution, les étranglements et les rapports pour améliorer les processus.
         differences: Composant produit, pas modèle de responsabilités métier ; pas de garantie de couverture des activités
           externes non instrumentées.
-        flow_position: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et blocages
-          à partir des faits corrélés.
+        flow_position: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+          en distinguant faits, engagements, attentes et restes à satisfaire.
         scope_summary: Analyser les données d’exécution, les étranglements et les rapports pour améliorer les processus.
         approach_summary: Appui à une responsabilité métier indépendante du produit ; pas de nomenclature commune présumée.
         source_title: What is Optimize?
@@ -1395,10 +1396,63 @@ publication_delivery:
         source_refs:
         - U881
         - U885
-        term_choice: Process Visibility nomme le résultat et le périmètre FLOW ; le nom n’est pas présenté comme une appellation
-          native commune.
-        definition_choice: Établir une vue cohérente de la progression d’un parcours Supply, de ses résultats, attentes et
-          blocages à partir des faits corrélés.
+        term_choice: Nom choisi par Laurent pour FLOW ; comparaison partielle, sans taxonomie commune.
+        definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des
+          commandes, en distinguant faits, engagements, attentes et restes à satisfaire.
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        element_name: Procurement and sourcing workflows
+        concept_name: Procurement and sourcing workflows
+        element_type: Mécanisme ou concept documenté par une source primaire
+        relationship: Recouvrement partiel
+        similarities: Les workflows de commande d’achat relient document, tâches, approbations, statut et historique.
+        differences: Périmètre des workflows d’approvisionnement ; pas une vue unique de tous les Orders et parcours Supply
+          FLOW.
+        flow_position: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+          en distinguant faits, engagements, attentes et restes à satisfaire.
+        scope_summary: Les workflows de commande d’achat relient document, tâches, approbations, statut et historique.
+        approach_summary: Appui partiel à une lecture conjointe ; aucune équivalence de capacité ou réalisation FLOW déduite.
+        source_title: Procurement and sourcing workflows
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-workflows
+        source_version: Documentation consultée le 2026-10-09
+        source_locator: Benefits of using the workflow system ; purchase order workflow
+        consulted_on: '2026-10-09'
+        evidence_limits: Périmètre des workflows d’approvisionnement ; pas une vue unique de tous les Orders et parcours Supply
+          FLOW.
+        status: proposed
+        source_refs:
+        - U909
+        term_choice: Nom choisi par Laurent pour FLOW ; pas de dénomination commune établie chez les éditeurs.
+        definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des
+          commandes, en distinguant faits, engagements, attentes et restes à satisfaire.
+      - vendor: SAP
+        product: SAP S/4HANA Cloud Public Edition
+        element_name: Using Sales Order Fulfillment Monitoring and Operations (BKK)
+        concept_name: Using Sales Order Fulfillment Monitoring and Operations (BKK)
+        element_type: Mécanisme ou concept documenté par une source primaire
+        relationship: Recouvrement partiel
+        similarities: Le flux de traitement montre les étapes, documents liés, statuts et problèmes de satisfaction de la
+          commande client.
+        differences: Cas de vente et suivi des exceptions ; ne couvre pas à lui seul toutes les familles d’Orders ni les Tasks
+          FLOW.
+        flow_position: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
+          en distinguant faits, engagements, attentes et restes à satisfaire.
+        scope_summary: Le flux de traitement montre les étapes, documents liés, statuts et problèmes de satisfaction de la
+          commande client.
+        approach_summary: Appui partiel à une lecture conjointe ; aucune équivalence de capacité ou réalisation FLOW déduite.
+        source_title: Using Sales Order Fulfillment Monitoring and Operations (BKK)
+        source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sales-automation-and-analytics/using-sales-order-fulfillment-monitoring-and-operations-bkk-_bc5cf72d-0812-4352-a6d6-e5a8e4fa6513
+        source_version: Documentation consultée le 2026-10-09
+        source_locator: Issues with the process flow ; Key process steps ; Monitoring process
+        consulted_on: '2026-10-09'
+        evidence_limits: Cas de vente et suivi des exceptions ; ne couvre pas à lui seul toutes les familles d’Orders ni les
+          Tasks FLOW.
+        status: proposed
+        source_refs:
+        - U909
+        term_choice: Nom choisi par Laurent pour FLOW ; pas de dénomination commune établie chez les éditeurs.
+        definition_choice: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des
+          commandes, en distinguant faits, engagements, attentes et restes à satisfaire.
     parent: ba-process-supervision
     parent_type: contains
   - id: BHV105
@@ -2272,7 +2326,7 @@ publication_delivery:
 
         Conserver prix et versions ; consulter l’historique sans réactiver la commande. Restaurer, rouvrir et purger sont des opérations distinctes, soumises à leurs règles sans durée légale ou solution technique présumée. Supprimer un brouillon se distingue d’annuler une commande engagée. Copier une commande ne copie pas ses engagements ou réalisations ; une substitution ne change pas silencieusement son prix.
 
-        [Order Visibility](model:order-visibility) expose demandes, engagements, réalisations rapprochées et restes à satisfaire sans double comptage. Les propositions amont ne sont pas à elles seules commandes fermes, réservations, promesses ou autorisations de démarrage. Réviser un besoin doit préserver ses liens sans en créer un doublon.
+        [Process, Tasks & Order Visibility](model:BHV082) expose demandes, engagements, réalisations rapprochées et restes à satisfaire sans double comptage. Les propositions amont ne sont pas à elles seules commandes fermes, réservations, promesses ou autorisations de démarrage. Réviser un besoin doit préserver ses liens sans en créer un doublon.
 
         Un achat de service et une prestation confiée restent distincts ; toute prestation ne nécessite pas un [Purchase Order](glossary:TER070). [Service Management](model:subdomain-service-orders) tient les engagements de prestation. [Inventory Management](model:D01) porte les faits de stock et les réservations ; [Fulfilment](glossary:TER085) coordonne la réalisation. Les actes nécessaires à un changement de propriété peuvent être demandés ici, mais leur effet reconnu relève d’[Inventory Ownership Transfer Decision](model:D01.h) et du registre de propriété. Clôturer une commande ne prouve pas ce transfert.
 
@@ -2975,7 +3029,7 @@ publication_delivery:
 
         Frontière : Décision [Fulfilment Adaptation Decision](model:D06.f) séparée ; pas de rollback physique ni seconde promesse.
 
-        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. [Fulfilment Coordination](glossary:TER176) coordonne la progression ; [Fulfilment Adaptation Decision](glossary:TER177) choisit les adaptations ; [Operations Tracking](glossary:TER179) intègre les faits d’exécution ; [Operations Visibility](glossary:TER178) restitue leur avancement et [Process Visibility](glossary:TER175) en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun produit logiciel particulier ou nouveau niveau descriptif imposé.
+        Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. [Fulfilment Coordination](glossary:TER176) coordonne la progression ; [Fulfilment Adaptation Decision](glossary:TER177) choisit les adaptations ; [Operations Tracking](glossary:TER179) intègre les faits d’exécution ; [Operations Visibility](glossary:TER178) restitue leur avancement et [Process, Tasks & Order Visibility](glossary:TER175) en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun produit logiciel particulier ou nouveau niveau descriptif imposé.
 
         Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Availability](glossary:TER112).
 
@@ -4127,7 +4181,7 @@ publication_delivery:
         explicites.
       finality: Répondre aux questions de pilotage sans perdre le contexte et la provenance des résultats.
       scope: |-
-        Filtrer, regrouper et comparer commandes, prestations, parcours et travail humain ; enregistrer et partager les vues utiles. Consommer les mesures de [Process Mining](glossary:TER173) et les connaissances d’[Order Visibility](model:order-visibility) et [Operations Visibility](glossary:TER178). Donner la population, la formule, la période, la fraîcheur et la version des indicateurs ; revenir aux dossiers à l’origine d’un résultat.
+        Filtrer, regrouper et comparer commandes, prestations, parcours et travail humain ; enregistrer et partager les vues utiles. Consommer les mesures de [Process Mining](glossary:TER173) et les connaissances d’[Process, Tasks & Order Visibility](model:BHV082) et [Operations Visibility](glossary:TER178). Donner la population, la formule, la période, la fraîcheur et la version des indicateurs ; revenir aux dossiers à l’origine d’un résultat.
 
         Préserver les droits d’accès et éviter le double comptage des contributions liées. Distinguer information absente et absence de retard. La responsabilité métier ne se réduit ni à un éditeur de graphiques ni à une requête technique ; l’administration de la plateforme de données reste distincte.
 
@@ -5082,7 +5136,7 @@ publication_delivery:
 
         Distinguer événement survenu et événement reçu, tentative et résultat, zéro et donnée absente. Un chemin non observé ne peut être reconstitué avec certitude ; une corrélation n’établit pas une causalité. Une [Task](glossary:TER089) peut mobiliser plusieurs services et un dossier plusieurs commandes, sans correspondance un pour un. Les identifiants et dates exploitables sont un préalable.
 
-        [Process Visibility](glossary:TER175) explique un parcours courant ; [Process Mining](glossary:TER173) analyse les parcours observés et inclut leurs mesures de performance. Aucune capacité Process Performance Analysis concurrente. Les décisions d’amélioration et leurs autorisations restent chez leurs responsables.
+        [Process, Tasks & Order Visibility](glossary:TER175) explique un parcours courant ; [Process Mining](glossary:TER173) analyse les parcours observés et inclut leurs mesures de performance. Aucune capacité Process Performance Analysis concurrente. Les décisions d’amélioration et leurs autorisations restent chez leurs responsables.
 
         Exemple fictif : découvrir deux variantes de validation, isoler l’attente avant prise en charge et vérifier si une réaffectation autorisée réduit cette attente.
 
@@ -6380,3 +6434,57 @@ delivery_reconciliation_U908:
     check: fields.scope
     previous_sha256: 17ea9c19c4969cbc318719ba505921667b32da5d3259a9d3df4f76ae97641dff
     current_sha256: c386efa145bbff1438fa4bb25c4e575f46ebb952a19901ef319e33df95f4cbb2
+delivery_reconciliation_U909:
+  source_refs:
+  - U909
+  note: Attentes de livraison courante réalignées après la fusion U909. Les attentes précédentes sont conservées par leurs
+    empreintes et dans Git ; cette opération technique ne réapprouve aucun contenu.
+  changed_checks:
+  - id: BHV079
+    check: fields.scope
+    previous_sha256: 6aade7add78763caec867a3456430646347d9725ab7a3a2b3a0d25f5d162b302
+    current_sha256: 1a2c89a6bb623d2ac9946b3d403e98d598b8383a61b32ad970e9adad1fe91c82
+  - id: BHV080
+    check: fields.scope
+    previous_sha256: 8d98f922e7091e6d580ba28c8997baf278468c11fd09428dba131b7f6f449bc9
+    current_sha256: 421983243adc9c7759a79ee60549148b064ed03b17f4b5dcdf764e21b0dbfa45
+  - id: BHV081
+    check: fields.scope
+    previous_sha256: 50550b71715741ca4b12279e15923d18f7c4367cb8d36c8a245b4d24a90feff8
+    current_sha256: d48481351c0a982e228e01c4e9729b7d3d5ce419ddf9ec6fa8d1153914769723
+  - id: BHV082
+    check: fields.name
+    previous_sha256: fc297e273b81eafd6cbc74e9c68cc5fcc7a1d1cd6374321e6847074f6ff40974
+    current_sha256: 6ce5480a92a493abf48023c17ffaa3ada144730830cfc008a088820833322e89
+  - id: BHV082
+    check: fields.definition
+    previous_sha256: 7eaecdfe0bf3435f0fcda66109353480ad8ca393ef75b4f04f5e571d2a1e5c80
+    current_sha256: 509c07c12a0ecde0eb9755279a7a4b6e7a99a2bbdbd63e38375bd170b77ab1a7
+  - id: BHV082
+    check: fields.finality
+    previous_sha256: be9ffc37702856df31bb2d172cf8e2a0e7dd4cc4dc82edceaf4bbdd60a0eaa7a
+    current_sha256: 644c7d393920a15fa8e7516ccdf6d506333ea44440e1662bf962ad8de4888d3a
+  - id: BHV082
+    check: fields.scope
+    previous_sha256: 7eed695fd3f18c599b51edef4cc3bd775941091e3ecd981d0d9bae782dc77a01
+    current_sha256: b779eb1fd78274e842e42d3b3089d3b7361ff9c6a3c4873d0a69315321ae6a6e
+  - id: BHV082
+    check: fields.market_comparisons
+    previous_sha256: 87e6fc9b4234d5299d9bebcb610032f70cf167f8d5df6b60a924f4c59f0b9aa7
+    current_sha256: c4331bf3e583139609ba0d7844e0d41c169e3462f60d6c6bf9d28746056da622
+  - id: D04
+    check: fields.scope
+    previous_sha256: 45062ab855ecffa557ff4134cc35ba6105be1fd16f140498c67ea80d337118af
+    current_sha256: 53f53837677c4c16ba928355dbe5397185ddac5f391b6e489289177ea5574dea
+  - id: D06.d
+    check: fields.scope
+    previous_sha256: 0502c30e0df4cc4968a32a633e6ef697193ec98a8c32bcf0c83fe671966a0df9
+    current_sha256: 3048dea0fe578c9893b2f195b4fde353704405d27543cf973f9cfce5740b3f60
+  - id: operational-analysis-reporting
+    check: fields.scope
+    previous_sha256: 671b9444b462d7dde957d31374e32ebed6ef4273db7c4d20167e3a1e7cb0bc61
+    current_sha256: 01f47ac3d9899b413fe478f4ac9095066640c90c5d72ea80e288099f4e0b52e9
+  - id: process-mining
+    check: fields.scope
+    previous_sha256: 2b758c44abe1a68e3ceae8e35db7d3745276cdb18415ad093d2ae3a7fcc86859
+    current_sha256: a2fc7f341b4b795cdc739ebe53145e1f240f99ba9c5472251ee6bfb2bfb0c22c
