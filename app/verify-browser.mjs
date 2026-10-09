@@ -45,13 +45,13 @@ try {
   const route = () => new URLSearchParams(new URL(page.url()).hash.slice(1));
 
   await visit({ view: 'map' });
-  await page.getByRole('heading', { level: 1, name: 'Univers' }).waitFor();
+  await page.getByRole('heading', { level: 1, name: universe.fields.name }).waitFor();
   assert.deepEqual((await page.locator('.overview-system').evaluateAll(items => items.map(item => item.dataset.nodeId))).sort(), children(universe.id).sort());
   assert.ok((await page.locator('.sidebar-stats').textContent()).includes(`${model.nodes.length} éléments`));
   await page.locator(`.overview-system[data-node-id="${system.id}"] h3 button`).click();
   await page.locator(`.business-card[data-node-id="${domain.id}"]`).waitFor();
   assert.equal(route().get('scope'), system.id);
-  checks.push('Universe, systems, published hierarchy and statistics');
+  checks.push('Published root, systems, hierarchy and statistics');
 
   await page.locator(`.business-card[data-node-id="${domain.id}"] h3 button`).click();
   await page.locator(`.business-card[data-node-id="${areas[0]}"]`).waitFor();
