@@ -186,7 +186,7 @@ Playwright est une dépendance de développement verrouillée. Chromium est le n
 
 Les anciennes recettes spécifiques sont archivées dans `legacy/qa-before-static-repair/`. Leurs entrées de commande historiques, notamment `verify:behaviors`, `verify:market`, `verify:dependencies` et `verify:presentation`, lancent désormais la recette consolidée ; elles ne rejouent pas tous les scénarios historiques. Les archives et preuves datées ne sont jamais réécrites par les tests courants.
 
-Le serveur de production sert exclusivement l’entrée et les ressources autorisées dans `app/dist/`. Le serveur expose les JSON générés sous `data/`, mais pas les sources TypeScript, les dépendances, les source maps ni les fichiers du dépôt. Il conserve la vérification de l’hôte et de l’origine, l’absence de cache et les types de contenu explicites. La politique CSP limite scripts et feuilles de style aux fichiers locaux ; seuls les attributs de style nécessaires au placement React Flow sont autorisés en ligne. Elle n’autorise ni scripts en ligne ni évaluation dynamique.
+Le serveur de production sert exclusivement l’entrée et les ressources autorisées dans `app/dist/`. Le serveur expose les JSON générés et le YAML téléchargeable sous `data/`, mais pas les sources TypeScript, les dépendances, les source maps ni les fichiers du dépôt. Il conserve la vérification de l’hôte et de l’origine, l’absence de cache et les types de contenu explicites. La politique CSP limite scripts et feuilles de style aux fichiers locaux ; seuls les attributs de style nécessaires au placement React Flow sont autorisés en ligne. Elle n’autorise ni scripts en ligne ni évaluation dynamique.
 
 ## Structure du frontend
 

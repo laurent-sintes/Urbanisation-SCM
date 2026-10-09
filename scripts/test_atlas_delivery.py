@@ -7,6 +7,7 @@ class DeliveryTests(unittest.TestCase):
     def setUp(self):
         self.files = {'index.html': b'new UI', 'data/index.json': b'new catalog',
                       'data/2026-09-28.3/model.json': b'complete model',
+                      'data/2026-09-28.3/model.yaml': b'readable model',
                       'data/2026-09-28.3/guide.json': b'complete methodology',
                       'assets/scenarios.js': b'scenario reader'}
         self.expected = {'schema_version': 1, 'commit': 'expected-commit',

@@ -18,7 +18,8 @@ def manifest(dist, commit):
     index = json.loads((dist / 'data/index.json').read_bytes())
     version = index['current_version']
     paths = [dist / 'index.html', dist / 'data/index.json',
-             dist / f'data/{version}/model.json', dist / f'data/{version}/guide.json']
+             dist / f'data/{version}/model.json', dist / f'data/{version}/model.yaml',
+             dist / f'data/{version}/guide.json']
     paths += sorted(p for p in (dist / 'assets').rglob('*') if p.is_file())
     return {'schema_version': 1, 'commit': commit, 'current_version': version,
             'files': {p.relative_to(dist).as_posix(): digest(p.read_bytes()) for p in paths}}
@@ -39,6 +40,7 @@ def verify(expected, fetch):
         raise ValueError('Invalid delivery manifest')
     required = {'index.html', 'data/index.json',
                 f'data/{expected["current_version"]}/model.json',
+                f'data/{expected["current_version"]}/model.yaml',
                 f'data/{expected["current_version"]}/guide.json'}
     if not required <= expected['files'].keys():
         raise ValueError('Incomplete delivery manifest')

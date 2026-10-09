@@ -46,7 +46,7 @@ CSP = (
 
 
 def built_file(root: Path, route: str) -> tuple[Path, str] | None:
-    """Serve only compiled assets and generated publication JSON, never sources."""
+    """Serve only compiled assets and generated publication data, never sources."""
     if route in BUILT_ROOT_FILES:
         filename, content_type = BUILT_ROOT_FILES[route]
     elif re.fullmatch(r"/assets/[A-Za-z0-9][A-Za-z0-9._-]*", route) and ".." not in route:
@@ -56,6 +56,8 @@ def built_file(root: Path, route: str) -> tuple[Path, str] | None:
             return None
     elif route == '/data/index.json' or re.fullmatch(r'/data/\d{4}-\d{2}-\d{2}\.[1-9]\d*/(?:model|guide)\.json', route):
         filename, content_type = route.lstrip('/'), 'application/json; charset=utf-8'
+    elif re.fullmatch(r'/data/\d{4}-\d{2}-\d{2}\.[1-9]\d*/model\.yaml', route):
+        filename, content_type = route.lstrip('/'), 'application/yaml; charset=utf-8'
     else:
         return None
     build_dir = root / "app" / "dist"

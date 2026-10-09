@@ -128,12 +128,24 @@ class HTTPTests(unittest.TestCase):
         folder = self.dist / 'data/2026-09-26.2'
         folder.mkdir(parents=True)
         payload = b'{"space":"release","version":"2026-09-26.2"}'
+        yaml_payload = b'space: release\nversion: 2026-09-26.2\n'
         (folder / 'model.json').write_bytes(payload)
+        (folder / 'model.yaml').write_bytes(yaml_payload)
         (self.dist / 'data/index.json').write_text('{"current_version":"2026-09-26.2"}')
         self.assertEqual(self.request('/data/2026-09-26.2/model.json')[2], payload)
-        # No modeles directory exists: serving JSON needs no YAML or release reader.
+        status, headers, body = self.request('/data/2026-09-26.2/model.yaml')
+        self.assertEqual(status, 200)
+        self.assertEqual(headers['Content-Type'], 'application/yaml; charset=utf-8')
+        self.assertEqual(body, yaml_payload)
+        status, headers, body = self.request('/data/2026-09-26.2/model.yaml', method='HEAD')
+        self.assertEqual(status, 200)
+        self.assertEqual(int(headers['Content-Length']), len(yaml_payload))
+        self.assertEqual(body, b'')
+        # No modeles directory exists: serving published files needs no release reader.
         self.assertEqual(self.request('/data/2026-09-26.2/model.json')[2], payload)
-        for route in ['/api/model', '/api/releases', '/api/source', '/api/modeling-guide', '/data/../AGENTS.md', '/data/2026-09-26.2/secret.json']:
+        for route in ['/api/model', '/api/releases', '/api/source', '/api/modeling-guide',
+                      '/data/../AGENTS.md', '/data/2026-09-26.2/secret.json',
+                      '/data/2026-09-26.2/guide.yaml', '/data/2026-09-26.2/model.yaml.bak']:
             self.assertEqual(self.request(route)[0], 404, route)
 
     def test_static_delivery_manifest_is_served_for_build_update_detection(self):
