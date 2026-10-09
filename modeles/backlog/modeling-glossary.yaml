@@ -1,6 +1,6 @@
 id: flow-modeling-glossary
 kind: modeling_glossary
-as_of: '2026-10-07'
+as_of: '2026-10-09'
 source_refs:
 - U229
 - U230
@@ -66,6 +66,12 @@ source_refs:
 - U825
 - U880
 - U903
+- U917
+- U918
+- U919
+- U920
+- U921
+- U922
 purpose: Vocabulaire de modélisation en support à la définition des objets du modèle ; distinct du glossaire métier.
 boundary:
   business_glossary: modeles/backlog/glossary.yaml
@@ -1825,6 +1831,28 @@ terms:
     state: partial
     adopted_scope: Niveau racine au-dessus des systèmes métier.
     proposed_scope: Rédaction pédagogique.
+- id: MOD044
+  name: Hotspot
+  label_fr: Point chaud
+  short_description: Sujet à instruire ou arbitrer, situé sur un périmètre ou entre deux périmètres du modèle.
+  definition: Sujet transverse dont le problème, les options et les éléments à confirmer sont suivis dans une fiche autonome.
+    Un point chaud de périmètre est ancré sur un ou plusieurs objets du modèle ; un point chaud d’intégration relie exactement
+    deux objets. Sa gravité combine la difficulté politique et la difficulté d’implémentation selon une grille publiée,
+    sans mesurer automatiquement l’urgence ni l’impact.
+  role: Rendre visibles les sujets à traiter sur les cartes et garder leurs options, sources, réserves et arbitrages.
+  notes:
+  - Les statuts Atlas découvert, partagé, validé et résolu ne remplacent pas les états de suivi du registre FLOW-Program.
+  - La fiche reste hors de la hiérarchie métier ; sa localisation ne crée pas une relation de décomposition.
+  source_refs:
+  - U917
+  - U918
+  - U919
+  - U920
+  - U921
+  - U922
+  review:
+    state: proposed
+    note: Définition méthodologique pilote ; libellés, états et calcul de gravité restent à éprouver avant accord métier.
 methodology_agreements:
 - id: AGREEMENT-U787
   source_refs:
@@ -2015,6 +2043,7 @@ presentation:
     - MOD029
     - MOD030
     - MOD031
+    - MOD044
   - id: attributes
     label: Qualificatifs
     term_ids:

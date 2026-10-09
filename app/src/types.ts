@@ -177,6 +177,11 @@ export interface GlossaryTerm extends JsonRecord {
   last_modified?: string;
 }
 export interface RawPublication extends JsonRecord {
+  hotspot_catalog?: {
+    schema_version: 1;
+    hotspots: Hotspot[];
+    source_refs: string[];
+  };
   metamodel?: {
     node_types?: { kind: string; label: string; definition?: string | null }[];
     documentation?: import('./modelingGuide').ModelingGuide;
@@ -201,6 +206,33 @@ export interface RawPublication extends JsonRecord {
   limitations?: string[];
   last_modified?: string;
   published_at?: string;
+}
+export interface Hotspot {
+  id: string;
+  title: string;
+  kind: 'scope' | 'integration';
+  location: { node_ids: string[] };
+  problem: string;
+  examples: string[];
+  resolution_options: {
+    id: string;
+    title: string;
+    principle: string;
+    effect?: string;
+    conditions?: string[];
+    tradeoffs?: string[];
+    implementation_complexity: 'S' | 'M' | 'L' | 'XL' | 'unassessed';
+    evidence_state: 'documented' | 'hypothesis' | 'to_investigate';
+  }[];
+  complexity: { political: string; implementation: string; rationale: string };
+  severity: 'S' | 'M' | 'L' | 'XL' | 'unassessed';
+  arbitration_level: string;
+  arbitration_note?: string;
+  status: 'discovered' | 'shared' | 'validated' | 'resolved';
+  source_status?: string;
+  source_refs: string[];
+  origin: { repository: string; path: string; id: string; source_id: string; evidence_limit: string };
+  review: Review;
 }
 export interface AtlasNode {
   readonly displayCode?: string;

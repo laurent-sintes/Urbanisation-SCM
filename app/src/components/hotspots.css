@@ -1,0 +1,363 @@
+.hotspot-page {
+  max-width: 900px;
+  padding: 1.5rem;
+}
+.hotspot-page h2,
+.hotspot-page h3 {
+  margin-top: 0;
+}
+.hotspot-scale {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+  color: #4b6261;
+  font-size: 12px;
+}
+.hotspot-scale span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.hotspot-scale-color {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+}
+.hotspot-scale-color.severity-S {
+  background: #dcaa2d;
+}
+.hotspot-scale-color.severity-M {
+  background: #e47f2a;
+}
+.hotspot-scale-color.severity-L {
+  background: #d54d31;
+}
+.hotspot-scale-color.severity-XL {
+  background: #ae2336;
+}
+.hotspot-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 1.3rem 0;
+}
+.hotspot-filters label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+.hotspot-filters input,
+.hotspot-filters select {
+  min-height: 2.3rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #a9b9b6;
+  border-radius: 0.4rem;
+  background: white;
+}
+.hotspot-list {
+  display: grid;
+  gap: 0.7rem;
+}
+.hotspot-list > button {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem;
+  text-align: left;
+  border: 1px solid #ccd8d5;
+  border-radius: 0.7rem;
+  background: white;
+  cursor: pointer;
+}
+.hotspot-list > button:hover,
+.hotspot-list > button:focus-visible {
+  border-color: #be6954;
+}
+.hotspot-list small {
+  display: block;
+  margin-top: 0.35rem;
+}
+.hotspot-dot {
+  flex: none;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  background: #a7abae;
+  box-shadow: 0 0 0 0.35rem #a7abae44;
+}
+.hotspot-dot.severity-S {
+  background: #dcaa2d;
+  box-shadow: 0 0 0 0.35rem #dcaa2d44;
+}
+.hotspot-dot.severity-M {
+  background: #e47f2a;
+  box-shadow: 0 0 0 0.45rem #e47f2a55;
+}
+.hotspot-dot.severity-L {
+  background: #d54d31;
+  box-shadow: 0 0 0 0.55rem #d54d3155;
+}
+.hotspot-dot.severity-XL {
+  background: #ae2336;
+  box-shadow: 0 0 0 0.7rem #ae233666;
+}
+.hotspot-kicker {
+  color: #9c513e;
+  font-weight: 700;
+}
+.hotspot-detail {
+  display: grid;
+  gap: 0.5rem;
+}
+.hotspot-detail > button {
+  justify-self: start;
+}
+.hotspot-anchors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.hotspot-anchors button {
+  border: 1px solid #90aaa5;
+  border-radius: 99px;
+  background: #eff7f5;
+  padding: 0.4rem 0.8rem;
+  cursor: pointer;
+}
+.hotspot-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.7rem;
+}
+.hotspot-facts div,
+.hotspot-options section {
+  border: 1px solid #d9e0dc;
+  border-radius: 0.6rem;
+  padding: 0.9rem;
+  background: #fff;
+}
+.hotspot-facts dt {
+  font-size: 0.85rem;
+}
+.hotspot-facts dd {
+  margin: 0.3rem 0 0;
+  font-weight: 700;
+}
+.hotspot-options {
+  display: grid;
+  gap: 0.7rem;
+}
+.hotspot-options h5 {
+  margin: 0;
+  font-size: 1rem;
+}
+.hotspot-detail code {
+  overflow-wrap: anywhere;
+}
+.hotspot-map-toggle,
+.hotspot-map-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+.hotspot-map-filter select {
+  border: 1px solid #a9b9b6;
+  border-radius: 0.3rem;
+  padding: 0.2rem;
+  background: white;
+}
+.hotspot-map-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.55rem 1rem;
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #a9aaa8;
+  border-radius: 0.5rem;
+  background: #f7f7f5;
+  color: #303b3b;
+  font-size: 0.86rem;
+}
+.hotspot-map-summary button {
+  border: 1px solid #697d7e;
+  border-radius: 99px;
+  background: white;
+  padding: 0.3rem 0.7rem;
+  color: #173e43;
+  font-weight: 650;
+  cursor: pointer;
+}
+.hotspot-map-summary button:hover,
+.hotspot-map-summary button:focus-visible {
+  border-color: #173e43;
+  background: #e7efed;
+}
+.hotspot-map-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+.hotspot-map-overlay-viewport {
+  position: absolute;
+  inset: 0;
+  transform-origin: 0 0;
+  pointer-events: none;
+}
+.hotspot-map-point {
+  --hotspot-rgb: 118 139 145;
+  --halo-size: 112px;
+  --pulse-duration: 4.4s;
+  --flame-duration: 1.8s;
+  --flame-size: 13px;
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.hotspot-map-point.severity-S {
+  --hotspot-rgb: 220 170 45;
+  --halo-size: 110px;
+  --pulse-duration: 4.2s;
+  --flame-duration: 1.8s;
+  --flame-size: 13px;
+}
+.hotspot-map-point.severity-M {
+  --hotspot-rgb: 228 127 42;
+  --halo-size: 132px;
+  --pulse-duration: 3.6s;
+  --flame-duration: 1.4s;
+  --flame-size: 12px;
+}
+.hotspot-map-point.severity-L {
+  --hotspot-rgb: 213 77 49;
+  --halo-size: 158px;
+  --pulse-duration: 3s;
+  --flame-duration: 1.05s;
+  --flame-size: 11px;
+}
+.hotspot-map-point.severity-XL {
+  --hotspot-rgb: 174 35 54;
+  --halo-size: 188px;
+  --pulse-duration: 2.4s;
+  --flame-duration: 0.72s;
+  --flame-size: 10px;
+}
+.hotspot-map-halo {
+  position: absolute;
+  left: calc(var(--halo-size) / -2);
+  top: calc(var(--halo-size) / -2);
+  width: var(--halo-size);
+  height: var(--halo-size);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgb(var(--hotspot-rgb) / 0.25) 0,
+    rgb(var(--hotspot-rgb) / 0.18) 23%,
+    rgb(var(--hotspot-rgb) / 0.1) 48%,
+    transparent 72%
+  );
+  animation: hotspot-breathe var(--pulse-duration) ease-in-out infinite;
+  pointer-events: none;
+}
+.hotspot-map-marker {
+  position: absolute;
+  left: -22px;
+  top: -22px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgb(var(--hotspot-rgb) / 0.75);
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.88);
+  box-shadow: 0 1px 7px rgb(var(--hotspot-rgb) / 0.3);
+  color: rgb(var(--hotspot-rgb));
+  cursor: pointer;
+  pointer-events: auto;
+}
+.hotspot-map-flames {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 25px;
+  line-height: 1;
+}
+.hotspot-map-flames svg {
+  width: var(--flame-size);
+  height: calc(var(--flame-size) * 1.45);
+  fill: rgb(var(--hotspot-rgb) / 0.45);
+  stroke-width: 2.2;
+  transform-origin: 50% 90%;
+  animation: hotspot-flicker var(--flame-duration) ease-in-out infinite alternate;
+}
+.hotspot-map-flames svg:nth-child(even) {
+  animation-delay: calc(var(--flame-duration) / -2);
+}
+.hotspot-map-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: 33px;
+  transform: translateX(-50%);
+  display: grid;
+  gap: 4px;
+  width: max-content;
+  max-width: 290px;
+  padding: 8px 10px;
+  border: 1px solid #cbd7d2;
+  border-radius: 7px;
+  background: #fffefcf2;
+  box-shadow: 0 4px 15px #193f4322;
+  color: #263c3d;
+  font-size: 11px;
+  line-height: 1.3;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 3;
+}
+.hotspot-map-tooltip span {
+  white-space: normal;
+}
+.hotspot-map-marker:hover + .hotspot-map-tooltip,
+.hotspot-map-marker:focus-visible + .hotspot-map-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+.hotspot-map-marker:focus-visible {
+  outline: 3px solid #153f75;
+  outline-offset: 5px;
+}
+@keyframes hotspot-breathe {
+  0%,
+  100% {
+    transform: scale(0.9);
+    opacity: 0.72;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+@keyframes hotspot-flicker {
+  from {
+    transform: scale(0.88) rotate(-5deg);
+    opacity: 0.7;
+  }
+  to {
+    transform: scale(1.1) rotate(5deg);
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hotspot-map-halo,
+  .hotspot-map-flames svg {
+    animation: none;
+  }
+}

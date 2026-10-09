@@ -1,5 +1,14 @@
 import type { PublishedModel } from './types.ts';
-export type View = 'map' | 'sheet' | 'relations' | 'market' | 'glossary' | 'principles' | 'metamodel' | 'scenarios';
+export type View =
+  | 'map'
+  | 'sheet'
+  | 'relations'
+  | 'market'
+  | 'glossary'
+  | 'principles'
+  | 'metamodel'
+  | 'scenarios'
+  | 'hotspots';
 export interface GraphRoute {
   graphLevel?: 'capability' | 'business_area' | 'area' | 'domain' | 'business_system' | 'universe';
   graphDepth?: 0 | 1 | 2 | 3;
@@ -30,6 +39,7 @@ export interface RouteState extends GraphRoute {
   catalogReturn?: string;
   scroll?: string;
   scenario?: string;
+  hotspot?: string;
   stream?: string;
   path?: string;
   event?: string;
@@ -70,9 +80,17 @@ export function readRoute(hash: string): RouteState {
       ? { mapDepth: Number(mapDepth) as RouteState['mapDepth'] }
       : {}),
     ...(p.has('mapFocus') ? { mapFocus: p.get('mapFocus') || '' } : {}),
-    view: ['map', 'sheet', 'relations', 'market', 'glossary', 'principles', 'metamodel', 'scenarios'].includes(
-      view || '',
-    )
+    view: [
+      'map',
+      'sheet',
+      'relations',
+      'market',
+      'glossary',
+      'principles',
+      'metamodel',
+      'scenarios',
+      'hotspots',
+    ].includes(view || '')
       ? (view as View)
       : undefined,
     ...((view === 'principles' || view === 'metamodel') && p.has('principle')
@@ -95,6 +113,7 @@ export function readRoute(hash: string): RouteState {
         .filter((k) => p.has(k))
         .map((k) => [k, p.get(k) || '']),
     ),
+    ...(view === 'hotspots' && p.has('hotspot') ? { hotspot: p.get('hotspot') || '' } : {}),
     version: p.get('version') || '',
     query: p.get('q') || '',
     status: p.get('status') || '',
@@ -119,6 +138,7 @@ export function routePath(route: RouteState, model?: PublishedModel | null): str
           scenarioQuery: route.scenarioQuery,
         }
       : {}),
+    hotspot: route.view === 'hotspots' ? route.hotspot : undefined,
     version: route.version,
     node: route.node,
     scope: route.scope,

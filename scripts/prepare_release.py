@@ -328,6 +328,8 @@ def model_diff(previous, candidate):
     result['principles'] = changes(previous.get('principles', []), candidate.get('principles', []))
     if 'scenario_catalog' in previous or 'scenario_catalog' in candidate:
         result['scenario_catalog'] = changes(previous.get('scenario_catalog'), candidate.get('scenario_catalog'))
+    if 'hotspot_catalog' in previous or 'hotspot_catalog' in candidate:
+        result['hotspot_catalog'] = changes(previous.get('hotspot_catalog'), candidate.get('hotspot_catalog'))
     if 'display_policy' in previous or 'display_policy' in candidate:
         result['display_policy'] = changes(previous.get('display_policy'), candidate.get('display_policy'))
         result['display_index'] = changes(previous.get('display_index'), candidate.get('display_index'))
@@ -730,6 +732,8 @@ def publish_prepared(root, version, activate=False):
     if 'scenario_catalog' in release:
         catalogue = release['scenario_catalog']
         notes += ['', '## Scénarios métier', '', f"{len(catalogue['value_streams'])} flux de valeur, {len(catalogue['scenarios'])} scénarios et {len(catalogue['paths'])} parcours figés dans cette publication. Les contenus proposés ne deviennent pas des accords métier par publication."]
+    if 'hotspot_catalog' in release:
+        notes += ['', '## Points chauds', '', f"{len(release['hotspot_catalog']['hotspots'])} points chauds localisés dans cette publication. Leur publication ne vaut ni arbitrage ni résolution."]
     if 'information_catalog' in release:
         catalogue = release['information_catalog']
         notes += ['', '## Informations métier', '',

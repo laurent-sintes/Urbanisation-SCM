@@ -53184,3 +53184,87 @@ scenario_catalog:
     scenario_id: b2b-partial-stock
     contribution: Évaluer les disponibilités, faisabilités et conséquences économiques des options, puis sélectionner une
       proposition distincte de l’engagement confirmé.
+hotspot_catalog:
+  schema_version: 1
+  source_refs:
+  - U917
+  - U918
+  - U919
+  - U920
+  - U921
+  - U922
+  - U923
+  hotspots:
+  - id: HS-002
+    title: C-LOG — partage des décisions de fulfillment
+    kind: integration
+    location:
+      node_ids:
+      - supply-chain-orchestration
+      - domain-logistics-execution
+    problem: Clarifier la répartition des décisions de promesse et de fulfillment entre FLOW et C-LOG, ainsi que les
+      échanges qui rendent leurs décisions compatibles, avant de définir la cible.
+    examples:
+    - Une commande peut mobiliser des choix de source, de site, de transport et de promesse qui traversent la frontière
+      entre orchestration Supply et exécution logistique.
+    - Le rôle de C-LOG diffère entre les marques historiques Beaumanoir et Boardriders ; une cible uniforme ne peut pas
+      être présumée.
+    resolution_options:
+    - id: hs-002-clog-extended
+      title: Étendre l’OMS C-LOG
+      principle: Étudier une prise en charge plus large des magasins et de l’omnicanalité par C-LOG.
+      effect: Couverture et propriété de la promesse à vérifier selon les marques et les parcours.
+      conditions:
+      - Confirmer le mandat de décision de C-LOG et la couverture réelle de l’OMS.
+      tradeoffs:
+      - Risque de confier une décision transverse à la filiale logistique.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-002-flow-oms
+      title: Porter l’OMS au niveau FLOW
+      principle: Étudier une décision de source, de transport et de promesse portée par FLOW, C-LOG assurant l’exécution
+        ou des services spécialisés.
+      effect: Frontière de décision et contrat avec C-LOG à préciser.
+      conditions:
+      - Qualifier les règles existantes de Crossroad et les événements attendus de C-LOG.
+      tradeoffs:
+      - Risque de reproduire des décisions déjà prises dans C-LOG.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-002-complementary-oms
+      title: Ajouter un OMS complémentaire hors C-LOG
+      principle: Étudier une couverture des usages non pris en charge par C-LOG par un autre OMS.
+      effect: Répartition des usages à définir avant toute comparaison.
+      conditions:
+      - Établir les responsabilités, les contrats et les règles de priorité entre les décisions.
+      tradeoffs:
+      - Risque d’intégration et de double décision élevé selon la fiche source.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    complexity:
+      political: XL
+      implementation: L
+      rationale: Laurent qualifie la difficulté politique XL et la difficulté d'implémentation L (U923) ; la gravité XL
+        découle de la matrice-v1. Cette estimation ne documente pas encore les contrats, les autorités ni la réalisation installée.
+    severity: XL
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: La fiche source cite la gouvernance Demand / Supply et l’Architecture d’Entreprise ; le niveau
+      parmi les instances FLOW proposées par Laurent n’est pas encore établi.
+    status: discovered
+    source_status: En instruction
+    source_refs:
+    - U922
+    - U923
+    origin:
+      repository: FLOW-Program
+      path: src/docs/as-is/hotspots/c-log-decision-fulfillment.md
+      id: HS-002
+      source_id: SRC-2026-06-30-GBM-CLOG-OMS
+      evidence_limit: Compte rendu d’atelier disponible ; transcript source manquant et rôles, contrats, règles de scoring
+        et autorités à confirmer. Les hypothèses ne fixent pas la cible.
+    review:
+      state: proposed
+      note: Projection pilote du hotspot FLOW-Program HS-002 sur les deux domaines du backlog. Difficultés politique XL
+        et d'implémentation L qualifiées par Laurent (U923) ; options et arbitrage restent à instruire, sans preuve de
+        réalisation installée.

@@ -15,6 +15,7 @@ import {
 import { type CSSProperties, lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { BusinessSheet } from './components/BusinessSheet';
 import { GlossaryPage } from './components/GlossaryPage';
+import { HotspotCatalogPage } from './components/HotspotCatalogPage';
 import { MapDetailPicker } from './components/MapDetailPicker';
 import { MapPanel } from './components/MapPanel';
 import { MarketComparisons } from './components/MarketComparisons';
@@ -159,7 +160,8 @@ export function App() {
   const parentScope =
     scope && model ? model.nodeById.get(parentRelationOf(model, scope.id)?.sourceId || '') : undefined;
   // Keep the map context stable on selection, including between double-clicks.
-  const referenceView = view === 'scenarios' || view === 'glossary' || view === 'principles' || view === 'metamodel';
+  const referenceView =
+    view === 'scenarios' || view === 'hotspots' || view === 'glossary' || view === 'principles' || view === 'metamodel';
   const headingNode = referenceView ? undefined : view === 'map' ? scope : selected;
   const contentScope = view === 'map' ? scopeId : route.node;
   useLayoutEffect(() => {
@@ -511,13 +513,15 @@ export function App() {
         <span>
           <ChevronRight size={12} />
           <span aria-current="page">
-            {view === 'scenarios'
-              ? 'Scénarios métier'
-              : view === 'metamodel'
-                ? 'Métamodèle FLOW'
-                : view === 'principles'
-                  ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
-                  : glossaryTitle}
+            {view === 'hotspots'
+              ? 'Points chauds'
+              : view === 'scenarios'
+                ? 'Scénarios métier'
+                : view === 'metamodel'
+                  ? 'Métamodèle FLOW'
+                  : view === 'principles'
+                    ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
+                    : glossaryTitle}
           </span>
         </span>
       )}
@@ -771,32 +775,36 @@ export function App() {
                         )}
                       </div>
                       <h1 id="page-title" ref={heading} tabIndex={-1}>
-                        {view === 'scenarios'
-                          ? 'Scénarios métier'
-                          : view === 'metamodel'
-                            ? 'Métamodèle FLOW'
-                            : view === 'principles'
-                              ? methodTitle
-                              : view === 'glossary'
-                                ? glossaryTitle
-                                : headingNode?.name || 'Cartographie'}
+                        {view === 'hotspots'
+                          ? 'Points chauds'
+                          : view === 'scenarios'
+                            ? 'Scénarios métier'
+                            : view === 'metamodel'
+                              ? 'Métamodèle FLOW'
+                              : view === 'principles'
+                                ? methodTitle
+                                : view === 'glossary'
+                                  ? glossaryTitle
+                                  : headingNode?.name || 'Cartographie'}
                       </h1>
                       {view !== 'sheet' && (
                         <p>
                           <ModelText
                             text={
-                              view === 'scenarios'
-                                ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.'
-                                : view === 'metamodel'
-                                  ? metaGuide?.subtitle || 'Comprendre les objets et règles du modèle.'
-                                  : view === 'principles'
-                                    ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.'
-                                    : view === 'glossary'
-                                      ? 'Les notions et leurs définitions dans la publication consultée.'
-                                      : headingNode?.purpose ||
-                                        (headingNode
-                                          ? 'Explore cet élément et ses relations dans le modèle publié.'
-                                          : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')
+                              view === 'hotspots'
+                                ? 'Explorer les sujets localisés sur la cartographie et leurs options de résolution.'
+                                : view === 'scenarios'
+                                  ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.'
+                                  : view === 'metamodel'
+                                    ? metaGuide?.subtitle || 'Comprendre les objets et règles du modèle.'
+                                    : view === 'principles'
+                                      ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.'
+                                      : view === 'glossary'
+                                        ? 'Les notions et leurs définitions dans la publication consultée.'
+                                        : headingNode?.purpose ||
+                                          (headingNode
+                                            ? 'Explore cet élément et ses relations dans le modèle publié.'
+                                            : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')
                             }
                           />
                         </p>
@@ -910,7 +918,9 @@ export function App() {
                       : `tab-${['sheet', 'market'].includes(view) && !selected ? 'map' : view}`
                   }
                 >
-                  {view === 'scenarios' ? (
+                  {view === 'hotspots' ? (
+                    <HotspotCatalogPage model={model} route={route} onChange={changeRoute} />
+                  ) : view === 'scenarios' ? (
                     <ScenarioCatalogPage model={model} route={route} onChange={changeRoute} />
                   ) : view === 'metamodel' ? (
                     <Suspense fallback={<p role="status">Ouverture du métamodèle…</p>}>
@@ -999,6 +1009,7 @@ export function App() {
                       onBack={() => navigate(parentScope?.id || '')}
                       onSelect={select}
                       onAnnouncement={setAnnouncement}
+                      onOpenHotspot={(hotspot) => changeRoute({ view: 'hotspots', hotspot, node: '', scope: '' })}
                     />
                   )}
                 </div>

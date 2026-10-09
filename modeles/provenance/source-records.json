@@ -7331,6 +7331,62 @@
       "captured_text": "## U916\n\nDate : 2026-10-09. Source : Laurent, épurement technique du modèle et du métamodèle.\n\nVerbatim :\n\n> Pourquoi un champ proposed et ai_proposed ? Ca sert vraiment ?\n> Il y a des références à des fichiers avec sha => on peut les placer à part ?\n> Je souhaite un audit sur le modèle et le méta modèle pour l'épurer le plus possible des choses inutiles\n>\n> Go\n>\n> Release, commit & push\n\nPortée : accord sur l’épurement technique proposé après l’audit : une seule lecture de l’état de revue, décisions conservées comme preuve champ par champ, références globales de fichiers déplacées dans une annexe de provenance, règles du métamodèle distinctes du profil observé. Aucun changement du contenu métier, de la portée des accords ou des publications historiques. Publication locale et opérations Git explicitement demandées."
     },
     {
+      "id": "U917",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u917",
+      "line": 22433,
+      "content_sha256": "f515b772aa5ce5bcd872ba7802d66b47a549a1e44dc1e804df03ed16e0889557",
+      "captured_text": "## U917\n\nDate : 2026-10-09. Source : Laurent, proposition de concept Hotspot et demande d’audit.\n\nVerbatim :\n\n> Hotspot.\n>\n> C'est un nouveau concept que j'aimerais ajouter au modèle.\n>\n> Un Hotspot est un sujet chaud à traiter localisable sur la cartographie.\n>\n> Un hotspot peut être de type :\n> - coeur (je ne suis pas sûr du terme) : localisé sur un domaine, un sous domaine ou un ensemble de BA et ou de capacité.\n> - intégration : localisé entre deux objets du modèles car il cible une problématique de communication entre ces objets\n>\n> Un Hotspot peut avoir un niveau de complexité selon plusieurs aspects :\n> - difficulté politique (difficile pour l'entreprise de faire un choix)\n> - difficulté d'implémentation\n>\n> Le niveau de complexité peut être defini selon une grille de tshirt sizing simple (3 ou 4 niveaux maxi)\n>\n> Un hotspot se décrit par :\n> - le problème\n> - exemples de cas d'usage\n> - les options de résolution\n> - le niveau d'arbitrage : direction métier, interne programme FLOW, comité de pilotage FLOW\n> - un statut : découvert - partagé - validé - résolu\n> - l'option de résolution retenue lorsque c'est résolu\n>\n> Je souhaite un point d'entrée dans le menu à gauche qui référence les hotspots\n>\n> Je souhaite que les hotspots soient visualisables sur les cartographies si on le décide (une barre à tirette par exemple)\n>\n> Je souhaite un audit pour avoir ton avis sur le modèle, son intégration dans le méta modèle et son intégration dans ATLAS.\n\nPortée : proposition à auditer. Le type « coeur » et la grille de complexité restent ouverts ; aucun schéma, hotspot concret, accord métier, changement Atlas ou publication n'est encore validé."
+    },
+    {
+      "id": "U918",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u918",
+      "line": 22471,
+      "content_sha256": "00284209f3c6caea36b13d8b55ebbdfcd919ea6a9560915b8ddd69058dad6a90",
+      "captured_text": "## U918\n\nDate : 2026-10-09. Source : Laurent, précision de la grille et de la représentation des hotspots.\n\nVerbatim :\n\n> Pour la grille, je propose S/M/L/XL\n>\n> Pour la visualisation je souhaite un truc qui ressemble à ce que fait Camunda pour identifier les points de blocage dans les processus : une sorte de halo de couleur, d'intensité et de diametre différent selon la gravité du sujet.\n>\n> La gravité du sujet s'estime selon la complexité politique combinée à la complexité d'implémentation\n\nPortée : précision de la proposition U917 pour l'audit. La grille à quatre niveaux, la combinaison des deux difficultés et le principe visuel du halo sont demandés ; la matrice de calcul, les couleurs et les tailles exactes restent à proposer. Aucun hotspot concret, changement canonique ou publication demandé."
+    },
+    {
+      "id": "U919",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u919",
+      "line": 22485,
+      "content_sha256": "7817fcb6d61eef47fec36884f440f59dc8690f7acfcdd7f3fe62de65ea30f320",
+      "captured_text": "## U919\n\nDate : 2026-10-09. Source : Laurent, question sur les options de résolution des hotspots.\n\nVerbatim :\n\n> Je me demande s'il ne faut pas qualifier les options de résolution des hotspots\n\nPortée : demande d'avis dans l'audit U917–U918. Elle n'adopte pas encore une grille de qualification, des champs précis ou une option de résolution particulière."
+    },
+    {
+      "id": "U920",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u920",
+      "line": 22495,
+      "content_sha256": "38af61cb8afdd14483f71c14c7b35dea1e53f491bf82e57c849a4e587402fa0b",
+      "captured_text": "## U920\n\nDate : 2026-10-09. Source : Laurent, question sur la sélection des hotspots selon les vues de la cartographie.\n\nVerbatim :\n\n> Comment sélectionner les bons hotspot dans la cartographie selon les vues : un système de filtre, de détail, un système automatique ?\n\nPortée : demande d'avis sur les règles de pertinence, de projection et de contrôle utilisateur de la surcouche Hotspots dans Atlas. Aucune règle de sélection, automatisation ou modification de l'application n'est encore adoptée."
+    },
+    {
+      "id": "U921",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u921",
+      "line": 22505,
+      "content_sha256": "a95dbd3516b974f70ae328e2ad69fcb111618d840f19e391a9bd8762a18ddf87",
+      "captured_text": "## U921\n\nDate : 2026-10-09. Source : Laurent, précision sur l'animation des halos Hotspot.\n\nVerbatim :\n\n> Petit caprice : possible d'imaginer un halo avec une animation continue qui montre légèrement quelque chose qui enfle et qui diminue, une peu comme une représentation d'un point douloureux ?\n\nPortée : demande d'avis et préférence visuelle pour une pulsation douce et continue des halos. Les paramètres d'animation restent à concevoir ; cette précision ne demande pas encore une modification d'Atlas ni une publication."
+    },
+    {
+      "id": "U922",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u922",
+      "line": 22515,
+      "content_sha256": "dccdd16c35d6e8a960a0948c8ea27132e99d49e7e6873590c5ad24449872504a",
+      "captured_text": "## U922\n\nDate : 2026-10-09. Source : Laurent, premier hotspot à localiser dans Atlas.\n\nVerbatim :\n\n> C'est parfait. Il y a un point chaud d'intégration C-LOG, donc un point chaud d'intégration entre le domaine logistics et le domaine Supply Chain Orchestration. Tu saurais le retrouver et l'initialiser ? Ca pourrait alors servir de test pour implémenter la première version.\n\nPortée : demande de retrouver le sujet C-LOG dans l'historique FLOW et d'initialiser un premier hotspot lié aux deux domaines du modèle courant. Cette instruction n'établit pas à elle seule un contrat d'interface installé, un arbitrage métier ou une publication ; le rapprochement avec `HS-002` de FLOW-Program et le point `T04` du Cadre reste à qualifier sur leurs preuves propres."
+    },
+    {
+      "id": "U923",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u923",
+      "line": 22525,
+      "content_sha256": "07d0ef1e546662b2c01dd5a4490a5d009724ea0be94bf9113f16d50f9902fe89",
+      "captured_text": "## U923\n\nDate : 2026-10-09. Source : Laurent, qualification de C-LOG et évolution de la représentation des points chauds.\n\nVerbatim :\n\n> Afficher le code du hotspot n'apporte rien.\n>\n> Je propose un halo transparent plus étendu.\n> Je propose que le clic sur la halo soit concentré sur le centre uniquement.\n> Afficher un tooltip quand on survole le centre.\n> La complexité politique et d'implémentation doit être définie avec une valeur.\n> Pour la problématique C-LOG, politique=XL, impl=L\n> Il faut déterminer un gradiant de couleurs pour la criticité résultante.\n> Je pensais même à des petites flammes au centre façon gif animé dont la cadence de rafraichissement évolue avec la criticité. Voire si on ne peut pas intervenir sur la taille ou le nombre de flamèches pour indiquer la criticité.\n\nPortée : qualification explicite des deux difficultés du hotspot C-LOG par Laurent ; la gravité XL en découle selon la matrice actuelle. Préférence de représentation Atlas : halo transparent étendu, interaction limitée au centre, infobulle et flammes animées dont l'intensité varie avec la gravité. Les couleurs, tailles et cadences exactes relèvent de la conception de l'interface ; cette contribution ne qualifie pas les options de résolution ni le niveau d'arbitrage."
+    },
+    {
       "id": "F001",
       "path": "connaissance/02-assertions.md",
       "anchor": "f001",

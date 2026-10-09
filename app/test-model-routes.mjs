@@ -21,3 +21,9 @@ test('current and historical relation levels retain the selected publication sem
   const route = readRoute('#/scenarios?version=v1&capability=D04');
   assert.equal(readRoute(routeHash(route, model)).capability, 'D04');
 });
+test('hotspot direct link keeps its identifier and pinned publication', () => {
+  const route = readRoute('#/hotspots?version=2026-10-09.1&hotspot=HS-002');
+  assert.equal(route.view, 'hotspots');
+  assert.equal(route.hotspot, 'HS-002');
+  assert.deepEqual(readRoute(routeHash(route, model)), route);
+});

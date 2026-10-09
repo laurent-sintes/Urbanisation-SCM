@@ -1,5 +1,13 @@
-import { Background, Controls, type Node, ReactFlow, ReactFlowProvider, useReactFlow } from '@xyflow/react';
-import { FileText } from 'lucide-react';
+import {
+  Background,
+  Controls,
+  type Node,
+  ReactFlow,
+  ReactFlowProvider,
+  useReactFlow,
+  useViewport,
+} from '@xyflow/react';
+import { FileText, Flame } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { prominentChildIndex } from './adaptiveLayout';
 import { startsCapabilityTypeSection } from './capabilityTypes';
@@ -39,7 +47,20 @@ export interface ReactFlowPaneProps {
   onRead: (id: string) => void;
   onPageFallbackChange: (fallback: boolean) => void;
   perspective: string;
+  showHotspots?: boolean;
+  hotspotSeverity?: string;
+  onOpenHotspot?: (id: string) => void;
 }
+interface HotspotMarker {
+  id: string;
+  x: number;
+  y: number;
+  title: string;
+  severity: string;
+  political: string;
+  implementation: string;
+}
+const FLAMES = ['first', 'second', 'third', 'fourth'];
 function Canvas(props: ReactFlowPaneProps) {
   const { model, selectedId, scopeId, perspective, detail = 0, zoomMode = 'auto', focusId } = props;
   const [layout, setLayout] = useState<{
@@ -62,6 +83,7 @@ function Canvas(props: ReactFlowPaneProps) {
   const [fullscreen, setFullscreen] = useState(() => Boolean(document.fullscreenElement));
   const [error, setError] = useState('');
   const { fitView, setViewport } = useReactFlow();
+  const viewport = useViewport();
   const container = useRef<HTMLDivElement>(null);
   const capabilityOverview = detail >= 3;
   const minimumHeight = fullscreen
@@ -431,6 +453,76 @@ function Canvas(props: ReactFlowPaneProps) {
       }),
     [layout, selectedId, model, scopeId, props.onRead, perspective, onHeight],
   );
+  const hotspotMarkers = useMemo(() => {
+    if (!props.showHotspots) return [];
+    const visible = new Map(layout.nodes.filter((node) => node.type === 'business').map((node) => [node.id, node]));
+    const group = layout.nodes.find((node) => node.type === 'container');
+    if (group?.id.startsWith('group:')) visible.set(group.id.slice(6), group);
+    const projected = (id: string): Node | undefined => {
+      let current = id;
+      const seen = new Set<string>();
+      while (current && !seen.has(current)) {
+        seen.add(current);
+        const found = visible.get(current);
+        if (found) return found;
+        current = parentRelationOf(model, current)?.sourceId || '';
+      }
+      return undefined;
+    };
+    return (model.raw.hotspot_catalog?.hotspots || [])
+      .filter(
+        (hotspot) =>
+          props.hotspotSeverity === 'all' || !props.hotspotSeverity || hotspot.severity === props.hotspotSeverity,
+      )
+      .flatMap((hotspot, index): HotspotMarker[] => {
+        const anchors = hotspot.location.node_ids.map(projected).filter((node): node is Node => Boolean(node));
+        if (!anchors.length) return [];
+        const distinct = [...new Map(anchors.map((node) => [node.id, node])).values()];
+        const boxes = distinct.map((node) => ({
+          left: node.position.x,
+          top: node.position.y,
+          right: node.position.x + (node.width || 0),
+          bottom: node.position.y + (node.height || 0),
+        }));
+        let x: number;
+        let y: number;
+        if (hotspot.kind === 'integration' && boxes.length === 1) {
+          x = boxes[0].right;
+          y = boxes[0].top + 24;
+        } else if (hotspot.kind === 'integration' && boxes.length === 2) {
+          const [a, b] = boxes;
+          const horizontalOverlap = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+          const verticalOverlap = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+          if (horizontalOverlap <= 0 && verticalOverlap > 0) {
+            const [left, right] = a.left < b.left ? [a, b] : [b, a];
+            x = (left.right + right.left) / 2;
+            y = Math.max(left.top, right.top) + 10;
+          } else if (verticalOverlap <= 0 && horizontalOverlap > 0) {
+            const [top, bottom] = a.top < b.top ? [a, b] : [b, a];
+            x = (Math.max(top.left, bottom.left) + Math.min(top.right, bottom.right)) / 2;
+            y = (top.bottom + bottom.top) / 2;
+          } else {
+            x = (a.left + a.right + b.left + b.right) / 4;
+            y = Math.min(a.top, b.top) + 10;
+          }
+        } else {
+          x = boxes.reduce((sum, box) => sum + (box.left + box.right) / 2, 0) / boxes.length;
+          y = boxes.reduce((sum, box) => sum + (box.top + box.bottom) / 2, 0) / boxes.length;
+        }
+        const offset = (index % 3) * 13;
+        return [
+          {
+            id: hotspot.id,
+            x: x - 28 + offset,
+            y: y - 28 + offset,
+            title: hotspot.title,
+            severity: hotspot.severity,
+            political: hotspot.complexity.political,
+            implementation: hotspot.complexity.implementation,
+          },
+        ];
+      });
+  }, [layout.nodes, model, props.showHotspots, props.hotspotSeverity]);
   const select = useCallback(
     (_event: unknown, node: Node) => {
       if (node.type === 'business') props.onSelect(node.id);
@@ -524,6 +616,47 @@ function Canvas(props: ReactFlowPaneProps) {
           <Background gap={24} size={1} color="#d8e3df" />
           {effectiveZoomMode === 'page' && <Controls showInteractive={false} />}
         </ReactFlow>
+        {hotspotMarkers.length > 0 && (
+          <div className="hotspot-map-overlay">
+            <div
+              className="hotspot-map-overlay-viewport"
+              style={{ transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})` }}
+            >
+              {hotspotMarkers.map((marker) => {
+                const count = ({ S: 1, M: 2, L: 3, XL: 4 } as Record<string, number>)[marker.severity] || 0;
+                const severity = marker.severity === 'unassessed' ? 'non évaluée' : marker.severity;
+                const tooltipId = `hotspot-map-tip-${marker.id}`;
+                return (
+                  <div
+                    key={marker.id}
+                    className={`hotspot-map-point severity-${marker.severity}`}
+                    style={{ left: marker.x + 28, top: marker.y + 28 }}
+                  >
+                    <span className="hotspot-map-halo" aria-hidden="true" />
+                    <button
+                      type="button"
+                      data-id={`hotspot:${marker.id}`}
+                      className="hotspot-map-marker"
+                      aria-label={`${marker.title}, criticité ${severity}, difficulté politique ${marker.political}, difficulté d’implémentation ${marker.implementation}`}
+                      aria-describedby={tooltipId}
+                      onClick={() => props.onOpenHotspot?.(marker.id)}
+                    >
+                      <span className="hotspot-map-flames" aria-hidden="true">
+                        {count ? FLAMES.slice(0, count).map((flame) => <Flame key={flame} />) : '·'}
+                      </span>
+                    </button>
+                    <span id={tooltipId} className="hotspot-map-tooltip" role="tooltip">
+                      <strong>{marker.title}</strong>
+                      <span>
+                        Criticité {severity} · Politique {marker.political} · Implémentation {marker.implementation}
+                      </span>
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </div>
       {!graph.nodes.length && (
         <div className="empty-state">

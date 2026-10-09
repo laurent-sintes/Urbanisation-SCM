@@ -22429,3 +22429,113 @@ Verbatim :
 > Release, commit & push
 
 Portée : accord sur l’épurement technique proposé après l’audit : une seule lecture de l’état de revue, décisions conservées comme preuve champ par champ, références globales de fichiers déplacées dans une annexe de provenance, règles du métamodèle distinctes du profil observé. Aucun changement du contenu métier, de la portée des accords ou des publications historiques. Publication locale et opérations Git explicitement demandées.
+
+## U917
+
+Date : 2026-10-09. Source : Laurent, proposition de concept Hotspot et demande d’audit.
+
+Verbatim :
+
+> Hotspot.
+>
+> C'est un nouveau concept que j'aimerais ajouter au modèle.
+>
+> Un Hotspot est un sujet chaud à traiter localisable sur la cartographie.
+>
+> Un hotspot peut être de type :
+> - coeur (je ne suis pas sûr du terme) : localisé sur un domaine, un sous domaine ou un ensemble de BA et ou de capacité.
+> - intégration : localisé entre deux objets du modèles car il cible une problématique de communication entre ces objets
+>
+> Un Hotspot peut avoir un niveau de complexité selon plusieurs aspects :
+> - difficulté politique (difficile pour l'entreprise de faire un choix)
+> - difficulté d'implémentation
+>
+> Le niveau de complexité peut être defini selon une grille de tshirt sizing simple (3 ou 4 niveaux maxi)
+>
+> Un hotspot se décrit par :
+> - le problème
+> - exemples de cas d'usage
+> - les options de résolution
+> - le niveau d'arbitrage : direction métier, interne programme FLOW, comité de pilotage FLOW
+> - un statut : découvert - partagé - validé - résolu
+> - l'option de résolution retenue lorsque c'est résolu
+>
+> Je souhaite un point d'entrée dans le menu à gauche qui référence les hotspots
+>
+> Je souhaite que les hotspots soient visualisables sur les cartographies si on le décide (une barre à tirette par exemple)
+>
+> Je souhaite un audit pour avoir ton avis sur le modèle, son intégration dans le méta modèle et son intégration dans ATLAS.
+
+Portée : proposition à auditer. Le type « coeur » et la grille de complexité restent ouverts ; aucun schéma, hotspot concret, accord métier, changement Atlas ou publication n'est encore validé.
+
+## U918
+
+Date : 2026-10-09. Source : Laurent, précision de la grille et de la représentation des hotspots.
+
+Verbatim :
+
+> Pour la grille, je propose S/M/L/XL
+>
+> Pour la visualisation je souhaite un truc qui ressemble à ce que fait Camunda pour identifier les points de blocage dans les processus : une sorte de halo de couleur, d'intensité et de diametre différent selon la gravité du sujet.
+>
+> La gravité du sujet s'estime selon la complexité politique combinée à la complexité d'implémentation
+
+Portée : précision de la proposition U917 pour l'audit. La grille à quatre niveaux, la combinaison des deux difficultés et le principe visuel du halo sont demandés ; la matrice de calcul, les couleurs et les tailles exactes restent à proposer. Aucun hotspot concret, changement canonique ou publication demandé.
+
+## U919
+
+Date : 2026-10-09. Source : Laurent, question sur les options de résolution des hotspots.
+
+Verbatim :
+
+> Je me demande s'il ne faut pas qualifier les options de résolution des hotspots
+
+Portée : demande d'avis dans l'audit U917–U918. Elle n'adopte pas encore une grille de qualification, des champs précis ou une option de résolution particulière.
+
+## U920
+
+Date : 2026-10-09. Source : Laurent, question sur la sélection des hotspots selon les vues de la cartographie.
+
+Verbatim :
+
+> Comment sélectionner les bons hotspot dans la cartographie selon les vues : un système de filtre, de détail, un système automatique ?
+
+Portée : demande d'avis sur les règles de pertinence, de projection et de contrôle utilisateur de la surcouche Hotspots dans Atlas. Aucune règle de sélection, automatisation ou modification de l'application n'est encore adoptée.
+
+## U921
+
+Date : 2026-10-09. Source : Laurent, précision sur l'animation des halos Hotspot.
+
+Verbatim :
+
+> Petit caprice : possible d'imaginer un halo avec une animation continue qui montre légèrement quelque chose qui enfle et qui diminue, une peu comme une représentation d'un point douloureux ?
+
+Portée : demande d'avis et préférence visuelle pour une pulsation douce et continue des halos. Les paramètres d'animation restent à concevoir ; cette précision ne demande pas encore une modification d'Atlas ni une publication.
+
+## U922
+
+Date : 2026-10-09. Source : Laurent, premier hotspot à localiser dans Atlas.
+
+Verbatim :
+
+> C'est parfait. Il y a un point chaud d'intégration C-LOG, donc un point chaud d'intégration entre le domaine logistics et le domaine Supply Chain Orchestration. Tu saurais le retrouver et l'initialiser ? Ca pourrait alors servir de test pour implémenter la première version.
+
+Portée : demande de retrouver le sujet C-LOG dans l'historique FLOW et d'initialiser un premier hotspot lié aux deux domaines du modèle courant. Cette instruction n'établit pas à elle seule un contrat d'interface installé, un arbitrage métier ou une publication ; le rapprochement avec `HS-002` de FLOW-Program et le point `T04` du Cadre reste à qualifier sur leurs preuves propres.
+
+## U923
+
+Date : 2026-10-09. Source : Laurent, qualification de C-LOG et évolution de la représentation des points chauds.
+
+Verbatim :
+
+> Afficher le code du hotspot n'apporte rien.
+>
+> Je propose un halo transparent plus étendu.
+> Je propose que le clic sur la halo soit concentré sur le centre uniquement.
+> Afficher un tooltip quand on survole le centre.
+> La complexité politique et d'implémentation doit être définie avec une valeur.
+> Pour la problématique C-LOG, politique=XL, impl=L
+> Il faut déterminer un gradiant de couleurs pour la criticité résultante.
+> Je pensais même à des petites flammes au centre façon gif animé dont la cadence de rafraichissement évolue avec la criticité. Voire si on ne peut pas intervenir sur la taille ou le nombre de flamèches pour indiquer la criticité.
+
+Portée : qualification explicite des deux difficultés du hotspot C-LOG par Laurent ; la gravité XL en découle selon la matrice actuelle. Préférence de représentation Atlas : halo transparent étendu, interaction limitée au centre, infobulle et flammes animées dont l'intensité varie avec la gravité. Les couleurs, tailles et cadences exactes relèvent de la conception de l'interface ; cette contribution ne qualifie pas les options de résolution ni le niveau d'arbitrage.

@@ -108,7 +108,9 @@ export function Sidebar({
         <button
           type="button"
           aria-current={
-            !['scenarios', 'glossary', 'principles', 'metamodel'].includes(route.view || '') ? 'page' : undefined
+            !['scenarios', 'hotspots', 'glossary', 'principles', 'metamodel'].includes(route.view || '')
+              ? 'page'
+              : undefined
           }
           onClick={() => onNavigate('')}
         >
@@ -143,6 +145,19 @@ export function Sidebar({
           >
             <Compass size={17} />
             Scénarios métier
+          </button>
+        )}
+        {!!model.raw.hotspot_catalog && (
+          <button
+            type="button"
+            aria-current={route.view === 'hotspots' ? 'page' : undefined}
+            onClick={() => {
+              onSearch({ view: 'hotspots', hotspot: '', node: '', scope: '', query: '', status: '', section: '' });
+              onClose();
+            }}
+          >
+            <Compass size={17} />
+            Points chauds
           </button>
         )}
         <button
