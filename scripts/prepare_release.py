@@ -31,6 +31,7 @@ try:
     from .decision_registry import read_registry, read_consumed_registry, is_index, shard_path
     from . import guide_candidate
     from .backlog_delivery import check_delivery
+    from .model_provenance import validate_model_provenance
     from .json_contract import validate as validate_contract
     from .validate_models import canonical_sha256, validate_release, validate_sources, validate_urbanism, validate_decision_review
 except ImportError:
@@ -46,6 +47,7 @@ except ImportError:
     from decision_registry import read_registry, read_consumed_registry, is_index, shard_path
     import guide_candidate
     from backlog_delivery import check_delivery
+    from model_provenance import validate_model_provenance
     from json_contract import validate as validate_contract
     from validate_models import canonical_sha256, validate_release, validate_sources, validate_urbanism, validate_decision_review
 
@@ -319,7 +321,8 @@ def model_diff(previous, candidate):
                               'removed': [before[k] for k in sorted(set(before) - set(after))],
                               'modified': []}
         for identifier in sorted(set(before) & set(after)):
-            delta = changes(before[identifier], after[identifier])
+            delta = changes(decision_review.semantic(before[identifier]),
+                            decision_review.semantic(after[identifier]))
             if delta:
                 result[collection]['modified'].append({'id': identifier, 'changes': delta})
     result['principles'] = changes(previous.get('principles', []), candidate.get('principles', []))
@@ -569,6 +572,12 @@ def stage_candidate(root, bundle, *, guide_path=None):
         for name, key in [('backlog.yaml', 'snapshot'), ('decisions.json', 'decisions'),
                           ('source-records.json', 'provenance'), ('candidate.yaml', 'candidate'), ('report.json', 'report')]:
             write(temporary / name, bundle[key])
+        model_provenance = models / 'backlog/model-provenance.yaml'
+        if model_provenance.is_file():
+            provenance_errors = validate_model_provenance(read(model_provenance))
+            if provenance_errors:
+                raise ValueError('\n'.join(provenance_errors))
+            publisher.copy_verified(model_provenance, temporary / 'model-provenance.yaml', digest(model_provenance))
         deferred = []
         for record in bundle['report']['deferred_artifacts']:
             source_path = checked_path(models, record['path'])
@@ -589,6 +598,8 @@ def stage_candidate(root, bundle, *, guide_path=None):
                     'deferred': deferred,
                     'input_state': bundle['input_state'],
                     'modeling_guide': capture_association(root, bundle['pointer']['version'])}
+        if model_provenance.is_file():
+            manifest['files']['model-provenance.yaml'] = digest(temporary / 'model-provenance.yaml')
         if guide_path is not None:
             manifest['new_modeling_guide'] = guide_candidate.stage(root, guide_path, temporary)
         if review_files:
@@ -644,7 +655,8 @@ def publish_prepared(root, version, activate=False):
     if 'input_state' in manifest and manifest['input_state']['files'] != decision_review.input_state(root)['files']:
         raise ValueError('Backlog context changed since preparation; prepare a fresh candidate')
     required_files = {'backlog.yaml', 'decisions.json', 'source-records.json', 'candidate.yaml', 'report.json'}
-    if set(manifest['files']) != required_files:
+    allowed_files = required_files | {'model-provenance.yaml'}
+    if not required_files <= set(manifest['files']) <= allowed_files:
         raise ValueError('Prepared manifest file inventory mismatch')
     for name, sha in manifest['files'].items():
         if digest(checked_path(stage, name)) != sha:
@@ -690,6 +702,8 @@ def publish_prepared(root, version, activate=False):
     revision_dir.mkdir()
     proof_dir.mkdir()
     publisher.copy_verified(stage / 'backlog.yaml', revision_dir / 'backlog.yaml', manifest['files']['backlog.yaml'])
+    if 'model-provenance.yaml' in manifest['files']:
+        publisher.copy_verified(stage / 'model-provenance.yaml', revision_dir / 'model-provenance.yaml', manifest['files']['model-provenance.yaml'])
     publisher.copy_verified(stage / 'decisions.json', decision_path, manifest['files']['decisions.json'])
     publisher.copy_verified(stage / 'source-records.json', proof_dir / 'source-records.json', manifest['files']['source-records.json'])
     for name in review_files:
@@ -735,7 +749,7 @@ def publish_prepared(root, version, activate=False):
               'input_revision_path': f'../../revisions/{version}/backlog.yaml', 'input_revision_sha256': digest(revision_dir / 'backlog.yaml'),
               'decisions_path': f'../../decisions/{version}.json', 'decisions_sha256': digest(decision_path),
               'provenance_path': f'../../provenance/{version}/source-records.json', 'provenance_sha256': digest(proof_dir / 'source-records.json'),
-              'source_files': release['source_files'], 'node_count': len(release['nodes']),
+              'node_count': len(release['nodes']),
               'capability_count': sum(n['kind'] == 'capability' for n in release['nodes']),
               'complete_capability_count': sum(n['kind'] == 'capability' and n['review']['state'] == 'accepted' for n in release['nodes']),
               'changes_path': 'changes.json', 'changes_sha256': digest(release_dir / 'changes.json'),
@@ -743,6 +757,11 @@ def publish_prepared(root, version, activate=False):
               'decision_registry_files': {e['path']: e['sha256'] for e in manifest['deferred']
                   if e['path'] == 'deferred/decision-intents.yaml' or e['path'].startswith('deferred/decision-intents/')},
               'note': 'Publication du backlog préparé ; validations conservées seulement à révision et valeurs identiques.'}
+    if 'model-provenance.yaml' in manifest['files']:
+        output['model_provenance_path'] = f'../../revisions/{version}/model-provenance.yaml'
+        output['model_provenance_sha256'] = digest(revision_dir / 'model-provenance.yaml')
+    elif 'source_files' in release:
+        output['source_files'] = release['source_files']
     if review_files:
         output['decision_review'] = {f'../../revisions/{version}/{name}': digest(revision_dir / name)
                                      for name in review_files}

@@ -71,7 +71,8 @@ def _export_atlas(root, destinations):
         guide_seconds += perf_counter() - step
         step = perf_counter()
         metamodel_document, guide = separate_documentation(complete_guide, raw)
-        model = {**raw, 'sourcePath': 'modeles/release/' + descriptor['path'],
+        model = {**{key: value for key, value in raw.items() if key not in {'source_files', 'source_version'}},
+                 'sourcePath': 'modeles/release/' + descriptor['path'],
                  'metamodel': describe_metamodel(raw, complete_guide, snapshot_schema)}
         if metamodel_document:
             model['metamodel']['documentation'] = metamodel_document

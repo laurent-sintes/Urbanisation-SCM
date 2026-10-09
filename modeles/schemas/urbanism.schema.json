@@ -24,10 +24,12 @@
       "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
     },
     "source_version": {
+      "description": "Legacy source narrative; current working evidence is in model-provenance.yaml.",
       "type": "string",
       "minLength": 1
     },
     "source_files": {
+      "description": "Legacy file fingerprints; current working evidence is frozen separately in the publication manifest.",
       "type": "array",
       "items": {
         "type": "object",
@@ -1081,8 +1083,6 @@
     "version",
     "space",
     "as_of",
-    "source_version",
-    "source_files",
     "nodes",
     "relations",
     "principles",
@@ -1575,6 +1575,7 @@
       "additionalProperties": false
     },
     "lifecycle": {
+      "description": "Historical editorial lifecycle. Current approvals are qualified by decisions, field by field.",
       "type": "object",
       "properties": {
         "state": {

@@ -90,6 +90,8 @@ def _allowed_pairs(relation_type, kinds, principles):
 
 def _constraints(model):
     principles = {item['id'] for item in model.get('principles', [])}
+    root_name = next((node.get('fields', {}).get('name') for node in model.get('nodes', [])
+                      if node['kind'] == 'universe'), 'Univers')
     rules = [
         {'id': 'structural-acyclic', 'applies_to': 'contains/presents',
          'rule': 'Aucun cycle dans les liens de décomposition ou de présentation.',
@@ -114,10 +116,10 @@ def _constraints(model):
             rules.append(entry)
 
     add('PRINCIPLE-TARGET-UNIVERSE', 'target-universe', 'universe',
-        'Une seule racine Univers ; elle contient une fois chaque Business System et n’a pas de parent.',
+        f'Une seule racine {root_name} ; elle contient une fois chaque Business System et n’a pas de parent.',
         {'instances': {'min': 1, 'max': 1}, 'parent': {'min': 0, 'max': 0}})
     add('PRINCIPLE-TARGET-UNIVERSE', 'business-system-parent', 'business_system',
-        'Chaque Business System a exactement un parent Univers par contains.',
+        f'Chaque Business System a exactement un parent {root_name} par contains.',
         {'parent': {'min': 1, 'max': 1}})
     add('PRINCIPLE-BUSINESS-SYSTEM', 'domain-parent', 'domain',
         'Chaque Domain a exactement un parent Business System par presents.',
@@ -208,10 +210,10 @@ def _catalog_types(model, terms):
         if path.split('.')[0] not in model:
             continue
         term = terms.get(term_name)
-        result.append({'path': path, 'count': counts[path], 'label': term_name,
+        result.append({'path': path, 'label': term_name,
                        'definition': _plain(term['definition']) if term else fallback,
                        'definition_source': f"method:{term['id']}" if term else 'export-format' if fallback else None})
-    return result
+    return result, counts
 
 
 def describe_metamodel(model, guide_response, snapshot_schema=None):
@@ -231,7 +233,6 @@ def describe_metamodel(model, guide_response, snapshot_schema=None):
         semantic_term = term or publication_term
         node_types.append({
             'kind': kind,
-            'count': kinds[kind],
             'label': semantic_term['name'] if semantic_term else kind.replace('_', ' ').title(),
             'definition': _plain(semantic_term['definition']) if semantic_term else None,
             'definition_source': (f"method:{term['id']}" if term else
@@ -255,14 +256,21 @@ def describe_metamodel(model, guide_response, snapshot_schema=None):
             'role': RELATION_ROLES.get(relation_type, 'interaction'),
             'definition': RELATION_MEANINGS.get(relation_type),
             'direction': 'source_id → target_id',
-            'count': sum(pairs.values()),
             'allowed_endpoints': _allowed_pairs(relation_type, set(kinds), principles),
             'allowed_endpoints_source': 'published_hierarchy' if current_hierarchy and relation_type in {'contains', 'presents'} else 'validator',
-            'observed_endpoints': [
-                {'source_kind': source, 'target_kind': target, 'count': count}
-                for (source, target), count in sorted(pairs.items())
-            ],
         })
+
+    catalog_types, catalog_counts = _catalog_types(model, terms)
+    profile = {
+        'node_counts': dict(sorted(kinds.items())),
+        'catalog_counts': {item['path']: catalog_counts[item['path']] for item in catalog_types},
+        'relation_counts': {kind: sum(pairs.values()) for kind, pairs in sorted(relations.items())},
+        'observed_endpoints': {
+            kind: [{'source_kind': source, 'target_kind': target, 'count': count}
+                   for (source, target), count in sorted(pairs.items())]
+            for kind, pairs in sorted(relations.items())
+        },
+    }
 
     return {
         'schema_version': '1.0.0',
@@ -275,9 +283,10 @@ def describe_metamodel(model, guide_response, snapshot_schema=None):
         },
         'fields': FIELD_MEANINGS,
         'snapshot_schema': snapshot_schema,
-        'snapshot_schema_scope': 'Schéma du contenu publié, avant ajout de sourcePath et metamodel par l’export Atlas.' if snapshot_schema else None,
+        'snapshot_schema_scope': 'Contrat général du contenu publié ; profile indique les types et liens réellement présents dans cette édition. sourcePath et metamodel sont ajoutés par Atlas.' if snapshot_schema else None,
         'node_types': node_types,
-        'catalog_types': _catalog_types(model, terms),
+        'catalog_types': catalog_types,
         'relation_types': relation_types,
         'constraints': _constraints(model),
+        'profile': profile,
     }

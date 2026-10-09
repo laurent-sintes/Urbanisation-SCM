@@ -22413,3 +22413,19 @@ Verbatim :
 Précision demandée pendant la mise en œuvre : « Oui, distinguer les deux (recommandé) » à la question de réserver « Enterprise Architecture » à l’objet racine et de renommer la notion de méthode existante « Enterprise Architecture Practice ».
 
 Portée : appliquer les six corrections UX proposées dans l’audit précédent. Renommer l’objet racine du modèle cible en Enterprise Architecture, sans changer son identité ni ses rattachements, et distinguer la pratique méthodologique homonyme. Les définitions restent en français. Les publications historiques conservent leur vocabulaire ; aucune release ni opération Git demandée.
+
+## U916
+
+Date : 2026-10-09. Source : Laurent, épurement technique du modèle et du métamodèle.
+
+Verbatim :
+
+> Pourquoi un champ proposed et ai_proposed ? Ca sert vraiment ?
+> Il y a des références à des fichiers avec sha => on peut les placer à part ?
+> Je souhaite un audit sur le modèle et le méta modèle pour l'épurer le plus possible des choses inutiles
+>
+> Go
+>
+> Release, commit & push
+
+Portée : accord sur l’épurement technique proposé après l’audit : une seule lecture de l’état de revue, décisions conservées comme preuve champ par champ, références globales de fichiers déplacées dans une annexe de provenance, règles du métamodèle distinctes du profil observé. Aucun changement du contenu métier, de la portée des accords ou des publications historiques. Publication locale et opérations Git explicitement demandées.

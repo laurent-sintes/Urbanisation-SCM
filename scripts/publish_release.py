@@ -222,12 +222,14 @@ def publish(input_manifest, version, source_refs, activate=False):
         'decisions_path':'../../' + inputs['decisions'][0].relative_to(model_root).as_posix(),
         'decisions_sha256':digest(inputs['decisions'][0]),
         'provenance_path':f'../../provenance/{version}/source-records.json',
-        'provenance_sha256':digest(provenance_path), 'source_files':release['source_files'],
+        'provenance_sha256':digest(provenance_path),
         'node_count':len(release['nodes']),
         'capability_count':sum(n['kind']=='capability' for n in release['nodes']),
         'complete_capability_count':sum(n['kind']=='capability' and n['review']['state']=='accepted' for n in release['nodes']),
         'note':'Publication complète ; validation distincte, détaillée par champ et sourcée.'
     }
+    if 'source_files' in release:
+        output_manifest['source_files'] = release['source_files']
     write(destination / 'manifest.json', output_manifest)
     if activate:
         activate_pointer(model_root / 'release/current.json', {'schema_version':'1.0.0', 'model_id':release['model_id'], 'space':'release', 'version':version, 'path':f'{version}/model.json','sha256':digest(path)})

@@ -9,6 +9,7 @@ dans l’édition elle-même, sans ressource mutable partagée entre publication
 Elle est publiée avec le modèle `2026-09-28.3` (v041). Les éditions suivantes restent
 associées explicitement par `--guide modeles/backlog/atlas-transformation-methodology.yaml`.
 Dans Atlas, les éditions qui portent un groupe explicite de notions de transformation sont exposées sous deux documents distincts : le métamodèle est intégré à l’en-tête du modèle exporté avec son glossaire, et la transformation est exportée dans `guide.json` avec le sien. La répartition est faite depuis l’édition figée associée à la publication, jamais depuis le brouillon courant. La source de travail et le format historique des guides figés restent combinés à ce stade ; la séparation concerne les documents consultables et téléchargeables dans Atlas.
+L’export Atlas place les règles et définitions dans `metamodel`, et les nombres ainsi que les couples de liens observés dans `metamodel.profile`. Le schéma embarqué reste un contrat général ; le profil indique les types réellement présents dans l’édition consultée.
 `node app/verify-transformation-method.mjs` vérifie le candidat dans le frontend
 compilé, sur une fixture isolée, et produit un aperçu HTML et les SVG sous
 `app/.runtime/qa-transformation-method/`. Aucun serveur ni publication n’est modifié.
@@ -125,7 +126,7 @@ Le graphe courant distingue `domain`, `area`, `reference`, `group`, `capability`
 
 **U456 : Atlas reste strictement métier.** Structures d’information métier, autorités, documents et faits y ont leur place ; catalogues d’applications/produits logiciels, contrats techniques et liens vers les réalisations restent hors d’Atlas. Les dossiers de solution peuvent citer la référence métier. Cette décision corrige la proposition d’audit ; elle ne réécrit pas les publications ni l’application courante.
 
-Chaque nœud a un identifiant stable, une révision, des champs de contenu, un statut et des sources. `fields` contient notamment `name`, `definition`, `finality` et, quand elles sont établies, `nature`, `scope`, `independence` ou `mastership`. Une valeur absente reste inconnue ; la vue ne la complète pas depuis un autre espace.
+Chaque nœud a un identifiant stable, une révision, des champs de contenu, un statut de revue et des sources. `fields` contient notamment `name`, `definition`, `finality` et, quand elles sont établies, `nature`, `scope`, `independence` ou `mastership`. Une valeur absente reste inconnue ; la vue ne la complète pas depuis un autre espace. Les références globales aux fichiers et leurs empreintes sont dans `backlog/model-provenance.yaml`, hors du modèle métier ; une nouvelle publication les fige dans son dossier de révision et les lie par son manifeste.
 
 Les relations ont également leur identifiant, leur type, leurs extrémités et leur statut. `contains` décrit la décomposition et `presents` la présentation. Authoritative Data conserve son type `group` et ses relations de présentation vers les référentiels : son nom adopté n’ajoute pas une Area ni un gestionnaire unique des données maîtresses. Les autres liens décrivent des relations métier, sans convertir automatiquement objets, documents ou événements en sous-capacités. Les préfixes historiques ne déterminent jamais les parents : D02.b et D02.c sont rattachées à D01 ; D02.e à D03. Le même principe conserve l’identifiant `universe-supply` pour le Domain Supply Chain Orchestration.
 
@@ -206,11 +207,7 @@ Voir l’[audit de structure et d’extraction](../audits/2026-09-13-structure-m
 
 ## Cycle de vie — U131
 
-Les nœuds et relations du backlog portent `lifecycle` : `ai_proposed` (Proposé par l’IA), `under_instruction` (En cours d’instruction), `urbanist_validated` (Validé par l’urbaniste). Sources, date d’enregistrement, champs validés et empreintes qualifient la portée. Une validation limitée au nom ne valide pas la définition. Les décisions ADOPT et `review` restent les preuves techniques détaillées ; publication et cycle sont indépendants.
-
-`lifecycle_policy: 1` rend ce champ obligatoire pour chaque nœud et relation du modèle courant. Une empreinte périmée ou une validation sans portée bloque le contrôle. Les modèles historiques sans cette politique restent compatibles.
-
-Les modèles historiques sans lifecycle restent lisibles. L’introduction initiale de ce champ conserve les accords sur les contenus strictement inchangés, avec des décisions de transcription traçables lors de la prochaine préparation. Les illustrations ne sont pas rendues publiables par leur cycle. Les principes de fonctionnement et les données As Is conservent leurs contrats distincts.
+Le backlog courant utilise `review` pour la lecture et les décisions ADOPT pour la portée exacte des accords, champ par champ. Il ne maintient plus un second statut `lifecycle` ni les listes `approved_fields`, `proposed_fields` et `adoption_ids` : la préparation calcule ces listes depuis les décisions conservées. Une validation limitée au nom ne valide pas la définition. Les publications historiques gardent leurs métadonnées `lifecycle` et leur ancien contrat ; elles ne sont pas réécrites.
 # Glossaire publié et références textuelles — U203
 
 Le vocabulaire courant est dans `backlog/glossary.yaml`. Les identifiants TER/VER sont stables ; `name`, `short_description`, `definition`, `review` et `source_refs` sont obligatoires. Les sens homonymes disposent de repères distincts : TER004 est historique ; TER060 décrit Article comme rôle de Product. Le registre Markdown conserve les récits et preuves, sans seconde autorité à maintenir.

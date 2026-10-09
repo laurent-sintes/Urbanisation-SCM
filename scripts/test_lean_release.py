@@ -42,6 +42,31 @@ class GitPublicationTests(unittest.TestCase):
     def run_release(self, **options):
         return release.run(self.root, self.version, ['PUB-TEST-NEW'], verify_site=False, **options)
 
+    def test_technical_provenance_cleanup_publishes_without_business_delta(self):
+        model = workflow.read(self.backlog_path)
+        evidence = {'schema_version': '1.0.0', 'model_id': model['model_id'],
+                    'source_version': model.pop('source_version'),
+                    'source_files': model.pop('source_files')}
+        save(self.backlog_path, model)
+        save(self.models / 'backlog/model-provenance.yaml', evidence)
+        prior_model = workflow.load_current(self.root)[2]
+        prior_decisions = workflow.read(self.models / 'decisions' / (self.base + '.json'))['decisions']
+        result = self.run_release(activate=True)
+        self.assertEqual(result['status'], 'published')
+        self.assertEqual(result['summary']['deferred_decisions'], 0)
+        published = workflow.read(self.models / 'release' / self.version / 'model.yaml')
+        manifest = workflow.read(self.models / 'release' / self.version / 'manifest.json')
+        self.assertNotIn('source_files', published)
+        self.assertNotIn('source_version', published)
+        self.assertEqual({item['id']: item['fields'] for item in published['nodes']},
+                         {item['id']: item['fields'] for item in prior_model['nodes']})
+        self.assertEqual(manifest['model_provenance_sha256'],
+                         workflow.digest(self.models / 'revisions' / self.version / 'model-provenance.yaml'))
+        carried = workflow.read(self.models / 'decisions' / (self.version + '.json'))['decisions']
+        self.assertEqual({item['id'] for item in carried}, {item['id'] for item in prior_decisions})
+        self.assertEqual({item['id']: item['target']['value_sha256'] for item in carried},
+                         {item['id']: item['target']['value_sha256'] for item in prior_decisions})
+
     def test_incomplete_declared_delivery_blocks_publication(self):
         self.editorial()
         workflow.write(self.models / 'backlog/delivery.yaml', {'publication_delivery': {

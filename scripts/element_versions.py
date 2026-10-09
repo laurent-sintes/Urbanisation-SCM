@@ -2,14 +2,23 @@
 from datetime import datetime, timezone
 import hashlib
 import json
+from copy import deepcopy
 
 COLLECTIONS = ('nodes', 'relations', 'principles')
 GENERATED = {'revision', 'last_modified', 'content_sha256', 'adoption_ids',
-             'approved_fields', 'proposed_fields', 'missing_fields'}
+             'approved_fields', 'proposed_fields', 'missing_fields', 'lifecycle'}
 
 
 def content_hash(item):
     value = {k: v for k, v in item.items() if k not in GENERATED}
+    return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True,
+                                     separators=(',', ':')).encode()).hexdigest()
+
+
+def _legacy_lifecycle_hash(item, lifecycle):
+    """Compare a clean item with its exact pre-cleanup lifecycle fingerprint."""
+    value = {k: v for k, v in {**item, 'lifecycle': lifecycle}.items()
+             if k not in GENERATED - {'lifecycle'}}
     return hashlib.sha256(json.dumps(value, ensure_ascii=False, sort_keys=True,
                                      separators=(',', ':')).encode()).hexdigest()
 
@@ -23,6 +32,7 @@ def assign_versions(snapshot, previous, now=None, published=None):
     """
     stamp = now or datetime.now(timezone.utc).isoformat(timespec='microseconds').replace('+00:00', 'Z')
     changes = []
+    metadata_migrations = {collection: set() for collection in COLLECTIONS}
     for collection in COLLECTIONS:
         before = {item['id']: item for item in previous.get(collection, [])}
         visible = {item['id']: item for item in (published or {}).get(collection, [])}
@@ -32,8 +42,15 @@ def assign_versions(snapshot, previous, now=None, published=None):
             # Legacy snapshots may precede derived published review states.
             # Bootstrap against the actual published element when no input hash exists.
             baseline = visible.get(item['id'], old) if old else None
-            previous_hashes = {old['content_sha256']} if old and 'content_sha256' in old else ({content_hash(old), content_hash(baseline)} if old else set())
-            changed = old is not None and fingerprint not in previous_hashes
+            # A former input hash included lifecycle metadata. Compare the
+            # normalized prior record as well when that metadata is removed.
+            previous_hashes = ({old['content_sha256'], content_hash(old)} if old and 'content_sha256' in old
+                               else {content_hash(old), content_hash(baseline)} if old else set())
+            metadata_only = (old is not None and 'lifecycle' not in item and 'lifecycle' in old
+                             and _legacy_lifecycle_hash(item, old['lifecycle']) == old.get('content_sha256'))
+            changed = old is not None and fingerprint not in previous_hashes and not metadata_only
+            if metadata_only:
+                metadata_migrations[collection].add(item['id'])
             revision = (old.get('revision', 1) + int(changed)) if old else 1
             item.update(revision=revision, last_modified=old.get('last_modified', stamp) if old and not changed else stamp,
                         content_sha256=fingerprint)
@@ -97,7 +114,13 @@ def assign_versions(snapshot, previous, now=None, published=None):
     if 'market_reference_policy' in snapshot:
         root_value['market_reference_policy'] = snapshot['market_reference_policy']
     fingerprint = content_hash(root_value)
-    changed = fingerprint != previous.get('content_sha256')
+    legacy_root = deepcopy(root_value)
+    for collection in COLLECTIONS:
+        old_hashes = {item['id']: item.get('content_sha256') for item in previous.get(collection, [])}
+        legacy_root['elements'][collection] = [(identifier, old_hashes[identifier] if identifier in metadata_migrations[collection] else digest)
+                                               for identifier, digest in root_value['elements'][collection]]
+    changed = (fingerprint != previous.get('content_sha256')
+               and content_hash(legacy_root) != previous.get('content_sha256'))
     revision = previous.get('revision', 0) + int(changed)
     snapshot.update(element_versioning=1, revision=max(1, revision), content_sha256=fingerprint,
                     last_modified=stamp if changed else previous['last_modified'])

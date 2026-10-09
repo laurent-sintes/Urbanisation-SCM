@@ -24,7 +24,7 @@ EDITORIAL_METADATA = GENERATED | {
 MARKET_FIELDS = {'market_comparisons', 'market_inspiration'}
 ROOT_METADATA = EDITORIAL_METADATA | {
     'version', 'as_of', 'space', 'source_version', 'source_files', 'publication',
-    'release_kind', 'excluded_nodes',
+    'release_kind', 'excluded_nodes', 'lifecycle_policy',
 }
 
 

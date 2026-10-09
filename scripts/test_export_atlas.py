@@ -21,7 +21,9 @@ class StaticExportTests(unittest.TestCase):
         for version in ('2026-09-25.1', '2026-09-26.1'):
             folder = self.release / version
             folder.mkdir()
-            model = encoded({'space': 'release', 'version': version, 'nodes': [], 'relations': [], 'glossary': {'terms': []}})
+            model = encoded({'space': 'release', 'version': version, 'nodes': [], 'relations': [],
+                             'glossary': {'terms': []}, 'source_version': 'archived',
+                             'source_files': [{'path': 'evidence.txt', 'sha256': 'a' * 64}]})
             (folder / 'model.json').write_bytes(model)
             descriptor = encoded({'version': version, 'path': version + '/model.json', 'sha256': hashlib.sha256(model).hexdigest()})
             name = version + '.json'
@@ -48,7 +50,9 @@ class StaticExportTests(unittest.TestCase):
             self.assertEqual(metamodel['methodology']['status'], 'unavailable')
             self.assertEqual(metamodel['node_types'], [])
             self.assertEqual(metamodel['relation_types'], [])
-            self.assertEqual(model, json.loads((self.release / version / 'model.json').read_bytes()))
+            archived = json.loads((self.release / version / 'model.json').read_bytes())
+            self.assertEqual(model, {key: value for key, value in archived.items()
+                                     if key not in {'source_version', 'source_files'}})
             self.assertEqual(hashlib.sha256(payload).hexdigest(), entry['model_sha256'])
             guide = json.loads((self.output / version / 'guide.json').read_bytes())
             self.assertEqual(guide['publication_version'], version)
@@ -63,8 +67,10 @@ class StaticExportTests(unittest.TestCase):
             'version': '2026-09-25.1',
             'glossary': {'terms': [{'id': 'TER203', 'name': 'Univers',
                                     'definition': 'Vue de la cible.', 'historical': False}]},
-            'nodes': [{'id': 'u', 'kind': 'universe'}, {'id': 's', 'kind': 'business_system'}],
+            'nodes': [{'id': 'u', 'kind': 'universe', 'fields': {'name': 'Univers'}},
+                      {'id': 's', 'kind': 'business_system'}],
             'relations': [{'id': 'r', 'type': 'contains', 'source_id': 'u', 'target_id': 's'}],
+            'principles': [{'id': 'PRINCIPLE-TARGET-UNIVERSE'}],
         }
         guide = {'status': 'available', 'association': {'scope': 'contemporaneous'},
                  'guide': {'version': '2026-09-25.1', 'glossary': {'terms': [
@@ -77,8 +83,11 @@ class StaticExportTests(unittest.TestCase):
         self.assertEqual(types['universe']['definition_source'], 'glossary:TER203')
         self.assertEqual(types['business_system']['definition'], 'Ensemble de domaines.')
         self.assertEqual(types['business_system']['definition_source'], 'method:MOD022')
-        self.assertEqual(header['relation_types'][0]['observed_endpoints'], [
+        self.assertEqual(header['profile']['observed_endpoints']['contains'], [
             {'source_kind': 'universe', 'target_kind': 'business_system', 'count': 1}])
+        self.assertEqual(header['profile']['node_counts'], {'business_system': 1, 'universe': 1})
+        self.assertIn('Univers', next(rule['rule'] for rule in header['constraints']
+                                     if rule['id'] == 'target-universe'))
 
     def test_metamodel_uses_enterprise_architecture_for_new_guide(self):
         from scripts.atlas_metamodel import describe_metamodel
@@ -111,6 +120,9 @@ class StaticExportTests(unittest.TestCase):
         self.assertEqual(header['methodology']['status'], 'available')
         self.assertTrue(all(entry['definition'] for entry in header['node_types']))
         self.assertTrue(all(entry['definition'] for entry in header['catalog_types']))
+        self.assertEqual(sum(header['profile']['node_counts'].values()), len(model['nodes']))
+        self.assertEqual(sum(header['profile']['relation_counts'].values()), len(model['relations']))
+        self.assertTrue(all('count' not in entry for entry in header['node_types'] + header['relation_types']))
         rules = {entry['id']: entry for entry in header['constraints']}
         self.assertEqual(rules['capability-parent']['cardinality']['parent'], {'min': 1, 'max': 1})
         self.assertEqual(rules['capability-behaviors']['cardinality']['behavior_children']['allowed'], [0, '2..*'])

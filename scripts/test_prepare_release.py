@@ -98,6 +98,27 @@ class BacklogPublicationTests(unittest.TestCase):
     def prepare(self):
         return workflow.prepare(self.root, self.version, ['PUB-TEST-NEW'])
 
+    def test_model_file_provenance_is_frozen_outside_the_published_model(self):
+        model = workflow.read(self.backlog_path)
+        evidence = {'schema_version': '1.0.0', 'model_id': model['model_id'],
+                    'source_version': model.pop('source_version'),
+                    'source_files': model.pop('source_files')}
+        save(self.backlog_path, model)
+        save(self.models / 'backlog/model-provenance.yaml', evidence)
+        self.prepare()
+        stage = self.models / 'staging' / self.version
+        staged_manifest = workflow.read(stage / 'manifest.json')
+        self.assertIn('model-provenance.yaml', staged_manifest['files'])
+        workflow.publish_prepared(self.root, self.version)
+        published = workflow.read(self.models / 'release' / self.version / 'model.yaml')
+        manifest = workflow.read(self.models / 'release' / self.version / 'manifest.json')
+        self.assertNotIn('source_files', published)
+        self.assertNotIn('source_version', published)
+        self.assertNotIn('source_files', manifest)
+        self.assertEqual(workflow.read(self.models / 'revisions' / self.version / 'model-provenance.yaml'), evidence)
+        self.assertEqual(manifest['model_provenance_sha256'],
+                         workflow.digest(self.models / 'revisions' / self.version / 'model-provenance.yaml'))
+
     def test_working_annexes_stay_in_knowledge_base(self):
         annex = self.models/'backlog/exact-evidence.yaml'
         content = b'# Research retained in knowledge base\r\nvalue: "00123"\r\n'

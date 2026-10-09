@@ -1,4 +1,6 @@
 from copy import deepcopy
+import hashlib
+import json
 import unittest
 
 try:
@@ -50,5 +52,27 @@ class ElementVersionsTests(unittest.TestCase):
         current=deepcopy(published)
         assign_versions(current,old,'2026-09-13T10:00:00Z',published)
         self.assertEqual(current['nodes'][0]['revision'],1)
+
+    def test_removing_legacy_lifecycle_keeps_business_revisions(self):
+        old = self.model()
+        old['nodes'][0]['lifecycle'] = {'state': 'ai_proposed'}
+        assign_versions(old, {}, '2026-09-13T10:00:00Z')
+        node = old['nodes'][0]
+        legacy = {key: value for key, value in node.items()
+                  if key not in {'revision', 'last_modified', 'content_sha256', 'adoption_ids',
+                                 'approved_fields', 'proposed_fields', 'missing_fields'}}
+        node['content_sha256'] = hashlib.sha256(json.dumps(legacy, sort_keys=True,
+            ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
+        old['content_sha256'] = hashlib.sha256(json.dumps({
+            'model_id': old['model_id'], 'limitations': [],
+            'elements': {collection: [(item['id'], item['content_sha256']) for item in old[collection]]
+                         for collection in ('nodes', 'relations', 'principles')}},
+            sort_keys=True, ensure_ascii=False, separators=(',', ':')).encode()).hexdigest()
+        current = deepcopy(old)
+        current['nodes'][0].pop('lifecycle')
+        changes = assign_versions(current, old, '2026-09-13T11:00:00Z')
+        self.assertEqual(changes, [])
+        self.assertEqual(current['nodes'][0]['revision'], old['nodes'][0]['revision'])
+        self.assertEqual(current['revision'], old['revision'])
 
 if __name__=='__main__': unittest.main()

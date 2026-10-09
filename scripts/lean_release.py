@@ -12,6 +12,7 @@ from .record_decision import _registry_lock
 from .atlas_lock import atlas_lock
 from .decision_registry import atomic_replace
 from .structured_io import read, dumps
+from .model_provenance import validate_model_provenance
 
 
 def archive_plan(root, version):
@@ -95,6 +96,13 @@ def stage_candidate(root, bundle, guide_path=None):
         for name, key in [('model.yaml', 'candidate'), ('backlog.yaml', 'snapshot'),
                           ('decisions.json', 'decisions'), ('source-records.json', 'provenance')]:
             workflow.write(folder / name, bundle[key])
+        model_provenance = root / 'modeles/backlog/model-provenance.yaml'
+        if model_provenance.is_file():
+            provenance_errors = validate_model_provenance(read(model_provenance))
+            if provenance_errors:
+                raise ValueError('\n'.join(provenance_errors))
+            workflow.publisher.copy_verified(model_provenance, folder / 'model-provenance.yaml',
+                                             workflow.digest(model_provenance))
         evidence = bundle.get('review_evidence', {})
         if evidence and set(evidence) != {'review.json', 'assessment.yaml', 'transcriptions.json'}:
             raise ValueError('Incomplete reassessment evidence')
@@ -133,6 +141,8 @@ def publish(root, stage, manifest):
         'backlog.yaml': models / 'revisions' / version / 'backlog.yaml',
         'decisions.json': models / 'decisions' / (version + '.json'),
         'source-records.json': models / 'provenance' / version / 'source-records.json'}
+    if 'model-provenance.yaml' in manifest['files']:
+        destinations['model-provenance.yaml'] = models / 'revisions' / version / 'model-provenance.yaml'
     review_files = {name: sha for name, sha in manifest['files'].items()
                     if name.startswith('decision-review/')}
     if review_files and set(review_files) != {
@@ -154,6 +164,9 @@ def publish(root, stage, manifest):
     for key, name in [('input_revision', 'backlog.yaml'), ('decisions', 'decisions.json'), ('provenance', 'source-records.json')]:
         output[key + '_path'] = os.path.relpath(destinations[name], release_dir).replace('\\', '/')
         output[key + '_sha256'] = manifest['files'][name]
+    if 'model-provenance.yaml' in manifest['files']:
+        output['model_provenance_path'] = os.path.relpath(destinations['model-provenance.yaml'], release_dir).replace('\\', '/')
+        output['model_provenance_sha256'] = manifest['files']['model-provenance.yaml']
     if review_files:
         output['decision_review'] = {f'../../revisions/{version}/{name}': sha
                                     for name, sha in review_files.items()}
@@ -231,7 +244,13 @@ def _run(root, version, source_refs, *, activate, review_path, decisions_path, g
             dossier = workflow.decision_review.save_review(folder, bundle['review'], report)
             return {'status': 'needs_review', 'version': version, **dossier, 'timings_seconds': {**timings, 'total': round(perf_counter() - started, 4)}}
         has_changes = any(any(delta.values()) if isinstance(delta, dict) else bool(delta) for delta in report['changes'].values())
-        if not has_changes and not report['glossary_changes'] and not report['new_decision_ids'] and guide_path is None:
+        model_provenance = root / 'modeles/backlog/model-provenance.yaml'
+        current_manifest = read(current[4])
+        provenance_changed = (model_provenance.is_file()
+                              and workflow.digest(model_provenance) != current_manifest.get('model_provenance_sha256'))
+        metadata_cleaned = any(key in current[2] and key not in bundle['candidate']
+                               for key in ('source_version', 'source_files', 'lifecycle_policy'))
+        if not has_changes and not report['glossary_changes'] and not report['new_decision_ids'] and guide_path is None and not provenance_changed and not metadata_cleaned:
             return finish(root, {'status': 'unchanged', 'version': current[1]['version']}, activate and verify_site, atlas_url, started, export_site=activate, timings=timings)
         stage, manifest = measured('stage', lambda: stage_candidate(root, bundle, guide_path))
     try:

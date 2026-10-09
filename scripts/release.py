@@ -54,7 +54,8 @@ def verify_atlas(root, version, base_url='http://127.0.0.1:8765'):
     metamodel_document, expected_guide = separate_documentation(complete_guide, raw)
     schema_path = root / 'modeles/schemas/urbanism.schema.json'
     snapshot_schema = read_document(schema_path) if schema_path.is_file() else None
-    expected = {**raw, 'sourcePath': 'modeles/release/' + pointer['path'],
+    expected = {**{key: value for key, value in raw.items() if key not in {'source_files', 'source_version'}},
+                'sourcePath': 'modeles/release/' + pointer['path'],
                 'metamodel': describe_metamodel(raw, complete_guide, snapshot_schema)}
     if metamodel_document:
         expected['metamodel']['documentation'] = metamodel_document

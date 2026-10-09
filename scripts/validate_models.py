@@ -697,6 +697,13 @@ def validate_project(root=ROOT):
         sources = _index(source_doc["records"], "sources", errors)
         counters["source_records"] = len(sources)
         backlog = _load(working_path(root / "modeles/backlog"))
+        model_provenance_path = root / 'modeles/backlog/model-provenance.yaml'
+        if model_provenance_path.is_file():
+            try:
+                from .model_provenance import validate_model_provenance
+            except ImportError:
+                from model_provenance import validate_model_provenance
+            errors.extend(validate_model_provenance(_load(model_provenance_path)))
         glossary_path = working_path(root / "modeles/backlog", "glossary")
         if glossary_path.exists():
             backlog["glossary"] = _load(glossary_path)
@@ -735,6 +742,15 @@ def validate_project(root=ROOT):
             _, frozen_sources = _pointer(root, release_path.parent, {"path": manifest["provenance_path"], "sha256": manifest.get("provenance_sha256")}, errors)
             errors.extend(validate_sources(frozen_sources))
             release_sources = _index(frozen_sources["records"], "release_sources", errors)
+        if 'model_provenance_path' in manifest:
+            _, frozen_model_provenance = _pointer(root, release_path.parent,
+                {'path': manifest['model_provenance_path'], 'sha256': manifest.get('model_provenance_sha256')}, errors)
+            try:
+                from .model_provenance import validate_model_provenance
+            except ImportError:
+                from model_provenance import validate_model_provenance
+            if frozen_model_provenance is not None:
+                errors.extend(validate_model_provenance(frozen_model_provenance))
         decision_schema = schemas / "decisions.schema.json"
         errors.extend(validate_contract(decisions, _load(decision_schema)))
         errors.extend(f"release: {e}" for e in validate_release(release, decisions, snapshot, release_sources, urbanism_schema))
