@@ -359,6 +359,7 @@ try {
   const capabilityLink = page.locator(`[data-map-item-id="${capability.id}"]`).first();
   await capabilityLink.click();
   assert.equal(route().get('node'), capability.id);
+  await page.locator(`[data-map-item-id="${capability.id}"][aria-current="true"]`).first().waitFor();
   assert.equal(await capabilityLink.getAttribute('aria-current'), 'true');
   assert.equal(await page.getByRole('tab', { name: 'Carte' }).getAttribute('aria-selected'), 'true');
   await visit({ view: 'map', node: businessArea.id, scope: domain.id, mapDepth: '3', mapFocus: businessArea.id });
