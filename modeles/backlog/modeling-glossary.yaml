@@ -1527,15 +1527,16 @@ terms:
     note: Rédaction de mise en œuvre, pas de validation individuelle déduite.
   short_description: Contribution intermédiaire à un parcours, avec les capacités, informations et conditions nécessaires.
 - id: MOD032
-  name: Enterprise Architecture
-  label_fr: Architecture d’entreprise
+  name: Enterprise Architecture Practice
+  label_fr: Pratique d’architecture d’entreprise
   definition: Fonction et pratique qui relie stratégie, métier, organisation, informations et technologie pour maintenir une
     cohérence durable pendant et après les transformations.
   short_description: Fonction et pratique qui relie stratégie, métier, organisation, informations et technologie pour maintenir
     une cohérence durable pendant et après les transformations.
   notes:
-  - Notion méthodologique ; ne crée ni objet du métamodèle, ni pouvoir de décision supplémentaire.
+  - Pratique méthodologique distincte de l’objet racine Enterprise Architecture (MOD043) ; ne crée ni pouvoir de décision supplémentaire.
   source_refs:
+  - U915
   - U807
   - U808
   - U809
@@ -1811,13 +1812,14 @@ terms:
     state: proposed
     note: Complément méthodologique de mise en œuvre de l’audit accepté U903.
 - id: MOD043
-  name: Universe
-  label_fr: Univers
-  short_description: Racine de lecture du SI Beaumanoir cible, au-dessus des systèmes métier.
-  definition: Niveau racine du modèle cible. Il réunit les Business Systems par des relations explicites et permet de situer
+  name: Enterprise Architecture
+  label_fr: Architecture d’entreprise cible
+  short_description: Représentation du SI Beaumanoir cible, au-dessus des systèmes métier.
+  definition: Objet racine du modèle cible. Il réunit les Business Systems par des relations explicites et permet de situer
     chaque responsabilité dans la cible, sans décrire à lui seul les applications qui les réaliseront.
   role: Donner un point de départ unique à la navigation et une fiche expliquant la portée de la cible.
   source_refs:
+  - U915
   - U912
   review:
     state: partial

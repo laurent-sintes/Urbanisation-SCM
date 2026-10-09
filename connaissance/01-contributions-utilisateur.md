@@ -22388,3 +22388,28 @@ Verbatim :
 > Process Management est le seul sous domaine qui n'est pas taggué. Vérifie les autres aussi
 
 Portée : signalement d'un tag absent pour Process Management et demande de vérifier tous les sous-domaines. Le choix du libellé du rôle reste une proposition de mise en œuvre ; cette demande ne vaut ni accord sur une taxonomie nouvelle ni demande de release, de commit ou de push.
+
+## U914
+
+Date : 2026-10-09. Source : Laurent, correction de la langue des libellés structurants du modèle.
+
+Verbatim :
+
+> Les "primary_role" des sous domaines sont en français. Toute la structuration du modèle doit être en anglais
+
+Portée : les libellés des rôles dominants des sous-domaines et les noms des nœuds du modèle courant sont en anglais. Les définitions et explications restent en français ; les publications figées ne sont pas réécrites. Le champ courant est `dominant_role`. Aucune release ni opération Git demandée.
+
+## U915
+
+Date : 2026-10-09. Source : Laurent, validation de l’audit UX Atlas et renommage de la racine.
+
+Verbatim :
+
+> Je valide tout.
+>
+> J'ajoute que Univers doit être remplacé par "Architecture d'Entreprise".
+> En aglais car le metamodele est en anglais
+
+Précision demandée pendant la mise en œuvre : « Oui, distinguer les deux (recommandé) » à la question de réserver « Enterprise Architecture » à l’objet racine et de renommer la notion de méthode existante « Enterprise Architecture Practice ».
+
+Portée : appliquer les six corrections UX proposées dans l’audit précédent. Renommer l’objet racine du modèle cible en Enterprise Architecture, sans changer son identité ni ses rattachements, et distinguer la pratique méthodologique homonyme. Les définitions restent en français. Les publications historiques conservent leur vocabulaire ; aucune release ni opération Git demandée.

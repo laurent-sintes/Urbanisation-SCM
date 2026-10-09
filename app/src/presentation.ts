@@ -2,13 +2,13 @@ import type { AtlasNode, AtlasRelation } from './types';
 import { capabilityTypeLabel } from './capabilityTypes.ts';
 import { behaviorTypeLabel } from './behaviorTypes.ts';
 export function kindLabel(node: AtlasNode) {
-  if (node.kind === 'universe') return 'Univers';
-  if (node.kind === 'business_system') return 'Système métier';
-  if (node.groupRole === 'urbanism_level') return node.levelRef === 'universe' ? 'Univers' : 'Niveau d’urbanisme';
-  if (node.kind === 'capability') return `Capacité · ${capabilityTypeLabel(node)}`;
-  if (node.kind === 'behavior') return `Comportement · ${behaviorTypeLabel(node)}`;
-  if (node.kind === 'area') return node.hierarchyLabel || 'Area';
-  return ({ domain: 'Domaine', area: 'Area', business_area: 'Business Area', capability: 'Capacité', behavior: 'Comportement', reference: 'Référence', group: 'Groupe de présentation', object: 'Objet métier', document: 'Document', event: 'Événement' } as Record<string,string>)[node.kind] || node.kind;
+  if (node.kind === 'universe') return node.name === 'Enterprise Architecture' || node.name === 'Univers' ? node.name : 'Universe';
+  if (node.kind === 'business_system') return 'Business System';
+  if (node.groupRole === 'urbanism_level') return node.levelRef === 'universe' ? 'Universe' : 'Urbanism Level';
+  if (node.kind === 'capability') return `Capability · ${capabilityTypeLabel(node)}`;
+  if (node.kind === 'behavior') return `Behavior · ${behaviorTypeLabel(node)}`;
+  if (node.kind === 'area') return node.hierarchyLabel === 'Sous-domaine' ? 'Subdomain' : node.hierarchyLabel || 'Area';
+  return ({ domain: 'Domain', area: 'Area', business_area: 'Business Area', reference: 'Business Reference', group: 'Presentation Group', object: 'Business Object', document: 'Document', event: 'Event' } as Record<string,string>)[node.kind] || node.kind;
 }
 export function modelingDepthLabel(node: AtlasNode): string {
   if (node.kind === 'domain' && node.fields.modeling_depth === 'domains') return 'Vue de domaine';

@@ -32,6 +32,15 @@ test('historical publications do not inherit Business Areas from newer publicati
   assert.deepEqual(stats(historical,'sub').map(x=>x.kind),['capability','behavior']);
   assert.equal(stats(adaptPublication(fixture()),'sub')[0].kind,'business_area');
 });
+test('subdomain totals include presented references without counting dependencies',()=>{
+  const raw=fixture();
+  raw.nodes.push({id:'ref',kind:'reference',fields:{name:'Shared Reference'}});
+  raw.relations.push({id:'presented-ref',type:'presents',source_id:'sub',target_id:'ref'});
+  const model=adaptPublication(raw);
+  assert.deepEqual(stats(model,'sub').find(item=>item.kind==='reference'),
+    {kind:'reference',count:1,label:'référentiel'});
+  assert.equal(stats(model,'sub').find(item=>item.kind==='capability')?.count,2);
+});
 test('scope statistics keep the hierarchy vocabulary of the selected publication',()=>{
   for (const [principle,singular,plural] of [
     ['PRINCIPLE-DOMAIN-SUBDOMAIN','sous-domaine','sous-domaines'],

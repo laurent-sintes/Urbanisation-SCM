@@ -14,8 +14,12 @@
 .scenario-catalog h2 {margin:18px 0}.scenario-catalog h3 {margin:20px 0 10px}
 .scenario-filters {display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
 .scenario-filters label {min-width:0}.scenario-filters button {justify-self:start;min-height:42px}
+.scenario-results-count {margin:0;align-self:end;padding:8px 0}
+.scenario-advanced-filters {grid-column:1/-1}
+.scenario-advanced-filters summary {display:none}
+.scenario-advanced-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:end}
 .stage-boundaries,.step-inputs {border-top:1px solid #dbe7e1;margin-top:12px;padding-top:10px}
 .step-inputs h5 {font-size:inherit;margin:0 0 6px}.stage-boundaries p {margin:4px 0}
 .scenario-conditions {margin:18px 0}.mobilization-steps p {margin:8px 0}
-@media(max-width:700px){.scenario-filters{grid-template-columns:1fr}.scenario-path-select{margin:18px 0}}
+@media(max-width:700px){.scenario-filters,.scenario-advanced-grid{grid-template-columns:1fr}.scenario-path-select{margin:18px 0}.scenario-advanced-filters summary{display:list-item;cursor:pointer;font-weight:600;color:#236159}.scenario-advanced-grid{margin-top:12px}}
 @media(max-width:600px){.scenario-catalog{padding:12px}.scenario-filters label{width:100%}.scenario-filters select{width:100%}}

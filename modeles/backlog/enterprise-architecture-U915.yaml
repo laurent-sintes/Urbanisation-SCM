@@ -1,0 +1,23 @@
+id: ENTERPRISE-ARCHITECTURE-U915
+source_refs:
+- U912
+- U915
+status: applied_to_backlog
+agreement_scope: L’objet racine représentant le SI Beaumanoir cible est nommé Enterprise Architecture. La pratique méthodologique distincte est nommée Enterprise Architecture Practice. Les identités et les relations existantes sont conservées ; les publications historiques ne changent pas.
+market_position:
+  microsoft_dynamics: Le catalogue des processus et scénarios Dynamics 365 traverse plusieurs responsabilités, mais décrit la portée d’une suite de produits et ne prescrit ni racine du SI cible ni découpage Enterprise Architecture de FLOW.
+  sap_s4hana: La Feature Scope Description de SAP S/4HANA couvre plusieurs domaines fonctionnels, mais reste un catalogue produit et ne définit pas l’architecture cible Beaumanoir.
+  flow_choice: Le nom Enterprise Architecture désigne ici la représentation du SI cible ; Enterprise Architecture Practice désigne l’activité qui la construit et la maintient. Aucun équivalent de structure chez les éditeurs ni réalisation installée n’est déduit.
+  sources:
+  - https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/overview
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68
+publication_delivery:
+  state: applied
+  source_refs:
+  - U915
+  summary: Renommage de la racine cible, sans changement d’identité, de nature ni de rattachement.
+  required_nodes:
+  - id: beaumanoir-target-universe
+    kind: universe
+    fields:
+      name: Enterprise Architecture

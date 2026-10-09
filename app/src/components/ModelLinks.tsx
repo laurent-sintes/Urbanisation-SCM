@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import type { PublishedModel } from '../types';
+import type { AtlasNode, PublishedModel } from '../types';
 import type { RouteState } from '../navigation';
 import { routeHash, readRoute } from '../navigation';
 import { inlineParts, plainInlineText } from '../inlineLinks';
@@ -9,6 +9,7 @@ import { childrenOf } from '../model';
 import type { ModelingGuide } from '../modelingGuide';
 import './glossary.css';
 import { resolveGlossaryTerm } from '../glossary';
+import { kindLabel } from '../presentation';
 
 type Kind = 'model' | 'glossary' | 'method' | 'guide';
 type LinksContext = { model: PublishedModel | null; metaGlossary?: ModelingGuide['glossary']; guide?: ModelingGuide; route: RouteState; onFollow: (kind: 'model' | 'glossary', id: string, section?: string) => void };
@@ -40,6 +41,53 @@ export function ContextReturn() {
   if(origin.version && origin.version!==context.model.version) return null;
   const label=origin.view==='scenarios' ? (origin.scenario ? 'Retour au scénario' : 'Retour au catalogue') : origin.view==='principles' ? 'Retour à la méthode' : origin.view==='glossary' ? 'Retour au glossaire' : 'Retour à la fiche : '+(context.model.nodeById.get(origin.node)?.name || origin.node);
   return <p className="context-return"><a href={context.route.returnTo}>{label}</a></p>;
+}
+
+const metamodelTermNames: Record<string, string> = {
+  universe: 'Enterprise Architecture', business_system: 'Business System', domain: 'Domain', area: 'Subdomain',
+  business_area: 'Business Area', capability: 'Capability', behavior: 'Capability Behavior', reference: 'Business Reference',
+};
+
+/** Explain the type from the selected publication, on hover and keyboard focus. */
+export function MetaTypeLabel({ node }: { node: AtlasNode }) {
+  const context = useContext(Context);
+  const id = useId();
+  const anchor = useRef<HTMLSpanElement>(null);
+  const tooltip = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const [position, setPosition] = useState({ left: 0, top: 0 });
+  const historicalArea = node.kind === 'area' && node.hierarchyLabel !== 'Sous-domaine';
+  const published = historicalArea ? undefined : context?.model?.raw.metamodel?.node_types?.find(type => type.kind === node.kind);
+  const methodName = node.kind === 'universe' && node.name !== 'Enterprise Architecture' ? node.name : metamodelTermNames[node.kind];
+  const fallback = historicalArea ? undefined
+    : context?.metaGlossary?.terms.find(term => term.name === methodName);
+  const definition = published?.definition || fallback?.short_description || fallback?.definition;
+  const label = kindLabel(node);
+  const show = () => { if (definition) setOpen(true); };
+  useLayoutEffect(() => {
+    if (!open || !anchor.current || !tooltip.current) return;
+    const rect = anchor.current.getBoundingClientRect();
+    const height = tooltip.current.getBoundingClientRect().height;
+    const below = rect.bottom + 8;
+    setPosition({ left: Math.max(8, Math.min(rect.left, window.innerWidth - 348)),
+      top: below + height <= window.innerHeight - 8 ? below : Math.max(8, rect.top - height - 8) });
+  }, [open]);
+  useEffect(() => {
+    if (!open) return;
+    const close = () => setOpen(false);
+    const escape = (event: KeyboardEvent) => { if (event.key === 'Escape') { event.stopPropagation(); close(); anchor.current?.focus(); } };
+    window.addEventListener('keydown', escape, true);
+    window.addEventListener('scroll', close, true);
+    window.addEventListener('resize', close);
+    return () => { window.removeEventListener('keydown', escape, true); window.removeEventListener('scroll', close, true); window.removeEventListener('resize', close); };
+  }, [open]);
+  return <><span ref={anchor} className={definition ? 'metamodel-type' : undefined} role={definition ? 'term' : undefined}
+    tabIndex={definition ? 0 : undefined} aria-describedby={open ? id : undefined}
+    onMouseEnter={show} onMouseLeave={() => setOpen(false)} onFocus={show} onBlur={() => setOpen(false)}
+    onClick={event => { if (definition) { event.stopPropagation(); setOpen(true); } }}>{label}</span>
+    {open && definition && createPortal(<div ref={tooltip} id={id} role="tooltip" className="reference-tooltip metamodel-tooltip" style={position}>
+      <strong>{label}</strong><span>{plainInlineText(publicText(definition))}</span>
+    </div>, document.body)}</>;
 }
 
 export function ReferenceLink({ kind = 'model', target, anchor, children, className, showBehaviors = false, fullDefinition = false }: { kind?: Kind; target: string; anchor?: string; children: ReactNode; className?: string; showBehaviors?: boolean; fullDefinition?: boolean }) {

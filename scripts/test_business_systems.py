@@ -25,7 +25,7 @@ class BusinessSystemTests(unittest.TestCase):
     def test_complete_structure_and_delivery(self):
         self.assertEqual(self.errors(self.model), [])
         self.assertEqual(check_delivery(ROOT, self.model)[1], [])
-        self.assertIn('| beaumanoir-target-universe | Univers | Universe |', render(self.model, 'Fixture'))
+        self.assertIn('| beaumanoir-target-universe | Enterprise Architecture | Enterprise Architecture |', render(self.model, 'Fixture'))
         self.assertIn('| system-business-operations | Business Operations | Business System |', render(self.model, 'Fixture'))
 
     def test_universe_is_single_root_of_the_three_business_systems(self):
@@ -64,6 +64,20 @@ class BusinessSystemTests(unittest.TestCase):
         self.assertTrue(detailed_areas)
         self.assertEqual([area_id for area_id in sorted(detailed_areas)
                           if not nodes[area_id]['fields'].get('dominant_role')], [])
+
+    def test_subdomain_role_labels_are_english_and_consistent(self):
+        expected = {
+            'commitments': 'Commitment Management',
+            'data-state': 'Data & State',
+            'decision-planning': 'Decision & Planning',
+            'orchestration': 'Orchestration',
+            'policies': 'Configuration Control',
+            'processes': 'Process Management',
+        }
+        for node in self.model['nodes']:
+            role = node['fields'].get('dominant_role')
+            if role:
+                self.assertEqual(role['display_name'], expected[role['id']], node['id'])
 
     def test_depth_cannot_be_attached_to_a_capability(self):
         model = deepcopy(self.model)

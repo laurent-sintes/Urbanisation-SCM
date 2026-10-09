@@ -69,12 +69,28 @@ class StaticExportTests(unittest.TestCase):
                       'definition': 'Ensemble de [domaines](method:MOD008).'}]}}}
         header = describe_metamodel(model, guide)
         types = {entry['kind']: entry for entry in header['node_types']}
+        self.assertEqual(types['universe']['label'], 'Univers')
         self.assertEqual(types['universe']['definition'], 'Vue de la cible.')
         self.assertEqual(types['universe']['definition_source'], 'glossary:TER203')
         self.assertEqual(types['business_system']['definition'], 'Ensemble de domaines.')
         self.assertEqual(types['business_system']['definition_source'], 'method:MOD022')
         self.assertEqual(header['relation_types'][0]['observed_endpoints'], [
             {'source_kind': 'universe', 'target_kind': 'business_system', 'count': 1}])
+
+    def test_metamodel_uses_enterprise_architecture_for_new_guide(self):
+        from scripts.atlas_metamodel import describe_metamodel
+
+        model = {'version': 'future', 'nodes': [{'id': 'root', 'kind': 'universe',
+                                               'fields': {'name': 'Enterprise Architecture'}}],
+                 'relations': [], 'glossary': {'terms': []}}
+        guide = {'status': 'available', 'guide': {'version': 'future', 'glossary': {'terms': [
+            {'id': 'MOD043', 'name': 'Enterprise Architecture',
+             'definition': 'Architecture cible de l’entreprise.'},
+        ]}}}
+        root_type = describe_metamodel(model, guide)['node_types'][0]
+        self.assertEqual(root_type['label'], 'Enterprise Architecture')
+        self.assertEqual(root_type['definition'], 'Architecture cible de l’entreprise.')
+        self.assertEqual(root_type['definition_source'], 'method:MOD043')
 
     def test_current_publication_has_semantics_cardinalities_and_schema(self):
         from app.modeling_guide import _load_associated_guide

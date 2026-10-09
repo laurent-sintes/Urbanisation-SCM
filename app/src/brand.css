@@ -117,6 +117,14 @@
 .primary-spaces button,.space-navigation button {justify-content:flex-start;text-align:left;min-height:40px;padding:9px 10px;border:0;background:transparent;color:var(--ink);gap:10px}
 .primary-spaces button[aria-current="page"],.space-navigation button[aria-current="page"] {background:#d8eee6;color:#174e46;font-weight:650}
 .primary-spaces button:hover,.space-navigation button:hover {background:#edf5f1}
+.download-menu summary {display:flex;align-items:center;gap:10px;min-height:40px;padding:9px 10px;list-style:none;cursor:pointer;color:var(--ink);border-radius:6px}
+.download-menu summary::-webkit-details-marker {display:none}
+.download-menu summary:hover,.download-menu summary:focus-visible,.download-menu[open] summary {background:#edf5f1}
+.download-chevron {margin-left:auto;transition:transform .15s}
+.download-menu[open] .download-chevron {transform:rotate(180deg)}
+.download-menu a {display:flex;flex-direction:column;gap:2px;margin:2px 0 4px 27px;padding:8px 10px;color:var(--ink);text-decoration:none;border-radius:6px}
+.download-menu a:hover,.download-menu a:focus-visible {background:#edf5f1}
+.download-menu a small {font-size:11px;color:#52675f}
 .space-navigation {flex:1;min-height:0;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:8px;align-items:stretch}
 .space-navigation h2 {font-size:13px;margin:10px 0;color:var(--muted)}
 .space-navigation a {color:var(--flow-green);padding:10px;line-height:1.45;text-underline-offset:3px;overflow-wrap:anywhere}

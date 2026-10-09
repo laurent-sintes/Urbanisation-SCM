@@ -2,8 +2,10 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { resolveMapZoom, widthFit } from './src/mapZoom.ts';
 
-test('automatic framing follows detail while a manual choice stays fixed', () => {
+test('automatic framing preserves readable text while manual choices stay fixed', () => {
   assert.equal(resolveMapZoom('auto', 1), 'page');
+  assert.equal(resolveMapZoom('auto', 2, 0.42), 'width');
+  assert.equal(resolveMapZoom('auto', 2, 0.9), 'page');
   assert.equal(resolveMapZoom('auto', 3), 'width');
   assert.equal(resolveMapZoom('auto', 4), 'width');
   assert.equal(resolveMapZoom('page', 4), 'page');

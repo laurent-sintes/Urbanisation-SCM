@@ -2,9 +2,9 @@ import { MethodNavigation } from './MethodNavigation';
 import type { ModelingGuide } from '../modelingGuide';
 import { CatalogLink } from './ModelLinks';
 import { catalogOf } from '../scenarioCatalog';
-import { staticUrl } from '../publication';
+import { publicationUrl, staticUrl } from '../publication';
 import { useEffect, useRef, useState, type RefObject } from 'react';
-import { Search, X, PanelLeftClose, Compass, BookOpen, Lightbulb } from 'lucide-react';
+import { Search, X, PanelLeftClose, Compass, BookOpen, Lightbulb, Download, ChevronDown } from 'lucide-react';
 import type { PublishedModel } from '../types';
 import { lineageOf } from '../model';
 import { searchPublication } from '../search';
@@ -32,7 +32,7 @@ export function Sidebar({ model, guide, route, open, mobile, searchRef, onClose,
     const key = (event: globalThis.KeyboardEvent) => {
       if (event.key === 'Escape') { event.preventDefault(); onClose(); }
       if (event.key !== 'Tab') return;
-      const items = [...(panel.current?.querySelectorAll<HTMLElement>('button:not([disabled]):not([tabindex="-1"]),input,select,a[href]') || [])].filter(el => el.offsetParent !== null);
+      const items = [...(panel.current?.querySelectorAll<HTMLElement>('button:not([disabled]):not([tabindex="-1"]),input,select,a[href],summary') || [])].filter(el => el.offsetParent !== null);
       const first = items[0], last = items.at(-1);
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
       if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
@@ -51,6 +51,9 @@ export function Sidebar({ model, guide, route, open, mobile, searchRef, onClose,
       {!!model.raw.scenario_catalog && <button aria-current={route.view==='scenarios' ? 'page' : undefined} onClick={() => {onSearch({view:'scenarios',node:'',scope:'',query:'',scenario:'',stream:'',path:'',section:'',event:'',object:'',situation:'',capability:'',scenarioQuery:'',returnTo:'',catalogReturn:'',scroll:''});onClose();}}><Compass size={17}/>Scénarios métier</button>}
       <button onClick={() => onOpenGlossary('model')} aria-current={route.view==='glossary' ? 'page' : undefined}><BookOpen size={17}/>Glossaires</button>
       <button onClick={onOpenPrinciples} aria-current={route.view==='principles' ? 'page' : undefined}><Lightbulb size={17}/>{guide?.title || 'Méthodologie'}</button>
+      <details className="download-menu"><summary><Download size={17}/>Télécharger<ChevronDown className="download-chevron" size={15}/></summary>
+        <a href={publicationUrl(model.version)} download={`flow-atlas-model-${model.version}.json`} onClick={mobile ? onClose : undefined}><span>Modèle (JSON)</span><small>{revision} · {model.version}</small></a>
+      </details>
     </nav>
     <div className="search-box"><Search size={17} /><input ref={searchRef} id="fa-search" aria-label="Rechercher dans le modèle publié" placeholder="Un nom, une idée, un repère…" value={route.query} onChange={e => onSearch({ query: e.target.value })} onKeyDown={e => {
       if (e.key === 'ArrowDown') { e.preventDefault(); panel.current?.querySelector<HTMLButtonElement>('[data-search-result]')?.focus(); }

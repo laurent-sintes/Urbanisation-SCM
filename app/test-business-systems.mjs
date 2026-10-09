@@ -27,7 +27,7 @@ test('overview shows explicit domains, compact contexts and complete breadcrumbs
   assert.deepEqual(list.items.map(n => n.id), ['sales', 'orchestration']);
   assert.equal(cardChildListOf(model, model.nodeById.get('design')), undefined);
   assert.deepEqual(lineageOf(model, 'order').map(n => n.id), ['operations', 'orchestration', 'orders', 'order']);
-  assert.equal(kindLabel(model.nodeById.get('operations')), 'Système métier');
+  assert.equal(kindLabel(model.nodeById.get('operations')), 'Business System');
   assert.equal(modelingDepthLabel(model.nodeById.get('orchestration')), 'Capacités et comportements');
   assert.equal(modelingDepthLabel(model.nodeById.get('sales')), 'Vue de domaine');
 });
@@ -49,7 +49,7 @@ test('dependency system level preserves original business relations and route', 
 
 test('historical publications keep roots and fallback for a shared system-level URL', () => {
   const historical = adaptPublication({ space: 'release', version: 'old', nodes: [node('domain', 'domain'), node('area', 'area')], relations: [edge('parent', 'presents', 'domain', 'area')] });
-  assert.equal(kindLabel(historical.nodeById.get('domain')), 'Domaine');
+  assert.equal(kindLabel(historical.nodeById.get('domain')), 'Domain');
   assert.equal(rootsOf(historical)[0].id, 'domain');
   assert.equal(dependencyLevels(historical).some(l => l.value === 'business_system'), false);
   assert.equal(dependencyLevel(historical, 'business_system'), 'domain');
@@ -63,5 +63,7 @@ test('published Universe is the navigable root above the systems', () => {
   assert.deepEqual(rootsOf(model).map(n => n.id), ['universe']);
   assert.deepEqual(childrenOf(model, 'universe').map(n => n.id), ['design', 'operations', 'control']);
   assert.deepEqual(lineageOf(model, 'order').map(n => n.id), ['universe', 'operations', 'orchestration', 'orders', 'order']);
-  assert.equal(kindLabel(model.nodeById.get('universe')), 'Univers');
+  assert.equal(kindLabel(model.nodeById.get('universe')), 'Universe');
+  const renamed = adaptPublication({space:'release',version:'renamed-root',nodes:[{id:'beaumanoir-target-universe',kind:'universe',fields:{name:'Enterprise Architecture'}}],relations:[]});
+  assert.equal(kindLabel(renamed.nodeById.get('beaumanoir-target-universe')), 'Enterprise Architecture');
 });

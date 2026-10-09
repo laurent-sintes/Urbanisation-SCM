@@ -1,6 +1,6 @@
-id: flow-methodology-2026-10-07.4
-version: 2026-10-07.4
-as_of: '2026-10-07'
+id: flow-methodology-2026-10-09.2
+version: 2026-10-09.2
+as_of: '2026-10-09'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
 editorial_status: implementation_wording
@@ -61,6 +61,7 @@ source_refs:
 - U885
 - U889
 - U903
+- U915
 lessons:
 - id: business-first
   label: Le métier d’abord
@@ -439,7 +440,7 @@ sources:
 
     - Objets métier, documents et événements restent distincts ; ils ne sont pas des niveaux inférieurs de comportement. Leurs liens ne présument ni possession exclusive, ni cardinalité, ni ordre d’exécution.
 
-    - Déduire l’arbre uniquement des relations explicites. `contains`, `presents` et les liens métier transversaux ont des sens différents. Business References est un groupe de présentation ; Universe est un niveau d’urbanisme. Un lien « a besoin de » n’est pas une décomposition.
+    - Déduire l’arbre uniquement des relations explicites. `contains`, `presents` et les liens métier transversaux ont des sens différents. Business References est un groupe de présentation ; Enterprise Architecture est la racine du SI cible. Un lien « a besoin de » n’est pas une décomposition.
 
     Publier ne vaut pas valider. Un Go s’applique au contenu présenté et à sa portée : champs, valeurs et rattachements explicites. Ne pas étendre un accord aux compléments éditoriaux, descendants ou nouvelles valeurs. Conserver empreintes et accords historiques ; `lifecycle`, `review` et décisions `ADOPT-*` ne remplacent pas la qualification champ par champ.
 
@@ -718,6 +719,10 @@ sources:
   title: Appliquer l’audit des glossaires
   excerpt: Applique l’audit
   scope: Corrections lexicales et compléments méthodologiques de l’audit U902.
+- id: U915
+  title: Distinguer la racine cible et la pratique d’architecture
+  excerpt: Je valide tout. Univers doit être remplacé par Architecture d’Entreprise, en anglais dans le métamodèle.
+  scope: Enterprise Architecture nomme l’objet racine du SI cible ; Enterprise Architecture Practice nomme la pratique méthodologique distincte.
 glossary:
   terms:
   - id: MOD001
@@ -1296,6 +1301,14 @@ glossary:
     - Préciser l’objet de la décision, les limites d’autorité, les preuves nécessaires et le destinataire d’une escalade.
       Un rôle de coordination ne donne pas automatiquement le pouvoir d’engager l’entreprise.
     - La méthode aide à expliciter ce mandat ; elle ne prétend pas que le mandat réel du programme est déjà arrêté.
+  - id: MOD043
+    canonical_fields:
+    - name
+    - label_fr
+    - definition
+    - short_description
+    notes:
+    - Objet racine du modèle cible, distinct de la pratique Enterprise Architecture Practice (MOD032).
   model_term_ids:
   - TER001
   - TER002
@@ -1319,6 +1332,7 @@ glossary:
   - id: objects
     label: Objets et liens
     term_ids:
+    - MOD043
     - MOD022
     - MOD008
     - MOD013

@@ -2,16 +2,16 @@ import type { AtlasNode } from './types.ts';
 
 /** Explicit published nature only; names and identifiers never determine the type. */
 export const capabilityTypes = {
-  integration: { label: 'Intégration', icon: 'ArrowLeftRight' },
+  integration: { label: 'Integration', icon: 'ArrowLeftRight' },
   action: { label: 'Action', icon: 'Zap' },
-  management: { label: 'Gestion', icon: 'SlidersHorizontal' },
-  ledger: { label: 'Registre', icon: 'BookOpen' },
-  knowledge: { label: 'Connaissance / visibilité', icon: 'Eye' },
+  management: { label: 'Management', icon: 'SlidersHorizontal' },
+  ledger: { label: 'Ledger', icon: 'BookOpen' },
+  knowledge: { label: 'Knowledge / Visibility', icon: 'Eye' },
   orchestration: { label: 'Orchestration', icon: 'Workflow' },
-  planning: { label: 'Planification', icon: 'CalendarCheck' },
-  policy: { label: 'Politique', icon: 'ShieldCheck' },
-  evaluation: { label: 'Évaluation', icon: 'Calculator' },
-  decision: { label: 'Décision', icon: 'GitBranch' },
+  planning: { label: 'Planning', icon: 'CalendarCheck' },
+  policy: { label: 'Policy', icon: 'ShieldCheck' },
+  evaluation: { label: 'Evaluation', icon: 'Calculator' },
+  decision: { label: 'Decision', icon: 'GitBranch' },
 } as const;
 export type CapabilityNature = keyof typeof capabilityTypes;
 
@@ -23,7 +23,7 @@ export function capabilityNature(node: AtlasNode): CapabilityNature | undefined 
 
 export function capabilityTypeLabel(node: AtlasNode): string {
   const nature = capabilityNature(node);
-  return nature ? capabilityTypes[nature].label : 'Type non renseigné';
+  return nature ? capabilityTypes[nature].label : 'Unspecified Type';
 }
 
 export const isDecision = (node: AtlasNode): boolean => capabilityNature(node) === 'decision';

@@ -1,8 +1,8 @@
 export type MapZoomChoice = 'auto' | 'page' | 'width';
 export type MapZoomMode = 'page' | 'width';
 
-export function resolveMapZoom(choice: MapZoomChoice, detail: number): MapZoomMode {
-  return choice === 'auto' ? (detail >= 3 ? 'width' : 'page') : choice;
+export function resolveMapZoom(choice: MapZoomChoice, detail: number, pageFitZoom = 1): MapZoomMode {
+  return choice === 'auto' ? (detail >= 3 || pageFitZoom < 0.8 ? 'width' : 'page') : choice;
 }
 
 /** Fill the available width without making a sparse map comically large. */

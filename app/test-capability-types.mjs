@@ -7,14 +7,14 @@ const node = (id, nature, kind = 'capability') => ({ id, name: id, kind, fields:
 test('explicit types drive labels and ten distinct icons; never names or IDs', () => {
   assert.equal(Object.keys(capabilityTypes).length, 10);
   assert.equal(new Set(Object.values(capabilityTypes).map(type => type.icon)).size, 10);
-  assert.equal(capabilityTypeLabel(node('ingestion', 'integration')), 'Intégration');
-  assert.equal(capabilityTypeLabel(node('register', 'ledger')), 'Registre');
-  assert.equal(capabilityTypeLabel(node('ATP', 'evaluation')), 'Évaluation');
-  assert.equal(capabilityTypeLabel(node('ATP', 'decision')), 'Décision');
-  assert.equal(capabilityTypeLabel(node('rules', 'policy')), 'Politique');
+  assert.equal(capabilityTypeLabel(node('ingestion', 'integration')), 'Integration');
+  assert.equal(capabilityTypeLabel(node('register', 'ledger')), 'Ledger');
+  assert.equal(capabilityTypeLabel(node('ATP', 'evaluation')), 'Evaluation');
+  assert.equal(capabilityTypeLabel(node('ATP', 'decision')), 'Decision');
+  assert.equal(capabilityTypeLabel(node('rules', 'policy')), 'Policy');
   assert.equal(capabilityNature(node('Decision by name only', undefined)), undefined);
   assert.equal(capabilityNature(node('Supply Policy', undefined)), undefined);
-  assert.equal(capabilityTypeLabel(node('Supply Policy', undefined)), 'Type non renseigné');
+  assert.equal(capabilityTypeLabel(node('Supply Policy', undefined)), 'Unspecified Type');
   assert.equal(capabilityNature(node('D05.e', 'unsupported')), undefined);
   assert.equal(capabilityNature(node('rules', 'policy_strategy')), undefined);
   assert.equal(capabilityNature(node('toString', 'toString')), undefined);

@@ -109,6 +109,14 @@ try {
  for(const view of [{view:'scenarios'},{view:'principles',principle:'start'},{view:'sheet',node:'D05.e'},{view:'glossary',glossary:'meta',term:'MOD027'}]){
   await visit(view);await page.waitForTimeout(100);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,JSON.stringify(view));
  }
+ await visit({view:'scenarios'});
+ const advanced=page.locator('.scenario-advanced-filters');
+ assert.equal(await advanced.getAttribute('open'),null,'Mobile scenarios start with compact filters');
+ await advanced.locator('summary').click();
+ assert.equal(await advanced.getAttribute('open'),'','Mobile advanced filters expand');
+ await visit({view:'glossary',glossary:'meta'});
+ assert.equal(await page.locator('.glossary-term h2').innerText(),await page.locator('.glossary-index li a').first().innerText());
+ assert.equal(await page.locator('.glossary-term').evaluate(el=>getComputedStyle(el).overflowY),'visible');
  await page.getByRole('button',{name:'Ouvrir le panneau',exact:true}).click();await page.locator('.sidebar.open').waitFor();
  const last=page.locator('.sidebar.open button:visible,.sidebar.open a:visible').last();await last.focus();await page.keyboard.press('Tab');
  assert.ok(await page.locator('.sidebar.open').evaluate(el=>el.contains(document.activeElement)));

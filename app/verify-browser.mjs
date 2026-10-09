@@ -56,6 +56,10 @@ try {
   await page.locator(`.business-card[data-node-id="${domain.id}"] h3 button`).click();
   await page.locator(`.business-card[data-node-id="${areas[0]}"]`).waitFor();
   assert.equal(route().get('scope'), domain.id);
+  await visit({ view: 'map', node: domain.id, scope: domain.id, mapDepth: '2' });
+  await page.locator('.graph-canvas.zoom-width .business-card').first().waitFor();
+  const areaZoom = Number(await page.locator('.react-flow__viewport').evaluate(element => element.getAttribute('style')?.match(/scale\(([^)]+)\)/)?.[1] || 0));
+  assert.ok(areaZoom >= 0.8, 'Auto keeps Business Area labels readable');
   const detail = page.locator('.map-header-controls .detail-trigger');
   await detail.click();
   await page.getByRole('group', { name: 'Niveau de détail de la carte' }).waitFor();

@@ -177,7 +177,7 @@ publication_delivery:
     fields:
       dominant_role:
         id: data-state
-        display_name: Données et état
+        display_name: Data & State
   - id: D06.b
     fields: {}
   - id: D07.a
@@ -190,12 +190,12 @@ publication_delivery:
     fields:
       dominant_role:
         id: commitments
-        display_name: Gestion des engagements
+        display_name: Commitment Management
   - id: D01
     fields:
       dominant_role:
         id: data-state
-        display_name: Données et état
+        display_name: Data & State
   - id: D06
     fields:
       dominant_role:
@@ -205,7 +205,7 @@ publication_delivery:
     fields:
       dominant_role:
         id: decision-planning
-        display_name: Décision et planification
+        display_name: Decision & Planning
   - id: D06.d
     fields: {}
   - id: D06.e
@@ -218,7 +218,7 @@ publication_delivery:
     fields:
       dominant_role:
         id: policies
-        display_name: Contrôle par configuration
+        display_name: Configuration Control
   - id: subdomain-plans
     fields:
       dominant_role: null
@@ -229,7 +229,7 @@ publication_delivery:
     fields:
       dominant_role:
         id: commitments
-        display_name: Gestion des engagements
+        display_name: Commitment Management
   - id: D02.b
     parent: ba-protection-policies
     fields: {}
@@ -722,3 +722,33 @@ delivery_reconciliation_U909:
     check: required_node
     previous_sha256: 00cd08a1a21768ce79f26615eee74f49ae4d2924714201fd5c95d4ce42ba05a5
     current: absent by U909
+delivery_reconciliation_U914:
+  source_refs:
+  - U914
+  note: Les six contrôles de rôle du lot U711 suivent les libellés anglais du modèle courant. Les empreintes précédentes
+    préservent les valeurs françaises ; ce réalignement n'étend aucun accord métier.
+  changed_checks:
+  - id: business-references
+    check: fields.dominant_role
+    previous_sha256: 27dfac0774f95eb1cabd150df83bd31907c2de7263494d5c6e47ac350a2c2f9a
+    current_sha256: 1f997599e274016080b63750a6b1700d7b70ea6ae85791fd23f4e52db4edcbb9
+  - id: D04
+    check: fields.dominant_role
+    previous_sha256: 8affd46b43011860761efb3866b86427c27752d872824ae44e32c031eb7f09eb
+    current_sha256: d44d80c7e39586332b324f1e53a724122aa4225dfb69bd82d62651c3e3c9b7b1
+  - id: D01
+    check: fields.dominant_role
+    previous_sha256: 27dfac0774f95eb1cabd150df83bd31907c2de7263494d5c6e47ac350a2c2f9a
+    current_sha256: 1f997599e274016080b63750a6b1700d7b70ea6ae85791fd23f4e52db4edcbb9
+  - id: D03
+    check: fields.dominant_role
+    previous_sha256: 9877d1865a0619aa4e0d08eac890638ae0d5d4fdba9b16987d6848bc44fc52bd
+    current_sha256: 62e1f9b29220475da681bf17efe7da8c5a201e323a5b474bcbd7fc53a19b4a20
+  - id: subdomain-policies
+    check: fields.dominant_role
+    previous_sha256: bebca930b8044d97e1f8e8eb445c1235aa3fc6592f76b6cadbb41e440d28344e
+    current_sha256: 9facdc27cfe4366e541c8f0ef5b3a5aaec9a6d4b776a2afe43557ec995063b85
+  - id: subdomain-service-orders
+    check: fields.dominant_role
+    previous_sha256: 8affd46b43011860761efb3866b86427c27752d872824ae44e32c031eb7f09eb
+    current_sha256: d44d80c7e39586332b324f1e53a724122aa4225dfb69bd82d62651c3e3c9b7b1

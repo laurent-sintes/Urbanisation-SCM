@@ -114,10 +114,10 @@ test('cards and navigation retain the terminology and rank of the selected publi
   assert.deepEqual(dependencyLevels(historical).map(level => level.value), ['capability', 'domain', 'universe']);
   assert.equal(dependencyLevel(historical, 'area'), 'domain');
   assert.equal(dependencyLevel(modern, 'universe'), 'domain');
-  assert.equal(kindLabel(modern.nodeById.get('scope-one')), 'Domaine');
+  assert.equal(kindLabel(modern.nodeById.get('scope-one')), 'Domain');
   assert.equal(kindLabel(modern.nodeById.get('d1')), 'Area');
-  assert.equal(kindLabel(historical.nodeById.get('d1')), 'Domaine');
-  assert.equal(kindLabel({ ...historical.nodeById.get('scope-one'), groupRole: 'urbanism_level' }), 'Univers');
+  assert.equal(kindLabel(historical.nodeById.get('d1')), 'Domain');
+  assert.equal(kindLabel({ ...historical.nodeById.get('scope-one'), groupRole: 'urbanism_level' }), 'Universe');
   assert.equal(isCapabilityContainer(modern, modern.nodeById.get('scope-one')), false);
   assert.equal(isCapabilityContainer(modern, modern.nodeById.get('d1')), true);
   assert.equal(isCapabilityContainer(historical, historical.nodeById.get('d1')), true);

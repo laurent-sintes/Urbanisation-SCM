@@ -112,6 +112,7 @@ export interface GlossaryTerm extends JsonRecord {
   revision?: number; last_modified?: string;
 }
 export interface RawPublication extends JsonRecord {
+  metamodel?: { node_types?: { kind: string; label: string; definition?: string | null }[] };
   display_policy?: 'typed-tree-v1';
   display_index?: { policy: 'typed-tree-v1'; roots: string[]; children: Record<string, string[]>; codes: Record<string, string> };
   information_catalog?: InformationCatalogue;

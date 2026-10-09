@@ -2,9 +2,17 @@ import type { PublishedModel } from '../types';
 import type { RouteState } from '../navigation';
 import { catalogOf, filterScenarios, scenarioCapabilities } from '../scenarioCatalog';
 import { CatalogLink, MethodLink, ModelText, ReferenceLink } from './ModelLinks';
+import { useEffect, useState } from 'react';
 import './scenario-catalog.css';
 
 export function ScenarioCatalogPage({model,route,onChange}:{model:PublishedModel;route:RouteState;onChange:(v:Partial<RouteState>)=>void}) {
+  const [advancedOpen, setAdvancedOpen] = useState(() => typeof matchMedia === 'function' && matchMedia('(min-width: 701px)').matches);
+  useEffect(() => {
+    const media = matchMedia('(min-width: 701px)');
+    const update = () => setAdvancedOpen(media.matches);
+    media.addEventListener('change', update);
+    return () => media.removeEventListener('change', update);
+  }, []);
   const catalog=catalogOf(model);
   if (!catalog) return <article className="scenario-catalog"><h2>Catalogue absent de cette publication</h2><p>Les illustrations historiques restent accessibles dans les fiches de cette version.</p></article>;
   const scenario=catalog.scenarios.find(s=>s.id===route.scenario);
@@ -12,6 +20,8 @@ export function ScenarioCatalogPage({model,route,onChange}:{model:PublishedModel
   const paths=catalog.paths.filter(p=>p.scenario_id===scenario?.id);
   const path=route.path ? paths.find(p=>p.id===route.path) : paths[0];
   const change=(v:Partial<RouteState>)=>onChange({...v,section:''});
+  const filtered = filterScenarios(catalog,{stream:route.stream,event:route.event,object:route.object,situation:route.situation,capability:route.capability,query:route.scenarioQuery});
+  const advancedCount = [route.event, route.object, route.situation, route.capability].filter(Boolean).length;
   const cards=(items:typeof catalog.scenarios)=><ul className="scenario-cards">{items.map(s=><li key={s.id}><CatalogLink scenario={s.id}>{s.title}</CatalogLink><p><ModelText text={s.objective}/></p><small>{s.nature==='illustrative'?'Illustration métier':'Situation documentée'} · {scenarioCapabilities(catalog,s.id).length} éléments mobilisés</small></li>)}</ul>;
   if (route.scenario && !scenario || route.stream && !stream || route.path && !path) return <article className="scenario-catalog"><h2>Élément absent de cette publication</h2><CatalogLink>Revenir au catalogue</CatalogLink></article>;
   return <article className="scenario-catalog">
@@ -30,12 +40,15 @@ export function ScenarioCatalogPage({model,route,onChange}:{model:PublishedModel
       <section><h3>Ce que ce scénario permet de vérifier</h3><ul>{scenario.validation_points.map((v,i)=><li key={i}><ModelText text={v}/></li>)}</ul><p>Ces contributions ne prouvent ni une couverture exhaustive ni une réalisation installée.</p></section>
     </> : <>
       <h2>{stream ? stream.label_fr : 'Trouver un scénario'}</h2><div className="scenario-filters">
-        <label>Flux de valeur<select aria-label="Flux de valeur" value={route.stream || ''} onChange={e=>change({stream:e.target.value})}><option value="">Tous les flux</option>{catalog.value_streams.map(s=><option key={s.id} value={s.id}>{s.label_fr}</option>)}</select></label>
         <label>Rechercher un scénario<input value={route.scenarioQuery || ''} onChange={e=>change({scenarioQuery:e.target.value})}/></label>
-        {(['events','objects','situations'] as const).map((facet,i)=>{const key=(['event','object','situation'] as const)[i];return <label key={facet}>{['Événement','Objet métier','Situation'][i]}<select aria-label={['Événement','Objet métier','Situation'][i]} value={route[key] || ''} onChange={e=>change({[key]:e.target.value})}><option value="">Tous</option>{catalog.facets[facet].map(v=><option key={v.id} value={v.id}>{v.label}</option>)}</select></label>;})}
-        <label>Capacité ou référentiel<select aria-label="Capacité ou référentiel" value={route.capability || ''} onChange={e=>change({capability:e.target.value})}><option value="">Tous</option>{model.nodes.filter(n=>n.kind==='capability'||n.kind==='reference').map(n=><option key={n.id} value={n.id}>{n.name}</option>)}</select></label>
-        <button onClick={()=>change({stream:'',event:'',object:'',situation:'',capability:'',scenarioQuery:''})}>Effacer les filtres</button>
-      </div>{(()=>{const items=filterScenarios(catalog,{stream:route.stream,event:route.event,object:route.object,situation:route.situation,capability:route.capability,query:route.scenarioQuery});return <><p role="status">{items.length} scénario{items.length>1?'s':''}</p>{items.length ? cards(items) : <p>Aucun scénario ne correspond à ces filtres. Modifie-les ou efface-les pour élargir la recherche.</p>}</>;})()}
+        <label>Flux de valeur<select aria-label="Flux de valeur" value={route.stream || ''} onChange={e=>change({stream:e.target.value})}><option value="">Tous les flux</option>{catalog.value_streams.map(s=><option key={s.id} value={s.id}>{s.label_fr}</option>)}</select></label>
+        <p className="scenario-results-count" role="status">{filtered.length} scénario{filtered.length>1?'s':''}</p>
+        <details className="scenario-advanced-filters" open={advancedOpen} onToggle={e=>setAdvancedOpen(e.currentTarget.open)}><summary>Plus de filtres{advancedCount ? ` · ${advancedCount} actif${advancedCount > 1 ? 's' : ''}` : ''}</summary><div className="scenario-advanced-grid">
+          {(['events','objects','situations'] as const).map((facet,i)=>{const key=(['event','object','situation'] as const)[i];return <label key={facet}>{['Événement','Objet métier','Situation'][i]}<select aria-label={['Événement','Objet métier','Situation'][i]} value={route[key] || ''} onChange={e=>change({[key]:e.target.value})}><option value="">Tous</option>{catalog.facets[facet].map(v=><option key={v.id} value={v.id}>{v.label}</option>)}</select></label>;})}
+          <label>Capacité ou référentiel<select aria-label="Capacité ou référentiel" value={route.capability || ''} onChange={e=>change({capability:e.target.value})}><option value="">Tous</option>{model.nodes.filter(n=>n.kind==='capability'||n.kind==='reference').map(n=><option key={n.id} value={n.id}>{n.name}</option>)}</select></label>
+          <button onClick={()=>change({stream:'',event:'',object:'',situation:'',capability:'',scenarioQuery:''})}>Effacer les filtres</button>
+        </div></details>
+      </div>{filtered.length ? cards(filtered) : <p>Aucun scénario ne correspond à ces filtres. Modifie-les ou efface-les pour élargir la recherche.</p>}
       {stream ? <section><h2>Comprendre ce flux de valeur</h2><p>{stream.name}</p><p><ModelText text={stream.description}/></p><dl><dt>Bénéficiaire</dt><dd><ModelText text={stream.beneficiary}/></dd><dt>Valeur attendue</dt><dd><ModelText text={stream.value}/></dd><dt>Déclencheur</dt><dd><ModelText text={stream.trigger}/></dd><dt>Frontières</dt><dd><ModelText text={stream.boundary}/></dd></dl><h3>Étapes de valeur</h3><ol>{stream.stages.map(s=><li key={s.id}><strong>{s.name}</strong><p><ModelText text={s.outcome}/></p><div className="stage-boundaries"><p>Entrée : <ModelText text={s.entry}/></p><p>Sortie : <ModelText text={s.exit}/></p></div></li>)}</ol><details><summary>Positionnement et appuis méthodologiques / marché</summary><p><ModelText text={stream.market_position}/></p>{stream.market_sources.map((s,i)=><p key={i}><a href={s.url} target="_blank" rel="noreferrer">{s.vendor}</a> — <ModelText text={s.support}/> <ModelText text={s.limit}/></p>)}</details></section> : <><h2>Explorer par flux de valeur</h2><p>Un scénario peut contribuer à plusieurs flux. Chaque résultat de recherche reste unique.</p><ul className="value-stream-cards">{catalog.value_streams.map(s=><li key={s.id}><CatalogLink stream={s.id}>{s.label_fr}</CatalogLink><p><ModelText text={s.value}/></p><small>{catalog.scenarios.filter(v=>v.value_stream_ids.includes(s.id)).length} scénarios associés</small></li>)}</ul></>}
 
     </>}

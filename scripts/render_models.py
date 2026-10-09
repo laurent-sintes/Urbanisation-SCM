@@ -89,7 +89,7 @@ def render(model, label):
         lines += ['## Niveaux d’urbanisation', '', '| Repère | Nom | Niveau | Contenu direct | Statut |', '| --- | --- | --- | --- | --- |']
         for level in levels:
             children = [nodes[r['target_id']]['fields'].get('name', r['target_id']) for r in model['relations'] if r['type'] in ('contains', 'presents') and r['source_id'] == level['id']]
-            level_name = 'Universe' if level['kind'] == 'universe' else level['level_ref'] if level.get('group_role') == 'urbanism_level' else 'Business System' if level['kind'] == 'business_system' else 'Domain'
+            level_name = level['fields'].get('name', 'Universe') if level['kind'] == 'universe' else level['level_ref'] if level.get('group_role') == 'urbanism_level' else 'Business System' if level['kind'] == 'business_system' else 'Domain'
             lines.append('| ' + ' | '.join(cell(v) for v in [level['id'], level['fields'].get('name', ''), level_name, ', '.join(children) or 'Exploration différée', status(level)]) + ' |')
         lines += ['', 'Les groupes de présentation conservent leur rôle distinct des niveaux de décomposition métier.', '']
     for domain in model['nodes']:

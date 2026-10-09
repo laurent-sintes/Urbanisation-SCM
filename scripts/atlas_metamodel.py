@@ -12,6 +12,7 @@ from scripts.validate_models import RELATION_KINDS
 
 
 GUIDE_TERMS = {
+    'universe': 'Enterprise Architecture',
     'business_system': 'Business System',
     'domain': 'Domain',
     'area': 'Subdomain',
@@ -223,8 +224,10 @@ def describe_metamodel(model, guide_response, snapshot_schema=None):
     kinds = Counter(node['kind'] for node in model.get('nodes', []))
     node_types = []
     for kind in sorted(kinds):
-        term = terms.get(GUIDE_TERMS.get(kind))
-        publication_term = publication_terms.get(PUBLICATION_TERMS.get(kind)) if not term else None
+        root_name = next((node.get('fields', {}).get('name') for node in model.get('nodes', [])
+                          if node['kind'] == 'universe'), None) if kind == 'universe' else None
+        term = terms.get(GUIDE_TERMS.get(kind)) if kind != 'universe' or root_name == 'Enterprise Architecture' else None
+        publication_term = publication_terms.get(root_name or PUBLICATION_TERMS.get(kind)) if not term else None
         semantic_term = term or publication_term
         node_types.append({
             'kind': kind,

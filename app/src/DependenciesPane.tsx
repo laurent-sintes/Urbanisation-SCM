@@ -3,9 +3,8 @@ import { ArrowRight, ArrowUpRight, Maximize2, Network } from 'lucide-react';
 import { CytoscapeCanvas } from './CytoscapeCanvas';
 import { dependencyLevel, dependencyLevels, projectDependencies, type DependencyOptions } from './dependencyGraph';
 import { RelationDetails } from './components/BusinessSheet';
-import { ReferenceLink } from './components/ModelLinks';
+import { MetaTypeLabel, ReferenceLink } from './components/ModelLinks';
 import { NodeIcon } from './icons';
-import { kindLabel } from './presentation';
 import { hasAreaLevels, parentRelationOf } from './model';
 import { publicText } from './publicText';
 import type { GraphRoute } from './navigation';
@@ -84,7 +83,7 @@ export function DependenciesPane({ model, focusId, relationId, settings, onSetti
         <optgroup label="Éléments">{projection.nodes.map(n => <option key={n.id} value={`node|${n.id}`}>{n.item.name} · {n.item.displayCode ?? n.id}</option>)}</optgroup>
         <optgroup label="Liens regroupés">{projection.edges.map(e => <option key={e.id} value={`edge|${e.id}`}>{model.nodeById.get(e.source)?.name || e.source} → {model.nodeById.get(e.target)?.name || e.target} · {e.label} · {e.count}</option>)}</optgroup>
       </select></label>
-      {pickedNode && <div className="dependency-node-detail"><div className="dependency-node-heading"><NodeIcon node={pickedNode.item} size={24}/><div><strong>{pickedNode.item.name}</strong><span>{kindLabel(pickedNode.item)} · {pickedNode.item.displayCode ?? pickedNode.id} · {pickedNode.internalRelationIds.length} relation(s) interne(s)</span></div></div>
+      {pickedNode && <div className="dependency-node-detail"><div className="dependency-node-heading"><NodeIcon node={pickedNode.item} size={24}/><div><strong>{pickedNode.item.name}</strong><span><MetaTypeLabel node={pickedNode.item}/> · {pickedNode.item.displayCode ?? pickedNode.id} · {pickedNode.internalRelationIds.length} relation(s) interne(s)</span></div></div>
         <div className="dependency-node-actions"><button className="secondary-button" onClick={() => enter(pickedNode.id)}>Explorer depuis cet élément<ArrowRight size={14}/></button><button className="secondary-button" onClick={() => onRead(pickedNode.id)}>Ouvrir la fiche<ArrowUpRight size={14}/></button></div>
         {pickedNode.memberIds.length > 1 && <details><summary>Éléments regroupés ({pickedNode.memberIds.length})</summary><ul>{pickedNode.memberIds.map(id => <li key={id}><ReferenceLink target={id}>{model.nodeById.get(id)?.name || id}</ReferenceLink></li>)}</ul></details>}
       </div>}

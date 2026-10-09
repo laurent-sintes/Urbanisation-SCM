@@ -40,15 +40,15 @@ space: backlog
 display_policy: typed-tree-v1
 nodes:
 - id: beaumanoir-target-universe
-  revision: 1
+  revision: 2
   kind: universe
   fields:
-    name: Univers
-    definition: '[Univers](glossary:TER203) : représentation du SI Beaumanoir cible, organisée en systèmes métier et en responsabilités
+    name: Enterprise Architecture
+    definition: '[Enterprise Architecture](glossary:TER203) : représentation du SI Beaumanoir cible, organisée en systèmes métier et en responsabilités
       de plus en plus détaillées.'
     finality: Donner une vue d’ensemble du SI Beaumanoir cible pour situer les responsabilités métier et leurs coopérations.
-    scope: L’Univers regroupe Design & Development, Business Operations et Enterprise Management & Control. Il décrit la cible
-      à la profondeur documentée dans chaque système ; il ne constitue ni l’inventaire des applications existantes, ni une
+    scope: Enterprise Architecture regroupe Design & Development, Business Operations et Enterprise Management & Control. Elle décrit la cible
+      à la profondeur documentée dans chaque système ; elle ne constitue ni l’inventaire des applications existantes, ni une
       preuve de couverture installée, ni une décomposition exhaustive de toute l’entreprise. Les réalisations et les flux
       techniques restent à établir séparément.
     examples:
@@ -68,10 +68,10 @@ nodes:
       similarities: Le catalogue parcourt plusieurs responsabilités de conception, planification, achat, vente, livraison
         et restitution.
       differences: Il organise des processus pris en charge par une suite de produits ; il ne définit ni le SI cible Beaumanoir
-        ni une racine Univers du modèle FLOW.
-      flow_position: Univers est la racine de lecture de la cible Beaumanoir et de ses systèmes métier, indépendamment des
+        ni une racine Enterprise Architecture du modèle FLOW.
+      flow_position: Enterprise Architecture est la racine de lecture de la cible Beaumanoir et de ses systèmes métier, indépendamment des
         choix d’applications.
-      term_choice: Univers est un nom de navigation et de modèle FLOW, pas un terme standard déduit du catalogue Microsoft.
+      term_choice: Enterprise Architecture nomme dans FLOW la représentation cible ; le catalogue Microsoft ne prescrit pas cette racine ni son découpage.
       definition_choice: La cible est décrite par responsabilités métier ; sa réalisation logicielle reste distincte.
       concept_name: End-to-end scenarios
       scope_summary: Catalogue transversal de scénarios métier pris en charge par Dynamics 365.
@@ -82,7 +82,7 @@ nodes:
       consulted_on: '2026-10-09'
       source_locator: End-to-end scenarios ; business process catalog
       evidence_limits: Source primaire consultée ; catalogue produit et processus, sans modèle cible Beaumanoir ni équivalence
-        exacte au niveau Univers.
+        exacte au niveau Enterprise Architecture.
       source_refs:
       - U912
       status: proposed
@@ -93,9 +93,9 @@ nodes:
       relationship: Rapprochement partiel
       similarities: Le document distingue de grands périmètres tels que R&D, ventes, achats, Supply Chain et Finance.
       differences: Ces périmètres et leur couverture produit ne sont pas les systèmes métier ni le SI cible Beaumanoir.
-      flow_position: Univers réunit les responsabilités métier de la cible FLOW ; les produits et leurs fonctions restent
+      flow_position: Enterprise Architecture réunit les responsabilités métier de la cible FLOW ; les produits et leurs fonctions restent
         des réalisations possibles à étudier.
-      term_choice: Univers est une convention FLOW ; SAP ne documente pas un niveau équivalent à cette racine.
+      term_choice: Enterprise Architecture nomme la représentation cible dans FLOW ; SAP ne documente pas un niveau équivalent à cette racine.
       definition_choice: Le niveau englobe les trois systèmes métier documentés sans inférer leur réalisation installée.
       concept_name: Feature Scope Description
       scope_summary: Périmètres de fonctions de SAP S/4HANA Enterprise Management et de ses extensions.
@@ -105,11 +105,13 @@ nodes:
       source_version: Document version 3.0 du 7 octobre 2026
       consulted_on: '2026-10-09'
       source_locator: Table des matières, sections 2.5, 2.8, 2.9, 2.11 et 2.12
-      evidence_limits: Source primaire consultée ; catalogue produit, sans taxonomie Univers ni preuve de déploiement Beaumanoir.
+      evidence_limits: Source primaire consultée ; catalogue produit, sans taxonomie Enterprise Architecture ni preuve de déploiement Beaumanoir.
       source_refs:
       - U912
       status: proposed
   source_refs:
+  - U915
+  - U914
   - U912
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
@@ -1564,8 +1566,9 @@ nodes:
       actives relèvent de Control Plane ; les prévisions de demande et de mouvements relèvent de Plan Visibility.
     dominant_role:
       id: data-state
-      display_name: Données et état
+      display_name: Data & State
   source_refs:
+  - U914
   - U103
   - U455
   - U458
@@ -12583,8 +12586,9 @@ nodes:
         source_url: https://www.ibm.com/docs/en/order-management?topic=configuration-document-types
     dominant_role:
       id: commitments
-      display_name: Gestion des engagements
+      display_name: Commitment Management
   source_refs:
+  - U914
   - P81
   - U97
   - U98
@@ -12879,8 +12883,9 @@ nodes:
         source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-on-hand-list
     dominant_role:
       id: data-state
-      display_name: Données et état
+      display_name: Data & State
   source_refs:
+  - U914
   - P81
   - U66
   - U74
@@ -13547,8 +13552,9 @@ nodes:
         source_url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26b/faubm/overview-of-backlog-management-processes.html
     dominant_role:
       id: decision-planning
-      display_name: Décision et planification
+      display_name: Decision & Planning
   source_refs:
+  - U914
   - P81
   - P83
   - U52
@@ -13672,11 +13678,12 @@ nodes:
   revision: 2
   kind: object
   fields:
-    name: Engagement de fourniture
+    name: Supply Commitment
     definition: 'Objet de travail de l’exemple de confirmation : l’engagement possède des valeurs et un état. Identité, limites
       et cycle de vie restent à préciser.'
     finality: Exprimer les quantités et dates de fourniture engagées.
   source_refs:
+  - U914
   - U61
   - U62
   - P80
@@ -13707,11 +13714,12 @@ nodes:
   revision: 2
   kind: document
   fields:
-    name: Confirmation de promesse
+    name: Promise Confirmation
     definition: Document associé proposé. Le contenu exact, la portée de la représentation de l’état et le traitement des
       corrections restent à définir.
     finality: Porter les engagements et conditions retenus dans une confirmation identifiée et versionnée.
   source_refs:
+  - U914
   - U61
   - U62
   - P80
@@ -13742,11 +13750,12 @@ nodes:
   revision: 2
   kind: event
   fields:
-    name: Promesse confirmée
+    name: Confirmed Promise
     definition: Nom illustratif du fait de gestion décrit dans la note 24. Le fait métier est distinct du message qui pourrait
       le notifier.
     finality: Constater que des quantités et dates ont été confirmées pour une demande.
   source_refs:
+  - U914
   - U61
   - U62
   - P80
@@ -13777,11 +13786,12 @@ nodes:
   revision: 2
   kind: object
   fields:
-    name: Demande de réassort
+    name: Replenishment Request
     definition: Objet cité par Laurent en U62. Besoin exprimé, exceptions et clôture sont des contenus proposés ; aucune convention
       universelle Demande n’est adoptée.
     finality: Suivre une situation de réassort dans le modèle processus.
   source_refs:
+  - U914
   - U61
   - U62
   - P80
@@ -27061,8 +27071,9 @@ nodes:
         source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom-rules
     dominant_role:
       id: policies
-      display_name: Contrôle par configuration
+      display_name: Configuration Control
   source_refs:
+  - U914
   - U673
   - U711
   - U771
@@ -27893,8 +27904,9 @@ nodes:
         source_url: https://www.tmforum.org/oda/directory/components-map/production/TMFC007
     dominant_role:
       id: commitments
-      display_name: Gestion des engagements
+      display_name: Commitment Management
   source_refs:
+  - U914
   - U679
   - U681
   - U682
@@ -35686,8 +35698,9 @@ nodes:
         une convention FLOW, pas une taxonomie éditeur.
     dominant_role:
       id: data-state
-      display_name: Données et état
+      display_name: Data & State
   source_refs:
+  - U914
   - U826
   - ELM853
   - ELM854
@@ -36092,8 +36105,9 @@ nodes:
         détaillée ici.
     dominant_role:
       id: data-state
-      display_name: Données et état
+      display_name: Data & State
   source_refs:
+  - U914
   - U826
   - ELM858
   - ELM859
@@ -40468,8 +40482,9 @@ nodes:
         contributions humaines et automatisées.
     dominant_role:
       id: processes
-      display_name: Conduite des parcours
+      display_name: Process Management
   source_refs:
+  - U914
   - U881
   - U882
   - U883
@@ -40487,7 +40502,7 @@ nodes:
   review:
     state: proposed
     note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite. Le rôle dominant Conduite des parcours est proposé après le
+      restent proposés ; aucune réalisation installée déduite. Le rôle dominant Process Management est proposé après le
       signalement U913 ; il ne qualifie pas les sous-domaines Sales de contexte.'
   last_modified: '2026-10-09T00:00:00Z'
   proposed_fields:
@@ -56164,7 +56179,7 @@ principles:
   - U792
   - U793
 - id: PRINCIPLE-BUSINESS-SYSTEM
-  statement: 'Univers → Business System → Domain → Subdomain → Capability → Behavior. Un système métier regroupe des domaines
+  statement: 'Enterprise Architecture → Business System → Domain → Subdomain → Capability → Behavior. Un système métier regroupe des domaines
     coopérant pour une finalité commune, indépendamment des applications et de l’organisation. Chaque domaine a un seul système
     parent explicite. Profondeur ciblée : contexte autour de Business Operations, domaines opérationnels précis, capacités
     et comportements dans Supply Chain Orchestration. Les référentiels sources utiles aux ingestions seront documentés à terme
@@ -56186,7 +56201,7 @@ principles:
   - U783
   - U912
 - id: PRINCIPLE-BUSINESS-AREA
-  statement: 'Univers → Business System → Domain → Subdomain → Business Area → Capability → Behavior. Business Area porte
+  statement: 'Enterprise Architecture → Business System → Domain → Subdomain → Business Area → Capability → Behavior. Business Area porte
     un périmètre de responsabilité métier distinct, avec une ou plusieurs capacités ; aucun minimum de deux. Une capacité
     a un seul parent métier, obligatoirement une Business Area, et peut être mobilisée ailleurs. Les référentiels restent
     des objets documentaires liés aux capacités. Les catégories sont retirées du modèle courant ; les publications historiques
@@ -56207,10 +56222,11 @@ principles:
   source_refs:
   - U880
 - id: PRINCIPLE-TARGET-UNIVERSE
-  statement: Univers est la racine unique du SI Beaumanoir cible dans le modèle courant. Il contient explicitement les trois
-    Business Systems ; il décrit leurs responsabilités métier sans établir la réalisation applicative ni la couverture installée.
+  statement: Enterprise Architecture est la racine unique du SI Beaumanoir cible dans le modèle courant. Elle contient explicitement les trois
+    Business Systems ; elle décrit leurs responsabilités métier sans établir la réalisation applicative ni la couverture installée.
     Les publications antérieures conservent leurs racines historiques.
   source_refs:
+  - U915
   - U912
 limitations:
 - Les propositions, illustrations et justifications éditoriales ne sont pas validées par leur présence dans le modèle. Consulter

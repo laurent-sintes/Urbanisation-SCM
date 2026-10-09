@@ -133,7 +133,7 @@ for (const kind of ['area', 'group']) test(`${kind} preserves six reference card
   });
   const publication = adaptPublication(raw);
   const scope = publication.nodeById.get('reference-scope');
-  assert.equal(kindLabel(scope), kind === 'area' ? 'Area' : 'Groupe de présentation');
+  assert.equal(kindLabel(scope), kind === 'area' ? 'Area' : 'Presentation Group');
   assert.equal(parentRelationOf(publication, scope.id).type, 'presents');
   assert.equal(hasCapabilityCards(publication, 'supply'), true);
   assert.equal(hasCapabilityCards(publication, scope.id), true);
