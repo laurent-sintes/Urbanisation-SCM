@@ -12,6 +12,8 @@ Atlas charge `data/index.json`, puis `data/VERSION/model.json` et le guide `data
 
 `python scripts/export_atlas.py` exporte les publications désignées par `modeles/release/index.json`, vérifie les empreintes des descripteurs, modèles et guides, puis active le catalogue statique en dernier. Les snapshots retirés sont lus dans leurs commits exacts via `modeles/git-history.json`. Le YAML reste l’autorité. Aucun backlog ni corpus documentaire vivant n’est exporté. Les JSON conservent les métadonnées déjà présentes dans les snapshots ; masquer un champ dans l’interface ne le supprime pas des fichiers téléchargés. Chaque `model.json` ajoute un en-tête `metamodel` : définitions des types d’objets et des catalogues (issues du guide figé associé ou du glossaire de la publication), types et sens des liens, extrémités admises et observées, cardinalités et règles applicables, ainsi que le schéma JSON complet du snapshot. La provenance du guide et des règles est indiquée. Une définition absente reste `null` ; les couples observés ne valent pas règle d’autorisation. Le schéma embarqué décrit le snapshot publié, avant les deux ajouts techniques `sourcePath` et `metamodel`.
 
+Le menu « Télécharger » conserve le JSON compact et propose un YAML lisible de la publication sélectionnée, métamodèle compris. L’export produit `data/VERSION/model.yaml` à partir du même snapshot vérifié que `model.json`, sans relire le backlog.
+
 Les sorties `app/public/data/` et `app/dist/` sont générées et ignorées par Git. Le build exporte les données avant Vite ; une release activée réexporte les données vers `public/data/` et vers `dist/data/` si l’interface est compilée. Une simple préparation ne les publie pas. En cas d’export interrompu, relancer l’export ; aucun nouveau numéro de release n’est nécessaire.
 
 Publication, export et compilation partagent le verrou système `.runtime/atlas.lock`. Une opération concurrente est refusée : attendre la fin de l’opération en cours puis relancer. Le fichier de verrou peut rester présent ; le verrou est libéré par le système à la fermeture du processus. `scripts/build_atlas.py` protège toute la compilation, contrôle TypeScript avant l’export et appelle Vite. Chaque requête JSON a un délai maximal de 15 secondes, après lequel l’écran propose de réessayer.
@@ -157,6 +159,7 @@ La recherche porte sur les noms, identifiants et textes publiés, avec un filtre
 
 - `data/index.json` : catalogue et pointeur courant explicites, empreintes des exports.
 - `data/VERSION/model.json` : modèle et glossaire figés dans la même publication.
+- `data/VERSION/model.yaml` : représentation YAML lisible du même modèle, métamodèle compris.
 - `data/VERSION/guide.json` : guide associé et ses extraits figés, ou état indisponible explicite.
 - `/__atlas__/identity.json` : identité du serveur local pour le lanceur ; absent de GitHub Pages et inutilisé par la SPA.
 

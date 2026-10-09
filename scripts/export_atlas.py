@@ -20,7 +20,7 @@ from scripts.release_catalog import PublicationReader
 from scripts.git_history import batch_reader
 from app.modeling_guide import _load_associated_guide
 from scripts.atlas_metamodel import describe_metamodel
-from scripts.structured_io import read as read_document
+from scripts.structured_io import dumps as dump_yaml, read as read_document
 
 
 def encoded(value):
@@ -71,6 +71,7 @@ def _export_atlas(root, destinations):
         step = perf_counter()
         model = {**raw, 'sourcePath': 'modeles/release/' + descriptor['path'],
                  'metamodel': describe_metamodel(raw, guide, snapshot_schema)}
+        files[f'{version}/model.yaml'] = dump_yaml(model).encode('utf-8')
         for name, value in (('model', model), ('guide', guide)):
             payload = encoded(value)
             relative = f'{version}/{name}.json'

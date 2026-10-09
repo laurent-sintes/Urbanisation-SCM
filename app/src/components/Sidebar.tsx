@@ -2,7 +2,7 @@ import { MethodNavigation } from './MethodNavigation';
 import type { ModelingGuide } from '../modelingGuide';
 import { CatalogLink } from './ModelLinks';
 import { catalogOf } from '../scenarioCatalog';
-import { publicationUrl, staticUrl } from '../publication';
+import { publicationUrl, publicationYamlUrl, staticUrl } from '../publication';
 import { useEffect, useRef, useState, type RefObject } from 'react';
 import { Search, X, PanelLeftClose, Compass, BookOpen, Lightbulb, Download, ChevronDown } from 'lucide-react';
 import type { PublishedModel } from '../types';
@@ -53,6 +53,7 @@ export function Sidebar({ model, guide, route, open, mobile, searchRef, onClose,
       <button onClick={onOpenPrinciples} aria-current={route.view==='principles' ? 'page' : undefined}><Lightbulb size={17}/>{guide?.title || 'Méthodologie'}</button>
       <details className="download-menu"><summary><Download size={17}/>Télécharger<ChevronDown className="download-chevron" size={15}/></summary>
         <a href={publicationUrl(model.version)} download={`flow-atlas-model-${model.version}.json`} onClick={mobile ? onClose : undefined}><span>Modèle (JSON)</span><small>{revision} · {model.version}</small></a>
+        <a href={publicationYamlUrl(model.version)} download={`flow-atlas-model-${model.version}.yaml`} onClick={mobile ? onClose : undefined}><span>Modèle (YAML lisible)</span><small>{revision} · {model.version}</small></a>
       </details>
     </nav>
     <div className="search-box"><Search size={17} /><input ref={searchRef} id="fa-search" aria-label="Rechercher dans le modèle publié" placeholder="Un nom, une idée, un repère…" value={route.query} onChange={e => onSearch({ query: e.target.value })} onKeyDown={e => {

@@ -6,6 +6,7 @@ import tempfile
 import unittest
 
 from scripts.export_atlas import export_atlas, encoded
+from scripts.structured_io import loads
 
 
 class StaticExportTests(unittest.TestCase):
@@ -39,6 +40,8 @@ class StaticExportTests(unittest.TestCase):
             version = entry['version']
             payload = (self.output / version / 'model.json').read_bytes()
             model = json.loads(payload)
+            yaml_payload = (self.output / version / 'model.yaml').read_text(encoding='utf-8')
+            self.assertEqual(loads(yaml_payload, '.yaml'), model)
             self.assertEqual(model.pop('sourcePath'), f'modeles/release/{version}/model.json')
             metamodel = model.pop('metamodel')
             self.assertEqual(metamodel['publication_version'], version)
@@ -50,7 +53,7 @@ class StaticExportTests(unittest.TestCase):
             guide = json.loads((self.output / version / 'guide.json').read_bytes())
             self.assertEqual(guide['publication_version'], version)
             self.assertEqual(guide['status'], 'unavailable')
-        before = {p: p.stat().st_mtime_ns for p in self.output.rglob('*.json')}
+        before = {p: p.stat().st_mtime_ns for p in self.output.rglob('*') if p.is_file()}
         export_atlas(self.root, [self.output])
         self.assertEqual(before, {p: p.stat().st_mtime_ns for p in before})
 

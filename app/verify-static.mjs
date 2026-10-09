@@ -74,11 +74,26 @@ try {
   const downloadedModel = JSON.parse(await readFile(path.join(dist, 'data', version, 'model.json'), 'utf8'));
   assert.equal(downloadedModel.version, version);
   assert.ok(downloadedModel.metamodel?.node_types?.length, 'The downloaded model carries its metamodel');
+  const yamlPending = page.waitForEvent('download');
+  const yamlLink = page.getByRole('link', { name: /Modèle \(YAML lisible\)/ });
+  assert.equal(new URL(await yamlLink.getAttribute('href'), base).pathname, `${prefix}data/${version}/model.yaml`);
+  await yamlLink.click();
+  const yamlDownload = await yamlPending;
+  assert.equal(yamlDownload.suggestedFilename(), `flow-atlas-model-${version}.yaml`);
+  assert.equal(new URL(yamlDownload.url()).pathname, `${prefix}data/${version}/model.yaml`);
+  assert.match(await readFile(path.join(dist, 'data', version, 'model.yaml'), 'utf8'), /^schema_version:/);
   assert.equal(new URL(page.url()).pathname, prefix);
   await page.goto(base + '#version=' + historical + '&view=glossary');
   await page.locator(`#fa-version[data-version="${historical}"]`).waitFor({ state: 'attached' });
   await page.locator('.download-menu summary').click();
   assert.equal(new URL(await page.getByRole('link', { name: /Modèle \(JSON\)/ }).getAttribute('href'), base).pathname, `${prefix}data/${historical}/model.json`);
+  const historicYamlPending = page.waitForEvent('download');
+  const historicYamlLink = page.getByRole('link', { name: /Modèle \(YAML lisible\)/ });
+  assert.equal(new URL(await historicYamlLink.getAttribute('href'), base).pathname, `${prefix}data/${historical}/model.yaml`);
+  await historicYamlLink.click();
+  const historicYaml = await historicYamlPending;
+  assert.equal(historicYaml.suggestedFilename(), `flow-atlas-model-${historical}.yaml`);
+  assert.equal(new URL(historicYaml.url()).pathname, `${prefix}data/${historical}/model.yaml`);
   await page.getByRole('button', { name: 'FLOW Atlas, accueil', exact: true }).click();
   assert.equal(new URL(page.url()).pathname, prefix);
   assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).get('version'), historical);
@@ -107,7 +122,7 @@ try {
   await page.screenshot({ path: path.join(directory, '.runtime/qa-static/overview.png') });
   assert.deepEqual(unexpected, []);
   assert.deepEqual(errors, []);
-  console.log(JSON.stringify({ status: 'passed', version, historical, checks: ['project prefix', 'visible loading', 'HTML error', 'retry', 'current model', 'Explorer default and saved collapse', 'JSON download with metamodel', 'fixed history', 'home links', 'guide', 'no API'], requests: requests.length }));
+  console.log(JSON.stringify({ status: 'passed', version, historical, checks: ['project prefix', 'visible loading', 'HTML error', 'retry', 'current model', 'Explorer default and saved collapse', 'compact JSON download with metamodel', 'current and historical YAML downloads', 'fixed history', 'home links', 'guide', 'no API'], requests: requests.length }));
 } finally {
   releaseModel();
   await browser.close();

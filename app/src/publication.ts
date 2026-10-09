@@ -92,6 +92,9 @@ export function publicationUrl(version: string): string {
   if (!/^[A-Za-z0-9][A-Za-z0-9.-]*$/.test(version) || version.includes('..')) throw new Error('Version invalide.');
   return staticUrl(`data/${version}/model.json`);
 }
+export function publicationYamlUrl(version: string): string {
+  return publicationUrl(version).replace(/model\.json$/, 'model.yaml');
+}
 export function guideUrl(version: string): string {
   return publicationUrl(version).replace(/model\.json$/, 'guide.json');
 }
