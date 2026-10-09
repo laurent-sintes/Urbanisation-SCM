@@ -19,6 +19,8 @@ from scripts.atlas_lock import atlas_lock
 from scripts.release_catalog import PublicationReader
 from scripts.git_history import batch_reader
 from app.modeling_guide import _load_associated_guide
+from scripts.atlas_metamodel import describe_metamodel
+from scripts.structured_io import read as read_document
 
 
 def encoded(value):
@@ -51,6 +53,8 @@ def _export_atlas(root, destinations):
     before = index_path.read_bytes()
     reader = PublicationReader(index_path.parent)
     result = reader.catalog()
+    schema_path = root / 'modeles/schemas/urbanism.schema.json'
+    snapshot_schema = read_document(schema_path) if schema_path.is_file() else None
     catalog_seconds = perf_counter() - started
     model_seconds = guide_seconds = serialization_seconds = 0.0
     files = {}
@@ -60,12 +64,13 @@ def _export_atlas(root, destinations):
             raise ValueError('Invalid static publication version')
         step = perf_counter()
         descriptor, raw = reader.load(version)
-        model = {**raw, 'sourcePath': 'modeles/release/' + descriptor['path']}
         model_seconds += perf_counter() - step
         step = perf_counter()
         guide = _load_associated_guide(root, version)
         guide_seconds += perf_counter() - step
         step = perf_counter()
+        model = {**raw, 'sourcePath': 'modeles/release/' + descriptor['path'],
+                 'metamodel': describe_metamodel(raw, guide, snapshot_schema)}
         for name, value in (('model', model), ('guide', guide)):
             payload = encoded(value)
             relative = f'{version}/{name}.json'

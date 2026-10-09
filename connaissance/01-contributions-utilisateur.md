@@ -22378,3 +22378,13 @@ Verbatim :
 > L'objet "Univers" doit faire partie du modèle et doit avoir sa fiche description. Il représente le SI Beaumanoir cible.
 
 Portée : ajout demandé d’un objet racine Univers dans le modèle cible et d’une fiche consultable dans Atlas après publication. Sa place est au-dessus des systèmes métier déjà modélisés. La description détaillée et la comparaison au marché sont des rédactions proposées ; cette demande ne prouve aucune réalisation installée et ne demande ni release ni opération Git.
+
+## U913
+
+Date : 2026-10-09. Source : Laurent, retour sur les tags des sous-domaines dans Atlas.
+
+Verbatim :
+
+> Process Management est le seul sous domaine qui n'est pas taggué. Vérifie les autres aussi
+
+Portée : signalement d'un tag absent pour Process Management et demande de vérifier tous les sous-domaines. Le choix du libellé du rôle reste une proposition de mise en œuvre ; cette demande ne vaut ni accord sur une taxonomie nouvelle ni demande de release, de commit ou de push.

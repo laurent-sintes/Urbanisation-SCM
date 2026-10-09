@@ -56,6 +56,15 @@ class BusinessSystemTests(unittest.TestCase):
         edge['target_id'] = 'D04.i'
         self.assertTrue(any('business system presents only domains' in error for error in self.errors(model)))
 
+    def test_detailed_subdomains_have_explicit_roles(self):
+        nodes = {node['id']: node for node in self.model['nodes']}
+        detailed_areas = {edge['source_id'] for edge in self.model['relations']
+                          if edge['type'] == 'contains' and nodes[edge['source_id']]['kind'] == 'area'
+                          and nodes[edge['target_id']]['kind'] in ('business_area', 'capability')}
+        self.assertTrue(detailed_areas)
+        self.assertEqual([area_id for area_id in sorted(detailed_areas)
+                          if not nodes[area_id]['fields'].get('dominant_role')], [])
+
     def test_depth_cannot_be_attached_to_a_capability(self):
         model = deepcopy(self.model)
         next(n for n in model['nodes'] if n['id'] == 'D04.i')['fields']['modeling_depth'] = 'domains'

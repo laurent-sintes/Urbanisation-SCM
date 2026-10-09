@@ -40339,7 +40339,7 @@ nodes:
     anchor: u880
 - id: subdomain-process-management
   kind: area
-  revision: 1
+  revision: 2
   fields:
     name: Process Management
     definition: Définir, conduire, superviser et améliorer les parcours de traitement Supply en organisant leurs contributions
@@ -40466,6 +40466,9 @@ nodes:
         native commune.
       definition_choice: Définir, conduire, superviser et améliorer les parcours de traitement Supply en organisant leurs
         contributions humaines et automatisées.
+    dominant_role:
+      id: processes
+      display_name: Conduite des parcours
   source_refs:
   - U881
   - U882
@@ -40476,6 +40479,7 @@ nodes:
   - U896
   - U897
   - U898
+  - U913
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
@@ -40483,14 +40487,16 @@ nodes:
   review:
     state: proposed
     note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite.'
-  last_modified: '2026-10-07T00:00:00Z'
+      restent proposés ; aucune réalisation installée déduite. Le rôle dominant Conduite des parcours est proposé après le
+      signalement U913 ; il ne qualifie pas les sous-domaines Sales de contexte.'
+  last_modified: '2026-10-09T00:00:00Z'
   proposed_fields:
   - name
   - definition
   - finality
   - scope
   - market_comparisons
+  - dominant_role
   approved_fields: []
   lifecycle:
     state: ai_proposed

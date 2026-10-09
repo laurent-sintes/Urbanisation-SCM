@@ -40,6 +40,11 @@ class StaticExportTests(unittest.TestCase):
             payload = (self.output / version / 'model.json').read_bytes()
             model = json.loads(payload)
             self.assertEqual(model.pop('sourcePath'), f'modeles/release/{version}/model.json')
+            metamodel = model.pop('metamodel')
+            self.assertEqual(metamodel['publication_version'], version)
+            self.assertEqual(metamodel['methodology']['status'], 'unavailable')
+            self.assertEqual(metamodel['node_types'], [])
+            self.assertEqual(metamodel['relation_types'], [])
             self.assertEqual(model, json.loads((self.release / version / 'model.json').read_bytes()))
             self.assertEqual(hashlib.sha256(payload).hexdigest(), entry['model_sha256'])
             guide = json.loads((self.output / version / 'guide.json').read_bytes())
@@ -48,6 +53,56 @@ class StaticExportTests(unittest.TestCase):
         before = {p: p.stat().st_mtime_ns for p in self.output.rglob('*.json')}
         export_atlas(self.root, [self.output])
         self.assertEqual(before, {p: p.stat().st_mtime_ns for p in before})
+
+    def test_metamodel_describes_object_semantics_and_observed_relations(self):
+        from scripts.atlas_metamodel import describe_metamodel
+        model = {
+            'version': '2026-09-25.1',
+            'glossary': {'terms': [{'id': 'TER203', 'name': 'Univers',
+                                    'definition': 'Vue de la cible.', 'historical': False}]},
+            'nodes': [{'id': 'u', 'kind': 'universe'}, {'id': 's', 'kind': 'business_system'}],
+            'relations': [{'id': 'r', 'type': 'contains', 'source_id': 'u', 'target_id': 's'}],
+        }
+        guide = {'status': 'available', 'association': {'scope': 'contemporaneous'},
+                 'guide': {'version': '2026-09-25.1', 'glossary': {'terms': [
+                     {'id': 'MOD022', 'name': 'Business System',
+                      'definition': 'Ensemble de [domaines](method:MOD008).'}]}}}
+        header = describe_metamodel(model, guide)
+        types = {entry['kind']: entry for entry in header['node_types']}
+        self.assertEqual(types['universe']['definition'], 'Vue de la cible.')
+        self.assertEqual(types['universe']['definition_source'], 'glossary:TER203')
+        self.assertEqual(types['business_system']['definition'], 'Ensemble de domaines.')
+        self.assertEqual(types['business_system']['definition_source'], 'method:MOD022')
+        self.assertEqual(header['relation_types'][0]['observed_endpoints'], [
+            {'source_kind': 'universe', 'target_kind': 'business_system', 'count': 1}])
+
+    def test_current_publication_has_semantics_cardinalities_and_schema(self):
+        from app.modeling_guide import _load_associated_guide
+        from scripts.atlas_metamodel import describe_metamodel
+        from scripts.structured_io import read
+        from scripts.release_catalog import PublicationReader
+        project = Path(__file__).resolve().parents[1]
+        reader = PublicationReader(project / 'modeles/release')
+        current = reader.catalog()['current_version']
+        _, model = reader.load(current)
+        guide = _load_associated_guide(project, current)
+        schema = read(project / 'modeles/schemas/urbanism.schema.json')
+        header = describe_metamodel(model, guide, schema)
+        self.assertEqual(header['publication_version'], current)
+        self.assertEqual(header['methodology']['status'], 'available')
+        self.assertTrue(all(entry['definition'] for entry in header['node_types']))
+        self.assertTrue(all(entry['definition'] for entry in header['catalog_types']))
+        rules = {entry['id']: entry for entry in header['constraints']}
+        self.assertEqual(rules['capability-parent']['cardinality']['parent'], {'min': 1, 'max': 1})
+        self.assertEqual(rules['capability-behaviors']['cardinality']['behavior_children']['allowed'], [0, '2..*'])
+        relation_types = {entry['type']: entry for entry in header['relation_types']}
+        self.assertEqual(relation_types['contains']['allowed_endpoints'], [
+            {'source_kind': 'universe', 'target_kind': 'business_system'},
+            {'source_kind': 'area', 'target_kind': 'business_area'},
+            {'source_kind': 'business_area', 'target_kind': 'capability'},
+            {'source_kind': 'capability', 'target_kind': 'behavior'},
+        ])
+        self.assertIn('$defs', header['snapshot_schema'])
 
     def test_corrupt_publication_does_not_activate_partial_export(self):
         export_atlas(self.root, [self.output])

@@ -31,7 +31,9 @@ def verify_atlas(root, version, base_url='http://127.0.0.1:8765'):
     if address.scheme != 'http' or address.hostname not in ('127.0.0.1', 'localhost', '::1') or address.path not in ('', '/') or address.query or address.fragment or address.username:
         raise ValueError('Atlas verification requires a local HTTP origin')
     from scripts.export_atlas import encoded
+    from scripts.atlas_metamodel import describe_metamodel
     from scripts.release_catalog import PublicationReader
+    from scripts.structured_io import read as read_document
     from app.modeling_guide import _load_associated_guide
 
     def document(route):
@@ -47,7 +49,11 @@ def verify_atlas(root, version, base_url='http://127.0.0.1:8765'):
         raise ValueError('The local service is not this project’s FLOW Atlas')
     reader = PublicationReader(root / 'modeles/release')
     pointer, raw = reader.load(version)
-    expected = {**raw, 'sourcePath': 'modeles/release/' + pointer['path']}
+    expected_guide = _load_associated_guide(root, version)
+    schema_path = root / 'modeles/schemas/urbanism.schema.json'
+    snapshot_schema = read_document(schema_path) if schema_path.is_file() else None
+    expected = {**raw, 'sourcePath': 'modeles/release/' + pointer['path'],
+                'metamodel': describe_metamodel(raw, expected_guide, snapshot_schema)}
     actual, model_payload = document('/data/' + version + '/model.json')
     if not isinstance(actual, dict) or actual.get('version') != version or actual.get('sourcePath') != expected['sourcePath']:
         raise ValueError('Atlas serves another publication')
@@ -76,7 +82,6 @@ def verify_atlas(root, version, base_url='http://127.0.0.1:8765'):
         raise ValueError('Atlas model hash differs')
 
     guide, guide_payload = document('/data/' + version + '/guide.json')
-    expected_guide = _load_associated_guide(root, version)
     if guide != expected_guide:
         raise ValueError('Atlas methodology differs')
     if (hashlib.sha256(guide_payload).hexdigest() != entry.get('guide_sha256')

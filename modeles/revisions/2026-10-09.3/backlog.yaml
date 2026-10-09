@@ -1,6 +1,6 @@
 schema_version: 1.0.0
 model_id: flow-urbanism
-version: 2026-10-09.2
+version: 2026-10-09.3
 as_of: '2026-10-09'
 source_version: P81 0.9 + P82/U116 + libellés P84/P86 retenus en U118 + séparation D01 U125 (vocabulaire U126 ouvert) + nom
   D01.g adopté U129 + U141 univers Supply/Case et refonte D04 + U145 retrait D02 sans renumérotation + U154 D03 recomposé
@@ -23885,9 +23885,9 @@ nodes:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-U909-CAPABILITY-NAME-FINAL. Note
-      antérieure, qui ne qualifie pas cette révision : « U909 valide la fusion et le nom. La description détaillée et les
-      comparaisons restent proposées ; aucun déploiement déduit. »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1b44dc05536d53f302064461.
+      Note antérieure, qui ne qualifie pas cette révision : « U909 valide la fusion et le nom. La description détaillée et
+      les comparaisons restent proposées ; aucun déploiement déduit. »'
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-10-09T04:31:41Z'
@@ -39413,7 +39413,7 @@ nodes:
   content_sha256: 59b7258e052f0ffc3935591feb710cc8ce16e66444e0fb3310c3599936479c72
 - id: subdomain-process-management
   kind: area
-  revision: 2
+  revision: 3
   fields:
     name: Process Management
     definition: Définir, conduire, superviser et améliorer les parcours de traitement Supply en organisant leurs contributions
@@ -39540,6 +39540,9 @@ nodes:
         native commune.
       definition_choice: Définir, conduire, superviser et améliorer les parcours de traitement Supply en organisant leurs
         contributions humaines et automatisées.
+    dominant_role:
+      id: processes
+      display_name: Conduite des parcours
   source_refs:
   - U881
   - U882
@@ -39550,16 +39553,16 @@ nodes:
   - U896
   - U897
   - U898
+  - U913
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
   review:
     state: proposed
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : ADOPT-REASSESS-bc444ed4e4ad168d891b4706. Note antérieure, qui ne qualifie pas cette révision
-      : « Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite. »'
-  last_modified: '2026-10-07T10:46:23.694754Z'
+    note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
+      restent proposés ; aucune réalisation installée déduite. Le rôle dominant Conduite des parcours est proposé après le
+      signalement U913 ; il ne qualifie pas les sous-domaines Sales de contexte.'
+  last_modified: '2026-10-09T07:50:54.795768Z'
   lifecycle:
     state: ai_proposed
     recorded_at: '2026-10-07T00:00:00Z'
@@ -39570,7 +39573,7 @@ nodes:
     validated_fields: []
     value_sha256: {}
     note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
-  content_sha256: 01b59cd8446172644eab428e9a1c574b9e772c4308e329f9e20789258343519a
+  content_sha256: ef588f52138ddb7ef716ef08f18cbfa71cc5ced77c4c45aea9581f7aa39c8744
 - id: ba-process-supervision
   kind: business_area
   revision: 1
@@ -50339,9 +50342,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-U909-RELATION-01-FINAL. Note antérieure,
-      qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification conservée à réexaminer.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-083ae2570e97bb2fb9da8f0b.
+      Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
+      conservée à réexaminer. »'
   content_sha256: 6a5c50bb4c5331c2abd682ba2da89e7c655858f5be6d1a2d8b91a51275736929
 - id: REL-U725-VISIBILITY-D04.j
   revision: 2
@@ -50371,9 +50374,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-U909-RELATION-02-FINAL. Note antérieure,
-      qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification conservée à réexaminer.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-94c4cb4db0e161a9fb8c0ab2.
+      Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
+      conservée à réexaminer. »'
   content_sha256: 845cdc88c849cd58285db1aeb9b41ccd83648edfd6d5843eab59c71368f24655
 - id: REL-U725-VISIBILITY-D04.k
   revision: 2
@@ -50403,9 +50406,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-U909-RELATION-03-FINAL. Note antérieure,
-      qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification conservée à réexaminer.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-021fd7e3efd9dda3722964b0.
+      Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
+      conservée à réexaminer. »'
   content_sha256: 042688cc35031e8285f27a1470befb32f3474238f2494636297db0b211170a35
 - id: REL-U725-VISIBILITY-D04.l
   revision: 2
@@ -50435,9 +50438,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-U909-RELATION-04-FINAL. Note antérieure,
-      qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification conservée à réexaminer.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0e6a1cfb5bf7931acffa04f5.
+      Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
+      conservée à réexaminer. »'
   content_sha256: 2918e3b0e464c097f46703d0df1eba51e607829b749eb824e0943a4e80b37a31
 - id: REL-U725-VISIBILITY-D04.m
   revision: 2
@@ -50467,9 +50470,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-U909-RELATION-05-FINAL. Note antérieure,
-      qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification conservée à réexaminer.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-833c3ce3486ddfe3b416a50f.
+      Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
+      conservée à réexaminer. »'
   content_sha256: d7f96d293374d1cdcc478544f7e7ccca9f06890c9f47c4157afa723dd3085171
 - id: REL-U725-VISIBILITY-D04.r
   revision: 2
@@ -50499,9 +50502,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-U909-RELATION-06-FINAL. Note antérieure,
-      qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification conservée à réexaminer.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-da2c1c86139f870f15c796d7.
+      Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
+      conservée à réexaminer. »'
   content_sha256: 8ca7d0b546253babf2bc6c0126a2f021c30ac19bdd514c5214444adced3b2d8c
 - id: REL-U725-VISIBILITY-D04.t
   revision: 2
@@ -50531,9 +50534,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-U909-RELATION-07-FINAL. Note antérieure,
-      qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification conservée à réexaminer.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c9ec7c4003e696aea7744cd8.
+      Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
+      conservée à réexaminer. »'
   content_sha256: f04db48f40c32797ed698c9ee804c69541bc3be6fbb3147e5faf3bd273518e10
 - id: REL-U725-ORDER-RESULTS
   revision: 2
@@ -50564,9 +50567,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-U909-RELATION-08-FINAL. Note antérieure,
-      qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification conservée à réexaminer.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9c9069bc26cb473be74d9c5b.
+      Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
+      conservée à réexaminer. »'
   content_sha256: b1bb66b63f3c15a9b772ab26e37e4386549a4475758ab286ef5f4cb3c96539d7
 - id: REL-U725-EXECUTION-AUTHORIZATIONS
   revision: 1
@@ -55339,9 +55342,9 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-U909-RELATION-09-FINAL. Note antérieure,
-      qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification conservée à réexaminer.
-      »'
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-15dc6c4b503c05e45649dd96.
+      Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
+      conservée à réexaminer. »'
   qualification:
     meaning: Croiser les mesures avec la progression des parcours, les tâches et les engagements des commandes connus.
     scope: Parcours Supply et responsabilité décrite dans les fiches ; aucune séquence universelle.
@@ -90608,6 +90611,6 @@ glossary:
   last_modified: '2026-10-09T06:22:49.710148Z'
   content_sha256: 02f9fe9469a605d8ece2461bfa75e17cee0f220fcdea3ccf8136b6ebbfb8208e
 element_versioning: 1
-revision: 58
-content_sha256: 591b0df967c4629c0622bb7a24966ed9c346e3778909553da5e668ee4ca74e31
-last_modified: '2026-10-09T06:22:49.710148Z'
+revision: 59
+content_sha256: ea9e7310178f8c5aa9c9f2c002595b7f8c2a9a28c76c282b1f0a6715a2bd0e3b
+last_modified: '2026-10-09T07:50:54.795768Z'
