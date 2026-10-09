@@ -1,11 +1,13 @@
 import { Background, Controls, type Node, ReactFlow, ReactFlowProvider, useReactFlow } from '@xyflow/react';
 import { FileText } from 'lucide-react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { prominentChildIndex } from './adaptiveLayout';
 import { startsCapabilityTypeSection } from './capabilityTypes';
 import { categoryCaption, categoryOf, startsCategorySection } from './categories';
 import { type MapChildList, nodeTypes } from './components/MapCards';
 import { ModelText } from './components/ModelLinks';
 import { NodeIcon } from './icons';
+import { measureMapCards } from './mapCardMeasure';
 import { areaListAtDetail } from './mapDetail';
 import { chooseMapGrid } from './mapLayout';
 import { structuralMap } from './mapProjection';
@@ -35,6 +37,7 @@ export interface ReactFlowPaneProps {
   focusId?: string;
   onSelect: (id: string) => void;
   onRead: (id: string) => void;
+  onPageFallbackChange: (fallback: boolean) => void;
   perspective: string;
 }
 function Canvas(props: ReactFlowPaneProps) {
@@ -188,13 +191,34 @@ function Canvas(props: ReactFlowPaneProps) {
       const gridSections = sections.map((section, index) => ({
         heights: section.map((item) => item.height),
         headingHeight: headingHeights[index],
+        prominentIndex: prominentChildIndex(section.map((item) => childLists.get(item.id)?.items.length || 0)),
       }));
-      const pageGrid = chooseMapGrid(gridSections, canvasWidth, minimumHeight, 'page', Boolean(group));
+      const measuredSections = new Map<number, typeof gridSections>();
+      const measure = (cardWidth: number) => {
+        const cached = measuredSections.get(cardWidth);
+        if (cached) return cached;
+        const heights = measureMapCards(
+          container.current,
+          inputs.map((item) => item.id),
+          detail,
+          cardWidth,
+        );
+        const result = sections.map((section, index) => ({
+          heights: section.map((item) => heights.get(item.id) || item.height),
+          headingHeight: headingHeights[index],
+          prominentIndex: gridSections[index].prominentIndex,
+        }));
+        measuredSections.set(cardWidth, result);
+        return result;
+      };
+      const pageGrid = chooseMapGrid(gridSections, canvasWidth, minimumHeight, 'page', Boolean(group), measure);
       const mode = resolveMapZoom(zoomMode, detail, pageGrid.pageZoom);
       const grid =
-        mode === 'page' ? pageGrid : chooseMapGrid(gridSections, canvasWidth, minimumHeight, 'width', Boolean(group));
-      const { columns, cardWidth } = grid;
-      const positioned: ((typeof inputs)[number] & { x: number; y: number })[] = [];
+        mode === 'page'
+          ? pageGrid
+          : chooseMapGrid(gridSections, canvasWidth, minimumHeight, 'width', Boolean(group), measure);
+      const { cardWidth } = grid;
+      const positioned: ((typeof inputs)[number] & { x: number; y: number; width: number })[] = [];
       let top = 16;
       const dividerPositions: number[] = [];
       const banners: { caption: string; y: number; area?: AtlasNode }[] = [];
@@ -212,11 +236,16 @@ function Canvas(props: ReactFlowPaneProps) {
           dividerPositions.push(top - 7);
           top += 14;
         }
-        for (let offset = 0; offset < section.length; offset += columns) {
-          const row = section.slice(offset, offset + columns);
-          const rowHeight = Math.max(...row.map((item) => item.height));
-          row.forEach((item, column) => {
-            positioned.push({ ...item, height: rowHeight, x: 16 + column * (cardWidth + 28), y: top });
+        for (const row of grid.rows[sectionIndex]) {
+          const rowHeight = Math.max(...row.map((entry) => entry.height));
+          row.forEach((entry) => {
+            positioned.push({
+              ...section[entry.index],
+              height: entry.displayHeight,
+              width: entry.span * cardWidth + (entry.span - 1) * 28,
+              x: 16 + entry.column * (cardWidth + 28),
+              y: top,
+            });
           });
           top += rowHeight + 28;
         }
@@ -282,9 +311,9 @@ function Canvas(props: ReactFlowPaneProps) {
           data: { item, childList, detail, behaviorsByCapability },
           position: { x: (position.x || 0) + (group ? 14 : 0), y: (position.y || 0) + (group ? 54 : 0) },
           ...(group ? { parentId: `group:${group.id}`, extent: 'parent' as const } : {}),
-          width: cardWidth,
+          width: position.width,
           height: position.height,
-          style: { width: cardWidth, height: position.height },
+          style: { width: position.width, height: position.height },
           draggable: false,
           ariaLabel: `${kindLabel(item)} ${item.name}`,
         });
@@ -314,6 +343,9 @@ function Canvas(props: ReactFlowPaneProps) {
     zoomMode,
   ]);
   const effectiveZoomMode = layout.mode;
+  useEffect(() => {
+    props.onPageFallbackChange(zoomMode === 'page' && effectiveZoomMode === 'width' && layout.nodes.length > 0);
+  }, [zoomMode, effectiveZoomMode, layout.nodes.length, props.onPageFallbackChange]);
   const nativeTouchScroll = (effectiveZoomMode === 'width' || capabilityOverview) && touch;
   const widthFrame =
     layout.width && canvasWidth ? widthFit(layout.width, layout.height, canvasWidth, minimumHeight) : undefined;

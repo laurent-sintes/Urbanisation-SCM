@@ -11,7 +11,7 @@
 }
 .urbanisation-overview {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 16px;
   align-items: start;
 }
@@ -22,6 +22,7 @@
   border-radius: 10px;
   background: white;
   min-width: 0;
+  container-type: inline-size;
 }
 .overview-system small {
   color: #52635f;
@@ -70,8 +71,43 @@
   font-size: 17px;
 }
 .urbanisation-overview {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
   align-items: start;
+}
+.urbanisation-overview.layout-stack {
+  grid-template-columns: minmax(0, 1fr);
+}
+.urbanisation-overview.layout-featured {
+  grid-template-rows: auto auto;
+}
+.urbanisation-overview.layout-featured.featured-middle {
+  grid-template-columns: minmax(260px, 1fr) minmax(520px, 2fr);
+}
+.urbanisation-overview.layout-featured.featured-middle > :nth-child(1) {
+  grid-column: 1;
+  grid-row: 1;
+}
+.urbanisation-overview.layout-featured.featured-middle > :nth-child(2) {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+.urbanisation-overview.layout-featured.featured-middle > :nth-child(3) {
+  grid-column: 1;
+  grid-row: 2;
+}
+.urbanisation-overview.layout-featured.featured-first {
+  grid-template-columns: minmax(520px, 2fr) minmax(260px, 1fr);
+}
+.urbanisation-overview.layout-featured.featured-first > :nth-child(1) {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+.urbanisation-overview.layout-featured.featured-first > :nth-child(2) {
+  grid-column: 2;
+  grid-row: 1;
+}
+.urbanisation-overview.layout-featured.featured-first > :nth-child(3) {
+  grid-column: 2;
+  grid-row: 2;
 }
 .overview-system {
   padding: 20px;
@@ -179,6 +215,25 @@
   margin: 0;
   color: #6b7c70;
   font-size: 12px;
+}
+@container (min-width: 620px) {
+  .overview-hierarchy > ul {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .overview-hierarchy > ul > li {
+    min-width: 0;
+    padding: 9px;
+    border: 1px solid #e2eae3;
+    border-radius: 6px;
+  }
+  .overview-hierarchy > ul > li + li {
+    border-top: 1px solid #e2eae3;
+  }
+  .overview-hierarchy > ul > li.overview-domain-prominent {
+    grid-column: span 2;
+  }
 }
 .sheet-mobile-toc {
   display: none;

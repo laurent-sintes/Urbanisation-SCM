@@ -165,6 +165,7 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
       className={`business-card ${expanded ? 'has-child-list' : ''} ${selected ? 'is-selected' : ''} ${presentation ? 'is-presentation' : ''} ${data.highlighted ? 'is-highlighted' : ''} ${data.muted ? 'is-muted' : ''}`}
       style={{ height: '100%' }}
       data-node-id={data.item.id}
+      data-detail={data.detail}
       data-kind={data.item.kind}
       data-depth={String(data.item.fields.modeling_depth || '')}
     >

@@ -1,5 +1,5 @@
 import { ArrowLeft, Maximize2, Minimize2 } from 'lucide-react';
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useId, useRef, useState } from 'react';
 import type { MapZoomChoice } from '../mapZoom';
 import { preference, savePreference } from '../navigation';
 import type { AtlasNode, PublishedModel } from '../types';
@@ -41,7 +41,9 @@ export function MapPanel({
   onAnnouncement,
 }: MapPanelProps) {
   const panel = useRef<HTMLElement>(null);
+  const pageTooltipId = useId();
   const [expanded, setExpanded] = useState(false);
+  const [pageFallback, setPageFallback] = useState(false);
   const [zoomChoice, setZoomChoice] = useState<MapZoomChoice>(() => {
     const saved = preference<string>('map-zoom-choice', 'auto');
     return saved === 'page' || saved === 'width' ? saved : 'auto';
@@ -87,16 +89,31 @@ export function MapPanel({
                 { id: 'page', label: 'Pleine page' },
                 { id: 'width', label: 'Pleine largeur' },
               ] as const
-            ).map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                aria-pressed={zoomChoice === option.id}
-                onClick={() => setZoomChoice(option.id)}
-              >
-                {option.label}
-              </button>
-            ))}
+            ).map((option) => {
+              const hasHelp = option.id === 'page' && zoomChoice === 'page' && pageFallback;
+              return (
+                <span key={option.id} className="map-zoom-option">
+                  <button
+                    type="button"
+                    aria-pressed={zoomChoice === option.id}
+                    aria-describedby={hasHelp ? pageTooltipId : undefined}
+                    onClick={() => setZoomChoice(option.id)}
+                  >
+                    {option.label}
+                    {hasHelp && (
+                      <sup className="map-zoom-asterisk" aria-hidden="true">
+                        *
+                      </sup>
+                    )}
+                  </button>
+                  {hasHelp && (
+                    <span id={pageTooltipId} role="tooltip" className="map-zoom-tooltip">
+                      Ce niveau ne tient pas lisiblement sur une page. Parcours vertical à taille de lecture.
+                    </span>
+                  )}
+                </span>
+              );
+            })}
           </div>
           {scope && (
             <button
@@ -130,6 +147,7 @@ export function MapPanel({
           focusId={focusId}
           onSelect={onSelect}
           onRead={onSelect}
+          onPageFallbackChange={setPageFallback}
           perspective=""
         />
       </Suspense>

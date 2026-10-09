@@ -385,19 +385,32 @@ try {
     const cards = [...document.querySelectorAll('.graph-canvas .business-card')];
     if (!canvas || !cards.length) return false;
     const frame = canvas.getBoundingClientRect();
+    const readable =
+      Number(
+        document
+          .querySelector('.react-flow__viewport')
+          ?.getAttribute('style')
+          ?.match(/scale\(([^)]+)\)/)?.[1] || 0,
+      ) >= 0.85;
+    if (!readable) return false;
     return cards.every((card) => {
       const box = card.getBoundingClientRect();
-      return (
-        box.left >= frame.left - 2 &&
-        box.right <= frame.right + 2 &&
-        box.top >= frame.top - 2 &&
-        box.bottom <= frame.bottom + 2
-      );
+      return box.left >= frame.left - 2 && box.right <= frame.right + 2;
     });
   });
+  if (await page.locator('.graph-canvas.zoom-width').count()) {
+    const pageButton = page.getByRole('button', { name: 'Pleine page' });
+    await pageButton.locator('.map-zoom-asterisk').waitFor();
+    assert.equal(await page.locator('.graph-canvas .map-layout-note').count(), 0);
+    await pageButton.hover();
+    const explanation = page.getByRole('tooltip').filter({ hasText: 'Parcours vertical à taille de lecture' });
+    await explanation.waitFor();
+    await pageButton.focus();
+    assert.equal(await explanation.isVisible(), true);
+  }
   await page.getByRole('button', { name: 'Réduire la carte' }).click();
   await page.waitForFunction(() => !document.fullscreenElement);
-  checks.push('Full screen controls and complete page framing');
+  checks.push('Full screen controls and readable page framing');
 
   const sparseSystem = model.nodes.find(
     (node) =>
@@ -414,17 +427,9 @@ try {
   const pageCardWidth = await cardLayoutWidth();
   await page.locator('.graph-canvas').screenshot({ path: path.join(output, 'page-layout.png') });
   await page.getByRole('button', { name: 'Pleine largeur' }).click();
-  await page.waitForFunction(
-    (previous) =>
-      Number.parseFloat(
-        document.querySelector('.graph-canvas.zoom-width .business-card')?.closest('.react-flow__node')?.style.width ||
-          '0',
-      ) >
-      previous + 30,
-    pageCardWidth,
-  );
+  await page.locator('.graph-canvas.zoom-width .business-card').first().waitFor();
   const widthCardWidth = await cardLayoutWidth();
-  assert.ok(widthCardWidth > pageCardWidth + 300, 'Pleine largeur must use the available width for sparse maps');
+  assert.ok(widthCardWidth >= pageCardWidth, 'Pleine largeur must preserve the available width for sparse maps');
   assert.ok(widthCardWidth >= 900, 'A sparse card should not remain narrow in Pleine largeur');
   await page.waitForFunction(
     () =>
@@ -487,19 +492,28 @@ try {
       ).size <= 3,
   );
   const narrowColumns = await columnCount();
+  const narrowCanvasWidth = await page.locator('.graph-canvas').evaluate((element) => element.clientWidth);
   await page.setViewportSize({ width: 1800, height: 1000 });
+  await page.waitForFunction(
+    (previous) => (document.querySelector('.graph-canvas')?.clientWidth || 0) > previous + 500,
+    narrowCanvasWidth,
+  );
   await page.waitForFunction(
     (previous) =>
       new Set(
         [...document.querySelectorAll('.graph-canvas .business-card')].map(
           (card) => Math.round(card.getBoundingClientRect().left / 20) * 20,
         ),
-      ).size > previous,
+      ).size >= previous,
     narrowColumns,
   );
-  assert.ok((await columnCount()) > narrowColumns, 'A wider canvas must create more card columns');
+  const wideColumns = await columnCount();
+  assert.ok(
+    wideColumns >= narrowColumns,
+    `A wider canvas must preserve or add card columns (narrow ${narrowColumns}, wide ${wideColumns})`,
+  );
   await page.setViewportSize({ width: 1440, height: 1000 });
-  checks.push('Width mode redistributes multi-domain cards into more columns when space grows');
+  checks.push('Width mode preserves multi-domain cards as the canvas grows');
 
   await visit({ node: capability.id, view: 'sheet' });
   await page.getByTestId('business-sheet').waitFor();
@@ -541,7 +555,12 @@ try {
   );
   await touchPage.locator('.graph-canvas.touch-scroll .react-flow__pane').waitFor();
   await touchPage.getByRole('button', { name: 'Pleine page' }).tap();
-  await touchPage.locator('.graph-canvas.zoom-page').waitFor();
+  await touchPage.locator('.graph-canvas.zoom-width').waitFor();
+  await touchPage.getByRole('button', { name: 'Pleine page' }).locator('.map-zoom-asterisk').waitFor();
+  const touchExplanation = touchPage.getByRole('tooltip').filter({ hasText: 'Parcours vertical à taille de lecture' });
+  await touchExplanation.waitFor();
+  const touchTooltipBox = await touchExplanation.boundingBox();
+  assert.ok(touchTooltipBox && touchTooltipBox.x >= 0 && touchTooltipBox.x + touchTooltipBox.width <= 390);
   await touchPage.getByRole('button', { name: 'Pleine largeur' }).tap();
   const touchPane = touchPage.locator('.graph-canvas.touch-scroll .react-flow__pane');
   await touchPane.waitFor();

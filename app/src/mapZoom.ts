@@ -1,8 +1,12 @@
+import { MIN_READABLE_ZOOM } from './adaptiveLayout.ts';
+
 export type MapZoomChoice = 'auto' | 'page' | 'width';
 export type MapZoomMode = 'page' | 'width';
 
 export function resolveMapZoom(choice: MapZoomChoice, detail: number, pageFitZoom = 1): MapZoomMode {
-  return choice === 'auto' ? (detail >= 3 || pageFitZoom < 0.8 ? 'width' : 'page') : choice;
+  if (choice === 'width') return 'width';
+  if (pageFitZoom < MIN_READABLE_ZOOM) return 'width';
+  return choice === 'auto' && detail >= 3 ? 'width' : 'page';
 }
 
 /** Frame a width-oriented grid at native size; the grid itself uses the available width. */

@@ -9,6 +9,8 @@ test('automatic framing preserves readable text while manual choices stay fixed'
   assert.equal(resolveMapZoom('auto', 3), 'width');
   assert.equal(resolveMapZoom('auto', 4), 'width');
   assert.equal(resolveMapZoom('page', 4), 'page');
+  assert.equal(resolveMapZoom('page', 2, 0.84), 'width');
+  assert.equal(resolveMapZoom('page', 2, 0.85), 'page');
   assert.equal(resolveMapZoom('width', 0), 'width');
 });
 

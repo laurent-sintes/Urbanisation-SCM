@@ -1,3 +1,5 @@
+import { useEffect, useRef, useState } from 'react';
+import { overviewLayout, prominentChildIndex } from '../adaptiveLayout';
 import { childrenOf, descendantsOf, rootsOf } from '../model';
 import type { PublishedModel } from '../types';
 import { MapNodeButton, MetaTypeLabel, ModelText } from './ModelLinks';
@@ -18,18 +20,54 @@ export function Overview({
   const systems = universe
     ? childrenOf(model, universe.id).filter((node) => node.kind === 'business_system')
     : rootsOf(model).filter((node) => node.kind === 'business_system');
+  const section = useRef<HTMLElement>(null);
+  const [availableWidth, setAvailableWidth] = useState(0);
+  useEffect(() => {
+    const target = section.current;
+    if (!target) return;
+    const observer = new ResizeObserver(() => setAvailableWidth(target.clientWidth));
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, []);
+  const weights = systems.map((system) => {
+    const domains = childrenOf(model, system.id).filter((node) => node.kind === 'domain');
+    return (
+      1 +
+      (detail > 0 ? domains.length * 2 : 0) +
+      (detail > 1
+        ? domains.reduce(
+            (total, domain) => total + childrenOf(model, domain.id).filter((node) => node.kind === 'area').length,
+            0,
+          )
+        : 0)
+    );
+  });
+  const layout = overviewLayout(weights, availableWidth);
   return (
-    <section className="universe-overview" aria-label={`${universe?.name || 'Univers'} des systèmes métier`}>
+    <section
+      ref={section}
+      className="universe-overview"
+      aria-label={`${universe?.name || 'Univers'} des systèmes métier`}
+    >
       <div className="universe-toolbar">
         <h2>Systèmes métier</h2>
       </div>
-      <div className="urbanisation-overview">
+      <div
+        className={`urbanisation-overview layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}
+        data-layout={layout.kind}
+      >
         {systems.map((system) => {
           const domains = childrenOf(model, system.id).filter((node) => node.kind === 'domain');
           const subdomains = domains.flatMap((domain) =>
             childrenOf(model, domain.id).filter((node) => node.kind === 'area'),
           );
           const capabilities = descendantsOf(model, system.id).filter((node) => node.kind === 'capability');
+          const prominentDomain = prominentChildIndex(
+            domains.map(
+              (domain) =>
+                1 + childrenOf(model, domain.id).filter((node) => node.kind === 'area').length * (detail > 1 ? 2 : 1),
+            ),
+          );
           return (
             <article data-node-id={system.id} key={system.id} className="overview-system">
               <small>
@@ -65,10 +103,13 @@ export function Overview({
                 <div className="overview-hierarchy">
                   {domains.length ? (
                     <ul>
-                      {domains.map((domain) => {
+                      {domains.map((domain, domainIndex) => {
                         const areas = childrenOf(model, domain.id).filter((node) => node.kind === 'area');
                         return (
-                          <li key={domain.id}>
+                          <li
+                            key={domain.id}
+                            className={domainIndex === prominentDomain ? 'overview-domain-prominent' : undefined}
+                          >
                             <MapNodeButton
                               node={domain}
                               className="overview-domain-link"
