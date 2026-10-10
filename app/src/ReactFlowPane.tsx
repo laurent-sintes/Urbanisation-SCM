@@ -59,6 +59,7 @@ interface HotspotMarker {
   severity: string;
   political: string;
   implementation: string;
+  workshop: boolean;
 }
 const FLAMES = ['first', 'second', 'third', 'fourth'];
 function Canvas(props: ReactFlowPaneProps) {
@@ -515,10 +516,11 @@ function Canvas(props: ReactFlowPaneProps) {
             id: hotspot.id,
             x: x - 28 + offset,
             y: y - 28 + offset,
-            title: hotspot.title,
+            title: hotspot.workshop ? `Atelier · ${hotspot.title}` : hotspot.title,
             severity: hotspot.severity,
             political: hotspot.complexity.political,
             implementation: hotspot.complexity.implementation,
+            workshop: Boolean(hotspot.workshop),
           },
         ];
       });
@@ -629,7 +631,7 @@ function Canvas(props: ReactFlowPaneProps) {
                 return (
                   <div
                     key={marker.id}
-                    className={`hotspot-map-point severity-${marker.severity}`}
+                    className={`hotspot-map-point severity-${marker.severity}${marker.workshop ? ' is-workshop' : ''}`}
                     style={{ left: marker.x + 28, top: marker.y + 28 }}
                   >
                     <span className="hotspot-map-halo" aria-hidden="true" />

@@ -132,6 +132,17 @@ class AtlasHandler(BaseHTTPRequestHandler):
                     'appName': 'FLOW Atlas', 'mode': 'static',
                     'pid': os.getpid(), 'repositoryRoot': str(self.root),
                 }, head)
+            elif route == '/__atlas__/workshop/staging.json':
+                stage = self.root / '.runtime/atlas-atelier/staging.json'
+                if stage.resolve() != stage:
+                    raise SourceAccessError('Staging non autorisé.')
+                if stage.is_file():
+                    payload = stage.read_bytes()
+                    if len(payload) > 2_000_000:
+                        raise SourceAccessError('Staging trop volumineux.')
+                    self._send(200, payload, 'application/json; charset=utf-8', head)
+                else:
+                    self._json(200, {'active': False}, head)
             else:
                 asset = built_file(self.root, route)
                 if asset is None:

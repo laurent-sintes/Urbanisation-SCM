@@ -25,8 +25,11 @@ if (-not $atlasCatalog.current_version -or $atlasCatalog.current_version -ne $at
     throw 'Le catalogue servi ne correspond pas au build local.'
 }
 Write-Output ("Publication servie : " + $atlasCatalog.current_version)
+```
 
-# Arrêter le serveur suivi
+Pour **arrêter** le serveur suivi, exécuter séparément :
+
+```powershell
 .\Lancer-FLOW-Atlas.ps1 -Port 8765 -Stop
 ```
 

@@ -1,4 +1,14 @@
-import { BookOpen, ChevronDown, Compass, Download, Lightbulb, PanelLeftClose, Search, X } from 'lucide-react';
+import {
+  BookOpen,
+  ChevronDown,
+  Compass,
+  Download,
+  HelpCircle,
+  Lightbulb,
+  PanelLeftClose,
+  Search,
+  X,
+} from 'lucide-react';
 import { type RefObject, useEffect, useRef, useState } from 'react';
 import { NodeIcon } from '../icons';
 import { lineageOf } from '../model';
@@ -9,6 +19,7 @@ import { publicationUrl, publicationYamlUrl, staticUrl } from '../publication';
 import { catalogOf } from '../scenarioCatalog';
 import { searchPublication } from '../search';
 import type { PublishedModel } from '../types';
+import { downloadWorkingModel, workshopUrl } from '../workshop';
 import { MethodNavigation } from './MethodNavigation';
 import { CatalogLink } from './ModelLinks';
 
@@ -108,7 +119,7 @@ export function Sidebar({
         <button
           type="button"
           aria-current={
-            !['scenarios', 'hotspots', 'glossary', 'principles', 'metamodel'].includes(route.view || '')
+            !['scenarios', 'hotspots', 'glossary', 'principles', 'metamodel', 'help'].includes(route.view || '')
               ? 'page'
               : undefined
           }
@@ -168,10 +179,6 @@ export function Sidebar({
           <BookOpen size={17} />
           Glossaire métier
         </button>
-        <button type="button" onClick={onOpenMetamodel} aria-current={route.view === 'metamodel' ? 'page' : undefined}>
-          <BookOpen size={17} />
-          Métamodèle
-        </button>
         <button
           type="button"
           onClick={onOpenPrinciples}
@@ -179,6 +186,17 @@ export function Sidebar({
         >
           <Lightbulb size={17} />
           {guide?.title || 'Transformation'}
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            onSearch({ view: 'help', helpTopic: 'start', node: '', scope: '', query: '', section: '' });
+            onClose();
+          }}
+          aria-current={route.view === 'help' || route.view === 'metamodel' ? 'page' : undefined}
+        >
+          <HelpCircle size={17} />
+          Aide
         </button>
         <details className="download-menu">
           <summary>
@@ -206,6 +224,17 @@ export function Sidebar({
               {revision} · {model.version}
             </small>
           </a>
+          {model.raw.workshop && (
+            <>
+              <a href={workshopUrl()} download={`flow-atlas-staging-${model.raw.workshop.session_id}.json`}>
+                <span>Staging de l’atelier</span>
+                <small>Séance {model.raw.workshop.session_id}</small>
+              </a>
+              <button type="button" className="workshop-download" onClick={() => downloadWorkingModel(model)}>
+                Modèle de travail (JSON)
+              </button>
+            </>
+          )}
         </details>
       </nav>
       <div className="search-box">
@@ -327,7 +356,7 @@ export function Sidebar({
           ))}
           {!matches.length && <p>Aucun élément ne correspond dans cette publication.</p>}
         </div>
-      ) : ['scenarios', 'glossary', 'principles', 'metamodel'].includes(route.view || '') ? (
+      ) : ['scenarios', 'glossary', 'principles', 'metamodel', 'help'].includes(route.view || '') ? (
         <nav
           className="space-navigation"
           aria-label={
@@ -371,15 +400,50 @@ export function Sidebar({
               }}
             />
           )}
+          {(route.view === 'help' || route.view === 'metamodel') && (
+            <>
+              <h2>Aide</h2>
+              <button
+                type="button"
+                aria-current={route.view === 'help' && route.helpTopic !== 'workshop' ? 'page' : undefined}
+                onClick={() => {
+                  onSearch({ view: 'help', helpTopic: 'start', principle: '', section: '' });
+                  onClose();
+                }}
+              >
+                Par où commencer
+              </button>
+              <button
+                type="button"
+                aria-current={route.view === 'help' && route.helpTopic === 'workshop' ? 'page' : undefined}
+                onClick={() => {
+                  onSearch({ view: 'help', helpTopic: 'workshop', principle: '', section: '' });
+                  onClose();
+                }}
+              >
+                Mode atelier
+              </button>
+              <button
+                type="button"
+                aria-current={route.view === 'metamodel' ? 'page' : undefined}
+                onClick={onOpenMetamodel}
+              >
+                Métamodèle FLOW
+              </button>
+            </>
+          )}
           {route.view === 'metamodel' && (
-            <MethodNavigation
-              guide={model.raw.metamodel?.documentation}
-              selected={route.principle}
-              onSelect={(principle) => {
-                onSearch({ principle, scroll: '' });
-                onClose();
-              }}
-            />
+            <>
+              <h2>Rubriques du métamodèle</h2>
+              <MethodNavigation
+                guide={model.raw.metamodel?.documentation}
+                selected={route.principle}
+                onSelect={(principle) => {
+                  onSearch({ principle, scroll: '' });
+                  onClose();
+                }}
+              />
+            </>
           )}
           {route.view === 'scenarios' && (
             <>

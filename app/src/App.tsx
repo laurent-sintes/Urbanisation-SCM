@@ -15,6 +15,7 @@ import {
 import { type CSSProperties, lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { BusinessSheet } from './components/BusinessSheet';
 import { GlossaryPage } from './components/GlossaryPage';
+import { HelpPage } from './components/HelpPage';
 import { HotspotCatalogPage } from './components/HotspotCatalogPage';
 import { MapDetailPicker } from './components/MapDetailPicker';
 import { MapPanel } from './components/MapPanel';
@@ -36,6 +37,7 @@ import { useBuildUpdate } from './useBuildUpdate';
 import type { GuideState } from './useModelingGuide';
 import { useModelingGuide } from './useModelingGuide';
 import { usePublication } from './usePublication';
+import { downloadWorkingModel, useWorkshop } from './workshop';
 
 const DependenciesPane = lazy(() =>
   import('./DependenciesPane').then((module) => ({ default: module.DependenciesPane })),
@@ -58,6 +60,11 @@ export function App() {
   const softwareUpdate = useBuildUpdate();
   const { route, locationKey, navigationType, changeRoute: changeLocation } = useAtlasLocation();
   const { model, catalog, loading, error, notice, reload } = usePublication(route.version || undefined);
+  const workshop = useWorkshop(
+    model,
+    catalog?.releases.find((entry) => entry.version === model?.version)?.model_sha256,
+  );
+  const displayModel = workshop.displayModel || model;
   const { state: guideState, retry: retryGuide } = useModelingGuide(
     model?.version,
     catalog?.releases.find((entry) => entry.version === model?.version)?.guide_sha256,
@@ -161,7 +168,12 @@ export function App() {
     scope && model ? model.nodeById.get(parentRelationOf(model, scope.id)?.sourceId || '') : undefined;
   // Keep the map context stable on selection, including between double-clicks.
   const referenceView =
-    view === 'scenarios' || view === 'hotspots' || view === 'glossary' || view === 'principles' || view === 'metamodel';
+    view === 'scenarios' ||
+    view === 'hotspots' ||
+    view === 'glossary' ||
+    view === 'principles' ||
+    view === 'metamodel' ||
+    view === 'help';
   const headingNode = referenceView ? undefined : view === 'map' ? scope : selected;
   const contentScope = view === 'map' ? scopeId : route.node;
   useLayoutEffect(() => {
@@ -190,6 +202,7 @@ export function App() {
     route.scenario,
     route.stream,
     route.path,
+    route.helpTopic,
     route.scroll,
   ]);
   const changeRoute = useCallback(
@@ -513,15 +526,17 @@ export function App() {
         <span>
           <ChevronRight size={12} />
           <span aria-current="page">
-            {view === 'hotspots'
-              ? 'Points chauds'
-              : view === 'scenarios'
-                ? 'Scénarios métier'
-                : view === 'metamodel'
-                  ? 'Métamodèle FLOW'
-                  : view === 'principles'
-                    ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
-                    : glossaryTitle}
+            {view === 'help'
+              ? 'Aide'
+              : view === 'hotspots'
+                ? 'Points chauds'
+                : view === 'scenarios'
+                  ? 'Scénarios métier'
+                  : view === 'metamodel'
+                    ? 'Métamodèle FLOW'
+                    : view === 'principles'
+                      ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
+                      : glossaryTitle}
           </span>
         </span>
       )}
@@ -598,7 +613,7 @@ export function App() {
         </header>
         {model && (
           <Sidebar
-            model={model}
+            model={displayModel || model}
             route={{ ...route, glossary: glossaryMode }}
             open={drawer}
             mobile={mobile}
@@ -745,7 +760,7 @@ export function App() {
                         <NodeIcon node={headingNode} size={30} framed />
                       ) : (
                         <span className="node-icon framed tone-context">
-                          {view === 'principles' || view === 'metamodel' ? (
+                          {view === 'principles' || view === 'metamodel' || view === 'help' ? (
                             <Lightbulb size={30} />
                           ) : (
                             <Compass size={30} />
@@ -759,13 +774,15 @@ export function App() {
                           <MetaTypeLabel node={headingNode} />
                         ) : (
                           <span>
-                            {view === 'metamodel'
-                              ? 'LE MÉTAMODÈLE'
-                              : view === 'principles'
-                                ? 'LA DÉMARCHE DE TRANSFORMATION'
-                                : view === 'glossary'
-                                  ? 'LE VOCABULAIRE PUBLIÉ'
-                                  : 'LE MODÈLE PUBLIÉ'}
+                            {view === 'help'
+                              ? 'AIDE À LA LECTURE'
+                              : view === 'metamodel'
+                                ? 'LE MÉTAMODÈLE'
+                                : view === 'principles'
+                                  ? 'LA DÉMARCHE DE TRANSFORMATION'
+                                  : view === 'glossary'
+                                    ? 'LE VOCABULAIRE PUBLIÉ'
+                                    : 'LE MODÈLE PUBLIÉ'}
                           </span>
                         )}
                         {headingNode && (
@@ -775,36 +792,44 @@ export function App() {
                         )}
                       </div>
                       <h1 id="page-title" ref={heading} tabIndex={-1}>
-                        {view === 'hotspots'
-                          ? 'Points chauds'
-                          : view === 'scenarios'
-                            ? 'Scénarios métier'
-                            : view === 'metamodel'
-                              ? 'Métamodèle FLOW'
-                              : view === 'principles'
-                                ? methodTitle
-                                : view === 'glossary'
-                                  ? glossaryTitle
-                                  : headingNode?.name || 'Cartographie'}
+                        {view === 'help'
+                          ? route.helpTopic === 'workshop'
+                            ? 'Mode atelier'
+                            : 'Par où commencer ?'
+                          : view === 'hotspots'
+                            ? 'Points chauds'
+                            : view === 'scenarios'
+                              ? 'Scénarios métier'
+                              : view === 'metamodel'
+                                ? 'Métamodèle FLOW'
+                                : view === 'principles'
+                                  ? methodTitle
+                                  : view === 'glossary'
+                                    ? glossaryTitle
+                                    : headingNode?.name || 'Cartographie'}
                       </h1>
                       {view !== 'sheet' && (
                         <p>
                           <ModelText
                             text={
-                              view === 'hotspots'
-                                ? 'Explorer les sujets localisés sur la cartographie et leurs options de résolution.'
-                                : view === 'scenarios'
-                                  ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.'
-                                  : view === 'metamodel'
-                                    ? metaGuide?.subtitle || 'Comprendre les objets et règles du modèle.'
-                                    : view === 'principles'
-                                      ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.'
-                                      : view === 'glossary'
-                                        ? 'Les notions et leurs définitions dans la publication consultée.'
-                                        : headingNode?.purpose ||
-                                          (headingNode
-                                            ? 'Explore cet élément et ses relations dans le modèle publié.'
-                                            : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')
+                              view === 'help'
+                                ? route.helpTopic === 'workshop'
+                                  ? 'Préparer une séance de travail collective autour de la cartographie.'
+                                  : 'Un parcours rapide pour explorer le modèle publié.'
+                                : view === 'hotspots'
+                                  ? 'Explorer les sujets localisés sur la cartographie et leurs options de résolution.'
+                                  : view === 'scenarios'
+                                    ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.'
+                                    : view === 'metamodel'
+                                      ? metaGuide?.subtitle || 'Comprendre les objets et règles du modèle.'
+                                      : view === 'principles'
+                                        ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.'
+                                        : view === 'glossary'
+                                          ? 'Les notions et leurs définitions dans la publication consultée.'
+                                          : headingNode?.purpose ||
+                                            (headingNode
+                                              ? 'Explore cet élément et ses relations dans le modèle publié.'
+                                              : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')
                             }
                           />
                         </p>
@@ -918,8 +943,28 @@ export function App() {
                       : `tab-${['sheet', 'market'].includes(view) && !selected ? 'map' : view}`
                   }
                 >
-                  {view === 'hotspots' ? (
-                    <HotspotCatalogPage model={model} route={route} onChange={changeRoute} />
+                  {view === 'help' ? (
+                    <HelpPage
+                      topic={route.helpTopic === 'workshop' ? 'workshop' : 'start'}
+                      stage={workshop.stage}
+                      stageMatchesPublication={Boolean(workshop.active)}
+                      stageError={workshop.error}
+                      onDownloadWorkingModel={() => displayModel && downloadWorkingModel(displayModel)}
+                      onNavigate={(target, topic) =>
+                        changeRoute({
+                          view: target,
+                          helpTopic: topic,
+                          node: '',
+                          scope: '',
+                          query: '',
+                          section: '',
+                          principle: '',
+                          hotspot: '',
+                        })
+                      }
+                    />
+                  ) : view === 'hotspots' ? (
+                    <HotspotCatalogPage model={displayModel || model} route={route} onChange={changeRoute} />
                   ) : view === 'scenarios' ? (
                     <ScenarioCatalogPage model={model} route={route} onChange={changeRoute} />
                   ) : view === 'metamodel' ? (
@@ -990,10 +1035,15 @@ export function App() {
                       />
                     </Suspense>
                   ) : !scopeId && model.nodes.some((node) => node.kind === 'business_system') ? (
-                    <Overview model={model} detail={universeDepth} onOpen={openOverviewNode} />
+                    <Overview
+                      model={displayModel || model}
+                      detail={universeDepth}
+                      onOpen={openOverviewNode}
+                      onOpenHotspot={(hotspot) => changeRoute({ view: 'hotspots', hotspot, node: '', scope: '' })}
+                    />
                   ) : (
                     <MapPanel
-                      model={model}
+                      model={displayModel || model}
                       scope={scope}
                       scopeId={scopeId}
                       selectedId={selected?.id || ''}

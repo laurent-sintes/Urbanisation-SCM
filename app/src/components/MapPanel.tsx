@@ -53,6 +53,10 @@ export function MapPanel({
     ),
   );
   const [showHotspots, setShowHotspots] = useState(false);
+  const workshopRevision = model.raw.workshop?.revision;
+  useEffect(() => {
+    if (workshopRevision !== undefined) setShowHotspots(true);
+  }, [workshopRevision]);
   const [hotspotSeverity, setHotspotSeverity] = useState('all');
   const visibleHotspots = scopedHotspots.filter(
     (hotspot) => hotspotSeverity === 'all' || hotspot.severity === hotspotSeverity,

@@ -1,0 +1,48 @@
+.help-page {
+  max-width: 850px;
+  padding: 8px 4px 48px;
+  line-height: 1.6;
+}
+
+.help-page section + section {
+  margin-top: 32px;
+}
+
+.help-page h2 {
+  margin: 0 0 12px;
+  font-size: 1.25rem;
+}
+
+.help-page li {
+  padding-left: 4px;
+  margin: 0 0 12px;
+}
+
+.help-page .help-link {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--flow-green);
+  font: inherit;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.help-page .help-link:hover,
+.help-page .help-link:focus-visible {
+  color: var(--ink);
+}
+
+.help-notice {
+  padding: 14px 18px;
+  border-left: 4px solid var(--flow-green);
+  border-radius: 4px;
+  background: #edf5f1;
+}
+
+.help-prompts {
+  padding-left: 24px;
+}

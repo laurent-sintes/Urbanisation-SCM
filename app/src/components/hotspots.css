@@ -249,6 +249,13 @@
   --flame-duration: 0.72s;
   --flame-size: 10px;
 }
+.hotspot-map-point.severity-unassessed {
+  --hotspot-rgb: 55 111 119;
+  --halo-size: 116px;
+  --pulse-duration: 4s;
+  --flame-duration: 1.8s;
+  --flame-size: 13px;
+}
 .hotspot-map-halo {
   position: absolute;
   left: calc(var(--halo-size) / -2);
@@ -281,6 +288,10 @@
   color: rgb(var(--hotspot-rgb));
   cursor: pointer;
   pointer-events: auto;
+}
+.hotspot-map-point.is-workshop .hotspot-map-marker {
+  border-style: dashed;
+  border-width: 2px;
 }
 .hotspot-map-flames {
   display: flex;

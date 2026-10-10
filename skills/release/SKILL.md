@@ -24,7 +24,7 @@ Les fichiers de la publication remplacée doivent déjà être conservés à l�
 - `unchanged` : aucune nouvelle publication nécessaire.
 - `needs_review` : lire le dossier fourni avec `prepare_release.py inspect DOSSIER --section review --id ID`, renseigner seulement les arbitrages explicitement autorisés dans `assessment.yaml`, puis reprendre avec `--review DOSSIER`.
 - `blocked` : corriger les erreurs de la synthèse. Une intention périmée ne devient pas automatiquement un accord.
-- `published_checks_failed` : la publication existe ; corriger l’export statique ou la disponibilité d’Atlas, sans publier une nouvelle version. Relancer `python scripts/export_atlas.py` pour réparer les artefacts générés.
+- `published_checks_failed` : la publication existe ; lire d’abord l’erreur `static_export` ou `atlas`. Si l’export a échoué, corriger sa cause puis relancer `python scripts/export_atlas.py`. Si seule la vérification HTTP d’Atlas a échoué, contrôler l’accès au serveur et son identité dans un environnement autorisé ; une permission refusée par le bac à sable ne prouve pas un défaut de publication. Réparer uniquement l’écart constaté, sans publier une nouvelle version.
 
 Une source, un artefact ou le code modifié après préparation impose une nouvelle préparation. En cas d’interruption pendant les écritures, examiner les fichiers et le pointeur avant une reprise ; ne pas écraser une version existante.
 

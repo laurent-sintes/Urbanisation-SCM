@@ -177,6 +177,7 @@ export interface GlossaryTerm extends JsonRecord {
   last_modified?: string;
 }
 export interface RawPublication extends JsonRecord {
+  workshop?: { active: true; session_id: string; base_version: string; revision: number };
   hotspot_catalog?: {
     schema_version: 1;
     hotspots: Hotspot[];
@@ -208,6 +209,7 @@ export interface RawPublication extends JsonRecord {
   published_at?: string;
 }
 export interface Hotspot {
+  workshop?: { session_id: string; revision: number };
   id: string;
   title: string;
   kind: 'scope' | 'integration';

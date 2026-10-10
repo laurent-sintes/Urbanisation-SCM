@@ -1,20 +1,25 @@
+import { Flame } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { overviewLayout, prominentChildIndex } from '../adaptiveLayout';
-import { childrenOf, descendantsOf, rootsOf } from '../model';
+import { childrenOf, descendantsOf, lineageOf, rootsOf } from '../model';
 import type { PublishedModel } from '../types';
 import { MapNodeButton, MetaTypeLabel, ModelText } from './ModelLinks';
+import './hotspots.css';
 
 const plainDefinition = (text: string) => text.replace(/^\[[^\]]+\]\([^)]*\)\s*:\s*/, '');
+const FLAMES = ['first', 'second', 'third', 'fourth'];
 
 /** The overview follows the publication's explicit hierarchy and frozen order. */
 export function Overview({
   model,
   detail,
   onOpen,
+  onOpenHotspot,
 }: {
   model: PublishedModel;
   detail: number;
   onOpen: (id: string) => void;
+  onOpenHotspot: (id: string) => void;
 }) {
   const universe = rootsOf(model).find((node) => node.kind === 'universe');
   const systems = universe
@@ -22,6 +27,12 @@ export function Overview({
     : rootsOf(model).filter((node) => node.kind === 'business_system');
   const section = useRef<HTMLElement>(null);
   const [availableWidth, setAvailableWidth] = useState(0);
+  const [showHotspots, setShowHotspots] = useState(false);
+  const workshopRevision = model.raw.workshop?.revision;
+  useEffect(() => {
+    if (workshopRevision !== undefined) setShowHotspots(true);
+  }, [workshopRevision]);
+  const hotspots = model.raw.hotspot_catalog?.hotspots || [];
   useEffect(() => {
     const target = section.current;
     if (!target) return;
@@ -51,12 +62,25 @@ export function Overview({
     >
       <div className="universe-toolbar">
         <h2>Systèmes métier</h2>
+        {!!hotspots.length && (
+          <label className="hotspot-map-toggle">
+            <input type="checkbox" checked={showHotspots} onChange={(event) => setShowHotspots(event.target.checked)} />{' '}
+            Points chauds
+          </label>
+        )}
       </div>
       <div
         className={`urbanisation-overview layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}
         data-layout={layout.kind}
       >
         {systems.map((system) => {
+          const systemHotspots = showHotspots
+            ? hotspots.filter((hotspot) =>
+                hotspot.location.node_ids.some(
+                  (anchor) => anchor === system.id || lineageOf(model, anchor).some((node) => node.id === system.id),
+                ),
+              )
+            : [];
           const domains = childrenOf(model, system.id).filter((node) => node.kind === 'domain');
           const subdomains = domains.flatMap((domain) =>
             childrenOf(model, domain.id).filter((node) => node.kind === 'area'),
@@ -70,6 +94,39 @@ export function Overview({
           );
           return (
             <article data-node-id={system.id} key={system.id} className="overview-system">
+              {systemHotspots.map((hotspot, index) => (
+                <div
+                  key={hotspot.id}
+                  className={`hotspot-map-point severity-${hotspot.severity}${hotspot.workshop ? ' is-workshop' : ''}`}
+                  style={{ right: 46 + index * 52, top: 48 }}
+                >
+                  <span className="hotspot-map-halo" aria-hidden="true" />
+                  <button
+                    type="button"
+                    className="hotspot-map-marker"
+                    aria-label={`${hotspot.workshop ? 'Atelier · ' : ''}${hotspot.title}, criticité ${hotspot.severity}`}
+                    aria-describedby={`overview-hotspot-tip-${system.id}-${hotspot.id}`}
+                    onClick={() => onOpenHotspot(hotspot.id)}
+                  >
+                    <span className="hotspot-map-flames" aria-hidden="true">
+                      {FLAMES.slice(0, { S: 1, M: 2, L: 3, XL: 4, unassessed: 0 }[hotspot.severity]).map((flame) => (
+                        <Flame key={flame} />
+                      ))}
+                    </span>
+                  </button>
+                  <span
+                    id={`overview-hotspot-tip-${system.id}-${hotspot.id}`}
+                    className="hotspot-map-tooltip"
+                    role="tooltip"
+                  >
+                    <strong>
+                      {hotspot.workshop ? 'Atelier · ' : ''}
+                      {hotspot.title}
+                    </strong>
+                    <span>Criticité {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}</span>
+                  </span>
+                </div>
+              ))}
               <small>
                 <MetaTypeLabel node={system} />
               </small>

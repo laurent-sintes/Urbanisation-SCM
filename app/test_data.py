@@ -91,6 +91,21 @@ class HTTPTests(unittest.TestCase):
         self.assertNotIn(b"SOURCE INTERFACE", body)
         self.assertEqual(self.request("/api/model")[0], 404)
 
+    def test_workshop_staging_is_read_only_and_local(self):
+        route = '/__atlas__/workshop/staging.json'
+        status, _, body = self.request(route)
+        self.assertEqual(status, 200)
+        self.assertEqual(json.loads(body), {'active': False})
+        folder = self.root / '.runtime/atlas-atelier'
+        folder.mkdir(parents=True)
+        (folder / 'staging.json').write_text('{"active":true,"revision":1}', encoding='utf-8')
+        status, headers, body = self.request(route)
+        self.assertEqual(status, 200)
+        self.assertEqual(headers['Cache-Control'], 'no-store')
+        self.assertEqual(json.loads(body)['revision'], 1)
+        self.assertEqual(self.request(route, method='POST')[0], 405)
+        self.assertEqual(self.request(route, headers={'Origin': 'https://evil.example'})[0], 403)
+
     def test_build_never_exposes_sources_models_maps_or_dependency_trees(self):
         # Even accidental copies into dist must not become public endpoints.
         for filename in ["model.json", "index-test123.js.map", "secret.tsx"]:

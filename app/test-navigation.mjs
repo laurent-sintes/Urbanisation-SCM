@@ -27,6 +27,17 @@ test('only the current path syntax selects a view', () => {
   assert.equal(routeHash(readRoute('')), '#/');
 });
 
+test('help topics keep the selected publication and clear model selection', () => {
+  const workshop = readRoute('#/help?topic=workshop&version=2026-10-09.8&node=some-node&scope=some-domain');
+  assert.equal(workshop.view, 'help');
+  assert.equal(workshop.helpTopic, 'workshop');
+  assert.equal(workshop.version, '2026-10-09.8');
+  assert.equal(workshop.node, '');
+  assert.equal(workshop.scope, '');
+  assert.deepEqual(readRoute(routeHash(workshop)), workshop);
+  assert.equal(readRoute('#/help?topic=unknown').helpTopic, undefined);
+});
+
 test('unknown query keys do not restrict a search invisibly', () => {
   const route = readRoute('#/map?version=2026-09-19.6&node=D04&q=order&type=capability');
   assert.deepEqual(route, readRoute('#/map?version=2026-09-19.6&node=D04&q=order'));

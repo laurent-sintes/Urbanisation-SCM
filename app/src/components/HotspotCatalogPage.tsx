@@ -27,6 +27,7 @@ export function HotspotCatalogPage({
   onChange: (changes: Partial<RouteState>) => void;
 }) {
   const hotspots = model.raw.hotspot_catalog?.hotspots || [];
+  const workshopCount = hotspots.filter((item) => item.workshop).length;
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState('all');
   const [severity, setSeverity] = useState('all');
@@ -56,7 +57,9 @@ export function HotspotCatalogPage({
       <header>
         <h2>Points chauds</h2>
         <p>
-          {hotspots.length} sujet{hotspots.length > 1 ? 's' : ''} dans la publication {model.version}.
+          {hotspots.length} sujet{hotspots.length > 1 ? 's' : ''} affiché{hotspots.length > 1 ? 's' : ''} pour{' '}
+          {model.version}
+          {workshopCount ? `, dont ${workshopCount} en atelier` : ''}.
         </p>
         <div className="hotspot-scale" role="group" aria-label="Échelle de criticité, de S à XL">
           {(['S', 'M', 'L', 'XL'] as const).map((level) => (
@@ -73,6 +76,7 @@ export function HotspotCatalogPage({
             ← Tous les points chauds
           </button>
           <p className="hotspot-kicker">
+            {chosen.workshop ? 'Atelier · ' : ''}
             {chosen.kind === 'integration' ? 'Intégration' : 'Périmètre'} · {STATUS[chosen.status]}
           </p>
           <h3>{chosen.title}</h3>
@@ -181,6 +185,7 @@ export function HotspotCatalogPage({
                 <span>
                   <strong>{item.title}</strong>
                   <small>
+                    {item.workshop ? 'Atelier · ' : ''}
                     {item.kind === 'integration' ? 'Intégration' : 'Périmètre'} · {STATUS[item.status]} · Gravité{' '}
                     {SIZE(item.severity)}
                   </small>
