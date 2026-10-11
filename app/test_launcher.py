@@ -33,7 +33,7 @@ class LauncherTests(unittest.TestCase):
             shutil.copy2(ROOT / 'Lancer-FLOW-Atlas.ps1', root)
             shutil.copy2(ROOT / 'app/server.py', root / 'app')
             (root / 'scripts').mkdir()
-            for dependency in ('atlas_lock.py', 'atlas_workshop.py', 'hotspot_catalog.py'):
+            for dependency in ('atlas_lock.py', 'atlas_workshop.py', 'hotspot_catalog.py', 'hotspot_resolution.py'):
                 shutil.copy2(ROOT / 'scripts' / dependency, root / 'scripts')
             with socket.socket() as reservation:
                 reservation.bind(('127.0.0.1', 0))
