@@ -1,0 +1,139 @@
+id: HOTSPOT-PROGRESS-U950
+source_refs:
+- U925
+- U926
+- U950
+status: applied_to_backlog
+assessment:
+  reviewer: Codex
+  hotspot_id: HS-002
+  stage: qualifying
+  rationale: La solution BMN/C-LOG est décrite et en discussion. Sa crédibilité dépend encore des garanties, de la validité
+    du plan et du passage à un engagement ferme, explicitement en discussion U926. Un choix définitif ou une mise en œuvre
+    ne sont pas requis pour atteindre ensuite le niveau crédible.
+  other_hotspots: À explorer, sur instruction explicite U950 ; leurs options documentées sont conservées.
+alignment:
+  business_glossary: 'Contrôlé : progression uniquement, sans modification du sens, des noms ou des frontières métier.'
+  methodological_glossary: 'MOD044 : niveaux existants réutilisés sans changement.'
+market_comparison:
+  reused_from: HS-002.market_view ; appuis Microsoft Dynamics et SAP S/4HANA déjà consultés, périmètre inchangé.
+  common: Séparer décision de commande et exécution logistique.
+  difference: Qualification du contrat de proposition et d’engagement BMN/C-LOG.
+  limit: Ces appuis ne prouvent ni la disponibilité du fonctionnement cible chez C-LOG ni une réservation des ressources par
+    le plan proposé.
+superseded_delivery_fingerprints:
+- path: modeles/backlog/hotspot-first-lot-U948.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-001
+    content_sha256: e2bdca1e096274caf0d6bc0197806cc61768d13da0ecf241849badf2a7a84d54
+  - collection: hotspots
+    id: HS-002
+    content_sha256: 0d152a5337c12c973442e38ec07478b4d168bfc7c6f81627b5a648d685afeb0e
+  - collection: hotspots
+    id: HS-011
+    content_sha256: f9d8fa7c054eba2eada80ca4f08d7b4658f4631c470024c28cf3ea81db120649
+  - collection: hotspots
+    id: HS-003
+    content_sha256: ab3f5b495e69fdd94b96d978f6dd4deb8ea78265fa1f1eec0e6c5092b36b7c18
+  - collection: hotspots
+    id: HS-012
+    content_sha256: 2b0f0cf1eb4b68895cbf96670e9b462f44d534eb578e9bf0f393207da0656023
+  - collection: hotspots
+    id: HS-013
+    content_sha256: 047500a2e01fa466cc9c5797603379010d7edc15632af6e142cb2ea6cab062ce
+  - collection: hotspots
+    id: HS-006
+    content_sha256: cf316d02618a851a1d472c10719408ea5af81a3ec3b4a069b2e88dc2608b9cd4
+  - collection: hotspots
+    id: HS-014
+    content_sha256: d43e34841a1f6adc44f5800c1db96e505666eb7d22a163a5f0642efa8f8e1371
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 6f1bbc7baf848ef41a369b4a65e1574b57b81e242dbcff4cc421784391877cc8
+  - collection: hotspots
+    id: HS-007
+    content_sha256: d2f8b041d3a91114099a2be711e1dc504f39c1e6ab959fc4f2bcb4f8482374ae
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 63e36720be155478dd471c836f93189a0460dcac21f2ef069ef383f872221c58
+- path: modeles/backlog/hotspot-stock-freshness-U928.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-003
+    content_sha256: ab3f5b495e69fdd94b96d978f6dd4deb8ea78265fa1f1eec0e6c5092b36b7c18
+- path: modeles/backlog/hotspot-resolution-U949.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-001
+    content_sha256: e2bdca1e096274caf0d6bc0197806cc61768d13da0ecf241849badf2a7a84d54
+  - collection: hotspots
+    id: HS-002
+    content_sha256: 0d152a5337c12c973442e38ec07478b4d168bfc7c6f81627b5a648d685afeb0e
+  - collection: hotspots
+    id: HS-011
+    content_sha256: f9d8fa7c054eba2eada80ca4f08d7b4658f4631c470024c28cf3ea81db120649
+  - collection: hotspots
+    id: HS-003
+    content_sha256: ab3f5b495e69fdd94b96d978f6dd4deb8ea78265fa1f1eec0e6c5092b36b7c18
+  - collection: hotspots
+    id: HS-012
+    content_sha256: 2b0f0cf1eb4b68895cbf96670e9b462f44d534eb578e9bf0f393207da0656023
+  - collection: hotspots
+    id: HS-013
+    content_sha256: 047500a2e01fa466cc9c5797603379010d7edc15632af6e142cb2ea6cab062ce
+  - collection: hotspots
+    id: HS-006
+    content_sha256: cf316d02618a851a1d472c10719408ea5af81a3ec3b4a069b2e88dc2608b9cd4
+  - collection: hotspots
+    id: HS-014
+    content_sha256: d43e34841a1f6adc44f5800c1db96e505666eb7d22a163a5f0642efa8f8e1371
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 6f1bbc7baf848ef41a369b4a65e1574b57b81e242dbcff4cc421784391877cc8
+  - collection: hotspots
+    id: HS-007
+    content_sha256: d2f8b041d3a91114099a2be711e1dc504f39c1e6ab959fc4f2bcb4f8482374ae
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 63e36720be155478dd471c836f93189a0460dcac21f2ef069ef383f872221c58
+publication_delivery:
+  state: applied
+  source_refs:
+  - U950
+  summary: HS-002 en qualification ; dix autres hotspots à explorer.
+  required_catalog:
+  - collection: hotspots
+    id: HS-001
+    content_sha256: 81ce4b617f529524ceba21f5f4fafe87a2d07716f86b987cb509663e896391f0
+  - collection: hotspots
+    id: HS-002
+    content_sha256: dd78e0bed2d317c6ebe07e71038babd8b5c7f281150b1a043f9ec1325a9dc0f6
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 96c4b107b234a36069719e9154c71dd4867701d97c0b966dbae472d284e30e93
+  - collection: hotspots
+    id: HS-003
+    content_sha256: 471b94b951de2c6f44989065be4aff002cc58bf904ffae4b34066c36e186ba3b
+  - collection: hotspots
+    id: HS-012
+    content_sha256: f04232c2f06e71a0b6cbc9964c392181f1d24da1043a98c27802f7fa41289c44
+  - collection: hotspots
+    id: HS-013
+    content_sha256: 17b2fb9906d284f43957fa4acd1326bc3d5deb00a66388ee95527d4ae3e3ea33
+  - collection: hotspots
+    id: HS-006
+    content_sha256: 05a2bbba0e8192ac81ecab55b02907eeb00c5b5cb34188aa9b1777ec8174a72d
+  - collection: hotspots
+    id: HS-014
+    content_sha256: bfb6b867ca606a20633f72bca6943eadec6546217c4e4190c9e54c609cfa08df
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 395ebe4b2000556769a46ca9689a14421ab14fbfcb4ab2fb309de10d52bd3fd6
+  - collection: hotspots
+    id: HS-007
+    content_sha256: f2bae31ad22f8f6c347915357222689cef624dc2e438c0d63f302744f870e11b
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 91b27738589435ad13e9a51e87634b66be1e7a84feaf26f68215cc5e55dad372
+capture_method: Verbatim enregistré avant interprétation ; empreintes du lot final, sans extension des accords sur les solutions.

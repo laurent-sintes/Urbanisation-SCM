@@ -22860,3 +22860,15 @@ Verbatim :
 > Go
 
 Portée : intégrer la proposition de progression « À explorer », « Pistes identifiées », « Options en qualification », « Solution crédible — cadrage résolu », avec « Non renseigné » pour les sujets existants sans évaluation. Une ou plusieurs solutions crédibles, argumentées avec leurs hypothèses et réserves, suffisent ; le choix définitif et la mise en œuvre restent distincts. Conserver la criticité, représenter la progression par un anneau à trois jalons et éteindre les flammes lorsque le cadrage est résolu. Le blocage conserve sa raison et la prochaine étape. Aucun accord implicite sur une solution individuelle, aucune publication demandée.
+
+## U950
+
+Date : 2026-10-11. Source : Laurent, initialisation de la progression des hotspots.
+
+Verbatim :
+
+> Pour le hostspot qui parle de la relation Bordriders / C-LOG, tu peux mettre un niveau d'avancement réel au vu de ce que je t'ai raconté
+>
+> Les autres, tu peux mettre le niveau le plus bas.
+
+Portée : évaluer HS-002 à partir des apports U925–U926 et initialiser les dix autres sujets à « À explorer », premier niveau de progression. L'évaluation de Codex retient « Options en qualification » pour HS-002 : une solution est décrite et discutée, ses garanties, sa durée de validité et le moment de l'engagement ferme restent à préciser. Cette évaluation ne vaut ni choix définitif, ni validation d'une solution, ni preuve de réalisation installée.
