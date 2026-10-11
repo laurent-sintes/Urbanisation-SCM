@@ -138,14 +138,13 @@ try {
   await page.locator('.universe-toolbar .map-hotspot-picker .detail-trigger').click();
   const hotspotFilters = page.getByRole('group', { name: 'Filtres des points chauds' });
   await hotspotFilters.getByLabel('Afficher les points chauds').check();
-  const severityChoices = hotspotFilters.getByRole('group', { name: 'Criticité', exact: true });
-  const levelL = severityChoices.locator('button[data-value="L"]');
-  await levelL.click();
-  assert.equal(await levelL.getAttribute('aria-pressed'), 'true');
-  assert.equal(await severityChoices.locator('button[data-value="M"]').getAttribute('aria-pressed'), 'false');
-  await levelL.click();
-  assert.equal(await levelL.getAttribute('aria-label'), 'L et moins critiques');
-  assert.equal(await severityChoices.locator('button[data-value="M"]').getAttribute('aria-pressed'), 'true');
+  const severityChoices = hotspotFilters.getByRole('combobox', { name: 'Criticité' });
+  await severityChoices.selectOption('exact:L');
+  assert.equal(await severityChoices.inputValue(), 'exact:L');
+  await severityChoices.selectOption('at_most:L');
+  assert.equal(await severityChoices.inputValue(), 'at_most:L');
+  await severityChoices.selectOption('at_least:L');
+  assert.equal(await severityChoices.inputValue(), 'at_least:L');
   assert.equal(await hotspotFilters.locator('.hotspot-filter-list').count(), 1);
   await hotspotFilters.getByRole('button', { name: /Affiner par complexité/ }).click();
   await hotspotFilters
@@ -156,7 +155,7 @@ try {
     .getByRole('group', { name: 'Complexité d’implémentation' })
     .getByRole('button', { name: 'L', exact: true })
     .click();
-  assert.equal(await severityChoices.getByRole('button', { name: 'Toutes' }).getAttribute('aria-pressed'), 'true');
+  assert.equal(await severityChoices.inputValue(), 'all');
   await page.locator('.universe-toolbar .map-hotspot-picker .detail-trigger').click();
   await page.locator(`.overview-system[data-node-id="${system.id}"] h3 button`).click();
   await page.locator('.map-toolbar .map-detail-picker').waitFor();
@@ -180,10 +179,7 @@ try {
       .getAttribute('aria-pressed'),
     'true',
   );
-  await scopedFilters
-    .getByRole('group', { name: 'Criticité', exact: true })
-    .getByRole('button', { name: 'XL', exact: true })
-    .click();
+  await scopedFilters.getByRole('combobox', { name: 'Criticité' }).selectOption('exact:XL');
   assert.equal(
     await scopedFilters
       .getByRole('group', { name: 'Complexité politique' })
@@ -210,10 +206,9 @@ try {
   }
   await page.getByRole('button', { name: 'Filtres' }).click();
   const catalogFilters = page.getByRole('group', { name: 'Filtres des points chauds' });
-  const catalogSeverity = catalogFilters.getByRole('group', { name: 'Criticité', exact: true });
-  await catalogSeverity.locator('button[data-value="L"]').click();
-  await catalogSeverity.locator('button[data-value="L"]').click();
-  assert.equal(await catalogSeverity.locator('button[data-value="M"]').getAttribute('aria-pressed'), 'true');
+  const catalogSeverity = catalogFilters.getByRole('combobox', { name: 'Criticité' });
+  await catalogSeverity.selectOption('at_most:L');
+  assert.equal(await catalogSeverity.inputValue(), 'at_most:L');
   checks.push('Hotspot catalog uses the map filters and a semantic characteristics table');
 
   for (const depth of [0, 1, 2]) {
