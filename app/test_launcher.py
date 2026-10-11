@@ -1,5 +1,6 @@
 """Exercise the real Windows launcher in a disposable repository, never port 8765."""
 import json
+import hashlib
 import os
 from pathlib import Path
 import shutil
@@ -20,9 +21,20 @@ class LauncherTests(unittest.TestCase):
             root = Path(directory).resolve()
             (root / 'app/dist/data').mkdir(parents=True)
             (root / 'app/dist/index.html').write_bytes(b'<!doctype html><title>Test</title>')
-            (root / 'app/dist/data/index.json').write_bytes(b'{}')
+            version = '2026-10-10.1'
+            model = json.dumps({'space': 'release', 'version': version, 'nodes': [],
+                                'hotspot_catalog': {'schema_version': 1, 'source_refs': [], 'hotspots': []}}).encode()
+            (root / 'app/dist/data' / version).mkdir()
+            (root / 'app/dist/data' / version / 'model.json').write_bytes(model)
+            (root / 'app/dist/data/index.json').write_text(json.dumps({
+                'current_version': version,
+                'versions': [{'version': version, 'model_sha256': hashlib.sha256(model).hexdigest()}],
+            }))
             shutil.copy2(ROOT / 'Lancer-FLOW-Atlas.ps1', root)
             shutil.copy2(ROOT / 'app/server.py', root / 'app')
+            (root / 'scripts').mkdir()
+            for dependency in ('atlas_lock.py', 'atlas_workshop.py', 'hotspot_catalog.py'):
+                shutil.copy2(ROOT / 'scripts' / dependency, root / 'scripts')
             with socket.socket() as reservation:
                 reservation.bind(('127.0.0.1', 0))
                 port = reservation.getsockname()[1]
