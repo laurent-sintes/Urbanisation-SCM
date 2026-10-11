@@ -82,6 +82,8 @@ Le checkpoint local d’audit vérifie les empreintes des fichiers et du code av
 
 Release, commit, push et administration serveur sont distincts : utiliser leurs skills seulement pour la demande correspondante. Pas de déclenchement implicite ni confirmation répétée pour une action autorisée. `push` cible Urbanisation-SCM ; `flow-push` concerne FLOW-Program. Ne pas changer l’identité Git globale.
 
+Après chaque push, vérifier systématiquement sur GitHub la référence envoyée et l’exécution du workflow distant attendu pour ce commit. S’il déploie Atlas, attendre son résultat et contrôler la version et le commit réellement servis par Pages. Signaler tout échec ou toute absence de déclenchement attendue ; un push réussi ne prouve pas le déploiement.
+
 Préserver le contenu des publications et les portées d’accord. Git conserve leurs états historiques ; les copies retirées de l’arbre sont référencées dans `modeles/git-history.json`. Une correction métier publiée exige une nouvelle version. Une release part d’une préparation figée contrôlée du backlog courant. Les caches ne dispensent jamais des contrôles d’intégrité.
 
 Atlas présente les publications sous Urbanisation : historique sélectionné fixe, courant suivi automatiquement, glossaire et liens du même snapshot. Le mode atelier local peut superposer explicitement son staging à la seule publication de base ; cette vue de travail est signalée et ne modifie pas le snapshot. Aucun repli backlog ni glossaire méthodologique présenté comme métier. React/TypeScript, structure React Flow, relations Cytoscape ; conserver les relations publiées et leurs qualifications. Arbre gauche, fiche centrale, recherche, comportements et liens directs ; aucun historique de visites. Identité : `app/BRANDING.md`.
