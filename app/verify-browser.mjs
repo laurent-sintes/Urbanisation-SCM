@@ -68,6 +68,7 @@ try {
   const expectTooltip = async (target, expected, fullscreen = false) => {
     let tooltip;
     let actual = '';
+    let insideFullscreen = !fullscreen;
     // A map panel can finish measuring and replace the hovered node once.
     // Bind the help to the hovered node's aria-describedby, not another lingering tooltip.
     for (let attempt = 0; attempt < 3; attempt++) {
@@ -82,20 +83,24 @@ try {
         tooltip = page.locator(`[id="${tooltipId}"]`);
         await tooltip.waitFor({ timeout: 2000 });
         actual = await tooltip.innerText({ timeout: 2000 });
-        if (actual.includes(expected)) break;
-        if (attempt === 2) throw new Error(`Unexpected tooltip: ${actual}`);
+        if (fullscreen) {
+          insideFullscreen = await tooltip.evaluate((element) =>
+            Boolean(document.fullscreenElement?.contains(element)),
+          );
+        }
+        if (actual.includes(expected) && insideFullscreen) break;
+        if (attempt === 2) {
+          throw new Error(
+            actual.includes(expected) ? 'Tooltip outside fullscreen map' : `Unexpected tooltip: ${actual}`,
+          );
+        }
       } catch (error) {
         if (attempt === 2) throw error;
       }
     }
     assert.ok(actual.includes(expected));
     if (fullscreen) {
-      await page.waitForFunction(() => Boolean(document.fullscreenElement?.querySelector('[role="tooltip"]')));
-      assert.equal(
-        await page.evaluate(() => Boolean(document.fullscreenElement?.querySelector('[role="tooltip"]'))),
-        true,
-        'Tooltip stays visible inside the fullscreen map',
-      );
+      assert.equal(insideFullscreen, true, 'Tooltip stays visible inside the fullscreen map');
     }
     await page.mouse.move(0, 0);
     await tooltip.waitFor({ state: 'hidden' });
