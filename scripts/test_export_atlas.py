@@ -94,6 +94,79 @@ class StaticExportTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'fingerprint or format differs'):
             export_atlas(self.root, [self.output])
 
+    def test_incremental_export_reuses_serialization_and_repairs_corrupt_output(self):
+        from unittest.mock import patch
+        from scripts import export_atlas as module
+        export_atlas(self.root, [self.output])
+        original = (self.output / '2026-09-25.1/model.yaml').read_bytes()
+        with patch.object(module, 'dump_yaml', wraps=module.dump_yaml) as dump:
+            result = export_atlas(self.root, [self.output])
+            self.assertEqual(result['reused_publications'], 2)
+            self.assertEqual(dump.call_count, 0)
+            (self.output / '2026-09-25.1/model.yaml').write_bytes(b'corrupt')
+            result = export_atlas(self.root, [self.output])
+            self.assertEqual(result['generated_publications'], 1)
+            self.assertEqual(dump.call_count, 1)
+        self.assertEqual((self.output / '2026-09-25.1/model.yaml').read_bytes(), original)
+
+    def test_new_destination_reuses_verified_outputs_and_matches_full_export(self):
+        from unittest.mock import patch
+        from scripts import export_atlas as module
+        source = self.root / 'app/public/data'
+        export_atlas(self.root, [source])
+        with patch.object(module, 'dump_yaml', side_effect=AssertionError('unnecessary serialization')):
+            result = export_atlas(self.root, [self.output])
+        self.assertEqual(result['reused_publications'], 2)
+        before = {p.relative_to(self.output): p.read_bytes() for p in self.output.rglob('*') if p.is_file()}
+        result = export_atlas(self.root, [self.output], incremental=False)
+        self.assertEqual(result['generated_publications'], 2)
+        self.assertEqual(before, {p.relative_to(self.output): p.read_bytes() for p in self.output.rglob('*') if p.is_file()})
+
+    def test_schema_generator_and_guide_changes_invalidate_receipts(self):
+        from unittest.mock import patch
+        from scripts import export_atlas as module
+        export_atlas(self.root, [self.output])
+        schema = self.root / 'modeles/schemas/urbanism.schema.json'
+        schema.parent.mkdir()
+        schema.write_bytes(encoded({'title': 'new schema'}))
+        self.assertEqual(export_atlas(self.root, [self.output])['generated_publications'], 2)
+        with patch.object(module, 'generator_signature', return_value='changed generator'):
+            self.assertEqual(export_atlas(self.root, [self.output])['generated_publications'], 2)
+        original = module._load_associated_guide
+        with patch.object(module, '_load_associated_guide', side_effect=lambda *a: {**original(*a), 'note': 'changed association'}):
+            self.assertEqual(export_atlas(self.root, [self.output])['generated_publications'], 2)
+
+    def test_corrupt_receipts_are_rebuilt_without_trusting_paths(self):
+        export_atlas(self.root, [self.output])
+        for invalid in ({'../../evidence.txt': 'a' * 64}, ['model.yaml', 'model.json', 'guide.json']):
+            for path in (self.root / '.runtime/atlas-export-receipts').glob('*.json'):
+                path.write_bytes(encoded(invalid))
+            self.assertEqual(export_atlas(self.root, [self.output])['generated_publications'], 2)
+
+    def test_added_publication_generates_only_the_new_version(self):
+        from unittest.mock import patch
+        from scripts import export_atlas as module
+        export_atlas(self.root, [self.output])
+        version = '2026-09-27.1'
+        folder = self.release / version
+        folder.mkdir()
+        model = json.loads((self.release / '2026-09-26.1/model.json').read_bytes())
+        model['version'] = version
+        payload = encoded(model)
+        (folder / 'model.json').write_bytes(payload)
+        descriptor = encoded({'version': version, 'path': version + '/model.json',
+                              'sha256': hashlib.sha256(payload).hexdigest()})
+        (self.release / (version + '.json')).write_bytes(descriptor)
+        index = json.loads((self.release / 'index.json').read_bytes())
+        index['publications'].append({'descriptor': version + '.json', 'sha256': hashlib.sha256(descriptor).hexdigest()})
+        index['current'] = version + '.json'
+        (self.release / 'index.json').write_bytes(encoded(index))
+        with patch.object(module, 'dump_yaml', wraps=module.dump_yaml) as dump:
+            result = export_atlas(self.root, [self.output])
+        self.assertEqual((result['generated_publications'], result['reused_publications']), (1, 2))
+        self.assertEqual(dump.call_count, 1)
+        self.assertEqual(json.loads((self.output / 'index.json').read_bytes())['current_version'], version)
+
     def test_metamodel_describes_object_semantics_and_observed_relations(self):
         from scripts.atlas_metamodel import describe_metamodel
         model = {

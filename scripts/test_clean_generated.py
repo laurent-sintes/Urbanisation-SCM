@@ -61,3 +61,40 @@ class CleanupTests(unittest.TestCase):
         for age in (-1, float('nan'), float('inf')):
             with self.assertRaises(ValueError):
                 clean(self.root, min_age_days=age, apply=True)
+
+    def test_build_copies_require_explicit_scope_and_preserve_active_build(self):
+        copy = self.root / 'app/.runtime/qa-dist'
+        (copy / 'data/2026-10-11.1').mkdir(parents=True)
+        (copy / 'index.html').write_text('<html>generated</html>')
+        (copy / 'data/index.json').write_text('{}')
+        (copy / 'data/2026-10-11.1/model.yaml').write_text('version: test')
+        active = self.root / 'app/.runtime/build-active/index.html'
+        active.parent.mkdir()
+        active.write_text('active build')
+        clean(self.root, min_age_days=0, apply=True)
+        self.assertTrue(copy.exists())
+        result = clean(self.root, min_age_days=0, apply=True, build_copies=True)
+        self.assertIn('app/.runtime/qa-dist', result['directories'])
+        self.assertFalse(copy.exists())
+        self.assertEqual(active.read_text(), 'active build')
+        self.assertTrue(self.proof.exists())
+
+    def test_unknown_build_evidence_blocks_cleanup(self):
+        copy = self.root / 'app/.runtime/qa-dist'
+        (copy / 'data').mkdir(parents=True)
+        (copy / 'index.html').write_text('generated')
+        (copy / 'data/index.json').write_text('{}')
+        proof = copy / 'notes.yaml'
+        proof.write_text('unique proof')
+        with self.assertRaisesRegex(ValueError, 'Unexpected build content'):
+            clean(self.root, min_age_days=0, apply=True, build_copies=True)
+        self.assertEqual(proof.read_text(), 'unique proof')
+
+    def test_benchmark_yaml_and_document_exports_are_regenerable(self):
+        version = self.folder / '2026-10-11.1'
+        (version / 'documents').mkdir(parents=True)
+        (version / 'model.yaml').write_text('version: test')
+        (version / 'documents/DOC001.pdf').write_bytes(b'%PDF-generated')
+        clean(self.root, min_age_days=0, apply=True)
+        self.assertFalse(self.folder.exists())
+        self.assertTrue(self.proof.exists())

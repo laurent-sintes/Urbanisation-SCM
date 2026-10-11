@@ -59,6 +59,15 @@ jobs:
       - run: python -m pip install -r requirements.txt
       - run: pnpm --dir app install --frozen-lockfile
       - run: pnpm --dir app test
+      - name: Restore verified export candidates
+        uses: actions/cache@v5
+        with:
+          path: |
+            app/public/data
+            .runtime/atlas-export-receipts
+          key: atlas-export-${{ runner.os }}-${{ hashFiles('scripts/*.py', 'app/*.py', 'requirements.txt', 'modeles/schemas/urbanism.schema.json') }}-${{ hashFiles('modeles/release/index.json', 'modeles/modeling-guides/index.yaml') }}
+          restore-keys: |
+            atlas-export-${{ runner.os }}-${{ hashFiles('scripts/*.py', 'app/*.py', 'requirements.txt', 'modeles/schemas/urbanism.schema.json') }}-
       - run: pnpm --dir app build
       - run: pnpm --dir app exec playwright install --with-deps chromium
       - run: pnpm --dir app verify

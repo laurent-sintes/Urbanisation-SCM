@@ -289,6 +289,14 @@ Les dossiers de revue sont locaux. Les décisions résultantes portent la porté
 
 `python -m scripts.benchmark_lean_release` mesure une publication éditoriale complète sur copie isolée dotée de son propre Git, à froid puis à chaud. Les résultats sont indicatifs et la vérification HTTP est séparée. `validate_models.py` reste disponible pour un contrôle global explicite ; il ne fait plus partie de chaque publication.
 
+### Export incrémental et nettoyage local
+
+`scripts/export_atlas.py` vérifie toujours les snapshots, leurs descripteurs, les guides associés et les PDF. Il réutilise les YAML et JSON existants seulement si leurs empreintes correspondent à un reçu lié au descripteur, au guide, au schéma et au code Python du générateur. Les reçus sous `.runtime/atlas-export-receipts/` sont régénérables et ne contiennent aucune copie de modèle. Une sortie absente ou altérée est régénérée ; un changement du code ou du schéma invalide les reçus. Release et build partagent ce mécanisme. `--full` force la génération complète pour comparaison ; le catalogue est activé après les vérifications comme auparavant. Les résultats indiquent les publications réutilisées et générées.
+
+Le workflow Pages restaure les sorties et reçus du build précédent avec [actions/cache](https://github.com/actions/cache). Ils restent des candidats à réutiliser, contrôlés par l'exporteur ; le cache ne remplace jamais la vérification des publications. Le premier build, une absence de cache ou un changement du générateur demande une génération complète.
+
+`python scripts/clean_generated.py --build-copies` simule le nettoyage des benchmarks anciens et de cinq anciennes copies nommées de build sous `app/.runtime/` : `qa-dist`, `qa-hotspot-build`, `quick-build`, `build-final`, `build-clean`. `--apply` applique le plan après recontrôle des chemins, fichiers et empreintes ; `--min-age-days` fixe l'âge minimal (sept jours par défaut). Un fichier inattendu ou une redirection de chemin bloque la suppression. Le build servi, les stages actifs `build-*`, les preuves de réexamen, les préparations de publication et le cache de parsing restent exclus. Les noms réservés aux anciennes copies ne doivent plus servir à un build actif.
+
 ## Améliorations de lecture U458
 
 Atlas indexe les champs métier et le glossaire du snapshot sélectionné, avec priorité au nom exact et à l’identifiant. U459 corrige le retrait des comparaisons : leurs champs de positionnement métier sont affichés et recherchables. Réserves, statuts et sources internes restent hors affichage et hors index de recherche. Les champs autorisés sont explicites dans `app/src/businessContent.ts` ; cette séparation de présentation n’est pas un contrôle d’accès à l’API locale. Les dépendances directes sont montrées par défaut ; les liens entre voisins se demandent explicitement. Les fiches gardent leurs conditions et effets accessibles dans les détails.
