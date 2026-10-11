@@ -33,7 +33,7 @@ import {
   scopeStatistics,
 } from './model';
 import { kindLabel } from './presentation';
-import type { AtlasNode, PublishedModel } from './types';
+import type { AtlasNode, Hotspot, PublishedModel } from './types';
 import '@xyflow/react/dist/style.css';
 
 export interface ReactFlowPaneProps {
@@ -47,10 +47,7 @@ export interface ReactFlowPaneProps {
   onRead: (id: string) => void;
   onPageFallbackChange: (fallback: boolean) => void;
   perspective: string;
-  showHotspots?: boolean;
-  hotspotSeverity?: string;
-  hotspotKind?: string;
-  hotspotStatus?: string;
+  hotspots?: Hotspot[];
   onOpenHotspot?: (id: string, groupIds?: string[]) => void;
 }
 interface HotspotMarker {
@@ -464,7 +461,7 @@ function Canvas(props: ReactFlowPaneProps) {
     [layout, selectedId, model, scopeId, props.onRead, perspective, onHeight],
   );
   const hotspotMarkers = useMemo(() => {
-    if (!props.showHotspots) return [];
+    if (!props.hotspots?.length) return [];
     const visible = new Map(layout.nodes.filter((node) => node.type === 'business').map((node) => [node.id, node]));
     for (const node of layout.nodes.filter((candidate) => candidate.type === 'business')) {
       const list = childLists.get(node.id);
@@ -494,75 +491,68 @@ function Canvas(props: ReactFlowPaneProps) {
       }
       return undefined;
     };
-    const markers = (model.raw.hotspot_catalog?.hotspots || [])
-      .filter(
-        (hotspot) =>
-          (props.hotspotSeverity === 'all' || !props.hotspotSeverity || hotspot.severity === props.hotspotSeverity) &&
-          (props.hotspotKind === 'all' || !props.hotspotKind || hotspot.kind === props.hotspotKind) &&
-          (props.hotspotStatus === 'all' || !props.hotspotStatus || hotspot.status === props.hotspotStatus),
-      )
-      .flatMap((hotspot, index): HotspotMarker[] => {
-        const anchors = hotspot.location.node_ids
-          .map(projected)
-          .filter((anchor): anchor is { node: Node; elementId: string } => Boolean(anchor));
-        if (!anchors.length) return [];
-        const distinct = [...new Map(anchors.map((anchor) => [anchor.elementId, anchor])).values()];
-        const boxes = distinct.map(({ node }) => ({
-          left: node.position.x,
-          top: node.position.y,
-          right: node.position.x + (node.width || 0),
-          bottom: node.position.y + (node.height || 0),
-        }));
-        let x: number;
-        let y: number;
-        if (hotspot.kind === 'integration' && boxes.length === 1) {
-          x = boxes[0].right;
-          y = boxes[0].top + 24;
-        } else if (hotspot.kind === 'integration' && boxes.length === 2) {
-          const [a, b] = boxes;
-          const horizontalOverlap = Math.min(a.right, b.right) - Math.max(a.left, b.left);
-          const verticalOverlap = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
-          if (horizontalOverlap <= 0 && verticalOverlap > 0) {
-            const [left, right] = a.left < b.left ? [a, b] : [b, a];
-            x = (left.right + right.left) / 2;
-            y = Math.max(left.top, right.top) + 10;
-          } else if (verticalOverlap <= 0 && horizontalOverlap > 0) {
-            const [top, bottom] = a.top < b.top ? [a, b] : [b, a];
-            x = (Math.max(top.left, bottom.left) + Math.min(top.right, bottom.right)) / 2;
-            y = (top.bottom + bottom.top) / 2;
-          } else {
-            x = (a.left + a.right + b.left + b.right) / 4;
-            y = Math.min(a.top, b.top) + 10;
-          }
-        } else if (distinct.length === 1 && distinct[0].node.type === 'container') {
-          x = boxes[0].left + 190;
-          y = boxes[0].top + 28;
+    const markers = props.hotspots.flatMap((hotspot, index): HotspotMarker[] => {
+      const anchors = hotspot.location.node_ids
+        .map(projected)
+        .filter((anchor): anchor is { node: Node; elementId: string } => Boolean(anchor));
+      if (!anchors.length) return [];
+      const distinct = [...new Map(anchors.map((anchor) => [anchor.elementId, anchor])).values()];
+      const boxes = distinct.map(({ node }) => ({
+        left: node.position.x,
+        top: node.position.y,
+        right: node.position.x + (node.width || 0),
+        bottom: node.position.y + (node.height || 0),
+      }));
+      let x: number;
+      let y: number;
+      if (hotspot.kind === 'integration' && boxes.length === 1) {
+        x = boxes[0].right;
+        y = boxes[0].top + 24;
+      } else if (hotspot.kind === 'integration' && boxes.length === 2) {
+        const [a, b] = boxes;
+        const horizontalOverlap = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+        const verticalOverlap = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+        if (horizontalOverlap <= 0 && verticalOverlap > 0) {
+          const [left, right] = a.left < b.left ? [a, b] : [b, a];
+          x = (left.right + right.left) / 2;
+          y = Math.max(left.top, right.top) + 10;
+        } else if (verticalOverlap <= 0 && horizontalOverlap > 0) {
+          const [top, bottom] = a.top < b.top ? [a, b] : [b, a];
+          x = (Math.max(top.left, bottom.left) + Math.min(top.right, bottom.right)) / 2;
+          y = (top.bottom + bottom.top) / 2;
         } else {
-          x = boxes.reduce((sum, box) => sum + (box.left + box.right) / 2, 0) / boxes.length;
-          y = boxes.reduce((sum, box) => sum + (box.top + box.bottom) / 2, 0) / boxes.length;
+          x = (a.left + a.right + b.left + b.right) / 4;
+          y = Math.min(a.top, b.top) + 10;
         }
-        const offset = (index % 3) * 13;
-        return [
-          {
-            id: hotspot.id,
-            projectionKey: distinct
-              .map((anchor) => anchor.elementId)
-              .sort()
-              .join('|'),
-            x: x - 28 + offset,
-            y: y - 28 + offset,
-            title: hotspot.workshop ? `Atelier · ${hotspot.title}` : hotspot.title,
-            titles: [hotspot.title],
-            hotspotIds: [hotspot.id],
-            count: 1,
-            severity: hotspot.severity,
-            political: hotspot.complexity.political,
-            implementation: hotspot.complexity.implementation,
-            workshop: Boolean(hotspot.workshop),
-            projectedElementIds: distinct.map((anchor) => anchor.elementId),
-          },
-        ];
-      });
+      } else if (distinct.length === 1 && distinct[0].node.type === 'container') {
+        x = boxes[0].left + 190;
+        y = boxes[0].top + 28;
+      } else {
+        x = boxes.reduce((sum, box) => sum + (box.left + box.right) / 2, 0) / boxes.length;
+        y = boxes.reduce((sum, box) => sum + (box.top + box.bottom) / 2, 0) / boxes.length;
+      }
+      const offset = (index % 3) * 13;
+      return [
+        {
+          id: hotspot.id,
+          projectionKey: distinct
+            .map((anchor) => anchor.elementId)
+            .sort()
+            .join('|'),
+          x: x - 28 + offset,
+          y: y - 28 + offset,
+          title: hotspot.workshop ? `Atelier · ${hotspot.title}` : hotspot.title,
+          titles: [hotspot.title],
+          hotspotIds: [hotspot.id],
+          count: 1,
+          severity: hotspot.severity,
+          political: hotspot.complexity.political,
+          implementation: hotspot.complexity.implementation,
+          workshop: Boolean(hotspot.workshop),
+          projectedElementIds: distinct.map((anchor) => anchor.elementId),
+        },
+      ];
+    });
     const byProjection = new Map<string, HotspotMarker>();
     for (const marker of markers) {
       const existing = byProjection.get(marker.projectionKey);
@@ -581,16 +571,7 @@ function Canvas(props: ReactFlowPaneProps) {
       existing.title = `${existing.count} points chauds sur ce périmètre`;
     }
     return [...byProjection.values()];
-  }, [
-    layout.nodes,
-    model,
-    childLists,
-    detail,
-    props.showHotspots,
-    props.hotspotSeverity,
-    props.hotspotKind,
-    props.hotspotStatus,
-  ]);
+  }, [layout.nodes, model, childLists, detail, props.hotspots]);
   const [measuredMarkerPositions, setMeasuredMarkerPositions] = useState<Record<string, { x: number; y: number }>>({});
   useLayoutEffect(() => {
     const frame = requestAnimationFrame(() => {

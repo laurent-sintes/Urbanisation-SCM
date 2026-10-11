@@ -26,6 +26,11 @@ STAGING = Path('.runtime/atlas-atelier/staging.json')
 LEVELS = ('S', 'M', 'L', 'XL')
 EDITABLE = {'title', 'problem', 'kind', 'location', 'examples', 'market_view', 'resolution_options',
             'complexity', 'arbitration_level', 'arbitration_note', 'status'}
+TABLE_EDITABLE = {'title', 'complexity', 'arbitration_level', 'status'}
+
+
+class StageConflictError(ValueError):
+    """The browser edited a staging revision that is no longer current."""
 
 
 def encoded(value):
@@ -246,6 +251,67 @@ def apply_request(root, request):
         save_stage(root, stage)
         return {'session_id': stage['session_id'], 'revision': stage['revision'], 'action': action,
                 'entity': 'hotspot', 'id': identifier, 'staging': str(stage_path(root))}
+
+
+def apply_table_changes(root, request):
+    """Atomically stage a small batch of direct edits from the local Atlas table."""
+    with atlas_lock(root):
+        if not isinstance(request, dict):
+            raise ValueError('La requête doit être un objet JSON.')
+        changes = request.get('changes')
+        if not isinstance(changes, list) or not 1 <= len(changes) <= 100:
+            raise ValueError('Entre 1 et 100 points chauds modifiés sont attendus.')
+        model, model_sha = publication(root)
+        stage = load_stage(root)
+        if not stage or not stage.get('active'):
+            raise StageConflictError('Aucun atelier actif sur cette publication.')
+        if stage.get('base_version') != model['version'] or stage.get('base_model_sha256') != model_sha:
+            raise StageConflictError('La publication a changé ; conserver le staging et réexaminer la base.')
+        if request.get('session_id') != stage['session_id'] or request.get('expected_revision') != stage['revision']:
+            raise StageConflictError('Le staging a changé ; relire sa révision avant de modifier.')
+        # Work on a copy: one invalid row must leave the complete staging untouched.
+        stage = json.loads(json.dumps(stage))
+        items = effective_hotspots(model, stage)
+        published = {item['id']: item for item in model.get('hotspot_catalog', {}).get('hotspots', [])}
+        nodes = {item['id'] for item in model['nodes']}
+        seen = set()
+        for change in changes:
+            if not isinstance(change, dict) or set(change) != {'id', 'fields'}:
+                raise ValueError('Modification de tableau invalide.')
+            identifier, fields = change['id'], change['fields']
+            if not isinstance(identifier, str) or identifier in seen or identifier not in items:
+                raise ValueError('Point chaud absent ou dupliqué dans le lot.')
+            seen.add(identifier)
+            if not isinstance(fields, dict) or not fields or set(fields) - TABLE_EDITABLE:
+                raise ValueError('Champs de tableau non autorisés.')
+            if 'complexity' in fields and (not isinstance(fields['complexity'], dict)
+                                           or set(fields['complexity']) != {'political', 'implementation', 'rationale'}):
+                raise ValueError('Complexité de tableau invalide.')
+            if 'status' in fields and fields['status'] not in ('discovered', 'shared'):
+                raise ValueError('L’atelier ne peut pas valider ni résoudre un point chaud.')
+            value = json.loads(json.dumps(items[identifier]))
+            value.update(fields)
+            checked_hotspot(value, nodes)
+            if identifier in published:
+                value['origin'] = {'repository': 'Atelier Atlas', 'path': str(STAGING).replace('\\', '/'),
+                                   'id': identifier, 'source_id': stage['session_id'],
+                                   'evidence_limit': 'Modification proposée en atelier sur une fiche publiée ; sources initiales à réexaminer.'}
+                value['review'] = {'state': 'proposed', 'note': 'Modification recueillie en atelier ; contenu non revalidé.'}
+            revision = stage['revision'] + 1
+            value['workshop'] = {'session_id': stage['session_id'], 'revision': revision}
+            operation = {'sequence': revision, 'entity': 'hotspot', 'action': 'update',
+                         'id': identifier, 'base_sha256': digest(published[identifier]) if identifier in published else None,
+                         'at': now(),
+                         'verbatim': 'Saisie directe dans le tableau Atlas : '
+                                     + json.dumps(fields, ensure_ascii=False, sort_keys=True),
+                         'note': 'Valeurs soumises depuis l’interface locale ; auteur de la proposition non attribué.',
+                         'value': value}
+            stage['operations'].append(operation)
+            stage['revision'] = revision
+            stage['updated_at'] = operation['at']
+            items[identifier] = value
+        save_stage(root, stage)
+        return stage
 
 
 def close_stage(root, expected_revision):

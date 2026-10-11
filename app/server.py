@@ -1,4 +1,4 @@
-"""Local, read-only HTTP server for FLOW Atlas (Python standard library only)."""
+"""Local FLOW Atlas server: static reads and a bounded workshop staging endpoint."""
 
 from __future__ import annotations
 
@@ -13,6 +13,9 @@ from pathlib import Path
 from urllib.parse import unquote, urlsplit
 
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(REPOSITORY_ROOT))
+from scripts.atlas_lock import atlas_lock
+from scripts.atlas_workshop import StageConflictError, apply_table_changes, current_stage, publication
 
 class SourceAccessError(ValueError):
     pass
@@ -114,7 +117,33 @@ class AtlasHandler(BaseHTTPRequestHandler):
         self._dispatch(head=True)
 
     def do_POST(self):
-        self._error(405, "Cette application propose uniquement la lecture du modèle.")
+        if not self._local_request():
+            self._error(403, "Accès réservé à l’application locale.")
+            return
+        try:
+            route = unquote(urlsplit(self.path).path, errors="strict")
+            if route != '/__atlas__/workshop/hotspots/batch':
+                self._error(405, "Écriture indisponible pour cette ressource.")
+                return
+            expected_origin = f"http://{self.headers.get('Host', '')}"
+            if (self.headers.get('Origin') != expected_origin
+                    or self.headers.get('X-Atlas-Workshop') != '1'
+                    or self.headers.get('Content-Type', '').split(';', 1)[0].strip().lower() != 'application/json'):
+                self._error(403, "Écriture réservée à l’atelier local ouvert dans Atlas.")
+                return
+            length = int(self.headers.get('Content-Length', '0'))
+            if not 0 < length <= 128_000:
+                self._error(413, "Lot d’atelier trop volumineux ou vide.")
+                return
+            request = json.loads(self.rfile.read(length))
+            stage = apply_table_changes(self.root, request)
+            self._json(200, stage)
+        except StageConflictError as exc:
+            self._error(409, str(exc))
+        except (ValueError, UnicodeError, json.JSONDecodeError) as exc:
+            self._error(400, str(exc) or "Requête invalide.")
+        except OSError:
+            self._error(500, "Écriture du staging impossible.")
 
     do_PUT = do_POST
     do_PATCH = do_POST
@@ -175,6 +204,13 @@ def create_server(port=8765, root=REPOSITORY_ROOT):
     return ThreadingHTTPServer(("127.0.0.1", port), partial(AtlasHandler, root=root))
 
 
+def activate_workshop(root=REPOSITORY_ROOT):
+    """Resume or create the local workshop without replacing an incompatible stage."""
+    with atlas_lock(root):
+        model, model_sha = publication(root)
+        return current_stage(root, model, model_sha)
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description="FLOW Atlas — explorateur local du modèle métier")
     parser.add_argument("--port", type=int, default=8765)
@@ -193,6 +229,16 @@ def main(argv=None):
         server = create_server(args.port)
     except OSError as exc:
         print(f"Démarrage impossible sur le port {args.port} : {exc}", file=sys.stderr)
+        return 1
+    try:
+        stage = activate_workshop()
+        print(f"Atelier local actif : {stage['session_id']}", flush=True)
+    except ValueError as exc:
+        # Keep the older staging available for export and conflict resolution.
+        print(f"Atelier à réexaminer : {exc}", file=sys.stderr)
+    except OSError as exc:
+        server.server_close()
+        print(f"Démarrage de l’atelier impossible : {exc}", file=sys.stderr)
         return 1
     print(f"FLOW Atlas : http://127.0.0.1:{args.port}", flush=True)
     try:

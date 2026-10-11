@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.atlas_workshop import apply_request, close_stage, current_stage, effective_hotspots, load_stage, publication
+from scripts.atlas_workshop import apply_request, apply_table_changes, close_stage, current_stage, effective_hotspots, load_stage, publication
 
 
 class WorkshopTests(unittest.TestCase):
@@ -99,6 +99,37 @@ class WorkshopTests(unittest.TestCase):
             apply_request(self.root, {'expected_revision': 1, 'entity': 'hotspot', 'action': 'add',
                                       'verbatim': 'Ajoute un avis marché sans source valide.', 'fields': fields})
         self.assertEqual(load_stage(self.root)['revision'], 1)
+
+    def test_table_changes_are_atomic_and_keep_the_published_model(self):
+        model, model_sha = publication(self.root)
+        stage = current_stage(self.root, model, model_sha)
+        for revision, title in enumerate(('Premier', 'Second')):
+            apply_request(self.root, {'expected_revision': revision, 'entity': 'hotspot', 'action': 'add',
+                                      'verbatim': f'Ajoute {title}.',
+                                      'fields': {'title': title, 'problem': 'Question ouverte.',
+                                                 'location': {'node_ids': ['logistics']}}})
+        batch = {'session_id': stage['session_id'], 'expected_revision': 2,
+                 'changes': [
+                     {'id': 'AT-HS-001', 'fields': {'title': 'Premier précisé', 'complexity': {
+                         'political': 'XL', 'implementation': 'L', 'rationale': ''}}},
+                     {'id': 'AT-HS-002', 'fields': {'status': 'shared'}},
+                 ]}
+        result = apply_table_changes(self.root, batch)
+        self.assertEqual(result['revision'], 4)
+        items = effective_hotspots(model, result)
+        self.assertEqual(items['AT-HS-001']['severity'], 'XL')
+        self.assertEqual(items['AT-HS-002']['status'], 'shared')
+        self.assertEqual(publication(self.root)[0], self.model)
+        stale = dict(batch, expected_revision=2)
+        with self.assertRaisesRegex(ValueError, 'relire sa révision'):
+            apply_table_changes(self.root, stale)
+        invalid = {'session_id': stage['session_id'], 'expected_revision': 4,
+                   'changes': [{'id': 'AT-HS-001', 'fields': {'title': 'Ne pas écrire'}},
+                               {'id': 'AT-HS-002', 'fields': {'status': 'validated'}}]}
+        with self.assertRaisesRegex(ValueError, 'ne peut pas valider'):
+            apply_table_changes(self.root, invalid)
+        self.assertEqual(load_stage(self.root)['revision'], 4)
+        self.assertEqual(effective_hotspots(model, load_stage(self.root))['AT-HS-001']['title'], 'Premier précisé')
 
 
 if __name__ == '__main__':

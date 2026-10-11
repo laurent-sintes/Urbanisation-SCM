@@ -132,6 +132,90 @@ try {
   assert.equal(route().get('scope'), system.id, 'Forward restores the Business System route');
   checks.push('Published root, systems, hierarchy and statistics');
 
+  await visit({ view: 'map' });
+  assert.equal(await page.locator('.universe-toolbar .map-detail-picker').count(), 1);
+  assert.equal(await page.locator('.universe-toolbar .map-hotspot-picker').count(), 1);
+  await page.locator('.universe-toolbar .map-hotspot-picker .detail-trigger').click();
+  const hotspotFilters = page.getByRole('group', { name: 'Filtres des points chauds' });
+  await hotspotFilters.getByLabel('Afficher les points chauds').check();
+  const severityChoices = hotspotFilters.getByRole('group', { name: 'Criticité', exact: true });
+  const levelL = severityChoices.locator('button[data-value="L"]');
+  await levelL.click();
+  assert.equal(await levelL.getAttribute('aria-pressed'), 'true');
+  assert.equal(await severityChoices.locator('button[data-value="M"]').getAttribute('aria-pressed'), 'false');
+  await levelL.click();
+  assert.equal(await levelL.getAttribute('aria-label'), 'L et moins critiques');
+  assert.equal(await severityChoices.locator('button[data-value="M"]').getAttribute('aria-pressed'), 'true');
+  assert.equal(await hotspotFilters.locator('.hotspot-filter-list').count(), 1);
+  await hotspotFilters.getByRole('button', { name: /Affiner par complexité/ }).click();
+  await hotspotFilters
+    .getByRole('group', { name: 'Complexité politique' })
+    .getByRole('button', { name: 'XL', exact: true })
+    .click();
+  await hotspotFilters
+    .getByRole('group', { name: 'Complexité d’implémentation' })
+    .getByRole('button', { name: 'L', exact: true })
+    .click();
+  assert.equal(await severityChoices.getByRole('button', { name: 'Toutes' }).getAttribute('aria-pressed'), 'true');
+  await page.locator('.universe-toolbar .map-hotspot-picker .detail-trigger').click();
+  await page.locator(`.overview-system[data-node-id="${system.id}"] h3 button`).click();
+  await page.locator('.map-toolbar .map-detail-picker').waitFor();
+  assert.equal(await page.locator('.map-toolbar .map-detail-picker').count(), 1);
+  assert.equal(await page.locator('.map-toolbar .map-hotspot-picker').count(), 1);
+  await page.getByRole('tab', { name: 'Fiche' }).click();
+  await page.getByRole('tab', { name: 'Carte' }).click();
+  await page.locator('.map-toolbar .map-hotspot-picker .detail-trigger').click();
+  const scopedFilters = page.getByRole('group', { name: 'Filtres des points chauds' });
+  assert.equal(
+    await scopedFilters
+      .getByRole('group', { name: 'Complexité politique' })
+      .getByRole('button', { name: 'XL', exact: true })
+      .getAttribute('aria-pressed'),
+    'true',
+  );
+  assert.equal(
+    await scopedFilters
+      .getByRole('group', { name: 'Complexité d’implémentation' })
+      .getByRole('button', { name: 'L', exact: true })
+      .getAttribute('aria-pressed'),
+    'true',
+  );
+  await scopedFilters
+    .getByRole('group', { name: 'Criticité', exact: true })
+    .getByRole('button', { name: 'XL', exact: true })
+    .click();
+  assert.equal(
+    await scopedFilters
+      .getByRole('group', { name: 'Complexité politique' })
+      .getByRole('button', { name: 'Toutes' })
+      .getAttribute('aria-pressed'),
+    'true',
+  );
+  checks.push('Overview and scoped maps share compact controls and keep hotspot filters across tabs');
+
+  await visit({ view: 'hotspots' });
+  const hotspotTable = page.getByRole('table');
+  assert.equal(await hotspotTable.count(), 1);
+  for (const column of [
+    'Point chaud',
+    'Type',
+    'Périmètre',
+    'Criticité',
+    'Politique',
+    'Implémentation',
+    'Statut',
+    'Arbitrage',
+  ]) {
+    assert.equal(await hotspotTable.getByRole('columnheader', { name: column }).count(), 1);
+  }
+  await page.getByRole('button', { name: 'Filtres' }).click();
+  const catalogFilters = page.getByRole('group', { name: 'Filtres des points chauds' });
+  const catalogSeverity = catalogFilters.getByRole('group', { name: 'Criticité', exact: true });
+  await catalogSeverity.locator('button[data-value="L"]').click();
+  await catalogSeverity.locator('button[data-value="L"]').click();
+  assert.equal(await catalogSeverity.locator('button[data-value="M"]').getAttribute('aria-pressed'), 'true');
+  checks.push('Hotspot catalog uses the map filters and a semantic characteristics table');
+
   for (const depth of [0, 1, 2]) {
     await visit({ view: 'map', mapDepth: String(depth) });
     assert.equal(
@@ -346,7 +430,7 @@ try {
           ?.match(/scale\(([^)]+)\)/)?.[1] || 0,
       ) >= 0.8,
   );
-  const detail = page.locator('.map-header-controls .detail-trigger');
+  const detail = page.locator('.map-toolbar .map-detail-picker .detail-trigger');
   await detail.click();
   await page.getByRole('group', { name: 'Niveau de détail de la carte' }).waitFor();
   assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('type')), 'range');

@@ -1,5 +1,6 @@
 """HTTP boundary tests for the standard-library static server."""
 import contextlib
+import hashlib
 import http.client
 import io
 import json
@@ -7,7 +8,8 @@ import tempfile
 import threading
 import unittest
 from pathlib import Path
-from server import create_server
+from server import activate_workshop, create_server
+from scripts.atlas_workshop import apply_request, current_stage, publication
 
 class HTTPTests(unittest.TestCase):
     def setUp(self):
@@ -33,16 +35,41 @@ class HTTPTests(unittest.TestCase):
         self.server.server_close()
         self.thread.join(timeout=2)
 
-    def request(self, path, method="GET", headers=None):
+    def request(self, path, method="GET", headers=None, body=None):
         connection = http.client.HTTPConnection("127.0.0.1", self.port, timeout=5)
         try:
             with contextlib.redirect_stderr(io.StringIO()):
-                connection.request(method, path, headers=headers or {})
+                connection.request(method, path, body=body, headers=headers or {})
                 response = connection.getresponse()
                 body = response.read()
             return response.status, dict(response.getheaders()), body
         finally:
             connection.close()
+
+    def test_server_startup_opens_and_resumes_workshop_without_replacing_conflicts(self):
+        data = self.dist / 'data'
+        folder = data / '2026-10-10.1'
+        folder.mkdir(parents=True)
+        model = {'space': 'release', 'version': '2026-10-10.1', 'nodes': [],
+                 'hotspot_catalog': {'schema_version': 1, 'source_refs': [], 'hotspots': []}}
+        raw = json.dumps(model).encode()
+        (folder / 'model.json').write_bytes(raw)
+        index = data / 'index.json'
+        index.write_text(json.dumps({'current_version': model['version'], 'versions': [
+            {'version': model['version'], 'model_sha256': hashlib.sha256(raw).hexdigest()}]}))
+        first = activate_workshop(self.root)
+        self.assertEqual(first['revision'], 0)
+        self.assertEqual(activate_workshop(self.root)['session_id'], first['session_id'])
+        model['version'] = '2026-10-11.1'
+        next_folder = data / model['version']
+        next_folder.mkdir()
+        next_raw = json.dumps(model).encode()
+        (next_folder / 'model.json').write_bytes(next_raw)
+        index.write_text(json.dumps({'current_version': model['version'], 'versions': [
+            {'version': model['version'], 'model_sha256': hashlib.sha256(next_raw).hexdigest()}]}))
+        with self.assertRaisesRegex(ValueError, 'publication a changé'):
+            activate_workshop(self.root)
+        self.assertEqual(json.loads((self.root / '.runtime/atlas-atelier/staging.json').read_bytes())['session_id'], first['session_id'])
 
     def test_api_identification_and_security_headers(self):
         status, headers, body = self.request("/__atlas__/identity.json")
@@ -105,6 +132,39 @@ class HTTPTests(unittest.TestCase):
         self.assertEqual(json.loads(body)['revision'], 1)
         self.assertEqual(self.request(route, method='POST')[0], 405)
         self.assertEqual(self.request(route, headers={'Origin': 'https://evil.example'})[0], 403)
+
+    def test_workshop_batch_post_is_local_and_stages_changes(self):
+        data = self.dist / 'data'
+        folder = data / '2026-10-10.1'
+        folder.mkdir(parents=True)
+        model = {'space': 'release', 'version': '2026-10-10.1',
+                 'nodes': [{'id': 'logistics'}],
+                 'hotspot_catalog': {'schema_version': 1, 'source_refs': [], 'hotspots': []}}
+        raw = json.dumps(model).encode()
+        (folder / 'model.json').write_bytes(raw)
+        (data / 'index.json').write_text(json.dumps({
+            'current_version': model['version'],
+            'versions': [{'version': model['version'], 'model_sha256': hashlib.sha256(raw).hexdigest()}]}))
+        published, model_sha = publication(self.root)
+        stage = current_stage(self.root, published, model_sha)
+        apply_request(self.root, {'expected_revision': 0, 'entity': 'hotspot', 'action': 'add',
+                                  'verbatim': 'Ajouter un point chaud.',
+                                  'fields': {'title': 'Sujet initial', 'problem': 'Question ouverte.',
+                                             'location': {'node_ids': ['logistics']}}})
+        route = '/__atlas__/workshop/hotspots/batch'
+        body = json.dumps({'session_id': stage['session_id'], 'expected_revision': 1,
+                           'changes': [{'id': 'AT-HS-001', 'fields': {'title': 'Sujet précisé'}}]}).encode()
+        headers = {'Origin': f'http://127.0.0.1:{self.port}', 'X-Atlas-Workshop': '1',
+                   'Content-Type': 'application/json'}
+        self.assertEqual(self.request(route, 'POST', headers={'Origin': 'https://evil.example'}, body=body)[0], 403)
+        self.assertEqual(self.request(route, 'POST', headers={'Content-Type': 'application/json'}, body=body)[0], 403)
+        status, _, payload = self.request(route, 'POST', headers=headers, body=body)
+        self.assertEqual(status, 200)
+        saved = json.loads(payload)
+        self.assertEqual(saved['revision'], 2)
+        self.assertEqual(saved['operations'][-1]['value']['title'], 'Sujet précisé')
+        self.assertEqual(self.request(route, 'POST', headers=headers, body=body)[0], 409)
+        self.assertEqual(self.request('/data/2026-10-10.1/model.json')[2], raw)
 
     def test_build_never_exposes_sources_models_maps_or_dependency_trees(self):
         # Even accidental copies into dist must not become public endpoints.

@@ -41,7 +41,7 @@ export function HelpPage({
           <p className="help-notice" role="status">
             {stage
               ? `L’atelier ${stage.session_id} est lié à la publication ${stage.base_version}. Tu peux la consulter, mais une nouvelle publication courante peut bloquer les éditions : demande à Codex de comparer les versions avant de reprendre.`
-              : 'Aucun atelier actif sur cette publication. Demande à Codex de démarrer une séance avec le skill atlas-workshop.'}
+              : 'Aucun atelier actif sur cette publication. Le serveur local ouvre normalement une séance au démarrage ; demande à Codex de vérifier le staging et la publication.'}
           </p>
         )}
         {stageError && <p role="alert">Lecture du staging : {stageError}</p>}
@@ -52,10 +52,13 @@ export function HelpPage({
               Lancer Atlas localement, choisir la publication courante et projeter la cartographie en plein écran.
             </li>
             <li>
-              Demander à Codex de démarrer l’atelier. Les points chauds apparaissent aussi sur la carte d’accueil.
+              Vérifier que « Atelier actif » apparaît ici. Le serveur local ouvre la séance au démarrage ; les points
+              chauds apparaissent aussi sur la carte d’accueil.
             </li>
             <li>
-              Demander à Codex d’ajouter, modifier ou retirer un point chaud. Atlas le montre sur la carte sans release.
+              Demander à Codex d’ajouter ou retirer un point chaud, ou de modifier sa fiche. Pour les attributs du
+              tableau « Points chauds », les saisir directement puis choisir « Valider les modifications ». Atlas les
+              montre sur la carte sans release.
             </li>
             <li>Télécharger le staging et le modèle de travail avant de terminer la séance.</li>
             <li>Clôturer la séance avec Codex après avoir conservé le staging.</li>

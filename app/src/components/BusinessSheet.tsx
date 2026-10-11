@@ -98,7 +98,7 @@ function Value({ value }: { value: unknown }): ReactNode {
     </span>
   );
 }
-export function BusinessSheet({ model, node }: { model: PublishedModel; node: AtlasNode; onShowMarket: () => void }) {
+export function BusinessSheet({ model, node }: { model: PublishedModel; node: AtlasNode }) {
   const parents = model.relations.filter((r) => ['contains', 'presents'].includes(r.type) && r.targetId === node.id);
   const children = childrenOf(model, node.id);
   const behaviors = children.filter((child) => child.kind === 'behavior');

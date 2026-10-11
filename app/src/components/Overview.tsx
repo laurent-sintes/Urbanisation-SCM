@@ -1,8 +1,11 @@
-import { Flame } from 'lucide-react';
+import { Flame, Maximize2, Minimize2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { overviewLayout, prominentChildIndex } from '../adaptiveLayout';
+import { filterMapHotspots, type HotspotMapFilters } from '../hotspotMap';
 import { childrenOf, descendantsOf, lineageOf, rootsOf } from '../model';
 import type { PublishedModel } from '../types';
+import { MapDetailPicker } from './MapDetailPicker';
+import { MapHotspotPicker } from './MapHotspotPicker';
 import { MapNodeButton, MetaTypeLabel, ModelText } from './ModelLinks';
 import './hotspots.css';
 
@@ -13,11 +16,19 @@ const FLAMES = ['first', 'second', 'third', 'fourth'];
 export function Overview({
   model,
   detail,
+  hotspotFilters,
+  onHotspotFiltersChange,
+  onDepthChange,
+  onAnnouncement,
   onOpen,
   onOpenHotspot,
 }: {
   model: PublishedModel;
   detail: number;
+  hotspotFilters: HotspotMapFilters;
+  onHotspotFiltersChange: (changes: Partial<HotspotMapFilters>) => void;
+  onDepthChange: (depth: number) => void;
+  onAnnouncement: (message: string) => void;
   onOpen: (id: string) => void;
   onOpenHotspot: (id: string, groupIds?: string[]) => void;
 }) {
@@ -27,12 +38,14 @@ export function Overview({
     : rootsOf(model).filter((node) => node.kind === 'business_system');
   const section = useRef<HTMLElement>(null);
   const [availableWidth, setAvailableWidth] = useState(0);
-  const [showHotspots, setShowHotspots] = useState(false);
-  const workshopRevision = model.raw.workshop?.revision;
+  const [expanded, setExpanded] = useState(false);
   useEffect(() => {
-    if (workshopRevision !== undefined) setShowHotspots(true);
-  }, [workshopRevision]);
+    const update = () => setExpanded(document.fullscreenElement === section.current);
+    document.addEventListener('fullscreenchange', update);
+    return () => document.removeEventListener('fullscreenchange', update);
+  }, []);
   const hotspots = model.raw.hotspot_catalog?.hotspots || [];
+  const visibleHotspots = filterMapHotspots(hotspots, hotspotFilters);
   useEffect(() => {
     const target = section.current;
     if (!target) return;
@@ -62,25 +75,44 @@ export function Overview({
     >
       <div className="universe-toolbar">
         <h2>Systèmes métier</h2>
-        {!!hotspots.length && (
-          <label className="hotspot-map-toggle">
-            <input type="checkbox" checked={showHotspots} onChange={(event) => setShowHotspots(event.target.checked)} />{' '}
-            Points chauds
-          </label>
-        )}
+        <div className="map-actions">
+          <MapDetailPicker labels={['Systèmes', 'Domaines', 'Sous-domaines']} value={detail} onChange={onDepthChange} />
+          {!!hotspots.length && (
+            <MapHotspotPicker
+              filters={hotspotFilters}
+              onChange={onHotspotFiltersChange}
+              scopedHotspots={hotspots}
+              visibleHotspots={visibleHotspots}
+              onOpenHotspot={onOpenHotspot}
+            />
+          )}
+          <button
+            type="button"
+            className="map-fullscreen-button"
+            aria-label={expanded ? 'Réduire la carte' : 'Étendre la carte'}
+            title={expanded ? 'Réduire la carte' : 'Étendre la carte'}
+            onClick={() => {
+              if (expanded) void document.exitFullscreen();
+              else
+                void section.current
+                  ?.requestFullscreen()
+                  .catch(() => onAnnouncement('Le plein écran est indisponible dans ce navigateur.'));
+            }}
+          >
+            {expanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+          </button>
+        </div>
       </div>
       <div
         className={`urbanisation-overview layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}
         data-layout={layout.kind}
       >
         {systems.map((system) => {
-          const systemHotspots = showHotspots
-            ? hotspots.filter((hotspot) =>
-                hotspot.location.node_ids.some(
-                  (anchor) => anchor === system.id || lineageOf(model, anchor).some((node) => node.id === system.id),
-                ),
-              )
-            : [];
+          const systemHotspots = visibleHotspots.filter((hotspot) =>
+            hotspot.location.node_ids.some(
+              (anchor) => anchor === system.id || lineageOf(model, anchor).some((node) => node.id === system.id),
+            ),
+          );
           const systemMarkers =
             systemHotspots.length > 1
               ? [

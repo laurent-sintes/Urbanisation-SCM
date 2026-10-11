@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { staticUrl } from './publication.ts';
 import type { Hotspot, PublishedModel, RawPublication } from './types.ts';
 
@@ -18,6 +18,11 @@ export interface WorkshopStage {
   base_model_sha256: string;
   revision: number;
   operations: WorkshopOperation[];
+}
+
+export interface WorkshopTableChange {
+  id: string;
+  fields: Partial<Pick<Hotspot, 'title' | 'complexity' | 'arbitration_level' | 'status'>>;
 }
 
 export const workshopUrl = () => staticUrl('__atlas__/workshop/staging.json');
@@ -71,7 +76,7 @@ export function useWorkshop(model?: PublishedModel | null, modelSha?: string) {
           throw new Error('Staging d’atelier invalide.');
         if (!stopped) {
           setStage((previous) =>
-            value.active && previous?.session_id === value.session_id && previous?.revision === value.revision
+            value.active && previous?.session_id === value.session_id && (previous?.revision ?? -1) >= value.revision
               ? previous
               : value.active
                 ? value
@@ -100,7 +105,25 @@ export function useWorkshop(model?: PublishedModel | null, modelSha?: string) {
     () => (model && active ? ({ ...model, raw: overlayWorkshop(model.raw, active) } as PublishedModel) : model),
     [model, active],
   );
-  return { stage, active, displayModel, error };
+  const saveHotspotChanges = useCallback(
+    async (changes: WorkshopTableChange[]) => {
+      if (!active) throw new Error('Aucun atelier actif sur cette publication.');
+      const response = await fetch(staticUrl('__atlas__/workshop/hotspots/batch'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'X-Atlas-Workshop': '1' },
+        body: JSON.stringify({
+          session_id: active.session_id,
+          expected_revision: active.revision,
+          changes,
+        }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || `Enregistrement impossible (HTTP ${response.status}).`);
+      setStage(result as WorkshopStage);
+    },
+    [active],
+  );
+  return { stage, active, displayModel, error, saveHotspotChanges };
 }
 
 export function downloadWorkingModel(model: PublishedModel) {

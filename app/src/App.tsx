@@ -1,4 +1,5 @@
 import {
+  ArrowLeft,
   BookOpen,
   ChevronRight,
   Compass,
@@ -18,14 +19,15 @@ import { DocumentCatalogPage } from './components/DocumentCatalogPage';
 import { GlossaryPage } from './components/GlossaryPage';
 import { HelpPage } from './components/HelpPage';
 import { HotspotCatalogPage } from './components/HotspotCatalogPage';
-import { MapDetailPicker } from './components/MapDetailPicker';
 import { MapPanel } from './components/MapPanel';
 import { MarketComparisons } from './components/MarketComparisons';
 import { ContextReturn, MetaTypeLabel, ModelLinksProvider, ModelText } from './components/ModelLinks';
 import { Overview } from './components/Overview';
 import { ScenarioCatalogPage } from './components/ScenarioCatalogPage';
 import { Sidebar } from './components/Sidebar';
+import { defaultHotspotMapFilters, type HotspotMapFilters, updateHotspotMapFilters } from './hotspotMap';
 import { NodeIcon } from './icons';
+import { mapRouteForNode } from './mapNavigation';
 import { defaultMapDepth, mapDepthLimit } from './mapProjection';
 import { activeMethod, methodEntries } from './methodNavigation';
 import { childrenOf, lineageOf, parentRelationOf, relatedTo, scopeStatistics } from './model';
@@ -123,6 +125,15 @@ export function App() {
   const [sidebarOpen, setSidebarOpen] = useState(() => preference('sidebar-open', true));
   const [width, setWidth] = useState(() => clampWidth(Number(preference('tree-width', 300))));
   const [announcement, setAnnouncement] = useState('');
+  const [hotspotFilters, setHotspotFilters] = useState<HotspotMapFilters>(defaultHotspotMapFilters);
+  const onHotspotFiltersChange = useCallback(
+    (changes: Partial<HotspotMapFilters>) => setHotspotFilters((current) => updateHotspotMapFilters(current, changes)),
+    [],
+  );
+  const workshopRevision = displayModel?.raw.workshop?.revision;
+  useEffect(() => {
+    if (workshopRevision !== undefined) setHotspotFilters((current) => ({ ...current, enabled: true }));
+  }, [workshopRevision]);
   const search = useRef<HTMLInputElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const content = useRef<HTMLDivElement>(null);
@@ -167,6 +178,8 @@ export function App() {
       : ['Domaines', 'Sous-domaines', 'Business Areas', 'Capacités', 'Comportements'];
   const parentScope =
     scope && model ? model.nodeById.get(parentRelationOf(model, scope.id)?.sourceId || '') : undefined;
+  const viewParent =
+    selected && model ? model.nodeById.get(parentRelationOf(model, selected.id)?.sourceId || '') : undefined;
   // Keep the map context stable on selection, including between double-clicks.
   const referenceView =
     view === 'scenarios' ||
@@ -442,48 +455,8 @@ export function App() {
     [changeRoute, model],
   );
   const showSelectedOnMap = useCallback(() => {
-    if (selected?.kind === 'universe') {
-      changeRoute({
-        view: 'map',
-        node: '',
-        scope: '@root',
-        mapDepth: defaultMapDepth('universe'),
-        mapFocus: '',
-        relation: '',
-        section: '',
-      });
-      return;
-    }
-    if (!model || !selected) {
-      changeRoute({
-        view: 'map',
-        node: '',
-        scope: '@root',
-        mapDepth: defaultMapDepth('universe'),
-        mapFocus: '',
-        relation: '',
-        section: '',
-      });
-      return;
-    }
-    const path = lineageOf(model, selected.id);
-    const domain = path.find((node) => node.kind === 'domain');
-    const system = path.find((node) => node.kind === 'business_system');
-    const businessArea = [...path].reverse().find((node) => node.kind === 'business_area');
-    const depth =
-      selected.kind === 'behavior'
-        ? 4
-        : ['capability', 'reference', 'business_area'].includes(selected.kind) && businessArea
-          ? 3
-          : defaultMapDepth(domain ? 'domain' : system ? 'business_system' : 'universe');
-    changeRoute({
-      view: 'map',
-      scope: domain?.id || system?.id || selected.id,
-      mapDepth: depth as 0 | 1 | 3 | 4,
-      mapFocus: depth >= 3 ? selected.id : '',
-      relation: '',
-      section: '',
-    });
+    if (model) changeRoute(mapRouteForNode(model, selected?.id || ''));
+    else changeRoute({ view: 'map', node: '', scope: '@root', mapDepth: 1, mapFocus: '', relation: '', section: '' });
   }, [changeRoute, model, selected]);
   const links = selected && model ? relatedTo(model, selected.id) : [];
   const copyLink = async () => {
@@ -912,18 +885,15 @@ export function App() {
                           </button>
                         ))}
                     </div>
-                    {view === 'map' && (
-                      <div className="map-header-controls">
-                        <MapDetailPicker
-                          labels={
-                            scope ? detailLabels.slice(0, mapMaxDepth + 1) : ['Systèmes', 'Domaines', 'Sous-domaines']
-                          }
-                          value={scope ? mapDepth : universeDepth}
-                          onChange={(depth) =>
-                            changeRoute({ view: 'map', mapDepth: depth as 0 | 1 | 2 | 3 | 4, mapFocus: '' }, true)
-                          }
-                        />
-                      </div>
+                    {selected && selected.kind !== 'universe' && (
+                      <button
+                        type="button"
+                        className="view-parent-button"
+                        onClick={() => navigate(view === 'map' ? parentScope?.id || '' : viewParent?.id || '')}
+                      >
+                        <ArrowLeft size={14} /> Remonter vers{' '}
+                        {view === 'map' ? parentScope?.name || rootName : viewParent?.name || rootName}
+                      </button>
                     )}
                   </div>
                 )}
@@ -975,7 +945,13 @@ export function App() {
                       }
                     />
                   ) : view === 'hotspots' ? (
-                    <HotspotCatalogPage model={displayModel || model} route={route} onChange={changeRoute} />
+                    <HotspotCatalogPage
+                      model={displayModel || model}
+                      route={route}
+                      onChange={changeRoute}
+                      workshopStage={catalog?.current === model.version ? workshop.active : null}
+                      onSaveWorkshopChanges={workshop.saveHotspotChanges}
+                    />
                   ) : view === 'documents' ? (
                     <DocumentCatalogPage model={displayModel || model} route={route} onChange={changeRoute} />
                   ) : view === 'scenarios' ? (
@@ -1016,11 +992,7 @@ export function App() {
                       onSelect={(term) => changeRoute({ view: 'glossary', glossary: glossaryMode, term, section: '' })}
                     />
                   ) : view === 'sheet' && selected ? (
-                    <BusinessSheet
-                      model={model}
-                      node={selected}
-                      onShowMarket={() => changeRoute({ view: 'market', relation: '', section: '' })}
-                    />
+                    <BusinessSheet model={model} node={selected} />
                   ) : view === 'market' && selected ? (
                     <article className="market-page" key={selected.id}>
                       <MarketComparisons
@@ -1051,6 +1023,12 @@ export function App() {
                     <Overview
                       model={displayModel || model}
                       detail={universeDepth}
+                      hotspotFilters={hotspotFilters}
+                      onHotspotFiltersChange={onHotspotFiltersChange}
+                      onDepthChange={(depth) =>
+                        changeRoute({ view: 'map', mapDepth: depth as 0 | 1 | 2, mapFocus: '' }, true)
+                      }
+                      onAnnouncement={setAnnouncement}
                       onOpen={openOverviewNode}
                       onOpenHotspot={(hotspot, groupIds) =>
                         changeRoute({
@@ -1069,7 +1047,8 @@ export function App() {
                       scopeId={scopeId}
                       selectedId={selected?.id || ''}
                       rootName={rootName}
-                      parentName={parentScope?.name}
+                      hotspotFilters={hotspotFilters}
+                      onHotspotFiltersChange={onHotspotFiltersChange}
                       mapDepth={mapDepth}
                       mapMaxDepth={mapMaxDepth}
                       detailLabels={detailLabels}
@@ -1077,7 +1056,6 @@ export function App() {
                       onDepthChange={(depth) =>
                         changeRoute({ view: 'map', mapDepth: depth as 0 | 1 | 2 | 3 | 4, mapFocus: '' }, true)
                       }
-                      onBack={() => navigate(parentScope?.id || '')}
                       onSelect={select}
                       onAnnouncement={setAnnouncement}
                       onOpenHotspot={(hotspot, groupIds) =>

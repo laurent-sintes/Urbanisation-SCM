@@ -58,12 +58,25 @@
 .universe-overview {
   padding-top: 18px;
 }
+.universe-overview:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  scrollbar-gutter: stable;
+  padding: 18px;
+  background: #fcfdfa;
+}
 .universe-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 6;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 16px;
+  padding: 8px 0;
+  background: #fcfdfa;
 }
 .universe-toolbar h2 {
   margin: 0;
