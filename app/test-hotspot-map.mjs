@@ -111,6 +111,10 @@ test('same filters apply to scoped and overview hotspots without mutating public
     ['g0', 'g1', 'g2'],
   );
   assert.deepEqual(
+    filterMapHotspots(graduated, { ...filters, severity: 'L', severityMode: 'at_least' }).map((item) => item.id),
+    ['g2', 'g3'],
+  );
+  assert.deepEqual(
     filterMapHotspots(graduated, { ...filters, severity: 'unassessed', severityMode: 'at_most' }).map(
       (item) => item.id,
     ),

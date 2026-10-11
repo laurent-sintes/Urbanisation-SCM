@@ -1,5 +1,5 @@
 import { ChevronDown } from 'lucide-react';
-import { useId, useState } from 'react';
+import { useState } from 'react';
 import { type HotspotMapFilters, severityForComplexities } from '../hotspotMap';
 
 const sizeOptions = [
@@ -10,7 +10,6 @@ const sizeOptions = [
   { value: 'XL', label: 'XL' },
   { value: 'unassessed', label: 'Non évaluée' },
 ];
-const rankedSizes = ['S', 'M', 'L', 'XL'];
 const typeOptions = [
   { value: 'all', label: 'Tous' },
   { value: 'scope', label: 'Périmètre' },
@@ -67,17 +66,11 @@ export function HotspotFilterFields({
   const [advancedOpen, setAdvancedOpen] = useState(
     () => filters.political !== 'all' || filters.implementation !== 'all',
   );
-  const id = useId();
   const computedSeverity = severityForComplexities(filters.political, filters.implementation);
-  const severityLimit = rankedSizes.indexOf(filters.severity);
-  const severityRange = filters.severityMode === 'at_most' && severityLimit >= 0;
-  const selectSeverity = (severity: string) => {
-    const severityMode =
-      severity === filters.severity && rankedSizes.indexOf(severity) > 0 && filters.severityMode === 'exact'
-        ? 'at_most'
-        : 'exact';
-    onChange({ severity, severityMode, enabled: true });
-  };
+  const severityChoice =
+    filters.severity === 'all' || filters.severity === 'unassessed'
+      ? filters.severity
+      : `${filters.severityMode}:${filters.severity}`;
   return (
     <div className="hotspot-filter-controls">
       {showDisplayToggle && (
@@ -92,38 +85,35 @@ export function HotspotFilterFields({
       )}
       <div className="hotspot-filter-grid">
         <div className="hotspot-filter-section">
-          <div
-            className="hotspot-filter-choice-row"
-            role="group"
-            aria-label="Criticité"
-            aria-describedby={`${id}-severity-hint`}
-          >
-            <span className="hotspot-filter-choice-label">Criticité</span>
-            <div className="hotspot-filter-options">
-              {sizeOptions.map((option) => {
-                const rank = rankedSizes.indexOf(option.value);
-                const included = severityRange && rank >= 0 && rank <= severityLimit;
-                const boundary = option.value === filters.severity;
-                return (
-                  <button
-                    type="button"
-                    key={option.value}
-                    data-value={option.value}
-                    data-boundary={boundary}
-                    data-included={included}
-                    aria-pressed={boundary || included}
-                    aria-label={included && boundary ? `${option.label} et moins critiques` : option.label}
-                    onClick={() => selectSeverity(option.value)}
-                  >
-                    {included && boundary ? `≤ ${option.label}` : option.label}
-                  </button>
-                );
-              })}
-            </div>
-            <p id={`${id}-severity-hint`} className="hotspot-filter-hint">
-              Sélectionne un niveau, puis sélectionne-le à nouveau pour inclure les niveaux inférieurs.
-            </p>
-          </div>
+          <label className="hotspot-filter-select">
+            Criticité
+            <select
+              value={severityChoice}
+              onChange={(event) => {
+                const [mode, level] = event.target.value.includes(':')
+                  ? event.target.value.split(':')
+                  : ['exact', event.target.value];
+                onChange({ severity: level, severityMode: mode as HotspotMapFilters['severityMode'], enabled: true });
+              }}
+            >
+              <option value="all">Toutes</option>
+              <optgroup label="Un niveau précis">
+                <option value="exact:S">S uniquement</option>
+                <option value="exact:M">M uniquement</option>
+                <option value="exact:L">L uniquement</option>
+                <option value="exact:XL">XL uniquement</option>
+              </optgroup>
+              <optgroup label="Ce niveau et plus critiques">
+                <option value="at_least:M">M à XL</option>
+                <option value="at_least:L">L à XL</option>
+              </optgroup>
+              <optgroup label="Ce niveau et moins critiques">
+                <option value="at_most:M">S à M</option>
+                <option value="at_most:L">S à L</option>
+              </optgroup>
+              <option value="unassessed">Non évaluée</option>
+            </select>
+          </label>
         </div>
         <div className="hotspot-filter-section">
           <FilterChoices

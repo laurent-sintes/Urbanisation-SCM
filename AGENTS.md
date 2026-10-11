@@ -65,6 +65,10 @@ Sous Windows, avant les commandes `python` ou les tests qui lancent Python en so
 
 Avant les tests Python qui créent des fichiers temporaires, utiliser un répertoire temporaire accessible dans le dépôt, car le `TEMP` Windows du bac à sable peut refuser les écritures. Dans le même processus PowerShell, avant de lancer Python : `$testTemp = Join-Path (Get-Location) '.runtime/test-temp'; New-Item -ItemType Directory -Force -Path $testTemp | Out-Null; $env:TEMP = $testTemp; $env:TMP = $testTemp`. `.runtime/` est ignoré par Git. Ne pas modifier les variables système ; fixer ces variables avant le démarrage de Python, qui mémorise le choix de son répertoire temporaire.
 
+Pour les tests HTTP de `app/test_data.py`, ajouter `app/` et la racine du dépôt au `PYTHONPATH` du processus avant `python -m unittest app.test_data` : le test importe `server` depuis `app/`. Le bac à sable Windows peut interdire les connexions vers le serveur de test sur `127.0.0.1` (`WinError 10013`) même quand le serveur a démarré. Dans ce cas, relancer uniquement ce module avec `sandbox_permissions: require_escalated` ; ne pas modifier le pare-feu ni affaiblir les tests. Garder `TEMP` et `TMP` locaux au dépôt dans la même commande.
+
+Dans le bac à sable géré, `.git/` peut être en lecture seule : `git add` échoue alors sur `index.lock` avec « Permission denied ». Pour un commit, fetch ou push autorisé par Laurent, exécuter les commandes Git qui écrivent dans `.git/` avec `sandbox_permissions: require_escalated` ; ne pas modifier les ACL de `.git/` et ne pas répéter la commande dans le même bac à sable après ce diagnostic.
+
 | Changement | Vérification et restitution |
 | --- | --- |
 | Documentation / instructions seules | Relire les liens et la cohérence ; pas de build ni d’audit métier |

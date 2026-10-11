@@ -1,5 +1,7 @@
 import { ChevronDown, Flame, Info } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import type { MouseEvent } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { documentsForHotspot, documentUrl } from '../documentCatalog';
 import {
   defaultHotspotMapFilters,
@@ -41,18 +43,30 @@ type SortKey =
 const STATUS_RANK = ['discovered', 'shared', 'validated', 'resolved'];
 type HotspotDraft = {
   title: string;
+  kind: Hotspot['kind'];
+  node_ids: string[];
   political: string;
   implementation: string;
+  rationale: string;
   status: Hotspot['status'];
+  selected_option_id: string;
+  resolution_note: string;
   arbitration_level: string;
 };
 const draftFor = (item: Hotspot): HotspotDraft => ({
   title: item.title,
+  kind: item.kind,
+  node_ids: [...item.location.node_ids],
   political: item.complexity.political,
   implementation: item.complexity.implementation,
+  rationale: item.complexity.rationale,
   status: item.status,
+  selected_option_id: item.selected_option_id || '',
+  resolution_note: item.resolution_note || '',
   arbitration_level: item.arbitration_level,
 });
+const sameDraftValue = (a: HotspotDraft[keyof HotspotDraft], b: HotspotDraft[keyof HotspotDraft]) =>
+  Array.isArray(a) && Array.isArray(b) ? JSON.stringify(a) === JSON.stringify(b) : a === b;
 
 export function HotspotCatalogPage({
   model,
@@ -83,6 +97,10 @@ export function HotspotCatalogPage({
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
   const [tooltip, setTooltip] = useState<{ id: string; left: number; top: number } | null>(null);
+  const [dialog, setDialog] = useState<{ id: string; mode: 'location' | 'resolution' | 'complexity' } | null>(null);
+  const [nodeQuery, setNodeQuery] = useState('');
+  const dialogReturnFocus = useRef<HTMLElement | null>(null);
+  const dialogFocus = useRef<HTMLElement | null>(null);
   const groupIds = new Set((route.hotspotGroup || '').split(',').filter(Boolean));
   const groupHotspots = groupIds.size ? hotspots.filter((item) => groupIds.has(item.id)) : hotspots;
   const chosen = hotspots.find((item) => item.id === route.hotspot);
@@ -92,8 +110,15 @@ export function HotspotCatalogPage({
     if (!storageKey || restoredKey === storageKey) return;
     try {
       const saved = JSON.parse(sessionStorage.getItem(storageKey) || '{}');
-      setDrafts(saved.drafts || {});
-      setDraftBases(saved.bases || {});
+      const restore = (entries: Record<string, Partial<HotspotDraft>> | undefined) =>
+        Object.fromEntries(
+          Object.entries(entries || {}).flatMap(([id, value]) => {
+            const item = hotspots.find((hotspot) => hotspot.id === id);
+            return item ? [[id, { ...draftFor(item), ...value }]] : [];
+          }),
+        ) as Record<string, HotspotDraft>;
+      setDrafts(restore(saved.drafts));
+      setDraftBases(restore(saved.bases));
       setDraftRevision(typeof saved.revision === 'number' ? saved.revision : null);
     } catch {
       setDrafts({});
@@ -101,7 +126,7 @@ export function HotspotCatalogPage({
       setDraftRevision(null);
     }
     setRestoredKey(storageKey);
-  }, [storageKey, restoredKey]);
+  }, [storageKey, restoredKey, hotspots]);
   useEffect(() => {
     if (!storageKey || restoredKey !== storageKey) return;
     if (Object.keys(drafts).length)
@@ -117,15 +142,53 @@ export function HotspotCatalogPage({
     window.addEventListener('beforeunload', warn);
     return () => window.removeEventListener('beforeunload', warn);
   }, [drafts]);
+  useEffect(() => {
+    if (!dialog) return;
+    dialogFocus.current?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setDialog(null);
+        dialogReturnFocus.current?.focus();
+      }
+      if (event.key === 'Tab') {
+        const elements = [
+          ...document.querySelectorAll<HTMLElement>(
+            '.hotspot-dialog button, .hotspot-dialog input, .hotspot-dialog select, .hotspot-dialog textarea',
+          ),
+        ].filter((element) => !element.hasAttribute('disabled'));
+        if (!elements.length) return;
+        const first = elements[0];
+        const last = elements[elements.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [dialog]);
   const effective = (item: Hotspot) => {
     const draft = drafts[item.id];
     if (!draft) return item;
     return {
       ...item,
       title: draft.title,
+      kind: draft.kind,
+      location: { ...item.location, node_ids: draft.node_ids },
       status: draft.status,
+      selected_option_id: draft.selected_option_id || undefined,
+      resolution_note: draft.resolution_note || undefined,
       arbitration_level: draft.arbitration_level,
-      complexity: { ...item.complexity, political: draft.political, implementation: draft.implementation },
+      complexity: {
+        ...item.complexity,
+        political: draft.political,
+        implementation: draft.implementation,
+        rationale: draft.rationale,
+      },
       severity: (severityForComplexities(draft.political, draft.implementation) ||
         item.severity) as Hotspot['severity'],
     };
@@ -174,14 +237,25 @@ export function HotspotCatalogPage({
     const base = draftBases[id] || draftFor(item);
     const fields: WorkshopTableChange['fields'] = {};
     if (draft.title.trim() !== base.title) fields.title = draft.title.trim();
-    if (draft.political !== base.political || draft.implementation !== base.implementation)
+    if (draft.kind !== base.kind) fields.kind = draft.kind;
+    if (!sameDraftValue(draft.node_ids, base.node_ids))
+      fields.location = { ...item.location, node_ids: draft.node_ids };
+    if (
+      draft.political !== base.political ||
+      draft.implementation !== base.implementation ||
+      draft.rationale !== base.rationale
+    )
       fields.complexity = {
         ...item.complexity,
-        political: draft.political !== base.political ? draft.political : item.complexity.political,
-        implementation:
-          draft.implementation !== base.implementation ? draft.implementation : item.complexity.implementation,
+        political: draft.political,
+        implementation: draft.implementation,
+        rationale: draft.rationale.trim(),
       };
     if (draft.status !== base.status) fields.status = draft.status;
+    if (draft.status === 'resolved') {
+      if (draft.selected_option_id !== base.selected_option_id) fields.selected_option_id = draft.selected_option_id;
+      if (draft.resolution_note.trim() !== base.resolution_note) fields.resolution_note = draft.resolution_note.trim();
+    }
     if (draft.arbitration_level !== base.arbitration_level) fields.arbitration_level = draft.arbitration_level;
     return Object.keys(fields).length ? [{ id, fields }] : [];
   });
@@ -193,19 +267,55 @@ export function HotspotCatalogPage({
     const latest = draftFor(item);
     const draft = drafts[change.id];
     return (Object.keys(draft) as (keyof HotspotDraft)[])
-      .filter((key) => draft[key] !== base[key] && latest[key] !== base[key] && latest[key] !== draft[key])
+      .filter(
+        (key) =>
+          !sameDraftValue(draft[key], base[key]) &&
+          !sameDraftValue(latest[key], base[key]) &&
+          !sameDraftValue(latest[key], draft[key]),
+      )
       .map(
         (key) =>
-          `${item.title} · ${key === 'political' ? 'politique' : key === 'implementation' ? 'implémentation' : key === 'arbitration_level' ? 'arbitrage' : key === 'status' ? 'statut' : 'titre'}`,
+          `${item.title} · ${key === 'political' ? 'politique' : key === 'implementation' ? 'implémentation' : key === 'arbitration_level' ? 'arbitrage' : key === 'status' ? 'statut' : key === 'kind' ? 'type' : key === 'node_ids' ? 'périmètre' : key === 'rationale' ? 'justification' : key === 'selected_option_id' ? 'option retenue' : key === 'resolution_note' ? 'note de résolution' : 'titre'}`,
       );
   });
-  const invalidDrafts = Object.values(drafts).some((draft) => !draft.title.trim());
-  const edit = (item: Hotspot, field: keyof HotspotDraft, value: string) => {
+  const draftErrors = Object.entries(drafts).flatMap(([id, draft]) => {
+    const item = hotspots.find((hotspot) => hotspot.id === id);
+    if (!item) return [];
+    const errors: string[] = [];
+    if (!draft.title.trim()) errors.push('titre requis');
+    if (draft.kind === 'integration' && draft.node_ids.length !== 2)
+      errors.push('deux objets requis pour une intégration');
+    if (draft.kind === 'scope' && draft.node_ids.length < 1) errors.push('un objet requis pour un périmètre');
+    if ((draft.political !== 'unassessed' || draft.implementation !== 'unassessed') && !draft.rationale.trim())
+      errors.push('justification des complexités requise');
+    if (draft.status === 'resolved') {
+      if (!item.resolution_options.some((option) => option.id === draft.selected_option_id))
+        errors.push('option retenue requise');
+      if (!draft.resolution_note.trim()) errors.push('note de résolution requise');
+    }
+    return errors.map((error) => `${item.title} : ${error}`);
+  });
+  const invalidDrafts = draftErrors.length > 0;
+  const editFields = (item: Hotspot, updates: Partial<HotspotDraft>) => {
     if (!workshopStage) return;
     if (draftRevision === null) setDraftRevision(workshopStage.revision);
     setDraftBases((current) => (current[item.id] ? current : { ...current, [item.id]: draftFor(item) }));
-    setDrafts((current) => ({ ...current, [item.id]: { ...(current[item.id] || draftFor(item)), [field]: value } }));
+    setDrafts((current) => ({ ...current, [item.id]: { ...(current[item.id] || draftFor(item)), ...updates } }));
     setSaveMessage('');
+  };
+  const edit = (item: Hotspot, field: keyof HotspotDraft, value: string) => editFields(item, { [field]: value });
+  const openDialog = (
+    event: MouseEvent<HTMLElement>,
+    item: Hotspot,
+    mode: 'location' | 'resolution' | 'complexity',
+  ) => {
+    dialogReturnFocus.current = event.currentTarget;
+    setNodeQuery('');
+    setDialog({ id: item.id, mode });
+  };
+  const closeDialog = () => {
+    setDialog(null);
+    dialogReturnFocus.current?.focus();
   };
   const save = async () => {
     if (!changes.length || staleDrafts || invalidDrafts || saving) return;
@@ -240,7 +350,7 @@ export function HotspotCatalogPage({
               Object.fromEntries(
                 (Object.keys(draft) as (keyof HotspotDraft)[]).map((key) => [
                   key,
-                  draft[key] !== base[key] ? draft[key] : latest[key],
+                  !sameDraftValue(draft[key], base[key]) ? draft[key] : latest[key],
                 ]),
               ) as HotspotDraft,
             ],
@@ -366,6 +476,11 @@ export function HotspotCatalogPage({
           </button>
         </div>
       )}
+      {draftErrors.length > 0 && (
+        <p className="hotspot-draft-errors" role="alert">
+          {draftErrors.join(' · ')}
+        </p>
+      )}
       {saveMessage && (
         <p className="hotspot-save-message" role="status">
           {saveMessage}
@@ -421,6 +536,18 @@ export function HotspotCatalogPage({
           </dl>
           <p>{publicText(chosen.complexity.rationale)}</p>
           {chosen.arbitration_note && <p>{publicText(chosen.arbitration_note)}</p>}
+          {chosen.status === 'resolved' && chosen.selected_option_id && (
+            <p>
+              <strong>Option retenue :</strong>{' '}
+              {chosen.resolution_options.find((option) => option.id === chosen.selected_option_id)?.title ||
+                chosen.selected_option_id}
+            </p>
+          )}
+          {chosen.status === 'resolved' && chosen.resolution_note && (
+            <p>
+              <strong>Décision :</strong> {publicText(chosen.resolution_note)}
+            </p>
+          )}
           <h4>Lecture du marché</h4>
           {chosen.market_view ? (
             <section className="hotspot-market">
@@ -539,63 +666,92 @@ export function HotspotCatalogPage({
                 return (
                   <tr key={item.id} className={changes.some((change) => change.id === item.id) ? 'is-draft' : ''}>
                     <td className="hotspot-table-subject">
-                      {canEdit ? (
-                        <input
-                          aria-label={`Titre de ${item.title}`}
-                          value={draft.title}
-                          onChange={(event) => edit(item, 'title', event.target.value)}
-                        />
-                      ) : (
-                        <button
-                          type="button"
-                          className="hotspot-title-button"
-                          aria-describedby={tooltip?.id === item.id ? `hotspot-summary-${item.id}` : undefined}
-                          onClick={() => onChange({ hotspot: item.id })}
-                          onMouseEnter={(event) => showTooltip(event.currentTarget, item.id)}
-                          onMouseLeave={() => setTooltip(null)}
-                          onFocus={(event) => showTooltip(event.currentTarget, item.id)}
-                          onBlur={() => setTooltip(null)}
-                        >
-                          {item.title}
-                        </button>
-                      )}
-                      <span className="hotspot-subject-tools">
-                        {item.workshop && <small>Atelier</small>}
-                        <span className="hotspot-subject-info">
+                      <div className="hotspot-subject-line">
+                        {canEdit ? (
+                          <input
+                            aria-label={`Titre de ${item.title}`}
+                            value={draft.title}
+                            onChange={(event) => edit(item, 'title', event.target.value)}
+                          />
+                        ) : (
                           <button
                             type="button"
-                            aria-label={`Résumé de ${item.title}`}
+                            className="hotspot-title-button"
                             aria-describedby={tooltip?.id === item.id ? `hotspot-summary-${item.id}` : undefined}
+                            onClick={() => onChange({ hotspot: item.id })}
                             onMouseEnter={(event) => showTooltip(event.currentTarget, item.id)}
                             onMouseLeave={() => setTooltip(null)}
                             onFocus={(event) => showTooltip(event.currentTarget, item.id)}
                             onBlur={() => setTooltip(null)}
                           >
-                            <Info size={15} aria-hidden="true" />
+                            {item.title}
                           </button>
-                          {tooltip?.id === item.id && (
-                            <span
-                              id={`hotspot-summary-${item.id}`}
-                              role="tooltip"
-                              className="hotspot-subject-tooltip"
-                              style={{ left: tooltip.left, top: tooltip.top }}
+                        )}
+                        <span className="hotspot-subject-tools">
+                          {item.workshop && <small>Atelier</small>}
+                          <span className="hotspot-subject-info">
+                            <button
+                              type="button"
+                              aria-label={`Résumé de ${item.title}`}
+                              aria-describedby={tooltip?.id === item.id ? `hotspot-summary-${item.id}` : undefined}
+                              onMouseEnter={(event) => showTooltip(event.currentTarget, item.id)}
+                              onMouseLeave={() => setTooltip(null)}
+                              onFocus={(event) => showTooltip(event.currentTarget, item.id)}
+                              onBlur={() => setTooltip(null)}
                             >
-                              <strong>Problème</strong>
-                              {item.problem}
-                              {item.examples[0] && (
-                                <span>
-                                  <strong>Exemple</strong>
-                                  {item.examples[0]}
-                                </span>
-                              )}
-                            </span>
-                          )}
+                              <Info size={15} aria-hidden="true" />
+                            </button>
+                            {tooltip?.id === item.id && (
+                              <span
+                                id={`hotspot-summary-${item.id}`}
+                                role="tooltip"
+                                className="hotspot-subject-tooltip"
+                                style={{ left: tooltip.left, top: tooltip.top }}
+                              >
+                                <strong>Problème</strong>
+                                {item.problem}
+                                {item.examples[0] && (
+                                  <span>
+                                    <strong>Exemple</strong>
+                                    {item.examples[0]}
+                                  </span>
+                                )}
+                              </span>
+                            )}
+                          </span>
                         </span>
-                      </span>
+                      </div>
                     </td>
-                    <td>{item.kind === 'integration' ? 'Intégration' : 'Périmètre'}</td>
+                    <td>
+                      {canEdit ? (
+                        <button
+                          type="button"
+                          className="hotspot-cell-edit"
+                          onClick={(event) => openDialog(event, item, 'location')}
+                          aria-label={`Modifier le type et le périmètre de ${item.title}`}
+                        >
+                          {draft.kind === 'integration' ? 'Intégration' : 'Périmètre'}
+                        </button>
+                      ) : item.kind === 'integration' ? (
+                        'Intégration'
+                      ) : (
+                        'Périmètre'
+                      )}
+                    </td>
                     <td className="hotspot-table-scope">
-                      {item.location.node_ids.map((id) => model.nodeById.get(id)?.name || id).join(' · ')}
+                      {canEdit ? (
+                        <button
+                          type="button"
+                          className="hotspot-cell-edit"
+                          onClick={(event) => openDialog(event, item, 'location')}
+                          aria-label={`Modifier le périmètre de ${item.title}`}
+                        >
+                          {draft.node_ids.map((id) => model.nodeById.get(id)?.name || id).join(' · ') ||
+                            'Choisir un objet'}
+                        </button>
+                      ) : (
+                        item.location.node_ids.map((id) => model.nodeById.get(id)?.name || id).join(' · ')
+                      )}
                     </td>
                     <td>
                       <span className={`hotspot-table-criticality severity-${severity}`}>
@@ -604,17 +760,28 @@ export function HotspotCatalogPage({
                     </td>
                     <td>
                       {canEdit ? (
-                        <select
-                          aria-label={`Complexité politique de ${item.title}`}
-                          value={draft.political}
-                          onChange={(event) => edit(item, 'political', event.target.value)}
-                        >
-                          {['S', 'M', 'L', 'XL', 'unassessed'].map((level) => (
-                            <option key={level} value={level}>
-                              {SIZE(level)}
-                            </option>
-                          ))}
-                        </select>
+                        <div className="hotspot-complexity-cell">
+                          <select
+                            aria-label={`Complexité politique de ${item.title}`}
+                            value={draft.political}
+                            onChange={(event) => edit(item, 'political', event.target.value)}
+                          >
+                            {['S', 'M', 'L', 'XL', 'unassessed'].map((level) => (
+                              <option key={level} value={level}>
+                                {SIZE(level)}
+                              </option>
+                            ))}
+                          </select>
+                          <button
+                            type="button"
+                            className="hotspot-cell-detail"
+                            aria-label={`Justifier les complexités de ${item.title}`}
+                            title="Justifier les complexités"
+                            onClick={(event) => openDialog(event, item, 'complexity')}
+                          >
+                            …
+                          </button>
+                        </div>
                       ) : (
                         SIZE(item.complexity.political)
                       )}
@@ -637,15 +804,40 @@ export function HotspotCatalogPage({
                       )}
                     </td>
                     <td>
-                      {canEdit && ['discovered', 'shared'].includes(item.status) ? (
-                        <select
-                          aria-label={`Statut de ${item.title}`}
-                          value={draft.status}
-                          onChange={(event) => edit(item, 'status', event.target.value)}
-                        >
-                          <option value="discovered">Découvert</option>
-                          <option value="shared">Partagé</option>
-                        </select>
+                      {canEdit ? (
+                        <div className="hotspot-status-cell">
+                          <select
+                            aria-label={`Statut de ${item.title}`}
+                            value={draft.status}
+                            onChange={(event) => {
+                              const status = event.target.value as Hotspot['status'];
+                              editFields(
+                                item,
+                                status === 'resolved'
+                                  ? { status }
+                                  : { status, selected_option_id: '', resolution_note: '' },
+                              );
+                              if (status === 'resolved')
+                                openDialog(event as unknown as MouseEvent<HTMLElement>, item, 'resolution');
+                            }}
+                          >
+                            <option value="discovered">Découvert</option>
+                            <option value="shared">Partagé</option>
+                            <option value="validated">Validé</option>
+                            <option value="resolved">Résolu</option>
+                          </select>
+                          {draft.status === 'resolved' && (
+                            <button
+                              type="button"
+                              className="hotspot-cell-detail"
+                              onClick={(event) => openDialog(event, item, 'resolution')}
+                              aria-label={`Renseigner la résolution de ${item.title}`}
+                              title="Option retenue et note de résolution"
+                            >
+                              …
+                            </button>
+                          )}
+                        </div>
                       ) : (
                         STATUS[item.status]
                       )}
@@ -690,6 +882,195 @@ export function HotspotCatalogPage({
           </table>
         </div>
       )}
+      {dialog &&
+        (() => {
+          const item = hotspots.find((hotspot) => hotspot.id === dialog.id);
+          if (!item) return null;
+          const draft = drafts[item.id] || draftFor(item);
+          const nodes = [...model.nodeById.values()]
+            .filter(
+              (node) =>
+                node.kind !== 'universe' &&
+                `${node.name} ${node.displayCode || ''}`
+                  .toLocaleLowerCase('fr')
+                  .includes(nodeQuery.toLocaleLowerCase('fr')),
+            )
+            .slice(0, 80);
+          return createPortal(
+            <div className="hotspot-dialog-backdrop">
+              <section
+                className="hotspot-dialog"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="hotspot-dialog-title"
+              >
+                <header>
+                  <div>
+                    <h3 id="hotspot-dialog-title">
+                      {dialog.mode === 'location'
+                        ? 'Type et périmètre'
+                        : dialog.mode === 'resolution'
+                          ? 'Résolution'
+                          : 'Complexités'}{' '}
+                      · {item.title}
+                    </h3>
+                    <p>Modifications en attente du bouton « Valider les modifications ».</p>
+                  </div>
+                  <button type="button" onClick={closeDialog} aria-label="Fermer">
+                    ×
+                  </button>
+                </header>
+                {dialog.mode === 'location' && (
+                  <div className="hotspot-dialog-body">
+                    <label>
+                      Type{' '}
+                      <select
+                        ref={(element) => {
+                          dialogFocus.current = element;
+                        }}
+                        value={draft.kind}
+                        onChange={(event) => editFields(item, { kind: event.target.value as Hotspot['kind'] })}
+                      >
+                        <option value="scope">Périmètre</option>
+                        <option value="integration">Intégration</option>
+                      </select>
+                    </label>
+                    <p>
+                      {draft.kind === 'integration'
+                        ? 'Choisis exactement deux objets entre lesquels se situe le sujet.'
+                        : 'Choisis au moins un objet concerné.'}
+                    </p>
+                    <div className="hotspot-selected-nodes">
+                      {draft.node_ids.map((id) => (
+                        <button
+                          type="button"
+                          key={id}
+                          onClick={() => editFields(item, { node_ids: draft.node_ids.filter((value) => value !== id) })}
+                          aria-label={`Retirer ${model.nodeById.get(id)?.name || id}`}
+                        >
+                          {model.nodeById.get(id)?.name || id} ×
+                        </button>
+                      ))}
+                    </div>
+                    <label>
+                      Rechercher un objet{' '}
+                      <input
+                        type="search"
+                        value={nodeQuery}
+                        onChange={(event) => setNodeQuery(event.target.value)}
+                        placeholder="Nom ou code…"
+                      />
+                    </label>
+                    <div className="hotspot-node-options" role="group" aria-label="Objets du modèle">
+                      {nodes.map((node) => (
+                        <label key={node.id}>
+                          <input
+                            type="checkbox"
+                            checked={draft.node_ids.includes(node.id)}
+                            onChange={() =>
+                              editFields(item, {
+                                node_ids: draft.node_ids.includes(node.id)
+                                  ? draft.node_ids.filter((id) => id !== node.id)
+                                  : [...draft.node_ids, node.id],
+                              })
+                            }
+                          />{' '}
+                          <span>
+                            {node.name}
+                            <small>
+                              {node.kind} · {node.displayCode || node.id}
+                            </small>
+                          </span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {dialog.mode === 'resolution' && (
+                  <div className="hotspot-dialog-body">
+                    <label>
+                      Option retenue{' '}
+                      <select
+                        ref={(element) => {
+                          dialogFocus.current = element;
+                        }}
+                        value={draft.selected_option_id}
+                        onChange={(event) => edit(item, 'selected_option_id', event.target.value)}
+                      >
+                        <option value="">Choisir une option…</option>
+                        {item.resolution_options.map((option) => (
+                          <option key={option.id} value={option.id}>
+                            {option.title}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    {item.resolution_options.length === 0 && (
+                      <p>Aucune option n’est documentée. Ajoute d’abord une option avec Codex.</p>
+                    )}
+                    <label>
+                      Note de résolution{' '}
+                      <textarea
+                        value={draft.resolution_note}
+                        onChange={(event) => edit(item, 'resolution_note', event.target.value)}
+                        placeholder="Décision, portée et conditions retenues…"
+                        rows={5}
+                      />
+                    </label>
+                  </div>
+                )}
+                {dialog.mode === 'complexity' && (
+                  <div className="hotspot-dialog-body">
+                    <p>La criticité est calculée à partir des deux complexités.</p>
+                    <label>
+                      Complexité politique{' '}
+                      <select
+                        ref={(element) => {
+                          dialogFocus.current = element;
+                        }}
+                        value={draft.political}
+                        onChange={(event) => edit(item, 'political', event.target.value)}
+                      >
+                        {SIZE_RANK.map((level) => (
+                          <option key={level} value={level}>
+                            {SIZE(level)}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <label>
+                      Complexité d’implémentation{' '}
+                      <select
+                        value={draft.implementation}
+                        onChange={(event) => edit(item, 'implementation', event.target.value)}
+                      >
+                        {SIZE_RANK.map((level) => (
+                          <option key={level} value={level}>
+                            {SIZE(level)}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <label>
+                      Justification{' '}
+                      <textarea
+                        value={draft.rationale}
+                        onChange={(event) => edit(item, 'rationale', event.target.value)}
+                        rows={5}
+                      />
+                    </label>
+                  </div>
+                )}
+                <footer>
+                  <button type="button" onClick={closeDialog}>
+                    Terminer
+                  </button>
+                </footer>
+              </section>
+            </div>,
+            document.body,
+          );
+        })()}
     </section>
   );
 }

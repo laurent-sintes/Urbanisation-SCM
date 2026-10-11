@@ -240,6 +240,7 @@ export interface Hotspot {
   arbitration_note?: string;
   status: 'discovered' | 'shared' | 'validated' | 'resolved';
   selected_option_id?: string;
+  resolution_note?: string;
   source_status?: string;
   source_refs: string[];
   origin: { repository: string; path: string; id: string; source_id: string; evidence_limit: string };

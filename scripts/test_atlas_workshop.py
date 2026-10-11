@@ -111,7 +111,7 @@ class WorkshopTests(unittest.TestCase):
         batch = {'session_id': stage['session_id'], 'expected_revision': 2,
                  'changes': [
                      {'id': 'AT-HS-001', 'fields': {'title': 'Premier précisé', 'complexity': {
-                         'political': 'XL', 'implementation': 'L', 'rationale': ''}}},
+                         'political': 'XL', 'implementation': 'L', 'rationale': 'Décision transverse.'}}},
                      {'id': 'AT-HS-002', 'fields': {'status': 'shared'}},
                  ]}
         result = apply_table_changes(self.root, batch)
@@ -125,11 +125,37 @@ class WorkshopTests(unittest.TestCase):
             apply_table_changes(self.root, stale)
         invalid = {'session_id': stage['session_id'], 'expected_revision': 4,
                    'changes': [{'id': 'AT-HS-001', 'fields': {'title': 'Ne pas écrire'}},
-                               {'id': 'AT-HS-002', 'fields': {'status': 'validated'}}]}
-        with self.assertRaisesRegex(ValueError, 'ne peut pas valider'):
+                               {'id': 'AT-HS-002', 'fields': {'status': 'resolved'}}]}
+        with self.assertRaisesRegex(ValueError, 'option retenue'):
             apply_table_changes(self.root, invalid)
         self.assertEqual(load_stage(self.root)['revision'], 4)
         self.assertEqual(effective_hotspots(model, load_stage(self.root))['AT-HS-001']['title'], 'Premier précisé')
+
+    def test_table_coordinates_type_location_and_resolution(self):
+        model, model_sha = publication(self.root)
+        stage = current_stage(self.root, model, model_sha)
+        apply_request(self.root, {'expected_revision': 0, 'entity': 'hotspot', 'action': 'add',
+                                  'verbatim': 'Ajoute une question de périmètre.',
+                                  'fields': {'title': 'Coordination', 'problem': 'Qui agit ?',
+                                             'location': {'node_ids': ['logistics']},
+                                             'resolution_options': [{'id': 'opt-1', 'title': 'Clarifier',
+                                                                     'principle': 'Fixer le contrat.',
+                                                                     'implementation_complexity': 'S',
+                                                                     'evidence_state': 'hypothesis'}]}})
+        result = apply_table_changes(self.root, {'session_id': stage['session_id'], 'expected_revision': 1,
+            'changes': [{'id': 'AT-HS-001', 'fields': {
+                'kind': 'integration', 'location': {'node_ids': ['logistics', 'orchestration']},
+                'status': 'resolved', 'selected_option_id': 'opt-1',
+                'resolution_note': 'Contrat retenu pour la séance.'}}]})
+        item = effective_hotspots(model, result)['AT-HS-001']
+        self.assertEqual(item['kind'], 'integration')
+        self.assertEqual(item['selected_option_id'], 'opt-1')
+        self.assertEqual(item['status'], 'resolved')
+        result = apply_table_changes(self.root, {'session_id': stage['session_id'], 'expected_revision': 2,
+            'changes': [{'id': 'AT-HS-001', 'fields': {'status': 'validated'}}]})
+        item = effective_hotspots(model, result)['AT-HS-001']
+        self.assertNotIn('selected_option_id', item)
+        self.assertNotIn('resolution_note', item)
 
 
 if __name__ == '__main__':

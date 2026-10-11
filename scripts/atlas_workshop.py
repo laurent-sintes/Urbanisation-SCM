@@ -26,7 +26,8 @@ STAGING = Path('.runtime/atlas-atelier/staging.json')
 LEVELS = ('S', 'M', 'L', 'XL')
 EDITABLE = {'title', 'problem', 'kind', 'location', 'examples', 'market_view', 'resolution_options',
             'complexity', 'arbitration_level', 'arbitration_note', 'status'}
-TABLE_EDITABLE = {'title', 'complexity', 'arbitration_level', 'status'}
+TABLE_EDITABLE = {'title', 'kind', 'location', 'complexity', 'arbitration_level', 'status',
+                  'selected_option_id', 'resolution_note'}
 
 
 class StageConflictError(ValueError):
@@ -171,6 +172,20 @@ def checked_hotspot(value, nodes):
         raise ValueError('Options de résolution incomplètes.')
     if len({option['id'] for option in options}) != len(options):
         raise ValueError('Identifiants d’options dupliqués.')
+    selected = value.get('selected_option_id')
+    if selected is not None and not isinstance(selected, str):
+        raise ValueError('L’option de résolution retenue doit être un identifiant.')
+    if 'resolution_note' in value and not isinstance(value['resolution_note'], str):
+        raise ValueError('La note de résolution doit être un texte.')
+    if selected and selected not in {option['id'] for option in options}:
+        raise ValueError('L’option de résolution retenue est absente de la fiche.')
+    if value['status'] == 'resolved' and (not selected or not isinstance(value.get('resolution_note'), str)
+                                          or not value['resolution_note'].strip()):
+        raise ValueError('Un point chaud résolu exige une option retenue et une note de résolution.')
+    if value['status'] != 'resolved' and selected:
+        raise ValueError('Une option retenue exige le statut résolu.')
+    if any(complexity[axis] != 'unassessed' for axis in ('political', 'implementation')) and not complexity['rationale'].strip():
+        raise ValueError('Une complexité évaluée exige une justification.')
     return value
 
 
@@ -287,10 +302,13 @@ def apply_table_changes(root, request):
             if 'complexity' in fields and (not isinstance(fields['complexity'], dict)
                                            or set(fields['complexity']) != {'political', 'implementation', 'rationale'}):
                 raise ValueError('Complexité de tableau invalide.')
-            if 'status' in fields and fields['status'] not in ('discovered', 'shared'):
-                raise ValueError('L’atelier ne peut pas valider ni résoudre un point chaud.')
+            if 'status' in fields and fields['status'] not in ('discovered', 'shared', 'validated', 'resolved'):
+                raise ValueError('Statut de tableau inconnu.')
             value = json.loads(json.dumps(items[identifier]))
             value.update(fields)
+            if 'status' in fields and fields['status'] != 'resolved':
+                value.pop('selected_option_id', None)
+                value.pop('resolution_note', None)
             checked_hotspot(value, nodes)
             if identifier in published:
                 value['origin'] = {'repository': 'Atelier Atlas', 'path': str(STAGING).replace('\\', '/'),

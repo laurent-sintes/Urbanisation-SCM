@@ -22,7 +22,19 @@ export interface WorkshopStage {
 
 export interface WorkshopTableChange {
   id: string;
-  fields: Partial<Pick<Hotspot, 'title' | 'complexity' | 'arbitration_level' | 'status'>>;
+  fields: Partial<
+    Pick<
+      Hotspot,
+      | 'title'
+      | 'kind'
+      | 'location'
+      | 'complexity'
+      | 'arbitration_level'
+      | 'status'
+      | 'selected_option_id'
+      | 'resolution_note'
+    >
+  >;
 }
 
 export const workshopUrl = () => staticUrl('__atlas__/workshop/staging.json');

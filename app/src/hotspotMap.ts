@@ -21,7 +21,7 @@ export function severityForComplexities(political: string, implementation: strin
 export interface HotspotMapFilters {
   enabled: boolean;
   severity: string;
-  severityMode: 'exact' | 'at_most';
+  severityMode: 'exact' | 'at_most' | 'at_least';
   kind: string;
   status: string;
   political: string;
@@ -58,7 +58,9 @@ export function filterMapHotspots(hotspots: Hotspot[], filters: HotspotMapFilter
       (filters.severity === 'all' ||
         (filters.severityMode === 'at_most' && selectedRank >= 0
           ? LEVELS.indexOf(hotspot.severity) >= 0 && LEVELS.indexOf(hotspot.severity) <= selectedRank
-          : hotspot.severity === filters.severity)) &&
+          : filters.severityMode === 'at_least' && selectedRank >= 0
+            ? LEVELS.indexOf(hotspot.severity) >= selectedRank
+            : hotspot.severity === filters.severity)) &&
       (filters.kind === 'all' || hotspot.kind === filters.kind) &&
       (filters.status === 'all' || hotspot.status === filters.status) &&
       (filters.political === 'all' || hotspot.complexity.political === filters.political) &&

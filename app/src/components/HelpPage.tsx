@@ -57,8 +57,9 @@ export function HelpPage({
             </li>
             <li>
               Demander à Codex d’ajouter ou retirer un point chaud, ou de modifier sa fiche. Pour les attributs du
-              tableau « Points chauds », les saisir directement puis choisir « Valider les modifications ». Atlas les
-              montre sur la carte sans release.
+              tableau « Points chauds », les saisir directement ; une fenêtre réunit les champs liés (type et périmètre,
+              résolution et décision, complexités et justification). Choisir ensuite « Valider les modifications ».
+              Atlas les montre sur la carte sans release.
             </li>
             <li>Télécharger le staging et le modèle de travail avant de terminer la séance.</li>
             <li>Clôturer la séance avec Codex après avoir conservé le staging.</li>
