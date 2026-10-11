@@ -63,6 +63,8 @@ Choisir les contrôles selon les fichiers effectivement modifiés ; les lignes a
 
 Sous Windows, avant les commandes `python` ou les tests qui lancent Python en sous-processus, vérifier `python --version`. Si `python` pointe d’abord vers un alias WindowsApps inaccessible, sélectionner un interpréteur installé avec `Get-Command python -All` et placer son dossier en tête du `PATH` du processus courant. Vérifier à nouveau `python --version` ; ne pas modifier le `PATH` système.
 
+Avant les tests Python qui créent des fichiers temporaires, utiliser un répertoire temporaire accessible dans le dépôt, car le `TEMP` Windows du bac à sable peut refuser les écritures. Dans le même processus PowerShell, avant de lancer Python : `$testTemp = Join-Path (Get-Location) '.runtime/test-temp'; New-Item -ItemType Directory -Force -Path $testTemp | Out-Null; $env:TEMP = $testTemp; $env:TMP = $testTemp`. `.runtime/` est ignoré par Git. Ne pas modifier les variables système ; fixer ces variables avant le démarrage de Python, qui mémorise le choix de son répertoire temporaire.
+
 | Changement | Vérification et restitution |
 | --- | --- |
 | Documentation / instructions seules | Relire les liens et la cohérence ; pas de build ni d’audit métier |
