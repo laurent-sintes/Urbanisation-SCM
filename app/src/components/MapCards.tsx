@@ -25,6 +25,7 @@ type Card = Node<
     onRead: (id: string) => void;
     highlighted: boolean;
     muted: boolean;
+    hotspotRelatedIds?: string[];
   },
   'business'
 >;
@@ -76,7 +77,7 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
         node={child}
         itemId={child.id}
         selected={data.selectedId === child.id}
-        className={`card-child-link ${child.kind === 'reference' ? 'reference-link' : child.kind === 'behavior' ? 'behavior-link' : 'capacity-link'}`}
+        className={`card-child-link ${child.kind === 'reference' ? 'reference-link' : child.kind === 'behavior' ? 'behavior-link' : 'capacity-link'}${data.hotspotRelatedIds?.includes(child.id) ? ' hotspot-related-item' : ''}`}
         onClick={() => data.onRead(child.id)}
       >
         <NodeIcon node={child} size={16} />
@@ -108,7 +109,10 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
     list.items.map((child, index) =>
       child.kind === 'business_area' && list.businessAreaChildren ? (
         <li key={child.id} className="business-area-list-group">
-          <div className="category-list-banner" data-business-area-summary={child.id}>
+          <div
+            className={`category-list-banner${data.hotspotRelatedIds?.includes(child.id) ? ' hotspot-related-item' : ''}`}
+            data-business-area-summary={child.id}
+          >
             <MapNodeButton
               node={child}
               className="nodrag nopan"

@@ -9,7 +9,8 @@ export type View =
   | 'metamodel'
   | 'help'
   | 'scenarios'
-  | 'hotspots';
+  | 'hotspots'
+  | 'documents';
 export interface GraphRoute {
   graphLevel?: 'capability' | 'business_area' | 'area' | 'domain' | 'business_system' | 'universe';
   graphDepth?: 0 | 1 | 2 | 3;
@@ -41,6 +42,8 @@ export interface RouteState extends GraphRoute {
   scroll?: string;
   scenario?: string;
   hotspot?: string;
+  hotspotGroup?: string;
+  document?: string;
   helpTopic?: 'start' | 'workshop';
   stream?: string;
   path?: string;
@@ -93,6 +96,7 @@ export function readRoute(hash: string): RouteState {
       'help',
       'scenarios',
       'hotspots',
+      'documents',
     ].includes(view || '')
       ? (view as View)
       : undefined,
@@ -117,6 +121,8 @@ export function readRoute(hash: string): RouteState {
         .map((k) => [k, p.get(k) || '']),
     ),
     ...(view === 'hotspots' && p.has('hotspot') ? { hotspot: p.get('hotspot') || '' } : {}),
+    ...(view === 'hotspots' && p.has('group') ? { hotspotGroup: p.get('group') || '' } : {}),
+    ...(view === 'documents' && p.has('document') ? { document: p.get('document') || '' } : {}),
     ...(view === 'help' && p.get('topic') === 'workshop' ? { helpTopic: 'workshop' as const } : {}),
     version: p.get('version') || '',
     query: p.get('q') || '',
@@ -143,6 +149,8 @@ export function routePath(route: RouteState, model?: PublishedModel | null): str
         }
       : {}),
     hotspot: route.view === 'hotspots' ? route.hotspot : undefined,
+    group: route.view === 'hotspots' ? route.hotspotGroup : undefined,
+    document: route.view === 'documents' ? route.document : undefined,
     topic: route.view === 'help' && route.helpTopic === 'workshop' ? 'workshop' : undefined,
     version: route.version,
     node: route.node,

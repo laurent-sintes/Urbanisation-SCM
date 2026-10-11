@@ -75,7 +75,7 @@ class WorkshopImportTests(unittest.TestCase):
                                   'fields': {'problem': 'Nouvelle question d’atelier.'}})
         backlog_path = self.root / 'modeles/backlog/model.yaml'
         model = structured_io.read(backlog_path)
-        model['hotspot_catalog']['hotspots'][0]['problem'] = 'Autre correction du backlog.'
+        next(item for item in model['hotspot_catalog']['hotspots'] if item['id'] == 'HS-002')['problem'] = 'Autre correction du backlog.'
         backlog_path.write_text(structured_io.dumps(model), encoding='utf-8')
         plan = preview(self.root, stage_path(self.root))
         self.assertIn('problem', plan['changes'][0]['conflicts'])

@@ -21,6 +21,7 @@ from scripts.git_history import batch_reader
 from app.modeling_guide import _load_associated_guide
 from scripts.atlas_metamodel import describe_metamodel
 from scripts.atlas_documentation import separate_documentation
+from scripts.document_catalog import asset_bytes
 from scripts.structured_io import dumps as dump_yaml, read as read_document
 
 
@@ -82,6 +83,8 @@ def _export_atlas(root, destinations):
             relative = f'{version}/{name}.json'
             files[relative] = payload
             entry[name + '_sha256'] = hashlib.sha256(payload).hexdigest()
+        for document in raw.get('document_catalog', {}).get('documents', []):
+            files[f"{version}/documents/{document['id']}.pdf"] = asset_bytes(root, document)
         serialization_seconds += perf_counter() - step
     if index_path.read_bytes() != before:
         raise ValueError('Publication index changed during static export; retry.')

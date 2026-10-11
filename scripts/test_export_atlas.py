@@ -61,6 +61,39 @@ class StaticExportTests(unittest.TestCase):
         export_atlas(self.root, [self.output])
         self.assertEqual(before, {p: p.stat().st_mtime_ns for p in before})
 
+    def test_document_asset_is_exported_with_its_publication(self):
+        version = '2026-09-25.1'
+        payload = b'%PDF-1.4\n1 0 obj\n<<>>\nendobj\n%%EOF\n'
+        digest = hashlib.sha256(payload).hexdigest()
+        asset = self.root / 'modeles/documents' / f'{digest}.pdf'
+        asset.parent.mkdir(parents=True)
+        asset.write_bytes(payload)
+        model_path = self.release / version / 'model.json'
+        model = json.loads(model_path.read_bytes())
+        model['document_catalog'] = {'schema_version': 1, 'source_refs': ['U946'], 'documents': [{
+            'id': 'DOC001', 'title': 'Test', 'summary': 'Test', 'context': 'Test', 'category': 'analysis',
+            'asset': {'path': f'modeles/documents/{digest}.pdf', 'sha256': digest,
+                      'media_type': 'application/pdf'}, 'source_refs': ['U946'],
+            'review': {'state': 'proposed', 'note': 'Test'},
+        }]}
+        model_payload = encoded(model)
+        model_path.write_bytes(model_payload)
+        descriptor_path = self.release / f'{version}.json'
+        descriptor = json.loads(descriptor_path.read_bytes())
+        descriptor['sha256'] = hashlib.sha256(model_payload).hexdigest()
+        descriptor_payload = encoded(descriptor)
+        descriptor_path.write_bytes(descriptor_payload)
+        index_path = self.release / 'index.json'
+        index = json.loads(index_path.read_bytes())
+        index['publications'][0]['sha256'] = hashlib.sha256(descriptor_payload).hexdigest()
+        index_path.write_bytes(encoded(index))
+
+        export_atlas(self.root, [self.output])
+        self.assertEqual((self.output / version / 'documents/DOC001.pdf').read_bytes(), payload)
+        asset.write_bytes(b'%PDF-1.4\ntampered')
+        with self.assertRaisesRegex(ValueError, 'fingerprint or format differs'):
+            export_atlas(self.root, [self.output])
+
     def test_metamodel_describes_object_semantics_and_observed_relations(self):
         from scripts.atlas_metamodel import describe_metamodel
         model = {

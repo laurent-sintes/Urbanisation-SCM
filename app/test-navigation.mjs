@@ -38,6 +38,13 @@ test('help topics keep the selected publication and clear model selection', () =
   assert.equal(readRoute('#/help?topic=unknown').helpTopic, undefined);
 });
 
+test('a hotspot group keeps only its published selection in the catalog route', () => {
+  const route = readRoute('#/hotspots?version=2026-10-10.1&group=HS-003%2CHS-012');
+  assert.equal(route.hotspotGroup, 'HS-003,HS-012');
+  assert.deepEqual(readRoute(routeHash(route)), route);
+  assert.ok(!routeHash({ ...route, view: 'map' }).includes('group='));
+});
+
 test('unknown query keys do not restrict a search invisibly', () => {
   const route = readRoute('#/map?version=2026-09-19.6&node=D04&q=order&type=capability');
   assert.deepEqual(route, readRoute('#/map?version=2026-09-19.6&node=D04&q=order'));

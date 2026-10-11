@@ -153,6 +153,11 @@ def validate_urbanism(model, sources, schema=None):
     except ImportError:
         from hotspot_catalog import validate_catalog as validate_hotspots
     errors.extend(validate_hotspots(model))
+    try:
+        from .document_catalog import validate_catalog as validate_documents
+    except ImportError:
+        from document_catalog import validate_catalog as validate_documents
+    errors.extend(validate_documents(model))
     relations = _index(model["relations"], "relations", errors)
     business_areas = any(p.get('id') == 'PRINCIPLE-BUSINESS-AREA' for p in model.get('principles', []))
     required_business_areas = any(p.get('id') == 'PRINCIPLE-REQUIRED-BUSINESS-AREA' for p in model.get('principles', []))
@@ -466,6 +471,8 @@ def validate_release(release, decisions_document, snapshot, sources, schema=None
         errors.append('release: scenario catalogue differs from frozen input')
     if release.get('hotspot_catalog') != snapshot.get('hotspot_catalog'):
         errors.append('release: hotspot catalogue differs from frozen input')
+    if release.get('document_catalog') != snapshot.get('document_catalog'):
+        errors.append('release: document catalogue differs from frozen input')
     if release.get('information_catalog') != snapshot.get('information_catalog'):
         errors.append('release: information catalogue differs from frozen input')
     if errors:

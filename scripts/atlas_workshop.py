@@ -24,7 +24,7 @@ except ImportError:
 ROOT = Path(__file__).resolve().parents[1]
 STAGING = Path('.runtime/atlas-atelier/staging.json')
 LEVELS = ('S', 'M', 'L', 'XL')
-EDITABLE = {'title', 'problem', 'kind', 'location', 'examples', 'resolution_options',
+EDITABLE = {'title', 'problem', 'kind', 'location', 'examples', 'market_view', 'resolution_options',
             'complexity', 'arbitration_level', 'arbitration_note', 'status'}
 
 
@@ -141,6 +141,20 @@ def checked_hotspot(value, nodes):
         raise ValueError('La note d’arbitrage doit être un texte.')
     if not isinstance(value.get('examples'), list) or any(not isinstance(x, str) for x in value['examples']):
         raise ValueError('Les exemples doivent être une liste de textes.')
+    market = value.get('market_view')
+    if market is not None:
+        if (not isinstance(market, dict)
+                or set(market) != {'finding', 'flow_assessment', 'limits', 'sources'}
+                or any(not isinstance(market[key], str) or not market[key].strip()
+                       for key in ('finding', 'flow_assessment', 'limits'))
+                or not isinstance(market['sources'], list) or not market['sources']
+                or any(not isinstance(source, dict)
+                       or set(source) != {'publisher', 'title', 'url', 'relevance'}
+                       or any(not isinstance(source[key], str) or not source[key].strip()
+                              for key in ('publisher', 'title', 'url', 'relevance'))
+                       or not source['url'].startswith('https://')
+                       for source in market['sources'])):
+            raise ValueError('Lecture du marché incomplète ou source non sécurisée.')
     options = value.get('resolution_options')
     if not isinstance(options, list) or any(
         not isinstance(option, dict)
@@ -200,6 +214,8 @@ def apply_request(root, request):
                            'evidence_limit': 'Note d’atelier à qualifier avant intégration au backlog.'},
                 'review': {'state': 'proposed', 'note': 'Proposition recueillie en atelier ; non validée.'},
             }
+            if 'market_view' in fields:
+                value['market_view'] = fields['market_view']
         else:
             if not isinstance(identifier, str) or identifier not in items:
                 raise ValueError('Point chaud introuvable dans cette séance.')

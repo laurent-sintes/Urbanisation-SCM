@@ -19,7 +19,7 @@ export function Overview({
   model: PublishedModel;
   detail: number;
   onOpen: (id: string) => void;
-  onOpenHotspot: (id: string) => void;
+  onOpenHotspot: (id: string, groupIds?: string[]) => void;
 }) {
   const universe = rootsOf(model).find((node) => node.kind === 'universe');
   const systems = universe
@@ -81,6 +81,20 @@ export function Overview({
                 ),
               )
             : [];
+          const systemMarkers =
+            systemHotspots.length > 1
+              ? [
+                  {
+                    ...systemHotspots[0],
+                    id: `cluster-${system.id}`,
+                    title: `${systemHotspots.length} points chauds sur ${system.name}`,
+                    severity:
+                      (['XL', 'L', 'M', 'S', 'unassessed'] as const).find((level) =>
+                        systemHotspots.some((hotspot) => hotspot.severity === level),
+                      ) || 'unassessed',
+                  },
+                ]
+              : systemHotspots;
           const domains = childrenOf(model, system.id).filter((node) => node.kind === 'domain');
           const subdomains = domains.flatMap((domain) =>
             childrenOf(model, domain.id).filter((node) => node.kind === 'area'),
@@ -94,7 +108,7 @@ export function Overview({
           );
           return (
             <article data-node-id={system.id} key={system.id} className="overview-system">
-              {systemHotspots.map((hotspot, index) => (
+              {systemMarkers.map((hotspot, index) => (
                 <div
                   key={hotspot.id}
                   className={`hotspot-map-point severity-${hotspot.severity}${hotspot.workshop ? ' is-workshop' : ''}`}
@@ -104,26 +118,36 @@ export function Overview({
                   <button
                     type="button"
                     className="hotspot-map-marker"
-                    aria-label={`${hotspot.workshop ? 'Atelier · ' : ''}${hotspot.title}, criticité ${hotspot.severity}`}
+                    aria-label={
+                      systemHotspots.length > 1
+                        ? `${hotspot.title}, criticité maximale ${hotspot.severity}. Ouvrir la liste.`
+                        : `${hotspot.workshop ? 'Atelier · ' : ''}${hotspot.title}, criticité ${hotspot.severity}`
+                    }
                     aria-describedby={`overview-hotspot-tip-${system.id}-${hotspot.id}`}
-                    onClick={() => onOpenHotspot(hotspot.id)}
+                    onClick={() =>
+                      onOpenHotspot(
+                        systemHotspots.length > 1 ? '' : hotspot.id,
+                        systemHotspots.length > 1 ? systemHotspots.map((item) => item.id) : undefined,
+                      )
+                    }
                   >
                     <span className="hotspot-map-flames" aria-hidden="true">
                       {FLAMES.slice(0, { S: 1, M: 2, L: 3, XL: 4, unassessed: 0 }[hotspot.severity]).map((flame) => (
                         <Flame key={flame} />
                       ))}
                     </span>
+                    {systemHotspots.length > 1 && <span className="hotspot-map-count">{systemHotspots.length}</span>}
                   </button>
                   <span
                     id={`overview-hotspot-tip-${system.id}-${hotspot.id}`}
                     className="hotspot-map-tooltip"
                     role="tooltip"
                   >
-                    <strong>
-                      {hotspot.workshop ? 'Atelier · ' : ''}
-                      {hotspot.title}
-                    </strong>
-                    <span>Criticité {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}</span>
+                    <strong>{hotspot.title}</strong>
+                    <span>
+                      {systemHotspots.length > 1 ? 'Ouvrir la liste pour choisir un sujet. ' : ''}
+                      Criticité {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}
+                    </span>
                   </span>
                 </div>
               ))}

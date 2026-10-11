@@ -1829,6 +1829,8 @@ terms:
     Affecter : Établir un lien entre une ressource et une demande ou un bénéficiaire précis. Qualifier ressource ou tâche ; ne pas confondre avec une promesse commerciale.
 
     Réaffecter : Modifier une affectation existante de ressource. Distinguer l’effet sur le lien de ressource de l’éventuelle modification de promesse.
+
+    Le [pegging](glossary:TER204) est une manière de nommer et tracer ce lien demande–ressource dans certains systèmes. La capacité [Supply Assignment](model:D03.o) choisit les liens à établir ou à réviser ; le terme pegging ne désigne pas à lui seul toute cette décision.
   notes: |-
     La quantité affectée peut différer de la quantité demandée ou promise. Qualifier l’affectation d’une tâche, qui relève d’un autre objet. N1/N3. U289 : notion résultat associée à Supply Assignment (affectation des ressources aux commandes). Ne pas employer Allocation seul comme synonyme. Un lien peut porter sur une ressource future ; il ne prouve ni promesse confirmée ni mouvement physique. Convention : modeles/backlog/assignment-terminology.yaml.
 
@@ -1848,6 +1850,7 @@ terms:
   - CMP307
   - ELM208
   - U903
+  - U944
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -26833,6 +26836,65 @@ terms:
     state: partial
     adopted_scope: Existence et sens de la racine cible, nommée Enterprise Architecture en U915.
     proposed_scope: Formulation de la définition et du contexte.
+- id: TER204
+  name: Pegging
+  short_description: Lien traçable entre une demande et la ressource qui la couvre.
+  definition: Lien traçable entre une demande et une quantité de stock ou de réception attendue retenue pour la couvrir.
+  context: |-
+    Le pegging indique quelle ressource couvre quelle demande, éventuellement sur plusieurs niveaux de planification. Selon le système et les règles, le lien peut être recalculé ou maintenu. Dans FLOW, [Supply Assignment](model:D03.o) décide des affectations ; le pegging décrit le lien produit et suivi. Il ne signifie pas, à lui seul, que la ressource est [réservée](model:D02.c) ni qu'une promesse ferme a été communiquée au client.
+
+    Exemple : 40 pièces d'une commande d'achat attendue sont liées à une commande client. Si l'arrivée change, le lien peut être maintenu, révisé ou supprimé selon les règles applicables. Le statut de la promesse client doit être déterminé séparément.
+  notes: Le terme est employé comme rapprochement de marché pour le lien demande–ressource. Il ne renomme pas la capacité Supply Assignment et n'impose ni chaîne de nomenclature multi-niveaux ni mécanisme technique SAP à FLOW. Le support Boardriders de juillet 2025 décrit des affectations ARun entre commandes, stock physique et réceptions futures, mais ne nomme pas ces liens « pegging ».
+  source_refs:
+  - U942
+  - U944
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u944
+  review:
+    state: proposed
+    note: Correspondance terminologique proposée par Codex à la suite de la question U944 ; aucune adoption du terme comme nom de capacité.
+  market_comparisons:
+  - vendor: SAP
+    product: SAP S/4HANA
+    element_name: Pegging
+    concept_name: Pegging
+    element_type: Concept de liaison entre demande et ressource
+    relationship: Recouvrement partiel
+    scope_summary: Relie éléments de stock ou de réception aux éléments de besoin dans un périmètre de planification.
+    approach_summary: Distingue des liens dynamiques recalculables et des liens fixés selon les règles du calcul.
+    similarities: Décrit le lien ressource–demande que produit une affectation.
+    differences: Le pegging documenté concerne la planification SAP ; il ne décrit pas toute la logique ARun ni l'engagement client FLOW.
+    flow_position: FLOW conserve Supply Assignment comme capacité de décision et Pegging comme nom du lien résultant.
+    source_title: Pegging
+    source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/02e4ab50135e0c0be10000000a423f68.html
+    source_version: SAP S/4HANA On-Premise ; documentation consultée le 10 octobre 2026.
+    source_locator: Pegging Procedure ; dynamic pegging ; fixed pegging
+    consulted_on: '2026-10-10'
+    evidence_limits: La source explique le terme dans SAP S/4HANA ; elle ne prouve ni que Boardriders nomme les liens ARun pegging ni qu'un produit SAP est retenu pour FLOW.
+    status: proposed
+    source_refs:
+    - U944
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Pegging information
+    concept_name: Pegging
+    element_type: Information de couverture demande–ressource
+    relationship: Appui sémantique
+    scope_summary: Conserve des liens entre offre et demande dans des calculs de planification.
+    approach_summary: Maintient certaines informations de pegging pour les demandes confirmées selon les paramètres du calcul.
+    similarities: Le lien peut porter sur un stock présent ou une ressource future.
+    differences: Le mécanisme Microsoft cité appartient à Planning Optimization et ne décrit pas les statuts ARun Boardriders.
+    flow_position: FLOW qualifie séparément affectation, réservation et promesse client.
+    source_title: Keep supply for confirmed demand
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/keep-supply-for-confirmed-demand
+    source_version: Documentation Microsoft ; prérequis 10.0.48 indiqué par la page.
+    source_locator: What data is preserved ; Control how on-hand inventory is pegged
+    consulted_on: '2026-10-10'
+    evidence_limits: Appui terminologique primaire, sans équivalence fonctionnelle complète à ARun ni preuve de déploiement Beaumanoir.
+    status: proposed
+    source_refs:
+    - U944
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées. as_of indique la date du dernier lot éditorial appliqué
   au brouillon, sans modifier les dates des publications figées.

@@ -1,0 +1,75 @@
+.documents-page {
+  max-width: 900px;
+  padding: 1.5rem;
+}
+
+.documents-page h2 {
+  margin-top: 0;
+}
+
+.documents-search {
+  display: grid;
+  gap: 0.35rem;
+  max-width: 28rem;
+  margin: 1.4rem 0;
+  font-weight: 600;
+}
+
+.documents-search input {
+  min-height: 2.3rem;
+  padding: 0.35rem 0.5rem;
+  border: 1px solid #a9b9b6;
+  border-radius: 0.4rem;
+  background: white;
+}
+
+.documents-list {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.documents-list > button {
+  display: grid;
+  gap: 0.45rem;
+  width: 100%;
+  padding: 1rem;
+  text-align: left;
+  border: 1px solid #ccd8d5;
+  border-radius: 0.7rem;
+  background: white;
+  cursor: pointer;
+}
+
+.documents-list > button:hover,
+.documents-list > button:focus-visible {
+  border-color: #be6954;
+}
+
+.documents-category {
+  color: #8d4d3e;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.documents-download {
+  display: inline-block;
+  width: fit-content;
+  margin: 1rem 0;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.4rem;
+  background: #244d60;
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.documents-download:hover,
+.documents-download:focus-visible {
+  background: #163749;
+  color: white;
+}
+
+.documents-detail > button,
+.documents-detail li button {
+  cursor: pointer;
+}

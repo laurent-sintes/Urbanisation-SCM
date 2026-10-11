@@ -111,6 +111,8 @@ def assign_versions(snapshot, previous, now=None, published=None):
         root_value['information_catalog'] = snapshot['information_catalog']['content_sha256']
     if 'scenario_catalog' in snapshot:
         root_value['scenario_catalog'] = snapshot['scenario_catalog']['content_sha256']
+    if 'document_catalog' in snapshot:
+        root_value['document_catalog'] = content_hash(snapshot['document_catalog'])
     if 'market_reference_policy' in snapshot:
         root_value['market_reference_policy'] = snapshot['market_reference_policy']
     fingerprint = content_hash(root_value)

@@ -343,6 +343,32 @@
               },
               "problem": { "type": "string", "minLength": 1 },
               "examples": { "type": "array", "items": { "type": "string" } },
+              "document_ids": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+              "market_view": {
+                "type": "object",
+                "properties": {
+                  "finding": { "type": "string", "minLength": 1 },
+                  "flow_assessment": { "type": "string", "minLength": 1 },
+                  "limits": { "type": "string", "minLength": 1 },
+                  "sources": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "publisher": { "type": "string", "minLength": 1 },
+                        "title": { "type": "string", "minLength": 1 },
+                        "url": { "type": "string", "pattern": "^https://" },
+                        "relevance": { "type": "string", "minLength": 1 }
+                      },
+                      "required": ["publisher", "title", "url", "relevance"],
+                      "additionalProperties": false
+                    }
+                  }
+                },
+                "required": ["finding", "flow_assessment", "limits", "sources"],
+                "additionalProperties": false
+              },
               "resolution_options": {
                 "type": "array",
                 "items": {
@@ -408,6 +434,50 @@
         }
       },
       "required": ["schema_version", "source_refs", "hotspots"],
+      "additionalProperties": false
+    },
+    "document_catalog": {
+      "type": "object",
+      "properties": {
+        "schema_version": { "const": 1 },
+        "source_refs": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "documents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string", "pattern": "^DOC[0-9]{3,}$" },
+              "title": { "type": "string", "minLength": 1 },
+              "summary": { "type": "string", "minLength": 1 },
+              "context": { "type": "string", "minLength": 1 },
+              "category": { "enum": ["analysis", "source", "decision", "guide"] },
+              "asset": {
+                "type": "object",
+                "properties": {
+                  "path": { "type": "string", "pattern": "^modeles/documents/[0-9a-f]{64}\\.pdf$" },
+                  "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+                  "media_type": { "const": "application/pdf" }
+                },
+                "required": ["path", "sha256", "media_type"],
+                "additionalProperties": false
+              },
+              "source_refs": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1, "uniqueItems": true },
+              "review": {
+                "type": "object",
+                "properties": {
+                  "state": { "enum": ["proposed", "under_review", "accepted"] },
+                  "note": { "type": "string", "minLength": 1 }
+                },
+                "required": ["state", "note"],
+                "additionalProperties": false
+              }
+            },
+            "required": ["id", "title", "summary", "context", "category", "asset", "source_refs", "review"],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["schema_version", "source_refs", "documents"],
       "additionalProperties": false
     },
     "display_policy": {

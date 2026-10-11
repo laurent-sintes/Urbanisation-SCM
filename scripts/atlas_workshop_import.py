@@ -150,7 +150,9 @@ def replace_root_value(source, name, value):
         raise ValueError(f'Bloc {name} absent ou dupliqué.')
     key, node = match[0]
     fragment = structured_io.dumps({name: value}).rstrip('\n')
-    result = source[:key.start_mark.index] + fragment + source[node.end_mark.index:]
+    suffix = source[node.end_mark.index:]
+    separator = '\n' if suffix and not suffix.startswith(('\n', '\r')) else ''
+    result = source[:key.start_mark.index] + fragment + separator + suffix
     if structured_io.loads(result) is None:
         raise ValueError('Écriture YAML invalide.')
     return result

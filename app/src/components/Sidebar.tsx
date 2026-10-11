@@ -3,6 +3,7 @@ import {
   ChevronDown,
   Compass,
   Download,
+  FileText,
   HelpCircle,
   Lightbulb,
   PanelLeftClose,
@@ -119,7 +120,9 @@ export function Sidebar({
         <button
           type="button"
           aria-current={
-            !['scenarios', 'hotspots', 'glossary', 'principles', 'metamodel', 'help'].includes(route.view || '')
+            !['scenarios', 'hotspots', 'documents', 'glossary', 'principles', 'metamodel', 'help'].includes(
+              route.view || '',
+            )
               ? 'page'
               : undefined
           }
@@ -163,7 +166,16 @@ export function Sidebar({
             type="button"
             aria-current={route.view === 'hotspots' ? 'page' : undefined}
             onClick={() => {
-              onSearch({ view: 'hotspots', hotspot: '', node: '', scope: '', query: '', status: '', section: '' });
+              onSearch({
+                view: 'hotspots',
+                hotspot: '',
+                hotspotGroup: '',
+                node: '',
+                scope: '',
+                query: '',
+                status: '',
+                section: '',
+              });
               onClose();
             }}
           >
@@ -171,6 +183,17 @@ export function Sidebar({
             Points chauds
           </button>
         )}
+        <button
+          type="button"
+          aria-current={route.view === 'documents' ? 'page' : undefined}
+          onClick={() => {
+            onSearch({ view: 'documents', document: '', hotspot: '', node: '', scope: '', query: '', section: '' });
+            onClose();
+          }}
+        >
+          <FileText size={17} />
+          Documents
+        </button>
         <button
           type="button"
           onClick={() => onOpenGlossary('model')}

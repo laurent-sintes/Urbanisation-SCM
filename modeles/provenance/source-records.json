@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "captured_at": "2026-10-09",
+  "captured_at": "2026-10-10",
   "records": [
     {
       "id": "U01",
@@ -7385,6 +7385,206 @@
       "line": 22525,
       "content_sha256": "07d0ef1e546662b2c01dd5a4490a5d009724ea0be94bf9113f16d50f9902fe89",
       "captured_text": "## U923\n\nDate : 2026-10-09. Source : Laurent, qualification de C-LOG et évolution de la représentation des points chauds.\n\nVerbatim :\n\n> Afficher le code du hotspot n'apporte rien.\n>\n> Je propose un halo transparent plus étendu.\n> Je propose que le clic sur la halo soit concentré sur le centre uniquement.\n> Afficher un tooltip quand on survole le centre.\n> La complexité politique et d'implémentation doit être définie avec une valeur.\n> Pour la problématique C-LOG, politique=XL, impl=L\n> Il faut déterminer un gradiant de couleurs pour la criticité résultante.\n> Je pensais même à des petites flammes au centre façon gif animé dont la cadence de rafraichissement évolue avec la criticité. Voire si on ne peut pas intervenir sur la taille ou le nombre de flamèches pour indiquer la criticité.\n\nPortée : qualification explicite des deux difficultés du hotspot C-LOG par Laurent ; la gravité XL en découle selon la matrice actuelle. Préférence de représentation Atlas : halo transparent étendu, interaction limitée au centre, infobulle et flammes animées dont l'intensité varie avec la gravité. Les couleurs, tailles et cadences exactes relèvent de la conception de l'interface ; cette contribution ne qualifie pas les options de résolution ni le niveau d'arbitrage."
+    },
+    {
+      "id": "U924",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u924",
+      "line": 22543,
+      "content_sha256": "2a2dc370a259eb5dd916a9787d734ec66fefa99f771e3aff75e95c496dafcbc4",
+      "captured_text": "## U924\n\nDate : 2026-10-10. Source : Laurent, correction du périmètre du hotspot de migration SAP ECC et de son lien avec Finance.\n\nVerbatim :\n\n> Dans le 1, on parle de ECC dans le scope MM / PP / SD hors FI / CO.\n>\n> C'est une problématique de migration.\n>\n> Ce scope touche le système opération dans son ensemble car même si opérationnellement SAP ne gère que le wholesale, il est agrégateur de la master data et publieur vers FI/CO. C'est en ça que ce hotspot a un lien avec le 10.\n\nPortée : correction de cadrage pour le dossier de consolidation C01 issu de `HS-001`. La migration concerne MM / PP / SD et exclut FI / CO. Le périmètre de cartographie proposé est le système Business Operations dans son ensemble, car Laurent signale un rôle transverse d'agrégation de master data et de publication vers FI / CO au-delà du Wholesale opérationnel. C10 reste lié par les échanges avec Finance ; cette précision ne fusionne pas les deux hotspots, ne démontre pas les contrats techniques détaillés et ne valide pas encore les complexités proposées par Codex."
+    },
+    {
+      "id": "U925",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u925",
+      "line": 22557,
+      "content_sha256": "4027ad90be82daf316d5cb4abea83e9bd6baeae4030ae231d4f275e1820ff9de",
+      "captured_text": "## U925\n\nDate : 2026-10-10. Source : Laurent, distinction de deux points chauds logistiques et description du fonctionnement Boardriders / C-LOG.\n\nVerbatim :\n\n> Il y a en effet 2 points chaud :\n>\n> Point 1 : Aujourd'hui, Boardriders est connecté à C-LOG comme à tout autre logisticien selon le schéma suivant :\n>\n> - BRD maintient le référentiel de Fulfillment Network de ses partenaires logisticiens\n> - BRD construit le plan de fulfillment selon la promesse client et sa connaissance du stock disponible\n> - BRD passe les ordres logistiques aux prestataires et choisit quand releaser les ordres à des fins d'optimisation\n> - Le prestataire execute les ordres quand ils arrivent\n>\n> C-LOG pilote localement les ordres passés sans initiative : ils appellent ça de \"l'orchestration passive\"\n>\n> Le sujet est de trouver un point d'entente pour avoir un mode de fonctionnement uniforme marque histo / Boardriders.\n>\n> La solution (Beaumanoir SI cible unifié) en cours de discussion est la suivante :\n>\n> - BMN : détient la promesse client et connait le stock disponible\n> - BMN demande à C-LOG les solutions de fulfillment pour cette promesse (liste des plans valides)\n> - BMN sélectionne le plan parmi les plans valides\n> - BMN demande une éxecution de ce plan\n> - C-LOG prendre en compte le plan qui porte des engagements\n> - C-LOG gère l'exécution\n>\n> Dans cette solution, C-LOG porte l'optimisation logistique alors que dans l'ancienne situation, c'était l'inverse.\n>\n> Dans tous les cas, la promesse client reste sous ownership \"marques\"\n>\n> Evolution pour BRD : la master data logistic pour les entrepôts C-LOG est très simplifiée.\n>\n> Point 2 :\n>\n> Les marques histo ne travaillent qu'avec C-LOG mais BRD travaille avec d'autres prestataires logistiques.\n>\n> Le mode de fonctionnement actuel de BRD doit être reconduit dans la plateforme Core System (Supply Chain Orchestration).\n\nPortée : Laurent distingue explicitement deux points chauds. Le premier concerne l'accord de fonctionnement avec C-LOG pour les marques historiques et Boardriders ; le fonctionnement actuel Boardriders est décrit, tandis que la séquence BMN–C-LOG est une solution **en discussion**, sans arbitrage cible annoncé. La promesse reste sous ownership des marques dans les deux cas. Le second concerne la conservation dans Supply Chain Orchestration du mode multi-prestataires actuel de Boardriders. Cette contribution ne qualifie pas la complexité du second point ni les contrats techniques détaillés et ne sélectionne pas encore une option de résolution."
+    },
+    {
+      "id": "U926",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u926",
+      "line": 22599,
+      "content_sha256": "1f3b6febead295b9e88fec0f656495e19675ed8c1245f3b78e2c09a862e4649b",
+      "captured_text": "## U926\n\nDate : 2026-10-10. Source : Laurent, précision sur l'arbitrage en cours pour le point chaud BMN–C-LOG.\n\nVerbatim :\n\n> \"La question qui aiderait le plus à préciser C02a est celle de **l’engagement du plan** : quand C‑LOG propose un plan valide, que garantit cette proposition, pendant combien de temps, et à quel moment l’engagement devient-il ferme ?  \" => ce sont les discussions en cours justement\n\nPortée : les garanties associées à un plan proposé par C-LOG, leur durée et le moment où l'engagement devient ferme sont précisément des questions ouvertes de la discussion C02a. Leur absence de réponse ne bloque pas la description du point chaud ; aucune garantie, durée ou étape d'engagement ne doit être présentée comme décidée."
+    },
+    {
+      "id": "U927",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u927",
+      "line": 22609,
+      "content_sha256": "0a73f2df6e34d84c276b6037bdf37d23185bfb2150786898422436b154426ce7",
+      "captured_text": "## U927\n\nDate : 2026-10-10. Source : Laurent, précision sur le point chaud d'alimentation du stock centralisé.\n\nVerbatim :\n\n> Le problème est qu'un stock centralisé est une vue des stocks physiques magasin et entrepots léquels sont gérés par des logiciels sur lesquels nous n'avons pas la main.\n>\n> L'enjeu est de rfraichir la vue stock centralisée le plus vite possible lorsqu'un mouvement réel se passe :\n>\n> - une vente magasin\n> - une eReservation\n> - une mise de côté\n> - une mise au rebus (vente impossible)\n> - une préparation entrepot\n>\n> On peut avoir le meilleur système Stock / Availability, si les données sont fausses, le système ne vaut rien. C'est hotspot d'origine technologique mais aussi politique car les logiciels au plus près de la gestion du physique sont hors scope du redéveloppement.\n\nPortée : Laurent situe le problème dans la dépendance de la vue centralisée aux logiciels qui gèrent les stocks en magasin et en entrepôt, hors périmètre de redéveloppement. Il donne cinq exemples d'événements qui doivent rafraîchir rapidement cette vue. Il qualifie le hotspot de technologique et politique ; il ne fixe pas les tailles S/M/L/XL, le délai cible ni les mécanismes de transmission. Certains exemples peuvent changer la disponibilité sans déplacement physique : leur sens et leur effet sur les quantités restent à distinguer, sans corriger le verbatim."
+    },
+    {
+      "id": "U928",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u928",
+      "line": 22629,
+      "content_sha256": "c193e291fc2c23edec326fccb4cc30b5d3ef8b775557f4bb1dbc4eb27b8f9200",
+      "captured_text": "## U928\n\nDate : 2026-10-10. Source : Laurent, validation du dossier C03 et demande de passer au point chaud suivant.\n\nVerbatim :\n\n> je valide.\n>\n> next\n\nPortée : validation de la proposition C03 construite dans la discussion, avec la correction U927 : problème de rafraîchissement et de justesse de la vue centralisée, cinq situations citées, dépendance technique et politique aux logiciels de terrain hors redéveloppement, distinction à instruire entre quantité physique et disponibilité, trois familles d'options non sélectionnées, complexité politique L et implémentation XL (gravité XL). Aucun délai cible, contrat source, option choisie, niveau d'arbitrage ni état « résolu » n'est validé. Le rattachement cartographique précis reste une décision de représentation à qualifier."
+    },
+    {
+      "id": "U929",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u929",
+      "line": 22641,
+      "content_sha256": "895a4e0a3f17cc38ae8a31f571526071ac16815d3bfb539fdca949aa87322efe",
+      "captured_text": "## U929\n\nDate : 2026-10-10. Source : Laurent, correction du découpage du point chaud Stock Hub.\n\nVerbatim :\n\n> Ca doit être un seul hotspot qui porte sur des rapprochements à partir de sources diverses. C'est le cas aujourd'hui où C-LOG remonte un état de stock (une sorte d'inventaire). On a prévu une capacité inventaire qui va dans ce sens d'ailleurs.\n\nPortée : C04 reste un seul point chaud, centré sur le rapprochement des informations de stock issues de sources diverses. Laurent cite comme exemple actuel la remontée d'un état de stock par C-LOG et rappelle la capacité d'inventaire prévue dans le modèle. Le rapprochement avec les capacités Inventory Tracking, Inventory Ledger, Inventory Visibility et Stocktaking doit respecter leurs rôles distincts : l'état transmis par C-LOG n'est pas, par sa seule transmission, un comptage ou une correction validée par Stocktaking. Cette précision ne valide ni architecture Event Sourcing, ni règle de comptabilisation, ni complexité, ni option de résolution."
+    },
+    {
+      "id": "U930",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u930",
+      "line": 22651,
+      "content_sha256": "69da4fb9bb91fe12407899307618d8d65cff4672929e07de52f9fb74d55c8b25",
+      "captured_text": "## U930\n\nDate : 2026-10-10. Source : Laurent, finalité de l'analyse du point chaud Stock Hub.\n\nVerbatim :\n\n> Ca permettra de justifier des patterns de solutions orientées DATA HUB\n\nPortée : le rapprochement de données de stock provenant de sources diverses doit nourrir la justification de patterns de solution orientés Data Hub. Laurent précise l'objectif de l'analyse ; il ne choisit pas un produit, une architecture détaillée ou un mécanisme Event Sourcing particulier."
+    },
+    {
+      "id": "U931",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u931",
+      "line": 22661,
+      "content_sha256": "67a03ccc4e90b1b2a595cf5e67f0eb3e612c6b5eec7828fed8877dd6d281b6af",
+      "captured_text": "## U931\n\nDate : 2026-10-10. Source : Laurent, correction du problème C05 relatif à la promesse avant le plan de fulfilment.\n\nVerbatim :\n\n> Qu'est-ce que je donne comme promesse au client alors que je n'ai pas construit encore le plan de fulfillment qui porte l'engagement ? L'idée est de s'appuyer sur des SLA et des statistiques (retour d'xp) et au fur et à mesure que le système creuse la solution de fulfillment, on affermit la promesse et on la dote avec un engagement ferme. Question : on le fait dans toutes les situations ? N'importe quel client ? tout type de livraison ? B2B ? B2C ?\n\nPortée : C05 porte d'abord sur la nature et les conditions d'une promesse initiale avant la construction d'un plan de fulfilment engageant, puis sur son éventuel affermissement. SLA et statistiques de retour d'expérience sont des bases envisagées, non une garantie établie. Laurent laisse ouverte l'applicabilité selon situation, client, livraison et canal B2B/B2C ; aucune règle universelle, seuil, autorité de confirmation ni niveau de complexité n'est validé. Cette question est distincte de la seule fraîcheur des données de stock C03/C04, même si cette qualité peut affecter la promesse."
+    },
+    {
+      "id": "U932",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u932",
+      "line": 22671,
+      "content_sha256": "6b68673044c6d7440b77324d7f122f2cea0f2325ca50aa4543a46df317600172",
+      "captured_text": "## U932\n\nDate : 2026-10-10. Source : Laurent, correction de l'interprétation du point chaud C05.\n\nVerbatim :\n\n> Je n'ai pas déplacé, j'ai complété le problème qui se résume à : \"le client demande, je ne sais pas vraiment lui répondre tout de suite, qu'est ce que je lui répond tout de suite et plus tard ?\"\n\nPortée : U931 complète la question initiale `I04` au lieu de la remplacer. C05 porte sur la réponse à donner au client immédiatement quand la possibilité de satisfaire sa demande est incertaine, puis sur la manière de préciser ou réviser cette réponse à mesure que l'information et le plan se construisent. Une source de stock retardée et l'absence de plan de fulfilment engageant sont deux causes possibles de cette incertitude. La segmentation par situation, client, livraison et B2B/B2C reste ouverte."
+    },
+    {
+      "id": "U933",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u933",
+      "line": 22681,
+      "content_sha256": "944e6cb2b814c1cf2195d97942daaf0c4bfcd3f881c47834efb64b971c1ba879",
+      "captured_text": "## U933\n\nDate : 2026-10-10. Source : Laurent, situation connue chez Boardriders pour la promesse des précommandes B2B d'avant saison.\n\nVerbatim :\n\n> Situation connue chez Boardriders : dans le cas d'une implantation (livraison initiale de saison), lors des précommandes B2B d'avant saison, on promet un mois cible de livraison mais on n'affine jamais, c'est le transporteur qui prévient au dernier moment. Ca pourrait être amélioré.\n\nPortée : exemple As Is concret pour C05. Lors des précommandes B2B d'avant saison destinées à une implantation, Boardriders communique un mois cible de livraison, sans l'affiner ensuite ; le transporteur prévient à la dernière étape. Laurent voit une possibilité d'amélioration. Le mois cible n'est pas assimilé à une date ferme ; aucune cadence d'actualisation, nouvelle autorité d'annonce ou cible de précision n'est décidée."
+    },
+    {
+      "id": "U934",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u934",
+      "line": 22691,
+      "content_sha256": "156066ee211f72d8ef56f840da4e4165bfbd4f77b1903758a7fa0f0e1f8abc92",
+      "captured_text": "## U934\n\nDate : 2026-10-10. Source : Laurent, décomposition proposée des sujets de C06 et demande d'avis.\n\nVerbatim :\n\n> Les sujets C06 sont triples à mon avis :\n>\n> - Qui construit les EAN ? C'est un information qu'on doit passer à la commande d'achat aujourd'hui mais personne n'a dit que l'Orchestration de la Supply Chain devait prendre en charge ce traitement (=> j'aimerais ton avis)\n> - Il y a des irritants sur le \"push\" du PLM qui fournit des états complet de reférentiel produit, le delta est compliqué à gérer => nécessité Data Hub pattern\n> - Quel niveau d'information produit pour l'orchestration de la supply chain ? Certainement Product pour les achats, Product/Package pour les achats en gros et ProductVariant (article) pour le B2C. => A étudier (ton avis ?)\n\nPortée : Laurent distingue trois questions à instruire : l'autorité de création des EAN nécessaires aux commandes d'achat, sans mandat établi pour Supply Chain Orchestration ; le traitement de publications complètes du référentiel PLM et la difficulté à en déduire les deltas, qui motive l'étude de patterns Data Hub ; la granularité des informations produit requises selon les achats, les achats en gros et le B2C. Les rattachements et granularités cités sont des hypothèses soumises à avis, pas des décisions validées. Le nombre final de hotspots et les responsabilités restent à arbitrer."
+    },
+    {
+      "id": "U935",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u935",
+      "line": 22705,
+      "content_sha256": "f9ffdbe3e88033da8064aa713d12da9915658550da9dc12435f65ef17589c8ca",
+      "captured_text": "## U935\n\nDate : 2026-10-10. Source : Laurent, réaction au découpage de C06.\n\nVerbatim :\n\n> C'est peut être 3 hotspots en effet\n\nPortée : Laurent ouvre explicitement l'hypothèse de trois hotspots distincts pour les trois questions U934. La formulation « peut être » ne vaut pas validation finale du découpage, des localisations, des complexités ou des options."
+    },
+    {
+      "id": "U936",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u936",
+      "line": 22715,
+      "content_sha256": "6f735daaa520582b4a510c5b3aa4cce6069d42429014e6ef679e5964a0202f8a",
+      "captured_text": "## U936\n\nDate : 2026-10-10. Source : Laurent, souhait d'intégrer une lecture du marché aux hotspots.\n\nVerbatim :\n\n> Ce serait bien d'avoir l'avis du marché dans les hotspots\n\nPortée : les fiches de hotspot devraient exposer un positionnement marché sourcé, distinct des faits Beaumanoir, de l'analyse et des décisions FLOW. Ce souhait ne valide aucun contenu marché particulier ni une sélection de solution ; la structure du champ et son affichage restent à définir."
+    },
+    {
+      "id": "U937",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u937",
+      "line": 22725,
+      "content_sha256": "2a38144822c8f5e6042278663346531a65107c16dc83cdad0d0af3b616d9a1d1",
+      "captured_text": "## U937\n\nDate : 2026-10-10. Source : Laurent, correction de cadrage pour les hotspots produit.\n\nVerbatim :\n\n> C'est une archi domaine / capacité, on ne parle pas d'organisation humaine.\n\nPortée : les questions de responsabilité et l'avis du marché doivent être formulés au niveau des domaines, capacités et frontières fonctionnelles du modèle. Ne pas déduire d'équipes, de services propriétaires ni d'organigramme de la localisation d'un hotspot."
+    },
+    {
+      "id": "U938",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u938",
+      "line": 22735,
+      "content_sha256": "3619848b2a741f4f04cc44d8ebe349be883898dd4392852b93692d35f87401f2",
+      "captured_text": "## U938\n\nDate : 2026-10-10. Source : Laurent, précision sur C07 et le suivi des commandes.\n\nVerbatim :\n\n> Dans le modèle, il y a une capacité sentinelle de suivi des commandes qui comprend le contexte juridique et produit les factures au bon moment.\n\nPortée : Laurent demande de prendre en compte la réaction au contexte juridique et le déclenchement de la facturation dans l'analyse C07. Le backlog courant distingue Process Sentry, qui déclenche la réaction autorisée, Order Management, qui conserve engagements et transitions, et Billing, qui obtient et tient la facture ; cette répartition doit être confrontée à l'intention exprimée, sans attribuer d'office la production de la facture à Process Sentry."
+    },
+    {
+      "id": "U939",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u939",
+      "line": 22745,
+      "content_sha256": "4f07078e884e84f56b9bba959647faac5e9b665054f2bb480735c084707bd3fc",
+      "captured_text": "## U939\n\nDate : 2026-10-10. Source : Laurent, question de frontière sur C07.\n\nVerbatim :\n\n> Est-ce que ça rentre dans les problématiques intercompany ?\n\nPortée : examiner si les rôles fournisseur, usine et entité de facturation relèvent d'un échange entre sociétés du groupe. La seule présence de parties distinctes ou de pays différents ne suffit pas à qualifier une opération intercompany."
+    },
+    {
+      "id": "U940",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u940",
+      "line": 22755,
+      "content_sha256": "175f798acbf93e0d12413350b9e614ccb5244f9c70b07cf0a0b16ab1d054489d",
+      "captured_text": "## U940\n\nDate : 2026-10-10. Source : Laurent, reformulation du hotspot C07.\n\nVerbatim :\n\n> Je pense qu'on peut donner plusieurs exemples distincts mais on traite un seul problème : produire des documents qui actent les échanges entre entités juridiques différentes dans la chaine de valeur achat et vente.\n\nPortée : C07 est un seul hotspot transverse à l'achat et à la vente. Les configurations fournisseur, usine, facturation par un tiers et intercompany sont des exemples distincts d'un même problème : produire les documents appropriés aux échanges entre entités juridiques distinctes, au moment justifié par le parcours et les engagements. Ne pas réduire C07 à un modèle de fiche fournisseur ni au seul intercompany. Les types de documents, leurs effets, leurs déclencheurs et les capacités qui les portent restent à qualifier ; la phrase ne valide aucun catalogue de documents ni architecture de génération."
+    },
+    {
+      "id": "U941",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u941",
+      "line": 22765,
+      "content_sha256": "8149608158b101b64d2276d1c0ea0300c182a6867cbdd1c3cebe1204532aac19",
+      "captured_text": "## U941\n\nDate : 2026-10-10. Source : Laurent, appréciation de la gravité de C07.\n\nVerbatim :\n\n> Pour moi, il va falloir paramétrer le core system pour que ça corresponde à la réalité de terrain. Mais j'ai l'impression que le modèle actuel traite le problème. C'est donc un hotspot de faible intensité, qu'en penses-tu ?*\n\nPortée : Laurent estime que le modèle de capacités couvre déjà le problème C07 et que l'enjeu principal est la configuration du Core System selon les cas réels. Il propose une faible intensité, sans donner de valeurs S/M/L/XL pour les deux axes. La réponse de Codex doit vérifier la couverture, distinguer configuration et éventuelle lacune de modèle, puis proposer une taille sans présenter cette estimation comme un accord chiffré de Laurent."
+    },
+    {
+      "id": "U942",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u942",
+      "line": 22775,
+      "content_sha256": "d75f034dbc8644efa7ae8b6f132620ea3d1fafa1a408b027e11fa7f60cf4e44e",
+      "captured_text": "## U942\n\nDate : 2026-10-10. Source : Laurent, correction de cadrage C08 et présentation Boardriders de juillet 2025 jointe.\n\nVerbatim :\n\n> Le sujet n'est pas la protection du stock mais la redistribution de stock disponible à des promesses pas encore affermies. Chez SAP, c'est AllocationRun qui fait ça. Voici un ppt qui résume la logique.\n> J'aimerais en avoir une synthèse séparée au format pdf et un résumé dans le hotspot.\n\nPortée : C08 doit porter sur l'affectation et la redistribution de ressources disponibles entre demandes Wholesale dont la promesse n'est pas encore affermie, avec AllocationRun comme exemple SAP Boardriders. La protection préalable de quotas par canal ou client n'est pas le problème central. Le statut technique de réservation ou de fixation dans ARun ne prouve pas, à lui seul, le statut de la promesse communiquée au client. La présentation jointe est conservée dans `audits/2026-10-10-hotspots-sources/sources/Boardriders_Early_Allocation_Set_Up_2025-07.pptx` ; son contenu est une source de configuration et de processus Boardriders datée de juillet 2025, non une décision cible FLOW."
+    },
+    {
+      "id": "U943",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u943",
+      "line": 22786,
+      "content_sha256": "efd6c5fc9c425df834f570d938592521cee0c327a7de149b84f5508c039a81df",
+      "captured_text": "## U943\n\nDate : 2026-10-10. Source : Laurent, précision sur la synthèse d'AllocationRun et l'estimation de C08.\n\nVerbatim :\n\n> Si on pouvait estimer le spécifique Boardriders par rapport au standard et ce qu'il reste à faire qu'ils n'ont jamais réalisé. => Ca peut avoir un impact sur la complexité\n\nPortée : comparer le fonctionnement décrit à des capacités standard SAP pertinentes, distinguer paramétrage Boardriders, extensions prouvées et évolutions annoncées mais non réalisées dans le support. Réexaminer la difficulté d'implémentation de C08 à partir de cet écart. La formule « jamais réalisé » exprime l'attente d'un état des lieux ; le support de juillet 2025 ne démontre pas, à lui seul, l'absence de réalisation ultérieure."
+    },
+    {
+      "id": "U944",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u944",
+      "line": 22796,
+      "content_sha256": "9b82264f36b452b363df618a249a665233bbf86229c6dae44d993b73fb4fbcf2",
+      "captured_text": "## U944\n\nDate : 2026-10-10. Source : Laurent, question terminologique sur AllocationRun.\n\nVerbatim :\n\n> \"ARun affecte les commandes au stock physique\" => c'est du pegging ?\n\nPortée : rapprocher le lien explicite demande–ressource produit par ARun du pegging, tout en distinguant le mécanisme de liaison de la décision d'affectation, de la réservation et de la promesse client. Le vocabulaire FLOW conserve Supply Assignment pour la capacité ; pegging peut servir de comparaison de marché sans renommage implicite."
+    },
+    {
+      "id": "U945",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u945",
+      "line": 22806,
+      "content_sha256": "1058e4454a2ad5d803d3938394c0ef0aeb2c71f6af51f48ceb087c2ce85cc893",
+      "captured_text": "## U945\n\nDate : 2026-10-10. Source : Laurent, demande d'accès à la synthèse C08 depuis Atlas.\n\nVerbatim :\n\n> On pourra avoir un lien de téléchargement du pdf depuis le hotspot ?\n\nPortée : permettre à une fiche de hotspot de renvoyer vers un document PDF téléchargeable. Le lien doit fonctionner dans l'Atlas local et sur son hébergement statique lorsqu'une publication contient ce hotspot et ce document. C08 reste un candidat du dossier d'atelier tant qu'il n'est pas intégré et publié."
+    },
+    {
+      "id": "U946",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u946",
+      "line": 22816,
+      "content_sha256": "0b142cbe0c12cad54d14ceba8699c222a8ff6a24418926b26bcb9016c0d0d1f5",
+      "captured_text": "## U946\n\nDate : 2026-10-10. Source : Laurent, extension documentaire d'Atlas.\n\nVerbatim :\n\n> Il faut prévoir dans ATLAS un espace documentaire\n\nPortée : ajouter un point d'entrée documentaire dans Atlas, alimenté par les documents associés à une publication. Un document doit être retrouvable indépendamment d'une fiche de hotspot et peut y être lié lorsque le hotspot appartient à la même publication. La sélection d'une publication historique doit conserver ses documents et liens propres ; la demande ne publie ni le candidat C08 ni le PDF par elle-même."
+    },
+    {
+      "id": "U947",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u947",
+      "line": 22826,
+      "content_sha256": "c291f674a4a643d894c8aee31ad435f1b16dc7cac08d874aeb7e6e496e439ae9",
+      "captured_text": "## U947\n\nDate : 2026-10-10. Source : Laurent, volonté de valider le premier lot de points chauds.\n\nVerbatim :\n\n> Je souhaite valider tout ceux qu'on a passé en revue et voir comment ça se passe côté ATLAS. Que manque-t-il ?\n\nPortée : préparer les dossiers C01 à C08 déjà parcourus, en tenant compte des scissions discutées, pour un examen dans Atlas. La demande porte sur la reconnaissance des problèmes et de leurs périmètres ; elle ne choisit pas leurs options de résolution et ne transforme pas les estimations de Codex en mesures établies."
+    },
+    {
+      "id": "U948",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u948",
+      "line": 22836,
+      "content_sha256": "d6273e7e83a94e5df8afec3d496f44836803356e3d10b8fe288acf8cbfec64f5",
+      "captured_text": "## U948\n\nDate : 2026-10-10. Source : Laurent, confirmation du découpage C06 et poursuite du lot.\n\nVerbatim :\n\n> Oui, C06 ce sont 3 Hotspots.\n>\n> Complete le reste\n\nPortée : confirmer trois sujets distincts C06a (EAN / GTIN), C06b (états complets du PLM) et C06c (maille produit utile à Supply). Compléter le lot des onze dossiers C01 à C08 pour leur intégration au backlog et leur examen dans Atlas, en laissant explicites les choix et preuves encore ouverts."
     },
     {
       "id": "F001",

@@ -1,5 +1,9 @@
 # Modèles structurés
 
+## Documents associés aux publications
+
+Le backlog peut porter un `document_catalog` autonome : identifiant, titre, résumé, contexte, catégorie, source et empreinte SHA-256 de chaque PDF. Les octets sont conservés sous `modeles/documents/<sha256>.pdf`. Un hotspot du même snapshot peut le citer par `document_ids`. La validation contrôle les empreintes et les références ; l'export Atlas copie seulement les PDF du snapshot publié dans `data/VERSION/documents/`. Une publication historique ne lit ni le catalogue documentaire courant ni un fichier modifié sous le même nom.
+
 La nouvelle édition de la méthode de transformation est préparée dans
 [`backlog/atlas-transformation-methodology.yaml`](backlog/atlas-transformation-methodology.yaml)
 (U825, édition `2026-09-28.2`). Elle sépare cinq rubriques de travail, le métamodèle,

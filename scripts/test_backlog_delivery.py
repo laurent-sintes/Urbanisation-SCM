@@ -86,3 +86,14 @@ class DeliveryTests(unittest.TestCase):
         item['title'] = 'Changed'
         self.assertTrue(check_delivery(self.root, self.model)[1])
         self.assertEqual(item['review']['state'], 'proposed')
+
+    def test_hotspot_delivery_tracks_backlog_item(self):
+        from scripts.element_versions import content_hash
+        item = {'id': 'HS-003', 'problem': 'Vue de stock à rafraîchir.'}
+        self.model['hotspot_catalog'] = {'hotspots': [item]}
+        declaration = {'state': 'applied', 'required_catalog': [
+            {'collection': 'hotspots', 'id': 'HS-003', 'content_sha256': content_hash(item)}]}
+        (self.folder / 'hotspot.yaml').write_text(dumps({'publication_delivery': declaration}), encoding='utf-8')
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+        item['problem'] = 'Sujet différent.'
+        self.assertTrue(check_delivery(self.root, self.model)[1])

@@ -23,7 +23,7 @@ export interface MapPanelProps {
   onBack: () => void;
   onSelect: (id: string) => void;
   onAnnouncement: (message: string) => void;
-  onOpenHotspot: (id: string) => void;
+  onOpenHotspot: (id: string, groupIds?: string[]) => void;
 }
 
 export function MapPanel({
@@ -58,8 +58,13 @@ export function MapPanel({
     if (workshopRevision !== undefined) setShowHotspots(true);
   }, [workshopRevision]);
   const [hotspotSeverity, setHotspotSeverity] = useState('all');
+  const [hotspotKind, setHotspotKind] = useState('all');
+  const [hotspotStatus, setHotspotStatus] = useState('all');
   const visibleHotspots = scopedHotspots.filter(
-    (hotspot) => hotspotSeverity === 'all' || hotspot.severity === hotspotSeverity,
+    (hotspot) =>
+      (hotspotSeverity === 'all' || hotspot.severity === hotspotSeverity) &&
+      (hotspotKind === 'all' || hotspot.kind === hotspotKind) &&
+      (hotspotStatus === 'all' || hotspot.status === hotspotStatus),
   );
   const [zoomChoice, setZoomChoice] = useState<MapZoomChoice>(() => {
     const saved = preference<string>('map-zoom-choice', 'auto');
@@ -103,17 +108,37 @@ export function MapPanel({
                 Points chauds
               </label>
               {showHotspots && (
-                <label className="hotspot-map-filter">
-                  Gravité{' '}
-                  <select value={hotspotSeverity} onChange={(event) => setHotspotSeverity(event.target.value)}>
-                    <option value="all">Toutes</option>
-                    {['S', 'M', 'L', 'XL', 'unassessed'].map((value) => (
-                      <option key={value} value={value}>
-                        {value === 'unassessed' ? 'Non évaluée' : value}
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                <>
+                  <label className="hotspot-map-filter">
+                    Gravité{' '}
+                    <select value={hotspotSeverity} onChange={(event) => setHotspotSeverity(event.target.value)}>
+                      <option value="all">Toutes</option>
+                      {['S', 'M', 'L', 'XL', 'unassessed'].map((value) => (
+                        <option key={value} value={value}>
+                          {value === 'unassessed' ? 'Non évaluée' : value}
+                        </option>
+                      ))}
+                    </select>
+                  </label>
+                  <label className="hotspot-map-filter">
+                    Type{' '}
+                    <select value={hotspotKind} onChange={(event) => setHotspotKind(event.target.value)}>
+                      <option value="all">Tous</option>
+                      <option value="scope">Périmètre</option>
+                      <option value="integration">Intégration</option>
+                    </select>
+                  </label>
+                  <label className="hotspot-map-filter">
+                    Statut{' '}
+                    <select value={hotspotStatus} onChange={(event) => setHotspotStatus(event.target.value)}>
+                      <option value="all">Tous</option>
+                      <option value="discovered">Découvert</option>
+                      <option value="shared">Partagé</option>
+                      <option value="validated">Validé</option>
+                      <option value="resolved">Résolu</option>
+                    </select>
+                  </label>
+                </>
               )}
             </>
           )}
@@ -180,20 +205,22 @@ export function MapPanel({
         </div>
       </div>
       {showHotspots && (
-        <div className="hotspot-map-summary" role="status">
-          <strong>
+        <details className="hotspot-map-summary">
+          <summary>
             {visibleHotspots.length} point{visibleHotspots.length > 1 ? 's' : ''} chaud
-            {visibleHotspots.length > 1 ? 's' : ''} sur cette vue
-          </strong>
-          {visibleHotspots.map((hotspot) => (
-            <button type="button" key={hotspot.id} onClick={() => onOpenHotspot(hotspot.id)}>
-              {hotspot.title} · Gravité {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}
-            </button>
-          ))}
-          {scopedHotspots.length > visibleHotspots.length && (
-            <span>{scopedHotspots.length - visibleHotspots.length} masqué par le filtre.</span>
-          )}
-        </div>
+            {visibleHotspots.length > 1 ? 's' : ''} sur cette vue · Voir la liste
+          </summary>
+          <div className="hotspot-map-summary-list">
+            {visibleHotspots.map((hotspot) => (
+              <button type="button" key={hotspot.id} onClick={() => onOpenHotspot(hotspot.id)}>
+                {hotspot.title} · Gravité {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}
+              </button>
+            ))}
+            {scopedHotspots.length > visibleHotspots.length && (
+              <span>{scopedHotspots.length - visibleHotspots.length} masqué par le filtre.</span>
+            )}
+          </div>
+        </details>
       )}
       <Suspense fallback={<div className="graph-canvas empty-state">Ouverture de la carte…</div>}>
         <ReactFlowPane
@@ -209,6 +236,8 @@ export function MapPanel({
           perspective=""
           showHotspots={showHotspots}
           hotspotSeverity={hotspotSeverity}
+          hotspotKind={hotspotKind}
+          hotspotStatus={hotspotStatus}
           onOpenHotspot={onOpenHotspot}
         />
       </Suspense>

@@ -14,6 +14,40 @@
   color: #4b6261;
   font-size: 12px;
 }
+.hotspot-group-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.65rem 0.8rem;
+  margin: 0.8rem 0;
+  border: 1px solid #aac5ba;
+  border-radius: 0.5rem;
+  background: #edf6f1;
+}
+.hotspot-group-filter button {
+  border: 1px solid #61877a;
+  border-radius: 0.4rem;
+  background: white;
+  padding: 0.35rem 0.65rem;
+  cursor: pointer;
+}
+.hotspot-status-note {
+  padding: 0.5rem 0.7rem;
+  border-left: 3px solid #699280;
+  background: #f1f7f3;
+}
+.hotspot-provenance {
+  margin-top: 1rem;
+  padding: 0.7rem;
+  border: 1px solid #d4dfdb;
+  border-radius: 0.5rem;
+}
+.hotspot-provenance summary {
+  cursor: pointer;
+  font-weight: 650;
+}
 .hotspot-scale span {
   display: inline-flex;
   align-items: center;
@@ -132,11 +166,18 @@
   gap: 0.7rem;
 }
 .hotspot-facts div,
-.hotspot-options section {
+.hotspot-options section,
+.hotspot-market {
   border: 1px solid #d9e0dc;
   border-radius: 0.6rem;
   padding: 0.9rem;
   background: #fff;
+}
+.hotspot-market ul {
+  padding-left: 1.25rem;
+}
+.hotspot-market li + li {
+  margin-top: 0.4rem;
 }
 .hotspot-facts dt {
   font-size: 0.85rem;
@@ -171,10 +212,6 @@
   background: white;
 }
 .hotspot-map-summary {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.6rem;
   margin: 0.55rem 1rem;
   padding: 0.55rem 0.75rem;
   border: 1px solid #a9aaa8;
@@ -182,6 +219,17 @@
   background: #f7f7f5;
   color: #303b3b;
   font-size: 0.86rem;
+}
+.hotspot-map-summary summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+.hotspot-map-summary-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.6rem;
 }
 .hotspot-map-summary button {
   border: 1px solid #697d7e;
@@ -209,6 +257,21 @@
   inset: 0;
   transform-origin: 0 0;
   pointer-events: none;
+}
+.react-flow__node.hotspot-related .business-card {
+  border-color: #d95431;
+  box-shadow:
+    0 0 0 4px rgb(217 84 49 / 0.36),
+    0 0 24px rgb(217 84 49 / 0.28);
+}
+.hotspot-related-item {
+  outline: 3px solid rgb(217 84 49 / 0.75);
+  outline-offset: 2px;
+  border-radius: 4px;
+  background: #fff1e6;
+}
+.react-flow__node.hotspot-related .business-card {
+  background: #fff9f3;
 }
 .hotspot-map-point {
   --hotspot-rgb: 118 139 145;
@@ -310,6 +373,22 @@
 }
 .hotspot-map-flames svg:nth-child(even) {
   animation-delay: calc(var(--flame-duration) / -2);
+}
+.hotspot-map-count {
+  position: absolute;
+  right: -9px;
+  top: -9px;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 4px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #173d4a;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
 }
 .hotspot-map-tooltip {
   position: absolute;

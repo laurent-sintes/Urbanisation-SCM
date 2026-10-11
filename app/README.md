@@ -1,5 +1,11 @@
 # FLOW Atlas — SPA statique
 
+## Documents de la publication
+
+Le menu **Documents** liste les PDF déclarés dans `document_catalog` de la publication sélectionnée. Une fiche de point chaud peut référencer ces documents par `document_ids` et proposer un téléchargement direct. Les anciennes publications sans catalogue documentaire affichent une liste vide. Une sélection historique conserve ses propres titres, liens et fichiers.
+
+Chaque PDF source est conservé dans `modeles/documents/` sous le nom de son empreinte SHA-256. `scripts/export_atlas.py` vérifie cette empreinte puis copie le fichier vers `data/VERSION/documents/ID.pdf`, pour le serveur local comme pour GitHub Pages. Les fichiers servis et le catalogue proviennent du même snapshot ; aucun chemin local n'est exposé comme lien de téléchargement. Le hotspot C08 du backlog lie le PDF de synthèse `DOC001` : ils deviennent consultables ensemble dans la publication qui les inclut. Un document publié est accessible à tout visiteur ayant accès au site Atlas ; vérifier sa diffusion avant la release.
+
 ## Aide à la lecture
 
 Le menu **Aide** propose « Par où commencer », « Mode atelier » et le guide du métamodèle de la publication sélectionnée. Le tutoriel renvoie vers la cartographie et les points chauds. La page « Mode atelier » explique la saisie par Codex et donne des exemples de prompts. Les liens `#/help` et `#/help?topic=workshop` conservent une version historique sélectionnée.

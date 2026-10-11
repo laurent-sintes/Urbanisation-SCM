@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { documentsForHotspot, documentUrl } from '../documentCatalog';
 import type { RouteState } from '../navigation';
+import { publicText } from '../publicText';
 import type { Hotspot, PublishedModel } from '../types';
 import './hotspots.css';
 
@@ -31,8 +33,11 @@ export function HotspotCatalogPage({
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState('all');
   const [severity, setSeverity] = useState('all');
+  const groupIds = new Set((route.hotspotGroup || '').split(',').filter(Boolean));
+  const groupHotspots = groupIds.size ? hotspots.filter((item) => groupIds.has(item.id)) : hotspots;
   const chosen = hotspots.find((item) => item.id === route.hotspot);
-  const filtered = hotspots.filter(
+  const documents = chosen ? documentsForHotspot(model, chosen.document_ids || []) : [];
+  const filtered = groupHotspots.filter(
     (item) =>
       (status === 'all' || item.status === status) &&
       (severity === 'all' || item.severity === severity) &&
@@ -70,16 +75,27 @@ export function HotspotCatalogPage({
           ))}
         </div>
       </header>
+      {groupIds.size > 0 && (
+        <div className="hotspot-group-filter" role="status">
+          <strong>{groupHotspots.length} points chauds de ce groupe</strong>
+          <button type="button" onClick={() => onChange({ hotspot: '', hotspotGroup: '' })}>
+            Voir tous les points chauds
+          </button>
+        </div>
+      )}
       {chosen ? (
         <article className="hotspot-detail">
           <button type="button" onClick={() => onChange({ hotspot: '' })}>
-            ← Tous les points chauds
+            ← {groupIds.size ? 'Retour au groupe' : 'Tous les points chauds'}
           </button>
           <p className="hotspot-kicker">
             {chosen.workshop ? 'Atelier · ' : ''}
             {chosen.kind === 'integration' ? 'Intégration' : 'Périmètre'} · {STATUS[chosen.status]}
           </p>
           <h3>{chosen.title}</h3>
+          {chosen.status === 'validated' && !chosen.selected_option_id && (
+            <p className="hotspot-status-note">Problème et périmètre validés ; aucune option de résolution retenue.</p>
+          )}
           <p>{chosen.problem}</p>
           <div className="hotspot-anchors" role="group" aria-label="Localisation">
             {chosen.location.node_ids.map(anchorButton)}
@@ -102,8 +118,56 @@ export function HotspotCatalogPage({
               <dd>{LEVEL[chosen.arbitration_level] || chosen.arbitration_level}</dd>
             </div>
           </dl>
-          <p>{chosen.complexity.rationale}</p>
-          {chosen.arbitration_note && <p>{chosen.arbitration_note}</p>}
+          <p>{publicText(chosen.complexity.rationale)}</p>
+          {chosen.arbitration_note && <p>{publicText(chosen.arbitration_note)}</p>}
+          <h4>Lecture du marché</h4>
+          {chosen.market_view ? (
+            <section className="hotspot-market">
+              <p>
+                <strong>Pratiques documentées :</strong> {chosen.market_view.finding}
+              </p>
+              <p>
+                <strong>Avis pour FLOW :</strong> {chosen.market_view.flow_assessment}
+              </p>
+              <p>
+                <strong>Limites :</strong> {chosen.market_view.limits}
+              </p>
+              <ul>
+                {chosen.market_view.sources.map((source) => (
+                  <li key={source.url}>
+                    <a href={source.url} target="_blank" rel="noopener noreferrer">
+                      {source.publisher} — {source.title}
+                    </a>
+                    {' : '}
+                    {source.relevance}
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : (
+            <p>Comparaison marché non documentée pour ce point chaud.</p>
+          )}
+          {documents.length > 0 && (
+            <section className="hotspot-documents">
+              <h4>Documents</h4>
+              <ul>
+                {documents.map((document) => (
+                  <li key={document.id}>
+                    <button
+                      type="button"
+                      onClick={() => onChange({ view: 'documents', document: document.id, hotspot: '' })}
+                    >
+                      {document.title}
+                    </button>
+                    {' · '}
+                    <a href={documentUrl(model, document)} download={`flow-atlas-${document.id}.pdf`}>
+                      Télécharger le PDF
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          )}
           <h4>Cas d’usage</h4>
           <ul>
             {chosen.examples.map((example) => (
@@ -138,13 +202,15 @@ export function HotspotCatalogPage({
               </section>
             ))}
           </div>
-          <h4>Source et réserves</h4>
-          <p>
-            {chosen.origin.repository} · {chosen.origin.source_id}
-          </p>
-          <code>{chosen.origin.path}</code>
-          <p>{chosen.origin.evidence_limit}</p>
-          <small>{chosen.review.note}</small>
+          <details className="hotspot-provenance">
+            <summary>Sources et réserves détaillées</summary>
+            <p>
+              {chosen.origin.repository} · {chosen.origin.source_id}
+            </p>
+            <code>{chosen.origin.path}</code>
+            <p>{chosen.origin.evidence_limit}</p>
+            <small>{chosen.review.note}</small>
+          </details>
         </article>
       ) : (
         <>
@@ -176,7 +242,7 @@ export function HotspotCatalogPage({
             </label>
           </div>
           <p>
-            {filtered.length} résultat{filtered.length > 1 ? 's' : ''} sur {hotspots.length}.
+            {filtered.length} résultat{filtered.length > 1 ? 's' : ''} sur {groupHotspots.length}.
           </p>
           <div className="hotspot-list">
             {filtered.map((item) => (

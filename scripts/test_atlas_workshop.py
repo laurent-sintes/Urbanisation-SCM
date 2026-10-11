@@ -80,6 +80,26 @@ class WorkshopTests(unittest.TestCase):
                                                  'location': {'node_ids': ['logistics']}}})
         self.assertEqual(load_stage(self.root)['operations'], [])
 
+    def test_market_view_requires_a_traceable_source(self):
+        model, model_sha = publication(self.root)
+        current_stage(self.root, model, model_sha)
+        fields = {'title': 'Référence produit', 'problem': 'Où construire le GTIN ?',
+                  'location': {'node_ids': ['orchestration']},
+                  'market_view': {'finding': 'Les ERP portent le GTIN.',
+                                  'flow_assessment': 'Séparer construction et consommation.',
+                                  'limits': 'Aucune capacité source décidée.',
+                                  'sources': [{'publisher': 'SAP', 'title': 'EAN',
+                                               'url': 'https://help.sap.com/example',
+                                               'relevance': 'EAN par unité.'}]}}
+        apply_request(self.root, {'expected_revision': 0, 'entity': 'hotspot', 'action': 'add',
+                                  'verbatim': 'Ajoute un avis marché sourcé.', 'fields': fields})
+        self.assertEqual(load_stage(self.root)['operations'][0]['value']['market_view'], fields['market_view'])
+        fields['market_view']['sources'][0]['url'] = 'http://example.com'
+        with self.assertRaisesRegex(ValueError, 'Lecture du marché'):
+            apply_request(self.root, {'expected_revision': 1, 'entity': 'hotspot', 'action': 'add',
+                                      'verbatim': 'Ajoute un avis marché sans source valide.', 'fields': fields})
+        self.assertEqual(load_stage(self.root)['revision'], 1)
+
 
 if __name__ == '__main__':
     unittest.main()

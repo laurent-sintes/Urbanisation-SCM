@@ -178,6 +178,7 @@ export interface GlossaryTerm extends JsonRecord {
 }
 export interface RawPublication extends JsonRecord {
   workshop?: { active: true; session_id: string; base_version: string; revision: number };
+  document_catalog?: { schema_version: 1; source_refs: string[]; documents: AtlasDocument[] };
   hotspot_catalog?: {
     schema_version: 1;
     hotspots: Hotspot[];
@@ -216,6 +217,13 @@ export interface Hotspot {
   location: { node_ids: string[] };
   problem: string;
   examples: string[];
+  document_ids?: string[];
+  market_view?: {
+    finding: string;
+    flow_assessment: string;
+    limits: string;
+    sources: { publisher: string; title: string; url: string; relevance: string }[];
+  };
   resolution_options: {
     id: string;
     title: string;
@@ -231,9 +239,20 @@ export interface Hotspot {
   arbitration_level: string;
   arbitration_note?: string;
   status: 'discovered' | 'shared' | 'validated' | 'resolved';
+  selected_option_id?: string;
   source_status?: string;
   source_refs: string[];
   origin: { repository: string; path: string; id: string; source_id: string; evidence_limit: string };
+  review: Review;
+}
+export interface AtlasDocument {
+  id: string;
+  title: string;
+  summary: string;
+  context: string;
+  category: 'analysis' | 'source' | 'decision' | 'guide';
+  asset: { path: string; sha256: string; media_type: 'application/pdf' };
+  source_refs: string[];
   review: Review;
 }
 export interface AtlasNode {

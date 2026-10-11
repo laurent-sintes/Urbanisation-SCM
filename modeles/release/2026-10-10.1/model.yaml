@@ -1,7 +1,7 @@
 schema_version: 1.0.0
 model_id: flow-urbanism
-version: 2026-10-09.8
-as_of: '2026-10-09'
+version: 2026-10-10.1
+as_of: '2026-10-10'
 space: release
 display_policy: typed-tree-v1
 principles:
@@ -6716,51 +6716,134 @@ hotspot_catalog:
   - U921
   - U922
   - U923
+  - U927
+  - U928
+  - U924
+  - U925
+  - U926
+  - U929
+  - U930
+  - U931
+  - U932
+  - U933
+  - U934
+  - U935
+  - U936
+  - U938
+  - U939
+  - U940
+  - U941
+  - U942
+  - U943
+  - U944
+  - U945
+  - U947
+  - U948
   hotspots:
+  - id: HS-001
+    title: Migration ECC MM / PP / SD chez Boardriders
+    kind: scope
+    location:
+      node_ids:
+      - system-business-operations
+    problem: Migrer les responsabilités ECC MM, PP et SD de Boardriders sans interrompre les opérations Wholesale, l’agrégation
+      des données de référence ni leur publication vers FI / CO. FI / CO reste hors du périmètre migré.
+    examples:
+    - Un article créé pour le Wholesale reste transmis aux consommateurs financiers pendant la transition.
+    - Une commande ouverte traverse une étape de migration sans perdre son état ni sa suite.
+    resolution_options:
+    - id: hs-001-phased
+      title: Migrer par responsabilités
+      principle: Séparer les responsabilités MM, PP et SD et préparer leurs coexistences successives.
+      effect: Réduit la taille de chaque bascule.
+      conditions:
+      - Inventorier les flux et objets ouverts par responsabilité.
+      tradeoffs:
+      - Augmente les interfaces transitoires.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-001-cutover
+      title: Basculer un ensemble cohérent
+      principle: Préparer une bascule groupée des fonctions qui ne peuvent être séparées sans rupture.
+      effect: Limite la coexistence sur ce groupe.
+      conditions:
+      - Éprouver les dépendances et la reprise des transactions ouvertes.
+      tradeoffs:
+      - Concentre le risque de bascule.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    complexity:
+      political: XL
+      implementation: XL
+      rationale: Le choix de trajectoire touche tout Business Operations et une migration avec coexistence est complexe. Taille
+        proposée par Codex, à vérifier sur les cas et volumes réels.
+    severity: XL
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Instance de décision à établir selon les responsabilités et les conséquences des options.
+    status: validated
+    source_refs:
+    - U924
+    - U947
+    - U948
+    origin:
+      repository: Dossier consolidé FLOW
+      path: audits/2026-10-10-hotspots-sources/consolidation.md
+      id: C01
+      source_id: U924
+      evidence_limit: Inventaire des fonctions, flux, volumes, dépendances et contraintes de bascule non établi.
+    review:
+      state: under_review
+      note: Laurent reconnaît le problème et son périmètre dans le lot U947–U948. Les options, estimations, ancres et arbitrages
+        restent à éprouver ; aucune solution retenue.
+    market_view:
+      finding: Les deux éditeurs documentent la reprise de référentiels et de transactions ouvertes.
+      flow_assessment: Définir la trajectoire autour des responsabilités MM / PP / SD et de leurs consommateurs, dont FI /
+        CO, sans supposer une migration de Finance.
+      limits: Ces guides de migration ne prouvent ni la faisabilité ni le coût de la trajectoire Boardriders.
+      sources:
+      - publisher: Microsoft
+        title: Data migration for Dynamics 365 implementation projects
+        url: https://learn.microsoft.com/en-us/dynamics365/guidance/resources/migrate-data
+        relevance: Distingue référentiels, configuration et transactions ouvertes lors d’une migration.
+      - publisher: SAP S/4HANA
+        title: What Data Can Be Migrated?
+        url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/d5699934e7004d048c4801b552f3b013/886e1b9bf25245d093a98e0c635818e5.html
+        relevance: Documente les objets migrables et les contraintes sur les documents ouverts.
   - id: HS-002
-    title: C-LOG — partage des décisions de fulfillment
+    title: BMN–C-LOG — partage des décisions de fulfillment
     kind: integration
     location:
       node_ids:
       - supply-chain-orchestration
       - domain-logistics-execution
-    problem: Clarifier la répartition des décisions de promesse et de fulfillment entre FLOW et C-LOG, ainsi que les échanges
-      qui rendent leurs décisions compatibles, avant de définir la cible.
+    problem: 'Définir un fonctionnement uniforme entre marques historiques et Boardriders : BMN garde la promesse client et
+      choisit un plan de fulfillment ; C-LOG pourrait proposer des plans valides, puis optimiser et exécuter celui demandé.
+      Les garanties de la proposition, sa durée et le moment de l’engagement ferme restent en discussion.'
     examples:
-    - Une commande peut mobiliser des choix de source, de site, de transport et de promesse qui traversent la frontière entre
-      orchestration Supply et exécution logistique.
-    - Le rôle de C-LOG diffère entre les marques historiques Beaumanoir et Boardriders ; une cible uniforme ne peut pas être
-      présumée.
+    - Aujourd’hui, Boardriders maintient le réseau de fulfillment, construit et libère les ordres ; C-LOG exécute et pilote
+      localement sans initiative sur le plan.
+    - Dans la cible discutée, BMN demande des plans valides à C-LOG, en sélectionne un et demande son exécution ; C-LOG porte
+      alors l’optimisation logistique.
     resolution_options:
-    - id: hs-002-clog-extended
-      title: Étendre l’OMS C-LOG
-      principle: Étudier une prise en charge plus large des magasins et de l’omnicanalité par C-LOG.
-      effect: Couverture et propriété de la promesse à vérifier selon les marques et les parcours.
+    - id: hs-002-joint-plan
+      title: Plans proposés par C-LOG et choisis par BMN
+      principle: BMN détient la promesse et sélectionne un plan valide fourni par C-LOG ; C-LOG tient et exécute le plan.
+      effect: Unifie la frontière de décision envisagée.
       conditions:
-      - Confirmer le mandat de décision de C-LOG et la couverture réelle de l’OMS.
+      - Définir ce que garantit le plan, pour combien de temps et quand l’engagement devient ferme.
       tradeoffs:
-      - Risque de confier une décision transverse à la filiale logistique.
+      - Dépend fortement des délais et garanties de C-LOG.
       implementation_complexity: unassessed
       evidence_state: hypothesis
-    - id: hs-002-flow-oms
-      title: Porter l’OMS au niveau FLOW
-      principle: Étudier une décision de source, de transport et de promesse portée par FLOW, C-LOG assurant l’exécution ou
-        des services spécialisés.
-      effect: Frontière de décision et contrat avec C-LOG à préciser.
+    - id: hs-002-brand-plan
+      title: Plan tenu par BMN
+      principle: BMN construit et libère le plan, C-LOG pilote localement les ordres reçus.
+      effect: Conserve le fonctionnement actuel Boardriders.
       conditions:
-      - Qualifier les règles existantes de Crossroad et les événements attendus de C-LOG.
+      - Vérifier la compatibilité avec les marques historiques et l’optimisation C-LOG.
       tradeoffs:
-      - Risque de reproduire des décisions déjà prises dans C-LOG.
-      implementation_complexity: unassessed
-      evidence_state: hypothesis
-    - id: hs-002-complementary-oms
-      title: Ajouter un OMS complémentaire hors C-LOG
-      principle: Étudier une couverture des usages non pris en charge par C-LOG par un autre OMS.
-      effect: Répartition des usages à définir avant toute comparaison.
-      conditions:
-      - Établir les responsabilités, les contrats et les règles de priorité entre les décisions.
-      tradeoffs:
-      - Risque d’intégration et de double décision élevé selon la fiche source.
+      - Peut limiter la mutualisation de l’optimisation logistique.
       implementation_complexity: unassessed
       evidence_state: hypothesis
     complexity:
@@ -6773,11 +6856,15 @@ hotspot_catalog:
     arbitration_level: to_confirm
     arbitration_note: La fiche source cite la gouvernance Demand / Supply et l’Architecture d’Entreprise ; le niveau parmi
       les instances FLOW proposées par Laurent n’est pas encore établi.
-    status: discovered
+    status: validated
     source_status: En instruction
     source_refs:
     - U922
     - U923
+    - U925
+    - U926
+    - U947
+    - U948
     origin:
       repository: FLOW-Program
       path: src/docs/as-is/hotspots/c-log-decision-fulfillment.md
@@ -6786,10 +6873,733 @@ hotspot_catalog:
       evidence_limit: Compte rendu d’atelier disponible ; transcript source manquant et rôles, contrats, règles de scoring
         et autorités à confirmer. Les hypothèses ne fixent pas la cible.
     review:
+      state: under_review
+      note: Problème et frontière BMN–C-LOG reconnus U947–U948 ; option de plans proposés en discussion, garanties et engagement
+        ferme non décidés. Tailles XL/L données avant scission et à reconfirmer pour C02a.
+    market_view:
+      finding: Les éditeurs séparent ordres, exécution logistique et échanges avec un entrepôt externe.
+      flow_assessment: Formaliser la proposition de plan, son choix, sa validité et l’accusé d’exécution comme des engagements
+        distincts entre BMN et C-LOG.
+      limits: Les sources ne démontrent pas que le fonctionnement cible est disponible chez C-LOG ni qu’un plan proposé réserve
+        les ressources.
+      sources:
+      - publisher: Microsoft Dynamics 365 SCM
+        title: Warehouse management only mode with external ERP systems
+        url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-external-erp
+        relevance: Distingue le traitement logistique et les commandes tenues par un système externe.
+      - publisher: SAP S/4HANA
+        title: External Warehouse Management Services
+        url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/2f36056ae9a044bba55bcbad204b7bc5/6cb085242fce4c4abd480ef3650e669a.html
+        relevance: Décrit des échanges de livraisons et confirmations avec un prestataire logistique tiers.
+  - id: HS-011
+    title: Pilotage des autres prestataires logistiques
+    kind: scope
+    location:
+      node_ids:
+      - supply-chain-orchestration
+    problem: Le Core System doit reconduire le pilotage des prestataires logistiques autres que C-LOG utilisé par Boardriders,
+      alors que les marques historiques travaillent seulement avec C-LOG.
+    examples:
+    - Un ordre Boardriders est confié à un prestataire externe selon le plan et le moment de libération choisis par la marque.
+    resolution_options:
+    - id: hs-011-common-contract
+      title: Contrat commun avec variantes
+      principle: Définir un mandat d’orchestration commun et les variantes nécessaires par prestataire.
+      effect: Préserve une vue cohérente des engagements.
+      conditions:
+      - Recenser les contrats et différences des prestataires.
+      tradeoffs:
+      - Le contrat commun peut masquer des capacités très différentes.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-011-provider-contracts
+      title: Contrats propres aux prestataires
+      principle: Conserver les échanges propres à chaque prestataire sous une coordination Core System.
+      effect: Respecte les usages existants.
+      conditions:
+      - Identifier les règles de choix et les états comparables.
+      tradeoffs:
+      - Multiplie les adaptations et rapprochements.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    complexity:
+      political: M
+      implementation: L
+      rationale: Le mandat du Core System est posé, mais plusieurs contrats logistiques doivent être repris. Taille proposée
+        par Codex, à vérifier sur les cas et volumes réels.
+    severity: L
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Instance de décision à établir selon les responsabilités et les conséquences des options.
+    status: validated
+    source_refs:
+    - U925
+    - U947
+    - U948
+    origin:
+      repository: Dossier consolidé FLOW
+      path: audits/2026-10-10-hotspots-sources/consolidation.md
+      id: C02b
+      source_id: U925
+      evidence_limit: Prestataires, volumes, contrats et variantes Boardriders à inventorier.
+    review:
+      state: under_review
+      note: Laurent reconnaît le problème et son périmètre dans le lot U947–U948. Les options, estimations, ancres et arbitrages
+        restent à éprouver ; aucune solution retenue.
+    market_view:
+      finding: Les deux éditeurs prévoient des échanges avec des systèmes logistiques externes.
+      flow_assessment: Garder la décision de délégation dans Supply Chain Orchestration et qualifier les contrats des prestataires
+        séparément du cas C-LOG.
+      limits: Ces exemples de produits ne démontrent pas une interface commune à tous les partenaires Boardriders.
+      sources:
+      - publisher: Microsoft Dynamics 365 SCM
+        title: Exchange data between systems
+        url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-exchange-data
+        relevance: Sépare données de référence, ordres, progression et variations de stock.
+      - publisher: SAP S/4HANA
+        title: External Warehouse Management Services
+        url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/2f36056ae9a044bba55bcbad204b7bc5/6cb085242fce4c4abd480ef3650e669a.html
+        relevance: Décrit des échanges de livraisons et confirmations avec un prestataire logistique tiers.
+  - id: HS-003
+    title: Fraîcheur et justesse de la vue de stock centralisée
+    kind: scope
+    location:
+      node_ids:
+      - D01
+    problem: La vue de stock centralisée dépend des logiciels de magasin et d'entrepôt qui gèrent le stock au plus près du
+      terrain et restent hors du périmètre de redéveloppement. Les événements qui changent les quantités ou leur disponibilité
+      doivent être transmis et pris en compte assez vite et correctement pour que Stock et Availability puissent fonder leurs
+      décisions sur une vue fiable.
+    examples:
+    - Une vente magasin doit se répercuter rapidement sur la vue de stock centralisée.
+    - Une eReservation ou une mise de côté peut changer la disponibilité à la vente sans déplacer physiquement un article
+      ; son effet exact reste à qualifier.
+    - Une mise au rebut rend un article impossible à vendre et doit corriger la vue utilisable.
+    - Une préparation en entrepôt doit être reflétée sans attendre une photographie de stock trop ancienne.
+    resolution_options:
+    - id: hs-003-direct-sources
+      title: Recevoir les données des systèmes de terrain
+      principle: Étudier un raccordement aux sources compétentes par périmètre pour obtenir états et événements exploitables.
+      effect: Réduit certains relais, sous réserve des interfaces et droits réellement disponibles.
+      conditions:
+      - Qualifier les contrats et capacités des logiciels de magasin et des gestionnaires d’entrepôt.
+      tradeoffs:
+      - Dépendance à des évolutions de logiciels hors du périmètre de redéveloppement.
+      implementation_complexity: unassessed
+      evidence_state: to_investigate
+    - id: hs-003-existing-aggregators
+      title: Recevoir les vues des agrégateurs existants
+      principle: Étudier la réutilisation de vues déjà consolidées par les systèmes existants, selon le périmètre.
+      effect: Réutilise des échanges existants si leur provenance, leur couverture et leur fraîcheur sont suffisantes.
+      conditions:
+      - Mesurer l’âge des données à la source et le délai cumulé des relais.
+      tradeoffs:
+      - Une consultation rapide ne corrige pas un stock amont périmé.
+      implementation_complexity: unassessed
+      evidence_state: to_investigate
+    - id: hs-003-qualified-hybrid
+      title: Combiner les chemins par périmètre
+      principle: Étudier un chemin qualifié par source et usage, sous un contrat commun de sens, fraîcheur, correction et
+        reprise.
+      effect: Permet de tenir compte des capacités différentes des magasins et entrepôts.
+      conditions:
+      - Définir autorité et provenance de chaque quantité pour éviter les doubles comptes.
+      tradeoffs:
+      - Multiplie les règles de rapprochement et de supervision.
+      implementation_complexity: unassessed
+      evidence_state: to_investigate
+    complexity:
+      political: L
+      implementation: XL
+      rationale: Laurent valide L politique et XL implémentation pour C03 (U928). La dépendance aux logiciels de terrain hors
+        redéveloppement rend l'arbitrage politique ; la diversité des sources, la fraîcheur et les reprises rendent la réalisation
+        difficile. Les contrats et délais réels restent inconnus.
+    severity: XL
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Le niveau d'arbitrage parmi les instances FLOW n'a pas été choisi ; les responsables des logiciels de
+      terrain devront participer à l'instruction.
+    status: validated
+    source_status: À qualifier
+    source_refs:
+    - U927
+    - U928
+    - U947
+    - U948
+    origin:
+      repository: FLOW-Program
+      path: src/docs/as-is/hotspots/stock-temps-reel.md
+      id: HS-003
+      source_id: SRC-2025-09-17-SYNVANCE-ACHATS-VENTES
+      evidence_limit: La fiche source ne mesure ni latences, volumes, seuils ni capacités des instances du Groupe ; les cinq
+        situations et la dépendance aux logiciels hors redéveloppement sont précisées par U927.
+    review:
+      state: under_review
+      note: Problème et tailles L/XL confirmés par Laurent U928 ; reconnaissance renouvelée U947–U948. Ancre D01 provisoire,
+        seuils de fraîcheur et capacités des sources à mesurer ; aucune option retenue.
+    market_view:
+      finding: Des systèmes du marché agrègent des états de stock externes et échangent les progrès d’exécution des entrepôts.
+      flow_assessment: Qualifier par source les mouvements qui changent la quantité ou la disponibilité, leur âge, leur correction
+        et leur usage dans la promesse.
+      limits: La documentation ne mesure ni les latences des logiciels Beaumanoir ni leur aptitude à publier chaque événement
+        requis.
+      sources:
+      - publisher: Microsoft Dynamics 365 SCM
+        title: Inventory Visibility Add-in overview
+        url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility
+        relevance: Agrège des états issus notamment des points de vente et entrepôts tiers.
+      - publisher: SAP S/4HANA
+        title: Process Flow for Sales Orders
+        url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/2d95c3180a974e0aad07556ee4d28e94/1a61b6531de6b64ce10000000a174cb4.html
+        relevance: Décrit des commandes dans un environnement d’entrepôts distribués.
+  - id: HS-012
+    title: Stock Hub — rapprochement des états et faits de stock
+    kind: scope
+    location:
+      node_ids:
+      - D01
+    problem: Rapprocher les mouvements et photographies de stock provenant de sources diverses pour établir une vue cohérente,
+      datée et traçable sans double compte. C-LOG transmet aujourd’hui un état de stock comparable à une photographie d’inventaire.
+    examples:
+    - Un état C-LOG est rapproché des mouvements déjà reçus avant de corriger la vue centrale.
+    - Une divergence entre stock attendu et état observé déclenche une vérification et une correction justifiée.
+    resolution_options:
+    - id: hs-012-hub
+      title: Rapprochement dans un Data Hub
+      principle: Comparer états et faits dans un composant de données spécialisé avant publication de la vue.
+      effect: Rend les écarts et corrections traçables.
+      conditions:
+      - Définir identité, dates, provenance et règles de priorité.
+      tradeoffs:
+      - Ajoute un composant et ses responsabilités de gouvernance.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-012-domain
+      title: Rapprochement dans Inventory Management
+      principle: Tenir les faits, états et corrections dans les responsabilités de stock du Core System.
+      effect: Rapproche la décision de correction de son usage métier.
+      conditions:
+      - Vérifier volumes et contrats des sources.
+      tradeoffs:
+      - Peut alourdir le traitement des apports hétérogènes.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    complexity:
+      political: L
+      implementation: XL
+      rationale: La diversité des sources, les reprises et les règles anti-double-compte rendent la réalisation difficile.
+        Taille proposée par Codex, à vérifier sur les cas et volumes réels.
+    severity: XL
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Instance de décision à établir selon les responsabilités et les conséquences des options.
+    status: validated
+    source_refs:
+    - U929
+    - U930
+    - U947
+    - U948
+    origin:
+      repository: Dossier consolidé FLOW
+      path: audits/2026-10-10-hotspots-sources/consolidation.md
+      id: C04
+      source_id: U929
+      evidence_limit: Portée et date des états C-LOG, écarts et règles de correction non qualifiés.
+    review:
+      state: under_review
+      note: Laurent reconnaît le problème et son périmètre dans le lot U947–U948. Les options, estimations, ancres et arbitrages
+        restent à éprouver ; aucune solution retenue.
+    market_view:
+      finding: Microsoft documente l’agrégation multi-source ; SAP documente des contrôles de cohérence entre inventaires
+        de systèmes intégrés.
+      flow_assessment: Étudier un pattern Data Hub pour rapprocher les états C-LOG et les faits de stock, sans transférer
+        automatiquement la décision métier au hub.
+      limits: Ces sources ne prescrivent pas un Data Hub FLOW et ne prouvent pas les règles de réconciliation propres à C-LOG.
+      sources:
+      - publisher: Microsoft Dynamics 365 SCM
+        title: Inventory Visibility Add-in overview
+        url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility
+        relevance: Agrège des états issus notamment des points de vente et entrepôts tiers.
+      - publisher: SAP S/4HANA
+        title: Inventory Synchronization
+        url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/2d95c3180a974e0aad07556ee4d28e94/0261b6531de6b64ce10000000a174cb4.html
+        relevance: Documente le contrôle de cohérence entre stocks de systèmes intégrés.
+  - id: HS-013
+    title: Répondre au client lorsque la promesse reste incertaine
+    kind: scope
+    location:
+      node_ids:
+      - ba-order-promising
+    problem: Déterminer ce que FLOW répond immédiatement puis plus tard quand le client demande une date et qu’aucun plan
+      de fulfillment porteur d’engagement ferme n’est encore disponible.
+    examples:
+    - Une précommande B2B Boardriders pour l’implantation reçoit un mois cible qui n’est pas affiné avant l’avis tardif du
+      transporteur.
+    - Une disponibilité de stock encore incertaine permet une estimation, puis une confirmation ou une révision explicite.
+    resolution_options:
+    - id: hs-013-progressive
+      title: Réponse progressive
+      principle: Annoncer une estimation qualifiée, son délai de révision, puis confirmer à mesure que le plan s’affermit.
+      effect: Améliore l’information client sans promettre trop tôt.
+      conditions:
+      - Définir règles par client, canal, type de livraison et confiance.
+      tradeoffs:
+      - Exige suivi et notification des changements.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-013-firm-only
+      title: Attendre une promesse ferme
+      principle: Ne communiquer une date garantie qu’après confirmation des ressources et du plan.
+      effect: Réduit les révisions de promesse.
+      conditions:
+      - Définir le message et le délai d’attente acceptables.
+      tradeoffs:
+      - Peut laisser le client trop longtemps sans réponse utile.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    complexity:
+      political: L
+      implementation: L
+      rationale: La politique de réponse varie selon les clients et exige un suivi de l’estimation à la confirmation. Taille
+        proposée par Codex, à vérifier sur les cas et volumes réels.
+    severity: XL
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Instance de décision à établir selon les responsabilités et les conséquences des options.
+    status: validated
+    source_refs:
+    - U931
+    - U932
+    - U933
+    - U947
+    - U948
+    origin:
+      repository: Dossier consolidé FLOW
+      path: audits/2026-10-10-hotspots-sources/consolidation.md
+      id: C05
+      source_id: U931
+      evidence_limit: Garanties, déclencheurs de réponse ultérieure et applicabilité B2B/B2C à préciser.
+    review:
+      state: under_review
+      note: Laurent reconnaît le problème et son périmètre dans le lot U947–U948. Les options, estimations, ancres et arbitrages
+        restent à éprouver ; aucune solution retenue.
+    market_view:
+      finding: Microsoft distingue date issue du délai commercial, disponibilité et capacité ; SAP documente la confirmation
+        selon disponibilité.
+      flow_assessment: Distinguer estimation, engagement ferme et prochaine mise à jour, avec une règle explicite pour chaque
+        type de situation.
+      limits: Aucun éditeur cité ne fixe la politique de communication progressive adaptée à tous les clients FLOW.
+      sources:
+      - publisher: Microsoft Dynamics 365 SCM
+        title: Delivery dates and available-to-promise calculations
+        url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+        relevance: Distingue délai commercial, disponibilité et capacité.
+      - publisher: SAP S/4HANA
+        title: Outlining Availability Check in Detail
+        url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-availability-check-in-detail
+        relevance: Décrit le calcul de quantités confirmables selon disponibilité.
+  - id: HS-006
+    title: Construction et disponibilité des EAN / GTIN
+    kind: scope
+    location:
+      node_ids:
+      - D08
+    problem: Déterminer quelle capacité construit les EAN / GTIN nécessaires à la commande d’achat, puis comment Supply reçoit,
+      contrôle et utilise ces identifiants sans présumer qu’il doit les créer.
+    examples:
+    - Une commande d’achat requiert un identifiant par unité commerciale alors que la référence reçue n’en porte pas encore.
+    - Un fournisseur fournit son identifiant ; FLOW doit vérifier son rattachement au produit et au conditionnement.
+    resolution_options:
+    - id: hs-006-source
+      title: Construction dans le domaine source
+      principle: Faire construire l’identifiant par la responsabilité qui définit le produit ou sa mise en marché ; Supply
+        l’ingère et le valide.
+      effect: Respecte la source de vérité d’entreprise.
+      conditions:
+      - Qualifier marque propre, marque fournisseur et unité commerciale.
+      tradeoffs:
+      - Dépend de la capacité du domaine source à fournir le code à temps.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-006-supply-gap
+      title: Traitement encadré des absences dans Supply
+      principle: Permettre à Supply de détecter et faire résoudre une absence avant achat, sans s’attribuer automatiquement
+        la création.
+      effect: Rend visible le blocage opérationnel.
+      conditions:
+      - Définir l’autorité de correction et les délais.
+      tradeoffs:
+      - Risque de contourner l’autorité source si la correction est mal cadrée.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    complexity:
+      political: L
+      implementation: M
+      rationale: Le choix de responsabilité est à clarifier ; le contrôle et la mise à disposition sont plus circonscrits.
+        Taille proposée par Codex, à vérifier sur les cas et volumes réels.
+    severity: L
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Instance de décision à établir selon les responsabilités et les conséquences des options.
+    status: validated
+    source_refs:
+    - U934
+    - U935
+    - U936
+    - U947
+    - U948
+    origin:
+      repository: Dossier consolidé FLOW
+      path: audits/2026-10-10-hotspots-sources/consolidation.md
+      id: C06a
+      source_id: U934
+      evidence_limit: Autorité de création et cas d’usage par unité commerciale non établis.
+    review:
+      state: under_review
+      note: Laurent reconnaît le problème et son périmètre dans le lot U947–U948. Les options, estimations, ancres et arbitrages
+        restent à éprouver ; aucune solution retenue.
+    market_view:
+      finding: Les éditeurs conservent les identifiants avec produits, variantes et unités de mesure.
+      flow_assessment: Séparer création à la source, ingestion dans Operational References et exigence de la commande d’achat.
+      limits: La présence d’un champ EAN dans un produit logiciel ne désigne pas le propriétaire métier de sa création.
+      sources:
+      - publisher: Microsoft Dynamics 365 SCM
+        title: Product identifiers
+        url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-identifiers
+        relevance: Distingue produit, variante et identifiants associés.
+      - publisher: SAP S/4HANA
+        title: EANs for Units of Measure
+        url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f7fddfe4caca43dd967ac4c9ce6a70e4/9215c453f57eb44ce10000000a174cb4.html
+        relevance: Relie l’EAN aux unités et conditionnements du produit.
+  - id: HS-014
+    title: États complets PLM et extraction des changements
+    kind: integration
+    location:
+      node_ids:
+      - system-design-development
+      - supply-chain-orchestration
+    problem: Le PLM pousse des états complets du référentiel produit ; Supply doit identifier changements, suppressions et
+      versions fiables sans supposer qu’un delta source est disponible.
+    examples:
+    - Une nouvelle photographie PLM modifie un produit mais la différence avec l’état précédent doit être reconstruite.
+    - 'Une référence absente d’un état complet peut être supprimée ou simplement hors périmètre : le sens de l’absence doit
+      être défini.'
+    resolution_options:
+    - id: hs-014-source-delta
+      title: Delta fourni par le PLM
+      principle: Obtenir un journal fiable des créations, modifications et retraits auprès de la source.
+      effect: Réduit les comparaisons aval.
+      conditions:
+      - Vérifier la capacité réelle du PLM et sa reprise après incident.
+      tradeoffs:
+      - Dépend d’une évolution ou configuration du PLM.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-014-data-hub
+      title: Delta calculé dans un Data Hub
+      principle: Comparer des états complets versionnés, conserver provenance et publier les différences qualifiées.
+      effect: Isole la réconciliation des consommateurs Supply.
+      conditions:
+      - Garantir identité stable, périmètre complet et sens des suppressions.
+      tradeoffs:
+      - Ajoute stockage, reprise et contrôle de qualité.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    complexity:
+      political: L
+      implementation: XL
+      rationale: Le rapprochement de photographies complètes, versions et reprises est transverse et potentiellement volumineux.
+        Taille proposée par Codex, à vérifier sur les cas et volumes réels.
+    severity: XL
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Instance de décision à établir selon les responsabilités et les conséquences des options.
+    status: validated
+    source_refs:
+    - U934
+    - U935
+    - U936
+    - U947
+    - U948
+    origin:
+      repository: Dossier consolidé FLOW
+      path: audits/2026-10-10-hotspots-sources/consolidation.md
+      id: C06b
+      source_id: U934
+      evidence_limit: Contrat et volumes PLM, identité stable et sémantique des suppressions non vérifiés.
+    review:
+      state: under_review
+      note: Laurent reconnaît le problème et son périmètre dans le lot U947–U948. Les options, estimations, ancres et arbitrages
+        restent à éprouver ; aucune solution retenue.
+    market_view:
+      finding: Microsoft distingue export complet et suivi de changements ; SAP documente chargement initial puis deltas via
+        un hub.
+      flow_assessment: Vérifier un delta source avant de retenir un calcul aval ; un Data Hub est une piste si le PLM ne fournit
+        pas les événements requis.
+      limits: La documentation produit ne prouve pas la capacité du PLM installé chez Boardriders ni la qualité de ses photographies.
+      sources:
+      - publisher: Microsoft Dynamics 365
+        title: Export entities to your own database
+        url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/analytics/export-entities-to-your-own-database
+        relevance: Distingue export complet et suivi des changements.
+      - publisher: SAP Master Data Integration
+        title: Synchronization of Master Data
+        url: https://help.sap.com/docs/master-data-integration/sap-master-data-integration-prod/synchronization-of-master-data
+        relevance: Documente chargement initial et synchronisation des deltas.
+  - id: HS-015
+    title: Maille produit nécessaire aux opérations Supply
+    kind: scope
+    location:
+      node_ids:
+      - ba-product-references
+    problem: 'Déterminer la maille d’information produit nécessaire aux décisions et documents Supply selon les usages : produit,
+      variante vendable, assortiment ou conditionnement, sans fixer cette maille par le seul canal.'
+    examples:
+    - Un achat de gros peut porter un carton ou un prépack dont la composition doit être connue.
+    - Une vente B2C doit identifier la variante effectivement vendue ; un cadrage d’achat peut commencer à une maille plus
+      large.
+    resolution_options:
+    - id: hs-015-common-identity
+      title: Identité commune et projections par usage
+      principle: Conserver une identité produit commune et exposer la maille nécessaire à chaque commande ou décision.
+      effect: Évite des catalogues divergents par canal.
+      conditions:
+      - Tester achats par style, cartons et vente à la variante.
+      tradeoffs:
+      - Exige conversions et règles de cohérence explicites.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-015-fixed-grain
+      title: Maille unique de référence
+      principle: Imposer une maille détaillée commune à tous les échanges Supply.
+      effect: Simplifie certaines interfaces.
+      conditions:
+      - Prouver que chaque source connaît cette maille assez tôt.
+      tradeoffs:
+      - Peut forcer un détail absent ou inutile pour certains achats.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    complexity:
+      political: L
+      implementation: L
+      rationale: Les projections entre produit, variante et conditionnement traversent achats, stock et vente. Taille proposée
+        par Codex, à vérifier sur les cas et volumes réels.
+    severity: XL
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Instance de décision à établir selon les responsabilités et les conséquences des options.
+    status: validated
+    source_refs:
+    - U934
+    - U935
+    - U936
+    - U947
+    - U948
+    origin:
+      repository: Dossier consolidé FLOW
+      path: audits/2026-10-10-hotspots-sources/consolidation.md
+      id: C06c
+      source_id: U934
+      evidence_limit: Contrats de commande représentatifs et définition de Package non établis.
+    review:
+      state: under_review
+      note: Laurent reconnaît le problème et son périmètre dans le lot U947–U948. Les options, estimations, ancres et arbitrages
+        restent à éprouver ; aucune solution retenue.
+    market_view:
+      finding: Microsoft distingue produit et variante ; SAP Fashion documente des achats avec article générique et variantes.
+      flow_assessment: Choisir la maille selon la décision et la ligne de commande, puis expliciter les conversions entre
+        unités et conditionnements.
+      limits: Ces exemples ne prouvent pas la maille exacte des achats Boardriders ni le sens local de Package.
+      sources:
+      - publisher: Microsoft Dynamics 365 SCM
+        title: Product identifiers
+        url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-identifiers
+        relevance: Distingue produit, variante et identifiants associés.
+      - publisher: SAP S/4HANA Fashion
+        title: Generic Article in Purchasing
+        url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9905622a5c1f49ba84e9076fc83a9c2c/e69ce957fc00be12e10000000a4450e5.html
+        relevance: Illustre commande sur article générique et variantes.
+  - id: HS-007
+    title: Documents des échanges entre entités juridiques
+    kind: scope
+    location:
+      node_ids:
+      - system-business-operations
+    problem: Produire au bon moment les documents qui actent les échanges entre entités juridiques distinctes dans les chaînes
+      d’achat et de vente, selon les parties, engagements, événements et conditions applicables.
+    examples:
+    - Un fournisseur, une usine et une entité de facturation peuvent être distincts ; les rôles doivent figurer dans les bons
+      documents.
+    - Une vente intercompany relie commandes et factures propres à chaque relation juridique.
+    resolution_options:
+    - id: hs-007-configure
+      title: Paramétrer les capacités existantes
+      principle: Configurer parties, rôles, engagements et déclencheurs documentaires dans les parcours de commande et de
+        facturation.
+      effect: Utilise les responsabilités déjà représentées dans le modèle.
+      conditions:
+      - Éprouver les chaînes externe, multipartite et intercompany.
+      tradeoffs:
+      - Les cas locaux peuvent révéler une lacune de données ou de paramétrage.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-007-gap
+      title: Étendre seulement sur lacune prouvée
+      principle: Ajouter une responsabilité ciblée si un cas réel ne peut être représenté par les capacités courantes.
+      effect: Évite un nouveau périmètre générique sans nécessité.
+      conditions:
+      - Documenter le cas impossible et la frontière concernée.
+      tradeoffs:
+      - Une découverte tardive peut repousser le traitement.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    complexity:
+      political: S
+      implementation: M
+      rationale: Le modèle couvre l’essentiel selon Laurent ; le travail principal est un paramétrage éprouvé sur les situations
+        réelles. Taille proposée par Codex, à vérifier sur les cas et volumes réels.
+    severity: M
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Instance de décision à établir selon les responsabilités et les conséquences des options.
+    status: validated
+    source_refs:
+    - U938
+    - U939
+    - U940
+    - U941
+    - U947
+    - U948
+    origin:
+      repository: Dossier consolidé FLOW
+      path: audits/2026-10-10-hotspots-sources/consolidation.md
+      id: C07
+      source_id: U938
+      evidence_limit: Chaînes documentaires et sources de contexte juridique à vérifier ; aucun manque de capacité démontré.
+    review:
+      state: under_review
+      note: Laurent reconnaît le problème et son périmètre dans le lot U947–U948. Les options, estimations, ancres et arbitrages
+        restent à éprouver ; aucune solution retenue.
+    market_view:
+      finding: Les deux éditeurs séparent les documents et relations juridiques d’une transaction intercompany.
+      flow_assessment: Éprouver les cas réels dans Sales Order, Purchase Order, Process Sentry et Billing avant de modifier
+        le modèle.
+      limits: Les exemples de produits ne prouvent ni le paramétrage requis ni la couverture installée chez Beaumanoir.
+      sources:
+      - publisher: Microsoft Dynamics 365 SCM
+        title: Intercompany orders and return orders
+        url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/intercompany-orders-and-return-orders
+        relevance: Relie commandes d’achat et de vente entre sociétés du groupe.
+      - publisher: SAP S/4HANA
+        title: Executing the Advanced Intercompany Sales and Stock Transfer Process
+        url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/executing-the-advanced-intercompany-sales-and-stock-transfer-process_c5f8e409-c8e3-4e0a-b736-6d1d93d0f2bc
+        relevance: Distingue facture client et facture intercompany.
+  - id: HS-008
+    title: Affectation et redistribution Wholesale avant promesse ferme
+    kind: scope
+    location:
+      node_ids:
+      - D03.o
+    problem: Affecter puis, lorsque les règles le permettent, redistribuer stock physique et réceptions attendues entre des
+      demandes Wholesale concurrentes avant l’affermissement de leurs promesses client.
+    examples:
+    - L’Allocation Run Boardriders relie commandes, contrats et ressources selon dates, priorités et catégories.
+    - Une quantité déjà fixée ou une réservation conservée à un run suivant ne peut pas être redistribuée comme une ressource
+      libre.
+    resolution_options:
+    - id: hs-008-priority
+      title: Règles de priorité et de stabilité
+      principle: Reprendre les règles utiles de sélection, d’affectation, de conservation et de libération des liens.
+      effect: Conserve les arbitrages Wholesale nécessaires.
+      conditions:
+      - Inventorier les règles actives, extensions et engagements réellement fermes.
+      tradeoffs:
+      - La complexité dépend des exceptions et du spécifique conservé.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-008-limited
+      title: Reprise limitée des règles
+      principle: Définir un jeu restreint de priorités et de réaffectations fondé sur les besoins confirmés.
+      effect: Réduit le coût initial.
+      conditions:
+      - Tester les cas Boardriders qui seraient exclus.
+      tradeoffs:
+      - Peut perdre une différenciation commerciale importante.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    complexity:
+      political: L
+      implementation: XL
+      rationale: Le paramétrage EMEA décrit en juillet 2025 est élaboré et des adaptations existent ; le coût de reprise FLOW
+        dépend des règles effectivement conservées. Taille proposée par Codex, à vérifier sur les cas et volumes réels.
+    severity: XL
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Instance de décision à établir selon les responsabilités et les conséquences des options.
+    status: validated
+    source_refs:
+    - U942
+    - U943
+    - U944
+    - U945
+    - U947
+    - U948
+    origin:
+      repository: Dossier consolidé FLOW
+      path: audits/2026-10-10-hotspots-sources/consolidation.md
+      id: C08
+      source_id: U942
+      evidence_limit: État actuel des jobs, extensions et chantiers ouverts en juillet 2025 non vérifié ; taille d’implémentation
+        conditionnelle.
+    review:
+      state: under_review
+      note: Laurent reconnaît le problème et son périmètre dans le lot U947–U948. Les options, estimations, ancres et arbitrages
+        restent à éprouver ; aucune solution retenue.
+    market_view:
+      finding: SAP Fashion documente un Allocation Run avec tri et affectation ; Microsoft documente la conservation de liens
+        de couverture pour certaines demandes confirmées.
+      flow_assessment: Séparer priorité, affectation ou pegging, stabilité des liens et affermissement de la promesse ; le
+        moteur C14 reste un sujet distinct.
+      limits: Les mécanismes Microsoft ne sont pas équivalents à ARun ; le support Boardriders de 2025 ne prouve pas l’état
+        actuel.
+      sources:
+      - publisher: Microsoft Dynamics 365 SCM
+        title: Keep supply for confirmed demand
+        url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/keep-supply-for-confirmed-demand
+        relevance: Documente la conservation de certains liens de couverture de demande confirmée.
+      - publisher: SAP Fashion Management
+        title: Steps in Order Allocation Run
+        url: https://help.sap.com/docs/SAP_ERP_SPV/f48e74ad3b3740bc8c9eaade394a3c1e/3d1df055aa2a6d55e10000000a4450e5.html
+        relevance: Documente sélection, tri et affectation de ressources physiques et futures.
+    document_ids:
+    - DOC001
+document_catalog:
+  schema_version: 1
+  source_refs:
+  - U945
+  - U946
+  - U948
+  documents:
+  - id: DOC001
+    title: Allocation Run Boardriders — synthèse et écart au standard
+    summary: Synthèse du processus de répartition des ressources aux commandes Wholesale, des choix Boardriders et des évolutions
+      encore ouvertes en juillet 2025.
+    context: Synthèse documentaire liée au hotspot C08 ; les constats du support de juillet 2025 et les évolutions proposées
+      restent à vérifier sur l'instance Boardriders actuelle.
+    category: analysis
+    asset:
+      path: modeles/documents/3d6a96c7878c4ce735f4faba96070befb9de7524c2cbedad88312c2c57efa6e5.pdf
+      sha256: 3d6a96c7878c4ce735f4faba96070befb9de7524c2cbedad88312c2c57efa6e5
+      media_type: application/pdf
+    source_refs:
+    - U942
+    - U943
+    - U945
+    - U948
+    review:
       state: proposed
-      note: Projection pilote du hotspot FLOW-Program HS-002 sur les deux domaines du backlog. Difficultés politique XL et
-        d'implémentation L qualifiées par Laurent (U923) ; options et arbitrage restent à instruire, sans preuve de réalisation
-        installée.
+      note: Synthèse de source préparée pour C08. La comparaison du standard SAP et les évolutions postérieures à juillet
+        2025 restent à confirmer sur l'instance Boardriders.
 glossary:
   schema_version: 1.0.0
   id: flow-glossary
@@ -8676,6 +9486,8 @@ glossary:
       Affecter : Établir un lien entre une ressource et une demande ou un bénéficiaire précis. Qualifier ressource ou tâche ; ne pas confondre avec une promesse commerciale.
 
       Réaffecter : Modifier une affectation existante de ressource. Distinguer l’effet sur le lien de ressource de l’éventuelle modification de promesse.
+
+      Le [pegging](glossary:TER204) est une manière de nommer et tracer ce lien demande–ressource dans certains systèmes. La capacité [Supply Assignment](model:D03.o) choisit les liens à établir ou à réviser ; le terme pegging ne désigne pas à lui seul toute cette décision.
     notes: |-
       La quantité affectée peut différer de la quantité demandée ou promise. Qualifier l’affectation d’une tâche, qui relève d’un autre objet. N1/N3. U289 : notion résultat associée à Supply Assignment (affectation des ressources aux commandes). Ne pas employer Allocation seul comme synonyme. Un lien peut porter sur une ressource future ; il ne prouve ni promesse confirmée ni mouvement physique. Convention : modeles/backlog/assignment-terminology.yaml.
 
@@ -8695,6 +9507,7 @@ glossary:
     - CMP307
     - ELM208
     - U903
+    - U944
     source_locator:
       path: connaissance/19-glossaire-metier.md
       anchor: ''
@@ -8786,9 +9599,9 @@ glossary:
         - U477
         - ELM452
         - CMP191
-    revision: 6
-    last_modified: '2026-10-07T10:46:23.694754Z'
-    content_sha256: 7bf50bd66ed3f58a2e41d0722d539876c03b3727a139d69a96a271ca83de5415
+    revision: 7
+    last_modified: '2026-10-10T09:03:44.306851Z'
+    content_sha256: 875877d776e907740472c634d20b765b3505d1a8a3069fe3617ffd292225603b
   - id: TER018
     name: Allocation de groupe
     short_description: Attribution d’une enveloppe à un usage ou une population, avec des règles d’horizon et de consommation.
@@ -34361,20 +35174,89 @@ glossary:
     revision: 2
     last_modified: '2026-10-09T09:17:15.708607Z'
     content_sha256: 4b265da4400adca9048880adc7fbb6ba80513b1133374155731b15ab23b34c9b
+  - id: TER204
+    name: Pegging
+    short_description: Lien traçable entre une demande et la ressource qui la couvre.
+    definition: Lien traçable entre une demande et une quantité de stock ou de réception attendue retenue pour la couvrir.
+    context: |-
+      Le pegging indique quelle ressource couvre quelle demande, éventuellement sur plusieurs niveaux de planification. Selon le système et les règles, le lien peut être recalculé ou maintenu. Dans FLOW, [Supply Assignment](model:D03.o) décide des affectations ; le pegging décrit le lien produit et suivi. Il ne signifie pas, à lui seul, que la ressource est [réservée](model:D02.c) ni qu'une promesse ferme a été communiquée au client.
+
+      Exemple : 40 pièces d'une commande d'achat attendue sont liées à une commande client. Si l'arrivée change, le lien peut être maintenu, révisé ou supprimé selon les règles applicables. Le statut de la promesse client doit être déterminé séparément.
+    notes: Le terme est employé comme rapprochement de marché pour le lien demande–ressource. Il ne renomme pas la capacité
+      Supply Assignment et n'impose ni chaîne de nomenclature multi-niveaux ni mécanisme technique SAP à FLOW. Le support
+      Boardriders de juillet 2025 décrit des affectations ARun entre commandes, stock physique et réceptions futures, mais
+      ne nomme pas ces liens « pegging ».
+    source_refs:
+    - U942
+    - U944
+    source_locator:
+      path: connaissance/01-contributions-utilisateur.md
+      anchor: u944
+    review:
+      state: proposed
+      note: Correspondance terminologique proposée par Codex à la suite de la question U944 ; aucune adoption du terme comme
+        nom de capacité.
+    market_comparisons:
+    - vendor: SAP
+      product: SAP S/4HANA
+      element_name: Pegging
+      concept_name: Pegging
+      element_type: Concept de liaison entre demande et ressource
+      relationship: Recouvrement partiel
+      scope_summary: Relie éléments de stock ou de réception aux éléments de besoin dans un périmètre de planification.
+      approach_summary: Distingue des liens dynamiques recalculables et des liens fixés selon les règles du calcul.
+      similarities: Décrit le lien ressource–demande que produit une affectation.
+      differences: Le pegging documenté concerne la planification SAP ; il ne décrit pas toute la logique ARun ni l'engagement
+        client FLOW.
+      flow_position: FLOW conserve Supply Assignment comme capacité de décision et Pegging comme nom du lien résultant.
+      source_title: Pegging
+      source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/02e4ab50135e0c0be10000000a423f68.html
+      source_version: SAP S/4HANA On-Premise ; documentation consultée le 10 octobre 2026.
+      source_locator: Pegging Procedure ; dynamic pegging ; fixed pegging
+      consulted_on: '2026-10-10'
+      evidence_limits: La source explique le terme dans SAP S/4HANA ; elle ne prouve ni que Boardriders nomme les liens ARun
+        pegging ni qu'un produit SAP est retenu pour FLOW.
+      status: proposed
+      source_refs:
+      - U944
+    - vendor: Microsoft
+      product: Dynamics 365 Supply Chain Management
+      element_name: Pegging information
+      concept_name: Pegging
+      element_type: Information de couverture demande–ressource
+      relationship: Appui sémantique
+      scope_summary: Conserve des liens entre offre et demande dans des calculs de planification.
+      approach_summary: Maintient certaines informations de pegging pour les demandes confirmées selon les paramètres du calcul.
+      similarities: Le lien peut porter sur un stock présent ou une ressource future.
+      differences: Le mécanisme Microsoft cité appartient à Planning Optimization et ne décrit pas les statuts ARun Boardriders.
+      flow_position: FLOW qualifie séparément affectation, réservation et promesse client.
+      source_title: Keep supply for confirmed demand
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/keep-supply-for-confirmed-demand
+      source_version: Documentation Microsoft ; prérequis 10.0.48 indiqué par la page.
+      source_locator: What data is preserved ; Control how on-hand inventory is pegged
+      consulted_on: '2026-10-10'
+      evidence_limits: Appui terminologique primaire, sans équivalence fonctionnelle complète à ARun ni preuve de déploiement
+        Beaumanoir.
+      status: proposed
+      source_refs:
+      - U944
+    revision: 1
+    last_modified: '2026-10-10T09:03:44.306851Z'
+    content_sha256: 52a866177c11acde8fde4dcac98bd9a30bff0c5977f52a65299e79e8786cd0b9
   note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est
     figé avec chaque nouvelle publication. Les reformulations restent proposées. as_of indique la date du dernier lot éditorial
     appliqué au brouillon, sans modifier les dates des publications figées.
-  revision: 43
-  last_modified: '2026-10-09T11:24:43.972758Z'
-  content_sha256: 88945cfbca49067944f92ceeb43e00f8395495dbcea19632c3e5e861b6ac6c1e
+  revision: 44
+  last_modified: '2026-10-10T09:03:44.306851Z'
+  content_sha256: c706917d1d0116d6e7702c17434500dfb5dc6f558cfd6cb89b70b2a164d6c01b
 element_versioning: 1
-revision: 61
-content_sha256: 1b5172454653745293c8d788f2107089f984c58ab86b9da249ecd6948e4aa23b
-last_modified: '2026-10-09T11:24:43.972758Z'
+revision: 62
+content_sha256: 16d6eaca79362e952f4f504df2ca5b3bc650bafb1866605b270ddc9673900939
+last_modified: '2026-10-10T09:03:44.306851Z'
 release_kind: published_snapshot
 publication:
   source_refs:
-  - U923
+  - U948
   note: Publication complète demandée par Laurent ; publier ne vaut pas valider.
 nodes:
 - id: beaumanoir-target-universe
@@ -34460,13 +35342,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8c589b848ec024464893e794.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-600f51a95af665f584a83b6b.
       Note antérieure, qui ne qualifie pas cette révision : « U912 établit l’existence et le sens de la racine ; la rédaction
       détaillée et les comparaisons restent proposées. »'
   last_modified: '2026-10-09T09:17:15.708607Z'
   content_sha256: 73b941b3bf14600f8d5f87b4081219c6287be636bfccfb0a19bb2804e35f22c2
   adoption_ids:
-  - ADOPT-REASSESS-600f51a95af665f584a83b6b
+  - ADOPT-REASSESS-95d0e7eeab6701b44386e8bd
   approved_fields:
   - name
   proposed_fields:
@@ -34562,13 +35444,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3576c774476a259f621d3605.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-34136fc343483dc0be84808b.
       Note antérieure, qui ne qualifie pas cette révision : « U780 autorise nom, niveau, rattachement et profondeur ; nouvelles
       rédactions, illustrations et comparaisons restent proposées. »'
   last_modified: '2026-09-26T09:07:26.717034Z'
   content_sha256: 74ddf81a37016cdd6b56b568ec0bc41d27f81a376eb35d2c9cf89ee21297d42d
   adoption_ids:
-  - ADOPT-REASSESS-34136fc343483dc0be84808b
+  - ADOPT-REASSESS-3c4ac6873342b9c5decd5385
   approved_fields:
   - modeling_depth
   - name
@@ -37876,7 +38758,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-02e904ba4d72ddf99d340dab.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4d8a33c9f0868a2d30111a8b.
       Note antérieure, qui ne qualifie pas cette révision : « Conversion en référentiel sous Control Plane acceptée U908 ;
       détail rédactionnel proposé. Identité conservée, code de lecture recalculé à la publication. »'
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
@@ -37884,7 +38766,7 @@ nodes:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: c4bdbc52089c183bb78c539a98ec4ab3bf35d232577b26a478d94e5f3e7747ec
   adoption_ids:
-  - ADOPT-REASSESS-4d8a33c9f0868a2d30111a8b
+  - ADOPT-REASSESS-537abb43b4589afa40fc3a26
   approved_fields:
   - data_governance
   proposed_fields:
@@ -39862,7 +40744,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0ad60b85be2706f837c8b669.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9f023542408715ddbdd41396.
       Note antérieure, qui ne qualifie pas cette révision : « Libellé Control Plane aligné sur U908 ; autres contenus et accords
       antérieurs non étendus à cette rédaction. »'
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
@@ -39872,7 +40754,7 @@ nodes:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: 6c7dc5ac4c229f3eca2fdfa0e33aa76a39e147d6941809252fe42bd2212b14dd
   adoption_ids:
-  - ADOPT-REASSESS-9f023542408715ddbdd41396
+  - ADOPT-REASSESS-d56556e1a9b8d3d6bf2301f2
   approved_fields:
   - reading_order
   proposed_fields:
@@ -43577,7 +44459,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-53bb4ab8efb79d6df58ff5e7.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ef0a456a47ae9b3e52ec8b36.
       Note antérieure, qui ne qualifie pas cette révision : « Libellé Control Plane aligné sur U908 ; autres contenus et accords
       antérieurs non étendus à cette rédaction. »'
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
@@ -43586,7 +44468,7 @@ nodes:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: 327f6578706e679bd2d68b2db45fa0564ece99f76a5fc6837cdde225e5514f36
   adoption_ids:
-  - ADOPT-REASSESS-ef0a456a47ae9b3e52ec8b36
+  - ADOPT-REASSESS-3c9d897d4722e858701a10d3
   approved_fields:
   - name
   proposed_fields:
@@ -43748,7 +44630,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4b2849821a1e4a88d777db6a.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2537080412c0b10116eb649c.
       Note antérieure, qui ne qualifie pas cette révision : « Libellé Control Plane aligné sur U908 ; autres contenus et accords
       antérieurs non étendus à cette rédaction. »'
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
@@ -43756,7 +44638,7 @@ nodes:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: 6f97c8319697ef718d43bfb9b7d6a08a6cdf2ba3247324e53e4b19f8ae4423b2
   adoption_ids:
-  - ADOPT-REASSESS-2537080412c0b10116eb649c
+  - ADOPT-REASSESS-7942251637f785ddb75fba3a
   approved_fields:
   - name
   proposed_fields:
@@ -45039,7 +45921,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3a6c7b23de53c9feb276c2f1.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-149818e1f123394d81c4e005.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U877 appliquées ; les formulations détaillées
       restent proposées, sans extension des accords historiques. »'
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
@@ -45048,7 +45930,7 @@ nodes:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: 43d68ed1742127be8dee9257f87075bc9f14437979c0e9b725d82edceca7bfb5
   adoption_ids:
-  - ADOPT-REASSESS-149818e1f123394d81c4e005
+  - ADOPT-REASSESS-f1bb129f6e7b4b8bc2047bde
   approved_fields:
   - reading_order
   proposed_fields:
@@ -49182,7 +50064,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f64c5d35b185ca492c3decd1.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-eefa8ff28ba34766669325a5.
       Note antérieure, qui ne qualifie pas cette révision : « Mise en cohérence sous délégation U771 ; seuls les accords de
       champs inchangés restent applicables, sans validation globale de rédaction nouvelle. »'
   editorial_basis: 'Comportement de la cible U286–U289 appliqué U290 ; définition détaillée, exemple et périmètre éditoriaux.
@@ -49191,7 +50073,7 @@ nodes:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: d65a07a7db852ee381d9b05bb9362ff6a64788fe379a346b753bb726b421c640
   adoption_ids:
-  - ADOPT-REASSESS-eefa8ff28ba34766669325a5
+  - ADOPT-REASSESS-9179d78752352d329c295828
   approved_fields:
   - reading_order
   proposed_fields:
@@ -51481,14 +52363,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bd815cfd5873b6c9474647cd.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-91c6bde7711e7189bcd16ca9.
       Note antérieure, qui ne qualifie pas cette révision : « Libellé Control Plane aligné sur U908 ; autres contenus et accords
       antérieurs non étendus à cette rédaction. »'
   editorial_basis: Accord U342 sur la proposition U341. Recensement mécanismes/paramètres/frontières documenté dans reservation-policy-review.yaml.
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: a427a122283c29525ea8cf5ddb0adcc94ececb62420f42f67f25e82323f2f5c6
   adoption_ids:
-  - ADOPT-REASSESS-91c6bde7711e7189bcd16ca9
+  - ADOPT-REASSESS-e9593af6c142de3ce716c5e8
   approved_fields:
   - name
   proposed_fields:
@@ -52352,7 +53234,7 @@ nodes:
   - nature
   - scope
 - id: D03.o
-  revision: 14
+  revision: 15
   kind: capability
   fields:
     name: Supply Assignment
@@ -52362,7 +53244,7 @@ nodes:
     finality: Proposer un plan d’affectation collectivement cohérent pour satisfaire les commandes et les besoins prévisionnels
       identifiés selon les objectifs applicables.
     scope: |-
-      Choisir les ressources présentes ou futures admissibles à affecter aux commandes et aux besoins prévisionnels identifiés, avec quantités, dates, justification et reste non couvert. Mobiliser les priorités, disponibilités et faisabilités, propositions de réapprovisionnement et de redistribution. La demande prévue reste distincte d’un [Order](glossary:TER012).
+      Choisir les ressources présentes ou futures admissibles à affecter aux commandes et aux besoins prévisionnels identifiés, avec quantités, dates, justification et reste non couvert. Le lien traçable entre une demande et la ressource retenue est appelé [pegging](glossary:TER204) dans certains systèmes ; Supply Assignment décide de le créer ou de le réviser. Mobiliser les priorités, disponibilités et faisabilités, propositions de réapprovisionnement et de redistribution. La demande prévue reste distincte d’un [Order](glossary:TER012).
 
       Préserver les liens existants qui soutiennent les engagements protégés, ou réaffecter les ressources dont les liens peuvent être revus. Ces stratégies peuvent concerner des périmètres distincts du même calcul. La sélection peut privilégier une réception future compatible pour conserver du stock immédiat ; aucun classement par coût, date ou canal n’est universel.
 
@@ -52675,17 +53557,16 @@ nodes:
   - ELM208
   - U797
   - U848
+  - U944
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u378
   review:
     state: proposed
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : ADOPT-REASSESS-bf2fd11d08eaf21a9a18e7b0. Note antérieure, qui ne qualifie pas cette révision
-      : « Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
-      globale de rédaction nouvelle. »'
-  last_modified: '2026-10-06T09:16:17.871814Z'
-  content_sha256: 53aea4998b3f11ebf12cf8ecd611530acb41581a45ec478fb94a2093b9f5ab58
+    note: Mise en cohérence sous délégation U771 ; seuls les accords de champs inchangés restent applicables, sans validation
+      globale de rédaction nouvelle.
+  last_modified: '2026-10-10T09:03:44.306851Z'
+  content_sha256: 7662f7532419a4001718843cf6418f3d15f89d846f6fee02528cf5bae45934af
   adoption_ids: []
   approved_fields: []
   proposed_fields:
@@ -58124,13 +59005,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ae2c52dd31813d7935984a21.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b92fa15a00a46cf20cc338a1.
       Note antérieure, qui ne qualifie pas cette révision : « U909 valide la fusion et le nom. La description détaillée et
       les comparaisons restent proposées ; aucun déploiement déduit. »'
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: efbd9e98d6a71ce6fd785afbd1e67c613a4ee88ea4b7371f80511260e72a33db
   adoption_ids:
-  - ADOPT-REASSESS-b92fa15a00a46cf20cc338a1
+  - ADOPT-REASSESS-473010fc6a25bde05b804559
   approved_fields:
   - name
   proposed_fields:
@@ -59444,13 +60325,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a2d75ef25bb710fe269f7371.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3132003e777788070addd4b7.
       Note antérieure, qui ne qualifie pas cette révision : « Conversion en référentiel sous Control Plane acceptée U908 ;
       détail rédactionnel proposé. Identité conservée, code de lecture recalculé à la publication. »'
   last_modified: '2026-10-07T13:23:24.382595Z'
   content_sha256: e16b8670f8492f471f2a43b6962ee589fde8f5cdc83d2f4bee8bd9f488c45735
   adoption_ids:
-  - ADOPT-REASSESS-3132003e777788070addd4b7
+  - ADOPT-REASSESS-c603820ee89a38d3fe23936c
   approved_fields:
   - data_governance
   proposed_fields:
@@ -59558,13 +60439,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-283ef536b0f3264552d31186.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-02ca823dece49ab9386e6e48.
       Note antérieure, qui ne qualifie pas cette révision : « Conversion en référentiel sous Control Plane acceptée U908 ;
       détail rédactionnel proposé. Identité conservée, code de lecture recalculé à la publication. »'
   last_modified: '2026-10-07T13:23:24.382595Z'
   content_sha256: 64e5afcd4c38d2fc28b1627974bbecbeeac718e6e8e84b35c763e09a1a5ad121
   adoption_ids:
-  - ADOPT-REASSESS-02ca823dece49ab9386e6e48
+  - ADOPT-REASSESS-58179569427d89660dd39fa3
   approved_fields:
   - data_governance
   proposed_fields:
@@ -60680,13 +61561,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7be6289bd0ed4127a9547425.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cc41c2ffed3127c47e7cffd6.
       Note antérieure, qui ne qualifie pas cette révision : « Nom et nature référentielle acceptés U908 ; formulation détaillée
       proposée. Les accords antérieurs restent dans les publications. »'
   last_modified: '2026-10-09T09:17:15.708607Z'
   content_sha256: 8a52744fcce9ea8bcb2e629e71b6995ac12ee3b68512195b1f86dbe23d5ebe24
   adoption_ids:
-  - ADOPT-REASSESS-cc41c2ffed3127c47e7cffd6
+  - ADOPT-REASSESS-1df46e6f37e731c3fd93d9d1
   approved_fields:
   - name
   proposed_fields:
@@ -70762,13 +71643,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-86394aad7d6f48e22ee55c36.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1d8128175314911f82515a1d.
       Note antérieure, qui ne qualifie pas cette révision : « Libellé Control Plane aligné sur U908 ; autres contenus et accords
       antérieurs non étendus à cette rédaction. »'
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: e3cd89292d6c2a7b853efdb00a7dcadb07cd24bbe61b65562ee59a242dd9cf16
   adoption_ids:
-  - ADOPT-REASSESS-1d8128175314911f82515a1d
+  - ADOPT-REASSESS-05928079471015a8a64d64f8
   approved_fields:
   - name
   proposed_fields:
@@ -75872,13 +76753,13 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a16f1e6e7ea6287b7905ec91.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-87a16d36263f3bc81cfc9cd0.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement à la racine cible demandé U912 ; aucune validation
       étendue aux descriptions des systèmes. »'
   last_modified: '2026-10-09T06:22:49.710148Z'
   content_sha256: e070a107c5cfbddfc49dd9224049e2d5402efa46f866d75a3c1e8c935ef0fccd
   adoption_ids:
-  - ADOPT-REASSESS-87a16d36263f3bc81cfc9cd0
+  - ADOPT-REASSESS-0d2aaf60d981f4b877743b74
 - id: REL-U912-UNIVERSE-system-business-operations
   revision: 1
   type: contains
@@ -75889,13 +76770,13 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fd98a3b5ee99f6f89350a945.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d480fdad57e7eb4e76007d51.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement à la racine cible demandé U912 ; aucune validation
       étendue aux descriptions des systèmes. »'
   last_modified: '2026-10-09T06:22:49.710148Z'
   content_sha256: a2d80a2fe17649f739f0aa0c08f12e44d4dc1c80d45e5b8a2c8398b80672dd9a
   adoption_ids:
-  - ADOPT-REASSESS-d480fdad57e7eb4e76007d51
+  - ADOPT-REASSESS-3ab5e3224c80f7947c474588
 - id: REL-U912-UNIVERSE-system-enterprise-management-control
   revision: 1
   type: contains
@@ -75906,13 +76787,13 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ac3675591f6382a741cb2fa0.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-322a4fd9b02b9493f7d5890f.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement à la racine cible demandé U912 ; aucune validation
       étendue aux descriptions des systèmes. »'
   last_modified: '2026-10-09T06:22:49.710148Z'
   content_sha256: ccd7a71e4ce65127e32d9cf63e211d43c66cb614476ad7daf926675b7b8202bc
   adoption_ids:
-  - ADOPT-REASSESS-322a4fd9b02b9493f7d5890f
+  - ADOPT-REASSESS-e573298e274b88455eeeeb6c
 - id: REL-UNIVERSE-SUPPLY-business-references
   revision: 4
   type: presents
@@ -81801,12 +82682,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9d9edd531dc1c3f9f0479377.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5bf0d33814dd9d05a702c23a.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: c5b84d7996f8e389cc15f3af17e5b315507adcd115be2b8e521e880c585834e5
   adoption_ids:
-  - ADOPT-REASSESS-5bf0d33814dd9d05a702c23a
+  - ADOPT-REASSESS-51dcfe620edc37eda5270ab3
 - id: REL-U725-VISIBILITY-D04.j
   revision: 2
   type: relates-to
@@ -81826,12 +82707,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-45581e75fca888eb64cebad9.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1d14c08c1e329582bd356994.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: 3ee61fa4d9dcc614647310524d29da7430e7c9cfcd6bbc8b5ff87e911993aa0d
   adoption_ids:
-  - ADOPT-REASSESS-1d14c08c1e329582bd356994
+  - ADOPT-REASSESS-39c78815f03dfc061e1ce38d
 - id: REL-U725-VISIBILITY-D04.k
   revision: 2
   type: relates-to
@@ -81851,12 +82732,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-191dcc73b97267e07626bfd9.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5b2128a9d240ac637e65bacd.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: 889a63b8bfd95a8c596bed36c765101045185bcf9d201aba8607be9c06c88dbe
   adoption_ids:
-  - ADOPT-REASSESS-5b2128a9d240ac637e65bacd
+  - ADOPT-REASSESS-cc88e0e4798b24912490e453
 - id: REL-U725-VISIBILITY-D04.l
   revision: 2
   type: relates-to
@@ -81876,12 +82757,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-32328a7303db2a5235f3f480.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1aa2e6531a08bac563a0533b.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: 7fb13dbc2df45aba76fe301afc3676a0f3e0608c69680150a8d0131cce0d39d5
   adoption_ids:
-  - ADOPT-REASSESS-1aa2e6531a08bac563a0533b
+  - ADOPT-REASSESS-677f76f85bace17e0ebb5e9e
 - id: REL-U725-VISIBILITY-D04.m
   revision: 2
   type: relates-to
@@ -81901,12 +82782,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8f0533007235f80aeb9b4939.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-95e8b9463906a7a4e5f4029c.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: fbb58372188c6b62a5a89ceec1d66b82663a498abcb2efa82c46148dbbe776ef
   adoption_ids:
-  - ADOPT-REASSESS-95e8b9463906a7a4e5f4029c
+  - ADOPT-REASSESS-fa78378727c6f8b6abbb1f8b
 - id: REL-U725-VISIBILITY-D04.r
   revision: 2
   type: relates-to
@@ -81926,12 +82807,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7bccd4e5c530f2e271d674d9.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fb93aa786209f1c659f98b48.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: 7d7520594c83f01653758ca2bf0a6cffa677172ed5f3c0890e8efc1c9ce51b91
   adoption_ids:
-  - ADOPT-REASSESS-fb93aa786209f1c659f98b48
+  - ADOPT-REASSESS-6028e136bb26c450bed2d6be
 - id: REL-U725-VISIBILITY-D04.t
   revision: 2
   type: relates-to
@@ -81951,12 +82832,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b3bf383c3a9606d1abfc78b2.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-43baac1104975025b0ed5c90.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: 48e11f622d727c311f94216ea250e89b9022852efd69b1d7750d47baa1872571
   adoption_ids:
-  - ADOPT-REASSESS-43baac1104975025b0ed5c90
+  - ADOPT-REASSESS-54cb21d19eb653f3f931c2a5
 - id: REL-U725-ORDER-RESULTS
   revision: 2
   type: relates-to
@@ -81977,12 +82858,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2ef9e04f0c37cd85f1cf3a6d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f1e81e3ca118686abcccc475.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: bde4aa03e0e04e784b18ecd9bdf99ae02169ed08044ef889ef0e86f7581a8fd3
   adoption_ids:
-  - ADOPT-REASSESS-f1e81e3ca118686abcccc475
+  - ADOPT-REASSESS-dc8df5cd89f196c06ab7481d
 - id: REL-U725-EXECUTION-AUTHORIZATIONS
   revision: 1
   type: provides-knowledge
@@ -85154,7 +86035,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3c6c448af4f38aa14263495e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b9016757721ab5878a8710c0.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   qualification:
@@ -85167,7 +86048,7 @@ relations:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: 5f95322ea2abd02646dde42ff4292530b83210f38aa95b17adb17dfe3e146c4a
   adoption_ids:
-  - ADOPT-REASSESS-b9016757721ab5878a8710c0
+  - ADOPT-REASSESS-dbfdbf1948b9c5c93498c603
 - id: REL-U891-PARENT-ba-internal-supplies-equipment-references
   revision: 1
   type: contains
@@ -85695,13 +86576,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-56dd62869c81d01eaf56fd7c.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4a65ed665afcb1b9630f1fd3.
       Note antérieure, qui ne qualifie pas cette révision : « Nature référentielle et présentation dans Control Plane acceptées
       U908 ; regroupement documentaire de mise en œuvre. »'
   last_modified: '2026-10-07T13:23:24.382595Z'
   content_sha256: b26a8496c295903f107b8ca9ce3aa751164e6f125c6e52c83b7726fddb113377
   adoption_ids:
-  - ADOPT-REASSESS-4a65ed665afcb1b9630f1fd3
+  - ADOPT-REASSESS-d89e6be6465c2dd1bc8792ba
 - id: REL-U908-PRESENTS-BHV017
   revision: 1
   type: presents
@@ -85776,13 +86657,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-77681bb74413b5eeb9d19ee5.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-722bbb1737ed14fc37a45ca5.
       Note antérieure, qui ne qualifie pas cette révision : « Nature référentielle et présentation dans Control Plane acceptées
       U908 ; regroupement documentaire de mise en œuvre. »'
   last_modified: '2026-10-07T13:23:24.382595Z'
   content_sha256: 871ffda3317485ded0678256a285629fd6cc0df9f61fe73f8072392530097842
   adoption_ids:
-  - ADOPT-REASSESS-722bbb1737ed14fc37a45ca5
+  - ADOPT-REASSESS-c26b291a0ab8c7bea9996eb2
 - id: REL-U908-PRESENTS-D19.a
   revision: 1
   type: presents
@@ -85793,13 +86674,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f7d9bbf050ae62872bcf93a8.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0c47b22f3995f2827b116ceb.
       Note antérieure, qui ne qualifie pas cette révision : « Nature référentielle et présentation dans Control Plane acceptées
       U908 ; regroupement documentaire de mise en œuvre. »'
   last_modified: '2026-10-07T13:23:24.382595Z'
   content_sha256: 63efd149f7e8085e4a3ac8c36f0260b30f6655a06174a422744ea51101fb98be
   adoption_ids:
-  - ADOPT-REASSESS-0c47b22f3995f2827b116ceb
+  - ADOPT-REASSESS-5e968b92dd7584159d1c7edf
 excluded_nodes:
 - id: ILL-OBJ-01
   source_refs:

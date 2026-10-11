@@ -183,6 +183,7 @@ CATALOG_TERMS = (
     ('scenario_catalog.legacy_links', 'Legacy Scenario Link', 'Correspondance de lecture entre une ancienne illustration locale et un scénario autonome de cette publication.'),
     ('information_catalog.items', 'Information', None),
     ('information_catalog.links', 'Information Link', 'Relation orientée et qualifiée entre deux informations métier distinctes.'),
+    ('document_catalog.documents', 'Publication Document', 'Document téléchargeable figé avec une publication et éventuellement lié à un point chaud.'),
     ('glossary.terms', 'Business Glossary Term', 'Terme du vocabulaire métier de cette publication, avec définition et statut de revue.'),
     ('principles', 'Model Principle', 'Règle ou choix de modélisation applicable à cette publication, identifié et sourcé.'),
 )
@@ -202,6 +203,7 @@ def _catalog_types(model, terms):
         'scenario_catalog.legacy_links': len(scenarios.get('legacy_links', [])),
         'information_catalog.items': len((model.get('information_catalog') or {}).get('items', [])),
         'information_catalog.links': len((model.get('information_catalog') or {}).get('links', [])),
+        'document_catalog.documents': len((model.get('document_catalog') or {}).get('documents', [])),
         'glossary.terms': len((model.get('glossary') or {}).get('terms', [])),
         'principles': len(model.get('principles', [])),
     }

@@ -40,7 +40,11 @@ def check_delivery(root, candidate):
             from element_versions import content_hash
             from record_decision import canonical_sha256
         for expected in catalog_checks:
-            items = candidate.get('scenario_catalog', {}).get(expected['collection'], [])
+            collection = expected['collection']
+            if collection == 'hotspots':
+                items = candidate.get('hotspot_catalog', {}).get('hotspots', [])
+            else:
+                items = candidate.get('scenario_catalog', {}).get(collection, [])
             item = next((v for v in items if v['id'] == expected['id']), None)
             if item is None or content_hash(item) != expected['content_sha256']:
                 errors.append(f'backlog-delivery: {label}: catalog mismatch: {expected["id"]}')

@@ -1,0 +1,42 @@
+id: HOTSPOT-STOCK-FRESHNESS-U928
+source_refs:
+- U927
+- U928
+status: applied_to_backlog
+agreement:
+  problem: La justesse et la fraîcheur de la vue centralisée dépendent des logiciels qui gèrent les stocks en magasin et en
+    entrepôt, hors périmètre de redéveloppement.
+  examples:
+  - vente magasin
+  - eReservation
+  - mise de côté
+  - mise au rebut
+  - préparation en entrepôt
+  complexity:
+    political: L
+    implementation: XL
+    severity: XL
+  boundary: Distinguer la quantité physique de la disponibilité à la vente ; cette distinction reste à qualifier pour chaque
+    événement.
+  open:
+  - Contrats et délais des systèmes sources
+  - Choix parmi les trois pistes de raccordement
+  - Niveau d'arbitrage et localisation finale du hotspot multi-source
+publication_delivery:
+  state: applied
+  source_refs:
+  - U927
+  - U928
+  summary: HS-003 porte le rafraîchissement et la justesse de la vue de stock centralisée, avec difficulté L/XL validée.
+  required_catalog:
+  - collection: hotspots
+    id: HS-003
+    content_sha256: b09dd43d85314269cffa1c3dc120f1ce2c4ba6d028f1d046c42553706551e665
+delivery_updates:
+- source_ref: U948
+  fields:
+  - HS-003.status
+  - HS-003.market_view
+  - HS-003.review
+  - HS-003.source_refs
+  reason: Reconnaissance du premier lot, ajout du regard marché et maintien des réserves ; problème et tailles U928 conservés.

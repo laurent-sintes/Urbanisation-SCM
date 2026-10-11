@@ -17,7 +17,7 @@ class HotspotCatalogTests(unittest.TestCase):
 
     def test_clog_pilot_is_located_on_two_domains(self):
         self.assertEqual(validate_catalog(self.model), [])
-        hotspot = self.model['hotspot_catalog']['hotspots'][0]
+        hotspot = next(item for item in self.model['hotspot_catalog']['hotspots'] if item['id'] == 'HS-002')
         self.assertEqual(hotspot['id'], hotspot['origin']['id'])
         self.assertEqual(hotspot['kind'], 'integration')
         self.assertEqual(set(hotspot['location']['node_ids']), {
@@ -30,6 +30,14 @@ class HotspotCatalogTests(unittest.TestCase):
         self.assertEqual(severity_for('S', 'M'), 'M')
         self.assertEqual(severity_for('L', 'L'), 'XL')
         self.assertEqual(severity_for('unassessed', 'XL'), 'unassessed')
+
+    def test_first_reviewed_lot_has_three_product_subjects_and_c08_document(self):
+        hotspots = {item['id']: item for item in self.model['hotspot_catalog']['hotspots']}
+        self.assertEqual(len(hotspots), 11)
+        self.assertEqual({hotspots[identifier]['origin']['id'] for identifier in ('HS-006', 'HS-014', 'HS-015')},
+                         {'C06a', 'C06b', 'C06c'})
+        self.assertEqual(hotspots['HS-008']['document_ids'], ['DOC001'])
+        self.assertTrue(all(item['status'] == 'validated' for item in hotspots.values()))
 
     def test_publication_freezes_catalog_without_backlog_lookup(self):
         snapshot = compile_snapshot(self.model, {'decisions': []}, '2026-10-09.1', ['U922'])

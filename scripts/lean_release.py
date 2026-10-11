@@ -177,6 +177,8 @@ def publish(root, stage, manifest):
         notes += f"\n## Scénarios métier\n\n{len(catalog['value_streams'])} flux de valeur, {len(catalog['scenarios'])} scénarios et {len(catalog['paths'])} parcours autonomes. Illustrations locales et lecture des anciennes publications conservées. Les nouveaux contenus restent proposés.\n"
     if 'hotspot_catalog' in candidate:
         notes += f"\n## Points chauds\n\n{len(candidate['hotspot_catalog']['hotspots'])} points chauds localisés. La publication ne vaut ni arbitrage ni résolution.\n"
+    if 'document_catalog' in candidate:
+        notes += f"\n## Documents\n\n{len(candidate['document_catalog']['documents'])} documents téléchargeables figés avec cette publication.\n"
     (release_dir / 'release-notes.md').write_text(notes, encoding='utf-8')
     # Recheck every source immediately before the activation boundary.
     check_stage(root, stage, manifest)

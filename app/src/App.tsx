@@ -14,6 +14,7 @@ import {
 } from 'lucide-react';
 import { type CSSProperties, lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { BusinessSheet } from './components/BusinessSheet';
+import { DocumentCatalogPage } from './components/DocumentCatalogPage';
 import { GlossaryPage } from './components/GlossaryPage';
 import { HelpPage } from './components/HelpPage';
 import { HotspotCatalogPage } from './components/HotspotCatalogPage';
@@ -170,6 +171,7 @@ export function App() {
   const referenceView =
     view === 'scenarios' ||
     view === 'hotspots' ||
+    view === 'documents' ||
     view === 'glossary' ||
     view === 'principles' ||
     view === 'metamodel' ||
@@ -530,13 +532,15 @@ export function App() {
               ? 'Aide'
               : view === 'hotspots'
                 ? 'Points chauds'
-                : view === 'scenarios'
-                  ? 'Scénarios métier'
-                  : view === 'metamodel'
-                    ? 'Métamodèle FLOW'
-                    : view === 'principles'
-                      ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
-                      : glossaryTitle}
+                : view === 'documents'
+                  ? 'Documents'
+                  : view === 'scenarios'
+                    ? 'Scénarios métier'
+                    : view === 'metamodel'
+                      ? 'Métamodèle FLOW'
+                      : view === 'principles'
+                        ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
+                        : glossaryTitle}
           </span>
         </span>
       )}
@@ -782,7 +786,9 @@ export function App() {
                                   ? 'LA DÉMARCHE DE TRANSFORMATION'
                                   : view === 'glossary'
                                     ? 'LE VOCABULAIRE PUBLIÉ'
-                                    : 'LE MODÈLE PUBLIÉ'}
+                                    : view === 'documents'
+                                      ? 'LES DOCUMENTS PUBLIÉS'
+                                      : 'LE MODÈLE PUBLIÉ'}
                           </span>
                         )}
                         {headingNode && (
@@ -798,15 +804,17 @@ export function App() {
                             : 'Par où commencer ?'
                           : view === 'hotspots'
                             ? 'Points chauds'
-                            : view === 'scenarios'
-                              ? 'Scénarios métier'
-                              : view === 'metamodel'
-                                ? 'Métamodèle FLOW'
-                                : view === 'principles'
-                                  ? methodTitle
-                                  : view === 'glossary'
-                                    ? glossaryTitle
-                                    : headingNode?.name || 'Cartographie'}
+                            : view === 'documents'
+                              ? 'Documents'
+                              : view === 'scenarios'
+                                ? 'Scénarios métier'
+                                : view === 'metamodel'
+                                  ? 'Métamodèle FLOW'
+                                  : view === 'principles'
+                                    ? methodTitle
+                                    : view === 'glossary'
+                                      ? glossaryTitle
+                                      : headingNode?.name || 'Cartographie'}
                       </h1>
                       {view !== 'sheet' && (
                         <p>
@@ -818,18 +826,20 @@ export function App() {
                                   : 'Un parcours rapide pour explorer le modèle publié.'
                                 : view === 'hotspots'
                                   ? 'Explorer les sujets localisés sur la cartographie et leurs options de résolution.'
-                                  : view === 'scenarios'
-                                    ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.'
-                                    : view === 'metamodel'
-                                      ? metaGuide?.subtitle || 'Comprendre les objets et règles du modèle.'
-                                      : view === 'principles'
-                                        ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.'
-                                        : view === 'glossary'
-                                          ? 'Les notions et leurs définitions dans la publication consultée.'
-                                          : headingNode?.purpose ||
-                                            (headingNode
-                                              ? 'Explore cet élément et ses relations dans le modèle publié.'
-                                              : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')
+                                  : view === 'documents'
+                                    ? 'Consulter et télécharger les documents associés à cette publication.'
+                                    : view === 'scenarios'
+                                      ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.'
+                                      : view === 'metamodel'
+                                        ? metaGuide?.subtitle || 'Comprendre les objets et règles du modèle.'
+                                        : view === 'principles'
+                                          ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.'
+                                          : view === 'glossary'
+                                            ? 'Les notions et leurs définitions dans la publication consultée.'
+                                            : headingNode?.purpose ||
+                                              (headingNode
+                                                ? 'Explore cet élément et ses relations dans le modèle publié.'
+                                                : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')
                             }
                           />
                         </p>
@@ -960,11 +970,14 @@ export function App() {
                           section: '',
                           principle: '',
                           hotspot: '',
+                          hotspotGroup: '',
                         })
                       }
                     />
                   ) : view === 'hotspots' ? (
                     <HotspotCatalogPage model={displayModel || model} route={route} onChange={changeRoute} />
+                  ) : view === 'documents' ? (
+                    <DocumentCatalogPage model={displayModel || model} route={route} onChange={changeRoute} />
                   ) : view === 'scenarios' ? (
                     <ScenarioCatalogPage model={model} route={route} onChange={changeRoute} />
                   ) : view === 'metamodel' ? (
@@ -1039,7 +1052,15 @@ export function App() {
                       model={displayModel || model}
                       detail={universeDepth}
                       onOpen={openOverviewNode}
-                      onOpenHotspot={(hotspot) => changeRoute({ view: 'hotspots', hotspot, node: '', scope: '' })}
+                      onOpenHotspot={(hotspot, groupIds) =>
+                        changeRoute({
+                          view: 'hotspots',
+                          hotspot,
+                          hotspotGroup: groupIds?.join(',') || '',
+                          node: '',
+                          scope: '',
+                        })
+                      }
                     />
                   ) : (
                     <MapPanel
@@ -1059,7 +1080,15 @@ export function App() {
                       onBack={() => navigate(parentScope?.id || '')}
                       onSelect={select}
                       onAnnouncement={setAnnouncement}
-                      onOpenHotspot={(hotspot) => changeRoute({ view: 'hotspots', hotspot, node: '', scope: '' })}
+                      onOpenHotspot={(hotspot, groupIds) =>
+                        changeRoute({
+                          view: 'hotspots',
+                          hotspot,
+                          hotspotGroup: groupIds?.join(',') || '',
+                          node: '',
+                          scope: '',
+                        })
+                      }
                     />
                   )}
                 </div>
