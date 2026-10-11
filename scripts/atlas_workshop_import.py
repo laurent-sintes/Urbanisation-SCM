@@ -91,6 +91,17 @@ def new_id(stage, temporary):
     return f'HS-W-{suffix}-{temporary.removeprefix("AT-HS-")}'
 
 
+def comparable_field(item, key):
+    # An explicit empty baseline adds no assessment to an old published record.
+    if key == 'resolution':
+        try:
+            from .hotspot_resolution import empty_resolution
+        except ImportError:
+            from hotspot_resolution import empty_resolution
+        return item.get(key, empty_resolution())
+    return item.get(key)
+
+
 def preview(root, stage_path, selected=None):
     stage, stage_sha = read_stage(stage_path)
     base = pinned_publication(root, stage)
@@ -124,11 +135,11 @@ def preview(root, stage_path, selected=None):
             action = 'remove'
         else:
             target = identifier
-            fields = sorted(key for key in EDITABLE if proposed.get(key) != original.get(key))
+            fields = sorted(key for key in EDITABLE if comparable_field(proposed, key) != comparable_field(original, key))
             if not fields:
                 continue
             conflicts = ['Fiche absente du backlog.'] if current is None else [
-                key for key in fields if current.get(key) not in (original.get(key), proposed.get(key))
+                key for key in fields if comparable_field(current, key) not in (comparable_field(original, key), comparable_field(proposed, key))
             ]
             action = 'update'
         verbatims = [operation['verbatim'] for operation in stage['operations'] if operation['id'] == identifier]

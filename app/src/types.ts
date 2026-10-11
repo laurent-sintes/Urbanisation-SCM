@@ -209,7 +209,18 @@ export interface RawPublication extends JsonRecord {
   last_modified?: string;
   published_at?: string;
 }
+export interface HotspotResolution {
+  stage: 'unassessed' | 'to_explore' | 'identified' | 'qualifying' | 'credible';
+  summary: string;
+  credible_option_ids: string[];
+  credibility_note: string;
+  blocked_reason: string;
+  next_step: string;
+  assessed_on?: string;
+  assessment_source: string;
+}
 export interface Hotspot {
+  resolution?: HotspotResolution;
   workshop?: { session_id: string; revision: number };
   id: string;
   title: string;

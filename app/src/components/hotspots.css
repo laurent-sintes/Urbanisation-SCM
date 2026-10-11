@@ -255,7 +255,7 @@
   color: #243b3e;
   font-size: 12px;
   line-height: 1.4;
-  pointer-events: none;
+  pointer-events: auto;
 }
 .hotspot-subject-tooltip strong {
   color: #205a43;
@@ -617,15 +617,12 @@
   cursor: pointer;
 }
 .hotspot-filter-popover {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  z-index: 20;
+  z-index: 3000;
   display: flex;
   flex-direction: column;
   width: min(760px, calc(100vw - 32px));
   height: min(70vh, 610px);
-  min-height: 360px;
+  min-height: 0;
   overflow: hidden;
   border: 1px solid #d9e4db;
   border-radius: 15px;
@@ -864,10 +861,8 @@
 }
 @media (max-width: 900px) {
   .hotspot-filter-popover {
-    position: fixed;
-    inset: 12px;
-    width: auto;
-    height: auto;
+    width: calc(100vw - 24px);
+    height: min(70dvh, 610px);
     min-height: 0;
   }
 }
@@ -900,7 +895,10 @@
   transform-origin: 0 0;
   pointer-events: none;
 }
-.react-flow__node.hotspot-related .business-card {
+.react-flow__node.hotspot-related .business-card,
+.react-flow__node.hotspot-related .container-label,
+.react-flow__node.hotspot-related .category-banner,
+.overview-system.hotspot-related {
   border-color: #d95431;
   box-shadow:
     0 0 0 4px rgb(217 84 49 / 0.36),
@@ -917,6 +915,7 @@
 }
 .hotspot-map-point {
   --hotspot-rgb: 118 139 145;
+  --marker-size: 40px;
   --halo-size: 112px;
   --pulse-duration: 4.4s;
   --flame-duration: 1.8s;
@@ -926,37 +925,55 @@
   height: 0;
   pointer-events: none;
 }
-.hotspot-map-point.severity-S {
+.hotspot-map-point:has(.hotspot-map-marker:hover, .hotspot-map-marker:focus-visible) {
+  z-index: 5;
+}
+.hotspot-map-point.severity-S,
+.hotspot-expanded-item.severity-S,
+.hotspot-legend-level.severity-S {
   --hotspot-rgb: 220 170 45;
-  --halo-size: 110px;
+  --marker-size: 36px;
+  --halo-size: 58px;
   --pulse-duration: 4.2s;
   --flame-duration: 1.8s;
   --flame-size: 13px;
 }
-.hotspot-map-point.severity-M {
+.hotspot-map-point.severity-M,
+.hotspot-expanded-item.severity-M,
+.hotspot-legend-level.severity-M {
   --hotspot-rgb: 228 127 42;
-  --halo-size: 132px;
+  --marker-size: 40px;
+  --halo-size: 66px;
   --pulse-duration: 3.6s;
   --flame-duration: 1.4s;
   --flame-size: 12px;
 }
-.hotspot-map-point.severity-L {
+.hotspot-map-point.severity-L,
+.hotspot-expanded-item.severity-L,
+.hotspot-legend-level.severity-L {
   --hotspot-rgb: 213 77 49;
-  --halo-size: 158px;
+  --marker-size: 44px;
+  --halo-size: 74px;
   --pulse-duration: 3s;
   --flame-duration: 1.05s;
   --flame-size: 11px;
 }
-.hotspot-map-point.severity-XL {
+.hotspot-map-point.severity-XL,
+.hotspot-expanded-item.severity-XL,
+.hotspot-legend-level.severity-XL {
   --hotspot-rgb: 174 35 54;
-  --halo-size: 188px;
+  --marker-size: 48px;
+  --halo-size: 82px;
   --pulse-duration: 2.4s;
   --flame-duration: 0.72s;
   --flame-size: 10px;
 }
-.hotspot-map-point.severity-unassessed {
+.hotspot-map-point.severity-unassessed,
+.hotspot-expanded-item.severity-unassessed,
+.hotspot-legend-level.severity-unassessed {
   --hotspot-rgb: 55 111 119;
-  --halo-size: 116px;
+  --marker-size: 40px;
+  --halo-size: 66px;
   --pulse-duration: 4s;
   --flame-duration: 1.8s;
   --flame-size: 13px;
@@ -975,15 +992,16 @@
     rgb(var(--hotspot-rgb) / 0.1) 48%,
     transparent 72%
   );
-  animation: hotspot-breathe var(--pulse-duration) ease-in-out infinite;
+  opacity: 0.28;
+  transition: opacity 160ms;
   pointer-events: none;
 }
 .hotspot-map-marker {
   position: absolute;
-  left: -22px;
-  top: -22px;
-  width: 44px;
-  height: 44px;
+  left: calc(var(--marker-size) / -2);
+  top: calc(var(--marker-size) / -2);
+  width: var(--marker-size);
+  height: var(--marker-size);
   display: grid;
   place-items: center;
   border: 1px solid rgb(var(--hotspot-rgb) / 0.75);
@@ -1011,7 +1029,7 @@
   fill: rgb(var(--hotspot-rgb) / 0.45);
   stroke-width: 2.2;
   transform-origin: 50% 90%;
-  animation: hotspot-flicker var(--flame-duration) ease-in-out infinite alternate;
+  animation: none;
 }
 .hotspot-map-flames svg:nth-child(even) {
   animation-delay: calc(var(--flame-duration) / -2);
@@ -1033,34 +1051,108 @@
   line-height: 1;
 }
 .hotspot-map-tooltip {
-  position: absolute;
-  left: 50%;
-  bottom: 33px;
-  transform: translateX(-50%);
+  z-index: 3000;
   display: grid;
-  gap: 4px;
+  gap: 5px;
   width: max-content;
-  max-width: 290px;
-  padding: 8px 10px;
+  max-width: min(340px, calc(100vw - 24px));
+  max-height: 45dvh;
+  overflow-y: auto;
+  padding: 10px 12px;
   border: 1px solid #cbd7d2;
-  border-radius: 7px;
-  background: #fffefcf2;
+  border-radius: 8px;
+  background: #fffefc;
   box-shadow: 0 4px 15px #193f4322;
   color: #263c3d;
-  font-size: 11px;
-  line-height: 1.3;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  z-index: 3;
+  font-size: 13px;
+  line-height: 1.45;
+  pointer-events: auto;
 }
-.hotspot-map-tooltip span {
-  white-space: normal;
+.hotspot-map-point:has(.hotspot-map-marker:hover, .hotspot-map-marker:focus-visible) .hotspot-map-halo,
+.hotspot-map-point.is-expanded .hotspot-map-halo {
+  opacity: 0.9;
+  animation: hotspot-breathe var(--pulse-duration) ease-in-out infinite;
 }
-.hotspot-map-marker:hover + .hotspot-map-tooltip,
-.hotspot-map-marker:focus-visible + .hotspot-map-tooltip {
-  opacity: 1;
-  visibility: visible;
+.hotspot-cluster-popover {
+  z-index: 3000;
+  width: min(520px, calc(100vw - 24px));
+  max-height: 70dvh;
+  overflow: auto;
+  padding: 12px;
+  border: 1px solid #cbd7d2;
+  border-radius: 12px;
+  background: #fffefc;
+  box-shadow: 0 8px 30px #193f4333;
+  color: #263c3d;
+  font-size: 13px;
+  pointer-events: auto;
+}
+.hotspot-cluster-popover header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.hotspot-cluster-popover header button,
+.hotspot-filter-header button {
+  min-width: 32px;
+  min-height: 32px;
+}
+.hotspot-cluster-popover header button {
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.hotspot-expanded-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 12px;
+  margin: 14px 0;
+}
+.hotspot-expanded-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.hotspot-expanded-item .hotspot-map-marker {
+  position: static;
+  flex: none;
+}
+.hotspot-expanded-item > span {
+  font-size: 12px;
+  line-height: 1.35;
+}
+.hotspot-group-list {
+  min-height: 36px;
+  border: 1px solid #cbd7d2;
+  border-radius: 6px;
+  background: #f3f7f4;
+  cursor: pointer;
+}
+.hotspot-map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #4a6263;
+}
+.hotspot-legend-level {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+.hotspot-legend-level i {
+  display: inline-block;
+  width: calc(var(--marker-size) / 4);
+  height: calc(var(--marker-size) / 4);
+  border-radius: 50%;
+  background: rgb(var(--hotspot-rgb));
 }
 .hotspot-map-marker:focus-visible {
   outline: 3px solid #153f75;
@@ -1092,4 +1184,58 @@
   .hotspot-map-flames svg {
     animation: none;
   }
+}
+
+.hotspot-resolution-ring {
+  position: absolute;
+  inset: 1px;
+  width: calc(100% - 2px);
+  height: calc(100% - 2px);
+  pointer-events: none;
+}
+.hotspot-resolution-ring circle {
+  stroke: #73838b;
+  opacity: 0.45;
+}
+.hotspot-resolution-ring circle.is-complete {
+  stroke: #173c51;
+  opacity: 1;
+}
+.hotspot-resolution-ring[data-stage="unassessed"] circle {
+  stroke-dasharray: 2 3;
+}
+.hotspot-resolved-check {
+  width: 23px;
+  height: 23px;
+  color: #173c51;
+}
+.hotspot-blocked-symbol {
+  position: absolute;
+  bottom: 1px;
+  right: 1px;
+  width: 12px;
+  height: 12px;
+  color: #173c51;
+  background: white;
+  border-radius: 50%;
+}
+.hotspot-map-count {
+  min-width: 22px;
+  width: auto;
+  padding: 0 3px;
+}
+.hotspot-resolution-fields {
+  display: grid;
+  gap: 12px;
+}
+.hotspot-resolution-fields label {
+  display: grid;
+  gap: 4px;
+}
+.hotspot-map-marker:has(.hotspot-resolution-ring) .hotspot-map-flames {
+  transform: scale(0.72);
+}
+.hotspot-map-point.is-framing-closed .hotspot-map-halo {
+  opacity: 0.08;
+  animation: none;
 }

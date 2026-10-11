@@ -1,6 +1,7 @@
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { type HotspotMapFilters, severityForComplexities } from '../hotspotMap';
+import { RESOLUTION_STAGES } from '../hotspotResolution';
 
 const sizeOptions = [
   { value: 'all', label: 'Toutes' },
@@ -83,6 +84,28 @@ export function HotspotFilterFields({
           Afficher les points chauds
         </label>
       )}
+      <label className="hotspot-filter-select">
+        Avancement du cadrage
+        <select
+          value={filters.resolutionStage || 'all'}
+          onChange={(event) => onChange({ resolutionStage: event.target.value, enabled: true })}
+        >
+          <option value="all">Tous</option>
+          {Object.entries(RESOLUTION_STAGES).map(([value, label]) => (
+            <option key={value} value={value}>
+              {label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="hotspot-map-toggle">
+        <input
+          type="checkbox"
+          checked={filters.showResolved !== false}
+          onChange={(event) => onChange({ showResolved: event.target.checked, enabled: true })}
+        />
+        Inclure les cadrages résolus
+      </label>
       <div className="hotspot-filter-grid">
         <div className="hotspot-filter-section">
           <label className="hotspot-filter-select">

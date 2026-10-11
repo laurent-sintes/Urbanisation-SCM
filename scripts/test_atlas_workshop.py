@@ -157,6 +157,34 @@ class WorkshopTests(unittest.TestCase):
         self.assertNotIn('selected_option_id', item)
         self.assertNotIn('resolution_note', item)
 
+    def test_table_credible_framing_is_atomic_and_keeps_final_choice_distinct(self):
+        from scripts.hotspot_resolution import empty_resolution
+        model, model_sha = publication(self.root)
+        stage = current_stage(self.root, model, model_sha)
+        apply_request(self.root, {'expected_revision': 0, 'entity': 'hotspot', 'action': 'add',
+            'verbatim': 'Deux pistes de cadrage.', 'fields': {
+                'title': 'Question', 'problem': 'Qui agit ?', 'location': {'node_ids': ['logistics']},
+                'resolution_options': [{'id': key, 'title': key, 'principle': 'Contrat à qualifier',
+                                       'implementation_complexity': 'S', 'evidence_state': 'hypothesis'}
+                                       for key in ('a', 'b')]}})
+        resolution = dict(empty_resolution(), stage='credible', summary='Deux solutions crédibles',
+                          credible_option_ids=['a', 'b'], credibility_note='Hypothèses explicites',
+                          assessed_on='2026-10-11', assessment_source='Séance')
+        def request(fields, revision):
+            return {'session_id': stage['session_id'], 'expected_revision': revision,
+                    'changes': [{'id': 'AT-HS-001', 'fields': fields}]}
+        with self.assertRaises(ValueError):
+            apply_table_changes(self.root, request({'status': 'resolved', 'resolution': dict(resolution, credible_option_ids=[])}, 1))
+        self.assertEqual(load_stage(self.root)['revision'], 1)
+        result = apply_table_changes(self.root, request({'status': 'resolved', 'resolution': resolution}, 1))
+        item = effective_hotspots(model, result)['AT-HS-001']
+        self.assertEqual(item['resolution']['credible_option_ids'], ['a', 'b'])
+        self.assertNotIn('selected_option_id', item)
+        apply_table_changes(self.root, request({'selected_option_id': 'b'}, 2))
+        result = apply_table_changes(self.root, request({'status': 'validated', 'resolution': dict(resolution, stage='qualifying', credible_option_ids=[])}, 3))
+        self.assertEqual(effective_hotspots(model, result)['AT-HS-001']['selected_option_id'], 'b')
+        self.assertEqual(publication(self.root)[0], self.model)
+
 
 if __name__ == '__main__':
     unittest.main()

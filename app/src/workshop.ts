@@ -33,6 +33,7 @@ export interface WorkshopTableChange {
       | 'status'
       | 'selected_option_id'
       | 'resolution_note'
+      | 'resolution'
     >
   >;
 }

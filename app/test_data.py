@@ -150,7 +150,10 @@ class HTTPTests(unittest.TestCase):
         apply_request(self.root, {'expected_revision': 0, 'entity': 'hotspot', 'action': 'add',
                                   'verbatim': 'Ajouter un point chaud.',
                                   'fields': {'title': 'Sujet initial', 'problem': 'Question ouverte.',
-                                             'location': {'node_ids': ['logistics']}}})
+                                             'location': {'node_ids': ['logistics']},
+                                             'resolution_options': [{'id': 'credible', 'title': 'Contrat',
+                                                 'principle': 'Clarifier les responsabilités',
+                                                 'implementation_complexity': 'S', 'evidence_state': 'hypothesis'}]}})
         route = '/__atlas__/workshop/hotspots/batch'
         body = json.dumps({'session_id': stage['session_id'], 'expected_revision': 1,
                            'changes': [{'id': 'AT-HS-001', 'fields': {'title': 'Sujet précisé'}}]}).encode()
@@ -164,6 +167,17 @@ class HTTPTests(unittest.TestCase):
         self.assertEqual(saved['revision'], 2)
         self.assertEqual(saved['operations'][-1]['value']['title'], 'Sujet précisé')
         self.assertEqual(self.request(route, 'POST', headers=headers, body=body)[0], 409)
+        from scripts.hotspot_resolution import empty_resolution
+        resolution = dict(empty_resolution(), stage='credible', summary='Solution envisageable',
+                          credible_option_ids=['credible'], credibility_note='Sous réserves explicites',
+                          assessed_on='2026-10-11', assessment_source='Séance')
+        resolved = json.dumps({'session_id': stage['session_id'], 'expected_revision': 2,
+            'changes': [{'id': 'AT-HS-001', 'fields': {'status': 'resolved', 'resolution': resolution}}]}).encode()
+        status, _, payload = self.request(route, 'POST', headers=headers, body=resolved)
+        self.assertEqual(status, 200)
+        saved = json.loads(payload)
+        self.assertEqual(saved['operations'][-1]['value']['resolution'], resolution)
+        self.assertNotIn('selected_option_id', saved['operations'][-1]['value'])
         self.assertEqual(self.request('/data/2026-10-10.1/model.json')[2], raw)
 
     def test_build_never_exposes_sources_models_maps_or_dependency_trees(self):

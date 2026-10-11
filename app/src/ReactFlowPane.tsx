@@ -7,13 +7,16 @@ import {
   useReactFlow,
   useViewport,
 } from '@xyflow/react';
-import { FileText, Flame } from 'lucide-react';
+import { FileText } from 'lucide-react';
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { prominentChildIndex } from './adaptiveLayout';
 import { startsCapabilityTypeSection } from './capabilityTypes';
 import { categoryCaption, categoryOf, startsCategorySection } from './categories';
+import { HotspotMapMarker } from './components/HotspotDisplay';
 import { type MapChildList, nodeTypes } from './components/MapCards';
 import { ModelText } from './components/ModelLinks';
+import { hotspotRelatedElementIds } from './hotspotMap';
+import { HOTSPOT_DIAMETERS, layoutHotspots } from './hotspotPlacement';
 import { NodeIcon } from './icons';
 import { measureMapCards } from './mapCardMeasure';
 import { areaListAtDetail } from './mapDetail';
@@ -65,8 +68,6 @@ interface HotspotMarker {
   workshop: boolean;
   projectedElementIds: string[];
 }
-const FLAMES = ['first', 'second', 'third', 'fourth'];
-const SEVERITY_ORDER: Record<string, number> = { unassessed: 0, S: 1, M: 2, L: 3, XL: 4 };
 function Canvas(props: ReactFlowPaneProps) {
   const { model, selectedId, scopeId, perspective, detail = 0, zoomMode = 'auto', focusId } = props;
   const [layout, setLayout] = useState<{
@@ -83,7 +84,7 @@ function Canvas(props: ReactFlowPaneProps) {
     mode: 'page',
   });
   const [cardHeights, setCardHeights] = useState<Record<string, number>>({});
-  const [hoveredHotspotId, setHoveredHotspotId] = useState<string | null>(null);
+  const [hoveredHotspotIds, setHoveredHotspotIds] = useState<string[]>([]);
   const [canvasWidth, setCanvasWidth] = useState(0);
   const [availableHeight, setAvailableHeight] = useState(0);
   const [touch, setTouch] = useState(() => matchMedia('(pointer: coarse)').matches);
@@ -491,7 +492,7 @@ function Canvas(props: ReactFlowPaneProps) {
       }
       return undefined;
     };
-    const markers = props.hotspots.flatMap((hotspot, index): HotspotMarker[] => {
+    const markers = props.hotspots.flatMap((hotspot): HotspotMarker[] => {
       const anchors = hotspot.location.node_ids
         .map(projected)
         .filter((anchor): anchor is { node: Node; elementId: string } => Boolean(anchor));
@@ -531,7 +532,6 @@ function Canvas(props: ReactFlowPaneProps) {
         x = boxes.reduce((sum, box) => sum + (box.left + box.right) / 2, 0) / boxes.length;
         y = boxes.reduce((sum, box) => sum + (box.top + box.bottom) / 2, 0) / boxes.length;
       }
-      const offset = (index % 3) * 13;
       return [
         {
           id: hotspot.id,
@@ -539,8 +539,8 @@ function Canvas(props: ReactFlowPaneProps) {
             .map((anchor) => anchor.elementId)
             .sort()
             .join('|'),
-          x: x - 28 + offset,
-          y: y - 28 + offset,
+          x,
+          y,
           title: hotspot.workshop ? `Atelier · ${hotspot.title}` : hotspot.title,
           titles: [hotspot.title],
           hotspotIds: [hotspot.id],
@@ -553,25 +553,9 @@ function Canvas(props: ReactFlowPaneProps) {
         },
       ];
     });
-    const byProjection = new Map<string, HotspotMarker>();
-    for (const marker of markers) {
-      const existing = byProjection.get(marker.projectionKey);
-      if (!existing) {
-        byProjection.set(marker.projectionKey, { ...marker });
-        continue;
-      }
-      existing.count += 1;
-      existing.titles.push(marker.title);
-      existing.hotspotIds.push(...marker.hotspotIds);
-      existing.projectedElementIds = [...new Set([...existing.projectedElementIds, ...marker.projectedElementIds])];
-      existing.workshop ||= marker.workshop;
-      if ((SEVERITY_ORDER[marker.severity] || 0) > (SEVERITY_ORDER[existing.severity] || 0))
-        existing.severity = marker.severity;
-      existing.id = `cluster:${marker.projectionKey}`;
-      existing.title = `${existing.count} points chauds sur ce périmètre`;
-    }
-    return [...byProjection.values()];
+    return markers;
   }, [layout.nodes, model, childLists, detail, props.hotspots]);
+  const [textObstacles, setTextObstacles] = useState<{ x: number; y: number; width: number; height: number }[]>([]);
   const [measuredMarkerPositions, setMeasuredMarkerPositions] = useState<Record<string, { x: number; y: number }>>({});
   useLayoutEffect(() => {
     const frame = requestAnimationFrame(() => {
@@ -580,7 +564,6 @@ function Canvas(props: ReactFlowPaneProps) {
       const surfaceRect = surface.getBoundingClientRect();
       const targets = [...surface.querySelectorAll<HTMLElement>('[data-business-area-summary], [data-map-item-id]')];
       const next: Record<string, { x: number; y: number }> = {};
-      const placed: { x: number; y: number }[] = [];
       for (const marker of hotspotMarkers) {
         if (marker.projectedElementIds.length !== 1) continue;
         const id = marker.projectedElementIds[0];
@@ -590,24 +573,88 @@ function Canvas(props: ReactFlowPaneProps) {
         );
         if (!target) continue;
         const rect = target.getBoundingClientRect();
-        let x = (rect.right - 16 - surfaceRect.left - viewport.x) / viewport.zoom;
+        const x = (rect.right - 16 - surfaceRect.left - viewport.x) / viewport.zoom;
         const y = (rect.top + rect.height / 2 - surfaceRect.top - viewport.y) / viewport.zoom;
-        while (placed.some((point) => Math.hypot(point.x - x, point.y - y) < 58)) x -= 58;
         next[marker.id] = { x, y };
-        placed.push({ x, y });
       }
+      const obstacles: { x: number; y: number; width: number; height: number }[] = [];
+      for (const element of surface.querySelectorAll('.business-card, .container-label, .category-banner')) {
+        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+        while (walker.nextNode()) {
+          if (!walker.currentNode.textContent?.trim()) continue;
+          const range = document.createRange();
+          range.selectNodeContents(walker.currentNode);
+          for (const rect of range.getClientRects())
+            if (rect.width && rect.height)
+              obstacles.push({
+                x: rect.left - surfaceRect.left,
+                y: rect.top - surfaceRect.top,
+                width: rect.width,
+                height: rect.height,
+              });
+        }
+      }
+      setTextObstacles((previous) => (JSON.stringify(previous) === JSON.stringify(obstacles) ? previous : obstacles));
       setMeasuredMarkerPositions((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));
     });
     return () => cancelAnimationFrame(frame);
   }, [hotspotMarkers, viewport.x, viewport.y, viewport.zoom]);
+  const markerLayout = useMemo(() => {
+    const width = canvasWidth;
+    const height = effectiveZoomMode === 'width' ? widthFrame?.height || minimumHeight : minimumHeight;
+    const anchor = (marker: HotspotMarker) => measuredMarkerPositions[marker.id] || { x: marker.x, y: marker.y };
+    const screen = (marker: HotspotMarker) => ({
+      x: viewport.x + anchor(marker).x * viewport.zoom,
+      y: viewport.y + anchor(marker).y * viewport.zoom,
+      diameter: HOTSPOT_DIAMETERS[marker.severity],
+      id: marker.id,
+    });
+    // Zoomed-out-of-frame anchors must not pull visible markers into unrelated groups.
+    // They become visible again when their location re-enters the map surface.
+    const visible = hotspotMarkers
+      .map(screen)
+      .filter((item) => item.x >= 0 && item.x <= width && item.y >= 0 && item.y <= height);
+    const groups = layoutHotspots(visible, { width, height, obstacles: textObstacles });
+    const markers = groups.map((group) => {
+      const members = hotspotMarkers.filter((marker) => group.ids.includes(marker.id));
+      return {
+        ...members[0],
+        id: group.id,
+        hotspotIds: group.ids,
+        count: group.ids.length,
+        projectedElementIds: [...new Set(members.flatMap((marker) => marker.projectedElementIds))],
+        position: { x: group.x, y: group.y },
+        anchor: group.anchor,
+      };
+    });
+    return { markers };
+  }, [
+    hotspotMarkers,
+    measuredMarkerPositions,
+    textObstacles,
+    canvasWidth,
+    effectiveZoomMode,
+    widthFrame?.height,
+    minimumHeight,
+    viewport.x,
+    viewport.y,
+    viewport.zoom,
+  ]);
   const hoveredElementIds = new Set(
-    hotspotMarkers.find((marker) => marker.id === hoveredHotspotId)?.projectedElementIds || [],
+    hotspotRelatedElementIds(
+      model,
+      (props.hotspots || []).filter((item) => hoveredHotspotIds.includes(item.id)),
+      hotspotMarkers
+        .filter((marker) => hoveredHotspotIds.includes(marker.id))
+        .flatMap((marker) => marker.projectedElementIds),
+    ),
   );
   const displayedNodes = hoveredElementIds.size
     ? nodes.map((node) => ({
         ...node,
         data: { ...node.data, hotspotRelatedIds: [...hoveredElementIds] },
-        className: `${node.className || ''}${hoveredElementIds.has(node.id) ? ' hotspot-related' : ''}`.trim(),
+        className:
+          `${node.className || ''}${hoveredElementIds.has(node.id.replace(/^group:/, '')) || hoveredElementIds.has((node.data.area as { id?: string } | undefined)?.id || '') ? ' hotspot-related' : ''}`.trim(),
       }))
     : nodes;
   const select = useCallback(
@@ -703,64 +750,20 @@ function Canvas(props: ReactFlowPaneProps) {
           <Background gap={24} size={1} color="#d8e3df" />
           {effectiveZoomMode === 'page' && <Controls showInteractive={false} />}
         </ReactFlow>
-        {hotspotMarkers.length > 0 && (
+        {markerLayout.markers.length > 0 && (
           <div className="hotspot-map-overlay">
-            <div
-              className="hotspot-map-overlay-viewport"
-              style={{ transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})` }}
-            >
-              {hotspotMarkers.map((marker) => {
-                const count = ({ S: 1, M: 2, L: 3, XL: 4 } as Record<string, number>)[marker.severity] || 0;
-                const severity = marker.severity === 'unassessed' ? 'non évaluée' : marker.severity;
-                const tooltipId = `hotspot-map-tip-${marker.id}`;
-                return (
-                  <div
-                    key={marker.id}
-                    className={`hotspot-map-point severity-${marker.severity}${marker.workshop ? ' is-workshop' : ''}`}
-                    style={{
-                      left: measuredMarkerPositions[marker.id]?.x ?? marker.x + 28,
-                      top: measuredMarkerPositions[marker.id]?.y ?? marker.y + 28,
-                    }}
-                  >
-                    <span className="hotspot-map-halo" aria-hidden="true" />
-                    <button
-                      type="button"
-                      data-id={`hotspot:${marker.id}`}
-                      className="hotspot-map-marker"
-                      aria-label={
-                        marker.count > 1
-                          ? `${marker.count} points chauds, criticité maximale ${severity}. Ouvrir la liste.`
-                          : `${marker.title}, criticité ${severity}, difficulté politique ${marker.political}, difficulté d’implémentation ${marker.implementation}`
-                      }
-                      aria-describedby={tooltipId}
-                      onMouseEnter={() => setHoveredHotspotId(marker.id)}
-                      onMouseLeave={() => setHoveredHotspotId(null)}
-                      onFocus={() => setHoveredHotspotId(marker.id)}
-                      onBlur={() => setHoveredHotspotId(null)}
-                      onClick={() =>
-                        props.onOpenHotspot?.(
-                          marker.count > 1 ? '' : marker.id,
-                          marker.count > 1 ? marker.hotspotIds : undefined,
-                        )
-                      }
-                    >
-                      <span className="hotspot-map-flames" aria-hidden="true">
-                        {count ? FLAMES.slice(0, count).map((flame) => <Flame key={flame} />) : '·'}
-                      </span>
-                      {marker.count > 1 && <span className="hotspot-map-count">{marker.count}</span>}
-                    </button>
-                    <span id={tooltipId} className="hotspot-map-tooltip" role="tooltip">
-                      <strong>{marker.title}</strong>
-                      <span>
-                        {marker.count > 1
-                          ? `Ouvrir les ${marker.count} fiches de ce groupe · Criticité maximale ${severity}`
-                          : `Criticité ${severity} · Politique ${marker.political} · Implémentation ${marker.implementation}`}
-                      </span>
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
+            {markerLayout.markers.map((marker) => (
+              <HotspotMapMarker
+                key={marker.id}
+                id={marker.id}
+                items={(props.hotspots || []).filter((item) => marker.hotspotIds.includes(item.id))}
+                x={marker.position.x}
+                y={marker.position.y}
+                model={model}
+                onOpen={(id, ids) => props.onOpenHotspot?.(id, ids)}
+                onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
+              />
+            ))}
           </div>
         )}
       </div>

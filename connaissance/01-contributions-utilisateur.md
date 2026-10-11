@@ -22844,3 +22844,19 @@ Verbatim :
 > Complete le reste
 
 Portée : confirmer trois sujets distincts C06a (EAN / GTIN), C06b (états complets du PLM) et C06c (maille produit utile à Supply). Compléter le lot des onze dossiers C01 à C08 pour leur intégration au backlog et leur examen dans Atlas, en laissant explicites les choix et preuves encore ouverts.
+
+## U949
+
+Date : 2026-10-11. Source : Laurent, progression de résolution des points chauds en cadrage.
+
+Verbatim :
+
+> Je souhaite réfléchir à ajouter dans la représentation d'un hotspot à la fois sa criticité et à la fois son avancement de résolution, comme si on éteignait le feu.
+>
+> On est en cadrage. Donc résolu signifie qu'on envisagé une solution crédible et ça suffit.
+>
+> Mais il manque une progression dans la résolution
+>
+> Go
+
+Portée : intégrer la proposition de progression « À explorer », « Pistes identifiées », « Options en qualification », « Solution crédible — cadrage résolu », avec « Non renseigné » pour les sujets existants sans évaluation. Une ou plusieurs solutions crédibles, argumentées avec leurs hypothèses et réserves, suffisent ; le choix définitif et la mise en œuvre restent distincts. Conserver la criticité, représenter la progression par un anneau à trois jalons et éteindre les flammes lorsque le cadrage est résolu. Le blocage conserve sa raison et la prochaine étape. Aucun accord implicite sur une solution individuelle, aucune publication demandée.

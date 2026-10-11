@@ -3,6 +3,7 @@ import { test } from 'node:test';
 import {
   defaultHotspotMapFilters,
   filterMapHotspots,
+  hotspotRelatedElementIds,
   hotspotsInScope,
   severityForComplexities,
   updateHotspotMapFilters,
@@ -50,6 +51,26 @@ const model = adaptPublication({
       },
     ],
   },
+});
+
+test('hotspot illumination includes actual descendants without extending a projected ancestor to other branches', () => {
+  const [capabilityHotspot, systemHotspot] = model.raw.hotspot_catalog.hotspots;
+  assert.deepEqual(hotspotRelatedElementIds(model, [capabilityHotspot]).sort(), ['behavior', 'cap']);
+  assert.deepEqual(hotspotRelatedElementIds(model, [capabilityHotspot], ['domain']).sort(), [
+    'behavior',
+    'cap',
+    'domain',
+  ]);
+  assert.deepEqual(hotspotRelatedElementIds(model, [systemHotspot]).sort(), [
+    'area',
+    'ba',
+    'behavior',
+    'cap',
+    'domain',
+    'system',
+  ]);
+  assert.equal(new Set(hotspotRelatedElementIds(model, [capabilityHotspot, systemHotspot])).size, 6);
+  assert.deepEqual(hotspotRelatedElementIds(model, []), []);
 });
 
 test('hotspot anchor opens a map level containing its published object', () => {

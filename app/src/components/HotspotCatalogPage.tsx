@@ -6,14 +6,17 @@ import { documentsForHotspot, documentUrl } from '../documentCatalog';
 import {
   defaultHotspotMapFilters,
   filterMapHotspots,
+  type HotspotMapFilters,
   severityForComplexities,
   updateHotspotMapFilters,
 } from '../hotspotMap';
+import { emptyResolution, RESOLUTION_STAGES, resolutionErrors, resolutionFor } from '../hotspotResolution';
 import { mapRouteForNode } from '../mapNavigation';
 import type { RouteState } from '../navigation';
 import { publicText } from '../publicText';
-import type { Hotspot, PublishedModel } from '../types';
+import type { Hotspot, HotspotResolution, PublishedModel } from '../types';
 import type { WorkshopStage, WorkshopTableChange } from '../workshop';
+import { HotspotTooltipButton } from './HotspotDisplay';
 import { HotspotFilterFields } from './HotspotFilterFields';
 import './hotspots.css';
 
@@ -39,6 +42,7 @@ type SortKey =
   | 'political'
   | 'implementation'
   | 'status'
+  | 'resolution'
   | 'arbitration_level';
 const STATUS_RANK = ['discovered', 'shared', 'validated', 'resolved'];
 type HotspotDraft = {
@@ -49,6 +53,7 @@ type HotspotDraft = {
   implementation: string;
   rationale: string;
   status: Hotspot['status'];
+  resolution: HotspotResolution;
   selected_option_id: string;
   resolution_note: string;
   arbitration_level: string;
@@ -61,12 +66,13 @@ const draftFor = (item: Hotspot): HotspotDraft => ({
   implementation: item.complexity.implementation,
   rationale: item.complexity.rationale,
   status: item.status,
+  resolution: structuredClone(resolutionFor(item)),
   selected_option_id: item.selected_option_id || '',
   resolution_note: item.resolution_note || '',
   arbitration_level: item.arbitration_level,
 });
 const sameDraftValue = (a: HotspotDraft[keyof HotspotDraft], b: HotspotDraft[keyof HotspotDraft]) =>
-  Array.isArray(a) && Array.isArray(b) ? JSON.stringify(a) === JSON.stringify(b) : a === b;
+  typeof a === 'object' && typeof b === 'object' ? JSON.stringify(a) === JSON.stringify(b) : a === b;
 
 export function HotspotCatalogPage({
   model,
@@ -84,7 +90,11 @@ export function HotspotCatalogPage({
   const hotspots = model.raw.hotspot_catalog?.hotspots || [];
   const workshopCount = hotspots.filter((item) => item.workshop).length;
   const [query, setQuery] = useState('');
-  const [filters, setFilters] = useState({ ...defaultHotspotMapFilters, enabled: true });
+  const [filters, setFilters] = useState<HotspotMapFilters>({
+    ...defaultHotspotMapFilters,
+    enabled: true,
+    showResolved: true,
+  });
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [sort, setSort] = useState<{ key: SortKey; direction: 'ascending' | 'descending' }>({
     key: 'severity',
@@ -96,7 +106,6 @@ export function HotspotCatalogPage({
   const [restoredKey, setRestoredKey] = useState('');
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
-  const [tooltip, setTooltip] = useState<{ id: string; left: number; top: number } | null>(null);
   const [dialog, setDialog] = useState<{ id: string; mode: 'location' | 'resolution' | 'complexity' } | null>(null);
   const [nodeQuery, setNodeQuery] = useState('');
   const dialogReturnFocus = useRef<HTMLElement | null>(null);
@@ -180,6 +189,12 @@ export function HotspotCatalogPage({
       kind: draft.kind,
       location: { ...item.location, node_ids: draft.node_ids },
       status: draft.status,
+      resolution:
+        item.resolution ||
+        !sameDraftValue(draft.resolution, emptyResolution()) ||
+        draft.selected_option_id !== (item.selected_option_id || '')
+          ? draft.resolution
+          : undefined,
       selected_option_id: draft.selected_option_id || undefined,
       resolution_note: draft.resolution_note || undefined,
       arbitration_level: draft.arbitration_level,
@@ -211,6 +226,8 @@ export function HotspotCatalogPage({
             return SIZE_RANK.indexOf(item.complexity.political);
           case 'implementation':
             return SIZE_RANK.indexOf(item.complexity.implementation);
+          case 'resolution':
+            return Object.keys(RESOLUTION_STAGES).indexOf(resolutionFor(item).stage);
           case 'status':
             return STATUS_RANK.indexOf(item.status);
           case 'arbitration_level':
@@ -252,7 +269,15 @@ export function HotspotCatalogPage({
         rationale: draft.rationale.trim(),
       };
     if (draft.status !== base.status) fields.status = draft.status;
-    if (draft.status === 'resolved') {
+    if (!sameDraftValue(draft.resolution, base.resolution)) fields.resolution = draft.resolution;
+    if (
+      draft.status === 'resolved' ||
+      item.resolution ||
+      draft.resolution.stage !== 'unassessed' ||
+      draft.selected_option_id !== base.selected_option_id
+    ) {
+      if (!item.resolution && draft.selected_option_id !== base.selected_option_id)
+        fields.resolution = draft.resolution;
       if (draft.selected_option_id !== base.selected_option_id) fields.selected_option_id = draft.selected_option_id;
       if (draft.resolution_note.trim() !== base.resolution_note) fields.resolution_note = draft.resolution_note.trim();
     }
@@ -275,7 +300,7 @@ export function HotspotCatalogPage({
       )
       .map(
         (key) =>
-          `${item.title} · ${key === 'political' ? 'politique' : key === 'implementation' ? 'implémentation' : key === 'arbitration_level' ? 'arbitrage' : key === 'status' ? 'statut' : key === 'kind' ? 'type' : key === 'node_ids' ? 'périmètre' : key === 'rationale' ? 'justification' : key === 'selected_option_id' ? 'option retenue' : key === 'resolution_note' ? 'note de résolution' : 'titre'}`,
+          `${item.title} · ${key === 'political' ? 'politique' : key === 'implementation' ? 'implémentation' : key === 'arbitration_level' ? 'arbitrage' : key === 'status' ? 'statut' : key === 'kind' ? 'type' : key === 'node_ids' ? 'périmètre' : key === 'rationale' ? 'justification' : key === 'selected_option_id' ? 'option retenue' : key === 'resolution_note' ? 'note de résolution' : key === 'resolution' ? 'avancement du cadrage' : 'titre'}`,
       );
   });
   const draftErrors = Object.entries(drafts).flatMap(([id, draft]) => {
@@ -288,7 +313,8 @@ export function HotspotCatalogPage({
     if (draft.kind === 'scope' && draft.node_ids.length < 1) errors.push('un objet requis pour un périmètre');
     if ((draft.political !== 'unassessed' || draft.implementation !== 'unassessed') && !draft.rationale.trim())
       errors.push('justification des complexités requise');
-    if (draft.status === 'resolved') {
+    errors.push(...resolutionErrors(effective(item)));
+    if (draft.status === 'resolved' && !effective(item).resolution) {
       if (!item.resolution_options.some((option) => option.id === draft.selected_option_id))
         errors.push('option retenue requise');
       if (!draft.resolution_note.trim()) errors.push('note de résolution requise');
@@ -304,6 +330,19 @@ export function HotspotCatalogPage({
     setSaveMessage('');
   };
   const edit = (item: Hotspot, field: keyof HotspotDraft, value: string) => editFields(item, { [field]: value });
+  const editResolution = (item: Hotspot, updates: Partial<HotspotResolution>) => {
+    const draft = drafts[item.id] || draftFor(item);
+    const resolution = { ...draft.resolution, ...updates };
+    if (resolution.stage !== 'unassessed') {
+      resolution.assessed_on ||= new Date().toLocaleDateString('sv-SE');
+      resolution.assessment_source ||= `Atelier Atlas ${workshopStage?.session_id || ''}`;
+    }
+    if (resolution.stage !== 'credible') resolution.credible_option_ids = [];
+    editFields(item, {
+      resolution,
+      status: resolution.stage === 'credible' ? 'resolved' : draft.status === 'resolved' ? 'validated' : draft.status,
+    });
+  };
   const openDialog = (
     event: MouseEvent<HTMLElement>,
     item: Hotspot,
@@ -367,14 +406,6 @@ export function HotspotCatalogPage({
       ),
     );
     setDraftRevision(workshopStage.revision);
-  };
-  const showTooltip = (element: HTMLElement, id: string) => {
-    const rect = element.getBoundingClientRect();
-    setTooltip({
-      id,
-      left: Math.max(12, Math.min(rect.left, window.innerWidth - 380)),
-      top: Math.max(12, Math.min(rect.bottom + 8, window.innerHeight - 200)),
-    });
   };
   const sortHeader = (key: SortKey, label: string) => (
     <th scope="col" aria-sort={sort.key === key ? sort.direction : 'none'}>
@@ -509,6 +540,33 @@ export function HotspotCatalogPage({
             {chosen.kind === 'integration' ? 'Intégration' : 'Périmètre'} · {STATUS[chosen.status]}
           </p>
           <h3>{chosen.title}</h3>
+          <section className="hotspot-resolution-summary" aria-label="Avancement du cadrage">
+            <h3>{RESOLUTION_STAGES[resolutionFor(chosen).stage]}</h3>
+            <p>
+              Résolu en cadrage : une solution crédible est envisagée. Le choix définitif et la mise en œuvre sont
+              distincts.
+            </p>
+            {resolutionFor(chosen).summary && <p>{publicText(resolutionFor(chosen).summary)}</p>}
+            {resolutionFor(chosen).credible_option_ids.length > 0 && (
+              <p>
+                Solutions crédibles :{' '}
+                {resolutionFor(chosen)
+                  .credible_option_ids.map(
+                    (id) => chosen.resolution_options.find((option) => option.id === id)?.title || id,
+                  )
+                  .join(' · ')}
+              </p>
+            )}
+            {resolutionFor(chosen).credibility_note && <p>{publicText(resolutionFor(chosen).credibility_note)}</p>}
+            {resolutionFor(chosen).blocked_reason && <p>Bloqué : {publicText(resolutionFor(chosen).blocked_reason)}</p>}
+            {resolutionFor(chosen).next_step && <p>Prochaine étape : {publicText(resolutionFor(chosen).next_step)}</p>}
+            {resolutionFor(chosen).assessed_on && (
+              <p>
+                Évaluation du {resolutionFor(chosen).assessed_on} ·{' '}
+                {publicText(resolutionFor(chosen).assessment_source)}
+              </p>
+            )}
+          </section>
           {chosen.status === 'validated' && !chosen.selected_option_id && (
             <p className="hotspot-status-note">Problème et périmètre validés ; aucune option de résolution retenue.</p>
           )}
@@ -536,16 +594,16 @@ export function HotspotCatalogPage({
           </dl>
           <p>{publicText(chosen.complexity.rationale)}</p>
           {chosen.arbitration_note && <p>{publicText(chosen.arbitration_note)}</p>}
-          {chosen.status === 'resolved' && chosen.selected_option_id && (
+          {chosen.selected_option_id && (
             <p>
               <strong>Option retenue :</strong>{' '}
               {chosen.resolution_options.find((option) => option.id === chosen.selected_option_id)?.title ||
                 chosen.selected_option_id}
             </p>
           )}
-          {chosen.status === 'resolved' && chosen.resolution_note && (
+          {chosen.resolution_note && (
             <p>
-              <strong>Décision :</strong> {publicText(chosen.resolution_note)}
+              <strong>Note du choix :</strong> {publicText(chosen.resolution_note)}
             </p>
           )}
           <h4>Lecture du marché</h4>
@@ -652,6 +710,7 @@ export function HotspotCatalogPage({
                 {sortHeader('political', 'Politique')}
                 {sortHeader('implementation', 'Implémentation')}
                 {sortHeader('status', 'Statut')}
+                {sortHeader('resolution', 'Avancement du cadrage')}
                 {sortHeader('arbitration_level', 'Arbitrage')}
                 <th scope="col">
                   <span className="sr-only">Ouvrir la fiche</span>
@@ -674,50 +733,49 @@ export function HotspotCatalogPage({
                             onChange={(event) => edit(item, 'title', event.target.value)}
                           />
                         ) : (
-                          <button
-                            type="button"
-                            className="hotspot-title-button"
-                            aria-describedby={tooltip?.id === item.id ? `hotspot-summary-${item.id}` : undefined}
-                            onClick={() => onChange({ hotspot: item.id })}
-                            onMouseEnter={(event) => showTooltip(event.currentTarget, item.id)}
-                            onMouseLeave={() => setTooltip(null)}
-                            onFocus={(event) => showTooltip(event.currentTarget, item.id)}
-                            onBlur={() => setTooltip(null)}
-                          >
-                            {item.title}
-                          </button>
-                        )}
-                        <span className="hotspot-subject-tools">
-                          {item.workshop && <small>Atelier</small>}
-                          <span className="hotspot-subject-info">
-                            <button
-                              type="button"
-                              aria-label={`Résumé de ${item.title}`}
-                              aria-describedby={tooltip?.id === item.id ? `hotspot-summary-${item.id}` : undefined}
-                              onMouseEnter={(event) => showTooltip(event.currentTarget, item.id)}
-                              onMouseLeave={() => setTooltip(null)}
-                              onFocus={(event) => showTooltip(event.currentTarget, item.id)}
-                              onBlur={() => setTooltip(null)}
-                            >
-                              <Info size={15} aria-hidden="true" />
-                            </button>
-                            {tooltip?.id === item.id && (
-                              <span
-                                id={`hotspot-summary-${item.id}`}
-                                role="tooltip"
-                                className="hotspot-subject-tooltip"
-                                style={{ left: tooltip.left, top: tooltip.top }}
-                              >
+                          <HotspotTooltipButton
+                            tip={
+                              <>
                                 <strong>Problème</strong>
-                                {item.problem}
+                                <span>{item.problem}</span>
                                 {item.examples[0] && (
                                   <span>
                                     <strong>Exemple</strong>
                                     {item.examples[0]}
                                   </span>
                                 )}
-                              </span>
-                            )}
+                              </>
+                            }
+                            tooltipClass="hotspot-subject-tooltip"
+                            type="button"
+                            className="hotspot-title-button"
+                            onClick={() => onChange({ hotspot: item.id })}
+                          >
+                            {item.title}
+                          </HotspotTooltipButton>
+                        )}
+                        <span className="hotspot-subject-tools">
+                          {item.workshop && <small>Atelier</small>}
+                          <span className="hotspot-subject-info">
+                            <HotspotTooltipButton
+                              tip={
+                                <>
+                                  <strong>Problème</strong>
+                                  <span>{item.problem}</span>
+                                  {item.examples[0] && (
+                                    <span>
+                                      <strong>Exemple</strong>
+                                      {item.examples[0]}
+                                    </span>
+                                  )}
+                                </>
+                              }
+                              tooltipClass="hotspot-subject-tooltip"
+                              type="button"
+                              aria-label={`Résumé de ${item.title}`}
+                            >
+                              <Info size={15} aria-hidden="true" />
+                            </HotspotTooltipButton>
                           </span>
                         </span>
                       </div>
@@ -811,12 +869,21 @@ export function HotspotCatalogPage({
                             value={draft.status}
                             onChange={(event) => {
                               const status = event.target.value as Hotspot['status'];
-                              editFields(
-                                item,
-                                status === 'resolved'
-                                  ? { status }
-                                  : { status, selected_option_id: '', resolution_note: '' },
-                              );
+                              if (status === 'resolved')
+                                editResolution(item, { stage: 'credible', blocked_reason: '' });
+                              else
+                                editFields(item, {
+                                  status,
+                                  ...(draft.resolution.stage === 'credible'
+                                    ? {
+                                        resolution: {
+                                          ...draft.resolution,
+                                          stage: 'qualifying',
+                                          credible_option_ids: [],
+                                        },
+                                      }
+                                    : {}),
+                                });
                               if (status === 'resolved')
                                 openDialog(event as unknown as MouseEvent<HTMLElement>, item, 'resolution');
                             }}
@@ -832,7 +899,7 @@ export function HotspotCatalogPage({
                               className="hotspot-cell-detail"
                               onClick={(event) => openDialog(event, item, 'resolution')}
                               aria-label={`Renseigner la résolution de ${item.title}`}
-                              title="Option retenue et note de résolution"
+                              title="Avancement et solutions crédibles"
                             >
                               …
                             </button>
@@ -840,6 +907,24 @@ export function HotspotCatalogPage({
                         </div>
                       ) : (
                         STATUS[item.status]
+                      )}
+                    </td>
+                    <td>
+                      {canEdit ? (
+                        <button
+                          type="button"
+                          className="hotspot-cell-detail"
+                          onClick={(event) => openDialog(event, item, 'resolution')}
+                          aria-label={`Avancement du cadrage de ${item.title}`}
+                        >
+                          {RESOLUTION_STAGES[draft.resolution.stage]}
+                          {draft.resolution.blocked_reason ? ' · Bloqué' : ''}
+                        </button>
+                      ) : (
+                        <span>
+                          {RESOLUTION_STAGES[resolutionFor(item).stage]}
+                          {resolutionFor(item).blocked_reason ? ' · Bloqué' : ''}
+                        </span>
                       )}
                     </td>
                     <td>
@@ -873,7 +958,7 @@ export function HotspotCatalogPage({
               })}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={9} className="hotspot-table-empty">
+                  <td colSpan={10} className="hotspot-table-empty">
                     Aucun point chaud avec ces filtres.
                   </td>
                 </tr>
@@ -987,17 +1072,101 @@ export function HotspotCatalogPage({
                   </div>
                 )}
                 {dialog.mode === 'resolution' && (
-                  <div className="hotspot-dialog-body">
+                  <div className="hotspot-dialog-body hotspot-resolution-fields">
+                    <p>Une solution crédible suffit au cadrage ; le choix définitif reste distinct.</p>
                     <label>
-                      Option retenue{' '}
+                      Avancement du cadrage
                       <select
                         ref={(element) => {
                           dialogFocus.current = element;
                         }}
+                        value={draft.resolution.stage}
+                        onChange={(event) =>
+                          editResolution(item, {
+                            stage: event.target.value as HotspotResolution['stage'],
+                            ...(event.target.value === 'credible' ? { blocked_reason: '' } : {}),
+                          })
+                        }
+                      >
+                        {Object.entries(RESOLUTION_STAGES).map(([value, label]) => (
+                          <option key={value} value={value}>
+                            {label}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <label>
+                      Synthèse d’avancement
+                      <textarea
+                        value={draft.resolution.summary}
+                        onChange={(event) => editResolution(item, { summary: event.target.value })}
+                      />
+                    </label>
+                    {draft.resolution.stage === 'credible' && (
+                      <fieldset>
+                        <legend>Solutions crédibles (au moins une)</legend>
+                        {item.resolution_options.map((option) => (
+                          <label key={option.id}>
+                            <input
+                              type="checkbox"
+                              checked={draft.resolution.credible_option_ids.includes(option.id)}
+                              onChange={(event) =>
+                                editResolution(item, {
+                                  credible_option_ids: event.target.checked
+                                    ? [...draft.resolution.credible_option_ids, option.id]
+                                    : draft.resolution.credible_option_ids.filter((id) => id !== option.id),
+                                })
+                              }
+                            />
+                            {option.title}
+                          </label>
+                        ))}
+                        <label>
+                          Crédibilité, hypothèses et réserves
+                          <textarea
+                            value={draft.resolution.credibility_note}
+                            onChange={(event) => editResolution(item, { credibility_note: event.target.value })}
+                          />
+                        </label>
+                      </fieldset>
+                    )}
+                    <label>
+                      Raison du blocage (facultative)
+                      <textarea
+                        disabled={draft.resolution.stage === 'credible'}
+                        value={draft.resolution.blocked_reason}
+                        onChange={(event) => editResolution(item, { blocked_reason: event.target.value })}
+                      />
+                    </label>
+                    <label>
+                      Prochaine étape
+                      <textarea
+                        value={draft.resolution.next_step}
+                        onChange={(event) => editResolution(item, { next_step: event.target.value })}
+                      />
+                    </label>
+                    <label>
+                      Date d’évaluation
+                      <input
+                        type="date"
+                        value={draft.resolution.assessed_on || ''}
+                        onChange={(event) => editResolution(item, { assessed_on: event.target.value })}
+                      />
+                    </label>
+                    <label>
+                      Source d’évaluation
+                      <input
+                        value={draft.resolution.assessment_source}
+                        onChange={(event) => editResolution(item, { assessment_source: event.target.value })}
+                      />
+                    </label>
+                    <label>
+                      Option retenue (choix définitif facultatif){' '}
+                      <select
                         value={draft.selected_option_id}
                         onChange={(event) => edit(item, 'selected_option_id', event.target.value)}
                       >
-                        <option value="">Choisir une option…</option>
+                        <option value="">Aucun choix définitif</option>
                         {item.resolution_options.map((option) => (
                           <option key={option.id} value={option.id}>
                             {option.title}
@@ -1009,7 +1178,7 @@ export function HotspotCatalogPage({
                       <p>Aucune option n’est documentée. Ajoute d’abord une option avec Codex.</p>
                     )}
                     <label>
-                      Note de résolution{' '}
+                      Note du choix définitif (facultative){' '}
                       <textarea
                         value={draft.resolution_note}
                         onChange={(event) => edit(item, 'resolution_note', event.target.value)}

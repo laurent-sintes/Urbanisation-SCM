@@ -1540,7 +1540,8 @@ terms:
   short_description: Fonction et pratique qui relie stratégie, métier, organisation, informations et technologie pour maintenir
     une cohérence durable pendant et après les transformations.
   notes:
-  - Pratique méthodologique distincte de l’objet racine Enterprise Architecture (MOD043) ; ne crée ni pouvoir de décision supplémentaire.
+  - Pratique méthodologique distincte de l’objet racine Enterprise Architecture (MOD043) ; ne crée ni pouvoir de décision
+    supplémentaire.
   source_refs:
   - U915
   - U807
@@ -1837,13 +1838,21 @@ terms:
   short_description: Sujet à instruire ou arbitrer, situé sur un périmètre ou entre deux périmètres du modèle.
   definition: Sujet transverse dont le problème, les options et les éléments à confirmer sont suivis dans une fiche autonome.
     Un point chaud de périmètre est ancré sur un ou plusieurs objets du modèle ; un point chaud d’intégration relie exactement
-    deux objets. Sa gravité combine la difficulté politique et la difficulté d’implémentation selon une grille publiée,
-    sans mesurer automatiquement l’urgence ni l’impact.
+    deux objets. Sa gravité combine la difficulté politique et la difficulté d’implémentation selon une grille publiée, sans
+    mesurer automatiquement l’urgence ni l’impact.
   role: Rendre visibles les sujets à traiter sur les cartes et garder leurs options, sources, réserves et arbitrages.
   notes:
   - Les statuts Atlas découvert, partagé, validé et résolu ne remplacent pas les états de suivi du registre FLOW-Program.
   - La fiche reste hors de la hiérarchie métier ; sa localisation ne crée pas une relation de décomposition.
-  - Une lecture du marché peut distinguer pratiques documentées, avis pour FLOW et limites, avec des sources primaires consultées. Elle n'attribue pas une décision métier à Laurent.
+  - Une lecture du marché peut distinguer pratiques documentées, avis pour FLOW et limites, avec des sources primaires consultées.
+    Elle n'attribue pas une décision métier à Laurent.
+  - Le cadrage progresse de À explorer à Pistes identifiées, puis Options en qualification et Solution crédible. Non renseigné
+    signifie absence d’évaluation, jamais absence de risque.
+  - Résolu signifie qu’au moins une solution crédible est envisagée et argumentée avec ses hypothèses et réserves. Cela ne
+    prouve ni choix définitif, ni mise en œuvre, ni disparition du problème opérationnel.
+  - La qualification du problème et l’avancement du cadrage sont distincts. La criticité reste inchangée par la progression
+    ; les flammes s’éteignent au cadrage résolu. Un blocage précise sa raison et la prochaine étape.
+  - Aucune progression ou résolution n’est propagée aux autres points chauds ou aux enfants des objets concernés.
   source_refs:
   - U917
   - U918
@@ -1851,6 +1860,7 @@ terms:
   - U920
   - U921
   - U922
+  - U949
   review:
     state: proposed
     note: Définition méthodologique pilote ; libellés, états et calcul de gravité restent à éprouver avant accord métier.
@@ -2016,6 +2026,32 @@ methodology_agreements:
     value_sha256: 5823a4d6bed3b943d9a3ffdde94cd9e54a5b76f2d8b460c8d5711652306ecfaa
   limits: Noms des nouveaux regroupements et descriptions détaillées proposés ; aucune modification des contrats historiques.
   capture_method: Registre méthodologique ; principes non ciblables par les captures nodes/relations.
+- id: AGREEMENT-U949
+  source_refs:
+  - U949
+  author: Laurent
+  recorded_by: Codex
+  decided_on: '2026-10-11'
+  interpretation: contextual
+  scope: 'Quatre notes ajoutées à MOD044 : progression de cadrage, solution crédible suffisante, représentation indépendante
+    de la criticité et absence de propagation.'
+  fields:
+  - target: MOD044
+    field: notes.3
+    value_sha256: fc05bb8faca40fd3f5505f2f692fa2e1f917abe0f9fa91f4a762ee3a775451b2
+  - target: MOD044
+    field: notes.4
+    value_sha256: 3600fd0392a8d7bc835c52e727012680920b5f8ac86352be8168be6108785045
+  - target: MOD044
+    field: notes.5
+    value_sha256: 048fb09332856d2e5267010d7f11c681fb2e2b1c60fecd97a85493a3a5f09872
+  - target: MOD044
+    field: notes.6
+    value_sha256: bd95d43be561235cb38bf190261e7de2c1dea04c2e69157d64be91728af4df80
+  source_index_sha256: 02b7dc94ef94b3dec7191f8dc114d3205bd866c503b5a85f0ff40d40a20ec64b
+  limits: Aucun accord étendu au reste de la fiche ou aux solutions individuelles ; aucune publication.
+  capture_method: Verbatim U949 puis empreintes finales ; record_decision/record_intents ne supportent que nodes/relations,
+    pas hotspots ou termes MOD.
 presentation:
   aliases:
     TER001: MOD015

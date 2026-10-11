@@ -54,7 +54,7 @@ class HotspotCatalogTests(unittest.TestCase):
         hotspot['status'] = 'resolved'
         errors = validate_catalog(model)
         self.assertTrue(any('missing anchor' in error for error in errors))
-        self.assertTrue(any('resolved hotspot requires' in error for error in errors))
+        self.assertTrue(any('require credible resolution stage' in error for error in errors))
 
 
 if __name__ == '__main__':

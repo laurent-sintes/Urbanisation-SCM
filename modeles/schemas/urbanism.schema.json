@@ -403,6 +403,56 @@
               "arbitration_note": { "type": "string" },
               "status": { "enum": ["discovered", "shared", "validated", "resolved"] },
               "source_status": { "type": "string" },
+              "resolution": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "stage",
+                  "summary",
+                  "credible_option_ids",
+                  "credibility_note",
+                  "blocked_reason",
+                  "next_step",
+                  "assessment_source"
+                ],
+                "properties": {
+                  "stage": {
+                    "enum": [
+                      "unassessed",
+                      "to_explore",
+                      "identified",
+                      "qualifying",
+                      "credible"
+                    ]
+                  },
+                  "summary": {
+                    "type": "string"
+                  },
+                  "credibility_note": {
+                    "type": "string"
+                  },
+                  "blocked_reason": {
+                    "type": "string"
+                  },
+                  "next_step": {
+                    "type": "string"
+                  },
+                  "assessment_source": {
+                    "type": "string"
+                  },
+                  "credible_option_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "uniqueItems": true
+                  },
+                  "assessed_on": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  }
+                }
+              },
               "selected_option_id": { "type": "string" },
               "resolution_note": { "type": "string" },
               "source_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },

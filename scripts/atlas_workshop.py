@@ -17,17 +17,19 @@ from uuid import uuid4
 try:
     from .atlas_lock import atlas_lock
     from .hotspot_catalog import severity_for
+    from .hotspot_resolution import validate_resolution
 except ImportError:
     from atlas_lock import atlas_lock
     from hotspot_catalog import severity_for
+    from hotspot_resolution import validate_resolution
 
 ROOT = Path(__file__).resolve().parents[1]
 STAGING = Path('.runtime/atlas-atelier/staging.json')
 LEVELS = ('S', 'M', 'L', 'XL')
 EDITABLE = {'title', 'problem', 'kind', 'location', 'examples', 'market_view', 'resolution_options',
-            'complexity', 'arbitration_level', 'arbitration_note', 'status'}
+            'complexity', 'arbitration_level', 'arbitration_note', 'status', 'resolution', 'selected_option_id', 'resolution_note'}
 TABLE_EDITABLE = {'title', 'kind', 'location', 'complexity', 'arbitration_level', 'status',
-                  'selected_option_id', 'resolution_note'}
+                  'selected_option_id', 'resolution_note', 'resolution'}
 
 
 class StageConflictError(ValueError):
@@ -179,10 +181,13 @@ def checked_hotspot(value, nodes):
         raise ValueError('La note de résolution doit être un texte.')
     if selected and selected not in {option['id'] for option in options}:
         raise ValueError('L’option de résolution retenue est absente de la fiche.')
-    if value['status'] == 'resolved' and (not selected or not isinstance(value.get('resolution_note'), str)
+    resolution_errors = validate_resolution(value)
+    if resolution_errors:
+        raise ValueError('Résolution de cadrage invalide : ' + '; '.join(resolution_errors))
+    if 'resolution' not in value and value['status'] == 'resolved' and (not selected or not isinstance(value.get('resolution_note'), str)
                                           or not value['resolution_note'].strip()):
         raise ValueError('Un point chaud résolu exige une option retenue et une note de résolution.')
-    if value['status'] != 'resolved' and selected:
+    if 'resolution' not in value and value['status'] != 'resolved' and selected:
         raise ValueError('Une option retenue exige le statut résolu.')
     if any(complexity[axis] != 'unassessed' for axis in ('political', 'implementation')) and not complexity['rationale'].strip():
         raise ValueError('Une complexité évaluée exige une justification.')
@@ -236,6 +241,9 @@ def apply_request(root, request):
             }
             if 'market_view' in fields:
                 value['market_view'] = fields['market_view']
+            for key in ('resolution', 'selected_option_id', 'resolution_note'):
+                if key in fields:
+                    value[key] = fields[key]
         else:
             if not isinstance(identifier, str) or identifier not in items:
                 raise ValueError('Point chaud introuvable dans cette séance.')
@@ -306,7 +314,7 @@ def apply_table_changes(root, request):
                 raise ValueError('Statut de tableau inconnu.')
             value = json.loads(json.dumps(items[identifier]))
             value.update(fields)
-            if 'status' in fields and fields['status'] != 'resolved':
+            if 'resolution' not in value and 'status' in fields and fields['status'] != 'resolved':
                 value.pop('selected_option_id', None)
                 value.pop('resolution_note', None)
             checked_hotspot(value, nodes)

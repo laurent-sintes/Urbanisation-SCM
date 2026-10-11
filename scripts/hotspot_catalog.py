@@ -1,4 +1,8 @@
 """Validate autonomous hotspots against the model snapshot they annotate."""
+try:
+    from .hotspot_resolution import validate_resolution
+except ImportError:
+    from hotspot_resolution import validate_resolution
 
 LEVELS = ('S', 'M', 'L', 'XL')
 MATRIX = (
@@ -41,9 +45,10 @@ def validate_catalog(model):
         selected = hotspot.get('selected_option_id')
         if selected and selected not in options:
             errors.append(f'{identifier}: selected option is missing')
-        if hotspot['status'] == 'resolved' and (not selected or not hotspot.get('resolution_note')):
+        errors.extend(f'{identifier}: {error}' for error in validate_resolution(hotspot))
+        if 'resolution' not in hotspot and hotspot['status'] == 'resolved' and (not selected or not hotspot.get('resolution_note')):
             errors.append(f'{identifier}: resolved hotspot requires a selected option and resolution note')
-        if hotspot['status'] != 'resolved' and selected:
+        if 'resolution' not in hotspot and hotspot['status'] != 'resolved' and selected:
             errors.append(f'{identifier}: selected option requires resolved status')
         complexity = hotspot['complexity']
         if hotspot['severity'] != severity_for(complexity['political'], complexity['implementation']):

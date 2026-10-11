@@ -1,0 +1,129 @@
+id: HOTSPOT-RESOLUTION-U949
+source_refs:
+- U949
+status: applied_to_backlog
+agreement:
+  scope: Progression du cadrage et représentation ; une solution crédible suffit, sans choix définitif ni mise en œuvre.
+  stages:
+    unassessed: Non renseigné
+    to_explore: À explorer
+    identified: Pistes identifiées
+    qualifying: Options en qualification
+    credible: Solution crédible — cadrage résolu
+  representation: Criticité inchangée ; anneau à trois jalons ; flammes éteintes et coche au cadrage résolu ; blocage distinct.
+  limits:
+  - Aucune solution individuelle approuvée.
+  - Aucune progression déduite du statut validé.
+  - Aucune propagation à d’autres hotspots.
+  - Aucune publication ni réalisation installée attestée.
+baseline:
+  hotspot_ids:
+  - HS-001
+  - HS-002
+  - HS-011
+  - HS-003
+  - HS-012
+  - HS-013
+  - HS-006
+  - HS-014
+  - HS-015
+  - HS-007
+  - HS-008
+  resolution: unassessed
+  unchanged: Problèmes, options, localisations, statuts, criticité, sources et accords de chaque sujet.
+alignment:
+  business_glossary: 'Contrôlé : aucun terme Hotspot métier ; pas de changement métier de périmètre.'
+  methodological_glossary: MOD044, quatre notes de résolution uniquement ; autres propositions inchangées.
+market_comparison:
+- publisher: Microsoft Dynamics
+  url: https://learn.microsoft.com/en-us/dynamics365/customer-service/use/customer-service-hub-user-guide-resolve-cancel-reassign-a-case
+  common: Distinguer l’état de résolution et garder sa justification.
+  difference: Le cadrage FLOW est clos dès une solution crédible envisagée, sans réalisation opérationnelle.
+  limit: Analogie de suivi ; pas une équivalence de hotspot.
+- publisher: SAP S/4HANA
+  url: https://www.sap.com/design-system/fiori-design-web/v1-136/discover/sap-products/sap-s4hana-only/situation-handling/situation-handling-controls
+  common: Repères localisés et état explicite dans les aides.
+  difference: Anneau de qualification et maintien de la criticité, sans situation opérationnelle éteinte.
+  limit: Les motifs résolu, obsolète et invalide ne sont pas confondus avec les étapes de cadrage.
+superseded_delivery_fingerprints:
+- path: modeles/backlog/hotspot-first-lot-U948.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-001
+    content_sha256: 39efafd72e3985731acd1ac5fe1b5aa8cbc18b5bdae2cee809e83937b315992e
+  - collection: hotspots
+    id: HS-002
+    content_sha256: 60116e5c8c64dd1114352d355e59c688eecd195a5a74d7ff095a2d82d3d27145
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 01dc3b5f5dbc70528d3bd0946c10ba0ba090321af4a833428ac9b4fe59b14fbd
+  - collection: hotspots
+    id: HS-003
+    content_sha256: b09dd43d85314269cffa1c3dc120f1ce2c4ba6d028f1d046c42553706551e665
+  - collection: hotspots
+    id: HS-012
+    content_sha256: 53b94142a607d351fd3225438c0bccde6eef6cbc79c2d0bdc7cb2e8be3375a85
+  - collection: hotspots
+    id: HS-013
+    content_sha256: 62b41446cd0bd2c5bbbc257794d0b4f7961dd1bee8eb924b469d40fde3a9aba4
+  - collection: hotspots
+    id: HS-006
+    content_sha256: ac88095898fdc75966c3e1ac79a8c948a16466894e3c8ee07a5af7794b73f664
+  - collection: hotspots
+    id: HS-014
+    content_sha256: 9e22308175cc6edd20d05114447cbe1e64be44f00e63ce73c2fbd144900d4dc6
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 6619d586d911ed1a88fbccad2c2e5ec9222a7f290d31de67be59832148ae4c87
+  - collection: hotspots
+    id: HS-007
+    content_sha256: 8d4a655c1e89b57779d02fb369f9638d885f2caa717d0be8bd3f9dcfd5944097
+  - collection: hotspots
+    id: HS-008
+    content_sha256: b94749f7b8687e00e7ba9204465a8bf7630325589854ece427d2c0b0a1663f5e
+- path: modeles/backlog/hotspot-stock-freshness-U928.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-003
+    content_sha256: b09dd43d85314269cffa1c3dc120f1ce2c4ba6d028f1d046c42553706551e665
+publication_delivery:
+  state: applied
+  source_refs:
+  - U949
+  summary: Ajout du contrat de progression ; onze sujets explicitement non renseignés.
+  required_catalog:
+  - collection: hotspots
+    id: HS-001
+    content_sha256: e2bdca1e096274caf0d6bc0197806cc61768d13da0ecf241849badf2a7a84d54
+  - collection: hotspots
+    id: HS-002
+    content_sha256: 0d152a5337c12c973442e38ec07478b4d168bfc7c6f81627b5a648d685afeb0e
+  - collection: hotspots
+    id: HS-011
+    content_sha256: f9d8fa7c054eba2eada80ca4f08d7b4658f4631c470024c28cf3ea81db120649
+  - collection: hotspots
+    id: HS-003
+    content_sha256: ab3f5b495e69fdd94b96d978f6dd4deb8ea78265fa1f1eec0e6c5092b36b7c18
+  - collection: hotspots
+    id: HS-012
+    content_sha256: 2b0f0cf1eb4b68895cbf96670e9b462f44d534eb578e9bf0f393207da0656023
+  - collection: hotspots
+    id: HS-013
+    content_sha256: 047500a2e01fa466cc9c5797603379010d7edc15632af6e142cb2ea6cab062ce
+  - collection: hotspots
+    id: HS-006
+    content_sha256: cf316d02618a851a1d472c10719408ea5af81a3ec3b4a069b2e88dc2608b9cd4
+  - collection: hotspots
+    id: HS-014
+    content_sha256: d43e34841a1f6adc44f5800c1db96e505666eb7d22a163a5f0642efa8f8e1371
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 6f1bbc7baf848ef41a369b4a65e1574b57b81e242dbcff4cc421784391877cc8
+  - collection: hotspots
+    id: HS-007
+    content_sha256: d2f8b041d3a91114099a2be711e1dc504f39c1e6ab959fc4f2bcb4f8482374ae
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 63e36720be155478dd471c836f93189a0460dcac21f2ef069ef383f872221c58
+capture_method: Verbatim U949 puis empreintes finales ; record_decision/record_intents ne supportent que nodes/relations,
+  pas hotspots ou termes MOD.

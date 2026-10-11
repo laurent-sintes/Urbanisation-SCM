@@ -8,7 +8,7 @@ import unittest
 from pathlib import Path
 
 from scripts import structured_io
-from scripts.atlas_workshop import ROOT, apply_request, current_stage, encoded, publication, stage_path
+from scripts.atlas_workshop import ROOT, apply_request, apply_table_changes, current_stage, encoded, publication, stage_path
 from scripts.atlas_workshop_import import apply, preview
 from scripts.release_catalog import PublicationReader
 
@@ -86,6 +86,29 @@ class WorkshopImportTests(unittest.TestCase):
         backlog_path.write_text(structured_io.dumps(model), encoding='utf-8')
         plan = preview(self.root, stage_path(self.root))
         self.assertIn('problem', plan['changes'][0]['conflicts'])
+
+    def test_progress_import_accepts_empty_baseline_and_preserves_credible_solutions(self):
+        from scripts.hotspot_resolution import empty_resolution
+        model, model_sha = publication(self.root)
+        stage = current_stage(self.root, model, model_sha)
+        # Open an atelier before editing its published subject from the table.
+        apply_request(self.root, {'expected_revision': 0, 'entity': 'hotspot', 'action': 'update',
+                                  'id': 'HS-002', 'verbatim': 'Évalue le cadrage.', 'fields': {'status': 'shared'}})
+        item = next(item for item in model['hotspot_catalog']['hotspots'] if item['id'] == 'HS-002')
+        resolution = dict(empty_resolution(), stage='credible', summary='Solution envisageable',
+                          assessed_on='2026-10-11', assessment_source='Séance',
+                          credible_option_ids=[item['resolution_options'][0]['id']], credibility_note='Sous réserves explicites')
+        apply_table_changes(self.root, {'session_id': stage['session_id'], 'expected_revision': 1,
+            'changes': [{'id': 'HS-002', 'fields': {'status': 'resolved', 'resolution': resolution}}]})
+        plan = preview(self.root, stage_path(self.root))
+        self.assertFalse(plan['changes'][0]['conflicts'])
+        path = self.root / 'plan.json'
+        path.write_text(structured_io.dumps(plan, '.json'), encoding='utf-8')
+        self.add_source(plan, 'U99999')
+        apply(self.root, path, 'U99999')
+        updated = next(item for item in structured_io.read(self.root / 'modeles/backlog/model.yaml')['hotspot_catalog']['hotspots'] if item['id'] == 'HS-002')
+        self.assertEqual(updated['resolution'], resolution)
+        self.assertNotIn('selected_option_id', updated)
 
 
 if __name__ == '__main__':

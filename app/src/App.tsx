@@ -21,7 +21,7 @@ import { HelpPage } from './components/HelpPage';
 import { HotspotCatalogPage } from './components/HotspotCatalogPage';
 import { MapPanel } from './components/MapPanel';
 import { MarketComparisons } from './components/MarketComparisons';
-import { ContextReturn, MetaTypeLabel, ModelLinksProvider, ModelText } from './components/ModelLinks';
+import { ContextReturn, MetaTypeLabel, ModelLinksProvider, ModelText, readingOrigin } from './components/ModelLinks';
 import { Overview } from './components/Overview';
 import { ScenarioCatalogPage } from './components/ScenarioCatalogPage';
 import { Sidebar } from './components/Sidebar';
@@ -1033,6 +1033,7 @@ export function App() {
                       onOpenHotspot={(hotspot, groupIds) =>
                         changeRoute({
                           view: 'hotspots',
+                          returnTo: readingOrigin({ ...route, returnTo: undefined }, model.version),
                           hotspot,
                           hotspotGroup: groupIds?.join(',') || '',
                           node: '',
@@ -1061,6 +1062,7 @@ export function App() {
                       onOpenHotspot={(hotspot, groupIds) =>
                         changeRoute({
                           view: 'hotspots',
+                          returnTo: readingOrigin({ ...route, returnTo: undefined }, model.version),
                           hotspot,
                           hotspotGroup: groupIds?.join(',') || '',
                           node: '',

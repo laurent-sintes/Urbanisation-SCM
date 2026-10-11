@@ -1,7 +1,24 @@
-import { lineageOf } from './model.ts';
+import { isClosedHotspot, resolutionFor } from './hotspotResolution.ts';
+import { descendantsOf, lineageOf } from './model.ts';
 import type { Hotspot, PublishedModel } from './types.ts';
 
 const LEVELS = ['S', 'M', 'L', 'XL'];
+
+/** Actual locations include their descendants; a projected ancestor does not include siblings. */
+export function hotspotRelatedElementIds(
+  model: PublishedModel,
+  hotspots: Hotspot[],
+  projectedIds: string[] = [],
+): string[] {
+  return [
+    ...new Set([
+      ...projectedIds,
+      ...hotspots.flatMap((hotspot) =>
+        hotspot.location.node_ids.flatMap((id) => [id, ...descendantsOf(model, id).map((node) => node.id)]),
+      ),
+    ]),
+  ];
+}
 const MATRIX_V1 = [
   ['S', 'M', 'L', 'XL'],
   ['M', 'L', 'L', 'XL'],
@@ -20,6 +37,8 @@ export function severityForComplexities(political: string, implementation: strin
 
 export interface HotspotMapFilters {
   enabled: boolean;
+  resolutionStage?: string;
+  showResolved?: boolean;
   severity: string;
   severityMode: 'exact' | 'at_most' | 'at_least';
   kind: string;
@@ -30,6 +49,8 @@ export interface HotspotMapFilters {
 
 export const defaultHotspotMapFilters: HotspotMapFilters = {
   enabled: false,
+  resolutionStage: 'all',
+  showResolved: false,
   severity: 'all',
   severityMode: 'exact',
   kind: 'all',
@@ -43,6 +64,15 @@ export function updateHotspotMapFilters(
   current: HotspotMapFilters,
   changes: Partial<HotspotMapFilters>,
 ): HotspotMapFilters {
+  if (changes.resolutionStage === 'credible' || changes.status === 'resolved')
+    return { ...current, ...changes, showResolved: true };
+  if (changes.showResolved === false)
+    return {
+      ...current,
+      ...changes,
+      resolutionStage: current.resolutionStage === 'credible' ? 'all' : current.resolutionStage,
+      status: current.status === 'resolved' ? 'all' : current.status,
+    };
   if (changes.severity !== undefined || changes.severityMode !== undefined)
     return { ...current, ...changes, political: 'all', implementation: 'all' };
   if (changes.political !== undefined || changes.implementation !== undefined)
@@ -61,6 +91,13 @@ export function filterMapHotspots(hotspots: Hotspot[], filters: HotspotMapFilter
           : filters.severityMode === 'at_least' && selectedRank >= 0
             ? LEVELS.indexOf(hotspot.severity) >= selectedRank
             : hotspot.severity === filters.severity)) &&
+      (filters.showResolved !== false ||
+        filters.status === 'resolved' ||
+        filters.resolutionStage === 'credible' ||
+        !isClosedHotspot(hotspot)) &&
+      (!filters.resolutionStage ||
+        filters.resolutionStage === 'all' ||
+        resolutionFor(hotspot).stage === filters.resolutionStage) &&
       (filters.kind === 'all' || hotspot.kind === filters.kind) &&
       (filters.status === 'all' || hotspot.status === filters.status) &&
       (filters.political === 'all' || hotspot.complexity.political === filters.political) &&

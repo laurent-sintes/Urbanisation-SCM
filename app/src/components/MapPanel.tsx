@@ -4,6 +4,7 @@ import { filterMapHotspots, type HotspotMapFilters, hotspotsInScope } from '../h
 import type { MapZoomChoice } from '../mapZoom';
 import { preference, savePreference } from '../navigation';
 import type { AtlasNode, PublishedModel } from '../types';
+import { HotspotLegend } from './HotspotDisplay';
 import { MapDetailPicker } from './MapDetailPicker';
 import { MapHotspotPicker } from './MapHotspotPicker';
 
@@ -139,6 +140,7 @@ export function MapPanel({
           </button>
         </div>
       </div>
+      {hotspotFilters.enabled && <HotspotLegend count={visibleHotspots.length} />}
       <Suspense fallback={<div className="graph-canvas empty-state">Ouverture de la carte…</div>}>
         <ReactFlowPane
           model={model}

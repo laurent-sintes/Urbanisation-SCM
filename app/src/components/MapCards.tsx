@@ -92,7 +92,7 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
                 node={behavior}
                 itemId={behavior.id}
                 selected={data.selectedId === behavior.id}
-                className="card-child-link behavior-link"
+                className={`card-child-link behavior-link${data.hotspotRelatedIds?.includes(behavior.id) ? ' hotspot-related-item' : ''}`}
                 onClick={() => data.onRead(behavior.id)}
               >
                 <NodeIcon node={behavior} size={14} />

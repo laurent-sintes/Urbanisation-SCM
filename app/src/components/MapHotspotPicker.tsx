@@ -1,7 +1,16 @@
+import {
+  FloatingFocusManager,
+  FloatingPortal,
+  useClick,
+  useDismiss,
+  useInteractions,
+  useRole,
+} from '@floating-ui/react';
 import { ChevronDown, Flame, X } from 'lucide-react';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useId, useState } from 'react';
 import { filterMapHotspots, type HotspotMapFilters } from '../hotspotMap';
 import type { Hotspot } from '../types';
+import { useHotspotFloating } from './HotspotDisplay';
 import { HotspotFilterFields } from './HotspotFilterFields';
 
 export function MapHotspotPicker({
@@ -18,35 +27,22 @@ export function MapHotspotPicker({
   onOpenHotspot: (id: string) => void;
 }) {
   const [open, setOpen] = useState(false);
-  const root = useRef<HTMLDivElement>(null);
   const id = useId();
+  const { refs, floatingStyles, context, host } = useHotspotFloating(open, setOpen);
+  const click = useClick(context);
+  const dismiss = useDismiss(context);
+  const role = useRole(context, { role: 'dialog' });
+  const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
   const matchingHotspots = filterMapHotspots(scopedHotspots, { ...filters, enabled: true });
-  useEffect(() => {
-    if (!open) return;
-    const outside = (event: PointerEvent) => {
-      if (!root.current?.contains(event.target as Node)) setOpen(false);
-    };
-    const closeEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setOpen(false);
-        root.current?.querySelector<HTMLButtonElement>('.detail-trigger')?.focus();
-      }
-    };
-    document.addEventListener('pointerdown', outside);
-    document.addEventListener('keydown', closeEscape);
-    return () => {
-      document.removeEventListener('pointerdown', outside);
-      document.removeEventListener('keydown', closeEscape);
-    };
-  }, [open]);
   return (
-    <div className="map-hotspot-picker" ref={root}>
+    <div className="map-hotspot-picker">
       <button
         type="button"
         className="detail-trigger"
         aria-expanded={open}
         aria-controls={open ? id : undefined}
-        onClick={() => setOpen((value) => !value)}
+        ref={refs.setReference}
+        {...getReferenceProps()}
       >
         <Flame size={15} />
         <span>
@@ -56,43 +52,61 @@ export function MapHotspotPicker({
         <ChevronDown size={14} className={open ? 'is-open' : ''} />
       </button>
       {open && (
-        <div id={id} className="hotspot-filter-popover" role="group" aria-label="Filtres des points chauds">
-          <div className="hotspot-filter-header">
-            <strong>Points chauds de cette carte</strong>
-            <button type="button" aria-label="Fermer les filtres" onClick={() => setOpen(false)}>
-              <X size={16} />
-            </button>
-          </div>
-          <div className="hotspot-filter-layout">
-            <HotspotFilterFields filters={filters} onChange={onChange} showDisplayToggle />
-            <section className="hotspot-filter-results" aria-label="Liste des points chauds">
-              <div className="hotspot-filter-results-heading">
-                <strong>
-                  {matchingHotspots.length} point{matchingHotspots.length > 1 ? 's' : ''} chaud
-                  {matchingHotspots.length > 1 ? 's' : ''}
-                </strong>
-                <span>sur {scopedHotspots.length} dans ce périmètre</span>
+        <FloatingPortal root={host}>
+          <FloatingFocusManager context={context} modal={matchMedia('(max-width: 900px)').matches}>
+            <div
+              {...getFloatingProps()}
+              ref={refs.setFloating}
+              style={floatingStyles}
+              id={id}
+              className="hotspot-filter-popover"
+              role="dialog"
+              aria-label="Filtres des points chauds"
+            >
+              <div className="hotspot-filter-header">
+                <strong>Points chauds de cette carte</strong>
+                <button type="button" aria-label="Fermer les filtres" onClick={() => setOpen(false)}>
+                  <X size={16} />
+                </button>
               </div>
-              <div className="hotspot-filter-list" role="group" aria-label="Points chauds visibles">
-                {matchingHotspots.length ? (
-                  matchingHotspots.map((hotspot) => (
-                    <button type="button" key={hotspot.id} onClick={() => onOpenHotspot(hotspot.id)}>
-                      <span className={`hotspot-filter-severity severity-${hotspot.severity}`} aria-hidden="true">
-                        <Flame size={17} />
-                      </span>
-                      <span className="hotspot-filter-list-label">
-                        <strong>{hotspot.title}</strong>
-                        <small>Criticité {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}</small>
-                      </span>
-                    </button>
-                  ))
-                ) : (
-                  <p>Aucun point chaud avec ces filtres.</p>
-                )}
+              <div className="hotspot-filter-layout">
+                <HotspotFilterFields filters={filters} onChange={onChange} showDisplayToggle />
+                <section className="hotspot-filter-results" aria-label="Liste des points chauds">
+                  <div className="hotspot-filter-results-heading">
+                    <strong>
+                      {matchingHotspots.length} point{matchingHotspots.length > 1 ? 's' : ''} chaud
+                      {matchingHotspots.length > 1 ? 's' : ''}
+                    </strong>
+                    <span>sur {scopedHotspots.length} dans ce périmètre</span>
+                  </div>
+                  <div
+                    className="hotspot-filter-list"
+                    role="group"
+                    aria-label="Points chauds correspondant aux filtres"
+                  >
+                    {matchingHotspots.length ? (
+                      matchingHotspots.map((hotspot) => (
+                        <button type="button" key={hotspot.id} onClick={() => onOpenHotspot(hotspot.id)}>
+                          <span className={`hotspot-filter-severity severity-${hotspot.severity}`} aria-hidden="true">
+                            <Flame size={17} />
+                          </span>
+                          <span className="hotspot-filter-list-label">
+                            <strong>{hotspot.title}</strong>
+                            <small>
+                              Criticité {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}
+                            </small>
+                          </span>
+                        </button>
+                      ))
+                    ) : (
+                      <p>Aucun point chaud avec ces filtres.</p>
+                    )}
+                  </div>
+                </section>
               </div>
-            </section>
-          </div>
-        </div>
+            </div>
+          </FloatingFocusManager>
+        </FloatingPortal>
       )}
     </div>
   );

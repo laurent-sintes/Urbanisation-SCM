@@ -1,16 +1,20 @@
-import { Flame, Maximize2, Minimize2 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { Maximize2, Minimize2 } from 'lucide-react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { overviewLayout, prominentChildIndex } from '../adaptiveLayout';
-import { filterMapHotspots, type HotspotMapFilters } from '../hotspotMap';
+import { filterMapHotspots, type HotspotMapFilters, hotspotRelatedElementIds } from '../hotspotMap';
+import { HOTSPOT_DIAMETERS, type HotspotPlacementGroup, layoutHotspots } from '../hotspotPlacement';
 import { childrenOf, descendantsOf, lineageOf, rootsOf } from '../model';
 import type { PublishedModel } from '../types';
+import { HotspotLegend, HotspotMapMarker } from './HotspotDisplay';
 import { MapDetailPicker } from './MapDetailPicker';
 import { MapHotspotPicker } from './MapHotspotPicker';
 import { MapNodeButton, MetaTypeLabel, ModelText } from './ModelLinks';
 import './hotspots.css';
 
 const plainDefinition = (text: string) => text.replace(/^\[[^\]]+\]\([^)]*\)\s*:\s*/, '');
-const FLAMES = ['first', 'second', 'third', 'fourth'];
+type OverviewPlacement = {
+  groups: HotspotPlacementGroup[];
+};
 
 /** The overview follows the publication's explicit hierarchy and frozen order. */
 export function Overview({
@@ -33,25 +37,73 @@ export function Overview({
   onOpenHotspot: (id: string, groupIds?: string[]) => void;
 }) {
   const universe = rootsOf(model).find((node) => node.kind === 'universe');
-  const systems = universe
-    ? childrenOf(model, universe.id).filter((node) => node.kind === 'business_system')
-    : rootsOf(model).filter((node) => node.kind === 'business_system');
+  const systems = useMemo(
+    () =>
+      universe
+        ? childrenOf(model, universe.id).filter((node) => node.kind === 'business_system')
+        : rootsOf(model).filter((node) => node.kind === 'business_system'),
+    [model, universe],
+  );
   const section = useRef<HTMLElement>(null);
   const [availableWidth, setAvailableWidth] = useState(0);
+  const [measurementVersion, setMeasurementVersion] = useState(0);
+  const [markerPlacement, setMarkerPlacement] = useState<Record<string, OverviewPlacement>>({});
   const [expanded, setExpanded] = useState(false);
+  const [hoveredHotspotIds, setHoveredHotspotIds] = useState<string[]>([]);
   useEffect(() => {
     const update = () => setExpanded(document.fullscreenElement === section.current);
     document.addEventListener('fullscreenchange', update);
     return () => document.removeEventListener('fullscreenchange', update);
   }, []);
   const hotspots = model.raw.hotspot_catalog?.hotspots || [];
-  const visibleHotspots = filterMapHotspots(hotspots, hotspotFilters);
+  const visibleHotspots = useMemo(() => filterMapHotspots(hotspots, hotspotFilters), [hotspots, hotspotFilters]);
+  const visibleIds = new Set(
+    systems.flatMap((system) => [
+      system.id,
+      ...(detail > 0
+        ? childrenOf(model, system.id)
+            .filter((node) => node.kind === 'domain')
+            .flatMap((domain) => [
+              domain.id,
+              ...(detail > 1
+                ? childrenOf(model, domain.id)
+                    .filter((node) => node.kind === 'area')
+                    .map((node) => node.id)
+                : []),
+            ])
+        : []),
+    ]),
+  );
+  const activeHotspots = visibleHotspots.filter((item) => hoveredHotspotIds.includes(item.id));
+  const relatedIds = new Set(
+    hotspotRelatedElementIds(
+      model,
+      activeHotspots,
+      activeHotspots.flatMap((hotspot) =>
+        hotspot.location.node_ids.flatMap(
+          (id) => [...lineageOf(model, id)].reverse().find((node) => visibleIds.has(node.id))?.id || [],
+        ),
+      ),
+    ),
+  );
   useEffect(() => {
     const target = section.current;
     if (!target) return;
-    const observer = new ResizeObserver(() => setAvailableWidth(target.clientWidth));
+    const update = () => {
+      setAvailableWidth(target.clientWidth);
+      setMeasurementVersion((version) => version + 1);
+    };
+    const observer = new ResizeObserver(update);
     observer.observe(target);
-    return () => observer.disconnect();
+    for (const article of target.querySelectorAll('.overview-system')) observer.observe(article);
+    let active = true;
+    void document.fonts.ready.then(() => {
+      if (active) update();
+    });
+    return () => {
+      active = false;
+      observer.disconnect();
+    };
   }, []);
   const weights = systems.map((system) => {
     const domains = childrenOf(model, system.id).filter((node) => node.kind === 'domain');
@@ -67,6 +119,83 @@ export function Overview({
     );
   });
   const layout = overviewLayout(weights, availableWidth);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Detail and width change the measured DOM layout.
+  useLayoutEffect(() => {
+    const next: Record<string, OverviewPlacement> = {};
+    for (const system of systems) {
+      const article = [...(section.current?.querySelectorAll<HTMLElement>('.overview-system') || [])].find(
+        (element) => element.dataset.nodeId === system.id,
+      );
+      if (!article) continue;
+      const borderRect = article.getBoundingClientRect();
+      const articleRect = {
+        left: borderRect.left + article.clientLeft,
+        top: borderRect.top + article.clientTop,
+        width: article.clientWidth,
+        height: article.clientHeight,
+      };
+      const obstacles = [
+        ...article.querySelectorAll<HTMLElement>('small, h3, p, .overview-stats, .overview-hierarchy'),
+      ].flatMap((element) => {
+        const rects = [];
+        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+        while (walker.nextNode()) {
+          if (!walker.currentNode.textContent?.trim()) continue;
+          const range = document.createRange();
+          range.selectNodeContents(walker.currentNode);
+          for (const rect of range.getClientRects())
+            rects.push({
+              x: rect.left - articleRect.left,
+              y: rect.top - articleRect.top,
+              width: rect.width,
+              height: rect.height,
+            });
+        }
+        return rects;
+      });
+      const markers = visibleHotspots.filter((hotspot) =>
+        hotspot.location.node_ids.some(
+          (id) => id === system.id || lineageOf(model, id).some((node) => node.id === system.id),
+        ),
+      );
+      const anchors = markers.map((hotspot) => {
+        const targets = hotspot.location.node_ids
+          .filter((id) => id === system.id || lineageOf(model, id).some((node) => node.id === system.id))
+          .map((id) => {
+            const lineage = [id, ...lineageOf(model, id).map((node) => node.id)];
+            for (const ancestor of lineage) {
+              const target = [...article.querySelectorAll<HTMLElement>('[data-map-item-id]')].find(
+                (element) => element.dataset.mapItemId === ancestor,
+              );
+              if (target) return { rect: target.getBoundingClientRect(), id: ancestor };
+            }
+            const rect = article.querySelector('h3')?.getBoundingClientRect();
+            return rect ? { rect, id: system.id } : undefined;
+          })
+          .filter((target): target is { rect: DOMRect; id: string } => Boolean(target));
+        const x = targets.length
+          ? targets.reduce(
+              (sum, target) =>
+                sum +
+                (target.id === system.id
+                  ? articleRect.width / 2
+                  : Math.min(articleRect.width - 24, target.rect.right - articleRect.left - 20)),
+              0,
+            ) / targets.length
+          : articleRect.width / 2;
+        const y = targets.length
+          ? targets.reduce(
+              (sum, target) => sum + (target.id === system.id ? 26 : target.rect.top - articleRect.top + 2),
+              0,
+            ) / targets.length
+          : 26;
+        return { id: hotspot.id, x, y, diameter: HOTSPOT_DIAMETERS[hotspot.severity] };
+      });
+      const bounds = { width: articleRect.width, height: articleRect.height, obstacles };
+      next[system.id] = { groups: layoutHotspots(anchors, bounds) };
+    }
+    setMarkerPlacement((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));
+  }, [systems, visibleHotspots, model, detail, availableWidth, measurementVersion]);
   return (
     <section
       ref={section}
@@ -103,6 +232,21 @@ export function Overview({
           </button>
         </div>
       </div>
+      {hotspotFilters.enabled && (
+        <HotspotLegend
+          count={visibleHotspots.length}
+          projections={systems.reduce(
+            (total, system) =>
+              total +
+              visibleHotspots.filter((hotspot) =>
+                hotspot.location.node_ids.some(
+                  (id) => id === system.id || lineageOf(model, id).some((node) => node.id === system.id),
+                ),
+              ).length,
+            0,
+          )}
+        />
+      )}
       <div
         className={`urbanisation-overview layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}
         data-layout={layout.kind}
@@ -113,20 +257,7 @@ export function Overview({
               (anchor) => anchor === system.id || lineageOf(model, anchor).some((node) => node.id === system.id),
             ),
           );
-          const systemMarkers =
-            systemHotspots.length > 1
-              ? [
-                  {
-                    ...systemHotspots[0],
-                    id: `cluster-${system.id}`,
-                    title: `${systemHotspots.length} points chauds sur ${system.name}`,
-                    severity:
-                      (['XL', 'L', 'M', 'S', 'unassessed'] as const).find((level) =>
-                        systemHotspots.some((hotspot) => hotspot.severity === level),
-                      ) || 'unassessed',
-                  },
-                ]
-              : systemHotspots;
+          const groups = markerPlacement[system.id]?.groups || [];
           const domains = childrenOf(model, system.id).filter((node) => node.kind === 'domain');
           const subdomains = domains.flatMap((domain) =>
             childrenOf(model, domain.id).filter((node) => node.kind === 'area'),
@@ -139,55 +270,33 @@ export function Overview({
             ),
           );
           return (
-            <article data-node-id={system.id} key={system.id} className="overview-system">
-              {systemMarkers.map((hotspot, index) => (
-                <div
-                  key={hotspot.id}
-                  className={`hotspot-map-point severity-${hotspot.severity}${hotspot.workshop ? ' is-workshop' : ''}`}
-                  style={{ right: 46 + index * 52, top: 48 }}
-                >
-                  <span className="hotspot-map-halo" aria-hidden="true" />
-                  <button
-                    type="button"
-                    className="hotspot-map-marker"
-                    aria-label={
-                      systemHotspots.length > 1
-                        ? `${hotspot.title}, criticité maximale ${hotspot.severity}. Ouvrir la liste.`
-                        : `${hotspot.workshop ? 'Atelier · ' : ''}${hotspot.title}, criticité ${hotspot.severity}`
-                    }
-                    aria-describedby={`overview-hotspot-tip-${system.id}-${hotspot.id}`}
-                    onClick={() =>
-                      onOpenHotspot(
-                        systemHotspots.length > 1 ? '' : hotspot.id,
-                        systemHotspots.length > 1 ? systemHotspots.map((item) => item.id) : undefined,
-                      )
-                    }
-                  >
-                    <span className="hotspot-map-flames" aria-hidden="true">
-                      {FLAMES.slice(0, { S: 1, M: 2, L: 3, XL: 4, unassessed: 0 }[hotspot.severity]).map((flame) => (
-                        <Flame key={flame} />
-                      ))}
-                    </span>
-                    {systemHotspots.length > 1 && <span className="hotspot-map-count">{systemHotspots.length}</span>}
-                  </button>
-                  <span
-                    id={`overview-hotspot-tip-${system.id}-${hotspot.id}`}
-                    className="hotspot-map-tooltip"
-                    role="tooltip"
-                  >
-                    <strong>{hotspot.title}</strong>
-                    <span>
-                      {systemHotspots.length > 1 ? 'Ouvrir la liste pour choisir un sujet. ' : ''}
-                      Criticité {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}
-                    </span>
-                  </span>
-                </div>
+            <article
+              data-node-id={system.id}
+              key={system.id}
+              className={`overview-system${relatedIds.has(system.id) ? ' hotspot-related' : ''}`}
+            >
+              {groups.map((group) => (
+                <HotspotMapMarker
+                  key={group.id}
+                  id={group.id}
+                  items={systemHotspots.filter((item) => group.ids.includes(item.id))}
+                  x={group.x}
+                  y={group.y}
+                  model={model}
+                  onOpen={onOpenHotspot}
+                  onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
+                />
               ))}
               <small>
                 <MetaTypeLabel node={system} />
               </small>
               <h3>
-                <MapNodeButton node={system} onClick={() => onOpen(system.id)}>
+                <MapNodeButton
+                  node={system}
+                  itemId={system.id}
+                  className={relatedIds.has(system.id) ? 'hotspot-related-item' : undefined}
+                  onClick={() => onOpen(system.id)}
+                >
                   {system.name}
                 </MapNodeButton>
               </h3>
@@ -225,7 +334,8 @@ export function Overview({
                           >
                             <MapNodeButton
                               node={domain}
-                              className="overview-domain-link"
+                              itemId={domain.id}
+                              className={`overview-domain-link${relatedIds.has(domain.id) ? ' hotspot-related-item' : ''}`}
                               onClick={() => onOpen(domain.id)}
                             >
                               {domain.name}
@@ -241,7 +351,8 @@ export function Overview({
                                   <li key={area.id}>
                                     <MapNodeButton
                                       node={area}
-                                      className="overview-subdomain-link"
+                                      itemId={area.id}
+                                      className={`overview-subdomain-link${relatedIds.has(area.id) ? ' hotspot-related-item' : ''}`}
                                       onClick={() => onOpen(area.id)}
                                     >
                                       {area.name}
