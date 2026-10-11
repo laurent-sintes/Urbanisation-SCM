@@ -136,7 +136,7 @@ try {
   assert.equal(await page.locator('.universe-toolbar .map-detail-picker').count(), 1);
   assert.equal(await page.locator('.universe-toolbar .map-hotspot-picker').count(), 1);
   await page.locator('.universe-toolbar .map-hotspot-picker .detail-trigger').click();
-  const hotspotFilters = page.getByRole('group', { name: 'Filtres des points chauds' });
+  const hotspotFilters = page.getByRole('dialog', { name: 'Filtres des points chauds' });
   await hotspotFilters.getByLabel('Afficher les points chauds').check();
   const severityChoices = hotspotFilters.getByRole('combobox', { name: 'Criticité' });
   await severityChoices.selectOption('exact:L');
@@ -164,7 +164,7 @@ try {
   await page.getByRole('tab', { name: 'Fiche' }).click();
   await page.getByRole('tab', { name: 'Carte' }).click();
   await page.locator('.map-toolbar .map-hotspot-picker .detail-trigger').click();
-  const scopedFilters = page.getByRole('group', { name: 'Filtres des points chauds' });
+  const scopedFilters = page.getByRole('dialog', { name: 'Filtres des points chauds' });
   assert.equal(
     await scopedFilters
       .getByRole('group', { name: 'Complexité politique' })
