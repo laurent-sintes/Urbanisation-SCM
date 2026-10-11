@@ -8,8 +8,9 @@ import unittest
 from pathlib import Path
 
 from scripts import structured_io
-from scripts.atlas_workshop import ROOT, apply_request, current_stage, publication, stage_path
+from scripts.atlas_workshop import ROOT, apply_request, current_stage, encoded, publication, stage_path
 from scripts.atlas_workshop_import import apply, preview
+from scripts.release_catalog import PublicationReader
 
 
 class WorkshopImportTests(unittest.TestCase):
@@ -17,11 +18,17 @@ class WorkshopImportTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory()
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        source_data = ROOT / 'app/dist/data'
-        index = json.loads((source_data / 'index.json').read_bytes())
-        version = index['current_version']
-        for relative in [f'app/dist/data/{version}/model.json', 'app/dist/data/index.json',
-                         'modeles/backlog/model.yaml', 'modeles/backlog/glossary.yaml',
+        descriptor, model = PublicationReader(ROOT / 'modeles/release').load()
+        version = descriptor['version']
+        payload = encoded(model)
+        data = self.root / 'app/dist/data'
+        (data / version).mkdir(parents=True)
+        (data / version / 'model.json').write_bytes(payload)
+        (data / 'index.json').write_text(json.dumps({
+            'current_version': version,
+            'versions': [{'version': version, 'model_sha256': hashlib.sha256(payload).hexdigest()}],
+        }), encoding='utf-8')
+        for relative in ['modeles/backlog/model.yaml', 'modeles/backlog/glossary.yaml',
                          'modeles/schemas/urbanism.schema.json', 'modeles/provenance/source-records.json']:
             destination = self.root / relative
             destination.parent.mkdir(parents=True, exist_ok=True)
