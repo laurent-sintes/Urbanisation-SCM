@@ -90,19 +90,23 @@ publication_delivery:
   state: applied
   source_refs:
   - U967
+  - U971
   summary: 'Deuxième lot : quatre sujets reconnus avec leurs périmètres et réserves.'
   required_catalog:
   - collection: hotspots
     id: HS-016
-    content_sha256: d3d35ec4d9d3a4548942e8ad80e0cba8952f70bba821f49692101a43dd96dcf8
+    content_sha256: 6cb2a325c6709ef35070b401bc748b1108bf1859c9e3a691aa2c197920dbb26b
   - collection: hotspots
     id: HS-019
-    content_sha256: 626dd1a3af66658363d3eba9c31ba77972fa1f1b0a16fe48938184066b3fb184
+    content_sha256: 4481ac1f772ddf2ec7d0972ac19d1bbfc8371c638ce34414798cd882b25a4550
   - collection: hotspots
     id: HS-020
-    content_sha256: 3744b8a9a0061c36dcb981e42dbedfc9253eb3e1375d80c60d2dc332608b89f7
+    content_sha256: b0fc3738206ff76dd6e37d705216d1ba907eb48b3aa36b6394b657b8af951651
   - collection: hotspots
     id: HS-021
-    content_sha256: bdda0b0d03bf9dbd623c48e813bf6c53277abc2c34612cf0a4b7a946c8740e6e
+    content_sha256: c30e144fb7e426fee47504c5119c2c31f3aee077278d3a65950c48e124889ce0
+  visibility_update: 'U971 : ajout technique visible=true aux sujets existants. Contenu métier, ancrages, statuts, notes et
+    options inchangés. Les propositions de l’audit restent hors du catalogue ; les preuves antérieures sont conservées dans
+    Git.'
 capture_method: Verbatim et proposition complète enregistrés avant application. record_decision/record_intents ne prennent
   pas en charge les hotspots ; portée, statut et empreintes conservés séparément.

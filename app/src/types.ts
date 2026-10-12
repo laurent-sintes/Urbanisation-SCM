@@ -230,6 +230,8 @@ export interface HotspotResolution {
   assessment_source: string;
 }
 export interface Hotspot {
+  /** Technical display preference; historical publications default to true. */
+  visible?: boolean;
   gap_analysis?: {
     id: string;
     title: string;

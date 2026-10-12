@@ -26,9 +26,9 @@ except ImportError:
 ROOT = Path(__file__).resolve().parents[1]
 STAGING = Path('.runtime/atlas-atelier/staging.json')
 LEVELS = ('S', 'M', 'L', 'XL')
-EDITABLE = {'title', 'problem', 'kind', 'location', 'examples', 'market_view', 'resolution_options',
+EDITABLE = {'visible', 'title', 'problem', 'kind', 'location', 'examples', 'market_view', 'resolution_options',
             'complexity', 'arbitration_level', 'arbitration_note', 'status', 'resolution', 'selected_option_id', 'resolution_note'}
-TABLE_EDITABLE = {'title', 'kind', 'location', 'complexity', 'arbitration_level', 'status',
+TABLE_EDITABLE = {'visible', 'title', 'kind', 'location', 'complexity', 'arbitration_level', 'status',
                   'selected_option_id', 'resolution_note', 'resolution'}
 
 
@@ -119,6 +119,8 @@ def effective_hotspots(model, stage):
 
 
 def checked_hotspot(value, nodes):
+    if 'visible' in value and not isinstance(value['visible'], bool):
+        raise ValueError('La visibilité doit être un booléen.')
     if not isinstance(value.get('title'), str) or not value['title'].strip():
         raise ValueError('Un titre est requis.')
     if not isinstance(value.get('problem'), str) or not value['problem'].strip():
@@ -229,6 +231,7 @@ def apply_request(root, request):
             if fields.get('status', 'discovered') not in ('discovered', 'shared'):
                 raise ValueError('L’atelier ne peut pas valider ni résoudre un point chaud.')
             value = {
+                'visible': fields.get('visible', True),
                 'id': identifier, 'title': fields.get('title'), 'kind': fields.get('kind', 'scope'),
                 'location': fields.get('location', {}), 'problem': fields.get('problem'),
                 'examples': fields.get('examples', []), 'resolution_options': fields.get('resolution_options', []),

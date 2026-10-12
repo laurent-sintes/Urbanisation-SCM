@@ -4,6 +4,8 @@ import type { Hotspot, PublishedModel } from './types.ts';
 
 const LEVELS = ['S', 'M', 'L', 'XL'];
 
+export const isHotspotVisible = (hotspot: Hotspot): boolean => hotspot.visible !== false;
+
 /** Actual locations include their descendants; a projected ancestor does not include siblings. */
 export function hotspotRelatedElementIds(
   model: PublishedModel,
@@ -132,6 +134,7 @@ export function filterMapHotspots(hotspots: Hotspot[], filters: HotspotMapFilter
   const selectedRank = LEVELS.indexOf(filters.severity);
   return hotspots.filter(
     (hotspot) =>
+      isHotspotVisible(hotspot) &&
       (hotspot.framing_impact?.category === 'structuring'
         ? filters.showModelHotspots !== false
         : hotspot.framing_impact?.category === 'usage'

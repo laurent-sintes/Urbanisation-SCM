@@ -42,6 +42,7 @@ FIELD_MEANINGS = {
     'display_index': 'Ordre, parenté de lecture et codes figés pour cette publication.',
     'hotspot_catalog.hotspots': 'Sujets autonomes à instruire et arbitrer, hors de la hiérarchie métier.',
     'hotspot_catalog.hotspots.status': 'Qualification du sujet ; validated ne confirme ni dysfonctionnement ni solution.',
+    'hotspot_catalog.hotspots.visible': 'Visibilité technique, vraie par défaut. Faux masque halos et filtres ; le sujet reste accessible en fin de liste et de sélecteur, grisé après un séparateur. Aucun changement de qualification ou de résolution.',
     'hotspot_catalog.hotspots.framing_impact': 'Impact sur le modèle métier, le Core System ou la praticité d’usage ; indépendant de la criticité.',
     'hotspot_catalog.hotspots.gap_analysis': 'Comparaisons facultatives inter-SI ou intra-SI, avec observations sourcées et réserves.',
     'hotspot_catalog.hotspots.resolution': 'Avancement du cadrage, solutions crédibles, blocage et prochaine étape ; distinct de la réalisation.',

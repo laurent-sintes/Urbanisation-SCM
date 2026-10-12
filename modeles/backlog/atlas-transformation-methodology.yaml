@@ -1,5 +1,5 @@
 id: flow-methodology-2026-10-12.2
-version: 2026-10-12.2
+version: 2026-10-12.3
 as_of: '2026-10-12'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
@@ -68,6 +68,7 @@ source_refs:
 - U889
 - U903
 - U915
+- U971
 lessons:
 - id: business-first
   label: Le métier d’abord
@@ -314,6 +315,11 @@ lessons:
     - U482
   model_links: []
 sources:
+- id: U971
+  title: Audit du contenu et visibilité technique des Hotspots
+  kind: user_contribution
+  excerpt: Je souhaite un champ "technique" Visible=true par défaut.
+  scope: Visibilité et accès discret aux sujets masqués ; propositions de contenu et de localisation non adoptées.
 - id: U970
   title: Application de l’audit UX Hotspots
   kind: user_contribution
@@ -1908,6 +1914,11 @@ chapters:
       d’un même SI, ou les deux. Chaque observation garde ses sources, son périmètre et ses réserves.
     detail: Une différence peut rester légitime. Une décision argumentée de convergence totale, partielle ou de non-convergence
       peut suffire ; sa compatibilité avec le Core System reste à établir sur preuve.
+  - title: Visibilité technique des points chauds
+    text: Le champ visible vaut true par défaut. Un sujet non visible ne produit aucun halo et n’entre pas dans les compteurs
+      ou résultats des filtres. Il reste accessible en fin de liste et de sélecteur, grisé après un trait de séparation.
+    detail: Cette préférence ne supprime pas le sujet et ne change ni sa qualification, ni sa criticité, ni son avancement.
+      Une publication historique sans ce champ conserve tous ses sujets visibles.
   - title: Lire les dimensions d’un point chaud
     text: Le sujet est découvert, partagé ou validé. Son impact concerne le modèle métier/Core System, la praticité d’usage,
       ou reste à qualifier. Le niveau de preuve et la justification expliquent ce classement. La criticité croise les difficultés

@@ -11,6 +11,16 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class HotspotCatalogTests(unittest.TestCase):
+    def test_visibility_is_technical_and_strictly_boolean(self):
+        model = copy.deepcopy(self.model)
+        item = model['hotspot_catalog']['hotspots'][0]
+        item['visible'] = False
+        self.assertEqual(validate_catalog(model), [])
+        self.assertEqual(item['status'], self.model['hotspot_catalog']['hotspots'][0]['status'])
+        item['visible'] = 'false'
+        self.assertTrue(any('visible' in error for error in validate_catalog(model)))
+        item.pop('visible')
+        self.assertEqual(validate_catalog(model), [])
     @classmethod
     def setUpClass(cls):
         cls.model = read(ROOT / 'modeles/backlog/model.yaml')

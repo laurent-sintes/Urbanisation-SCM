@@ -6,6 +6,7 @@ import {
   filterMapHotspots,
   hotspotRelatedElementIds,
   hotspotsInScope,
+  isHotspotVisible,
   readHotspotFilters,
   severityForComplexities,
   updateHotspotMapFilters,
@@ -14,6 +15,26 @@ import { mapRouteForNode } from './src/mapNavigation.ts';
 import { adaptPublication } from './src/model.ts';
 
 const node = (id, kind) => ({ id, kind, fields: { name: id } });
+test('technical visibility defaults to true and excludes only explicitly hidden hotspots from map filters', () => {
+  const base = {
+    severity: 'L',
+    kind: 'scope',
+    status: 'validated',
+    complexity: { political: 'M', implementation: 'L' },
+  };
+  const items = [
+    { ...base, id: 'historic' },
+    { ...base, id: 'visible', visible: true },
+    { ...base, id: 'hidden', visible: false },
+  ];
+  assert.equal(isHotspotVisible(items[0]), true);
+  assert.equal(isHotspotVisible(items[2]), false);
+  assert.deepEqual(
+    filterMapHotspots(items, { ...defaultHotspotMapFilters, enabled: true }).map((h) => h.id),
+    ['historic', 'visible'],
+  );
+  assert.equal(items[2].status, 'validated');
+});
 test('shared filters round-trip safely without accepting malformed or unknown criteria', () => {
   const filters = updateHotspotMapFilters(defaultHotspotMapFilters, {
     enabled: true,

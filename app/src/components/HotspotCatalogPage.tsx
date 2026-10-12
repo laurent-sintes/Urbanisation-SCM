@@ -1,8 +1,8 @@
 import { ChevronDown, Flame, Info } from 'lucide-react';
 import type { MouseEvent } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { filterMapHotspots, type HotspotMapFilters, severityForComplexities } from '../hotspotMap';
+import { filterMapHotspots, type HotspotMapFilters, isHotspotVisible, severityForComplexities } from '../hotspotMap';
 import { emptyResolution, RESOLUTION_STAGES, resolutionErrors, resolutionFor } from '../hotspotResolution';
 import type { RouteState } from '../navigation';
 import type { Hotspot, HotspotResolution, PublishedModel } from '../types';
@@ -41,6 +41,7 @@ type SortKey =
   | 'arbitration_level';
 const STATUS_RANK = ['discovered', 'shared', 'validated', 'resolved'];
 type HotspotDraft = {
+  visible: boolean;
   title: string;
   kind: Hotspot['kind'];
   node_ids: string[];
@@ -56,6 +57,7 @@ type HotspotDraft = {
   arbitration_level: string;
 };
 const draftFor = (item: Hotspot): HotspotDraft => ({
+  visible: isHotspotVisible(item),
   title: item.title,
   kind: item.kind,
   node_ids: [...item.location.node_ids],
@@ -213,6 +215,7 @@ export function HotspotCatalogPage({
     if (!draft) return item;
     return {
       ...item,
+      visible: draft.visible,
       title: draft.title,
       kind: draft.kind,
       location: { ...item.location, node_ids: draft.node_ids },
@@ -239,11 +242,15 @@ export function HotspotCatalogPage({
     };
   };
   const scoped = groupHotspots.map(effective);
-  const filtered = filterMapHotspots(scoped, { ...filters, enabled: true })
+  const visibleScope = scoped.filter(isHotspotVisible);
+  const hiddenScope = scoped.filter((item) => !isHotspotVisible(item));
+  const filtered = [...filterMapHotspots(scoped, { ...filters, enabled: true }), ...hiddenScope]
     .filter((item) =>
       `${item.id} ${item.title} ${item.problem}`.toLocaleLowerCase('fr').includes(query.toLocaleLowerCase('fr')),
     )
     .sort((a, b) => {
+      const visibilityOrder = Number(isHotspotVisible(b)) - Number(isHotspotVisible(a));
+      if (visibilityOrder) return visibilityOrder;
       const value = (item: Hotspot) => {
         switch (sort.key) {
           case 'kind':
@@ -283,6 +290,7 @@ export function HotspotCatalogPage({
     if (!item) return [];
     const base = draftBases[id] || draftFor(item);
     const fields: WorkshopTableChange['fields'] = {};
+    if (draft.visible !== base.visible) fields.visible = draft.visible;
     if (draft.title.trim() !== base.title) fields.title = draft.title.trim();
     if (draft.kind !== base.kind) fields.kind = draft.kind;
     if (!sameDraftValue(draft.node_ids, base.node_ids))
@@ -465,15 +473,16 @@ export function HotspotCatalogPage({
           <div>
             <h2>Points chauds</h2>
             <p>
-              {filtered.length} sur {groupHotspots.length} · Publication {model.version}
+              {filtered.filter(isHotspotVisible).length} sur {visibleScope.length} visibles
+              {hiddenScope.length ? ` · ${hiddenScope.length} non visibles` : ''} · Publication {model.version}
               {workshopCount ? ` · ${workshopCount} en atelier` : ''}
             </p>
             <p className="hotspot-story-caption">
               Dans ce périmètre :{' '}
-              {groupHotspots.filter((item) => item.framing_impact?.category === 'structuring').length} modèle ·{' '}
-              {groupHotspots.filter((item) => item.framing_impact?.category === 'usage').length} usage ·{' '}
+              {visibleScope.filter((item) => item.framing_impact?.category === 'structuring').length} modèle ·{' '}
+              {visibleScope.filter((item) => item.framing_impact?.category === 'usage').length} usage ·{' '}
               {
-                groupHotspots.filter((item) => !item.framing_impact || item.framing_impact.category === 'to_assess')
+                visibleScope.filter((item) => !item.framing_impact || item.framing_impact.category === 'to_assess')
                   .length
               }{' '}
               à qualifier. La validation du sujet ne vaut pas résolution du cadrage.
@@ -590,7 +599,7 @@ export function HotspotCatalogPage({
               </tr>
             </thead>
             <tbody>
-              {filtered.map((item) => {
+              {filtered.map((item, index) => {
                 const draft = drafts[item.id] || draftFor(item);
                 const severity = severityForComplexities(draft.political, draft.implementation) || item.severity;
                 const canEdit = Boolean(workshopStage);
@@ -602,95 +611,106 @@ export function HotspotCatalogPage({
                   </>
                 );
                 return (
-                  <tr key={item.id} className={changes.some((change) => change.id === item.id) ? 'is-draft' : ''}>
-                    <td className="hotspot-table-subject" data-label="Sujet et impact">
-                      <div className="hotspot-list-heading">
-                        <button
-                          type="button"
-                          className="hotspot-title-button"
-                          onClick={() => onChange({ hotspot: item.id })}
-                        >
-                          {item.title}
-                        </button>
+                  <Fragment key={item.id}>
+                    {!isHotspotVisible(item) && (index === 0 || isHotspotVisible(filtered[index - 1])) && (
+                      <tr className="hotspot-hidden-separator">
+                        <td colSpan={4}>Non visibles — hors des filtres et de la carte</td>
+                      </tr>
+                    )}
+                    <tr
+                      data-hotspot-id={item.id}
+                      className={`${changes.some((change) => change.id === item.id) ? 'is-draft' : ''} ${!isHotspotVisible(item) ? 'hotspot-is-hidden' : ''}`}
+                    >
+                      <td className="hotspot-table-subject" data-label="Sujet et impact">
+                        <div className="hotspot-list-heading">
+                          <button
+                            type="button"
+                            className="hotspot-title-button"
+                            onClick={() => onChange({ hotspot: item.id })}
+                          >
+                            {item.title}
+                          </button>
+                          {!isHotspotVisible(item) && <span className="hotspot-visibility-label">Non visible</span>}
+                          <HotspotTooltipButton
+                            type="button"
+                            className="hotspot-summary-trigger"
+                            aria-label={`Résumé de ${item.title}`}
+                            tip={
+                              <>
+                                <strong>{item.title}</strong>
+                                <span>
+                                  <ModelText text={item.problem} />
+                                </span>
+                              </>
+                            }
+                          >
+                            <Info size={16} aria-hidden="true" />
+                          </HotspotTooltipButton>
+                        </div>
+                        <p className="hotspot-list-summary">
+                          <ModelText text={item.problem} />
+                        </p>
+                        <HotspotImpact item={item} />
+                        {item.workshop && <small>Atelier</small>}
+                      </td>
+                      <td className="hotspot-table-scope" data-label="Périmètre">
+                        <small>{draft.kind === 'integration' ? 'Intégration' : 'Sujet de périmètre'}</small>
+                        {canEdit ? (
+                          <button
+                            type="button"
+                            className="hotspot-cell-edit"
+                            aria-label={`Modifier le périmètre de ${item.title}`}
+                            onClick={(event) => openDialog(event, item, 'location')}
+                          >
+                            {draft.node_ids.map((id) => model.nodeById.get(id)?.name || id).join(' · ')}
+                          </button>
+                        ) : (
+                          draft.node_ids.map((id) => model.nodeById.get(id)?.name || id).join(' · ')
+                        )}
+                      </td>
+                      <td data-label="Criticité">
                         <HotspotTooltipButton
                           type="button"
-                          className="hotspot-summary-trigger"
-                          aria-label={`Résumé de ${item.title}`}
+                          className={`hotspot-table-criticality severity-${severity}`}
+                          aria-label={`Criticité et complexités de ${item.title}`}
+                          onClick={canEdit ? (event) => openDialog(event, item, 'complexity') : undefined}
                           tip={
                             <>
-                              <strong>{item.title}</strong>
+                              <strong>Criticité : {SIZE(severity)}</strong>
                               <span>
-                                <ModelText text={item.problem} />
+                                Politique : {SIZE(draft.political)} · Implémentation : {SIZE(draft.implementation)}
+                              </span>
+                              <span>
+                                <ModelText text={draft.rationale || 'Justification non documentée.'} />
                               </span>
                             </>
                           }
                         >
-                          <Info size={16} aria-hidden="true" />
+                          <Flame size={15} aria-hidden="true" /> {SIZE(severity)}
                         </HotspotTooltipButton>
-                      </div>
-                      <p className="hotspot-list-summary">
-                        <ModelText text={item.problem} />
-                      </p>
-                      <HotspotImpact item={item} />
-                      {item.workshop && <small>Atelier</small>}
-                    </td>
-                    <td className="hotspot-table-scope" data-label="Périmètre">
-                      <small>{draft.kind === 'integration' ? 'Intégration' : 'Sujet de périmètre'}</small>
-                      {canEdit ? (
-                        <button
-                          type="button"
-                          className="hotspot-cell-edit"
-                          aria-label={`Modifier le périmètre de ${item.title}`}
-                          onClick={(event) => openDialog(event, item, 'location')}
+                        <small
+                          title={`Politique : ${SIZE(draft.political)} · Implémentation : ${SIZE(draft.implementation)}`}
                         >
-                          {draft.node_ids.map((id) => model.nodeById.get(id)?.name || id).join(' · ')}
-                        </button>
-                      ) : (
-                        draft.node_ids.map((id) => model.nodeById.get(id)?.name || id).join(' · ')
-                      )}
-                    </td>
-                    <td data-label="Criticité">
-                      <HotspotTooltipButton
-                        type="button"
-                        className={`hotspot-table-criticality severity-${severity}`}
-                        aria-label={`Criticité et complexités de ${item.title}`}
-                        onClick={canEdit ? (event) => openDialog(event, item, 'complexity') : undefined}
-                        tip={
-                          <>
-                            <strong>Criticité : {SIZE(severity)}</strong>
-                            <span>
-                              Politique : {SIZE(draft.political)} · Implémentation : {SIZE(draft.implementation)}
-                            </span>
-                            <span>
-                              <ModelText text={draft.rationale || 'Justification non documentée.'} />
-                            </span>
-                          </>
-                        }
-                      >
-                        <Flame size={15} aria-hidden="true" /> {SIZE(severity)}
-                      </HotspotTooltipButton>
-                      <small
-                        title={`Politique : ${SIZE(draft.political)} · Implémentation : ${SIZE(draft.implementation)}`}
-                      >
-                        P {draft.political === 'unassessed' ? '—' : draft.political} · I{' '}
-                        {draft.implementation === 'unassessed' ? '—' : draft.implementation}
-                      </small>
-                    </td>
-                    <td data-label="Qualification et avancement">
-                      {canEdit ? (
-                        <button
-                          type="button"
-                          className="hotspot-qualification"
-                          aria-label={`Qualification et avancement de ${item.title}`}
-                          onClick={(event) => openDialog(event, item, 'resolution')}
-                        >
-                          {progress}
-                        </button>
-                      ) : (
-                        <div className="hotspot-qualification">{progress}</div>
-                      )}
-                    </td>
-                  </tr>
+                          P {draft.political === 'unassessed' ? '—' : draft.political} · I{' '}
+                          {draft.implementation === 'unassessed' ? '—' : draft.implementation}
+                        </small>
+                      </td>
+                      <td data-label="Qualification et avancement">
+                        {canEdit ? (
+                          <button
+                            type="button"
+                            className="hotspot-qualification"
+                            aria-label={`Qualification et avancement de ${item.title}`}
+                            onClick={(event) => openDialog(event, item, 'resolution')}
+                          >
+                            {progress}
+                          </button>
+                        ) : (
+                          <div className="hotspot-qualification">{progress}</div>
+                        )}
+                      </td>
+                    </tr>
+                  </Fragment>
                 );
               })}
               {filtered.length === 0 && (
@@ -748,6 +768,18 @@ export function HotspotCatalogPage({
                 </header>
                 {dialog.mode === 'location' && (
                   <div className="hotspot-dialog-body">
+                    <label className="hotspot-visible-control">
+                      <input
+                        type="checkbox"
+                        checked={draft.visible}
+                        onChange={(event) => editFields(item, { visible: event.target.checked })}
+                      />
+                      Visible dans la carte et les filtres
+                    </label>
+                    <p>
+                      Un sujet non visible reste accessible en fin de liste, grisé. Cette préférence ne change ni sa
+                      qualification ni sa résolution.
+                    </p>
                     <label>
                       Intitulé du sujet
                       <input value={draft.title} onChange={(event) => edit(item, 'title', event.target.value)} />

@@ -1873,6 +1873,9 @@ terms:
   - La grille matrix-v1, les définitions des axes et les repères d’estimation sont figés dans hotspot_catalog.criticality_policy
     avec chaque publication. Les repères restent à éprouver selon l’option ; aucune urgence ni note existante n’est déduite
     automatiquement.
+  - Le booléen technique visible vaut true par défaut. false masque les halos et exclut le sujet des compteurs et résultats
+    des filtres ; il reste accessible en fin de liste et de sélecteur, grisé après un séparateur. Il ne modifie ni statut,
+    criticité, impact sur le cadrage ou résolution. Une publication historique sans ce champ garde tous ses sujets visibles.
   - L’impact modèle/usage est une qualification argumentée, non un calcul. Présenter ensemble sa cible, sa justification et
     son niveau de preuve ; une qualification proposée n’est pas un impact confirmé.
   - Les justifications political_rationale et implementation_rationale peuvent compléter la justification commune de complexité.

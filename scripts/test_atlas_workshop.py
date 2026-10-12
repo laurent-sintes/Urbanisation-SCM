@@ -114,7 +114,7 @@ class WorkshopTests(unittest.TestCase):
                          'political': 'XL', 'implementation': 'L', 'rationale': 'Décision transverse.',
                          'political_rationale': 'Compromis entre pôles.',
                          'implementation_rationale': 'Interfaces interdépendantes.'}}},
-                     {'id': 'AT-HS-002', 'fields': {'status': 'shared'}},
+                     {'id': 'AT-HS-002', 'fields': {'status': 'shared', 'visible': False}},
                  ]}
         result = apply_table_changes(self.root, batch)
         self.assertEqual(result['revision'], 4)
@@ -123,6 +123,8 @@ class WorkshopTests(unittest.TestCase):
         self.assertEqual(items['AT-HS-001']['complexity']['political_rationale'], 'Compromis entre pôles.')
         self.assertEqual(items['AT-HS-001']['complexity']['implementation_rationale'], 'Interfaces interdépendantes.')
         self.assertEqual(items['AT-HS-002']['status'], 'shared')
+        self.assertFalse(items['AT-HS-002']['visible'])
+        self.assertTrue(items['AT-HS-001']['visible'])
         self.assertEqual(publication(self.root)[0], self.model)
         stale = dict(batch, expected_revision=2)
         with self.assertRaisesRegex(ValueError, 'relire sa révision'):
@@ -134,6 +136,13 @@ class WorkshopTests(unittest.TestCase):
             apply_table_changes(self.root, invalid)
         self.assertEqual(load_stage(self.root)['revision'], 4)
         self.assertEqual(effective_hotspots(model, load_stage(self.root))['AT-HS-001']['title'], 'Premier précisé')
+        invalid_visibility = {'session_id': stage['session_id'], 'expected_revision': 4,
+                              'changes': [{'id': 'AT-HS-001', 'fields': {'visible': False}},
+                                          {'id': 'AT-HS-002', 'fields': {'visible': 'false'}}]}
+        with self.assertRaisesRegex(ValueError, 'booléen'):
+            apply_table_changes(self.root, invalid_visibility)
+        self.assertEqual(load_stage(self.root)['revision'], 4)
+        self.assertTrue(effective_hotspots(model, load_stage(self.root))['AT-HS-001']['visible'])
 
     def test_table_coordinates_type_location_and_resolution(self):
         model, model_sha = publication(self.root)

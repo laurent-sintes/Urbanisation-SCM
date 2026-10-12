@@ -33,6 +33,8 @@ def validate_catalog(model):
     ids = set()
     for hotspot in catalog['hotspots']:
         identifier = hotspot['id']
+        if 'visible' in hotspot and not isinstance(hotspot['visible'], bool):
+            errors.append(f'{identifier}: visible must be a boolean')
         if identifier in ids:
             errors.append(f'hotspot_catalog: duplicate identity {identifier}')
         ids.add(identifier)

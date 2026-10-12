@@ -4,7 +4,8 @@ This is NOT a complete JSON Schema implementation. It implements only the
 keywords in SUPPORTED, with JSON Schema 2020-12 semantics where supported.
 References are local JSON pointers starting with #/$defs/; $schema and $id
 are root metadata only. Patterns use Python re, not full ECMA-262 syntax.
-No external resolution, formats, coercion or defaults.
+No external resolution, formats, coercion or default insertion.
+The default keyword is a documentation annotation, never a mutation of input.
 An unproductive reference cycle is rejected instead of recursing indefinitely.
 Public functions return lists of errors; an empty list means success.
 """
@@ -14,7 +15,7 @@ import re
 
 
 SUPPORTED = frozenset({
-    "$schema", "$id", "title", "description", "$defs", "$ref", "type",
+    "$schema", "$id", "title", "description", "default", "$defs", "$ref", "type",
     "properties", "required", "additionalProperties", "items", "enum",
     "const", "minItems", "uniqueItems", "minLength", "pattern", "anyOf",
 })

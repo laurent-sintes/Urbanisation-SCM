@@ -754,6 +754,11 @@
                   "note"
                 ],
                 "additionalProperties": false
+              },
+              "visible": {
+                "type": "boolean",
+                "default": true,
+                "description": "Préférence technique de présentation. false masque les halos et résultats des filtres ; accès conservé en fin de liste et de sélecteur, grisé après un séparateur. Aucun changement métier. Champ absent : true, notamment dans les publications historiques."
               }
             },
             "required": [

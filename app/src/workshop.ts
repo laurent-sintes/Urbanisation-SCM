@@ -25,6 +25,7 @@ export interface WorkshopTableChange {
   fields: Partial<
     Pick<
       Hotspot,
+      | 'visible'
       | 'title'
       | 'kind'
       | 'location'

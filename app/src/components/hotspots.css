@@ -600,6 +600,42 @@ button.hotspot-qualification:hover {
   font: inherit;
   font-weight: 400;
 }
+.hotspot-is-hidden {
+  color: #596364;
+  background: #f2f3f3;
+  filter: grayscale(1);
+}
+.hotspot-is-hidden .hotspot-title-button,
+.hotspot-is-hidden strong {
+  color: #596364;
+}
+.hotspot-hidden-separator {
+  border-top: 2px solid #9ba8a8;
+  margin-top: 12px;
+  padding-top: 12px;
+  color: #596364;
+  font-size: 12px;
+  font-weight: 600;
+}
+.hotspot-table .hotspot-hidden-separator td {
+  padding: 12px;
+  border-top: 2px solid #9ba8a8;
+}
+.hotspot-visibility-label {
+  color: #596364;
+  font-size: 11px;
+}
+.hotspot-dialog-body .hotspot-visible-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+@media (max-width: 900px) {
+  .hotspot-table .hotspot-hidden-separator td {
+    grid-column: 1 / -1;
+  }
+}
 .hotspot-selected-nodes {
   display: flex;
   flex-wrap: wrap;

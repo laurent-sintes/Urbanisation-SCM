@@ -36,6 +36,14 @@ class JsonContractTests(unittest.TestCase):
         self.assertEqual(validate(None, {"type": ["string", "null"]}), [])
         self.assertTrue(validate(2, {"type": "boolean"}))
 
+    def test_default_is_documented_without_inserting_values(self):
+        schema = {'type': 'object', 'properties': {'visible': {'type': 'boolean', 'default': True}}}
+        document = {}
+        self.assertEqual(check_schema(schema), [])
+        self.assertEqual(validate(document, schema), [])
+        self.assertEqual(document, {})
+        self.assertTrue(validate({'visible': 'false'}, schema))
+
     def test_references_and_sibling_constraints(self):
         schema = {"$defs": {"id": {"type": "string", "pattern": "^D[0-9]+$"}},
                   "$ref": "#/$defs/id", "minLength": 3}

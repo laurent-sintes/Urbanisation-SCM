@@ -104,6 +104,7 @@ class StaticExportTests(unittest.TestCase):
         original = json.loads(model_path.read_bytes())
         catalog = read(project / 'modeles/backlog/model.yaml')['hotspot_catalog']
         hotspot = next(h for h in catalog['hotspots'] if h['id'] == 'HS-008')
+        hotspot['visible'] = False
         original.update(hotspot_catalog={**catalog, 'hotspots': [hotspot]},
                         information_catalog={'items': [], 'links': []},
                         arbitrary_published_extension={'unicode': 'Écart été → décision', 'nested': {'kept': True}})
@@ -136,6 +137,9 @@ class StaticExportTests(unittest.TestCase):
         self.assertEqual(meta['hotspot_criticality_policy'], catalog['criticality_policy'])
         self.assertEqual(downloaded_yaml['hotspot_catalog']['sources'], catalog['sources'])
         self.assertEqual(downloaded_yaml['hotspot_catalog']['hotspots'][0]['complexity'], hotspot['complexity'])
+        self.assertFalse(downloaded_yaml['hotspot_catalog']['hotspots'][0]['visible'])
+        self.assertIn('hotspot_catalog.hotspots.visible', meta['fields'])
+        self.assertEqual(meta['snapshot_schema']['properties']['hotspot_catalog']['properties']['hotspots']['items']['properties']['visible']['default'], True)
         self.assertEqual(meta['snapshot_schema'], schema)
         types = {item['path']: item for item in meta['catalog_types']}
         self.assertEqual(types['hotspot_catalog.hotspots']['definition_source'], 'method:MOD044')

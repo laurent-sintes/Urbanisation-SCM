@@ -87,16 +87,20 @@ publication_delivery:
   state: applied
   source_refs:
   - U963
+  - U971
   summary: Premier lot de validation intégré ; autres candidats conservés.
   required_catalog:
   - collection: hotspots
     id: HS-017
-    content_sha256: 935a6c83a381677254ca1b9fc891eedb418151a585e0cc617892834d11c1884a
+    content_sha256: a42a91ce88e038e2b4032347176d31f00643c317eac4f38596416c0e6b5b7e1f
   - collection: hotspots
     id: HS-030
-    content_sha256: ac65ad7f7c736624803e96a212ad6c98e482991d6844383cbe0d6ed8ac03e251
+    content_sha256: ee24e23adf9e042af94132e20eda4d3ad1e6d242ffdb59e2b1e6164f531b3fb4
   - collection: hotspots
     id: HS-018
-    content_sha256: 41963cfc70786ea2c964b6892a619df28a510a166fed149ca27d80bdbec533d5
+    content_sha256: 3de9a7f9a70d294b462088f25088e08b40de0fddf100c3839f73d98e88104342
+  visibility_update: 'U971 : ajout technique visible=true aux sujets existants. Contenu métier, ancrages, statuts, notes et
+    options inchangés. Les propositions de l’audit restent hors du catalogue ; les preuves antérieures sont conservées dans
+    Git.'
 capture_method: Verbatim et proposition complète enregistrés avant application ; capture champ par champ sur l’état final.
   record_decision/record_intents ne prennent pas en charge les hotspots ; l’annexe conserve la portée de cet accord.

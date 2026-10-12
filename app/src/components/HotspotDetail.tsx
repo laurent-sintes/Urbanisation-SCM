@@ -147,6 +147,12 @@ export function HotspotDetail({
           Une solution crédible résout le cadrage. Le choix définitif, la mise en œuvre et le résultat sur le terrain
           restent distincts. Selon le sujet, une décision argumentée peut suffire.
         </p>
+        {hotspot.visible === false && (
+          <p className="hotspot-visibility-label">
+            Non visible dans la carte et les filtres. Le sujet reste conservé ; sa qualification et son avancement sont
+            inchangés.
+          </p>
+        )}
         {resolution.assessed_on && (
           <p className="hotspot-story-caption">
             Évaluation du {resolution.assessed_on}

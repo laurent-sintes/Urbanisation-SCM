@@ -1,0 +1,3229 @@
+schema_version: 1
+id: AUDIT-HOTSPOTS-U971
+date: '2026-10-12'
+author: Codex
+source_refs:
+- U971
+state: proposals_for_review
+baseline:
+  publication: 2026-10-12.3
+  model_path: modeles/backlog/model.yaml
+  model_sha256: faa6a5d5228c26c11517cd27e45ebf7eff0ba259032c18575cd9887e8519eefc
+scope: 27 hotspots ; champs manquants, rédaction, options, marché, regroupements et localisations. Seule la visibilité technique
+  demandée est appliquée au catalogue.
+summary:
+  hotspots: 27
+  without_options: 15
+  missing_axis_explanations: 26
+  missing_next_step: 9
+  relocation_proposals: 10
+  new_option_proposals: 32
+  empty_fields_policy: Un champ conditionnel non applicable ou une inconnue justifiée ne se remplit pas artificiellement.
+visibility:
+  default: true
+  applied: true
+  hidden_ids: []
+  effect: Exclusion des halos, compteurs et résultats de filtres. Accès discret en fin de liste et de sélecteur, grisé après
+    un trait. Aucune résolution ou suppression implicite.
+glossary_review:
+  business: 'Glossaire métier contrôlé : Fulfilment, Wholesale, affectation, promesse et carnet ; aucune définition métier
+    changée. Les textes de substitution devront garder les liens de glossaire existants lors de leur application.'
+  methodology: MOD044 complété sur la préférence technique visible ; Gap Analysis et Decision Provenance conservent leurs
+    frontières.
+market_sources:
+- publisher: Microsoft
+  title: Data migration for Dynamics 365 implementation projects
+  url: https://learn.microsoft.com/en-us/dynamics365/guidance/resources/migrate-data
+  relevance: Distingue référentiels, configuration et transactions ouvertes lors d’une migration.
+  id: A971-REF-001
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Data migration for Dynamics 365 implementation projects
+- publisher: SAP S/4HANA
+  title: What Data Can Be Migrated?
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/d5699934e7004d048c4801b552f3b013/886e1b9bf25245d093a98e0c635818e5.html
+  relevance: Documente les objets migrables et les contraintes sur les documents ouverts.
+  id: A971-REF-002
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365 SCM
+  title: Warehouse management only mode with external ERP systems
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-external-erp
+  relevance: Distingue le traitement logistique et les commandes tenues par un système externe.
+  id: A971-REF-003
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Warehouse management only mode with external ERP systems
+- publisher: SAP S/4HANA
+  title: External Warehouse Management Services
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/2f36056ae9a044bba55bcbad204b7bc5/6cb085242fce4c4abd480ef3650e669a.html
+  relevance: Décrit des échanges de livraisons et confirmations avec un prestataire logistique tiers.
+  id: A971-REF-004
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365 SCM
+  title: Exchange data between systems
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-exchange-data
+  relevance: Sépare données de référence, ordres, progression et variations de stock.
+  id: A971-REF-005
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Exchange data between systems
+- publisher: Microsoft Dynamics 365 SCM
+  title: Inventory Visibility Add-in overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility
+  relevance: Agrège des états issus notamment des points de vente et entrepôts tiers.
+  id: A971-REF-006
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Inventory Visibility Add-in overview
+- publisher: SAP S/4HANA
+  title: Process Flow for Sales Orders
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/2d95c3180a974e0aad07556ee4d28e94/1a61b6531de6b64ce10000000a174cb4.html
+  relevance: Décrit des commandes dans un environnement d’entrepôts distribués.
+  id: A971-REF-007
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: SAP S/4HANA
+  title: Inventory Synchronization
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/2d95c3180a974e0aad07556ee4d28e94/0261b6531de6b64ce10000000a174cb4.html
+  relevance: Documente le contrôle de cohérence entre stocks de systèmes intégrés.
+  id: A971-REF-008
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365 SCM
+  title: Delivery dates and available-to-promise calculations
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+  relevance: Distingue délai commercial, disponibilité et capacité.
+  id: A971-REF-009
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Delivery dates and available-to-promise calculations
+- publisher: SAP S/4HANA
+  title: Outlining Availability Check in Detail
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-availability-check-in-detail
+  relevance: Décrit le calcul de quantités confirmables selon disponibilité.
+  id: A971-REF-010
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Outlining Availability Check in Detail
+- publisher: Microsoft Dynamics 365 SCM
+  title: Product identifiers
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-identifiers
+  relevance: Distingue produit, variante et identifiants associés.
+  id: A971-REF-011
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Product identifiers
+- publisher: SAP S/4HANA
+  title: EANs for Units of Measure
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f7fddfe4caca43dd967ac4c9ce6a70e4/9215c453f57eb44ce10000000a174cb4.html
+  relevance: Relie l’EAN aux unités et conditionnements du produit.
+  id: A971-REF-012
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365
+  title: Export entities to your own database
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/analytics/export-entities-to-your-own-database
+  relevance: Distingue export complet et suivi des changements.
+  id: A971-REF-013
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Export entities to your own database
+- publisher: SAP Master Data Integration
+  title: Synchronization of Master Data
+  url: https://help.sap.com/docs/master-data-integration/sap-master-data-integration-prod/synchronization-of-master-data
+  relevance: Documente chargement initial et synchronisation des deltas.
+  id: A971-REF-014
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: SAP S/4HANA Fashion
+  title: Generic Article in Purchasing
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9905622a5c1f49ba84e9076fc83a9c2c/e69ce957fc00be12e10000000a4450e5.html
+  relevance: Illustre commande sur article générique et variantes.
+  id: A971-REF-015
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365 SCM
+  title: Intercompany orders and return orders
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/intercompany-orders-and-return-orders
+  relevance: Relie commandes d’achat et de vente entre sociétés du groupe.
+  id: A971-REF-016
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Intercompany orders and return orders
+- publisher: SAP S/4HANA
+  title: Executing the Advanced Intercompany Sales and Stock Transfer Process
+  url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/executing-the-advanced-intercompany-sales-and-stock-transfer-process_c5f8e409-c8e3-4e0a-b736-6d1d93d0f2bc
+  relevance: Distingue facture client et facture intercompany.
+  id: A971-REF-017
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Executing the Advanced Intercompany Sales and Stock Transfer Process
+- publisher: Microsoft Dynamics 365 SCM
+  title: Keep supply for confirmed demand
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/keep-supply-for-confirmed-demand
+  relevance: Documente la conservation de certains liens de couverture de demande confirmée.
+  id: A971-REF-018
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Keep supply for confirmed demand
+- publisher: SAP Fashion Management
+  title: Steps in Order Allocation Run
+  url: https://help.sap.com/docs/SAP_ERP_SPV/f48e74ad3b3740bc8c9eaade394a3c1e/3d1df055aa2a6d55e10000000a4450e5.html
+  relevance: Documente sélection, tri et affectation de ressources physiques et futures.
+  id: A971-REF-019
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365 SCM
+  title: Reserve inventory quantities
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/reserve-inventory-quantities
+  relevance: Règles de réservation ; périmètre plus étroit que la réévaluation globale du carnet.
+  id: A971-REF-020
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Reserve inventory quantities
+- publisher: SAP S/4HANA
+  title: Backorder Processing — Supply Assignment
+  url: https://help.sap.com/docs/PRODUCT_ID/f132c385e0234fe68ae9ff35b2da178c/6b8eb017a1d1431abde00056a249f72b.html
+  relevance: 'Texte primaire indexé consulté le 12 octobre 2026, version affichée 2025 FPS01 (février 2026) ; sélection, tri,
+    affectation et réaffectation, réceptions futures. Frontière : traitement produit plus large et distinct de l’instance
+    Boardriders.'
+  id: A971-REF-021
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Oracle Fusion Cloud SCM
+  title: Start Backlog Planning
+  url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25c/faspc/start-backlog-planning.html
+  relevance: 'Édition 25C, consultée le 12 octobre 2026 ; réexamen périodique du carnet, données actualisées et règle de priorité.
+    Frontière : planification plus large que la seule affectation avant promesse ferme.'
+  id: A971-REF-022
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Start Backlog Planning
+- publisher: Microsoft Dynamics 365 Commerce
+  title: Distributed order management (DOM)
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom
+  relevance: Profils distincts selon l’activité ou le segment ; règles et contraintes de sélection, sans preuve d’autonomie
+    par marque.
+  id: A971-REF-023
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Distributed order management (DOM)
+- publisher: SAP S/4HANA Cloud Public Edition Retail
+  title: Executing Omnichannel Order Fulfillment for Retail (5FZ)
+  url: https://learning.sap.com/courses/exploring-sap-s-4hana-cloud-public-edition-retail/executing-omnichannel-order-fulfillment-for-retail-5fz-_db648c00-65bf-4489-b638-23d3a38a27d7
+  relevance: Parcours en magasin et variantes configurables ; appui partiel, sans preuve de sélection déléguée par marque.
+  id: A971-REF-024
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Executing Omnichannel Order Fulfillment for Retail (5FZ)
+- publisher: Microsoft Dynamics 365
+  title: Import sales order data
+  url: https://learn.microsoft.com/en-us/dynamics365/guidance/resources/import-sales-orders
+  relevance: Import de commandes ; appui partiel à la captation, pas couverture complète du Négoce.
+  id: A971-REF-025
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Import sales order data
+- publisher: SAP S/4HANA Cloud
+  title: Import Sales Orders
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/a376cd9ea00d476b96f18dea1247e6a5/fbf21ca2d6c1482c8473b7d76c0ed39d.html?locale=en-US&q=Import+Sales+Orders+App
+  relevance: Création et contrôle d’imports ; ne prouve pas la couverture des usages Négoce locaux.
+  id: A971-REF-026
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365 SCM
+  title: Inventory Visibility inventory allocation
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+  relevance: Protection de quantités par groupes et canaux.
+  id: A971-REF-027
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Inventory Visibility inventory allocation
+- publisher: SAP S/4HANA Cloud
+  title: Supply Protection Object
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/32da8359c8ee4e8b8e8c5e15cacba5aa/e37431b6ec2e4ab5b3ff64abfba93d43.html
+  relevance: Quantités protégées par groupes et périodes, avec priorités.
+  id: A971-REF-028
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365
+  title: Import general journals
+  url: https://learn.microsoft.com/en-us/dynamics365/guidance/resources/import-general-journals
+  relevance: Entités d’import des écritures ; distinctes de l’interprétation des faits opérationnels.
+  id: A971-REF-029
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Import general journals
+- publisher: SAP S/4HANA
+  title: Journal Entry
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/3ab6e6fc510f4840a5508e126ef01e22/92fed0579212c525e10000000a4450e5.html
+  relevance: Écritures et contrepassation ; une interface comptable ne décide pas qui traduit les faits FLOW.
+  id: A971-REF-030
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365
+  title: Help organizations manage case to resolution processes
+  url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/case-to-resolution-introduction
+  relevance: Enregistrer, orienter et suivre les dossiers ; recouvrement partiel avec la conduite des parcours Supply.
+  id: A971-REF-031
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Help organizations manage case to resolution processes
+- publisher: SAP S/4HANA Cloud
+  title: Flexible Workflow for Purchase Orders
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/adbae5bcd5994f159bf2847a11397b61/fbc1a9b4600745c1939276a0d9ce62ec.html
+  relevance: Conditions, étapes et approbateurs ; processus d’approbation plus étroit que la continuité générale des parcours.
+  id: A971-REF-032
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Singh, Cobbe et Norval — IEEE Access
+  title: 'Decision Provenance: Harnessing data flow for accountable systems'
+  url: https://arxiv.org/abs/1804.05741
+  relevance: 'Résumé primaire consulté : chaîne reliant entrées, décisions et effets ; DOI de l’article publié relevé.'
+  id: A971-REF-033
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: 'Decision Provenance: Harnessing data flow for accountable systems'
+- publisher: W3C
+  title: 'PROV-DM: The PROV Data Model'
+  url: https://www.w3.org/TR/prov-dm/
+  relevance: Modèle général des entités, activités, agents et dérivations ; adaptation aux décisions FLOW à définir.
+  id: A971-REF-034
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: 'PROV-DM: The PROV Data Model'
+- publisher: Microsoft Dynamics 365 Finance & Operations
+  title: Configure database logging
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/sysadmin/configure-manage-database-log
+  relevance: Trace ciblée de modifications de données ; pas la chaîne d’une décision métier ni la couverture générale des
+    traitements batch.
+  id: A971-REF-035
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Configure database logging
+- publisher: SAP S/4HANA
+  title: Displaying Change Documents
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/1a087e1593b24e4ebb9d5abf942b8758/666a9753858ced23e10000000a174cb4.html?locale=en-US
+  relevance: Anciennes et nouvelles valeurs ; appui partiel à la trace, sans provenance complète d’un choix.
+  id: A971-REF-036
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: SAP S/4HANA
+  title: Backorder Processing
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-backorder-processing-for-advanced-atp-in-sap-s-4hana
+  relevance: Réévaluation des confirmations ; ne garantit pas performance, stabilité ou algorithme adapté au cas FLOW.
+  id: A971-REF-037
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Backorder Processing
+- publisher: Microsoft Dynamics 365 Finance & Operations
+  title: Business document management overview
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/analytics/er-business-document-management
+  relevance: Formats et modèles des documents sortants ; ne couvre pas tout le cycle des corrections et accusés.
+  id: A971-REF-038
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Business document management overview
+- publisher: SAP S/4HANA Cloud
+  title: Output Management for Sales Documents and Billing Process Documents
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/a376cd9ea00d476b96f18dea1247e6a5/d9cc17d1aa404aee9bf2d10599c9a8d1.html?locale=en-us
+  relevance: Émissions et suivi des sorties documentaires ; appui partiel à la remise et à ses statuts.
+  id: A971-REF-039
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365 Finance & Operations
+  title: Business events overview
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/business-events/home-page
+  relevance: Contrats d’événements métier pour les consommateurs ; ne fixe pas le mandat métier des systèmes.
+  id: A971-REF-040
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Business events overview
+- publisher: SAP S/4HANA
+  title: Purchase Order Events
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/91af7f8d3acd47da90d33aaacfcd0d59/eeab037f56e24beeb5d729de18055a65.html?locale=en-US&state=PRODUCTION&version=2023.latest
+  relevance: Événements de création et modification de commandes ; couverture partielle des contrats à qualifier.
+  id: A971-REF-041
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365 SCM
+  title: Inventory forecasts
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
+  relevance: Import de lignes de prévision de demande et de ressources ; ne fixe pas la sémantique de tous les plans FLOW.
+  id: A971-REF-042
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Inventory forecasts
+- publisher: SAP S/4HANA Cloud
+  title: Planned Independent Requirement Events
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/d35113ee62644d3abee1aaec148291d9/c0d28173576f495daf208e3e21653780.html
+  relevance: Événements de création et changement des besoins prévisionnels ; objet plus étroit que tous les plans amont.
+  id: A971-REF-043
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365 SCM
+  title: Vendor collaboration with external vendors
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/vendor-collaboration-work-external-vendors
+  relevance: Versions, réponses et modifications des commandes d’achat ; parcours fournisseur, pas preuve de l’interface CBS.
+  id: A971-REF-044
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Vendor collaboration with external vendors
+- publisher: SAP S/4HANA Cloud
+  title: Manage Supplier Confirmations
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/0e602d466b99490187fcbb30d1dc897c/9900dd93aec14047b483dc1a52561bf5.html
+  relevance: Confirmations de quantité et date ; ne remplace pas la réception physique faisant autorité.
+  id: A971-REF-045
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- publisher: Microsoft Dynamics 365 Finance & Operations
+  title: View and update entity data with Excel
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/mobile-apps/use-excel-add-in
+  relevance: Lecture, édition et publication des données depuis Excel ; appui au parcours de manipulation, pas preuve d’un
+    irritant local.
+  id: A971-REF-046
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: View and update entity data with Excel
+- publisher: SAP S/4HANA
+  title: Manage Prices - Sales
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/7b24a64d9d0941bda1afa753263d9e39/b2a4b6024aa54e30af5a523ff62f43bc.html
+  relevance: Export et import de conditions tarifaires par tableur ; appui spécifique au cas candidat, sans preuve des usages
+    FLOW.
+  id: A971-REF-047
+  accessed_on: '2026-10-12'
+  edition: Non précisée dans la fiche ; page évolutive
+  native_id: null
+  access_state: no_readable_content
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+  consulted_section: Page sans corps lisible
+- id: A971-REF-048
+  publisher: Microsoft Dynamics 365 Intelligent Order Management
+  title: Intelligent Fulfillment Optimization architecture
+  url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/ifo-arch
+  consulted_section: Fulfillment sources ; Business constraints
+  relevance: Sources de fulfilment et contraintes ; ne définit pas le mandat contractuel d’un logisticien.
+  accessed_on: '2026-10-12'
+  edition: Page évolutive, édition non fixée
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+- id: A971-REF-049
+  publisher: SAP S/4HANA
+  title: Outlining Alternative-based Confirmation
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-alternative-based-confirmation
+  consulted_section: Alternative-based Confirmation, Configure Substitution Strategy
+  relevance: Substitution de sites pour confirmer quantité et date ; plus étroit qu’un plan logistique complet.
+  accessed_on: '2026-10-12'
+  edition: Page évolutive, édition non fixée
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+- id: A971-REF-050
+  publisher: SAP S/4HANA
+  title: Setting Up Flexible Workflows in Purchasing
+  url: https://learning.sap.com/courses/purchasing-in-sap-s-4hana/setting-up-flexible-workflows-in-purchasing
+  consulted_section: Flexible Workflows for Purchase Orders
+  relevance: Appui partiel aux approbations ; ne garantit pas la migration d’un parcours engagé.
+  accessed_on: '2026-10-12'
+  edition: Page évolutive, édition non fixée
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+- id: A971-REF-051
+  publisher: SAP S/4HANA Cloud Public Edition Retail
+  title: Creating Products for Retail (3I1)
+  url: https://learning.sap.com/courses/exploring-sap-s-4hana-cloud-public-edition-retail/creating-products-for-retail-3i1-
+  consulted_section: Products for Retail ; article categories, units and GTIN
+  relevance: Produit, variante et unité ; ne fixe pas l’autorité Beaumanoir de création.
+  accessed_on: '2026-10-12'
+  edition: Page évolutive, édition non fixée
+  native_id: null
+  access_state: readable_document
+  reuse: Reformulation courte et lien ; aucune copie intégrale.
+grouping_proposals:
+- id: A971-G01
+  recommendation: merge_proposal
+  members:
+  - HS-002
+  - HS-011
+  related:
+  - HS-016
+  proposed_title: Construction du plan de fulfilment et partage des décisions avec les logisticiens
+  rationale: 'Même arbitrage : quelle maîtrise garder dans FLOW selon le mandat du logisticien ? Le multi-prestataires est
+    une variante, pas une seconde question de convergence.'
+  boundaries: Distinguer choix du stock/site pour la promesse, choix des services/exécutants, libération des ordres et opérations
+    internes. Le magasin/entrepôt de HS-016 reste un sujet lié jusqu’à comparaison détaillée.
+  options:
+  - FLOW construit et libère les plans de tous les prestataires.
+  - Le logisticien propose, FLOW choisit et engage lorsque les garanties sont qualifiées.
+  - 'Mandat mixte : proposition pour les partenaires capables de la garantir, construction FLOW pour les partenaires exécutants.'
+  location:
+  - D06
+  - domain-logistics-execution
+  identity_policy: Conserver HS-002 comme identité proposée ; ne pas réutiliser ni supprimer HS-011. Le masquer seulement
+    après accord et conserver provenance, variantes, options et références dans la fiche commune.
+  source_ids:
+  - A971-REF-003
+  - A971-REF-048
+  - A971-REF-049
+- id: A971-G02
+  recommendation: related_keep_separate
+  members:
+  - HS-003
+  - HS-012
+  rationale: 'Même chaîne de stock, mais deux décisions : obtenir une fraîcheur suffisante et rapprocher les faits sans doubles
+    comptes. Ne fusionner que si le même contrat et les mêmes critères de décision couvrent les deux.'
+- id: A971-G03
+  recommendation: related_keep_separate
+  members:
+  - HS-008
+  - HS-025
+  rationale: Règle commerciale Wholesale et qualité/performance d’un calcul sont différentes. Un calcul performant ne résout
+    pas l’arbitrage de convergence Wholesale.
+- id: A971-G04
+  recommendation: shared_design_workstream
+  members:
+  - HS-017
+  - HS-030
+  rationale: Ressaisies, changements d’écran et tableurs peuvent partager un chantier design. Garder les cas et leurs localisations
+    métier ; ils ne prouvent pas une même cause.
+- id: A971-G05
+  recommendation: related_keep_separate
+  members:
+  - HS-020
+  - HS-024
+  - HS-029
+  rationale: Fonctions à reconduire, continuité des dossiers et contrat de suivi fournisseur sont trois décisions. CBS dans
+    deux titres ne suffit pas à les fusionner.
+- id: A971-G06
+  recommendation: possible_split
+  members:
+  - HS-024
+  rationale: Séparer CBS et SAV si leurs propriétaires, états et trajectoires de continuité diffèrent ; ne pas créer deux
+    identifiants sans cet inventaire.
+- id: A971-G07
+  recommendation: portfolio_topic
+  members:
+  - HS-031
+  related:
+  - HS-001
+  - HS-020
+  - HS-024
+  rationale: Tenir une grille de qualification commune des services ; les arbitrages concrets restent dans les fiches spécialisées,
+    pas dans une fusion géante.
+hotspots:
+- id: HS-001
+  title: Migration ECC MM / PP / SD chez Boardriders
+  state: proposal_not_adopted
+  source_refs:
+  - U924
+  - U947
+  - U948
+  - U950
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution.next_step
+  - 'arbitration_level: décision non prise'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Comment remplacer MM, PP et SD sans interrompre les commandes ouvertes ni les échanges avec
+    Finance ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Les marques et Finance doivent s’accorder sur le calendrier et les responsabilités conservées
+      pendant la transition.
+    complexity.implementation_rationale: Les référentiels, commandes ouvertes et interfaces financières doivent rester cohérents
+      pendant chaque bascule.
+    resolution.next_step: Inventorier les objets ouverts et leurs dépendances, puis simuler une bascule partielle et une bascule
+      groupée.
+    arbitration_level: flow_steering
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Les marques et Finance doivent s’accorder sur le calendrier
+      et les responsabilités conservées pendant la transition.'
+    resolution.summary: Comment remplacer MM, PP et SD sans interrompre les commandes ouvertes ni les échanges avec Finance
+      ? Aucun résultat de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids:
+    - hs-001-phased
+    - hs-001-cutover
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - system-business-operations
+    proposed_node_ids:
+    - system-business-operations
+    current_names:
+    - Business Operations
+    proposed_names:
+    - Business Operations
+    rationale: Périmètre de migration réellement transverse ; un seul ancrage de capacité serait trompeur.
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-001
+    - A971-REF-002
+    common_points: Les deux éditeurs documentent la reprise de référentiels et de transactions ouvertes.
+    differences_and_limits: Ces guides de migration ne prouvent ni la faisabilité ni le coût de la trajectoire Boardriders.
+    flow_position: Définir la trajectoire autour des responsabilités MM / PP / SD et de leurs consommateurs, dont FI / CO,
+      sans supposer une migration de Finance.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-002
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-002
+  title: BMN–C-LOG — partage des décisions de fulfillment
+  state: proposal_not_adopted
+  source_refs:
+  - U922
+  - U923
+  - U925
+  - U926
+  - U947
+  - U948
+  - U950
+  - U957
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - 'arbitration_level: décision non prise'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Qui construit, choisit et engage le plan de fulfilment lorsque le logisticien peut proposer
+    un plan, ou seulement exécuter des ordres ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Le partage de décision entre marques et logisticiens touche la promesse client et leur
+      latitude de choix.
+    complexity.implementation_rationale: Il faut distinguer proposition, réservation des ressources, acceptation et exécution
+      ; leurs garanties ne sont pas documentées.
+    resolution.next_step: 'Tester le même besoin avec C-LOG et un prestataire exécutant : choix du site, validité de la proposition,
+      engagement et libération des ordres.'
+    arbitration_level: flow_steering
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Le partage de décision entre marques et logisticiens
+      touche la promesse client et leur latitude de choix.'
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids:
+    - hs-002-joint-plan
+    - hs-002-brand-plan
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - supply-chain-orchestration
+    - domain-logistics-execution
+    proposed_node_ids:
+    - D06
+    - domain-logistics-execution
+    current_names:
+    - Supply Chain Orchestration
+    - Logistics
+    proposed_names:
+    - Fulfilment Orchestration
+    - Logistics
+    rationale: Fulfilment Orchestration désigne le mandat discuté plus précisément que tout Supply Chain Orchestration ; Logistics
+      reste l’autre extrémité.
+    action: propose_relocation
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-003
+    - A971-REF-004
+    - A971-REF-048
+    - A971-REF-049
+    common_points: Les éditeurs séparent ordres, exécution logistique et échanges avec un entrepôt externe.
+    differences_and_limits: Les sources ne démontrent pas que le fonctionnement cible est disponible chez C-LOG ni qu’un plan
+      proposé réserve les ressources.
+    flow_position: Formaliser la proposition de plan, son choix, sa validité et l’accusé d’exécution comme des engagements
+      distincts entre BMN et C-LOG.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: documented_partial_support
+    gaps: []
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-011
+  title: Pilotage des autres prestataires logistiques
+  state: proposal_not_adopted
+  source_refs:
+  - U925
+  - U947
+  - U948
+  - U950
+  - U957
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution.next_step
+  - 'arbitration_level: décision non prise'
+  content_audit: Recouvrement fort avec HS-002 ; séparer seulement si l’intégration multi-prestataires a un arbitrage indépendant.
+  editorial_question_proposal: Comment FLOW garde-t-il la maîtrise du plan lorsqu’un prestataire sait exécuter des ordres
+    mais ne propose pas de plan complet ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: La cible doit préserver la latitude multi-prestataires Boardriders ; un contrat conçu
+      pour C-LOG seul pourrait la réduire.
+    complexity.implementation_rationale: Les partenaires peuvent offrir des garanties, états et commandes différents ; les
+      adaptations doivent être inventoriées.
+    resolution.next_step: Comparer les mandats de C-LOG et des autres prestataires dans la fiche de partage des décisions
+      logistiques.
+    arbitration_level: flow_steering
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : La cible doit préserver la latitude multi-prestataires
+      Boardriders ; un contrat conçu pour C-LOG seul pourrait la réduire.'
+    resolution.summary: Comment FLOW garde-t-il la maîtrise du plan lorsqu’un prestataire sait exécuter des ordres mais ne
+      propose pas de plan complet ? Aucun résultat de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids:
+    - hs-011-common-contract
+    - hs-011-provider-contracts
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - supply-chain-orchestration
+    proposed_node_ids:
+    - D06
+    - domain-logistics-execution
+    current_names:
+    - Supply Chain Orchestration
+    proposed_names:
+    - Fulfilment Orchestration
+    - Logistics
+    rationale: Même frontière de décision que HS-002, avec une variante de mandat ; proposer une fusion, sans supprimer cet
+      identifiant.
+    action: propose_relocation
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-005
+    - A971-REF-004
+    - A971-REF-048
+    - A971-REF-049
+    common_points: Les deux éditeurs prévoient des échanges avec des systèmes logistiques externes.
+    differences_and_limits: Ces exemples de produits ne démontrent pas une interface commune à tous les partenaires Boardriders.
+    flow_position: Garder la décision de délégation dans Supply Chain Orchestration et qualifier les contrats des prestataires
+      séparément du cas C-LOG.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: documented_partial_support
+    gaps: []
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-003
+  title: Fraîcheur et justesse de la vue de stock centralisée
+  state: proposal_not_adopted
+  source_refs:
+  - U927
+  - U928
+  - U947
+  - U948
+  - U950
+  - A76
+  - U957
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution.next_step
+  - 'arbitration_level: décision non prise'
+  - 'gap_analysis.hs-003-stock-paths.observations_by_context[0].business_rules: inconnues à qualifier'
+  - 'gap_analysis.hs-003-stock-paths.observations_by_context[1].business_rules: inconnues à qualifier'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Quelle fraîcheur et quelle fiabilité du stock faut-il garantir pour prendre une promesse utilisable
+    ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Les responsables des magasins et entrepôts doivent accepter les données, délais et corrections
+      attendus par FLOW.
+    complexity.implementation_rationale: Les mises à jour peuvent arriver tard, en double ou après correction ; le stock utilisable
+      dépend de leur sens et de leur date.
+    resolution.next_step: Définir le délai acceptable pour vente, mise de côté et préparation, puis mesurer les chaînes de
+      transmission réelles.
+    arbitration_level: flow_steering
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Les responsables des magasins et entrepôts doivent
+      accepter les données, délais et corrections attendus par FLOW.'
+    resolution.summary: Quelle fraîcheur et quelle fiabilité du stock faut-il garantir pour prendre une promesse utilisable
+      ? Aucun résultat de qualification des options n’est encore établi.
+  proposed_gap_fields:
+  - id: hs-003-stock-paths
+    proposed_fields:
+      observations_by_context[0].business_need: Quelle fraîcheur et quelle fiabilité du stock faut-il garantir pour prendre
+        une promesse utilisable ?
+      observations_by_context[1].business_need: Quelle fraîcheur et quelle fiabilité du stock faut-il garantir pour prendre
+        une promesse utilisable ?
+      open_questions:
+      - Définir le délai acceptable pour vente, mise de côté et préparation, puis mesurer les chaînes de transmission réelles.
+      - Quelle source datée confirme ce fonctionnement dans le périmètre exact comparé ?
+    rule: Conserver observations, preuves et limites ; ne pas compléter une règle de gestion sans source.
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids:
+    - hs-003-direct-sources
+    - hs-003-existing-aggregators
+    - hs-003-qualified-hybrid
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - D01
+    proposed_node_ids:
+    - D01.f
+    - D01.c
+    current_names:
+    - Inventory Management
+    proposed_names:
+    - Inventory Tracking
+    - Inventory Visibility
+    rationale: Inventory Tracking capte les faits ; Inventory Visibility restitue la vue. Deux ancrages de périmètre, sans
+      inventer une nouvelle intégration.
+    action: propose_relocation
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-006
+    - A971-REF-007
+    common_points: Des systèmes du marché agrègent des états de stock externes et échangent les progrès d’exécution des entrepôts.
+    differences_and_limits: La documentation ne mesure ni les latences des logiciels Beaumanoir ni leur aptitude à publier
+      chaque événement requis.
+    flow_position: Qualifier par source les mouvements qui changent la quantité ou la disponibilité, leur âge, leur correction
+      et leur usage dans la promesse.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-007
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-012
+  title: Stock Hub — rapprochement des états et faits de stock
+  state: proposal_not_adopted
+  source_refs:
+  - U929
+  - U930
+  - U947
+  - U948
+  - U950
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution.next_step
+  - 'arbitration_level: décision non prise'
+  - 'gap_analysis.hs-012-stock-reconciliation.observations_by_context[0].business_rules: inconnues à qualifier'
+  - 'gap_analysis.hs-012-stock-reconciliation.observations_by_context[1].business_rules: inconnues à qualifier'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Comment combiner événements et photographies de stock sans compter deux fois une quantité ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Les contributeurs doivent reconnaître quelle source fait autorité lorsqu’un événement
+      et une photographie se contredisent.
+    complexity.implementation_rationale: L’ordre d’arrivée, les corrections et le rapprochement temporel doivent produire
+      un registre reproductible.
+    resolution.next_step: Rejouer une réception suivie d’une photographie et d’une correction tardive ; fixer les règles de
+      rapprochement.
+    arbitration_level: flow_internal
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Les contributeurs doivent reconnaître quelle source
+      fait autorité lorsqu’un événement et une photographie se contredisent.'
+    resolution.summary: Comment combiner événements et photographies de stock sans compter deux fois une quantité ? Aucun
+      résultat de qualification des options n’est encore établi.
+  proposed_gap_fields:
+  - id: hs-012-stock-reconciliation
+    proposed_fields:
+      observations_by_context[0].business_need: Comment combiner événements et photographies de stock sans compter deux fois
+        une quantité ?
+      observations_by_context[1].business_need: Comment combiner événements et photographies de stock sans compter deux fois
+        une quantité ?
+      open_questions:
+      - Rejouer une réception suivie d’une photographie et d’une correction tardive ; fixer les règles de rapprochement.
+      - Quelle source datée confirme ce fonctionnement dans le périmètre exact comparé ?
+    rule: Conserver observations, preuves et limites ; ne pas compléter une règle de gestion sans source.
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids:
+    - hs-012-hub
+    - hs-012-domain
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - D01
+    proposed_node_ids:
+    - D01.f
+    - D01.g
+    current_names:
+    - Inventory Management
+    proposed_names:
+    - Inventory Tracking
+    - Inventory Ledger
+    rationale: La captation et le registre sont les responsabilités directement touchées, plus précises qu’Inventory Management.
+    action: propose_relocation
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-006
+    - A971-REF-008
+    common_points: Microsoft documente l’agrégation multi-source ; SAP documente des contrôles de cohérence entre inventaires
+      de systèmes intégrés.
+    differences_and_limits: Ces sources ne prescrivent pas un Data Hub FLOW et ne prouvent pas les règles de réconciliation
+      propres à C-LOG.
+    flow_position: Étudier un pattern Data Hub pour rapprocher les états C-LOG et les faits de stock, sans transférer automatiquement
+      la décision métier au hub.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-008
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-013
+  title: Répondre au client lorsque la promesse reste incertaine
+  state: proposal_not_adopted
+  source_refs:
+  - U931
+  - U932
+  - U933
+  - U947
+  - U948
+  - U950
+  - A76
+  - U957
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution.next_step
+  - 'arbitration_level: décision non prise'
+  - 'gap_analysis.hs-013-promise-knowledge.observations_by_context[0].business_rules: inconnues à qualifier'
+  - 'gap_analysis.hs-013-promise-knowledge.observations_by_context[1].business_rules: inconnues à qualifier'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Que peut-on annoncer au client avant qu’un plan permette de tenir une quantité et une date
+    ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Les marques doivent choisir ce qui peut être annoncé comme indicatif, conditionnel ou
+      engagé.
+    complexity.implementation_rationale: Les réponses successives doivent distinguer estimation, confirmation et changement
+      d’engagement.
+    resolution.next_step: 'Écrire trois réponses attendues : disponible immédiatement, réception future incertaine et plan
+      confirmé ; vérifier ce qui engage FLOW.'
+    arbitration_level: business_direction
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Les marques doivent choisir ce qui peut être annoncé
+      comme indicatif, conditionnel ou engagé.'
+    resolution.summary: Que peut-on annoncer au client avant qu’un plan permette de tenir une quantité et une date ? Aucun
+      résultat de qualification des options n’est encore établi.
+  proposed_gap_fields:
+  - id: hs-013-promise-knowledge
+    proposed_fields:
+      observations_by_context[0].business_need: Que peut-on annoncer au client avant qu’un plan permette de tenir une quantité
+        et une date ?
+      observations_by_context[1].business_need: Que peut-on annoncer au client avant qu’un plan permette de tenir une quantité
+        et une date ?
+      open_questions:
+      - 'Écrire trois réponses attendues : disponible immédiatement, réception future incertaine et plan confirmé ; vérifier
+        ce qui engage FLOW.'
+      - Quelle source datée confirme ce fonctionnement dans le périmètre exact comparé ?
+    rule: Conserver observations, preuves et limites ; ne pas compléter une règle de gestion sans source.
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids:
+    - hs-013-progressive
+    - hs-013-firm-only
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - ba-order-promising
+    proposed_node_ids:
+    - ba-order-promising
+    current_names:
+    - Order Promising
+    proposed_names:
+    - Order Promising
+    rationale: L’ancrage Order Promising correspond à la question ; ne pas déplacer ce sujet vers le calcul Wholesale.
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-009
+    - A971-REF-010
+    common_points: Microsoft distingue date issue du délai commercial, disponibilité et capacité ; SAP documente la confirmation
+      selon disponibilité.
+    differences_and_limits: Aucun éditeur cité ne fixe la politique de communication progressive adaptée à tous les clients
+      FLOW.
+    flow_position: Distinguer estimation, engagement ferme et prochaine mise à jour, avec une règle explicite pour chaque
+      type de situation.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: documented_partial_support
+    gaps: []
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-006
+  title: Construction et disponibilité des EAN / GTIN
+  state: proposal_not_adopted
+  source_refs:
+  - U934
+  - U935
+  - U936
+  - U947
+  - U948
+  - U950
+  - A76
+  - U957
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution.next_step
+  - 'arbitration_level: décision non prise'
+  - 'gap_analysis.hs-006-product-origin.observations_by_context[0].business_rules: inconnues à qualifier'
+  - 'gap_analysis.hs-006-product-origin.observations_by_context[1].business_rules: inconnues à qualifier'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Qui fournit le GTIN requis pour acheter un produit, et que fait Supply lorsqu’il manque ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Le propriétaire de l’identifiant doit être désigné sans attribuer sa création à Supply
+      par défaut.
+    complexity.implementation_rationale: Les rattachements entre produit, variante et unité commerciale doivent être contrôlés
+      avant utilisation.
+    resolution.next_step: Tester un produit de marque propre, un produit fournisseur et un conditionnement ; identifier pour
+      chacun l’autorité du code.
+    arbitration_level: business_direction
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Le propriétaire de l’identifiant doit être désigné
+      sans attribuer sa création à Supply par défaut.'
+    resolution.summary: Qui fournit le GTIN requis pour acheter un produit, et que fait Supply lorsqu’il manque ? Aucun résultat
+      de qualification des options n’est encore établi.
+  proposed_gap_fields:
+  - id: hs-006-product-origin
+    proposed_fields:
+      observations_by_context[0].business_need: Qui fournit le GTIN requis pour acheter un produit, et que fait Supply lorsqu’il
+        manque ?
+      observations_by_context[1].business_need: Qui fournit le GTIN requis pour acheter un produit, et que fait Supply lorsqu’il
+        manque ?
+      open_questions:
+      - Tester un produit de marque propre, un produit fournisseur et un conditionnement ; identifier pour chacun l’autorité
+        du code.
+      - Quelle source datée confirme ce fonctionnement dans le périmètre exact comparé ?
+    rule: Conserver observations, preuves et limites ; ne pas compléter une règle de gestion sans source.
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids:
+    - hs-006-source
+    - hs-006-supply-gap
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - D08
+    proposed_node_ids:
+    - D08
+    current_names:
+    - Product Reference
+    proposed_names:
+    - Product Reference
+    rationale: Product Reference convient à la réception et au contrôle ; la capacité source de création reste à établir.
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-011
+    - A971-REF-012
+    - A971-REF-051
+    common_points: Les éditeurs conservent les identifiants avec produits, variantes et unités de mesure.
+    differences_and_limits: La présence d’un champ EAN dans un produit logiciel ne désigne pas le propriétaire métier de sa
+      création. La provenance fournisseur ou conception interne n’est pas démontrée par ces documentations produits ; la comparaison
+      locale reste une hypothèse.
+    flow_position: Séparer création à la source, ingestion dans Operational References et exigence de la commande d’achat.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: documented_partial_support
+    gaps: []
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-014
+  title: États complets PLM et extraction des changements
+  state: proposal_not_adopted
+  source_refs:
+  - U934
+  - U935
+  - U936
+  - U947
+  - U948
+  - U950
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution.next_step
+  - 'arbitration_level: décision non prise'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Comment reconnaître les changements et retraits d’un produit lorsque le PLM envoie des états
+    complets ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Le domaine source et Supply doivent partager le sens d’un état complet et d’une référence
+      absente.
+    complexity.implementation_rationale: Comparer des états exige identité stable, périmètre connu et reprise après interruption
+      ; une absence ne signifie pas forcément suppression.
+    resolution.next_step: Recevoir deux états réels du même périmètre et tester création, modification, retrait et état incomplet.
+    arbitration_level: flow_internal
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Le domaine source et Supply doivent partager le sens
+      d’un état complet et d’une référence absente.'
+    resolution.summary: Comment reconnaître les changements et retraits d’un produit lorsque le PLM envoie des états complets
+      ? Aucun résultat de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids:
+    - hs-014-source-delta
+    - hs-014-data-hub
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - system-design-development
+    - supply-chain-orchestration
+    proposed_node_ids:
+    - system-design-development
+    - D08
+    current_names:
+    - Design & Development
+    - Supply Chain Orchestration
+    proposed_names:
+    - Design & Development
+    - Product Reference
+    rationale: L’entrée concerne Product Reference, et non toutes les responsabilités de Supply Chain Orchestration.
+    action: propose_relocation
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-013
+    - A971-REF-014
+    - A971-REF-051
+    common_points: Microsoft distingue export complet et suivi de changements ; SAP documente chargement initial puis deltas
+      via un hub.
+    differences_and_limits: La documentation produit ne prouve pas la capacité du PLM installé chez Boardriders ni la qualité
+      de ses photographies.
+    flow_position: Vérifier un delta source avant de retenir un calcul aval ; un Data Hub est une piste si le PLM ne fournit
+      pas les événements requis.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: documented_partial_support
+    gaps: []
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-015
+  title: Maille produit nécessaire aux opérations Supply
+  state: proposal_not_adopted
+  source_refs:
+  - U934
+  - U935
+  - U936
+  - U947
+  - U948
+  - U950
+  - A76
+  - U957
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution.next_step
+  - 'arbitration_level: décision non prise'
+  - 'gap_analysis.hs-015-product-origin.observations_by_context[0].business_rules: inconnues à qualifier'
+  - 'gap_analysis.hs-015-product-origin.observations_by_context[1].business_rules: inconnues à qualifier'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: À quelle maille les achats, stocks et ventes doivent-ils désigner un même produit ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Les métiers doivent accepter les conversions entre style, variante et conditionnement
+      sans forcer un détail absent à la source.
+    complexity.implementation_rationale: Les identités, unités et compositions doivent rester cohérentes entre les lignes
+      de commande et les faits de stock.
+    resolution.next_step: Comparer une ligne au style, un prépack et une variante vendue ; relever les informations disponibles
+      à chaque étape.
+    arbitration_level: business_direction
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Les métiers doivent accepter les conversions entre
+      style, variante et conditionnement sans forcer un détail absent à la source.'
+    resolution.summary: À quelle maille les achats, stocks et ventes doivent-ils désigner un même produit ? Aucun résultat
+      de qualification des options n’est encore établi.
+  proposed_gap_fields:
+  - id: hs-015-product-origin
+    proposed_fields:
+      observations_by_context[0].business_need: À quelle maille les achats, stocks et ventes doivent-ils désigner un même
+        produit ?
+      observations_by_context[1].business_need: À quelle maille les achats, stocks et ventes doivent-ils désigner un même
+        produit ?
+      open_questions:
+      - Comparer une ligne au style, un prépack et une variante vendue ; relever les informations disponibles à chaque étape.
+      - Quelle source datée confirme ce fonctionnement dans le périmètre exact comparé ?
+    rule: Conserver observations, preuves et limites ; ne pas compléter une règle de gestion sans source.
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids:
+    - hs-015-common-identity
+    - hs-015-fixed-grain
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - ba-product-references
+    proposed_node_ids:
+    - ba-product-references
+    current_names:
+    - Merchandise References
+    proposed_names:
+    - Merchandise References
+    rationale: Merchandise References couvre plusieurs représentations ; ne pas réduire le sujet à Product Reference seul.
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-011
+    - A971-REF-015
+    - A971-REF-051
+    common_points: Microsoft distingue produit et variante ; SAP Fashion documente des achats avec article générique et variantes.
+    differences_and_limits: Ces exemples ne prouvent pas la maille exacte des achats Boardriders ni le sens local de Package.
+      La provenance fournisseur ou conception interne n’est pas démontrée par ces documentations produits ; la comparaison
+      locale reste une hypothèse.
+    flow_position: Choisir la maille selon la décision et la ligne de commande, puis expliciter les conversions entre unités
+      et conditionnements.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: documented_partial_support
+    gaps: []
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-007
+  title: Documents des échanges entre entités juridiques
+  state: proposal_not_adopted
+  source_refs:
+  - U938
+  - U939
+  - U940
+  - U941
+  - U947
+  - U948
+  - U950
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution.next_step
+  - 'arbitration_level: décision non prise'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Les capacités actuelles peuvent-elles produire les documents des achats et ventes entre plusieurs
+    entités juridiques ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Les rôles et événements qui engagent chaque entité doivent être approuvés par les responsables
+      concernés.
+    complexity.implementation_rationale: Les documents doivent référencer les mêmes commandes, parties et événements sans
+      confondre leurs rôles.
+    resolution.next_step: Éprouver un achat multipartite et une vente intercompany ; relever uniquement les données ou déclencheurs
+      manquants.
+    arbitration_level: business_direction
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Les rôles et événements qui engagent chaque entité
+      doivent être approuvés par les responsables concernés.'
+    resolution.summary: Les capacités actuelles peuvent-elles produire les documents des achats et ventes entre plusieurs
+      entités juridiques ? Aucun résultat de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids:
+    - hs-007-configure
+    - hs-007-gap
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - system-business-operations
+    proposed_node_ids:
+    - D04.j
+    - D04.i
+    current_names:
+    - Business Operations
+    proposed_names:
+    - Purchase Order
+    - Sales Order
+    rationale: Les commandes d’achat et de vente sont les responsabilités explicitement décrites ; les documents financiers
+      restent à rattacher sur preuve.
+    action: propose_relocation
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-016
+    - A971-REF-017
+    common_points: Les deux éditeurs séparent les documents et relations juridiques d’une transaction intercompany.
+    differences_and_limits: Les exemples de produits ne prouvent ni le paramétrage requis ni la couverture installée chez
+      Beaumanoir.
+    flow_position: Éprouver les cas réels dans Sales Order, Purchase Order, Process Sentry et Billing avant de modifier le
+      modèle.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: documented_partial_support
+    gaps: []
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-008
+  title: Affectation et redistribution Wholesale avant promesse ferme
+  state: proposal_not_adopted
+  source_refs:
+  - U942
+  - U943
+  - U944
+  - U945
+  - U947
+  - U948
+  - U950
+  - U951
+  - U952
+  - U953
+  - U954
+  - U971
+  missing_or_unqualified_fields:
+  - 'arbitration_level: décision non prise'
+  - 'gap_analysis.hs-008-future-supply.observations_by_context[1].business_rules: inconnues à qualifier'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Faut-il partager les règles Wholesale, conserver des variantes ou maintenir deux modes coordonnés
+    avant engagement ferme ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Les poids Wholesale et les priorités commerciales diffèrent ; une règle unique peut désavantager
+      une entité.
+    complexity.implementation_rationale: La redistribution doit préserver les engagements et prendre en compte ressources
+      présentes ou futures sans reproduire des développements inutiles.
+    resolution.next_step: Éprouver les quatre options sur des commandes refusées, non couvertes et prioritaires, avec stock
+      présent et réception future.
+    arbitration_level: business_direction
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Les poids Wholesale et les priorités commerciales diffèrent
+      ; une règle unique peut désavantager une entité.'
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids:
+    - hs-008-priority
+    - hs-008-limited
+    - hs-008-variants
+    - hs-008-separate
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - D03.o
+    proposed_node_ids:
+    - D03.o
+    current_names:
+    - Supply Assignment
+    proposed_names:
+    - Supply Assignment
+    rationale: Supply Assignment est le cœur de la question. Availability et Sales Order contribuent, mais ne sont pas des
+      parents supplémentaires.
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-018
+    - A971-REF-019
+    - A971-REF-020
+    - A971-REF-021
+    - A971-REF-022
+    - A971-REF-037
+    common_points: Microsoft documente la réservation au fil des commandes ou selon des priorités, sur stock présent ou commandé.
+      SAP S/4HANA documente affectation, désaffectation et réaffectation avec tri des demandes et réceptions futures. Oracle
+      décrit le réexamen périodique du carnet avec règles de priorité.
+    differences_and_limits: 'Réservation Microsoft, Supply Assignment SAP et Backlog Planning Oracle ne sont pas des équivalents
+      exacts : certains traitements couvrent aussi confirmation ou planification. Le standard produit ne prouve ni couverture
+      installée Boardriders ni faisabilité dans Core System FLOW. Le support 2025 ne prouve pas l’état actuel.'
+    flow_position: 'Le nom reste centré sur l’affectation et la redistribution avant promesse ferme : responsabilité Supply
+      Assignment commune, politiques de gestion différentes. Ces appuis justifient l’examen d’un socle commun avec variantes,
+      sans prouver qu’il convient aux deux entités.'
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: documented_partial_support
+    gaps: []
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-016
+  title: Choix des moyens de livraison selon le parcours entrepôt ou magasin
+  state: proposal_not_adopted
+  source_refs:
+  - U03
+  - U04
+  - U05
+  - U06
+  - U957
+  - U964
+  - U965
+  - U966
+  - U967
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  - 'gap_analysis.hs-016-fulfilment-paths.observations_by_context[0].business_rules: inconnues à qualifier'
+  - 'gap_analysis.hs-016-fulfilment-paths.observations_by_context[1].business_rules: inconnues à qualifier'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Quelles décisions de livraison doivent rester propres au parcours magasin ou entrepôt, et lesquelles
+    peuvent être communes ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Une convergence peut retirer aux marques des choix adaptés à leur parcours ; l’autonomie
+      est une option légitime.
+    complexity.implementation_rationale: Le socle doit accepter les décisions locales sans perdre la cohérence des prestations
+      et des engagements.
+    resolution.next_step: Comparer qui choisit site, prestataire et transport dans chaque parcours, puis tester trois degrés
+      de convergence.
+    arbitration_level: business_direction
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Une convergence peut retirer aux marques des choix
+      adaptés à leur parcours ; l’autonomie est une option légitime.'
+    complexity.political: M
+    complexity.implementation: M
+    resolution_options_additions:
+    - id: hs-016-audit-1
+      title: Partager les règles avec variantes
+      principle: Partager critères admissibles et contrats, en gardant des règles par parcours.
+      conditions:
+      - Éprouver magasin et entrepôt sur les mêmes contraintes.
+      tradeoffs:
+      - Conserve du paramétrage et des tests de variantes.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-016-audit-2
+      title: Unifier la sélection
+      principle: Appliquer une politique commune de choix des services et exécutants.
+      conditions:
+      - Démontrer le bénéfice et l’absence de désavantage pour les marques.
+      tradeoffs:
+      - Peut supprimer une latitude utile.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+  proposed_gap_fields:
+  - id: hs-016-fulfilment-paths
+    proposed_fields:
+      observations_by_context[0].business_need: Quelles décisions de livraison doivent rester propres au parcours magasin
+        ou entrepôt, et lesquelles peuvent être communes ?
+      observations_by_context[1].business_need: Quelles décisions de livraison doivent rester propres au parcours magasin
+        ou entrepôt, et lesquelles peuvent être communes ?
+    rule: Conserver observations, preuves et limites ; ne pas compléter une règle de gestion sans source.
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids:
+    - hs-016-brand-autonomy
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - D06.e
+    proposed_node_ids:
+    - D06.e
+    current_names:
+    - Service Selection Decision
+    proposed_names:
+    - Service Selection Decision
+    rationale: 'Service Selection Decision convient au choix des services et exécutants. Un choix de stock pour la promesse
+      relève d’Availability : il faut d’abord distinguer les décisions.'
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-023
+    - A971-REF-024
+    - A971-REF-048
+    - A971-REF-049
+    common_points: Microsoft documente plusieurs profils de sélection selon le type d’activité ou le segment. SAP décrit des
+      parcours en magasin et des variantes configurables.
+    differences_and_limits: Ces appuis montrent des variantes possibles, pas la compatibilité des décisions de chaque marque
+      avec FLOW. Les profils Microsoft ne prouvent pas une délégation indépendante ; le parcours SAP étudié ne prouve pas
+      une politique équivalente de sélection du magasin. Aucune réalisation locale ni décision d’unification n’est confirmée.
+    flow_position: La responsabilité [Service Selection Decision](model:D06.e) décrit le choix des moyens sans imposer un
+      décideur unique ou des règles uniformes. Comparer la convergence totale, partielle et le maintien de décisions par marque
+      ; retenir le choix justifié par les besoins et la compatibilité avec le socle commun.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: documented_partial_support
+    gaps: []
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-017
+  title: Manipulations manuelles et dispersion de la saisie des commandes
+  state: proposal_not_adopted
+  source_refs:
+  - A76
+  - U957
+  - U963
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  - 'gap_analysis.hs-017-sales-capture.observations_by_context[0].business_rules: inconnues à qualifier'
+  - 'gap_analysis.hs-017-sales-capture.observations_by_context[1].business_rules: inconnues à qualifier'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Comment réduire les ressaisies d’une commande sans supprimer les contrôles utiles ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Le parcours doit être accepté par les utilisateurs et conserver leurs responsabilités
+      ; aucun changement de modèle n’est établi.
+    complexity.implementation_rationale: L’import ou la saisie guidée doit signaler les erreurs et éviter les doublons sans
+      masquer les contrôles.
+    resolution.next_step: Observer une commande complète ; compter ressaisies, changements d’écran et corrections avant de
+      prototyper.
+    arbitration_level: flow_internal
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Le parcours doit être accepté par les utilisateurs
+      et conserver leurs responsabilités ; aucun changement de modèle n’est établi.'
+    complexity.political: S
+    complexity.implementation: M
+    resolution_options_additions:
+    - id: hs-017-audit-1
+      title: Saisie guidée dans un parcours unique
+      principle: Réunir les étapes et contrôles d’une commande dans un parcours cohérent.
+      conditions:
+      - Observer les ressaisies et tester le prototype avec les utilisateurs.
+      tradeoffs:
+      - Demande une adaptation du parcours produit.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-017-audit-2
+      title: Import contrôlé avec traitement des erreurs
+      principle: Conserver un import groupé avec contrôles et corrections ciblées.
+      conditions:
+      - Établir les erreurs, doublons et règles d’acceptation.
+      tradeoffs:
+      - Ne supprime pas toutes les manipulations hors outil.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Comment réduire les ressaisies d’une commande sans supprimer les contrôles utiles ? Aucun résultat
+      de qualification des options n’est encore établi.
+  proposed_gap_fields:
+  - id: hs-017-sales-capture
+    proposed_fields:
+      observations_by_context[0].business_need: Comment réduire les ressaisies d’une commande sans supprimer les contrôles
+        utiles ?
+      observations_by_context[1].business_need: Comment réduire les ressaisies d’une commande sans supprimer les contrôles
+        utiles ?
+      open_questions:
+      - Observer une commande complète ; compter ressaisies, changements d’écran et corrections avant de prototyper.
+      - Quelle source datée confirme ce fonctionnement dans le périmètre exact comparé ?
+    rule: Conserver observations, preuves et limites ; ne pas compléter une règle de gestion sans source.
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - D04.i
+    proposed_node_ids:
+    - D04.i
+    current_names:
+    - Sales Order
+    proposed_names:
+    - Sales Order
+    rationale: Sales Order décrit l’acte concerné ; garder l’impact usage, sans créer une capacité de confort.
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-025
+    - A971-REF-026
+    common_points: Les deux éditeurs documentent des imports de commandes.
+    differences_and_limits: Ces fonctions ne prouvent ni équipement local, ni formats, ni règles de contrôle identiques. La
+      comparaison des règles de chaque parcours reste à documenter.
+    flow_position: '[Sales Order](glossary:TER069) garde l’identité et la validité des commandes. La comparaison des imports
+      éclaire les moyens de saisie ; le design produit doit mesurer et simplifier l’effort manuel. La couverture du Négoce
+      reste dans HS-020.'
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-026
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-018
+  title: Captation interactive et commandes de grands comptes chez Boardriders
+  state: proposal_not_adopted
+  source_refs:
+  - A76
+  - U957
+  - U963
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  - 'gap_analysis.hs-018-b2b-capture.observations_by_context[0].business_rules: inconnues à qualifier'
+  - 'gap_analysis.hs-018-b2b-capture.observations_by_context[1].business_rules: inconnues à qualifier'
+  content_audit: Ne pas présenter la coexistence de deux parcours comme un dysfonctionnement.
+  editorial_question_proposal: Les parcours de saisie et de fichier des grands comptes présentent-ils une difficulté, ou seulement
+    deux usages adaptés ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Aucun désavantage ni conflit de règle n’est démontré ; ne pas noter un conflit avant de
+      l’observer.
+    complexity.implementation_rationale: Volume, formats, erreurs et engagement des commandes restent inconnus ; une estimation
+      n’est pas défendable.
+    resolution.next_step: Comparer une commande interactive et un fichier d’un grand compte, avec erreurs et accusés de prise
+      en charge.
+    arbitration_level: to_confirm
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Aucun désavantage ni conflit de règle n’est démontré
+      ; ne pas noter un conflit avant de l’observer.'
+    resolution_options_additions:
+    - id: hs-018-audit-1
+      title: Conserver deux parcours cohérents
+      principle: Garder saisie interactive et fichier avec règles d’acceptation communes.
+      conditions:
+      - Vérifier que les deux répondent à des usages distincts.
+      tradeoffs:
+      - Conserve deux expériences à maintenir.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-018-audit-2
+      title: Partager les contrôles de captation
+      principle: Mutualiser contrôles et retours d’erreur tout en gardant les deux entrées.
+      conditions:
+      - Identifier une divergence réellement gênante.
+      tradeoffs:
+      - Une mutualisation sans divergence démontrée pourrait n’apporter aucun gain.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Les parcours de saisie et de fichier des grands comptes présentent-ils une difficulté, ou seulement
+      deux usages adaptés ? Aucun résultat de qualification des options n’est encore établi.
+  proposed_gap_fields:
+  - id: hs-018-b2b-capture
+    proposed_fields:
+      observations_by_context[0].business_need: Les parcours de saisie et de fichier des grands comptes présentent-ils une
+        difficulté, ou seulement deux usages adaptés ?
+      observations_by_context[1].business_need: Les parcours de saisie et de fichier des grands comptes présentent-ils une
+        difficulté, ou seulement deux usages adaptés ?
+      open_questions:
+      - Comparer une commande interactive et un fichier d’un grand compte, avec erreurs et accusés de prise en charge.
+      - Quelle source datée confirme ce fonctionnement dans le périmètre exact comparé ?
+    rule: Conserver observations, preuves et limites ; ne pas compléter une règle de gestion sans source.
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - D04.i
+    proposed_node_ids:
+    - D04.i
+    current_names:
+    - Sales Order
+    proposed_names:
+    - Sales Order
+    rationale: Sales Order reste provisoire ; si le sujet concerne seulement la captation commerciale, déplacer vers Sales
+      sur cas documenté.
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-025
+    - A971-REF-026
+    common_points: Les deux éditeurs documentent des imports de commandes.
+    differences_and_limits: Ces fonctions ne prouvent ni équipement local, ni formats, ni règles de contrôle identiques. La
+      comparaison des règles de chaque parcours reste à documenter.
+    flow_position: Sales Order garde l’identité et la validité des commandes, quel que soit le moyen de captation.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-026
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+    complexity: 'Estimation laissée ouverte : une difficulté locale doit d’abord être établie.'
+- id: HS-019
+  title: Protection du stock par canal et transferts entre réserves
+  state: proposal_not_adopted
+  source_refs:
+  - U10
+  - A76
+  - U957
+  - U967
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  - 'gap_analysis.hs-019-channel-protection.observations_by_context[0].business_rules: inconnues à qualifier'
+  - 'gap_analysis.hs-019-channel-protection.observations_by_context[1].business_rules: inconnues à qualifier'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Quelles quantités protéger par canal, et qui autorise un transfert entre protections ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Transférer une protection avantage un canal aux dépens d’un autre ; les critères et droits
+      doivent être explicites.
+    complexity.implementation_rationale: Les consommations et transferts doivent préserver les quantités protégées et rester
+      cohérents avec les réservations.
+    resolution.next_step: Comparer une protection, sa consommation et un transfert sur le même produit et la même période
+      dans les deux SI.
+    arbitration_level: business_direction
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Transférer une protection avantage un canal aux dépens
+      d’un autre ; les critères et droits doivent être explicites.'
+    complexity.political: L
+    complexity.implementation: L
+    resolution_options_additions:
+    - id: hs-019-audit-1
+      title: Protection commune avec règles par canal
+      principle: Partager le registre de protection et paramétrer quotas, priorités et transferts.
+      conditions:
+      - Fixer droits et invariants de quantité.
+      tradeoffs:
+      - Accroît le nombre de règles à gouverner.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-019-audit-2
+      title: Protections séparées et transferts explicites
+      principle: Conserver les règles locales et encadrer les transferts entre protections.
+      conditions:
+      - Vérifier qu’un transfert n’est pas compté deux fois.
+      tradeoffs:
+      - Limite les arbitrages communs entre canaux.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Quelles quantités protéger par canal, et qui autorise un transfert entre protections ? Aucun résultat
+      de qualification des options n’est encore établi.
+  proposed_gap_fields:
+  - id: hs-019-channel-protection
+    proposed_fields:
+      observations_by_context[0].business_need: Quelles quantités protéger par canal, et qui autorise un transfert entre protections
+        ?
+      observations_by_context[1].business_need: Quelles quantités protéger par canal, et qui autorise un transfert entre protections
+        ?
+    rule: Conserver observations, preuves et limites ; ne pas compléter une règle de gestion sans source.
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - D05.d
+    proposed_node_ids:
+    - D05.d
+    current_names:
+    - Logical Stock Protection Optimization
+    proposed_names:
+    - Logical Stock Protection Optimization
+    rationale: L’optimisation de la protection logique est distincte des affectations à des commandes traitées par HS-008.
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-027
+    - A971-REF-028
+    common_points: Les deux éditeurs distinguent des protections de quantités par groupe.
+    differences_and_limits: Les mécanismes produits ne prouvent ni règle de transfert commune ni pertinence actuelle du ratio
+      historique.
+    flow_position: Rattacher les règles de protection à Logical Stock Protection Optimization ; conserver l’affectation aux
+      commandes dans HS-008.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-028
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-020
+  title: Couverture et convergence des responsabilités du Négoce
+  state: proposal_not_adopted
+  source_refs:
+  - U958
+  - A77
+  - U967
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Quelles responsabilités réellement exercées par Négoce Storeland faut-il reconduire ou laisser
+    dans l’existant ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: La convergence peut déplacer les responsabilités d’achat et de vente entre équipes et
+      marques.
+    complexity.implementation_rationale: Les fonctions, objets ouverts et interfaces à reprendre ne sont pas encore inventoriés.
+    resolution.next_step: Inventorier un parcours complet du Négoce par marque avant de décider ce qui relève de Sales, Order
+      Management ou des achats.
+    arbitration_level: flow_steering
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : La convergence peut déplacer les responsabilités d’achat
+      et de vente entre équipes et marques.'
+    complexity.political: L
+    complexity.implementation: L
+    resolution_options_additions:
+    - id: hs-020-audit-1
+      title: Reprendre les responsabilités qualifiées
+      principle: Transférer dans FLOW les responsabilités dont les usages et contrats sont établis.
+      conditions:
+      - Tester chaque parcours Négoce et ses objets ouverts.
+      tradeoffs:
+      - Augmente le risque de migration si l’inventaire est incomplet.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-020-audit-2
+      title: Conserver Négoce et organiser sa coopération
+      principle: Laisser les fonctions utiles dans l’existant avec des responsabilités d’échange explicites.
+      conditions:
+      - Fixer l’autorité des commandes, achats et engagements.
+      tradeoffs:
+      - Conserve une coexistence et des coûts d’interface.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Quelles responsabilités réellement exercées par Négoce Storeland faut-il reconduire ou laisser dans
+      l’existant ? Aucun résultat de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - system-business-operations
+    proposed_node_ids:
+    - system-business-operations
+    current_names:
+    - Business Operations
+    proposed_names:
+    - Business Operations
+    rationale: Ancrage transverse conservé provisoirement ; une liste d’usages est nécessaire avant un rattachement plus fin.
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-025
+    - A971-REF-026
+    common_points: Les deux éditeurs documentent des imports de commandes ; ils ne couvrent pas à eux seuls l’ensemble vente,
+      achat et exécution du Négoce.
+    differences_and_limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de
+      pertinence d’un produit retenu.'
+    flow_position: Périmètre plus large que HS-017 et distinct de l’affectation aux commandes HS-008 ; ancrage Business Operations
+      provisoire, pas adoption du module comme capacité.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-026
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-021
+  title: Transmission et acceptation des faits FLOW par Finance
+  state: proposal_not_adopted
+  source_refs:
+  - U958
+  - A77
+  - U967
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Quels faits FLOW fournit-il à Finance, et comment traiter un rejet ou une correction ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: FLOW et Finance doivent reconnaître qui interprète les faits et qui corrige leur origine.
+    complexity.implementation_rationale: Identités, versions et retours doivent éviter écriture perdue, doublon ou correction
+      sans lien avec l’original.
+    resolution.next_step: Faire accepter, rejeter puis corriger un fait d’expédition ; vérifier l’accusé et le propriétaire
+      de chaque étape.
+    arbitration_level: flow_steering
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : FLOW et Finance doivent reconnaître qui interprète
+      les faits et qui corrige leur origine.'
+    complexity.political: L
+    complexity.implementation: L
+    resolution_options_additions:
+    - id: hs-021-audit-1
+      title: FLOW fournit les faits, Finance les traduit
+      principle: Transmettre faits et corrections ; Finance conserve la traduction comptable et renvoie acceptation ou rejet.
+      conditions:
+      - Accorder identités, règles de rejet et propriétaire des corrections.
+      tradeoffs:
+      - Exige une boucle de traitement des rejets.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-021-audit-2
+      title: Traduction par un service de Finance
+      principle: Faire appeler un service Finance qui traduit et atteste les faits selon ses règles.
+      conditions:
+      - Préciser son mandat et sa disponibilité.
+      tradeoffs:
+      - Ajoute une dépendance au service financier.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Quels faits FLOW fournit-il à Finance, et comment traiter un rejet ou une correction ? Aucun résultat
+      de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - accounting-data-provision
+    - subdomain-financial-accounting
+    proposed_node_ids:
+    - accounting-data-provision
+    - accounting-interpretation
+    current_names:
+    - Accounting Data Provision
+    - Financial Accounting
+    proposed_names:
+    - Accounting Data Provision
+    - Accounting Interpretation
+    rationale: Deux capacités nomment précisément l’émission des faits et leur traduction, sans présumer que FLOW fait la
+      comptabilité.
+    action: propose_relocation
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-029
+    - A971-REF-030
+    common_points: Microsoft documente l’import des journaux ; SAP une interface de comptabilisation et contrepassation. La
+      traduction du fait opérationnel reste une responsabilité à attribuer.
+    differences_and_limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de
+      pertinence d’un produit retenu.'
+    flow_position: '[Accounting Data Provision](model:accounting-data-provision) prépare et transmet les faits ; Finance comptabilise.
+      FI/CO reste hors de la migration HS-001. Les observations sources ne sont pas toutes rattachées à des preuves datées.'
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-030
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-022
+  title: Continuité des parcours, tâches et engagements
+  state: proposal_not_adopted
+  source_refs:
+  - U958
+  - A77
+  - U968
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Comment changer un parcours engagé sans rejouer ses actes ni modifier ses engagements silencieusement
+    ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Une reprise doit respecter les autorisations et engagements déjà pris, même si le parcours
+      cible change.
+    complexity.implementation_rationale: Il faut corréler activités, états de commande et effets déjà acquis, puis traiter
+      échec et compensation.
+    resolution.next_step: Rejouer une commande dont une prestation est exécutée et une autre en attente ; tester changement,
+      incident et reprise.
+    arbitration_level: flow_internal
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Une reprise doit respecter les autorisations et engagements
+      déjà pris, même si le parcours cible change.'
+    complexity.political: M
+    complexity.implementation: XL
+    resolution_options_additions:
+    - id: hs-022-audit-1
+      title: Versionner le parcours des commandes ouvertes
+      principle: Conserver le parcours applicable à chaque commande et migrer seulement sur décision explicite.
+      conditions:
+      - Pouvoir finir les anciennes versions.
+      tradeoffs:
+      - Maintient plusieurs versions actives.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-022-audit-2
+      title: Adapter le parcours sous contrôle
+      principle: Migrer l’état et les actes restants avec vérification des effets déjà acquis et compensation si nécessaire.
+      conditions:
+      - Démontrer la reprise sur incident et les droits d’intervention.
+      tradeoffs:
+      - La migration d’un parcours engagé est complexe.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Comment changer un parcours engagé sans rejouer ses actes ni modifier ses engagements silencieusement
+      ? Aucun résultat de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - subdomain-process-management
+    - D04
+    proposed_node_ids:
+    - order-workflow-orchestration
+    - D04
+    current_names:
+    - Process Management
+    - Order Management
+    proposed_names:
+    - Process Orchestration
+    - Order Management
+    rationale: Process Orchestration conduit le parcours ; Order Management garde les engagements. L’ensemble Process Management
+      est trop large pour ce cas.
+    action: propose_relocation
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-031
+    - A971-REF-032
+    - A971-REF-050
+    common_points: Microsoft décrit le suivi de dossiers ; SAP des approbations conditionnelles. Ces périmètres recouvrent
+      une partie de la conduite des parcours, sans prouver reprise et compensation de bout en bout.
+    differences_and_limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de
+      pertinence d’un produit retenu.'
+    flow_position: '[Process Management](glossary:TER164) conduit les parcours ; [Order Management](model:D04) garde identité,
+      engagements et validité des transitions. La généricité ne transfère pas les règles Commerce ou Finance au cœur Supply
+      ; aucun choix de plateforme.'
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: documented_partial_support
+    gaps: []
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-023
+  title: Provenance des décisions prises dans FLOW
+  state: proposal_not_adopted
+  source_refs:
+  - U958
+  - A77
+  - U968
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  content_audit: 'Garder le résultat concret : expliquer une décision ; les journaux de modifications ne suffisent pas.'
+  editorial_question_proposal: Comment expliquer après coup une décision FLOW et les engagements qu’elle a produits ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Le niveau de traçabilité, les droits d’accès et la durée de conservation doivent être
+      décidés avec les responsables concernés.
+    complexity.implementation_rationale: Un journal de modifications ne relie pas à lui seul les entrées, règles versionnées,
+      auteur, résultat et effets d’un choix.
+    resolution.next_step: Contester une réaffectation puis reconstruire ses entrées, règle, version et effets ; mesurer données
+      à conserver et coût.
+    arbitration_level: flow_steering
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Le niveau de traçabilité, les droits d’accès et la
+      durée de conservation doivent être décidés avec les responsables concernés.'
+    complexity.political: M
+    complexity.implementation: L
+    resolution_options_additions:
+    - id: hs-023-audit-1
+      title: Trace minimale de chaque décision
+      principle: Conserver identifiants des entrées, versions des règles, auteur, résultat et effets.
+      conditions:
+      - Définir les décisions concernées, accès et rétention.
+      tradeoffs:
+      - Une entrée externe disparue peut rester impossible à reproduire.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-023-audit-2
+      title: Dossier de décision pour les choix sensibles
+      principle: Conserver un état des entrées et relier toute la chaîne des effets pour les décisions contestables.
+      conditions:
+      - Définir sensibilité, confidentialité et volume à stocker.
+      tradeoffs:
+      - Augmente le coût de stockage et de maintien de la chaîne.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Comment expliquer après coup une décision FLOW et les engagements qu’elle a produits ? Aucun résultat
+      de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - supply-chain-orchestration
+    proposed_node_ids:
+    - supply-chain-orchestration
+    current_names:
+    - Supply Chain Orchestration
+    proposed_names:
+    - Supply Chain Orchestration
+    rationale: 'Sujet d’architecture transverse : conserver cet ancrage de contexte, sans l’attribuer uniquement à Process
+      Visibility ou à Control Plane.'
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-033
+    - A971-REF-034
+    - A971-REF-035
+    - A971-REF-036
+    common_points: Singh, Cobbe et Norval nomment Decision Provenance la chaîne des entrées, décisions et effets dans des
+      systèmes interconnectés. W3C PROV-DM fournit un modèle général de provenance. Microsoft et SAP documentent des traces
+      de modifications ; elles ne reconstituent pas seules une décision métier.
+    differences_and_limits: L’article fondateur vise notamment les décisions algorithmiques ; son application à FLOW est une
+      interprétation. PROV-DM ne prescrit pas le contrat métier FLOW. Les sources Microsoft et SAP décrivent des journaux
+      plus étroits ; texte primaire SAP indexé consulté. Aucune chaîne de provenance installée chez Beaumanoir n’est prouvée.
+    flow_position: 'HS-023 porte une question d’architecture transverse aux décisions du cœur Supply : relier données, règles
+      actives, versions, intervenants, résultats et effets. [Control Plane](glossary:TER130) garde l’autorité des règles ;
+      la provenance relie leur usage aux décisions sans lui transférer la décision ni imposer un produit.'
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-036
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-024
+  title: Continuité des dossiers CBS et de service après-vente
+  state: proposal_not_adopted
+  source_refs:
+  - U958
+  - A77
+  - U968
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  content_audit: CBS et SAV sont réunis sans preuve de mêmes états et responsabilités ; la fiche peut devoir être scindée.
+  editorial_question_proposal: Comment poursuivre les dossiers CBS et SAV ouverts pendant la transition vers FLOW ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Il faut choisir qui termine les dossiers et quelle continuité de service offrir aux équipes.
+    complexity.implementation_rationale: Les états, pièces, tâches et engagements d’un dossier doivent rester accessibles
+      et corrélés pendant la transition.
+    resolution.next_step: Choisir un dossier ouvert CBS et un dossier SAV ; tester maintien, coopération et reprise de bout
+      en bout.
+    arbitration_level: flow_steering
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Il faut choisir qui termine les dossiers et quelle
+      continuité de service offrir aux équipes.'
+    complexity.political: L
+    complexity.implementation: L
+    resolution_options_additions:
+    - id: hs-024-audit-1
+      title: Terminer les dossiers dans l’existant
+      principle: Laisser les dossiers ouverts dans CBS ou l’outil SAV, avec accès et échanges durant leur clôture.
+      conditions:
+      - Garantir le support et la durée de coexistence.
+      tradeoffs:
+      - Prolonge la dépendance aux anciens outils.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-024-audit-2
+      title: Reprendre les dossiers après rapprochement
+      principle: Transférer états, pièces et actes restants après comparaison avec le modèle cible.
+      conditions:
+      - Reconstituer les engagements et tester un dossier complet.
+      tradeoffs:
+      - Les historiques et états peuvent être difficiles à migrer.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Comment poursuivre les dossiers CBS et SAV ouverts pendant la transition vers FLOW ? Aucun résultat
+      de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - subdomain-process-management
+    - D04
+    proposed_node_ids:
+    - subdomain-process-management
+    - D04
+    current_names:
+    - Process Management
+    - Order Management
+    proposed_names:
+    - Process Management
+    - Order Management
+    rationale: 'Deux périmètres concernés, mais le regroupement CBS/SAV reste à éprouver : les états et propriétaires peuvent
+      différer.'
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-031
+    - A971-REF-032
+    - A971-REF-050
+    common_points: Le suivi de dossiers Microsoft et les étapes d’approbation SAP éclairent la poursuite des traitements ;
+      aucun ne prouve la reprise des dossiers CBS ou de service après-vente locaux.
+    differences_and_limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de
+      pertinence d’un produit retenu.'
+    flow_position: Distinct des échanges d’achat C18. Aucun retrait de CBS ni reprise du service après-vente Sarenza présumé
+      ; Sarenza reste non évalué. Les possibilités de reprise ne sont pas démontrées.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: documented_partial_support
+    gaps: []
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-025
+  title: Performance et stabilité du calcul de couverture du carnet
+  state: proposal_not_adopted
+  source_refs:
+  - U958
+  - A77
+  - U968
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Quel calcul couvre le carnet dans le temps disponible, avec des résultats stables et des engagements
+    respectés ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Les responsables doivent définir les priorités et les changements acceptables entre deux
+      calculs.
+    complexity.implementation_rationale: Volumes, durée et stabilité doivent être mesurés sur un même jeu de demandes et ressources
+      avant de choisir un mécanisme.
+    resolution.next_step: Comparer règles, heuristique et optimisation sur un jeu commun avec pénurie, réception future et
+      modification mineure.
+    arbitration_level: flow_internal
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Les responsables doivent définir les priorités et les
+      changements acceptables entre deux calculs.'
+    complexity.political: M
+    complexity.implementation: XL
+    resolution_options_additions:
+    - id: hs-025-audit-1
+      title: Règles ordonnées puis optimisation ciblée
+      principle: Traiter les cas courants par règles explicites et réserver l’optimisation aux pénuries ou choix complexes.
+      conditions:
+      - Mesurer qualité et stabilité sur les mêmes cas.
+      tradeoffs:
+      - Les résultats peuvent dépendre de l’ordre des règles.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-025-audit-2
+      title: Calcul d’optimisation sous contraintes
+      principle: Comparer des plans sur objectifs, contraintes et engagements protégés explicites.
+      conditions:
+      - Définir durée maximale, stabilité acceptable et solution de repli.
+      tradeoffs:
+      - Peut accroître coût de calcul et difficulté d’explication.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Quel calcul couvre le carnet dans le temps disponible, avec des résultats stables et des engagements
+      respectés ? Aucun résultat de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - ba-supply-matching
+    proposed_node_ids:
+    - ba-supply-matching
+    current_names:
+    - Demand / Supply Matching
+    proposed_names:
+    - Demand / Supply Matching
+    rationale: 'Le besoin dépasse le seul Wholesale : conserver Demand / Supply Matching jusqu’à définition du périmètre de
+      test.'
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-020
+    - A971-REF-037
+    common_points: Microsoft décrit des règles de réservation ; SAP la sélection et priorisation de demandes pour réévaluer
+      leurs confirmations. Leur périmètre et leurs objectifs diffèrent du calcul global FLOW à éprouver.
+    differences_and_limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de
+      pertinence d’un produit retenu.'
+    flow_position: La politique [Wholesale](glossary:TER193) reste dans HS-008. Un bon résultat de calcul ne vaut pas autorisation
+      d’engager ses changements ; aucune performance ni architecture installée démontrée.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: documented_partial_support
+    gaps: []
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-026
+  title: Versions, remise et corrections des documents opérationnels
+  state: proposal_not_adopted
+  source_refs:
+  - U958
+  - A77
+  - U968
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Comment relier un document envoyé, sa correction et la preuve de sa remise ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Les producteurs et destinataires doivent reconnaître quelle version fait foi et qui autorise
+      sa correction.
+    complexity.implementation_rationale: 'Le format ne suffit pas : version, identité, remise et correction doivent rester
+      liés malgré erreurs et réémissions.'
+    resolution.next_step: Suivre un document envoyé, rejeté, corrigé et réémis ; vérifier l’historique visible par chaque
+      destinataire.
+    arbitration_level: flow_internal
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Les producteurs et destinataires doivent reconnaître
+      quelle version fait foi et qui autorise sa correction.'
+    complexity.political: M
+    complexity.implementation: L
+    resolution_options_additions:
+    - id: hs-026-audit-1
+      title: Registre de documents commun
+      principle: Relier versions, corrections et preuves de remise dans un registre partagé.
+      conditions:
+      - Définir le document original, les droits de correction et les retours.
+      tradeoffs:
+      - Ajoute une responsabilité de registre à qualifier.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-026-audit-2
+      title: Registres locaux avec identité commune
+      principle: Laisser chaque producteur tenir son historique et transmettre des identités et statuts comparables.
+      conditions:
+      - Garantir consultation et corrélation entre producteurs.
+      tradeoffs:
+      - La vue complète dépend de plusieurs systèmes.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Comment relier un document envoyé, sa correction et la preuve de sa remise ? Aucun résultat de qualification
+      des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - subdomain-integration
+    proposed_node_ids:
+    - ba-outbound-information-provision
+    current_names:
+    - Integration
+    proposed_names:
+    - Outbound Information Provision
+    rationale: La fourniture d’informations sortantes est plus précise qu’Integration ; confirmer les documents concernés
+      avant rattachement définitif.
+    action: propose_relocation
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-038
+    - A971-REF-039
+    common_points: Microsoft décrit les modèles des documents sortants ; SAP leur émission et leurs statuts. Les originaux,
+      corrections et accusés de remise doivent être précisés au-delà de ces exemples.
+    differences_and_limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de
+      pertinence d’un produit retenu.'
+    flow_position: Ancrage Integration de contexte provisoire ; le sujet concerne aussi les échanges opérationnels. Ne pas
+      créer un hotspot par format ni confondre fichier et opération métier.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-039
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-027
+  title: Actions du Commerce et engagements pris dans FLOW
+  state: proposal_not_adopted
+  source_refs:
+  - U958
+  - A77
+  - U968
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Quelles actions le Commerce peut-il demander à FLOW et lesquelles créent un engagement ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Les droits et responsabilités doivent distinguer demande, autorisation et engagement auprès
+      du client.
+    complexity.implementation_rationale: Les appels doivent supporter doublons, versions concurrentes, refus et erreurs avec
+      une réponse exploitable.
+    resolution.next_step: Comparer création, modification et annulation d’une commande ; fixer préconditions, droits et preuve
+      du résultat.
+    arbitration_level: business_direction
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Les droits et responsabilités doivent distinguer demande,
+      autorisation et engagement auprès du client.'
+    complexity.political: L
+    complexity.implementation: L
+    resolution_options_additions:
+    - id: hs-027-audit-1
+      title: Commandes synchrones avec préconditions
+      principle: Accepter ou refuser chaque action selon droits, état et version de commande.
+      conditions:
+      - Fixer la réponse et le traitement des doubles appels.
+      tradeoffs:
+      - Dépend de la disponibilité immédiate du service.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-027-audit-2
+      title: Demande acceptée puis résultat confirmé
+      principle: Distinguer l’accusé de prise en charge du résultat métier et notifier celui-ci.
+      conditions:
+      - Garantir suivi, corrélation et traitement des refus tardifs.
+      tradeoffs:
+      - Le Commerce doit gérer un état en attente.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Quelles actions le Commerce peut-il demander à FLOW et lesquelles créent un engagement ? Aucun résultat
+      de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - domain-sales
+    - supply-chain-orchestration
+    proposed_node_ids:
+    - domain-sales
+    - D04
+    current_names:
+    - Sales
+    - Supply Chain Orchestration
+    proposed_names:
+    - Sales
+    - Order Management
+    rationale: Sales et Order Management sont les extrémités documentées ; garder les autres services FLOW comme dépendances
+      à inventorier.
+    action: propose_relocation
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-040
+    - A971-REF-041
+    common_points: Les deux éditeurs publient des événements métier. Appui partiel aux retours d’information ; la sécurité
+      des appels Commerce et leurs préconditions ne sont pas comparées par ces sources.
+    differences_and_limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de
+      pertinence d’un produit retenu.'
+    flow_position: L’absence de gestionnaire d’interfaces rapportée dans les notes ne prouve pas absence de tous les contrôles.
+      Les appuis événements ne documentent qu’une partie des échanges, pas la sécurité complète.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-041
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-028
+  title: Versions et interprétation des plans amont reçus par FLOW
+  state: proposal_not_adopted
+  source_refs:
+  - U958
+  - A77
+  - U968
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Comment recevoir un plan corrigé sans le confondre avec une commande ou un engagement ferme
+    ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Planification et opérations doivent partager la signification des objets et l’autorité
+      des corrections.
+    complexity.implementation_rationale: Versions, unités, périodes et retraits doivent être comparables ; un import ne doit
+      pas affermir une prévision.
+    resolution.next_step: Recevoir puis corriger un plan de demande et un plan de ressources ; tester retrait, retard et version
+      ancienne.
+    arbitration_level: flow_internal
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Planification et opérations doivent partager la signification
+      des objets et l’autorité des corrections.'
+    complexity.political: M
+    complexity.implementation: L
+    resolution_options_additions:
+    - id: hs-028-audit-1
+      title: Journal de changements versionnés
+      principle: Recevoir des changements identifiés et rejouables avec retraits explicites.
+      conditions:
+      - Vérifier que la source fournit un journal complet.
+      tradeoffs:
+      - Dépend fortement des capacités amont.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-028-audit-2
+      title: États complets rapprochés
+      principle: Comparer des états complets dont périmètre et version sont connus.
+      conditions:
+      - Définir le sens d’une absence et d’un état incomplet.
+      tradeoffs:
+      - Ajoute calcul, stockage et risques de rapprochement.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Comment recevoir un plan corrigé sans le confondre avec une commande ou un engagement ferme ? Aucun
+      résultat de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - plans-ingestion
+    proposed_node_ids:
+    - plans-ingestion
+    current_names:
+    - Plan Ingestion
+    proposed_names:
+    - Plan Ingestion
+    rationale: Plan Ingestion correspond précisément à la frontière réception/interprétation ; ne pas déplacer vers Master
+      Planning.
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-042
+    - A971-REF-043
+    common_points: Microsoft permet d’importer des prévisions ; SAP publie les changements de besoins prévisionnels. Ces objets
+      ne représentent pas tous les plans de ressources et engagements reçus par FLOW.
+    differences_and_limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de
+      pertinence d’un produit retenu.'
+    flow_position: '[Plan Ingestion](model:plans-ingestion) reçoit les plans ; [Demand & Supply Planning](glossary:TER111)
+      conserve leur production hors du cœur [Supply Chain Orchestration](model:supply-chain-orchestration). Les types et contrats
+      réels restent à documenter.'
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-043
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-029
+  title: Commande d’achat FLOW et suivi d’approvisionnement CBS
+  state: proposal_not_adopted
+  source_refs:
+  - U958
+  - A77
+  - U968
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  content_audit: Question lisible ; préciser l’action et les critères de décision.
+  editorial_question_proposal: Comment maintenir la commande d’achat FLOW lorsque CBS reçoit une nouvelle date ou quantité
+    fournisseur ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Les responsables doivent reconnaître qui accepte une modification d’engagement et qui
+      constate la réception réelle.
+    complexity.implementation_rationale: Identités de ligne, versions et réponses doivent se rapprocher sans transformer une
+      confirmation en réception physique.
+    resolution.next_step: Suivre une ligne confirmée puis partiellement reportée ; comparer la commande, le suivi CBS et la
+      réception.
+    arbitration_level: business_direction
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Les responsables doivent reconnaître qui accepte une
+      modification d’engagement et qui constate la réception réelle.'
+    complexity.political: M
+    complexity.implementation: L
+    resolution_options_additions:
+    - id: hs-029-audit-1
+      title: Commande FLOW, CBS suivi fournisseur
+      principle: FLOW tient la commande et ses engagements ; CBS fournit les faits de suivi rapprochés par ligne.
+      conditions:
+      - Fixer les droits d’acceptation de changement.
+      tradeoffs:
+      - Une divergence d’état nécessite un rapprochement.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-029-audit-2
+      title: Service commun de confirmations
+      principle: Partager la réception des confirmations et distribuer les changements acceptés vers FLOW et CBS.
+      conditions:
+      - Désigner une autorité et comparer les contrats existants.
+      tradeoffs:
+      - Ajoute un service et une transition à financer.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Comment maintenir la commande d’achat FLOW lorsque CBS reçoit une nouvelle date ou quantité fournisseur
+      ? Aucun résultat de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - D04.j
+    proposed_node_ids:
+    - D04.j
+    current_names:
+    - Purchase Order
+    proposed_names:
+    - Purchase Order
+    rationale: Purchase Order porte l’engagement ; un second ancrage CBS serait une application, pas un nœud métier.
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-044
+    - A971-REF-045
+    common_points: Microsoft décrit les réponses et versions des commandes fournisseur ; SAP les confirmations de quantité
+      et date. Ces parcours ne démontrent pas l’interface actuelle CBS.
+    differences_and_limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de
+      pertinence d’un produit retenu.'
+    flow_position: La commande d’achat dans FLOW est la cible de travail rapportée. Ce sujet ne décide pas de la reprise de
+      fonctions CBS/SAV C13 ; les interfaces réelles restent à éprouver.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-045
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-030
+  title: Extractions, manipulations Excel et réimports
+  state: proposal_not_adopted
+  source_refs:
+  - U958
+  - A77
+  - U963
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  content_audit: Le confort d’usage est établi comme type de sujet ; le cas tarifaire et sa localisation restent à corroborer.
+  editorial_question_proposal: Comment réduire les exports, corrections Excel et réimports tout en gardant les contrôles nécessaires
+    ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Le confort de travail doit être évalué avec les utilisateurs ; aucun conflit de modèle
+      n’est établi.
+    complexity.implementation_rationale: La simplification doit éviter perte de modifications, erreurs de réimport et contournement
+      des contrôles.
+    resolution.next_step: Observer un aller-retour complet ; mesurer temps, erreurs, corrections et contrôles, puis comparer
+      écran intégré et tableur connecté.
+    arbitration_level: flow_internal
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Le confort de travail doit être évalué avec les utilisateurs
+      ; aucun conflit de modèle n’est établi.'
+    complexity.political: S
+    complexity.implementation: M
+    resolution_options_additions:
+    - id: hs-030-audit-1
+      title: Édition groupée intégrée
+      principle: Effectuer les modifications usuelles dans l’outil avec validation avant application.
+      conditions:
+      - Observer les volumes et contrôles utiles.
+      tradeoffs:
+      - Peut être moins souple qu’Excel pour certains travaux.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-030-audit-2
+      title: Tableur connecté et publication contrôlée
+      principle: Conserver Excel mais rapprocher versions, erreurs et droits avant publication.
+      conditions:
+      - Éprouver concurrence et reprise d’une publication partielle.
+      tradeoffs:
+      - Conserve la dépendance au tableur.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Comment réduire les exports, corrections Excel et réimports tout en gardant les contrôles nécessaires
+      ? Aucun résultat de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - subdomain-process-management
+    proposed_node_ids:
+    - subdomain-process-management
+    current_names:
+    - Process Management
+    proposed_names:
+    - Process Management
+    rationale: 'Ancrage provisoire : les exports ne relèvent pas tous de Process Management. Identifier d’abord le contenu,
+      notamment les tarifs encore non corroborés.'
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-046
+    - A971-REF-047
+    common_points: 'Microsoft permet de lire, modifier et publier des données depuis Excel ; SAP décrit l’export et l’import
+      de conditions tarifaires par tableur. Un fichier peut être un moyen utile : ces fonctions ne démontrent pas à elles
+      seules un irritant.'
+    differences_and_limits: Cas tarifaire FLOW à corroborer ; aucune réalisation locale ni solution retenue. Appuis fonctionnels
+      partiels, sans mesure de temps ni preuve d’amélioration ergonomique.
+    flow_position: Comparer l’effort du parcours complet, les contrôles et les retours d’erreur. La simplification des manipulations
+      relève du design produit ; les mécanismes de conduite restent dans HS-022.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-047
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+- id: HS-031
+  title: Prérequis de coopération ou de reprise des services existants
+  state: proposal_not_adopted
+  source_refs:
+  - U958
+  - A77
+  - U968
+  - U971
+  missing_or_unqualified_fields:
+  - complexity.political_rationale
+  - complexity.implementation_rationale
+  - resolution_options
+  - 'arbitration_level: décision non prise'
+  - 'complexity.political: estimation non faite'
+  - 'complexity.implementation: estimation non faite'
+  content_audit: 'Sujet très large : utile comme question de portefeuille, trop abstrait pour une fiche de décision détaillée.'
+  editorial_question_proposal: Pour chaque service existant, que faut-il garantir pour coopérer avec FLOW ou reprendre sa
+    responsabilité ?
+  editorial_policy: Utiliser cette question pour rendre l’arbitrage explicite ; conserver le constat, les exemples, les observations
+    sourcées et les réserves de la fiche. Une question seule ne remplace pas le récit.
+  proposed_fields:
+    complexity.political_rationale: Le propriétaire du service doit accepter le mandat conservé ou transféré et ses conditions
+      de sortie.
+    complexity.implementation_rationale: Les contrats, accès, versions et garanties doivent être connus ; une interface existante
+      ne prouve pas qu’elle peut être réutilisée.
+    resolution.next_step: Dresser une matrice par service avec mandat, propriétaire, données, opérations, garanties et coût
+      de reprise ; créer des sujets précis sur les écarts.
+    arbitration_level: flow_steering
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Le propriétaire du service doit accepter le mandat
+      conservé ou transféré et ses conditions de sortie.'
+    complexity.political: L
+    complexity.implementation: L
+    resolution_options_additions:
+    - id: hs-031-audit-1
+      title: Coopération avec mandat stable
+      principle: Conserver le service et qualifier un contrat d’opérations, données, erreurs et garanties.
+      conditions:
+      - Vérifier accès, disponibilité et autorité.
+      tradeoffs:
+      - Conserve une dépendance à l’existant.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-031-audit-2
+      title: Reprise ciblée de responsabilité
+      principle: Transférer une responsabilité après comparaison des fonctions, objets ouverts et moyens nécessaires.
+      conditions:
+      - Financer migration, reprise et capacité de remplacement.
+      tradeoffs:
+      - La responsabilité peut être plus large que l’interface observée.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    resolution.summary: Pour chaque service existant, que faut-il garantir pour coopérer avec FLOW ou reprendre sa responsabilité
+      ? Aucun résultat de qualification des options n’est encore établi.
+  proposed_gap_fields: []
+  estimation_policy: Les tailles proposées sont des hypothèses de faible confiance, fondées sur le périmètre décrit ; elles
+    exigent des cas, volumes et une réalisation candidate. Les notes existantes ne sont pas remplacées.
+  existing_options_audit:
+    option_ids: []
+    finding: Les alternatives présentes sont conservées ; leurs conditions doivent être testées et leur coût reste non évalué.
+      Aucune option n’est crédible par le seul fait d’être décrite.
+  location_audit:
+    current_node_ids:
+    - beaumanoir-target-universe
+    proposed_node_ids:
+    - beaumanoir-target-universe
+    current_names:
+    - Enterprise Architecture
+    proposed_names:
+    - Enterprise Architecture
+    rationale: Garder un sujet de portefeuille transverse ; la racine ne désigne pas une difficulté partout. Les cas détaillés
+      doivent avoir leur propre localisation.
+    action: keep
+    evidence_state: hypothesis
+  market_comparison:
+    source_ids:
+    - A971-REF-040
+    - A971-REF-041
+    common_points: Les deux éditeurs documentent des contrats d’événements. Les autres prérequis de coopération ou reprise,
+      dont interfaces d’action, exploitation et propriété, restent à qualifier.
+    differences_and_limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de
+      pertinence d’un produit retenu.'
+    flow_position: Sujet transversal conservé sur instruction U958 avec ancrage [Enterprise Architecture](model:beaumanoir-target-universe)
+      de contexte provisoire ; cet ancrage ne signifie ni réalisation commune ni lacune généralisée. Ne pas dupliquer les
+      contrats des frontières précises.
+    audit_note: Correspondance partielle proposée, pas équivalence ni preuve de réalisation installée. Une paire documentaire
+      n’adopte pas un produit.
+    policy_status: explicit_documentary_gap
+    gaps:
+    - vendor: SAP S/4HANA
+      reason: Le document Help Portal lié a été ouvert mais aucun texte lisible n’a été restitué. La pertinence détaillée
+        reste à reconfirmer ; ni lien ni extrait indexé ne remplace un passage consulté.
+      examined_source_ids:
+      - A971-REF-041
+  kept_unknown:
+    credible_option_ids: 'Vide : aucune option nouvelle évaluée crédible.'
+    credibility_note: Ne renseigner qu’après épreuve d’une option.
+    selected_option_id: 'Absent : aucun choix final adopté.'
+    resolution_note: Ne pas inventer une décision pour remplir le champ.
+    blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
+    option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.

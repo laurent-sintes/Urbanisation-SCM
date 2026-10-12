@@ -23130,3 +23130,36 @@ Dans la vue liste, les descriptions prennent trop d'espace vertical, les autres 
 **portée**
 
 Application de l’audit technique app/audits/hotspots-ux-2026-10-12.html : parcours, documentation méthodologique, sources compréhensibles, critères explicites, contrat exporté et tests. Les repères d’estimation restent à éprouver ; aucune réévaluation automatique, aucun nouvel arbitrage métier ni preuve de réalisation installée. Publication locale des compléments documentaires nécessaire à leur lecture dans Atlas ; aucun push demandé. Préserver puis renouveler la séance ancienne si elle est vide ; conserver toute saisie existante avant reprise.
+
+## U971
+
+**id**
+
+U971
+
+**titre**
+
+Audit du contenu des Hotspots, propositions de compléments et visibilité technique
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Je voudrais faire un audit des Hotspots.
+
+- Je voudrais une proposition de remplissage des champs non remplis
+- Je souhaite un champ "technique" Visible=true par défaut. Si non visible, on ne l'affiche pas dans la carto et dans les filtres, la liste des non visibles sont systématiquement à la fin et grisés. Même comportement dans la vue liste. Je souhaite dans les deux cas un trait de séparation entre les visibles et les non visibles.
+- Je voudrais un audit du contenu : clarté, pas de gloubi boulga IA, recherche de référence du marché, établissement d'options
+- Je voudrais savoir si plusieurs Hotspots peuvent être regroupés : par exemple, il y a en a un qui parle de la sélection de site ou d'entrepot (Boardriders) alors que Marque Histo n'en n'a pas besoin parce que C-LOG gère tout. Mais c'est le même problème que le Hotspot qui parle de Boardriders qui a besoin de controler / fabrique le fulfillment plan avec des logisticiens "simples"
+
+Oui, conserver cet accès discret
+
+Je t'autorise à Release / Commit si tu en as besoin
+
+Je pense également que les localisations ne sont pas nécessairement bonnes.
+
+**portée**
+
+Audit des 27 fiches courantes et propositions sourcées : aucune fusion, estimation ou option métier adoptée implicitement. Le booléen technique visible est autorisé, vrai par défaut ; faux exclut le sujet des halos, compteurs et résultats des filtres, mais conserve un accès séparé en fin de liste et de sélecteur, grisé et précédé d'un trait. Il ne change ni validation, ni criticité, ni résolution. Release locale et commit autorisés, sans push. L’exemple rapporté du partage des décisions logistiques éclaire une proposition de regroupement ; il ne prouve pas une incapacité des Marques Historiques et ne modifie pas leurs observations historiques.

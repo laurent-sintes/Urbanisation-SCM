@@ -170,11 +170,12 @@ publication_delivery:
   - U954
   - U957
   - U970
+  - U971
   summary: Pilote HS-008 réécrit avec deux écarts, quatre options proposées et vocabulaire aligné ; aucune publication déclenchée.
   required_catalog:
   - collection: hotspots
     id: HS-008
-    content_sha256: 7383ada13bba25fabc3e178ac5301fa2e06f689f17ea0308d2273f4a29a7366d
+    content_sha256: db4c998062a6d93007b5682543ac1db86e627c05bec7014c1193cec2a2a320ae
   required_glossary:
   - id: TER205
     field_sha256:
@@ -186,6 +187,9 @@ publication_delivery:
     antérieurs ; empreintes précédentes dans hotspot-framing-impact-U959.yaml.'
   ux_update: 'U970 : formulation publique sans codes de récits et justifications par axe pour HS-008 ; notes L/XL, qualification
     et avancement conservés. Les états antérieurs restent dans Git ; aucune extension d’accord métier.'
+  visibility_update: 'U971 : ajout technique visible=true aux sujets existants. Contenu métier, ancrages, statuts, notes et
+    options inchangés. Les propositions de l’audit restent hors du catalogue ; les preuves antérieures sont conservées dans
+    Git.'
 superseded_delivery_check:
   content_sha256: 1cd7d02c846a68ffeb3294d18452bb58aac71dffd0c63f0622e5028887bc5437
   scope: État pilote avant enrichissement des sources sous U957 ; empreinte conservée, accord antérieur non étendu.
