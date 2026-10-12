@@ -57,12 +57,16 @@
 }
 .universe-overview {
   padding-top: 18px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
 }
 .universe-overview:fullscreen {
   width: 100vw;
   height: 100vh;
-  overflow: auto;
-  scrollbar-gutter: stable;
+  overflow: hidden;
   padding: 18px;
   background: #fcfdfa;
 }
@@ -71,12 +75,14 @@
   top: 0;
   z-index: 6;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 16px;
   margin-bottom: 16px;
   padding: 8px 0;
   background: #fcfdfa;
+  flex-shrink: 0;
 }
 .universe-toolbar h2 {
   margin: 0;
@@ -122,12 +128,34 @@
   grid-column: 2;
   grid-row: 2;
 }
+.overview-map-scroll {
+  max-width: 100%;
+  overflow: auto;
+  flex: 1;
+  min-height: 0;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+.overview-map-frame {
+  position: relative;
+}
+.urbanisation-overview .hotspot-map-point {
+  scale: calc(1 / var(--overview-scale, 1));
+  transform-origin: 0 0;
+}
+.urbanisation-overview.layout-fixed {
+  grid-template-columns: minmax(260px, 1fr) minmax(680px, 2.4fr) minmax(260px, 1fr);
+  min-width: 1232px;
+}
 .overview-system {
   position: relative;
   padding: 20px;
 }
 .overview-system .hotspot-map-point {
   z-index: 2;
+}
+.overview-system.has-map-hotspots {
+  padding-top: 76px;
 }
 .overview-system small {
   font-size: 11px;
@@ -251,6 +279,17 @@
   .overview-hierarchy > ul > li.overview-domain-prominent {
     grid-column: span 2;
   }
+}
+.overview-hierarchy > ul.overview-domains-fixed {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.overview-hierarchy > ul.overview-domains-fixed > li {
+  min-width: 0;
+  padding: 9px;
+  border: 1px solid #e2eae3;
+  border-radius: 6px;
 }
 .sheet-mobile-toc {
   display: none;

@@ -1,13 +1,15 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
-import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { overviewLayout, prominentChildIndex } from '../adaptiveLayout';
+import { type CSSProperties, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { MIN_READABLE_ZOOM, overviewLayout, prominentChildIndex } from '../adaptiveLayout';
 import { filterMapHotspots, type HotspotMapFilters, hotspotRelatedElementIds } from '../hotspotMap';
 import { HOTSPOT_DIAMETERS, type HotspotPlacementGroup, layoutHotspots } from '../hotspotPlacement';
+import { operationsMapSlots, systemMapSlots } from '../mapPlacement';
 import { childrenOf, descendantsOf, lineageOf, rootsOf } from '../model';
 import type { PublishedModel } from '../types';
 import { HotspotLegend, HotspotMapMarker } from './HotspotDisplay';
 import { MapDetailPicker } from './MapDetailPicker';
 import { MapHotspotPicker } from './MapHotspotPicker';
+import { MapZoomPicker, useMapZoomChoice } from './MapZoomPicker';
 import { MapNodeButton, MetaTypeLabel, ModelText } from './ModelLinks';
 import './hotspots.css';
 
@@ -45,6 +47,16 @@ export function Overview({
     [model, universe],
   );
   const section = useRef<HTMLElement>(null);
+  const scroll = useRef<HTMLDivElement>(null);
+  const grid = useRef<HTMLDivElement>(null);
+  const [zoomChoice, setZoomChoice] = useMapZoomChoice();
+  const [frame, setFrame] = useState({ width: 1232, height: 0, pageZoom: 1 });
+  const scale = zoomChoice !== 'width' && frame.pageZoom >= MIN_READABLE_ZOOM ? frame.pageZoom : 1;
+  const pageFallback = frame.pageZoom < MIN_READABLE_ZOOM;
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Detail and framing intentionally reset the map viewport.
+  useEffect(() => {
+    scroll.current?.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [detail, zoomChoice]);
   const [availableWidth, setAvailableWidth] = useState(0);
   const [measurementVersion, setMeasurementVersion] = useState(0);
   const [markerPlacement, setMarkerPlacement] = useState<Record<string, OverviewPlacement>>({});
@@ -130,6 +142,33 @@ export function Overview({
     );
   });
   const layout = overviewLayout(weights, availableWidth);
+  const systemSlots = useMemo(() => systemMapSlots(systems.map((system) => system.id)), [systems]);
+  const displayedSystems = systemSlots ? systemSlots.map((slot) => systems[slot.index]) : systems;
+  // Framing changes only the scale, preserving the logical system/domain positions.
+  useLayoutEffect(() => {
+    const target = scroll.current;
+    const content = grid.current;
+    if (!target || !content) return;
+    const measure = () => {
+      const offset = content.getBoundingClientRect().top - target.getBoundingClientRect().top + target.scrollTop;
+      const height = Math.max(1, target.clientHeight - offset - 24);
+      const next = {
+        width: systemSlots ? Math.max(1232, target.clientWidth) : target.clientWidth,
+        height: content.offsetHeight,
+        pageZoom: Math.min(
+          1,
+          target.clientWidth / Math.max(1, content.offsetWidth),
+          height / Math.max(1, content.offsetHeight),
+        ),
+      };
+      setFrame((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));
+    };
+    const observer = new ResizeObserver(measure);
+    observer.observe(target);
+    observer.observe(content);
+    measure();
+    return () => observer.disconnect();
+  }, [systemSlots]);
   // biome-ignore lint/correctness/useExhaustiveDependencies: Detail and width change the measured DOM layout.
   useLayoutEffect(() => {
     if (clusterExpanded) return;
@@ -141,10 +180,10 @@ export function Overview({
       if (!article) continue;
       const borderRect = article.getBoundingClientRect();
       const articleRect = {
-        left: borderRect.left + article.clientLeft,
-        top: borderRect.top + article.clientTop,
-        width: article.clientWidth,
-        height: article.clientHeight,
+        left: borderRect.left + article.clientLeft * scale,
+        top: borderRect.top + article.clientTop * scale,
+        width: article.clientWidth * scale,
+        height: article.clientHeight * scale,
       };
       const obstacles = [
         ...article.querySelectorAll<HTMLElement>('small, h3, p, .overview-stats, .overview-hierarchy'),
@@ -207,7 +246,7 @@ export function Overview({
       next[system.id] = { groups: layoutHotspots(anchors, bounds) };
     }
     setMarkerPlacement((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));
-  }, [systems, visibleHotspots, model, detail, availableWidth, measurementVersion, clusterExpanded]);
+  }, [systems, visibleHotspots, model, detail, availableWidth, measurementVersion, clusterExpanded, scale]);
   return (
     <section
       ref={section}
@@ -227,6 +266,7 @@ export function Overview({
               onOpenHotspot={onOpenHotspot}
             />
           )}
+          <MapZoomPicker choice={zoomChoice} onChange={setZoomChoice} pageFallback={pageFallback} />
           <button
             type="button"
             className="map-fullscreen-button"
@@ -244,175 +284,206 @@ export function Overview({
           </button>
         </div>
       </div>
-      {hotspotFilters.enabled && (
-        <HotspotLegend
-          count={visibleHotspots.length}
-          projections={systems.reduce(
-            (total, system) =>
-              total +
-              visibleHotspots.filter((hotspot) =>
-                hotspot.location.node_ids.some(
-                  (id) => id === system.id || lineageOf(model, id).some((node) => node.id === system.id),
-                ),
-              ).length,
-            rootHotspots.length,
-          )}
-        />
-      )}
-      {rootHotspots.length > 0 && (
-        <div
-          className="overview-global-hotspots"
-          role="group"
-          aria-label="Sujets transversaux à Enterprise Architecture"
-        >
-          <p>Sujets transversaux · {universe?.name}</p>
-          {rootHotspots.map((item) => (
-            <div className="overview-global-hotspot" key={item.id}>
-              <div className="overview-global-marker">
-                <HotspotMapMarker
-                  id={item.id}
-                  items={[item]}
-                  x={32}
-                  y={32}
-                  model={model}
-                  onOpen={onOpenHotspot}
-                  onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
-                />
-              </div>
-              <button type="button" onClick={() => onOpenHotspot(item.id)}>
-                <ModelText text={item.title} />
-              </button>
-            </div>
-          ))}
-        </div>
-      )}
       <div
-        className={`urbanisation-overview layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}
-        data-layout={layout.kind}
+        ref={scroll}
+        className="overview-map-scroll"
+        role="region"
+        aria-label="Carte des systèmes métier"
+        tabIndex={0}
       >
-        {systems.map((system) => {
-          const systemHotspots = visibleHotspots.filter((hotspot) =>
-            hotspot.location.node_ids.some(
-              (anchor) => anchor === system.id || lineageOf(model, anchor).some((node) => node.id === system.id),
-            ),
-          );
-          const groups = markerPlacement[system.id]?.groups || [];
-          const domains = childrenOf(model, system.id).filter((node) => node.kind === 'domain');
-          const subdomains = domains.flatMap((domain) =>
-            childrenOf(model, domain.id).filter((node) => node.kind === 'area'),
-          );
-          const capabilities = descendantsOf(model, system.id).filter((node) => node.kind === 'capability');
-          const prominentDomain = prominentChildIndex(
-            domains.map(
-              (domain) =>
-                1 + childrenOf(model, domain.id).filter((node) => node.kind === 'area').length * (detail > 1 ? 2 : 1),
-            ),
-          );
-          return (
-            <article
-              data-node-id={system.id}
-              key={system.id}
-              className={`overview-system${relatedIds.has(system.id) ? ' hotspot-related' : ''}`}
-            >
-              {groups.map((group) => (
-                <HotspotMapMarker
-                  key={group.id}
-                  id={group.id}
-                  items={systemHotspots.filter((item) => group.ids.includes(item.id))}
-                  onExpansionChange={setClusterExpanded}
-                  x={group.x}
-                  y={group.y}
-                  model={model}
-                  onOpen={onOpenHotspot}
-                  onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
-                />
-              ))}
-              <small>
-                <MetaTypeLabel node={system} />
-              </small>
-              <h3>
-                <MapNodeButton
-                  node={system}
-                  itemId={system.id}
-                  className={relatedIds.has(system.id) ? 'hotspot-related-item' : undefined}
-                  onClick={() => onOpen(system.id)}
-                >
-                  {system.name}
-                </MapNodeButton>
-              </h3>
-              <p>
-                <ModelText text={system.purpose || system.definition} />
-              </p>
-              {system.purpose && system.definition && (
-                <p className="overview-definition">
-                  <ModelText text={plainDefinition(system.definition)} />
-                </p>
-              )}
-              <div className="overview-stats" role="group" aria-label={`Contenu publié de ${system.name}`}>
-                <span>
-                  <strong>{domains.length}</strong> domaine{domains.length > 1 ? 's' : ''}
-                </span>
-                <span>
-                  <strong>{subdomains.length}</strong> sous-domaine{subdomains.length > 1 ? 's' : ''}
-                </span>
-                {capabilities.length > 0 && (
-                  <span>
-                    <strong>{capabilities.length}</strong> capacité{capabilities.length > 1 ? 's' : ''}
-                  </span>
-                )}
-              </div>
-              {detail > 0 && (
-                <div className="overview-hierarchy">
-                  {domains.length ? (
-                    <ul>
-                      {domains.map((domain, domainIndex) => {
-                        const areas = childrenOf(model, domain.id).filter((node) => node.kind === 'area');
-                        return (
-                          <li
-                            key={domain.id}
-                            className={domainIndex === prominentDomain ? 'overview-domain-prominent' : undefined}
-                          >
-                            <MapNodeButton
-                              node={domain}
-                              itemId={domain.id}
-                              className={`overview-domain-link${relatedIds.has(domain.id) ? ' hotspot-related-item' : ''}`}
-                              onClick={() => onOpen(domain.id)}
-                            >
-                              {domain.name}
-                            </MapNodeButton>
-                            {domain.purpose && (
-                              <span className="overview-domain-purpose">
-                                <ModelText text={domain.purpose} />
-                              </span>
-                            )}
-                            {detail > 1 && areas.length > 0 && (
-                              <ul>
-                                {areas.map((area) => (
-                                  <li key={area.id}>
-                                    <MapNodeButton
-                                      node={area}
-                                      itemId={area.id}
-                                      className={`overview-subdomain-link${relatedIds.has(area.id) ? ' hotspot-related-item' : ''}`}
-                                      onClick={() => onOpen(area.id)}
-                                    >
-                                      {area.name}
-                                    </MapNodeButton>
-                                  </li>
-                                ))}
-                              </ul>
-                            )}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  ) : (
-                    <p>Aucun domaine détaillé dans cette publication.</p>
-                  )}
+        {hotspotFilters.enabled && (
+          <HotspotLegend
+            count={visibleHotspots.length}
+            projections={systems.reduce(
+              (total, system) =>
+                total +
+                visibleHotspots.filter((hotspot) =>
+                  hotspot.location.node_ids.some(
+                    (id) => id === system.id || lineageOf(model, id).some((node) => node.id === system.id),
+                  ),
+                ).length,
+              rootHotspots.length,
+            )}
+          />
+        )}
+        {rootHotspots.length > 0 && (
+          <div
+            className="overview-global-hotspots"
+            role="group"
+            aria-label="Sujets transversaux à Enterprise Architecture"
+          >
+            <p>Sujets transversaux · {universe?.name}</p>
+            {rootHotspots.map((item) => (
+              <div className="overview-global-hotspot" key={item.id}>
+                <div className="overview-global-marker">
+                  <HotspotMapMarker
+                    id={item.id}
+                    items={[item]}
+                    x={32}
+                    y={32}
+                    model={model}
+                    onOpen={onOpenHotspot}
+                    onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
+                  />
                 </div>
-              )}
-            </article>
-          );
-        })}
+                <button type="button" onClick={() => onOpenHotspot(item.id)}>
+                  <ModelText text={item.title} />
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+        <div
+          className="overview-map-frame"
+          style={{ width: frame.width * scale, height: frame.height * scale || undefined }}
+        >
+          <div
+            ref={grid}
+            className={`urbanisation-overview ${systemSlots ? 'layout-fixed' : `layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}`}
+            style={{ width: frame.width, zoom: scale, '--overview-scale': scale } as CSSProperties}
+            data-layout={systemSlots ? 'fixed' : layout.kind}
+          >
+            {displayedSystems.map((system) => {
+              const systemHotspots = visibleHotspots.filter((hotspot) =>
+                hotspot.location.node_ids.some(
+                  (anchor) => anchor === system.id || lineageOf(model, anchor).some((node) => node.id === system.id),
+                ),
+              );
+              const groups = markerPlacement[system.id]?.groups || [];
+              const domains = childrenOf(model, system.id).filter((node) => node.kind === 'domain');
+              const subdomains = domains.flatMap((domain) =>
+                childrenOf(model, domain.id).filter((node) => node.kind === 'area'),
+              );
+              const capabilities = descendantsOf(model, system.id).filter((node) => node.kind === 'capability');
+              const prominentDomain = prominentChildIndex(
+                domains.map(
+                  (domain) =>
+                    1 +
+                    childrenOf(model, domain.id).filter((node) => node.kind === 'area').length * (detail > 1 ? 2 : 1),
+                ),
+              );
+              const domainSlots = operationsMapSlots(
+                system.id,
+                domains.map((domain) => domain.id),
+              );
+              const displayedDomains = domainSlots ? domainSlots.map((slot) => domains[slot.index]) : domains;
+              return (
+                <article
+                  data-node-id={system.id}
+                  key={system.id}
+                  className={`overview-system${systemHotspots.length ? ' has-map-hotspots' : ''}${relatedIds.has(system.id) ? ' hotspot-related' : ''}`}
+                >
+                  {groups.map((group) => (
+                    <HotspotMapMarker
+                      key={group.id}
+                      id={group.id}
+                      items={systemHotspots.filter((item) => group.ids.includes(item.id))}
+                      onExpansionChange={setClusterExpanded}
+                      x={group.x / scale}
+                      y={group.y / scale}
+                      model={model}
+                      onOpen={onOpenHotspot}
+                      onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
+                    />
+                  ))}
+                  <small>
+                    <MetaTypeLabel node={system} />
+                  </small>
+                  <h3>
+                    <MapNodeButton
+                      node={system}
+                      itemId={system.id}
+                      className={relatedIds.has(system.id) ? 'hotspot-related-item' : undefined}
+                      onClick={() => onOpen(system.id)}
+                    >
+                      {system.name}
+                    </MapNodeButton>
+                  </h3>
+                  <p>
+                    <ModelText text={system.purpose || system.definition} />
+                  </p>
+                  {system.purpose && system.definition && (
+                    <p className="overview-definition">
+                      <ModelText text={plainDefinition(system.definition)} />
+                    </p>
+                  )}
+                  <div className="overview-stats" role="group" aria-label={`Contenu publié de ${system.name}`}>
+                    <span>
+                      <strong>{domains.length}</strong> domaine{domains.length > 1 ? 's' : ''}
+                    </span>
+                    <span>
+                      <strong>{subdomains.length}</strong> sous-domaine{subdomains.length > 1 ? 's' : ''}
+                    </span>
+                    {capabilities.length > 0 && (
+                      <span>
+                        <strong>{capabilities.length}</strong> capacité{capabilities.length > 1 ? 's' : ''}
+                      </span>
+                    )}
+                  </div>
+                  {detail > 0 && (
+                    <div className="overview-hierarchy">
+                      {domains.length ? (
+                        <ul className={domainSlots ? 'overview-domains-fixed' : undefined}>
+                          {displayedDomains.map((domain, domainIndex) => {
+                            const slot = domainSlots?.[domainIndex];
+                            const areas = childrenOf(model, domain.id).filter((node) => node.kind === 'area');
+                            return (
+                              <li
+                                key={domain.id}
+                                className={
+                                  !domainSlots && domainIndex === prominentDomain
+                                    ? 'overview-domain-prominent'
+                                    : undefined
+                                }
+                                style={
+                                  slot
+                                    ? { gridRow: slot.row + 1, gridColumn: `${slot.column + 1} / span ${slot.span}` }
+                                    : undefined
+                                }
+                              >
+                                <MapNodeButton
+                                  node={domain}
+                                  itemId={domain.id}
+                                  className={`overview-domain-link${relatedIds.has(domain.id) ? ' hotspot-related-item' : ''}`}
+                                  onClick={() => onOpen(domain.id)}
+                                >
+                                  {domain.name}
+                                </MapNodeButton>
+                                {domain.purpose && (
+                                  <span className="overview-domain-purpose">
+                                    <ModelText text={domain.purpose} />
+                                  </span>
+                                )}
+                                {detail > 1 && areas.length > 0 && (
+                                  <ul>
+                                    {areas.map((area) => (
+                                      <li key={area.id}>
+                                        <MapNodeButton
+                                          node={area}
+                                          itemId={area.id}
+                                          className={`overview-subdomain-link${relatedIds.has(area.id) ? ' hotspot-related-item' : ''}`}
+                                          onClick={() => onOpen(area.id)}
+                                        >
+                                          {area.name}
+                                        </MapNodeButton>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      ) : (
+                        <p>Aucun domaine détaillé dans cette publication.</p>
+                      )}
+                    </div>
+                  )}
+                </article>
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
   );

@@ -6,6 +6,7 @@ import { browserOptions, chromium } from './browser-runtime.mjs';
 const dist = resolve(import.meta.dirname, process.env.ATLAS_HOTSPOT_DIST || 'dist');
 const catalog = JSON.parse(await readFile(resolve(dist, 'data/index.json'), 'utf8'));
 const model = JSON.parse(await readFile(resolve(dist, `data/${catalog.current_version}/model.json`), 'utf8'));
+const visibleHotspots = model.hotspot_catalog.hotspots.filter((item) => item.visible !== false);
 const parent = new Map(
   model.relations
     .filter((relation) => ['contains', 'presents'].includes(relation.type))
@@ -36,7 +37,7 @@ try {
       contentType: mime[extname(target)] || 'application/octet-stream',
     });
   });
-  for (const scope of [
+  const scopes = [
     '',
     'system-business-operations',
     'supply-chain-orchestration',
@@ -44,7 +45,8 @@ try {
     'domain-logistics-execution',
     'system-design-development',
     'domain-finance',
-  ]) {
+  ];
+  for (const scope of process.argv.includes('--filters-only') ? [] : scopes) {
     for (const depth of scope ? [0, 1, 2, 3, 4] : [0, 1, 2]) {
       await page.goto(
         `${base}#/map?version=${catalog.current_version}&mapDepth=${depth}${scope ? `&node=${scope}&scope=${scope}` : ''}`,
@@ -60,7 +62,7 @@ try {
         !['domain', 'business_system'].includes(model.nodes.find((node) => node.id === actualScope)?.kind)
       )
         actualScope = parent.get(actualScope);
-      const expected = model.hotspot_catalog.hotspots
+      const expected = visibleHotspots
         .filter((item) => item.location.node_ids.some((node) => belongs(node, actualScope)))
         .map((item) => item.id)
         .sort();
@@ -133,6 +135,10 @@ try {
           }
           return { markers: circles.length, ids: circles.map((circle) => circle.id), failures };
         });
+        if (geometry.failures.length) {
+          await page.screenshot({ path: resolve(import.meta.dirname, '.runtime/qa-hotspot-depths-failure.png') });
+          console.error(JSON.stringify({ scope: scope || 'overview', depth, width, ...geometry }));
+        }
         assert.deepEqual(geometry.failures, [], `${scope || 'overview'}/${depth}/${width}`);
         const represented = [
           ...new Set(geometry.ids.flatMap((id) => id.replace(/^hotspot:(cluster:)?/, '').split('|'))),
@@ -217,7 +223,7 @@ try {
   ]) {
     await filter.getByRole('combobox', { name: 'Criticité', exact: true }).selectOption(choice);
     const [mode, level] = choice.includes(':') ? choice.split(':') : ['exact', choice];
-    const expected = model.hotspot_catalog.hotspots
+    const expected = visibleHotspots
       .filter(
         (item) =>
           belongs(item.location.node_ids[0], 'system-business-operations') ||
@@ -233,11 +239,11 @@ try {
               : item.severity === level),
       );
     await page.waitForFunction(
-      (count) => document.querySelectorAll('.hotspot-filter-list > button').length === count,
+      (count) => document.querySelectorAll('.hotspot-filter-list > button:not(.hotspot-is-hidden)').length === count,
       expected.length,
     );
     assert.deepEqual(
-      (await filter.locator('.hotspot-filter-list > button strong').allTextContents()).sort(),
+      (await filter.locator('.hotspot-filter-list > button:not(.hotspot-is-hidden) strong').allTextContents()).sort(),
       expected.map((item) => item.title).sort(),
     );
   }
@@ -247,21 +253,29 @@ try {
   ]) {
     for (const value of values) {
       await filter.getByRole('group', { name: label, exact: true }).locator(`button[data-value="${value}"]`).click();
-      const expected = model.hotspot_catalog.hotspots.filter(
+      const expected = visibleHotspots.filter(
         (item) =>
           item.location.node_ids.some((node) => belongs(node, 'system-business-operations')) &&
           (value === 'all' || item[field] === value),
       );
       await page.waitForFunction(
-        (count) => document.querySelectorAll('.hotspot-filter-list > button').length === count,
+        (count) => document.querySelectorAll('.hotspot-filter-list > button:not(.hotspot-is-hidden)').length === count,
         expected.length,
       );
       assert.deepEqual(
-        (await filter.locator('.hotspot-filter-list > button strong').allTextContents()).sort(),
+        (await filter.locator('.hotspot-filter-list > button:not(.hotspot-is-hidden) strong').allTextContents()).sort(),
         expected.map((item) => item.title).sort(),
       );
     }
   }
+  await filter.getByRole('button', { name: 'Fermer les filtres' }).click();
+  // Domain focus retains automatic placement and the page zoom controls. The fixed
+  // four-row system map may correctly fall back to scrolling below the readability threshold.
+  const zoomScope = 'supply-chain-orchestration';
+  await page.goto(`${base}#/map?version=${catalog.current_version}&scope=${zoomScope}&node=${zoomScope}&mapDepth=0`);
+  await page.getByRole('button', { name: 'Pleine page', exact: true }).click();
+  await page.locator('.map-hotspot-picker .detail-trigger').click();
+  await filter.getByRole('checkbox', { name: 'Afficher les points chauds' }).check();
   await filter.getByRole('button', { name: 'Fermer les filtres' }).click();
   await page.waitForTimeout(700);
   for (let index = 0; index < 7; index++) {
@@ -288,8 +302,8 @@ try {
     );
   assert.deepEqual(
     fitted,
-    model.hotspot_catalog.hotspots
-      .filter((item) => item.location.node_ids.some((node) => belongs(node, 'system-business-operations')))
+    visibleHotspots
+      .filter((item) => item.location.node_ids.some((node) => belongs(node, zoomScope)))
       .map((item) => item.id)
       .sort(),
     'fitView restores every scoped subject, including grouped markers',

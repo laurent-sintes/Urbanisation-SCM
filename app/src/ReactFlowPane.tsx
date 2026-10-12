@@ -21,6 +21,7 @@ import { NodeIcon } from './icons';
 import { measureMapCards } from './mapCardMeasure';
 import { areaListAtDetail } from './mapDetail';
 import { chooseMapGrid } from './mapLayout';
+import { operationsMapSlots } from './mapPlacement';
 import { structuralMap } from './mapProjection';
 import { businessAreaSections, directSectionCaption } from './mapSections';
 import { type MapZoomChoice, resolveMapZoom, widthFit } from './mapZoom';
@@ -95,8 +96,8 @@ function Canvas(props: ReactFlowPaneProps) {
   const viewport = useViewport();
   const container = useRef<HTMLDivElement>(null);
   const capabilityOverview = detail >= 3;
-  const minimumHeight = fullscreen
-    ? Math.max(120, availableHeight)
+  const minimumHeight = availableHeight
+    ? Math.max(60, availableHeight)
     : matchMedia('(max-width: 600px)').matches
       ? 420
       : 600;
@@ -129,6 +130,16 @@ function Canvas(props: ReactFlowPaneProps) {
     return children.length ? { nodes: [scope, ...children], group: scope } : { nodes: [scope], group: undefined };
   }, [model, scopeId, areaSections, detail]);
   const items = useMemo(() => graph.nodes.filter((node) => node.id !== graph.group?.id), [graph]);
+  const fixedSlots = useMemo(
+    () =>
+      graph.group?.kind === 'business_system'
+        ? operationsMapSlots(
+            scopeId,
+            items.map((item) => item.id),
+          )
+        : undefined,
+    [graph.group, scopeId, items],
+  );
   // Height measurements only change placement; published descendants depend on scope and detail.
   const childLists = useMemo(() => {
     const lists = new Map<string, MapChildList>();
@@ -242,12 +253,20 @@ function Canvas(props: ReactFlowPaneProps) {
         measuredSections.set(cardWidth, result);
         return result;
       };
-      const pageGrid = chooseMapGrid(gridSections, canvasWidth, minimumHeight, 'page', Boolean(group), measure);
+      const pageGrid = chooseMapGrid(
+        gridSections,
+        canvasWidth,
+        minimumHeight,
+        'page',
+        Boolean(group),
+        measure,
+        fixedSlots,
+      );
       const mode = resolveMapZoom(zoomMode, detail, pageGrid.pageZoom);
       const grid =
         mode === 'page'
           ? pageGrid
-          : chooseMapGrid(gridSections, canvasWidth, minimumHeight, 'width', Boolean(group), measure);
+          : chooseMapGrid(gridSections, canvasWidth, minimumHeight, 'width', Boolean(group), measure, fixedSlots);
       const { cardWidth } = grid;
       const positioned: ((typeof inputs)[number] & { x: number; y: number; width: number })[] = [];
       let top = 16;
@@ -372,6 +391,7 @@ function Canvas(props: ReactFlowPaneProps) {
     detail,
     minimumHeight,
     zoomMode,
+    fixedSlots,
   ]);
   const effectiveZoomMode = layout.mode;
   useEffect(() => {
@@ -379,7 +399,11 @@ function Canvas(props: ReactFlowPaneProps) {
   }, [zoomMode, effectiveZoomMode, layout.nodes.length, props.onPageFallbackChange]);
   const nativeTouchScroll = (effectiveZoomMode === 'width' || capabilityOverview) && touch;
   const widthFrame =
-    layout.width && canvasWidth ? widthFit(layout.width, layout.height, canvasWidth, minimumHeight) : undefined;
+    layout.width && canvasWidth
+      ? widthFit(layout.width, layout.height, canvasWidth, minimumHeight, Boolean(fixedSlots))
+      : undefined;
+  const surfaceWidth =
+    effectiveZoomMode === 'width' && fixedSlots ? Math.max(canvasWidth, layout.width + 32) : undefined;
   const frameX = widthFrame?.x;
   const frameY = widthFrame?.y;
   const frameZoom = widthFrame?.zoom;
@@ -417,18 +441,29 @@ function Canvas(props: ReactFlowPaneProps) {
   // A new scope, detail or mode starts at the top of its map canvas.
   // biome-ignore lint/correctness/useExhaustiveDependencies: These values intentionally trigger a scroll reset.
   useEffect(() => {
-    container.current?.scrollTo({ top: 0, behavior: 'instant' });
+    container.current?.closest('.map-scroll-viewport')?.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [effectiveZoomMode, scopeId, detail]);
   useEffect(() => {
     const target = container.current;
     if (!target) return;
-    const observer = new ResizeObserver(() => {
+    const scroll = target.closest<HTMLElement>('.map-scroll-viewport');
+    const update = () => {
       setCanvasWidth(target.clientWidth);
-      if (fullscreen) setAvailableHeight(target.clientHeight);
-    });
+      const legend = scroll?.querySelector<HTMLElement>('.hotspot-map-legend');
+      setAvailableHeight(Math.max(60, (scroll?.clientHeight || target.clientHeight) - (legend?.offsetHeight || 0)));
+    };
+    const observer = new ResizeObserver(update);
     observer.observe(target);
-    return () => observer.disconnect();
-  }, [fullscreen]);
+    if (scroll) observer.observe(scroll);
+    const legend = scroll?.querySelector<HTMLElement>('.hotspot-map-legend');
+    if (legend) observer.observe(legend);
+    const mutations = new MutationObserver(update);
+    if (scroll) mutations.observe(scroll, { childList: true });
+    return () => {
+      observer.disconnect();
+      mutations.disconnect();
+    };
+  }, []);
   const nodes = useMemo(
     () =>
       layout.nodes.map((n) => {
@@ -624,7 +659,7 @@ function Canvas(props: ReactFlowPaneProps) {
     return () => cancelAnimationFrame(frame);
   }, [hotspotMarkers, viewport.x, viewport.y, viewport.zoom, canvasWidth, textMeasurementVersion]);
   const markerLayout = useMemo(() => {
-    const width = canvasWidth;
+    const width = surfaceWidth || canvasWidth;
     const height = effectiveZoomMode === 'width' ? widthFrame?.height || minimumHeight : minimumHeight;
     const anchor = (marker: HotspotMarker) => measuredMarkerPositions[marker.id] || { x: marker.x, y: marker.y };
     const screen = (marker: HotspotMarker) => ({
@@ -657,6 +692,7 @@ function Canvas(props: ReactFlowPaneProps) {
     measuredMarkerPositions,
     textObstacles,
     canvasWidth,
+    surfaceWidth,
     effectiveZoomMode,
     widthFrame?.height,
     minimumHeight,
@@ -742,14 +778,16 @@ function Canvas(props: ReactFlowPaneProps) {
   return (
     <div
       ref={container}
-      className={`graph-canvas zoom-${effectiveZoomMode} ${capabilityOverview ? 'capabilities-canvas' : ''} ${nativeTouchScroll ? 'touch-scroll' : ''}`}
-      style={!fullscreen && canvasHeight ? { height: canvasHeight } : undefined}
+      className={`graph-canvas zoom-${effectiveZoomMode} ${fixedSlots ? 'fixed-placement' : ''} ${capabilityOverview ? 'capabilities-canvas' : ''} ${nativeTouchScroll ? 'touch-scroll' : ''}`}
+      style={canvasHeight ? { height: canvasHeight } : undefined}
       data-testid="react-flow-canvas"
       data-layout-ms={layout.ms}
     >
       <div
         className="map-flow-surface"
-        style={effectiveZoomMode === 'width' && widthFrame ? { height: widthFrame.height } : undefined}
+        style={
+          effectiveZoomMode === 'width' && widthFrame ? { height: widthFrame.height, width: surfaceWidth } : undefined
+        }
       >
         <ReactFlow
           nodes={displayedNodes}

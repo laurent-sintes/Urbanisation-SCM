@@ -102,8 +102,11 @@ try {
   const hiddenChoice = picker.locator('[data-hotspot-id="HS-008"]');
   await hiddenChoice.waitFor();
   assert.deepEqual(
-    (await picker.locator('.hotspot-filter-list > button').evaluateAll((items) =>
-      items.slice(-2).map((item) => item.getAttribute('data-hotspot-id')))).sort(),
+    (
+      await picker
+        .locator('.hotspot-filter-list > button')
+        .evaluateAll((items) => items.slice(-2).map((item) => item.getAttribute('data-hotspot-id')))
+    ).sort(),
     ['HS-008', 'HS-011'],
   );
   assert.ok(await picker.locator('.hotspot-hidden-separator').isVisible());

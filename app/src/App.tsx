@@ -21,7 +21,14 @@ import { HelpPage } from './components/HelpPage';
 import { HotspotCatalogPage } from './components/HotspotCatalogPage';
 import { MapPanel } from './components/MapPanel';
 import { MarketComparisons } from './components/MarketComparisons';
-import { ContextReturn, MetaTypeLabel, ModelLinksProvider, ModelText, readingOrigin } from './components/ModelLinks';
+import {
+  ContextReturn,
+  MetaTypeLabel,
+  ModelLinksProvider,
+  ModelText,
+  readingOrigin,
+  readingViewport,
+} from './components/ModelLinks';
 import { Overview } from './components/Overview';
 import { ScenarioCatalogPage } from './components/ScenarioCatalogPage';
 import { Sidebar } from './components/Sidebar';
@@ -227,13 +234,33 @@ export function App() {
   // biome-ignore lint/correctness/useExhaustiveDependencies: These route fields intentionally reset reading position.
   useLayoutEffect(() => {
     // A new view starts at the top; selecting a card in the same map does not jump.
-    content.current?.scrollTo({
-      top: restoreScroll.current ?? Number(route.scroll || 0),
-      left: 0,
-      behavior: 'instant',
-    });
+    const top = restoreScroll.current ?? Number(route.scroll || 0);
+    const target = readingViewport(content.current);
+    const restore = () =>
+      target?.scrollTo({
+        top,
+        left: 0,
+        behavior: 'instant',
+      });
+    restore();
     restoreScroll.current = null;
     if (!route.section) heading.current?.focus({ preventScroll: true });
+    // Lazy maps acquire their scrollable height after mounting and card measurement.
+    if (top > 0 && target && target !== content.current) {
+      let timer: ReturnType<typeof setTimeout>;
+      const stop = () => observer.disconnect();
+      const observer = new MutationObserver(() => {
+        restore();
+        clearTimeout(timer);
+        timer = setTimeout(stop, 300);
+      });
+      observer.observe(target, { childList: true, subtree: true, attributes: true, attributeFilter: ['style'] });
+      timer = setTimeout(stop, 1000);
+      return () => {
+        clearTimeout(timer);
+        observer.disconnect();
+      };
+    }
   }, [
     model?.version,
     view,
@@ -248,7 +275,7 @@ export function App() {
   ]);
   const changeRoute = useCallback(
     (changes: Partial<RouteState>, replace = false) => {
-      changeLocation(changes, model, content.current?.scrollTop ?? 0, replace);
+      changeLocation(changes, model, readingViewport(content.current)?.scrollTop ?? 0, replace);
     },
     [changeLocation, model],
   );
@@ -930,13 +957,11 @@ export function App() {
                 tabIndex={0}
                 role="region"
                 aria-label="Contenu de la vue"
-                onScroll={(event) =>
-                  history.replaceState(
-                    { ...history.state, atlasScroll: event.currentTarget.scrollTop },
-                    '',
-                    location.href,
-                  )
-                }
+                onScrollCapture={(event) => {
+                  const target = event.target as HTMLElement;
+                  if (target !== readingViewport(content.current)) return;
+                  history.replaceState({ ...history.state, atlasScroll: target.scrollTop }, '', location.href);
+                }}
               >
                 <ContextReturn />
                 {/* biome-ignore lint/a11y/useAriaPropsSupportedByRole: Both runtime roles, region and tabpanel, support aria-labelledby. */}

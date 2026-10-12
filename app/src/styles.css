@@ -501,6 +501,18 @@ select {
 .map-workspace .workspace-content {
   padding-top: 0;
 }
+.map-workspace .workspace-content:has(#atlas-view > .map-panel, #atlas-view > .universe-overview) {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-bottom: 0;
+}
+.map-workspace #atlas-view:has(> .map-panel, > .universe-overview) {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
 .workspace-content:focus-visible {
   outline: 2px solid var(--green);
   outline-offset: -2px;
@@ -715,6 +727,22 @@ select {
   border-radius: 11px;
   overflow: visible;
   box-shadow: 0 4px 20px #243c2e03;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
+}
+.map-scroll-viewport {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
+}
+.map-panel > .map-toolbar,
+.map-panel > .map-footer {
+  flex-shrink: 0;
 }
 .map-workspace .view-bar {
   flex-wrap: wrap;
@@ -741,15 +769,11 @@ select {
   border-radius: 0;
 }
 .map-panel:fullscreen .graph-canvas {
-  flex: 1 1 auto;
   width: 100%;
   min-height: 0;
-  height: auto !important;
 }
 .map-panel:fullscreen .graph-canvas.zoom-width {
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-gutter: stable;
+  overflow: visible;
 }
 .map-toolbar {
   position: sticky;
@@ -757,6 +781,7 @@ select {
   z-index: 6;
   padding: 17px 21px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 15px;
@@ -969,6 +994,12 @@ select {
 }
 .graph-canvas.zoom-width .react-flow__pane {
   touch-action: pan-y;
+}
+.graph-canvas.zoom-width {
+  overflow: visible;
+}
+.graph-canvas.fixed-placement.zoom-width .react-flow__pane {
+  touch-action: pan-x pan-y pinch-zoom;
 }
 .react-flow__attribution {
   font-size: 9px !important;
@@ -1704,6 +1735,12 @@ select {
 
 /* Keep room to read beneath the fixed controls on short screens and at zoom. */
 @media (max-height: 650px) {
+  .universe-toolbar > h2,
+  .map-toolbar > div:first-child,
+  .map-workspace .workspace-footer,
+  .map-panel > .map-footer {
+    display: none;
+  }
   .workspace-header .breadcrumb-row {
     min-height: 40px;
     padding-top: 4px;

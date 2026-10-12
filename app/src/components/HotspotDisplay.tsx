@@ -60,11 +60,15 @@ function safePadding(reserveClusterSpace = false) {
   const heading = reserveClusterSpace
     ? document.querySelector('.hotspot-cluster-popover header')?.getBoundingClientRect()
     : undefined;
+  const toolbar =
+    reserveClusterSpace && !heading
+      ? document.querySelector('.map-toolbar, .universe-toolbar')?.getBoundingClientRect()
+      : undefined;
   const footer = reserveClusterSpace
     ? document.querySelector('.hotspot-cluster-pagination')?.getBoundingClientRect()
     : undefined;
   return {
-    top: Math.max(top, heading ? heading.bottom + 8 : 0),
+    top: Math.max(top, heading ? heading.bottom + 8 : toolbar ? toolbar.bottom + 8 : 0),
     left: 12,
     right: 12,
     bottom: footer ? window.innerHeight - footer.top + 8 : 12,

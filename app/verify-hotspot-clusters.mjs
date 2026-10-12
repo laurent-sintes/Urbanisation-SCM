@@ -655,6 +655,17 @@ try {
         const remaining = page.locator('.hotspot-map-marker').first();
         await remaining.waitFor();
         assert.equal(await remaining.evaluate((element) => Boolean(element.closest('[inert]'))), false);
+        const individual = page.locator('.hotspot-map-marker:not([aria-expanded])').first();
+        if (await individual.count()) {
+          await individual.hover();
+          const preview = page.locator('.hotspot-map-tooltip').first();
+          await preview.waitFor();
+          await page.waitForFunction(() => {
+            const preview = document.querySelector('.hotspot-map-tooltip')?.getBoundingClientRect();
+            const toolbar = document.querySelector('.map-toolbar, .universe-toolbar')?.getBoundingClientRect();
+            return preview && toolbar && preview.top >= toolbar.bottom;
+          });
+        }
         await page.getByRole('button', { name: 'Étendre la carte' }).click();
         await page.waitForFunction(() => Boolean(document.fullscreenElement));
       } finally {

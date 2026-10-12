@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
+import { hotspotImpactScopes } from './src/hotspotFraming.ts';
 import { hotspotsInScope } from './src/hotspotMap.ts';
 import { adaptPublication } from './src/model.ts';
 
@@ -48,12 +49,15 @@ try {
       const filter = page.getByRole('dialog', { name: 'Filtres des points chauds' });
       await filter.getByRole('checkbox', { name: 'Afficher les points chauds' }).check();
       await filter.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).uncheck();
+      await filter.getByRole('checkbox', { name: 'Hotspots transition', exact: true }).uncheck();
       await filter.getByRole('checkbox', { name: 'Impact à qualifier', exact: true }).uncheck();
-      const usageTitles = hotspots
-        .filter((item) => item.framing_impact?.category === 'usage')
+      const scopedHotspots =
+        view === 'overview' ? hotspots : hotspotsInScope(adaptPublication(model), 'system-business-operations');
+      const usageTitles = scopedHotspots
+        .filter((item) => item.visible !== false && hotspotImpactScopes(item).includes('usage'))
         .map((item) => item.title);
       assert.deepEqual(
-        await filter.locator('.hotspot-filter-list-label strong').allTextContents(),
+        await filter.locator('.hotspot-filter-list > button:not(.hotspot-is-hidden) strong').allTextContents(),
         usageTitles,
         'Map picker follows usage filter',
       );
@@ -62,6 +66,7 @@ try {
         () => !document.querySelector('.overview-system .hotspot-map-marker, .graph-canvas .hotspot-map-marker'),
       );
       await filter.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).check();
+      await filter.getByRole('checkbox', { name: 'Hotspots transition', exact: true }).check();
       await filter.getByRole('checkbox', { name: 'Hotspots usage', exact: true }).check();
       await filter.getByRole('checkbox', { name: 'Impact à qualifier', exact: true }).check();
       await filter.getByRole('combobox', { name: 'Criticité', exact: true }).selectOption('exact:S');
@@ -102,6 +107,7 @@ try {
           textCollisions = 0,
           interceptedTargets = 0;
         const collisions = [];
+        const interceptions = [];
         for (let i = 0; i < circles.length; i++)
           for (let j = i + 1; j < circles.length; j++) {
             const a = circles[i],
@@ -111,9 +117,42 @@ try {
           }
         for (const circle of circles) {
           const headerBottom = document.querySelector('.topbar').getBoundingClientRect().bottom;
-          if (circle.y > headerBottom && circle.y < innerHeight && circle.x > 0 && circle.x < innerWidth) {
+          let insideScrollports = true;
+          for (let ancestor = circle.parent; ancestor; ancestor = ancestor.parentElement) {
+            const style = getComputedStyle(ancestor);
+            const box = ancestor.getBoundingClientRect();
+            if (
+              style.overflowX !== 'visible' &&
+              (circle.x < box.left + ancestor.clientLeft ||
+                circle.x > box.left + ancestor.clientLeft + ancestor.clientWidth)
+            )
+              insideScrollports = false;
+            if (
+              style.overflowY !== 'visible' &&
+              (circle.y < box.top + ancestor.clientTop ||
+                circle.y > box.top + ancestor.clientTop + ancestor.clientHeight)
+            )
+              insideScrollports = false;
+          }
+          if (
+            insideScrollports &&
+            circle.y > headerBottom &&
+            circle.y < innerHeight &&
+            circle.x > 0 &&
+            circle.x < innerWidth
+          ) {
             const hit = document.elementFromPoint(circle.x, circle.y)?.closest('.hotspot-map-marker');
-            if (hit?.getAttribute('data-id') !== circle.id) interceptedTargets++;
+            if (hit?.getAttribute('data-id') !== circle.id) {
+              interceptedTargets++;
+              const blocker = document.elementFromPoint(circle.x, circle.y);
+              interceptions.push({
+                id: circle.id,
+                x: circle.x,
+                y: circle.y,
+                blocker: blocker?.className,
+                text: blocker?.textContent?.slice(0, 100),
+              });
+            }
           }
           const regions = circle.parent.querySelectorAll(
             '.business-card, .container-label, .category-banner, small, h3, p, .overview-stats, .overview-hierarchy, .overview-global-hotspot > button',
@@ -146,10 +185,15 @@ try {
           textCollisions,
           interceptedTargets,
           collisions,
+          interceptions,
           diameters: circles.map((circle) => circle.diameter),
           ids: circles.map((circle) => circle.id),
         };
       }, markerSelector);
+      if (geometry.interceptedTargets || geometry.textCollisions || geometry.overlaps) {
+        await page.screenshot({ path: resolve(output, `failure-${width}-${view}.png`) });
+        console.error(JSON.stringify({ width, view, ...geometry }));
+      }
       assert.equal(geometry.overlaps, 0, `${width}/${view}: marker clearance`);
       assert.equal(geometry.interceptedTargets, 0, `${width}/${view}: every visible center is clickable`);
       assert.equal(
@@ -164,12 +208,21 @@ try {
       const represented = new Set(geometry.ids.flatMap((id) => id.replace(/^hotspot:(cluster:)?/, '').split('|')));
       const expectedIds = (
         view === 'overview' ? hotspots : hotspotsInScope(adaptPublication(model), 'system-business-operations')
-      ).map((item) => item.id);
+      )
+        .filter((item) => item.visible !== false)
+        .map((item) => item.id);
       assert.deepEqual(
         [...represented].sort(),
         expectedIds.sort(),
         `${width}/${view}: every subject in this scope remains visible`,
       );
+      // A center outside a native scrollport is hidden until scrolled into view, not intercepted.
+      // Check the rightmost/lower markers through the actual pointer journey as well.
+      for (const marker of [markers.first(), markers.last()]) {
+        await marker.hover();
+        await page.keyboard.press('Escape');
+        await page.mouse.move(0, 0);
+      }
       const individual = page.locator(`${markerSelector}:not(:has(.hotspot-map-count))`).first();
       await individual.hover();
       const tooltip = page

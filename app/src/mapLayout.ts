@@ -1,4 +1,5 @@
 import { chooseLayoutCandidate } from './adaptiveLayout.ts';
+import type { MapSlot } from './mapPlacement.ts';
 import type { MapZoomMode } from './mapZoom';
 
 export interface GridSection {
@@ -37,7 +38,40 @@ export function chooseMapGrid(
   mode: MapZoomMode,
   group = false,
   measure?: (cardWidth: number) => readonly GridSection[],
+  slots?: readonly MapSlot[],
 ): MapGrid {
+  if (slots && sections.length === 1) {
+    const columns = 2;
+    const usableWidth = Math.max(1, viewportWidth - 64 - (group ? 28 : 0));
+    const cardWidth = Math.max(MIN_CARD_WIDTH, Math.min(1200, Math.floor((usableWidth - GAP) / columns)));
+    const measuredSections = measure?.(cardWidth) || sections;
+    const wideSection = measure?.(cardWidth * 2 + GAP)?.[0] || sections[0];
+    const rows: GridItem[][] = [];
+    for (const rowNumber of [...new Set(slots.map((slot) => slot.row))]) {
+      const entries = slots
+        .filter((slot) => slot.row === rowNumber)
+        .map((slot) => {
+          const height = (slot.span === 2 ? wideSection : measuredSections[0]).heights[slot.index];
+          return { index: slot.index, column: slot.column, span: slot.span, height, displayHeight: height };
+        });
+      rows.push(entries);
+    }
+    const width = columns * cardWidth + GAP + 32 + (group ? 28 : 0);
+    const height =
+      4 +
+      measuredSections[0].headingHeight +
+      rows.reduce((total, row) => total + Math.max(...row.map((entry) => entry.height)) + GAP, 0) +
+      (group ? 70 : 0);
+    return {
+      columns,
+      cardWidth,
+      width,
+      height,
+      pageZoom: Math.min(1, Math.max(1, viewportWidth - 32) / width, Math.max(1, viewportHeight - 32) / height),
+      sections: measuredSections,
+      rows: [rows],
+    };
+  }
   const itemCount = sections.reduce((count, section) => count + section.heights.length, 0);
   // Reserve the viewport padding and the optional container gutter before sizing cards.
   const usableWidth = Math.max(1, viewportWidth - 64 - (group ? 28 : 0));

@@ -481,7 +481,7 @@ try {
     await pageButton.locator('.map-zoom-asterisk').waitFor();
     assert.equal(await page.locator('.graph-canvas .map-layout-note').count(), 0);
     await pageButton.hover();
-    const explanation = page.getByRole('tooltip').filter({ hasText: 'Parcours vertical à taille de lecture' });
+    const explanation = page.getByRole('tooltip').filter({ hasText: 'Parcours à taille de lecture' });
     await explanation.waitFor();
     await pageButton.focus();
     assert.equal(await explanation.isVisible(), true);
@@ -635,7 +635,7 @@ try {
   await touchPage.getByRole('button', { name: 'Pleine page' }).tap();
   await touchPage.locator('.graph-canvas.zoom-width').waitFor();
   await touchPage.getByRole('button', { name: 'Pleine page' }).locator('.map-zoom-asterisk').waitFor();
-  const touchExplanation = touchPage.getByRole('tooltip').filter({ hasText: 'Parcours vertical à taille de lecture' });
+  const touchExplanation = touchPage.getByRole('tooltip').filter({ hasText: 'Parcours à taille de lecture' });
   await touchExplanation.waitFor();
   const touchTooltipBox = await touchExplanation.boundingBox();
   assert.ok(touchTooltipBox && touchTooltipBox.x >= 0 && touchTooltipBox.x + touchTooltipBox.width <= 390);

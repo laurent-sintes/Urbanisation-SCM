@@ -81,11 +81,15 @@ function useAnchoredTooltip<T extends HTMLElement>() {
   return { id, anchor: refs.setReference, tooltip: refs.setFloating, open, setOpen, host, position: floatingStyles };
 }
 
+export function readingViewport(root: HTMLElement | null = document.querySelector('.workspace-content')) {
+  return root?.querySelector<HTMLElement>('.map-scroll-viewport, .overview-map-scroll') || root;
+}
+
 export function readingOrigin(route: RouteState, version: string) {
   return routeHash({
     ...route,
     version: route.version ? version : '',
-    scroll: String(Math.round(document.querySelector('.workspace-content')?.scrollTop || 0)),
+    scroll: String(Math.round(readingViewport()?.scrollTop || 0)),
   });
 }
 
