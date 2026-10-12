@@ -13,6 +13,20 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from scripts.preflight_push import fingerprint
 
+# These tests use isolated fixtures or code/workflow contracts. A backlog edit
+# cannot affect their assertions. Every other module retains the full input
+# stamp until its data dependencies are explicitly reviewed.
+BACKLOG_INDEPENDENT = frozenset({
+    'test_check_policy', 'test_clean_generated', 'test_git_batch',
+    'test_preflight_push', 'test_python_check_receipts',
+})
+
+
+def module_inputs(inputs, name):
+    if name in BACKLOG_INDEPENDENT:
+        return {path: digest for path, digest in inputs.items() if not path.startswith('modeles/backlog/')}
+    return inputs
+
 
 def run(root=ROOT, *, directory='scripts', full=False, modules=None):
     root = Path(root).resolve()
@@ -26,7 +40,7 @@ def run(root=ROOT, *, directory='scripts', full=False, modules=None):
     inputs = fingerprint(root, include_generated=False)
     runtime = {'python': sys.version, 'optimize': sys.flags.optimize, 'platform': platform.platform(),
                'atlas': {key: value for key, value in os.environ.items() if key.startswith('ATLAS_')}}
-    scope = sha256(json.dumps({'inputs': inputs, 'runtime': runtime}, sort_keys=True).encode()).hexdigest()
+    full_scope_stamp = sha256(json.dumps({'inputs': inputs, 'runtime': runtime}, sort_keys=True).encode()).hexdigest()
     output = root / '.runtime/python-checks'
     output.mkdir(parents=True, exist_ok=True)
     env = dict(os.environ)
@@ -36,6 +50,7 @@ def run(root=ROOT, *, directory='scripts', full=False, modules=None):
                PYTHONPATH=os.pathsep.join((str(root / 'app'), str(root))))
     rows = []
     for name in names:
+        scope = sha256(json.dumps({'inputs': module_inputs(inputs, name), 'runtime': runtime}, sort_keys=True).encode()).hexdigest()
         receipt = output / (directory + '-' + name + '.json')
         # Preserve discovery's import path: some existing tests import sibling modules.
         command = [sys.executable, '-m', 'unittest', 'discover', '-s', directory, '-p', name + '.py']
@@ -62,7 +77,7 @@ def run(root=ROOT, *, directory='scripts', full=False, modules=None):
         # None of this run's results can be reused under the changed input stamp.
         raise ValueError('Sources changed during Python checks')
     result = {'status': 'passed' if all(row['status'] == 'passed' for row in rows) else 'failed',
-              'modules': rows, 'full_scope': not bool(modules), 'scope': scope}
+              'modules': rows, 'full_scope': not bool(modules), 'scope': full_scope_stamp}
     (output / (directory + '-report.json')).write_text(json.dumps(result, indent=2), encoding='utf-8')
     return result
 

@@ -160,6 +160,12 @@ try {
   await page.reload();
   const wholesale = model.hotspot_catalog.hotspots.find((item) => item.id === 'HS-008');
   await page.getByRole('button', { name: `Qualification et avancement de ${wholesale.title}`, exact: true }).waitFor();
+  await page.evaluate(() => {
+    window.originalStorageWrite = Storage.prototype.setItem;
+    Storage.prototype.setItem = () => {
+      throw new DOMException('Quota exceeded', 'QuotaExceededError');
+    };
+  });
   await page.getByRole('button', { name: `Criticité et complexités de ${wholesale.title}`, exact: true }).click();
   const dialog = page.getByRole('dialog', { name: /^Complexités/ });
   await dialog
@@ -169,6 +175,11 @@ try {
     .getByRole('textbox', { name: 'Justification d’implémentation', exact: true })
     .fill('Dépendances documentées pour le test.');
   assert.equal(posts.length, 0, 'editing a draft never submits it');
+  await page.getByText('Le stockage local est indisponible.', { exact: false }).waitFor();
+  assert.equal(await page.locator('.hotspot-table').isVisible(), true, 'the draft remains usable without storage');
+  await page.evaluate(() => {
+    Storage.prototype.setItem = window.originalStorageWrite;
+  });
   await dialog.getByRole('button', { name: 'Terminer', exact: true }).click();
   await page.getByRole('button', { name: 'Enregistrer les modifications', exact: true }).click();
   await page.waitForFunction(() => document.querySelector('.hotspot-save-message')?.textContent.includes('enregistré'));
@@ -177,6 +188,16 @@ try {
   assert.equal(posts[0].changes[0].fields.complexity.implementation_rationale, 'Dépendances documentées pour le test.');
   assert.equal(posts[0].changes[0].fields.complexity.political, wholesale.complexity.political);
   assert.equal(posts[0].changes[0].fields.complexity.implementation, wholesale.complexity.implementation);
+  await page.addInitScript(() => {
+    const read = Storage.prototype.getItem;
+    Storage.prototype.getItem = function (key) {
+      if (key.startsWith('atlas-hotspot-drafts:')) throw new DOMException('Storage denied', 'SecurityError');
+      return read.call(this, key);
+    };
+  });
+  await page.reload();
+  await page.getByText('Le stockage local est indisponible.', { exact: false }).waitFor();
+  assert.equal(await page.locator('.hotspot-table').isVisible(), true, 'a failed draft read keeps the catalog usable');
   assert.deepEqual(errors, []);
   assert.deepEqual(model, JSON.parse(payload), 'frozen publication is unchanged');
   console.log(

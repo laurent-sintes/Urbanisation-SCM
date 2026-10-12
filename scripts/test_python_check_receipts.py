@@ -50,6 +50,20 @@ class PythonCheckReceiptsTests(unittest.TestCase):
              patch('scripts.run_python_tests.subprocess.run', return_value=SimpleNamespace(returncode=0)):
             self.assertFalse(run(self.root, modules=['test_one'])['full_scope'])
 
+    def test_backlog_edit_reuses_only_explicitly_independent_module(self):
+        (self.root / 'scripts/test_preflight_push.py').write_text('')
+        (self.root / 'scripts/test_models.py').write_text('')
+        inputs = {'scripts/check.py': 'same', 'modeles/backlog/model.yaml': 'before'}
+        with patch('scripts.run_python_tests.fingerprint', side_effect=lambda *args, **kwargs: inputs.copy()), \
+             patch('scripts.run_python_tests.platform.platform', return_value='test'), \
+             patch('scripts.run_python_tests.subprocess.run', return_value=SimpleNamespace(returncode=0)) as process:
+            run(self.root, modules=['test_preflight_push', 'test_models'])
+            inputs['modeles/backlog/model.yaml'] = 'after'
+            result = run(self.root, modules=['test_preflight_push', 'test_models'])
+        reused = {row['module']: row['reused'] for row in result['modules']}
+        self.assertEqual(reused, {'test_models': False, 'test_preflight_push': True})
+        self.assertEqual(process.call_count, 3)
+
 
 if __name__ == '__main__':
     unittest.main()

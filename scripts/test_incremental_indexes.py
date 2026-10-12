@@ -79,7 +79,10 @@ class IncrementalIndexTests(unittest.TestCase):
 
     def test_model_changes_run_current_tests_and_unknown_changes_fail_closed(self):
         result = plan(['modeles/backlog/model.yaml'])
-        self.assertTrue(all(result[key] for key in ('contracts', 'frontend', 'browser')))
+        self.assertTrue(result['contracts'])
+        self.assertFalse(result['frontend'])
+        self.assertFalse(result['browser'])
+        self.assertTrue(all(plan(['modeles/release/index.json'])[key] for key in ('contracts', 'frontend', 'browser')))
         self.assertTrue(plan(['unknown.config'])['contracts'])
         self.assertFalse(plan(['app/README.md'])['browser'])
         self.assertTrue(plan(['scripts/test_credit_check.py'])['contracts'])

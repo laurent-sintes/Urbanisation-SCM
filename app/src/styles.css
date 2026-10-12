@@ -1736,10 +1736,26 @@ select {
 /* Keep room to read beneath the fixed controls on short screens and at zoom. */
 @media (max-height: 650px) {
   .universe-toolbar > h2,
-  .map-toolbar > div:first-child,
   .map-workspace .workspace-footer,
   .map-panel > .map-footer {
     display: none;
+  }
+  .map-toolbar {
+    min-height: 0;
+    padding: 7px 12px;
+    gap: 6px;
+  }
+  .map-toolbar > div:first-child {
+    flex: 1 1 120px;
+  }
+  .map-toolbar .toolbar-note {
+    display: none;
+  }
+  .map-toolbar strong {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
   .workspace-header .breadcrumb-row {
     min-height: 40px;

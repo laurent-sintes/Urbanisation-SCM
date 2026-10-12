@@ -174,6 +174,14 @@ try {
     await page.locator('.map-scroll-viewport').evaluate((element) => element.scrollWidth > element.clientWidth),
   );
   await page.evaluate(() => document.exitFullscreen());
+  await page.setViewportSize({ width: 840, height: 420 });
+  await visit({ node: systemId, scope: systemId, mapDepth: '0' });
+  await page.getByRole('button', { name: 'Étendre la carte', exact: true }).click();
+  await page.waitForFunction(() => Boolean(document.fullscreenElement));
+  const shortScreenTitle = page.locator('.map-toolbar > div:first-child > strong');
+  assert.equal(await shortScreenTitle.innerText(), 'Business Operations');
+  assert.equal(await shortScreenTitle.isVisible(), true);
+  await page.evaluate(() => document.exitFullscreen());
   const columns = [];
   for (const width of [768, 1800]) {
     await page.setViewportSize({ width, height: 1000 });
