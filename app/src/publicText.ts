@@ -5,6 +5,11 @@
 export function publicText(text: string = ''): string {
   const refs = 'U\\d+(?:/U\\d+)*';
   let result = text;
+  // These source IDs are private contribution locators, not reader-accessible stories.
+  result = result.replace(
+    /Quelles précisions des récits U02\/U10\/U30\/U31 restent actuelles au regard de U953, limité aux commandes avant engagement\s+ferme \?/g,
+    'Quelles règles de réservation du stock, de couverture par les réceptions futures et de réaffectation entre commandes restent actuelles avant engagement ferme ?',
+  );
   const editorialSentences = [
     'Notion locale en cours de consolidation ; consulter les sources et les réserves.',
     'Les deux derniers comportements et la formulation simplifiée sont proposés à la suite de U439/U440/U442.',
@@ -37,6 +42,7 @@ export function publicText(text: string = ''): string {
     .replace(/Le périmètre adopté /g, 'Le périmètre ')
     .replace(/U\d+ adopte trois comportements :/g, 'Trois comportements :')
     .replace(new RegExp(`^(?:Précision éditoriale |Nommage |Convention )?${refs}\\s*:\\s*`, 'gm'), '')
+    .replace(new RegExp(`^${refs}\\s*[—–-]\\s*`, 'gm'), '')
     .replace(new RegExp(`\\b(?:Depuis|Selon) ${refs},\\s*`, 'g'), '')
     .replace(new RegExp(`(?: sont)? adopté[es]* ${refs}`, 'g'), '')
     .replace(/comportements adoptés —/g, 'comportements —')

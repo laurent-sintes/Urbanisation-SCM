@@ -2,9 +2,11 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
   defaultHotspotMapFilters,
+  encodeHotspotFilters,
   filterMapHotspots,
   hotspotRelatedElementIds,
   hotspotsInScope,
+  readHotspotFilters,
   severityForComplexities,
   updateHotspotMapFilters,
 } from './src/hotspotMap.ts';
@@ -12,6 +14,20 @@ import { mapRouteForNode } from './src/mapNavigation.ts';
 import { adaptPublication } from './src/model.ts';
 
 const node = (id, kind) => ({ id, kind, fields: { name: id } });
+test('shared filters round-trip safely without accepting malformed or unknown criteria', () => {
+  const filters = updateHotspotMapFilters(defaultHotspotMapFilters, {
+    enabled: true,
+    showModelHotspots: false,
+    severity: 'L',
+  });
+  assert.deepEqual(readHotspotFilters(encodeHotspotFilters(filters)), filters);
+  assert.deepEqual(readHotspotFilters('{'), defaultHotspotMapFilters);
+  assert.deepEqual(readHotspotFilters('[]'), defaultHotspotMapFilters);
+  assert.deepEqual(
+    readHotspotFilters(JSON.stringify({ status: 'arbitrary', enabled: 'yes', unknown: true })),
+    defaultHotspotMapFilters,
+  );
+});
 test('model and usage filters stay independent and keep unqualified and historical subjects explicit', () => {
   const cases = ['structuring', 'usage', 'to_assess', undefined].map((category, index) => ({
     id: `impact-${index}`,

@@ -46,15 +46,16 @@ test('stages require evidence; a block requires a next step; impossible dates fa
   item.resolution.next_step = 'Obtenir les volumes';
   assert.deepEqual(resolutionErrors(item), []);
 });
-test('map hides closed framing by default and permits explicit retrieval', () => {
+test('common list and map filters include resolved framing and permit explicit hiding', () => {
   const closed = hotspot('credible'),
     open = { ...hotspot('qualifying'), id: 'open' };
   const filters = { ...defaultHotspotMapFilters, enabled: true };
   assert.deepEqual(
     filterMapHotspots([closed, open], filters).map((item) => item.id),
-    ['open'],
+    ['fixture', 'open'],
   );
   assert.equal(filterMapHotspots([closed, open], { ...filters, showResolved: true }).length, 2);
+  assert.deepEqual(filterMapHotspots([closed, open], { ...filters, showResolved: false }), [open]);
   assert.deepEqual(filterMapHotspots([closed, open], { ...filters, resolutionStage: 'credible' }), [closed]);
   assert.deepEqual(filterMapHotspots([closed, open], { ...filters, status: 'resolved' }), [closed]);
 });

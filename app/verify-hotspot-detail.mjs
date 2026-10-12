@@ -105,6 +105,24 @@ try {
     await readFile(resolve(dist, `data/${index.current_version}/documents/${documentId}.pdf`)),
   );
   assert.equal(pdfBytes.subarray(0, 5).toString(), '%PDF-');
+  const wholesale = model.hotspot_catalog.hotspots.find((item) => item.id === 'HS-008');
+  assert.ok(wholesale);
+  await page.goto(`${base}#/hotspots?version=${index.current_version}&hotspot=${wholesale.id}`);
+  const criticality = detail.getByRole('group', { name: `Criticité · ${wholesale.severity}` });
+  await criticality.waitFor();
+  assert.ok((await criticality.innerText()).includes('résulte du croisement'));
+  assert.ok((await criticality.innerText()).includes(`Complexité politique · ${wholesale.complexity.political}`));
+  assert.ok(
+    (await criticality.innerText()).includes(`Complexité d’implémentation · ${wholesale.complexity.implementation}`),
+  );
+  assert.ok((await criticality.innerText()).includes(text(wholesale.complexity.rationale)));
+  assert.equal(await criticality.locator('dd').count(), 2, 'both complexity axes have a textual explanation');
+  const questions = detail
+    .locator('.hotspot-gap-analysis li')
+    .filter({ hasText: 'Quelles règles de réservation du stock' });
+  assert.equal(await questions.count(), 2);
+  assert.equal(/\bU(?:02|10|30|31|953)\b/.test(await questions.first().innerText()), false);
+  await criticality.screenshot({ path: resolve(output, 'wholesale-criticality.png') });
   await open();
   assert.equal(await detail.getByRole('heading', { level: 3 }).innerText(), text(original.title));
   for (const field of [original.problem, ...original.examples, original.complexity.rationale]) {
@@ -341,7 +359,7 @@ try {
   );
   await detail.getByRole('button', { name: 'Étendre la fiche' }).click();
   await detail.getByRole('button', { name: 'Compléter l’avancement' }).click();
-  const dialog = page.getByRole('dialog', { name: /^Résolution/ });
+  const dialog = page.getByRole('dialog', { name: /^Qualification et avancement/ });
   await dialog.waitFor();
   assert.equal(
     await dialog.evaluate((element) => document.fullscreenElement.contains(element)),
@@ -355,7 +373,7 @@ try {
     'draft reflected in the story before saving',
   );
   assert.ok((await detail.innerText()).includes('Modifications non enregistrées'));
-  await page.getByRole('button', { name: 'Valider les modifications' }).click();
+  await page.getByRole('button', { name: 'Enregistrer les modifications' }).click();
   await page.waitForFunction(() => document.querySelector('.hotspot-save-message')?.textContent.includes('enregistré'));
   assert.equal(posts.length, 1);
   assert.equal(posts[0].changes[0].fields.resolution.next_step, 'Vérifier les volumes avec les équipes.');

@@ -42,6 +42,7 @@ export interface RouteState extends GraphRoute {
   scroll?: string;
   scenario?: string;
   hotspot?: string;
+  hotspotFilters?: string;
   hotspotGroup?: string;
   document?: string;
   helpTopic?: 'start' | 'workshop';
@@ -121,6 +122,7 @@ export function readRoute(hash: string): RouteState {
         .map((k) => [k, p.get(k) || '']),
     ),
     ...(view === 'hotspots' && p.has('hotspot') ? { hotspot: p.get('hotspot') || '' } : {}),
+    ...(p.has('hf') && (p.get('hf') || '').length <= 1200 ? { hotspotFilters: p.get('hf') || '' } : {}),
     ...(view === 'hotspots' && p.has('group') ? { hotspotGroup: p.get('group') || '' } : {}),
     ...(view === 'documents' && p.has('document') ? { document: p.get('document') || '' } : {}),
     ...(view === 'help' && p.get('topic') === 'workshop' ? { helpTopic: 'workshop' as const } : {}),
@@ -154,6 +156,7 @@ export function routePath(route: RouteState, model?: PublishedModel | null): str
     topic: route.view === 'help' && route.helpTopic === 'workshop' ? 'workshop' : undefined,
     version: route.version,
     node: route.node,
+    hf: route.hotspotFilters,
     scope: route.scope,
     ...(route.view === 'map' ? { mapDepth: route.mapDepth, mapFocus: route.mapFocus } : {}),
     q: route.query,

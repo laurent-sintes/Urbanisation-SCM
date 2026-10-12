@@ -25,6 +25,9 @@ def validate_catalog(model):
     catalog = model.get('hotspot_catalog')
     if catalog is None:
         return []
+    policy = catalog.get('criticality_policy')
+    if policy and (policy.get('id') != 'matrix-v1' or policy.get('levels') != list(LEVELS) or policy.get('matrix') != [list(row) for row in MATRIX]):
+        return ['Hotspot criticality policy differs from matrix-v1']
     nodes = {node['id']: node for node in model['nodes']}
     errors = []
     ids = set()
@@ -92,6 +95,8 @@ def validate_catalog(model):
         complexity = hotspot['complexity']
         if hotspot['severity'] != severity_for(complexity['political'], complexity['implementation']):
             errors.append(f'{identifier}: severity does not match matrix-v1')
+        if any(not isinstance(complexity.get(key, ''), str) for key in ('political_rationale', 'implementation_rationale')):
+            errors.append(f'{identifier}: per-axis rationale must be text')
         if any(complexity[axis] != 'unassessed' for axis in ('political', 'implementation')) and not complexity['rationale'].strip():
             errors.append(f'{identifier}: assessed complexity requires a rationale')
     return errors

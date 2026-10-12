@@ -137,6 +137,8 @@ def checked_hotspot(value, nodes):
     complexity = value.get('complexity', {})
     if not isinstance(complexity, dict) or not isinstance(complexity.get('rationale'), str):
         raise ValueError('La justification de complexité doit être un texte.')
+    if any(not isinstance(complexity.get(key, ''), str) for key in ('political_rationale', 'implementation_rationale')):
+        raise ValueError('Les justifications par axe doivent être des textes.')
     political, implementation = complexity.get('political'), complexity.get('implementation')
     if political not in (*LEVELS, 'unassessed') or implementation not in (*LEVELS, 'unassessed'):
         raise ValueError('Les difficultés doivent être S, M, L, XL ou non évaluées.')
@@ -308,7 +310,8 @@ def apply_table_changes(root, request):
             if not isinstance(fields, dict) or not fields or set(fields) - TABLE_EDITABLE:
                 raise ValueError('Champs de tableau non autorisés.')
             if 'complexity' in fields and (not isinstance(fields['complexity'], dict)
-                                           or set(fields['complexity']) != {'political', 'implementation', 'rationale'}):
+                                           or not {'political', 'implementation', 'rationale'} <= set(fields['complexity'])
+                                           or not set(fields['complexity']) <= {'political', 'implementation', 'rationale', 'political_rationale', 'implementation_rationale'}):
                 raise ValueError('Complexité de tableau invalide.')
             if 'status' in fields and fields['status'] not in ('discovered', 'shared', 'validated', 'resolved'):
                 raise ValueError('Statut de tableau inconnu.')

@@ -192,9 +192,9 @@ try {
       await page.locator('.hotspot-detail').waitFor();
       if (width === 1440 && view === 'overview') {
         await page.getByRole('button', { name: /Tous les points chauds/ }).click();
-        const summary = page.getByRole('button', { name: /^Résumé de / }).first();
+        const summary = page.getByRole('button', { name: /^Criticité et complexités de / }).first();
         await summary.focus();
-        const catalogTip = page.locator('.hotspot-subject-tooltip');
+        const catalogTip = page.locator('.hotspot-map-tooltip');
         await catalogTip.waitFor();
         await assertWithinViewport(catalogTip, page);
         await page.keyboard.press('Escape');

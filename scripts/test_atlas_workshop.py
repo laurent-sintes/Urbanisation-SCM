@@ -111,13 +111,17 @@ class WorkshopTests(unittest.TestCase):
         batch = {'session_id': stage['session_id'], 'expected_revision': 2,
                  'changes': [
                      {'id': 'AT-HS-001', 'fields': {'title': 'Premier précisé', 'complexity': {
-                         'political': 'XL', 'implementation': 'L', 'rationale': 'Décision transverse.'}}},
+                         'political': 'XL', 'implementation': 'L', 'rationale': 'Décision transverse.',
+                         'political_rationale': 'Compromis entre pôles.',
+                         'implementation_rationale': 'Interfaces interdépendantes.'}}},
                      {'id': 'AT-HS-002', 'fields': {'status': 'shared'}},
                  ]}
         result = apply_table_changes(self.root, batch)
         self.assertEqual(result['revision'], 4)
         items = effective_hotspots(model, result)
         self.assertEqual(items['AT-HS-001']['severity'], 'XL')
+        self.assertEqual(items['AT-HS-001']['complexity']['political_rationale'], 'Compromis entre pôles.')
+        self.assertEqual(items['AT-HS-001']['complexity']['implementation_rationale'], 'Interfaces interdépendantes.')
         self.assertEqual(items['AT-HS-002']['status'], 'shared')
         self.assertEqual(publication(self.root)[0], self.model)
         stale = dict(batch, expected_revision=2)

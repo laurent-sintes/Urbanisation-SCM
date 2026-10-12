@@ -25,7 +25,12 @@ import { ContextReturn, MetaTypeLabel, ModelLinksProvider, ModelText, readingOri
 import { Overview } from './components/Overview';
 import { ScenarioCatalogPage } from './components/ScenarioCatalogPage';
 import { Sidebar } from './components/Sidebar';
-import { defaultHotspotMapFilters, type HotspotMapFilters, updateHotspotMapFilters } from './hotspotMap';
+import {
+  encodeHotspotFilters,
+  type HotspotMapFilters,
+  readHotspotFilters,
+  updateHotspotMapFilters,
+} from './hotspotMap';
 import { NodeIcon } from './icons';
 import { mapRouteForNode } from './mapNavigation';
 import { defaultMapDepth, mapDepthLimit } from './mapProjection';
@@ -125,15 +130,34 @@ export function App() {
   const [sidebarOpen, setSidebarOpen] = useState(() => preference('sidebar-open', true));
   const [width, setWidth] = useState(() => clampWidth(Number(preference('tree-width', 300))));
   const [announcement, setAnnouncement] = useState('');
-  const [hotspotFilters, setHotspotFilters] = useState<HotspotMapFilters>(defaultHotspotMapFilters);
+  const [hotspotFilters, setHotspotFilters] = useState(() => readHotspotFilters(route.hotspotFilters));
+  const hotspotFiltersRef = useRef(hotspotFilters);
+  hotspotFiltersRef.current = hotspotFilters;
+  useEffect(() => {
+    const next = readHotspotFilters(route.hotspotFilters);
+    hotspotFiltersRef.current = next;
+    setHotspotFilters(next);
+  }, [route.hotspotFilters]);
   const onHotspotFiltersChange = useCallback(
-    (changes: Partial<HotspotMapFilters>) => setHotspotFilters((current) => updateHotspotMapFilters(current, changes)),
-    [],
+    (changes: Partial<HotspotMapFilters>) => {
+      const next = updateHotspotMapFilters(hotspotFiltersRef.current, changes);
+      hotspotFiltersRef.current = next;
+      setHotspotFilters(next);
+      changeLocation(
+        {
+          hotspotFilters: encodeHotspotFilters(next),
+        },
+        model,
+        0,
+        true,
+      );
+    },
+    [changeLocation, model],
   );
   const workshopRevision = displayModel?.raw.workshop?.revision;
   useEffect(() => {
-    if (workshopRevision !== undefined) setHotspotFilters((current) => ({ ...current, enabled: true }));
-  }, [workshopRevision]);
+    if (workshopRevision !== undefined && !route.hotspotFilters) onHotspotFiltersChange({ enabled: true });
+  }, [workshopRevision, route.hotspotFilters, onHotspotFiltersChange]);
   const search = useRef<HTMLInputElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const content = useRef<HTMLDivElement>(null);
@@ -950,6 +974,14 @@ export function App() {
                       route={route}
                       onChange={changeRoute}
                       workshopStage={catalog?.current === model.version ? workshop.active : null}
+                      filters={hotspotFilters}
+                      onFiltersChange={onHotspotFiltersChange}
+                      workshopMessage={
+                        workshop.error ||
+                        (workshop.stage && !workshop.active
+                          ? `Séance sur ${workshop.stage.base_version} ; publication consultée ${model.version}. Conserve ou archive la séance avec Codex, puis ouvre une séance sur le courant.`
+                          : 'Lecture seule : aucune séance active sur cette publication. Sur Atlas local, ouvre une séance via Aide → Mode atelier ; le site distant reste en lecture seule.')
+                      }
                       onSaveWorkshopChanges={workshop.saveHotspotChanges}
                     />
                   ) : view === 'documents' ? (

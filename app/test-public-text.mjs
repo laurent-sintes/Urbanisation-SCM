@@ -4,6 +4,23 @@ import { businessFields } from './src/businessContent.ts';
 import { shortText } from './src/presentation.ts';
 import { publicText } from './src/publicText.ts';
 
+test('Wholesale questions name the practices and retain the pre-commitment boundary', () => {
+  const source =
+    'Quelles précisions des récits U02/U10/U30/U31 restent actuelles au regard de U953, limité aux commandes avant engagement ferme ?';
+  const question = publicText(source);
+  assert.equal(
+    question,
+    'Quelles règles de réservation du stock, de couverture par les réceptions futures et de réaffectation entre commandes restent actuelles avant engagement ferme ?',
+  );
+  assert.equal(publicText(source.replace('engagement ferme', 'engagement\nferme')), question);
+  assert.equal(publicText(question), question);
+  assert.equal(publicText('U950 — initialisation demandée par Laurent.'), 'initialisation demandée par Laurent.');
+  assert.equal(
+    publicText('Observation U953 : les réceptions futures restent à vérifier.'),
+    'Observation U953 : les réceptions futures restent à vérifier.',
+  );
+});
+
 test('data governance and capability type remain independent explicit public fields', () => {
   assert.deepEqual(businessFields({ nature: 'knowledge', data_governance: 'Domain-View', internal: 'hidden' }), {
     nature: 'knowledge',

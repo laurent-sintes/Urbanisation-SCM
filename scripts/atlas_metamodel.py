@@ -45,6 +45,8 @@ FIELD_MEANINGS = {
     'hotspot_catalog.hotspots.framing_impact': 'Impact sur le modèle métier, le Core System ou la praticité d’usage ; indépendant de la criticité.',
     'hotspot_catalog.hotspots.gap_analysis': 'Comparaisons facultatives inter-SI ou intra-SI, avec observations sourcées et réserves.',
     'hotspot_catalog.hotspots.resolution': 'Avancement du cadrage, solutions crédibles, blocage et prochaine étape ; distinct de la réalisation.',
+    'hotspot_catalog.criticality_policy': 'Grille matrix-v1 figée avec la publication, ses axes, repères et limites ; aucun calcul d’urgence.',
+    'hotspot_catalog.sources': 'Intitulés et accès documentés des sources internes ; les identifiants de provenance restent conservés.',
 }
 
 RELATION_MEANINGS = {
@@ -315,5 +317,6 @@ def describe_metamodel(model, guide_response, snapshot_schema=None):
         'catalog_types': catalog_types,
         'relation_types': relation_types,
         'constraints': _constraints(model),
+        'hotspot_criticality_policy': (model.get('hotspot_catalog') or {}).get('criticality_policy'),
         'profile': profile,
     }

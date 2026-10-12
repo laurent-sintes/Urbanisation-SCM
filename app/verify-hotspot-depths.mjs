@@ -40,7 +40,7 @@ try {
     '',
     'system-business-operations',
     'supply-chain-orchestration',
-    'D01',
+    model.nodes.find((node) => node.kind === 'area' && belongs(node.id, 'supply-chain-orchestration')).id,
     'domain-logistics-execution',
     'system-design-development',
     'domain-finance',
@@ -69,7 +69,7 @@ try {
         await page.waitForTimeout(700);
         const geometry = await page.evaluate(() => {
           const circles = [
-            ...document.querySelectorAll('.overview-system .hotspot-map-marker, .graph-canvas .hotspot-map-marker'),
+            ...document.querySelectorAll('.universe-overview .hotspot-map-marker, .graph-canvas .hotspot-map-marker'),
           ].map((element) => {
             const rect = element.getBoundingClientRect();
             return {
@@ -77,7 +77,7 @@ try {
               x: rect.x + rect.width / 2,
               y: rect.y + rect.height / 2,
               radius: rect.width / 2,
-              parent: element.closest('.overview-system, .map-flow-surface'),
+              parent: element.closest('.overview-system, .overview-global-hotspot, .map-flow-surface'),
             };
           });
           const failures = [];
@@ -262,7 +262,21 @@ try {
   }
   await page.getByRole('button', { name: 'Centrer la carte', exact: true }).click();
   await page.waitForTimeout(700);
-  assert.equal(await page.locator('.graph-canvas .hotspot-map-marker').count(), 11, 'fitView restores all hotspots');
+  const fitted = await page
+    .locator('.graph-canvas .hotspot-map-marker')
+    .evaluateAll((elements) =>
+      [
+        ...new Set(elements.flatMap((element) => element.dataset.id.replace(/^hotspot:(cluster:)?/, '').split('|'))),
+      ].sort(),
+    );
+  assert.deepEqual(
+    fitted,
+    model.hotspot_catalog.hotspots
+      .filter((item) => item.location.node_ids.some((node) => belongs(node, 'system-business-operations')))
+      .map((item) => item.id)
+      .sort(),
+    'fitView restores every scoped subject, including grouped markers',
+  );
   await page.getByRole('button', { name: 'Étendre la carte' }).click();
   await page.waitForFunction(() => Boolean(document.fullscreenElement));
   await page.locator('.map-hotspot-picker .detail-trigger').click();

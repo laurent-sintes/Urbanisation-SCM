@@ -1,6 +1,6 @@
 import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
-import { type HotspotMapFilters, severityForComplexities } from '../hotspotMap';
+import { defaultHotspotMapFilters, type HotspotMapFilters, severityForComplexities } from '../hotspotMap';
 import { RESOLUTION_STAGES } from '../hotspotResolution';
 
 const sizeOptions = [
@@ -68,12 +68,35 @@ export function HotspotFilterFields({
     () => filters.political !== 'all' || filters.implementation !== 'all',
   );
   const computedSeverity = severityForComplexities(filters.political, filters.implementation);
+  const active = [
+    !filters.showModelHotspots && 'Modèle masqué',
+    !filters.showUsageHotspots && 'Usage masqué',
+    !filters.showUnqualifiedHotspots && 'Impact à qualifier masqué',
+    !filters.showResolved && 'Cadrages résolus masqués',
+    filters.resolutionStage !== 'all' &&
+      `Cadrage : ${RESOLUTION_STAGES[(filters.resolutionStage || 'unassessed') as keyof typeof RESOLUTION_STAGES]}`,
+    filters.status !== 'all' && `Sujet : ${statusOptions.find((option) => option.value === filters.status)?.label}`,
+    filters.kind !== 'all' && `Type : ${typeOptions.find((option) => option.value === filters.kind)?.label}`,
+    filters.severity !== 'all' &&
+      `Criticité : ${filters.severityMode === 'at_least' ? 'au moins ' : filters.severityMode === 'at_most' ? 'au plus ' : ''}${filters.severity === 'unassessed' ? 'Non évaluée' : filters.severity}`,
+    filters.political !== 'all' && `Politique : ${filters.political}`,
+    filters.implementation !== 'all' && `Implémentation : ${filters.implementation}`,
+  ].filter(Boolean);
   const severityChoice =
     filters.severity === 'all' || filters.severity === 'unassessed'
       ? filters.severity
       : `${filters.severityMode}:${filters.severity}`;
   return (
     <div className="hotspot-filter-controls">
+      <div className="hotspot-filter-summary" role="status">
+        <span>Filtres communs à la liste et à la carte · inclus dans le lien partagé.</span>
+        <button type="button" onClick={() => onChange({ ...defaultHotspotMapFilters, enabled: true })}>
+          Réinitialiser
+        </button>
+      </div>
+      <p className="hotspot-active-filters">
+        {active.length ? `Critères actifs : ${active.join(' · ')}` : 'Aucun critère restrictif.'}
+      </p>
       {showDisplayToggle && (
         <label className="hotspot-map-toggle">
           <input

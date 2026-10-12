@@ -323,64 +323,188 @@
     "hotspot_catalog": {
       "type": "object",
       "properties": {
-        "schema_version": { "const": 1 },
-        "source_refs": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+        "schema_version": {
+          "const": 1
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
         "hotspots": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
-              "id": { "type": "string", "minLength": 1 },
-              "title": { "type": "string", "minLength": 1 },
-              "kind": { "enum": ["scope", "integration"] },
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "kind": {
+                "enum": [
+                  "scope",
+                  "integration"
+                ]
+              },
               "framing_impact": {
                 "type": "object",
                 "additionalProperties": false,
-                "required": ["category", "targets", "rationale", "follow_up", "evidence_state", "source_refs"],
+                "required": [
+                  "category",
+                  "targets",
+                  "rationale",
+                  "follow_up",
+                  "evidence_state",
+                  "source_refs"
+                ],
                 "properties": {
-                  "category": { "enum": ["structuring", "usage", "to_assess"] },
-                  "targets": { "type": "array", "items": { "enum": ["business_model", "core_system"] }, "uniqueItems": true },
-                  "rationale": { "type": "string", "minLength": 1 },
-                  "follow_up": { "enum": ["framing", "product_design", "qualification"] },
-                  "evidence_state": { "enum": ["documented", "hypothesis", "to_investigate"] },
-                  "source_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true }
+                  "category": {
+                    "enum": [
+                      "structuring",
+                      "usage",
+                      "to_assess"
+                    ]
+                  },
+                  "targets": {
+                    "type": "array",
+                    "items": {
+                      "enum": [
+                        "business_model",
+                        "core_system"
+                      ]
+                    },
+                    "uniqueItems": true
+                  },
+                  "rationale": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "follow_up": {
+                    "enum": [
+                      "framing",
+                      "product_design",
+                      "qualification"
+                    ]
+                  },
+                  "evidence_state": {
+                    "enum": [
+                      "documented",
+                      "hypothesis",
+                      "to_investigate"
+                    ]
+                  },
+                  "source_refs": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  }
                 }
               },
               "location": {
                 "type": "object",
                 "properties": {
-                  "node_ids": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true }
+                  "node_ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    },
+                    "minItems": 1,
+                    "uniqueItems": true
+                  }
                 },
-                "required": ["node_ids"],
+                "required": [
+                  "node_ids"
+                ],
                 "additionalProperties": false
               },
-              "problem": { "type": "string", "minLength": 1, "description": "Sujet à creuser et à arbitrer ; le nom historique du champ ne présume pas un dysfonctionnement. Une Gap Analysis reste facultative." },
-              "examples": { "type": "array", "items": { "type": "string" } },
-              "gap_analysis": { "type": "array", "items": { "$ref": "#/$defs/hotspotGapAnalysis" } },
-              "document_ids": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+              "problem": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Sujet à creuser et à arbitrer ; le nom historique du champ ne présume pas un dysfonctionnement. Une Gap Analysis reste facultative."
+              },
+              "examples": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "gap_analysis": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/hotspotGapAnalysis"
+                }
+              },
+              "document_ids": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "uniqueItems": true
+              },
               "market_view": {
                 "type": "object",
                 "properties": {
-                  "finding": { "type": "string", "minLength": 1 },
-                  "flow_assessment": { "type": "string", "minLength": 1 },
-                  "limits": { "type": "string", "minLength": 1 },
+                  "finding": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "flow_assessment": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "limits": {
+                    "type": "string",
+                    "minLength": 1
+                  },
                   "sources": {
                     "type": "array",
                     "minItems": 1,
                     "items": {
                       "type": "object",
                       "properties": {
-                        "publisher": { "type": "string", "minLength": 1 },
-                        "title": { "type": "string", "minLength": 1 },
-                        "url": { "type": "string", "pattern": "^https://" },
-                        "relevance": { "type": "string", "minLength": 1 }
+                        "publisher": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "title": {
+                          "type": "string",
+                          "minLength": 1
+                        },
+                        "url": {
+                          "type": "string",
+                          "pattern": "^https://"
+                        },
+                        "relevance": {
+                          "type": "string",
+                          "minLength": 1
+                        }
                       },
-                      "required": ["publisher", "title", "url", "relevance"],
+                      "required": [
+                        "publisher",
+                        "title",
+                        "url",
+                        "relevance"
+                      ],
                       "additionalProperties": false
                     }
                   }
                 },
-                "required": ["finding", "flow_assessment", "limits", "sources"],
+                "required": [
+                  "finding",
+                  "flow_assessment",
+                  "limits",
+                  "sources"
+                ],
                 "additionalProperties": false
               },
               "resolution_options": {
@@ -388,35 +512,132 @@
                 "items": {
                   "type": "object",
                   "properties": {
-                    "id": { "type": "string", "minLength": 1 },
-                    "title": { "type": "string", "minLength": 1 },
-                    "principle": { "type": "string", "minLength": 1 },
-                    "effect": { "type": "string" },
-                    "conditions": { "type": "array", "items": { "type": "string" } },
-                    "tradeoffs": { "type": "array", "items": { "type": "string" } },
-                    "implementation_complexity": { "enum": ["S", "M", "L", "XL", "unassessed"] },
-                    "evidence_state": { "enum": ["documented", "hypothesis", "to_investigate"] }
+                    "id": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "title": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "principle": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "effect": {
+                      "type": "string"
+                    },
+                    "conditions": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "tradeoffs": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "implementation_complexity": {
+                      "enum": [
+                        "S",
+                        "M",
+                        "L",
+                        "XL",
+                        "unassessed"
+                      ]
+                    },
+                    "evidence_state": {
+                      "enum": [
+                        "documented",
+                        "hypothesis",
+                        "to_investigate"
+                      ]
+                    }
                   },
-                  "required": ["id", "title", "principle", "implementation_complexity", "evidence_state"],
+                  "required": [
+                    "id",
+                    "title",
+                    "principle",
+                    "implementation_complexity",
+                    "evidence_state"
+                  ],
                   "additionalProperties": false
                 }
               },
               "complexity": {
                 "type": "object",
                 "properties": {
-                  "political": { "enum": ["S", "M", "L", "XL", "unassessed"] },
-                  "implementation": { "enum": ["S", "M", "L", "XL", "unassessed"] },
-                  "rationale": { "type": "string" }
+                  "political": {
+                    "enum": [
+                      "S",
+                      "M",
+                      "L",
+                      "XL",
+                      "unassessed"
+                    ]
+                  },
+                  "implementation": {
+                    "enum": [
+                      "S",
+                      "M",
+                      "L",
+                      "XL",
+                      "unassessed"
+                    ]
+                  },
+                  "rationale": {
+                    "type": "string"
+                  },
+                  "political_rationale": {
+                    "type": "string"
+                  },
+                  "implementation_rationale": {
+                    "type": "string"
+                  }
                 },
-                "required": ["political", "implementation", "rationale"],
+                "required": [
+                  "political",
+                  "implementation",
+                  "rationale"
+                ],
                 "additionalProperties": false
               },
-              "severity": { "enum": ["S", "M", "L", "XL", "unassessed"] },
-              "severity_policy": { "const": "matrix-v1" },
-              "arbitration_level": { "enum": ["business_direction", "flow_internal", "flow_steering", "to_confirm"] },
-              "arbitration_note": { "type": "string" },
-              "status": { "enum": ["discovered", "shared", "validated", "resolved"] },
-              "source_status": { "type": "string" },
+              "severity": {
+                "enum": [
+                  "S",
+                  "M",
+                  "L",
+                  "XL",
+                  "unassessed"
+                ]
+              },
+              "severity_policy": {
+                "const": "matrix-v1"
+              },
+              "arbitration_level": {
+                "enum": [
+                  "business_direction",
+                  "flow_internal",
+                  "flow_steering",
+                  "to_confirm"
+                ]
+              },
+              "arbitration_note": {
+                "type": "string"
+              },
+              "status": {
+                "enum": [
+                  "discovered",
+                  "shared",
+                  "validated",
+                  "resolved"
+                ]
+              },
+              "source_status": {
+                "type": "string"
+              },
               "resolution": {
                 "type": "object",
                 "additionalProperties": false,
@@ -467,81 +688,378 @@
                   }
                 }
               },
-              "selected_option_id": { "type": "string" },
-              "resolution_note": { "type": "string" },
-              "source_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+              "selected_option_id": {
+                "type": "string"
+              },
+              "resolution_note": {
+                "type": "string"
+              },
+              "source_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
               "origin": {
                 "type": "object",
                 "properties": {
-                  "repository": { "type": "string", "minLength": 1 },
-                  "path": { "type": "string", "minLength": 1 },
-                  "id": { "type": "string", "minLength": 1 },
-                  "source_id": { "type": "string", "minLength": 1 },
-                  "evidence_limit": { "type": "string", "minLength": 1 }
+                  "repository": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "path": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "source_id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "evidence_limit": {
+                    "type": "string",
+                    "minLength": 1
+                  }
                 },
-                "required": ["repository", "path", "id", "source_id", "evidence_limit"],
+                "required": [
+                  "repository",
+                  "path",
+                  "id",
+                  "source_id",
+                  "evidence_limit"
+                ],
                 "additionalProperties": false
               },
               "review": {
                 "type": "object",
                 "properties": {
-                  "state": { "enum": ["proposed", "under_review", "accepted"] },
-                  "note": { "type": "string" }
+                  "state": {
+                    "enum": [
+                      "proposed",
+                      "under_review",
+                      "accepted"
+                    ]
+                  },
+                  "note": {
+                    "type": "string"
+                  }
                 },
-                "required": ["state", "note"],
+                "required": [
+                  "state",
+                  "note"
+                ],
                 "additionalProperties": false
               }
             },
-            "required": ["id", "title", "kind", "location", "problem", "examples", "resolution_options", "complexity", "severity", "severity_policy", "arbitration_level", "status", "source_refs", "origin", "review"],
+            "required": [
+              "id",
+              "title",
+              "kind",
+              "location",
+              "problem",
+              "examples",
+              "resolution_options",
+              "complexity",
+              "severity",
+              "severity_policy",
+              "arbitration_level",
+              "status",
+              "source_refs",
+              "origin",
+              "review"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "criticality_policy": {
+          "type": "object",
+          "required": [
+            "id",
+            "levels",
+            "matrix",
+            "axes",
+            "scope",
+            "unknown_rule",
+            "assessment_note",
+            "source_refs"
+          ],
+          "properties": {
+            "id": {
+              "const": "matrix-v1"
+            },
+            "levels": {
+              "const": [
+                "S",
+                "M",
+                "L",
+                "XL"
+              ]
+            },
+            "matrix": {
+              "const": [
+                [
+                  "S",
+                  "M",
+                  "L",
+                  "XL"
+                ],
+                [
+                  "M",
+                  "L",
+                  "L",
+                  "XL"
+                ],
+                [
+                  "L",
+                  "L",
+                  "XL",
+                  "XL"
+                ],
+                [
+                  "XL",
+                  "XL",
+                  "XL",
+                  "XL"
+                ]
+              ]
+            },
+            "axes": {
+              "type": "object",
+              "required": [
+                "political",
+                "implementation"
+              ],
+              "additionalProperties": false,
+              "properties": {
+                "political": {
+                  "type": "object",
+                  "required": [
+                    "definition",
+                    "guidance"
+                  ],
+                  "properties": {
+                    "definition": {
+                      "type": "string"
+                    },
+                    "guidance": {
+                      "type": "object",
+                      "required": [
+                        "S",
+                        "M",
+                        "L",
+                        "XL"
+                      ],
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "implementation": {
+                  "type": "object",
+                  "required": [
+                    "definition",
+                    "guidance"
+                  ],
+                  "properties": {
+                    "definition": {
+                      "type": "string"
+                    },
+                    "guidance": {
+                      "type": "object",
+                      "required": [
+                        "S",
+                        "M",
+                        "L",
+                        "XL"
+                      ],
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "scope": {
+              "type": "string"
+            },
+            "unknown_rule": {
+              "type": "string"
+            },
+            "assessment_note": {
+              "type": "string"
+            },
+            "source_refs": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "kind",
+              "access"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "access": {
+                "type": "string"
+              },
+              "kind": {
+                "const": "internal_contribution"
+              },
+              "date": {
+                "type": "string",
+                "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+              }
+            },
             "additionalProperties": false
           }
         }
       },
-      "required": ["schema_version", "source_refs", "hotspots"],
+      "required": [
+        "schema_version",
+        "source_refs",
+        "hotspots"
+      ],
       "additionalProperties": false
     },
     "document_catalog": {
       "type": "object",
       "properties": {
-        "schema_version": { "const": 1 },
-        "source_refs": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "schema_version": {
+          "const": 1
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
         "documents": {
           "type": "array",
           "items": {
             "type": "object",
             "properties": {
-              "id": { "type": "string", "pattern": "^DOC[0-9]{3,}$" },
-              "title": { "type": "string", "minLength": 1 },
-              "summary": { "type": "string", "minLength": 1 },
-              "context": { "type": "string", "minLength": 1 },
-              "category": { "enum": ["analysis", "source", "decision", "guide"] },
+              "id": {
+                "type": "string",
+                "pattern": "^DOC[0-9]{3,}$"
+              },
+              "title": {
+                "type": "string",
+                "minLength": 1
+              },
+              "summary": {
+                "type": "string",
+                "minLength": 1
+              },
+              "context": {
+                "type": "string",
+                "minLength": 1
+              },
+              "category": {
+                "enum": [
+                  "analysis",
+                  "source",
+                  "decision",
+                  "guide"
+                ]
+              },
               "asset": {
                 "type": "object",
                 "properties": {
-                  "path": { "type": "string", "pattern": "^modeles/documents/[0-9a-f]{64}\\.pdf$" },
-                  "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
-                  "media_type": { "const": "application/pdf" }
+                  "path": {
+                    "type": "string",
+                    "pattern": "^modeles/documents/[0-9a-f]{64}\\.pdf$"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "media_type": {
+                    "const": "application/pdf"
+                  }
                 },
-                "required": ["path", "sha256", "media_type"],
+                "required": [
+                  "path",
+                  "sha256",
+                  "media_type"
+                ],
                 "additionalProperties": false
               },
-              "source_refs": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1, "uniqueItems": true },
+              "source_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
               "review": {
                 "type": "object",
                 "properties": {
-                  "state": { "enum": ["proposed", "under_review", "accepted"] },
-                  "note": { "type": "string", "minLength": 1 }
+                  "state": {
+                    "enum": [
+                      "proposed",
+                      "under_review",
+                      "accepted"
+                    ]
+                  },
+                  "note": {
+                    "type": "string",
+                    "minLength": 1
+                  }
                 },
-                "required": ["state", "note"],
+                "required": [
+                  "state",
+                  "note"
+                ],
                 "additionalProperties": false
               }
             },
-            "required": ["id", "title", "summary", "context", "category", "asset", "source_refs", "review"],
+            "required": [
+              "id",
+              "title",
+              "summary",
+              "context",
+              "category",
+              "asset",
+              "source_refs",
+              "review"
+            ],
             "additionalProperties": false
           }
         }
       },
-      "required": ["schema_version", "source_refs", "documents"],
+      "required": [
+        "schema_version",
+        "source_refs",
+        "documents"
+      ],
       "additionalProperties": false
     },
     "display_policy": {

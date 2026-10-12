@@ -183,6 +183,16 @@ export interface RawPublication extends JsonRecord {
     schema_version: 1;
     hotspots: Hotspot[];
     source_refs: string[];
+    criticality_policy?: {
+      id: string;
+      levels: string[];
+      matrix: string[][];
+      scope: string;
+      unknown_rule: string;
+      assessment_note: string;
+      axes: Record<string, { definition: string; guidance: Record<string, string> }>;
+    };
+    sources?: { id: string; title: string; kind: string; access: string; date?: string }[];
   };
   metamodel?: {
     node_types?: { kind: string; label: string; definition?: string | null }[];
@@ -277,7 +287,13 @@ export interface Hotspot {
     implementation_complexity: 'S' | 'M' | 'L' | 'XL' | 'unassessed';
     evidence_state: 'documented' | 'hypothesis' | 'to_investigate';
   }[];
-  complexity: { political: string; implementation: string; rationale: string };
+  complexity: {
+    political: string;
+    implementation: string;
+    rationale: string;
+    political_rationale?: string;
+    implementation_rationale?: string;
+  };
   severity: 'S' | 'M' | 'L' | 'XL' | 'unassessed';
   arbitration_level: string;
   arbitration_note?: string;

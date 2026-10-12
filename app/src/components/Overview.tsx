@@ -97,12 +97,21 @@ export function Overview({
     const observer = new ResizeObserver(update);
     observer.observe(target);
     for (const article of target.querySelectorAll('.overview-system')) observer.observe(article);
+    // Breakpoint changes can move text without changing an observed box's size.
+    let resizeFrame = 0;
+    const resized = () => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(update);
+    };
+    window.addEventListener('resize', resized);
     let active = true;
     void document.fonts.ready.then(() => {
       if (active) update();
     });
     return () => {
       active = false;
+      window.removeEventListener('resize', resized);
+      cancelAnimationFrame(resizeFrame);
       observer.disconnect();
     };
   }, []);

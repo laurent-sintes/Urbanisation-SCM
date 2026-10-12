@@ -9,6 +9,7 @@ import { MethodNavigation } from './MethodNavigation';
 import { CatalogLink, MethodLink, MethodReturn, ModelText, ReferenceLink } from './ModelLinks';
 import { ReadingHelp } from './ReadingHelp';
 import './modeling-guide.css';
+import { HotspotAssessmentGuide } from './HotspotAssessmentGuide';
 import { MethodVisual } from './MethodVisual';
 
 function LessonScene({ scene }: { scene: GuideLesson['scene'] }) {
@@ -282,6 +283,7 @@ function GuideContent({
           ))}
         </article>
       )}
+      {chapter?.id === 'metamodel' && <HotspotAssessmentGuide model={model} />}
       {!home && !codes && (!chapter || chapter.id === 'metamodel') && (
         <>
           <p>

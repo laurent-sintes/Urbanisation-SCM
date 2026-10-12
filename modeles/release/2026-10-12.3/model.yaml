@@ -1,6 +1,6 @@
 schema_version: 1.0.0
 model_id: flow-urbanism
-version: 2026-10-12.2
+version: 2026-10-12.3
 as_of: '2026-10-12'
 space: release
 display_policy: typed-tree-v1
@@ -8116,6 +8116,12 @@ hotspot_catalog:
         La difficulté tient au choix d’unification, aux priorités évolutives et aux engagements protégés, ainsi qu’aux adaptations
         SAP et à la couverture des réceptions futures. Estimation L/XL antérieure conservée ; ampleur et coût à éprouver selon
         l’option retenue.
+      political_rationale: Le choix d’unification doit préserver les besoins des deux entités, dont le poids Wholesale et
+        les politiques de couverture et de priorité diffèrent. Estimation L conservée ; compromis à éprouver selon l’option
+        retenue.
+      implementation_rationale: Les priorités évolutives, les engagements protégés, les adaptations SAP et la couverture des
+        réceptions futures rendent la réalisation à éprouver. Estimation XL conservée ; ampleur et coût à préciser selon l’option
+        retenue.
     severity: XL
     severity_policy: matrix-v1
     arbitration_level: to_confirm
@@ -8249,8 +8255,8 @@ hotspot_catalog:
       - Quels besoins sont communs et quelles variantes apportent une valeur métier à chaque entité ?
       - À quel événement une promesse devient-elle ferme et quelles affectations cessent-elles alors d’être révisables ?
       - Quelles règles de priorité sont indispensables, configurables ou devenues inutiles ?
-      - Quelles précisions des récits U02/U10/U30/U31 restent actuelles au regard de U953, limité aux commandes avant engagement
-        ferme ?
+      - Quelles règles de réservation du stock, de couverture par les réceptions futures et de réaffectation entre commandes
+        restent actuelles avant engagement ferme ?
       resolution_option_ids:
       - hs-008-priority
       - hs-008-limited
@@ -8311,8 +8317,8 @@ hotspot_catalog:
         actuelle ?
       - Quels chantiers Preview (simulation sans modification des liens), Optimizer (outil SAP d’ajustement des affectations)
         et désallocation ont été livrés depuis juillet 2025 ?
-      - Quelles précisions des récits U02/U10/U30/U31 restent actuelles au regard de U953, limité aux commandes avant engagement
-        ferme ?
+      - Quelles règles de réservation du stock, de couverture par les réceptions futures et de réaffectation entre commandes
+        restent actuelles avant engagement ferme ?
       resolution_option_ids:
       - hs-008-priority
       - hs-008-limited
@@ -9768,6 +9774,293 @@ hotspot_catalog:
       - U959
       - U960
       - U961
+  criticality_policy:
+    id: matrix-v1
+    levels:
+    - S
+    - M
+    - L
+    - XL
+    matrix:
+    - - S
+      - M
+      - L
+      - XL
+    - - M
+      - L
+      - L
+      - XL
+    - - L
+      - L
+      - XL
+      - XL
+    - - XL
+      - XL
+      - XL
+      - XL
+    unknown_rule: Un axe non évalué rend la criticité non évaluée.
+    scope: Difficulté d’instruction et de réalisation ; ne mesure ni urgence ni impact business.
+    axes:
+      political:
+        definition: Difficulté à obtenir un accord sur les règles, responsabilités et compromis entre marques ou pôles.
+        guidance:
+          S: Accord local limité, sans compromis entre périmètres identifié.
+          M: Plusieurs interlocuteurs à coordonner ; règles compatibles à préciser.
+          L: Compromis entre marques ou pôles à instruire sur des règles ou responsabilités divergentes.
+          XL: Choix transverse déterminant plusieurs modèles de fonctionnement ou engagements ; arbitrage de gouvernance nécessaire.
+      implementation:
+        definition: 'Difficulté à réaliser la solution : règles à gérer, données à intégrer, adaptations et contraintes techniques.'
+        guidance:
+          S: Adaptation limitée avec données et règles déjà disponibles.
+          M: Plusieurs règles ou interfaces à adapter, avec dépendances connues.
+          L: Plusieurs composants et règles interdépendants ; données ou intégrations à consolider.
+          XL: Règles fortement interdépendantes, adaptations importantes ou contraintes de faisabilité à éprouver.
+    assessment_note: Repères d’appréciation à éprouver selon l’option et son périmètre. Aucune note existante n’est recalculée
+      à partir de ces repères.
+    source_refs:
+    - U970
+  sources:
+  - id: A76
+    title: Écarts entre SI et entre parcours d'un même SI
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+  - id: A77
+    title: Intégration des candidats restants du registre de hotspots
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+  - id: U02
+    title: Accord sur la démarche, plateformes et contextes des trois SI
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+  - id: U03
+    title: 'Panorama GBM : ventes, intégration et achats'
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+  - id: U04
+    title: Parcours eCommerce et ship-from-store GBM
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+  - id: U05
+    title: Confirmation de la portée de l’annulation
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+  - id: U06
+    title: Réassort, IRMA et demande logistique C-Log
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+  - id: U07
+    title: Noms corrigés et finalité de l’urbanisation
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+  - id: U10
+    title: 'Autre complément GBM important : MAP, CBS et allocations'
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+  - id: U30
+    title: Politiques de réservation GBM et comportements nécessaires à Boardriders
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-09-09'
+  - id: U306
+    title: Visibilité explicite de l’exécution des services numériques
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-09-17'
+  - id: U31
+    title: Rattachement du Backorder Processing à la promesse de commande
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-09-09'
+  - id: U922
+    title: Laurent, premier hotspot à localiser dans Atlas
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-09'
+  - id: U923
+    title: Laurent, qualification de C-LOG et évolution de la représentation des points chauds
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-09'
+  - id: U924
+    title: Laurent, correction du périmètre du hotspot de migration SAP ECC et de son lien avec Finance
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U925
+    title: Laurent, distinction de deux points chauds logistiques et description du fonctionnement Boardriders / C-LOG
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U926
+    title: Laurent, précision sur l'arbitrage en cours pour le point chaud BMN–C-LOG
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U927
+    title: Laurent, précision sur le point chaud d'alimentation du stock centralisé
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U928
+    title: Laurent, validation du dossier C03 et demande de passer au point chaud suivant
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U929
+    title: Laurent, correction du découpage du point chaud Stock Hub
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U930
+    title: Laurent, finalité de l'analyse du point chaud Stock Hub
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U931
+    title: Laurent, correction du problème C05 relatif à la promesse avant le plan de fulfilment
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U932
+    title: Laurent, correction de l'interprétation du point chaud C05
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U933
+    title: Laurent, situation connue chez Boardriders pour la promesse des précommandes B2B d'avant saison
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U934
+    title: Laurent, décomposition proposée des sujets de C06 et demande d'avis
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U935
+    title: Laurent, réaction au découpage de C06
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U936
+    title: Laurent, souhait d'intégrer une lecture du marché aux hotspots
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U938
+    title: Laurent, précision sur C07 et le suivi des commandes
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U939
+    title: Laurent, question de frontière sur C07
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U940
+    title: Laurent, reformulation du hotspot C07
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U941
+    title: Laurent, appréciation de la gravité de C07
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U942
+    title: Laurent, correction de cadrage C08 et présentation Boardriders de juillet 2025 jointe
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U943
+    title: Laurent, précision sur la synthèse d'AllocationRun et l'estimation de C08
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U944
+    title: Laurent, question terminologique sur AllocationRun
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U945
+    title: Laurent, demande d'accès à la synthèse C08 depuis Atlas
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U947
+    title: Laurent, volonté de valider le premier lot de points chauds
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U948
+    title: Laurent, confirmation du découpage C06 et poursuite du lot
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-10'
+  - id: U950
+    title: Laurent, initialisation de la progression des hotspots
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-11'
+  - id: U951
+    title: Laurent, extension du modèle Hotspot à l’analyse des écarts entre SI
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-12'
+  - id: U952
+    title: Laurent, grille métier commune et différences de réalisation entre SI
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-12'
+  - id: U953
+    title: Laurent, comparaison des modes de gestion Wholesale pour HS-008
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-12'
+  - id: U954
+    title: Laurent, confirmation du cadrage de la réécriture HS-008
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-12'
+  - id: U957
+    title: Laurent, accord sur l’extension et l’intégration des analyses d’écarts
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-12'
+  - id: U958
+    title: Laurent, intégration des hotspots encore présents dans les sources
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-12'
+  - id: U963
+    title: Laurent, validation du premier lot de revue des hotspots U962
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-12'
+  - id: U964
+    title: Laurent, distinction entre révélation d’un hotspot et problème de convergence
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-12'
+  - id: U965
+    title: Laurent, décision de convergence comme résolution d’un hotspot
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-12'
+  - id: U966
+    title: Laurent, portée générique de la notion de Hotspot
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-12'
+  - id: U967
+    title: Laurent, validation du deuxième lot de sujets Hotspot
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-12'
+  - id: U968
+    title: Laurent, cadrage architectural de HS-023 et validation autonome des derniers hotspots
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-12'
 document_catalog:
   schema_version: 1
   source_refs:
@@ -37476,7 +37769,7 @@ last_modified: '2026-10-12T05:38:25.130897Z'
 release_kind: published_snapshot
 publication:
   source_refs:
-  - U969
+  - U970
   note: Publication complète demandée par Laurent ; publier ne vaut pas valider.
 nodes:
 - id: beaumanoir-target-universe
@@ -37562,13 +37855,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5f7dd5e364767cd09d0ece58.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-255cd02b9d3f2075fd977142.
       Note antérieure, qui ne qualifie pas cette révision : « U912 établit l’existence et le sens de la racine ; la rédaction
       détaillée et les comparaisons restent proposées. »'
   last_modified: '2026-10-09T09:17:15.708607Z'
   content_sha256: 73b941b3bf14600f8d5f87b4081219c6287be636bfccfb0a19bb2804e35f22c2
   adoption_ids:
-  - ADOPT-REASSESS-255cd02b9d3f2075fd977142
+  - ADOPT-REASSESS-efbdeb755ddcd9bb4c70dde7
   approved_fields:
   - name
   proposed_fields:
@@ -37664,13 +37957,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d786a35f22b94f81420ef01f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cf1f848b08ac9eb89daeee4a.
       Note antérieure, qui ne qualifie pas cette révision : « U780 autorise nom, niveau, rattachement et profondeur ; nouvelles
       rédactions, illustrations et comparaisons restent proposées. »'
   last_modified: '2026-09-26T09:07:26.717034Z'
   content_sha256: 74ddf81a37016cdd6b56b568ec0bc41d27f81a376eb35d2c9cf89ee21297d42d
   adoption_ids:
-  - ADOPT-REASSESS-cf1f848b08ac9eb89daeee4a
+  - ADOPT-REASSESS-4264fc346c7498e0d86062f2
   approved_fields:
   - modeling_depth
   - name
@@ -40978,7 +41271,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bcb611db925e90f7e175a865.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c7173b707a7a076f9ff79247.
       Note antérieure, qui ne qualifie pas cette révision : « Conversion en référentiel sous Control Plane acceptée U908 ;
       détail rédactionnel proposé. Identité conservée, code de lecture recalculé à la publication. »'
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
@@ -40986,7 +41279,7 @@ nodes:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: c4bdbc52089c183bb78c539a98ec4ab3bf35d232577b26a478d94e5f3e7747ec
   adoption_ids:
-  - ADOPT-REASSESS-c7173b707a7a076f9ff79247
+  - ADOPT-REASSESS-73911971f723f349b33a5c77
   approved_fields:
   - data_governance
   proposed_fields:
@@ -42964,7 +43257,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-27cf21874f1314484d5099c7.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-eea51736be6dcd8ca0dcac34.
       Note antérieure, qui ne qualifie pas cette révision : « Libellé Control Plane aligné sur U908 ; autres contenus et accords
       antérieurs non étendus à cette rédaction. »'
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
@@ -42974,7 +43267,7 @@ nodes:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: 6c7dc5ac4c229f3eca2fdfa0e33aa76a39e147d6941809252fe42bd2212b14dd
   adoption_ids:
-  - ADOPT-REASSESS-eea51736be6dcd8ca0dcac34
+  - ADOPT-REASSESS-96d55f762a2d20c95c9a4b0d
   approved_fields:
   - reading_order
   proposed_fields:
@@ -46679,7 +46972,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-695a6e670cabedcc14f718cd.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ab1c32525002f60c177acff3.
       Note antérieure, qui ne qualifie pas cette révision : « Libellé Control Plane aligné sur U908 ; autres contenus et accords
       antérieurs non étendus à cette rédaction. »'
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
@@ -46688,7 +46981,7 @@ nodes:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: 327f6578706e679bd2d68b2db45fa0564ece99f76a5fc6837cdde225e5514f36
   adoption_ids:
-  - ADOPT-REASSESS-ab1c32525002f60c177acff3
+  - ADOPT-REASSESS-1e1fc437623a004574e9ccf2
   approved_fields:
   - name
   proposed_fields:
@@ -46850,7 +47143,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c5d6fc9f1e80f2398165c248.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-49117789f06b2a5f22cf0b78.
       Note antérieure, qui ne qualifie pas cette révision : « Libellé Control Plane aligné sur U908 ; autres contenus et accords
       antérieurs non étendus à cette rédaction. »'
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
@@ -46858,7 +47151,7 @@ nodes:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: 6f97c8319697ef718d43bfb9b7d6a08a6cdf2ba3247324e53e4b19f8ae4423b2
   adoption_ids:
-  - ADOPT-REASSESS-49117789f06b2a5f22cf0b78
+  - ADOPT-REASSESS-d28200268dd5655a5bb13b3e
   approved_fields:
   - name
   proposed_fields:
@@ -48141,7 +48434,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f9fa0ba0339e82fd3438a3af.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2eb11a741a0bbd620bcec387.
       Note antérieure, qui ne qualifie pas cette révision : « Corrections du lot U877 appliquées ; les formulations détaillées
       restent proposées, sans extension des accords historiques. »'
   editorial_basis: 'Refonte U290 depuis la cible U286–U289. Formulations et exemples ajoutés restent éditoriaux ; accords
@@ -48150,7 +48443,7 @@ nodes:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: 43d68ed1742127be8dee9257f87075bc9f14437979c0e9b725d82edceca7bfb5
   adoption_ids:
-  - ADOPT-REASSESS-2eb11a741a0bbd620bcec387
+  - ADOPT-REASSESS-41b88deabadd4b29890c9647
   approved_fields:
   - reading_order
   proposed_fields:
@@ -52284,7 +52577,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a021b87612297d81deceed13.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d414677724ecdbfd98a1f4ab.
       Note antérieure, qui ne qualifie pas cette révision : « Mise en cohérence sous délégation U771 ; seuls les accords de
       champs inchangés restent applicables, sans validation globale de rédaction nouvelle. »'
   editorial_basis: 'Comportement de la cible U286–U289 appliqué U290 ; définition détaillée, exemple et périmètre éditoriaux.
@@ -52293,7 +52586,7 @@ nodes:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: d65a07a7db852ee381d9b05bb9362ff6a64788fe379a346b753bb726b421c640
   adoption_ids:
-  - ADOPT-REASSESS-d414677724ecdbfd98a1f4ab
+  - ADOPT-REASSESS-a38b03344b715c9daa29bba4
   approved_fields:
   - reading_order
   proposed_fields:
@@ -54583,14 +54876,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f85fb2850dbe7f08d1e4e93b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-39c6471ae7da9283e63f77a9.
       Note antérieure, qui ne qualifie pas cette révision : « Libellé Control Plane aligné sur U908 ; autres contenus et accords
       antérieurs non étendus à cette rédaction. »'
   editorial_basis: Accord U342 sur la proposition U341. Recensement mécanismes/paramètres/frontières documenté dans reservation-policy-review.yaml.
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: a427a122283c29525ea8cf5ddb0adcc94ececb62420f42f67f25e82323f2f5c6
   adoption_ids:
-  - ADOPT-REASSESS-39c6471ae7da9283e63f77a9
+  - ADOPT-REASSESS-6ad2d293033deab59d88404d
   approved_fields:
   - name
   proposed_fields:
@@ -61225,13 +61518,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bf413cc88b00e128121d6924.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1dbed53ec4f9ce4e18783b36.
       Note antérieure, qui ne qualifie pas cette révision : « U909 valide la fusion et le nom. La description détaillée et
       les comparaisons restent proposées ; aucun déploiement déduit. »'
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: efbd9e98d6a71ce6fd785afbd1e67c613a4ee88ea4b7371f80511260e72a33db
   adoption_ids:
-  - ADOPT-REASSESS-1dbed53ec4f9ce4e18783b36
+  - ADOPT-REASSESS-948ac5c84f4f580f08115277
   approved_fields:
   - name
   proposed_fields:
@@ -62545,13 +62838,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-16655230ae8fd0c3afb94210.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1a5e7209f71e670ac9e0344e.
       Note antérieure, qui ne qualifie pas cette révision : « Conversion en référentiel sous Control Plane acceptée U908 ;
       détail rédactionnel proposé. Identité conservée, code de lecture recalculé à la publication. »'
   last_modified: '2026-10-07T13:23:24.382595Z'
   content_sha256: e16b8670f8492f471f2a43b6962ee589fde8f5cdc83d2f4bee8bd9f488c45735
   adoption_ids:
-  - ADOPT-REASSESS-1a5e7209f71e670ac9e0344e
+  - ADOPT-REASSESS-db55fbb23987ee735d7c7256
   approved_fields:
   - data_governance
   proposed_fields:
@@ -62659,13 +62952,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ee81fe7e435eb3612e7ce099.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fa7dcc49860a1b9cbf780ba1.
       Note antérieure, qui ne qualifie pas cette révision : « Conversion en référentiel sous Control Plane acceptée U908 ;
       détail rédactionnel proposé. Identité conservée, code de lecture recalculé à la publication. »'
   last_modified: '2026-10-07T13:23:24.382595Z'
   content_sha256: 64e5afcd4c38d2fc28b1627974bbecbeeac718e6e8e84b35c763e09a1a5ad121
   adoption_ids:
-  - ADOPT-REASSESS-fa7dcc49860a1b9cbf780ba1
+  - ADOPT-REASSESS-015c6ed529dfb39fa1666ed9
   approved_fields:
   - data_governance
   proposed_fields:
@@ -63781,13 +64074,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-76d8d173c2b7019934655d97.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fb0c0f623363536ceeff2f34.
       Note antérieure, qui ne qualifie pas cette révision : « Nom et nature référentielle acceptés U908 ; formulation détaillée
       proposée. Les accords antérieurs restent dans les publications. »'
   last_modified: '2026-10-09T09:17:15.708607Z'
   content_sha256: 8a52744fcce9ea8bcb2e629e71b6995ac12ee3b68512195b1f86dbe23d5ebe24
   adoption_ids:
-  - ADOPT-REASSESS-fb0c0f623363536ceeff2f34
+  - ADOPT-REASSESS-d311a50ef8f3fe97d627b609
   approved_fields:
   - name
   proposed_fields:
@@ -73863,13 +74156,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7e994dbd806209710c15d275.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-971ec55bc00b3803826593ad.
       Note antérieure, qui ne qualifie pas cette révision : « Libellé Control Plane aligné sur U908 ; autres contenus et accords
       antérieurs non étendus à cette rédaction. »'
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: e3cd89292d6c2a7b853efdb00a7dcadb07cd24bbe61b65562ee59a242dd9cf16
   adoption_ids:
-  - ADOPT-REASSESS-971ec55bc00b3803826593ad
+  - ADOPT-REASSESS-54be663a5dab0c61fd27717e
   approved_fields:
   - name
   proposed_fields:
@@ -78973,13 +79266,13 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-dc9ae4ebdf006c0d61f81091.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-79986afac3bbe4b20e3a0031.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement à la racine cible demandé U912 ; aucune validation
       étendue aux descriptions des systèmes. »'
   last_modified: '2026-10-09T06:22:49.710148Z'
   content_sha256: e070a107c5cfbddfc49dd9224049e2d5402efa46f866d75a3c1e8c935ef0fccd
   adoption_ids:
-  - ADOPT-REASSESS-79986afac3bbe4b20e3a0031
+  - ADOPT-REASSESS-7bee78310412a5968d7eaf89
 - id: REL-U912-UNIVERSE-system-business-operations
   revision: 1
   type: contains
@@ -78990,13 +79283,13 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-163a834d831e2738c76ad0f0.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0888425e552c911f7efdb903.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement à la racine cible demandé U912 ; aucune validation
       étendue aux descriptions des systèmes. »'
   last_modified: '2026-10-09T06:22:49.710148Z'
   content_sha256: a2d80a2fe17649f739f0aa0c08f12e44d4dc1c80d45e5b8a2c8398b80672dd9a
   adoption_ids:
-  - ADOPT-REASSESS-0888425e552c911f7efdb903
+  - ADOPT-REASSESS-48d05f2b5f0b279e40d72436
 - id: REL-U912-UNIVERSE-system-enterprise-management-control
   revision: 1
   type: contains
@@ -79007,13 +79300,13 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b20a9b2ede25288e5685aed3.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e71ff5133a8b621500cdef0d.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement à la racine cible demandé U912 ; aucune validation
       étendue aux descriptions des systèmes. »'
   last_modified: '2026-10-09T06:22:49.710148Z'
   content_sha256: ccd7a71e4ce65127e32d9cf63e211d43c66cb614476ad7daf926675b7b8202bc
   adoption_ids:
-  - ADOPT-REASSESS-e71ff5133a8b621500cdef0d
+  - ADOPT-REASSESS-22d9ac6b88c561559cf28c7b
 - id: REL-UNIVERSE-SUPPLY-business-references
   revision: 4
   type: presents
@@ -84902,12 +85195,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c2c7ed0310616e7af34227c9.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-896d93898cc2f413974f2655.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: c5b84d7996f8e389cc15f3af17e5b315507adcd115be2b8e521e880c585834e5
   adoption_ids:
-  - ADOPT-REASSESS-896d93898cc2f413974f2655
+  - ADOPT-REASSESS-dd95c68bd4823e9d052ffa63
 - id: REL-U725-VISIBILITY-D04.j
   revision: 2
   type: relates-to
@@ -84927,12 +85220,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-19756e1f92b7ca42e964297a.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0b64aeef21d0a2bb34d1fff6.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: 3ee61fa4d9dcc614647310524d29da7430e7c9cfcd6bbc8b5ff87e911993aa0d
   adoption_ids:
-  - ADOPT-REASSESS-0b64aeef21d0a2bb34d1fff6
+  - ADOPT-REASSESS-34aee347b1bd2c285e16670a
 - id: REL-U725-VISIBILITY-D04.k
   revision: 2
   type: relates-to
@@ -84952,12 +85245,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9acb7ce054d591315be73a4e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-dbe7c51da442ea8e54be0af5.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: 889a63b8bfd95a8c596bed36c765101045185bcf9d201aba8607be9c06c88dbe
   adoption_ids:
-  - ADOPT-REASSESS-dbe7c51da442ea8e54be0af5
+  - ADOPT-REASSESS-f225be785148b97973a477d8
 - id: REL-U725-VISIBILITY-D04.l
   revision: 2
   type: relates-to
@@ -84977,12 +85270,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-113f359a178a093be2d5e0a3.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fbd3a852e76d4fc6d6a67cc5.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: 7fb13dbc2df45aba76fe301afc3676a0f3e0608c69680150a8d0131cce0d39d5
   adoption_ids:
-  - ADOPT-REASSESS-fbd3a852e76d4fc6d6a67cc5
+  - ADOPT-REASSESS-286036b570cb0863e560cfcb
 - id: REL-U725-VISIBILITY-D04.m
   revision: 2
   type: relates-to
@@ -85002,12 +85295,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bdc45fd92df653b6c90e1f86.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-52ff50eb0264aa7cdfb1cf60.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: fbb58372188c6b62a5a89ceec1d66b82663a498abcb2efa82c46148dbbe776ef
   adoption_ids:
-  - ADOPT-REASSESS-52ff50eb0264aa7cdfb1cf60
+  - ADOPT-REASSESS-ca9f142a594369f85f52765f
 - id: REL-U725-VISIBILITY-D04.r
   revision: 2
   type: relates-to
@@ -85027,12 +85320,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a54d524649bbc3cedaad958d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fa84329eba27d90b9d60907f.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: 7d7520594c83f01653758ca2bf0a6cffa677172ed5f3c0890e8efc1c9ce51b91
   adoption_ids:
-  - ADOPT-REASSESS-fa84329eba27d90b9d60907f
+  - ADOPT-REASSESS-66f6fbc373bb23b3d7174820
 - id: REL-U725-VISIBILITY-D04.t
   revision: 2
   type: relates-to
@@ -85052,12 +85345,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-87ed6e082e0e23db638a519a.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fd1c5e0d2cb4b4c0af7c8591.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: 48e11f622d727c311f94216ea250e89b9022852efd69b1d7750d47baa1872571
   adoption_ids:
-  - ADOPT-REASSESS-fd1c5e0d2cb4b4c0af7c8591
+  - ADOPT-REASSESS-0e05d64dabdcb205070f93d7
 - id: REL-U725-ORDER-RESULTS
   revision: 2
   type: relates-to
@@ -85078,12 +85371,12 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4441f8f6c9cd8dabc4f8676e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cf4d56fe83004b815e07a003.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   content_sha256: bde4aa03e0e04e784b18ecd9bdf99ae02169ed08044ef889ef0e86f7581a8fd3
   adoption_ids:
-  - ADOPT-REASSESS-cf4d56fe83004b815e07a003
+  - ADOPT-REASSESS-ff30ec616bf18ae8dd3ba63e
 - id: REL-U725-EXECUTION-AUTHORIZATIONS
   revision: 1
   type: provides-knowledge
@@ -88255,7 +88548,7 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-552c9ff8dce75034f16f701b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-47ad77fa32f66aa3ffb1f90b.
       Note antérieure, qui ne qualifie pas cette révision : « U909 : extrémité reliée à la capacité fusionnée ; qualification
       conservée à réexaminer. »'
   qualification:
@@ -88268,7 +88561,7 @@ relations:
   last_modified: '2026-10-09T05:15:01.346785Z'
   content_sha256: 5f95322ea2abd02646dde42ff4292530b83210f38aa95b17adb17dfe3e146c4a
   adoption_ids:
-  - ADOPT-REASSESS-47ad77fa32f66aa3ffb1f90b
+  - ADOPT-REASSESS-8b44c002b5cdba9c515b6c62
 - id: REL-U891-PARENT-ba-internal-supplies-equipment-references
   revision: 1
   type: contains
@@ -88796,13 +89089,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4883adf918771be7596ff100.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4198d49c070ae03bd89e25d5.
       Note antérieure, qui ne qualifie pas cette révision : « Nature référentielle et présentation dans Control Plane acceptées
       U908 ; regroupement documentaire de mise en œuvre. »'
   last_modified: '2026-10-07T13:23:24.382595Z'
   content_sha256: b26a8496c295903f107b8ca9ce3aa751164e6f125c6e52c83b7726fddb113377
   adoption_ids:
-  - ADOPT-REASSESS-4198d49c070ae03bd89e25d5
+  - ADOPT-REASSESS-3746074ebcde18d40dd9a0bf
 - id: REL-U908-PRESENTS-BHV017
   revision: 1
   type: presents
@@ -88877,13 +89170,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c638b142642977793a8e8b50.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8a69ccc473e11a48debb0d53.
       Note antérieure, qui ne qualifie pas cette révision : « Nature référentielle et présentation dans Control Plane acceptées
       U908 ; regroupement documentaire de mise en œuvre. »'
   last_modified: '2026-10-07T13:23:24.382595Z'
   content_sha256: 871ffda3317485ded0678256a285629fd6cc0df9f61fe73f8072392530097842
   adoption_ids:
-  - ADOPT-REASSESS-8a69ccc473e11a48debb0d53
+  - ADOPT-REASSESS-38d25538f5d2b493832b844b
 - id: REL-U908-PRESENTS-D19.a
   revision: 1
   type: presents
@@ -88894,13 +89187,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-67d118407753af47f855937e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-757d2f4eedc3ad881532f416.
       Note antérieure, qui ne qualifie pas cette révision : « Nature référentielle et présentation dans Control Plane acceptées
       U908 ; regroupement documentaire de mise en œuvre. »'
   last_modified: '2026-10-07T13:23:24.382595Z'
   content_sha256: 63efd149f7e8085e4a3ac8c36f0260b30f6655a06174a422744ea51101fb98be
   adoption_ids:
-  - ADOPT-REASSESS-757d2f4eedc3ad881532f416
+  - ADOPT-REASSESS-82ee4a60970333681d0b4add
 excluded_nodes:
 - id: ILL-OBJ-01
   source_refs:

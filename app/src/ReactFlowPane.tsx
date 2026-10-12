@@ -557,6 +557,27 @@ function Canvas(props: ReactFlowPaneProps) {
   }, [layout.nodes, model, childLists, detail, props.hotspots]);
   const [textObstacles, setTextObstacles] = useState<{ x: number; y: number; width: number; height: number }[]>([]);
   const [measuredMarkerPositions, setMeasuredMarkerPositions] = useState<Record<string, { x: number; y: number }>>({});
+  const [textMeasurementVersion, setTextMeasurementVersion] = useState(0);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: A new layout replaces the card elements being observed.
+  useEffect(() => {
+    const surface = container.current?.querySelector<HTMLElement>('.map-flow-surface');
+    if (!surface) return;
+    let frame = 0;
+    const refresh = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => setTextMeasurementVersion((version) => version + 1));
+    };
+    const observer = new ResizeObserver(refresh);
+    observer.observe(surface);
+    for (const card of surface.querySelectorAll('.business-card')) observer.observe(card);
+    window.addEventListener('resize', refresh);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', refresh);
+      cancelAnimationFrame(frame);
+    };
+  }, [layout.nodes]);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: Resize measurements invalidate the DOM text geometry even when anchors remain unchanged.
   useLayoutEffect(() => {
     const frame = requestAnimationFrame(() => {
       const surface = container.current?.querySelector<HTMLElement>('.map-flow-surface');
@@ -578,7 +599,9 @@ function Canvas(props: ReactFlowPaneProps) {
         next[marker.id] = { x, y };
       }
       const obstacles: { x: number; y: number; width: number; height: number }[] = [];
-      for (const element of surface.querySelectorAll('.business-card, .container-label, .category-banner')) {
+      for (const element of surface.querySelectorAll(
+        '.business-card, .container-label, .category-banner, small, h3, p, .overview-stats, .overview-hierarchy',
+      )) {
         const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
         while (walker.nextNode()) {
           if (!walker.currentNode.textContent?.trim()) continue;
@@ -598,7 +621,7 @@ function Canvas(props: ReactFlowPaneProps) {
       setMeasuredMarkerPositions((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));
     });
     return () => cancelAnimationFrame(frame);
-  }, [hotspotMarkers, viewport.x, viewport.y, viewport.zoom]);
+  }, [hotspotMarkers, viewport.x, viewport.y, viewport.zoom, canvasWidth, textMeasurementVersion]);
   const markerLayout = useMemo(() => {
     const width = canvasWidth;
     const height = effectiveZoomMode === 'width' ? widthFrame?.height || minimumHeight : minimumHeight;

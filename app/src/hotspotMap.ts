@@ -53,7 +53,7 @@ export interface HotspotMapFilters {
 export const defaultHotspotMapFilters: HotspotMapFilters = {
   enabled: false,
   resolutionStage: 'all',
-  showResolved: false,
+  showResolved: true,
   severity: 'all',
   severityMode: 'exact',
   kind: 'all',
@@ -64,6 +64,47 @@ export const defaultHotspotMapFilters: HotspotMapFilters = {
   showUsageHotspots: true,
   showUnqualifiedHotspots: true,
 };
+
+/** Only known, bounded filter values are accepted from shared links. */
+export function readHotspotFilters(value?: string): HotspotMapFilters {
+  const result = { ...defaultHotspotMapFilters };
+  if (!value || value.length > 1200) return result;
+  try {
+    const input = JSON.parse(value);
+    if (!input || typeof input !== 'object' || Array.isArray(input)) return result;
+    for (const key of [
+      'enabled',
+      'showResolved',
+      'showModelHotspots',
+      'showUsageHotspots',
+      'showUnqualifiedHotspots',
+    ] as const)
+      if (typeof input[key] === 'boolean') result[key] = input[key];
+    const choices = {
+      resolutionStage: ['all', 'unassessed', 'to_explore', 'identified', 'qualifying', 'credible'],
+      severity: ['all', 'unassessed', ...LEVELS],
+      severityMode: ['exact', 'at_most', 'at_least'],
+      kind: ['all', 'scope', 'integration'],
+      status: ['all', 'discovered', 'shared', 'validated', 'resolved'],
+      political: ['all', 'unassessed', ...LEVELS],
+      implementation: ['all', 'unassessed', ...LEVELS],
+    };
+    for (const [key, values] of Object.entries(choices))
+      if (values.includes(input[key])) Object.assign(result, { [key]: input[key] });
+  } catch {
+    /* Invalid links keep the explicit defaults. */
+  }
+  return result;
+}
+export function encodeHotspotFilters(filters: HotspotMapFilters): string {
+  return JSON.stringify(
+    Object.fromEntries(
+      Object.entries(filters).filter(
+        ([key, value]) => value !== defaultHotspotMapFilters[key as keyof HotspotMapFilters],
+      ),
+    ),
+  );
+}
 
 /** Result severity and its input axes are alternative ways to filter the same classification. */
 export function updateHotspotMapFilters(

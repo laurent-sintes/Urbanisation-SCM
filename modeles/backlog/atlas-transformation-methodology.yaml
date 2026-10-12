@@ -1,5 +1,5 @@
-id: flow-methodology-2026-10-12.1
-version: 2026-10-12.1
+id: flow-methodology-2026-10-12.2
+version: 2026-10-12.2
 as_of: '2026-10-12'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
@@ -7,6 +7,7 @@ editorial_status: implementation_wording
 scope: Méthodologie de transformation et métamodèle ; Business Area obligatoire entre sous-domaine et capacité (U880). Les
   éditions historiques restent figées.
 source_refs:
+- U970
 - U969
 - U964
 - U965
@@ -313,17 +314,25 @@ lessons:
     - U482
   model_links: []
 sources:
+- id: U970
+  title: Application de l’audit UX Hotspots
+  kind: user_contribution
+  excerpt: Applique les préconisations de l’audit
+  scope: Documentation, critères explicites et parcours UX ; pas de réévaluation automatique des sujets.
 - id: U969
   title: Audit Hotspots et extractions complètes
-  excerpt: Ne jamais oublier que metamodele et modele complets doivent se trouver dans les extractions (téléchargement) yaml et json.
+  excerpt: Ne jamais oublier que metamodele et modele complets doivent se trouver dans les extractions (téléchargement) yaml
+    et json.
   scope: Demande de contrôle du catalogue, audit UX et tests de téléchargement ; aucune résolution ou réalisation déduite.
 - id: U964
   title: Une différence ne constitue pas automatiquement un problème
-  excerpt: Une décision qui conduirait à "chaque marque décide, ça ne pose pas de problème au Core System" est une forme de résolution.
+  excerpt: Une décision qui conduirait à "chaque marque décide, ça ne pose pas de problème au Core System" est une forme de
+    résolution.
   scope: Option conditionnelle pour HS-016 ; compatibilité et choix restent à établir.
 - id: U965
   title: Une décision de convergence peut résoudre le cadrage
-  excerpt: Oui, s'il y a un gap analysis, parfois, une simple décision de convergence totale / partielle / non convergence est la solution
+  excerpt: Oui, s'il y a un gap analysis, parfois, une simple décision de convergence totale / partielle / non convergence
+    est la solution
   scope: Formes possibles de résolution, aucune issue choisie automatiquement.
 - id: U966
   title: Hotspot comme sujet générique à creuser
@@ -747,7 +756,8 @@ sources:
 - id: U915
   title: Distinguer la racine cible et la pratique d’architecture
   excerpt: Je valide tout. Univers doit être remplacé par Architecture d’Entreprise, en anglais dans le métamodèle.
-  scope: Enterprise Architecture nomme l’objet racine du SI cible ; Enterprise Architecture Practice nomme la pratique méthodologique distincte.
+  scope: Enterprise Architecture nomme l’objet racine du SI cible ; Enterprise Architecture Practice nomme la pratique méthodologique
+    distincte.
 glossary:
   terms:
   - id: MOD001
@@ -1019,8 +1029,8 @@ glossary:
       pas à créer une capacité.
     - 'Le parcours mobilise des capacités et traverse leurs responsabilités ; il ne devient pas leur parent dans la hiérarchie.
       [Process Management](model:subdomain-process-management) porte le savoir-faire de définition, conduite, supervision
-      et analyse de ces parcours. [Process, Tasks & Order Visibility](model:BHV082) est une capacité : son identité persistante BHV082 ne
-      détermine pas sa nature ni son code de lecture.'
+      et analyse de ces parcours. [Process, Tasks & Order Visibility](model:BHV082) est une capacité : son identité persistante
+      BHV082 ne détermine pas sa nature ni son code de lecture.'
     editorial_notes:
     - 'Critère U751/U752 : imaginer des humains avec du papier, un stylo et des calepins, puis décrire ce qu’ils font et les
       actifs qu’ils tiennent pour faire fonctionner l’entreprise. Ce test révèle la responsabilité métier ; il ne prescrit
@@ -1335,21 +1345,39 @@ glossary:
     notes:
     - Objet racine du modèle cible, distinct de la pratique Enterprise Architecture Practice (MOD032).
   - id: MOD044
-    canonical_fields: [name, label_fr, definition, short_description]
+    canonical_fields:
+    - name
+    - label_fr
+    - definition
+    - short_description
     notes:
     - La validation reconnaît le sujet et son périmètre ; elle ne confirme pas un dysfonctionnement ni une solution.
-    - Impact sur le modèle, irritant d’usage, criticité et avancement du cadrage restent distincts. Les impacts à qualifier ne sont pas classés par défaut comme irritants.
-    - Une décision argumentée de convergence totale, partielle ou de non-convergence peut résoudre le cadrage sans changement technique obligatoire. Une solution crédible ne prouve ni choix définitif ni réalisation.
+    - Impact sur le modèle, irritant d’usage, criticité et avancement du cadrage restent distincts. Les impacts à qualifier
+      ne sont pas classés par défaut comme irritants.
+    - Une décision argumentée de convergence totale, partielle ou de non-convergence peut résoudre le cadrage sans changement
+      technique obligatoire. Une solution crédible ne prouve ni choix définitif ni réalisation.
   - id: MOD045
-    canonical_fields: [name, label_fr, definition, short_description]
+    canonical_fields:
+    - name
+    - label_fr
+    - definition
+    - short_description
     notes:
-    - Dimension facultative d’un hotspot ; comparer les SI, les périmètres d’un même SI, ou les deux, sans confondre différence et problème.
-    - Chaque observation conserve son périmètre, ses sources, la nature de sa preuve et ses limites. Non évalué ne signifie pas absent.
+    - Dimension facultative d’un hotspot ; comparer les SI, les périmètres d’un même SI, ou les deux, sans confondre différence
+      et problème.
+    - Chaque observation conserve son périmètre, ses sources, la nature de sa preuve et ses limites. Non évalué ne signifie
+      pas absent.
   - id: MOD046
-    canonical_fields: [name, label_fr, definition, short_description]
+    canonical_fields:
+    - name
+    - label_fr
+    - definition
+    - short_description
     notes:
-    - Question d’architecture transverse de HS-023 ; l’autorité des règles reste dans Control Plane. Une trace de modification seule ne démontre pas la chaîne complète.
-    - Références et limites de comparaison conservées dans la fiche HS-023 ; aucun standard, produit ou composant installé n’est déduit.
+    - Question d’architecture transverse de HS-023 ; l’autorité des règles reste dans Control Plane. Une trace de modification
+      seule ne démontre pas la chaîne complète.
+    - Références et limites de comparaison conservées dans la fiche HS-023 ; aucun standard, produit ou composant installé
+      n’est déduit.
   model_term_ids:
   - TER001
   - TER002
@@ -1870,11 +1898,35 @@ chapters:
       par exemple obtenir un engagement de livraison. Dans un scénario de stock partiel, une étape de mobilisation décrit
       comment les capacités évaluent les options puis sélectionnent une promesse. Les deux vues se relient sans se confondre.
   - title: Des sujets à instruire et à arbitrer
-    text: Un [Hotspot](method:MOD044) porte une question à creuser, sans présumer d’un dysfonctionnement. Sa fiche relie le sujet, les observations, les options et les décisions. Il reste hors de la hiérarchie métier et peut concerner un ou plusieurs périmètres.
-    detail: Distinguer impact sur le modèle métier ou le Core System, irritant d’usage et impact à qualifier. La criticité et l’avancement du cadrage sont des dimensions séparées ; « validé » reconnaît le sujet, « résolu » qualifie le cadrage.
+    text: Un [Hotspot](method:MOD044) porte une question à creuser, sans présumer d’un dysfonctionnement. Sa fiche relie le
+      sujet, les observations, les options et les décisions. Il reste hors de la hiérarchie métier et peut concerner un ou
+      plusieurs périmètres.
+    detail: Distinguer impact sur le modèle métier ou le Core System, irritant d’usage et impact à qualifier. La criticité
+      et l’avancement du cadrage sont des dimensions séparées ; « validé » reconnaît le sujet, « résolu » qualifie le cadrage.
   - title: Comparer sans imposer l’unification
-    text: Une [Gap Analysis](method:MOD045) est facultative. Elle compare des règles ou réalisations entre SI, entre périmètres d’un même SI, ou les deux. Chaque observation garde ses sources, son périmètre et ses réserves.
-    detail: Une différence peut rester légitime. Une décision argumentée de convergence totale, partielle ou de non-convergence peut suffire ; sa compatibilité avec le Core System reste à établir sur preuve.
+    text: Une [Gap Analysis](method:MOD045) est facultative. Elle compare des règles ou réalisations entre SI, entre périmètres
+      d’un même SI, ou les deux. Chaque observation garde ses sources, son périmètre et ses réserves.
+    detail: Une différence peut rester légitime. Une décision argumentée de convergence totale, partielle ou de non-convergence
+      peut suffire ; sa compatibilité avec le Core System reste à établir sur preuve.
+  - title: Lire les dimensions d’un point chaud
+    text: Le sujet est découvert, partagé ou validé. Son impact concerne le modèle métier/Core System, la praticité d’usage,
+      ou reste à qualifier. Le niveau de preuve et la justification expliquent ce classement. La criticité croise les difficultés
+      politique et d’implémentation ; le cadrage progresse jusqu’à une solution crédible. Ces dimensions répondent à des questions
+      différentes.
+    detail: La grille détaillée de la publication est accessible dans « Comment qualifier et évaluer un Hotspot ? ». Non évalué
+      ne veut dire ni simple ni sans impact ; une source documentée ne prouve pas une réalisation installée.
+  - title: 'Exemple : décider de la convergence Wholesale'
+    text: '[Wholesale](glossary:TER193) : les Marques Historiques servent le stock disponible à la saisie ; Boardriders conserve
+      les demandes non couvertes et réarbitre leurs affectations avant engagement ferme. L’impact modèle est proposé car il
+      faut décider des règles communes et des variantes à préserver. La différence ne prouve pas un dysfonctionnement.'
+    detail: Sujet validé ne signifie pas convergence décidée. Les complexités L et XL existantes sont conservées, leur combinaison
+      donne XL. Une convergence totale, partielle ou une non-convergence argumentée peut résoudre le cadrage.
+  - title: Modifier en séance et publier sont deux étapes
+    text: Les fenêtres de la liste modifient qualification, avancement, périmètre et complexités dans la séance locale. «
+      Enregistrer les modifications » conserve les saisies ; ce bouton ne valide pas le sujet dans le backlog et ne publie
+      pas une release.
+    detail: L’enrichissement de l’impact, des observations ou des options passe par une modification du modèle avec ses sources.
+      Les JSON et YAML téléchargés conservent le modèle et le métamodèle complets ; les filtres n’en réduisent jamais le contenu.
 - id: method
   title: Conventions de cartographie
   intro: Partir du service concret rendu, préciser les frontières, puis éprouver les [capacités](method:MOD015) sur des [scénarios](method:MOD027)
@@ -1915,8 +1967,8 @@ chapters:
     example: '[Order Promising](model:ba-order-promising) regroupe [ATP](model:D03.i), [CTP](model:D03.j) et [PTP](model:D03.k)
       dans [Availability](model:D03). Dans [Control Plane](model:subdomain-policies), [Protection Policies](model:ba-protection-policies)
       présente des référentiels de protection et [Service Provider Controls](model:ba-service-provider-controls) présente
-      [Service Provider Policy](model:D19.a). Les référentiels restent des objets documentaires ; le bandeau de la carte
-      rend chaque Business Area visible et ouvre sa fiche.'
+      [Service Provider Policy](model:D19.a). Les référentiels restent des objets documentaires ; le bandeau de la carte rend
+      chaque Business Area visible et ouvre sa fiche.'
   - title: Justifier une capacité, au-delà d’un accès aux données
     text: Une [capacité](method:MOD015) doit produire un résultat métier identifiable, avec une responsabilité propre. Un
       objet de données, une opération technique ou une fonctionnalité d’écran ne suffisent pas. Pour [Visibility](method:MOD040),

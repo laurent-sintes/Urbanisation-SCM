@@ -13,6 +13,7 @@ import { filterMapHotspots, type HotspotMapFilters } from '../hotspotMap';
 import type { Hotspot } from '../types';
 import { useHotspotFloating } from './HotspotDisplay';
 import { HotspotFilterFields } from './HotspotFilterFields';
+import { ModelText } from './ModelLinks';
 
 export function MapHotspotPicker({
   filters,
@@ -93,6 +94,9 @@ export function MapHotspotPicker({
                           </span>
                           <span className="hotspot-filter-list-label">
                             <strong>{hotspot.title}</strong>
+                            <span className="hotspot-picker-summary">
+                              <ModelText text={hotspot.problem} />
+                            </span>
                             <small>
                               {framingLabel(hotspot)} · Criticité{' '}
                               {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}

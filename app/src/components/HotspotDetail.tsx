@@ -1,11 +1,12 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { documentsForHotspot, documentUrl } from '../documentCatalog';
-import { framingLabel } from '../hotspotFraming';
 import { RESOLUTION_STAGES, resolutionFor } from '../hotspotResolution';
 import { mapRouteForNode } from '../mapNavigation';
 import type { RouteState } from '../navigation';
 import type { Hotspot, PublishedModel } from '../types';
+import { HotspotAssessmentGuide } from './HotspotAssessmentGuide';
+import { HotspotImpact } from './HotspotImpact';
 import { ModelText } from './ModelLinks';
 
 const STATUS: Record<Hotspot['status'], string> = {
@@ -71,7 +72,7 @@ export function HotspotDetail({
         <h3 id="hotspot-detail-title">
           <ModelText text={hotspot.title} />
         </h3>
-        <p className="hotspot-framing-marker">{framingLabel(hotspot)}</p>
+        <HotspotImpact item={hotspot} />
         {hotspot.framing_impact && (
           <div className="hotspot-framing-description">
             <p>
@@ -92,6 +93,16 @@ export function HotspotDetail({
       </header>
 
       <section className="hotspot-resolution-summary hotspot-story-overview" aria-labelledby="hotspot-progress-title">
+        <p className="hotspot-story-lead">
+          <strong>Le sujet : </strong>
+          <ModelText text={hotspot.problem} />
+        </p>
+        {hotspot.gap_analysis?.map((gap) => (
+          <p key={gap.id}>
+            <strong>Question de cadrage : </strong>
+            <ModelText text={gap.convergence_question} />
+          </p>
+        ))}
         <div className="hotspot-story-heading">
           <h4 id="hotspot-progress-title">Où en sommes-nous ?</h4>
           {canEdit && (
@@ -212,52 +223,54 @@ export function HotspotDetail({
             <p>
               <ModelText text={gap.comparison} />
             </p>
-            {gap.observations_by_context.map((observation) => (
-              <section key={`${observation.context_id}:${observation.observation_scope?.id || ''}`}>
-                <h6>
-                  {observation.context_id === 'beaumanoir-historique'
-                    ? 'SI Marques Historiques'
-                    : observation.context_id === 'boardriders'
-                      ? 'SI Boardriders'
-                      : 'SI Sarenza'}
+            <div className="hotspot-gap-observations">
+              {gap.observations_by_context.map((observation) => (
+                <section key={`${observation.context_id}:${observation.observation_scope?.id || ''}`}>
+                  <h6>
+                    {observation.context_id === 'beaumanoir-historique'
+                      ? 'SI Marques Historiques'
+                      : observation.context_id === 'boardriders'
+                        ? 'SI Boardriders'
+                        : 'SI Sarenza'}
+                    {observation.observation_scope && (
+                      <>
+                        {' '}
+                        · <ModelText text={observation.observation_scope.label} />
+                      </>
+                    )}
+                  </h6>
                   {observation.observation_scope && (
-                    <>
-                      {' '}
-                      · <ModelText text={observation.observation_scope.label} />
-                    </>
+                    <p className="hotspot-story-caption">
+                      <ModelText text={observation.observation_scope.description} />
+                    </p>
                   )}
-                </h6>
-                {observation.observation_scope && (
-                  <p className="hotspot-story-caption">
-                    <ModelText text={observation.observation_scope.description} />
+                  <p>
+                    <ModelText text={observation.handling} />
                   </p>
-                )}
-                <p>
-                  <ModelText text={observation.handling} />
-                </p>
-                <ul>
-                  {observation.business_rules.map((rule) => (
-                    <li key={rule}>
-                      <ModelText text={rule} />
-                    </li>
-                  ))}
-                </ul>
-                <p className="hotspot-story-caption">
-                  {observation.evidence_kind === 'user_report'
-                    ? 'Déclaration rapportée'
-                    : observation.evidence_kind === 'source_document'
-                      ? 'Source documentaire'
-                      : 'Analyse'}
-                  {' · '}
-                  {observation.evidence_state === 'hypothesis'
-                    ? 'Hypothèse · '
-                    : observation.evidence_state === 'to_investigate'
-                      ? 'À instruire · '
-                      : ''}
-                  <ModelText text={observation.limits} />
-                </p>
-              </section>
-            ))}
+                  <ul>
+                    {observation.business_rules.map((rule) => (
+                      <li key={rule}>
+                        <ModelText text={rule} />
+                      </li>
+                    ))}
+                  </ul>
+                  <p className="hotspot-story-caption">
+                    {observation.evidence_kind === 'user_report'
+                      ? 'Déclaration rapportée'
+                      : observation.evidence_kind === 'source_document'
+                        ? 'Source documentaire'
+                        : 'Analyse'}
+                    {' · '}
+                    {observation.evidence_state === 'hypothesis'
+                      ? 'Hypothèse · '
+                      : observation.evidence_state === 'to_investigate'
+                        ? 'À instruire · '
+                        : ''}
+                    <ModelText text={observation.limits} />
+                  </p>
+                </section>
+              ))}
+            </div>
             <h6>La question pour FLOW</h6>
             <p>
               <ModelText text={gap.convergence_question} />
@@ -299,27 +312,54 @@ export function HotspotDetail({
             </button>
           )}
         </div>
-        {hotspot.complexity.rationale ? (
-          <p>
-            <ModelText text={hotspot.complexity.rationale} />
+        <div className="hotspot-criticality" role="group" aria-labelledby="hotspot-criticality-title">
+          <h5 id="hotspot-criticality-title">Criticité · {size(hotspot.severity)}</h5>
+          <p className="hotspot-story-caption">
+            La criticité résulte du croisement des deux complexités ci-dessous.
+            {hotspot.severity === 'unassessed' && ' Elle reste non évaluée tant qu’un des deux axes ne l’est pas.'}
           </p>
-        ) : (
-          <p className="hotspot-story-empty">Difficultés encore à documenter.</p>
-        )}
-        <dl className="hotspot-facts">
-          <div>
-            <dt>Criticité</dt>
-            <dd>{size(hotspot.severity)}</dd>
-          </div>
-          <div>
-            <dt>Difficulté politique</dt>
-            <dd>{size(hotspot.complexity.political)}</dd>
-          </div>
-          <div>
-            <dt>Difficulté d’implémentation</dt>
-            <dd>{size(hotspot.complexity.implementation)}</dd>
-          </div>
-        </dl>
+          <dl className="hotspot-criticality-components">
+            <div>
+              <dt>Complexité politique · {size(hotspot.complexity.political)}</dt>
+              <dd>
+                Difficulté à obtenir un accord sur les règles, les responsabilités et les compromis entre marques ou
+                pôles.
+                <p>
+                  <ModelText
+                    text={
+                      hotspot.complexity.political_rationale ||
+                      'Justification propre à cet axe non documentée ; voir la justification commune.'
+                    }
+                  />
+                </p>
+              </dd>
+            </div>
+            <div>
+              <dt>Complexité d’implémentation · {size(hotspot.complexity.implementation)}</dt>
+              <dd>
+                Difficulté à réaliser la solution : règles à gérer, données à intégrer, adaptations et contraintes
+                techniques.
+                <p>
+                  <ModelText
+                    text={
+                      hotspot.complexity.implementation_rationale ||
+                      'Justification propre à cet axe non documentée ; voir la justification commune.'
+                    }
+                  />
+                </p>
+              </dd>
+            </div>
+          </dl>
+          <h6>Pourquoi cette évaluation ?</h6>
+          {hotspot.complexity.rationale ? (
+            <p>
+              <ModelText text={hotspot.complexity.rationale} />
+            </p>
+          ) : (
+            <p className="hotspot-story-empty">Justification des complexités non documentée.</p>
+          )}
+        </div>
+        <HotspotAssessmentGuide model={model} />
         {hotspot.market_view ? (
           <details className="hotspot-story-support">
             <summary>Ce que les références marché apportent à l’analyse</summary>
@@ -468,6 +508,12 @@ export function HotspotDetail({
       </section>
 
       <section className="hotspot-story-section" aria-labelledby="hotspot-evidence-title">
+        {canEdit && (
+          <p className="hotspot-story-caption">
+            Modifier dans la séance : périmètre, complexités et avancement. Pour enrichir le sujet, son impact, les
+            observations ou les options, demande à Codex de préparer une modification du modèle avec ses preuves.
+          </p>
+        )}
         <h4 id="hotspot-evidence-title">Les documents et les sources</h4>
         {documents.length > 0 && (
           <ul className="hotspot-documents">
@@ -495,6 +541,19 @@ export function HotspotDetail({
         )}
         <details className="hotspot-provenance">
           <summary>Sources et réserves détaillées</summary>
+          <ul>
+            {hotspot.source_refs.map((id) => {
+              const source = model.raw.hotspot_catalog?.sources?.find((item) => item.id === id);
+              return (
+                <li key={id}>
+                  <strong>{source?.title || 'Source interne — intitulé non fourni par cette publication'}</strong>
+                  {source?.date && ` · ${source.date}`}
+                  <p>{source?.access || 'Source interne non consultable dans Atlas.'}</p>
+                  <small>Référence de provenance : {id}</small>
+                </li>
+              );
+            })}
+          </ul>
           <p>
             {hotspot.origin.repository} · {hotspot.origin.source_id}
           </p>

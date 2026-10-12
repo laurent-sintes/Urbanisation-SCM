@@ -27,8 +27,9 @@ import {
 import { framingLabel } from '../hotspotFraming';
 import { isClosedHotspot, isFramingResolved, RESOLUTION_STAGES, resolutionFor } from '../hotspotResolution';
 import type { Hotspot, PublishedModel } from '../types';
+import { ModelText } from './ModelLinks';
 
-const STATUS = { discovered: 'Découvert', shared: 'Partagé', validated: 'Problème validé', resolved: 'Résolu' };
+const STATUS = { discovered: 'Découvert', shared: 'Partagé', validated: 'Sujet validé', resolved: 'Résolu' };
 const FLAMES = ['first', 'second', 'third', 'fourth'];
 export const severityLabel = (severity: string) => (severity === 'unassessed' ? 'non évaluée' : severity);
 
@@ -191,6 +192,17 @@ export function HotspotMapMarker({
   const tip = (
     <>
       <strong>{title}</strong>
+      {!grouped && (
+        <span className="hotspot-tooltip-summary">
+          <ModelText text={items[0].problem} />
+        </span>
+      )}
+      {!grouped && items[0].gap_analysis?.[0]?.convergence_question && (
+        <span>
+          <strong>À arbitrer : </strong>
+          <ModelText text={items[0].gap_analysis[0].convergence_question} />
+        </span>
+      )}
       {!grouped && <span>{framingLabel(items[0])}</span>}
       <span>
         Criticité {grouped ? 'maximale ' : ''}
@@ -291,6 +303,14 @@ export function HotspotMapMarker({
                       tip={
                         <>
                           <strong>{item.title}</strong>
+                          <span>
+                            <ModelText text={item.problem} />
+                          </span>
+                          {item.gap_analysis?.[0]?.convergence_question && (
+                            <span>
+                              À arbitrer : <ModelText text={item.gap_analysis[0].convergence_question} />
+                            </span>
+                          )}
                           <span>{framingLabel(item)}</span>
                           <span>
                             {STATUS[item.status]} · {RESOLUTION_STAGES[resolutionFor(item).stage]} · Criticité{' '}

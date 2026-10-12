@@ -31,6 +31,15 @@ class HotspotCatalogTests(unittest.TestCase):
         self.assertEqual(severity_for('L', 'L'), 'XL')
         self.assertEqual(severity_for('unassessed', 'XL'), 'unassessed')
 
+    def test_published_matrix_cannot_disagree_with_criticality_calculation(self):
+        model = copy.deepcopy(self.model)
+        policy = model['hotspot_catalog']['criticality_policy']
+        for row, political in enumerate(policy['levels']):
+            for column, implementation in enumerate(policy['levels']):
+                self.assertEqual(policy['matrix'][row][column], severity_for(political, implementation))
+        policy['matrix'][0][0] = 'XL'
+        self.assertTrue(any('criticality policy' in error for error in validate_catalog(model)))
+
     def test_source_candidates_are_integrated_and_subjects_validated_without_forcing_resolution(self):
         from scripts.structured_io import read
         candidates = read(ROOT / 'modeles/backlog/hotspot-source-candidates-U958.yaml')

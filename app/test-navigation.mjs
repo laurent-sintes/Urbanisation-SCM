@@ -15,6 +15,7 @@ test('a route preserves its fixed publication, selection and literal characters'
     source: 'connaissance/fichier avec espaces.md',
     anchor: 'référence-1',
     sourceId: 'U153',
+    hotspotFilters: JSON.stringify({ enabled: true, showModelHotspots: false, resolutionStage: 'qualifying' }),
   };
   assert.deepEqual(readRoute(routeHash(route)), route);
 });

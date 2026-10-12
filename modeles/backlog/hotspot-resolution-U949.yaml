@@ -90,6 +90,7 @@ publication_delivery:
   state: applied
   source_refs:
   - U949
+  - U970
   summary: Ajout du contrat de progression ; onze sujets explicitement non renseignés.
   required_catalog:
   - collection: hotspots
@@ -124,10 +125,12 @@ publication_delivery:
     content_sha256: 8b8acd82d380bc2265f53f844aee4a0fc26737216d0cdb3324d3e60e9f7d5f80
   - collection: hotspots
     id: HS-008
-    content_sha256: 5769876e7e82f0d4cbe83af7263f4408569264d9ee3aafd3d354a5dd90af911a
+    content_sha256: 7383ada13bba25fabc3e178ac5301fa2e06f689f17ea0308d2273f4a29a7366d
   annotation_update: U957 ajoute les analyses d’écarts et leur provenance ; aucun accord antérieur étendu. Empreintes précédentes
     conservées dans hotspot-gap-research-U955.yaml.
   impact_annotation_update: 'U959–U961 : ajout de qualifications d’impact proposées, sans changement des contenus ou accords
     antérieurs ; empreintes précédentes dans hotspot-framing-impact-U959.yaml.'
+  ux_update: 'U970 : formulation publique sans codes de récits et justifications par axe pour HS-008 ; notes L/XL, qualification
+    et avancement conservés. Les états antérieurs restent dans Git ; aucune extension d’accord métier.'
 capture_method: Verbatim U949 puis empreintes finales ; record_decision/record_intents ne supportent que nodes/relations,
   pas hotspots ou termes MOD.

@@ -23096,3 +23096,37 @@ Verbatim :
 > Développe bien des tests de téléchargement, parfois, ça peut merder.
 
 Portée : vérifier les sujets encore en attente, leur contenu et le métamodèle ; qualifier les résultats du contrôle avant une nouvelle publication locale. Auditer et corriger les parcours liste, détail, filtre et carte, avec distinction modèle/usage et conservation explicite des impacts à qualifier. Garantir des extractions YAML/JSON complètes et développer des tests des téléchargements effectifs. L’absence de sujet en attente de validation ne signifie ni résolution, ni confirmation des observations, estimations ou solutions. Une release ne donne aucun accord implicite sur ces dimensions ; commit et push restent distincts.
+
+## U970
+
+**id**
+
+U970
+
+**titre**
+
+Application de l’audit UX Hotspots : documentation, lecture, édition et cartographie
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Je veux un audit UX des Hotspots. de la doc métamodèle et glossaire jusqu'à l'usage et sa représentation dans la carto
+
+Les halos ont disparu ou presque, je trouve dommage
+
+Le tag "Structurant pour le cadrage" est interessant mais je ne comprends pas comment il est estimé.
+
+Les tooltips Hotspot on gagné en description de l'état mais ont perdu en description / Summary
+
+On a bcp d'attributs de type "Statut", on pourrait imaginer les regrouper dans la vue liste. En mode modification, une petite popup permettrait de les modifier
+
+Applique les préconisations de l'audit
+
+Dans la vue liste, les descriptions prennent trop d'espace vertical, les autres attributs ont trop d'espace : la liste est à rééquilibrer complètement.
+
+**portée**
+
+Application de l’audit technique app/audits/hotspots-ux-2026-10-12.html : parcours, documentation méthodologique, sources compréhensibles, critères explicites, contrat exporté et tests. Les repères d’estimation restent à éprouver ; aucune réévaluation automatique, aucun nouvel arbitrage métier ni preuve de réalisation installée. Publication locale des compléments documentaires nécessaire à leur lecture dans Atlas ; aucun push demandé. Préserver puis renouveler la séance ancienne si elle est vide ; conserver toute saisie existante avant reprise.

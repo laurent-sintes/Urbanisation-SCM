@@ -18,6 +18,13 @@ const stage = {
   revision: 1,
   operations: model.hotspot_catalog.hotspots.map((item, position) => {
     const progress = stages[position % stages.length];
+    const options = item.resolution_options.length
+      ? item.resolution_options
+      : structuredClone(
+          model.hotspot_catalog.hotspots
+            .find((subject) => subject.resolution_options.length)
+            .resolution_options.slice(0, 1),
+        );
     return {
       sequence: position + 1,
       entity: 'hotspot',
@@ -25,6 +32,7 @@ const stage = {
       id: item.id,
       value: {
         ...item,
+        resolution_options: options,
         status: progress === 'credible' ? 'resolved' : 'validated',
         kind: 'scope',
         location: { ...item.location, node_ids: ['domain-logistics-execution'] },
@@ -33,7 +41,7 @@ const stage = {
         resolution: {
           stage: progress,
           summary: progress === 'unassessed' ? '' : 'Hypothèses de cadrage',
-          credible_option_ids: progress === 'credible' ? [item.resolution_options[0].id] : [],
+          credible_option_ids: progress === 'credible' ? [options[0].id] : [],
           credibility_note: progress === 'credible' ? 'Crédibilité avec réserves' : '',
           blocked_reason: progress === 'qualifying' ? 'Volumes inconnus' : '',
           next_step: progress === 'qualifying' ? 'Obtenir les volumes' : '',
@@ -133,19 +141,19 @@ try {
   await page.setViewportSize({ width: 1440, height: 950 });
   await page.goto(`${base}#/hotspots?version=${index.current_version}`);
   const item = model.hotspot_catalog.hotspots[0];
-  const edit = page.getByRole('button', { name: `Avancement du cadrage de ${item.title}`, exact: true });
+  const edit = page.getByRole('button', { name: `Qualification et avancement de ${item.title}`, exact: true });
   await edit.click();
   const dialog = page.locator('.hotspot-dialog');
   await dialog.getByLabel('Avancement du cadrage').selectOption('credible');
   await dialog.getByLabel('Synthèse d’avancement').fill('Deux solutions crédibles en cadrage');
-  const save = page.getByRole('button', { name: 'Valider les modifications' });
+  const save = page.getByRole('button', { name: 'Enregistrer les modifications' });
   assert.equal(await save.isDisabled(), true, 'a stage alone cannot resolve framing');
   await dialog.getByRole('checkbox').first().check();
   await dialog.getByLabel('Crédibilité, hypothèses et réserves').fill('Contrat possible sous réserve de volumes');
   assert.equal(await dialog.getByLabel('Option retenue (choix définitif facultatif)').inputValue(), '');
   await dialog.getByRole('button', { name: 'Fermer', exact: true }).click();
   await save.click();
-  await page.getByText('enregistré dans le staging.', { exact: false }).waitFor();
+  await page.getByText('enregistré dans la séance', { exact: false }).waitFor();
   assert.equal(posts.length, 1);
   assert.equal(posts[0].changes[0].fields.status, 'resolved');
   assert.equal(posts[0].changes[0].fields.resolution.stage, 'credible');
