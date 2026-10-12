@@ -1,0 +1,38 @@
+id: DATA-SHARING-SUMMARY-U998
+source_refs:
+- U997
+- U998
+status: applied
+agreement_scope: Deux libellés courts explicitement adoptés, indépendants des libellés détaillés.
+contract:
+  field: relations.fields.summary_label
+  meaning: Synthèse des échanges ayant ces extrémités orientées. La projection Enterprise Architecture la prend sur la relation
+    entre les systèmes concernés.
+  historical_fallback: Une publication sans synthèse conserve ses libellés concaténés ; aucune synthèse inventée.
+  details: Relations et contenus détaillés conservés au survol et dans le panneau dédié.
+glossary_alignment:
+  checked_terms:
+  - TER120
+  - TER190
+  - TER117
+  - TER259
+  - TER264
+  changed: false
+  reason: Synthèse de lecture des échanges existants, sans nouveau concept ni changement de responsabilité.
+market_comparison: Ajustement de présentation et de contrat ; aucun nouveau périmètre métier ni taxonomie éditeur.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U998
+  summary: Deux libellés de synthèse intersystèmes modélisés ; détails conservés.
+  required_relations:
+  - id: REL-U979-management-facts
+    source_id: system-business-operations
+    target_id: system-enterprise-management-control
+    field_sha256:
+      summary_label: 62d0ae78b550e0bf80b1c1775f1a85720a2d057ab7e209f019eef3295fad04eb
+  - id: REL-U979-credit-profiles
+    source_id: system-enterprise-management-control
+    target_id: system-business-operations
+    field_sha256:
+      summary_label: 49f1a6f993c7e4ce5f4a739c95e5006353d3aa2b7dddfa19697cb72ac978cbc3

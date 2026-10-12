@@ -3,6 +3,7 @@
 
 def validate_data_sharing(model):
     errors = []
+    summaries = {}
     glossary = model.get('glossary')
     terms = {t['id'] for t in glossary.get('terms', [])} if isinstance(glossary, dict) else None
     for relation in model.get('relations', []):
@@ -12,7 +13,18 @@ def validate_data_sharing(model):
         if relation.get('type') != 'shares-data':
             if exchange is not None:
                 errors.append(path + ': data_exchange belongs only to shares-data')
+            if 'summary_label' in fields:
+                errors.append(path + ': summary_label belongs only to shares-data')
             continue
+        if 'summary_label' in fields:
+            label = fields['summary_label']
+            pair = (relation.get('source_id'), relation.get('target_id'))
+            if not isinstance(label, str) or not label.strip():
+                errors.append(path + ': summary_label must be nonempty text')
+            elif pair in summaries and summaries[pair] != label:
+                errors.append(path + ': conflicting summary labels for the same directed endpoints')
+            else:
+                summaries[pair] = label
         if relation.get('source_id') == relation.get('target_id'):
             errors.append(path + ': data sharing requires distinct endpoints')
         if not isinstance(fields.get('label'), str) or not fields['label'].strip():

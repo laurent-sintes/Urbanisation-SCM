@@ -22,7 +22,7 @@ from scripts.clean_generated import clean
 
 def fingerprints(folder):
     return {p.relative_to(folder).as_posix(): sha256(p.read_bytes()).hexdigest()
-            for p in sorted(folder.rglob('*.json'))}
+            for p in sorted(folder.rglob('*')) if p.is_file()}
 
 
 def main():
@@ -36,7 +36,7 @@ def main():
     folder.mkdir(parents=True)
     baseline = fingerprints(args.compare) if args.compare else None
     if args.compare and not baseline:
-        raise ValueError('Comparison directory has no exported JSON files')
+        raise ValueError('Comparison directory has no exported files')
     results = []
     for number in range(1, args.runs + 1):
         destination = folder / f'run-{number}'

@@ -170,7 +170,7 @@ export function SystemDataSharingMap({
           data-sharing-source={exchange.sourceId}
           data-sharing-target={exchange.targetId}
         >
-          <title>{`${model.nodeById.get(exchange.sourceId)?.name} → ${model.nodeById.get(exchange.targetId)?.name} : ${exchange.label}`}</title>
+          <title>{`${model.nodeById.get(exchange.sourceId)?.name} → ${model.nodeById.get(exchange.targetId)?.name} : ${exchange.label}${exchange.detailLabel !== exchange.label ? ` — ${exchange.detailLabel}` : ''}`}</title>
           <g filter={`url(#${paintId}-shadow)`}>
             <path
               className="data-sharing-ribbon"

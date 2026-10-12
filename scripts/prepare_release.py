@@ -19,6 +19,7 @@ from collections import Counter
 from hashlib import sha256
 
 try:
+    from .adoption_values import adoption_values
     from .element_versions import assign_versions
     from .glossary import reference_impacts
     from .structured_io import working_path, _PARSER_SIGNATURE
@@ -35,6 +36,7 @@ try:
     from .json_contract import validate as validate_contract
     from .validate_models import canonical_sha256, validate_release, validate_sources, validate_urbanism, validate_decision_review
 except ImportError:
+    from adoption_values import adoption_values
     from element_versions import assign_versions
     from glossary import reference_impacts
     from structured_io import working_path, _PARSER_SIGNATURE
@@ -171,7 +173,7 @@ def reconcile_decisions(old_document, snapshot, additional=None, previous_snapsh
     for original in old_document['decisions']:
         target = original['target']
         item = targets[target['collection']].get(target['id'])
-        values = item.get('fields', {}) if item and target['collection'] == 'nodes' else item
+        values = adoption_values(item, target['collection'])
         reason = None
         if item is None:
             reason = 'target_removed'

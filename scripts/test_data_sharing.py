@@ -44,6 +44,21 @@ class DataSharingTests(unittest.TestCase):
                 model, _ = self.fixture(ids[0], ids[1])
                 self.assertEqual(self.errors(model), [])
 
+    def test_summary_label_is_optional_directed_and_cannot_conflict(self):
+        from scripts.data_sharing import validate_data_sharing
+        model, relation = self.fixture()
+        relation['fields']['summary_label'] = 'Définitions et conditions produit'
+        self.assertEqual(self.errors(model), [])
+        second = deepcopy(relation)
+        second['id'] = 'OTHER-SUMMARY'
+        second['fields']['summary_label'] = 'Contradictory summary'
+        model['relations'].append(second)
+        self.assertTrue(any('conflicting summary' in e for e in validate_data_sharing(model)))
+        second['source_id'], second['target_id'] = second['target_id'], second['source_id']
+        self.assertEqual(validate_data_sharing(model), [])
+        second['fields']['summary_label'] = ' '
+        self.assertTrue(any('nonempty' in e for e in validate_data_sharing(model)))
+
     def test_missing_content_and_same_endpoint_fail(self):
         for mutation, expected in [
             (lambda r: r['fields'].pop('data_exchange'), 'requires data_exchange'),

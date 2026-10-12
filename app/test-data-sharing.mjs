@@ -83,6 +83,9 @@ test('malformed contents, missing glossary references and self exchanges are rej
     (r) => {
       r.fields.label = ' ';
     },
+    (r) => {
+      r.fields.summary_label = ' ';
+    },
   ]) {
     const raw = structuredClone(original);
     const r = relation('TEST-INVALID', 'system-design-development', 'system-business-operations');
@@ -90,4 +93,21 @@ test('malformed contents, missing glossary references and self exchanges are rej
     raw.relations.push(r);
     assert.throws(() => adaptPublication(raw), /Contenu de partage de données invalide/);
   }
+});
+
+test('modeled summary stays short when detailed exchanges grow and retains tooltip content', () => {
+  const raw = structuredClone(original);
+  const anchor = relation('SUMMARY', 'system-business-operations', 'system-enterprise-management-control', 'Faits de gestion');
+  anchor.fields.summary_label = 'Faits et conditions de gestion';
+  raw.relations.push(anchor);
+  raw.relations.push(relation('DETAIL', 'domain-sales', 'subdomain-financial-accounting', 'Commercial benefit conditions'));
+  const arrow = systemDataSharing(adaptPublication(raw))[0];
+  assert.equal(arrow.label, 'Faits et conditions de gestion');
+  assert.equal(arrow.detailLabel, 'Faits de gestion · Commercial benefit conditions');
+  assert.deepEqual(arrow.relations.map((r) => r.id), ['SUMMARY', 'DETAIL']);
+  const duplicate = structuredClone(anchor);
+  duplicate.id = 'CONFLICT';
+  duplicate.fields.summary_label = 'Other summary';
+  raw.relations.push(duplicate);
+  assert.throws(() => systemDataSharing(adaptPublication(raw)), /contradictoires/);
 });

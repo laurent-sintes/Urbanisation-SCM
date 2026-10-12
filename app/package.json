@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "pnpm run export && vite --host 127.0.0.1 --port 5173 --strictPort",
     "build": "python ../scripts/build_atlas.py",
+    "build:frontend": "python ../scripts/build_atlas.py --frontend",
+    "build:full": "python ../scripts/build_atlas.py --full-export",
     "test": "node --test --test-isolation=none test-*.mjs",
     "check:code": "biome check --diagnostic-level=warn --error-on-warnings .",
     "format:code": "biome check --write .",
@@ -28,6 +30,7 @@
     "verify:dependencies": "pnpm run verify",
     "verify:presentation": "pnpm run verify",
     "export": "python ../scripts/export_atlas.py",
+    "export:full": "python ../scripts/export_atlas.py --full",
     "verify:static": "node verify-static.mjs"
   },
   "dependencies": {

@@ -52383,7 +52383,7 @@ relations:
     state: proposed
     note: Synthèse cible proposée à partir des responsabilités documentées ; aucun flux installé ni contrat exhaustif déduit.
 - id: REL-U979-management-facts
-  revision: 1
+  revision: 2
   type: shares-data
   source_id: system-business-operations
   target_id: system-enterprise-management-control
@@ -52397,6 +52397,7 @@ relations:
         - TER120
         - TER114
       purpose: Fournir les faits nécessaires à la comptabilité.
+    summary_label: Faits et conditions de gestion
   qualification:
     meaning: Faits de gestion et justificatifs utiles à leur interprétation comptable, avec origine, dates et corrections.
     conditions:
@@ -52410,11 +52411,13 @@ relations:
   - U818
   - ELM869
   - ELM860
+  - U997
+  - U998
   review:
     state: proposed
     note: Synthèse cible proposée à partir des responsabilités documentées ; aucun flux installé ni contrat exhaustif déduit.
 - id: REL-U979-credit-profiles
-  revision: 1
+  revision: 2
   type: shares-data
   source_id: system-enterprise-management-control
   target_id: system-business-operations
@@ -52429,6 +52432,7 @@ relations:
         - TER190
         - TER155
       purpose: Permettre aux parcours de respecter les conditions de crédit autorisées.
+    summary_label: Crédit et règlements commerciaux
   qualification:
     meaning: Profils et conditions de crédit client fournis par [Finance](glossary:TER117) pour les contrôles contextualisés
       aux parcours opérationnels.
@@ -52443,6 +52447,8 @@ relations:
   - U898
   - ELM871
   - ELM878
+  - U997
+  - U998
   review:
     state: proposed
     note: Synthèse cible proposée à partir des responsabilités documentées ; aucun flux installé ni contrat exhaustif déduit.

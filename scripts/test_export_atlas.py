@@ -175,19 +175,52 @@ class StaticExportTests(unittest.TestCase):
         self.assertEqual(result['generated_publications'], 2)
         self.assertEqual(before, {p.relative_to(self.output): p.read_bytes() for p in self.output.rglob('*') if p.is_file()})
 
-    def test_schema_generator_and_guide_changes_invalidate_receipts(self):
+    def test_historical_metadata_stays_stable_until_explicit_rebuild(self):
         from unittest.mock import patch
         from scripts import export_atlas as module
         export_atlas(self.root, [self.output])
         schema = self.root / 'modeles/schemas/urbanism.schema.json'
         schema.parent.mkdir()
         schema.write_bytes(encoded({'title': 'new schema'}))
-        self.assertEqual(export_atlas(self.root, [self.output])['generated_publications'], 2)
-        with patch.object(module, 'generator_signature', return_value='changed generator'):
-            self.assertEqual(export_atlas(self.root, [self.output])['generated_publications'], 2)
+        self.assertEqual(export_atlas(self.root, [self.output])['generated_publications'], 0)
+        with patch.object(module, 'describe_metamodel', side_effect=AssertionError('changed generator must not rebuild verified history')):
+            self.assertEqual(export_atlas(self.root, [self.output])['generated_publications'], 0)
+        self.assertEqual(export_atlas(self.root, [self.output], incremental=False)['generated_publications'], 2)
         original = module._load_associated_guide
         with patch.object(module, '_load_associated_guide', side_effect=lambda *a: {**original(*a), 'note': 'changed association'}):
             self.assertEqual(export_atlas(self.root, [self.output])['generated_publications'], 2)
+
+    def test_verified_reuse_does_not_parse_published_yaml_and_still_rejects_tampering(self):
+        from unittest.mock import patch
+        from scripts.release_catalog import PublicationReader
+        export_atlas(self.root, [self.output])
+        with patch.object(PublicationReader, 'load', side_effect=AssertionError('unnecessary model parsing')):
+            self.assertEqual(export_atlas(self.root, [self.output])['reused_publications'], 2)
+        path = self.release / '2026-09-25.1/model.json'
+        path.write_bytes(path.read_bytes() + b' ')
+        with self.assertRaisesRegex(ValueError, 'hash mismatch'):
+            export_atlas(self.root, [self.output])
+
+    def test_frontend_mode_refuses_missing_or_corrupt_exports(self):
+        with self.assertRaisesRegex(ValueError, 'export missing'):
+            export_atlas(self.root, [self.output], require_cached=True)
+        export_atlas(self.root, [self.output])
+        self.assertEqual(export_atlas(self.root, [self.output], require_cached=True)['reused_publications'], 2)
+        (self.output / '2026-09-25.1/guide.json').write_bytes(b'corrupt')
+        with self.assertRaisesRegex(ValueError, 'export missing'):
+            export_atlas(self.root, [self.output], require_cached=True)
+
+    def test_frontend_mode_checks_the_exact_staged_directory_and_catalog(self):
+        source = self.root / 'app/public/data'
+        fallback = self.root / 'app/dist/data'
+        export_atlas(self.root, [source, fallback])
+        (source / 'index.json').write_bytes(b'{}')
+        with self.assertRaisesRegex(ValueError, 'catalog'):
+            export_atlas(self.root, [], require_cached=True)
+        export_atlas(self.root, [source])
+        (source / '2026-09-25.1/model.json').write_bytes(b'corrupt')
+        with self.assertRaisesRegex(ValueError, 'export missing'):
+            export_atlas(self.root, [], require_cached=True)
 
     def test_corrupt_receipts_are_rebuilt_without_trusting_paths(self):
         export_atlas(self.root, [self.output])

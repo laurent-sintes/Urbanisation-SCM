@@ -23745,3 +23745,47 @@ Je valide tout
 **portée**
 
 Accord sur le lot cohérent proposé U990–U995, CMP317/CMP318 : producteurs des prix et avantages hors orchestration, consommation contrôlée par FLOW, responsabilités de règlement, regroupement de Retail Operations dans Commerce avec maintien des sous-domaines POS/backoffice/réseau, clarification du mandat transport, Supply Policy Management remplaçant Control Plane, maintien d’Availability avec sa définition courte. Aucun calcul tarifaire ou droit à prime transféré à FLOW, aucune extension automatique de Payment aux fournisseurs, agents ou salariés, aucune Business Area adjacente créée. Les textes de mise en œuvre et détails de contrats rédigés ensuite restent proposés ; aucune réalisation installée, release ou opération Git demandée.
+
+## U997
+
+**id**
+
+U997
+
+**titre**
+
+Libellés intersystèmes devenus trop chargés
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Pour les flèches inter système, "Faits de gestion" et "Profil de crédit client" ont eu un libellé qui a changé : il est hyper chargé maintenant. Pourquoi ?
+
+**portée**
+
+Constat sur la concaténation des libellés après ajout des échanges U996 ; aucune modification des responsabilités ni des contenus détaillés demandée.
+
+## U998
+
+**id**
+
+U998
+
+**titre**
+
+Validation des libellés courts de synthèse des échanges
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Je valide !
+
+**portée**
+
+Accord sur les deux synthèses proposées : Business Operations → Enterprise Management & Control, « Faits et conditions de gestion » ; sens inverse, « Crédit et règlements commerciaux ». Synthèses explicitement modélisées ; contenus détaillés conservés au survol et dans le panneau de détail. Aucun changement de direction, de responsabilité, de contenu détaillé, de glossaire métier ou de réalisation installée ; aucune release demandée.

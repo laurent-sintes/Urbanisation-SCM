@@ -14,6 +14,7 @@ from pathlib import Path
 import re
 
 try:
+    from .adoption_values import adoption_values
     from .business_scenarios import validate_scenarios
     from .git_history import read_bytes
     from .glossary import validate as validate_glossary
@@ -21,6 +22,7 @@ try:
     from .release_catalog import resolve_release
     from .structured_io import read as read_document, working_path
 except ImportError:
+    from adoption_values import adoption_values
     from business_scenarios import validate_scenarios
     from git_history import read_bytes
     from glossary import validate as validate_glossary
@@ -519,7 +521,7 @@ def validate_release(release, decisions_document, snapshot, sources, schema=None
         if not isinstance(fields, list) or not fields or len(fields) != len(set(fields)) or set(fields) != set(hashes):
             errors.append(f"decisions/{identifier}: approved_fields/hash keys mismatch")
             continue
-        values = original.get("fields", {}) if collection == "nodes" else original
+        values = adoption_values(original, collection)
         for field in fields:
             if field not in values or canonical_sha256(values[field]) != hashes[field]:
                 errors.append(f"decisions/{identifier}/{field}: frozen value hash mismatch")

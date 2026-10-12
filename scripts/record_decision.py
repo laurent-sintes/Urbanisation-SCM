@@ -15,9 +15,11 @@ import re
 import tempfile
 
 try:
+    from .adoption_values import adoption_values
     from . import decision_registry
     from .structured_io import read, dumps, working_path, load_for_sequence_append, dump_sequence_append
 except ImportError:
+    from adoption_values import adoption_values
     import decision_registry
     from structured_io import read, dumps, working_path, load_for_sequence_append, dump_sequence_append
 
@@ -190,7 +192,7 @@ def _values(snapshot, collection, target_id, fields):
     target = _records(snapshot.get(collection), collection).get(target_id)
     if target is None:
         raise ValueError('Unknown target: ' + collection + '/' + target_id)
-    available = target.get('fields', {}) if collection == 'nodes' else target
+    available = adoption_values(target, collection)
     values = {}
     for field in _strings(fields, 'fields'):
         if field in METADATA:

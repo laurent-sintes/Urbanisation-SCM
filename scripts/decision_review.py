@@ -9,12 +9,14 @@ import sys
 import uuid
 
 try:
+    from .adoption_values import adoption_values
     from .structured_io import read
     from .publish_release import write, digest
     from .validate_models import canonical_sha256
     from .element_versions import GENERATED
     from .glossary import reference_impacts
 except ImportError:
+    from adoption_values import adoption_values
     from structured_io import read
     from publish_release import write, digest
     from validate_models import canonical_sha256
@@ -83,8 +85,8 @@ def make_review(snapshot, previous_snapshot, previous_release, old_decisions, de
         target = original['target']
         collection, identifier = target['collection'], target['id']
         before, after = old[collection].get(identifier), new[collection].get(identifier)
-        old_values = before.get('fields', {}) if before and collection == 'nodes' else before or {}
-        new_values = after.get('fields', {}) if after and collection == 'nodes' else after or {}
+        old_values = adoption_values(before, collection)
+        new_values = adoption_values(after, collection)
         values = {}
         for field in target['approved_fields']:
             values[field] = {

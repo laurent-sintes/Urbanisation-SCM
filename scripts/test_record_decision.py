@@ -177,6 +177,14 @@ class DecisionIntentTests(unittest.TestCase):
             recorder.record_intents(self.root, [second | {'intent_id': 'THIRD'}, second | {'fields': ['missing']}])
         self.assertEqual((self.root / recorder.REGISTRY_PATH).read_bytes(), before)
 
+    def test_relation_summary_can_be_approved_without_approving_other_fields(self):
+        self.model['relations'][0]['fields'] = {'summary_label': 'Facts and conditions', 'label': 'Detailed facts'}
+        self.save('modeles/backlog/model.yaml', self.model)
+        result = self.record(collection='relations', target_id='R1', fields=['fields.summary_label'])
+        self.assertEqual(result['intent']['target']['values'], {'fields.summary_label': 'Facts and conditions'})
+        compiled = recorder.compile_intents(self.document(), self.snapshot(), [], self.sources)
+        self.assertEqual(compiled['decisions'][0]['target']['approved_fields'], ['fields.summary_label'])
+
     def test_capture_is_explicit_versionless_idempotent_and_append_only(self):
         before = {path: path.read_bytes() for path in self.root.rglob('*') if path.is_file()}
         first = self.record()

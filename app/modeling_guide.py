@@ -19,6 +19,7 @@ if str(REPOSITORY_ROOT) not in sys.path:
 
 from scripts.release_catalog import resolve_release
 from scripts.structured_io import loads
+from scripts.structured_io import read as read_document
 
 VERSION = re.compile(r"\d{4}-\d{2}-\d{2}\.[1-9]\d*\Z")
 SCENES = {"comparison", "decomposition", "dependency", "responsibilities", "objects", "evidence"}
@@ -45,12 +46,14 @@ def _read(folder: Path, relative: str, sha256: str | None = None):
              "Chemin de guide non autorisé.")
     path = folder / relative
     _require(folder.resolve() == folder and path.resolve() == path, "Chemin de guide non autorisé.")
-    content = path.read_bytes()
     if sha256 is not None:
         _require(bool(re.fullmatch(r"[a-f0-9]{64}", sha256)), "Empreinte de guide invalide.")
-        _require(hashlib.sha256(content).hexdigest() == sha256, "L’empreinte du guide ne correspond pas au fichier.")
-    # Parse exactly the bytes whose hash was checked.
-    return loads(content.decode("utf-8-sig"), ".yaml")
+    # The structured reader checks source bytes on every call while sharing
+    # parsing across the many publications associated with the same guide.
+    try:
+        return read_document(path, expected_sha256=sha256)
+    except ValueError as error:
+        raise ModelingGuideError('Le guide est invalide ou son empreinte ne correspond pas au fichier.') from error
 
 
 def _validate_guide(guide, version):

@@ -32,6 +32,7 @@ RELATION_ROLES = {
     'provides-conditions': 'interaction',
 }
 FIELD_MEANINGS = {
+    'relations.fields.summary_label': 'Libellé de synthèse explicite des échanges ayant ces extrémités orientées ; les libellés et contenus détaillés des relations restent conservés.',
     'relations.fields.data_exchange': 'Contenus métier typés et finalité du partage orienté ; références au glossaire de cette publication, sans protocole technique implicite.',
     'nodes': 'Objets de cette publication ; kind indique leur type.',
     'relations': 'Liens orientés entre objets ; source_id et target_id désignent des nodes.id.',

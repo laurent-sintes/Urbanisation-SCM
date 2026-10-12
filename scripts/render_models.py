@@ -191,13 +191,13 @@ def render(model, label):
     exchanges = [r for r in model['relations'] if r['type'] == 'shares-data']
     if exchanges:
         lines += ['## Partages de données métier', '',
-                  '| Relation | Producteur → destinataire | Contenu | Finalité |',
-                  '| --- | --- | --- | --- |']
+                  '| Relation | Producteur → destinataire | Synthèse | Contenu | Finalité |',
+                  '| --- | --- | --- | --- | --- |']
         for relation in exchanges:
             data = relation['fields']['data_exchange']
             names = nodes[relation['source_id']]['fields']['name'] + ' → ' + nodes[relation['target_id']]['fields']['name']
             descriptions = ' ; '.join(content['description'] for content in data['contents'])
-            lines.append('| ' + ' | '.join(cell(value) for value in [relation['id'], names, descriptions, data['purpose']]) + ' |')
+            lines.append('| ' + ' | '.join(cell(value) for value in [relation['id'], names, relation['fields'].get('summary_label', ''), descriptions, data['purpose']]) + ' |')
         lines += ['']
     catalogue = model.get('information_catalog')
     if catalogue:

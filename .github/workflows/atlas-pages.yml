@@ -68,6 +68,7 @@ jobs:
           key: atlas-export-${{ runner.os }}-${{ hashFiles('scripts/*.py', 'app/*.py', 'requirements.txt', 'modeles/schemas/urbanism.schema.json') }}-${{ hashFiles('modeles/release/index.json', 'modeles/modeling-guides/index.yaml') }}
           restore-keys: |
             atlas-export-${{ runner.os }}-${{ hashFiles('scripts/*.py', 'app/*.py', 'requirements.txt', 'modeles/schemas/urbanism.schema.json') }}-
+            atlas-export-${{ runner.os }}-
       - run: pnpm --dir app build
       - run: pnpm --dir app exec playwright install --with-deps chromium
       - run: pnpm --dir app verify

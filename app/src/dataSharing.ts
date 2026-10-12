@@ -5,6 +5,8 @@ export function readDataExchange(relation: RawRelation, glossaryIds: ReadonlySet
   const raw = relation.fields?.data_exchange;
   if (relation.type !== 'shares-data') {
     if (raw !== undefined) throw new Error(`Partage de données sur une relation incompatible : ${relation.id}.`);
+    if (relation.fields?.summary_label !== undefined)
+      throw new Error(`Synthèse de partage sur une relation incompatible : ${relation.id}.`);
     return undefined;
   }
   const exchange = raw as DataExchange | undefined;
@@ -12,6 +14,8 @@ export function readDataExchange(relation: RawRelation, glossaryIds: ReadonlySet
     relation.source_id === relation.target_id ||
     typeof relation.fields?.label !== 'string' ||
     !relation.fields.label.trim() ||
+    (relation.fields.summary_label !== undefined &&
+      (typeof relation.fields.summary_label !== 'string' || !relation.fields.summary_label.trim())) ||
     !exchange ||
     typeof exchange.purpose !== 'string' ||
     !exchange.purpose.trim() ||
@@ -39,6 +43,7 @@ export interface SystemDataSharing {
   sourceId: string;
   targetId: string;
   label: string;
+  detailLabel: string;
   relations: readonly AtlasRelation[];
 }
 
@@ -111,12 +116,23 @@ export function systemDataSharing(model: PublishedModel): SystemDataSharing[] {
     const id = `${sourceId}/${targetId}`;
     const group = groups.get(id);
     const relations = group ? [...group.relations, relation] : [relation];
+    const summaries = [
+      ...new Set(
+        relations
+          .filter((r) => r.sourceId === sourceId && r.targetId === targetId)
+          .map((r) => r.fields.summary_label)
+          .filter((label): label is string => typeof label === 'string'),
+      ),
+    ];
+    if (summaries.length > 1) throw new Error(`Libellés de synthèse contradictoires : ${id}.`);
+    const detailLabel = [...new Set(relations.map((r) => r.label))].join(' · ');
     groups.set(id, {
       id,
       sourceId,
       targetId,
       relations,
-      label: [...new Set(relations.map((r) => r.label))].join(' · '),
+      label: summaries[0] || detailLabel,
+      detailLabel,
     });
   }
   return [...groups.values()];

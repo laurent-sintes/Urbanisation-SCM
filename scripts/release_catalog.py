@@ -113,6 +113,16 @@ class PublicationReader:
         item = self.by_version[version]
         return item, _read_release(self.folder, item)
 
+    def verify_model(self, version):
+        """Check immutable source bytes without parsing a previously exported model."""
+        item = self.by_version[version]
+        expected = item.get('sha256')
+        if not isinstance(expected, str) or not re.fullmatch('[a-f0-9]{64}', expected) or digest(within(self.folder, item['path'])) != expected:
+            raise ValueError('Published model hash mismatch')
+        if item.get('release_notes') and digest(within(self.folder, item['release_notes'])) != item['release_notes_sha256']:
+            raise ValueError('Release notes hash mismatch')
+        return item
+
     def catalog(self):
         values = sorted(self.values, key=lambda d: tuple(map(int, re.split(r'[-.]', d['version']))), reverse=True)
         return {'current_version': self.current_version, 'versions': [
