@@ -99,7 +99,7 @@ publication_delivery:
     content_sha256: b6738f815fcbe899f7127c7bf3e072a8dc1e703959456513189c40179b18e32a
   - collection: hotspots
     id: HS-018
-    content_sha256: b5cc211eb121037fece889472da82dbcbed97e7874447f62927e64c92e5a45b5
+    content_sha256: 75dd50ba7f03faa2cc3d476dddf6b4e3fd48dbb6cee533bc10758ed8d387a7c7
   visibility_update: 'U971 : ajout technique visible=true aux sujets existants. Contenu métier, ancrages, statuts, notes et
     options inchangés. Les propositions de l’audit restent hors du catalogue ; les preuves antérieures sont conservées dans
     Git.'
@@ -107,3 +107,14 @@ publication_delivery:
     HS-002. Les réserves et preuves historiques restent conservées dans Git ; aucune option n’est choisie ni déclarée crédible.'
 capture_method: Verbatim et proposition complète enregistrés avant application ; capture champ par champ sur l’état final.
   record_decision/record_intents ne prennent pas en charge les hotspots ; l’annexe conserve la portée de cet accord.
+delivery_reconciliation_U987:
+  source_refs:
+  - U987
+  - U989
+  reason: Alignement des libellés liés à Commerce, sans changement des responsabilités ni extension des accords.
+  previous_glossary_catalog_checks:
+  - collection: hotspots
+    previous_requirement:
+      collection: hotspots
+      id: HS-018
+      content_sha256: b5cc211eb121037fece889472da82dbcbed97e7874447f62927e64c92e5a45b5

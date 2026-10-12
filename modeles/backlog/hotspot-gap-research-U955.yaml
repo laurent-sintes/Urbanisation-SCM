@@ -483,7 +483,7 @@ publication_delivery:
     content_sha256: a4f19fd874ddcd3dff171337c8f408bb4d7bcc3c219ee6eea87e2838ec0d6486
   - collection: hotspots
     id: HS-008
-    content_sha256: 97c24af840eda7634a2e5b43862bcd1df653daabafc64dc457e1c88616eda09b
+    content_sha256: 4520f9b12a78273b9df8ad8b1d52369b41ac3a59de120b21765a3a7367112ebb
   - collection: hotspots
     id: HS-016
     content_sha256: a7619a05aa66feb0fa0c4a9d6aa90985128f06acc942e4899521231e19cab036
@@ -492,10 +492,10 @@ publication_delivery:
     content_sha256: 26c90b1229c8be50a5f5eb6d4c5bdc0cd22edf008ef4820a240d0db58f1c3a14
   - collection: hotspots
     id: HS-018
-    content_sha256: b5cc211eb121037fece889472da82dbcbed97e7874447f62927e64c92e5a45b5
+    content_sha256: 75dd50ba7f03faa2cc3d476dddf6b4e3fd48dbb6cee533bc10758ed8d387a7c7
   - collection: hotspots
     id: HS-019
-    content_sha256: fd19760629da02cbc21a9d2f8e171fabfa7a4178ac456f70a9093fffcb1f1a00
+    content_sha256: 60f63a57a697f327711198cd3eda38b8f9ef0d60156174a18255029416b22ccb
   required_glossary: []
   impact_annotation_update: 'U959–U961 : ajout de qualifications d’impact proposées, sans changement des contenus ou accords
     antérieurs ; empreintes précédentes dans hotspot-framing-impact-U959.yaml.'
@@ -640,3 +640,24 @@ agreement_capture:
   contract_sha256:
     modeles/schemas/urbanism.schema.json: 3cab8125de07df971ac8d333926a053cacc8323c469aa2ca0ad555d635e14293
     scripts/hotspot_catalog.py: 3d4dddab11930dfb24b361d537aacdae4571e09329cff4cb92e61a5bbbaef668
+delivery_reconciliation_U987:
+  source_refs:
+  - U987
+  - U989
+  reason: Alignement des libellés liés à Commerce, sans changement des responsabilités ni extension des accords.
+  previous_glossary_catalog_checks:
+  - collection: hotspots
+    previous_requirement:
+      collection: hotspots
+      id: HS-008
+      content_sha256: 97c24af840eda7634a2e5b43862bcd1df653daabafc64dc457e1c88616eda09b
+  - collection: hotspots
+    previous_requirement:
+      collection: hotspots
+      id: HS-018
+      content_sha256: b5cc211eb121037fece889472da82dbcbed97e7874447f62927e64c92e5a45b5
+  - collection: hotspots
+    previous_requirement:
+      collection: hotspots
+      id: HS-019
+      content_sha256: fd19760629da02cbc21a9d2f8e171fabfa7a4178ac456f70a9093fffcb1f1a00

@@ -3410,7 +3410,7 @@ publication_delivery:
       name: c30e0b52eddb8d49c179799f089000e69a3bf2111fbbfeda0e515bc2121b0981
       definition: b487f1c3a1c61a93451c1adea270b80baf4d8578d815141006f8488806d55d5e
       short_description: b487f1c3a1c61a93451c1adea270b80baf4d8578d815141006f8488806d55d5e
-      context: 44cdae59ddad837b939c12d3f22b6ae6763989206a9c2db9da804a9f9ae399c6
+      context: 8bad556807ccb17e406d258d3a1fea36d17a26eee8774791d1b3c6dd4ae753dd
   - id: TER019
     field_sha256:
       name: 1fe9be3d2e7aa9e1d57befb46711658c3a95cefe5ca8dcb26e73927223305cd7
@@ -3722,7 +3722,7 @@ publication_delivery:
       name: 1f23170a299572b9e962ef813a9fc55bca6c278b88e0f076c1f4410182b75dba
       definition: c6f08a85d163802dc8a2af1564b75129cfd932738eb399547efd0baae4db90ff
       short_description: ec6f5e895c724bce9666985737181725910876444dd94c32a93161d701f4f10e
-      context: a4282c42fd9c8158fe3fe7abcb18e0ed7520cbc12a964f169a12ee6809a59cd1
+      context: 9cd8130c3366b92e42f720f3940b21e6fd5b9591780d1b28de12a577e9fb5460
   - id: TER078
     field_sha256:
       name: 8a64c1238cb205b9b7ed291ff52d3ddfd555a998b1ceefa9d9203b133fded9cd
@@ -3740,7 +3740,7 @@ publication_delivery:
       name: 19c9924a608483cf8e7a9cb37209692aa6994de205662d3e0343a034c06d9c8e
       definition: 417e541f121d901a36f0cebe62423b4ae428f5224e68b846db9abe1488c17cef
       short_description: 417e541f121d901a36f0cebe62423b4ae428f5224e68b846db9abe1488c17cef
-      context: 2f33bd04f1991e2ae03509cb6a1ab87cfa571b27360c7eef297de46dd9746d6a
+      context: bdd8ada162d3e1f86bde9f66e8c92426200da4aced1fd19a5c8246a8fb9bb020
   - id: TER102
     field_sha256:
       name: 0731606e2479cf6b1deb3a535755d5f7724b6f1d9132a44be33bafb9e94139fa
@@ -3895,3 +3895,39 @@ delivery_reconciliation_U944:
     check: glossary.context
     previous_sha256: f96b9f0d6f5f26130b5ad7e60494ff7521c255b5a94c9f0aee03caca67f4dd44
     current_sha256: e9a2246829abb068682c4820ecfbdb782237bbc2837461ab53e6dd1161f4320d
+delivery_reconciliation_U976:
+  source_refs:
+  - U976
+  note: 'Contexte Supply Plan précisé : production externe, exploitation dans l’orchestration. Contrat hors achats et accords
+    historiques conservés.'
+  changed_checks:
+  - id: TER098
+    field: context
+    previous_sha256: 2f33bd04f1991e2ae03509cb6a1ab87cfa571b27360c7eef297de46dd9746d6a
+    current_sha256: bdd8ada162d3e1f86bde9f66e8c92426200da4aced1fd19a5c8246a8fb9bb020
+delivery_reconciliation_U987:
+  source_refs:
+  - U987
+  - U989
+  reason: Alignement des libellés liés à Commerce, sans changement des responsabilités ni extension des accords.
+  previous_glossary_catalog_checks:
+  - collection: terms
+    previous_requirement:
+      id: TER069
+      field_sha256:
+        name: 1f23170a299572b9e962ef813a9fc55bca6c278b88e0f076c1f4410182b75dba
+        definition: c6f08a85d163802dc8a2af1564b75129cfd932738eb399547efd0baae4db90ff
+        short_description: ec6f5e895c724bce9666985737181725910876444dd94c32a93161d701f4f10e
+        context: a4282c42fd9c8158fe3fe7abcb18e0ed7520cbc12a964f169a12ee6809a59cd1
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: TER018
+    field_sha256:
+      name: c30e0b52eddb8d49c179799f089000e69a3bf2111fbbfeda0e515bc2121b0981
+      definition: b487f1c3a1c61a93451c1adea270b80baf4d8578d815141006f8488806d55d5e
+      short_description: b487f1c3a1c61a93451c1adea270b80baf4d8578d815141006f8488806d55d5e
+      context: 44cdae59ddad837b939c12d3f22b6ae6763989206a9c2db9da804a9f9ae399c6

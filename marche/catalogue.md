@@ -907,3 +907,15 @@ Fluent Commerce — Fluent Order Management. Documentation officielle de workflo
 ## MKT95
 
 **Référence / organisme :** Axway Financial Accounting Hub, Axway. **Nature :** présentation primaire d’une plateforme d’intégration et transformation comptables. **Rôle :** distinguer alimentation des faits, traduction comptable et contrôle des échanges. **Source :** [Financial Accounting Hub](https://www.axway.com/en/products/afah). **Édition :** page évolutive, version produit non précisée. **Consultation :** 28 septembre 2026. **Contenu consulté :** AFAH core functions et Data reliability, ELM852. **Limites :** fonctions annoncées par l’éditeur, sans vérification des performances, du détail d’implémentation ni de réalisation Beaumanoir. Synthèses et liens ; droit de redistribution intégrale non présumé. U813, CMP310.
+
+## MKT96
+
+Centric Software — Centric PLM, Planning et Visual Boards. Source officielle : https://www.centricsoftware.com/fashion-apparel. Présentation commerciale sectorielle consultée le 2026-10-12, sections PLM, Planning, Visual Boards et cycle produit. Édition non indiquée. Rôle : complément mode pour distinguer collections, développement et planning ; pas de socle Dynamics/S/4HANA ni réalisation Beaumanoir. ELM879, CMP312. Synthèse et liens, sans redistribution intégrale.
+
+Complément U975 aux références MKT13 et MKT14 : les documents et passages effectivement consultés durant l’audit sont détaillés dans modeles/backlog/context-business-systems-U975.yaml. Versions produit, extensions et limites sont conservées séparément ; aucune taxonomie éditeur adoptée comme hiérarchie FLOW.
+
+## MKT97
+
+Elastic Suite — Emerald. Nature : plateforme B2B de vente et présentation commerciale. Rôle : complément sectoriel pour portail de commandes, sélection d’assortiments et whiteboards. Sources officielles : https://www.elasticsuite.com/ et https://support.elasticsuite.com/what-is-a-whiteboard. Pages évolutives consultées le 12 octobre 2026; édition produit non indiquée. Sections : Digital Catalog, Assortment Builder, Whiteboard, Custom Collections et définition de Whiteboard. ELM897–ELM898, CMP316, U982. Limites : fonctions annoncées ou documentées, pas preuve d’activation Beaumanoir ni appui au socle Dynamics/S/4HANA. Synthèses et liens, sans redistribution intégrale.
+
+Complément U982 aux références MKT13 et MKT14 : sources primaires et passages effectivement consultés sous ELM887–ELM896 et ELM899–ELM901; comparaisons proposées CMP316, jamais adoption d’une taxonomie produit.

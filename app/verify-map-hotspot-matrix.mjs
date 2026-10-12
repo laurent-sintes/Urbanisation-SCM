@@ -188,13 +188,26 @@ try {
         }
       const overview = document.querySelector('.urbanisation-overview.layout-fixed');
       if (overview) {
-        const systems = [...overview.querySelectorAll('.overview-system')].map((e) => e.getBoundingClientRect());
+        const ids = [
+          'system-design-development',
+          'system-business-operations',
+          'system-enterprise-management-control',
+          'domain-logistics-execution',
+        ];
+        const systems = ids.flatMap((id) => {
+          const card = overview.querySelector(`.overview-system[data-node-id="${id}"]`);
+          return card ? [card.getBoundingClientRect()] : [];
+        });
         if (
-          systems.length !== 3 ||
+          ![3, 4].includes(systems.length) ||
           !(
             systems[0].right < systems[1].left &&
             systems[1].right < systems[2].left &&
-            systems.every((r) => Math.abs(r.top - systems[0].top) < 1)
+            systems.slice(0, 3).every((r) => Math.abs(r.top - systems[0].top) < 1) &&
+            (systems.length === 3 ||
+              (systems[3].top > systems[1].bottom &&
+                Math.abs(systems[3].left - systems[1].left) < 1 &&
+                Math.abs(systems[3].right - systems[1].right) < 1))
           )
         )
           failures.push('system-positions');
@@ -216,7 +229,7 @@ try {
             operations.querySelector(`[data-map-item-id="${id}"]`)?.closest('li');
           return e?.getBoundingClientRect();
         });
-        if (boxes.every(Boolean)) {
+        if (boxes.slice(0, 4).every(Boolean)) {
           const [p, s, sales, o, l] = boxes;
           if (
             !(
@@ -224,7 +237,7 @@ try {
               Math.abs(s.top - sales.top) < 1 &&
               s.right < sales.left &&
               Math.max(s.bottom, sales.bottom) <= o.top + 1 &&
-              o.bottom <= l.top + 1
+              (!l || o.bottom <= l.top + 1)
             )
           )
             failures.push('domain-positions');

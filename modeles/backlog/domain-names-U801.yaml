@@ -14,7 +14,8 @@ publication_delivery:
   state: applied
   source_refs:
   - U801
-  summary: Domaines Demand & Supply Planning et Logistics ; identités et hiérarchie préservées.
+  summary: Noms U801 conservés ; rattachement de Logistics réconcilié après sa promotion en système U975. Valeurs et accords
+    historiques conservés.
   required_nodes:
   - id: domain-plan
     fields:
@@ -24,5 +25,19 @@ publication_delivery:
   - id: domain-logistics-execution
     fields:
       name: Logistics
-    parent: system-business-operations
-    parent_type: presents
+    parent: beaumanoir-target-universe
+    parent_type: contains
+  superseded_checks_U975:
+  - previous:
+      id: domain-logistics-execution
+      fields:
+        name: Logistics
+      parent: system-business-operations
+      parent_type: presents
+    previous_sha256: 15c6d8a13f0b2491578b3fef645d3f659bb8c12a41451b04d2bfc90d3c590b7d
+    current:
+      id: domain-logistics-execution
+      fields:
+        name: Logistics
+      parent: beaumanoir-target-universe
+      parent_type: contains

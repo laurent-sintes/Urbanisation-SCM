@@ -388,6 +388,7 @@ publication_delivery:
   - U958
   - U971
   - U973
+  - U981
   summary: Douze candidats intégrés, publication distincte.
   required_catalog:
   - collection: hotspots
@@ -395,19 +396,19 @@ publication_delivery:
     content_sha256: b0e30a29c77cf5789dcea9fc8274a6874a09d1d27f1617a6a71a90e99f5a7b38
   - collection: hotspots
     id: HS-021
-    content_sha256: 8aac43a58227501e3de858c52e752f6fd34cc348375bfb846260afb5af78522c
+    content_sha256: 32c678769a4869abb734ccbbe1b29879e91f785ec3b7122b6644873f10f6fcb2
   - collection: hotspots
     id: HS-022
     content_sha256: 0dc9b238c00133f2fb9c732df5a8ac87ad0ebbeafcd0c8718f9e758c0d53670a
   - collection: hotspots
     id: HS-023
-    content_sha256: 70d5bcdd8329cf05125434e53a7078a2739c66db2f915c75e4bf909a9696a9b8
+    content_sha256: 18f0dde30b6e28d45b6399aeaa1e919045e36ca64020fb65fc9a790c7da0474d
   - collection: hotspots
     id: HS-024
     content_sha256: 77cd09932b8695515fb716bde707c378343bc6ecc0f0797f25014b16d7664a5b
   - collection: hotspots
     id: HS-025
-    content_sha256: 46be0acce199df761f7e17f54cb07ce3b3078bc3d74bf7019ef6b0e720d81be3
+    content_sha256: 056a65b165c1902b0d79e71b5ab32f4da5c6c04f2425902755a94cd71222b76f
   - collection: hotspots
     id: HS-026
     content_sha256: 8b90d0ebf8472808842ae160e5fb2eeb8ab1114b1f20f00bf4b84950334f82f3
@@ -437,3 +438,32 @@ publication_delivery:
     HS-002. Les réserves et preuves historiques restent conservées dans Git ; aucune option n’est choisie ni déclarée crédible.'
 capture_method: Verbatim enregistré avant application ; empreintes finales, les outils record_decision/record_intents ne prennent
   pas en charge les hotspots. Cette capture constate l’intégration et ne valide pas les propositions détaillées.
+delivery_reconciliation_U981:
+  source_ref: U981
+  note: 'Instruction explicite de profondeur : les responsabilités sont conservées au niveau sous-domaine ; les contrôles
+    précédents restent ci-dessous, sans nouvel accord sur leurs rédactions.'
+  retired_requirements: []
+  previous_catalog_checks:
+  - collection: hotspots
+    id: HS-021
+    content_sha256: 8aac43a58227501e3de858c52e752f6fd34cc348375bfb846260afb5af78522c
+delivery_reconciliation_U987:
+  source_refs:
+  - U987
+  - U989
+  reason: Alignement des libellés liés à Commerce, sans changement des responsabilités ni extension des accords.
+  previous_glossary_catalog_checks:
+  - collection: hotspots
+    previous_requirement:
+      collection: hotspots
+      id: HS-025
+      content_sha256: 46be0acce199df761f7e17f54cb07ce3b3078bc3d74bf7019ef6b0e720d81be3
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - collection: hotspots
+    id: HS-023
+    content_sha256: 70d5bcdd8329cf05125434e53a7078a2739c66db2f915c75e4bf909a9696a9b8

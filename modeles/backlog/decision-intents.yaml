@@ -1,3 +1,881 @@
 schema_version: 1.0.0
-intents: []
+intents:
+- id: U996-subdomain-pricing-promotions-management
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: nodes
+    id: subdomain-pricing-promotions-management
+    approved_fields:
+    - finality
+    - name
+    values:
+      finality: Définir les prix et promotions de vente, déterminer les prix applicables et publier les résultats autorisés.
+      name: Pricing & Promotions Management
+    value_sha256:
+      finality: 880b0577eaf9df3f6021b70e833b484d043b07030b47408a8213dc5cdaa71b2b
+      name: b938575e7863013a7fe01ee047a3e21e396680c0db3c9f71d5b31f05e28204c7
+    context:
+      format: semantic-sha256-v1
+      target: e35635c50439995d563ae9c9e7fe89c76e4d1560d476b920c5f872ec2a640fde
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U996-contextual-prices: 557573c7213b8d7ca20bec57f570189c1ef07e54e0489f69944935675db44685
+        REL-U996-subdomain-pricing-promotions-management: 8d68a07949648d475d9d66ed2a7534a08e3ac208f065249473a15eab8f79eb86
+        REL-UNIVERSE-SUPPLY-D04: 14e88a5905c33eeafccfab665867f8fe3f6cd2d479c2958e11b64777bf011977
+      related_nodes:
+        D04: 79f8670aa65cf090d37fa9160e29bb5f5e3a4462acfb17535ecc99d3f180b243
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-sales: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+        supply-chain-orchestration: 41c87f042022884b8555ace176e46b457aeaffe68bffec61fb454802c6e4e66d
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+    context_sha256: fa4a6d82c3cac082c5e9aacc7492b771648279a630d1792d2d49cb959a43eb66
+- id: U996-subdomain-rebates-incentives-management
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: nodes
+    id: subdomain-rebates-incentives-management
+    approved_fields:
+    - finality
+    - name
+    values:
+      finality: Définir les dispositifs de ristournes, primes commerciales et commissions de vente, leurs bénéficiaires et
+        leurs conditions.
+      name: Rebates & Incentives Management
+    value_sha256:
+      finality: b2835cd399000c4b9da7196e55b62884b30abd177f17473933ffbf8080c0c435
+      name: aa5acd39ea0fe892140d17c2d826144792305606c5dbb7e87bda2573f80a362c
+    context:
+      format: semantic-sha256-v1
+      target: c9457a848a8bd284f5ecdfd819fd3b174f44efe4ad1d2cc754abb75f8a31f406
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U826-domain-finance: dc4dd7d23707b24215a6513cfb0901b8efd6f2c56bfbe9c2bd8f63785708a6ae
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U912-UNIVERSE-system-enterprise-management-control: 89a32a089ad5ce635d8ad660c61bad056f0acac7a473eac62a7f5d42d3978c84
+        REL-U996-commercial-benefit-conditions: 2da0159a10922667b8f7e1fd57b92171f95a7851d13226c14837150af987c0fa
+        REL-U996-subdomain-commercial-settlement-management: d9a23e584caa8b800e7bfdf6b964a69e17e8cce65fb7c15895b775de5ca237ee
+        REL-U996-subdomain-rebates-incentives-management: 98475a98a80f015e50b3692e60661dfa20b27b9d31a670f0641d3bd031146580
+      related_nodes:
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-finance: b58536aa20de5c761009c4a99d560bd8826c6ef9a3837cbf06e48c01b68c939b
+        domain-sales: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+        subdomain-commercial-settlement-management: 49bff5643df7c309eb11f89d09e26c0ad2e190503cb2bc104f11fa947768595e
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+        system-enterprise-management-control: 08cde7829aa1d9249e971bef1b6c5da10c4e0ac0bffebabab2e8914850cd9010
+    context_sha256: 029e69161d4d5c7eb59131b4be5c77f05ac919ca2af7aa81c026b61cf8a20f8d
+- id: U996-subdomain-commercial-settlement-management
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: nodes
+    id: subdomain-commercial-settlement-management
+    approved_fields:
+    - finality
+    - name
+    values:
+      finality: Calculer et régulariser les avantages commerciaux dus, puis organiser leur règlement et en reconnaître les
+        résultats.
+      name: Commercial Settlement Management
+    value_sha256:
+      finality: f16acd8131c6626bf20428f10d58094b34a0200d233b34f25b9b4c2547aeaca6
+      name: 0f18452079be0de521a8a9225e562beaf6e9244161e3385a752a1ce5222a38fc
+    context:
+      format: semantic-sha256-v1
+      target: 49bff5643df7c309eb11f89d09e26c0ad2e190503cb2bc104f11fa947768595e
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U826-domain-finance: dc4dd7d23707b24215a6513cfb0901b8efd6f2c56bfbe9c2bd8f63785708a6ae
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U848-PARENT-accounting-data-provision: 2b3369bc5d16a48c2f82509bf9c0219c5e999f380cee9f4a958e59c4fd8b9cca
+        REL-U848-PARENT-ba-outbound-information-provision: d700e4f9f32af63a5597fd2a691125d29ef3b5f297360c1e0400723e6625354f
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U912-UNIVERSE-system-enterprise-management-control: 89a32a089ad5ce635d8ad660c61bad056f0acac7a473eac62a7f5d42d3978c84
+        REL-U996-commercial-benefit-conditions: 2da0159a10922667b8f7e1fd57b92171f95a7851d13226c14837150af987c0fa
+        REL-U996-commercial-settlement-results: fe1b8c60f5716fb315a37ae7fe64f099deac4f81d52f93f9adc6ba88868e59d7
+        REL-U996-eligible-supply-facts: d63f9a55ac9d1873b9a3d4dd4c9a9294a93b01237d89edae3f424e3041d95d48
+        REL-U996-subdomain-commercial-settlement-management: d9a23e584caa8b800e7bfdf6b964a69e17e8cce65fb7c15895b775de5ca237ee
+        REL-U996-subdomain-rebates-incentives-management: 98475a98a80f015e50b3692e60661dfa20b27b9d31a670f0641d3bd031146580
+        REL-UNIVERSE-SUPPLY-D04: 14e88a5905c33eeafccfab665867f8fe3f6cd2d479c2958e11b64777bf011977
+      related_nodes:
+        D04: 79f8670aa65cf090d37fa9160e29bb5f5e3a4462acfb17535ecc99d3f180b243
+        accounting-data-provision: 55d2f5a47205811393b39452925a47ff7451bf4b11453907a4f736e19022b9b0
+        ba-outbound-information-provision: 32044c41525207099b90ad48777d44684a7c4c2492ac525e5489f6c5154f555e
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-finance: b58536aa20de5c761009c4a99d560bd8826c6ef9a3837cbf06e48c01b68c939b
+        domain-sales: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        subdomain-rebates-incentives-management: c9457a848a8bd284f5ecdfd819fd3b174f44efe4ad1d2cc754abb75f8a31f406
+        supply-chain-orchestration: 41c87f042022884b8555ace176e46b457aeaffe68bffec61fb454802c6e4e66d
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+        system-enterprise-management-control: 08cde7829aa1d9249e971bef1b6c5da10c4e0ac0bffebabab2e8914850cd9010
+    context_sha256: 84c97ecf3f4be59c6b8d3bd707e046e09d4a204802858fb63119f215e7b93af1
+- id: U996-subdomain-policies
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: nodes
+    id: subdomain-policies
+    approved_fields:
+    - name
+    values:
+      name: Supply Policy Management
+    value_sha256:
+      name: b8091bbcadbf830758630f8840d3a336dabefe1dbfdb2aad39785f3b8db81ec7
+    context:
+      format: semantic-sha256-v1
+      target: 9756b965d9d7c30a9bae8b60709fce57e92fd0af5c384a6af1998bb1974e98be
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-U673-POLICIES-MATCHING: b4a2fbc0340069aaa88a42085bae15b74926796d090a451c80976c8bebdebd1c
+        REL-U673-POLICIES-PROMISING: 82b26d730e33e73224348d62fe9409ae9bd9b73bc73fa552c45a6f7d898c8a58
+        REL-U673-PRESENTS-subdomain-policies: 6ce7f1d4bd8a3e98259f288f9bb86384481240ca5013a7bfb616bc2da8149c3d
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U880-ba-protection-policies: 7fc164b8703719d002d5514fa646426ca7cfcf7a3dcbf00cac955a8bd0ddc173
+        REL-U880-ba-service-provider-controls: f33633f47f7c251769e4b589a586003f41191a0ecb75cd48f8b8fd0a37039a40
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-UNIVERSE-SUPPLY-D01: a8638c76de32bb8d785edae075cc0695a8b5018ba35e97c757b3fb2948b04076
+        REL-UNIVERSE-SUPPLY-D03: d1bc4c0258dff4689610b4b5e8b3b618a2b1cdf7c32d6f10dca4979aef94b94e
+      related_nodes:
+        D01: e432caf10ef8cb7b079a72afcf7d15579dacce4b656599a63266700e8b735c62
+        D03: a74e31afca957f9eb9be50304804c34b30271eabb5b5aa0c85595f215804d420
+        ba-protection-policies: cf18210bf44fed485bc78152afe52f05271888bdf0e34aabbe86557e855ed11b
+        ba-service-provider-controls: bd5920def1a9ceef1625147e19bf846baa86514f781fcd0e856f23feb490df8d
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        supply-chain-orchestration: 41c87f042022884b8555ace176e46b457aeaffe68bffec61fb454802c6e4e66d
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+    context_sha256: d190d557563938aeb023a8ec49d834ed39e21f4218d92d7486333565ff389007
+- id: U996-D03
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: nodes
+    id: D03
+    approved_fields:
+    - definition
+    - name
+    values:
+      definition: Déterminer comment couvrir les besoins et ce qui peut être promis, en tenant compte des ressources, des
+        priorités et des engagements.
+      name: Availability
+    value_sha256:
+      definition: ae41e32be3237186e2a7cda58dab2eb99f135adff0959bccb63014df14d1dc8b
+      name: 0e113b6a2a36e2e86e6fc50862a01a3cd6ee61e5b7f57e5e24b4c778ee322b81
+    context:
+      format: semantic-sha256-v1
+      target: a74e31afca957f9eb9be50304804c34b30271eabb5b5aa0c85595f215804d420
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-ILL-006: 135e2dc11a8977729df7170ba75c55f94be984b434040613756b3d26561cf6fc
+        REL-ILL-007: 99a2322964c6b55b9f1137b2da4fa170cad375b0154f0a1585228406a0534872
+        REL-SUPPLY-PLAN-VISIBILITY: eb61a047fd481597e3c7b188972429af3f4921c3affc35195175669d95b111e5
+        REL-U673-FULFILMENT-MATCHING: 537f4cde387fedddf92a962173a993fb9041e7aedfb8fe20c473711b23c1e1c3
+        REL-U673-MATCHING-PROMISING: 77a946bec621ef2c4dc34e9f4fe668c61dd864f7372cfe1227b33a5ae67ee6d6
+        REL-U673-ORDER-MATCHING: f33ee42c999de5ef86ecfbc27083ebbec6a9a4ee9cf766b5bd8efbcd522793d1
+        REL-U673-PLANS-MATCHING: a88217ea336bf09c918861728de77ad69a61ba369a1343a4308a402aec6d6475
+        REL-U673-POLICIES-MATCHING: b4a2fbc0340069aaa88a42085bae15b74926796d090a451c80976c8bebdebd1c
+        REL-U673-PRESENTS-subdomain-policies: 6ce7f1d4bd8a3e98259f288f9bb86384481240ca5013a7bfb616bc2da8149c3d
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U835-D03-D04: e671808f6275c5f6eb6948b7acd2acd1a4958a6fd03b748d98476611a572ad0a
+        REL-U835-D03-D06: d4bb09e1c0ce1ad93bc091281d3505cfcd202812456d3fc31d41286d34c23e4b
+        REL-U848-PARENT-ba-master-plan-management: e98bd18cd2f7e26fa52ba6cb8568869a20022b9aeb2fbb63aecbece469271c80
+        REL-U848-PARENT-ba-order-promising: e2154a48f6a4f5cbc886919af8bcc8deaf9b4f18e20a75305b312d8508d51e6a
+        REL-U848-PARENT-ba-policy-optimization: 814d036532a42473d8f681f8cda70f4d61413110a201106f8301467303a6cea0
+        REL-U848-PARENT-ba-supply-matching: 3927070c9ef4e7cb22bda34437f95dd4a57027384d445a21ba630d28d33eb82e
+        REL-U863-PARENT-D11: 46bdcd836e19f03bf5b317c5224b3bebb2b03209f3d051255b04ceb657034ed1
+        REL-U863-PARENT-ba-partner-agreement-references: b0b7e1b3099fddd6ee63a598539b9fe92bc33df3e4849554af9bd0ce77553c6b
+        REL-U865-PARENT-PLAN-VISIBILITY: 84c403cb01e219c63ec987631ee0a832225b94db9bd94f49dff9e3136a13c2a9
+        REL-U911-PARENT-ba-physical-stock-configuration-optimization: 2db8f541510d5cea79102bf5fbcbf4d43a3b79dc1d7452606090a4164ba42049
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-UNIVERSE-SUPPLY-D01: a8638c76de32bb8d785edae075cc0695a8b5018ba35e97c757b3fb2948b04076
+        REL-UNIVERSE-SUPPLY-D03: d1bc4c0258dff4689610b4b5e8b3b618a2b1cdf7c32d6f10dca4979aef94b94e
+        REL-UNIVERSE-SUPPLY-D04: 14e88a5905c33eeafccfab665867f8fe3f6cd2d479c2958e11b64777bf011977
+        REL-UNIVERSE-SUPPLY-D06: a0fc02f7e8d45fc4a4d2a15014a0b11c0f0526b4760e95cf4f6c455d3ff0ea83
+        REL-UNIVERSE-SUPPLY-business-references: b230a48f8d30c1c227481793ce51ef4e2030ed6a2b8ff3492450a35a16a691bf
+      related_nodes:
+        D01: e432caf10ef8cb7b079a72afcf7d15579dacce4b656599a63266700e8b735c62
+        D04: 79f8670aa65cf090d37fa9160e29bb5f5e3a4462acfb17535ecc99d3f180b243
+        D06: b4077305f5819bb31d90a65de740015029cfe2ac1d98a4721434e594c12c0021
+        D11: 9b3f3a4225b84cd6c24642cbc3d6062970b3a578f0f6b4af68cc1b5bfc2b7c1e
+        ba-master-plan-management: 8b92279463ad1c4b3cff7df217b127654502a9f4d1f4a4182df51f39367ca372
+        ba-order-promising: 8711d4afd47d7fd60dd9c8bc1e4a6c1ab3b4fc9bef773a0ca181b0b5d6ee4044
+        ba-partner-agreement-references: 43af2e05c05078cc5d96dcfd8c9fe8e49dd3ef166868124a57305b37a1003f64
+        ba-physical-stock-configuration-optimization: 707491914ab493eea2d0b9a374233d11cdddada85bcbd135dc80a1f94864eec4
+        ba-policy-optimization: fcaac821e02830e15dc4cb8ec4b0ede45c28921a0cecd91c96d4abe326ffe0db
+        ba-supply-matching: eadbe695d4298c23853291f144cd57c7bb5b60a9bde30912edd2ccca58062a4b
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        business-references: 7225c164cb4ea8660b2cef8f65edfc51af715e55a00c67903f949db5e5b19d3f
+        subdomain-plans: 0e9658308fe4cdfccce71de2d9d807235ee5ffbf12365c3caaba491556d9311e
+        subdomain-policies: 9756b965d9d7c30a9bae8b60709fce57e92fd0af5c384a6af1998bb1974e98be
+        supply-chain-orchestration: 41c87f042022884b8555ace176e46b457aeaffe68bffec61fb454802c6e4e66d
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+    context_sha256: f15df41eff7504d426146f664b023d38ba754fd10c096dac85af33648c5c7534
+- id: U996-domain-sales
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: nodes
+    id: domain-sales
+    approved_fields:
+    - name
+    values:
+      name: Commerce
+    value_sha256:
+      name: ac8fac72bb234738586e3deb31dbd2a165ca0fff8bb46aafb4ce2a3af36726d8
+    context:
+      format: semantic-sha256-v1
+      target: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U898-PARENT-subdomain-sales-b2c-ecommerce: 59ac3663813b618d942b8e88536dc27432ac0dc3ae54e3edd24c94d8dca4d8be
+        REL-U898-PARENT-subdomain-sales-b2c-store: 2c48cc896f8e38dd584d29be929dd7d65f2b03f7580f8eec826e6eba8823512e
+        REL-U898-PARENT-subdomain-sales-wholesale: eae5880bc73d03066a08344eacb39af0e4b045b9bd3bc92a0df13130ee1d6549
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U987-subdomain-assortment-catalog-management: 9a1343049a541c5687b497cd9410c16d8dd2fa585ef1c7175a4eea13e1e8b755
+        REL-U987-subdomain-retail-network-management: ca110926323eab1895f6d972a7c41fc1c3a1d7c0fe944c411568f0255c31dac5
+        REL-U987-subdomain-store-backoffice-operations: 05487f4d5305e2b9bd137653c0b637becc8932534ab25e9f72f6fff6ab24426e
+        REL-U996-subdomain-pricing-promotions-management: 8d68a07949648d475d9d66ed2a7534a08e3ac208f065249473a15eab8f79eb86
+        REL-U996-subdomain-rebates-incentives-management: 98475a98a80f015e50b3692e60661dfa20b27b9d31a670f0641d3bd031146580
+      related_nodes:
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        subdomain-assortment-catalog-management: da48056f8b61fa7570a7ec0c9e6ad8c9790c4d6a1d53f61b4ea4296909a68b6b
+        subdomain-pricing-promotions-management: e35635c50439995d563ae9c9e7fe89c76e4d1560d476b920c5f872ec2a640fde
+        subdomain-rebates-incentives-management: c9457a848a8bd284f5ecdfd819fd3b174f44efe4ad1d2cc754abb75f8a31f406
+        subdomain-retail-network-management: 887757fdeafa035f58347f868592e7a1779868121245cfc8b2bb0cec1850627e
+        subdomain-sales-b2c-ecommerce: ca8aa9d85b3bb3f692405018d2124214a494187ad79aacc37b28582d405630e2
+        subdomain-sales-b2c-store: 5b4dac410e896f808721509fd4976cd0a26a1bf5e530853724b1e0f4e85d347f
+        subdomain-sales-wholesale: b57bdba13a3be91ba3f78850054be6e357a7a65e7c9c2961d579db2f1fe4aad0
+        subdomain-store-backoffice-operations: 2d1b0c0c674e8ac8b12dd1aed847e811f5506dbdd6e811bd9615de276abe8918
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+    context_sha256: 9c31168711936cf4f07dbea273843e1cfc0f7616c71c020e6e877ee9d43f9b75
+- id: U996-REL-U987-subdomain-retail-network-management
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: relations
+    id: REL-U987-subdomain-retail-network-management
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: domain-sales
+      target_id: subdomain-retail-network-management
+      type: presents
+    value_sha256:
+      source_id: a226e9c9e13ad3cd4df8517384d55fd3540b51c50ae4165ddcdef9cdb6e5b04c
+      target_id: a51e3305276c6c59334c2f8f79c33b68c2bd1ac05360d0d0b48c5e601c2c52df
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    context:
+      format: semantic-sha256-v1
+      target: ca110926323eab1895f6d972a7c41fc1c3a1d7c0fe944c411568f0255c31dac5
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U898-PARENT-subdomain-sales-b2c-ecommerce: 59ac3663813b618d942b8e88536dc27432ac0dc3ae54e3edd24c94d8dca4d8be
+        REL-U898-PARENT-subdomain-sales-b2c-store: 2c48cc896f8e38dd584d29be929dd7d65f2b03f7580f8eec826e6eba8823512e
+        REL-U898-PARENT-subdomain-sales-wholesale: eae5880bc73d03066a08344eacb39af0e4b045b9bd3bc92a0df13130ee1d6549
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U987-subdomain-assortment-catalog-management: 9a1343049a541c5687b497cd9410c16d8dd2fa585ef1c7175a4eea13e1e8b755
+        REL-U987-subdomain-retail-network-management: ca110926323eab1895f6d972a7c41fc1c3a1d7c0fe944c411568f0255c31dac5
+        REL-U987-subdomain-store-backoffice-operations: 05487f4d5305e2b9bd137653c0b637becc8932534ab25e9f72f6fff6ab24426e
+        REL-U996-subdomain-pricing-promotions-management: 8d68a07949648d475d9d66ed2a7534a08e3ac208f065249473a15eab8f79eb86
+        REL-U996-subdomain-rebates-incentives-management: 98475a98a80f015e50b3692e60661dfa20b27b9d31a670f0641d3bd031146580
+      related_nodes:
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-sales: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+        subdomain-assortment-catalog-management: da48056f8b61fa7570a7ec0c9e6ad8c9790c4d6a1d53f61b4ea4296909a68b6b
+        subdomain-pricing-promotions-management: e35635c50439995d563ae9c9e7fe89c76e4d1560d476b920c5f872ec2a640fde
+        subdomain-rebates-incentives-management: c9457a848a8bd284f5ecdfd819fd3b174f44efe4ad1d2cc754abb75f8a31f406
+        subdomain-retail-network-management: 887757fdeafa035f58347f868592e7a1779868121245cfc8b2bb0cec1850627e
+        subdomain-sales-b2c-ecommerce: ca8aa9d85b3bb3f692405018d2124214a494187ad79aacc37b28582d405630e2
+        subdomain-sales-b2c-store: 5b4dac410e896f808721509fd4976cd0a26a1bf5e530853724b1e0f4e85d347f
+        subdomain-sales-wholesale: b57bdba13a3be91ba3f78850054be6e357a7a65e7c9c2961d579db2f1fe4aad0
+        subdomain-store-backoffice-operations: 2d1b0c0c674e8ac8b12dd1aed847e811f5506dbdd6e811bd9615de276abe8918
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+    context_sha256: b34203f9a1fb08770f366fad35b27fe0604d55599340836e26be8a9d39072791
+- id: U996-REL-U987-subdomain-store-backoffice-operations
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: relations
+    id: REL-U987-subdomain-store-backoffice-operations
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: domain-sales
+      target_id: subdomain-store-backoffice-operations
+      type: presents
+    value_sha256:
+      source_id: a226e9c9e13ad3cd4df8517384d55fd3540b51c50ae4165ddcdef9cdb6e5b04c
+      target_id: de121582ae8bb3a7d2825c3056aac361aafcfb94c049c929bc95322fb5bd8886
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    context:
+      format: semantic-sha256-v1
+      target: 05487f4d5305e2b9bd137653c0b637becc8932534ab25e9f72f6fff6ab24426e
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U898-PARENT-subdomain-sales-b2c-ecommerce: 59ac3663813b618d942b8e88536dc27432ac0dc3ae54e3edd24c94d8dca4d8be
+        REL-U898-PARENT-subdomain-sales-b2c-store: 2c48cc896f8e38dd584d29be929dd7d65f2b03f7580f8eec826e6eba8823512e
+        REL-U898-PARENT-subdomain-sales-wholesale: eae5880bc73d03066a08344eacb39af0e4b045b9bd3bc92a0df13130ee1d6549
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U987-subdomain-assortment-catalog-management: 9a1343049a541c5687b497cd9410c16d8dd2fa585ef1c7175a4eea13e1e8b755
+        REL-U987-subdomain-retail-network-management: ca110926323eab1895f6d972a7c41fc1c3a1d7c0fe944c411568f0255c31dac5
+        REL-U987-subdomain-store-backoffice-operations: 05487f4d5305e2b9bd137653c0b637becc8932534ab25e9f72f6fff6ab24426e
+        REL-U996-subdomain-pricing-promotions-management: 8d68a07949648d475d9d66ed2a7534a08e3ac208f065249473a15eab8f79eb86
+        REL-U996-subdomain-rebates-incentives-management: 98475a98a80f015e50b3692e60661dfa20b27b9d31a670f0641d3bd031146580
+      related_nodes:
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-sales: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+        subdomain-assortment-catalog-management: da48056f8b61fa7570a7ec0c9e6ad8c9790c4d6a1d53f61b4ea4296909a68b6b
+        subdomain-pricing-promotions-management: e35635c50439995d563ae9c9e7fe89c76e4d1560d476b920c5f872ec2a640fde
+        subdomain-rebates-incentives-management: c9457a848a8bd284f5ecdfd819fd3b174f44efe4ad1d2cc754abb75f8a31f406
+        subdomain-retail-network-management: 887757fdeafa035f58347f868592e7a1779868121245cfc8b2bb0cec1850627e
+        subdomain-sales-b2c-ecommerce: ca8aa9d85b3bb3f692405018d2124214a494187ad79aacc37b28582d405630e2
+        subdomain-sales-b2c-store: 5b4dac410e896f808721509fd4976cd0a26a1bf5e530853724b1e0f4e85d347f
+        subdomain-sales-wholesale: b57bdba13a3be91ba3f78850054be6e357a7a65e7c9c2961d579db2f1fe4aad0
+        subdomain-store-backoffice-operations: 2d1b0c0c674e8ac8b12dd1aed847e811f5506dbdd6e811bd9615de276abe8918
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+    context_sha256: 162570400bd0d73ba62d00c5093fb7dd73f1fdf1dd457f53af99bc1d7ffe8469
+- id: U996-REL-U996-subdomain-pricing-promotions-management
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: relations
+    id: REL-U996-subdomain-pricing-promotions-management
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: domain-sales
+      target_id: subdomain-pricing-promotions-management
+      type: presents
+    value_sha256:
+      source_id: a226e9c9e13ad3cd4df8517384d55fd3540b51c50ae4165ddcdef9cdb6e5b04c
+      target_id: e4c72c90149b372056cd3c08c561ff2129a401d0f8d09f719acfd634e9cc87af
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    context:
+      format: semantic-sha256-v1
+      target: 8d68a07949648d475d9d66ed2a7534a08e3ac208f065249473a15eab8f79eb86
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U898-PARENT-subdomain-sales-b2c-ecommerce: 59ac3663813b618d942b8e88536dc27432ac0dc3ae54e3edd24c94d8dca4d8be
+        REL-U898-PARENT-subdomain-sales-b2c-store: 2c48cc896f8e38dd584d29be929dd7d65f2b03f7580f8eec826e6eba8823512e
+        REL-U898-PARENT-subdomain-sales-wholesale: eae5880bc73d03066a08344eacb39af0e4b045b9bd3bc92a0df13130ee1d6549
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U987-subdomain-assortment-catalog-management: 9a1343049a541c5687b497cd9410c16d8dd2fa585ef1c7175a4eea13e1e8b755
+        REL-U987-subdomain-retail-network-management: ca110926323eab1895f6d972a7c41fc1c3a1d7c0fe944c411568f0255c31dac5
+        REL-U987-subdomain-store-backoffice-operations: 05487f4d5305e2b9bd137653c0b637becc8932534ab25e9f72f6fff6ab24426e
+        REL-U996-contextual-prices: 557573c7213b8d7ca20bec57f570189c1ef07e54e0489f69944935675db44685
+        REL-U996-subdomain-pricing-promotions-management: 8d68a07949648d475d9d66ed2a7534a08e3ac208f065249473a15eab8f79eb86
+        REL-U996-subdomain-rebates-incentives-management: 98475a98a80f015e50b3692e60661dfa20b27b9d31a670f0641d3bd031146580
+        REL-UNIVERSE-SUPPLY-D04: 14e88a5905c33eeafccfab665867f8fe3f6cd2d479c2958e11b64777bf011977
+      related_nodes:
+        D04: 79f8670aa65cf090d37fa9160e29bb5f5e3a4462acfb17535ecc99d3f180b243
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-sales: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+        subdomain-assortment-catalog-management: da48056f8b61fa7570a7ec0c9e6ad8c9790c4d6a1d53f61b4ea4296909a68b6b
+        subdomain-pricing-promotions-management: e35635c50439995d563ae9c9e7fe89c76e4d1560d476b920c5f872ec2a640fde
+        subdomain-rebates-incentives-management: c9457a848a8bd284f5ecdfd819fd3b174f44efe4ad1d2cc754abb75f8a31f406
+        subdomain-retail-network-management: 887757fdeafa035f58347f868592e7a1779868121245cfc8b2bb0cec1850627e
+        subdomain-sales-b2c-ecommerce: ca8aa9d85b3bb3f692405018d2124214a494187ad79aacc37b28582d405630e2
+        subdomain-sales-b2c-store: 5b4dac410e896f808721509fd4976cd0a26a1bf5e530853724b1e0f4e85d347f
+        subdomain-sales-wholesale: b57bdba13a3be91ba3f78850054be6e357a7a65e7c9c2961d579db2f1fe4aad0
+        subdomain-store-backoffice-operations: 2d1b0c0c674e8ac8b12dd1aed847e811f5506dbdd6e811bd9615de276abe8918
+        supply-chain-orchestration: 41c87f042022884b8555ace176e46b457aeaffe68bffec61fb454802c6e4e66d
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+    context_sha256: 7c7a16d9db3ce1184d7ffda0360df51d60cf48d3165df587458a26b3af7ad1b1
+- id: U996-REL-U996-subdomain-rebates-incentives-management
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: relations
+    id: REL-U996-subdomain-rebates-incentives-management
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: domain-sales
+      target_id: subdomain-rebates-incentives-management
+      type: presents
+    value_sha256:
+      source_id: a226e9c9e13ad3cd4df8517384d55fd3540b51c50ae4165ddcdef9cdb6e5b04c
+      target_id: 7afcf03f2aafff71a60e16e426a9c66165e7b663ce98620f3165619e2fb7bfb1
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    context:
+      format: semantic-sha256-v1
+      target: 98475a98a80f015e50b3692e60661dfa20b27b9d31a670f0641d3bd031146580
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U826-domain-finance: dc4dd7d23707b24215a6513cfb0901b8efd6f2c56bfbe9c2bd8f63785708a6ae
+        REL-U898-PARENT-subdomain-sales-b2c-ecommerce: 59ac3663813b618d942b8e88536dc27432ac0dc3ae54e3edd24c94d8dca4d8be
+        REL-U898-PARENT-subdomain-sales-b2c-store: 2c48cc896f8e38dd584d29be929dd7d65f2b03f7580f8eec826e6eba8823512e
+        REL-U898-PARENT-subdomain-sales-wholesale: eae5880bc73d03066a08344eacb39af0e4b045b9bd3bc92a0df13130ee1d6549
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U912-UNIVERSE-system-enterprise-management-control: 89a32a089ad5ce635d8ad660c61bad056f0acac7a473eac62a7f5d42d3978c84
+        REL-U987-subdomain-assortment-catalog-management: 9a1343049a541c5687b497cd9410c16d8dd2fa585ef1c7175a4eea13e1e8b755
+        REL-U987-subdomain-retail-network-management: ca110926323eab1895f6d972a7c41fc1c3a1d7c0fe944c411568f0255c31dac5
+        REL-U987-subdomain-store-backoffice-operations: 05487f4d5305e2b9bd137653c0b637becc8932534ab25e9f72f6fff6ab24426e
+        REL-U996-commercial-benefit-conditions: 2da0159a10922667b8f7e1fd57b92171f95a7851d13226c14837150af987c0fa
+        REL-U996-subdomain-commercial-settlement-management: d9a23e584caa8b800e7bfdf6b964a69e17e8cce65fb7c15895b775de5ca237ee
+        REL-U996-subdomain-pricing-promotions-management: 8d68a07949648d475d9d66ed2a7534a08e3ac208f065249473a15eab8f79eb86
+        REL-U996-subdomain-rebates-incentives-management: 98475a98a80f015e50b3692e60661dfa20b27b9d31a670f0641d3bd031146580
+      related_nodes:
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-finance: b58536aa20de5c761009c4a99d560bd8826c6ef9a3837cbf06e48c01b68c939b
+        domain-sales: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+        subdomain-assortment-catalog-management: da48056f8b61fa7570a7ec0c9e6ad8c9790c4d6a1d53f61b4ea4296909a68b6b
+        subdomain-commercial-settlement-management: 49bff5643df7c309eb11f89d09e26c0ad2e190503cb2bc104f11fa947768595e
+        subdomain-pricing-promotions-management: e35635c50439995d563ae9c9e7fe89c76e4d1560d476b920c5f872ec2a640fde
+        subdomain-rebates-incentives-management: c9457a848a8bd284f5ecdfd819fd3b174f44efe4ad1d2cc754abb75f8a31f406
+        subdomain-retail-network-management: 887757fdeafa035f58347f868592e7a1779868121245cfc8b2bb0cec1850627e
+        subdomain-sales-b2c-ecommerce: ca8aa9d85b3bb3f692405018d2124214a494187ad79aacc37b28582d405630e2
+        subdomain-sales-b2c-store: 5b4dac410e896f808721509fd4976cd0a26a1bf5e530853724b1e0f4e85d347f
+        subdomain-sales-wholesale: b57bdba13a3be91ba3f78850054be6e357a7a65e7c9c2961d579db2f1fe4aad0
+        subdomain-store-backoffice-operations: 2d1b0c0c674e8ac8b12dd1aed847e811f5506dbdd6e811bd9615de276abe8918
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+        system-enterprise-management-control: 08cde7829aa1d9249e971bef1b6c5da10c4e0ac0bffebabab2e8914850cd9010
+    context_sha256: 0eff221ec77fae71c9cbe64d34c94114919e0d0eaba32c7f4e1d18930884beb1
+- id: U996-REL-U996-subdomain-commercial-settlement-management
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: relations
+    id: REL-U996-subdomain-commercial-settlement-management
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: domain-finance
+      target_id: subdomain-commercial-settlement-management
+      type: presents
+    value_sha256:
+      source_id: 756744d84535e0cababd785cf6d5d363c85bb17aa3be4d6c42d17efae79e748e
+      target_id: 1c5ab1ff079ca339c703c09e5c23ad0b9c3804a4074dd00001cc501afdffb6dd
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    context:
+      format: semantic-sha256-v1
+      target: d9a23e584caa8b800e7bfdf6b964a69e17e8cce65fb7c15895b775de5ca237ee
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U826-domain-finance: dc4dd7d23707b24215a6513cfb0901b8efd6f2c56bfbe9c2bd8f63785708a6ae
+        REL-U826-subdomain-financial-accounting: 4564b8a3fcd833dabfe53aaa07853a1e3db9af4e1e2f627b538b04d15613442e
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U848-PARENT-accounting-data-provision: 2b3369bc5d16a48c2f82509bf9c0219c5e999f380cee9f4a958e59c4fd8b9cca
+        REL-U848-PARENT-ba-outbound-information-provision: d700e4f9f32af63a5597fd2a691125d29ef3b5f297360c1e0400723e6625354f
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U912-UNIVERSE-system-enterprise-management-control: 89a32a089ad5ce635d8ad660c61bad056f0acac7a473eac62a7f5d42d3978c84
+        REL-U975-subdomain-cost-profitability: d8e7a72db73494d845d41939843b89d98bb6915e2194fc49fa05e10f0b87c853
+        REL-U975-subdomain-credit-collections: a942ee32c413e83d2af6f4a6e107f50133df8cf107327c5b9f9f3abd1526f930
+        REL-U975-subdomain-treasury-cash: a5775b92fa79992232c3a4510d033c5d2914caca22b06432a8e4aabb15c0118b
+        REL-U996-commercial-benefit-conditions: 2da0159a10922667b8f7e1fd57b92171f95a7851d13226c14837150af987c0fa
+        REL-U996-commercial-settlement-results: fe1b8c60f5716fb315a37ae7fe64f099deac4f81d52f93f9adc6ba88868e59d7
+        REL-U996-eligible-supply-facts: d63f9a55ac9d1873b9a3d4dd4c9a9294a93b01237d89edae3f424e3041d95d48
+        REL-U996-subdomain-commercial-settlement-management: d9a23e584caa8b800e7bfdf6b964a69e17e8cce65fb7c15895b775de5ca237ee
+        REL-U996-subdomain-rebates-incentives-management: 98475a98a80f015e50b3692e60661dfa20b27b9d31a670f0641d3bd031146580
+        REL-UNIVERSE-SUPPLY-D04: 14e88a5905c33eeafccfab665867f8fe3f6cd2d479c2958e11b64777bf011977
+      related_nodes:
+        D04: 79f8670aa65cf090d37fa9160e29bb5f5e3a4462acfb17535ecc99d3f180b243
+        accounting-data-provision: 55d2f5a47205811393b39452925a47ff7451bf4b11453907a4f736e19022b9b0
+        ba-outbound-information-provision: 32044c41525207099b90ad48777d44684a7c4c2492ac525e5489f6c5154f555e
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-finance: b58536aa20de5c761009c4a99d560bd8826c6ef9a3837cbf06e48c01b68c939b
+        domain-sales: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+        subdomain-commercial-settlement-management: 49bff5643df7c309eb11f89d09e26c0ad2e190503cb2bc104f11fa947768595e
+        subdomain-cost-profitability: 6cd992d3b876a0906a91e6a6983dd49b42dc00cbdc58da062440a2ad3694a5a8
+        subdomain-credit-collections: e54c4a3aaccfda05e26d2154ca2952f4822bc290addbe2a182145b54ae1e8177
+        subdomain-financial-accounting: 60f195e2b9cbd7aa534a086882abbce560e1eff8eed7773bc988977af1d2bc86
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        subdomain-rebates-incentives-management: c9457a848a8bd284f5ecdfd819fd3b174f44efe4ad1d2cc754abb75f8a31f406
+        subdomain-treasury-cash: adc5f4c1ac0927d37d6a3c04c33cdf96bf809c8971965c0561c1ccbf646f221b
+        supply-chain-orchestration: 41c87f042022884b8555ace176e46b457aeaffe68bffec61fb454802c6e4e66d
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+        system-enterprise-management-control: 08cde7829aa1d9249e971bef1b6c5da10c4e0ac0bffebabab2e8914850cd9010
+    context_sha256: ea0144d9dbbbc24f5f205043480054258bb8277242d6764a80bf996763093caa
+- id: U996-REL-U996-contextual-prices
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: relations
+    id: REL-U996-contextual-prices
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: subdomain-pricing-promotions-management
+      target_id: D04
+      type: shares-data
+    value_sha256:
+      source_id: e4c72c90149b372056cd3c08c561ff2129a401d0f8d09f719acfd634e9cc87af
+      target_id: 0096bde465541109b5bce54d49a5c56a6b5a8c77c79d7ed9d49996276ee29b00
+      type: e674a15b699bb86881f50c8622cdb4fa4f6944148492546d1111bb5ee7ad0e39
+    context:
+      format: semantic-sha256-v1
+      target: 557573c7213b8d7ca20bec57f570189c1ef07e54e0489f69944935675db44685
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-EXECUTION-PROMISING: b057a6ea2e41910e52187b493703d8145d2e75df9593a81163c31a80989175bf
+        REL-U673-ORDER-MATCHING: f33ee42c999de5ef86ecfbc27083ebbec6a9a4ee9cf766b5bd8efbcd522793d1
+        REL-U673-PROMISING-ORDER: c67d9dc010a5a934576808e73fdad808916157cf929c857bd64b1ea06c23f86b
+        REL-U682-PRESENTS-SERVICE-ORDERS: a02703567b7e7b6514adc3aa63c20e7254665283cbd1147dde8a722709b862a9
+        REL-U711-SERVICE-ORDERS-ORDERS: ea790154d4783b02198a2780653db002dff3f243614ea8f166ae3f2d46251dfa
+        REL-U725-EXECUTION-AUTHORIZATIONS: 9d5e9c937aec2eb44b7f2af6e6120071dec31439efc9c494bc5bee47993fc0fa
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U826-domain-finance: dc4dd7d23707b24215a6513cfb0901b8efd6f2c56bfbe9c2bd8f63785708a6ae
+        REL-U835-D03-D04: e671808f6275c5f6eb6948b7acd2acd1a4958a6fd03b748d98476611a572ad0a
+        REL-U848-PARENT-ba-order-lifecycle-management: aab46321c6925cc6d25264849b75f20e6f285de3fc2e8f8b7846f56185be9fae
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U912-UNIVERSE-system-enterprise-management-control: 89a32a089ad5ce635d8ad660c61bad056f0acac7a473eac62a7f5d42d3978c84
+        REL-U996-commercial-settlement-results: fe1b8c60f5716fb315a37ae7fe64f099deac4f81d52f93f9adc6ba88868e59d7
+        REL-U996-contextual-prices: 557573c7213b8d7ca20bec57f570189c1ef07e54e0489f69944935675db44685
+        REL-U996-subdomain-commercial-settlement-management: d9a23e584caa8b800e7bfdf6b964a69e17e8cce65fb7c15895b775de5ca237ee
+        REL-U996-subdomain-pricing-promotions-management: 8d68a07949648d475d9d66ed2a7534a08e3ac208f065249473a15eab8f79eb86
+        REL-UNIVERSE-SUPPLY-D01: a8638c76de32bb8d785edae075cc0695a8b5018ba35e97c757b3fb2948b04076
+        REL-UNIVERSE-SUPPLY-D03: d1bc4c0258dff4689610b4b5e8b3b618a2b1cdf7c32d6f10dca4979aef94b94e
+        REL-UNIVERSE-SUPPLY-D04: 14e88a5905c33eeafccfab665867f8fe3f6cd2d479c2958e11b64777bf011977
+        REL-UNIVERSE-SUPPLY-D06: a0fc02f7e8d45fc4a4d2a15014a0b11c0f0526b4760e95cf4f6c455d3ff0ea83
+      related_nodes:
+        D01: e432caf10ef8cb7b079a72afcf7d15579dacce4b656599a63266700e8b735c62
+        D03: a74e31afca957f9eb9be50304804c34b30271eabb5b5aa0c85595f215804d420
+        D04: 79f8670aa65cf090d37fa9160e29bb5f5e3a4462acfb17535ecc99d3f180b243
+        D06: b4077305f5819bb31d90a65de740015029cfe2ac1d98a4721434e594c12c0021
+        ba-order-lifecycle-management: eac85b9501a96677a79da188fc5e0f2a5af97d98f1915adec309b50188292972
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-finance: b58536aa20de5c761009c4a99d560bd8826c6ef9a3837cbf06e48c01b68c939b
+        domain-sales: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+        subdomain-commercial-settlement-management: 49bff5643df7c309eb11f89d09e26c0ad2e190503cb2bc104f11fa947768595e
+        subdomain-pricing-promotions-management: e35635c50439995d563ae9c9e7fe89c76e4d1560d476b920c5f872ec2a640fde
+        subdomain-service-orders: e526dc60c594cab76ca2f1ad692b8f20cb22ef1f8e98406252e807418ed14010
+        supply-chain-orchestration: 41c87f042022884b8555ace176e46b457aeaffe68bffec61fb454802c6e4e66d
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+        system-enterprise-management-control: 08cde7829aa1d9249e971bef1b6c5da10c4e0ac0bffebabab2e8914850cd9010
+    context_sha256: ef8d959af39487c8c32fe57c650caa41898445b7efe5accf82ff391451a6a584
+- id: U996-REL-U996-commercial-benefit-conditions
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: relations
+    id: REL-U996-commercial-benefit-conditions
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: subdomain-rebates-incentives-management
+      target_id: subdomain-commercial-settlement-management
+      type: shares-data
+    value_sha256:
+      source_id: 7afcf03f2aafff71a60e16e426a9c66165e7b663ce98620f3165619e2fb7bfb1
+      target_id: 1c5ab1ff079ca339c703c09e5c23ad0b9c3804a4074dd00001cc501afdffb6dd
+      type: e674a15b699bb86881f50c8622cdb4fa4f6944148492546d1111bb5ee7ad0e39
+    context:
+      format: semantic-sha256-v1
+      target: 2da0159a10922667b8f7e1fd57b92171f95a7851d13226c14837150af987c0fa
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U826-domain-finance: dc4dd7d23707b24215a6513cfb0901b8efd6f2c56bfbe9c2bd8f63785708a6ae
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U848-PARENT-accounting-data-provision: 2b3369bc5d16a48c2f82509bf9c0219c5e999f380cee9f4a958e59c4fd8b9cca
+        REL-U848-PARENT-ba-outbound-information-provision: d700e4f9f32af63a5597fd2a691125d29ef3b5f297360c1e0400723e6625354f
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U912-UNIVERSE-system-enterprise-management-control: 89a32a089ad5ce635d8ad660c61bad056f0acac7a473eac62a7f5d42d3978c84
+        REL-U996-commercial-benefit-conditions: 2da0159a10922667b8f7e1fd57b92171f95a7851d13226c14837150af987c0fa
+        REL-U996-commercial-settlement-results: fe1b8c60f5716fb315a37ae7fe64f099deac4f81d52f93f9adc6ba88868e59d7
+        REL-U996-eligible-supply-facts: d63f9a55ac9d1873b9a3d4dd4c9a9294a93b01237d89edae3f424e3041d95d48
+        REL-U996-subdomain-commercial-settlement-management: d9a23e584caa8b800e7bfdf6b964a69e17e8cce65fb7c15895b775de5ca237ee
+        REL-U996-subdomain-rebates-incentives-management: 98475a98a80f015e50b3692e60661dfa20b27b9d31a670f0641d3bd031146580
+        REL-UNIVERSE-SUPPLY-D04: 14e88a5905c33eeafccfab665867f8fe3f6cd2d479c2958e11b64777bf011977
+      related_nodes:
+        D04: 79f8670aa65cf090d37fa9160e29bb5f5e3a4462acfb17535ecc99d3f180b243
+        accounting-data-provision: 55d2f5a47205811393b39452925a47ff7451bf4b11453907a4f736e19022b9b0
+        ba-outbound-information-provision: 32044c41525207099b90ad48777d44684a7c4c2492ac525e5489f6c5154f555e
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-finance: b58536aa20de5c761009c4a99d560bd8826c6ef9a3837cbf06e48c01b68c939b
+        domain-sales: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+        subdomain-commercial-settlement-management: 49bff5643df7c309eb11f89d09e26c0ad2e190503cb2bc104f11fa947768595e
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        subdomain-rebates-incentives-management: c9457a848a8bd284f5ecdfd819fd3b174f44efe4ad1d2cc754abb75f8a31f406
+        supply-chain-orchestration: 41c87f042022884b8555ace176e46b457aeaffe68bffec61fb454802c6e4e66d
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+        system-enterprise-management-control: 08cde7829aa1d9249e971bef1b6c5da10c4e0ac0bffebabab2e8914850cd9010
+    context_sha256: b69fea2261f324480acffb7d7f7c7b1ab7d037df9da2647916f16b1d502144ef
+- id: U996-REL-U996-eligible-supply-facts
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: relations
+    id: REL-U996-eligible-supply-facts
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: accounting-data-provision
+      target_id: subdomain-commercial-settlement-management
+      type: shares-data
+    value_sha256:
+      source_id: d2dbd1a62f3705e9549fa6375b737e794cc8fce800ff013a85828630e307e1a5
+      target_id: 1c5ab1ff079ca339c703c09e5c23ad0b9c3804a4074dd00001cc501afdffb6dd
+      type: e674a15b699bb86881f50c8622cdb4fa4f6944148492546d1111bb5ee7ad0e39
+    context:
+      format: semantic-sha256-v1
+      target: d63f9a55ac9d1873b9a3d4dd4c9a9294a93b01237d89edae3f424e3041d95d48
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U826-D01.g-TO-accounting-data-provision: d32f16df8e1f56f2e578ec8a6809edc61b7e3163905e407dc44ac1314d5418de
+        REL-U826-domain-finance: dc4dd7d23707b24215a6513cfb0901b8efd6f2c56bfbe9c2bd8f63785708a6ae
+        REL-U826-inventory-ownership-ledger-TO-accounting-data-provision: 0c34f53e1e42123bb3ffe43d32f347dd00d751d4018a50b8b21661f63fd2f381
+        REL-U826-subdomain-financial-accounting: 4564b8a3fcd833dabfe53aaa07853a1e3db9af4e1e2f627b538b04d15613442e
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U848-PARENT-D01.g: 41bf3dc4d862418d7a3abf676956dc90c278a7b21cd375c2fe8c9af8f5285acd
+        REL-U848-PARENT-accounting-data-provision: 2b3369bc5d16a48c2f82509bf9c0219c5e999f380cee9f4a958e59c4fd8b9cca
+        REL-U848-PARENT-ba-inventory-ownership-management: f5fbb687f87633a83be82ed8046a8d5d1ff183919a4233b6a73e89e448ead17c
+        REL-U848-PARENT-ba-inventory-position-management: ff64cd9dd84641682736159dc35a36892f320a292ab25025dce12421dc3d6c8b
+        REL-U848-PARENT-ba-outbound-information-provision: d700e4f9f32af63a5597fd2a691125d29ef3b5f297360c1e0400723e6625354f
+        REL-U848-PARENT-inventory-ownership-ledger: 1ff6bfab142889ae257cbc574c679b3b3cff91f7f1e3395f38da50ee55a85c6f
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U912-UNIVERSE-system-enterprise-management-control: 89a32a089ad5ce635d8ad660c61bad056f0acac7a473eac62a7f5d42d3978c84
+        REL-U981-accounting-facts: a670d6e6f4d927827b7eba51db782eb3fe5ddc227019bee3e2691e465fe9c6b8
+        REL-U996-commercial-benefit-conditions: 2da0159a10922667b8f7e1fd57b92171f95a7851d13226c14837150af987c0fa
+        REL-U996-commercial-settlement-results: fe1b8c60f5716fb315a37ae7fe64f099deac4f81d52f93f9adc6ba88868e59d7
+        REL-U996-eligible-supply-facts: d63f9a55ac9d1873b9a3d4dd4c9a9294a93b01237d89edae3f424e3041d95d48
+        REL-U996-subdomain-commercial-settlement-management: d9a23e584caa8b800e7bfdf6b964a69e17e8cce65fb7c15895b775de5ca237ee
+        REL-U996-subdomain-rebates-incentives-management: 98475a98a80f015e50b3692e60661dfa20b27b9d31a670f0641d3bd031146580
+        REL-UNIVERSE-SUPPLY-D01: a8638c76de32bb8d785edae075cc0695a8b5018ba35e97c757b3fb2948b04076
+        REL-UNIVERSE-SUPPLY-D04: 14e88a5905c33eeafccfab665867f8fe3f6cd2d479c2958e11b64777bf011977
+      related_nodes:
+        D01: e432caf10ef8cb7b079a72afcf7d15579dacce4b656599a63266700e8b735c62
+        D01.g: d094f8fed3e9496b11259cee01b04f31019e5b85add6c87363e053416e2ae2f1
+        D04: 79f8670aa65cf090d37fa9160e29bb5f5e3a4462acfb17535ecc99d3f180b243
+        accounting-data-provision: 55d2f5a47205811393b39452925a47ff7451bf4b11453907a4f736e19022b9b0
+        ba-inventory-ownership-management: f8e32c575c953a99081df84358eff295d5f1599a6b8207a51a017c5bbebbcfe1
+        ba-inventory-position-management: 6a61ab119efd520fd8a3f2f43028d0aad15dc231590b42a1dd059c058bba37a9
+        ba-outbound-information-provision: 32044c41525207099b90ad48777d44684a7c4c2492ac525e5489f6c5154f555e
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-finance: b58536aa20de5c761009c4a99d560bd8826c6ef9a3837cbf06e48c01b68c939b
+        domain-sales: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+        inventory-ownership-ledger: bbc934d099217d25a75f61ae8342ab18fac39f4cdda860daf63c6487004814c8
+        subdomain-commercial-settlement-management: 49bff5643df7c309eb11f89d09e26c0ad2e190503cb2bc104f11fa947768595e
+        subdomain-financial-accounting: 60f195e2b9cbd7aa534a086882abbce560e1eff8eed7773bc988977af1d2bc86
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        subdomain-rebates-incentives-management: c9457a848a8bd284f5ecdfd819fd3b174f44efe4ad1d2cc754abb75f8a31f406
+        supply-chain-orchestration: 41c87f042022884b8555ace176e46b457aeaffe68bffec61fb454802c6e4e66d
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+        system-enterprise-management-control: 08cde7829aa1d9249e971bef1b6c5da10c4e0ac0bffebabab2e8914850cd9010
+    context_sha256: 29f380d8ce74541b331bb211227e9d47a57b8d1b9b5386f068afd3d75a998c64
+- id: U996-REL-U996-commercial-settlement-results
+  author: Laurent
+  decided_at: '2026-10-12'
+  recorded_at: '2026-10-12'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U996
+  note: Validation du lot complet U990–U995 CMP317/CMP318. Noms, responsabilités et rattachements retenus ; descriptions détaillées
+    et charges utiles rédigées ensuite restent proposées. Aucune réalisation installée ni publication approuvée par cet accord.
+  target:
+    collection: relations
+    id: REL-U996-commercial-settlement-results
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: subdomain-commercial-settlement-management
+      target_id: D04
+      type: shares-data
+    value_sha256:
+      source_id: 1c5ab1ff079ca339c703c09e5c23ad0b9c3804a4074dd00001cc501afdffb6dd
+      target_id: 0096bde465541109b5bce54d49a5c56a6b5a8c77c79d7ed9d49996276ee29b00
+      type: e674a15b699bb86881f50c8622cdb4fa4f6944148492546d1111bb5ee7ad0e39
+    context:
+      format: semantic-sha256-v1
+      target: fe1b8c60f5716fb315a37ae7fe64f099deac4f81d52f93f9adc6ba88868e59d7
+      principles: db5a1a9abc6128153166dcaf2d2acbbfbabb878ec86882423ef146191e929664
+      glossary: 4f6a3b40a17fed20a6c4cd05ca0185835f7b00ea05a3432694e312a88a7d7cd6
+      incident_relations:
+        REL-EXECUTION-PROMISING: b057a6ea2e41910e52187b493703d8145d2e75df9593a81163c31a80989175bf
+        REL-U673-ORDER-MATCHING: f33ee42c999de5ef86ecfbc27083ebbec6a9a4ee9cf766b5bd8efbcd522793d1
+        REL-U673-PROMISING-ORDER: c67d9dc010a5a934576808e73fdad808916157cf929c857bd64b1ea06c23f86b
+        REL-U682-PRESENTS-SERVICE-ORDERS: a02703567b7e7b6514adc3aa63c20e7254665283cbd1147dde8a722709b862a9
+        REL-U711-SERVICE-ORDERS-ORDERS: ea790154d4783b02198a2780653db002dff3f243614ea8f166ae3f2d46251dfa
+        REL-U725-EXECUTION-AUTHORIZATIONS: 9d5e9c937aec2eb44b7f2af6e6120071dec31439efc9c494bc5bee47993fc0fa
+        REL-U780-OPERATIONS-domain-sales: 1f3470a589a21cd2fd2c9546b3d132ba29a077b2e48fef8c1820b4c90be4f782
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U826-domain-finance: dc4dd7d23707b24215a6513cfb0901b8efd6f2c56bfbe9c2bd8f63785708a6ae
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U835-D03-D04: e671808f6275c5f6eb6948b7acd2acd1a4958a6fd03b748d98476611a572ad0a
+        REL-U848-PARENT-accounting-data-provision: 2b3369bc5d16a48c2f82509bf9c0219c5e999f380cee9f4a958e59c4fd8b9cca
+        REL-U848-PARENT-ba-order-lifecycle-management: aab46321c6925cc6d25264849b75f20e6f285de3fc2e8f8b7846f56185be9fae
+        REL-U848-PARENT-ba-outbound-information-provision: d700e4f9f32af63a5597fd2a691125d29ef3b5f297360c1e0400723e6625354f
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-U912-UNIVERSE-system-enterprise-management-control: 89a32a089ad5ce635d8ad660c61bad056f0acac7a473eac62a7f5d42d3978c84
+        REL-U996-commercial-benefit-conditions: 2da0159a10922667b8f7e1fd57b92171f95a7851d13226c14837150af987c0fa
+        REL-U996-commercial-settlement-results: fe1b8c60f5716fb315a37ae7fe64f099deac4f81d52f93f9adc6ba88868e59d7
+        REL-U996-contextual-prices: 557573c7213b8d7ca20bec57f570189c1ef07e54e0489f69944935675db44685
+        REL-U996-eligible-supply-facts: d63f9a55ac9d1873b9a3d4dd4c9a9294a93b01237d89edae3f424e3041d95d48
+        REL-U996-subdomain-commercial-settlement-management: d9a23e584caa8b800e7bfdf6b964a69e17e8cce65fb7c15895b775de5ca237ee
+        REL-U996-subdomain-pricing-promotions-management: 8d68a07949648d475d9d66ed2a7534a08e3ac208f065249473a15eab8f79eb86
+        REL-U996-subdomain-rebates-incentives-management: 98475a98a80f015e50b3692e60661dfa20b27b9d31a670f0641d3bd031146580
+        REL-UNIVERSE-SUPPLY-D01: a8638c76de32bb8d785edae075cc0695a8b5018ba35e97c757b3fb2948b04076
+        REL-UNIVERSE-SUPPLY-D03: d1bc4c0258dff4689610b4b5e8b3b618a2b1cdf7c32d6f10dca4979aef94b94e
+        REL-UNIVERSE-SUPPLY-D04: 14e88a5905c33eeafccfab665867f8fe3f6cd2d479c2958e11b64777bf011977
+        REL-UNIVERSE-SUPPLY-D06: a0fc02f7e8d45fc4a4d2a15014a0b11c0f0526b4760e95cf4f6c455d3ff0ea83
+      related_nodes:
+        D01: e432caf10ef8cb7b079a72afcf7d15579dacce4b656599a63266700e8b735c62
+        D03: a74e31afca957f9eb9be50304804c34b30271eabb5b5aa0c85595f215804d420
+        D04: 79f8670aa65cf090d37fa9160e29bb5f5e3a4462acfb17535ecc99d3f180b243
+        D06: b4077305f5819bb31d90a65de740015029cfe2ac1d98a4721434e594c12c0021
+        accounting-data-provision: 55d2f5a47205811393b39452925a47ff7451bf4b11453907a4f736e19022b9b0
+        ba-order-lifecycle-management: eac85b9501a96677a79da188fc5e0f2a5af97d98f1915adec309b50188292972
+        ba-outbound-information-provision: 32044c41525207099b90ad48777d44684a7c4c2492ac525e5489f6c5154f555e
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-finance: b58536aa20de5c761009c4a99d560bd8826c6ef9a3837cbf06e48c01b68c939b
+        domain-sales: bee713861c4365d54af62fccd1ad2a388d575fda2797a44aa8d1f2184b87ea16
+        subdomain-commercial-settlement-management: 49bff5643df7c309eb11f89d09e26c0ad2e190503cb2bc104f11fa947768595e
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        subdomain-pricing-promotions-management: e35635c50439995d563ae9c9e7fe89c76e4d1560d476b920c5f872ec2a640fde
+        subdomain-rebates-incentives-management: c9457a848a8bd284f5ecdfd819fd3b174f44efe4ad1d2cc754abb75f8a31f406
+        subdomain-service-orders: e526dc60c594cab76ca2f1ad692b8f20cb22ef1f8e98406252e807418ed14010
+        supply-chain-orchestration: 41c87f042022884b8555ace176e46b457aeaffe68bffec61fb454802c6e4e66d
+        system-business-operations: 827526e6bd2ea305beff0222914822d27b3fd71bd3bbf001335dd9d340e86f7b
+        system-enterprise-management-control: 08cde7829aa1d9249e971bef1b6c5da10c4e0ac0bffebabab2e8914850cd9010
+    context_sha256: d51b452b43862fa9ed11d1389be33eec159c7de6a475eb2417913f08c9ccb294
 suspensions: []

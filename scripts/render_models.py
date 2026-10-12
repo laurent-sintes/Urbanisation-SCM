@@ -188,6 +188,17 @@ def render(model, label):
             inspiration = term.get('market_inspiration')
             lines += [f"## Sources d’inspiration — {term['name']}", '']
             lines += inspiration_lines(inspiration, entries, term['name']) if inspiration else market_lines(entries)
+    exchanges = [r for r in model['relations'] if r['type'] == 'shares-data']
+    if exchanges:
+        lines += ['## Partages de données métier', '',
+                  '| Relation | Producteur → destinataire | Contenu | Finalité |',
+                  '| --- | --- | --- | --- |']
+        for relation in exchanges:
+            data = relation['fields']['data_exchange']
+            names = nodes[relation['source_id']]['fields']['name'] + ' → ' + nodes[relation['target_id']]['fields']['name']
+            descriptions = ' ; '.join(content['description'] for content in data['contents'])
+            lines.append('| ' + ' | '.join(cell(value) for value in [relation['id'], names, descriptions, data['purpose']]) + ' |')
+        lines += ['']
     catalogue = model.get('information_catalog')
     if catalogue:
         lines += ['## Informations métier', '', 'Vue transversale des informations utiles aux capacités ; aucune structure de données implémentable prescrite.', '']

@@ -40,6 +40,29 @@ test('system positions follow persistent identities without mutating the publish
   assert.equal(systemMapSlots(ids.slice(1)), undefined);
 });
 
+test('Logistics is a separate system directly below Business Operations in the four-system map', () => {
+  const ids = [
+    'domain-logistics-execution',
+    'system-enterprise-management-control',
+    'system-business-operations',
+    'system-design-development',
+  ];
+  const original = [...ids];
+  const slots = systemMapSlots(ids);
+  assert.deepEqual(
+    slots.map((slot) => [ids[slot.index], slot.row, slot.column, slot.span]),
+    [
+      ['system-design-development', 0, 0, 1],
+      ['system-business-operations', 0, 1, 1],
+      ['system-enterprise-management-control', 0, 2, 1],
+      ['domain-logistics-execution', 1, 1, 1],
+    ],
+  );
+  assert.deepEqual(ids, original);
+  assert.equal(systemMapSlots([...ids, 'another-system']), undefined);
+  assert.equal(systemMapSlots(ids.slice(0, 3)), undefined);
+});
+
 test('Business Operations keeps four rows in every framing mode and canvas size', () => {
   const slots = operationsMapSlots('system-business-operations', domains);
   for (const width of [320, 768, 1100, 1800]) {

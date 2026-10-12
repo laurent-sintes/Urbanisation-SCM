@@ -355,6 +355,7 @@ export interface AtlasRelation {
   readonly label: string;
   readonly qualification: Readonly<Qualification>;
   readonly fields: Readonly<JsonRecord>;
+  readonly dataExchange?: DataExchange;
   readonly review: Readonly<Review>;
   readonly lifecycle?: Readonly<Lifecycle>;
   readonly status: string;
@@ -365,6 +366,14 @@ export interface AtlasRelation {
   readonly sourceRefs: readonly string[];
   readonly sourceLocator?: Readonly<SourceLocator>;
   readonly raw: Readonly<RawRelation>;
+}
+export interface DataExchange {
+  readonly contents: readonly {
+    readonly name: string;
+    readonly description: string;
+    readonly glossary_refs: readonly string[];
+  }[];
+  readonly purpose: string;
 }
 export interface PublishedModel {
   readonly hasInformationCatalogue: boolean;

@@ -10,11 +10,16 @@ const dist = path.join(root, 'dist');
 const output = path.join(root, '.runtime/qa-map-placement');
 await mkdir(output, { recursive: true });
 const catalog = JSON.parse(await readFile(path.join(dist, 'data/index.json'), 'utf8'));
-const model = JSON.parse(await readFile(path.join(dist, `data/${catalog.current_version}/model.json`), 'utf8'));
+const version = process.argv.find((arg) => arg.startsWith('--version='))?.slice(10) || catalog.current_version;
+const model = JSON.parse(await readFile(path.join(dist, `data/${version}/model.json`), 'utf8'));
 const systemId = 'system-business-operations';
 const domainId = 'supply-chain-orchestration';
 const systems = ['system-design-development', systemId, 'system-enterprise-management-control'];
-const domains = ['domain-plan', 'domain-sourcing-procurement', 'domain-sales', domainId, 'domain-logistics-execution'];
+const logisticsId = 'domain-logistics-execution';
+const logisticsSystem = model.nodes.find((node) => node.id === logisticsId)?.kind === 'business_system';
+if (logisticsSystem) systems.push(logisticsId);
+const domains = ['domain-plan', 'domain-sourcing-procurement', 'domain-sales', domainId];
+if (!logisticsSystem) domains.push(logisticsId);
 assert.ok([...systems, ...domains].every((id) => model.nodes.some((node) => node.id === id)));
 const base = 'https://atlas.test/Urbanisation-SCM/';
 const browser = await chromium.launch(browserOptions);
@@ -65,11 +70,11 @@ try {
           Math.abs(sourcing.top - sales.top) < 1 &&
           sourcing.right <= sales.left + 1 &&
           Math.max(sourcing.bottom, sales.bottom) <= orchestration.top + 1 &&
-          orchestration.bottom <= logistics.top + 1 &&
+          (!logistics || orchestration.bottom <= logistics.top + 1) &&
           Math.abs(plan.left - sourcing.left) < 1 &&
           Math.abs(plan.right - sales.right) < 1 &&
           Math.abs(orchestration.left - plan.left) < 1 &&
-          Math.abs(logistics.right - plan.right) < 1
+          (!logistics || Math.abs(logistics.right - plan.right) < 1)
         );
       },
       { ids: domains, overview, systemId },
@@ -81,18 +86,27 @@ try {
     for (const depth of [0, 1, 2]) {
       await visit({ mapDepth: String(depth) });
       await page.locator('.urbanisation-overview[data-layout="fixed"]').waitFor();
-      const boxes = await page.locator('.overview-system').evaluateAll((items) =>
-        items.map((item) => {
-          const box = item.getBoundingClientRect();
-          return { id: item.dataset.nodeId, x: box.left, y: box.top, right: box.right };
-        }),
+      const boxes = await page.locator('.overview-system').evaluateAll(
+        (items, ids) =>
+          ids.map((id) => {
+            const item = items.find((element) => element.dataset.nodeId === id);
+            const box = item.getBoundingClientRect();
+            return { id: item.dataset.nodeId, x: box.left, y: box.top, right: box.right, bottom: box.bottom };
+          }),
+        systems,
       );
       assert.deepEqual(
         boxes.map((box) => box.id),
         systems,
       );
       assert.ok(boxes[0].right < boxes[1].x && boxes[1].right < boxes[2].x);
-      assert.ok(boxes.every((box) => Math.abs(box.y - boxes[0].y) < 1));
+      assert.ok(boxes.slice(0, 3).every((box) => Math.abs(box.y - boxes[0].y) < 1));
+      if (logisticsSystem) {
+        assert.ok(boxes[3].y > boxes[1].bottom);
+        assert.ok(boxes[3].y - boxes[1].bottom < 150, 'Logistics is docked to Business Operations');
+        assert.ok(Math.abs(boxes[3].x - boxes[1].x) < 1);
+        assert.ok(Math.abs(boxes[3].right - boxes[1].right) < 1);
+      }
       if (depth > 0) await checkRows(true);
       await noPageOverflow();
       if (width === 320) {
@@ -135,10 +149,17 @@ try {
       }
     }
   }
-  await visit({ node: systemId, scope: systemId, mapDepth: '0' });
-  await page.locator('.business-card[data-node-id="domain-logistics-execution"]').scrollIntoViewIfNeeded();
-  const logisticsBox = await page.locator('.business-card[data-node-id="domain-logistics-execution"]').boundingBox();
-  assert.ok(logisticsBox && logisticsBox.y >= 0 && logisticsBox.y + logisticsBox.height <= 1000);
+  const logisticsScope = logisticsSystem ? logisticsId : systemId;
+  await visit({ node: logisticsScope, scope: logisticsScope, mapDepth: '0' });
+  if (logisticsSystem) {
+    await page.locator('.business-card[data-node-id="domain-warehousing"]').waitFor();
+    await page.locator('.business-card[data-node-id="domain-transportation"]').waitFor();
+    assert.equal(await page.locator('.business-card[data-node-id="supply-chain-orchestration"]').count(), 0);
+  } else {
+    await page.locator('.business-card[data-node-id="domain-logistics-execution"]').scrollIntoViewIfNeeded();
+    const logisticsBox = await page.locator('.business-card[data-node-id="domain-logistics-execution"]').boundingBox();
+    assert.ok(logisticsBox && logisticsBox.y >= 0 && logisticsBox.y + logisticsBox.height <= 1000);
+  }
   checks++;
   // Give the complete four-row map enough height for an uncropped review capture.
   await page.setViewportSize({ width: 1440, height: 1800 });

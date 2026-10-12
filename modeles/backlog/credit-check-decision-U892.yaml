@@ -230,10 +230,10 @@ publication_delivery:
     field_sha256:
       definition: be5b55964061f635cefd74790f122b12bd4ef9e21ebf95daa7445bea67d583f2
       finality: b4d51ece93b62b52d8fc48a10386c25125978e76f9fb7e734908b510bef82643
-      scope: a4282c42fd9c8158fe3fe7abcb18e0ed7520cbc12a964f169a12ee6809a59cd1
+      scope: 9cd8130c3366b92e42f720f3940b21e6fd5b9591780d1b28de12a577e9fb5460
       market_comparisons: a27672b632eef92f68bc84c8a92c7515df1f94db8240a514cf628d3a407a8249
       nature: 6b6fdce2c6f9762666c2e6dd00b3a89831d3b2f9ec0bfa4054bf88fa9b45fad6
-      market_inspiration: 0cc7b2dfdfbd89ac10a84542abb9590f602ce616d229c23a1a589560374e70b3
+      market_inspiration: a4be516e26a95ecb7fdb3365ca574c4e34a8d9bf05b181782d10a408138a01f6
     parent: ba-order-lifecycle-management
     parent_type: contains
   - id: D04
@@ -243,9 +243,9 @@ publication_delivery:
     field_sha256:
       definition: eb34b6f9e60caee2787e3eccbb45de756edd5038f141cc62448d333d6d1c87ae
       finality: d9af5441aacd1cf6acd5f0b871fb86776ee6e0e32aa326e9935d0ee8736c2b69
-      scope: 53f53837677c4c16ba928355dbe5397185ddac5f391b6e489289177ea5574dea
-      market_comparisons: 0bc573070a0ebb15b60fd519cfdc4c89ab3377a1af77850a3863e85dd16b5565
-      market_inspiration: 59c5666cd72ef14114aafbefff27eb6e09401c01e95bd43fbe602329bafb2940
+      scope: dff5e20324e1f6c543243ba92c9b899ec83c892c9df0539223ea9029a87a0b64
+      market_comparisons: be25bd7f0445e75bf3209789295ed1ddb24eb5be0ba9d120af11be3294627b31
+      market_inspiration: 1d40917b37cf4913f3567cb23b1d9b8f460ed62d1b32f3a200ff20599a93824a
     parent: supply-chain-orchestration
     parent_type: presents
   - id: order-workflow-orchestration
@@ -256,9 +256,9 @@ publication_delivery:
       definition: dae583cf0928df44b5f25a2835869cdb2aa537b429ff935b938b02c60d8b3cbe
       finality: de9047289c135b1ebd3d534a7dc990262288e1998f4de62589e9f727af30c4a1
       nature: 47b33d8bb8868bf6e76b20eb2067c099ac843e0847be6b0384f76dafe8175cea
-      scope: b2a754b590ee8c11d5ec4f2a66c34f908e60001b9193864738c7ab3acd51c010
+      scope: 31760e3b2d0a57d404360f13ac07fd452c08a55dd8da13d67f591d8d49886f73
       market_comparisons: 59a229ca8edca5bc71dd4d4ee3757a8fbe4e1dd430d991affd094043fb3852e8
-      market_inspiration: 939a5b58378f67bbce2087324446428afce5943c2a19ae7d3568b336aa788ceb
+      market_inspiration: 2dfebb86ba35c24730954a8ad81fc49fd1012d72645c4cfb67489a8aae0ed6a2
     parent: ba-reactive-workflow-management
     parent_type: contains
   - id: ba-order-lifecycle-management
@@ -268,7 +268,7 @@ publication_delivery:
     field_sha256:
       definition: e45be25d98e2dab3d53927756ca8470f4901c1df61f852d732c7e98bebb9d048
       finality: 3ee980e2c9de6389488ed11ad3244c7547083cae64238075ab79868fa21703a4
-      scope: 18366d33d673f9c0f966b3425d5737e710f3915f89ba615a9404a534a8c496cd
+      scope: 082ff574a7fdcc5979fa4402a7f680858d3aebd68517932bfaf639fa4b9cb70d
       market_comparisons: 0c4493e10214b2d88cd37ea5a93fe854255413c9b0c6f2e800801b4ed0e5ba59
     parent: D04
     parent_type: contains
@@ -286,7 +286,7 @@ publication_delivery:
   required_catalog:
   - collection: scenarios
     id: customer-credit-hold
-    content_sha256: 2d7eaa632b2aba94d28c219fa719f61ca9df28eae47352e563333e690012ca4c
+    content_sha256: bfb6c1c501b86ef03ef4114c5eab7d5b92e639368227442f9354976a6716e8c1
   - collection: paths
     id: customer-credit-hold-path
     content_sha256: e5055e559ba98012ef79a0dfd77fcf1b7ce85115e432837d47576c04a3a7a397
@@ -934,3 +934,82 @@ delivery_reconciliation_U909:
     check: field_sha256.market_inspiration
     previous_sha256: edce1e8ea4eaa0db151cc88be7e4eea4808bc4a7286f789ea2ba8ec1821299f0
     current_sha256: 59c5666cd72ef14114aafbefff27eb6e09401c01e95bd43fbe602329bafb2940
+delivery_reconciliation_U987:
+  source_refs:
+  - U987
+  reason: Noms et frontières Commerce/Retail adoptés ; attentes antérieures conservées ci-dessous. Ne réapprouve pas les anciennes
+    descriptions ni correspondances.
+  previous_requirements:
+  - id: D04.i
+    kind: capability
+    fields:
+      name: Sales Order
+    field_sha256:
+      definition: be5b55964061f635cefd74790f122b12bd4ef9e21ebf95daa7445bea67d583f2
+      finality: b4d51ece93b62b52d8fc48a10386c25125978e76f9fb7e734908b510bef82643
+      scope: a4282c42fd9c8158fe3fe7abcb18e0ed7520cbc12a964f169a12ee6809a59cd1
+      market_comparisons: a27672b632eef92f68bc84c8a92c7515df1f94db8240a514cf628d3a407a8249
+      nature: 6b6fdce2c6f9762666c2e6dd00b3a89831d3b2f9ec0bfa4054bf88fa9b45fad6
+      market_inspiration: 0cc7b2dfdfbd89ac10a84542abb9590f602ce616d229c23a1a589560374e70b3
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+  - id: D04
+    kind: area
+    fields:
+      name: Order Management
+    field_sha256:
+      definition: eb34b6f9e60caee2787e3eccbb45de756edd5038f141cc62448d333d6d1c87ae
+      finality: d9af5441aacd1cf6acd5f0b871fb86776ee6e0e32aa326e9935d0ee8736c2b69
+      scope: 53f53837677c4c16ba928355dbe5397185ddac5f391b6e489289177ea5574dea
+      market_comparisons: 0bc573070a0ebb15b60fd519cfdc4c89ab3377a1af77850a3863e85dd16b5565
+      market_inspiration: 59c5666cd72ef14114aafbefff27eb6e09401c01e95bd43fbe602329bafb2940
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: order-workflow-orchestration
+    kind: capability
+    fields:
+      name: Process Orchestration
+    field_sha256:
+      definition: dae583cf0928df44b5f25a2835869cdb2aa537b429ff935b938b02c60d8b3cbe
+      finality: de9047289c135b1ebd3d534a7dc990262288e1998f4de62589e9f727af30c4a1
+      nature: 47b33d8bb8868bf6e76b20eb2067c099ac843e0847be6b0384f76dafe8175cea
+      scope: b2a754b590ee8c11d5ec4f2a66c34f908e60001b9193864738c7ab3acd51c010
+      market_comparisons: 59a229ca8edca5bc71dd4d4ee3757a8fbe4e1dd430d991affd094043fb3852e8
+      market_inspiration: 939a5b58378f67bbce2087324446428afce5943c2a19ae7d3568b336aa788ceb
+    parent: ba-reactive-workflow-management
+    parent_type: contains
+  - id: ba-order-lifecycle-management
+    kind: business_area
+    fields:
+      name: Order Lifecycle Management
+    field_sha256:
+      definition: e45be25d98e2dab3d53927756ca8470f4901c1df61f852d732c7e98bebb9d048
+      finality: 3ee980e2c9de6389488ed11ad3244c7547083cae64238075ab79868fa21703a4
+      scope: 18366d33d673f9c0f966b3425d5737e710f3915f89ba615a9404a534a8c496cd
+      market_comparisons: 0c4493e10214b2d88cd37ea5a93fe854255413c9b0c6f2e800801b4ed0e5ba59
+    parent: D04
+    parent_type: contains
+  previous_glossary_catalog_checks:
+  - collection: scenarios
+    previous_requirement:
+      collection: scenarios
+      id: customer-credit-hold
+      content_sha256: 2d7eaa632b2aba94d28c219fa719f61ca9df28eae47352e563333e690012ca4c
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: D04
+    kind: area
+    fields:
+      name: Order Management
+    field_sha256:
+      definition: eb34b6f9e60caee2787e3eccbb45de756edd5038f141cc62448d333d6d1c87ae
+      finality: d9af5441aacd1cf6acd5f0b871fb86776ee6e0e32aa326e9935d0ee8736c2b69
+      scope: 147af7f1e6e28dcfccec0ba5398d92ed09cd5ed922471c38df2415876e4392b0
+      market_comparisons: 0bc573070a0ebb15b60fd519cfdc4c89ab3377a1af77850a3863e85dd16b5565
+      market_inspiration: 1d40917b37cf4913f3567cb23b1d9b8f460ed62d1b32f3a200ff20599a93824a
+    parent: supply-chain-orchestration
+    parent_type: presents

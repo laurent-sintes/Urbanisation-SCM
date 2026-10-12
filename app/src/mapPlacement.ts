@@ -21,8 +21,14 @@ const operationsDomains: Record<string, Omit<MapSlot, 'index'>> = {
 };
 
 export function systemMapSlots(ids: readonly string[]): MapSlot[] | undefined {
-  if (ids.length !== systems.length || !systems.every((id) => ids.includes(id))) return undefined;
-  return systems.map((id, column) => ({ index: ids.indexOf(id), row: 0, column, span: 1 }));
+  const logisticsId = 'domain-logistics-execution';
+  const hasLogistics = ids.includes(logisticsId);
+  if (ids.length !== systems.length + Number(hasLogistics) || !systems.every((id) => ids.includes(id)))
+    return undefined;
+  const slots = systems.map((id, column) => ({ index: ids.indexOf(id), row: 0, column, span: 1 }));
+  // Logistics keeps its persistent identity when promoted from domain to system.
+  if (hasLogistics) slots.push({ index: ids.indexOf(logisticsId), row: 1, column: 1, span: 1 });
+  return slots;
 }
 
 /** Absent published domains stay absent; unrecognized children remain visible below the known rows. */

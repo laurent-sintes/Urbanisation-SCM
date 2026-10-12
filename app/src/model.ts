@@ -1,5 +1,6 @@
 import { sortCapabilitiesByType } from './capabilityTypes.ts';
 import { categorySections } from './categories.ts';
+import { readDataExchange } from './dataSharing.ts';
 import { validateDisplayIndex } from './displayCodes.ts';
 import { resolveGlossaryTerm } from './glossary.ts';
 import { plainInlineText } from './inlineLinks.ts';
@@ -174,6 +175,7 @@ export function adaptPublication(input: RawPublication): PublishedModel {
       label: textField(relation.fields?.label) || textField(relation.fields?.verb) || relation.type,
       qualification: relation.qualification ?? {},
       fields: relation.fields ?? {},
+      dataExchange: readDataExchange(relation, new Set(raw.glossary?.terms.map((term) => term.id) || [])),
       review: relation.review ?? {},
       lifecycle: relation.lifecycle,
       status: relation.review?.state ?? 'unknown',

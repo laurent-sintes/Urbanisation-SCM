@@ -2224,6 +2224,8 @@ publication_delivery:
         [Service Selection Decision](model:D06.e) choisit les prestations et prestataires admissibles en articulation avec le plan. [Transport Order](model:service-order-transport) porte les instructions et engagements de transport ; [Transport Booking Order](model:service-order-transport-booking) porte les réservations de transport confiées. [Service Order Release Decision](model:service-order-release-decision) décide quand libérer les ordres : une rétention d’ordres ne constitue pas à elle seule un plan de chargement ou de route.
 
         L’exécutant réalise les opérations et ses tâches internes. La capacité ne prescrit ni placement physique en trois dimensions, ni conduite, ni optimisation des tournées internes du transporteur qui ne sont pas confiées à l’orchestration. Exemple fictif : répartir les palettes destinées à six magasins entre deux chargements, puis retenir les arrêts et horaires compatibles avec leurs réceptions.
+
+        Le mandat doit préciser les groupements, trajets, arrêts ou échéances effectivement confiés à l’orchestration. [Transport Planning & Dispatch](model:subdomain-transport-planning-dispatch) construit le plan local des moyens et opérations dans son propre mandat et communique possibilités, confirmations et écarts. Ne pas reconstruire deux fois le même plan : les contraintes de l’orchestration, le résultat local et les adaptations autorisées sont reliés. Aucun outil ou calculateur installé attribué par cette frontière.
       nature: decision
     parent_id: D06
   - id: transport-load-consolidation
@@ -2647,3 +2649,24 @@ delivery_reconciliation_U909:
     check: fields.scope
     previous_sha256: 5c23140657a9c1d1c1b791dbd29feae2e9f59493e3b1bd711ffeea173670a922
     current_sha256: e86569a1c05ec5626bb5e02128c650bc2957c4162119b7458994d369f0a461a5
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: transport-plan-decision
+    fields:
+      name: Transport Plan Decision
+      definition: Construire et réviser un plan de transport qui regroupe les marchandises en chargements et détermine leurs
+        trajets, arrêts et échéances compatibles avec les engagements.
+      scope: |-
+        Construire le [plan de transport](glossary:TER103) pour organiser les transports confiés en un ensemble réalisable : [Load Consolidation](model:transport-load-consolidation) constitue les chargements ; [Routing & Scheduling](model:transport-routing-scheduling) en détermine les trajets et échéances. Les deux stratégies peuvent s’articuler et être réexaminées sans séquence universelle imposée. Le plan rend explicites les capacités, compatibilités, créneaux et conditions restant à confirmer.
+
+        Préserver les promesses portées par les [Orders](glossary:TER012) et les affectations d’[Availability](glossary:TER112). Si aucune solution locale ne les respecte, faire examiner l’adaptation par les capacités responsables ; ne pas réaffecter implicitement la supply ni reconfirmer une commande. Ce plan de transport n’est ni le [Matching Master Plan](glossary:TER100) ni un [Supply Plan](glossary:TER098) prévisionnel externe.
+
+        [Service Selection Decision](model:D06.e) choisit les prestations et prestataires admissibles en articulation avec le plan. [Transport Order](model:service-order-transport) porte les instructions et engagements de transport ; [Transport Booking Order](model:service-order-transport-booking) porte les réservations de transport confiées. [Service Order Release Decision](model:service-order-release-decision) décide quand libérer les ordres : une rétention d’ordres ne constitue pas à elle seule un plan de chargement ou de route.
+
+        L’exécutant réalise les opérations et ses tâches internes. La capacité ne prescrit ni placement physique en trois dimensions, ni conduite, ni optimisation des tournées internes du transporteur qui ne sont pas confiées à l’orchestration. Exemple fictif : répartir les palettes destinées à six magasins entre deux chargements, puis retenir les arrêts et horaires compatibles avec leurs réceptions.
+      nature: decision
+    parent_id: D06

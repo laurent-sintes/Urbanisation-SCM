@@ -32,6 +32,7 @@ RELATION_ROLES = {
     'provides-conditions': 'interaction',
 }
 FIELD_MEANINGS = {
+    'relations.fields.data_exchange': 'Contenus métier typés et finalité du partage orienté ; références au glossaire de cette publication, sans protocole technique implicite.',
     'nodes': 'Objets de cette publication ; kind indique leur type.',
     'relations': 'Liens orientés entre objets ; source_id et target_id désignent des nodes.id.',
     'nodes.id': 'Identifiant persistant, distinct du nom et du code de lecture.',
@@ -53,6 +54,7 @@ FIELD_MEANINGS = {
 }
 
 RELATION_MEANINGS = {
+    'shares-data': 'Le producteur source partage les informations métier décrites dans fields.data_exchange avec le destinataire cible, sans restriction de niveau ni preuve d’interface installée.',
     'contains': 'Décomposition ou appartenance structurelle du parent vers l’enfant.',
     'presents': 'Présentation d’un objet sous un autre, sans créer une responsabilité métier supplémentaire.',
     'relates-to': 'Interaction métier qualifiée ; son sens précis est dans qualification.',
@@ -81,6 +83,9 @@ def _allowed_pairs(relation_type, kinds, principles):
         return [{'source_kind': source, 'target_kind': target}
                 for source, target in hierarchy[relation_type] if source in kinds and target in kinds]
     source_kinds, target_kinds = RELATION_KINDS[relation_type]
+    if relation_type == 'shares-data':
+        return [{'source_kind': source, 'target_kind': target}
+                for source in sorted(kinds) for target in sorted(kinds)]
     pairs = []
     for source in sorted(source_kinds & kinds):
         for target in sorted(target_kinds & kinds):
@@ -146,6 +151,8 @@ def _constraints(model):
     add('PRINCIPLE-REQUIRED-BUSINESS-AREA', 'capability-parent', 'capability',
         'Chaque capacité a exactement une Business Area par contains ; aucun rattachement direct au sous-domaine.',
         {'parent': {'min': 1, 'max': 1}})
+    add('PRINCIPLE-ORCHESTRATION-DETAIL', 'orchestration-detail-scope', 'business_area/capability/behavior',
+        'Seul Supply Chain Orchestration est détaillé en Business Areas, capacités et comportements ; les autres systèmes et domaines restent décrits jusqu’aux sous-domaines utiles.')
     add('PRINCIPLE-DIFFERENTIATING-BEHAVIORS', 'capability-behaviors', 'capability',
         'Une capacité possède zéro ou au moins deux comportements différenciants.',
         {'behavior_children': {'allowed': [0, '2..*']}})

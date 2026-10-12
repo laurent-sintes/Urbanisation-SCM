@@ -1027,9 +1027,9 @@ publication_delivery:
       finality: Rendre cohérents les besoins à couvrir et les ressources du réseau, puis montrer les affectations retenues
         et les besoins encore découverts.
       scope: |-
-        La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Control Plane](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
+        La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Supply Policy Management](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
 
-        Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Control Plane](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+        Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Supply Policy Management](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
 
         [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
 
@@ -1050,8 +1050,16 @@ publication_delivery:
         relationship: Recouvrement partiel
         similarities: Rapprocher les besoins et apports nécessaires.
         differences: Des ordres planifiés ne valent pas affectation ni engagement confirmé.
-        flow_position: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
-          de ressources.
+        flow_position: |-
+          La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Supply Policy Management](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
+
+          Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Supply Policy Management](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+
+          [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
+
+          [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles et [Logical Stock Configuration Optimization](model:ba-policy-optimization) les droits d’usage ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+
+          Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
         definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
           de ressources.
         term_choice: Demand / Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
@@ -1075,8 +1083,16 @@ publication_delivery:
         relationship: Recouvrement partiel
         similarities: Affecter les ressources aux demandes selon des priorités.
         differences: La Business Area FLOW englobe plusieurs décisions, pas uniquement la fonction d’affectation SAP.
-        flow_position: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
-          de ressources.
+        flow_position: |-
+          La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Supply Policy Management](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
+
+          Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Supply Policy Management](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+
+          [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
+
+          [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles et [Logical Stock Configuration Optimization](model:ba-policy-optimization) les droits d’usage ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+
+          Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
         definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
           de ressources.
         term_choice: Demand / Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
@@ -1096,7 +1112,16 @@ publication_delivery:
         similarities: SAP retail confronte besoins, stocks, seuils, sécurité et prévisions pour proposer les apports.
         differences: Le processus retail et MRP dépasse le périmètre FLOW ; ses calculs ne décident pas du placement ni de
           l’intégration d’IRMA.
-        flow_position: Distinguer choix des cibles, paramètres actifs, décision d’apports et application autorisée.
+        flow_position: |-
+          La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Supply Policy Management](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
+
+          Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Supply Policy Management](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+
+          [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
+
+          [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles et [Logical Stock Configuration Optimization](model:ba-policy-optimization) les droits d’usage ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+
+          Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
         scope_summary: SAP retail confronte besoins, stocks, seuils, sécurité et prévisions pour proposer les apports.
         approach_summary: Distinguer choix des cibles, paramètres actifs, décision d’apports et application autorisée.
         source_title: Performing Requirements Planning
@@ -1121,7 +1146,16 @@ publication_delivery:
         similarities: Dynamics calcule des besoins nets et applique des contraintes de quantité, dont des multiples de lot.
         differences: Les réglages de master planning ne définissent pas les capacités FLOW ; un calcul n’est pas un engagement
           de commande.
-        flow_position: Conserver besoins, ressources, contraintes, résultats et limites explicités dans les décisions de couverture.
+        flow_position: |-
+          La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Supply Policy Management](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
+
+          Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Supply Policy Management](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+
+          [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
+
+          [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles et [Logical Stock Configuration Optimization](model:ba-policy-optimization) les droits d’usage ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+
+          Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
         scope_summary: Dynamics calcule des besoins nets et applique des contraintes de quantité, dont des multiples de lot.
         approach_summary: Conserver besoins, ressources, contraintes, résultats et limites explicités dans les décisions de
           couverture.
@@ -1147,7 +1181,16 @@ publication_delivery:
         relationship: Recouvrement partiel
         similarities: Dynamics utilise priorités, stock projeté et apports pour répartir la couverture sous contraintes.
         differences: Ce mécanisme produit ne prouve ni une taxonomie universelle ni un scénario installé chez Beaumanoir.
-        flow_position: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
+        flow_position: |-
+          La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Supply Policy Management](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
+
+          Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Supply Policy Management](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+
+          [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
+
+          [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles et [Logical Stock Configuration Optimization](model:ba-policy-optimization) les droits d’usage ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+
+          Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
         scope_summary: Dynamics utilise priorités, stock projeté et apports pour répartir la couverture sous contraintes.
         approach_summary: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
         source_title: Priority-based planning
@@ -1169,7 +1212,7 @@ publication_delivery:
       scope: '[Logical Stock Protection Optimization](model:D05.d) recommande des enveloppes et limites d’usage par groupe.
         [Reservation Rule Optimization](model:D05.h) recommande dans quelles conditions une quantité peut être réservée pour
         une demande. Ces deux décisions concernent les droits d’usage du **même stock physique**, sans créer un second stock.
-        [Protection Policies](model:ba-protection-policies) présente les règles rendues applicables par [Control Plane](model:subdomain-policies)
+        [Protection Policies](model:ba-protection-policies) présente les règles rendues applicables par [Supply Policy Management](model:subdomain-policies)
         ; [Inventory State Management](model:ba-inventory-position-management) tient les quantités et réservations effectives.
         Exemple fictif : proposer une protection de 20 pièces pour le web et une règle de réservation au paiement, sans activer
         ces règles ni réserver une pièce.'
@@ -1188,12 +1231,17 @@ publication_delivery:
         similarities: Des quantités accessibles à des canaux ou groupes sont suivies sans constituer de stocks physiques séparés.
         differences: La source couvre aussi l’application et la consommation des allocations ; FLOW isole la recommandation
           des droits.
-        flow_position: FLOW recommande les droits de groupe ; Control Plane les rend applicables et Inventory tient les engagements
-          individuels.
+        flow_position: '[Logical Stock Protection Optimization](model:D05.d) recommande des enveloppes et limites d’usage
+          par groupe. [Reservation Rule Optimization](model:D05.h) recommande dans quelles conditions une quantité peut être
+          réservée pour une demande. Ces deux décisions concernent les droits d’usage du **même stock physique**, sans créer
+          un second stock. [Protection Policies](model:ba-protection-policies) présente les règles rendues applicables par
+          [Supply Policy Management](model:subdomain-policies) ; [Inventory State Management](model:ba-inventory-position-management)
+          tient les quantités et réservations effectives. Exemple fictif : proposer une protection de 20 pièces pour le web
+          et une règle de réservation au paiement, sans activer ces règles ni réserver une pièce.'
         term_choice: Logical Stock Configuration Optimization désigne le périmètre FLOW ; aucune taxonomie commune aux éditeurs
           n’est revendiquée.
-        definition_choice: FLOW recommande les droits de groupe ; Control Plane les rend applicables et Inventory tient les
-          engagements individuels.
+        definition_choice: FLOW recommande les droits de groupe ; Supply Policy Management les rend applicables et Inventory
+          tient les engagements individuels.
         scope_summary: Des quantités accessibles à des canaux ou groupes sont suivies sans constituer de stocks physiques
           séparés.
         approach_summary: La source couvre aussi l’application et la consommation des allocations ; FLOW isole la recommandation
@@ -1217,7 +1265,13 @@ publication_delivery:
         similarities: Des quantités sont protégées pour des groupes et prises en compte dans le contrôle de disponibilité.
         differences: Le document décrit la protection et son usage dans aATP, pas une optimisation autonome des règles de
           réservation.
-        flow_position: FLOW distingue les droits recommandés, les règles actives et les réservations individuelles.
+        flow_position: '[Logical Stock Protection Optimization](model:D05.d) recommande des enveloppes et limites d’usage
+          par groupe. [Reservation Rule Optimization](model:D05.h) recommande dans quelles conditions une quantité peut être
+          réservée pour une demande. Ces deux décisions concernent les droits d’usage du **même stock physique**, sans créer
+          un second stock. [Protection Policies](model:ba-protection-policies) présente les règles rendues applicables par
+          [Supply Policy Management](model:subdomain-policies) ; [Inventory State Management](model:ba-inventory-position-management)
+          tient les quantités et réservations effectives. Exemple fictif : proposer une protection de 20 pièces pour le web
+          et une règle de réservation au paiement, sans activer ces règles ni réserver une pièce.'
         term_choice: Logical Stock Configuration Optimization désigne le périmètre FLOW ; aucune taxonomie commune aux éditeurs
           n’est revendiquée.
         definition_choice: FLOW distingue les droits recommandés, les règles actives et les réservations individuelles.
@@ -1657,6 +1711,8 @@ publication_delivery:
         La comptabilité générale, la trésorerie et le recouvrement des impayés ne sont pas inclus par extension. Les autorités financières compétentes conservent leurs règles et contrôles.
 
         Exemple fictif : après une livraison, Billing obtient la facture correspondant aux éléments facturables ; Payment tient le résultat de l’encaissement. Un paiement refusé reste visible et conduit le workflow à traiter la suite autorisée.
+
+        Pour les avantages commerciaux autorisés, coordonner les demandes et résultats qui relèvent des services de FLOW sans déterminer le droit à prime. Le calcul et la régularisation restent dans [Commercial Settlement Management](model:subdomain-commercial-settlement-management). [Payment](model:service-order-payment-collection) demeure limité aux encaissements et remboursements clients ; aucun paiement fournisseur, agent ou salarié ajouté par extension.
       market_comparisons:
       - vendor: Microsoft
         product: Dynamics 365 Intelligent Order Management
@@ -1671,8 +1727,16 @@ publication_delivery:
         relationship: Recouvrement partiel
         similarities: Transmettre une demande au prestataire de facturation.
         differences: Ne démontre pas le cycle d’encaissement ni la maîtrise comptable, qui reste externe.
-        flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
-          leur progression et leurs résultats.
+        flow_position: |-
+          [Billing](glossary:TER153) et [Payment](glossary:TER154) sont des services portés par FLOW. Ils peuvent mobiliser des applications ou prestataires spécialisés sans devenir des commandes documentaires adressées à la logistique. Leur responsabilité métier est distincte de la réalisation technique.
+
+          Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+
+          La comptabilité générale, la trésorerie et le recouvrement des impayés ne sont pas inclus par extension. Les autorités financières compétentes conservent leurs règles et contrôles.
+
+          Exemple fictif : après une livraison, Billing obtient la facture correspondant aux éléments facturables ; Payment tient le résultat de l’encaissement. Un paiement refusé reste visible et conduit le workflow à traiter la suite autorisée.
+
+          Pour les avantages commerciaux autorisés, coordonner les demandes et résultats qui relèvent des services de FLOW sans déterminer le droit à prime. Le calcul et la régularisation restent dans [Commercial Settlement Management](model:subdomain-commercial-settlement-management). [Payment](model:service-order-payment-collection) demeure limité aux encaissements et remboursements clients ; aucun paiement fournisseur, agent ou salarié ajouté par extension.
         definition_choice: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
           leur progression et leurs résultats.
         term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence
@@ -1696,8 +1760,16 @@ publication_delivery:
           ou traitées pour produire les factures.'
         similarities: Des demandes de facturation externes sont intégrées puis regroupées ou traitées pour produire les factures.
         differences: Le pilotage FLOW reste distinct du moteur de facturation, de la comptabilisation et du recouvrement.
-        flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
-          leur progression et leurs résultats.
+        flow_position: |-
+          [Billing](glossary:TER153) et [Payment](glossary:TER154) sont des services portés par FLOW. Ils peuvent mobiliser des applications ou prestataires spécialisés sans devenir des commandes documentaires adressées à la logistique. Leur responsabilité métier est distincte de la réalisation technique.
+
+          Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+
+          La comptabilité générale, la trésorerie et le recouvrement des impayés ne sont pas inclus par extension. Les autorités financières compétentes conservent leurs règles et contrôles.
+
+          Exemple fictif : après une livraison, Billing obtient la facture correspondant aux éléments facturables ; Payment tient le résultat de l’encaissement. Un paiement refusé reste visible et conduit le workflow à traiter la suite autorisée.
+
+          Pour les avantages commerciaux autorisés, coordonner les demandes et résultats qui relèvent des services de FLOW sans déterminer le droit à prime. Le calcul et la régularisation restent dans [Commercial Settlement Management](model:subdomain-commercial-settlement-management). [Payment](model:service-order-payment-collection) demeure limité aux encaissements et remboursements clients ; aucun paiement fournisseur, agent ou salarié ajouté par extension.
         source_title: Describing Omnichannel Convergent Billing (1MC)
         source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sales-automation-and-analytics/describing-omnichannel-convergent-billing-1mc-_e8281711-58ac-4058-93e3-f9fb65eb4537
         source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -1728,8 +1800,16 @@ publication_delivery:
         similarities: La documentation distingue autorisation et capture du paiement, avec un statut retourné par le prestataire.
         differences: 'Limite explicite : un accusé de capture n’est pas toujours le résultat final asynchrone. Ce document
           ne prouve pas une notification complète de fin ; FLOW doit suivre ce résultat distant.'
-        flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
-          leur progression et leurs résultats.
+        flow_position: |-
+          [Billing](glossary:TER153) et [Payment](glossary:TER154) sont des services portés par FLOW. Ils peuvent mobiliser des applications ou prestataires spécialisés sans devenir des commandes documentaires adressées à la logistique. Leur responsabilité métier est distincte de la réalisation technique.
+
+          Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+
+          La comptabilité générale, la trésorerie et le recouvrement des impayés ne sont pas inclus par extension. Les autorités financières compétentes conservent leurs règles et contrôles.
+
+          Exemple fictif : après une livraison, Billing obtient la facture correspondant aux éléments facturables ; Payment tient le résultat de l’encaissement. Un paiement refusé reste visible et conduit le workflow à traiter la suite autorisée.
+
+          Pour les avantages commerciaux autorisés, coordonner les demandes et résultats qui relèvent des services de FLOW sans déterminer le droit à prime. Le calcul et la régularisation restent dans [Commercial Settlement Management](model:subdomain-commercial-settlement-management). [Payment](model:service-order-payment-collection) demeure limité aux encaissements et remboursements clients ; aucun paiement fournisseur, agent ou salarié ajouté par extension.
         source_title: Manage payment authorizations - Commerce | Dynamics 365 | Microsoft Learn
         source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/manage-payment-authorizations
         source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -1763,8 +1843,16 @@ publication_delivery:
           le statut.
         differences: Le prestataire réalise le paiement ; FLOW orchestre sa demande et son résultat sans absorber les responsabilités
           financières.
-        flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
-          leur progression et leurs résultats.
+        flow_position: |-
+          [Billing](glossary:TER153) et [Payment](glossary:TER154) sont des services portés par FLOW. Ils peuvent mobiliser des applications ou prestataires spécialisés sans devenir des commandes documentaires adressées à la logistique. Leur responsabilité métier est distincte de la réalisation technique.
+
+          Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+
+          La comptabilité générale, la trésorerie et le recouvrement des impayés ne sont pas inclus par extension. Les autorités financières compétentes conservent leurs règles et contrôles.
+
+          Exemple fictif : après une livraison, Billing obtient la facture correspondant aux éléments facturables ; Payment tient le résultat de l’encaissement. Un paiement refusé reste visible et conduit le workflow à traiter la suite autorisée.
+
+          Pour les avantages commerciaux autorisés, coordonner les demandes et résultats qui relèvent des services de FLOW sans déterminer le droit à prime. Le calcul et la régularisation restent dans [Commercial Settlement Management](model:subdomain-commercial-settlement-management). [Payment](model:service-order-payment-collection) demeure limité aux encaissements et remboursements clients ; aucun paiement fournisseur, agent ou salarié ajouté par extension.
         source_title: Explaining Digital Payments
         source_url: https://learning.sap.com/courses/configuring-additional-settings-in-financial-accounting-in-sap-s-4hana/explaining-digital-payments
         source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -2035,3 +2123,353 @@ delivery_reconciliation_U911:
     check: fields.market_comparisons
     previous_sha256: 76e7a86a615b55207892ae121c86e0ef399263161860b1d33b5713574770c8c9
     current_sha256: 1450057fbf239847cfae946368cba5815eef591a66afa9c55a499e3a190b9871
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: ba-supply-matching
+    fields:
+      finality: Rendre cohérents les besoins à couvrir et les ressources du réseau, puis montrer les affectations retenues
+        et les besoins encore découverts.
+      scope: |-
+        La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Control Plane](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
+
+        Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Control Plane](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+
+        [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
+
+        [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles et [Logical Stock Configuration Optimization](model:ba-policy-optimization) les droits d’usage ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+
+        Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        source_title: Master planning home page
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+        source_locator: Besoins nets, ordres planifiés et distinction des prévisions
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Master planning home page
+        concept_name: Master planning home page
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Rapprocher les besoins et apports nécessaires.
+        differences: Des ordres planifiés ne valent pas affectation ni engagement confirmé.
+        flow_position: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        term_choice: Demand / Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Rapprocher les besoins et apports nécessaires.
+        approach_summary: Des ordres planifiés ne valent pas affectation ni engagement confirmé.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Fashion
+        source_title: Explaining Supply Assignment
+        source_url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+        source_locator: Affectation, statuts, libération et retrait des affectations
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Explaining Supply Assignment
+        concept_name: Explaining Supply Assignment
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Affecter les ressources aux demandes selon des priorités.
+        differences: La Business Area FLOW englobe plusieurs décisions, pas uniquement la fonction d’affectation SAP.
+        flow_position: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        definition_choice: Arbitrer la couverture des besoins par la priorisation, les apports, les transferts et les affectations
+          de ressources.
+        term_choice: Demand / Supply Matching désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
+        scope_summary: Affecter les ressources aux demandes selon des priorités.
+        approach_summary: La Business Area FLOW englobe plusieurs décisions, pas uniquement la fonction d’affectation SAP.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+      - vendor: SAP
+        product: SAP S/4HANA Retail
+        element_name: Reorder point, targets and forecast requirements
+        concept_name: Reorder point, targets and forecast requirements
+        element_type: Objet ou mécanisme documenté dans un produit
+        relationship: Recouvrement partiel
+        similarities: SAP retail confronte besoins, stocks, seuils, sécurité et prévisions pour proposer les apports.
+        differences: Le processus retail et MRP dépasse le périmètre FLOW ; ses calculs ne décident pas du placement ni de
+          l’intégration d’IRMA.
+        flow_position: Distinguer choix des cibles, paramètres actifs, décision d’apports et application autorisée.
+        scope_summary: SAP retail confronte besoins, stocks, seuils, sécurité et prévisions pour proposer les apports.
+        approach_summary: Distinguer choix des cibles, paramètres actifs, décision d’apports et application autorisée.
+        source_title: Performing Requirements Planning
+        source_url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/performing-requirements-planning_bbf9e421-fee4-4c82-bb13-5cf8ad7d7121
+        source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+        consulted_on: '2026-10-07'
+        source_locator: Reorder Point Planning ; Time-Phased Planning ; Forecast-Based Requirements Planning
+        evidence_limits: Le processus retail et MRP dépasse le périmètre FLOW ; ses calculs ne décident pas du placement ni
+          de l’intégration d’IRMA. Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+        status: proposed
+        source_refs:
+        - U890
+        - U891
+        term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
+        definition_choice: Distinguer choix des cibles, paramètres actifs, décision d’apports et application autorisée.
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        element_name: Net requirements and quantity modification
+        concept_name: Net requirements and quantity modification
+        element_type: Objet ou mécanisme documenté dans un produit
+        relationship: Recouvrement partiel
+        similarities: Dynamics calcule des besoins nets et applique des contraintes de quantité, dont des multiples de lot.
+        differences: Les réglages de master planning ne définissent pas les capacités FLOW ; un calcul n’est pas un engagement
+          de commande.
+        flow_position: Conserver besoins, ressources, contraintes, résultats et limites explicités dans les décisions de couverture.
+        scope_summary: Dynamics calcule des besoins nets et applique des contraintes de quantité, dont des multiples de lot.
+        approach_summary: Conserver besoins, ressources, contraintes, résultats et limites explicités dans les décisions de
+          couverture.
+        source_title: Replenishment methods and quantity modification
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/replenishment-methods-quantity-modification
+        source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+        consulted_on: '2026-10-07'
+        source_locator: Coverage codes ; Examples of Min./Max. coverage
+        evidence_limits: Les réglages de master planning ne définissent pas les capacités FLOW ; un calcul n’est pas un engagement
+          de commande. Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+        status: proposed
+        source_refs:
+        - U890
+        - U891
+        term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
+        definition_choice: Conserver besoins, ressources, contraintes, résultats et limites explicités dans les décisions
+          de couverture.
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        element_name: Priority-based planning
+        concept_name: Priority-based planning
+        element_type: Objet ou mécanisme documenté dans un produit
+        relationship: Recouvrement partiel
+        similarities: Dynamics utilise priorités, stock projeté et apports pour répartir la couverture sous contraintes.
+        differences: Ce mécanisme produit ne prouve ni une taxonomie universelle ni un scénario installé chez Beaumanoir.
+        flow_position: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
+        scope_summary: Dynamics utilise priorités, stock projeté et apports pour répartir la couverture sous contraintes.
+        approach_summary: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
+        source_title: Priority-based planning
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/priority-based-planning
+        source_version: Documentation évolutive ; périmètre du produit et des sections cités, version globale non présumée.
+        consulted_on: '2026-10-07'
+        source_locator: Where and how planning priorities are assigned ; Priority calculation methods
+        evidence_limits: Ce mécanisme produit ne prouve ni une taxonomie universelle ni un scénario installé chez Beaumanoir.
+          Aucun consensus de taxonomie ni réalisation Beaumanoir déduit.
+        status: proposed
+        source_refs:
+        - U890
+        - U891
+        term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
+        definition_choice: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
+  - id: ba-policy-optimization
+    fields:
+      finality: Proposer des droits d’usage cohérents avant leur éventuelle mise en vigueur.
+      scope: '[Logical Stock Protection Optimization](model:D05.d) recommande des enveloppes et limites d’usage par groupe.
+        [Reservation Rule Optimization](model:D05.h) recommande dans quelles conditions une quantité peut être réservée pour
+        une demande. Ces deux décisions concernent les droits d’usage du **même stock physique**, sans créer un second stock.
+        [Protection Policies](model:ba-protection-policies) présente les règles rendues applicables par [Control Plane](model:subdomain-policies)
+        ; [Inventory State Management](model:ba-inventory-position-management) tient les quantités et réservations effectives.
+        Exemple fictif : proposer une protection de 20 pièces pour le web et une règle de réservation au paiement, sans activer
+        ces règles ni réserver une pièce.'
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Supply Chain Management
+        source_title: Inventory Visibility inventory allocation
+        source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+        source_version: Documentation en ligne, édition non indiquée
+        source_locator: Allocation virtual pool ; allocation group ; oversell control
+        consulted_on: '2026-10-09'
+        element_name: Virtual allocation by group
+        concept_name: Virtual allocation by group
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Des quantités accessibles à des canaux ou groupes sont suivies sans constituer de stocks physiques séparés.
+        differences: La source couvre aussi l’application et la consommation des allocations ; FLOW isole la recommandation
+          des droits.
+        flow_position: FLOW recommande les droits de groupe ; Control Plane les rend applicables et Inventory tient les engagements
+          individuels.
+        term_choice: Logical Stock Configuration Optimization désigne le périmètre FLOW ; aucune taxonomie commune aux éditeurs
+          n’est revendiquée.
+        definition_choice: FLOW recommande les droits de groupe ; Control Plane les rend applicables et Inventory tient les
+          engagements individuels.
+        scope_summary: Des quantités accessibles à des canaux ou groupes sont suivies sans constituer de stocks physiques
+          séparés.
+        approach_summary: La source couvre aussi l’application et la consommation des allocations ; FLOW isole la recommandation
+          des droits.
+        evidence_limits: Documentation primaire de produit ; elle ne démontre ni toute la décision FLOW ni une réalisation
+          installée.
+        status: proposed
+        source_refs:
+        - U911
+      - vendor: SAP
+        product: SAP S/4HANA aATP
+        source_title: Outlining aATP with Supply Protection (SuP)
+        source_url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-aatp-with-supply-protection-sup-
+        source_version: Documentation en ligne, édition non indiquée
+        source_locator: Protected quantities ; supply protection group ; product availability check
+        consulted_on: '2026-10-09'
+        element_name: Supply Protection
+        concept_name: Supply Protection
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Des quantités sont protégées pour des groupes et prises en compte dans le contrôle de disponibilité.
+        differences: Le document décrit la protection et son usage dans aATP, pas une optimisation autonome des règles de
+          réservation.
+        flow_position: FLOW distingue les droits recommandés, les règles actives et les réservations individuelles.
+        term_choice: Logical Stock Configuration Optimization désigne le périmètre FLOW ; aucune taxonomie commune aux éditeurs
+          n’est revendiquée.
+        definition_choice: FLOW distingue les droits recommandés, les règles actives et les réservations individuelles.
+        scope_summary: Des quantités sont protégées pour des groupes et prises en compte dans le contrôle de disponibilité.
+        approach_summary: Le document décrit la protection et son usage dans aATP, pas une optimisation autonome des règles
+          de réservation.
+        evidence_limits: Documentation primaire de produit ; elle ne démontre ni toute la décision FLOW ni une réalisation
+          installée.
+        status: proposed
+        source_refs:
+        - U911
+  - id: ba-financial-service-order-management
+    fields:
+      finality: Permettre au bénéficiaire du flux de disposer de la facture attendue et de connaître le résultat du paiement.
+      scope: |-
+        [Billing](glossary:TER153) et [Payment](glossary:TER154) sont des services portés par FLOW. Ils peuvent mobiliser des applications ou prestataires spécialisés sans devenir des commandes documentaires adressées à la logistique. Leur responsabilité métier est distincte de la réalisation technique.
+
+        Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+
+        La comptabilité générale, la trésorerie et le recouvrement des impayés ne sont pas inclus par extension. Les autorités financières compétentes conservent leurs règles et contrôles.
+
+        Exemple fictif : après une livraison, Billing obtient la facture correspondant aux éléments facturables ; Payment tient le résultat de l’encaissement. Un paiement refusé reste visible et conduit le workflow à traiter la suite autorisée.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Intelligent Order Management
+        source_title: Create orchestration flows
+        source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+        source_locator: Actions, conditions, publication des parcours et envoi aux prestataires
+        source_version: Documentation en ligne consultée le 2026-10-06
+        consulted_on: '2026-10-06'
+        element_name: Create orchestration flows
+        concept_name: Create orchestration flows
+        element_type: Fonction produit documentée
+        relationship: Recouvrement partiel
+        similarities: Transmettre une demande au prestataire de facturation.
+        differences: Ne démontre pas le cycle d’encaissement ni la maîtrise comptable, qui reste externe.
+        flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
+          leur progression et leurs résultats.
+        definition_choice: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
+          leur progression et leurs résultats.
+        term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence
+          de taxonomie éditeur.
+        scope_summary: Transmettre une demande au prestataire de facturation.
+        approach_summary: Ne démontre pas le cycle d’encaissement ni la maîtrise comptable, qui reste externe.
+        evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation
+          installée chez Beaumanoir.
+        status: proposed
+        source_refs:
+        - U853
+        - U874
+      - vendor: SAP
+        product: SAP S/4HANA — périmètre du cours cité
+        element_name: Describing Omnichannel Convergent Billing (1MC)
+        concept_name: Describing Omnichannel Convergent Billing (1MC)
+        element_type: Mécanisme ou objet documenté dans un produit
+        relationship: Recouvrement partiel
+        scope_summary: Des demandes de facturation externes sont intégrées puis regroupées ou traitées pour produire les factures.
+        approach_summary: 'Rapprochement avec Billing : Des demandes de facturation externes sont intégrées puis regroupées
+          ou traitées pour produire les factures.'
+        similarities: Des demandes de facturation externes sont intégrées puis regroupées ou traitées pour produire les factures.
+        differences: Le pilotage FLOW reste distinct du moteur de facturation, de la comptabilisation et du recouvrement.
+        flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
+          leur progression et leurs résultats.
+        source_title: Describing Omnichannel Convergent Billing (1MC)
+        source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sales-automation-and-analytics/describing-omnichannel-convergent-billing-1mc-_e8281711-58ac-4058-93e3-f9fb65eb4537
+        source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+        source_locator: Describing Omnichannel Convergent Billing (1MC) — passages sur le mécanisme rapproché.
+        consulted_on: '2026-10-06'
+        evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou
+          déploiement Beaumanoir déduit. Le pilotage FLOW reste distinct du moteur de facturation, de la comptabilisation
+          et du recouvrement.
+        status: proposed
+        source_refs:
+        - U774
+        - CMP307
+        - ELM808
+        - U874
+        term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence
+          de taxonomie éditeur.
+        definition_choice: Assurer la facturation des éléments éligibles du flux et tenir la facture obtenue, les rejets et
+          les corrections nécessaires.
+      - vendor: Microsoft
+        product: Microsoft Dynamics 365 — application indiquée par la source
+        element_name: Manage payment authorizations
+        concept_name: Manage payment authorizations
+        element_type: Mécanisme ou objet documenté dans un produit
+        relationship: Recouvrement partiel
+        scope_summary: La documentation distingue autorisation et capture du paiement, avec un statut retourné par le prestataire.
+        approach_summary: 'Rapprochement avec Payment : La documentation distingue autorisation et capture du paiement, avec
+          un statut retourné par le prestataire.'
+        similarities: La documentation distingue autorisation et capture du paiement, avec un statut retourné par le prestataire.
+        differences: 'Limite explicite : un accusé de capture n’est pas toujours le résultat final asynchrone. Ce document
+          ne prouve pas une notification complète de fin ; FLOW doit suivre ce résultat distant.'
+        flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
+          leur progression et leurs résultats.
+        source_title: Manage payment authorizations - Commerce | Dynamics 365 | Microsoft Learn
+        source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/manage-payment-authorizations
+        source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+        source_locator: Manage payment authorizations - Commerce | Dynamics 365 | Microsoft Learn — passages sur le mécanisme
+          rapproché.
+        consulted_on: '2026-10-06'
+        evidence_limits: 'Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou
+          déploiement Beaumanoir déduit. Limite explicite : un accusé de capture n’est pas toujours le résultat final asynchrone.
+          Ce document ne prouve pas une notification complète de fin ; FLOW doit suivre ce résultat distant.'
+        status: proposed
+        source_refs:
+        - U774
+        - CMP307
+        - ELM811
+        - U874
+        term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence
+          de taxonomie éditeur.
+        definition_choice: Assurer le service de paiement associé au flux et tenir son résultat, ses refus et ses montants
+          restant à encaisser.
+      - vendor: SAP
+        product: SAP S/4HANA — périmètre du cours cité
+        element_name: Explaining Digital Payments
+        concept_name: Explaining Digital Payments
+        element_type: Mécanisme ou objet documenté dans un produit
+        relationship: Recouvrement partiel
+        scope_summary: S/4HANA sollicite un prestataire de paiement via Digital Payments et reçoit les résultats pour actualiser
+          le statut.
+        approach_summary: 'Rapprochement avec Payment : S/4HANA sollicite un prestataire de paiement via Digital Payments
+          et reçoit les résultats pour actualiser le statut.'
+        similarities: S/4HANA sollicite un prestataire de paiement via Digital Payments et reçoit les résultats pour actualiser
+          le statut.
+        differences: Le prestataire réalise le paiement ; FLOW orchestre sa demande et son résultat sans absorber les responsabilités
+          financières.
+        flow_position: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier,
+          leur progression et leurs résultats.
+        source_title: Explaining Digital Payments
+        source_url: https://learning.sap.com/courses/configuring-additional-settings-in-financial-accounting-in-sap-s-4hana/explaining-digital-payments
+        source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
+        source_locator: Explaining Digital Payments — passages sur le mécanisme rapproché.
+        consulted_on: '2026-10-06'
+        evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou
+          déploiement Beaumanoir déduit. Le prestataire réalise le paiement ; FLOW orchestre sa demande et son résultat sans
+          absorber les responsabilités financières.
+        status: proposed
+        source_refs:
+        - U774
+        - CMP307
+        - ELM812
+        - U874
+        term_choice: Financial Services regroupe Billing et Payment dans FLOW ; ce regroupement n’est pas une équivalence
+          de taxonomie éditeur.
+        definition_choice: Assurer le service de paiement associé au flux et tenir son résultat, ses refus et ses montants
+          restant à encaisser.

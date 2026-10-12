@@ -92,6 +92,7 @@ publication_delivery:
   - U967
   - U971
   - U973
+  - U981
   summary: 'Deuxième lot : quatre sujets reconnus avec leurs périmètres et réserves.'
   required_catalog:
   - collection: hotspots
@@ -99,13 +100,13 @@ publication_delivery:
     content_sha256: a7619a05aa66feb0fa0c4a9d6aa90985128f06acc942e4899521231e19cab036
   - collection: hotspots
     id: HS-019
-    content_sha256: fd19760629da02cbc21a9d2f8e171fabfa7a4178ac456f70a9093fffcb1f1a00
+    content_sha256: 60f63a57a697f327711198cd3eda38b8f9ef0d60156174a18255029416b22ccb
   - collection: hotspots
     id: HS-020
     content_sha256: b0e30a29c77cf5789dcea9fc8274a6874a09d1d27f1617a6a71a90e99f5a7b38
   - collection: hotspots
     id: HS-021
-    content_sha256: 8aac43a58227501e3de858c52e752f6fd34cc348375bfb846260afb5af78522c
+    content_sha256: 32c678769a4869abb734ccbbe1b29879e91f785ec3b7122b6644873f10f6fcb2
   visibility_update: 'U971 : ajout technique visible=true aux sujets existants. Contenu métier, ancrages, statuts, notes et
     options inchangés. Les propositions de l’audit restent hors du catalogue ; les preuves antérieures sont conservées dans
     Git.'
@@ -113,3 +114,23 @@ publication_delivery:
     HS-002. Les réserves et preuves historiques restent conservées dans Git ; aucune option n’est choisie ni déclarée crédible.'
 capture_method: Verbatim et proposition complète enregistrés avant application. record_decision/record_intents ne prennent
   pas en charge les hotspots ; portée, statut et empreintes conservés séparément.
+delivery_reconciliation_U981:
+  source_ref: U981
+  note: 'Instruction explicite de profondeur : les responsabilités sont conservées au niveau sous-domaine ; les contrôles
+    précédents restent ci-dessous, sans nouvel accord sur leurs rédactions.'
+  retired_requirements: []
+  previous_catalog_checks:
+  - collection: hotspots
+    id: HS-021
+    content_sha256: 8aac43a58227501e3de858c52e752f6fd34cc348375bfb846260afb5af78522c
+delivery_reconciliation_U987:
+  source_refs:
+  - U987
+  - U989
+  reason: Alignement des libellés liés à Commerce, sans changement des responsabilités ni extension des accords.
+  previous_glossary_catalog_checks:
+  - collection: hotspots
+    previous_requirement:
+      collection: hotspots
+      id: HS-019
+      content_sha256: fd19760629da02cbc21a9d2f8e171fabfa7a4178ac456f70a9093fffcb1f1a00

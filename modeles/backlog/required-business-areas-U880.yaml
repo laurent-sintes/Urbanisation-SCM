@@ -37,6 +37,7 @@ publication_delivery:
   state: applied
   source_refs:
   - U880
+  - U981
   summary: Business Area obligatoire pour chaque capacité ; six rattachements corrigés.
   required_nodes:
   - id: ba-protection-policies
@@ -87,16 +88,9 @@ publication_delivery:
         Exemple fictif : demander un dédouanement et suivre les pièces manquantes jusqu’au résultat reconnu.'
   - id: service-order-customs-clearance
     parent: ba-customs-services
-  - id: ba-accounting-translation
-    kind: business_area
-    parent: subdomain-financial-accounting
-    fields:
-      name: Accounting Translation
-      definition: Transformer les faits de gestion reconnus en écritures selon les règles comptables applicables.
-      scope: 'Ce périmètre reste dans Financial Accounting, hors Supply Chain Orchestration ; il ne couvre pas toute la comptabilité
-        générale. Exemple fictif : traduire une réception reconnue en écritures selon les comptes applicables.'
-  - id: accounting-interpretation
-    parent: ba-accounting-translation
+  absent_nodes:
+  - ba-accounting-translation
+  - accounting-interpretation
 delivery_reconciliation_U908:
   source_refs:
   - U908
@@ -155,3 +149,19 @@ delivery_reconciliation_U911:
     check: fields.scope
     previous_sha256: d6141cba259319322fa414e7beb17de05850acd79a7532a4cd629049ae05398c
     current_sha256: 51a3ac8f054d15b1996dae82a11b57b3849c1c5f3856bf2891e7d8b1812bde76
+delivery_reconciliation_U981:
+  source_ref: U981
+  note: 'Instruction explicite de profondeur : les responsabilités sont conservées au niveau sous-domaine ; les contrôles
+    précédents restent ci-dessous, sans nouvel accord sur leurs rédactions.'
+  retired_requirements:
+  - id: ba-accounting-translation
+    kind: business_area
+    parent: subdomain-financial-accounting
+    fields:
+      name: Accounting Translation
+      definition: Transformer les faits de gestion reconnus en écritures selon les règles comptables applicables.
+      scope: 'Ce périmètre reste dans Financial Accounting, hors Supply Chain Orchestration ; il ne couvre pas toute la comptabilité
+        générale. Exemple fictif : traduire une réception reconnue en écritures selon les comptes applicables.'
+  - id: accounting-interpretation
+    parent: ba-accounting-translation
+  previous_catalog_checks: []

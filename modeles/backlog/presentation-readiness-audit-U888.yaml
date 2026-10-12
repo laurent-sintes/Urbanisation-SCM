@@ -875,6 +875,7 @@ publication_delivery:
   source_refs:
   - U889
   - U891
+  - U981
   summary: 'Corrections du candidat pour présentation : frontières de promesse, références et responsabilités, parcours et
     prérequis.'
   required_nodes:
@@ -891,13 +892,13 @@ publication_delivery:
   - id: business-references
     kind: area
     field_sha256:
-      market_comparisons: d24f1c9e53559cf4123eff9873ffaf518bd9dc07cf9ec5d32c3cacdacca1705f
-      market_inspiration: 8fc79a4b85201b034f564a227c70d3761de3156db7b4357c1629e3c731ddf9ed
-      mastership: 6584db79b1eeddee79937b843a11997f48aa6480ac14af02aa30ea93e75d3a6a
+      market_comparisons: 447283ce7086b10cfd7851cdd4bb77af21465fd4979c7bcd6229c0c007620547
+      market_inspiration: 94b558a079393d12bb4728fdfda42ab69c574f109f0c4884793eb8a6ea6dbeed
+      mastership: 46bc745dbb9ed20dff643e7ad27dcaebbb16be76f9a4e2b7ea8a8bace19d2953
   - id: master-data-ingestion
     kind: capability
     field_sha256:
-      market_comparisons: 559d0b3515738ff0a081efb4ded8a2f0cdaa9e744f8b5284fbad2757be5c80cc
+      market_comparisons: 870d99bb759a7b2a610ae72a046a3cf0760c2367e689cd8ccf6a9237a1b914c1
   - id: master-data-ingestion-commerce
     kind: behavior
     field_sha256:
@@ -934,7 +935,7 @@ publication_delivery:
     content_sha256: e5055e559ba98012ef79a0dfd77fcf1b7ce85115e432837d47576c04a3a7a397
   - collection: paths
     id: intercompany-direct-delivery-path
-    content_sha256: 4a5e165bcf416e32cb2263dce5f6750ca16693df1ad89fc39fd6db9b6ac9a980
+    content_sha256: 4fcb1c00f0ddbece569034811708b1af3ff7e705080ac52a93f0d04058ab5b18
   - collection: paths
     id: payment-resumption-not-confirmed-path
     content_sha256: 2ec94858d4004a4b6d6c91e722281936f5a11130a3e140436aa53f261dc18391
@@ -1039,3 +1040,28 @@ delivery_reconciliation_U909:
     check: field_sha256.scope
     previous_sha256: 3ab4aa234e69a0ef9f381ff7b55cd02eb12fdde0329a636c0da72637a1b5b869
     current_sha256: edabc25bc38cc952c26749450dfa04d11a3073d0c04ba2443f85e53d8319fe7c
+delivery_reconciliation_U981:
+  source_ref: U981
+  note: 'Instruction explicite de profondeur : les responsabilités sont conservées au niveau sous-domaine ; les contrôles
+    précédents restent ci-dessous, sans nouvel accord sur leurs rédactions.'
+  retired_requirements: []
+  previous_catalog_checks:
+  - collection: paths
+    id: intercompany-direct-delivery-path
+    content_sha256: 4a5e165bcf416e32cb2263dce5f6750ca16693df1ad89fc39fd6db9b6ac9a980
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: business-references
+    kind: area
+    field_sha256:
+      market_comparisons: d24f1c9e53559cf4123eff9873ffaf518bd9dc07cf9ec5d32c3cacdacca1705f
+      market_inspiration: 8fc79a4b85201b034f564a227c70d3761de3156db7b4357c1629e3c731ddf9ed
+      mastership: 6584db79b1eeddee79937b843a11997f48aa6480ac14af02aa30ea93e75d3a6a
+  - id: master-data-ingestion
+    kind: capability
+    field_sha256:
+      market_comparisons: 559d0b3515738ff0a081efb4ded8a2f0cdaa9e744f8b5284fbad2757be5c80cc

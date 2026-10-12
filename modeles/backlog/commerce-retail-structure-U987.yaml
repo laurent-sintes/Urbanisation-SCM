@@ -1,0 +1,188 @@
+id: COMMERCE-RETAIL-STRUCTURE-U987
+status: applied
+source_refs:
+- U982
+- U983
+- U985
+- U986
+- U987
+- CMP316
+- U988
+- U989
+agreement_scope: 'Proposition complète U982–U986 validée U987 et confirmée U989 : renommage Commerce, tous les niveaux, parents,
+  sous-domaines et responsabilités corrigées. Les nouveaux textes explicatifs rédigés après la proposition restent proposés
+  ; aucune attribution installée des outils n’est déduite.'
+market_audit: marche/audit-sales-retail-wholesale-U982.yaml
+publication_delivery:
+  state: applied
+  source_refs:
+  - U987
+  summary: Commerce et Retail Operations, séparation POS/backoffice/réseau ; aucune nouvelle capacité ou réalisation applicative.
+  required_nodes:
+  - id: domain-sales
+    kind: domain
+    parent: system-business-operations
+    parent_type: presents
+    fields:
+      name: Commerce
+      finality: Préparer les offres, conduire les ventes et organiser l’exploitation des canaux et du réseau de magasins.
+    field_sha256:
+      scope: 3001cfaa09429790afaae4d73fde3eecd5c4992b902bf2faa9d89a2dda939412
+  - id: subdomain-sales-b2c-store
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    fields:
+      name: Store Commerce
+      finality: Vente magasin, caisse, encaissement et parcours client.
+    field_sha256:
+      scope: 0260b1efbe61bff9e1e4255a90dfbb644bba65a3a06e8e21fbf89edad3d0c132
+  - id: subdomain-sales-b2c-ecommerce
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    fields:
+      name: Digital Commerce
+      finality: Vente B2C en ligne.
+    field_sha256:
+      scope: 69d819d631a289bfc63836359c183b823cd553f328fc5562b96737eb7de506bf
+  - id: subdomain-sales-wholesale
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    fields:
+      name: Wholesale Commerce
+      finality: Relation commerciale et vente aux revendeurs, préparation des commandes B2B.
+    field_sha256:
+      scope: 99c4f6b27861ffd3a2808ed25e5b28498f6c7cb9785321c1c5f60c0614edb125
+  - id: subdomain-assortment-catalog-management
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    fields:
+      name: Assortment & Catalog Management
+      finality: Offre publiée par magasin, canal ou partenaire ; catalogues et présentations commerciales.
+    field_sha256:
+      scope: 85911a5b870db312ed9ed2ce52ad002c21a4442e5d78635802fc0707d0d36a65
+  - id: subdomain-retail-network-management
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    fields:
+      name: Retail Network Management
+      finality: Structure et règles d’exploitation du réseau.
+    field_sha256:
+      scope: 75a8835ad7b117a4f6f08846ca790500f147321a29c7142d6ee8b2eb255dac01
+  - id: subdomain-store-backoffice-operations
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    fields:
+      name: Store Backoffice Operations
+      finality: 'Backoffice magasin, central ou local : stocks, réceptions, inventaires et opérations quotidiennes.'
+    field_sha256:
+      scope: f988e599f2cfc58bdf4ac3e85f3f9f5c07705ab7c2f0810f14d77374b2d2eb31
+  required_relations:
+  - id: REL-U987-subdomain-assortment-catalog-management
+    type: presents
+    source_id: domain-sales
+    target_id: subdomain-assortment-catalog-management
+  - id: REL-U987-subdomain-retail-network-management
+    type: presents
+    source_id: domain-sales
+    target_id: subdomain-retail-network-management
+  - id: REL-U987-subdomain-store-backoffice-operations
+    type: presents
+    source_id: domain-sales
+    target_id: subdomain-store-backoffice-operations
+  absent_nodes:
+  - domain-retail-operations
+  absent_relations:
+  - REL-U987-domain-retail-operations
+preserved_identity_ids:
+- domain-sales
+- subdomain-sales-b2c-store
+- subdomain-sales-b2c-ecommerce
+- subdomain-sales-wholesale
+context_reconciliation:
+- business-systems-U780.yaml
+- core-reference-credit-boundaries-U895.yaml
+- credit-check-decision-U892.yaml
+- model-coherence-audit-U886.yaml
+- operational-work-audit-U881.yaml
+- product-packaging-supply-matching-U890.yaml
+validation_sources:
+- U987
+- U989
+glossary_alignment:
+  updated_terms:
+  - TER108
+  - TER191
+  - TER192
+  - TER193
+  - TER106
+  new_terms:
+  - TER245
+  - TER246
+  - TER247
+  - TER248
+  - TER249
+  - TER250
+  - TER251
+  - TER252
+  - TER253
+depth: Domain et Subdomain ; les capacités et comportements restent exclusivement dans Supply Chain Orchestration.
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: domain-sales
+    kind: domain
+    parent: system-business-operations
+    parent_type: presents
+    fields:
+      name: Commerce
+      finality: Préparer les offres et conduire les ventes au consommateur ou au revendeur.
+    field_sha256:
+      scope: cecce9f973390b010044f0583ff9f0f8399f473f66e82a14d1c098825aee66ed
+  - id: domain-retail-operations
+    kind: domain
+    parent: system-business-operations
+    parent_type: presents
+    fields:
+      name: Retail Operations
+      finality: Organiser le réseau de magasins et conduire leurs opérations quotidiennes.
+    field_sha256:
+      scope: febdb6469dbf9277bac1bbfc8f6bf782a038bd2f5a974a639fca95ccff730d64
+  - id: subdomain-retail-network-management
+    kind: area
+    parent: domain-retail-operations
+    parent_type: presents
+    fields:
+      name: Retail Network Management
+      finality: Structure et règles d’exploitation du réseau.
+    field_sha256:
+      scope: 75a8835ad7b117a4f6f08846ca790500f147321a29c7142d6ee8b2eb255dac01
+  - id: subdomain-store-backoffice-operations
+    kind: area
+    parent: domain-retail-operations
+    parent_type: presents
+    fields:
+      name: Store Backoffice Operations
+      finality: 'Backoffice magasin, central ou local : stocks, réceptions, inventaires et opérations quotidiennes.'
+    field_sha256:
+      scope: f988e599f2cfc58bdf4ac3e85f3f9f5c07705ab7c2f0810f14d77374b2d2eb31
+  - id: REL-U987-domain-retail-operations
+    type: presents
+    source_id: system-business-operations
+    target_id: domain-retail-operations
+  - id: REL-U987-subdomain-retail-network-management
+    type: presents
+    source_id: domain-retail-operations
+    target_id: subdomain-retail-network-management
+  - id: REL-U987-subdomain-store-backoffice-operations
+    type: presents
+    source_id: domain-retail-operations
+    target_id: subdomain-store-backoffice-operations

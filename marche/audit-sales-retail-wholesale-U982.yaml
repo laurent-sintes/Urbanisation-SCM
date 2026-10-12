@@ -1,0 +1,519 @@
+id: SALES-RETAIL-WHOLESALE-AUDIT-U982
+status: proposed_not_validated
+date: '2026-10-12'
+author: Codex
+source_refs:
+- U982
+- CMP316
+- U983
+scope: Audit demandé; aucune application canonique, release, décision capturée ni modification de réalisation installée.
+inspected_canonical_sha256:
+  modeles/backlog/model.yaml: cd0825978d51c07ee4b30908583dd4f7d0e8b38887edf87f5373a6a1b7a7cba1
+  modeles/backlog/glossary.yaml: 0f584b941c0409c8a70ae54e99c0091532f739678da0cffe55171662ef709764
+  modeles/backlog/modeling-glossary.yaml: 5a2e0e59e5119ece49986a12798c1a234d3d9c9a3fc6ca44d871d7888d0f00bd
+  modeles/release/index.json: cd832423d08a927d7af4b1348bf123200ee530c9b657f8a5619fa83fa7a769fe
+  modeles/panorama-as-is/current.json: 8dbaa18de2e74f785409155b602d71503969248f8f780d7ce9aeab14bbda5b8c
+current_findings:
+- target: domain-sales
+  finding: Le périmètre actuel inclut déjà offre et vente B2C/B2B, avec B2C E-commerce, B2C Store et Wholesale. Les sous-domaines
+    sont surtout décrits par leurs Cases et mobilisation du Core.
+  classification: documented
+- target: subdomain-sales-b2c-store
+  finding: Réseau, caisse et opérations de stock magasin ne sont pas explicitement délimités dans sa fiche.
+  classification: description_gap_not_proof_of_absence
+- target: subdomain-sales-wholesale
+  finding: La fiche détaille surtout le contrôle de crédit; catalogues, sélection d’assortiments et vente assistée B2B sont
+    peu décrits.
+  classification: description_gap_not_proof_of_absence
+- target: D04.i
+  finding: Sales Order décrit des commandes à satisfaire; distinguer les ventes POS déjà réalisées des demandes de livraison
+    ou retrait.
+  classification: boundary_to_clarify_not_new_capability
+- target: BHV081
+  finding: Store Visibility existe et suit réceptions, réserve, mise en rayon et réassort de surface. L’audit ne conclut pas
+    à un manque de visibilité Core.
+  classification: documented
+- target: domain-logistics-execution
+  finding: Logistics réalise transport et entreposage. La formule générale des fiches Sales sur toute exécution physique est
+    trop large pour décrire les gestes réalisés par le magasin.
+  classification: editorial_boundary_to_refine
+sources:
+- id: ELM887
+  reference: MKT14
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: Channels overview
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/channels-overview
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Types of channels; Channel setup basics
+  reformulation: Canaux magasin et en ligne, organisation du réseau, assortiments et règles propres aux canaux.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM888
+  reference: MKT14
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: Store Commerce app
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Introduction; Commerce operations; offline support
+  reformulation: Vente immédiate, caisse, vente assistée, commandes et opérations de stock au magasin.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM889
+  reference: MKT14
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: Assortment management
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/assortments
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Basic assortment setup; organization hierarchies; date effectivity
+  reformulation: Sélection de produits vendables par canal et période, distincte du stock physique disponible.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM890
+  reference: MKT14
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: Set up a B2B e-commerce site
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/b2b/set-up-b2b-site
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Prerequisites; partner sign-up; account management; order templates
+  reformulation: Portail professionnel, comptes partenaires et préparation de commandes, utilisant aussi des composants communs
+    au B2C.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM891
+  reference: MKT13
+  vendor: SAP
+  product: SAP S/4HANA Retail
+  title: Explaining Store Connection with Point-of-Sale Sales
+  url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/explaining-store-connection-with-point-of-sale-sales_ee5c0524-83cb-47aa-ba86-3d012edd5a67
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Point-of-Sale Sales; POS inbound and outbound
+  reformulation: Le POS réalise et journalise les ventes; le système central reçoit ventes, retours, mouvements et autres
+    faits et transmet des références.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM892
+  reference: MKT13
+  vendor: SAP
+  product: SAP S/4HANA Retail
+  title: Managing Retail Store Operations
+  url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/managing-retail-store-operations_f77c8f4d-b247-4ef0-879b-3c4f469a6323
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: SAP Fiori Apps for Retail Store Operations; receive, adjust, count, move
+  reformulation: 'Opérations réalisées par les équipes magasin: réception, comptage, corrections et déplacements locaux.'
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM893
+  reference: MKT13
+  vendor: SAP
+  product: SAP S/4HANA Retail
+  title: Introducing Assortment Management
+  url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/introducing-assortment-management_c4100b3e-db2f-49ed-8724-faf679d1be8d
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Assortment Management and Layout Workbench; planned assortments
+  reformulation: Assortiments, autorisations par site et présentation physique; des résultats de planning peuvent alimenter
+    les assortiments opérationnels.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM894
+  reference: MKT13
+  vendor: SAP
+  product: SAP S/4HANA for fashion and vertical business
+  title: Explaining Sales Order Handling
+  url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-sales-order-handling_b87d52ef-bf38-4a67-b6f5-7324019d8c24
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Scenario; sales order handling; fashion enhancements
+  reformulation: Demande saisonnière des revendeurs, variantes mode, captation par représentants ou plateformes, commandes
+    et contraintes de livraison.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM895
+  reference: MKT13
+  vendor: SAP
+  product: SAP S/4HANA Retail
+  title: Exploring the Business Partner, Retail Sites, and Article Groupings
+  url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/exploring-the-business-partner-retail-sites-and-article-groupings_ccbc5aa0-3702-4244-951d-9dcb8de51064
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Customer, Supplier, and Site Master in SAP Retail
+  reformulation: Sites magasins et centres de distribution distingués, partenaires et responsabilités commerciales ou financières
+    différenciées.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM896
+  reference: MKT13
+  vendor: SAP
+  product: SAP S/4HANA for fashion and vertical business
+  title: Getting a Business Process Overview
+  url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/getting-a-business-process-overview_dc53cbb3-5b68-4bb1-a163-7b4437784888
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Specifics of vertical fashion businesses; key benefits
+  reformulation: Commerce retail et wholesale dans une solution intégrée, avec visibilité du stock, planning et achats partagés.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM897
+  reference: MKT97
+  vendor: Elastic
+  product: Elastic Suite
+  title: Elastic Suite — B2B ecommerce and digital merchandising
+  url: https://www.elasticsuite.com/
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Digital Catalog; Assortment Builder; Whiteboard; Custom Collections; FAQ
+  reformulation: 'Présentation commerciale: vente B2B, catalogues, sélections pour un revendeur, présentation et propositions
+    de commande.'
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM898
+  reference: MKT97
+  vendor: Elastic
+  product: Elastic Suite
+  title: What is a Whiteboard?
+  url: https://support.elasticsuite.com/what-is-a-whiteboard
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: What is a Whiteboard?
+  reformulation: Le whiteboard est une présentation visuelle de produits du panier, accessible dans le parcours de construction
+    de commande; son existence ne prouve pas un engagement ferme.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM899
+  reference: MKT13
+  vendor: SAP
+  product: SAP S/4HANA Retail
+  title: Selling to Customers — Sales Order
+  url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/selling-to-customers-sales-order_fb704049-b43b-49c4-b17b-daf3fc42793f
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Sales order processing; cross-channel sales; click and collect
+  reformulation: Une commande peut provenir du web ou du magasin et être servie en magasin ou par un centre de distribution.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM900
+  reference: MKT14
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: Create Commerce catalogs for B2B sites
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/catalogs-b2b-sites
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Catalog information; B2B catalog process flow
+  reformulation: Catalogues liés aux canaux et partenaires, assortiments, prix et promotions; validation et publication.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+- id: ELM901
+  reference: MKT14
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: Commerce inventory management
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/work-with-store-inventory
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive, édition globale inconnue
+  locator: Inventory dimensions; inbound/outbound; stock counts
+  reformulation: Opérations de stock au magasin exposées dans le POS; le produit ne prescrit pas les autorités FLOW.
+  limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir.
+    Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. Le POS ne couvre pas toutes les
+    dimensions de stock; Owner dimension non supportée dans les applications CSU documentées. Aucun modèle de propriété ou
+    de consignation complet déduit de ce seul écran.
+recommendations:
+- name: Commerce
+  proposed_level: Domain
+  proposed_parent: Business Operations
+  service: Préparer les offres et conduire les ventes au consommateur ou au revendeur.
+  boundaries: Remplace le nom Sales si accepté, en conservant son identité. Ni achats fournisseur, ni allocation Supply, ni
+    comptabilité, ni construction de plans de ressources.
+  comparison:
+    relationship: Recouvrement partiel
+    microsoft:
+    - ELM887
+    - ELM890
+    - ELM900
+    sap:
+    - ELM896
+    - ELM899
+    - ELM893
+    similarities: Préparer les offres et conduire les ventes au consommateur ou au revendeur.
+    differences: La proposition FLOW sépare responsabilités et applications; les produits les regroupent. Le niveau et le
+      rattachement sont un choix local.
+    benefit: Rendre visibles la préparation commerciale et les canaux, au-delà du seul traitement de commandes.
+    limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation
+      Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+  status: proposed_not_validated
+- name: Store Commerce
+  proposed_level: Subdomain
+  proposed_parent: Commerce
+  service: 'Conduire la vente magasin: vente assistée, prix appliqués, encaissement, échange, retour et commandes à livrer.'
+  boundaries: Successeur proposé de B2C Store avec même identité. La caisse ne devient pas un cycle concurrent de Sales Order;
+    les mouvements locaux relèvent de Store Operations.
+  comparison:
+    relationship: Recouvrement partiel
+    microsoft:
+    - ELM888
+    sap:
+    - ELM891
+    - ELM899
+    similarities: 'Conduire la vente magasin: vente assistée, prix appliqués, encaissement, échange, retour et commandes à
+      livrer.'
+    differences: La proposition FLOW sépare responsabilités et applications; les produits les regroupent. Le niveau et le
+      rattachement sont un choix local.
+    benefit: Donner un périmètre métier au POS sans en faire un Business System logiciel.
+    limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation
+      Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+  status: proposed_not_validated
+- name: Digital Commerce
+  proposed_level: Subdomain
+  proposed_parent: Commerce
+  service: Conduire les parcours de vente numérique aux consommateurs.
+  boundaries: Successeur proposé de B2C E-commerce avec même identité. Le portail B2B reste une modalité de Wholesale Commerce;
+    retrait en magasin ne change pas le contexte de vente.
+  comparison:
+    relationship: Recouvrement partiel
+    microsoft:
+    - ELM887
+    - ELM890
+    sap:
+    - ELM899
+    similarities: Conduire les parcours de vente numérique aux consommateurs.
+    differences: La proposition FLOW sépare responsabilités et applications; les produits les regroupent. Le niveau et le
+      rattachement sont un choix local.
+    benefit: Préserver le contexte commercial et distinguer canal de vente et lieu de réalisation.
+    limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation
+      Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+  status: proposed_not_validated
+- name: Wholesale Commerce
+  proposed_level: Subdomain
+  proposed_parent: Commerce
+  service: 'Conduire la relation de vente aux revendeurs: offre, conditions négociées, préparation de sélection, commandes
+    saisonnières ou de réassort, suivi commercial.'
+  boundaries: Successeur proposé de Wholesale avec même identité. Les listes visuelles ne sont ni produits nouveaux, ni prévisions
+    de ressources, ni commandes engagées. Crédit sous Finance; promesses et affectations sous Core.
+  comparison:
+    relationship: Recouvrement partiel
+    microsoft:
+    - ELM890
+    - ELM900
+    sap:
+    - ELM894
+    - ELM896
+    similarities: 'Conduire la relation de vente aux revendeurs: offre, conditions négociées, préparation de sélection, commandes
+      saisonnières ou de réassort, suivi commercial.'
+    differences: La proposition FLOW sépare responsabilités et applications; les produits les regroupent. Le niveau et le
+      rattachement sont un choix local.
+    benefit: Décrire les usages métier d’Elastic et les prises de commandes hors portail sans réduire le B2B à un contrôle
+      de crédit.
+    limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation
+      Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+  status: proposed_not_validated
+- name: Assortment & Catalog Management
+  proposed_level: Subdomain
+  proposed_parent: Commerce
+  service: Publier les produits proposés par canal, magasin ou partenaire, avec validité et présentation commerciale.
+  boundaries: Sous-domaine partagé, non parent de Wholesale. Collection conçue sous Design & Development; optimisation prévisionnelle
+    sous Demand & Supply Planning; sélection négociée propre au client sous Wholesale. Autorités par attribut à instruire.
+  comparison:
+    relationship: Recouvrement partiel
+    microsoft:
+    - ELM889
+    - ELM900
+    sap:
+    - ELM893
+    similarities: Publier les produits proposés par canal, magasin ou partenaire, avec validité et présentation commerciale.
+    differences: La proposition FLOW sépare responsabilités et applications; les produits les regroupent. Le niveau et le
+      rattachement sont un choix local.
+    benefit: Documenter le fournisseur des assortiments et catalogues reçus par le Core sans dupliquer produit, stock ou plan.
+    limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation
+      Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+  status: proposed_not_validated
+- name: Retail Operations
+  proposed_level: Domain
+  proposed_parent: Business Operations
+  service: Organiser le réseau de magasins et conduire leurs opérations quotidiennes.
+  boundaries: 'Domaine complémentaire de Commerce. Pas de nouveau Business System à ce stade: centralisation du logiciel insuffisante.
+    RH, immobilier, budgets et Finance ne sont pas absorbés. Prestations transport/entreposage restent Logistics.'
+  comparison:
+    relationship: Recouvrement partiel
+    microsoft:
+    - ELM887
+    - ELM888
+    - ELM901
+    sap:
+    - ELM892
+    - ELM895
+    similarities: Organiser le réseau de magasins et conduire leurs opérations quotidiennes.
+    differences: La proposition FLOW sépare responsabilités et applications; les produits les regroupent. Le niveau et le
+      rattachement sont un choix local.
+    benefit: Distinguer conduite du réseau, vente et exécution locale des opérations magasin.
+    limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation
+      Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+  status: proposed_not_validated
+- name: Retail Network Management
+  proposed_level: Subdomain
+  proposed_parent: Retail Operations
+  service: Tenir les magasins exploités, leur rattachement, leur statut opérationnel, leurs regroupements et règles communes
+    d’exploitation.
+  boundaries: Périmètre opérationnel du réseau; baux, projets d’ouverture, expansion et administration technique du parc exclus
+    de cette proposition. Modèles d’exploitation intégrés/affiliés à qualifier.
+  comparison:
+    relationship: Recouvrement partiel
+    microsoft:
+    - ELM887
+    sap:
+    - ELM895
+    similarities: Tenir les magasins exploités, leur rattachement, leur statut opérationnel, leurs regroupements et règles
+      communes d’exploitation.
+    differences: La proposition FLOW sépare responsabilités et applications; les produits les regroupent. Le niveau et le
+      rattachement sont un choix local.
+    benefit: 'Rendre visible la source des lieux et modalités d’exploitation utile au Core. Appuis partiels: aucun cycle complet
+      d’expansion du réseau prouvé.'
+    limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation
+      Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+  status: proposed_not_validated
+- name: Store Operations
+  proposed_level: Subdomain
+  proposed_parent: Retail Operations
+  service: Réaliser les réceptions, inventaires, mouvements réserve/surface de vente et préparations ou remises de commandes
+    au magasin.
+  boundaries: Le Core reçoit les faits et coordonne les engagements; le magasin réalise les gestes. La visibilité Store Visibility
+    existe déjà dans Core. Ne pas attribuer ces opérations à C-LOG par défaut.
+  comparison:
+    relationship: Recouvrement partiel
+    microsoft:
+    - ELM888
+    - ELM901
+    sap:
+    - ELM892
+    similarities: Réaliser les réceptions, inventaires, mouvements réserve/surface de vente et préparations ou remises de
+      commandes au magasin.
+    differences: La proposition FLOW sépare responsabilités et applications; les produits les regroupent. Le niveau et le
+      rattachement sont un choix local.
+    benefit: Donner un producteur externe aux faits magasin déjà suivis, sans recréer les capacités de visibilité et d’orchestration.
+    limits: Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation
+      Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale.
+  status: proposed_not_validated
+system_options:
+  recommended: Conserver les quatre Business Systems, ajouter Retail Operations comme Domain de Business Operations.
+  alternative: Retail Management pourrait devenir un Business System après preuve d’un mandat autonome, responsabilités, échanges
+    et frontières. Pas de promotion du POS ou de Storeland sur le seul critère logiciel.
+  comparison: ELM887 et ELM895 appuient l’existence d’un réseau; ELM896 montre un produit intégré. Aucun ne fixe les Business
+    Systems FLOW.
+elastic:
+  business_position:
+  - Wholesale Commerce
+  - Assortment & Catalog Management
+  application_position: Conserver Elastic comme application dans le panorama As Is; ses couvertures métier restent des rapprochements
+    documentaires, pas une nouvelle hiérarchie de réalisation dans Atlas.
+  documented_local: 'APP-ELA, U03: prise de commande B2B du périmètre historique; U982 précise portail, assortiments, showroom
+    et whiteboard. U955 conserve la mémoire qualifiée d’Elastic interactif Boardriders et de fichiers grands comptes vers
+    AFS.'
+  market: ELM897 et ELM898 appuient les usages annoncés. Le whiteboard est une présentation du panier dans l’application;
+    le statut Order de l’éditeur ne prouve pas une commande ferme ou déjà reçue par FLOW.
+  limits: Marques, versions, modules effectivement activés, modalités de synchronisation, source de vérité et statut à la
+    transmission restent à établir. Pas de rattachement installé généralisé à Boardriders ou Sarenza.
+case_tests:
+- case: Vente magasin emportée
+  owner: Store Commerce
+  core: Recevoir faits de vente et effets de stock selon contrat; pas de nouvelle promesse ni affectation pour une demande
+    déjà satisfaite.
+  boundary: Ticket et vente réalisée distincts d’une commande restant à servir.
+- case: Commande magasin à livrer / retrait de commande web
+  owner: Store Commerce ou Digital Commerce selon origine commerciale; Store Operations exécute le retrait.
+  core: Sales Order conserve identité et engagements; promesse, affectation et coordination restent Core.
+  boundary: Canal commercial distinct du lieu et exécutant.
+- case: Showroom et whiteboard Elastic
+  owner: Wholesale Commerce
+  core: Sélection commerciale non engagée; ne pas réserver du stock sur la seule visualisation.
+  boundary: Une sélection n’est ni un nouveau produit PLM ni un plan de ressources.
+- case: Commande revendeur saisonnière ou réassort
+  owner: Wholesale Commerce
+  core: Commande explicite reçue, contraintes et confirmations; Sales Order, promesse et affectation sous Core.
+  boundary: Portal, représentant, fichier ou échange électronique sont des modalités alternatives à qualifier; crédit sous
+    Finance.
+- case: Affilié, franchise, concession, consignation
+  owner: À qualifier selon vendeur, propriétaire et bénéficiaire du stock.
+  core: Ne pas confondre apport de stock, transfert, vente au partenaire et vente finale.
+  boundary: Wholesale couvre les revendeurs; le statut juridique du partenaire ne détermine pas seul le parcours. Données
+    de vente au consommateur distinctes de vente au revendeur.
+proposed_data_contracts:
+- source: Store Commerce
+  target: Supply Chain Orchestration
+  contents: Faits de vente, retours, annulations et corrections liés aux effets de stock utiles au Core.
+  condition: Identité, provenance, moment de l’événement, reprise sans doublon et règle d’imputation; aucune décrémentation
+    double depuis vente et mouvement.
+- source: Store Operations
+  target: Supply Chain Orchestration
+  contents: Réceptions, comptages, ajustements, préparation et remise au client.
+  condition: Séparer stock physique constaté, stock attendu, stock vendable et stock engagé; autorité de chaque état à établir.
+- source: Wholesale Commerce / Store Commerce / Digital Commerce
+  target: Supply Chain Orchestration
+  contents: Demandes à satisfaire, engagements commerciaux applicables et changements autorisés.
+  condition: Séparer panier, proposition, précommande, commande et engagement; conserver identité et référence source.
+- source: Supply Chain Orchestration
+  target: Commerce
+  contents: Disponibilité, promesses, confirmations et avancement utiles au parcours client.
+  condition: Le canal applique ses règles propres sans recalculer les décisions Supply ni forcer leurs transitions.
+- source: Assortment & Catalog Management
+  target: Core et canaux selon contrat
+  contents: Assortiments publiés, validités, catalogues et conditions applicables.
+  condition: Attributs et autorité à établir; pas de transfert automatique de maîtrise du produit PLM ou des prix Finance.
+- source: Store Commerce / Retail Operations
+  target: Finance
+  contents: Encaissements, clôtures et justificatifs financiers selon responsabilité.
+  condition: Pas de passage obligatoire par Core pour toute donnée POS; comptabilité sous Finance.
+atlas_limits: Les échanges internes entre domaines de Business Operations peuvent être modélisés avec shares-data. La vue
+  Enterprise Architecture actuelle projette seulement les échanges entre Business Systems; elle ne représente pas ces liens
+  internes. Ne pas créer un système pour obtenir une flèche.
+glossary_review:
+  current:
+  - 'TER108 Sales: aligné au modèle actuel'
+  - 'TER194 B2C et TER195 B2B: relation commerciale, non canal'
+  - 'TER155: crédit sous Finance'
+  required_if_adopted:
+  - Mettre à jour ensemble noms, frontières et références de Sales et de ses sous-domaines, TER108 et fiches associées, sans
+    toucher aux identités persistantes.
+  - Définir POS, assortment, catalog, showroom, whiteboard, sell-in et sell-through au glossaire si utilisés dans de nouvelles
+    fiches.
+  - 'Réviser Commercial Reference Ingestion: Commerce ne serait plus seulement un repère historique; ne pas en déduire une
+    autorité générale sur toutes les références.'
+  changes_applied: true
+evidence_gaps:
+- url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9905622a5c1f49ba84e9076fc83a9c2c/9412a95740a9ab6be10000000a4450e5.html
+  reason: Page sans contenu direct lisible; non retenue comme preuve. SAP Learning ELM892 fournit l’appui effectivement consulté.
+- url: https://learn.microsoft.com/en-us/dynamics365/commerce/b2b/catalogs-b2b
+  reason: Erreur à l’ouverture; non retenue. Le document valide catalogs-b2b-sites est consulté sous ELM900.
+- Aucune source consultée ne justifie exactement le découpage hiérarchique FLOW recommandé; il reste une proposition locale.
+- Cycle complet des ouvertures, fermetures, immobilier, RH, CRM et fidélité non audité; pas de domaines correspondants créés.
+clarification_U983:
+  verbatim: Oui, POS et gestion de réseau de magasin ou backoffice magasin, ce n'est pas la même chose.
+  scope: Distinction confirmée, sans adoption globale du découpage ou modification canonique.
+  interpretation: Vente et caisse sous Store Commerce; backoffice local sous Store Operations; pilotage du réseau sous Retail
+    Network Management. Le même produit peut servir plusieurs périmètres sans les fusionner.
+  market_comparison: ELM888 et ELM892 distinguent opérations commerciales et opérations magasin; ELM887 et ELM895 éclairent
+    le pilotage du réseau. Les produits peuvent regrouper ces fonctions; ils ne prescrivent ni séparation logicielle ni hiérarchie
+    FLOW.
+adoption_U987:
+  status: applied_to_backlog
+  annex: modeles/backlog/commerce-retail-structure-U987.yaml
+  scope: 'Proposition complète U982–U986 validée U987 et confirmée U989 : renommage Commerce, tous les niveaux, parents, sous-domaines
+    et responsabilités corrigées. Les nouveaux textes explicatifs rédigés après la proposition restent proposés ; aucune attribution
+    installée des outils n’est déduite.'
+  corrections:
+  - Store Operations devient Store Backoffice Operations, central ou local.
+  excluded:
+  - Attribution des outils
+  - Grille d’atelier
+  - Contrats shares-data proposés
+  - Nouvelles capacités
+  - Nouveau Business System
+  confirmation_source: U989

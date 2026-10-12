@@ -96,6 +96,88 @@ class BusinessSystemTests(unittest.TestCase):
         legacy = read(ROOT / 'modeles/release/2026-09-19.7/model.yaml')
         self.assertEqual(self.errors(legacy), [])
 
+    def test_context_details_cannot_reappear_in_finance(self):
+        model = deepcopy(self.model)
+        area = next(n for n in model['nodes'] if n['kind'] == 'business_area')
+        edge = next(r for r in model['relations'] if r['target_id'] == area['id'] and r['type'] == 'contains')
+        edge['source_id'] = 'subdomain-financial-accounting'
+        self.assertIn(f'model-depth/{area["id"]}: detailed responsibility must belong only to Supply Chain Orchestration', self.errors(model))
+        next(n for n in model['nodes'] if n['id'] == 'domain-finance')['fields']['modeling_depth'] = 'behaviors'
+        self.assertIn('model-depth/domain-finance: detailed modeling is reserved to Supply Chain Orchestration', self.errors(model))
+
+    def test_retired_finance_detail_preserves_responsibility_and_real_exchange(self):
+        nodes = {n['id']: n for n in self.model['nodes']}
+        self.assertNotIn('accounting-interpretation', nodes)
+        self.assertNotIn('ba-accounting-translation', nodes)
+        self.assertEqual(len([n for n in nodes.values() if n['kind'] == 'capability']), 75)
+        self.assertIn('glossary:TER119', nodes['subdomain-financial-accounting']['fields']['scope'])
+        exchange = next(r for r in self.model['relations'] if r['id'] == 'REL-U981-accounting-facts')
+        self.assertEqual((exchange['type'], exchange['source_id'], exchange['target_id']),
+                         ('shares-data', 'accounting-data-provision', 'subdomain-financial-accounting'))
+        from scripts.atlas_metamodel import describe_metamodel
+        rules = describe_metamodel(self.model, {'status': 'unavailable'})['constraints']
+        self.assertTrue(any(r['id'] == 'orchestration-detail-scope' for r in rules))
+        step = next(s for p in self.model['scenario_catalog']['paths'] for s in p['steps']
+                    if p['id'] == 'intercompany-direct-delivery-path' and s['id'] == 'accounting-facts')
+        self.assertEqual([c['node_id'] for c in step['contributions']], ['accounting-data-provision'])
+        self.assertIn('model:subdomain-financial-accounting', step['description'])
+        hotspot = next(h for h in self.model['hotspot_catalog']['hotspots'] if h['id'] == 'HS-021')
+        self.assertEqual(hotspot['location']['node_ids'], ['accounting-data-provision', 'subdomain-financial-accounting'])
+
+    def test_commerce_retail_split_preserves_identities_and_boundaries(self):
+        nodes = {n['id']: n for n in self.model['nodes']}
+        expected = {
+            'domain-sales': ('Commerce', 'system-business-operations'),
+            'subdomain-sales-b2c-store': ('Store Commerce', 'domain-sales'),
+            'subdomain-sales-b2c-ecommerce': ('Digital Commerce', 'domain-sales'),
+            'subdomain-sales-wholesale': ('Wholesale Commerce', 'domain-sales'),
+            'subdomain-assortment-catalog-management': ('Assortment & Catalog Management', 'domain-sales'),
+            'subdomain-retail-network-management': ('Retail Network Management', 'domain-sales'),
+            'subdomain-store-backoffice-operations': ('Store Backoffice Operations', 'domain-sales'),
+            'subdomain-pricing-promotions-management': ('Pricing & Promotions Management', 'domain-sales'),
+            'subdomain-rebates-incentives-management': ('Rebates & Incentives Management', 'domain-sales'),
+            'subdomain-commercial-settlement-management': ('Commercial Settlement Management', 'domain-finance'),
+        }
+        terms = {t['name']: t for t in self.model['glossary']['terms']}
+        self.assertNotIn('domain-retail-operations', nodes)
+        for node_id, (name, parent) in expected.items():
+            with self.subTest(node_id=node_id):
+                self.assertEqual(nodes[node_id]['fields']['name'], name)
+                parents = [r['source_id'] for r in self.model['relations']
+                           if r['type'] == 'presents' and r['target_id'] == node_id]
+                self.assertEqual(parents, [parent])
+                self.assertEqual(terms[name]['context'], nodes[node_id]['fields']['scope'])
+        backoffice = nodes['subdomain-store-backoffice-operations']['fields']['scope']
+        self.assertIn('central ou local', backoffice)
+        self.assertIn('model:subdomain-sales-b2c-store', backoffice)
+        self.assertIn('model:subdomain-retail-network-management', backoffice)
+        digital = nodes['subdomain-sales-b2c-ecommerce']['fields']['scope']
+        self.assertIn('Wholesale Commerce', digital)
+        self.assertEqual(len([n for n in nodes.values() if n['kind'] == 'business_system']), 4)
+
+    def test_price_producer_and_settlement_remain_outside_orchestration(self):
+        nodes = {n['id']: n for n in self.model['nodes']}
+        exchanges = {r['id']: r for r in self.model['relations'] if r['type'] == 'shares-data'}
+        expected = {
+            'contextual-prices': ('subdomain-pricing-promotions-management', 'D04'),
+            'commercial-benefit-conditions': ('subdomain-rebates-incentives-management', 'subdomain-commercial-settlement-management'),
+            'eligible-supply-facts': ('accounting-data-provision', 'subdomain-commercial-settlement-management'),
+            'commercial-settlement-results': ('subdomain-commercial-settlement-management', 'D04'),
+        }
+        for suffix, endpoints in expected.items():
+            relation = exchanges['REL-U996-' + suffix]
+            self.assertEqual((relation['source_id'], relation['target_id']), endpoints)
+        self.assertEqual(nodes['subdomain-policies']['fields']['name'], 'Supply Policy Management')
+        self.assertEqual(nodes['D03']['fields']['name'], 'Availability')
+        self.assertIn('glossary:TER263', nodes['D04']['fields']['scope'])
+        self.assertIn('aucun paiement fournisseur', nodes['ba-financial-service-order-management']['fields']['scope'])
+        self.assertEqual(len([n for n in nodes.values() if n['kind'] == 'capability']), 75)
+
+    def test_frozen_publication_keeps_its_finance_capability(self):
+        published = read(ROOT / 'modeles/release/2026-10-12.6/model.yaml')
+        self.assertTrue(any(n['id'] == 'accounting-interpretation' and n['kind'] == 'capability' for n in published['nodes']))
+        self.assertEqual(self.errors(published), [])
+
 
 if __name__ == '__main__':
     unittest.main()

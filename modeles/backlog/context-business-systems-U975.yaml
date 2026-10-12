@@ -1,0 +1,941 @@
+id: CONTEXT-BUSINESS-SYSTEMS-U975
+source_refs:
+- U974
+- U975
+- CMP312
+- U976
+status: applied_to_backlog
+agreement:
+  verbatim: Je valide
+  author: Laurent
+  decided_at: '2026-10-12'
+  scope: 'Découpage complet proposé dans l’audit : noms, niveaux, rattachements et frontières ; pas d’extension au développement
+    FLOW ni aux réalisations installées.'
+  proposed_content: Définitions détaillées, exemples et correspondances rédigés après l’accord.
+structural_choice:
+  logistics_identity: domain-logistics-execution
+  previous_kind: domain
+  current_kind: business_system
+  previous_parent: system-business-operations
+  current_parent: beaumanoir-target-universe
+  justification: Autonomie de la prestation et de son pilotage ; C-LOG est un acteur de réalisation, pas un nom de système
+    métier.
+  retired_relations:
+  - id: REL-U780-OPERATIONS-domain-logistics-execution
+    revision: 1
+    type: presents
+    source_id: system-business-operations
+    target_id: domain-logistics-execution
+    source_refs:
+    - U780
+    review:
+      state: accepted
+      note: Rattachement explicite du domaine à Business Operations, U780 ; aucune adoption des descendants par extension.
+preserved_contracts:
+- Identités, parents et savoir-faire des capacités et comportements existants.
+- 'Supply Plan reçu par FLOW : mouvements prévisionnels hors achats ; Supply Planning peut produire d’autres plans.'
+- Availability conserve couverture, réservations, promesses et décisions effectives ; Logistics conserve moyens et opérations
+  locaux.
+- Financial Accounting et Accounting Interpretation conservent leur raccordement.
+- Aucune maîtrise entreprise des définitions produit ou des stocks déduite.
+market:
+  comparison_id: CMP312
+  sources:
+  - id: ELM860
+    reference_id: MKT13
+    vendor: SAP
+    product: SAP S/4HANA 2025 FPS02
+    title: SAP S/4HANA 2025 — Feature Scope Description
+    url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+    locator: §2.5 Finance ; §2.8 R&D ; §2.12 Supply Chain ; §3.6 R&D ; §4.1.3 Retail and Fashion
+    summary: Périmètres de finance, développement, structures et changements produit, entreposage et transport.
+    version: Document 3.0 du 2026-10-07
+    consulted_on: '2026-10-12'
+    limits: Catalogue fonctionnel ; sections de base et extensions distinctes. Aucun découpage universel de Business Systems
+      ni couverture installée. Portfolio Management porte des projets, pas une équivalence complète aux collections de mode.
+    native_id: null
+  - id: ELM861
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management et Commerce
+    title: Design to retire end-to-end overview
+    url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/design-to-retire-overview
+    locator: Business process areas ; process relationship
+    summary: Stratégie et introduction des produits, définitions et cycle de vie ; coûts et prix dépassent Design & Development
+      FLOW.
+    version: Page mise à jour 2025-05-27 ; avertissement de décalage avec le catalogue de juillet 2026
+    consulted_on: '2026-10-12'
+    limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
+    native_id: null
+  - id: ELM862
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Engineering change management overview
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/product-engineering-overview
+    locator: Product versions ; product readiness ; engineering changes
+    summary: Définition, versions, disponibilité à l’usage et changements contrôlés des produits.
+    version: Page mise à jour 2026-07-01
+    consulted_on: '2026-10-12'
+    limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
+    native_id: null
+  - id: ELM863
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Product information overview
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information
+    locator: Product definition ; product variants ; imports
+    summary: Identités, attributs, variantes et échanges de définitions produit.
+    version: Page mise à jour 2026-07-01
+    consulted_on: '2026-10-12'
+    limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
+    native_id: null
+  - id: ELM864
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Forecast to plan overview
+    url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/forecast-to-plan-overview
+    locator: Process relationship ; business process areas
+    summary: Prévoir les besoins et planifier les ressources, avec définition produit en amont.
+    version: Page mise à jour 2024-12-12 ; avertissement relatif au catalogue de juillet 2026
+    consulted_on: '2026-10-12'
+    limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
+    native_id: null
+  - id: ELM865
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Master planning home page
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+    locator: Net requirements ; forecast planning ; planned orders
+    summary: Équilibrer besoins et ressources et produire des propositions, distinctes des commandes affermies.
+    version: Page mise à jour 2026-03-26
+    consulted_on: '2026-10-12'
+    limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
+    native_id: null
+  - id: ELM866
+    reference_id: MKT13
+    vendor: SAP
+    product: SAP S/4HANA Production Planning
+    title: Execute Supply Chain Planning
+    url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/execute-supply-chain-planning
+    locator: Independent requirements ; sales order consumption ; MRP
+    summary: Besoins prévisionnels et commandes client, consommation de prévision et calcul des besoins.
+    version: Page évolutive ; édition globale non indiquée
+    consulted_on: '2026-10-12'
+    limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
+    native_id: null
+  - id: ELM867
+    reference_id: MKT13
+    vendor: SAP
+    product: SAP Integrated Business Planning
+    title: Sales and operations planning
+    url: https://www.sap.com/products/scm/integrated-business-planning/features/sales-and-operations-planning.html
+    locator: Cross-functional planning ; scenarios
+    summary: Réconcilier les objectifs et contraintes entre métiers.
+    version: Page commerciale évolutive ; édition non indiquée
+    consulted_on: '2026-10-12'
+    limits: Complément SAP IBP distinct de S/4HANA ; ne satisfait pas seul le socle S/4HANA et ne prescrit pas le sous-domaine
+      FLOW.
+    native_id: null
+  - id: ELM868
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Finance
+    title: Business performance planning overview
+    url: https://learn.microsoft.com/en-us/dynamics365/finance/business-performance-planning/business-performance-planning-overview
+    locator: Planning ; scenarios ; financial and operational dimensions
+    summary: Plans financiers et opérationnels, scénarios et dimensions de performance.
+    version: Page mise à jour 2026-06-25
+    consulted_on: '2026-10-12'
+    limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
+    native_id: null
+  - id: ELM869
+    reference_id: MKT13
+    vendor: SAP
+    product: SAP Analytics Cloud — Integrated Financial Planning for SAP S/4HANA
+    title: Using SAP Content Network Business Packages
+    url: https://learning.sap.com/courses/performing-manual-planning-with-sap-analytics-cloud/using-sap-content-network-business-packages-optional_e1f63cdb-d5b4-4a7e-a0a2-ebf67bc5bbb2
+    locator: Integrated Financial Planning for SAP S/4HANA ; simulation ; group financial planning
+    summary: Budgets et scénarios financiers intégrés aux données S/4HANA.
+    version: Cours évolutif ; édition non indiquée
+    consulted_on: '2026-10-12'
+    limits: Contenu SAP Analytics Cloud connecté à S/4HANA ; pas une fonction universellement incluse dans S/4HANA, ni toute
+      la stratégie entreprise.
+    native_id: null
+  - id: ELM870
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Finance
+    title: Cost accounting terminology
+    url: https://learn.microsoft.com/en-us/dynamics365/finance/cost-accounting/terms-cost-accounting
+    locator: Cost elements ; cost objects ; allocation policies
+    summary: Objets de coût, méthodes de répartition et contrôle des coûts.
+    version: Page évolutive ; édition globale non indiquée
+    consulted_on: '2026-10-12'
+    limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
+    native_id: null
+  - id: ELM871
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Finance
+    title: Credit and collections overview
+    url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-credit-and-collections-overview
+    locator: Credit management ; collections
+    summary: Limites de crédit, contrôles, blocages et traitement des créances.
+    version: Page évolutive ; édition globale non indiquée
+    consulted_on: '2026-10-12'
+    limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
+    native_id: null
+  - id: ELM872
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Finance
+    title: Cash flow forecasting
+    url: https://learn.microsoft.com/en-us/dynamics365/finance/cash-bank-management/cash-flow-forecasting
+    locator: Cash flow forecasting setup ; receivables and payables
+    summary: Prévisions de trésorerie issues des encaissements et décaissements attendus.
+    version: Page évolutive ; édition globale non indiquée
+    consulted_on: '2026-10-12'
+    limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
+    native_id: null
+  - id: ELM873
+    reference_id: MKT13
+    vendor: SAP
+    product: SAP Process Control 12.0 SP23 — intégration SAP S/4HANA
+    title: SAP Process Control — Application Help
+    url: https://help.sap.com/doc/d83af7d22baa49829e464111338e9c12/12.0.23/en-US/loio60d658f576b6452eb0f943c04b354018_en.pdf
+    locator: Introduction p.4 ; intégration S/4HANA Cloud et surveillance p.13–15
+    summary: Politiques, conformité, contrôles internes, tests et remédiation.
+    version: 12.0 SP23
+    consulted_on: '2026-10-12'
+    limits: Produit complémentaire, intégration S/4HANA documentée ; ne démontre pas toute une fonction de gestion des risques
+      ou d’audit indépendant.
+    native_id: null
+  - id: ELM874
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Finance
+    title: Audit policy rules
+    url: https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/audit-policy-rules
+    locator: Audit policies ; document selection rules
+    summary: Contrôles ciblés sur dépenses, factures fournisseur et commandes d’achat.
+    version: Documentation évolutive
+    consulted_on: '2026-10-12'
+    limits: Contrôles applicatifs ciblés ; ni fonction complète d’audit d’entreprise, ni toute la gestion des risques.
+    native_id: null
+  - id: ELM875
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Finance and Operations
+    title: Set up segregation of duties
+    url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/sysadmin/set-up-segregation-duties
+    locator: Segregation rules ; conflict validation
+    summary: Séparation de responsabilités et contrôle de conflits.
+    version: Page évolutive ; édition globale non indiquée
+    consulted_on: '2026-10-12'
+    limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
+    native_id: null
+  - id: ELM876
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Warehouse management overview
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+    locator: Inbound ; outbound ; warehouse management only mode
+    summary: Réception, rangement, stock physique, préparation et expédition ; entrepôt pouvant servir des systèmes externes.
+    version: Page mise à jour 2026-10-09
+    consulted_on: '2026-10-12'
+    limits: Responsabilités d’entrepôt et mode de prestation autonome ; pas réalisation C-LOG ni couverture complète des retours
+      et services supplémentaires.
+    native_id: null
+  - id: ELM877
+    reference_id: MKT14
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Transportation management overview
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+    locator: Transportation planning ; inbound and outbound transportation
+    summary: Organisation des chargements, itinéraires et transports entrants et sortants.
+    version: Documentation évolutive
+    consulted_on: '2026-10-12'
+    limits: Appui au pilotage transport ; ne démontre pas toute la résolution des exceptions ni le mandat de chaque prestataire.
+    native_id: null
+  - id: ELM878
+    reference_id: MKT13
+    vendor: SAP
+    product: SAP S/4HANA Sales — SAP Credit Management
+    title: Working with SAP Credit Management
+    url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/working-with-sap-credit-management_d6b177ee-a8bb-4b77-80dc-87c04a9dd3f1
+    locator: Credit controller ; risk ; limits ; sales document release
+    summary: Autorité de crédit et interactions avec les ventes.
+    version: Page évolutive ; édition globale non indiquée
+    consulted_on: '2026-10-12'
+    limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
+    native_id: null
+  - id: ELM879
+    reference_id: MKT96
+    vendor: Centric Software
+    product: Centric PLM et Centric Planning
+    title: Fashion & Apparel
+    url: https://www.centricsoftware.com/fashion-apparel
+    locator: PLM ; Planning ; Visual Boards ; product lifecycle
+    summary: Préparation des collections et développement produit, distingués de la planification.
+    version: Page commerciale évolutive ; édition non indiquée
+    consulted_on: '2026-10-12'
+    limits: Complément sectoriel mode ; ni socle Dynamics/S/4HANA, ni preuve de couverture Beaumanoir, ni taxonomie commune.
+    native_id: null
+  limits:
+  - Sources effectivement consultées durant l’audit ; consultation réutilisée après acquiescement.
+  - Regroupements FLOW ; pas de taxonomie commune ni consensus éditeur.
+  - SAP Analytics Cloud, IBP et Process Control sont des compléments distincts de S/4HANA.
+  - Lacunes explicites à la maille de Sampling & Product Validation, Strategy & Objectives, Audit & Assurance, Value-Added
+    & Returns Operations et Transport Exception Management.
+dependency_hypotheses:
+- dependency: Définition produit → planning et références FLOW
+  risk: Identité, variante, unité ou version non stabilisée.
+  status: hypothesis_not_observed
+- dependency: Collection Planning → Demand Planning
+  risk: Confusion entre intention de collection et prévision chiffrée.
+  status: hypothesis_not_observed
+- dependency: Plans → Availability
+  risk: Mélange de scénarios, versions ou propositions avec des engagements fermes.
+  status: hypothesis_not_observed
+- dependency: FLOW → Warehousing
+  risk: Modification de demande après début de préparation.
+  status: hypothesis_not_observed
+- dependency: FLOW → Transportation
+  risk: Adaptation locale remettant en cause une promesse.
+  status: hypothesis_not_observed
+- dependency: Logistics → FLOW
+  risk: Événements tardifs, dupliqués ou corrigés.
+  status: hypothesis_not_observed
+- dependency: Finance → Sales / FLOW
+  risk: Profil de crédit périmé ou autorité de déblocage ambiguë.
+  status: hypothesis_not_observed
+- dependency: FLOW → Financial Accounting
+  risk: Correction opérationnelle mal traduite ou doublonnée.
+  status: hypothesis_not_observed
+- dependency: Exigences entreprise → règles locales
+  risk: Version applicable, exception ou responsable ambigu.
+  status: hypothesis_not_observed
+deferred:
+- Nouveau domaine Customs & Trade Operations ; autonomie non établie.
+- Domaine RH ; absent de la proposition finale validée.
+- Hotspots constatés et contrats techniques installés.
+- Nouvelle publication ; commit et push.
+- 'Adaptation du placement Carte à quatre systèmes : règle actuelle limitée à trois ; position à définir.'
+publication_delivery:
+  state: applied
+  source_refs:
+  - U975
+  - U976
+  summary: Quatre systèmes ; Logistics autonome, deux domaines logistiques, domaines et sous-domaines de contexte validés
+    ; capacités et contrats FLOW conservés.
+  required_nodes:
+  - id: domain-product-portfolio-collection
+    kind: domain
+    fields:
+      name: Product Portfolio & Collection Management
+    parent: system-design-development
+    parent_type: presents
+  - id: subdomain-product-strategy-requirements
+    kind: area
+    fields:
+      name: Product Strategy & Requirements
+    parent: domain-product-portfolio-collection
+    parent_type: presents
+  - id: subdomain-collection-planning
+    kind: area
+    fields:
+      name: Collection Planning
+    parent: domain-product-portfolio-collection
+    parent_type: presents
+  - id: subdomain-development-planning
+    kind: area
+    fields:
+      name: Development Planning
+    parent: domain-product-portfolio-collection
+    parent_type: presents
+  - id: domain-product-development
+    kind: domain
+    fields:
+      name: Product Development
+    parent: system-design-development
+    parent_type: presents
+  - id: subdomain-product-design-specification
+    kind: area
+    fields:
+      name: Product Design & Specification
+    parent: domain-product-development
+    parent_type: presents
+  - id: subdomain-material-component-development
+    kind: area
+    fields:
+      name: Material & Component Development
+    parent: domain-product-development
+    parent_type: presents
+  - id: subdomain-sampling-product-validation
+    kind: area
+    fields:
+      name: Sampling & Product Validation
+    parent: domain-product-development
+    parent_type: presents
+  - id: domain-product-definition-lifecycle
+    kind: domain
+    fields:
+      name: Product Definition & Lifecycle Management
+    parent: system-design-development
+    parent_type: presents
+  - id: subdomain-product-definition-variants
+    kind: area
+    fields:
+      name: Product Definition & Variants
+    parent: domain-product-definition-lifecycle
+    parent_type: presents
+  - id: subdomain-product-documentation-classification
+    kind: area
+    fields:
+      name: Product Documentation & Classification
+    parent: domain-product-definition-lifecycle
+    parent_type: presents
+  - id: subdomain-product-change-release
+    kind: area
+    fields:
+      name: Product Change & Release Management
+    parent: domain-product-definition-lifecycle
+    parent_type: presents
+  - id: subdomain-demand-planning
+    kind: area
+    fields:
+      name: Demand Planning
+    parent: domain-plan
+    parent_type: presents
+  - id: subdomain-supply-planning
+    kind: area
+    fields:
+      name: Supply Planning
+    parent: domain-plan
+    parent_type: presents
+  - id: subdomain-plan-reconciliation-scenarios
+    kind: area
+    fields:
+      name: Plan Reconciliation & Scenario Management
+    parent: domain-plan
+    parent_type: presents
+  - id: domain-enterprise-planning-performance
+    kind: domain
+    fields:
+      name: Enterprise Planning & Performance
+    parent: system-enterprise-management-control
+    parent_type: presents
+  - id: subdomain-strategy-objectives
+    kind: area
+    fields:
+      name: Strategy & Objectives
+    parent: domain-enterprise-planning-performance
+    parent_type: presents
+  - id: subdomain-budgeting-forecasting
+    kind: area
+    fields:
+      name: Budgeting & Forecasting
+    parent: domain-enterprise-planning-performance
+    parent_type: presents
+  - id: subdomain-performance-analysis
+    kind: area
+    fields:
+      name: Performance Analysis
+    parent: domain-enterprise-planning-performance
+    parent_type: presents
+  - id: domain-governance-risk-compliance
+    kind: domain
+    fields:
+      name: Governance, Risk & Compliance
+    parent: system-enterprise-management-control
+    parent_type: presents
+  - id: subdomain-policy-compliance
+    kind: area
+    fields:
+      name: Policy & Compliance Management
+    parent: domain-governance-risk-compliance
+    parent_type: presents
+  - id: subdomain-risk-internal-control
+    kind: area
+    fields:
+      name: Risk & Internal Control Management
+    parent: domain-governance-risk-compliance
+    parent_type: presents
+  - id: subdomain-audit-assurance
+    kind: area
+    fields:
+      name: Audit & Assurance
+    parent: domain-governance-risk-compliance
+    parent_type: presents
+  - id: subdomain-cost-profitability
+    kind: area
+    fields:
+      name: Cost & Profitability Management
+    parent: domain-finance
+    parent_type: presents
+  - id: subdomain-credit-collections
+    kind: area
+    fields:
+      name: Credit & Collections Management
+    parent: domain-finance
+    parent_type: presents
+  - id: subdomain-treasury-cash
+    kind: area
+    fields:
+      name: Treasury & Cash Management
+    parent: domain-finance
+    parent_type: presents
+  - id: domain-warehousing
+    kind: domain
+    fields:
+      name: Warehousing
+    parent: domain-logistics-execution
+    parent_type: presents
+  - id: subdomain-inbound-operations
+    kind: area
+    fields:
+      name: Inbound Operations
+    parent: domain-warehousing
+    parent_type: presents
+  - id: subdomain-storage-inventory-control
+    kind: area
+    fields:
+      name: Storage & Inventory Control
+    parent: domain-warehousing
+    parent_type: presents
+  - id: subdomain-outbound-operations
+    kind: area
+    fields:
+      name: Outbound Operations
+    parent: domain-warehousing
+    parent_type: presents
+  - id: subdomain-value-added-returns
+    kind: area
+    fields:
+      name: Value-Added & Returns Operations
+    parent: domain-warehousing
+    parent_type: presents
+  - id: domain-transportation
+    kind: domain
+    fields:
+      name: Transportation
+    parent: domain-logistics-execution
+    parent_type: presents
+  - id: subdomain-transport-planning-dispatch
+    kind: area
+    fields:
+      name: Transport Planning & Dispatch
+    parent: domain-transportation
+    parent_type: presents
+  - id: subdomain-transport-execution-tracking
+    kind: area
+    fields:
+      name: Transport Execution & Tracking
+    parent: domain-transportation
+    parent_type: presents
+  - id: subdomain-transport-exception
+    kind: area
+    fields:
+      name: Transport Exception Management
+    parent: domain-transportation
+    parent_type: presents
+  - id: domain-logistics-execution
+    kind: business_system
+    fields:
+      name: Logistics
+    parent: beaumanoir-target-universe
+    parent_type: contains
+  - id: system-business-operations
+    kind: business_system
+    fields:
+      name: Business Operations
+    parent: beaumanoir-target-universe
+    parent_type: contains
+  - id: system-design-development
+    kind: business_system
+    fields:
+      name: Design & Development
+    parent: beaumanoir-target-universe
+    parent_type: contains
+  - id: system-enterprise-management-control
+    kind: business_system
+    fields:
+      name: Enterprise Management & Control
+    parent: beaumanoir-target-universe
+    parent_type: contains
+  - id: domain-finance
+    kind: domain
+    fields:
+      name: Finance
+    parent: system-enterprise-management-control
+    parent_type: presents
+  - id: domain-plan
+    kind: domain
+    fields:
+      name: Demand & Supply Planning
+    parent: system-business-operations
+    parent_type: presents
+  - id: beaumanoir-target-universe
+    kind: universe
+    fields:
+      name: Enterprise Architecture
+  - id: plans-ingestion
+    kind: capability
+    fields:
+      name: Plan Ingestion
+    parent: ba-inbound-information-integration
+    parent_type: contains
+  required_glossary:
+  - id: TER098
+    field_sha256:
+      name: 19c9924a608483cf8e7a9cb37209692aa6994de205662d3e0343a034c06d9c8e
+      short_description: 417e541f121d901a36f0cebe62423b4ae428f5224e68b846db9abe1488c17cef
+      definition: 417e541f121d901a36f0cebe62423b4ae428f5224e68b846db9abe1488c17cef
+      context: bdd8ada162d3e1f86bde9f66e8c92426200da4aced1fd19a5c8246a8fb9bb020
+  - id: TER105
+    field_sha256:
+      name: 9e4fe38dac2ea6922b33e67a50478be47931468404e97e198db2612680617afd
+      short_description: 6005cbcaf7e7423ffbc226ee192b7a6e57aef1e3fc1f29bd7769e632c684e1ed
+      definition: 423d7ec10063c3f5a3f64598a3fae05690dc7e0faba7ab305cec6522e69d0c48
+      context: 35b43caa0d8351d0bd9155ecca28e35f8e92dd3bd877bea1ee6bb006ff50eb71
+  - id: TER106
+    field_sha256:
+      name: 62cff1fd7f252c9fb41ffa48f6054716c2fa9050f1a27a4bd5a3043bc79cd858
+      short_description: 2ef494fc552a1c7eb18b32775711926f5a3ede5ea721f0ee5274a773adfbd411
+      definition: d763301193778deff03430f3ec24b47b9b8c52406afa25c3905003a1a62c9a54
+      context: c8156a25e81f94a8b55f3e1c51f5da27a5054e199fd599118c4f22ac5d27a72a
+  - id: TER107
+    field_sha256:
+      name: c1053b71e628d7ad70eaad72f74e5846a0346e4daaa9e28ee83b07a7cc839eee
+      short_description: 0c969882c67c486bca128133ca5031c924437cddc307727419d9c05e4535d5e8
+      definition: c52034b42e1aa86b3804a0fe6f9d53a2f26cef9433b69917164566f786e494e8
+      context: 7d2a5e2dd65a9828317c41413686c5de04e9abec2d4ada3f7303fd32f8f8285e
+  - id: TER110
+    field_sha256:
+      name: 8588f7a50477b84544715b91382cd2941451d5051c3cc33c3784b760cf5ef3d5
+      short_description: a3d844778775ad6f7cdc34eebfa58f3f61d4dfc87e9184ab787df985f92bd7fc
+      definition: 3fe214159521f0e932252d59e0ee13d06c3da11e23738120a9504a5e61becab5
+      context: 56006b860fe6d15fce8f3ff1648213cdd4bcb65c031a553a2c6667b8886922a1
+  - id: TER111
+    field_sha256:
+      name: 5619b4f11119346d80f2ca3797ea6829c527800dbce3e9c7defae8f5da4ab948
+      short_description: 0b99135fd4f118ebf4f2fad0f3be3964ca86d015d591e0ee34babe9edb77bcea
+      definition: 407f6cefe428a5a893f1247680d6da56c529297376518c55179b75a831d1d968
+      context: 9090366498f1380aa94dad5160e30ffc0cf6ee1589371d646ed1bb2c93d3d70a
+  - id: TER117
+    field_sha256:
+      name: a5a718fe610ba97267620b39803f6ad2827c00457943240dc942a5b2223a5f66
+      short_description: 0d7e2df68965a2341ab9a2b217ff4df72f24d8697f2d131a3d2d940975e266d3
+      definition: 0d7e2df68965a2341ab9a2b217ff4df72f24d8697f2d131a3d2d940975e266d3
+      context: 46df243c52187189d79b374dc3445bdc48ed9e44eaeaaf2f17910d0ba2436085
+  - id: TER151
+    field_sha256:
+      name: 91da9b278b01a755f4c5f54f5ec76188c3e7297075ede12f5ef66ca8910af57a
+      short_description: e4a2cd7c5fe958169e52bf8bec8059fcb528b56262977172aac76dd4196d1990
+      definition: 871add9bbadccd5be48c214175bc2c854e99142f4dc3e8d5ee2d1436d79fc90a
+      context: 29f72181262a5ff7cb45120814d3faecfe8dba834634ffe842cef90f51b36dd4
+  - id: TER203
+    field_sha256:
+      name: cbbeeae0f090eb364352058a528ff31ed4678a2fa7f79c9bb440c3d7efb6b82e
+      short_description: 774cdeb783022cc6b9f9c6bbf82bb0e0169f0ca71b612118422d2a434f6aa0ba
+      definition: cf46bbf9e32f169e486a0741ee3d623593f5f656a28013795b9fb3ad9bb7c5f1
+      context: 05f1bee7a44d6252cf42ba0122ed962a6e1f69437d733c9780ab25dcbb42adaa
+  - id: TER206
+    field_sha256:
+      name: 934ba94c05d515343fd359aa27cdb57df814c66d0a02d5aca1d7bf00c41e5e82
+      short_description: 6793795331e27bca6d5c85ec8cffea54397b349b5ad741303f16b5d7ee162e41
+      definition: 6793795331e27bca6d5c85ec8cffea54397b349b5ad741303f16b5d7ee162e41
+      context: b4812f9ea57b1b5b76e9f8157ce54c5d84a18e522e4126d156ad93b765a48348
+  - id: TER207
+    field_sha256:
+      name: c675217e3aca1b2e8ea34009ee12d23dc3da8bc34971475ed3626c99335f087f
+      short_description: 702e1ac9f501ff1beed9b63e0ae1c4bf4bd07ec5a542d6335c9f275d14caa7a3
+      definition: aa67a8d97d3bb97b03018a03f3f201cd377f643d9189479ca132b5e9c2621afc
+      context: 21c5f93a980fe16d87b4097beed539d1c7584b97c867a7cce5a8b4ed7ca2757f
+  - id: TER208
+    field_sha256:
+      name: f2508d5b4548c51ca579a0461822cd24c20dae07ed021f98cabe7f6fe5a09408
+      short_description: 156a38ed7d4f1cc97b1f59892f0320f01fea51bcc25f55d8b15283524795bfc0
+      definition: 156a38ed7d4f1cc97b1f59892f0320f01fea51bcc25f55d8b15283524795bfc0
+      context: 05ffc6a7db1ecbcd0ba6fc695487844dc84f417d7ec051a2cde77f8daecd09e2
+  - id: TER209
+    field_sha256:
+      name: 9f2908f0504491f8733a9356da4daf3f2689d748dbd1002822dd794b37563ab3
+      short_description: 2e51068364a7270b1e0673e50e766c893f71009ad1400fd402c87904ab43e76a
+      definition: 2e51068364a7270b1e0673e50e766c893f71009ad1400fd402c87904ab43e76a
+      context: 55373e3a64db5757119dc0f963d2d8a65b9edd939cc650cf6cf055b9b83f2de4
+  - id: TER210
+    field_sha256:
+      name: f56150e29bcd44a7da5b4db049f5a98bff102cc1462b861ca9cfd2118861e36e
+      short_description: c48bcd0f97b3edf2193cf9a90c35fe60b18d60f1692dc8bc06ee6f024305de92
+      definition: c48bcd0f97b3edf2193cf9a90c35fe60b18d60f1692dc8bc06ee6f024305de92
+      context: 47fd02bde71f6af45992ccfd2a6f9b66a51a0d9b35e569abd5b625051132cdda
+  - id: TER211
+    field_sha256:
+      name: df432f971ab851ed7ac3d08d77deafab918ab1b772127aa24fe498e5e73e0144
+      short_description: 3381de94c5e74077a9aede4c1609cdf3d4316474318dcbdac73fdf9943f796db
+      definition: df66693c8505d33cc6c18b8e096817d95c7a2ee17b4c1f4fa8719ed2896641b0
+      context: 6ab1ff374583c629f4794ad1f583826782cd7ed9a02dab18b993688247cf1f5b
+  - id: TER212
+    field_sha256:
+      name: 989215241f081df6427486144e970aa6506e6bc8fa5e8355d862c96d03e801a7
+      short_description: 64f294eb9642c8be31fd7732a2d88dfd5898609319c0bcebe92aa121925ba65f
+      definition: 64f294eb9642c8be31fd7732a2d88dfd5898609319c0bcebe92aa121925ba65f
+      context: f7336d8d18aa1b3282d89d76fbc9f784fcfe04303514a19fd4f498376df1c183
+  - id: TER213
+    field_sha256:
+      name: 8382a5510f6b7217bec37522f8a36bbf5b3eee444e4d6776d4b2f6165622442f
+      short_description: f18726322839d9e48428e5457be5bf6a388c7227fc655039bb46635a5dd42ba7
+      definition: f18726322839d9e48428e5457be5bf6a388c7227fc655039bb46635a5dd42ba7
+      context: 9e8903886661d882c50f3978d1881ccc0cb06357553845d378128220af9bd705
+  - id: TER214
+    field_sha256:
+      name: 0aacbfe1c46320d03a22ebd0c9b500fcc945a4d95b9ef3165f8b2c8aacf62299
+      short_description: 7784c48a42ad85bf81f96870868b10d770076a66adde8917870daa13390de578
+      definition: 7c6c846a4c8ac5fc0a93d89f166cd9329ec25fc9a0ca988818efdc7f2cc9fb45
+      context: 5b720a7ce1e16350878a784084b41ddb5fd4d7228096b967000034e886949571
+  - id: TER215
+    field_sha256:
+      name: c60037080c5f4ff419d0fd5354ec86f498fafb270a0cbec0607c97d7276e9c9b
+      short_description: a4aee65fb95f75b22a3a8fad90fd0a6aa69f747ec08ba90188df82495a87c0eb
+      definition: a4aee65fb95f75b22a3a8fad90fd0a6aa69f747ec08ba90188df82495a87c0eb
+      context: f29adbc2ed3962a90590ec36fe8e1e24f482ada1c5f543435828c44da1a8246f
+  - id: TER216
+    field_sha256:
+      name: d26ca222a51770b89b04ecaefc9a42e0c571a1e6861c5566fd1c93b19a37d3c8
+      short_description: 50a2ebebe499b7a763b0060246ee6366f0743b44671a126f5139b77652267ec1
+      definition: 50a2ebebe499b7a763b0060246ee6366f0743b44671a126f5139b77652267ec1
+      context: 91fb449d7a3cbb696eedc0c446c51302b0ca048d99de8080cee5f40a7a0f1827
+  - id: TER217
+    field_sha256:
+      name: 39a4619ce6357c152a2070bd2358e23cf08aeb1a6a37e1444e21f245e6008fc9
+      short_description: d00bfdbc2b5fee64504f7ca2f3ca085cb4c6c8b2fef7c1569877b8a24ff16c98
+      definition: d00bfdbc2b5fee64504f7ca2f3ca085cb4c6c8b2fef7c1569877b8a24ff16c98
+      context: 5044fdfda277c496d6fbbe62fb96f705068c4502c24895656b41d3e7778910e3
+  - id: TER218
+    field_sha256:
+      name: 58e782e8c07ea168859c442c88a0c738fa470e91ab9d95e2f45a1847e94f0b5d
+      short_description: 9a1dc6bfc23693034ec81f25882302987a35809a140ccbd2999f3088a01f97ca
+      definition: 9a1dc6bfc23693034ec81f25882302987a35809a140ccbd2999f3088a01f97ca
+      context: 03f27523002c11ef23013506e1d5174f283657a926c9a7bfe78094140366c3e7
+  - id: TER219
+    field_sha256:
+      name: 84991bd499e967d9f67820a1bbc76dca52a7877d30cd30f5c0d4b6e774226082
+      short_description: 4a53fc4b419b59585d618bd42452c331a8e6f93b076f829aaacbda7ea4813bc8
+      definition: 4a53fc4b419b59585d618bd42452c331a8e6f93b076f829aaacbda7ea4813bc8
+      context: a25e2ad5aad5d6293690d2f25278ec4adecaeebe1a94d258ecd0ac992022e36e
+  - id: TER220
+    field_sha256:
+      name: 2e5c8bd0c6682a2604e5253c85d1eb72892bb26b59fe9335c3124934c5301d1d
+      short_description: 438e6dde6b18fc6343489c38d3103dc43e7941d1eefc63a03a34625a4e0b31e8
+      definition: 438e6dde6b18fc6343489c38d3103dc43e7941d1eefc63a03a34625a4e0b31e8
+      context: 6f9c35da49db1f3438785a6aa598b4a8458b82443121658de7bfe681291e03cb
+  - id: TER221
+    field_sha256:
+      name: c8304c644a21d9c0fdf8842486ebfdfcc69d1668999f19473a3cc138c74bd57c
+      short_description: 0984fa0093a76d827ae96fb01448ee131b940724406b7cfd6058ae2ffdf0b73e
+      definition: 0984fa0093a76d827ae96fb01448ee131b940724406b7cfd6058ae2ffdf0b73e
+      context: 50190fea67b7ba6ca8072f1ccaf6b534b7b8d7728c3fb2792d85c8ae9b2f3e49
+  - id: TER222
+    field_sha256:
+      name: 8a8eb2656791f86bea203557399f1ddd4bb6d52f88a2b5bc2db23ea56503f493
+      short_description: 66803fa38dd51229b087d59036f256db9fb77a6df2f99b31cad550dd49e03fbf
+      definition: 2e69123ac55d0167e693be2ed94c3f4de03288c6658d08538a787f4a87cac257
+      context: d819e369423c5cfdb876564aaea30f4f731291276c13a1ebd388b0c1e9dd975a
+  - id: TER223
+    field_sha256:
+      name: 202fea7ec7447a08543cd39279ac56f83c4a00b877c2dec1e31d6a05c97a1ed8
+      short_description: c95021b7521a8dd4943d6e67a92d2b03f81a7a58a5dfd1e5b15e7d23630b275b
+      definition: c95021b7521a8dd4943d6e67a92d2b03f81a7a58a5dfd1e5b15e7d23630b275b
+      context: 8f291f74304278c713eccd39e6e442765f4d8e15a09a1291cf726d44a60a7053
+  - id: TER224
+    field_sha256:
+      name: 0445176752bd15a3559efc5d53f0b9ee6128f4f37bdadd0340bf0ed64d2f4f72
+      short_description: 9382a6559058ce64b24b625e93e251a27c38a2a692c0602b540ba9c164a3e666
+      definition: 9382a6559058ce64b24b625e93e251a27c38a2a692c0602b540ba9c164a3e666
+      context: c67680aa2f19c16843f32a3e9b6e54311407ec34e9535cafd34c17b2ac568796
+  - id: TER225
+    field_sha256:
+      name: 3f35a30554dc4c73a165d990182b290b390595f38f35a25183d72c319415bb8d
+      short_description: 3c387a36e1a0fbf939ad79a81c0f57a852e7628627b75fae67b9a237a78d0623
+      definition: 7d7d4af6594c80386f3dccb2008f051194464092fe0553224616476398e2d7e1
+      context: c1d6480cadfa872bc738bf43ef9b50be34bcadb8c3e0c324d7febf2eed17225f
+  - id: TER226
+    field_sha256:
+      name: e6747424edd1333b94518a934e8537fef0a72ca9754810a512c9a9c83927720b
+      short_description: e50fc5c348c81e2d621fe2c1434f7b961a956421ac79892b017f677d961fb08b
+      definition: 886cf59d2eea444686b75385178b70ae3bfbb3b66fac827fb557df7c09446ddc
+      context: a5fbf8edf2dbadc44e0ecdf0c6baa2bfa8e2697c6f358da55b44be1146c1ee61
+  - id: TER227
+    field_sha256:
+      name: 705f349e87574cdc9170edce012dc9f07397366a32a4d6e8b5cfae1dd46d31cf
+      short_description: 751ee2fb5ee1d73de9559a3e27444daf71c0dcdfbc0594e40a81f419bb4efdb0
+      definition: 751ee2fb5ee1d73de9559a3e27444daf71c0dcdfbc0594e40a81f419bb4efdb0
+      context: b680b1907c637ce054588fd7079159bab9003f2ab6f9060126d40b376823b328
+  - id: TER228
+    field_sha256:
+      name: 298ba652823e057a591e2d64d8585708d997d51f336473b3c189d90a5c46e711
+      short_description: 90a5c88b871126d3bed0e1cccf2455daa9698f068acb67eb7dfc80d6e22ceb38
+      definition: 90a5c88b871126d3bed0e1cccf2455daa9698f068acb67eb7dfc80d6e22ceb38
+      context: 78ac529f4780c41ee75b7005bcde04fb785bf8376bb4e951af986959fd803b34
+  - id: TER229
+    field_sha256:
+      name: c1e4ca6d8faafedf9aeea961a6d99572fa970c4d65771f055431f2999ac284f3
+      short_description: 36b322a811c58e0fbe64acbd3210f7d4047cd96f20edb1b33acbb4f7e55ad00a
+      definition: 9f7e0f98c0510905663d7591e4459c3d1dc21ed1aba34ce0e392242995635bb5
+      context: d344b3ddb1b6839c1865a4696814c201112d43ade21c5ba83bc07e25b084644b
+  - id: TER230
+    field_sha256:
+      name: 3e6c1561c00580af20e9a3bc8e12d11da7ee90dd3f06c4a5171a07aa61e2d41d
+      short_description: 42c4fae1d9024eab092c47691ae8e3e289708d4c7cc4327c4219591de06fa3c3
+      definition: d9ee7e5f691ae1cab1e91d5d7327438c3acc530f7d0141622c94eade08ab7f0f
+      context: af9bd8b1e18f299dcbccdee19d92fbade7fdb97371ba7d3dc0dfaa381c5014dc
+  - id: TER231
+    field_sha256:
+      name: ef1035c8f0170c38e33607f14354ceea735a4dd3ee5a945698333ad402b6d01b
+      short_description: a98a146cd1b29a1e0c004523e15a4ec114d7c4bc9ce14bdf9241af5962514c92
+      definition: a98a146cd1b29a1e0c004523e15a4ec114d7c4bc9ce14bdf9241af5962514c92
+      context: 7977acce14c1d2f83386bb8e5cef1c9e4dd3ce4266d4507a5cc866a910a3e72f
+  - id: TER232
+    field_sha256:
+      name: 46d24cc01e21bf339636e65fa741d279ff7431008e326afce8bb1553498f52d4
+      short_description: e7da693736b35cafa8f0ad26d739fcccae88d7d06f324f284cae89366531ab98
+      definition: e7da693736b35cafa8f0ad26d739fcccae88d7d06f324f284cae89366531ab98
+      context: b556b9527060b007ee2b994ca6797cce4963b2c6263c65db8b2abafceadcdd12
+  - id: TER233
+    field_sha256:
+      name: 36b14801f55ffa9ce9e0104ba3fbffd6cd952ca3568626c6f9ce718516283d1e
+      short_description: 691cded75f61eac786b2fb24fd66f63735c20b58f420e683fae5fc6a58f06015
+      definition: 691cded75f61eac786b2fb24fd66f63735c20b58f420e683fae5fc6a58f06015
+      context: 25d70aa5bbb5991b10d2bdf63a9d77279dbb8a5fbf75e5c3f98a3ab857a28c64
+  - id: TER234
+    field_sha256:
+      name: 2d1918c24f77789e1bbfa44252840e6b96e5af0f6b90a6d91dff493e4f3b31b1
+      short_description: e1fb26a8a69aeaf91602c3932c6d98396656cd0c0eb1c5befa39de8ab276578c
+      definition: 71eaf45b5c38c338a054bf4384d70ad6d0e558c390e2c679c8ffc386c4f3d0bd
+      context: 95abbe0c4c02d5c3fc9ccac295ff07a323055344007c0c02f477ec2ab677cc56
+  - id: TER235
+    field_sha256:
+      name: 7fa3c08e9142000845f98b9e0c60bf66a8874c3e2fa5aac6f8bd105c79af9a35
+      short_description: a0c55831002857ce307b71fe603b04b4a7614ced335e332e4d71772358502f46
+      definition: a0c55831002857ce307b71fe603b04b4a7614ced335e332e4d71772358502f46
+      context: 44f6115bcada9b9f0b42566e8a2f50f73d000784f2804c14c5c824d4230a2e9e
+  - id: TER236
+    field_sha256:
+      name: 55f72dd182afe9d15ac2ed7cb4e72ea29d39b3f8c6fff1d4bc8375f8dd96175e
+      short_description: 1e2d838b8bc37c62346f2bbcb712dda7df5283eda970c775723a2a60e255e6c1
+      definition: 1e2d838b8bc37c62346f2bbcb712dda7df5283eda970c775723a2a60e255e6c1
+      context: e522efbb216d43ac61798eb4918324afddad327638ca067c3b17c58241d4e4f6
+  - id: TER237
+    field_sha256:
+      name: 37dd65ca6c00f83ff825ca9884d504d139c7cbd0833eb741a078ef3f00b5a1e3
+      short_description: 6a888ff8f99a74bae7db617ac674914bc70a2dd7f9d1a8c045f6695ad6b0db51
+      definition: 6a888ff8f99a74bae7db617ac674914bc70a2dd7f9d1a8c045f6695ad6b0db51
+      context: 9fe6778caf91586adc21de0a55666f1c4211808e208847faf275ec1d73eb48f7
+  - id: TER238
+    field_sha256:
+      name: c894339fb093c3e672e023fd05e8d4889d12963762cfa5eb9ca159194836bed9
+      short_description: 4d79ddd9c759ed12a04e01258877cdd0cf3bd75f2b60b97688e5614a7519535f
+      definition: 4d79ddd9c759ed12a04e01258877cdd0cf3bd75f2b60b97688e5614a7519535f
+      context: f7437bf98e6cbfa58ddc792caa3b54a4dc22c1d57e7c1fc646ed5c6a105e2aa1
+  - id: TER239
+    field_sha256:
+      name: ae14ea5c874412948c6d7920e2cfaf8772a3b6ae95421ecde9ea2fdec1b0ca68
+      short_description: 2db22447f799a4543cdd8fd5d8315466883a43aa2ba9784b77fccff11cca1330
+      definition: 2db22447f799a4543cdd8fd5d8315466883a43aa2ba9784b77fccff11cca1330
+      context: 73bae9182062319cd6c0828e23f9103856e81ba420760990a6c9f7779f32631b
+  - id: TER240
+    field_sha256:
+      name: 6dc5afe9a92efb146c9b9a03c9ddff6dbe4f7c98f8e06e0fcf5ec3dcd7dea127
+      short_description: ea81966278a9a70af78bd327e822af9d92256fdbe2cfc40a2b8bbd1e85612257
+      definition: ea81966278a9a70af78bd327e822af9d92256fdbe2cfc40a2b8bbd1e85612257
+      context: 08fa6633f7051c9dcbf0f0a5bf552a15d02fad4587bae7b2b98501e1c13a3624
+clarification_U976:
+  verbatim: La supply plan du domaine orchestration, c'est le résultat de la planification. Construire le plan est un domaine
+    à l'extérieur d'orchestration.
+  meaning: Supply Plan est produit par Supply Planning à l’extérieur de Supply Chain Orchestration ; FLOW reçoit et exploite
+    ce résultat. Matching Master Plan et contrat hors achats inchangés.
+  source_refs:
+  - U976
+supersession_U981: Le raccordement financier reste conservé ; Accounting Interpretation devient une responsabilité décrite
+  dans Financial Accounting, sans capacité ni Business Area détaillée. La formulation initiale du contrat U975 reste historique.
+delivery_reconciliation_U987:
+  source_refs:
+  - U987
+  - U989
+  reason: Alignement des libellés liés à Commerce, sans changement des responsabilités ni extension des accords.
+  previous_glossary_catalog_checks:
+  - collection: terms
+    previous_requirement:
+      id: TER106
+      field_sha256:
+        name: 62cff1fd7f252c9fb41ffa48f6054716c2fa9050f1a27a4bd5a3043bc79cd858
+        short_description: 2ef494fc552a1c7eb18b32775711926f5a3ede5ea721f0ee5274a773adfbd411
+        definition: d763301193778deff03430f3ec24b47b9b8c52406afa25c3905003a1a62c9a54
+        context: 466bfc1682ab71a68ffd6d252cac2e60cfe371eef5e0e36c0320ba02b7fb8391
+  - collection: terms
+    previous_requirement:
+      id: TER208
+      field_sha256:
+        name: f2508d5b4548c51ca579a0461822cd24c20dae07ed021f98cabe7f6fe5a09408
+        short_description: 156a38ed7d4f1cc97b1f59892f0320f01fea51bcc25f55d8b15283524795bfc0
+        definition: 156a38ed7d4f1cc97b1f59892f0320f01fea51bcc25f55d8b15283524795bfc0
+        context: d5263bf0367d06c84c2fa2188e2a7d91b12cad77e1a5f601f9a831970ed07ca8
+  - collection: terms
+    previous_requirement:
+      id: TER216
+      field_sha256:
+        name: d26ca222a51770b89b04ecaefc9a42e0c571a1e6861c5566fd1c93b19a37d3c8
+        short_description: 50a2ebebe499b7a763b0060246ee6366f0743b44671a126f5139b77652267ec1
+        definition: 50a2ebebe499b7a763b0060246ee6366f0743b44671a126f5139b77652267ec1
+        context: 44be26e88b624b6d493757e5783f80b77009c53957db8980c3aad970f4d24aa0
+  - collection: terms
+    previous_requirement:
+      id: TER230
+      field_sha256:
+        name: 3e6c1561c00580af20e9a3bc8e12d11da7ee90dd3f06c4a5171a07aa61e2d41d
+        short_description: 42c4fae1d9024eab092c47691ae8e3e289708d4c7cc4327c4219591de06fa3c3
+        definition: d9ee7e5f691ae1cab1e91d5d7327438c3acc530f7d0141622c94eade08ab7f0f
+        context: 05a3328825162469a15cb73fc3219b91de0018bf7b43e0a7c8d2d3f578df9620
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: TER106
+    field_sha256:
+      name: 62cff1fd7f252c9fb41ffa48f6054716c2fa9050f1a27a4bd5a3043bc79cd858
+      short_description: 2ef494fc552a1c7eb18b32775711926f5a3ede5ea721f0ee5274a773adfbd411
+      definition: d763301193778deff03430f3ec24b47b9b8c52406afa25c3905003a1a62c9a54
+      context: 3a1e2bc5e48ca5ae4e3ec2364b9628ca3f5c8a693c84f2ca0f8f0e17764fbcae
+  - id: TER117
+    field_sha256:
+      name: a5a718fe610ba97267620b39803f6ad2827c00457943240dc942a5b2223a5f66
+      short_description: 0d7e2df68965a2341ab9a2b217ff4df72f24d8697f2d131a3d2d940975e266d3
+      definition: 0d7e2df68965a2341ab9a2b217ff4df72f24d8697f2d131a3d2d940975e266d3
+      context: 5677b1399d5e528c89371df1ad9823ea4f05cb86c783fe230e3bf665adc04ae2
+  - id: TER225
+    field_sha256:
+      name: 3f35a30554dc4c73a165d990182b290b390595f38f35a25183d72c319415bb8d
+      short_description: 3c387a36e1a0fbf939ad79a81c0f57a852e7628627b75fae67b9a237a78d0623
+      definition: 7d7d4af6594c80386f3dccb2008f051194464092fe0553224616476398e2d7e1
+      context: 9e29271a26be43718e9a352e84e7a615a817d942d0096bb47851959defb82e83
+  - id: TER226
+    field_sha256:
+      name: e6747424edd1333b94518a934e8537fef0a72ca9754810a512c9a9c83927720b
+      short_description: e50fc5c348c81e2d621fe2c1434f7b961a956421ac79892b017f677d961fb08b
+      definition: 886cf59d2eea444686b75385178b70ae3bfbb3b66fac827fb557df7c09446ddc
+      context: 86c79844807a7c26b7901527bf17418512ba933082a9b1a2f9359b8f93683af7
+  - id: TER238
+    field_sha256:
+      name: c894339fb093c3e672e023fd05e8d4889d12963762cfa5eb9ca159194836bed9
+      short_description: 4d79ddd9c759ed12a04e01258877cdd0cf3bd75f2b60b97688e5614a7519535f
+      definition: 4d79ddd9c759ed12a04e01258877cdd0cf3bd75f2b60b97688e5614a7519535f
+      context: 274886bbec7219d5b6cc1745be5e4598eff786ddca30ae2f03b703e8b14353e9

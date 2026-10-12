@@ -68,7 +68,7 @@
   height: 100vh;
   overflow: hidden;
   padding: 18px;
-  background: #fcfdfa;
+  background: var(--flow-paper);
 }
 .universe-toolbar {
   position: sticky;
@@ -81,7 +81,7 @@
   gap: 16px;
   margin-bottom: 16px;
   padding: 8px 0;
-  background: #fcfdfa;
+  background: var(--flow-paper);
   flex-shrink: 0;
 }
 .universe-toolbar h2 {
@@ -147,15 +147,48 @@
   grid-template-columns: minmax(260px, 1fr) minmax(680px, 2.4fr) minmax(260px, 1fr);
   min-width: 1232px;
 }
+.overview-system-column {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+.urbanisation-overview.has-data-sharing {
+  position: relative;
+  padding-top: var(--exchange-headroom);
+}
+.has-data-sharing .overview-system-column {
+  gap: 24px;
+}
+.system-data-sharing-map {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+  z-index: 3;
+}
+.system-data-sharing-map .data-sharing-ribbon {
+  stroke: var(--exchange-outline);
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+.system-data-sharing-map text {
+  fill: var(--exchange-ink);
+  font-size: 13px;
+  font-weight: 600;
+}
+.system-data-sharing-map .data-sharing-vertical-label {
+  font-size: 12px;
+}
 .overview-system {
   position: relative;
-  padding: 20px;
+  padding: calc(20px + var(--exchange-top-inset, 0px)) 20px calc(20px + var(--exchange-bottom-inset, 0px));
 }
 .overview-system .hotspot-map-point {
   z-index: 2;
 }
 .overview-system.has-map-hotspots {
-  padding-top: 76px;
+  padding-top: calc(76px + var(--exchange-top-inset, 0px));
 }
 .overview-system small {
   font-size: 11px;
@@ -364,7 +397,7 @@
     grid-template-columns: 1fr;
   }
   .overview-system {
-    padding: 14px;
+    padding: calc(14px + var(--exchange-top-inset, 0px)) 14px calc(14px + var(--exchange-bottom-inset, 0px));
   }
   .mobile-path {
     flex: 1;

@@ -280,7 +280,7 @@ publication_delivery:
 
         [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
-        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Control Plane](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
   - id: plans-visibility
     fields:
       name: Supply Plan Visibility
@@ -354,3 +354,24 @@ delivery_reconciliation_U908:
     check: fields.scope
     previous_sha256: d606cf6a59380ea9a174e651b9124c985baf227ec58c334b530febc5b22cf5ba
     current_sha256: 861e4b167b287fa794c186efc806cc617f0554493997619d545c38065a12ec26
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: business-references
+    fields:
+      name: Operational References
+      definition: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant
+        leur référence locale fiable sans transférer la maîtrise d’entreprise.
+      scope: |-
+        [Partner & Agreement References](model:ba-partner-agreement-references) porte les parties, accords et profils de crédit ; [Merchandise References](model:ba-product-references) les produits destinés à la vente, catalogues, assortiments et tarifs ; [Packaging References](model:ba-packaging-references) les matières et consignes de conditionnement ; [Internal Supplies & Equipment References](model:ba-internal-supplies-equipment-references) les fournitures et équipements internes ; [Service References](model:ba-service-references) les offres et moyens de prestation.
+
+        Un même bien peut avoir plusieurs usages. Les correspondances connues entre références conservent leur provenance ; aucun référentiel technique commun n’est imposé. La destination du bien ne détermine pas à elle seule son stockage ou son traitement comptable.
+
+        Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
+
+        [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+
+        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Control Plane](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).

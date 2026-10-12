@@ -2949,7 +2949,6 @@ U470/U471 — MKT14, Microsoft, Dynamics 365 Supply Chain Management. [Outbound 
 
 U470/U471 — MKT14, Microsoft, Dynamics 365 Commerce. [Store inventory management](https://learn.microsoft.com/en-us/dynamics365/commerce/work-with-store-inventory). Documentation évolutive ; état consulté le 19 septembre 2026. Nature : Fonction produit documentée. Passage consulté le 19 septembre 2026 : Store inventory management operations ; inventory dimensions. Libellé natif : titre indiqué ; aucun identifiant natif de capacité déduit. Appuis pour BHV081 ; reformulations, différences et limites dans leurs comparaisons et dans [le relevé U471](../audits/2026-09-19-base-U470/additions.yaml). Synthèse sélective et liens, sans reprise intégrale ni réalisation installée déduite.
 
-
 ### ELM320
 
 U470/U471 — MKT14, Microsoft, Dynamics 365 Supply Chain Management. [Replenishment methods and quantity modification](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/replenishment-methods-quantity-modification). Page mise à jour le 1er juillet 2026. Nature : Fonction produit documentée. Passage consulté le 19 septembre 2026 : Coverage codes : Requirement, Min./Max.. Libellé natif : titre indiqué ; aucun identifiant natif de capacité déduit. Appuis pour BHV083, BHV084 ; reformulations, différences et limites dans leurs comparaisons et dans [le relevé U471](../audits/2026-09-19-base-U470/additions.yaml). Synthèse sélective et liens, sans reprise intégrale ni réalisation installée déduite.
@@ -6294,3 +6293,223 @@ MKT14 — Dynamics 365 Finance. [Introduction to the record to report end-to-end
 ### ELM859
 
 MKT13 — SAP S/4HANA. [Identifying the Basics of Financial and Management Accounting](https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap-business-suite/identifying-the-areas-of-financial-and-management-accounting_e3512e3e-753c-4fc0-8e21-4391145368ef). Documentation primaire consultée le 2026-09-28. Passage : Financial Accounting et Management Accounting. Page évolutive, édition globale inconnue. Reformulation : La comptabilité financière enregistre les transactions et alimente les comptes ; elle est distinguée du contrôle de gestion. Limite : contexte financier, sans preuve de réalisation Beaumanoir ni équivalence de découpage FLOW. Synthèse et lien uniquement. U826, CMP310, CMP311.
+
+### ELM860
+
+MKT13 — [SAP S/4HANA 2025 — Feature Scope Description](https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf). SAP S/4HANA 2025 FPS02. Consultation : 2026-10-12. Édition : Document 3.0 du 2026-10-07. Passage : §2.5 Finance ; §2.8 R&D ; §2.12 Supply Chain ; §3.6 R&D ; §4.1.3 Retail and Fashion. Reformulation : Périmètres de finance, développement, structures et changements produit, entreposage et transport. Limite : Catalogue fonctionnel ; sections de base et extensions distinctes. Aucun découpage universel de Business Systems ni couverture installée. Portfolio Management porte des projets, pas une équivalence complète aux collections de mode. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM861
+
+MKT14 — [Design to retire end-to-end overview](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/design-to-retire-overview). Dynamics 365 Supply Chain Management et Commerce. Consultation : 2026-10-12. Édition : Page mise à jour 2025-05-27 ; avertissement de décalage avec le catalogue de juillet 2026. Passage : Business process areas ; process relationship. Reformulation : Stratégie et introduction des produits, définitions et cycle de vie ; coûts et prix dépassent Design & Development FLOW. Limite : Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM862
+
+MKT14 — [Engineering change management overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/product-engineering-overview). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Édition : Page mise à jour 2026-07-01. Passage : Product versions ; product readiness ; engineering changes. Reformulation : Définition, versions, disponibilité à l’usage et changements contrôlés des produits. Limite : Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM863
+
+MKT14 — [Product information overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Édition : Page mise à jour 2026-07-01. Passage : Product definition ; product variants ; imports. Reformulation : Identités, attributs, variantes et échanges de définitions produit. Limite : Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM864
+
+MKT14 — [Forecast to plan overview](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/forecast-to-plan-overview). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Édition : Page mise à jour 2024-12-12 ; avertissement relatif au catalogue de juillet 2026. Passage : Process relationship ; business process areas. Reformulation : Prévoir les besoins et planifier les ressources, avec définition produit en amont. Limite : Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM865
+
+MKT14 — [Master planning home page](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Édition : Page mise à jour 2026-03-26. Passage : Net requirements ; forecast planning ; planned orders. Reformulation : Équilibrer besoins et ressources et produire des propositions, distinctes des commandes affermies. Limite : Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM866
+
+MKT13 — [Execute Supply Chain Planning](https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/execute-supply-chain-planning). SAP S/4HANA Production Planning. Consultation : 2026-10-12. Édition : Page évolutive ; édition globale non indiquée. Passage : Independent requirements ; sales order consumption ; MRP. Reformulation : Besoins prévisionnels et commandes client, consommation de prévision et calcul des besoins. Limite : Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM867
+
+MKT13 — [Sales and operations planning](https://www.sap.com/products/scm/integrated-business-planning/features/sales-and-operations-planning.html). SAP Integrated Business Planning. Consultation : 2026-10-12. Édition : Page commerciale évolutive ; édition non indiquée. Passage : Cross-functional planning ; scenarios. Reformulation : Réconcilier les objectifs et contraintes entre métiers. Limite : Complément SAP IBP distinct de S/4HANA ; ne satisfait pas seul le socle S/4HANA et ne prescrit pas le sous-domaine FLOW. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM868
+
+MKT14 — [Business performance planning overview](https://learn.microsoft.com/en-us/dynamics365/finance/business-performance-planning/business-performance-planning-overview). Dynamics 365 Finance. Consultation : 2026-10-12. Édition : Page mise à jour 2026-06-25. Passage : Planning ; scenarios ; financial and operational dimensions. Reformulation : Plans financiers et opérationnels, scénarios et dimensions de performance. Limite : Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM869
+
+MKT13 — [Using SAP Content Network Business Packages](https://learning.sap.com/courses/performing-manual-planning-with-sap-analytics-cloud/using-sap-content-network-business-packages-optional_e1f63cdb-d5b4-4a7e-a0a2-ebf67bc5bbb2). SAP Analytics Cloud — Integrated Financial Planning for SAP S/4HANA. Consultation : 2026-10-12. Édition : Cours évolutif ; édition non indiquée. Passage : Integrated Financial Planning for SAP S/4HANA ; simulation ; group financial planning. Reformulation : Budgets et scénarios financiers intégrés aux données S/4HANA. Limite : Contenu SAP Analytics Cloud connecté à S/4HANA ; pas une fonction universellement incluse dans S/4HANA, ni toute la stratégie entreprise. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM870
+
+MKT14 — [Cost accounting terminology](https://learn.microsoft.com/en-us/dynamics365/finance/cost-accounting/terms-cost-accounting). Dynamics 365 Finance. Consultation : 2026-10-12. Édition : Page évolutive ; édition globale non indiquée. Passage : Cost elements ; cost objects ; allocation policies. Reformulation : Objets de coût, méthodes de répartition et contrôle des coûts. Limite : Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM871
+
+MKT14 — [Credit and collections overview](https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-credit-and-collections-overview). Dynamics 365 Finance. Consultation : 2026-10-12. Édition : Page évolutive ; édition globale non indiquée. Passage : Credit management ; collections. Reformulation : Limites de crédit, contrôles, blocages et traitement des créances. Limite : Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM872
+
+MKT14 — [Cash flow forecasting](https://learn.microsoft.com/en-us/dynamics365/finance/cash-bank-management/cash-flow-forecasting). Dynamics 365 Finance. Consultation : 2026-10-12. Édition : Page évolutive ; édition globale non indiquée. Passage : Cash flow forecasting setup ; receivables and payables. Reformulation : Prévisions de trésorerie issues des encaissements et décaissements attendus. Limite : Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM873
+
+MKT13 — [SAP Process Control — Application Help](https://help.sap.com/doc/d83af7d22baa49829e464111338e9c12/12.0.23/en-US/loio60d658f576b6452eb0f943c04b354018_en.pdf). SAP Process Control 12.0 SP23 — intégration SAP S/4HANA. Consultation : 2026-10-12. Édition : 12.0 SP23. Passage : Introduction p.4 ; intégration S/4HANA Cloud et surveillance p.13–15. Reformulation : Politiques, conformité, contrôles internes, tests et remédiation. Limite : Produit complémentaire, intégration S/4HANA documentée ; ne démontre pas toute une fonction de gestion des risques ou d’audit indépendant. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM874
+
+MKT14 — [Audit policy rules](https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/audit-policy-rules). Dynamics 365 Finance. Consultation : 2026-10-12. Édition : Documentation évolutive. Passage : Audit policies ; document selection rules. Reformulation : Contrôles ciblés sur dépenses, factures fournisseur et commandes d’achat. Limite : Contrôles applicatifs ciblés ; ni fonction complète d’audit d’entreprise, ni toute la gestion des risques. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM875
+
+MKT14 — [Set up segregation of duties](https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/sysadmin/set-up-segregation-duties). Dynamics 365 Finance and Operations. Consultation : 2026-10-12. Édition : Page évolutive ; édition globale non indiquée. Passage : Segregation rules ; conflict validation. Reformulation : Séparation de responsabilités et contrôle de conflits. Limite : Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM876
+
+MKT14 — [Warehouse management overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Édition : Page mise à jour 2026-10-09. Passage : Inbound ; outbound ; warehouse management only mode. Reformulation : Réception, rangement, stock physique, préparation et expédition ; entrepôt pouvant servir des systèmes externes. Limite : Responsabilités d’entrepôt et mode de prestation autonome ; pas réalisation C-LOG ni couverture complète des retours et services supplémentaires. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM877
+
+MKT14 — [Transportation management overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Édition : Documentation évolutive. Passage : Transportation planning ; inbound and outbound transportation. Reformulation : Organisation des chargements, itinéraires et transports entrants et sortants. Limite : Appui au pilotage transport ; ne démontre pas toute la résolution des exceptions ni le mandat de chaque prestataire. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM878
+
+MKT13 — [Working with SAP Credit Management](https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/working-with-sap-credit-management_d6b177ee-a8bb-4b77-80dc-87c04a9dd3f1). SAP S/4HANA Sales — SAP Credit Management. Consultation : 2026-10-12. Édition : Page évolutive ; édition globale non indiquée. Passage : Credit controller ; risk ; limits ; sales document release. Reformulation : Autorité de crédit et interactions avec les ventes. Limite : Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM879
+
+MKT96 — [Fashion & Apparel](https://www.centricsoftware.com/fashion-apparel). Centric PLM et Centric Planning. Consultation : 2026-10-12. Édition : Page commerciale évolutive ; édition non indiquée. Passage : PLM ; Planning ; Visual Boards ; product lifecycle. Reformulation : Préparation des collections et développement produit, distingués de la planification. Limite : Complément sectoriel mode ; ni socle Dynamics/S/4HANA, ni preuve de couverture Beaumanoir, ni taxonomie commune. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+### ELM880
+
+MKT13 — [SAP S/4HANA 2025 — Feature Scope Description](https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf). Consultation : 2026-10-12. Édition : 2025 FPS02, document 3.0 du 2026-10-07. Passages consultés : §2.11.3 Sourcing and Contract Management, Source Assignment, demandes et comparaison d’offres, p.152–158 ; §2.11.4 Operational Procurement, besoins, validations et commandes, p.158–164 ; §2.11.6 Supplier Management, classification et évaluation, p.171–173. Reformulation : responsabilités distinctes de connaissance et évaluation des fournisseurs, sélection d’une source pour un besoin, accords d’achat et parcours opérationnels. Limite : catalogue fonctionnel produit, pas taxonomie métier universelle ; la réalisation intégrée englobe des documents, réceptions et factures que FLOW répartit entre responsabilités distinctes. Certains parcours sourcing avancés passent par SAP Ariba, complément externe explicite. U977, CMP313 ; appui primaire pertinent S/4HANA pour chaque sous-domaine proposé, sans équivalence exacte ni réalisation Beaumanoir.
+
+### ELM881
+
+MKT14 — [Procurement and sourcing overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Page mise à jour le 2025-07-21. Passages : Identifying a need ; Procurement ; Prices and discounts ; Product receipt and invoicing ; Vendor performance. Reformulation : besoins, demandes, approbations, sélection, conditions d’achat, confirmations et suivi fournisseurs. Limite : le périmètre produit va jusqu’aux réceptions, factures et paiements ; il ne justifie pas de les absorber dans Sourcing and Procurement FLOW ni de créer un second cycle de Purchase Order. U977, CMP313 ; appui primaire Dynamics pour Operational Procurement et le domaine parent proposé.
+
+### ELM882
+
+MKT14 — [Onboard vendors](https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/vendor-onboarding). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Documentation évolutive, édition globale non indiquée. Passages : prospective vendor registration ; questionnaires selon catégorie ; approval workflow. Reformulation : recueillir les données du candidat fournisseur, qualifier son accès aux catégories d’achat et valider son admission. Limite : parcours applicatif avec comptes et utilisateurs ; appui partiel à Supplier Management, aucune attribution de maîtrise entreprise ni couverture exhaustive de gestion de relation fournisseur. L’analyse de performance documentée ELM881 complète la qualification. U977, CMP313.
+
+### ELM883
+
+MKT14 — [Requests for quotation overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/request-quotations). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Documentation évolutive, édition globale non indiquée. Passages : RFQ cases ; scoring criteria ; Compare replies ; accepting/rejecting bids. Reformulation : consulter plusieurs fournisseurs, comparer conditions et délais, choisir et justifier une offre. Limite : le produit peut générer directement commandes ou accords ; cette intégration ne transfère pas l’identité et les transitions de Purchase Order hors du Core FLOW. Appui fonctionnel à Strategic Sourcing, pas catalogue exhaustif de stratégie de catégorie. U977, CMP313.
+
+### ELM884
+
+MKT14 — [Purchase agreements](https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-agreements). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Documentation évolutive, édition globale non indiquée. Passages : commitments ; validity period ; pricing terms ; fulfillment calculations ; version history. Reformulation : définir et suivre engagements d’achat, conditions de prix, durée et consommation d’un accord par des commandes. Limite : contrat d’achat produit, pas gestion juridique de tous les contrats d’entreprise ; accord cadre distinct de commande individuelle. Appui primaire à Purchase Contract Management. U977, CMP313.
+
+### ELM885
+
+MKT13 — [SAP S/4HANA 2025 — Feature Scope Description](https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf). Consultation : 2026-10-12. Édition : 2025 FPS02, document 3.0 du 2026-10-07. Passages : §2.8 Product Development Foundation ; §2.12.3 Warehousing ; Connecting to External Warehouse Control Systems p.192 ; Decentralized EWM p.534. Reformulation : définitions produit utilisables dans les opérations ; données métier partagées entre gestion d’entreprise et entrepôt décentralisé ; demandes et retours distincts. Limite : exemple produit, pas contrat universel FLOW ; contrat complet transport et retour terrain produit non établi par ces seuls passages. La page External Warehouse Management Services a été trouvée mais son contenu direct n’était pas lisible ; elle n’est pas retenue comme appui complémentaire. U979, CMP314 ; aucune réalisation Beaumanoir déduite.
+
+### ELM886
+
+MKT14 — [Warehouse management only mode with external ERP systems](https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-external-erp). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Passages : exemples entrants et sortants ; On-hand inventory updates ; reconciliation ; warehouse inventory update logs. Reformulation : le système externe transmet des demandes d’expédition, l’entrepôt restitue réception, expédition et corrections de stock ; éviter les doubles effets. Limite : exemple d’entrepôt, pas tout Logistics ni constat d’interface installée ; protocole et fréquence non transposés à FLOW. U979, CMP314.
+
+### ELM887
+
+MKT14 — [Channels overview](https://learn.microsoft.com/en-us/dynamics365/commerce/channels-overview). Dynamics 365 Commerce. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Types of channels; Channel setup basics. Reformulation : Canaux magasin et en ligne, organisation du réseau, assortiments et règles propres aux canaux. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM888
+
+MKT14 — [Store Commerce app](https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce). Dynamics 365 Commerce. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Introduction; Commerce operations; offline support. Reformulation : Vente immédiate, caisse, vente assistée, commandes et opérations de stock au magasin. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM889
+
+MKT14 — [Assortment management](https://learn.microsoft.com/en-us/dynamics365/commerce/assortments). Dynamics 365 Commerce. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Basic assortment setup; organization hierarchies; date effectivity. Reformulation : Sélection de produits vendables par canal et période, distincte du stock physique disponible. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM890
+
+MKT14 — [Set up a B2B e-commerce site](https://learn.microsoft.com/en-us/dynamics365/commerce/b2b/set-up-b2b-site). Dynamics 365 Commerce. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Prerequisites; partner sign-up; account management; order templates. Reformulation : Portail professionnel, comptes partenaires et préparation de commandes, utilisant aussi des composants communs au B2C. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM891
+
+MKT13 — [Explaining Store Connection with Point-of-Sale Sales](https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/explaining-store-connection-with-point-of-sale-sales_ee5c0524-83cb-47aa-ba86-3d012edd5a67). SAP S/4HANA Retail. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Point-of-Sale Sales; POS inbound and outbound. Reformulation : Le POS réalise et journalise les ventes; le système central reçoit ventes, retours, mouvements et autres faits et transmet des références. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM892
+
+MKT13 — [Managing Retail Store Operations](https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/managing-retail-store-operations_f77c8f4d-b247-4ef0-879b-3c4f469a6323). SAP S/4HANA Retail. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : SAP Fiori Apps for Retail Store Operations; receive, adjust, count, move. Reformulation : Opérations réalisées par les équipes magasin: réception, comptage, corrections et déplacements locaux. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM893
+
+MKT13 — [Introducing Assortment Management](https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/introducing-assortment-management_c4100b3e-db2f-49ed-8724-faf679d1be8d). SAP S/4HANA Retail. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Assortment Management and Layout Workbench; planned assortments. Reformulation : Assortiments, autorisations par site et présentation physique; des résultats de planning peuvent alimenter les assortiments opérationnels. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM894
+
+MKT13 — [Explaining Sales Order Handling](https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-sales-order-handling_b87d52ef-bf38-4a67-b6f5-7324019d8c24). SAP S/4HANA for fashion and vertical business. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Scenario; sales order handling; fashion enhancements. Reformulation : Demande saisonnière des revendeurs, variantes mode, captation par représentants ou plateformes, commandes et contraintes de livraison. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM895
+
+MKT13 — [Exploring the Business Partner, Retail Sites, and Article Groupings](https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/exploring-the-business-partner-retail-sites-and-article-groupings_ccbc5aa0-3702-4244-951d-9dcb8de51064). SAP S/4HANA Retail. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Customer, Supplier, and Site Master in SAP Retail. Reformulation : Sites magasins et centres de distribution distingués, partenaires et responsabilités commerciales ou financières différenciées. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM896
+
+MKT13 — [Getting a Business Process Overview](https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/getting-a-business-process-overview_dc53cbb3-5b68-4bb1-a163-7b4437784888). SAP S/4HANA for fashion and vertical business. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Specifics of vertical fashion businesses; key benefits. Reformulation : Commerce retail et wholesale dans une solution intégrée, avec visibilité du stock, planning et achats partagés. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM897
+
+MKT97 — [Elastic Suite — B2B ecommerce and digital merchandising](https://www.elasticsuite.com/). Elastic Suite. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Digital Catalog; Assortment Builder; Whiteboard; Custom Collections; FAQ. Reformulation : Présentation commerciale: vente B2B, catalogues, sélections pour un revendeur, présentation et propositions de commande. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM898
+
+MKT97 — [What is a Whiteboard?](https://support.elasticsuite.com/what-is-a-whiteboard). Elastic Suite. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : What is a Whiteboard?. Reformulation : Le whiteboard est une présentation visuelle de produits du panier, accessible dans le parcours de construction de commande; son existence ne prouve pas un engagement ferme. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM899
+
+MKT13 — [Selling to Customers — Sales Order](https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/selling-to-customers-sales-order_fb704049-b43b-49c4-b17b-daf3fc42793f). SAP S/4HANA Retail. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Sales order processing; cross-channel sales; click and collect. Reformulation : Une commande peut provenir du web ou du magasin et être servie en magasin ou par un centre de distribution. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM900
+
+MKT14 — [Create Commerce catalogs for B2B sites](https://learn.microsoft.com/en-us/dynamics365/commerce/catalogs-b2b-sites). Dynamics 365 Commerce. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Catalog information; B2B catalog process flow. Reformulation : Catalogues liés aux canaux et partenaires, assortiments, prix et promotions; validation et publication. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+### ELM901
+
+MKT14 — [Commerce inventory management](https://learn.microsoft.com/en-us/dynamics365/commerce/work-with-store-inventory). Dynamics 365 Commerce. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Store inventory management. Reformulation : Opérations de stock au magasin exposées dans le POS; le produit ne prescrit pas les autorités FLOW. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316.
+
+
+### ELM902
+
+MKT14 — Dynamics 365 Finance. [Introduction to the record to report end-to-end business process](https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/record-to-report-introduction). Documentation primaire consultée le 2026-09-28. Passage : Record to report overview ; mise à jour 2026-07-31. Page évolutive, édition globale inconnue. Reformulation : Collecte des données financières, enregistrement, rapprochement et restitution des comptes. Limite : contexte financier, sans preuve de réalisation Beaumanoir ni équivalence de découpage FLOW. Synthèse et lien uniquement. U826, CMP310, CMP311. Relu le 2026-10-12 pour U981/CMP315 : les responsabilités comptables restent dans Financial Accounting ; la page ne prescrit pas une décomposition FLOW en capacités.
+
+
+### ELM903
+
+Contrôle complémentaire U981/CMP315 du 2026-10-12 : §2.5.2 Accounting and Financial Close, General Ledger et interfaces amont/corrections effectivement relus dans l’édition 3.0. Cet appui remplace, pour l’examen courant, la page ELM859 qui renvoie 404 ; sa consultation historique n’est pas effacée. Le document éclaire la responsabilité financière, sans prescrire le détail en capacités du modèle FLOW.
+
+MKT13 — [SAP S/4HANA 2025 — Feature Scope Description](https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf). SAP S/4HANA 2025 FPS02. Consultation : 2026-10-12. Édition : Document 3.0 du 2026-10-07. Passage : §2.5 Finance ; §2.8 R&D ; §2.12 Supply Chain ; §3.6 R&D ; §4.1.3 Retail and Fashion. Reformulation : Périmètres de finance, développement, structures et changements produit, entreposage et transport. Limite : Catalogue fonctionnel ; sections de base et extensions distinctes. Aucun découpage universel de Business Systems ni couverture installée. Portfolio Management porte des projets, pas une équivalence complète aux collections de mode. Aucun identifiant natif de capacité établi. U974–U975, CMP312 ; synthèse et lien, sans import intégral.
+
+
+### ELM904
+
+MKT14 — Dynamics 365 Supply Chain Management. [Sales trade agreement prices](https://learn.microsoft.com/en-us/dynamics365/supply-chain/unified-pricing-management/upm-sales-trade-agreement-prices). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Net pricing ; concurrence ; Date type. Reformulation : Prix négociés client/produit, prix net exclusif, priorités et date de recherche paramétrée. Limites : La logique éditeur ne prescrit ni autorité FLOW ni adoption du prix le plus bas. U990–U994, CMP317 ; synthèse et lien uniquement.
+
+
+### ELM905
+
+MKT13 — SAP S/4HANA Sales. [Introducing the Condition Technique](https://learning.sap.com/courses/configuring-pricing-in-sap-s-4hana-sales/introducing-the-condition-technique_dce0f313-dee6-470e-8851-3f1773cb5d45). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Pricing Procedure ; Search for a Valid Condition Record ; New Pricing ; Billing. Reformulation : Conditions déterminées par contexte client/document ; séquence de recherche, barèmes et reprise du prix configurables. Limites : Cours de fonctions S/4HANA, sans édition globale établie ; ne prescrit pas la responsabilité du Core FLOW. U990–U994, CMP317 ; synthèse et lien uniquement.
+
+
+### ELM906
+
+MKT14 — Dynamics 365 Commerce. [Retail discounts](https://learn.microsoft.com/en-us/dynamics365/commerce/retail-discounts-overview). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Common discount settings ; Currency ; Discount concurrency mode. Reformulation : Activation, devise, unité, priorité et règles de cumul ou exclusion déterminent les remises applicables. Limites : Fonctions de produit ; pas de politique promotionnelle Beaumanoir ni règle juridique sur les soldes déduite. U990–U994, CMP317 ; synthèse et lien uniquement.
+
+
+### ELM907
+
+MKT13 — SAP S/4HANA Sales. [Using Condition Records](https://learning.sap.com/courses/configuring-pricing-in-sap-s-4hana-sales/using-condition-records_ef2d603b-232f-4100-90b4-da7b4f75ade2). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Validity Intervals ; Mass Maintenance ; Calculation Type. Reformulation : Validité, taux, données client/produit et traces de modification encadrent les conditions de prix et de remise. Limites : L’exercice documente les conditions ; une saison métier ne se réduit pas automatiquement à une date. U990–U994, CMP317 ; synthèse et lien uniquement.
+
+
+### ELM908
+
+MKT14 — Dynamics 365 Supply Chain Management. [Rebate management module overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/rebate-management/rebate-management-overview). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Basis calculation ; Flexible calculations ; Rebate target transactions. Reformulation : Avantages différés sur quantités ou valeurs et périodes ; calcul, provisions, traitement, avoirs et sorties en biens distingués. Limites : Fonctionnalité large ; ne couvre pas toutes les primes de personnel ni une réalisation installée. Texte lisible malgré un bandeau d’authentification. U990–U994, CMP317 ; synthèse et lien uniquement.
+
+
+### ELM909
+
+MKT13 — SAP S/4HANA Settlement Management. [Outline the Structure of a Condition Contract](https://learning.sap.com/courses/exploring-sap-s-4hana-settlement-management/outline-the-structure-of-a-condition-contract_bf334045-48bb-4aae-98f7-83966c20eada). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Top Area ; Conditions Section ; purchasing rebates and external agents. Reformulation : Contrat daté, bénéficiaires, volume éligible et statut ; ristournes client/fournisseur et commissions d’agents externes. Limites : Les agents sont des fournisseurs dans cet exemple SAP, pas nécessairement dans le vocabulaire FLOW. Aucun modèle de paie documenté. U990–U994, CMP317 ; synthèse et lien uniquement.
+
+
+### ELM910
+
+MKT14 — Dynamics 365 Supply Chain Management. [Register sales commissions](https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/tasks/register-sales-commissions). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Invoice a qualifying sales order ; Review registered commissions. Reformulation : Commissions issues de la facture selon bénéficiaires et taux ; assiette sur montant net et écritures de charge/dette. Limites : Un exemple de commission ne documente pas toutes les primes salariales ni toutes les dates contractuelles possibles. U990–U994, CMP317 ; synthèse et lien uniquement.
+
+
+### ELM911
+
+MKT14 — Dynamics 365 Supply Chain Management. [Sales agreements overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-agreements). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Pricing policies ; validity ; sales order lines. Reformulation : Conditions de l’accord prioritaires et prix/remise éventuellement figés ; éligibilité liée à une période et à la date demandée d’expédition. Limites : La date de cet exemple ne devient pas une règle universelle de vente FLOW. U990–U994, CMP317 ; synthèse et lien uniquement.

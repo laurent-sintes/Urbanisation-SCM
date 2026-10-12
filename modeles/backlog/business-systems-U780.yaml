@@ -114,14 +114,14 @@ publication_delivery:
   source_refs:
   - U780
   - U826
-  summary: 'Trois systèmes métier ; quatre domaines opérationnels ; profondeur ciblée et parents des Orders préservés. U826
-    : attentes de livraison alignées sur Integration et le raccordement Finance, anciennes valeurs conservées ci-dessous.'
+  summary: Attentes courantes U780 réconciliées après U975 ; les anciennes valeurs, empreintes et accords historiques restent
+    conservés.
   required_nodes:
   - id: system-design-development
     kind: business_system
     fields:
       name: Design & Development
-      modeling_depth: context
+      modeling_depth: domains
   - id: system-business-operations
     kind: business_system
     fields:
@@ -135,7 +135,7 @@ publication_delivery:
   - id: domain-sales
     kind: domain
     fields:
-      name: Sales
+      name: Commerce
       modeling_depth: domains
     parent: system-business-operations
     parent_type: presents
@@ -147,12 +147,12 @@ publication_delivery:
     parent: system-business-operations
     parent_type: presents
   - id: domain-logistics-execution
-    kind: domain
+    kind: business_system
     fields:
       name: Logistics
       modeling_depth: domains
-    parent: system-business-operations
-    parent_type: presents
+    parent: beaumanoir-target-universe
+    parent_type: contains
   - id: supply-chain-orchestration
     kind: domain
     fields:
@@ -181,9 +181,53 @@ publication_delivery:
     reason: U826 remplace cette attente dans le courant ; preuves historiques préservées.
   supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
     sans extension des accords.
+  superseded_checks_U975:
+  - previous:
+      id: system-design-development
+      kind: business_system
+      fields:
+        name: Design & Development
+        modeling_depth: context
+    previous_sha256: 3f39b0b97bbb21ad72aca9ea97cd74554e2a4ea25197695da7e629fcc0dd9a27
+    current:
+      id: system-design-development
+      kind: business_system
+      fields:
+        name: Design & Development
+        modeling_depth: domains
+  - previous:
+      id: domain-logistics-execution
+      kind: domain
+      fields:
+        name: Logistics
+        modeling_depth: domains
+      parent: system-business-operations
+      parent_type: presents
+    previous_sha256: 040c3639d5525e4742b85b88d65d2714653278e75f142dcd04006e78f97ecd11
+    current:
+      id: domain-logistics-execution
+      kind: business_system
+      fields:
+        name: Logistics
+        modeling_depth: domains
+      parent: beaumanoir-target-universe
+      parent_type: contains
 delivery_updates:
 - source_ref: U848
   fields:
   - D04.i.parent
   - D04.j.parent
   reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.
+delivery_reconciliation_U987:
+  source_refs:
+  - U987
+  reason: Noms et frontières Commerce/Retail adoptés ; attentes antérieures conservées ci-dessous. Ne réapprouve pas les anciennes
+    descriptions ni correspondances.
+  previous_requirements:
+  - id: domain-sales
+    kind: domain
+    fields:
+      name: Sales
+      modeling_depth: domains
+    parent: system-business-operations
+    parent_type: presents

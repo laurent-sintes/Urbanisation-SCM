@@ -38,6 +38,8 @@ Ces couleurs viennent des formes des masques, documentées dans [palette.json](.
 
 Polices demandées : Aptos pour le texte, Aptos Display pour les titres ; repli sur Segoe UI et Arial. Aucune police Office n’est redistribuée.
 
+Les flèches de partage de données utilisent des surfaces menthe et lavande dérivées de cette palette, des libellés vert FLOW et une ombre légère. La pointe indique le sens ; la couleur accompagne la lecture sans qualifier la nature ni la criticité du flux. Les variables `--exchange-*` de `src/brand.css` centralisent cet habillage. Les couleurs des hotspots gardent leur sens propre.
+
 ## Maintenance
 
 Conserver les deux fichiers sources, leurs proportions et leurs couleurs. Pour une évolution, modifier les variables et règles de `src/brand.css`, compiler avec `pnpm --dir app build`, puis recharger Atlas. Les données publiées restent lues à l’exécution ; aucune release métier n’est nécessaire pour cet habillage.

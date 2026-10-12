@@ -11,6 +11,7 @@ def check_delivery(root, candidate):
     root = Path(root)
     nodes = {n['id']: n for n in candidate['nodes']}
     relations = candidate['relations']
+    relation_by_id = {r['id']: r for r in relations if 'id' in r}
     rows, errors = [], []
     for path in sorted((root / 'modeles/backlog').glob('*.yaml')):
         doc = read(path)
@@ -31,7 +32,9 @@ def check_delivery(root, candidate):
         absent = declaration.get('absent_nodes', [])
         catalog_checks = declaration.get('required_catalog', [])
         glossary_checks = declaration.get('required_glossary', [])
-        if not required and not absent and not catalog_checks and not glossary_checks:
+        required_relations = declaration.get('required_relations', [])
+        absent_relations = declaration.get('absent_relations', [])
+        if not any((required, absent, catalog_checks, glossary_checks, required_relations, absent_relations)):
             errors.append('backlog-delivery: applied declaration without checks in ' + label)
         try:
             from .element_versions import content_hash
@@ -80,4 +83,19 @@ def check_delivery(root, candidate):
         for ident in absent:
             if ident in nodes:
                 errors.append(f'backlog-delivery: {label}: retired node still present: {ident}')
+        for expected in required_relations:
+            ident = expected['id']
+            relation = relation_by_id.get(ident)
+            if relation is None:
+                errors.append(f'backlog-delivery: {label}: required relation missing: {ident}')
+                continue
+            for field in ('type', 'source_id', 'target_id'):
+                if field in expected and relation.get(field) != expected[field]:
+                    errors.append(f'backlog-delivery: {label}: relation mismatch: {ident}.{field}')
+            for field, fingerprint in expected.get('field_sha256', {}).items():
+                if field not in relation.get('fields', {}) or canonical_sha256(relation['fields'][field]) != fingerprint:
+                    errors.append(f'backlog-delivery: {label}: relation field hash mismatch: {ident}.{field}')
+        for ident in absent_relations:
+            if ident in relation_by_id:
+                errors.append(f'backlog-delivery: {label}: retired relation still present: {ident}')
     return rows, errors

@@ -36,6 +36,7 @@ BEHAVIOR_NATURES = {'policy_strategy', 'process_variant', 'intervention_mechanis
 REQUEST_ORIGINS = {'frontoffice', 'backoffice'}
 BEHAVIOR_ASPECTS = {'trigger', 'activity'}
 RELATION_KINDS = {
+    "shares-data": (None, None),
     # The former lower-level domain remains supported in frozen publications.
     "contains": ({"universe", "domain", "area", "business_area", "reference", "capability"}, {"business_system", "business_area", "capability", "behavior"}),
     "documents-reference": ({"capability"}, {"reference"}),
@@ -141,7 +142,17 @@ def validate_urbanism(model, sources, schema=None):
     errors.extend(validate_glossary(model))
     errors.extend(validate_reference_policy(model))
     errors.extend(validate_information(model))
+    try:
+        from .data_sharing import validate_data_sharing
+    except ImportError:
+        from data_sharing import validate_data_sharing
+    errors.extend(validate_data_sharing(model))
     nodes = _index(model["nodes"], "nodes", errors)
+    try:
+        from .model_depth import validate_detail_scope
+    except ImportError:
+        from model_depth import validate_detail_scope
+    errors.extend(validate_detail_scope(model))
     errors.extend(validate_scenarios(nodes))
     try:
         from .scenario_catalog import validate_catalog
@@ -263,11 +274,12 @@ def validate_urbanism(model, sources, schema=None):
         rule = RELATION_KINDS.get(rel.get("type"))
         if rule is None:
             errors.append(f"relations/{identifier}: unsupported relation type")
-        elif source.get("kind") not in rule[0] or target.get("kind") not in rule[1]:
+        elif rule[0] is not None and (source.get("kind") not in rule[0] or target.get("kind") not in rule[1]):
             errors.append(f"relations/{identifier}: incompatible endpoint kinds for {rel.get('type')}")
         if source.get('kind') == 'business_system' and rel.get('type') == 'presents' and target.get('kind') != 'domain':
             errors.append(f'relations/{identifier}: business system presents only domains')
-        if source.get('kind') == 'universe' and (rel.get('type'), target.get('kind')) != ('contains', 'business_system'):
+        if (source.get('kind') == 'universe' and rel.get('type') != 'shares-data'
+                and (rel.get('type'), target.get('kind')) != ('contains', 'business_system')):
             errors.append(f'relations/{identifier}: universe contains only business systems')
         if (rel.get("type") == "presents" and source.get("kind") == "domain"
                 and target.get("kind") not in {"area", "reference", "group"}):
@@ -275,7 +287,7 @@ def validate_urbanism(model, sources, schema=None):
         if (rel.get("type") == "presents" and source.get("kind") in {"area", "business_area"}
                 and target.get("kind") != "reference"):
             errors.append(f"relations/{identifier}: area presents only references; capabilities use contains")
-        if rel.get("type") in {"relates-to", "uses-reference", "supplies-reference"}:
+        if rel.get("type") in {"relates-to", "uses-reference", "supplies-reference", "shares-data"}:
             if (rel.get("type") == "relates-to" and
                     ((source.get("kind") == "reference") != (target.get("kind") == "reference"))):
                 errors.append(f"relations/{identifier}: a reference relates-to another reference; mixed endpoint kinds are not supported")

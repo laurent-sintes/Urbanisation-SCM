@@ -87,6 +87,7 @@ publication_delivery:
   source_refs:
   - U826
   - U880
+  - U981
   summary: Integration est-ouest, Inbound/Outbound et deux ingestions déplacées ; trois sorties et interprétation dans Finance
     ; Tracking conservés.
   required_nodes:
@@ -126,12 +127,6 @@ publication_delivery:
       name: Financial Accounting
     parent: domain-finance
     parent_type: presents
-  - id: accounting-interpretation
-    kind: capability
-    fields:
-      name: Accounting Interpretation
-    parent: ba-accounting-translation
-    parent_type: contains
   - id: master-data-ingestion
     fields: {}
     parent: ba-inbound-information-integration
@@ -145,6 +140,8 @@ publication_delivery:
     parent: ba-execution-assurance
   supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
     sans extension des accords.
+  absent_nodes:
+  - accounting-interpretation
 delivery_updates:
 - source_ref: U848
   fields:
@@ -158,3 +155,15 @@ delivery_updates:
   - D01.f.parent
   - D07.d.parent
   reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.
+delivery_reconciliation_U981:
+  source_ref: U981
+  note: 'Instruction explicite de profondeur : les responsabilités sont conservées au niveau sous-domaine ; les contrôles
+    précédents restent ci-dessous, sans nouvel accord sur leurs rédactions.'
+  retired_requirements:
+  - id: accounting-interpretation
+    kind: capability
+    fields:
+      name: Accounting Interpretation
+    parent: ba-accounting-translation
+    parent_type: contains
+  previous_catalog_checks: []

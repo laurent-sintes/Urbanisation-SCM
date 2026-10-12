@@ -1,0 +1,131 @@
+id: DATA-SHARING-U979
+source_refs:
+- U977
+- U978
+- U979
+- CMP313
+- CMP314
+status: applied_to_backlog
+agreement:
+  author: Laurent
+  decided_at: '2026-10-12'
+  validated_scope: Les quatre sous-domaines et frontières présentés CMP313 ; relation orientée et contenu métier demandé U979,
+    ouverte à plusieurs niveaux.
+  proposed_scope: Descriptions détaillées des échanges et des nouvelles fiches, exemples et correspondances ; aucune réalisation
+    installée.
+contract:
+  type: shares-data
+  direction: source_id → target_id
+  content: 'fields.data_exchange.contents : noms anglais, description française, références au glossaire métier publié.'
+  meaning: Partage d’information métier, distinct d’une décomposition, d’une dépendance générale, d’un transfert physique
+    et d’une interface technique.
+  levels: Tout élément métier du modèle, sans restriction aux Business Systems.
+  projection: 'Enterprise Architecture uniquement : remonter chaque extrémité à son Business System par les relations hiérarchiques
+    ; conserver les relations sources et ne pas créer de flux internes implicites.'
+  limits:
+  - PLM est une origine de réalisation citée, pas un Business System ajouté.
+  - 'Les retours ne sont pas supposés : une relation orientée séparée porte chaque sens documenté.'
+  - Information Catalogue historique inchangé ; contenu et liens métier portés par les relations.
+  - Fréquence, protocole, système maître entreprise et flux installés restent à documenter.
+market:
+  comparison_id: CMP314
+  sources:
+  - ELM860
+  - ELM862
+  - ELM869
+  - ELM871
+  - ELM878
+  - ELM885
+  - ELM886
+  limits:
+  - Socle primaire SAP S/4HANA et Dynamics ; recouvrements fonctionnels, pas preuve Beaumanoir.
+  - Les noms du contrat sont une convention FLOW ; aucune équivalence à un format de message produit.
+publication_delivery:
+  required_nodes:
+  - id: subdomain-supplier-management
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+    fields:
+      name: Supplier Management
+  - id: subdomain-strategic-sourcing
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+    fields:
+      name: Strategic Sourcing
+  - id: subdomain-purchase-contract-management
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+    fields:
+      name: Purchase Contract Management
+  - id: subdomain-operational-procurement
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+    fields:
+      name: Operational Procurement
+  required_relations:
+  - id: REL-U978-subdomain-supplier-management
+    type: presents
+    source_id: domain-sourcing-procurement
+    target_id: subdomain-supplier-management
+  - id: REL-U978-subdomain-strategic-sourcing
+    type: presents
+    source_id: domain-sourcing-procurement
+    target_id: subdomain-strategic-sourcing
+  - id: REL-U978-subdomain-purchase-contract-management
+    type: presents
+    source_id: domain-sourcing-procurement
+    target_id: subdomain-purchase-contract-management
+  - id: REL-U978-subdomain-operational-procurement
+    type: presents
+    source_id: domain-sourcing-procurement
+    target_id: subdomain-operational-procurement
+  - id: REL-U979-product-definitions
+    type: shares-data
+    source_id: system-design-development
+    target_id: system-business-operations
+    field_sha256:
+      label: 179cd53764c8a9e60016a49ad959489deac05f92bc436a759f88d190fea04c74
+      data_exchange: 06288e90b3be00854f7750a93ba89a4efcae9f47001342564d23b1b657dba8ab
+  - id: REL-U979-product-feedback
+    type: shares-data
+    source_id: system-business-operations
+    target_id: system-design-development
+    field_sha256:
+      label: 3afe1971c78fae764b4e30e09142e268f18a8de75757af03f0c420b6eb80ccd0
+      data_exchange: 4881d49c008a4b31017957266c0f14c7ad8ad4d0e776ec06e40d5d0a13678965
+  - id: REL-U979-service-requests
+    type: shares-data
+    source_id: system-business-operations
+    target_id: domain-logistics-execution
+    field_sha256:
+      label: 0af0ff7777fdee48627ce613099293686f277a01f0c3cbecbd52e1ada4cadfa3
+      data_exchange: 7e0dcf60380c3f34a9de2e3d9f8242d3e3d7497c5baae5e09f8424e2cb9d27b7
+  - id: REL-U979-execution-results
+    type: shares-data
+    source_id: domain-logistics-execution
+    target_id: system-business-operations
+    field_sha256:
+      label: 16f8a62b3a2f2621013477282112536cc01d2b1b3c5d5582bcdf30d73ca6c984
+      data_exchange: 98b0c0daee8ea0e30f7e56c8ad6f77dc6feeb9259181961795ce73312bf668e1
+  - id: REL-U979-management-facts
+    type: shares-data
+    source_id: system-business-operations
+    target_id: system-enterprise-management-control
+    field_sha256:
+      label: b442f97c183688cdfa8f853a4cc3113a7985c31a47139d90b2bf0ed90ae513b4
+      data_exchange: 607af3e818a339729afaf771312fc1485de31ab007856983ed4a3feb0c947d06
+  - id: REL-U979-credit-profiles
+    type: shares-data
+    source_id: system-enterprise-management-control
+    target_id: system-business-operations
+    field_sha256:
+      label: 244a71cf64ee336efa6f9bbdfaf8bca37347ec1e9b5d271dbf4ad4ca447b77d1
+      data_exchange: ec56a1d25a20eee39b3a63eeef294fb08115a65bdb8d563ee22c49c5c2ad98be
+  retired_node_ids: []
+  retired_relation_ids: []
+  summary: Quatre sous-domaines U978 et six relations de partage U979 ; descriptions complémentaires proposées.
+  state: applied

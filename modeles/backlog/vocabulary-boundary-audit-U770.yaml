@@ -1902,7 +1902,7 @@ publication_delivery:
 
         Exemples fictifs : réaffecter 40 pièces d’une arrivée ; relier 300 pièces à un besoin prévisionnel de novembre ; appliquer un partage de 150 pièces en lots de 50 et 100. Ce partage n’impose ni règle universelle ni réduction des besoins non couverts.
 
-        Les familles de commandes portent leurs engagements et changements autorisés, y compris achat, transfert et consignation. [Reservation](model:D02.c) bloque les usages concurrents ; [Control Plane](model:subdomain-policies) rend les règles applicables. Plan Application ne confirme pas à leur place une commande, un engagement fournisseur ou une nouvelle politique. Les décisions de promesse et de programmation restent chez leurs responsables.
+        Les familles de commandes portent leurs engagements et changements autorisés, y compris achat, transfert et consignation. [Reservation](model:D02.c) bloque les usages concurrents ; [Supply Policy Management](model:subdomain-policies) rend les règles applicables. Plan Application ne confirme pas à leur place une commande, un engagement fournisseur ou une nouvelle politique. Les décisions de promesse et de programmation restent chez leurs responsables.
 
         Suivre les changements acceptés, refusés et encore attendus. Une acceptation technique ne prouve pas l’effet métier ni l’exécution physique. Exemple fictif : un transfert de 30 pièces est accepté, un achat de 70 est rejeté ; conserver ce résultat partiel et traiter les 70 restantes. Le suivi permet d’ajuster la suite sans rollback global implicite ni redéfinition silencieuse du plan.
 
@@ -3306,3 +3306,25 @@ delivery_reconciliation_U911:
     check: fields.scope
     previous_sha256: 8bd381d29c14498b0ea215b1671803b9220c9bf8b62b0d48f525fb189fb35044
     current_sha256: 1127b556d084e3e16ca74db6f6e1b5d3dd6f1f082f89999b4ad1e901cd560f5b
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: D02.e
+    fields:
+      scope: |-
+        Déterminer quand et sur quelle partie appliquer un plan, vérifier les conditions et dépendances, puis transmettre les changements aux capacités responsables. L’application peut être immédiate, programmée, progressive ou sélective. Une application volontairement partielle se distingue d’une application incomplète après échec. Programmer les calculs du plan reste la responsabilité de [Master Planning](model:D05.f).
+
+        [Supply Assignment](model:D03.o) choisit les liens entre ressources et besoins ; Plan Application les matérialise, les complète, les révise ou les libère. Ces liens peuvent concerner un stock présent, une arrivée attendue, une commande ou un besoin prévisionnel. Préserver temporairement un lien pendant l’application n’instaure pas un gel durable. Une affectation ne constitue ni réservation, ni promesse, ni protection de groupe.
+
+        Exemples fictifs : réaffecter 40 pièces d’une arrivée ; relier 300 pièces à un besoin prévisionnel de novembre ; appliquer un partage de 150 pièces en lots de 50 et 100. Ce partage n’impose ni règle universelle ni réduction des besoins non couverts.
+
+        Les familles de commandes portent leurs engagements et changements autorisés, y compris achat, transfert et consignation. [Reservation](model:D02.c) bloque les usages concurrents ; [Control Plane](model:subdomain-policies) rend les règles applicables. Plan Application ne confirme pas à leur place une commande, un engagement fournisseur ou une nouvelle politique. Les décisions de promesse et de programmation restent chez leurs responsables.
+
+        Suivre les changements acceptés, refusés et encore attendus. Une acceptation technique ne prouve pas l’effet métier ni l’exécution physique. Exemple fictif : un transfert de 30 pièces est accepté, un achat de 70 est rejeté ; conserver ce résultat partiel et traiter les 70 restantes. Le suivi permet d’ajuster la suite sans rollback global implicite ni redéfinition silencieuse du plan.
+
+        L’autorisation peut être humaine ou fondée sur des règles selon le changement, les échéances, les partenaires et les contrôles applicables. Examiner chaque portion d’une commande partiellement engagée : une portion non commencée n’est pas automatiquement modifiable. [Fulfilment Orchestration](model:D06) traite les adaptations, arrêts et reprises de réalisation. Conserver les faits déjà réalisés et expliciter tout effet inverse autorisé. Une exigence de livraison complète peut lier plusieurs portions.
+
+        Les adaptations locales de réalisation ne passent pas toutes par un nouveau plan. Lorsqu’elles nécessitent un nouvel arbitrage entre demandes et ressources, les capacités de décision concernées le produisent avant son application.

@@ -1,0 +1,196 @@
+id: COHERENCE-PRICING-POLICIES-U996
+status: applied
+source_refs:
+- U990
+- U991
+- U992
+- U993
+- U994
+- U995
+- U996
+- CMP317
+- CMP318
+agreement_scope: 'Lot complet U990–U995 : responsabilités, frontières, noms, parents et définition courte Availability. La
+  formulation détaillée des fiches, les attributs des échanges et leurs réalisations restent proposés.'
+publication_delivery:
+  state: applied
+  summary: Commerce regroupe le retail ; producteurs prix/avantages externes ; Supply Policy Management et Availability ;
+    consommation sans décision tarifaire dans FLOW.
+  source_refs:
+  - U996
+  required_nodes:
+  - id: domain-sales
+    kind: domain
+    parent: system-business-operations
+    parent_type: presents
+    fields:
+      name: Commerce
+    field_sha256:
+      scope: 3001cfaa09429790afaae4d73fde3eecd5c4992b902bf2faa9d89a2dda939412
+  - id: subdomain-retail-network-management
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    fields:
+      name: Retail Network Management
+    field_sha256:
+      scope: 75a8835ad7b117a4f6f08846ca790500f147321a29c7142d6ee8b2eb255dac01
+  - id: subdomain-store-backoffice-operations
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    fields:
+      name: Store Backoffice Operations
+    field_sha256:
+      scope: f988e599f2cfc58bdf4ac3e85f3f9f5c07705ab7c2f0810f14d77374b2d2eb31
+  - id: subdomain-policies
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    fields:
+      name: Supply Policy Management
+    field_sha256:
+      scope: c94af81555a9dd00c9a725ea657e35a9def1b053b3d92db9489b03736c46b007
+  - id: D03
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    fields:
+      name: Availability
+    field_sha256:
+      scope: 06eadc2c6682b6c8075176a66704b78b682b0aebf7750b5c3982f19b4642ade5
+  - id: subdomain-pricing-promotions-management
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    fields:
+      name: Pricing & Promotions Management
+    field_sha256:
+      scope: 23bb3d60ff73953cb29df18e3eca13607c8300ddd2e324547baa69eab12b7c16
+  - id: subdomain-rebates-incentives-management
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    fields:
+      name: Rebates & Incentives Management
+    field_sha256:
+      scope: 8d998b8eb6b1dd220f5cb6ed611c6e1f78fe2fd40f73b64958917ccc350725bb
+  - id: subdomain-commercial-settlement-management
+    kind: area
+    parent: domain-finance
+    parent_type: presents
+    fields:
+      name: Commercial Settlement Management
+    field_sha256:
+      scope: 29fb5c956344272b22ee22d96396105ba48a80275a6fe116db687fd824dd9f74
+  - id: D04
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    fields:
+      name: Order Management
+    field_sha256:
+      scope: dff5e20324e1f6c543243ba92c9b899ec83c892c9df0539223ea9029a87a0b64
+  - id: master-data-ingestion
+    kind: capability
+    parent: ba-inbound-information-integration
+    parent_type: contains
+    fields:
+      name: Reference Ingestion
+    field_sha256:
+      scope: a08f12ee46f6eb1b5bf0a53c744393a0e75f88ac3d8d33e5c6abf35654f07616
+  - id: accounting-data-provision
+    kind: capability
+    parent: ba-outbound-information-provision
+    parent_type: contains
+    fields:
+      name: Accounting Data Provision
+    field_sha256:
+      scope: ded11ab664fd100a18d3bea90f99d5cee13529bf544c49321bc4819a80143a2f
+  - id: ba-financial-service-order-management
+    kind: business_area
+    parent: subdomain-service-orders
+    parent_type: contains
+    fields:
+      name: Financial Services
+    field_sha256:
+      scope: 27ac20c0e754fb7dc317a65d56465931f0f65c9a38c14ed2f2e73ca7f9de1df5
+  - id: subdomain-purchase-contract-management
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+    fields:
+      name: Purchase Contract Management
+    field_sha256:
+      scope: 8e0dac7b5288e5e7e10c316eea0d0706f20ee9fcd68b9d488bb869dfaae00060
+  - id: transport-plan-decision
+    kind: capability
+    parent: ba-service-planning
+    parent_type: contains
+    fields:
+      name: Transport Plan Decision
+    field_sha256:
+      scope: 8abf7e87130605b58a50c243f23407b3cb517cbcc66d70b92714422e730c789f
+  - id: subdomain-transport-planning-dispatch
+    kind: area
+    parent: domain-transportation
+    parent_type: presents
+    fields:
+      name: Transport Planning & Dispatch
+    field_sha256:
+      scope: f7437bf98e6cbfa58ddc792caa3b54a4dc22c1d57e7c1fc646ed5c6a105e2aa1
+  absent_nodes:
+  - domain-retail-operations
+  absent_relations:
+  - REL-U987-domain-retail-operations
+  required_relations:
+  - id: REL-U996-subdomain-pricing-promotions-management
+    type: presents
+    source_id: domain-sales
+    target_id: subdomain-pricing-promotions-management
+  - id: REL-U996-subdomain-rebates-incentives-management
+    type: presents
+    source_id: domain-sales
+    target_id: subdomain-rebates-incentives-management
+  - id: REL-U996-subdomain-commercial-settlement-management
+    type: presents
+    source_id: domain-finance
+    target_id: subdomain-commercial-settlement-management
+  - id: REL-U996-contextual-prices
+    type: shares-data
+    source_id: subdomain-pricing-promotions-management
+    target_id: D04
+  - id: REL-U996-commercial-benefit-conditions
+    type: shares-data
+    source_id: subdomain-rebates-incentives-management
+    target_id: subdomain-commercial-settlement-management
+  - id: REL-U996-eligible-supply-facts
+    type: shares-data
+    source_id: accounting-data-provision
+    target_id: subdomain-commercial-settlement-management
+  - id: REL-U996-commercial-settlement-results
+    type: shares-data
+    source_id: subdomain-commercial-settlement-management
+    target_id: D04
+retired_ids:
+- domain-retail-operations
+- REL-U987-domain-retail-operations
+preserved_ids:
+- domain-sales
+- subdomain-retail-network-management
+- subdomain-store-backoffice-operations
+- subdomain-policies
+- D03
+no_adjacent_business_area: true
+capability_count: 75
+implementation_of_findings:
+  F01: applied_to_responsibilities_and_contracts
+  F02: applied_to_responsibilities_and_contracts
+  F03: applied_to_responsibilities_and_contracts
+  F04: applied_to_responsibilities_and_contracts
+  F05: applied_to_responsibilities_and_contracts
+  F06: applied_to_responsibilities_and_contracts
+  F07: clarified_without_systematic_rename
+  F08: clarified_without_systematic_rename
+  F09: applied_to_responsibilities_and_contracts
+  F10: clarified_without_systematic_rename

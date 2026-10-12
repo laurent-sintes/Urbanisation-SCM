@@ -92,6 +92,7 @@ publication_delivery:
   - U831
   - U835
   - U889
+  - U981
   required_nodes:
   - id: BHV069
     kind: behavior
@@ -104,7 +105,7 @@ publication_delivery:
     content_sha256: 137055778440a2388dc98428a409c42e88fb6ad7dda45d485033687c326b9ed9
   - collection: paths
     id: intercompany-direct-delivery-path
-    content_sha256: 4a5e165bcf416e32cb2263dce5f6750ca16693df1ad89fc39fd6db9b6ac9a980
+    content_sha256: 4fcb1c00f0ddbece569034811708b1af3ff7e705080ac52a93f0d04058ab5b18
 delivery_updates:
 - source_refs:
   - U835
@@ -112,3 +113,12 @@ delivery_updates:
   id: intercompany-direct-delivery-path
   previous_content_sha256: 368767fe2b1363d82883d02c4ce2061dafc374ca7c626682f494e4ee6d0631d9
   reason: Transfert de la sélection de promesse D03.l vers ATP ; récit et portée de l’accord U831 conservés.
+delivery_reconciliation_U981:
+  source_ref: U981
+  note: 'Instruction explicite de profondeur : les responsabilités sont conservées au niveau sous-domaine ; les contrôles
+    précédents restent ci-dessous, sans nouvel accord sur leurs rédactions.'
+  retired_requirements: []
+  previous_catalog_checks:
+  - collection: paths
+    id: intercompany-direct-delivery-path
+    content_sha256: 4a5e165bcf416e32cb2263dce5f6750ca16693df1ad89fc39fd6db9b6ac9a980

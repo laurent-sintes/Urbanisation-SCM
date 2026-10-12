@@ -1,6 +1,6 @@
 id: flow-modeling-glossary
 kind: modeling_glossary
-as_of: '2026-10-09'
+as_of: '2026-10-12'
 source_refs:
 - U229
 - U230
@@ -519,8 +519,10 @@ terms:
   definition: Grand périmètre cohérent de responsabilités métier au sein d’un [Business System](method:MOD022). La profondeur
     de description dépend du périmètre. Lorsqu’un domaine est détaillé jusqu’aux [capacités](method:MOD015), ses [sous-domaines](method:MOD013)
     les regroupent obligatoirement dans des [Business Areas](method:MOD039).
-  role: Délimiter une responsabilité métier et ses coopérations. Sales, Sourcing and Procurement, Supply Chain Orchestration
-    et Logistics appartiennent à Business Operations.
+  role: Délimiter une responsabilité métier et ses coopérations. [Commerce](model:domain-sales), [Sourcing and Procurement](model:domain-sourcing-procurement),
+    [Demand & Supply Planning](model:domain-plan) et [Supply Chain Orchestration](model:supply-chain-orchestration) sont des
+    domaines de [Business Operations](model:system-business-operations). [Logistics](model:domain-logistics-execution) est
+    un [Business System](method:MOD022) distinct.
   source_refs:
   - U141
   - U446
@@ -535,6 +537,8 @@ terms:
   - U853
   - U880
   - U889
+  - U975
+  - U981
   review:
     state: partial
     adopted_scope: 'U482 : nom Domain et position au-dessus des Areas.'
@@ -544,6 +548,8 @@ terms:
     leur vocabulaire.
   - U780 ajoute Business System au-dessus de Domain ; la profondeur de description varie selon le périmètre. Les publications
     historiques gardent leurs niveaux.
+  - U981 réserve la décomposition en [Business Areas](method:MOD039), [capacités](method:MOD015) et [comportements](method:MOD006)
+    à Supply Chain Orchestration ; les autres domaines de contexte sont décrits jusqu’aux [sous-domaines](method:MOD013).
   short_description: Grand périmètre de responsabilités métier au sein d’un système métier.
 - id: MOD013
   name: Subdomain
@@ -1312,14 +1318,16 @@ terms:
   - U778
   - U779
   - U780
+  - U975
   review:
     state: partial
     adopted_scope: Nom du niveau, position au-dessus de Domain et regroupements U778–U780.
     proposed_scope: Rédaction pédagogique ; aucun standard universel revendiqué.
   notes:
   - La notion méthodologique reste distincte des noms des systèmes dans le glossaire métier.
-  - 'Design & Development et Enterprise Management & Control : contexte ; Business Operations : domaines ; Supply Chain Orchestration
-    : capacités et comportements.'
+  - 'U975 : quatre systèmes métier ; Logistics est autonome. Les systèmes périphériques et Demand & Supply Planning sont décrits
+    jusqu’aux sous-domaines de contexte utiles aux interfaces ; le raccordement comptable existant est conservé. Supply Chain
+    Orchestration reste le cœur approfondi de FLOW.'
   - Les sources marché comparent les périmètres ; elles ne définissent pas un équivalent exact de ce niveau FLOW.
   short_description: Ensemble de domaines qui coopèrent pour une finalité commune.
 - id: MOD023
@@ -1837,10 +1845,10 @@ terms:
   label_fr: Point chaud
   short_description: Sujet à creuser et à arbitrer, avec ou sans écart entre modes de fonctionnement.
   definition: Sujet à creuser et à arbitrer, suivi dans une fiche autonome. Il peut concerner un écart entre modes de fonctionnement,
-    une complexité d’implémentation, une contrainte de transition, un irritant d’usage ou une autre question de cadrage. Sa révélation ne démontre pas un
-    dysfonctionnement. Un point chaud de périmètre est ancré sur un ou plusieurs objets du modèle ; un point chaud d’intégration
-    relie exactement deux objets. Sa gravité combine la difficulté politique et la difficulté d’implémentation selon une grille
-    publiée, sans mesurer automatiquement l’urgence ni l’impact.
+    une complexité d’implémentation, une contrainte de transition, un irritant d’usage ou une autre question de cadrage. Sa
+    révélation ne démontre pas un dysfonctionnement. Un point chaud de périmètre est ancré sur un ou plusieurs objets du modèle
+    ; un point chaud d’intégration relie exactement deux objets. Sa gravité combine la difficulté politique et la difficulté
+    d’implémentation selon une grille publiée, sans mesurer automatiquement l’urgence ni l’impact.
   role: Rendre visibles les sujets à traiter sur les cartes et garder leurs options, sources, réserves et arbitrages.
   notes:
   - Les statuts Atlas découvert, partagé, validé et résolu ne remplacent pas les états de suivi du registre FLOW-Program.
@@ -1964,8 +1972,8 @@ terms:
     ; l’étude vise notamment les systèmes algorithmiques et ne définit pas un standard FLOW.'
   - W3C PROV-DM (2013) décrit la provenance des entités, activités et agents en général. Son application aux décisions FLOW
     reste à concevoir.
-  - Les versions des règles du [Control Plane](glossary:TER130) peuvent être des entrées de décision ; leur gouvernance reste
-    dans ce sous-domaine. La provenance traverse les responsabilités qui produisent et appliquent les choix.
+  - Les versions des règles du [Supply Policy Management](glossary:TER130) peuvent être des entrées de décision ; leur gouvernance
+    reste dans ce sous-domaine. La provenance traverse les responsabilités qui produisent et appliquent les choix.
   - Les journaux de modifications Microsoft Dynamics et SAP S/4HANA apportent des traces partielles ; ils ne démontrent ni
     chaîne complète ni réalisation installée chez Beaumanoir.
   source_refs:
@@ -1973,6 +1981,21 @@ terms:
   review:
     state: proposed
     note: Terme d’architecture demandé U968 ; définition FLOW détaillée proposée, sans choix de standard ou de produit.
+- id: MOD047
+  name: Data Sharing
+  label_fr: Partage de données
+  short_description: Transmission orientée d’informations métier d’un élément du modèle vers un autre, avec contenu explicite.
+  definition: Une relation de partage de données identifie le producteur, le destinataire et les informations métier mises
+    à disposition. Elle peut relier plusieurs niveaux de responsabilité. Elle ne crée pas de parent métier et ne prouve pas
+    une interface installée.
+  role: Relation métier transversale, indépendante des niveaux et des technologies.
+  source_refs:
+  - U979
+  review:
+    state: proposed
+    note: Convention de mise en œuvre de la demande U979 ; rédaction explicative proposée.
+  context: 'U979 : relation shares-data ; contenu dans fields.data_exchange, sens donné par source_id et target_id. La vue
+    Enterprise Architecture projette les extrémités vers leurs systèmes métier en conservant les relations sources.'
 methodology_agreements:
 - id: AGREEMENT-U787
   source_refs:

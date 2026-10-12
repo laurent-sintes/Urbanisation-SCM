@@ -1,0 +1,169 @@
+id: ORCHESTRATION-DETAIL-SCOPE-U981
+status: applied_to_backlog
+source_refs:
+- U981
+- CMP315
+- ELM858
+- ELM860
+agreement:
+  author: Laurent
+  decided_at: '2026-10-12'
+  scope: Détail en capacités réservé à Supply Chain Orchestration ; contexte externe limité aux sous-domaines.
+  not_adopted: Descriptions, comparaisons et contenus de partage détaillés ne sont pas approuvés globalement.
+retirement_proofs:
+- id: accounting-interpretation
+  content_sha256: 302e0bc7ac4a5920ded4e2931146bb6b54d3635ad48ddba1300c02a38926ffe8
+  unpublished_state:
+    id: accounting-interpretation
+    revision: 2
+    kind: capability
+    fields:
+      name: Accounting Interpretation
+      definition: Recevoir et contrôler les [faits de gestion](glossary:TER120), puis les traduire en [écritures](glossary:TER121)
+        selon les règles comptables.
+      finality: Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+      scope: |-
+        Recevoir les [faits de gestion](glossary:TER120) fournis notamment par [Accounting Data Provision](model:accounting-data-provision), contrôler leur complétude et leur cohérence, puis appliquer les règles de [Finance](glossary:TER117) pour produire les [écritures](glossary:TER121) prêtes à enregistrer. Conserver les liens vers les faits et justificatifs, les corrections et les rejets motivés.
+
+        Une information manquante entraîne une attente ou un rejet, sans inventer un montant. L’enregistrement effectif des écritures reste distinct. Exemple fictif : vérifier une réception reconnue de 80 pièces et déterminer son traitement comptable selon les règles applicables ; un composant installé hors du logiciel comptable peut servir cette responsabilité Finance.
+      market_comparisons:
+      - vendor: Microsoft
+        product: Dynamics 365 Finance
+        element_name: Accounting distributions
+        element_type: Fonction ou processus documenté
+        relationship: Recouvrement partiel
+        similarities: Les montants des documents sources sont répartis sur les comptes ; les corrections restent identifiables.
+        differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+          et enregistrement comptable.
+        flow_position: Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+        source_title: Accounting distributions
+        source_url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-payable/accounting-distributions
+        source_version: Documentation évolutive ; édition globale non indiquée
+        consulted_on: '2026-09-28'
+        source_locator: Introduction et Distribute amounts
+        evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+        status: proposed
+        source_refs:
+        - ELM848
+        - U826
+        term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+        definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+          et enregistrement comptable.
+      - vendor: SAP
+        product: SAP S/4HANA Materials Management
+        element_name: Describing Automatic Account Determination
+        element_type: Fonction ou processus documenté
+        relationship: Recouvrement partiel
+        similarities: Les comptes sont déterminés pour les transactions pertinentes comptablement.
+        differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+          et enregistrement comptable.
+        flow_position: Recevoir et contrôler les faits de gestion, puis les traduire en écritures selon les règles comptables.
+        source_title: Describing Automatic Account Determination
+        source_url: https://learning.sap.com/courses/cross-functional-customizing-in-sap-s-4hana-materials-management/describing-automatic-account-determination
+        source_version: Documentation évolutive ; édition globale non indiquée
+        consulted_on: '2026-09-28'
+        source_locator: Automatic Account Determination
+        evidence_limits: Appui primaire sur les responsabilités décrites ; aucun flux installé ni consensus de taxonomie déduit.
+        status: proposed
+        source_refs:
+        - ELM851
+        - U826
+        term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
+        definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
+          et enregistrement comptable.
+      nature: action
+    source_refs:
+    - U826
+    - ELM848
+    - ELM851
+    - U848
+    source_locator:
+      path: connaissance/01-contributions-utilisateur.md
+      anchor: u826
+    review:
+      state: partial
+      note: Lot appliqué sur autorisation ; compléments éditoriaux et contexte financier proposés, accords limités capturés
+        séparément.
+    last_modified: '2026-10-06T00:00:00Z'
+- id: ba-accounting-translation
+  content_sha256: ed8d5bfef7d64cd6cb6b0e7150d1f078d66e78c2a7f0f782934380b4d2edc126
+  preserved_in:
+    publication: 2026-10-12.6
+    path: modeles/release/2026-10-12.6/model.yaml
+- id: REL-U826-accounting-interpretation
+  content_sha256: 5cde6e131375ff83389541da8d143ef75030295d54764eca09610a20c09e6baf
+  preserved_in:
+    publication: 2026-10-12.6
+    path: modeles/release/2026-10-12.6/model.yaml
+- id: REL-U826-accounting-data-provision-TO-accounting-interpretation
+  content_sha256: 728ba7ce7d5c0da55ce36f98e258360f5e6e82a93bc76193f8de4670033ac667
+  preserved_in:
+    publication: 2026-10-12.6
+    path: modeles/release/2026-10-12.6/model.yaml
+- id: REL-U880-ba-accounting-translation
+  content_sha256: c32fe6228e9e11bca1e1c5f13185d7108679e1c35bbb87a3987db6ba0909f978
+  preserved_in:
+    publication: 2026-10-12.6
+    path: modeles/release/2026-10-12.6/model.yaml
+responsibility_preservation:
+  receiving_subdomain: subdomain-financial-accounting
+  flow_capability: accounting-data-provision
+  replacement_relation: REL-U981-accounting-facts
+  changed_paths:
+  - intercompany-direct-delivery-path
+  hotspot: HS-021
+  glossary_terms_preserved:
+  - TER114
+  - TER118
+  - TER119
+  - TER163
+market_comparison:
+  id: CMP315
+  common_points: Réception des données opérationnelles et traitement comptable dans le périmètre financier.
+  difference: La profondeur limitée est un choix de périmètre FLOW, pas une taxonomie SAP ou Dynamics.
+  benefit: Décrire les frontières et dépendances sans anticiper un développement du système financier.
+  tradeoff: Les savoir-faire comptables ne sont plus individuellement cartographiés ; leur responsabilité reste explicite
+    dans le sous-domaine.
+  access_limit: ELM859 indisponible lors du contrôle du 2026-10-12 ; preuve historique conservée, FSD ELM860 réellement consultée
+    en remplacement.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U981
+  summary: Finance reste au niveau contexte ; Accounting Interpretation et Accounting Translation retirés, rôle comptable
+    et raccordement conservés.
+  absent_nodes:
+  - accounting-interpretation
+  - ba-accounting-translation
+  required_nodes:
+  - id: domain-finance
+    fields:
+      modeling_depth: domains
+  - id: subdomain-financial-accounting
+    kind: area
+    parent: domain-finance
+    parent_type: presents
+    field_sha256:
+      scope: 413479bb7da30a65bf641b7585782a74d3ed2e782290a3fea522e8221f2b0c6c
+  - id: accounting-data-provision
+    kind: capability
+    parent: ba-outbound-information-provision
+  required_relations:
+  - id: REL-U981-accounting-facts
+    type: shares-data
+    source_id: accounting-data-provision
+    target_id: subdomain-financial-accounting
+    field_sha256:
+      label: b442f97c183688cdfa8f853a4cc3113a7985c31a47139d90b2bf0ed90ae513b4
+      data_exchange: 10b07dd280805c382e84ad89d6005619c590df43b599a4bdec09666ff64cb3bf
+  required_catalog:
+  - collection: paths
+    id: intercompany-direct-delivery-path
+    content_sha256: 4fcb1c00f0ddbece569034811708b1af3ff7e705080ac52a93f0d04058ab5b18
+  - collection: hotspots
+    id: HS-021
+    content_sha256: 32c678769a4869abb734ccbbe1b29879e91f785ec3b7122b6644873f10f6fcb2
+  absent_relations:
+  - REL-U826-accounting-interpretation
+  - REL-U826-accounting-data-provision-TO-accounting-interpretation
+  - REL-U880-ba-accounting-translation

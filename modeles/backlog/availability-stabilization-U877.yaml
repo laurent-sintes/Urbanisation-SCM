@@ -48,7 +48,7 @@ publication_delivery:
 
         [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
-        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Control Plane](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
+        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).
   - id: D02.c
     fields:
       scope: |-
@@ -115,7 +115,7 @@ publication_delivery:
         Purchase Orders](glossary:TER033) externes, en préservant leur nature, leurs versions et leur origine, sans les recalculer
         ni les affermir.
       scope: |-
-        Une capacité commune reçoit les [Supply Plans](glossary:TER098), les [Demand Plans](glossary:TER099) et les propositions d’achat planifiées, en conservant leur distinction. Reconnaître les nouvelles versions, corrections et rejets ; rapprocher les données de leurs références locales sans calculer les prévisions. Le domaine [Demand & Supply Planning](model:domain-plan) est extérieur à Supply Chain Orchestration et représenté sans décomposition interne. Une projection révisée ne modifie ni un [Order](glossary:TER012) ni un mouvement constaté. Exemple fictif : une prévision d’entrée hors achat passe de 100 à 80 pièces ; intégrer la révision sans enregistrer une réception.
+        Une capacité commune reçoit les [Supply Plans](glossary:TER098), les [Demand Plans](glossary:TER099) et les propositions d’achat planifiées, en conservant leur distinction. Reconnaître les nouvelles versions, corrections et rejets ; rapprocher les données de leurs références locales sans calculer les prévisions. Le domaine [Demand & Supply Planning](model:domain-plan) est extérieur à Supply Chain Orchestration et représenté avec trois sous-domaines de contexte. Une projection révisée ne modifie ni un [Order](glossary:TER012) ni un mouvement constaté. Exemple fictif : une prévision d’entrée hors achat passe de 100 à 80 pièces ; intégrer la révision sans enregistrer une réception.
 
         Cette capacité appartient à [Integration](model:subdomain-integration), Business Area [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
 
@@ -162,6 +162,32 @@ publication_delivery:
     Ceci ne modifie aucun accord historique.
   supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
     sans extension des accords.
+  superseded_checks_U975:
+  - previous:
+      id: plans-ingestion
+      fields:
+        definition: Recevoir et intégrer les [Supply Plans](glossary:TER098), les [Demand Plans](glossary:TER099) et les [Planned
+          Purchase Orders](glossary:TER033) externes, en préservant leur nature, leurs versions et leur origine, sans les
+          recalculer ni les affermir.
+        scope: |-
+          Une capacité commune reçoit les [Supply Plans](glossary:TER098), les [Demand Plans](glossary:TER099) et les propositions d’achat planifiées, en conservant leur distinction. Reconnaître les nouvelles versions, corrections et rejets ; rapprocher les données de leurs références locales sans calculer les prévisions. Le domaine [Demand & Supply Planning](model:domain-plan) est extérieur à Supply Chain Orchestration et représenté sans décomposition interne. Une projection révisée ne modifie ni un [Order](glossary:TER012) ni un mouvement constaté. Exemple fictif : une prévision d’entrée hors achat passe de 100 à 80 pièces ; intégrer la révision sans enregistrer une réception.
+
+          Cette capacité appartient à [Integration](model:subdomain-integration), Business Area [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+
+          Recevoir aussi les [Planned Purchase Orders](glossary:TER033) transmis par la planification, notamment MAP, avec leur identité, leur version, leurs quantités, dates et statut de proposition. Ce sont des propositions d’achat distinctes des [Supply Plans](glossary:TER098) hors achats. Leur réception ne les affermit pas et ne crée pas une réception physique. [Purchase Order](model:D04.j) conserve leur filiation avec l’achat affermi ; [Availability](glossary:TER112) explicite si et sous quelles conditions cet apport encore planifié peut contribuer à une promesse.
+    previous_sha256: 28ffe7cf1aa346d32bb4e6455b7992501ccff94f82218ce06ce7faecd0ff26da
+    current:
+      id: plans-ingestion
+      fields:
+        definition: Recevoir et intégrer les [Supply Plans](glossary:TER098), les [Demand Plans](glossary:TER099) et les [Planned
+          Purchase Orders](glossary:TER033) externes, en préservant leur nature, leurs versions et leur origine, sans les
+          recalculer ni les affermir.
+        scope: |-
+          Une capacité commune reçoit les [Supply Plans](glossary:TER098), les [Demand Plans](glossary:TER099) et les propositions d’achat planifiées, en conservant leur distinction. Reconnaître les nouvelles versions, corrections et rejets ; rapprocher les données de leurs références locales sans calculer les prévisions. Le domaine [Demand & Supply Planning](model:domain-plan) est extérieur à Supply Chain Orchestration et représenté avec trois sous-domaines de contexte. Une projection révisée ne modifie ni un [Order](glossary:TER012) ni un mouvement constaté. Exemple fictif : une prévision d’entrée hors achat passe de 100 à 80 pièces ; intégrer la révision sans enregistrer une réception.
+
+          Cette capacité appartient à [Integration](model:subdomain-integration), Business Area [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+
+          Recevoir aussi les [Planned Purchase Orders](glossary:TER033) transmis par la planification, notamment MAP, avec leur identité, leur version, leurs quantités, dates et statut de proposition. Ce sont des propositions d’achat distinctes des [Supply Plans](glossary:TER098) hors achats. Leur réception ne les affermit pas et ne crée pas une réception physique. [Purchase Order](model:D04.j) conserve leur filiation avec l’achat affermi ; [Availability](glossary:TER112) explicite si et sous quelles conditions cet apport encore planifié peut contribuer à une promesse.
 scope_followup: 'GEN-01 et GEN-02 : frontières appliquées sous U879 ; règles détaillées et autorité commerciale du retour
   restent à préciser.'
 superseded_delivery_U885:
@@ -321,3 +347,21 @@ delivery_reconciliation_U910:
     check: fields.scope
     previous_sha256: 2f2ec927aed40b1436650a20f541dbaeab7befab4ccb3424ba2d5fcccb18a4c5
     current_sha256: e6799edf339df5b2e2006952e29a689d4b7dd8ebf63b0e22ccf32693295e1245
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: business-references
+    fields:
+      scope: |-
+        [Partner & Agreement References](model:ba-partner-agreement-references) porte les parties, accords et profils de crédit ; [Merchandise References](model:ba-product-references) les produits destinés à la vente, catalogues, assortiments et tarifs ; [Packaging References](model:ba-packaging-references) les matières et consignes de conditionnement ; [Internal Supplies & Equipment References](model:ba-internal-supplies-equipment-references) les fournitures et équipements internes ; [Service References](model:ba-service-references) les offres et moyens de prestation.
+
+        Un même bien peut avoir plusieurs usages. Les correspondances connues entre références conservent leur provenance ; aucun référentiel technique commun n’est imposé. La destination du bien ne détermine pas à elle seule son stockage ou son traitement comptable.
+
+        Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
+
+        [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+
+        Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Control Plane](model:subdomain-policies), les prévisions interprétées de [Plan Visibility](model:subdomain-plans).

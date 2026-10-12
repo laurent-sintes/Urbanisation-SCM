@@ -2422,6 +2422,9 @@
             "verb": {
               "type": "string",
               "minLength": 1
+            },
+            "data_exchange": {
+              "$ref": "#/$defs/dataExchange"
             }
           },
           "additionalProperties": false
@@ -3278,6 +3281,52 @@
         },
         "additionalProperties": false
       }
+    },
+    "dataExchange": {
+      "type": "object",
+      "properties": {
+        "contents": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "description": {
+                "type": "string",
+                "minLength": 1
+              },
+              "glossary_refs": {
+                "type": "array",
+                "minItems": 1,
+                "uniqueItems": true,
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "required": [
+              "name",
+              "description",
+              "glossary_refs"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "purpose": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "contents",
+        "purpose"
+      ],
+      "additionalProperties": false
     }
   }
 }

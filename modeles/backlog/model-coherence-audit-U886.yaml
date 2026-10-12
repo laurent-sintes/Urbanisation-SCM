@@ -64,6 +64,10 @@ reading_codes:
     candidate_after_U898: CAP-022
     candidate_after_U910: CAP-014
     candidate_after_U911: CAP-014
+    candidate_after_U975: CAP-014
+    candidate_after_U978: CAP-014
+    candidate_after_U987: CAP-014
+    candidate_after_U996: CAP-014
   - id: BHV082
     previous: BHV-067
     candidate: CAP-074
@@ -72,6 +76,10 @@ reading_codes:
     candidate_after_U898: CAP-074
     candidate_after_U910: CAP-042
     candidate_after_U911: CAP-042
+    candidate_after_U975: CAP-042
+    candidate_after_U978: CAP-042
+    candidate_after_U987: CAP-042
+    candidate_after_U996: CAP-042
   - id: subdomain-plans
     previous: BA-014
     candidate: BA-013
@@ -80,6 +88,10 @@ reading_codes:
     candidate_after_U898: BA-015
     candidate_after_U910: BA-016
     candidate_after_U911: BA-017
+    candidate_after_U975: BA-017
+    candidate_after_U978: BA-017
+    candidate_after_U987: BA-017
+    candidate_after_U996: BA-017
   - id: D06.d
     previous: CAP-046
     candidate: CAP-042
@@ -88,6 +100,10 @@ reading_codes:
     candidate_after_U898: CAP-042
     candidate_after_U910: CAP-055
     candidate_after_U911: CAP-055
+    candidate_after_U975: CAP-055
+    candidate_after_U978: CAP-055
+    candidate_after_U987: CAP-055
+    candidate_after_U996: CAP-055
   - id: order-workflow-orchestration
     previous: CAP-014
     candidate: CAP-069
@@ -96,6 +112,10 @@ reading_codes:
     candidate_after_U898: CAP-069
     candidate_after_U910: CAP-037
     candidate_after_U911: CAP-037
+    candidate_after_U975: CAP-037
+    candidate_after_U978: CAP-037
+    candidate_after_U987: CAP-037
+    candidate_after_U996: CAP-037
   - id: subdomain-process-management
     previous: null
     candidate: SUB-009
@@ -104,10 +124,18 @@ reading_codes:
     candidate_after_U898: SUB-012
     candidate_after_U910: SUB-010
     candidate_after_U911: SUB-010
+    candidate_after_U975: SUB-022
+    candidate_after_U978: SUB-026
+    candidate_after_U987: SUB-027
+    candidate_after_U996: SUB-031
   note_U910: Nouvel ordre de lecture de Master Plan Management validé U910 ; les codes restent des prévisions du prochain
     snapshot, sans renumérotation des identités ni réouverture de l’audit U886.
   note_U911: La séparation en deux Business Areas U911 modifie les codes candidats de la prochaine publication ; l’audit U886
     et les codes des publications existantes restent figés.
+  note_U975: 'Ajout des domaines et sous-domaines de contexte U975 : le code candidat de Process Management devient SUB-022.
+    Identités persistantes, codes précédents et publications historiques conservés ; aucune nouvelle publication réalisée.'
+  note_U978: 'Quatre sous-domaines de contexte Sourcing and Procurement ajoutés U978 : code candidat de Process Management
+    SUB-026. Identités et codes publiés préservés ; audit U886 non rouvert.'
 findings:
 - id: A01
   priority: P1
@@ -418,10 +446,10 @@ publication_delivery:
   - id: D03
     fields:
       name: Availability
-      definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
-        conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
+      definition: Déterminer comment couvrir les besoins et ce qui peut être promis, en tenant compte des ressources, des
+        priorités et des engagements.
       scope: |-
-        Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Control Plane. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
+        Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Supply Policy Management. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
 
         Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
 
@@ -496,7 +524,7 @@ publication_delivery:
 
         Les demandes et précommandes connues peuvent éclairer [Plan Visibility](model:subdomain-plans) selon leur horizon. Leur prise en compte ne crée pas une seconde commande ni une addition automatique à la prévision ; les ventes observées constituent un apport distinct.
 
-        Appliquer le résultat du [Credit Check](glossary:TER155) conduit par le [Case](glossary:TER064) de [Wholesale](model:subdomain-sales-wholesale) selon le [contrat commun](model:D04#scope), avec motif, portée, version et validité. Tenir la suspension ou la reprise autorisée ; une information absente, périmée ou une échéance dépassée ne lève pas le blocage. La dérogation reste sous autorité de [Finance](glossary:TER117).
+        Appliquer le résultat du [Credit Check](glossary:TER155) conduit par le [Case](glossary:TER064) de [Wholesale Commerce](model:subdomain-sales-wholesale) selon le [contrat commun](model:D04#scope), avec motif, portée, version et validité. Tenir la suspension ou la reprise autorisée ; une information absente, périmée ou une échéance dépassée ne lève pas le blocage. La dérogation reste sous autorité de [Finance](glossary:TER117).
 
         La vue [Product Reference](model:D08) aide à comprendre les biens demandés à la vente ; leur identité reste commune dans [Product Reference](model:D08). Leurs offres et sélections ne deviennent pas de nouvelles identités produit.
   - id: D06.b
@@ -568,7 +596,7 @@ publication_delivery:
 
         Exemple fictif : Une commande est fractionnée avec accord du client : conserver les engagements et la filiation des parties sans choisir leur transporteur.
 
-        Les commandes appliquent les résultats autorisés des contrôles propres aux [Cases](glossary:TER064). Le [Credit Check](glossary:TER155) relève du parcours de [Wholesale](model:subdomain-sales-wholesale) et des règles financières compétentes ; ce périmètre ne porte pas une capacité de décision financière autonome.
+        Les commandes appliquent les résultats autorisés des contrôles propres aux [Cases](glossary:TER064). Le [Credit Check](glossary:TER155) relève du parcours de [Wholesale Commerce](model:subdomain-sales-wholesale) et des règles financières compétentes ; ce périmètre ne porte pas une capacité de décision financière autonome.
   - id: ba-order-promising
     fields:
       name: Order Promising
@@ -598,7 +626,7 @@ publication_delivery:
       definition: Recevoir et intégrer les référentiels fournis par les domaines sources pour maintenir les références locales
         utilisées par la Supply.
       scope: |-
-        Recevoir les apports sourcés, vérifier leur identité, leur portée et leur validité connues, intégrer les versions ou corrections prises en compte et conserver le résultat de cette intégration. Les contributions commerciales, celles de [Finance](glossary:TER117) et celles de [Design & Development](glossary:TER105) gardent leur provenance. La répartition des sources commerciales entre [Sales](model:domain-sales) et [Sourcing and Procurement](model:domain-sourcing-procurement) reste à documenter ; aucune autorité ni alimentation installée n’est déduite de ce regroupement.
+        Recevoir les apports sourcés, vérifier leur identité, leur portée et leur validité connues, intégrer les versions ou corrections prises en compte et conserver le résultat de cette intégration. Les contributions commerciales, celles de [Finance](glossary:TER117) et celles de [Design & Development](glossary:TER105) gardent leur provenance. La répartition des sources commerciales entre [Commerce](model:domain-sales) et [Sourcing and Procurement](model:domain-sourcing-procurement) reste à documenter ; aucune autorité ni alimentation installée n’est déduite de ce regroupement.
 
         Les sujets de référence restent distincts. Les produits et partenaires sont décrits dans : [Product Reference](glossary:TER052) (produits et variantes), Party / Role (personnes, relations et rôles), [Agreement](glossary:TER048) (conditions contractuelles). Les offres et moyens sont décrits dans : [Product Catalog](glossary:TER049) (offres et éligibilité), [Fulfilment Network](glossary:TER054) (lieux et relations), [Service Catalog](glossary:TER094) (prestations de référence), [Assortment](glossary:TER087) (sélections et périodes) [Product Price Book](model:product-price-book) (tarifs produits) et [Service Price Book](model:service-price-book) (tarifs de services). Un sujet peut recevoir plusieurs contributions et un domaine en fournir plusieurs.
 
@@ -615,14 +643,17 @@ publication_delivery:
         Recevoir également les données de [Product Reference](model:D08), [Packaging Material Reference](model:packaging-material-reference), [Packaging Specification](model:packaging-specification) et [Internal Supplies & Equipment Reference](model:internal-supplies-equipment-reference). Préserver les correspondances connues entre références, les versions et les conversions d’unités reçues. Distinguer une consigne réutilisable des structures de conditionnement annoncées ou réalisées, qui sont des informations d’opération. Les maîtres de ces apports restent à qualifier sur preuve ; aucun flux installé n’est déduit de cette couverture cible.
 
         L’apport du contrôle de gestion alimente [Customer Credit Profile](model:customer-credit-profile) dans [Partner & Agreement References](model:ba-partner-agreement-references), selon le comportement [Reference Ingestion from Finance](model:master-data-ingestion-finance). [Party / Role](model:D09) reste la référence d’identité liée au profil.
+
+        Pour les tarifs et conditions commerciaux reçus, préserver contexte, date métier de calcul, référence, version, période et limites d’application. La réception d’un [prix contextualisé](glossary:TER257) ne transfère pas sa détermination à FLOW. Relier les corrections à leur résultat d’origine et rendre les incohérences visibles ; une nouvelle version ne remplace pas automatiquement le [prix engagé](glossary:TER263).
   - id: master-data-ingestion-commerce
     fields:
       name: Commercial Reference Ingestion
       definition: Intégrer les données de référence provenant des sources commerciales dont les responsabilités restent à
         documenter, en conservant leur contrat et leur provenance.
-      scope: Conserver identification, validité, version et corrections selon le contrat source. Le repère historique Commerce
-        ne désigne pas un domaine courant. Les responsabilités de [Sales](model:domain-sales) et de [Sourcing and Procurement](glossary:TER109)
-        restent à établir selon les données ; ne pas attribuer toutes les références commerciales à [Sales](model:domain-sales).
+      scope: Conserver identification, validité, version et corrections selon le contrat source. Le nom [Commerce](model:domain-sales)
+        désigne désormais le domaine de vente ; cette ingestion conserve aussi des sources commerciales extérieures à ce domaine.
+        Les responsabilités de [Commerce](model:domain-sales) et de [Sourcing and Procurement](glossary:TER109) restent à
+        établir selon les données ; ne pas attribuer toutes les références commerciales à [Commerce](model:domain-sales).
         Aucun maître, contrat détaillé ni flux installé n’est présumé.
   - id: master-data-ingestion-design
     fields:
@@ -858,13 +889,13 @@ publication_delivery:
         et apports, faire appliquer les changements autorisés aux commandes et engagements, puis coordonner les prestations
         et suivre leurs résultats.
       scope: |-
-        Le domaine réunit [Operational References](model:business-references), [Control Plane](model:subdomain-policies), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) [Integration](model:subdomain-integration) et [Process Management](model:subdomain-process-management). [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability. Ces périmètres coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
+        Le domaine réunit [Operational References](model:business-references), [Supply Policy Management](model:subdomain-policies), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) [Integration](model:subdomain-integration) et [Process Management](model:subdomain-process-management). [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability. Ces périmètres coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
 
         [Integration](model:subdomain-integration) reçoit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) du domaine [Demand & Supply Planning](model:domain-plan), par [Plan Ingestion](model:plans-ingestion) ; [Plan Visibility](model:subdomain-plans) les interprète dans le contexte des demandes. [Supply Plan](glossary:TER098) porte les prévisions d’entrées ou de sorties de stock hors achats. Le [master plan de matching](glossary:TER100) est un objet distinct, construit et géré dans [Availability](glossary:TER112). Le domaine [Demand & Supply Planning](model:domain-plan) reste extérieur à l’orchestration.
 
         [Availability](glossary:TER112) choisit les propositions de promesse et maintient leur cohérence avec les arbitrages collectifs ; [Availability](glossary:TER112) arbitre les affectations ; [Order Management](model:D04) confirme, porte et révise les engagements. [Fulfilment](glossary:TER085) cherche des solutions locales préservant promesse et grands équilibres. Les exécutants réalisent les prestations et conservent leurs opérations internes.
 
-        Les sources de vérité d’entreprise restent externes ; [Operational References](glossary:TER123) porte les références locales Supply, Control Plane les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
+        Les sources de vérité d’entreprise restent externes ; [Operational References](glossary:TER123) porte les références locales Supply, Supply Policy Management les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
 
         [Service Management](model:subdomain-service-orders) porte les exigences et engagements propres des prestations confiées ; [Fulfilment](glossary:TER085) les compose et les coordonne. Les familles d’ordres de services sont des capacités, comme les familles d’[Orders](glossary:TER012) entrants.
 
@@ -872,7 +903,7 @@ publication_delivery:
 
         [Process Management](glossary:TER164) définit et conduit les parcours, organise le travail humain, supervise les interventions et analyse les résultats. Les commandes conservent leurs engagements ; les décisions spécialisées et la coordination des prestations restent chez leurs responsables. Un parcours mobilise les capacités sans modifier leur rattachement métier.
 
-        Le cœur métier décrit ici fournit les capacités génériques de gestion des demandes, de disponibilité et de conduite des processus. Les [Cases](glossary:TER064) opérationnels et leurs règles propres relèvent principalement de [Sourcing and Procurement](model:domain-sourcing-procurement) et de [Sales](model:domain-sales). Les contextes [B2C](glossary:TER194) et [B2B](glossary:TER195) se situent dans ces parcours ; ils ne subdivisent pas ce domaine. Les commandes gardent leurs invariants et leurs transitions autorisées dans [Order Management](model:D04). Cette frontière métier ne prescrit ni composants partagés ni stockage commun.
+        Le cœur métier décrit ici fournit les capacités génériques de gestion des demandes, de disponibilité et de conduite des processus. Les [Cases](glossary:TER064) opérationnels et leurs règles propres relèvent principalement de [Sourcing and Procurement](model:domain-sourcing-procurement) et de [Commerce](model:domain-sales). Les contextes [B2C](glossary:TER194) et [B2B](glossary:TER195) se situent dans ces parcours ; ils ne subdivisent pas ce domaine. Les commandes gardent leurs invariants et leurs transitions autorisées dans [Order Management](model:D04). Cette frontière métier ne prescrit ni composants partagés ni stockage commun.
   required_catalog:
   - collection: scenarios
     id: b2b-partial-stock
@@ -963,3 +994,161 @@ delivery_reconciliation_U911:
     check: fields.scope
     previous_sha256: aa5109c221a52022973913d75af881339cd85683263fb59e51410f2e4fbb4fd9
     current_sha256: 6cd87bdf4323fb7ca8525f41d43f3ee8cd78e13763b7a548c057166ca4a75c8c
+delivery_reconciliation_U987:
+  source_refs:
+  - U987
+  reason: Noms et frontières Commerce/Retail adoptés ; attentes antérieures conservées ci-dessous. Ne réapprouve pas les anciennes
+    descriptions ni correspondances.
+  previous_requirements:
+  - id: D04.i
+    fields:
+      name: Sales Order
+      definition: 'Gérer les commandes clients à satisfaire : enregistrer ce qui est demandé, maintenir les quantités, destinations
+        et échéances applicables, suivre les évolutions autorisées et déterminer ce qui reste à servir.'
+      scope: |-
+        Tenir les lignes, quantités, destinations, échéances et prix applicables de la commande client. Distinguer demandé, proposé, confirmé et réalisé ; suivre le reste à satisfaire et les évolutions autorisées selon le [cycle commun d’Order Management](model:D04#scope). Les conditions de l’[Agreement](glossary:TER048) restent sous leur autorité ; leur consultation n’autorise pas à les négocier.
+
+        Exemple fictif : sur 100 pièces, 60 sont livrées et 40 restent à servir. Une demande de report des 40 ne change pas automatiquement la date promise. Un retour ultérieur crée une [Return Order](glossary:TER072) distincte, liée à la vente lorsque connue ; il n’efface pas la livraison.
+
+        [Availability](glossary:TER112) détermine les propositions de promesse et les affectations ; la commande conserve les engagements effectivement acceptés. [Process Management](glossary:TER164) conduit le parcours ; [Service Management](glossary:TER152) porte les prestations confiées et [Fulfilment Coordination](glossary:TER176) les coordonne. Les exécutants réalisent les opérations. Les règles détaillées d’imputation, tolérances et autorisations restent à instruire.
+
+        [Ship to Customer](model:BHV066), [Customer Pickup](model:BHV067), [Direct Delivery](model:BHV068) et [Intercompany Sales](model:BHV069) décrivent des axes combinables. Intercompany qualifie la relation commerciale ; les autres précisent le mode de satisfaction. Identifier les quantités concernées sans les compter deux fois.
+
+        [Preorder](glossary:TER150) est un statut de la commande existante avant disponibilité commerciale. Suivre l’attente, le degré d’engagement et les révisions autorisées ; la sortie de précommande conserve la même identité. Une précommande peut déjà être ferme. La [distinction avec les propositions d’achat planifiées](model:D04#scope) dépend de la nature des objets, pas d’une règle générale achat/vente.
+
+        Les demandes et précommandes connues peuvent éclairer [Plan Visibility](model:subdomain-plans) selon leur horizon. Leur prise en compte ne crée pas une seconde commande ni une addition automatique à la prévision ; les ventes observées constituent un apport distinct.
+
+        Appliquer le résultat du [Credit Check](glossary:TER155) conduit par le [Case](glossary:TER064) de [Wholesale](model:subdomain-sales-wholesale) selon le [contrat commun](model:D04#scope), avec motif, portée, version et validité. Tenir la suspension ou la reprise autorisée ; une information absente, périmée ou une échéance dépassée ne lève pas le blocage. La dérogation reste sous autorité de [Finance](glossary:TER117).
+
+        La vue [Product Reference](model:D08) aide à comprendre les biens demandés à la vente ; leur identité reste commune dans [Product Reference](model:D08). Leurs offres et sélections ne deviennent pas de nouvelles identités produit.
+  - id: ba-order-lifecycle-management
+    fields:
+      name: Order Lifecycle Management
+      definition: Tenir les commandes, leurs engagements et leurs évolutions, préserver leur traçabilité et restituer leur
+        état.
+      scope: |-
+        La structuration et la visibilité restent des capacités distinctes ; le pilotage du parcours relève de [Reactive Workflow Management](glossary:TER125).
+
+        Bénéficiaire et résultat : Donner aux parties de la commande une trace fiable de ce qui a été demandé, accepté, modifié et réalisé.
+
+        Exemple fictif : Une commande est fractionnée avec accord du client : conserver les engagements et la filiation des parties sans choisir leur transporteur.
+
+        Les commandes appliquent les résultats autorisés des contrôles propres aux [Cases](glossary:TER064). Le [Credit Check](glossary:TER155) relève du parcours de [Wholesale](model:subdomain-sales-wholesale) et des règles financières compétentes ; ce périmètre ne porte pas une capacité de décision financière autonome.
+  - id: master-data-ingestion
+    fields:
+      name: Reference Ingestion
+      definition: Recevoir et intégrer les référentiels fournis par les domaines sources pour maintenir les références locales
+        utilisées par la Supply.
+      scope: |-
+        Recevoir les apports sourcés, vérifier leur identité, leur portée et leur validité connues, intégrer les versions ou corrections prises en compte et conserver le résultat de cette intégration. Les contributions commerciales, celles de [Finance](glossary:TER117) et celles de [Design & Development](glossary:TER105) gardent leur provenance. La répartition des sources commerciales entre [Sales](model:domain-sales) et [Sourcing and Procurement](model:domain-sourcing-procurement) reste à documenter ; aucune autorité ni alimentation installée n’est déduite de ce regroupement.
+
+        Les sujets de référence restent distincts. Les produits et partenaires sont décrits dans : [Product Reference](glossary:TER052) (produits et variantes), Party / Role (personnes, relations et rôles), [Agreement](glossary:TER048) (conditions contractuelles). Les offres et moyens sont décrits dans : [Product Catalog](glossary:TER049) (offres et éligibilité), [Fulfilment Network](glossary:TER054) (lieux et relations), [Service Catalog](glossary:TER094) (prestations de référence), [Assortment](glossary:TER087) (sélections et périodes) [Product Price Book](model:product-price-book) (tarifs produits) et [Service Price Book](model:service-price-book) (tarifs de services). Un sujet peut recevoir plusieurs contributions et un domaine en fournir plusieurs.
+
+        L’ingestion reconnaît les apports et leur prise en compte ; [Operational References](model:business-references) porte la composition et le maintien de la vue locale utilisable de chaque sujet, avec fraîcheur, provenance et incohérences connues. Une donnée reçue mais rejetée ou en attente ne devient pas une référence applicable. Le domaine tient la source de vérité locale Supply ; il ne négocie pas les accords, ne conçoit pas commercialement les offres et ne corrige pas silencieusement les maîtres d’entreprise.
+
+        Les références peuvent être liées sans fusionner leurs autorités : produit dans plusieurs catalogues, assortiment référencé par un accord, offre associée à des tarifs. Le tarif reste dans [Price Book](glossary:TER097) ; son évolution ne modifie pas automatiquement le prix ou le [SLA](glossary:TER076) d’un engagement existant. La consultation du catalogue de services ne remplace pas la captation des faits d’exécution.
+
+        Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
+
+        Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+
+        Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
+
+        Recevoir également les données de [Product Reference](model:D08), [Packaging Material Reference](model:packaging-material-reference), [Packaging Specification](model:packaging-specification) et [Internal Supplies & Equipment Reference](model:internal-supplies-equipment-reference). Préserver les correspondances connues entre références, les versions et les conversions d’unités reçues. Distinguer une consigne réutilisable des structures de conditionnement annoncées ou réalisées, qui sont des informations d’opération. Les maîtres de ces apports restent à qualifier sur preuve ; aucun flux installé n’est déduit de cette couverture cible.
+
+        L’apport du contrôle de gestion alimente [Customer Credit Profile](model:customer-credit-profile) dans [Partner & Agreement References](model:ba-partner-agreement-references), selon le comportement [Reference Ingestion from Finance](model:master-data-ingestion-finance). [Party / Role](model:D09) reste la référence d’identité liée au profil.
+  - id: master-data-ingestion-commerce
+    fields:
+      name: Commercial Reference Ingestion
+      definition: Intégrer les données de référence provenant des sources commerciales dont les responsabilités restent à
+        documenter, en conservant leur contrat et leur provenance.
+      scope: Conserver identification, validité, version et corrections selon le contrat source. Le repère historique Commerce
+        ne désigne pas un domaine courant. Les responsabilités de [Sales](model:domain-sales) et de [Sourcing and Procurement](glossary:TER109)
+        restent à établir selon les données ; ne pas attribuer toutes les références commerciales à [Sales](model:domain-sales).
+        Aucun maître, contrat détaillé ni flux installé n’est présumé.
+  - id: supply-chain-orchestration
+    fields:
+      name: Supply Chain Orchestration
+      definition: Organiser et adapter les ressources et les prestations pour satisfaire la demande. Arbitrer priorités, affectations
+        et apports, faire appliquer les changements autorisés aux commandes et engagements, puis coordonner les prestations
+        et suivre leurs résultats.
+      scope: |-
+        Le domaine réunit [Operational References](model:business-references), [Control Plane](model:subdomain-policies), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) [Integration](model:subdomain-integration) et [Process Management](model:subdomain-process-management). [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability. Ces périmètres coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
+
+        [Integration](model:subdomain-integration) reçoit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) du domaine [Demand & Supply Planning](model:domain-plan), par [Plan Ingestion](model:plans-ingestion) ; [Plan Visibility](model:subdomain-plans) les interprète dans le contexte des demandes. [Supply Plan](glossary:TER098) porte les prévisions d’entrées ou de sorties de stock hors achats. Le [master plan de matching](glossary:TER100) est un objet distinct, construit et géré dans [Availability](glossary:TER112). Le domaine [Demand & Supply Planning](model:domain-plan) reste extérieur à l’orchestration.
+
+        [Availability](glossary:TER112) choisit les propositions de promesse et maintient leur cohérence avec les arbitrages collectifs ; [Availability](glossary:TER112) arbitre les affectations ; [Order Management](model:D04) confirme, porte et révise les engagements. [Fulfilment](glossary:TER085) cherche des solutions locales préservant promesse et grands équilibres. Les exécutants réalisent les prestations et conservent leurs opérations internes.
+
+        Les sources de vérité d’entreprise restent externes ; [Operational References](glossary:TER123) porte les références locales Supply, Control Plane les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
+
+        [Service Management](model:subdomain-service-orders) porte les exigences et engagements propres des prestations confiées ; [Fulfilment](glossary:TER085) les compose et les coordonne. Les familles d’ordres de services sont des capacités, comme les familles d’[Orders](glossary:TER012) entrants.
+
+        [Integration](model:subdomain-integration) porte les échanges est-ouest avec les autres domaines. Les deux Tracking, les ordres et le pilotage des exécutants gardent leurs périmètres actuels.
+
+        [Process Management](glossary:TER164) définit et conduit les parcours, organise le travail humain, supervise les interventions et analyse les résultats. Les commandes conservent leurs engagements ; les décisions spécialisées et la coordination des prestations restent chez leurs responsables. Un parcours mobilise les capacités sans modifier leur rattachement métier.
+
+        Le cœur métier décrit ici fournit les capacités génériques de gestion des demandes, de disponibilité et de conduite des processus. Les [Cases](glossary:TER064) opérationnels et leurs règles propres relèvent principalement de [Sourcing and Procurement](model:domain-sourcing-procurement) et de [Sales](model:domain-sales). Les contextes [B2C](glossary:TER194) et [B2B](glossary:TER195) se situent dans ces parcours ; ils ne subdivisent pas ce domaine. Les commandes gardent leurs invariants et leurs transitions autorisées dans [Order Management](model:D04). Cette frontière métier ne prescrit ni composants partagés ni stockage commun.
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: D03
+    fields:
+      name: Availability
+      definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
+        conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
+      scope: |-
+        Le [master plan de matching](glossary:TER100) reste interne à ce sous-domaine ; il n’est pas un [Supply Plan](glossary:TER098). Mobiliser les décisions [ATP](glossary:TER044), [CTP](glossary:TER045) et [PTP](glossary:TER068), les [Orders](glossary:TER012) et engagements, Inventory, les Plans et Control Plane. Arbitrer priorités, protections et affectations sans doubler la demande déjà représentée par les [Orders](glossary:TER012). Les décisions de cible, implantation et réassort portent les adaptations opérationnelles de couverture ; elles ne reconstruisent pas le plan prévisionnel externe. Appliquer les résultats via les responsables des [Orders](glossary:TER012), des réservations et des règles. Exemple fictif : arbitrer quatre-vingts pièces entre deux commandes et la demande prévisionnelle restante ; préserver les engagements confirmés lors d’une révision.
+
+        Les alternatives de substitution et de trajet mobilisent les évaluations économiques utiles, dont les tarifs reçus et les prix contextualisés obtenus sous l’autorité commerciale compétente. L’arbitrage d’affectation ne modifie pas à lui seul le prix engagé dans l’[Order](glossary:TER012).
+
+        Les [Business Areas](method:MOD039) se répondent : [Plan Visibility](model:subdomain-plans) interprète les prévisions ; [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles ; [Logical Stock Configuration Optimization](model:ba-policy-optimization) recommande les droits d’usage ; [Order Promising](model:ba-order-promising) évalue les promesses ; [Demand / Supply Matching](model:ba-supply-matching) arbitre la couverture et ses adaptations ; [Master Plan Management](model:ba-master-plan-management) compose, révise et applique le plan commun. Leur lecture forme un ensemble de responsabilités, sans imposer une suite d’étapes. La profondeur métier se mesure aux décisions et aux cas couverts, pas au nombre de nœuds.
+
+        Appliquer les [règles communes de promesse](model:ba-order-promising#scope) : cohérence entre lignes, validité des hypothèses jusqu’à confirmation, respect des engagements et résultat explicite si aucune solution n’est admissible. La proposition ne confirme, ne réserve et n’affecte aucune ressource par elle-même.
+  - id: master-data-ingestion
+    fields:
+      name: Reference Ingestion
+      definition: Recevoir et intégrer les référentiels fournis par les domaines sources pour maintenir les références locales
+        utilisées par la Supply.
+      scope: |-
+        Recevoir les apports sourcés, vérifier leur identité, leur portée et leur validité connues, intégrer les versions ou corrections prises en compte et conserver le résultat de cette intégration. Les contributions commerciales, celles de [Finance](glossary:TER117) et celles de [Design & Development](glossary:TER105) gardent leur provenance. La répartition des sources commerciales entre [Commerce](model:domain-sales) et [Sourcing and Procurement](model:domain-sourcing-procurement) reste à documenter ; aucune autorité ni alimentation installée n’est déduite de ce regroupement.
+
+        Les sujets de référence restent distincts. Les produits et partenaires sont décrits dans : [Product Reference](glossary:TER052) (produits et variantes), Party / Role (personnes, relations et rôles), [Agreement](glossary:TER048) (conditions contractuelles). Les offres et moyens sont décrits dans : [Product Catalog](glossary:TER049) (offres et éligibilité), [Fulfilment Network](glossary:TER054) (lieux et relations), [Service Catalog](glossary:TER094) (prestations de référence), [Assortment](glossary:TER087) (sélections et périodes) [Product Price Book](model:product-price-book) (tarifs produits) et [Service Price Book](model:service-price-book) (tarifs de services). Un sujet peut recevoir plusieurs contributions et un domaine en fournir plusieurs.
+
+        L’ingestion reconnaît les apports et leur prise en compte ; [Operational References](model:business-references) porte la composition et le maintien de la vue locale utilisable de chaque sujet, avec fraîcheur, provenance et incohérences connues. Une donnée reçue mais rejetée ou en attente ne devient pas une référence applicable. Le domaine tient la source de vérité locale Supply ; il ne négocie pas les accords, ne conçoit pas commercialement les offres et ne corrige pas silencieusement les maîtres d’entreprise.
+
+        Les références peuvent être liées sans fusionner leurs autorités : produit dans plusieurs catalogues, assortiment référencé par un accord, offre associée à des tarifs. Le tarif reste dans [Price Book](glossary:TER097) ; son évolution ne modifie pas automatiquement le prix ou le [SLA](glossary:TER076) d’un engagement existant. La consultation du catalogue de services ne remplace pas la captation des faits d’exécution.
+
+        Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
+
+        Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+
+        Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
+
+        Recevoir également les données de [Product Reference](model:D08), [Packaging Material Reference](model:packaging-material-reference), [Packaging Specification](model:packaging-specification) et [Internal Supplies & Equipment Reference](model:internal-supplies-equipment-reference). Préserver les correspondances connues entre références, les versions et les conversions d’unités reçues. Distinguer une consigne réutilisable des structures de conditionnement annoncées ou réalisées, qui sont des informations d’opération. Les maîtres de ces apports restent à qualifier sur preuve ; aucun flux installé n’est déduit de cette couverture cible.
+
+        L’apport du contrôle de gestion alimente [Customer Credit Profile](model:customer-credit-profile) dans [Partner & Agreement References](model:ba-partner-agreement-references), selon le comportement [Reference Ingestion from Finance](model:master-data-ingestion-finance). [Party / Role](model:D09) reste la référence d’identité liée au profil.
+  - id: supply-chain-orchestration
+    fields:
+      name: Supply Chain Orchestration
+      definition: Organiser et adapter les ressources et les prestations pour satisfaire la demande. Arbitrer priorités, affectations
+        et apports, faire appliquer les changements autorisés aux commandes et engagements, puis coordonner les prestations
+        et suivre leurs résultats.
+      scope: |-
+        Le domaine réunit [Operational References](model:business-references), [Control Plane](model:subdomain-policies), [Order Management](model:D04), [Inventory Management](model:D01), [Availability](glossary:TER112), [Service Management](model:subdomain-service-orders), [Fulfilment Orchestration](model:D06) [Integration](model:subdomain-integration) et [Process Management](model:subdomain-process-management). [Plan Visibility](model:subdomain-plans) est une Business Area d’Availability. Ces périmètres coopèrent par des informations, des décisions et des engagements explicites, sans séquence universelle.
+
+        [Integration](model:subdomain-integration) reçoit les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) du domaine [Demand & Supply Planning](model:domain-plan), par [Plan Ingestion](model:plans-ingestion) ; [Plan Visibility](model:subdomain-plans) les interprète dans le contexte des demandes. [Supply Plan](glossary:TER098) porte les prévisions d’entrées ou de sorties de stock hors achats. Le [master plan de matching](glossary:TER100) est un objet distinct, construit et géré dans [Availability](glossary:TER112). Le domaine [Demand & Supply Planning](model:domain-plan) reste extérieur à l’orchestration.
+
+        [Availability](glossary:TER112) choisit les propositions de promesse et maintient leur cohérence avec les arbitrages collectifs ; [Availability](glossary:TER112) arbitre les affectations ; [Order Management](model:D04) confirme, porte et révise les engagements. [Fulfilment](glossary:TER085) cherche des solutions locales préservant promesse et grands équilibres. Les exécutants réalisent les prestations et conservent leurs opérations internes.
+
+        Les sources de vérité d’entreprise restent externes ; [Operational References](glossary:TER123) porte les références locales Supply, Control Plane les règles actives et Inventory les faits et réservations. Les responsabilités commerciales et financières ne sont pas absorbées.
+
+        [Service Management](model:subdomain-service-orders) porte les exigences et engagements propres des prestations confiées ; [Fulfilment](glossary:TER085) les compose et les coordonne. Les familles d’ordres de services sont des capacités, comme les familles d’[Orders](glossary:TER012) entrants.
+
+        [Integration](model:subdomain-integration) porte les échanges est-ouest avec les autres domaines. Les deux Tracking, les ordres et le pilotage des exécutants gardent leurs périmètres actuels.
+
+        [Process Management](glossary:TER164) définit et conduit les parcours, organise le travail humain, supervise les interventions et analyse les résultats. Les commandes conservent leurs engagements ; les décisions spécialisées et la coordination des prestations restent chez leurs responsables. Un parcours mobilise les capacités sans modifier leur rattachement métier.
+
+        Le cœur métier décrit ici fournit les capacités génériques de gestion des demandes, de disponibilité et de conduite des processus. Les [Cases](glossary:TER064) opérationnels et leurs règles propres relèvent principalement de [Sourcing and Procurement](model:domain-sourcing-procurement) et de [Commerce](model:domain-sales). Les contextes [B2C](glossary:TER194) et [B2B](glossary:TER195) se situent dans ces parcours ; ils ne subdivisent pas ce domaine. Les commandes gardent leurs invariants et leurs transitions autorisées dans [Order Management](model:D04). Cette frontière métier ne prescrit ni composants partagés ni stockage commun.

@@ -1047,6 +1047,7 @@ publication_delivery:
   - U877
   - U880
   - U891
+  - U981
   summary: '16 Business Areas, 64 capacités regroupées et 17 directes ; aucun savoir-faire supprimé. U858 : contrôles courants
     adaptés au retrait des huit Visibility de références et à la conservation de l’interprétation des plans ; état antérieur
     conservé dans Git (745813e). U861 : commandes passives et pilotage par les tâches du workflow explicités ; identités et
@@ -1109,9 +1110,9 @@ publication_delivery:
       finality: Rendre cohérents les besoins à couvrir et les ressources du réseau, puis montrer les affectations retenues
         et les besoins encore découverts.
       scope: |-
-        La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Control Plane](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
+        La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Supply Policy Management](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
 
-        Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Control Plane](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+        Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Supply Policy Management](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
 
         [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
 
@@ -1129,7 +1130,7 @@ publication_delivery:
       scope: '[Logical Stock Protection Optimization](model:D05.d) recommande des enveloppes et limites d’usage par groupe.
         [Reservation Rule Optimization](model:D05.h) recommande dans quelles conditions une quantité peut être réservée pour
         une demande. Ces deux décisions concernent les droits d’usage du **même stock physique**, sans créer un second stock.
-        [Protection Policies](model:ba-protection-policies) présente les règles rendues applicables par [Control Plane](model:subdomain-policies)
+        [Protection Policies](model:ba-protection-policies) présente les règles rendues applicables par [Supply Policy Management](model:subdomain-policies)
         ; [Inventory State Management](model:ba-inventory-position-management) tient les quantités et réservations effectives.
         Exemple fictif : proposer une protection de 20 pièces pour le web et une règle de réservation au paiement, sans activer
         ces règles ni réserver une pièce.'
@@ -1245,6 +1246,8 @@ publication_delivery:
         La comptabilité générale, la trésorerie et le recouvrement des impayés ne sont pas inclus par extension. Les autorités financières compétentes conservent leurs règles et contrôles.
 
         Exemple fictif : après une livraison, Billing obtient la facture correspondant aux éléments facturables ; Payment tient le résultat de l’encaissement. Un paiement refusé reste visible et conduit le workflow à traiter la suite autorisée.
+
+        Pour les avantages commerciaux autorisés, coordonner les demandes et résultats qui relèvent des services de FLOW sans déterminer le droit à prime. Le calcul et la régularisation restent dans [Commercial Settlement Management](model:subdomain-commercial-settlement-management). [Payment](model:service-order-payment-collection) demeure limité aux encaissements et remboursements clients ; aucun paiement fournisseur, agent ou salarié ajouté par extension.
   - id: D01.f
     parent: ba-inventory-position-management
   - id: D01.g
@@ -1382,8 +1385,6 @@ publication_delivery:
     parent: ba-outbound-information-provision
   - id: product-feedback
     parent: ba-outbound-information-provision
-  - id: accounting-interpretation
-    parent: ba-accounting-translation
   - id: workflow-definition-management
     parent: ba-reactive-workflow-management
   - id: order-workflow-sentry
@@ -1435,6 +1436,7 @@ publication_delivery:
     sans extension des accords.
   absent_nodes:
   - order-visibility
+  - accounting-interpretation
 superseded_delivery_U885:
 - id: ba-reactive-workflow-management
   previous_expectations:
@@ -1634,3 +1636,67 @@ delivery_reconciliation_U911:
     check: parent
     previous_sha256: 183027039067157b38b94216244fff34bd8d651acc86360d5be47075a3dd0530
     current: ba-physical-stock-configuration-optimization
+delivery_reconciliation_U981:
+  source_ref: U981
+  note: 'Instruction explicite de profondeur : les responsabilités sont conservées au niveau sous-domaine ; les contrôles
+    précédents restent ci-dessous, sans nouvel accord sur leurs rédactions.'
+  retired_requirements:
+  - id: accounting-interpretation
+    parent: ba-accounting-translation
+  previous_catalog_checks: []
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: ba-supply-matching
+    kind: business_area
+    parent: D03
+    fields:
+      name: Demand / Supply Matching
+      definition: Arbitrer la couverture de l’ensemble des demandes et besoins prévisionnels par les ressources présentes
+        ou attendues, la priorisation, les apports, les transferts et les affectations.
+      finality: Rendre cohérents les besoins à couvrir et les ressources du réseau, puis montrer les affectations retenues
+        et les besoins encore découverts.
+      scope: |-
+        La maille est globale : carnet de commandes, prévision résiduelle, ressources du réseau, seuils de stock des magasins et protections applicables sont rapprochés sans double compte. Un seuil est un paramètre actif reçu du [Control Plane](model:subdomain-policies), pas une quantité physiquement réservée. Exemple fictif : réévaluer ensemble les commandes en attente, une prévision de vente et les seuils de deux magasins avant de recommander un transfert ou une affectation. [Order Promising](model:ba-order-promising) répond ensuite à la demande identifiée avec ses propres conditions.
+
+        Mettre en regard les demandes connues et les prévisions restantes avec les ressources présentes et attendues à temps. [Inventory Visibility](model:D01.c) fournit positions et incertitudes ; [Plan Visibility](model:subdomain-plans) interprète les plans reçus ; [Control Plane](model:subdomain-policies) fournit les protections et paramètres actifs. Conserver unités, variantes, lieux, dates, engagements et fraîcheur. Ne pas additionner une commande à la prévision qui la comprend déjà, ni compter deux fois une arrivée.
+
+        [Demand Prioritization](model:D03.m) arbitre l’ordre de couverture ; [Replenishment](model:D05.e) détermine les apports et ajustements ; [Stock Redistribution](model:D05.c) arbitre les déplacements du stock existant ; [Supply Assignment](model:D03.o) choisit les affectations. Ces décisions peuvent se répondre : délai, conditionnement, coût, protection ou engagement peuvent rendre une première option inadmissible. Rendre quantités, dates, hypothèses, excédents et besoins non couverts explicites. Les calculs et essais nécessaires font partie des décisions ; leur complexité n’impose pas de nouvelles capacités.
+
+        [Order Promising](model:ba-order-promising) évalue ce qui peut être proposé à une demande. [Physical Stock Configuration Optimization](model:ba-physical-stock-configuration-optimization) recommande les cibles et [Logical Stock Configuration Optimization](model:ba-policy-optimization) les droits d’usage ; [Master Plan Management](model:ba-master-plan-management) compose les alternatives et maintient les choix cohérents. [Plan Application](model:D02.e) matérialise les changements autorisés ; les commandes et engagements ne sont jamais réécrits silencieusement par le matching.
+
+        Exemple fictif : deux demandes de 50 pièces font face à une arrivée revue de 100 à 60, dont 12 restent protégées pour un autre usage. Les 48 admissibles laissent 52 à couvrir ; des cartons de douze conduisent à examiner un complément de 60 et son excédent de huit. Un retard ou un engagement fournisseur non modifiable peut empêcher une réponse complète à la date voulue. Expliciter cette limite et les options autorisées sans fabriquer une disponibilité.
+  - id: ba-policy-optimization
+    kind: business_area
+    parent: D03
+    fields:
+      name: Logical Stock Configuration Optimization
+      definition: 'Recommander les droits d’usage du stock logique : protections de groupe et conditions de réservation, selon
+        les demandes, les engagements et les risques.'
+      finality: Proposer des droits d’usage cohérents avant leur éventuelle mise en vigueur.
+      scope: '[Logical Stock Protection Optimization](model:D05.d) recommande des enveloppes et limites d’usage par groupe.
+        [Reservation Rule Optimization](model:D05.h) recommande dans quelles conditions une quantité peut être réservée pour
+        une demande. Ces deux décisions concernent les droits d’usage du **même stock physique**, sans créer un second stock.
+        [Protection Policies](model:ba-protection-policies) présente les règles rendues applicables par [Control Plane](model:subdomain-policies)
+        ; [Inventory State Management](model:ba-inventory-position-management) tient les quantités et réservations effectives.
+        Exemple fictif : proposer une protection de 20 pièces pour le web et une règle de réservation au paiement, sans activer
+        ces règles ni réserver une pièce.'
+  - id: ba-financial-service-order-management
+    kind: business_area
+    parent: subdomain-service-orders
+    fields:
+      name: Financial Services
+      definition: Porter les services de facturation et de paiement nécessaires aux flux, avec leurs données métier, leur
+        progression et leurs résultats.
+      finality: Permettre au bénéficiaire du flux de disposer de la facture attendue et de connaître le résultat du paiement.
+      scope: |-
+        [Billing](glossary:TER153) et [Payment](glossary:TER154) sont des services portés par FLOW. Ils peuvent mobiliser des applications ou prestataires spécialisés sans devenir des commandes documentaires adressées à la logistique. Leur responsabilité métier est distincte de la réalisation technique.
+
+        Le moteur de [Reactive Workflow Management](glossary:TER125) produit et pilote les [Tasks](glossary:TER089). [Fulfilment Orchestration](model:D06) exécute la coordination déléguée. Porter le service ne présume pas son exécution dans un logiciel unique ; aucun déploiement installé n’est déduit.
+
+        La comptabilité générale, la trésorerie et le recouvrement des impayés ne sont pas inclus par extension. Les autorités financières compétentes conservent leurs règles et contrôles.
+
+        Exemple fictif : après une livraison, Billing obtient la facture correspondant aux éléments facturables ; Payment tient le résultat de l’encaissement. Un paiement refusé reste visible et conduit le workflow à traiter la suite autorisée.

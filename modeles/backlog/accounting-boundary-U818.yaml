@@ -50,6 +50,7 @@ publication_delivery:
   - U819
   - U826
   - U880
+  - U981
   summary: Fourniture dans Integration / Outbound et interprétation dans Finance / Financial Accounting appliquées.
   required_nodes:
   - id: master-data-ingestion-finance
@@ -62,15 +63,23 @@ publication_delivery:
     fields:
       name: Accounting Data Provision
     parent: ba-outbound-information-provision
-  - id: accounting-interpretation
-    kind: capability
-    fields:
-      name: Accounting Interpretation
-    parent: ba-accounting-translation
   supersession_U898: Contrôles courants corrigés par U898 ; contrats antérieurs conservés dans core-reference-credit-boundaries-U895.yaml,
     sans extension des accords.
+  absent_nodes:
+  - accounting-interpretation
 delivery_updates:
 - source_ref: U848
   fields:
   - accounting-data-provision.parent
   reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.
+delivery_reconciliation_U981:
+  source_ref: U981
+  note: 'Instruction explicite de profondeur : les responsabilités sont conservées au niveau sous-domaine ; les contrôles
+    précédents restent ci-dessous, sans nouvel accord sur leurs rédactions.'
+  retired_requirements:
+  - id: accounting-interpretation
+    kind: capability
+    fields:
+      name: Accounting Interpretation
+    parent: ba-accounting-translation
+  previous_catalog_checks: []

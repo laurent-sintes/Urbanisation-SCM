@@ -81,7 +81,11 @@ class ModelCoherenceTests(unittest.TestCase):
         audit=read(ROOT/'modeles/backlog/model-coherence-audit-U886.yaml')
         index=build_display_index(self.model)
         for example in audit['reading_codes']['examples']:
-            self.assertEqual(index['codes'][example['id']], example.get('candidate_after_U911', example.get('candidate_after_U910', example.get('candidate_after_U898', example.get('candidate_after_U894', example.get('candidate_after_U891', example['candidate']))))))
+            expected = next(example[key] for key in (
+                'candidate_after_U996', 'candidate_after_U987', 'candidate_after_U978', 'candidate_after_U975', 'candidate_after_U911', 'candidate_after_U910',
+                'candidate_after_U898', 'candidate_after_U894', 'candidate_after_U891', 'candidate'
+            ) if key in example)
+            self.assertEqual(index['codes'][example['id']], expected)
         for ident in ['master-data-ingestion-commerce','master-data-ingestion-design']:
             self.assertIn(ident,self.nodes)
 

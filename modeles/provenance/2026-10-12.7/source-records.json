@@ -19569,6 +19569,262 @@
       "line": 23273,
       "content_sha256": "4f07a16f656ac08a9185eccd588ec60829bbaf3dbfa87fa0306414216de396bc",
       "captured_text": "## U976\n\n**id**\n\nU976\n\n**titre**\n\nSupply Plan reçu par l’orchestration : résultat de la planification externe\n\n**date**\n\n2026-10-12\n\n**texte**\n\nLa supply plan du domaine orchestration, c'est le résultat de la planification. Construire le plan est un domaine à l'extérieur d'orchestration.\n\n**portée**\n\nPrécision du lot U975 pendant sa mise en œuvre : le Supply Plan exploité dans Supply Chain Orchestration est le résultat de la planification externe portée par Demand & Supply Planning ; l’orchestration le reçoit et l’exploite, sans le construire. Le contrat FLOW hors achats et la distinction avec le Matching Master Plan interne restent inchangés. Cette précision ne déplace pas toute décision locale de planification hors de FLOW et n’adopte pas de réalisation installée."
+    },
+    {
+      "id": "CMP313",
+      "path": "marche/comparaisons.md",
+      "anchor": "cmp313",
+      "line": 2907,
+      "content_sha256": "25f9595c89668ee48117c8795839fae644cb87aa23ed21ba9ec74c20116e523a",
+      "captured_text": "## CMP313\n\nU977 — Codex, 12 octobre 2026. Statut proposé, aucun valideur. État examiné : domain-sourcing-procurement, actuellement sans sous-domaines, et ses frontières adoptées U898. Le nom canonique reste Sourcing and Procurement. ELM880–ELM884 sont effectivement consultés ; correspondances partielles, pas consensus ni décomposition intégrée dans le modèle ou le glossaire.\n\n| Sous-domaine proposé | Service et frontière | SAP S/4HANA | Dynamics 365 | Justification et limite |\n| --- | --- | --- | --- | --- |\n| Supplier Management | Admettre, qualifier et évaluer les fournisseurs par catégories d’achat ; traiter leur statut et la relation durable. Ne choisit pas l’offre d’un besoin particulier. | ELM880, §2.11.6 et évaluation opérationnelle §2.11.2 | ELM882, admission et questionnaires ; ELM881, performance | Rend lisible le vivier de fournisseurs autorisés. Recouvrement fonctionnel, sans attribuer le référentiel maître entreprise ni toute la conformité à ce sous-domaine. |\n| Strategic Sourcing | Rechercher des sources, consulter, comparer et sélectionner une offre pour un besoin ; négocier les conditions proposées. | ELM880, §2.11.3.2 Source Assignment et demandes d’offres | ELM883, consultation, comparaison et attribution | Distingue fournisseur admissible et offre retenue. Le nom de synthèse n’est pas une équivalence native exacte ; stratégie de catégories avancée et sourcing Ariba ne sont pas déduits du seul périmètre S/4HANA. |\n| Purchase Contract Management | Formaliser, maintenir et suivre accords d’achat, conditions, dates et engagements ; vérifier leur consommation par les commandes. | ELM880, §2.11.3.1 Purchase Contract Management | ELM884, Purchase agreements | Sépare accord réutilisable et commande individuelle. Périmètre achats, sans gestion juridique universelle ni cycle concurrent de Purchase Order. |\n| Operational Procurement | Instruire et valider les demandes d’achat, déclencher la commande autorisée, suivre confirmations et traiter les écarts avec le fournisseur. | ELM880, §2.11.4 Operational Procurement | ELM881, demandes, validations, commandes et confirmations | Reprend un intitulé natif SAP à portée adaptée FLOW. Porte les parcours et décisions achat ; le Core conserve identité, engagements et validité des transitions du document. Réception physique et comptabilité restent externes. |\n\nBénéfice du découpage : quatre responsabilités durables et des interfaces distinctes, sans découpage par logiciel ni par achats directs/indirects. Compromis : limiter la profondeur au contexte ; suivi de performance inclus dans Supplier Management et analyse utile aux autres périmètres, sans cinquième sous-domaine analytique à ce stade. Les catégories d’achat structurent les responsabilités sans devenir automatiquement des sous-domaines. Une éventuelle responsabilité autonome de stratégie de catégories reste à éprouver.\n\nFrontières conservées : Design & Development définit le produit ; Demand & Supply Planning construit les plans ; Sourcing and Procurement choisit la source et les conditions commerciales ; Supply Chain Orchestration conserve le document Purchase Order et coordonne les prestations ; Logistics exécute transport et entrepôt ; Finance interprète, comptabilise et règle. Hypothèses de dépendance à examiner ultérieurement : fournisseur autorisé devenu indisponible, conditions d’achat divergentes, confirmation incompatible avec le plan ou retard logistique ; aucun hotspot constaté ni flux Beaumanoir ajouté. La proposition reste à valider, sans modifier la publication v064.\n\nSuite U978 : Laurent valide les quatre sous-domaines, leurs responsabilités et frontières. Lot appliqué au modèle et au glossaire ; noms et rattachements capturés séparément des nouvelles rédactions explicatives. La publication v064 reste figée."
+    },
+    {
+      "id": "CMP316",
+      "path": "marche/comparaisons.md",
+      "anchor": "cmp316",
+      "line": 2947,
+      "content_sha256": "2d66b5218deb395304ca2c36a8589ff94ec47f0e6f3458459c8d06e945c2713a",
+      "captured_text": "## CMP316\n\nU982 — 12 octobre 2026. Audit de Sales dans le backlog courant, sans modification canonique. [Annexe YAML](audit-sales-retail-wholesale-U982.yaml) : constats, sources, propositions à leur maille, cas de frontière et contrats de données proposés.\n\nSales et ses trois sous-domaines existent déjà. Leurs descriptions sont surtout orientées parcours et contrôles; les opérations du réseau, la caisse et la préparation commerciale B2B restent peu explicites. Cela ne prouve pas une absence de réalisation installée. Store Visibility et Sales Order sont présents dans le Core et ne sont pas recréés.\n\nProposition Codex : renommer Sales en Commerce, conserver l’identité des trois sous-domaines sous les noms Store Commerce, Digital Commerce et Wholesale Commerce; ajouter Assortment & Catalog Management et un domaine Retail Operations, avec Retail Network Management et Store Operations. Aucun nouveau Business System fondé sur le nom du POS ou d’Elastic. Les champs de chaque proposition conservent les appuis Dynamics/S/4HANA, bénéfices, différences et limites; relation de recouvrement partiel, sans équivalence exacte. Les produits intégrés ne prescrivent pas les autorités du Core FLOW.\n\nComparaison : ELM887/ELM895 appuient les canaux et sites; ELM888/ELM891 distinguent vente en caisse et transmission de faits; ELM901/ELM892 décrivent les opérations magasin. ELM889/ELM893 et ELM900 montrent assortiments publiés, validité, destinataires et catalogues, distincts de la définition produit et de la construction d’un plan de ressources. ELM890/ELM894 éclairent vente B2B et commandes saisonnières; ELM899 distingue lieu de vente et réalisation. ELM896 décrit un backend retail/wholesale intégré, sans obliger à fusionner les responsabilités FLOW. ELM897/ELM898 confirment le périmètre produit Elastic au-delà de la captation; ce complément ne remplace pas le socle des deux éditeurs.\n\nBénéfice : représenter producteurs de faits et références utiles au Core, sans transformer tout ticket POS en commande à servir. Compromis : un domaine supplémentaire et une responsabilité d’assortiment transversale, à articuler avec la vente client. Le portail B2B reste dans Wholesale Commerce même s’il est numérique. Un whiteboard, bien qu’attaché à un Order dans Elastic, ne prouve pas un engagement ferme. Les ventes au revendeur et ses ventes au consommateur restent distinctes; franchise et consignation exigent de qualifier vendeur et propriété. Les flux et marques effectivement raccordés restent inconnus ou limités aux preuves locales.\n\nLe glossaire courant a été contrôlé : TER108/TER194/TER195 restent alignés au modèle inchangé. Une éventuelle adoption exige leur mise à jour conjointe, sans extension automatique des accords U898/U981. Profondeur limitée aux sous-domaines, sans nouvelles capacités. Sources indisponibles et couverture partielle du réseau conservées dans l’annexe. Aucun statut adopté, publication ou réalisation installée généralisée."
+    },
+    {
+      "id": "ELM880",
+      "path": "marche/elements.md",
+      "anchor": "elm880",
+      "line": 6377,
+      "content_sha256": "e11d4f2fd278779d3e847e3fdaabe76173b1fd6e82fd68730265f86e013ea215",
+      "captured_text": "### ELM880\n\nMKT13 — [SAP S/4HANA 2025 — Feature Scope Description](https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf). Consultation : 2026-10-12. Édition : 2025 FPS02, document 3.0 du 2026-10-07. Passages consultés : §2.11.3 Sourcing and Contract Management, Source Assignment, demandes et comparaison d’offres, p.152–158 ; §2.11.4 Operational Procurement, besoins, validations et commandes, p.158–164 ; §2.11.6 Supplier Management, classification et évaluation, p.171–173. Reformulation : responsabilités distinctes de connaissance et évaluation des fournisseurs, sélection d’une source pour un besoin, accords d’achat et parcours opérationnels. Limite : catalogue fonctionnel produit, pas taxonomie métier universelle ; la réalisation intégrée englobe des documents, réceptions et factures que FLOW répartit entre responsabilités distinctes. Certains parcours sourcing avancés passent par SAP Ariba, complément externe explicite. U977, CMP313 ; appui primaire pertinent S/4HANA pour chaque sous-domaine proposé, sans équivalence exacte ni réalisation Beaumanoir."
+    },
+    {
+      "id": "ELM881",
+      "path": "marche/elements.md",
+      "anchor": "elm881",
+      "line": 6381,
+      "content_sha256": "fd7619b733b599fad701173dd05192b09dbf4c0191426393e7a07fcf91f4da9f",
+      "captured_text": "### ELM881\n\nMKT14 — [Procurement and sourcing overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Page mise à jour le 2025-07-21. Passages : Identifying a need ; Procurement ; Prices and discounts ; Product receipt and invoicing ; Vendor performance. Reformulation : besoins, demandes, approbations, sélection, conditions d’achat, confirmations et suivi fournisseurs. Limite : le périmètre produit va jusqu’aux réceptions, factures et paiements ; il ne justifie pas de les absorber dans Sourcing and Procurement FLOW ni de créer un second cycle de Purchase Order. U977, CMP313 ; appui primaire Dynamics pour Operational Procurement et le domaine parent proposé."
+    },
+    {
+      "id": "ELM882",
+      "path": "marche/elements.md",
+      "anchor": "elm882",
+      "line": 6385,
+      "content_sha256": "7c2f087c288dfe04cfef793f1694f47fa163a21fd5102a1c4cab6a91d518bd19",
+      "captured_text": "### ELM882\n\nMKT14 — [Onboard vendors](https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/vendor-onboarding). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Documentation évolutive, édition globale non indiquée. Passages : prospective vendor registration ; questionnaires selon catégorie ; approval workflow. Reformulation : recueillir les données du candidat fournisseur, qualifier son accès aux catégories d’achat et valider son admission. Limite : parcours applicatif avec comptes et utilisateurs ; appui partiel à Supplier Management, aucune attribution de maîtrise entreprise ni couverture exhaustive de gestion de relation fournisseur. L’analyse de performance documentée ELM881 complète la qualification. U977, CMP313."
+    },
+    {
+      "id": "ELM883",
+      "path": "marche/elements.md",
+      "anchor": "elm883",
+      "line": 6389,
+      "content_sha256": "56f567be4eb9cf64b1f1df891bb6a4c43a82239aa18ac2d9f966fee8b90594fa",
+      "captured_text": "### ELM883\n\nMKT14 — [Requests for quotation overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/request-quotations). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Documentation évolutive, édition globale non indiquée. Passages : RFQ cases ; scoring criteria ; Compare replies ; accepting/rejecting bids. Reformulation : consulter plusieurs fournisseurs, comparer conditions et délais, choisir et justifier une offre. Limite : le produit peut générer directement commandes ou accords ; cette intégration ne transfère pas l’identité et les transitions de Purchase Order hors du Core FLOW. Appui fonctionnel à Strategic Sourcing, pas catalogue exhaustif de stratégie de catégorie. U977, CMP313."
+    },
+    {
+      "id": "ELM884",
+      "path": "marche/elements.md",
+      "anchor": "elm884",
+      "line": 6393,
+      "content_sha256": "05a9638143322825085036424a9780ad86906f850773b3e91ea577e17f6e720e",
+      "captured_text": "### ELM884\n\nMKT14 — [Purchase agreements](https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-agreements). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Documentation évolutive, édition globale non indiquée. Passages : commitments ; validity period ; pricing terms ; fulfillment calculations ; version history. Reformulation : définir et suivre engagements d’achat, conditions de prix, durée et consommation d’un accord par des commandes. Limite : contrat d’achat produit, pas gestion juridique de tous les contrats d’entreprise ; accord cadre distinct de commande individuelle. Appui primaire à Purchase Contract Management. U977, CMP313."
+    },
+    {
+      "id": "ELM885",
+      "path": "marche/elements.md",
+      "anchor": "elm885",
+      "line": 6397,
+      "content_sha256": "08aa15a99cbcf5531ea76970270569aa288afef394080504d78ecfcaa96f2cbb",
+      "captured_text": "### ELM885\n\nMKT13 — [SAP S/4HANA 2025 — Feature Scope Description](https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf). Consultation : 2026-10-12. Édition : 2025 FPS02, document 3.0 du 2026-10-07. Passages : §2.8 Product Development Foundation ; §2.12.3 Warehousing ; Connecting to External Warehouse Control Systems p.192 ; Decentralized EWM p.534. Reformulation : définitions produit utilisables dans les opérations ; données métier partagées entre gestion d’entreprise et entrepôt décentralisé ; demandes et retours distincts. Limite : exemple produit, pas contrat universel FLOW ; contrat complet transport et retour terrain produit non établi par ces seuls passages. La page External Warehouse Management Services a été trouvée mais son contenu direct n’était pas lisible ; elle n’est pas retenue comme appui complémentaire. U979, CMP314 ; aucune réalisation Beaumanoir déduite."
+    },
+    {
+      "id": "ELM886",
+      "path": "marche/elements.md",
+      "anchor": "elm886",
+      "line": 6401,
+      "content_sha256": "5e5266ad64185f46a7e82c3641659d1dd7c46df539db9acdd056befaa04fac14",
+      "captured_text": "### ELM886\n\nMKT14 — [Warehouse management only mode with external ERP systems](https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-external-erp). Dynamics 365 Supply Chain Management. Consultation : 2026-10-12. Passages : exemples entrants et sortants ; On-hand inventory updates ; reconciliation ; warehouse inventory update logs. Reformulation : le système externe transmet des demandes d’expédition, l’entrepôt restitue réception, expédition et corrections de stock ; éviter les doubles effets. Limite : exemple d’entrepôt, pas tout Logistics ni constat d’interface installée ; protocole et fréquence non transposés à FLOW. U979, CMP314."
+    },
+    {
+      "id": "ELM887",
+      "path": "marche/elements.md",
+      "anchor": "elm887",
+      "line": 6405,
+      "content_sha256": "8c084fdf82517bd5001a90619f61549c1f57ec375362b90a48beed3c0695123f",
+      "captured_text": "### ELM887\n\nMKT14 — [Channels overview](https://learn.microsoft.com/en-us/dynamics365/commerce/channels-overview). Dynamics 365 Commerce. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Types of channels; Channel setup basics. Reformulation : Canaux magasin et en ligne, organisation du réseau, assortiments et règles propres aux canaux. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM888",
+      "path": "marche/elements.md",
+      "anchor": "elm888",
+      "line": 6409,
+      "content_sha256": "73ba393fcb8160a32be7d6929fcf681b248e80bde1762617b32df1e740e70e2f",
+      "captured_text": "### ELM888\n\nMKT14 — [Store Commerce app](https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce). Dynamics 365 Commerce. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Introduction; Commerce operations; offline support. Reformulation : Vente immédiate, caisse, vente assistée, commandes et opérations de stock au magasin. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM889",
+      "path": "marche/elements.md",
+      "anchor": "elm889",
+      "line": 6413,
+      "content_sha256": "ec095e52382ea9f5bf8e16e336ba30742d66b907c4b6b54c4727a426d8c2a54b",
+      "captured_text": "### ELM889\n\nMKT14 — [Assortment management](https://learn.microsoft.com/en-us/dynamics365/commerce/assortments). Dynamics 365 Commerce. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Basic assortment setup; organization hierarchies; date effectivity. Reformulation : Sélection de produits vendables par canal et période, distincte du stock physique disponible. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM890",
+      "path": "marche/elements.md",
+      "anchor": "elm890",
+      "line": 6417,
+      "content_sha256": "64a21aee53b283a6cb8d7e770f3afad40276a724676b890a6be7daa82482422f",
+      "captured_text": "### ELM890\n\nMKT14 — [Set up a B2B e-commerce site](https://learn.microsoft.com/en-us/dynamics365/commerce/b2b/set-up-b2b-site). Dynamics 365 Commerce. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Prerequisites; partner sign-up; account management; order templates. Reformulation : Portail professionnel, comptes partenaires et préparation de commandes, utilisant aussi des composants communs au B2C. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM891",
+      "path": "marche/elements.md",
+      "anchor": "elm891",
+      "line": 6421,
+      "content_sha256": "5a37fba9ca2dc9211ee52e906cbe9976e520c20eae1b2763e09ee00bdc87d319",
+      "captured_text": "### ELM891\n\nMKT13 — [Explaining Store Connection with Point-of-Sale Sales](https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/explaining-store-connection-with-point-of-sale-sales_ee5c0524-83cb-47aa-ba86-3d012edd5a67). SAP S/4HANA Retail. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Point-of-Sale Sales; POS inbound and outbound. Reformulation : Le POS réalise et journalise les ventes; le système central reçoit ventes, retours, mouvements et autres faits et transmet des références. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM892",
+      "path": "marche/elements.md",
+      "anchor": "elm892",
+      "line": 6425,
+      "content_sha256": "4395eca4395833f37d6ecfc75d87d6f08078fe4cf9221df08b3496b42f6eb88f",
+      "captured_text": "### ELM892\n\nMKT13 — [Managing Retail Store Operations](https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/managing-retail-store-operations_f77c8f4d-b247-4ef0-879b-3c4f469a6323). SAP S/4HANA Retail. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : SAP Fiori Apps for Retail Store Operations; receive, adjust, count, move. Reformulation : Opérations réalisées par les équipes magasin: réception, comptage, corrections et déplacements locaux. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM893",
+      "path": "marche/elements.md",
+      "anchor": "elm893",
+      "line": 6429,
+      "content_sha256": "0824e30edd6f9e391edbbdac8f5565ffae3108f4ac4d9a74661c66554a54a330",
+      "captured_text": "### ELM893\n\nMKT13 — [Introducing Assortment Management](https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/introducing-assortment-management_c4100b3e-db2f-49ed-8724-faf679d1be8d). SAP S/4HANA Retail. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Assortment Management and Layout Workbench; planned assortments. Reformulation : Assortiments, autorisations par site et présentation physique; des résultats de planning peuvent alimenter les assortiments opérationnels. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM894",
+      "path": "marche/elements.md",
+      "anchor": "elm894",
+      "line": 6433,
+      "content_sha256": "3c9b65c32b6506d574910cc769cb29e8f1dbe24d3326fb2786eca91d4cf9742b",
+      "captured_text": "### ELM894\n\nMKT13 — [Explaining Sales Order Handling](https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-sales-order-handling_b87d52ef-bf38-4a67-b6f5-7324019d8c24). SAP S/4HANA for fashion and vertical business. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Scenario; sales order handling; fashion enhancements. Reformulation : Demande saisonnière des revendeurs, variantes mode, captation par représentants ou plateformes, commandes et contraintes de livraison. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM895",
+      "path": "marche/elements.md",
+      "anchor": "elm895",
+      "line": 6437,
+      "content_sha256": "86f62f1da17b098509e8c2757a33a07875af93d3c27f3f43fc9a65830d5bdb2b",
+      "captured_text": "### ELM895\n\nMKT13 — [Exploring the Business Partner, Retail Sites, and Article Groupings](https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/exploring-the-business-partner-retail-sites-and-article-groupings_ccbc5aa0-3702-4244-951d-9dcb8de51064). SAP S/4HANA Retail. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Customer, Supplier, and Site Master in SAP Retail. Reformulation : Sites magasins et centres de distribution distingués, partenaires et responsabilités commerciales ou financières différenciées. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM896",
+      "path": "marche/elements.md",
+      "anchor": "elm896",
+      "line": 6441,
+      "content_sha256": "4ab9d45795c8797891d0537dcaad81054ef34814058e1ee845f36f0ab1ddb885",
+      "captured_text": "### ELM896\n\nMKT13 — [Getting a Business Process Overview](https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/getting-a-business-process-overview_dc53cbb3-5b68-4bb1-a163-7b4437784888). SAP S/4HANA for fashion and vertical business. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Specifics of vertical fashion businesses; key benefits. Reformulation : Commerce retail et wholesale dans une solution intégrée, avec visibilité du stock, planning et achats partagés. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM897",
+      "path": "marche/elements.md",
+      "anchor": "elm897",
+      "line": 6445,
+      "content_sha256": "b6d6e867ba202e55412fedc51fa45675a1b58c8d4388bd733130756f936f9703",
+      "captured_text": "### ELM897\n\nMKT97 — [Elastic Suite — B2B ecommerce and digital merchandising](https://www.elasticsuite.com/). Elastic Suite. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Digital Catalog; Assortment Builder; Whiteboard; Custom Collections; FAQ. Reformulation : Présentation commerciale: vente B2B, catalogues, sélections pour un revendeur, présentation et propositions de commande. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM898",
+      "path": "marche/elements.md",
+      "anchor": "elm898",
+      "line": 6449,
+      "content_sha256": "e37cc0dfbd85bcec0449417d8409f6cacca25ad1473e220deafd9141d4d1ffb0",
+      "captured_text": "### ELM898\n\nMKT97 — [What is a Whiteboard?](https://support.elasticsuite.com/what-is-a-whiteboard). Elastic Suite. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : What is a Whiteboard?. Reformulation : Le whiteboard est une présentation visuelle de produits du panier, accessible dans le parcours de construction de commande; son existence ne prouve pas un engagement ferme. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM899",
+      "path": "marche/elements.md",
+      "anchor": "elm899",
+      "line": 6453,
+      "content_sha256": "6bbfe607fcedcfb3ea13ef747963f7cb71753b219170b7fde49b45057c627624",
+      "captured_text": "### ELM899\n\nMKT13 — [Selling to Customers — Sales Order](https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/selling-to-customers-sales-order_fb704049-b43b-49c4-b17b-daf3fc42793f). SAP S/4HANA Retail. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Sales order processing; cross-channel sales; click and collect. Reformulation : Une commande peut provenir du web ou du magasin et être servie en magasin ou par un centre de distribution. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "ELM900",
+      "path": "marche/elements.md",
+      "anchor": "elm900",
+      "line": 6457,
+      "content_sha256": "d2e6f0e177df2c3379958823e68446216db99473fbac4f5fb3ed2dcecf6da068",
+      "captured_text": "### ELM900\n\nMKT14 — [Create Commerce catalogs for B2B sites](https://learn.microsoft.com/en-us/dynamics365/commerce/catalogs-b2b-sites). Dynamics 365 Commerce. Consultation : 2026-10-12. Édition : Documentation évolutive, édition globale inconnue. Passage : Catalog information; B2B catalog process flow. Reformulation : Catalogues liés aux canaux et partenaires, assortiments, prix et promotions; validation et publication. Limites : Recouvrement partiel de périmètre, sans taxonomie FLOW prescrite, équivalence exacte ni preuve de réalisation Beaumanoir. Édition globale non indiquée; synthèse et lien seulement, sans redistribution intégrale. U982, CMP316."
+    },
+    {
+      "id": "U822",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u822",
+      "line": 20205,
+      "content_sha256": "7ff28da885c593f0d1f717f97431ba72dcef734aa4b237e78d2646a612019605",
+      "captured_text": "## U822\n\n**id**\n\nU822\n\n**date**\n\n2026-09-28\n\n**titre**\n\nÉtudier un sous-domaine de diffusion des données opérationnelles vers les autres domaines\n\n**texte**\n\nOn pourrait imaginer un sous domaine \"intégration outbound\" qui publie, diffuse les données opérations dans les domaines hors supply : vers la compta, vers le plan, vers le PLM qui est dans \"étude et développement\".\n\nTu peux analyser ça ?\n\n**contexte et portée**\n\nHypothèse de regroupement des sorties de données opérationnelles vers Finance, Demand & Supply Planning et la conception et le développement, avec le PLM comme destinataire applicatif évoqué. Demande d’analyse, sans adoption de nom, de capacités supplémentaires, de sous-domaine ou de flux installé. Les accords U818 demeurent limités au lot comptable antérieur."
+    },
+    {
+      "id": "U977",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u977",
+      "line": 23295,
+      "content_sha256": "63ab29d930a0b8628704ae8825d1746a0a4c976e15c2ecc9413612e07c190cbd",
+      "captured_text": "## U977\n\n**id**\n\nU977\n\n**titre**\n\nSous-domaines de Sourcing and Procurement et placement de Logistics dans Atlas\n\n**date**\n\n2026-10-12\n\n**texte**\n\nSourcin and procurement, tu vois des sous domaines ?\n\nDans ATLAS, le système Logistics doit être sous Business Operations\n\n**portée**\n\nDemande de proposition de sous-domaines de Sourcing and Procurement, sans validation ni intégration de leur découpage. Demande de placement de Logistics dans Atlas : interprétation annoncée à Laurent comme un placement visuel sous Business Operations dans la vue Carte, en conservant le système métier distinct validé U975. Aucun changement de parent métier, nouvelle publication, commit ou push demandé."
+    },
+    {
+      "id": "U978",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u978",
+      "line": 23319,
+      "content_sha256": "a09cadb47fbca955d1a55f45cc5bb8609180f712b0035c7517a630a4c0a2ea17",
+      "captured_text": "## U978\n\n**id**\n\nU978\n\n**titre**\n\nValidation des quatre sous-domaines de Sourcing and Procurement\n\n**date**\n\n2026-10-12\n\n**texte**\n\nJe valide.\n\n**portée**\n\nValidation de la proposition complète CMP313 présentée après U977 : Supplier Management, Strategic Sourcing, Purchase Contract Management et Operational Procurement, avec leurs responsabilités et frontières, sous Sourcing and Procurement. Operational Procurement conduit le parcours d’achat ; le Core conserve identité, engagements et transitions de Purchase Order. La construction des plans reste dans Demand & Supply Planning, les opérations physiques dans Logistics. Profondeur de contexte, sans nouvelles capacités ni preuve de réalisation installée. Les nouvelles illustrations et rédactions détaillées restent proposées. Aucun nouvel accord sur les autres fiches, aucune publication ni opération Git."
+    },
+    {
+      "id": "U979",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u979",
+      "line": 23341,
+      "content_sha256": "501760d6f75b9f60876b0b8abbf4b5af0d109c45f871b03384aaff36b9658cbc",
+      "captured_text": "## U979\n\n**id**\n\nU979\n\n**titre**\n\nPartages de données modélisés et flèches orientées dans la vue Enterprise Architecture\n\n**date**\n\n2026-10-12\n\n**texte**\n\nDans la Vue Enterprise Architecture uniquement, je souhaite faire apparaitre des flèches de partage de données entre systèmes. Les flèches sont orientées et on doit voir le type de contenu échangé. Par exemple, les données produit issues du PLM doivent alimenter les opérations. Il y a des flèches entre opérations et Logictics, entre operations et Enterprise management etc.\n\nJe voudrais que ces liens ne soient pas une fioriture frontend. Il faut que ces liens soient modélisés dans la base de cartographie. Le fait que ces liens soient entre systèmes pour l'instant ne doit pas être limitatif.\n\n**portée**\n\nDemande d’un contrat canonique de partage de données, orienté et qualifié par son contenu, sans restriction aux seuls systèmes métier. La vue Carte Enterprise Architecture affiche la synthèse des échanges entre systèmes ; les vues focalisées conservent leur présentation. Exemple explicitement demandé : données produit issues du PLM vers les opérations, représentées par Design & Development vers Business Operations sans transformer le PLM en système métier. Les contenus complémentaires détaillés entre opérations, Logistics et Enterprise Management & Control sont proposés à partir des responsabilités documentées ; aucune interface installée, technologie, fréquence, responsabilité de maître entreprise ou exhaustive liste de flux déduite. Publication, commit et push restent distincts."
+    },
+    {
+      "id": "U981",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u981",
+      "line": 23387,
+      "content_sha256": "9eca367ce90d8e6b5fa139f895985177dd704b502f6dc51520f57f679b64adff",
+      "captured_text": "## U981\n\n**id**\n\nU981\n\n**titre**\n\nProfondeur capacité réservée à Supply Chain Orchestration\n\n**date**\n\n2026-10-12\n\n**texte**\n\nDans \"Enterprise Management & Control\", il y a une capacité. Dans les Systèmes adhérents à l'orchestration, je ne souhaite pas qu'on descende au niveau capacité : je le réserve à l'orchestration uniquement.\n\n**portée**\n\nInstruction explicite de profondeur du modèle courant : seules les responsabilités de Supply Chain Orchestration sont décomposées en capacités et comportements. Les systèmes et domaines de contexte restent décrits jusqu’aux sous-domaines utiles, sans Business Area portant une capacité externe. Accounting Interpretation et son regroupement Accounting Translation ne restent donc plus des nœuds détaillés de Finance ; leur responsabilité comptable, extérieure à l’orchestration, et le raccordement aux faits opérationnels doivent être conservés au niveau de Financial Accounting. Ce changement de profondeur ne transfère pas la comptabilité à FLOW, ne retire pas le besoin métier, ne modifie pas les publications historiques et ne demande ni release ni opération Git."
+    },
+    {
+      "id": "U982",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u982",
+      "line": 23409,
+      "content_sha256": "ce2ad09d44eaa4387e7b839f3389374c0a7496c11dc611c0fa0d470e90179cc4",
+      "captured_text": "## U982\n\n**id**\n\nU982\n\n**titre**\n\nAudit de Sales : réseau de magasins, ventes POS et distribution B2B avec Elastic\n\n**date**\n\n2026-10-12\n\n**texte**\n\nDerniere question : comment représenter le système qui gère le réseau de magasin ?\nDans une logique centralisée, l'orchestration de la supply chain reçoit les les ventes du Point Of Sale sans les gérer vraiment mais le POS doit avoir son espace en tant que système ou domaine, non ? Ou alors c'est le \"B2C Store\" qui gère ça ?\n\nJ'aimerais un audit du domaine \"Sales\" en prenant en compte les problématiques magasin et de distribution à des partenaires B2B. Que dit le marché ? Doit on revoir le domaine Sales en terme de nom et de contenu ? Manque t il des systèmes ou des domaines ?\n\nDans la partie B2B on a besoin de placer Elastic qui gère un portail de commandes mais aussi de construction d'assortiments, showroom, whiteboard.\n\n**portée**\n\nDemande d’audit et de comparaison marché, sans accord sur un nouveau découpage ni modification canonique. Laurent décrit la réception de ventes POS par une orchestration centralisée, extérieure à la conduite de la vente magasin, et précise le périmètre à représenter pour Elastic : commandes, assortiments, showroom et whiteboard. La séparation système métier / domaine / application, les frontières avec le Core et les variantes de distribution B2B sont à analyser. Le modèle courant, ses glossaires et les publications restent inchangés ; la profondeur hors orchestration reste limitée aux sous-domaines."
+    },
+    {
+      "id": "U986",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u986",
+      "line": 23504,
+      "content_sha256": "98133897530c7499232ab9590ddcc34d6823f80ff4ea0c55e1cba91fd9a1a042",
+      "captured_text": "## U986\n\n**id**\n\nU986\n\n**titre**\n\nSéparer le POS du backoffice magasin\n\n**date**\n\n2026-10-12\n\n**texte**\n\nJe pense que pour Store Operations, il faut séparer le POS du backoffice car c'est souvent des solutions différentes.\n\n**portée**\n\nPrécision du découpage discuté : Store Commerce porte vente et caisse ; Store Backoffice Operations remplace le nom trop large Store Operations et porte le backoffice central ou local. Retail Network Management conserve le pilotage du réseau. Les responsabilités restent séparées même si une application peut couvrir plusieurs périmètres ; aucune réalisation installée n’est attribuée."
+    },
+    {
+      "id": "U987",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u987",
+      "line": 23526,
+      "content_sha256": "87b84889ca485819decc16b29b652d8ccab194599890187dd318b394b309490b",
+      "captured_text": "## U987\n\n**id**\n\nU987\n\n**titre**\n\nValidation du découpage Commerce et Retail Operations pour préparer l’atelier\n\n**date**\n\n2026-10-12\n\n**texte**\n\nJe valide ce découpage\n\n**portée**\n\nAccord sur le lot cohérent U982–U986 : Sales devient Commerce, avec Store Commerce, Digital Commerce pour le B2C en ligne, Wholesale Commerce et Assortment & Catalog Management ; Retail Operations est un domaine de Business Operations avec Retail Network Management et Store Backoffice Operations, central ou local. Les quatre Business Systems et les identités des périmètres existants sont conservés. POS, backoffice et réseau restent distincts ; seule Supply Chain Orchestration est détaillée en capacités. L’accord porte sur noms, niveaux, parents et responsabilités discutées, pas sur les textes explicatifs rédigés après cet accord, les contrats de données proposés, les réalisations des outils ni la totalité des correspondances marché. Aucun atelier, grille de positionnement, release, commit ou push demandé."
+    },
+    {
+      "id": "U989",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u989",
+      "line": 23570,
+      "content_sha256": "6814f1cbb022dbbbf305f76f1ec452c29fce6ff05f35e9dce78a9f42504c310e",
+      "captured_text": "## U989\n\n**id**\n\nU989\n\n**titre**\n\nValidation du découpage complet\n\n**date**\n\n2026-10-12\n\n**texte**\n\nQuand j'ai dit je valide, je valide TOUT\n\n**portée**\n\nConfirme que U987 adopte la proposition complète construite U982–U986, renommage Commerce compris, avec tous ses domaines, sous-domaines et frontières corrigées. Ce n’est pas un accord limité au dernier échange sur le POS. Le lot canonique est décrit dans commerce-retail-structure-U987.yaml. Les textes nouveaux rédigés après la proposition et les responsabilités installées des outils ne sont pas inventés par cet accord."
     }
   ]
 }

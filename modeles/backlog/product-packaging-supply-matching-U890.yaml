@@ -251,11 +251,11 @@ publication_delivery:
     fields:
       name: Operational References
     field_sha256:
-      market_comparisons: d24f1c9e53559cf4123eff9873ffaf518bd9dc07cf9ec5d32c3cacdacca1705f
-      market_inspiration: 8fc79a4b85201b034f564a227c70d3761de3156db7b4357c1629e3c731ddf9ed
+      market_comparisons: 447283ce7086b10cfd7851cdd4bb77af21465fd4979c7bcd6229c0c007620547
+      market_inspiration: 94b558a079393d12bb4728fdfda42ab69c574f109f0c4884793eb8a6ea6dbeed
       definition: 7437a6fcea4650f38205f907d3278b10d6b061ad1dd1c2e3cd3169e2035fcc05
-      scope: 861e4b167b287fa794c186efc806cc617f0554493997619d545c38065a12ec26
-      mastership: 6584db79b1eeddee79937b843a11997f48aa6480ac14af02aa30ea93e75d3a6a
+      scope: 50bec8c85effeab2a5ee13960cc410e0cd74ce910ecda182d31e228e716d873b
+      mastership: 46bc745dbb9ed20dff643e7ad27dcaebbb16be76f9a4e2b7ea8a8bace19d2953
     parent: supply-chain-orchestration
     parent_type: presents
   - id: D08
@@ -297,10 +297,10 @@ publication_delivery:
     fields:
       name: Availability
     field_sha256:
-      definition: ad10e7f1b5476152211de9c036fe0507cf891ff7a048d1c1fab19a870ca03e60
-      scope: 6cd87bdf4323fb7ca8525f41d43f3ee8cd78e13763b7a548c057166ca4a75c8c
-      market_comparisons: d2896f5dff00f08e47b94c5e9a8d534bb62cd71f7dffa3d8e7e7faf18c574102
-      market_inspiration: 5d8c432edf47317b2a34caebc7d0624741cac492978ac8763c67e27306b88eb7
+      definition: ae41e32be3237186e2a7cda58dab2eb99f135adff0959bccb63014df14d1dc8b
+      scope: 06eadc2c6682b6c8075176a66704b78b682b0aebf7750b5c3982f19b4642ade5
+      market_comparisons: dc7429f705bfff0dd8817f052275dd443f27a0989723f6ddc915cda602a8fafb
+      market_inspiration: fe32cb2c325cbbbadd81fb3c3d98f3f6ad4684d75a52650d9835425c9246fa29
     parent: supply-chain-orchestration
     parent_type: presents
   - id: ba-supply-matching
@@ -309,8 +309,8 @@ publication_delivery:
       name: Demand / Supply Matching
     field_sha256:
       definition: 432acbf6b3360b687b6f13997443d8260e2e326deae92c58583f87e18503aff5
-      scope: b2b1a65c40bfe2675fc453b3b1730a82e5e34e5e4837b33962dabd3143435079
-      market_comparisons: 4dee067e5835f375bcb0e84d67613a7ba6ad2805f053112c282345e0d6aae247
+      scope: 4068b3f2c648580606ed63e454c4353764e0bd1307d661e8b5a4fba1c5b59c7b
+      market_comparisons: a37bd4153ef5ebe7284b1bc3a13382c67ef07ea33bf2876819457a0c3af2aa21
     parent: D03
     parent_type: contains
   - id: D05.e
@@ -330,8 +330,8 @@ publication_delivery:
       name: Physical Stock Target Optimization
     field_sha256:
       definition: 4edf0d60ad42465ed757f3b21a16b5675146f75a08c51a3ec722c98feb70e18f
-      scope: 117cad1976abfb779d6b69f176abe6761c2cfbd7f6e0dc337282193247e8c138
-      market_comparisons: cbd42879496403e7300f1960d08a6eeda8c1dfa2d8bfa3717e208f650fbe9acb
+      scope: b1c7bd1072ad229af0d68afe6248cb57fd57aac9cee29c66f7b1b81138022a9d
+      market_comparisons: 67dfaacd06c90c39c25db57e0c9df0bf3ddac58801277d50c2cfb6617aeb83e1
       market_inspiration: aba3dc3d9612fd0fdff0a0ca4c7c569b822eda864196d0ca8d31924749958537
     parent: ba-physical-stock-configuration-optimization
     parent_type: contains
@@ -395,9 +395,9 @@ publication_delivery:
       name: Reference Ingestion
     field_sha256:
       definition: 128d789e75343e2739f526fe314beb5cdaa326c20d091c37ec63fd53c6500c21
-      scope: be1fe94e9520d588639ccc3021508a31f3f2ff4ca1665c56763038ff0c5a2f22
-      market_comparisons: 559d0b3515738ff0a081efb4ded8a2f0cdaa9e744f8b5284fbad2757be5c80cc
-      market_inspiration: f36aa9d8ca7ad6a1fc94316928a10e60ca4015ce9e2c5e85499ac0c716ebbfca
+      scope: a08f12ee46f6eb1b5bf0a53c744393a0e75f88ac3d8d33e5c6abf35654f07616
+      market_comparisons: 870d99bb759a7b2a610ae72a046a3cf0760c2367e689cd8ccf6a9237a1b914c1
+      market_inspiration: 1b58385b41938fdf4cd623ba6969387d495410e7316ccee69f74bcc6c5af1f34
       mastership: f9857b4d5a7dcce48c236d8ad895d6201743373afbb940e06e32f89b1eb0d656
     parent: ba-inbound-information-integration
     parent_type: contains
@@ -1704,3 +1704,83 @@ delivery_reconciliation_U911:
     check: parent
     previous_sha256: 183027039067157b38b94216244fff34bd8d651acc86360d5be47075a3dd0530
     current: ba-physical-stock-configuration-optimization
+delivery_reconciliation_U987:
+  source_refs:
+  - U987
+  reason: Noms et frontières Commerce/Retail adoptés ; attentes antérieures conservées ci-dessous. Ne réapprouve pas les anciennes
+    descriptions ni correspondances.
+  previous_requirements:
+  - id: master-data-ingestion
+    kind: capability
+    fields:
+      name: Reference Ingestion
+    field_sha256:
+      definition: 128d789e75343e2739f526fe314beb5cdaa326c20d091c37ec63fd53c6500c21
+      scope: be1fe94e9520d588639ccc3021508a31f3f2ff4ca1665c56763038ff0c5a2f22
+      market_comparisons: 559d0b3515738ff0a081efb4ded8a2f0cdaa9e744f8b5284fbad2757be5c80cc
+      market_inspiration: f36aa9d8ca7ad6a1fc94316928a10e60ca4015ce9e2c5e85499ac0c716ebbfca
+      mastership: f9857b4d5a7dcce48c236d8ad895d6201743373afbb940e06e32f89b1eb0d656
+    parent: ba-inbound-information-integration
+    parent_type: contains
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: business-references
+    kind: area
+    fields:
+      name: Operational References
+    field_sha256:
+      market_comparisons: d24f1c9e53559cf4123eff9873ffaf518bd9dc07cf9ec5d32c3cacdacca1705f
+      market_inspiration: 8fc79a4b85201b034f564a227c70d3761de3156db7b4357c1629e3c731ddf9ed
+      definition: 7437a6fcea4650f38205f907d3278b10d6b061ad1dd1c2e3cd3169e2035fcc05
+      scope: 861e4b167b287fa794c186efc806cc617f0554493997619d545c38065a12ec26
+      mastership: 6584db79b1eeddee79937b843a11997f48aa6480ac14af02aa30ea93e75d3a6a
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: D03
+    kind: area
+    fields:
+      name: Availability
+    field_sha256:
+      definition: ad10e7f1b5476152211de9c036fe0507cf891ff7a048d1c1fab19a870ca03e60
+      scope: 6cd87bdf4323fb7ca8525f41d43f3ee8cd78e13763b7a548c057166ca4a75c8c
+      market_comparisons: d2896f5dff00f08e47b94c5e9a8d534bb62cd71f7dffa3d8e7e7faf18c574102
+      market_inspiration: 5d8c432edf47317b2a34caebc7d0624741cac492978ac8763c67e27306b88eb7
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: ba-supply-matching
+    kind: business_area
+    fields:
+      name: Demand / Supply Matching
+    field_sha256:
+      definition: 432acbf6b3360b687b6f13997443d8260e2e326deae92c58583f87e18503aff5
+      scope: b2b1a65c40bfe2675fc453b3b1730a82e5e34e5e4837b33962dabd3143435079
+      market_comparisons: 4dee067e5835f375bcb0e84d67613a7ba6ad2805f053112c282345e0d6aae247
+    parent: D03
+    parent_type: contains
+  - id: D05.a
+    kind: capability
+    fields:
+      name: Physical Stock Target Optimization
+    field_sha256:
+      definition: 4edf0d60ad42465ed757f3b21a16b5675146f75a08c51a3ec722c98feb70e18f
+      scope: 117cad1976abfb779d6b69f176abe6761c2cfbd7f6e0dc337282193247e8c138
+      market_comparisons: cbd42879496403e7300f1960d08a6eeda8c1dfa2d8bfa3717e208f650fbe9acb
+      market_inspiration: aba3dc3d9612fd0fdff0a0ca4c7c569b822eda864196d0ca8d31924749958537
+    parent: ba-physical-stock-configuration-optimization
+    parent_type: contains
+  - id: master-data-ingestion
+    kind: capability
+    fields:
+      name: Reference Ingestion
+    field_sha256:
+      definition: 128d789e75343e2739f526fe314beb5cdaa326c20d091c37ec63fd53c6500c21
+      scope: 41df56c441ee6c07065c9ac88efb8a35d2964bef100b1ce2ee7b573aa9d829a0
+      market_comparisons: 559d0b3515738ff0a081efb4ded8a2f0cdaa9e744f8b5284fbad2757be5c80cc
+      market_inspiration: 1b58385b41938fdf4cd623ba6969387d495410e7316ccee69f74bcc6c5af1f34
+      mastership: f9857b4d5a7dcce48c236d8ad895d6201743373afbb940e06e32f89b1eb0d656
+    parent: ba-inbound-information-integration
+    parent_type: contains

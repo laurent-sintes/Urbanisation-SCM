@@ -23211,3 +23211,537 @@ Prends en compte les préconisations de l'audit
 **portée**
 
 La dernière demande autorise l’application des préconisations de l’audit U971, avec la correction de vocabulaire discutée après U972 : Modèle, Transition et Usage comme portées cumulables. HS-001 concerne principalement la transition ; son impact sur le modèle durable n’est pas établi. Les compléments, options et estimations gardent leurs réserves de preuve ; aucune solution nouvelle n’est considérée crédible ou choisie implicitement. Préserver les identités et les preuves lors du regroupement HS-002/HS-011. Les séparations seulement éventuelles restent à instruire. La suspension précédente des modifications est levée pour ce lot.
+
+## U974
+
+**id**
+
+U974
+
+**titre**
+
+Audit des systèmes de contexte, de la planification et de l’autonomie logistique
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Design & Development et Enterprise Management & Control sont très vides en terme de domaines.
+
+Ce n'est pas grave car ce n'est pas le coeur de dev du Core System FLOW. Néanmoins, pour imaginer des dépendances et des hotspot sur ces dépendances, ce serait bien d'avoir Domaines et sous domaines.
+
+Tu peux scruter le marché et proposer le complément ?
+
+Ne mets pas à jour, fais juste un audit
+
+Tu peux aussi être critique sur le découpage actuel. Je doute sur le domaine Demand & Supply Planning : c'est dans les opérations ou dans Développement ?
+
+S'il y a besoin de descendre à sous domaine, ne pas hésiter
+
+Autre question : Logistics, c'est un domaine ou un système ?
+
+Sachant qu'opérationnellement, le "coeur des marques" gère l'orchestration mais ne gère pas la logistique. Même C-LOG est une filiale externalisée. Donc, Logistics pourrait être un système pour lequel on doit décomposer en domaines. Ca permettrait de découper transport et entrepot, ce serait plus clair
+
+**portée**
+
+Demande d’audit et de propositions seulement à ce stade. L’autonomie de la réalisation logistique par rapport au cœur des marques est un apport de Laurent ; C-LOG reste un acteur, sans déduire de sa séparation opérationnelle une sortie du groupe, des applications installées ou des contrats techniques. La proposition finale et ses limites sont conservées dans modeles/backlog/context-business-systems-U975.yaml. La restriction aux modifications est levée pour le lot validé ensuite en U975.
+
+## U975
+
+**id**
+
+U975
+
+**titre**
+
+Validation du découpage à quatre systèmes et de leurs domaines et sous-domaines de contexte
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Je valide
+
+**portée**
+
+Validation de la proposition complète issue de l’audit U974, avec la séparation opérationnelle décrite par Laurent : quatre Business Systems ; Logistics devient un système distinct avec Warehousing et Transportation ; Demand & Supply Planning reste dans Business Operations et reçoit trois sous-domaines ; Design & Development reçoit trois domaines ; Enterprise Management & Control conserve Finance et reçoit deux domaines, avec les sous-domaines présentés. Le lot exact, les noms, rattachements et frontières validées figurent dans modeles/backlog/context-business-systems-U975.yaml. Les identités et capacités existantes sont préservées. Les textes de fiche, illustrations et rapprochements détaillés rédigés après cet accord restent proposés ; aucune réalisation installée, exhaustivité, responsabilité de maître entreprise, nouvelle capacité, nouveau hotspot constaté, nouveau domaine douanier ni domaine RH n’est adopté. Les risques de dépendance restent des hypothèses d’audit. La publication, le commit, le push et l’adaptation du placement Carte ne sont pas déclenchés par cet accord.
+
+## U976
+
+**id**
+
+U976
+
+**titre**
+
+Supply Plan reçu par l’orchestration : résultat de la planification externe
+
+**date**
+
+2026-10-12
+
+**texte**
+
+La supply plan du domaine orchestration, c'est le résultat de la planification. Construire le plan est un domaine à l'extérieur d'orchestration.
+
+**portée**
+
+Précision du lot U975 pendant sa mise en œuvre : le Supply Plan exploité dans Supply Chain Orchestration est le résultat de la planification externe portée par Demand & Supply Planning ; l’orchestration le reçoit et l’exploite, sans le construire. Le contrat FLOW hors achats et la distinction avec le Matching Master Plan interne restent inchangés. Cette précision ne déplace pas toute décision locale de planification hors de FLOW et n’adopte pas de réalisation installée.
+
+## U977
+
+**id**
+
+U977
+
+**titre**
+
+Sous-domaines de Sourcing and Procurement et placement de Logistics dans Atlas
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Sourcin and procurement, tu vois des sous domaines ?
+
+Dans ATLAS, le système Logistics doit être sous Business Operations
+
+**portée**
+
+Demande de proposition de sous-domaines de Sourcing and Procurement, sans validation ni intégration de leur découpage. Demande de placement de Logistics dans Atlas : interprétation annoncée à Laurent comme un placement visuel sous Business Operations dans la vue Carte, en conservant le système métier distinct validé U975. Aucun changement de parent métier, nouvelle publication, commit ou push demandé.
+
+## U978
+
+**id**
+
+U978
+
+**titre**
+
+Validation des quatre sous-domaines de Sourcing and Procurement
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Je valide.
+
+**portée**
+
+Validation de la proposition complète CMP313 présentée après U977 : Supplier Management, Strategic Sourcing, Purchase Contract Management et Operational Procurement, avec leurs responsabilités et frontières, sous Sourcing and Procurement. Operational Procurement conduit le parcours d’achat ; le Core conserve identité, engagements et transitions de Purchase Order. La construction des plans reste dans Demand & Supply Planning, les opérations physiques dans Logistics. Profondeur de contexte, sans nouvelles capacités ni preuve de réalisation installée. Les nouvelles illustrations et rédactions détaillées restent proposées. Aucun nouvel accord sur les autres fiches, aucune publication ni opération Git.
+
+## U979
+
+**id**
+
+U979
+
+**titre**
+
+Partages de données modélisés et flèches orientées dans la vue Enterprise Architecture
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Dans la Vue Enterprise Architecture uniquement, je souhaite faire apparaitre des flèches de partage de données entre systèmes. Les flèches sont orientées et on doit voir le type de contenu échangé. Par exemple, les données produit issues du PLM doivent alimenter les opérations. Il y a des flèches entre opérations et Logictics, entre operations et Enterprise management etc.
+
+Je voudrais que ces liens ne soient pas une fioriture frontend. Il faut que ces liens soient modélisés dans la base de cartographie. Le fait que ces liens soient entre systèmes pour l'instant ne doit pas être limitatif.
+
+**portée**
+
+Demande d’un contrat canonique de partage de données, orienté et qualifié par son contenu, sans restriction aux seuls systèmes métier. La vue Carte Enterprise Architecture affiche la synthèse des échanges entre systèmes ; les vues focalisées conservent leur présentation. Exemple explicitement demandé : données produit issues du PLM vers les opérations, représentées par Design & Development vers Business Operations sans transformer le PLM en système métier. Les contenus complémentaires détaillés entre opérations, Logistics et Enterprise Management & Control sont proposés à partir des responsabilités documentées ; aucune interface installée, technologie, fréquence, responsabilité de maître entreprise ou exhaustive liste de flux déduite. Publication, commit et push restent distincts.
+
+## U980
+
+**id**
+
+U980
+
+**titre**
+
+Logistics docké visuellement à Business Operations
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Dans la vue Enterprise Architecture, le système Logistics pourrait être docké à Business Operations, sinon ça laisse un gros blanc...
+
+**portée**
+
+Ajustement visuel de la vue Carte Enterprise Architecture : empiler Business Operations puis Logistics dans une même colonne, sans attendre la hauteur des colonnes voisines, en réservant seulement l’espace utile aux échanges représentés. Logistics conserve sa fiche, sa nature de Business System et son parent métier Enterprise Architecture ; aucun changement canonique de hiérarchie.
+
+## U981
+
+**id**
+
+U981
+
+**titre**
+
+Profondeur capacité réservée à Supply Chain Orchestration
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Dans "Enterprise Management & Control", il y a une capacité. Dans les Systèmes adhérents à l'orchestration, je ne souhaite pas qu'on descende au niveau capacité : je le réserve à l'orchestration uniquement.
+
+**portée**
+
+Instruction explicite de profondeur du modèle courant : seules les responsabilités de Supply Chain Orchestration sont décomposées en capacités et comportements. Les systèmes et domaines de contexte restent décrits jusqu’aux sous-domaines utiles, sans Business Area portant une capacité externe. Accounting Interpretation et son regroupement Accounting Translation ne restent donc plus des nœuds détaillés de Finance ; leur responsabilité comptable, extérieure à l’orchestration, et le raccordement aux faits opérationnels doivent être conservés au niveau de Financial Accounting. Ce changement de profondeur ne transfère pas la comptabilité à FLOW, ne retire pas le besoin métier, ne modifie pas les publications historiques et ne demande ni release ni opération Git.
+
+## U982
+
+**id**
+
+U982
+
+**titre**
+
+Audit de Sales : réseau de magasins, ventes POS et distribution B2B avec Elastic
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Derniere question : comment représenter le système qui gère le réseau de magasin ?
+Dans une logique centralisée, l'orchestration de la supply chain reçoit les les ventes du Point Of Sale sans les gérer vraiment mais le POS doit avoir son espace en tant que système ou domaine, non ? Ou alors c'est le "B2C Store" qui gère ça ?
+
+J'aimerais un audit du domaine "Sales" en prenant en compte les problématiques magasin et de distribution à des partenaires B2B. Que dit le marché ? Doit on revoir le domaine Sales en terme de nom et de contenu ? Manque t il des systèmes ou des domaines ?
+
+Dans la partie B2B on a besoin de placer Elastic qui gère un portail de commandes mais aussi de construction d'assortiments, showroom, whiteboard.
+
+**portée**
+
+Demande d’audit et de comparaison marché, sans accord sur un nouveau découpage ni modification canonique. Laurent décrit la réception de ventes POS par une orchestration centralisée, extérieure à la conduite de la vente magasin, et précise le périmètre à représenter pour Elastic : commandes, assortiments, showroom et whiteboard. La séparation système métier / domaine / application, les frontières avec le Core et les variantes de distribution B2B sont à analyser. Le modèle courant, ses glossaires et les publications restent inchangés ; la profondeur hors orchestration reste limitée aux sous-domaines.
+
+## U983
+
+**id**
+
+U983
+
+**titre**
+
+Distinction du POS, de la gestion du réseau et du backoffice magasin
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Oui, POS et gestion de réseau de magasin ou backoffice magasin, ce n'est pas la même chose.
+
+**portée**
+
+Laurent confirme la distinction de responsabilités entre POS et gestion du réseau ou backoffice magasin. Cette précision enrichit l’audit U982 ; elle ne vaut pas validation globale du renommage Sales en Commerce, du découpage proposé ou de sa mise en œuvre canonique. Codex explicite séparément la vente/caisse, les opérations locales du magasin et le pilotage du réseau ; aucune séparation applicative installée n’est présumée.
+
+## U984
+
+**id**
+
+U984
+
+**titre**
+
+Objectif d’atelier : placer les responsabilités des outils Beaumanoir
+
+**date**
+
+2026-10-12
+
+**texte**
+
+L'idée est de faire un atelier pour essayer de placer les responsabilités des outils Beaumanoir : Storeland, UR, Cegid Y2, Elastic par exemple.
+
+**portée**
+
+Objectif d’un atelier de positionnement des responsabilités réellement exercées par les outils, notamment Storeland, UR, Cegid Y2 et Elastic. Préparer une grille séparant responsabilités métier, autorité sur les données, décisions, exécution et échanges, avec contexte de marque et preuves. La citation d’un outil ne prouve ni sa couverture, ni son déploiement, ni son rôle de maître. Aucun accord global sur le découpage proposé U982, aucun ajout de réalisation canonique, publication ou opération Git.
+
+## U985
+
+**id**
+
+U985
+
+**titre**
+
+Limiter le travail à la suffisance et à la clarté du découpage avant atelier
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Non non ! je veux juste que le découpage soit suffisant et clair pour préparer cet atelier pour l'instant.
+
+Tu peux me dire si c'est bon ?
+
+**portée**
+
+Correction explicite de l’interprétation de U984 : évaluer seulement si le découpage proposé fournit des périmètres suffisamment clairs pour un futur atelier. Ne pas préparer de grille, placer les outils ou lancer l’atelier. La phrase « Préparer une grille » de la portée U984 était une interprétation de Codex, désormais exclue. Aucun accord global ni demande d’application canonique.
+
+## U986
+
+**id**
+
+U986
+
+**titre**
+
+Séparer le POS du backoffice magasin
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Je pense que pour Store Operations, il faut séparer le POS du backoffice car c'est souvent des solutions différentes.
+
+**portée**
+
+Précision du découpage discuté : Store Commerce porte vente et caisse ; Store Backoffice Operations remplace le nom trop large Store Operations et porte le backoffice central ou local. Retail Network Management conserve le pilotage du réseau. Les responsabilités restent séparées même si une application peut couvrir plusieurs périmètres ; aucune réalisation installée n’est attribuée.
+
+## U987
+
+**id**
+
+U987
+
+**titre**
+
+Validation du découpage Commerce et Retail Operations pour préparer l’atelier
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Je valide ce découpage
+
+**portée**
+
+Accord sur le lot cohérent U982–U986 : Sales devient Commerce, avec Store Commerce, Digital Commerce pour le B2C en ligne, Wholesale Commerce et Assortment & Catalog Management ; Retail Operations est un domaine de Business Operations avec Retail Network Management et Store Backoffice Operations, central ou local. Les quatre Business Systems et les identités des périmètres existants sont conservés. POS, backoffice et réseau restent distincts ; seule Supply Chain Orchestration est détaillée en capacités. L’accord porte sur noms, niveaux, parents et responsabilités discutées, pas sur les textes explicatifs rédigés après cet accord, les contrats de données proposés, les réalisations des outils ni la totalité des correspondances marché. Aucun atelier, grille de positionnement, release, commit ou push demandé.
+
+## U988
+
+**id**
+
+U988
+
+**titre**
+
+Confirmation du renommage Sales en Commerce
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Tu n'as pas dis que tu voulais renommer en "Commerce" ?
+
+**portée**
+
+Rappelle que le renommage Sales en Commerce fait partie du découpage adopté U987 ; il conserve l’identité domain-sales.
+
+## U989
+
+**id**
+
+U989
+
+**titre**
+
+Validation du découpage complet
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Quand j'ai dit je valide, je valide TOUT
+
+**portée**
+
+Confirme que U987 adopte la proposition complète construite U982–U986, renommage Commerce compris, avec tous ses domaines, sous-domaines et frontières corrigées. Ce n’est pas un accord limité au dernier échange sur le POS. Le lot canonique est décrit dans commerce-retail-structure-U987.yaml. Les textes nouveaux rédigés après la proposition et les responsabilités installées des outils ne sont pas inventés par cet accord.
+
+## U990
+
+**id**
+
+U990
+
+**titre**
+
+Audit global de cohérence et couverture des prix, remises et primes
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Je veux un audit de cohérence du modèle global : nom, périmètres, manques. Avec dans l'idée : un haut niveau de précision dans l'orchestration de la supply chain et moins précis dans les domaines et systèmes adjacents.
+Je me demande si on a bien gérer dans l'orchestration les flux de remise et de primes ainsi que l'application de prix contrôlés selon la situation : selon le client, selon la saison ou le moment de la saison (promotion, soldes) etc.
+
+**portée**
+
+Demande d’audit du modèle courant, sans adoption de nouvelles capacités ni modification canonique implicite. Examiner noms, responsabilités et lacunes en conservant une profondeur forte dans Supply Chain Orchestration et un contexte plus simple autour. Vérifier explicitement prix contextualisés, remises, primes, périodes et contrôle de leur application ; distinguer définition des conditions, calcul, engagement, faits de réalisation et règlement.
+
+## U991
+
+**id**
+
+U991
+
+**titre**
+
+Périmètre des primes à examiner
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Les deux
+
+**portée**
+
+Réponse à la clarification : examiner à la fois « Primes commerciales / ristournes liées aux volumes ou objectifs d’achat ou de vente » et « Primes et commissions versées aux vendeurs, agents ou partenaires ». Ne pas confondre remise immédiate, avantage différé, rémunération d’agent et prime de personnel ; aucune pratique installée Beaumanoir présumée.
+
+## U992
+
+**id**
+
+U992
+
+**titre**
+
+Prix produits hors orchestration et consommés par FLOW
+
+**date**
+
+2026-10-12
+
+**texte**
+
+L'orchestration ne décide pas des prix mais les consomment. Mais ils doivent bien être produits quelque part...
+
+**portée**
+
+Frontière explicite de l’audit U990 : Supply Chain Orchestration consomme les prix déterminés par leurs responsables externes. Identifier le producteur métier des prix et conditions applicables dans les systèmes adjacents, puis le contrat de consommation et les conséquences sur les engagements. Ne pas ajouter une décision tarifaire sous PTP, Price Book, Control Plane ou Order Management par extension.
+
+## U993
+
+**id**
+
+U993
+
+**titre**
+
+Question sur le domaine Retail Operations
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Pourquoi un Domaine "Retail Operations" ? Ce n'est pas du commerce ?
+
+**portée**
+
+Réexaminer l’intérêt de la séparation de domaines Commerce/Retail Operations adoptée U987. La question n’adopte pas une fusion ; conserver les responsabilités distinctes de vente/POS, backoffice et réseau dans toute alternative.
+
+## U994
+
+**id**
+
+U994
+
+**titre**
+
+Signaler les exceptions de profondeur utiles autour du Core
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Si dans les domaines adjacents il faut descendre au niveau business area, il faut que tu me le dises.
+
+**portée**
+
+L’audit doit signaler les besoins justifiés de Business Areas dans les domaines adjacents, sans appliquer la simplicité comme une interdiction de penser les exceptions. Pas d’autorisation implicite de créer ces objets ni de modifier la règle actuelle U981. Justifier chaque exception par une responsabilité ou une frontière non exprimable clairement au niveau sous-domaine ; expliciter l’évolution des invariants nécessaire, sans créer une Business Area vide ni importer un catalogue de capacités adjacent.
+
+## U995
+
+**id**
+
+U995
+
+**titre**
+
+Propositions de noms pour Control Plane et Availability
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Que proposes -tu pour remplacer Control Plane ?
+
+Availability j'aimais bien. Que proposes-tu ?
+
+**portée**
+
+Demande de proposition de nom métier pour Control Plane et préférence pour Availability. Pas d’accord de renommage ni de modification de périmètre ; conserver identités et frontières. La remarque sur Availability porte sur la lisibilité de sa largeur fonctionnelle, sans obligation de changer son nom.
+
+## U996
+
+**id**
+
+U996
+
+**titre**
+
+Validation du lot complet de cohérence, prix, primes et noms
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Je valide tout
+
+**portée**
+
+Accord sur le lot cohérent proposé U990–U995, CMP317/CMP318 : producteurs des prix et avantages hors orchestration, consommation contrôlée par FLOW, responsabilités de règlement, regroupement de Retail Operations dans Commerce avec maintien des sous-domaines POS/backoffice/réseau, clarification du mandat transport, Supply Policy Management remplaçant Control Plane, maintien d’Availability avec sa définition courte. Aucun calcul tarifaire ou droit à prime transféré à FLOW, aucune extension automatique de Payment aux fournisseurs, agents ou salariés, aucune Business Area adjacente créée. Les textes de mise en œuvre et détails de contrats rédigés ensuite restent proposés ; aucune réalisation installée, release ou opération Git demandée.

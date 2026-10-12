@@ -176,7 +176,7 @@ publication_delivery:
   required_catalog:
   - collection: hotspots
     id: HS-008
-    content_sha256: 97c24af840eda7634a2e5b43862bcd1df653daabafc64dc457e1c88616eda09b
+    content_sha256: 4520f9b12a78273b9df8ad8b1d52369b41ac3a59de120b21765a3a7367112ebb
   required_glossary:
   - id: TER205
     field_sha256:
@@ -197,3 +197,14 @@ superseded_delivery_check:
   content_sha256: 1cd7d02c846a68ffeb3294d18452bb58aac71dffd0c63f0622e5028887bc5437
   scope: État pilote avant enrichissement des sources sous U957 ; empreinte conservée, accord antérieur non étendu.
   successor: hotspot-gap-research-U955.yaml
+delivery_reconciliation_U987:
+  source_refs:
+  - U987
+  - U989
+  reason: Alignement des libellés liés à Commerce, sans changement des responsabilités ni extension des accords.
+  previous_glossary_catalog_checks:
+  - collection: hotspots
+    previous_requirement:
+      collection: hotspots
+      id: HS-008
+      content_sha256: 97c24af840eda7634a2e5b43862bcd1df653daabafc64dc457e1c88616eda09b

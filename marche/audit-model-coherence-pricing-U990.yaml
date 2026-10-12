@@ -1,0 +1,441 @@
+id: MODEL-COHERENCE-PRICING-U990
+status: audit_complete_proposals_not_adopted
+date: '2026-10-12'
+source_refs:
+- U990
+- U991
+- U992
+- U993
+- U994
+- CMP317
+basis:
+  publication_version: 2026-10-12.7
+  backlog_fingerprints:
+    modeles\backlog\model.yaml: 0f59492a4dc24b818a409555957a492da15cdcf315306fb3a70e33eb0b9e803e
+    modeles\backlog\glossary.yaml: c89c88ecd3649ff429c8867a1fa1b9677e716e90320fe19f5a69bb211dd77074
+  counts:
+    universe: 1
+    business_system: 4
+    domain: 13
+    area: 48
+    reference: 20
+    capability: 75
+    object: 2
+    document: 1
+    event: 1
+    behavior: 74
+    business_area: 30
+  scenarios: 39
+  paths: 42
+  core_only_deep_nodes: true
+  all_75_capabilities_mobilized: true
+  scope: Structure et noms du modèle global ; définitions des 75 capacités ; frontières ciblées prix, commande, finance, planification,
+    stock, prestation, processus et domaines adjacents. Analyse documentaire des cas, pas exécution d’un moteur de prix ni
+    audit exhaustif des 74 comportements.
+  illustrations_without_business_parent:
+  - ILL-OBJ-01
+  - ILL-DOC-01
+  - ILL-EVT-01
+  - ILL-OBJ-02
+sources:
+- id: ELM904
+  market_reference: MKT14
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Sales trade agreement prices
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/unified-pricing-management/upm-sales-trade-agreement-prices
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; édition globale non établie
+  locator: Net pricing ; concurrence ; Date type
+  reformulation: Prix négociés client/produit, prix net exclusif, priorités et date de recherche paramétrée.
+  limits: La logique éditeur ne prescrit ni autorité FLOW ni adoption du prix le plus bas.
+- id: ELM905
+  market_reference: MKT13
+  vendor: SAP
+  product: SAP S/4HANA Sales
+  title: Introducing the Condition Technique
+  url: https://learning.sap.com/courses/configuring-pricing-in-sap-s-4hana-sales/introducing-the-condition-technique_dce0f313-dee6-470e-8851-3f1773cb5d45
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; édition globale non établie
+  locator: Pricing Procedure ; Search for a Valid Condition Record ; New Pricing ; Billing
+  reformulation: Conditions déterminées par contexte client/document ; séquence de recherche, barèmes et reprise du prix configurables.
+  limits: Cours de fonctions S/4HANA, sans édition globale établie ; ne prescrit pas la responsabilité du Core FLOW.
+- id: ELM906
+  market_reference: MKT14
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: Retail discounts
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/retail-discounts-overview
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; édition globale non établie
+  locator: Common discount settings ; Currency ; Discount concurrency mode
+  reformulation: Activation, devise, unité, priorité et règles de cumul ou exclusion déterminent les remises applicables.
+  limits: Fonctions de produit ; pas de politique promotionnelle Beaumanoir ni règle juridique sur les soldes déduite.
+- id: ELM907
+  market_reference: MKT13
+  vendor: SAP
+  product: SAP S/4HANA Sales
+  title: Using Condition Records
+  url: https://learning.sap.com/courses/configuring-pricing-in-sap-s-4hana-sales/using-condition-records_ef2d603b-232f-4100-90b4-da7b4f75ade2
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; édition globale non établie
+  locator: Validity Intervals ; Mass Maintenance ; Calculation Type
+  reformulation: Validité, taux, données client/produit et traces de modification encadrent les conditions de prix et de remise.
+  limits: L’exercice documente les conditions ; une saison métier ne se réduit pas automatiquement à une date.
+- id: ELM908
+  market_reference: MKT14
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Rebate management module overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/rebate-management/rebate-management-overview
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; édition globale non établie
+  locator: Basis calculation ; Flexible calculations ; Rebate target transactions
+  reformulation: Avantages différés sur quantités ou valeurs et périodes ; calcul, provisions, traitement, avoirs et sorties
+    en biens distingués.
+  limits: Fonctionnalité large ; ne couvre pas toutes les primes de personnel ni une réalisation installée. Texte lisible
+    malgré un bandeau d’authentification.
+- id: ELM909
+  market_reference: MKT13
+  vendor: SAP
+  product: SAP S/4HANA Settlement Management
+  title: Outline the Structure of a Condition Contract
+  url: https://learning.sap.com/courses/exploring-sap-s-4hana-settlement-management/outline-the-structure-of-a-condition-contract_bf334045-48bb-4aae-98f7-83966c20eada
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; édition globale non établie
+  locator: Top Area ; Conditions Section ; purchasing rebates and external agents
+  reformulation: Contrat daté, bénéficiaires, volume éligible et statut ; ristournes client/fournisseur et commissions d’agents
+    externes.
+  limits: Les agents sont des fournisseurs dans cet exemple SAP, pas nécessairement dans le vocabulaire FLOW. Aucun modèle
+    de paie documenté.
+- id: ELM910
+  market_reference: MKT14
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Register sales commissions
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/tasks/register-sales-commissions
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; édition globale non établie
+  locator: Invoice a qualifying sales order ; Review registered commissions
+  reformulation: Commissions issues de la facture selon bénéficiaires et taux ; assiette sur montant net et écritures de charge/dette.
+  limits: Un exemple de commission ne documente pas toutes les primes salariales ni toutes les dates contractuelles possibles.
+- id: ELM911
+  market_reference: MKT14
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Sales agreements overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-agreements
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; édition globale non établie
+  locator: Pricing policies ; validity ; sales order lines
+  reformulation: Conditions de l’accord prioritaires et prix/remise éventuellement figés ; éligibilité liée à une période
+    et à la date demandée d’expédition.
+  limits: La date de cet exemple ne devient pas une règle universelle de vente FLOW.
+reused_market_evidence:
+- ELM887
+- ELM888
+- ELM892
+- ELM895
+findings:
+- id: F01
+  priority: high
+  topic: Production des prix et conditions
+  evidence:
+  - product-price-book
+  - service-price-book
+  - D11
+  - D03
+  - D04.i
+  finding: Le modèle distingue tarif de référence et prix contextualisé ; aucun sous-domaine adjacent ne porte explicitement
+    le service complet de production et publication du prix applicable.
+  risk: Attribuer implicitement le calcul à Price Book, PTP ou Billing, ou laisser plusieurs producteurs produire des conditions
+    contradictoires.
+  recommendation: 'Sous Commerce : Pricing & Promotions Management, incluant politique, périodes, dérogations, détermination
+    et publication des prix client/canal/produit. Sourcing and Procurement porte les conditions d’achat ; les prix des prestations
+    proviennent de leurs accords et responsables. La fonction de calcul peut être réalisée par un composant spécialisé.'
+  microsoft:
+  - ELM904
+  - ELM906
+  - ELM911
+  sap:
+  - ELM905
+  - ELM907
+- id: F02
+  priority: high
+  topic: Consommation contrôlée des conditions par FLOW
+  evidence:
+  - D04
+  - D04.i
+  - D04.j
+  - master-data-ingestion
+  - D03.k
+  finding: Prix applicables et stabilité des engagements présents ; contrat complet de consommation, refus et correction non
+    explicite.
+  recommendation: 'Préciser Reference Ingestion, Order Management et les parcours : prix reçu, contexte évalué, référence
+    et version, période, date métier retenue, dérogation, statut de contrôle. Demander un résultat corrigé au producteur ;
+    ne pas recalculer les règles commerciales dans FLOW. Le contrôle vérifie l’applicabilité du résultat sans déterminer un
+    nouveau prix.'
+  microsoft:
+  - ELM904
+  - ELM911
+  sap:
+  - ELM905
+  - ELM907
+- id: F03
+  priority: high
+  topic: Ristournes et primes commerciales
+  evidence:
+  - D11
+  - service-order-billing
+  - service-order-payment-collection
+  finding: Les porteurs génériques d’accord, facture et paiement existent ; assiette éligible, seuils, périodes, droits acquis,
+    régularisations et statut de règlement ne sont pas définis comme responsabilité.
+  recommendation: 'Sous Commerce : Rebates & Incentives Management pour les dispositifs commerciaux de vente. Purchase Contract
+    Management porte les dispositifs d’achat. Finance porte le calcul financier et le règlement sous une responsabilité Commercial
+    Settlement Management. FLOW fournit les faits Supply et reçoit les conséquences autorisées qui concernent ses commandes,
+    sans devenir le calculateur du droit à prime.'
+  microsoft:
+  - ELM908
+  sap:
+  - ELM909
+- id: F04
+  priority: high
+  topic: Commissions et primes de personnel
+  evidence:
+  - service-order-payment-collection
+  - domain-finance
+  - system-enterprise-management-control
+  finding: Payment est limité aux encaissements/remboursements clients ; les versements fournisseurs, agents et salariés ne
+    sont pas couverts par extension.
+  recommendation: 'Agents externes : convention commerciale, calcul et règlement financier hors Core. Primes salariales :
+    responsabilité RH/paie hors Core à représenter seulement si une interface utile à FLOW doit être documentée. Fournir des
+    faits au responsable ; ne pas traiter une prime salariale comme une remise client.'
+  microsoft:
+  - ELM910
+  sap:
+  - ELM909
+  gap: La paie et les règles de rémunération Beaumanoir ne sont pas étudiées ; aucun sous-domaine RH ni Business Area proposé
+    comme déjà justifié.
+- id: F05
+  priority: medium
+  topic: Commerce / Retail Operations
+  evidence:
+  - domain-sales
+  - domain-retail-operations
+  - subdomain-store-backoffice-operations
+  - subdomain-retail-network-management
+  finding: La séparation de responsabilités est utile ; la séparation en deux domaines n’est pas obligatoire et alourdit le
+    contexte.
+  recommendation: 'Préférence après U993 : un seul domaine Commerce avec Store Commerce, Store Backoffice Operations, Retail
+    Network Management, Digital Commerce, Wholesale Commerce et Assortment & Catalog Management. Décrire l’exploitation des
+    canaux dans la définition Commerce. Les deux nouveaux sujets prix/avantages restent des sous-domaines proposés distincts.
+    Conserver les identités des nœuds déplacés ; un éventuel retrait du domaine Retail Operations doit être explicite.'
+  microsoft:
+  - ELM888
+  - ELM887
+  sap:
+  - ELM892
+  - ELM895
+- id: F06
+  priority: medium
+  topic: Mandat de planification du transport
+  evidence:
+  - transport-plan-decision
+  - subdomain-transport-planning-dispatch
+  finding: FLOW peut composer chargements et trajets ; Logistics organise aussi le transport local. La distinction est rédigée
+    mais le mandat transmis n’est pas assez explicite pour décider qui fait quel calcul.
+  recommendation: 'Décrire le contrat par périmètre : contraintes et groupements décidés par l’orchestration, possibilités
+    et plan local produits par Logistics, confirmations, adaptations et conséquences sur la promesse. Ne pas ajouter une seconde
+    décision de plan ni retirer automatiquement Transport Plan Decision.'
+  basis: Cohérence interne du modèle ; aucune nouvelle attribution d’outil ou source de calcul présumée.
+- id: F07
+  priority: medium
+  topic: Noms de portée trop larges ou techniques
+  evidence:
+  - D03
+  - subdomain-policies
+  - ba-financial-service-order-management
+  - service-order-payment-collection
+  finding: Availability couvre aussi matching, configurations et plan interne ; Control Plane peut évoquer une plateforme
+    informatique ; Financial Services et Payment peuvent laisser croire à une finance complète.
+  recommendation: Rendre les limites visibles dans les résumés et fiches ; envisager Customer Payment seulement si un renommage
+    améliore la lecture. Ne pas renommer systématiquement Availability ou Control Plane, déjà définis. Aucun catalogue de
+    capacités financières ajouté.
+  basis: Lecture comparée du nom et du périmètre canonique ; évaluation lexicale, sans synonymie marché revendiquée.
+- id: F08
+  priority: low
+  topic: Nom identique dans deux familles de commande
+  evidence:
+  - BHV059
+  - BHV068
+  finding: Direct Delivery est présent côté achat et côté vente. Ce sont deux contributions coordonnées au même cas, pas deux
+    flux physiques indépendants.
+  recommendation: Afficher le parent dans la recherche et les fiches ; garder le nom si le contexte est visible. Ne pas fusionner
+    les identités ni compter deux livraisons.
+  basis: Les définitions et parents différencient les responsabilités ; aucun réexamen de l’audit des comportements U431.
+- id: F09
+  priority: medium
+  topic: Sources responsables et interfaces adjacentes
+  evidence:
+  - master-data-ingestion-commerce
+  - D11
+  - D12
+  - D16
+  - product-price-book
+  finding: Références locales présentes ; producteurs, priorités et dates d’application de certaines données restent à établir.
+    Les échanges internes Commerce/Core sont absents des sept relations shares-data actuelles.
+  recommendation: 'Documenter les contrats utiles par donnée : produit, assortiment, condition, prix contextualisé et correction.
+    Les relations entre domaines du même système peuvent être modélisées ; elles ne sont pas projetées en flèches intersystèmes
+    dans la vue Enterprise Architecture.'
+  basis: Contrats sources explicitement ouverts dans les fiches ; absence de relation documentée ne démontre pas absence d’interface
+    installée.
+- id: F10
+  priority: low
+  topic: Précision des systèmes adjacents
+  evidence:
+  - system-design-development
+  - system-enterprise-management-control
+  - domain-plan
+  - domain-logistics-execution
+  finding: Les systèmes de contexte couvrent les domaines et sous-domaines utiles à FLOW. Ils ne constituent pas un inventaire
+    complet de toutes les fonctions d’entreprise.
+  recommendation: Conserver cette limite. Les achats restent dans les opérations ; Collection Planning définit l’offre, Demand
+    & Supply Planning les prévisions, le Matching Master Plan les affectations opérationnelles. Ajouter un périmètre adjacent
+    seulement pour identifier une responsabilité ou un contrat utile.
+  basis: Cohérence interne et frontières canoniques ; absence de RH, immobilier ou production interne ne constitue pas un
+    manque démontré de FLOW.
+scenario_checks:
+- case: Client B2B avec prix contractuel et promotion en cours
+  expected: Le producteur précise priorité et exclusion/cumul. FLOW reçoit le prix net autorisé ; ne choisit pas implicitement
+    le moins cher.
+  current_coverage: partial
+  source_refs:
+  - ELM904
+  - ELM905
+- case: Commande avant soldes, expédition pendant soldes
+  expected: Le producteur précise la date de référence du calcul. Le changement de période ne modifie pas automatiquement
+    un engagement confirmé.
+  current_coverage: partial
+  source_refs:
+  - ELM911
+  - ELM907
+- case: Remise de volume et commande fractionnée
+  expected: Le producteur établit le résultat et ses allocations par ligne ; les fragments conservent le lien à la décision
+    d’origine et ne déclenchent pas plusieurs fois l’avantage.
+  current_coverage: not_explicit
+  source_refs:
+  - ELM906
+  - ELM905
+- case: Retour après fin de promotion
+  expected: Conserver le prix et les remises de l’engagement d’origine pour le règlement autorisé ; le prix actuel ne remplace
+    pas silencieusement cette base.
+  current_coverage: partial
+  source_refs:
+  - ELM905
+  - ELM908
+- case: Correction tardive d’une condition déjà appliquée
+  expected: Recevoir la correction, reconnaître les documents affectés, obtenir une décision autorisée ; tracer sans réécrire
+    silencieusement le passé.
+  current_coverage: not_explicit
+  source_refs:
+  - ELM907
+  - ELM911
+- case: Ristourne annuelle puis retour client
+  expected: Le responsable calcule les volumes éligibles et la régularisation. FLOW fournit ses faits et applique seulement
+    les conséquences autorisées.
+  current_coverage: not_explicit
+  source_refs:
+  - ELM908
+  - ELM909
+- case: Prime en marchandises offertes
+  expected: Un avantage autorisé en biens crée une demande de réalisation distincte, sans inventer paiement ni revenu ; FLOW
+    peut orchestrer l’apport.
+  current_coverage: not_explicit
+  source_refs:
+  - ELM908
+  - ELM909
+- case: Commission d’agent après facture et correction ultérieure
+  expected: Identifier bénéficiaire, assiette, date, correction et résultat de règlement ; Payment client ne couvre pas le
+    versement à l’agent.
+  current_coverage: not_explicit
+  source_refs:
+  - ELM910
+  - ELM909
+- case: Prime d’équipe magasin
+  expected: RH/paie définit et règle la rémunération ; les faits de vente utiles sont fournis sous contrat, hors calcul Supply.
+  current_coverage: outside_core
+  source_refs:
+  - U991
+  - U992
+- case: Résultat de prix absent, expiré ou incohérent
+  expected: Exposer le problème et déclencher l’attente, le contrôle humain ou la demande de correction autorisée ; aucune
+    validation automatique ni prix inventé.
+  current_coverage: not_explicit
+  source_refs:
+  - ELM904
+  - ELM907
+glossary_review:
+  canonical_modified: false
+  existing:
+  - TER097
+  - TER145
+  - TER146
+  - TER048
+  - TER153
+  - TER154
+  gaps:
+  - Prix de référence / prix déterminé / prix engagé
+  - Remise immédiate / ristourne différée
+  - Prime commerciale en argent ou en biens
+  - Commission d’agent / prime de personnel
+  - Assiette éligible et période de calcul
+  - Cumul, exclusion, date métier du prix et dérogation
+  rule: Aligner modèle et glossaire dans le même lot si une proposition est adoptée ; aucun accord U987 transféré à ces nouveaux
+    sujets.
+depth_assessment:
+  current_rule: 'U981 : seules les capacités du Core sont détaillées ; U848/U880 : Business Area contient au moins une capacité
+    et les capacités ont un parent Business Area.'
+  business_area_required_now: false
+  reason: Les responsabilités adjacentes peuvent être définies par sous-domaines et contrats explicites. Aucun partage de
+    responsabilité justifiant une Business Area distincte n’est encore documenté.
+  trigger_for_exception: Si définition des règles, détermination du prix et publication relèvent de mandats distincts non
+    exprimables clairement à la maille sous-domaine, proposer une exception ciblée avec responsabilité, bénéfice et frontière
+    ; faire arbitrer la profondeur et les exigences de contenu des Business Areas avant application.
+  constraints: Ne pas créer de Business Area vide pour contourner la règle ; ne pas transférer le calcul du prix ou de la
+    prime dans le Core pour éviter de préciser son producteur.
+limitations:
+- Deux éditeurs documentent les fonctions mais ne prouvent pas un consensus de hiérarchie ni les responsabilités Beaumanoir.
+- La disponibilité technique d’un moteur de calcul ne transfère pas l’autorité métier.
+- L’audit U431 reste clos ; aucun rejeu historique ni décomposition supplémentaire de comportements.
+- Aucune modification canonique, release, affectation d’outil ni contrat de partage adopté.
+- SAP Help sur Condition Records et Maintaining Condition Contracts ne rendait pas de corps exploitable ; les cours SAP Learning
+  cités ont été consultés.
+- La paie et les réglementations de promotion/soldes ne font pas l’objet de cet audit.
+naming_proposal_U995:
+  status: proposed_not_applied
+  source_refs:
+  - U995
+  - CMP318
+  - ELM394
+  - ELM452
+  control_plane:
+    id: subdomain-policies
+    proposed_name: Supply Policy Management
+    scope: 'Tenir les politiques opérationnelles Supply : protections, plafonds, recours aux prestataires, versions, validités
+      et dérogations autorisées. Recommandation et application restent chez leurs responsables ; aucune autorité tarifaire
+      ou financière transférée.'
+  availability:
+    id: D03
+    proposed_name: Availability
+    action: keep_name
+    proposed_short_definition: Déterminer comment couvrir les besoins et ce qui peut être promis, en tenant compte des ressources,
+      des priorités et des engagements.
+  market_limit: Nom Supply Policy Management proposé par cohérence du modèle ; les deux sources documentent des fonctions
+    voisines, pas un consensus de taxonomie.
+adoption_U996:
+  status: applied_to_backlog
+  source_refs:
+  - U996
+  annex: modeles/backlog/coherence-pricing-policies-U996.yaml
+  scope: 'Lot complet U990–U995 : responsabilités, frontières, noms, parents et définition courte Availability. La formulation
+    détaillée des fiches, les attributs des échanges et leurs réalisations restent proposés.'

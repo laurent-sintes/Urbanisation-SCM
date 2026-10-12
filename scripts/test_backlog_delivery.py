@@ -97,3 +97,31 @@ class DeliveryTests(unittest.TestCase):
         self.assertEqual(check_delivery(self.root, self.model)[1], [])
         item['problem'] = 'Sujet différent.'
         self.assertTrue(check_delivery(self.root, self.model)[1])
+
+    def test_exchange_delivery_binds_direction_content_and_retirement(self):
+        from copy import deepcopy
+        from scripts.record_decision import canonical_sha256
+        relation = {'id': 'exchange', 'type': 'shares-data', 'source_id': 'producer', 'target_id': 'receiver',
+                    'fields': {'data_exchange': {'contents': [{'name': 'Facts'}], 'purpose': 'Interpret facts'}}}
+        declaration = {'state': 'applied', 'required_relations': [{'id': 'exchange', 'type': 'shares-data',
+                       'source_id': 'producer', 'target_id': 'receiver',
+                       'field_sha256': {'data_exchange': canonical_sha256(relation['fields']['data_exchange'])}}],
+                       'absent_relations': ['retired']}
+        (self.folder / 'exchange.yaml').write_text(dumps({'publication_delivery': declaration}), encoding='utf-8')
+        self.model['relations'] = [relation]
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+        for mutate, message in [
+            (lambda r: r.update(source_id='receiver', target_id='producer'), 'relation mismatch'),
+            (lambda r: r.update(type='relates-to'), 'relation mismatch'),
+            (lambda r: r['fields']['data_exchange'].update(purpose='Different responsibility'), 'relation field hash mismatch'),
+            (lambda r: r['fields'].clear(), 'relation field hash mismatch'),
+        ]:
+            with self.subTest(message=message):
+                changed = deepcopy(relation)
+                mutate(changed)
+                self.model['relations'] = [changed]
+                self.assertTrue(any(message in e for e in check_delivery(self.root, self.model)[1]))
+        self.model['relations'] = []
+        self.assertTrue(any('required relation missing' in e for e in check_delivery(self.root, self.model)[1]))
+        self.model['relations'] = [relation, dict(relation, id='retired')]
+        self.assertTrue(any('retired relation still present' in e for e in check_delivery(self.root, self.model)[1]))

@@ -62,7 +62,7 @@ publication_delivery:
   required_catalog:
   - collection: hotspots
     id: HS-001
-    content_sha256: 00b8a4fcdc4229df765ec7aebbdd05b3e2657f85e7032e90a3a5101f98052074
+    content_sha256: 7ea87607d009b50658cccb9a0f8006bbfc5e8fe8e1dcc3b91c59a7f16d1b847b
   - collection: hotspots
     id: HS-002
     content_sha256: 5f6065727a4cf513f36963373d926e461c7482b150663deb0fd2b6f1df7115ec
@@ -92,7 +92,7 @@ publication_delivery:
     content_sha256: da8a82e678ccb73a97d0b276040a0360323a5fa0a4850eb8c9b51f0de3af3581
   - collection: hotspots
     id: HS-008
-    content_sha256: 97c24af840eda7634a2e5b43862bcd1df653daabafc64dc457e1c88616eda09b
+    content_sha256: 4520f9b12a78273b9df8ad8b1d52369b41ac3a59de120b21765a3a7367112ebb
   annotation_update: U957 ajoute les analyses d’écarts et leur provenance ; aucun accord antérieur étendu. Empreintes précédentes
     conservées dans hotspot-gap-research-U955.yaml.
   impact_annotation_update: 'U959–U961 : ajout de qualifications d’impact proposées, sans changement des contenus ou accords
@@ -104,3 +104,19 @@ publication_delivery:
     Git.'
   audit_update: 'U973 : compléments de l’audit U971, nouvelles portées Modèle/Transition/Usage et consolidation HS-011 dans
     HS-002. Les réserves et preuves historiques restent conservées dans Git ; aucune option n’est choisie ni déclarée crédible.'
+delivery_reconciliation_U987:
+  source_refs:
+  - U987
+  - U989
+  reason: Alignement des libellés liés à Commerce, sans changement des responsabilités ni extension des accords.
+  previous_glossary_catalog_checks:
+  - collection: hotspots
+    previous_requirement:
+      collection: hotspots
+      id: HS-001
+      content_sha256: 00b8a4fcdc4229df765ec7aebbdd05b3e2657f85e7032e90a3a5101f98052074
+  - collection: hotspots
+    previous_requirement:
+      collection: hotspots
+      id: HS-008
+      content_sha256: 97c24af840eda7634a2e5b43862bcd1df653daabafc64dc457e1c88616eda09b

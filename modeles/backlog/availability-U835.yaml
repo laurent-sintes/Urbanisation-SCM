@@ -83,8 +83,8 @@ publication_delivery:
   - id: D03
     fields:
       name: Availability
-      definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
-        conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
+      definition: Déterminer comment couvrir les besoins et ce qui peut être promis, en tenant compte des ressources, des
+        priorités et des engagements.
   - id: D03.i
     parent: ba-order-promising
     fields:
@@ -176,3 +176,14 @@ delivery_updates:
   - D03.k.category
   - D03.k.parent
   reason: Migration validée vers les Business Areas ; savoir-faire conservés, catégories retirées.
+delivery_reconciliation_U996:
+  source_refs:
+  - U996
+  reason: 'Lot complet adopté : fusion du contexte retail, noms et frontières prix/primes. Aucune réapprobation implicite
+    des autres champs historiques.'
+  previous_requirements:
+  - id: D03
+    fields:
+      name: Availability
+      definition: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles
+        conditions ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
