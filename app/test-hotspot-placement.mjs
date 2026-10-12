@@ -39,6 +39,41 @@ test('extreme density uses groups while retaining every source hotspot', () => {
     for (const other of groups.slice(index + 1)) assert.ok(Math.hypot(group.x - other.x, group.y - other.y) >= 54);
 });
 
+test('a dense mixed-size group stays clear of obstacles and adapts to new bounds', () => {
+  const items = Array.from({ length: 45 }, (_, index) => ({
+    id: String(index),
+    x: 750,
+    y: 190,
+    diameter: [36, 40, 44, 48][index % 4],
+  }));
+  const original = structuredClone(items);
+  const obstacles = [
+    { x: 600, y: 0, width: 280, height: 130 },
+    { x: 600, y: 210, width: 280, height: 240 },
+  ];
+  for (const bounds of [
+    { width: 900, height: 450, obstacles },
+    { width: 900, height: 600 },
+  ]) {
+    const groups = layoutHotspots(items, bounds);
+    assert.equal(new Set(groups.flatMap((group) => group.ids)).size, 45);
+    for (const [index, group] of groups.entries()) {
+      assert.ok(group.x >= group.diameter / 2 + 2 && group.x <= bounds.width - group.diameter / 2 - 2);
+      assert.ok(group.y >= group.diameter / 2 + 2 && group.y <= bounds.height - group.diameter / 2 - 2);
+      for (const obstacle of bounds.obstacles || []) {
+        const x = Math.max(obstacle.x, Math.min(group.x, obstacle.x + obstacle.width));
+        const y = Math.max(obstacle.y, Math.min(group.y, obstacle.y + obstacle.height));
+        assert.ok(Math.hypot(group.x - x, group.y - y) >= group.diameter / 2 + 2);
+      }
+      for (const other of groups.slice(index + 1))
+        assert.ok(
+          Math.hypot(group.x - other.x, group.y - other.y) >= (group.diameter + other.diameter) / 2 + 6 - 0.001,
+        );
+    }
+  }
+  assert.deepEqual(items, original);
+});
+
 test('same and nearby hotspot anchors remain individually visible when there is space', () => {
   const items = [
     { id: 'a', x: 150, y: 150, diameter: HOTSPOT_DIAMETERS.S },

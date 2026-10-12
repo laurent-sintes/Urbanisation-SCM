@@ -67,6 +67,23 @@ try {
       for (const width of [1440, 390, 900]) {
         await page.setViewportSize({ width, height: width === 390 ? 667 : 900 });
         await page.waitForTimeout(700);
+        // Card measurements and framing can finish after 700 ms. Missing subjects must still fail within a bounded deadline.
+        await page.waitForFunction(
+          (ids) => {
+            const represented = [
+              ...new Set(
+                [
+                  ...document.querySelectorAll(
+                    '.universe-overview .hotspot-map-marker[data-hotspot-ids], .graph-canvas .hotspot-map-marker[data-hotspot-ids]',
+                  ),
+                ].flatMap((element) => element.dataset.hotspotIds.split('|')),
+              ),
+            ].sort();
+            return JSON.stringify(represented) === JSON.stringify(ids);
+          },
+          expected,
+          { timeout: 8000 },
+        );
         const geometry = await page.evaluate(() => {
           const circles = [
             ...document.querySelectorAll('.universe-overview .hotspot-map-marker, .graph-canvas .hotspot-map-marker'),

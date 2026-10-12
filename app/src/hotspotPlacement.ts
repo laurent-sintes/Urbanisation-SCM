@@ -26,6 +26,17 @@ export function placeHotspots(
   bounds: HotspotPlacementBounds,
   gap = 6,
 ): Record<string, { x: number; y: number }> | null {
+  return placeWithCandidates(items, bounds, gap, new Map());
+}
+
+type CandidateCache = Map<string, { x: number; y: number }[]>;
+
+function placeWithCandidates(
+  items: HotspotPlacementItem[],
+  bounds: HotspotPlacementBounds,
+  gap: number,
+  cache: CandidateCache,
+): Record<string, { x: number; y: number }> | null {
   if (!items.length) return {};
   if (items.reduce((area, item) => area + Math.PI * (item.diameter / 2) ** 2, 0) > bounds.width * bounds.height)
     return null;
@@ -33,7 +44,11 @@ export function placeHotspots(
   const maxDistance = bounds.maxDisplacement ?? 192;
   const candidatesFor = (fine: boolean) =>
     items.map((item) => {
+      const key = `${fine}:${item.x}:${item.y}:${item.diameter}`;
+      const cached = cache.get(key);
+      if (cached) return cached;
       const positions: { x: number; y: number }[] = [];
+      const cells = new Map<string, { x: number; y: number }[]>();
       const radius = item.diameter / 2;
       const centerX = Math.max(radius + margin, Math.min(bounds.width - radius - margin, item.x));
       const centerY = Math.max(radius + margin, Math.min(bounds.height - radius - margin, item.y));
@@ -54,7 +69,22 @@ export function placeHotspots(
           })
         )
           return;
-        if (!positions.some((position) => Math.hypot(position.x - x, position.y - y) < 3)) positions.push({ x, y });
+        const cellX = Math.floor(x / 3),
+          cellY = Math.floor(y / 3);
+        for (let dx = -1; dx <= 1; dx++)
+          for (let dy = -1; dy <= 1; dy++)
+            if (
+              cells
+                .get(`${cellX + dx}:${cellY + dy}`)
+                ?.some((position) => Math.hypot(position.x - x, position.y - y) < 3)
+            )
+              return;
+        const cellKey = `${cellX}:${cellY}`;
+        const neighbors = cells.get(cellKey) || [];
+        const point = { x, y };
+        neighbors.push(point);
+        cells.set(cellKey, neighbors);
+        positions.push(point);
       };
       add(centerX, centerY);
       for (let distance = fine ? 12 : 48; distance <= maxDistance; distance += fine ? 12 : 48) {
@@ -72,7 +102,9 @@ export function placeHotspots(
           for (const x of xs) for (const y of ys) add(x, y);
         }
       }
-      return positions.sort((a, b) => Math.hypot(a.x - item.x, a.y - item.y) - Math.hypot(b.x - item.x, b.y - item.y));
+      positions.sort((a, b) => Math.hypot(a.x - item.x, a.y - item.y) - Math.hypot(b.x - item.x, b.y - item.y));
+      cache.set(key, positions);
+      return positions;
     });
   const solve = (candidates: { x: number; y: number }[][]) => {
     const order = items
@@ -92,10 +124,10 @@ export function placeHotspots(
         if (
           chosen.some((position, placedIndex) => {
             const other = items[order[placedIndex]];
-            return (
-              Math.hypot(position.x - candidate.x, position.y - candidate.y) <
-              (item.diameter + other.diameter) / 2 + gap
-            );
+            const dx = position.x - candidate.x,
+              dy = position.y - candidate.y;
+            const clearance = (item.diameter + other.diameter) / 2 + gap;
+            return dx * dx + dy * dy < clearance * clearance;
           })
         )
           continue;
@@ -119,9 +151,12 @@ export interface HotspotPlacementGroup extends HotspotPlacementItem {
 /** Collapse only nearby groups, retaining all unrelated individual markers. */
 export function layoutHotspots(items: HotspotPlacementItem[], bounds: HotspotPlacementBounds): HotspotPlacementGroup[] {
   const groups = items.map((item) => ({ ...item, ids: [item.id], anchor: { x: item.x, y: item.y } }));
-  let positions = placeHotspots(groups, bounds);
+  // Bounds and obstacles are fixed during this call; merges can reuse their candidate positions.
+  const cache: CandidateCache = new Map();
+  const place = (subset: HotspotPlacementItem[]) => placeWithCandidates(subset, bounds, 6, cache);
+  let positions = place(groups);
   while (!positions && groups.length > 1) {
-    const blocked = groups.findIndex((group) => !placeHotspots([group], bounds));
+    const blocked = groups.findIndex((group) => !place([group]));
     let pair = [0, 1];
     let distance = Infinity;
     for (let a = 0; a < groups.length; a++)
@@ -148,7 +183,7 @@ export function layoutHotspots(items: HotspotPlacementItem[], bounds: HotspotPla
       anchor: { x, y },
       diameter: Math.max(first.diameter, second.diameter),
     });
-    positions = placeHotspots(groups, bounds);
+    positions = place(groups);
   }
   return groups.map((group) => ({
     ...group,

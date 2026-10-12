@@ -374,6 +374,8 @@ export function ReferenceLink({
     // Keep it dismissed until a new intentional focus/hover interaction.
     const onEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        // The radial modal owns Escape, including help bubbles opened inside its previews.
+        if (link.current?.closest('.hotspot-cluster-popover')) return;
         dismissed.current = true;
         clear();
         event.stopPropagation();

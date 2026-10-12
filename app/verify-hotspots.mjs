@@ -210,12 +210,83 @@ try {
         await cluster.click();
         const expanded = page.getByRole('dialog', { name: /points chauds regroupés/ });
         await expanded.waitFor();
-        await assertWithinViewport(expanded, page);
+        await assertWithinViewport(expanded.locator('header'), page);
+        for (const item of await expanded.locator('.hotspot-expanded-item').all())
+          await assertWithinViewport(item, page);
+        assert.equal(await expanded.locator('.hotspot-expanded-title').count(), 0, 'only pastilles are deployed');
+        assert.equal(
+          await expanded
+            .locator('.hotspot-expanded-item')
+            .first()
+            .evaluate((button) => button.getAnimations().length),
+          0,
+        );
+        await page.screenshot({ path: resolve(output, `${width}-${view}-cluster.png`) });
         assert.ok((await expanded.locator('.hotspot-expanded-item').count()) > 1);
+        assert.equal(await expanded.getAttribute('aria-modal'), 'true');
+        const clusterGeometry = await expanded.locator('.hotspot-expanded-item').evaluateAll((buttons) =>
+          buttons.map((button) => {
+            const marker = button.querySelector('.hotspot-map-marker').getBoundingClientRect();
+            const ring = button.querySelector('.hotspot-resolution-ring').getBoundingClientRect();
+            return {
+              marker: marker.width,
+              ring: ring.width,
+              halo: getComputedStyle(button.querySelector('.hotspot-map-marker')).boxShadow,
+            };
+          }),
+        );
+        assert.ok(clusterGeometry.every(({ marker, ring }) => marker >= 36 && marker <= 48 && ring <= marker));
+        assert.ok(
+          clusterGeometry.every(({ halo }) => halo.includes('rgb(252, 253, 253)')),
+          'the light outline separates every severity from the dark backdrop',
+        );
+        await expanded.locator('.hotspot-expanded-item').first().focus();
+        await page.keyboard.press('ArrowRight');
+        assert.equal(
+          await expanded
+            .locator('.hotspot-expanded-item')
+            .nth(1)
+            .evaluate((button) => button === document.activeElement),
+          true,
+        );
+        await page.keyboard.press('End');
+        await page.keyboard.press('Tab');
+        await page.keyboard.press('Tab');
+        await page.waitForFunction(() =>
+          document.querySelector('.hotspot-cluster-popover')?.contains(document.activeElement),
+        );
+        assert.equal(
+          await expanded.evaluate((dialog) => dialog.contains(document.activeElement)),
+          true,
+          'focus stays in the group',
+        );
         await page.keyboard.press('Escape');
+        await expanded.waitFor({ state: 'detached' });
         assert.equal(await expanded.count(), 0);
+        assert.equal(await cluster.evaluate((button) => button === document.activeElement), true);
         await cluster.click();
-        await expanded.locator('.hotspot-map-marker').first().click();
+        await page.mouse.click(2, 2);
+        await expanded.waitFor({ state: 'detached' });
+        await page.emulateMedia({ reducedMotion: 'no-preference' });
+        await cluster.click();
+        assert.ok(
+          await expanded
+            .locator('.hotspot-expanded-item')
+            .first()
+            .evaluate((button) => button.getAnimations().length > 0),
+        );
+        await page.keyboard.press('Escape');
+        await expanded.waitFor({ state: 'detached' });
+        await page.emulateMedia({ reducedMotion: 'reduce' });
+        await page.getByRole('button', { name: 'Étendre la carte' }).click();
+        await page.waitForFunction(() => Boolean(document.fullscreenElement));
+        await cluster.click();
+        assert.equal(await expanded.evaluate((dialog) => document.fullscreenElement.contains(dialog)), true);
+        await page.keyboard.press('Escape');
+        await page.getByRole('button', { name: 'Réduire la carte' }).click();
+        await page.waitForFunction(() => !document.fullscreenElement);
+        await cluster.click();
+        await expanded.locator('.hotspot-expanded-item').first().click();
         await page.locator('.hotspot-detail').waitFor();
         await page.getByRole('link', { name: /^Retour à la carte/ }).click();
         deploymentChecked = true;

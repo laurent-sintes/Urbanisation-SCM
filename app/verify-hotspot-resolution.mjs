@@ -125,7 +125,36 @@ try {
   assert.match(await group.locator('.hotspot-map-count').innerText(), /\d+\/\d+/);
   await group.click();
   assert.ok(await page.locator('.hotspot-cluster-popover .hotspot-resolution-ring[data-stage="credible"]').count());
+  assert.equal(
+    await page.locator('.hotspot-cluster-popover .hotspot-resolution-ring').evaluateAll((rings) =>
+      rings.every((ring) => {
+        const bounds = ring.getBoundingClientRect();
+        const marker = ring.parentElement.getBoundingClientRect();
+        return bounds.width <= marker.width && bounds.height <= marker.height && bounds.width <= 48;
+      }),
+    ),
+    true,
+    'each ring stays inside its own marker in a deployed group',
+  );
+  await page.screenshot({ path: resolve(output, 'mobile-cluster.png') });
+  const clusterDialog = page.locator('.hotspot-cluster-popover');
   await page.getByRole('button', { name: 'Replier le groupe' }).click();
+  await page.setViewportSize({ width: 240, height: 700 });
+  await group.click();
+  const groupTotal = Number((await clusterDialog.getAttribute('aria-label')).match(/^\d+/)[0]);
+  const seen = new Set();
+  for (let turn = 0; turn < groupTotal; turn++) {
+    for (const label of await clusterDialog
+      .locator('.hotspot-expanded-item')
+      .evaluateAll((buttons) => buttons.map((button) => button.getAttribute('aria-label'))))
+      seen.add(label);
+    const next = clusterDialog.getByRole('button', { name: 'Pastilles suivantes' });
+    if (!(await next.count()) || (await next.isDisabled())) break;
+    await next.click();
+  }
+  assert.equal(seen.size, groupTotal, 'paging keeps every hotspot reachable as a pastille');
+  await page.getByRole('button', { name: 'Replier le groupe' }).click();
+  await page.setViewportSize({ width: 390, height: 900 });
   await trigger.click();
   await filters.getByRole('combobox', { name: 'Avancement du cadrage' }).selectOption('credible');
   await filters.getByRole('button', { name: 'Fermer les filtres' }).click();

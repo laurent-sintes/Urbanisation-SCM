@@ -85,6 +85,7 @@ function Canvas(props: ReactFlowPaneProps) {
   });
   const [cardHeights, setCardHeights] = useState<Record<string, number>>({});
   const [hoveredHotspotIds, setHoveredHotspotIds] = useState<string[]>([]);
+  const [clusterExpanded, setClusterExpanded] = useState(false);
   const [canvasWidth, setCanvasWidth] = useState(0);
   const [availableHeight, setAvailableHeight] = useState(0);
   const [touch, setTouch] = useState(() => matchMedia('(pointer: coarse)').matches);
@@ -663,6 +664,11 @@ function Canvas(props: ReactFlowPaneProps) {
     viewport.y,
     viewport.zoom,
   ]);
+  const lastMarkerLayout = useRef<typeof markerLayout | null>(null);
+  useLayoutEffect(() => {
+    if (!clusterExpanded) lastMarkerLayout.current = markerLayout;
+  }, [markerLayout, clusterExpanded]);
+  const displayedMarkerLayout = clusterExpanded && lastMarkerLayout.current ? lastMarkerLayout.current : markerLayout;
   const hoveredElementIds = new Set(
     hotspotRelatedElementIds(
       model,
@@ -773,13 +779,14 @@ function Canvas(props: ReactFlowPaneProps) {
           <Background gap={24} size={1} color="#d8e3df" />
           {effectiveZoomMode === 'page' && <Controls showInteractive={false} />}
         </ReactFlow>
-        {markerLayout.markers.length > 0 && (
+        {displayedMarkerLayout.markers.length > 0 && (
           <div className="hotspot-map-overlay">
-            {markerLayout.markers.map((marker) => (
+            {displayedMarkerLayout.markers.map((marker) => (
               <HotspotMapMarker
                 key={marker.id}
                 id={marker.id}
                 items={(props.hotspots || []).filter((item) => marker.hotspotIds.includes(item.id))}
+                onExpansionChange={setClusterExpanded}
                 x={marker.position.x}
                 y={marker.position.y}
                 model={model}

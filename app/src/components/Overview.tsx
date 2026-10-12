@@ -48,6 +48,7 @@ export function Overview({
   const [availableWidth, setAvailableWidth] = useState(0);
   const [measurementVersion, setMeasurementVersion] = useState(0);
   const [markerPlacement, setMarkerPlacement] = useState<Record<string, OverviewPlacement>>({});
+  const [clusterExpanded, setClusterExpanded] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [hoveredHotspotIds, setHoveredHotspotIds] = useState<string[]>([]);
   useEffect(() => {
@@ -131,6 +132,7 @@ export function Overview({
   const layout = overviewLayout(weights, availableWidth);
   // biome-ignore lint/correctness/useExhaustiveDependencies: Detail and width change the measured DOM layout.
   useLayoutEffect(() => {
+    if (clusterExpanded) return;
     const next: Record<string, OverviewPlacement> = {};
     for (const system of systems) {
       const article = [...(section.current?.querySelectorAll<HTMLElement>('.overview-system') || [])].find(
@@ -205,7 +207,7 @@ export function Overview({
       next[system.id] = { groups: layoutHotspots(anchors, bounds) };
     }
     setMarkerPlacement((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));
-  }, [systems, visibleHotspots, model, detail, availableWidth, measurementVersion]);
+  }, [systems, visibleHotspots, model, detail, availableWidth, measurementVersion, clusterExpanded]);
   return (
     <section
       ref={section}
@@ -317,6 +319,7 @@ export function Overview({
                   key={group.id}
                   id={group.id}
                   items={systemHotspots.filter((item) => group.ids.includes(item.id))}
+                  onExpansionChange={setClusterExpanded}
                   x={group.x}
                   y={group.y}
                   model={model}
