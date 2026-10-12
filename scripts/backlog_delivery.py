@@ -14,12 +14,16 @@ def check_delivery(root, candidate, *, stats=None):
     nodes = {n['id']: n for n in candidate['nodes']}
     relations = candidate['relations']
     relation_by_id = {r['id']: r for r in relations if 'id' in r}
+    parent_edges = {(r.get('type'), r.get('source_id'), r.get('target_id')) for r in relations}
+    terms = {t['id']: t for t in candidate.get('glossary', {}).get('terms', [])}
     rows, errors = [], []
     documents = declarations(root, stats)
     overrides, override_errors = replacement_scopes(documents)
     errors.extend(override_errors)
+    prepared = requirement_index(root, documents, overrides) if not override_errors else {
+        label: active_requirements(label, declaration, overrides) for label, declaration in documents.items()}
     for label, original in documents.items():
-        declaration = active_requirements(label, original, overrides)
+        declaration = prepared[label]
         if not isinstance(declaration, dict) or declaration.get('state') not in ('pending', 'applied'):
             errors.append('backlog-delivery: invalid declaration in ' + label)
             continue
@@ -53,7 +57,6 @@ def check_delivery(root, candidate, *, stats=None):
             item = next((v for v in items if v['id'] == expected['id']), None)
             if item is None or content_hash(item) != expected['content_sha256']:
                 errors.append(f'backlog-delivery: {label}: catalog mismatch: {expected["id"]}')
-        terms = {t['id']: t for t in candidate.get('glossary', {}).get('terms', [])}
         for expected in glossary_checks:
             term = terms.get(expected['id'])
             if term is None:
@@ -79,8 +82,7 @@ def check_delivery(root, candidate, *, stats=None):
             if 'kind' in item and node.get('kind') != item['kind']:
                 errors.append(f'backlog-delivery: {label}: kind mismatch: {ident}')
             parent_type = item.get('parent_type', 'contains')
-            if 'parent' in item and (parent_type not in ('contains', 'presents') or not any(r['type'] == parent_type and r['source_id'] == item['parent']
-                                            and r['target_id'] == ident for r in relations)):
+            if 'parent' in item and (parent_type not in ('contains', 'presents') or (parent_type, item['parent'], ident) not in parent_edges):
                 errors.append(f'backlog-delivery: {label}: missing parent: {ident}')
         for ident in absent:
             if ident in nodes:
@@ -101,6 +103,24 @@ def check_delivery(root, candidate, *, stats=None):
             if ident in relation_by_id:
                 errors.append(f'backlog-delivery: {label}: retired relation still present: {ident}')
     return rows, errors
+
+
+def requirement_index(root, documents, overrides):
+    """Cache the compact active obligations, never their result against a model."""
+    import json
+    from hashlib import sha256
+    try:
+        from . import parsed_cache
+    except ImportError:
+        import parsed_cache
+    key = sha256(Path(__file__).read_bytes() + json.dumps(documents, ensure_ascii=False,
+                                                        sort_keys=True).encode('utf-8')).hexdigest()
+    directory = Path(root).resolve() / '.runtime/active-requirements'
+    indexed = parsed_cache.get(key, directory=directory)
+    if not isinstance(indexed, dict) or set(indexed) != set(documents):
+        indexed = {label: active_requirements(label, declaration, overrides) for label, declaration in documents.items()}
+        parsed_cache.put(key, indexed, directory=directory)
+    return indexed
 
 
 def replacement_scopes(documents):

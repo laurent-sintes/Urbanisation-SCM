@@ -9,11 +9,11 @@ from copy import deepcopy
 
 try:
     from .element_versions import GENERATED
-    from .glossary import references
+    from .glossary import references, ReferenceIndex
     from .validate_models import canonical_sha256
 except ImportError:
     from element_versions import GENERATED
-    from glossary import references
+    from glossary import references, ReferenceIndex
     from validate_models import canonical_sha256
 
 
@@ -62,6 +62,7 @@ class ContextIndex:
                          for key, records in self.records.items()}
         self.terms = {key: business_record(value) for key, value in
                       _index(snapshot.get('glossary', {}).get('terms', [])).items()}
+        self.term_links = ReferenceIndex(self.terms.values())
         self.incident, self.parents, self.contexts, self.glossaries = {}, {}, {}, {}
         for identifier, edge in self.business['relations'].items():
             for endpoint in ('source_id', 'target_id'):
@@ -146,23 +147,16 @@ def _glossary_context(index, context, seeds):
     key = frozenset(seeds)
     if key in index.glossaries:
         return index.glossaries[key]
-    selected = {}
-    pending = [identifier for kind, identifier in references(context) if kind == 'glossary']
-    while pending:
-        identifier = pending.pop()
-        if identifier in selected:
-            continue
-        value = selected[identifier] = index.terms.get(identifier)
-        if value is not None:
-            pending.extend(target for kind, target in references(value) if kind == 'glossary')
-            if value.get('alias_of'):
-                chain, target = {identifier}, value['alias_of']
-                while target is not None:
-                    if target in chain:
-                        raise ValueError('Cyclic glossary alias')
-                    chain.add(target)
-                    target = (index.terms.get(target) or {}).get('alias_of')
-                pending.append(value['alias_of'])
+    identifiers = index.term_links.closure(identifier for kind, identifier in references(context) if kind == 'glossary')
+    selected = {identifier: index.terms.get(identifier) for identifier in identifiers}
+    for identifier, value in selected.items():
+        if value is not None and value.get('alias_of'):
+            chain, target = {identifier}, value['alias_of']
+            while target is not None:
+                if target in chain:
+                    raise ValueError('Cyclic glossary alias')
+                chain.add(target)
+                target = (index.terms.get(target) or {}).get('alias_of')
     index.glossaries[key] = selected
     return selected
 

@@ -23,6 +23,10 @@ Actualiser les références avec `git fetch origin`, puis examiner les commits l
 
 ## Gérer l’historique et envoyer
 
+Avant un envoi autorisé, utiliser `python scripts/preflight_push.py --run` après le fetch et le commit concernés ; pour une première branche sans upstream, préciser `--base origin/main` si main est bien la base observée. Le programme contrôle destination, divergence, conflits et fraîcheur des preuves de tests. `--working --offline --run` ne prépare que le lot local et n'autorise pas un push. Ne pas contourner un refus ni un contrôle en échec. Le plan de contrôles est commun à la CI ; les reçus ne sont réutilisés qu'à empreintes et environnement identiques.
+
+Lorsque main exige une PR et le statut `Atlas checks`, envoyer la branche de travail puis préparer sa PR. Une demande d'intégration autorise sa fusion après les contrôles requis ; une demande d'envoi seule ne donne pas une autorisation de fusion. Ne pas affaiblir les protections, y compris pour l'administrateur. Attacher la PR à la conversation après création.
+
 Si la branche est uniquement en retard, une avance rapide peut la synchroniser lorsque le répertoire est propre. Si les historiques divergent, ne pas forcer : examiner les changements et intégrer ceux du distant en préservant le travail local. Respecter un choix de merge/rebase explicite et les règles du dépôt ; sans stratégie établie, préférer une fusion qui conserve les commits. Ne pas masquer une perte ou résoudre un conflit métier en inventant un arbitrage. S’il reste un conflit non résolu, signaler ce qui empêche l’envoi.
 
 Avec un upstream correct, pousser explicitement la branche visée :
@@ -42,3 +46,9 @@ Remplacer les repères par les branches effectivement observées. N’utiliser n
 Après succès, vérifier la référence distante avec `git ls-remote origin refs/heads/BRANCHE_DISTANTE`, comparer son hash à `git rev-parse HEAD`, puis vérifier le statut local. En cas de résultat réseau incertain, lire d’abord la référence distante avant de réessayer. Signaler le dépôt, la branche, le commit envoyé et les changements locaux restant hors de cet envoi. Si l’authentification ou une permission manque, identifier précisément le blocage ; ne pas créer un autre dépôt ni changer sa visibilité comme solution de repli.
 
 Vérifier systématiquement l’exécution distante après le push : identifier les workflows GitHub attendus pour les chemins modifiés, retrouver le run du commit envoyé et attendre sa conclusion. Pour Atlas Pages, contrôler aussi le `delivery.json` et `data/index.json` réellement servis : leur commit et leur version doivent correspondre au déploiement attendu. Si un workflow attendu ne démarre pas, échoue ou si Pages sert encore l’ancienne version, diagnostiquer le blocage et le signaler ; ne pas assimiler le succès de `git push` à celui du déploiement. Si les chemins poussés ne déclenchent aucun workflow, le constater explicitement.
+
+`python scripts/follow_delivery.py --commit SHA --deploy` automatise l'attente et la comparaison avec le manifeste de confiance récupéré depuis le build du commit exact. Sans `--deploy`, il suit seulement les contrôles ; une absence de workflow ou de déploiement reste un résultat explicite.
+
+## Lecture distante sous sandbox Windows
+
+Si git ls-remote ou gh run list echoue avec getaddrinfo() thread failed to start ou une erreur de connexion API apres un push reussi, relancer la verification avec sandbox_permissions: require_escalated. Le bac a sable peut bloquer la lecture reseau. Ne pas conclure a une panne GitHub ni repeter la meme commande dans ce bac a sable.

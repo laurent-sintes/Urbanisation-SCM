@@ -6,6 +6,7 @@ from pathlib import Path
 import os
 import shutil
 import sys
+import time
 import uuid
 
 try:
@@ -58,9 +59,37 @@ def input_state(root):
             paths.append(path)
     return {
         'files': {p.relative_to(root).as_posix(): digest(p) for p in sorted(paths)},
-        'tool_code': {p.name: digest(p) for p in sorted(Path(__file__).parent.glob('*.py'))},
+        'tool_code': publication_tool_state(),
         'python': sys.version,
     }
+
+
+def publication_tool_state():
+    try:
+        from .dependency_signature import dependency_files
+    except ImportError:
+        from dependency_signature import dependency_files
+    code_root = Path(__file__).resolve().parents[1]
+    try:
+        from . import parsed_cache
+    except ImportError:
+        import parsed_cache
+    # Verify the production inventory by bytes, but parse imports only when it changes.
+    inventory = {p.relative_to(code_root).as_posix(): digest(p)
+                 for folder in ('scripts', 'app') for p in sorted((code_root / folder).glob('*.py'))
+                 if not p.name.startswith(('test_', 'benchmark_'))}
+    key = canonical_sha256({'format': 1, 'inventory': inventory})
+    directory = code_root / '.runtime/publication-dependency-index'
+    names = parsed_cache.get(key, directory=directory)
+    if (not isinstance(names, list) or any(not isinstance(name, str) or name not in inventory for name in names)
+            or not {'scripts/prepare_release.py', 'scripts/lean_release.py',
+                    'scripts/dependency_signature.py'}.issubset(names)):
+        paths = dependency_files(code_root, ['scripts/prepare_release.py', 'scripts/lean_release.py',
+                                             'scripts/dependency_signature.py'])
+        names = [p.relative_to(code_root).as_posix() for p in paths]
+        parsed_cache.put(key, names, directory=directory)
+    paths = [code_root / name for name in names]
+    return {p.relative_to(code_root).as_posix(): digest(p) for p in paths}
 
 
 def semantic(value):
@@ -73,12 +102,12 @@ def semantic(value):
 
 
 def make_review(snapshot, previous_snapshot, previous_release, old_decisions, deferred,
-                pointer, base_manifest_sha256, state, source_refs, diff):
+                pointer, base_manifest_sha256, state, source_refs, diff, glossary_impacts=None):
     """Exact values plus context, prior to derived publication notes/timestamps."""
     old = {c: {v['id']: v for v in previous_snapshot[c]} for c in ('nodes', 'relations')}
     new = {c: {v['id']: v for v in snapshot[c]} for c in old}
     decisions = {v['id']: v for v in old_decisions['decisions']}
-    impacts = reference_impacts(previous_release, snapshot)
+    impacts = reference_impacts(previous_release, snapshot) if glossary_impacts is None else glossary_impacts
     items = []
     for suspended in deferred:
         original = decisions[suspended['id']]
@@ -139,6 +168,18 @@ def make_review(snapshot, previous_snapshot, previous_release, old_decisions, de
     }
 
 
+def _rename_review(source, destination):
+    """Keep atomic creation while tolerating short-lived Windows file locks."""
+    for attempt in range(5):
+        try:
+            os.rename(source, destination)
+            return
+        except PermissionError as error:
+            if getattr(error, 'winerror', None) not in (5, 32, 33) or attempt == 4 or destination.exists():
+                raise
+            time.sleep(0.05 * (attempt + 1))
+
+
 def save_review(destination, review, report):
     """Create a complete dossier once; only assessment.yaml is intended for editing."""
     destination = Path(destination).resolve()
@@ -157,7 +198,7 @@ def save_review(destination, review, report):
             'items': [{'decision_id': item['decision_id'], 'action': 'pending', 'rationale': ''}
                       for item in review['items']],
         })
-        os.rename(temporary, destination)
+        _rename_review(temporary, destination)
     finally:
         if temporary.exists():
             if temporary.resolve().parent != destination.parent or not temporary.name.startswith('.review-'):

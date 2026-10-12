@@ -12,7 +12,7 @@
     "test": "node --test --test-isolation=none test-*.mjs",
     "check:code": "biome check --diagnostic-level=warn --error-on-warnings .",
     "format:code": "biome check --write .",
-    "verify": "pnpm run check:code && node verify-browser.mjs && node verify-map-history.mjs && node verify-map-placement.mjs && node verify-static.mjs && node verify-modeling-guide.mjs && node verify-display-codes.mjs && node verify-ux.mjs && node verify-published-content.mjs && node verify-process-management.mjs && pnpm run verify:hotspots && pnpm run verify:hotspot-resolution && pnpm run verify:hotspot-detail",
+    "verify": "pnpm run check:code && python ../scripts/verify_atlas.py",
     "verify:map-placement": "node verify-map-placement.mjs",
     "verify:map-hotspots": "node verify-map-hotspot-matrix.mjs",
     "verify:process-management": "node verify-process-management.mjs",
@@ -31,7 +31,8 @@
     "verify:presentation": "pnpm run verify",
     "export": "python ../scripts/export_atlas.py",
     "export:full": "python ../scripts/export_atlas.py --full",
-    "verify:static": "node verify-static.mjs"
+    "verify:static": "node verify-static.mjs",
+    "verify:serial": "pnpm run check:code && node verify-browser.mjs && node verify-map-history.mjs && node verify-map-placement.mjs && node verify-static.mjs && node verify-modeling-guide.mjs && node verify-display-codes.mjs && node verify-ux.mjs && node verify-published-content.mjs && node verify-process-management.mjs && pnpm run verify:hotspots && pnpm run verify:hotspot-resolution && pnpm run verify:hotspot-detail"
   },
   "dependencies": {
     "@floating-ui/react": "0.27.20",

@@ -7,6 +7,9 @@ business backlog or resolves a live source, and cannot change a model response.
 from __future__ import annotations
 
 import hashlib
+from contextlib import contextmanager
+from contextvars import ContextVar
+from copy import deepcopy
 from pathlib import Path
 import re
 import sys
@@ -23,6 +26,17 @@ from scripts.structured_io import read as read_document
 
 VERSION = re.compile(r"\d{4}-\d{2}-\d{2}\.[1-9]\d*\Z")
 SCENES = {"comparison", "decomposition", "dependency", "responsibilities", "objects", "evidence"}
+_guide_batch = ContextVar('atlas_guide_validation_batch', default=None)
+
+
+@contextmanager
+def guide_validation_batch():
+    """Share guide validation only inside one operation; each read still checks bytes."""
+    token = _guide_batch.set({})
+    try:
+        yield
+    finally:
+        _guide_batch.reset(token)
 
 
 class ModelingGuideError(ValueError):
@@ -256,7 +270,15 @@ def _load_associated_guide(root, publication_version):
         if association is None:
             return response
         entry = guides[association["guide_version"]]
-        guide = _validate_guide(_read(folder, entry["path"], entry["sha256"]), entry["version"])
+        document = _read(folder, entry["path"], entry["sha256"])
+        cache = _guide_batch.get()
+        key = (str(folder.resolve()), entry['sha256'], entry['version'])
+        if cache is not None and key in cache:
+            guide = deepcopy(cache[key])
+        else:
+            guide = _validate_guide(document, entry["version"])
+            if cache is not None:
+                cache[key] = deepcopy(guide)
         return {
             **response, "status": "available", "message": "Guide méthodologique associé à cette publication.",
             "association": {key: association[key] for key in ("scope", "note")}, "guide": guide,

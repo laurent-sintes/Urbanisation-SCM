@@ -23,31 +23,62 @@ def references(value):
     yield from ((kind, target) for kind, target, _ in links(value))
 
 
+class ReferenceIndex:
+    """Extract term links once; closures retain missing targets and handle cycles."""
+    def __init__(self, terms):
+        self.terms = {term['id']: term for term in terms}
+        self.edges = {identifier: {target for kind, target in references(term) if kind == 'glossary'}
+                      | ({term['alias_of']} if term.get('alias_of') else set())
+                      for identifier, term in self.terms.items()}
+        self.closures = {}
+
+    def closure(self, identifiers):
+        selected = set()
+        for identifier in identifiers:
+            if identifier not in self.closures:
+                found, pending = set(), [identifier]
+                while pending:
+                    current = pending.pop()
+                    if current not in found:
+                        found.add(current)
+                        pending.extend(self.edges.get(current, ()))
+                self.closures[identifier] = frozenset(found)
+            selected.update(self.closures[identifier])
+        return selected
+
+    def changed_reachable(self, changed):
+        reverse = {}
+        for source, targets in self.edges.items():
+            for target in targets:
+                reverse.setdefault(target, set()).add(source)
+        affected = {identifier: {identifier} for identifier in changed}
+        pending = list(changed)
+        while pending:
+            current = pending.pop()
+            for source in reverse.get(current, ()):
+                old = affected.setdefault(source, set())
+                additions = affected[current] - old
+                if additions:
+                    old.update(additions)
+                    pending.append(source)
+        return affected
+
+
 def reference_impacts(previous, candidate):
     """Flag statements whose linked vocabulary changed, including term-to-term links."""
     before = {t['id']: t for t in previous.get('glossary', {}).get('terms', [])}
     after = {t['id']: t for t in candidate.get('glossary', {}).get('terms', [])}
     semantic = lambda t: {k: v for k, v in t.items() if k not in ('revision', 'last_modified', 'content_sha256')}
     changed = {key for key in set(before) | set(after) if semantic(before.get(key, {})) != semantic(after.get(key, {}))}
-    def affected(value, seen=None):
-        seen = set() if seen is None else seen
-        found = set()
-        for kind, target in references(value):
-            if kind != 'glossary' or target in seen:
-                continue
-            seen.add(target)
-            if target in changed:
-                found.add(target)
-            term = after.get(target, {})
-            found.update(affected(term, seen))
-            if term.get('alias_of'):
-                found.update(affected('[alias](glossary:' + term['alias_of'] + ')', seen))
-        return found
+    if not changed:
+        return []
+    affected = ReferenceIndex(after.values()).changed_reachable(changed)
     result = []
     for collection in ('nodes', 'relations'):
         for item in candidate.get(collection, []):
             for field in ('fields', 'qualification'):
-                impacted = affected(item.get(field, {}))
+                impacted = set().union(*(affected.get(target, set())
+                                        for kind, target in references(item.get(field, {})) if kind == 'glossary'))
                 if impacted:
                     result.append({'collection': collection, 'id': item['id'], 'field': field,
                                    'changed_terms': sorted(impacted), 'disposition': 'semantic_review_required'})
