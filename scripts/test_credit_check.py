@@ -22,8 +22,12 @@ class CreditCheckTests(unittest.TestCase):
         self.assertNotIn(('model','credit-check-decision'),references(list(self.terms.values())))
         self.assertFalse(any('credit-check-decision' in (r['source_id'],r['target_id']) for r in self.model['relations']))
 
-    def test_sales_contexts_belong_to_sales_and_do_not_decompose_the_core(self):
-        expected={'subdomain-sales-b2c-ecommerce','subdomain-sales-b2c-store','subdomain-sales-wholesale'}
+    def test_commerce_contexts_belong_to_commerce_and_do_not_decompose_the_core(self):
+        self.assertEqual(self.nodes['domain-sales']['fields']['name'], 'Commerce')
+        expected={'subdomain-sales-b2c-ecommerce','subdomain-sales-b2c-store','subdomain-sales-wholesale',
+                  'subdomain-assortment-catalog-management','subdomain-retail-network-management',
+                  'subdomain-store-backoffice-operations','subdomain-pricing-promotions-management',
+                  'subdomain-rebates-incentives-management'}
         actual={r['target_id'] for r in self.model['relations'] if r['source_id']=='domain-sales' and r['type']=='presents'}
         self.assertEqual(expected,actual)
         for ident in expected:

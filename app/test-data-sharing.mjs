@@ -97,14 +97,24 @@ test('malformed contents, missing glossary references and self exchanges are rej
 
 test('modeled summary stays short when detailed exchanges grow and retains tooltip content', () => {
   const raw = structuredClone(original);
-  const anchor = relation('SUMMARY', 'system-business-operations', 'system-enterprise-management-control', 'Faits de gestion');
+  const anchor = relation(
+    'SUMMARY',
+    'system-business-operations',
+    'system-enterprise-management-control',
+    'Faits de gestion',
+  );
   anchor.fields.summary_label = 'Faits et conditions de gestion';
   raw.relations.push(anchor);
-  raw.relations.push(relation('DETAIL', 'domain-sales', 'subdomain-financial-accounting', 'Commercial benefit conditions'));
+  raw.relations.push(
+    relation('DETAIL', 'domain-sales', 'subdomain-financial-accounting', 'Commercial benefit conditions'),
+  );
   const arrow = systemDataSharing(adaptPublication(raw))[0];
   assert.equal(arrow.label, 'Faits et conditions de gestion');
   assert.equal(arrow.detailLabel, 'Faits de gestion · Commercial benefit conditions');
-  assert.deepEqual(arrow.relations.map((r) => r.id), ['SUMMARY', 'DETAIL']);
+  assert.deepEqual(
+    arrow.relations.map((r) => r.id),
+    ['SUMMARY', 'DETAIL'],
+  );
   const duplicate = structuredClone(anchor);
   duplicate.id = 'CONFLICT';
   duplicate.fields.summary_label = 'Other summary';

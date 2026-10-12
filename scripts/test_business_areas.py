@@ -117,6 +117,9 @@ class BusinessAreaTests(unittest.TestCase):
         visibility_fusion=read(root/'modeles/backlog/process-tasks-order-visibility-U909.yaml')
         self.assertEqual(visibility_fusion['publication_delivery']['absent_nodes'], ['order-visibility'])
         later_retirements.update(visibility_fusion['publication_delivery']['absent_nodes'])
+        adjacent_scope = read(root/'modeles/backlog/orchestration-detail-scope-U981.yaml')
+        self.assertIn('accounting-interpretation', adjacent_scope['publication_delivery']['absent_nodes'])
+        later_retirements.update(adjacent_scope['publication_delivery']['absent_nodes'])
         control_references = {'D02.b', 'D19.a', 'D19.b', 'BHV017', 'BHV018', 'BHV019', 'BHV020'}
         self.assertEqual((((initial_caps - retired) | process_additions | decision_additions)-later_retirements)
                          - (control_references & initial_caps), caps)
@@ -163,7 +166,11 @@ class BusinessAreaTests(unittest.TestCase):
             expected_parent = 'business-references' if ident in common_references else next(
                 area for area, items in reference_mapping.items() if ident in items)
             self.assertEqual([(r['source_id'],r['type']) for r in parents], [(expected_parent,'presents')],ident)
-        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),26+len(operational_areas))  # U911 adds the physical target area.
+        retired_adjacent_areas = {'ba-accounting-translation'}
+        self.assertLessEqual(retired_adjacent_areas, set(adjacent_scope['publication_delivery']['absent_nodes']))
+        self.assertTrue(retired_adjacent_areas.isdisjoint(nodes))
+        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),
+                         26+len(operational_areas)-len(retired_adjacent_areas))  # U911 then U981.
         for ident in caps:
             parents = [r for r in m['relations'] if r['target_id']==ident and r['type'] in ('contains','presents')]
             self.assertEqual(len(parents), 1, ident)
