@@ -232,6 +232,7 @@ export interface HotspotResolution {
 export interface Hotspot {
   /** Technical display preference; historical publications default to true. */
   visible?: boolean;
+  consolidated_into?: string;
   gap_analysis?: {
     id: string;
     title: string;
@@ -264,6 +265,7 @@ export interface Hotspot {
   framing_impact?: {
     category: 'structuring' | 'usage' | 'to_assess';
     targets: ('business_model' | 'core_system')[];
+    scopes?: ('model' | 'transition' | 'usage')[];
     rationale: string;
     follow_up: 'framing' | 'product_design' | 'qualification';
     evidence_state: 'documented' | 'hypothesis' | 'to_investigate';

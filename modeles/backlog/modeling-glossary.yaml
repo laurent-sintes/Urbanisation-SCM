@@ -1837,7 +1837,7 @@ terms:
   label_fr: Point chaud
   short_description: Sujet à creuser et à arbitrer, avec ou sans écart entre modes de fonctionnement.
   definition: Sujet à creuser et à arbitrer, suivi dans une fiche autonome. Il peut concerner un écart entre modes de fonctionnement,
-    une complexité d’implémentation, un irritant d’usage ou une autre question de cadrage. Sa révélation ne démontre pas un
+    une complexité d’implémentation, une contrainte de transition, un irritant d’usage ou une autre question de cadrage. Sa révélation ne démontre pas un
     dysfonctionnement. Un point chaud de périmètre est ancré sur un ou plusieurs objets du modèle ; un point chaud d’intégration
     relie exactement deux objets. Sa gravité combine la difficulté politique et la difficulté d’implémentation selon une grille
     publiée, sans mesurer automatiquement l’urgence ni l’impact.
@@ -1876,12 +1876,19 @@ terms:
   - Le booléen technique visible vaut true par défaut. false masque les halos et exclut le sujet des compteurs et résultats
     des filtres ; il reste accessible en fin de liste et de sélecteur, grisé après un séparateur. Il ne modifie ni statut,
     criticité, impact sur le cadrage ou résolution. Une publication historique sans ce champ garde tous ses sujets visibles.
-  - L’impact modèle/usage est une qualification argumentée, non un calcul. Présenter ensemble sa cible, sa justification et
-    son niveau de preuve ; une qualification proposée n’est pas un impact confirmé.
+  - L’impact Modèle / Transition / Usage est une qualification argumentée, non un calcul. Présenter ensemble ses portées,
+    sa justification et son niveau de preuve ; une qualification proposée n’est pas un impact confirmé.
   - Les justifications political_rationale et implementation_rationale peuvent compléter la justification commune de complexité.
     Leur absence reste explicite ; ne pas inventer une explication par axe.
   - Enregistrer une saisie dans l’atelier ne valide pas le sujet ni ne le publie. Qualification du sujet et avancement peuvent
     être regroupés à l’écran sans fusion de leur sens.
+  - Modèle désigne les règles, responsabilités et contrats durables du modèle métier ou du Core System. Transition désigne
+    le séquencement, les dépendances, coexistences, reprises et bascules. Usage désigne la praticité du travail dans les outils.
+    framing_impact.scopes peut cumuler ces portées ; un impact non établi reste inconnu, pas absent.
+  - Un sujet de transition peut être structurant pour le cadrage et la roadmap sans changer le modèle durable. Les cibles
+    business_model et core_system ne sont renseignées que pour une portée Modèle.
+  - consolidated_into relie une fiche conservée à la fiche commune qui reprend son traitement. La fiche source reste non visible,
+    accessible après le séparateur ; sa résolution et son identité ne sont pas effacées.
   source_refs:
   - U917
   - U918
@@ -1901,6 +1908,8 @@ terms:
   - U965
   - U966
   - U970
+  - U972
+  - U973
   review:
     state: proposed
     note: Définition méthodologique pilote ; libellés, états et calcul de gravité restent à éprouver avant accord métier.

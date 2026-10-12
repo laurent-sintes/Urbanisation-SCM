@@ -70,6 +70,7 @@ export function HotspotFilterFields({
   const computedSeverity = severityForComplexities(filters.political, filters.implementation);
   const active = [
     !filters.showModelHotspots && 'Modèle masqué',
+    !filters.showTransitionHotspots && 'Transition masquée',
     !filters.showUsageHotspots && 'Usage masqué',
     !filters.showUnqualifiedHotspots && 'Impact à qualifier masqué',
     !filters.showResolved && 'Cadrages résolus masqués',
@@ -120,6 +121,14 @@ export function HotspotFilterFields({
         <label className="hotspot-map-toggle">
           <input
             type="checkbox"
+            checked={filters.showTransitionHotspots !== false}
+            onChange={(event) => onChange({ showTransitionHotspots: event.target.checked, enabled: true })}
+          />
+          Hotspots transition
+        </label>
+        <label className="hotspot-map-toggle">
+          <input
+            type="checkbox"
             checked={filters.showUsageHotspots !== false}
             onChange={(event) => onChange({ showUsageHotspots: event.target.checked, enabled: true })}
           />
@@ -133,7 +142,10 @@ export function HotspotFilterFields({
           />
           Impact à qualifier
         </label>
-        <p>Modèle métier ou Core System FLOW · Usage de l’outil · Impact encore incertain.</p>
+        <p>
+          Modèle métier ou Core System FLOW · Trajectoire et bascule · Usage de l’outil. Un sujet peut avoir plusieurs
+          impacts.
+        </p>
       </fieldset>
       <label className="hotspot-filter-select">
         Avancement du cadrage

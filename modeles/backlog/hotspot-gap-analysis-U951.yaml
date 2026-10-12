@@ -171,11 +171,12 @@ publication_delivery:
   - U957
   - U970
   - U971
+  - U973
   summary: Pilote HS-008 réécrit avec deux écarts, quatre options proposées et vocabulaire aligné ; aucune publication déclenchée.
   required_catalog:
   - collection: hotspots
     id: HS-008
-    content_sha256: db4c998062a6d93007b5682543ac1db86e627c05bec7014c1193cec2a2a320ae
+    content_sha256: 97c24af840eda7634a2e5b43862bcd1df653daabafc64dc457e1c88616eda09b
   required_glossary:
   - id: TER205
     field_sha256:
@@ -190,6 +191,8 @@ publication_delivery:
   visibility_update: 'U971 : ajout technique visible=true aux sujets existants. Contenu métier, ancrages, statuts, notes et
     options inchangés. Les propositions de l’audit restent hors du catalogue ; les preuves antérieures sont conservées dans
     Git.'
+  audit_update: 'U973 : compléments de l’audit U971, nouvelles portées Modèle/Transition/Usage et consolidation HS-011 dans
+    HS-002. Les réserves et preuves historiques restent conservées dans Git ; aucune option n’est choisie ni déclarée crédible.'
 superseded_delivery_check:
   content_sha256: 1cd7d02c846a68ffeb3294d18452bb58aac71dffd0c63f0622e5028887bc5437
   scope: État pilote avant enrichissement des sources sous U957 ; empreinte conservée, accord antérieur non étendu.

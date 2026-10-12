@@ -88,19 +88,22 @@ publication_delivery:
   source_refs:
   - U963
   - U971
+  - U973
   summary: Premier lot de validation intégré ; autres candidats conservés.
   required_catalog:
   - collection: hotspots
     id: HS-017
-    content_sha256: a42a91ce88e038e2b4032347176d31f00643c317eac4f38596416c0e6b5b7e1f
+    content_sha256: 26c90b1229c8be50a5f5eb6d4c5bdc0cd22edf008ef4820a240d0db58f1c3a14
   - collection: hotspots
     id: HS-030
-    content_sha256: ee24e23adf9e042af94132e20eda4d3ad1e6d242ffdb59e2b1e6164f531b3fb4
+    content_sha256: b6738f815fcbe899f7127c7bf3e072a8dc1e703959456513189c40179b18e32a
   - collection: hotspots
     id: HS-018
-    content_sha256: 3de9a7f9a70d294b462088f25088e08b40de0fddf100c3839f73d98e88104342
+    content_sha256: b5cc211eb121037fece889472da82dbcbed97e7874447f62927e64c92e5a45b5
   visibility_update: 'U971 : ajout technique visible=true aux sujets existants. Contenu métier, ancrages, statuts, notes et
     options inchangés. Les propositions de l’audit restent hors du catalogue ; les preuves antérieures sont conservées dans
     Git.'
+  audit_update: 'U973 : compléments de l’audit U971, nouvelles portées Modèle/Transition/Usage et consolidation HS-011 dans
+    HS-002. Les réserves et preuves historiques restent conservées dans Git ; aucune option n’est choisie ni déclarée crédible.'
 capture_method: Verbatim et proposition complète enregistrés avant application ; capture champ par champ sur l’état final.
   record_decision/record_intents ne prennent pas en charge les hotspots ; l’annexe conserve la portée de cet accord.

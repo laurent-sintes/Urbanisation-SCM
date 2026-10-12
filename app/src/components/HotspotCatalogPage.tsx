@@ -2,6 +2,7 @@ import { ChevronDown, Flame, Info } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { hotspotImpactScopes } from '../hotspotFraming';
 import { filterMapHotspots, type HotspotMapFilters, isHotspotVisible, severityForComplexities } from '../hotspotMap';
 import { emptyResolution, RESOLUTION_STAGES, resolutionErrors, resolutionFor } from '../hotspotResolution';
 import type { RouteState } from '../navigation';
@@ -478,9 +479,9 @@ export function HotspotCatalogPage({
               {workshopCount ? ` · ${workshopCount} en atelier` : ''}
             </p>
             <p className="hotspot-story-caption">
-              Dans ce périmètre :{' '}
-              {visibleScope.filter((item) => item.framing_impact?.category === 'structuring').length} modèle ·{' '}
-              {visibleScope.filter((item) => item.framing_impact?.category === 'usage').length} usage ·{' '}
+              Dans ce périmètre : {visibleScope.filter((item) => hotspotImpactScopes(item).includes('model')).length}{' '}
+              modèle · {visibleScope.filter((item) => hotspotImpactScopes(item).includes('transition')).length}{' '}
+              transition · {visibleScope.filter((item) => hotspotImpactScopes(item).includes('usage')).length} usage ·{' '}
               {
                 visibleScope.filter((item) => !item.framing_impact || item.framing_impact.category === 'to_assess')
                   .length

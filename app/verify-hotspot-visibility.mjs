@@ -75,17 +75,21 @@ try {
   const hiddenRow = page.locator('[data-hotspot-id="HS-008"]');
   await hiddenRow.waitFor();
   assert.ok((await hiddenRow.getAttribute('class')).includes('hotspot-is-hidden'));
-  assert.equal(await page.locator('.hotspot-table tbody tr:last-child').getAttribute('data-hotspot-id'), hidden.id);
+  assert.ok(
+    (await page.locator('.hotspot-table tbody tr:last-child').getAttribute('class')).includes('hotspot-is-hidden'),
+  );
   assert.match(await page.locator('.hotspot-hidden-separator').innerText(), /Non visibles/);
   await page.getByRole('button', { name: 'Sujet et impact', exact: false }).click();
-  assert.equal(await page.locator('.hotspot-table tbody tr:last-child').getAttribute('data-hotspot-id'), hidden.id);
+  assert.ok(
+    (await page.locator('.hotspot-table tbody tr:last-child').getAttribute('class')).includes('hotspot-is-hidden'),
+  );
   await page.getByRole('button', { name: 'Filtres', exact: true }).click();
   await page.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).uncheck();
   await hiddenRow.waitFor();
   assert.equal(
     await page.locator('.hotspot-table tr[data-hotspot-id]').count(),
-    4,
-    '3 matching visible subjects plus the separate hidden subject',
+    7,
+    '5 matching visible subjects plus two separately retained hidden subjects',
   );
   await page.setViewportSize({ width: 390, height: 950 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true);
@@ -97,15 +101,16 @@ try {
   await picker.getByRole('button', { name: 'Réinitialiser', exact: true }).click();
   const hiddenChoice = picker.locator('[data-hotspot-id="HS-008"]');
   await hiddenChoice.waitFor();
-  assert.equal(
-    await picker.locator('.hotspot-filter-list > button:last-child').getAttribute('data-hotspot-id'),
-    hidden.id,
+  assert.deepEqual(
+    (await picker.locator('.hotspot-filter-list > button').evaluateAll((items) =>
+      items.slice(-2).map((item) => item.getAttribute('data-hotspot-id')))).sort(),
+    ['HS-008', 'HS-011'],
   );
   assert.ok(await picker.locator('.hotspot-hidden-separator').isVisible());
-  assert.match(await picker.locator('.hotspot-filter-results-heading').innerText(), /26/);
+  assert.match(await picker.locator('.hotspot-filter-results-heading').innerText(), /25/);
   await picker.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).uncheck();
   await hiddenChoice.waitFor();
-  assert.match(await picker.locator('.hotspot-filter-results-heading').innerText(), /3/);
+  assert.match(await picker.locator('.hotspot-filter-results-heading').innerText(), /5/);
   await picker.getByRole('button', { name: 'Fermer les filtres' }).click();
   assert.equal(await page.locator('[data-id="hotspot:HS-008"]').count(), 0, 'hidden hotspot has no halo');
   await page.goto(`${base}#/hotspots`);
@@ -120,7 +125,11 @@ try {
   assert.equal(posts.length, 1);
   assert.deepEqual(posts[0].changes, [{ id: hidden.id, fields: { visible: true } }]);
   assert.equal(hidden.visible, false, 'frozen publication is unchanged');
-  assert.equal(await page.locator('.hotspot-hidden-separator').count(), 0);
+  assert.equal(
+    await page.locator('.hotspot-hidden-separator').count(),
+    1,
+    'the consolidated subject retains its separate access',
+  );
   assert.deepEqual(errors, []);
   console.log(
     JSON.stringify({

@@ -43,7 +43,9 @@ FIELD_MEANINGS = {
     'hotspot_catalog.hotspots': 'Sujets autonomes à instruire et arbitrer, hors de la hiérarchie métier.',
     'hotspot_catalog.hotspots.status': 'Qualification du sujet ; validated ne confirme ni dysfonctionnement ni solution.',
     'hotspot_catalog.hotspots.visible': 'Visibilité technique, vraie par défaut. Faux masque halos et filtres ; le sujet reste accessible en fin de liste et de sélecteur, grisé après un séparateur. Aucun changement de qualification ou de résolution.',
-    'hotspot_catalog.hotspots.framing_impact': 'Impact sur le modèle métier, le Core System ou la praticité d’usage ; indépendant de la criticité.',
+    'hotspot_catalog.hotspots.framing_impact': 'Portées cumulables Modèle, Transition et Usage ; indépendantes de la criticité. Un impact non établi reste inconnu.',
+    'hotspot_catalog.hotspots.framing_impact.scopes': 'Modèle durable, trajectoire de transition ou praticité d’usage ; plusieurs portées possibles.',
+    'hotspot_catalog.hotspots.consolidated_into': 'Hotspot commun qui reprend le sujet ; identité et preuves d’origine conservées, accès discret.',
     'hotspot_catalog.hotspots.gap_analysis': 'Comparaisons facultatives inter-SI ou intra-SI, avec observations sourcées et réserves.',
     'hotspot_catalog.hotspots.resolution': 'Avancement du cadrage, solutions crédibles, blocage et prochaine étape ; distinct de la réalisation.',
     'hotspot_catalog.criticality_policy': 'Grille matrix-v1 figée avec la publication, ses axes, repères et limites ; aucun calcul d’urgence.',
@@ -187,6 +189,10 @@ def _constraints(model):
              'rule': 'Une analyse d’écarts est facultative. Son sujet est une Business Area, capacité ou comportement ; plusieurs observations du même SI exigent des périmètres distincts.', 'source': 'validation'},
             {'id': 'hotspot-independent-dimensions', 'applies_to': 'hotspot_catalog.hotspots',
              'rule': 'Qualification du sujet, impact du cadrage, criticité et avancement restent distincts. Un écart ne prouve pas un dysfonctionnement et une décision de non-convergence peut résoudre le cadrage.', 'source': 'conventions Hotspot et Gap Analysis'},
+            {'id': 'hotspot-impact-scopes', 'applies_to': 'hotspot_catalog.hotspots.framing_impact.scopes',
+             'rule': 'Modèle, Transition et Usage sont cumulables. Une transition structurante peut ne pas déclarer de cible de modèle ; une cible business_model ou core_system exige la portée Modèle.', 'source': 'validation'},
+            {'id': 'hotspot-consolidation', 'applies_to': 'hotspot_catalog.hotspots.consolidated_into',
+             'rule': 'La destination est une fiche indépendante existante. La fiche source garde son identité et ses preuves, avec accès discret en fin de liste.', 'source': 'validation'},
         ])
     return rules
 

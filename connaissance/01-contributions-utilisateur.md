@@ -23163,3 +23163,51 @@ Je pense également que les localisations ne sont pas nécessairement bonnes.
 **portée**
 
 Audit des 27 fiches courantes et propositions sourcées : aucune fusion, estimation ou option métier adoptée implicitement. Le booléen technique visible est autorisé, vrai par défaut ; faux exclut le sujet des halos, compteurs et résultats des filtres, mais conserve un accès séparé en fin de liste et de sélecteur, grisé et précédé d'un trait. Il ne change ni validation, ni criticité, ni résolution. Release locale et commit autorisés, sans push. L’exemple rapporté du partage des décisions logistiques éclaire une proposition de regroupement ; il ne prouve pas une incapacité des Marques Historiques et ne modifie pas leurs observations historiques.
+
+## U972
+
+**id**
+
+U972
+
+**titre**
+
+HS-001 : distinguer les contraintes de transition des impacts sur la cible
+
+**date**
+
+2026-10-12
+
+**texte**
+
+HS-001 : c'est un hotspot qui a un impact sur la roadmap, la transition qui est contrainte. Mais pas forcément sur la cible. Est-ce un type de hotspot différent ?
+
+**portée**
+
+Précision sur HS-001 et question sur la typologie. Laurent distingue contrainte de trajectoire et impact sur la cible ; il n’affirme pas l’absence définitive de tout impact cible. Aucune nouvelle catégorie ni requalification du catalogue n’est encore approuvée.
+
+## U973
+
+**id**
+
+U973
+
+**titre**
+
+Application de l’audit Hotspots et portées Modèle, Transition et Usage
+
+**date**
+
+2026-10-12
+
+**texte**
+
+Tout est cible. Je préfère "Modèle". Qu'ne penses-tu ?
+
+Ne modifie rien pour l'instant
+
+Prends en compte les préconisations de l'audit
+
+**portée**
+
+La dernière demande autorise l’application des préconisations de l’audit U971, avec la correction de vocabulaire discutée après U972 : Modèle, Transition et Usage comme portées cumulables. HS-001 concerne principalement la transition ; son impact sur le modèle durable n’est pas établi. Les compléments, options et estimations gardent leurs réserves de preuve ; aucune solution nouvelle n’est considérée crédible ou choisie implicitement. Préserver les identités et les preuves lors du regroupement HS-002/HS-011. Les séparations seulement éventuelles restent à instruire. La suspension précédente des modifications est levée pour ce lot.

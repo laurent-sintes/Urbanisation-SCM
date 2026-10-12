@@ -88,17 +88,24 @@ try {
   assert.match(await impact.innerText(), /Preuve :/);
   await page.getByRole('button', { name: 'Filtres', exact: true }).click();
   await page.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).uncheck();
-  assert.equal(await page.locator('.hotspot-table tbody tr').count(), 3);
+  assert.equal(await page.locator('.hotspot-table tr[data-hotspot-id]').count(), 6);
+  assert.ok(
+    await page.locator('[data-hotspot-id="HS-001"]').isVisible(),
+    'transition remains selectable independently of model',
+  );
+  await page.getByRole('checkbox', { name: 'Hotspots transition', exact: true }).uncheck();
+  assert.equal(await page.locator('.hotspot-table tr[data-hotspot-id]').count(), 4);
+  await page.getByRole('checkbox', { name: 'Hotspots transition', exact: true }).check();
   const shared = page.url();
   assert.ok(new URLSearchParams(new URL(shared).hash.split('?')[1]).has('hf'));
   await page.reload();
   await page.locator('.hotspot-table').waitFor();
-  assert.equal(await page.locator('.hotspot-table tbody tr').count(), 3);
+  assert.equal(await page.locator('.hotspot-table tr[data-hotspot-id]').count(), 6);
   await page.goto(shared.replace('#/hotspots', '#/map'));
   await page.locator('.map-hotspot-picker .detail-trigger').click();
   const filters = page.getByRole('dialog', { name: 'Filtres des points chauds' });
   assert.equal(await filters.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).isChecked(), false);
-  assert.equal(await filters.locator('.hotspot-filter-list-label').count(), 3);
+  assert.equal(await filters.locator('.hotspot-filter-list-label').count(), 6);
   await filters.getByRole('button', { name: 'Réinitialiser', exact: true }).click();
   await filters.getByRole('button', { name: 'Fermer les filtres' }).click();
   const marker = page.locator('.hotspot-map-marker:not(:has(.hotspot-map-count))').first();

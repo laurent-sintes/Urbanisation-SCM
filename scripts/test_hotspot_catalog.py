@@ -11,6 +11,23 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class HotspotCatalogTests(unittest.TestCase):
+    def test_transition_impact_and_consolidated_identity_are_preserved(self):
+        items = {h['id']: h for h in self.model['hotspot_catalog']['hotspots']}
+        self.assertEqual(items['HS-001']['framing_impact']['scopes'], ['transition'])
+        self.assertEqual(items['HS-001']['framing_impact']['targets'], [])
+        self.assertEqual(items['HS-011']['consolidated_into'], 'HS-002')
+        self.assertFalse(items['HS-011']['visible'])
+        self.assertTrue(items['HS-011']['source_refs'])
+        self.assertEqual(items['HS-011']['status'], 'validated')
+        self.assertFalse(items['HS-002']['resolution']['credible_option_ids'])
+        model = copy.deepcopy(self.model)
+        model['hotspot_catalog']['hotspots'][0]['framing_impact']['targets'] = ['core_system']
+        self.assertTrue(any('model scope' in error for error in validate_catalog(model)))
+        model = copy.deepcopy(self.model)
+        origin = next(h for h in model['hotspot_catalog']['hotspots'] if h['id'] == 'HS-011')
+        origin['consolidated_into'] = 'HS-011'
+        self.assertTrue(any('independent hotspot' in error for error in validate_catalog(model)))
+
     def test_visibility_is_technical_and_strictly_boolean(self):
         model = copy.deepcopy(self.model)
         item = model['hotspot_catalog']['hotspots'][0]
@@ -31,7 +48,7 @@ class HotspotCatalogTests(unittest.TestCase):
         self.assertEqual(hotspot['id'], hotspot['origin']['id'])
         self.assertEqual(hotspot['kind'], 'integration')
         self.assertEqual(set(hotspot['location']['node_ids']), {
-            'domain-logistics-execution', 'supply-chain-orchestration'})
+            'domain-logistics-execution', 'D06'})
         self.assertEqual(hotspot['complexity']['political'], 'XL')
         self.assertEqual(hotspot['complexity']['implementation'], 'L')
         self.assertEqual(hotspot['severity'], severity_for('XL', 'L'))
@@ -105,7 +122,10 @@ class HotspotCatalogTests(unittest.TestCase):
         self.assertEqual(hotspots['HS-019']['status'], 'validated')
         self.assertEqual(hotspots['HS-019']['framing_impact']['evidence_state'], 'hypothesis')
         for identifier in ('HS-017', 'HS-018', 'HS-019'):
-            self.assertEqual(hotspots[identifier]['severity'], 'unassessed')
+            if identifier == 'HS-018':
+                self.assertEqual(hotspots[identifier]['severity'], 'unassessed')
+            else:
+                self.assertIn('faible confiance', hotspots[identifier]['complexity']['rationale'])
             self.assertEqual(hotspots[identifier]['resolution']['stage'], 'unassessed')
         for hotspot in hotspots.values():
             if hotspot['id'] == 'HS-008':

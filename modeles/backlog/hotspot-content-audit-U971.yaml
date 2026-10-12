@@ -4,7 +4,8 @@ date: '2026-10-12'
 author: Codex
 source_refs:
 - U971
-state: proposals_for_review
+- U973
+state: applied_with_reserves
 baseline:
   publication: 2026-10-12.3
   model_path: modeles/backlog/model.yaml
@@ -3227,3 +3228,22 @@ hotspots:
     resolution_note: Ne pas inventer une décision pour remplir le champ.
     blocked_reason: Vide ne signifie pas blocage ; renseigner seulement un obstacle réel.
     option.implementation_complexity: Non évaluée tant que conception et réalisation candidate ne sont pas définies.
+application_U973:
+  source_ref: U973
+  catalogue: modeles/backlog/model.yaml
+  visible_hotspots: 26
+  consolidation:
+    HS-011: HS-002
+  impact_scopes:
+  - model
+  - transition
+  - usage
+  transition_hotspots:
+  - HS-001
+  - HS-024
+  kept_open:
+  - Crédibilité et choix des options
+  - Instance d’arbitrage non mandatée
+  - Règles locales inconnues
+  - Scission CBS/SAV à étudier
+  - Pages SAP sans texte lisible

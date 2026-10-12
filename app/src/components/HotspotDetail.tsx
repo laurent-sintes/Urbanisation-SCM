@@ -63,6 +63,15 @@ export function HotspotDetail({
         </button>
       </div>
       <header className="hotspot-story-header">
+        {hotspot.consolidated_into && (
+          <p className="hotspot-story-caption">
+            Sujet repris dans une fiche commune.{' '}
+            <button type="button" onClick={() => onChange({ hotspot: hotspot.consolidated_into })}>
+              Ouvrir {hotspot.consolidated_into}
+            </button>{' '}
+            Cette fiche conserve son identité et ses preuves d’origine.
+          </p>
+        )}
         <p className="hotspot-kicker">
           {model.raw.workshop ? 'Vue de travail · ' : ''}Publication {model.version} ·{' '}
           {hotspot.kind === 'integration' ? 'Intégration' : 'Périmètre'} ·{' '}

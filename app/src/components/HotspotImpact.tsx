@@ -1,4 +1,4 @@
-import { framingLabel } from '../hotspotFraming';
+import { framingLabel, hotspotImpactScopes } from '../hotspotFraming';
 import type { Hotspot } from '../types';
 import { ModelText } from './ModelLinks';
 export function HotspotImpact({ item }: { item: Hotspot }) {
@@ -9,7 +9,8 @@ export function HotspotImpact({ item }: { item: Hotspot }) {
       <p>Qualification de l’impact, indépendante de la criticité et de l’avancement.</p>
       <p>
         Modèle : règle, responsabilité, donnée ou réalisation métier/Core System concernée. Usage : praticité de
-        l’outil, sans changement métier établi.
+        l’outil, sans changement métier établi. Transition : étapes, coexistence, reprise et bascule. Ces portées
+        peuvent se cumuler.
       </p>
       {impact ? (
         <>
@@ -18,10 +19,15 @@ export function HotspotImpact({ item }: { item: Hotspot }) {
             <ModelText text={impact.rationale} />
           </p>
           <p>
-            Cible :{' '}
+            Modèle concerné :{' '}
             {impact.targets
               .map((target) => (target === 'business_model' ? 'Modèle métier' : 'Core System FLOW'))
-              .join(' · ') || (impact.category === 'usage' ? 'Usage de l’outil' : 'À qualifier')}
+              .join(' · ') ||
+              (hotspotImpactScopes(item).includes('transition')
+                ? 'Impact durable non établi'
+                : impact.category === 'usage'
+                  ? 'Usage de l’outil'
+                  : 'À qualifier')}
           </p>
           <p>
             Preuve :{' '}

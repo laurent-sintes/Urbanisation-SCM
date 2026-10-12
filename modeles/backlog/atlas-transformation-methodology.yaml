@@ -1,5 +1,5 @@
-id: flow-methodology-2026-10-12.2
-version: 2026-10-12.3
+id: flow-methodology-2026-10-12.4
+version: 2026-10-12.4
 as_of: '2026-10-12'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
@@ -69,6 +69,8 @@ source_refs:
 - U903
 - U915
 - U971
+- U972
+- U973
 lessons:
 - id: business-first
   label: Le métier d’abord
@@ -764,6 +766,21 @@ sources:
   excerpt: Je valide tout. Univers doit être remplacé par Architecture d’Entreprise, en anglais dans le métamodèle.
   scope: Enterprise Architecture nomme l’objet racine du SI cible ; Enterprise Architecture Practice nomme la pratique méthodologique
     distincte.
+- id: U972
+  title: 'HS-001 : transition'
+  kind: internal_contribution
+  access: Source interne non consultable dans Atlas.
+  date: '2026-10-12'
+  excerpt: 'HS-001 : c’est un hotspot qui a un impact sur la roadmap, la transition qui est contrainte. Mais pas forcément
+    sur la cible.'
+  scope: Distinguer transition et modèle durable.
+- id: U973
+  title: Application de l’audit
+  kind: internal_contribution
+  access: Source interne non consultable dans Atlas.
+  date: '2026-10-12'
+  excerpt: Prends en compte les préconisations de l’audit
+  scope: Application des compléments et distinction Modèle, Transition et Usage.
 glossary:
   terms:
   - id: MOD001
@@ -1938,6 +1955,11 @@ chapters:
       pas une release.
     detail: L’enrichissement de l’impact, des observations ou des options passe par une modification du modèle avec ses sources.
       Les JSON et YAML téléchargés conservent le modèle et le métamodèle complets ; les filtres n’en réduisent jamais le contenu.
+  - title: Impacts Modèle, Transition et Usage
+    text: Un Hotspot peut toucher le modèle durable (règles, responsabilités et contrats), la transition (séquencement, coexistence,
+      reprises et bascule) ou la praticité d’usage. Ces portées se cumulent. Une contrainte de transition peut être structurante
+      pour le cadrage sans remettre en cause le modèle durable. Les filtres affichent un sujet dès qu’une de ses portées est
+      cochée. HS-001 illustre la transition ; son impact sur le modèle durable reste non établi.
 - id: method
   title: Conventions de cartographie
   intro: Partir du service concret rendu, préciser les frontières, puis éprouver les [capacités](method:MOD015) sur des [scénarios](method:MOD027)

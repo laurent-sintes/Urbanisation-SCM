@@ -1,0 +1,73 @@
+schema_version: 1
+id: HOTSPOT-IMPACT-SCOPE-U972
+date: '2026-10-12'
+source_refs:
+- U972
+- U973
+state: applied_with_U973
+baseline_publication: 2026-10-12.4
+finding:
+  hotspot_id: HS-001
+  current_classification: Structurant, cible core_system
+  limitation: La justification actuelle confond réalisation transitoire du cœur et modification de sa cible durable.
+proposal:
+  principle: Distinguer la portée des impacts ; un sujet peut toucher plusieurs portées.
+  scopes:
+  - id: model
+    label: Modèle
+    question: Le sujet change-t-il les responsabilités, règles ou contrats durables du SI commun ?
+  - id: transition
+    label: Transition
+    question: Le sujet contraint-il les étapes, dépendances, coexistences, reprises ou conditions de bascule ?
+  - id: usage
+    label: Usage
+    question: Le sujet concerne-t-il la praticité du travail dans les outils ?
+  evidence_policy: Qualifier chaque portée séparément ; un impact non établi ne signifie pas absent. Justifier les portées
+    retenues.
+  boundaries: Garder scope/integration pour la localisation. Gap Analysis, complexité, criticité, visibilité et progression
+    restent des dimensions distinctes.
+  framing: Un sujet de transition peut être structurant pour le cadrage et la roadmap même sans modification démontrée de
+    la cible.
+  ux: Afficher Modèle, Transition et Usage comme impacts cumulables ; préciser le libellé Structurant pour la transition lorsque
+    cette portée est démontrée.
+hs001_proposal:
+  primary_impact: transition
+  rationale: Reprendre les commandes ouvertes et conserver les échanges nécessaires pendant le remplacement de MM, PP et SD
+    impose une trajectoire ; cela ne démontre pas une remise en cause du modèle cible.
+  resolution_question: Quelle séquence de bascule et quelles coexistences permettent de poursuivre les opérations, avec FI/CO
+    conservé hors du périmètre migré ?
+  options_policy: Les options existantes de migration par responsabilités ou de bascule d’un ensemble cohérent restent des
+    hypothèses à éprouver.
+  model_impact: not_established
+market_comparison:
+  relation: methodological_support
+  common_points: Microsoft traite la stratégie de migration et les données ouvertes ; SAP distingue plusieurs chemins de transition
+    et leurs contraintes.
+  difference: Ces sources concernent des migrations vers les produits éditeurs ; HS-001 concerne FLOW, sans choix d’un produit
+    cible ni équivalence de trajectoire établie.
+  conclusion: Les sources éclairent la distinction entre résultat cible et chemin de transition ; la classification proposée
+    reste un choix du métamodèle FLOW, pas une taxonomie standard des éditeurs.
+  references:
+  - id: U972-MKT-MS
+    publisher: Microsoft Dynamics 365
+    title: Data migration for Dynamics 365 implementation projects
+    url: https://learn.microsoft.com/en-us/dynamics365/guidance/resources/migrate-data
+    edition: Page évolutive, édition non précisée
+    accessed_on: '2026-10-12'
+    consulted_content: Stratégie de migration, configuration, référentiels et transactions ouvertes.
+    native_id: null
+  - id: U972-MKT-SAP
+    publisher: SAP S/4HANA
+    title: Describing the Customer Transition Paths to SAP S/4HANA Cloud Private Edition
+    url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-private-edition/describing-the-customer-transition-paths-to-sap-s-4hana-cloud-private-edition_b8aa0951-21d6-44d0-b9f5-81cd24b2b8bb
+    edition: Page évolutive, édition non précisée
+    accessed_on: '2026-10-12'
+    consulted_content: Customer Journey Transition Paths, Transition Option Summary et Initial Data Load ; comparaison de
+      bascules groupées ou progressives et reprise des données ouvertes.
+    native_id: null
+  reuse: Reformulations et liens ; aucune copie intégrale.
+glossary_review:
+  methodology: MOD044 distingue déjà hotspot générique, localisation et Gap Analysis ; proposition d’ajouter les portées cible,
+    transition et usage lors de son adoption.
+  business: Aucun sens métier modifié par cette proposition ; glossaire métier conservé.
+canonical_changes_applied: true

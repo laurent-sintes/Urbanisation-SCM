@@ -42,8 +42,17 @@ def validate_catalog(model):
         if impact:
             category = impact['category']
             targets = impact['targets']
-            if category == 'structuring' and not targets:
+            scopes = impact.get('scopes', ['model'] if category == 'structuring' else ['usage'] if category == 'usage' else [])
+            if category == 'structuring' and not targets and 'transition' not in scopes:
                 errors.append(f'{identifier}: structuring impact requires a model target')
+            if category == 'structuring' and not any(scope in scopes for scope in ('model', 'transition')):
+                errors.append(f'{identifier}: structuring impact requires a model or transition scope')
+            if targets and 'model' not in scopes:
+                errors.append(f'{identifier}: model targets require a model scope')
+            if category == 'usage' and scopes != ['usage']:
+                errors.append(f'{identifier}: usage impact requires only a usage scope')
+            if category == 'to_assess' and scopes:
+                errors.append(f'{identifier}: unassessed impact cannot declare assessed scopes')
             if category != 'structuring' and targets:
                 errors.append(f'{identifier}: usage or unassessed impact cannot declare a model target')
             expected = {'structuring': 'framing', 'usage': 'product_design', 'to_assess': 'qualification'}
@@ -52,6 +61,13 @@ def validate_catalog(model):
             if not impact['rationale'].strip():
                 errors.append(f'{identifier}: framing impact requires a rationale')
         anchors = hotspot['location']['node_ids']
+        consolidated = hotspot.get('consolidated_into')
+        if consolidated:
+            destination = next((item for item in catalog['hotspots'] if item['id'] == consolidated), None)
+            if not destination or destination is hotspot or destination.get('consolidated_into'):
+                errors.append(f'{identifier}: consolidation requires an existing independent hotspot')
+            if hotspot.get('visible', True):
+                errors.append(f'{identifier}: consolidated hotspot must retain discreet hidden access')
         if hotspot['kind'] == 'integration' and len(anchors) != 2:
             errors.append(f'{identifier}: integration requires exactly two anchors')
         if hotspot['kind'] == 'scope' and not anchors:

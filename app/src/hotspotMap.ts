@@ -1,3 +1,4 @@
+import { hotspotImpactScopes } from './hotspotFraming.ts';
 import { isClosedHotspot, resolutionFor } from './hotspotResolution.ts';
 import { descendantsOf, lineageOf } from './model.ts';
 import type { Hotspot, PublishedModel } from './types.ts';
@@ -48,6 +49,7 @@ export interface HotspotMapFilters {
   political: string;
   implementation: string;
   showModelHotspots?: boolean;
+  showTransitionHotspots?: boolean;
   showUsageHotspots?: boolean;
   showUnqualifiedHotspots?: boolean;
 }
@@ -63,6 +65,7 @@ export const defaultHotspotMapFilters: HotspotMapFilters = {
   political: 'all',
   implementation: 'all',
   showModelHotspots: true,
+  showTransitionHotspots: true,
   showUsageHotspots: true,
   showUnqualifiedHotspots: true,
 };
@@ -78,6 +81,7 @@ export function readHotspotFilters(value?: string): HotspotMapFilters {
       'enabled',
       'showResolved',
       'showModelHotspots',
+      'showTransitionHotspots',
       'showUsageHotspots',
       'showUnqualifiedHotspots',
     ] as const)
@@ -135,11 +139,15 @@ export function filterMapHotspots(hotspots: Hotspot[], filters: HotspotMapFilter
   return hotspots.filter(
     (hotspot) =>
       isHotspotVisible(hotspot) &&
-      (hotspot.framing_impact?.category === 'structuring'
-        ? filters.showModelHotspots !== false
-        : hotspot.framing_impact?.category === 'usage'
-          ? filters.showUsageHotspots !== false
-          : filters.showUnqualifiedHotspots !== false) &&
+      (hotspotImpactScopes(hotspot).length
+        ? hotspotImpactScopes(hotspot).some((scope) =>
+            scope === 'model'
+              ? filters.showModelHotspots !== false
+              : scope === 'transition'
+                ? filters.showTransitionHotspots !== false
+                : filters.showUsageHotspots !== false,
+          )
+        : filters.showUnqualifiedHotspots !== false) &&
       (filters.severity === 'all' ||
         (filters.severityMode === 'at_most' && selectedRank >= 0
           ? LEVELS.indexOf(hotspot.severity) >= 0 && LEVELS.indexOf(hotspot.severity) <= selectedRank

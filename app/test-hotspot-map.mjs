@@ -15,6 +15,35 @@ import { mapRouteForNode } from './src/mapNavigation.ts';
 import { adaptPublication } from './src/model.ts';
 
 const node = (id, kind) => ({ id, kind, fields: { name: id } });
+test('impact scopes distinguish transition and combine selections without hiding a mixed subject', () => {
+  const item = (id, scopes) => ({
+    id,
+    visible: true,
+    severity: 'M',
+    kind: 'scope',
+    status: 'validated',
+    complexity: { political: 'S', implementation: 'M' },
+    framing_impact: { category: 'structuring', scopes },
+  });
+  const items = [item('model', ['model']), item('transition', ['transition']), item('mixed', ['model', 'transition'])];
+  const filters = { ...defaultHotspotMapFilters, enabled: true, showModelHotspots: false };
+  assert.deepEqual(
+    filterMapHotspots(items, filters).map((h) => h.id),
+    ['transition', 'mixed'],
+  );
+  assert.deepEqual(
+    filterMapHotspots(items, { ...filters, showTransitionHotspots: false }).map((h) => h.id),
+    [],
+  );
+  assert.deepEqual(
+    filterMapHotspots(items, { ...filters, showModelHotspots: true, showTransitionHotspots: false }).map((h) => h.id),
+    ['model', 'mixed'],
+  );
+  assert.equal(
+    readHotspotFilters(encodeHotspotFilters({ ...filters, showTransitionHotspots: false })).showTransitionHotspots,
+    false,
+  );
+});
 test('technical visibility defaults to true and excludes only explicitly hidden hotspots from map filters', () => {
   const base = {
     severity: 'L',

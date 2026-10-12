@@ -406,6 +406,18 @@
                     },
                     "minItems": 1,
                     "uniqueItems": true
+                  },
+                  "scopes": {
+                    "type": "array",
+                    "items": {
+                      "enum": [
+                        "model",
+                        "transition",
+                        "usage"
+                      ]
+                    },
+                    "uniqueItems": true,
+                    "description": "Portées cumulables : Modèle, Transition et Usage. Absence historique interprétée selon la catégorie publiée."
                   }
                 }
               },
@@ -759,6 +771,11 @@
                 "type": "boolean",
                 "default": true,
                 "description": "Préférence technique de présentation. false masque les halos et résultats des filtres ; accès conservé en fin de liste et de sélecteur, grisé après un séparateur. Aucun changement métier. Champ absent : true, notamment dans les publications historiques."
+              },
+              "consolidated_into": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Identité de la fiche commune qui reprend le sujet ; la fiche source reste conservée et non visible."
               }
             },
             "required": [
