@@ -1,10 +1,12 @@
 """Push refuses wrong destinations, stale refs, conflicts and interrupted checks."""
+from hashlib import sha256
+import os
 from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
 
-from scripts.preflight_push import context, run, check_inputs, ALLOWED
+from scripts.preflight_push import context, run, check_inputs, fingerprint, ALLOWED
 
 
 class PreflightPushTests(unittest.TestCase):
@@ -26,10 +28,43 @@ class PreflightPushTests(unittest.TestCase):
         with patch('scripts.preflight_push.fingerprint', return_value=inputs.copy()) as fingerprint:
             self.assertEqual(check_inputs(Path('.'), 'browser'),
                              {key: value for key, value in inputs.items() if key != 'app/dist/delivery.json'})
-            fingerprint.assert_called_once_with(Path('.'), include_generated=True)
+            fingerprint.assert_called_once_with(Path('.'), generated_folders=('app/dist',))
         with patch('scripts.preflight_push.fingerprint', return_value={'scripts/code.py': 'a'}) as fingerprint:
             check_inputs(Path('.'), 'scripts')
             fingerprint.assert_called_once_with(Path('.'), include_generated=False)
+
+    def test_browser_receipt_ignores_unserved_public_data(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / 'app/dist/data').mkdir(parents=True)
+            (root / 'app/public/data').mkdir(parents=True)
+            (root / 'app/dist/data/index.json').write_text('served', encoding='utf-8')
+            (root / 'app/public/data/index.json').write_text('build input', encoding='utf-8')
+            with patch('scripts.preflight_push.git_paths', return_value=set()):
+                browser = check_inputs(root, 'browser')
+                build = check_inputs(root, 'build')
+            self.assertIn('app/dist/data/index.json', browser)
+            self.assertNotIn('app/public/data/index.json', browser)
+            self.assertIn('app/public/data/index.json', build)
+
+    def test_tracked_symlink_fingerprints_link_without_reading_its_target(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            link = root / 'link.txt'
+            with patch('scripts.preflight_push.git_paths', side_effect=[{'link.txt'}, set()]), \
+                 patch.object(Path, 'is_symlink', autospec=True, side_effect=lambda path: path == link), \
+                 patch('scripts.preflight_push.os.readlink', return_value='../outside.txt'), \
+                 patch.object(Path, 'read_bytes', side_effect=AssertionError('link target was read')):
+                stamp = fingerprint(root, include_generated=False)
+            self.assertEqual(stamp['link.txt'], sha256(os.fsencode('../outside.txt')).hexdigest())
+
+    def test_nul_separated_git_paths_preserve_leading_whitespace(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            (root / ' leading.txt').write_text('content', encoding='utf-8')
+            with patch('scripts.preflight_push.subprocess.check_output', side_effect=[b' leading.txt\0', b'']):
+                stamp = fingerprint(root, include_generated=False)
+            self.assertEqual(stamp[' leading.txt'], sha256(b'content').hexdigest())
 
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()

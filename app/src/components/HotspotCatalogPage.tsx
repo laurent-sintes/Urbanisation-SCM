@@ -106,6 +106,7 @@ export function HotspotCatalogPage({
   const [drafts, setDrafts] = useState<Record<string, HotspotDraft>>({});
   const [draftBases, setDraftBases] = useState<Record<string, HotspotDraft>>({});
   const [draftRevision, setDraftRevision] = useState<number | null>(null);
+  const draftEditSequence = useRef(0);
   const [restoredKey, setRestoredKey] = useState('');
   const [storageReadFailedKey, setStorageReadFailedKey] = useState('');
   const [saving, setSaving] = useState(false);
@@ -385,6 +386,7 @@ export function HotspotCatalogPage({
   const invalidDrafts = draftErrors.length > 0;
   const editFields = (item: Hotspot, updates: Partial<HotspotDraft>) => {
     if (!workshopStage) return;
+    draftEditSequence.current += 1;
     if (draftRevision === null) setDraftRevision(workshopStage.revision);
     setDraftBases((current) => (current[item.id] ? current : { ...current, [item.id]: draftFor(item) }));
     setDrafts((current) => ({ ...current, [item.id]: { ...(current[item.id] || draftFor(item)), ...updates } }));
@@ -419,15 +421,20 @@ export function HotspotCatalogPage({
   };
   const save = async () => {
     if (!changes.length || staleDrafts || invalidDrafts || saving) return;
+    const submittedSequence = draftEditSequence.current;
     setSaving(true);
     setSaveMessage('');
     try {
       await onSaveWorkshopChanges(changes);
-      setDrafts({});
-      setDraftBases({});
-      setDraftRevision(null);
+      // Edits made while the request is in flight must remain available for review.
+      const hasLaterEdits = draftEditSequence.current !== submittedSequence;
+      if (!hasLaterEdits) {
+        setDrafts({});
+        setDraftBases({});
+        setDraftRevision(null);
+      }
       setSaveMessage(
-        `${changes.length} point${changes.length > 1 ? 's' : ''} chaud${changes.length > 1 ? 's' : ''} enregistré${changes.length > 1 ? 's' : ''} dans la séance — à intégrer au backlog.`,
+        `${changes.length} point${changes.length > 1 ? 's' : ''} chaud${changes.length > 1 ? 's' : ''} enregistré${changes.length > 1 ? 's' : ''} dans la séance${hasLaterEdits ? '. Des modifications plus récentes restent à examiner avant un nouvel enregistrement.' : ' — à intégrer au backlog.'}`,
       );
     } catch (error) {
       setSaveMessage(error instanceof Error ? error.message : 'Enregistrement impossible.');
@@ -437,6 +444,7 @@ export function HotspotCatalogPage({
   };
   const rebaseDrafts = () => {
     if (!workshopStage) return;
+    draftEditSequence.current += 1;
     setDrafts((current) =>
       Object.fromEntries(
         Object.entries(current).flatMap(([id, draft]) => {
