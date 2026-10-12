@@ -214,6 +214,8 @@ export function App() {
     view === 'metamodel' ||
     view === 'help';
   const headingNode = referenceView ? undefined : view === 'map' ? scope : selected;
+  const hotspotDetail =
+    view === 'hotspots' && displayModel?.raw.hotspot_catalog?.hotspots.some((item) => item.id === route.hotspot);
   const contentScope = view === 'map' ? scopeId : route.node;
   useLayoutEffect(() => {
     if (lastLocationKey.current === locationKey) return;
@@ -750,9 +752,9 @@ export function App() {
                     {shareButton}
                   </div>
                 )}
-                {view === 'map' ? (
+                {view === 'map' || hotspotDetail ? (
                   <h1 id="page-title" className="sr-only" ref={heading} tabIndex={-1}>
-                    {scope?.name || rootName}
+                    {hotspotDetail ? 'Points chauds' : scope?.name || rootName}
                   </h1>
                 ) : (
                   <header className="page-heading">

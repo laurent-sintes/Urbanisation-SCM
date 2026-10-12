@@ -8,7 +8,7 @@ import { browserOptions, chromium } from './browser-runtime.mjs';
 import { plainInlineText } from './src/inlineLinks.ts';
 import { publicText } from './src/publicText.ts';
 
-const dist = resolve(import.meta.dirname, 'dist');
+const dist = resolve(import.meta.dirname, process.env.ATLAS_QA_DIST || 'dist');
 const index = JSON.parse(await readFile(resolve(dist, 'data/index.json'), 'utf8'));
 const payload = await readFile(resolve(dist, `data/${index.current_version}/model.json`));
 const model = JSON.parse(payload);
@@ -88,6 +88,61 @@ try {
   };
   await open();
   const detail = page.locator('.hotspot-detail');
+  assert.equal(await page.locator('.workspace-header .page-heading').count(), 0, 'no duplicate visual title band');
+  assert.equal(await page.getByRole('heading', { level: 1, name: 'Points chauds', exact: true }).count(), 1);
+  const verifyPinnedHeader = async (fullscreen, screenshot) => {
+    const scroller = page.locator(fullscreen ? '.hotspot-page' : '.workspace-content');
+    const geometry = () =>
+      scroller.evaluate((element) => {
+        const header = element.querySelector('.hotspot-detail-header').getBoundingClientRect();
+        const title = element.querySelector('#hotspot-detail-title').getBoundingClientRect();
+        const viewport = element.getBoundingClientRect();
+        return { header: header.toJSON(), title: title.toJSON(), viewport: viewport.toJSON() };
+      });
+    for (const progress of [0.4, 1]) {
+      await scroller.evaluate((element, fraction) => {
+        element.scrollTop = (element.scrollHeight - element.clientHeight) * fraction;
+      }, progress);
+      await page.waitForFunction(() => {
+        const element = document.fullscreenElement || document.querySelector('.workspace-content');
+        return element.scrollTop > 100;
+      });
+      const { header, title, viewport } = await geometry();
+      assert.ok(
+        title.top >= viewport.top - 1 && title.bottom <= viewport.bottom,
+        `the entire title stays visible: ${JSON.stringify({ title, viewport })}`,
+      );
+      assert.ok(
+        header.height < viewport.height * 0.6,
+        `the pinned band leaves room to read the body: ${header.height}/${viewport.height}`,
+      );
+    }
+    // Native keyboard scrolling must not put the focused control behind the title.
+    await detail.locator('.hotspot-provenance summary').focus();
+    for (let step = 0; step < 8; step++) {
+      await page.keyboard.press('Shift+Tab');
+      const focused = await detail.evaluate((element) => {
+        const active = document.activeElement;
+        if (!element.querySelector('.hotspot-detail-body').contains(active)) return null;
+        return {
+          rect: active.getBoundingClientRect().toJSON(),
+          headerBottom: element.querySelector('.hotspot-detail-header').getBoundingClientRect().bottom,
+        };
+      });
+      if (focused)
+        assert.ok(
+          focused.rect.top >= focused.headerBottom,
+          `keyboard focus is below the pinned band: ${JSON.stringify(focused)}`,
+        );
+    }
+    await scroller.evaluate((element) => {
+      element.scrollTop = element.scrollHeight * 0.5;
+    });
+    await page.screenshot({ path: resolve(output, screenshot) });
+    await scroller.evaluate((element) => {
+      element.scrollTop = 0;
+    });
+  };
   const documentHotspot = model.hotspot_catalog.hotspots.find((item) => item.document_ids?.length);
   assert.ok(documentHotspot, 'a hotspot links a published PDF');
   await page.goto(`${base}#/hotspots?version=${index.current_version}&hotspot=${documentHotspot.id}`);
@@ -159,6 +214,7 @@ try {
 
   for (const width of [1440, 900, 390, 320]) {
     await page.setViewportSize({ width, height: 950 });
+    await verifyPinnedHeader(false, `pinned-${width}.png`);
     await detail.getByRole('button', { name: 'Étendre la fiche' }).click();
     await page.waitForFunction(() => document.fullscreenElement?.classList.contains('hotspot-page'));
     await detail.getByRole('button', { name: 'Réduire la fiche' }).waitFor();
@@ -168,6 +224,7 @@ try {
       `no horizontal overflow at ${width}px`,
     );
     await page.screenshot({ path: resolve(output, `fullscreen-${width}.png`) });
+    await verifyPinnedHeader(true, `fullscreen-pinned-${width}.png`);
     await detail.getByRole('button', { name: 'Réduire la fiche' }).click();
     await page.waitForFunction(() => !document.fullscreenElement);
     assert.equal(await detail.getByRole('button', { name: 'Étendre la fiche' }).getAttribute('aria-pressed'), 'false');
@@ -177,6 +234,29 @@ try {
   await detail.getByRole('button', { name: 'Tous les points chauds' }).click();
   await page.waitForFunction(() => !document.fullscreenElement);
   await page.locator('.hotspot-table').waitFor();
+  assert.equal(await page.locator('.workspace-header .page-heading').count(), 1, 'the catalog keeps its heading');
+
+  // Keep a long title in full, while the impact explanation belongs to the scrolling body.
+  const longTitle = structuredClone(original);
+  longTitle.title =
+    'Garantir la cohérence des engagements de stock entre les différents systèmes et les équipes lors des changements de commande et des opérations logistiques';
+  servedModel = { ...model, hotspot_catalog: { ...model.hotspot_catalog, hotspots: [longTitle] } };
+  await open();
+  assert.equal(await detail.locator('.hotspot-detail-header .hotspot-framing-description').count(), 0);
+  for (const viewport of [
+    { width: 390, height: 844 },
+    { width: 840, height: 420 },
+  ]) {
+    await page.setViewportSize(viewport);
+    await verifyPinnedHeader(false, `long-title-${viewport.width}.png`);
+    assert.equal(await detail.getByRole('heading', { level: 3 }).innerText(), longTitle.title);
+    await detail.getByRole('button', { name: 'Étendre la fiche' }).click();
+    await page.waitForFunction(() => Boolean(document.fullscreenElement));
+    await verifyPinnedHeader(true, `long-title-fullscreen-${viewport.width}.png`);
+    await detail.getByRole('button', { name: 'Réduire la fiche' }).click();
+    await page.waitForFunction(() => !document.fullscreenElement);
+  }
+  await page.setViewportSize({ width: 1440, height: 950 });
 
   // A legacy publication without progress must never gain a synthetic assessment or a timeline.
   const legacy = structuredClone(original);
@@ -391,6 +471,9 @@ try {
       missingData: true,
       gapAnalysis: true,
       fullscreenWidths: [1440, 900, 390, 320],
+      pinnedTitle: true,
+      keyboardFocus: true,
+      longTitleAndLandscape: true,
       workshopEdit: true,
       publicationUnchanged: true,
       screenshots: output,

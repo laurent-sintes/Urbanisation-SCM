@@ -877,8 +877,31 @@ button.hotspot-qualification:hover {
   gap: 0.7rem;
 }
 .hotspot-detail-toolbar {
-  padding-bottom: 0.75rem;
+  margin-bottom: 0.6rem;
+}
+.hotspot-detail-header {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  padding: 0.65rem 0;
   border-bottom: 1px solid var(--line);
+  background: var(--flow-paper);
+  box-shadow: 0 6px 10px var(--flow-paper);
+}
+.hotspot-detail-header h3 {
+  margin: 0;
+  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.hotspot-detail-body {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+.hotspot-detail-body :is(a, button, summary, [tabindex]) {
+  scroll-margin-top: calc(var(--hotspot-header-height, 150px) + 1rem);
+  scroll-margin-bottom: 1rem;
 }
 .hotspot-detail-toolbar button,
 .hotspot-story-heading button,
@@ -900,18 +923,13 @@ button.hotspot-qualification:hover {
   outline: 2px solid var(--flow-green);
   outline-offset: 3px;
 }
-.hotspot-story-header {
+.hotspot-story-context {
   padding: 0.5rem 0 0.75rem;
 }
-.hotspot-story-header .hotspot-kicker {
+.hotspot-story-context .hotspot-kicker {
   color: var(--muted);
   font-size: 0.8rem;
   font-weight: 500;
-}
-.hotspot-story-header h3 {
-  margin: 0;
-  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
-  line-height: 1.3;
 }
 .hotspot-story-section {
   padding: 1.5rem 0;
@@ -1015,19 +1033,13 @@ button.hotspot-qualification:hover {
 }
 .hotspot-page:fullscreen {
   overflow: auto;
+  scroll-padding: 1.5rem;
   background: var(--flow-paper);
   color: var(--ink);
   padding: 1.5rem max(1rem, calc((100vw - 1100px) / 2));
 }
 .hotspot-page:fullscreen .hotspot-detail {
   max-width: none;
-}
-.hotspot-page:fullscreen .hotspot-detail-toolbar {
-  position: sticky;
-  top: -1.5rem;
-  z-index: 2;
-  padding: 0.75rem 0;
-  background: var(--flow-paper);
 }
 @media (max-width: 760px) {
   .hotspot-story-overview {
@@ -1039,6 +1051,13 @@ button.hotspot-qualification:hover {
   .hotspot-detail-toolbar button,
   .hotspot-story-heading button {
     min-height: 44px;
+  }
+  .hotspot-detail-toolbar .map-fullscreen-button {
+    justify-content: center;
+    min-width: 44px;
+  }
+  .hotspot-fullscreen-label {
+    display: none;
   }
 }
 .hotspot-map-toggle {
