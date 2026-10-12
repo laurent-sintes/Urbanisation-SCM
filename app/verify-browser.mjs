@@ -192,24 +192,18 @@ try {
   await visit({ view: 'hotspots' });
   const hotspotTable = page.getByRole('table');
   assert.equal(await hotspotTable.count(), 1);
-  for (const column of [
-    'Point chaud',
-    'Type',
-    'Périmètre',
-    'Criticité',
-    'Politique',
-    'Implémentation',
-    'Statut',
-    'Arbitrage',
-  ]) {
-    assert.equal(await hotspotTable.getByRole('columnheader', { name: column }).count(), 1);
+  assert.equal(await hotspotTable.getByRole('columnheader').count(), 4);
+  for (const column of ['Sujet et impact', 'Périmètre', 'Criticité', 'Qualification et avancement']) {
+    assert.equal(await hotspotTable.getByRole('columnheader', { name: column, exact: true }).count(), 1);
   }
   await page.getByRole('button', { name: 'Filtres' }).click();
   const catalogFilters = page.getByRole('group', { name: 'Filtres des points chauds' });
   const catalogSeverity = catalogFilters.getByRole('combobox', { name: 'Criticité' });
   await catalogSeverity.selectOption('at_most:L');
   assert.equal(await catalogSeverity.inputValue(), 'at_most:L');
-  checks.push('Hotspot catalog uses the map filters and a semantic characteristics table');
+  checks.push(
+    'Hotspot catalog uses the map filters and four semantic columns for subject, scope, severity and progress',
+  );
 
   for (const depth of [0, 1, 2]) {
     await visit({ view: 'map', mapDepth: String(depth) });
