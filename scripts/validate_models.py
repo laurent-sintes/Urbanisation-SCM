@@ -172,6 +172,11 @@ def validate_urbanism(model, sources, schema=None):
         from document_catalog import validate_catalog as validate_documents
     errors.extend(validate_documents(model))
     relations = _index(model["relations"], "relations", errors)
+    try:
+        from .model_index import ModelIndex
+    except ImportError:
+        from model_index import ModelIndex
+    graph_index = ModelIndex(model)
     business_areas = any(p.get('id') == 'PRINCIPLE-BUSINESS-AREA' for p in model.get('principles', []))
     required_business_areas = any(p.get('id') == 'PRINCIPLE-REQUIRED-BUSINESS-AREA' for p in model.get('principles', []))
     if required_business_areas and not business_areas:
@@ -184,7 +189,7 @@ def validate_urbanism(model, sources, schema=None):
             if 'category' in node.get('fields', {}):
                 errors.append(f'business-area/{identifier}: category is retired')
             if kind in ('business_area', 'capability'):
-                parents = [r for r in model['relations'] if r.get('type') in ('contains', 'presents') and r.get('target_id') == identifier]
+                parents = graph_index.parents[identifier]
                 allowed = ('area',) if kind == 'business_area' else ('area', 'business_area')
                 if kind == 'capability' and required_business_areas:
                     allowed = ('business_area',)
@@ -194,11 +199,11 @@ def validate_urbanism(model, sources, schema=None):
                 for field in ('name', 'definition', 'finality', 'scope'):
                     if not isinstance(node.get('fields', {}).get(field), str) or not node['fields'][field].strip():
                         errors.append(f'business-area/{identifier}: {field} must be nonempty')
-                children = [r for r in model['relations'] if r.get('type') in ('contains', 'presents') and r.get('source_id') == identifier]
+                children = graph_index.children[identifier]
                 if not children or any((r['type'], nodes.get(r['target_id'], {}).get('kind')) not in {('contains', 'capability'), ('presents', 'reference')} for r in children):
                     errors.append(f'business-area/{identifier}: requires contained capabilities or presented references')
             if kind == 'reference':
-                parents = [r for r in model['relations'] if r.get('type') in ('contains', 'presents') and r.get('target_id') == identifier]
+                parents = graph_index.parents[identifier]
                 if any(nodes.get(r['source_id'], {}).get('kind') == 'business_area' for r in parents) and len(parents) != 1:
                     errors.append(f'business-area/{identifier}: reference requires a unique presentation parent')
     for item in model['nodes'] + model['relations']:
@@ -419,8 +424,7 @@ def validate_urbanism(model, sources, schema=None):
     for identifier, node in nodes.items():
         if node.get('kind') != 'behavior':
             continue
-        parents = [r for r in model['relations'] if r.get('type') in ('contains', 'presents')
-                   and r.get('target_id') == identifier]
+        parents = graph_index.parents[identifier]
         if (len(parents) != 1 or parents[0]['type'] != 'contains'
                 or nodes.get(parents[0]['source_id'], {}).get('kind') != 'capability'):
             errors.append(f'behavior/{identifier}: requires exactly one capability parent via contains')

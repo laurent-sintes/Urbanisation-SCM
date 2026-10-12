@@ -7,10 +7,16 @@ import { browserOptions, chromium } from './browser-runtime.mjs';
 const dist = resolve(import.meta.dirname, process.env.ATLAS_HOTSPOT_DIST || 'dist');
 const selectedCase = process.argv.find((arg) => arg.startsWith('--case='))?.slice(7);
 const navigationOnly = process.argv.includes('--navigation-only');
+const shardArgument = process.argv.find((arg) => arg.startsWith('--shard='))?.slice(8);
+const shard = shardArgument ? shardArgument.split('/').map(Number) : null;
+assert.ok(
+  !shard ||
+    (shard.length === 2 && shard.every(Number.isInteger) && shard[1] > 0 && shard[0] >= 0 && shard[0] < shard[1]),
+);
 const output = resolve(
   import.meta.dirname,
   '.runtime/qa-map-hotspot-matrix',
-  navigationOnly ? 'navigation' : selectedCase ? 'targeted' : '.',
+  navigationOnly ? 'navigation' : shard ? `shard-${shard[0]}-${shard[1]}` : selectedCase ? 'targeted' : '.',
 );
 await mkdir(output, { recursive: true });
 const catalog = JSON.parse(await readFile(resolve(dist, 'data/index.json'), 'utf8'));
@@ -323,12 +329,15 @@ try {
         await page.screenshot({ path: resolve(output, 'operations-mobile.png') });
     }
   }
+  let caseNumber = 0;
   for (const width of navigationOnly ? [] : [390, 1440]) {
     await page.setViewportSize({ width, height: width === 390 ? 667 : 900 });
     for (const scope of ['', 'system-business-operations', 'supply-chain-orchestration']) {
       for (const detail of scope ? [0, 1, 2, 3, 4] : [0, 1, 2]) {
         for (const mode of ['Auto', 'Pleine page', 'Pleine largeur']) {
           for (const profile of profiles) {
+            const position = caseNumber++;
+            if (shard && position % shard[1] !== shard[0]) continue;
             currentCase = { width, scope: scope || 'overview', detail, mode, profile: profile.name, fullscreen: false };
             if (selectedCase && selectedCase !== `${width}/${currentCase.scope}/${detail}/${mode}/${profile.name}`)
               continue;
@@ -356,7 +365,7 @@ try {
       }
     }
   }
-  if (!selectedCase) {
+  if (!selectedCase && (!shard || shard[0] === 0)) {
     report.navigation = [];
     await page.setViewportSize({ width: 390, height: 844 });
     const subject = model.hotspot_catalog.hotspots.findLast(

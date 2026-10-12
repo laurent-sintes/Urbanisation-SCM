@@ -1,6 +1,8 @@
 name: FLOW Atlas — GitHub Pages
 
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
     paths:
@@ -15,12 +17,37 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: atlas-pages
-  cancel-in-progress: false
-
 jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      contracts: ${{ steps.plan.outputs.contracts }}
+      frontend: ${{ steps.plan.outputs.frontend }}
+      browser: ${{ steps.plan.outputs.browser }}
+      launcher: ${{ steps.plan.outputs.launcher }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.14'
+      - id: plan
+        env:
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PUSH_BASE: ${{ github.event.before }}
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
+            BASE="$PR_BASE"
+          elif [ "$GITHUB_EVENT_NAME" = "push" ] && [ "$PUSH_BASE" != "0000000000000000000000000000000000000000" ]; then
+            BASE="$PUSH_BASE"
+          else
+            BASE="$(git rev-list --max-parents=0 HEAD | head -1)"
+          fi
+          python scripts/plan_checks.py --base "$BASE" --github-output
   launcher:
+    needs: plan
+    if: needs.plan.outputs.launcher == 'true'
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v6
@@ -29,6 +56,11 @@ jobs:
           python-version: '3.14'
       - run: python -m unittest discover -s app -p test_launcher.py
   contracts:
+    needs: plan
+    if: needs.plan.outputs.contracts == 'true'
+    concurrency:
+      group: atlas-contracts-${{ github.ref }}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -38,9 +70,14 @@ jobs:
         with:
           python-version: '3.14'
       - run: python -m pip install -r requirements.txt
-      - run: python -m unittest discover -s scripts -p "test_*.py"
-      - run: python -m unittest discover -s app -p "test_*.py"
+      - run: python scripts/run_python_tests.py --directory scripts --full
+      - run: python scripts/run_python_tests.py --directory app --full
   build:
+    needs: plan
+    if: needs.plan.outputs.frontend == 'true'
+    concurrency:
+      group: atlas-build-${{ github.ref }}
+      cancel-in-progress: true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -58,6 +95,7 @@ jobs:
           version: 11.19.0
       - run: python -m pip install -r requirements.txt
       - run: pnpm --dir app install --frozen-lockfile
+      - run: pnpm --dir app check:code
       - run: pnpm --dir app test
       - name: Restore verified export candidates
         uses: actions/cache@v5
@@ -65,23 +103,59 @@ jobs:
           path: |
             app/public/data
             .runtime/atlas-export-receipts
-          key: atlas-export-${{ runner.os }}-${{ hashFiles('scripts/*.py', 'app/*.py', 'requirements.txt', 'modeles/schemas/urbanism.schema.json') }}-${{ hashFiles('modeles/release/index.json', 'modeles/modeling-guides/index.yaml') }}
+            .runtime/parsed-models
+            .runtime/export-document-index
+          key: atlas-export-v2-${{ runner.os }}-${{ hashFiles('scripts/structured_io.py', 'scripts/parsed_cache.py', 'requirements.txt') }}-${{ hashFiles('modeles/release/index.json', 'modeles/modeling-guides/index.yaml') }}
           restore-keys: |
-            atlas-export-${{ runner.os }}-${{ hashFiles('scripts/*.py', 'app/*.py', 'requirements.txt', 'modeles/schemas/urbanism.schema.json') }}-
+            atlas-export-v2-${{ runner.os }}-
             atlas-export-${{ runner.os }}-
       - run: pnpm --dir app build
       - run: pnpm --dir app exec playwright install --with-deps chromium
-      - run: pnpm --dir app verify
-      - uses: actions/configure-pages@v5
+        if: needs.plan.outputs.browser == 'true'
+      - run: python scripts/verify_atlas.py --workers 3
+        if: needs.plan.outputs.browser == 'true'
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: atlas-failed-recipes
+          path: app/.runtime/qa-*/**
       - uses: actions/upload-pages-artifact@v4
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         with:
           path: app/dist
       - uses: actions/upload-artifact@v4
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
         with:
           name: atlas-delivery-manifest
           path: app/dist/delivery.json
+  checks:
+    name: Atlas checks
+    needs: [plan, build, launcher, contracts]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          PLAN: ${{ needs.plan.result }}
+          BUILD: ${{ needs.build.result }}
+          LAUNCHER: ${{ needs.launcher.result }}
+          CONTRACTS: ${{ needs.contracts.result }}
+          NEED_BUILD: ${{ needs.plan.outputs.frontend }}
+          NEED_LAUNCHER: ${{ needs.plan.outputs.launcher }}
+          NEED_CONTRACTS: ${{ needs.plan.outputs.contracts }}
+        run: |
+          test "$PLAN" = "success"
+          for RESULT in "$BUILD" "$LAUNCHER" "$CONTRACTS"; do
+            test "$RESULT" = "success" || test "$RESULT" = "skipped"
+          done
+          if [ "$NEED_BUILD" = "true" ]; then test "$BUILD" = "success"; fi
+          if [ "$NEED_LAUNCHER" = "true" ]; then test "$LAUNCHER" = "success"; fi
+          if [ "$NEED_CONTRACTS" = "true" ]; then test "$CONTRACTS" = "success"; fi
   deploy:
-    needs: [build, launcher, contracts]
+    needs: [checks, build]
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && needs.build.result == 'success'
+    concurrency:
+      group: atlas-pages-deployment
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -93,14 +167,23 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v6
+      - id: freshness
+        run: |
+          REMOTE="$(git ls-remote origin refs/heads/main | cut -f1)"
+          if [ "$REMOTE" = "$GITHUB_SHA" ]; then echo "fresh=true" >> "$GITHUB_OUTPUT"; else echo "fresh=false" >> "$GITHUB_OUTPUT"; fi
+      - uses: actions/configure-pages@v5
+        if: steps.freshness.outputs.fresh == 'true'
       - uses: actions/download-artifact@v4
+        if: steps.freshness.outputs.fresh == 'true'
         with:
           name: atlas-delivery-manifest
           path: .runtime/delivery
       - name: Deploy Atlas
+        if: steps.freshness.outputs.fresh == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
       - name: Verify deployed content
+        if: steps.freshness.outputs.fresh == 'true'
         env:
           ATLAS_URL: ${{ steps.deployment.outputs.page_url }}
         run: python scripts/atlas_delivery.py --manifest .runtime/delivery/delivery.json --url "$ATLAS_URL" --attempts 6

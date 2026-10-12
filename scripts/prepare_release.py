@@ -406,12 +406,13 @@ def _prepare_draft(root, models, pointer, previous, inputs, manifest_path, versi
         except ValueError as exc:
             intent_errors.append('decision-intents: ' + str(exc))
     decisions, deferred_decisions = reconcile_decisions(inputs['decisions'], snapshot, additional, inputs['input_revision'], stable_ids=lightweight)
+    glossary_impacts = reference_impacts(previous, snapshot)
     publication_refs = source_refs or previous.get('publication', {}).get('source_refs', [])
     review = None
     if include_review:
         review = decision_review.make_review(snapshot, inputs['input_revision'], previous,
             inputs['decisions'], deferred_decisions, pointer, digest(manifest_path), state,
-            publication_refs, changes)
+            publication_refs, changes, glossary_impacts=glossary_impacts)
     return {
         'snapshot': snapshot,
         'element_changes': element_changes,
@@ -422,7 +423,8 @@ def _prepare_draft(root, models, pointer, previous, inputs, manifest_path, versi
         'decisions': decisions,
         'deferred_decisions': deferred_decisions,
         'publication_refs': publication_refs,
-        'review': review
+        'review': review,
+        'glossary_impacts': glossary_impacts
     }
 
 
@@ -527,7 +529,7 @@ def build_candidate(root=ROOT, version=None, source_refs=None, additional_path=N
     report = {'schema_version': '1.0.0', 'base_version': pointer['version'], 'candidate_version': version,
               'backlog_delivery': delivery_rows,
               'element_version_changes': element_changes,
-              'glossary_reference_impacts': reference_impacts(previous, candidate),
+              'glossary_reference_impacts': draft['glossary_impacts'],
               'publication_is_business_validation': False, 'glossary_changes': changes(previous.get('glossary'), candidate.get('glossary')), 'changes': model_diff(previous, candidate),
               'retained_decision_ids': [d['id'] for d in decisions['decisions'] if d['id'] in {o['id'] for o in inputs['decisions']['decisions']}],
               'deferred_decisions': deferred_decisions,

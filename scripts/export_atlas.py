@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 import sys
 import uuid
+import tempfile
 from time import perf_counter
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -18,11 +19,12 @@ if str(ROOT) not in sys.path:
 from scripts.atlas_lock import atlas_lock
 from scripts.release_catalog import PublicationReader
 from scripts.git_history import batch_reader
-from app.modeling_guide import _load_associated_guide
+from app.modeling_guide import _load_associated_guide, guide_validation_batch
 from scripts.atlas_metamodel import describe_metamodel
 from scripts.atlas_documentation import separate_documentation
 from scripts.document_catalog import asset_bytes
 from scripts.structured_io import dumps as dump_yaml, read as read_document
+from scripts import parsed_cache
 
 
 EXPORT_NAMES = ('model.yaml', 'model.json', 'guide.json')
@@ -30,7 +32,7 @@ EXPORT_NAMES = ('model.yaml', 'model.json', 'guide.json')
 EXPORT_FORMAT_VERSION = 1
 
 
-def cached_export(receipt, sources):
+def cached_export(receipt, sources, *, with_source=False):
     """Receipts accelerate serialization only; source integrity is checked upstream."""
     try:
         hashes = json.loads(receipt.read_bytes())
@@ -43,7 +45,7 @@ def cached_export(receipt, sources):
                 payloads = {name: (source / name).read_bytes() for name in EXPORT_NAMES}
                 if all(hashlib.sha256(payload).hexdigest() == hashes[name]
                        for name, payload in payloads.items()):
-                    return payloads
+                    return (payloads, source) if with_source else payloads
             except OSError:
                 continue
     except (OSError, ValueError, TypeError):
@@ -83,11 +85,19 @@ def atomic_write(path, content):
 
 def export_atlas(root=ROOT, destinations=None, *, incremental=True, require_cached=False):
     root = Path(root).resolve()
-    with atlas_lock(root), batch_reader(root):
+    with atlas_lock(root), batch_reader(root), guide_validation_batch():
         return _export_atlas(root, destinations, incremental=incremental, require_cached=require_cached)
 
 
 def _export_atlas(root, destinations, *, incremental=True, require_cached=False):
+    runtime = root / '.runtime'
+    runtime.mkdir(exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='export-', dir=runtime) as directory:
+        return _staged_export(root, destinations, Path(directory), incremental=incremental,
+                              require_cached=require_cached)
+
+
+def _staged_export(root, destinations, stage, *, incremental, require_cached):
     started = perf_counter()
     # Refuse the legacy directory-scanning fallback: the index is authoritative.
     index_path = root / 'modeles/release/index.json'
@@ -110,6 +120,27 @@ def _export_atlas(root, destinations, *, incremental=True, require_cached=False)
     receipts = {}
     legacy_hashes = None
     reused = 0
+    def stage_payload(relative, payload, existing=None):
+        path = stage / relative
+        if not path.resolve().is_relative_to(stage.resolve()):
+            raise ValueError('Export path escapes staging')
+        path.parent.mkdir(parents=True, exist_ok=True)
+        if existing is not None:
+            try:
+                os.link(existing, path)
+            except OSError:
+                path.write_bytes(payload)
+        else:
+            path.write_bytes(payload)
+        files[relative] = (path, hashlib.sha256(payload).hexdigest(), len(payload))
+
+    def staged_bytes(entry):
+        path, fingerprint, _ = entry
+        content = path.read_bytes()
+        if hashlib.sha256(content).hexdigest() != fingerprint:
+            raise ValueError('Export staging changed before activation')
+        return content
+
     for entry in result['versions']:
         version = entry['version']
         if not isinstance(version, str) or not re.fullmatch(r'\d{4}-\d{2}-\d{2}\.[1-9]\d*', version):
@@ -124,7 +155,8 @@ def _export_atlas(root, destinations, *, incremental=True, require_cached=False)
         key = hashlib.sha256(encoded({'format': EXPORT_FORMAT_VERSION,
                                      'descriptor': descriptor, 'guide': complete_guide})).hexdigest()
         receipt = root / '.runtime/atlas-export-receipts' / (key + '.json')
-        payloads = cached_export(receipt, [source / version for source in sources]) if incremental else None
+        cached = cached_export(receipt, [source / version for source in sources], with_source=True) if incremental else None
+        payloads, payload_source = cached if cached is not None else (None, None)
         if payloads is None:
             if require_cached:
                 raise ValueError('Verified static export missing or outdated; run the data export first: ' + version)
@@ -149,6 +181,7 @@ def _export_atlas(root, destinations, *, incremental=True, require_cached=False)
                     hashes = tuple(hashlib.sha256(candidate[name]).hexdigest() for name in EXPORT_NAMES)
                     if hashes in legacy_hashes and candidate['model.json'] == model_json and candidate['guide.json'] == guide_json:
                         payloads = candidate
+                        payload_source = source / version
                         reused += 1
                         break
             if payloads is None:
@@ -158,16 +191,22 @@ def _export_atlas(root, destinations, *, incremental=True, require_cached=False)
             reused += 1
             # The cached JSON has already passed parsing and publication metadata
             # checks when its receipt was created. Source bytes are checked above.
-            raw = json.loads(payloads['model.json'])
+            raw = None
+        document_key = hashlib.sha256(b'export-document-index-v1\0' + payloads['model.json']).hexdigest()
+        document_directory = root / '.runtime/export-document-index'
+        document_index = parsed_cache.get(document_key, directory=document_directory)
+        if not isinstance(document_index, dict) or set(document_index) != {'documents'} or not isinstance(document_index['documents'], list):
+            document_index = {'documents': (raw if raw is not None else json.loads(payloads['model.json'])).get('document_catalog', {}).get('documents', [])}
+            parsed_cache.put(document_key, document_index, directory=document_directory)
         receipts[receipt] = encoded({name: hashlib.sha256(payload).hexdigest()
                                     for name, payload in payloads.items()})
         for name, payload in payloads.items():
-            files[f'{version}/{name}'] = payload
+            stage_payload(f'{version}/{name}', payload, payload_source / name if payload_source else None)
         for name in ('model', 'guide'):
             entry[name + '_sha256'] = hashlib.sha256(payloads[name + '.json']).hexdigest()
         entry['model_yaml_sha256'] = hashlib.sha256(payloads['model.yaml']).hexdigest()
-        for document in raw.get('document_catalog', {}).get('documents', []):
-            files[f"{version}/documents/{document['id']}.pdf"] = asset_bytes(root, document)
+        for document in document_index['documents']:
+            stage_payload(f"{version}/documents/{document['id']}.pdf", asset_bytes(root, document))
         serialization_seconds += perf_counter() - step
     if index_path.read_bytes() != before:
         raise ValueError('Publication index changed during static export; retry.')
@@ -175,7 +214,7 @@ def _export_atlas(root, destinations, *, incremental=True, require_cached=False)
     if require_cached:
         source = sources[0]
         if (source / 'index.json').read_bytes() != encoded(result) or any(
-                (source / relative).read_bytes() != payload for relative, payload in files.items()):
+                (source / relative).read_bytes() != staged_bytes(payload) for relative, payload in files.items()):
             raise ValueError('Static export differs from the verified publication catalog; run the data export first')
     # Build everything before touching the served catalog. Keep older files for
     # readers whose catalog request preceded a release.
@@ -183,7 +222,7 @@ def _export_atlas(root, destinations, *, incremental=True, require_cached=False)
     for destination in destinations:
         destination = Path(destination)
         for relative, payload in files.items():
-            atomic_write(destination / relative, payload)
+            atomic_write(destination / relative, staged_bytes(payload))
         if index_path.read_bytes() != before:
             raise ValueError('Publication index changed before static activation; retry.')
         reader.verify_descriptors()
@@ -194,7 +233,7 @@ def _export_atlas(root, destinations, *, incremental=True, require_cached=False)
             atomic_write(path, content)
     return {'current_version': result['current_version'], 'publications': len(result['versions']),
             'reused_publications': reused, 'generated_publications': len(result['versions']) - reused,
-            'files': len(files) + 1, 'bytes': sum(map(len, files.values())),
+            'files': len(files) + 1, 'bytes': sum(value[2] for value in files.values()),
             'destinations': [str(path) for path in destinations],
             'timings_seconds': {key: round(value, 4) for key, value in {
                 'catalog': catalog_seconds, 'models': model_seconds, 'guides': guide_seconds,
