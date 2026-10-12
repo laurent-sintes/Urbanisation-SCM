@@ -2,7 +2,6 @@ import { ChevronDown, Flame, Info } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { documentsForHotspot, documentUrl } from '../documentCatalog';
 import {
   defaultHotspotMapFilters,
   filterMapHotspots,
@@ -11,11 +10,10 @@ import {
   updateHotspotMapFilters,
 } from '../hotspotMap';
 import { emptyResolution, RESOLUTION_STAGES, resolutionErrors, resolutionFor } from '../hotspotResolution';
-import { mapRouteForNode } from '../mapNavigation';
 import type { RouteState } from '../navigation';
-import { publicText } from '../publicText';
 import type { Hotspot, HotspotResolution, PublishedModel } from '../types';
 import type { WorkshopStage, WorkshopTableChange } from '../workshop';
+import { HotspotDetail } from './HotspotDetail';
 import { HotspotTooltipButton } from './HotspotDisplay';
 import { HotspotFilterFields } from './HotspotFilterFields';
 import './hotspots.css';
@@ -113,7 +111,35 @@ export function HotspotCatalogPage({
   const groupIds = new Set((route.hotspotGroup || '').split(',').filter(Boolean));
   const groupHotspots = groupIds.size ? hotspots.filter((item) => groupIds.has(item.id)) : hotspots;
   const chosen = hotspots.find((item) => item.id === route.hotspot);
-  const documents = chosen ? documentsForHotspot(model, chosen.document_ids || []) : [];
+  const page = useRef<HTMLElement>(null);
+  const [expanded, setExpanded] = useState(false);
+  const fullscreenRoute = useRef('');
+  const detailRoute = `${model.version}:${route.hotspot || ''}`;
+  useEffect(() => {
+    const owner = page.current;
+    const update = () => setExpanded(document.fullscreenElement === page.current);
+    document.addEventListener('fullscreenchange', update);
+    return () => {
+      document.removeEventListener('fullscreenchange', update);
+      if (owner && document.fullscreenElement === owner) void document.exitFullscreen().catch(() => {});
+    };
+  }, []);
+  useEffect(() => {
+    if (expanded && fullscreenRoute.current !== detailRoute && document.fullscreenElement === page.current) {
+      void document.exitFullscreen().catch(() => {});
+    }
+  }, [expanded, detailRoute]);
+  const toggleFullscreen = async () => {
+    try {
+      if (document.fullscreenElement === page.current) await document.exitFullscreen();
+      else {
+        fullscreenRoute.current = detailRoute;
+        await page.current?.requestFullscreen();
+      }
+    } catch {
+      setSaveMessage('Le plein écran est indisponible dans ce navigateur.');
+    }
+  };
   const storageKey = workshopStage ? `atlas-hotspot-drafts:${model.version}:${workshopStage.session_id}` : '';
   useEffect(() => {
     if (!storageKey || restoredKey === storageKey) return;
@@ -424,43 +450,35 @@ export function HotspotCatalogPage({
       </button>
     </th>
   );
-  const anchorButton = (id: string) => {
-    const node = model.nodeById.get(id);
-    return (
-      node && (
-        <button type="button" key={id} onClick={() => onChange(mapRouteForNode(model, id))}>
-          {node.name}
-        </button>
-      )
-    );
-  };
   return (
-    <section className="hotspot-page" aria-label="Points chauds de la publication">
-      <header className="hotspot-page-header">
-        <div>
-          <h2>Points chauds</h2>
-          <p>
-            {filtered.length} sur {groupHotspots.length} · Publication {model.version}
-            {workshopCount ? ` · ${workshopCount} en atelier` : ''}
-          </p>
-        </div>
-        {!chosen && (
-          <div className="hotspot-page-tools">
-            <label>
-              <span className="sr-only">Rechercher un point chaud</span>
-              <input
-                type="search"
-                value={query}
-                placeholder="Rechercher un sujet…"
-                onChange={(event) => setQuery(event.target.value)}
-              />
-            </label>
-            <button type="button" aria-expanded={filtersOpen} onClick={() => setFiltersOpen((open) => !open)}>
-              Filtres <ChevronDown size={15} className={filtersOpen ? 'is-open' : ''} />
-            </button>
+    <section className="hotspot-page" ref={page} aria-label="Points chauds de la publication">
+      {!chosen && (
+        <header className="hotspot-page-header">
+          <div>
+            <h2>Points chauds</h2>
+            <p>
+              {filtered.length} sur {groupHotspots.length} · Publication {model.version}
+              {workshopCount ? ` · ${workshopCount} en atelier` : ''}
+            </p>
           </div>
-        )}
-      </header>
+          {!chosen && (
+            <div className="hotspot-page-tools">
+              <label>
+                <span className="sr-only">Rechercher un point chaud</span>
+                <input
+                  type="search"
+                  value={query}
+                  placeholder="Rechercher un sujet…"
+                  onChange={(event) => setQuery(event.target.value)}
+                />
+              </label>
+              <button type="button" aria-expanded={filtersOpen} onClick={() => setFiltersOpen((open) => !open)}>
+                Filtres <ChevronDown size={15} className={filtersOpen ? 'is-open' : ''} />
+              </button>
+            </div>
+          )}
+        </header>
+      )}
       {!chosen && filtersOpen && (
         <div className="hotspot-catalog-filters" role="group" aria-label="Filtres des points chauds">
           <HotspotFilterFields
@@ -531,173 +549,17 @@ export function HotspotCatalogPage({
         </div>
       )}
       {chosen ? (
-        <article className="hotspot-detail">
-          <button type="button" onClick={() => onChange({ hotspot: '' })}>
-            ← {groupIds.size ? 'Retour au groupe' : 'Tous les points chauds'}
-          </button>
-          <p className="hotspot-kicker">
-            {chosen.workshop ? 'Atelier · ' : ''}
-            {chosen.kind === 'integration' ? 'Intégration' : 'Périmètre'} · {STATUS[chosen.status]}
-          </p>
-          <h3>{chosen.title}</h3>
-          <section className="hotspot-resolution-summary" aria-label="Avancement du cadrage">
-            <h3>{RESOLUTION_STAGES[resolutionFor(chosen).stage]}</h3>
-            <p>
-              Résolu en cadrage : une solution crédible est envisagée. Le choix définitif et la mise en œuvre sont
-              distincts.
-            </p>
-            {resolutionFor(chosen).summary && <p>{publicText(resolutionFor(chosen).summary)}</p>}
-            {resolutionFor(chosen).credible_option_ids.length > 0 && (
-              <p>
-                Solutions crédibles :{' '}
-                {resolutionFor(chosen)
-                  .credible_option_ids.map(
-                    (id) => chosen.resolution_options.find((option) => option.id === id)?.title || id,
-                  )
-                  .join(' · ')}
-              </p>
-            )}
-            {resolutionFor(chosen).credibility_note && <p>{publicText(resolutionFor(chosen).credibility_note)}</p>}
-            {resolutionFor(chosen).blocked_reason && <p>Bloqué : {publicText(resolutionFor(chosen).blocked_reason)}</p>}
-            {resolutionFor(chosen).next_step && <p>Prochaine étape : {publicText(resolutionFor(chosen).next_step)}</p>}
-            {resolutionFor(chosen).assessed_on && (
-              <p>
-                Évaluation du {resolutionFor(chosen).assessed_on} ·{' '}
-                {publicText(resolutionFor(chosen).assessment_source)}
-              </p>
-            )}
-          </section>
-          {chosen.status === 'validated' && !chosen.selected_option_id && (
-            <p className="hotspot-status-note">Problème et périmètre validés ; aucune option de résolution retenue.</p>
-          )}
-          <p>{chosen.problem}</p>
-          <div className="hotspot-anchors" role="group" aria-label="Localisation">
-            {chosen.location.node_ids.map(anchorButton)}
-          </div>
-          <dl className="hotspot-facts">
-            <div>
-              <dt>Criticité</dt>
-              <dd>{SIZE(chosen.severity)}</dd>
-            </div>
-            <div>
-              <dt>Difficulté politique</dt>
-              <dd>{SIZE(chosen.complexity.political)}</dd>
-            </div>
-            <div>
-              <dt>Difficulté d’implémentation</dt>
-              <dd>{SIZE(chosen.complexity.implementation)}</dd>
-            </div>
-            <div>
-              <dt>Arbitrage</dt>
-              <dd>{LEVEL[chosen.arbitration_level] || chosen.arbitration_level}</dd>
-            </div>
-          </dl>
-          <p>{publicText(chosen.complexity.rationale)}</p>
-          {chosen.arbitration_note && <p>{publicText(chosen.arbitration_note)}</p>}
-          {chosen.selected_option_id && (
-            <p>
-              <strong>Option retenue :</strong>{' '}
-              {chosen.resolution_options.find((option) => option.id === chosen.selected_option_id)?.title ||
-                chosen.selected_option_id}
-            </p>
-          )}
-          {chosen.resolution_note && (
-            <p>
-              <strong>Note du choix :</strong> {publicText(chosen.resolution_note)}
-            </p>
-          )}
-          <h4>Lecture du marché</h4>
-          {chosen.market_view ? (
-            <section className="hotspot-market">
-              <p>
-                <strong>Pratiques documentées :</strong> {chosen.market_view.finding}
-              </p>
-              <p>
-                <strong>Avis pour FLOW :</strong> {chosen.market_view.flow_assessment}
-              </p>
-              <p>
-                <strong>Limites :</strong> {chosen.market_view.limits}
-              </p>
-              <ul>
-                {chosen.market_view.sources.map((source) => (
-                  <li key={source.url}>
-                    <a href={source.url} target="_blank" rel="noopener noreferrer">
-                      {source.publisher} — {source.title}
-                    </a>
-                    {' : '}
-                    {source.relevance}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          ) : (
-            <p>Comparaison marché non documentée pour ce point chaud.</p>
-          )}
-          {documents.length > 0 && (
-            <section className="hotspot-documents">
-              <h4>Documents</h4>
-              <ul>
-                {documents.map((document) => (
-                  <li key={document.id}>
-                    <button
-                      type="button"
-                      onClick={() => onChange({ view: 'documents', document: document.id, hotspot: '' })}
-                    >
-                      {document.title}
-                    </button>
-                    {' · '}
-                    <a href={documentUrl(model, document)} download={`flow-atlas-${document.id}.pdf`}>
-                      Télécharger le PDF
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )}
-          <h4>Cas d’usage</h4>
-          <ul>
-            {chosen.examples.map((example) => (
-              <li key={example}>{example}</li>
-            ))}
-          </ul>
-          <h4>Options à instruire</h4>
-          <div className="hotspot-options">
-            {chosen.resolution_options.map((option) => (
-              <section key={option.id}>
-                <h5>{option.title}</h5>
-                <p>{option.principle}</p>
-                {option.effect && (
-                  <p>
-                    <strong>Effet attendu :</strong> {option.effect}
-                  </p>
-                )}
-                {!!option.conditions?.length && (
-                  <p>
-                    <strong>À confirmer :</strong> {option.conditions.join(' · ')}
-                  </p>
-                )}
-                {!!option.tradeoffs?.length && (
-                  <p>
-                    <strong>Compromis :</strong> {option.tradeoffs.join(' · ')}
-                  </p>
-                )}
-                <small>
-                  Implémentation : {SIZE(option.implementation_complexity)} ·{' '}
-                  {option.evidence_state === 'hypothesis' ? 'Hypothèse' : option.evidence_state}
-                </small>
-              </section>
-            ))}
-          </div>
-          <details className="hotspot-provenance">
-            <summary>Sources et réserves détaillées</summary>
-            <p>
-              {chosen.origin.repository} · {chosen.origin.source_id}
-            </p>
-            <code>{chosen.origin.path}</code>
-            <p>{chosen.origin.evidence_limit}</p>
-            <small>{chosen.review.note}</small>
-          </details>
-        </article>
+        <HotspotDetail
+          hotspot={effective(chosen)}
+          model={model}
+          grouped={groupIds.size > 0}
+          expanded={expanded}
+          canEdit={Boolean(workshopStage)}
+          pending={Boolean(drafts[chosen.id])}
+          onChange={onChange}
+          onToggleFullscreen={() => void toggleFullscreen()}
+          onEdit={(event, mode) => openDialog(event, chosen, mode)}
+        />
       ) : (
         <div className="hotspot-table-scroll" role="region" aria-label="Tableau des points chauds" tabIndex={0}>
           <table className="hotspot-table">
@@ -1237,7 +1099,7 @@ export function HotspotCatalogPage({
                 </footer>
               </section>
             </div>,
-            document.body,
+            document.fullscreenElement || document.body,
           );
         })()}
     </section>
