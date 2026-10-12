@@ -162,6 +162,28 @@ def compact_context(context):
                for key in ('incident_relations', 'related_nodes')}}
 
 
+class ContextIndex:
+    """One immutable snapshot per batch; preserve the existing context contract."""
+    def __init__(self, snapshot):
+        self.snapshot = snapshot
+        self.shared = {key: canonical_sha256(semantic(snapshot.get(key, default)))
+                       for key, default in (('principles', []), ('glossary', {}))}
+        self.contexts = {}
+
+    def context(self, collection, target_id, legacy=False):
+        if legacy:
+            return semantic_context(self.snapshot, collection, target_id)
+        key = (collection, target_id)
+        if key not in self.contexts:
+            # The graph neighborhood keeps exactly the conservative legacy scope.
+            # Shared objects are omitted here to avoid repeatedly copying the glossary.
+            view = {**self.snapshot, 'principles': [], 'glossary': {}}
+            context = compact_context(semantic_context(view, collection, target_id))
+            context.update(self.shared)
+            self.contexts[key] = context
+        return deepcopy(self.contexts[key])
+
+
 def _values(snapshot, collection, target_id, fields):
     if collection not in ('nodes', 'relations'):
         raise ValueError('collection must be nodes or relations')
@@ -256,15 +278,18 @@ def validate_suspensions(suspensions, intents, known=None):
 
 def make_intent(snapshot, sources, *, intent_id, collection, target_id, fields,
                 source_refs, author, decided_at, interpretation, note, reviewer,
-                recorded_at=None, supersedes=None, legacy_context=False):
+                recorded_at=None, supersedes=None, legacy_context=False, context_index=None):
     _text(intent_id, 'id')
     _text(target_id, 'target id')
     fields = sorted(_strings(fields, 'fields'))
     source_refs = sorted(_strings(source_refs, 'source_refs'))
     values = _values(snapshot, collection, target_id, fields)
-    context = semantic_context(snapshot, collection, target_id)
-    if not legacy_context:
-        context = compact_context(context)
+    if context_index is not None:
+        context = context_index.context(collection, target_id, legacy_context)
+    else:
+        context = semantic_context(snapshot, collection, target_id)
+        if not legacy_context:
+            context = compact_context(context)
     intent = {
         'id': intent_id, 'author': author, 'decided_at': decided_at,
         'recorded_at': recorded_at or date.today().isoformat(),
@@ -356,6 +381,7 @@ def compile_intents(document, snapshot, active_decisions, sources, consumed_docu
             if intent['id'] not in consumed and intent['id'] not in historical:
                 raise ValueError('Published intents require the publication review workflow, not supersedes')
     decisions, stale = [], []
+    context_index = ContextIndex(snapshot)
     for intent in document['intents']:
         identifier, target = intent['id'], intent['target']
         if identifier in historical:
@@ -368,9 +394,8 @@ def compile_intents(document, snapshot, active_decisions, sources, consumed_docu
             continue
         try:
             values = _values(snapshot, target['collection'], target['id'], target['approved_fields'])
-            context = semantic_context(snapshot, target['collection'], target['id'])
-            if target['context'].get('format') == 'semantic-sha256-v1':
-                context = compact_context(context)
+            context = context_index.context(target['collection'], target['id'],
+                                            target['context'].get('format') != 'semantic-sha256-v1')
         except ValueError as error:
             stale.append('Stale decision intent ' + identifier + ': ' + str(error))
             continue
@@ -458,9 +483,11 @@ def _record_intents(root, path, parameters):
     validate_document(document, sources)
     appended = []
     results = []
+    context_index = ContextIndex(snapshot)
     for params in parameters:
         existing = next((item for item in document['intents'] if item['id'] == params.get('intent_id')), None)
         intent = make_intent(snapshot, sources, **params,
+                             context_index=context_index,
                              recorded_at=existing['recorded_at'] if existing else None,
                              legacy_context=bool(existing and 'format' not in existing['target']['context']))
         if existing and existing != intent:

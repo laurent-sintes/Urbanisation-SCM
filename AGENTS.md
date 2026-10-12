@@ -73,7 +73,8 @@ Dans le bac à sable géré, `.git/` peut être en lecture seule : `git add` éc
 | --- | --- |
 | Documentation / instructions seules | Relire les liens et la cohérence ; pas de build ni d’audit métier |
 | Contributions ou sources indexées | `python scripts/refresh_sources.py` |
-| Backlog, glossaires, schémas ou validation | `python scripts/validate_models.py` + tests concernés ; `python scripts/render_models.py --space backlog` si la vue change |
+| Backlog métier et glossaire métier | `python scripts/check_backlog.py` + tests concernés ; ajouter `--render` si la vue change |
+| Glossaire méthodologique, schémas, validation ou contrats transversaux | `python scripts/validate_models.py` + tests concernés |
 | Panorama As Is | Validation concernée et `python scripts/render_models.py --space panorama-as-is` |
 | Audit des comportements ou ses preuves | `python -m scripts.render_behavior_gap_audit` lit le résultat clos dans Git ; tout rejeu historique exige un checkout isolé de son ancien état |
 | Code Python / publication / lecture structurée | Tests des contrats et parcours touchés ; vérifier l’intégrité, pas publier |

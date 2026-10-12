@@ -253,6 +253,7 @@ def migrate(root, archived_ids=()):
 
 def record_sharded(root, path, before, index, parameters, snapshot, sources):
     r = contract()
+    context_index = r.ContextIndex(snapshot)
     verify_index(path, index, sources)
     entries = {e['id']: e for e in index['entries']}
     pending, results = {}, []
@@ -266,7 +267,7 @@ def record_sharded(root, path, before, index, parameters, snapshot, sources):
         existing = pending.get(identifier) or (load_entry(path, entries[identifier]) if identifier in entries else None)
         if existing:
             r.validate_document({'schema_version': '1.0.0', 'intents': [existing]}, sources)
-        intent = r.make_intent(snapshot, sources, **params, recorded_at=existing['recorded_at'] if existing else None,
+        intent = r.make_intent(snapshot, sources, **params, context_index=context_index, recorded_at=existing['recorded_at'] if existing else None,
                                legacy_context=bool(existing and 'format' not in existing['target']['context']))
         if existing and existing != intent:
             raise ValueError('Decision intent ID already exists with different content: ' + identifier)

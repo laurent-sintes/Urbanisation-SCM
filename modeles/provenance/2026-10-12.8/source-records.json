@@ -19825,6 +19825,102 @@
       "line": 23570,
       "content_sha256": "6814f1cbb022dbbbf305f76f1ec452c29fce6ff05f35e9dce78a9f42504c310e",
       "captured_text": "## U989\n\n**id**\n\nU989\n\n**titre**\n\nValidation du découpage complet\n\n**date**\n\n2026-10-12\n\n**texte**\n\nQuand j'ai dit je valide, je valide TOUT\n\n**portée**\n\nConfirme que U987 adopte la proposition complète construite U982–U986, renommage Commerce compris, avec tous ses domaines, sous-domaines et frontières corrigées. Ce n’est pas un accord limité au dernier échange sur le POS. Le lot canonique est décrit dans commerce-retail-structure-U987.yaml. Les textes nouveaux rédigés après la proposition et les responsabilités installées des outils ne sont pas inventés par cet accord."
+    },
+    {
+      "id": "CMP317",
+      "path": "marche/comparaisons.md",
+      "anchor": "cmp317",
+      "line": 2962,
+      "content_sha256": "9b16aa58048ed9db1d5b3b1c53bcb1992d76ec21e30a6c3dcb1a6308b08db375",
+      "captured_text": "## CMP317\n\nU990–U994 — 12 octobre 2026. [Audit global de cohérence, prix et primes](audit-model-coherence-pricing-U990.yaml), sur le backlog et la publication 2026-10-12.7. Constats et propositions distincts, aucune modification canonique.\n\nLe Core dispose de 75 capacités, toutes mobilisées dans les parcours ; aucun détail en Business Areas, capacités ou comportements hors orchestration. La finesse reste utile autour des commandes, promesses, stocks, prestations et parcours. Les lacunes principales concernent le producteur des prix applicables et le cycle complet des avantages commerciaux, pas un nouveau moteur de prix dans FLOW. U992 réserve explicitement la détermination des prix à leurs responsables externes.\n\nELM904/ELM905/ELM907/ELM911 documentent prix contextualisés, conditions datées, recherche, priorité et reprise du prix ; ELM906 montre les cumuls et exclusions. ELM908/ELM909 distinguent ristournes, assiettes, contrats et règlement ; ELM910/ELM909 documentent les commissions et bénéficiaires. Ces fonctions ne prescrivent pas la hiérarchie FLOW ni les autorités Beaumanoir. Les fiches candidates dans l’annexe portent chacune une paire Dynamics/S/4HANA lorsque la comparaison est établie. La paie demeure une lacune explicite, sans équivalence inventée aux commissions commerciales.\n\nPréférence de simplification après U993 : un domaine Commerce, conservant POS, backoffice et réseau comme sous-domaines distincts. ELM888/ELM892 réunissent et distinguent ces fonctions dans les solutions retail ; ils ne prescrivent pas leur niveau hiérarchique. Proposition ciblée pour les producteurs : Pricing & Promotions Management et Rebates & Incentives Management sous Commerce ; conditions d’achat sous Sourcing and Procurement ; Commercial Settlement Management sous Finance. FLOW reçoit et contrôle l’applicabilité, conserve les engagements, transmet ses faits et coordonne les conséquences autorisées. Aucun calcul de politique tarifaire ajouté à PTP, Price Book ou Control Plane.\n\nBénéfice : contrats de responsabilité lisibles et précision là où la décision et l’engagement l’exigent. Compromis : quelques sous-domaines adjacents supplémentaires, sans capacités financières ou commerciales détaillées. Aucune Business Area adjacente actuellement nécessaire ; U994 demande de signaler une exception si un partage de mandat l’exige. Les noms Availability, Control Plane et Payment sont confrontés à leur portée ; aucun renommage général proposé comme acquis. Le modèle et le glossaire ont été contrôlés ensemble ; leurs lacunes explicatives sont listées et leur contenu reste inchangé."
+    },
+    {
+      "id": "ELM904",
+      "path": "marche/elements.md",
+      "anchor": "elm904",
+      "line": 6478,
+      "content_sha256": "6ec79b64d6e3e6863bcea1bc18ba3bda03268e877a8dcf3b6b3d02ae48e3aae1",
+      "captured_text": "### ELM904\n\nMKT14 — Dynamics 365 Supply Chain Management. [Sales trade agreement prices](https://learn.microsoft.com/en-us/dynamics365/supply-chain/unified-pricing-management/upm-sales-trade-agreement-prices). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Net pricing ; concurrence ; Date type. Reformulation : Prix négociés client/produit, prix net exclusif, priorités et date de recherche paramétrée. Limites : La logique éditeur ne prescrit ni autorité FLOW ni adoption du prix le plus bas. U990–U994, CMP317 ; synthèse et lien uniquement."
+    },
+    {
+      "id": "ELM905",
+      "path": "marche/elements.md",
+      "anchor": "elm905",
+      "line": 6483,
+      "content_sha256": "e5ae61b05db0a626c9b8117307dd6df0de87187b30281ae9303ea29119121d78",
+      "captured_text": "### ELM905\n\nMKT13 — SAP S/4HANA Sales. [Introducing the Condition Technique](https://learning.sap.com/courses/configuring-pricing-in-sap-s-4hana-sales/introducing-the-condition-technique_dce0f313-dee6-470e-8851-3f1773cb5d45). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Pricing Procedure ; Search for a Valid Condition Record ; New Pricing ; Billing. Reformulation : Conditions déterminées par contexte client/document ; séquence de recherche, barèmes et reprise du prix configurables. Limites : Cours de fonctions S/4HANA, sans édition globale établie ; ne prescrit pas la responsabilité du Core FLOW. U990–U994, CMP317 ; synthèse et lien uniquement."
+    },
+    {
+      "id": "ELM906",
+      "path": "marche/elements.md",
+      "anchor": "elm906",
+      "line": 6488,
+      "content_sha256": "769a3a2a04a01d405580b0f5cc5d8ea29678cca21ab156e28f6349ec52676763",
+      "captured_text": "### ELM906\n\nMKT14 — Dynamics 365 Commerce. [Retail discounts](https://learn.microsoft.com/en-us/dynamics365/commerce/retail-discounts-overview). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Common discount settings ; Currency ; Discount concurrency mode. Reformulation : Activation, devise, unité, priorité et règles de cumul ou exclusion déterminent les remises applicables. Limites : Fonctions de produit ; pas de politique promotionnelle Beaumanoir ni règle juridique sur les soldes déduite. U990–U994, CMP317 ; synthèse et lien uniquement."
+    },
+    {
+      "id": "ELM907",
+      "path": "marche/elements.md",
+      "anchor": "elm907",
+      "line": 6493,
+      "content_sha256": "d99a2fee2fb9b620a9cee7af706053986589b37d70d190d5ba486a5fcef24f9e",
+      "captured_text": "### ELM907\n\nMKT13 — SAP S/4HANA Sales. [Using Condition Records](https://learning.sap.com/courses/configuring-pricing-in-sap-s-4hana-sales/using-condition-records_ef2d603b-232f-4100-90b4-da7b4f75ade2). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Validity Intervals ; Mass Maintenance ; Calculation Type. Reformulation : Validité, taux, données client/produit et traces de modification encadrent les conditions de prix et de remise. Limites : L’exercice documente les conditions ; une saison métier ne se réduit pas automatiquement à une date. U990–U994, CMP317 ; synthèse et lien uniquement."
+    },
+    {
+      "id": "ELM908",
+      "path": "marche/elements.md",
+      "anchor": "elm908",
+      "line": 6498,
+      "content_sha256": "b6c56f58b9140cae420088e935f22ed65bb8d80727a289e32a7e96f80b5cc0ba",
+      "captured_text": "### ELM908\n\nMKT14 — Dynamics 365 Supply Chain Management. [Rebate management module overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/rebate-management/rebate-management-overview). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Basis calculation ; Flexible calculations ; Rebate target transactions. Reformulation : Avantages différés sur quantités ou valeurs et périodes ; calcul, provisions, traitement, avoirs et sorties en biens distingués. Limites : Fonctionnalité large ; ne couvre pas toutes les primes de personnel ni une réalisation installée. Texte lisible malgré un bandeau d’authentification. U990–U994, CMP317 ; synthèse et lien uniquement."
+    },
+    {
+      "id": "ELM909",
+      "path": "marche/elements.md",
+      "anchor": "elm909",
+      "line": 6503,
+      "content_sha256": "5c32e8ccfca4e2a4abca42571f3d58bd66c43c8b466bd6e2c4daf084bb2bddcd",
+      "captured_text": "### ELM909\n\nMKT13 — SAP S/4HANA Settlement Management. [Outline the Structure of a Condition Contract](https://learning.sap.com/courses/exploring-sap-s-4hana-settlement-management/outline-the-structure-of-a-condition-contract_bf334045-48bb-4aae-98f7-83966c20eada). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Top Area ; Conditions Section ; purchasing rebates and external agents. Reformulation : Contrat daté, bénéficiaires, volume éligible et statut ; ristournes client/fournisseur et commissions d’agents externes. Limites : Les agents sont des fournisseurs dans cet exemple SAP, pas nécessairement dans le vocabulaire FLOW. Aucun modèle de paie documenté. U990–U994, CMP317 ; synthèse et lien uniquement."
+    },
+    {
+      "id": "ELM910",
+      "path": "marche/elements.md",
+      "anchor": "elm910",
+      "line": 6508,
+      "content_sha256": "0bbb4829bd03b5c61976a042726b1903f0dd95658360804ac8cd66f27586d36d",
+      "captured_text": "### ELM910\n\nMKT14 — Dynamics 365 Supply Chain Management. [Register sales commissions](https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/tasks/register-sales-commissions). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Invoice a qualifying sales order ; Review registered commissions. Reformulation : Commissions issues de la facture selon bénéficiaires et taux ; assiette sur montant net et écritures de charge/dette. Limites : Un exemple de commission ne documente pas toutes les primes salariales ni toutes les dates contractuelles possibles. U990–U994, CMP317 ; synthèse et lien uniquement."
+    },
+    {
+      "id": "U990",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u990",
+      "line": 23592,
+      "content_sha256": "066667bbe2c45fdc1345c1721c21065fd80cd3efd8cbe07f2ed0987310e1cead",
+      "captured_text": "## U990\n\n**id**\n\nU990\n\n**titre**\n\nAudit global de cohérence et couverture des prix, remises et primes\n\n**date**\n\n2026-10-12\n\n**texte**\n\nJe veux un audit de cohérence du modèle global : nom, périmètres, manques. Avec dans l'idée : un haut niveau de précision dans l'orchestration de la supply chain et moins précis dans les domaines et systèmes adjacents.\nJe me demande si on a bien gérer dans l'orchestration les flux de remise et de primes ainsi que l'application de prix contrôlés selon la situation : selon le client, selon la saison ou le moment de la saison (promotion, soldes) etc.\n\n**portée**\n\nDemande d’audit du modèle courant, sans adoption de nouvelles capacités ni modification canonique implicite. Examiner noms, responsabilités et lacunes en conservant une profondeur forte dans Supply Chain Orchestration et un contexte plus simple autour. Vérifier explicitement prix contextualisés, remises, primes, périodes et contrôle de leur application ; distinguer définition des conditions, calcul, engagement, faits de réalisation et règlement."
+    },
+    {
+      "id": "U991",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u991",
+      "line": 23615,
+      "content_sha256": "60b4a54db92bb131b7e5d57aba3bc2fc0a9281540df72bf2a66988e7a3fe2533",
+      "captured_text": "## U991\n\n**id**\n\nU991\n\n**titre**\n\nPérimètre des primes à examiner\n\n**date**\n\n2026-10-12\n\n**texte**\n\nLes deux\n\n**portée**\n\nRéponse à la clarification : examiner à la fois « Primes commerciales / ristournes liées aux volumes ou objectifs d’achat ou de vente » et « Primes et commissions versées aux vendeurs, agents ou partenaires ». Ne pas confondre remise immédiate, avantage différé, rémunération d’agent et prime de personnel ; aucune pratique installée Beaumanoir présumée."
+    },
+    {
+      "id": "U992",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u992",
+      "line": 23637,
+      "content_sha256": "91976723ca971255e25e60734aebf2c3a48d17479c12f8dc49394a053a2d568e",
+      "captured_text": "## U992\n\n**id**\n\nU992\n\n**titre**\n\nPrix produits hors orchestration et consommés par FLOW\n\n**date**\n\n2026-10-12\n\n**texte**\n\nL'orchestration ne décide pas des prix mais les consomment. Mais ils doivent bien être produits quelque part...\n\n**portée**\n\nFrontière explicite de l’audit U990 : Supply Chain Orchestration consomme les prix déterminés par leurs responsables externes. Identifier le producteur métier des prix et conditions applicables dans les systèmes adjacents, puis le contrat de consommation et les conséquences sur les engagements. Ne pas ajouter une décision tarifaire sous PTP, Price Book, Control Plane ou Order Management par extension."
+    },
+    {
+      "id": "U996",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u996",
+      "line": 23727,
+      "content_sha256": "08149ac21ec8b1bfd88bad256903339e195766e2cc63b4a4f983f63595927507",
+      "captured_text": "## U996\n\n**id**\n\nU996\n\n**titre**\n\nValidation du lot complet de cohérence, prix, primes et noms\n\n**date**\n\n2026-10-12\n\n**texte**\n\nJe valide tout\n\n**portée**\n\nAccord sur le lot cohérent proposé U990–U995, CMP317/CMP318 : producteurs des prix et avantages hors orchestration, consommation contrôlée par FLOW, responsabilités de règlement, regroupement de Retail Operations dans Commerce avec maintien des sous-domaines POS/backoffice/réseau, clarification du mandat transport, Supply Policy Management remplaçant Control Plane, maintien d’Availability avec sa définition courte. Aucun calcul tarifaire ou droit à prime transféré à FLOW, aucune extension automatique de Payment aux fournisseurs, agents ou salariés, aucune Business Area adjacente créée. Les textes de mise en œuvre et détails de contrats rédigés ensuite restent proposés ; aucune réalisation installée, release ou opération Git demandée."
     }
   ]
 }

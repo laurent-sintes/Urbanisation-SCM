@@ -3,27 +3,28 @@ from pathlib import Path
 
 try:
     from .structured_io import read
+    from .delivery_index import declarations
 except ImportError:
     from structured_io import read
+    from delivery_index import declarations
 
 
-def check_delivery(root, candidate):
+def check_delivery(root, candidate, *, stats=None):
     root = Path(root)
     nodes = {n['id']: n for n in candidate['nodes']}
     relations = candidate['relations']
     relation_by_id = {r['id']: r for r in relations if 'id' in r}
     rows, errors = [], []
-    for path in sorted((root / 'modeles/backlog').glob('*.yaml')):
-        doc = read(path)
-        if not isinstance(doc, dict) or 'publication_delivery' not in doc:
-            continue
-        declaration = doc['publication_delivery']
-        label = path.name
+    documents = declarations(root, stats)
+    overrides, override_errors = replacement_scopes(documents)
+    errors.extend(override_errors)
+    for label, original in documents.items():
+        declaration = active_requirements(label, original, overrides)
         if not isinstance(declaration, dict) or declaration.get('state') not in ('pending', 'applied'):
             errors.append('backlog-delivery: invalid declaration in ' + label)
             continue
         state = declaration['state']
-        rows.append({'path': path.relative_to(root).as_posix(), 'state': state,
+        rows.append({'path': 'modeles/backlog/' + label, 'state': state,
                      'summary': declaration.get('summary', ''),
                      'source_refs': declaration.get('source_refs', [])})
         if state == 'pending':
@@ -34,7 +35,8 @@ def check_delivery(root, candidate):
         glossary_checks = declaration.get('required_glossary', [])
         required_relations = declaration.get('required_relations', [])
         absent_relations = declaration.get('absent_relations', [])
-        if not any((required, absent, catalog_checks, glossary_checks, required_relations, absent_relations)):
+        if not any(original.get(key) for key in ('required_nodes', 'absent_nodes', 'required_catalog',
+                                                 'required_glossary', 'required_relations', 'absent_relations')):
             errors.append('backlog-delivery: applied declaration without checks in ' + label)
         try:
             from .element_versions import content_hash
@@ -99,3 +101,88 @@ def check_delivery(root, candidate):
             if ident in relation_by_id:
                 errors.append(f'backlog-delivery: {label}: retired relation still present: {ident}')
     return rows, errors
+
+
+def replacement_scopes(documents):
+    """Explicit field replacements; never infer them from chronology or status."""
+    scopes, errors, replacements = set(), [], {}
+    for label, declaration in documents.items():
+        if not isinstance(declaration, dict) or declaration.get('state') != 'applied':
+            continue
+        for entry in declaration.get('supersedes_requirements', []):
+            try:
+                if set(entry) != {'annex', 'collection', 'id', 'fields'}:
+                    raise ValueError('expected annex, collection, id and fields')
+                old_label, collection, identifier = entry['annex'], entry['collection'], entry['id']
+                if old_label == label or old_label not in documents or not declaration.get('source_refs'):
+                    raise ValueError('existing distinct annex and explicit source_refs required')
+                fields = entry['fields']
+                if not isinstance(fields, list) or not fields or len(set(fields)) != len(fields):
+                    raise ValueError('explicit unique nonempty fields required')
+                for field in fields:
+                    key = (old_label, collection, identifier, field)
+                    if key in scopes:
+                        raise ValueError('conflicting replacement')
+                    if not requirement_covers(documents[old_label], collection, identifier, field):
+                        raise ValueError('historical requirement does not cover field')
+                    if not requirement_covers(declaration, collection, identifier, field, replacement=True):
+                        raise ValueError('replacement must check the same field or explicit retirement')
+                    scopes.add(key)
+                    replacements[key] = label
+            except (KeyError, TypeError, ValueError, AttributeError) as error:
+                errors.append(f'backlog-delivery: {label}: invalid supersession: {error}')
+    for start in replacements:
+        current, visited = start, set()
+        while current in replacements:
+            if current in visited:
+                errors.append(f'backlog-delivery: {start[0]}: cyclic requirement supersession')
+                break
+            visited.add(current)
+            current = (replacements[current], *current[1:])
+    return scopes, errors
+
+
+def requirement_covers(declaration, collection, identifier, field, replacement=False):
+    key = {'nodes': 'required_nodes', 'relations': 'required_relations', 'terms': 'required_glossary'}.get(collection)
+    if key is None:
+        return False
+    absent = {'nodes': 'absent_nodes', 'relations': 'absent_relations'}.get(collection)
+    if replacement and absent and identifier in declaration.get(absent, []):
+        return True
+    for item in declaration.get(key, []):
+        if item['id'] != identifier:
+            continue
+        if field == 'exists':
+            return True
+        if field in item.get('fields', {}) or field in item.get('field_sha256', {}):
+            return True
+        if field in ('parent', 'kind', 'type', 'source_id', 'target_id') and field in item:
+            return True
+    return False
+
+
+def active_requirements(label, declaration, overrides):
+    from copy import deepcopy
+    if not isinstance(declaration, dict):
+        return declaration
+    result = deepcopy(declaration)
+    for collection, key in [('nodes', 'required_nodes'), ('relations', 'required_relations'), ('terms', 'required_glossary')]:
+        items = []
+        for item in result.get(key, []):
+            prefix = (label, collection, item['id'])
+            if (*prefix, 'exists') in overrides:
+                continue
+            for field in list(item.get('fields', {})):
+                if (*prefix, field) in overrides:
+                    del item['fields'][field]
+            for field in list(item.get('field_sha256', {})):
+                if (*prefix, field) in overrides:
+                    del item['field_sha256'][field]
+            for field in ('parent', 'kind', 'type', 'source_id', 'target_id'):
+                if (*prefix, field) in overrides:
+                    item.pop(field, None)
+                    if field == 'parent':
+                        item.pop('parent_type', None)
+            items.append(item)
+        result[key] = items
+    return result

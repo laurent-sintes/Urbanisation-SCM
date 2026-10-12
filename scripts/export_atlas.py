@@ -27,13 +27,9 @@ from scripts.structured_io import _PARSER_SIGNATURE
 
 
 def generator_signature():
-    """Conservative dependency closure, including transitive Python helpers."""
-    digest = hashlib.sha256(_PARSER_SIGNATURE)
-    for folder in (ROOT / 'scripts', ROOT / 'app'):
-        for path in sorted(folder.glob('*.py')):
-            digest.update(path.relative_to(ROOT).as_posix().encode())
-            digest.update(path.read_bytes())
-    return digest.hexdigest()
+    """Only generator dependencies invalidate historical serialization receipts."""
+    from scripts.dependency_signature import signature
+    return signature(ROOT, ['scripts/export_atlas.py'], _PARSER_SIGNATURE)
 
 
 EXPORT_NAMES = ('model.yaml', 'model.json', 'guide.json')
