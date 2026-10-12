@@ -120,7 +120,7 @@ def _export_atlas(root, destinations, *, incremental=True):
         payloads = cached_export(receipt, [source / version for source in sources]) if incremental else None
         if payloads is None:
             metamodel_document, guide = separate_documentation(complete_guide, raw)
-            model = {**{key: value for key, value in raw.items() if key not in {'source_files', 'source_version'}},
+            model = {**raw,
                      'sourcePath': 'modeles/release/' + descriptor['path'],
                      'metamodel': describe_metamodel(raw, complete_guide, snapshot_schema)}
             if metamodel_document:
@@ -135,6 +135,7 @@ def _export_atlas(root, destinations, *, incremental=True):
             files[f'{version}/{name}'] = payload
         for name in ('model', 'guide'):
             entry[name + '_sha256'] = hashlib.sha256(payloads[name + '.json']).hexdigest()
+        entry['model_yaml_sha256'] = hashlib.sha256(payloads['model.yaml']).hexdigest()
         for document in raw.get('document_catalog', {}).get('documents', []):
             files[f"{version}/documents/{document['id']}.pdf"] = asset_bytes(root, document)
         serialization_seconds += perf_counter() - step

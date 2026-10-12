@@ -1,0 +1,432 @@
+id: HOTSPOT-SOURCE-CANDIDATES-U958
+status: applied
+source_refs:
+- U958
+- A77
+integrated_on: '2026-10-12'
+scope: C09–C19 et sujet transversal HS-004 ; aucune extension des accords C01–C08 ni des preuves de réalisation.
+approval:
+  source_ref: U958
+  scope: Présence des candidats dans le backlog avec leurs réserves.
+  excluded: Validation des contenus détaillés, localisations, criticités, solutions, réalisations et publication.
+integration_map:
+- source_dossier: C09
+  source_identifiers:
+  - HS-009
+  hotspot_id: HS-020
+  boundary: Périmètre plus large que HS-017 et distinct de l’affectation aux commandes HS-008 ; ancrage Business Operations
+    provisoire, pas adoption du module comme capacité.
+  qualification: candidate_not_validated
+  market_source_keys:
+  - import-ms
+  - import-sap
+  market_comparison:
+    common: Les deux éditeurs documentent des imports de commandes ; ils ne couvrent pas à eux seuls l’ensemble vente, achat
+      et exécution du Négoce.
+    difference: Périmètre plus large que HS-017 et distinct de l’affectation aux commandes HS-008 ; ancrage Business Operations
+      provisoire, pas adoption du module comme capacité.
+    limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
+      produit retenu.'
+- source_dossier: C10
+  source_identifiers:
+  - HS-010
+  - T06
+  hotspot_id: HS-021
+  boundary: Accounting Data Provision prépare et transmet les faits ; Finance comptabilise. FI/CO reste hors de la migration
+    HS-001. Les observations sources ne sont pas toutes rattachées à des preuves datées.
+  qualification: candidate_not_validated
+  market_source_keys:
+  - finance-ms
+  - finance-sap
+  market_comparison:
+    common: Microsoft documente l’import des journaux ; SAP une interface de comptabilisation et contrepassation. La traduction
+      du fait opérationnel reste une responsabilité à attribuer.
+    difference: '[Accounting Data Provision](model:accounting-data-provision) prépare et transmet les faits ; Finance comptabilise.
+      FI/CO reste hors de la migration HS-001. Les observations sources ne sont pas toutes rattachées à des preuves datées.'
+    limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
+      produit retenu.'
+- source_dossier: C11
+  source_identifiers: []
+  hotspot_id: HS-022
+  boundary: Process Management conduit les parcours ; Order Management garde identité, engagements et validité des transitions.
+    La généricité ne transfère pas les règles Commerce ou Finance au cœur Supply ; aucun choix de plateforme.
+  qualification: candidate_not_validated
+  market_source_keys:
+  - case-ms
+  - workflow-sap
+  market_comparison:
+    common: Microsoft décrit le suivi de dossiers ; SAP des approbations conditionnelles. Ces périmètres recouvrent une partie
+      de la conduite des parcours, sans prouver reprise et compensation de bout en bout.
+    difference: '[Process Management](glossary:TER164) conduit les parcours ; [Order Management](model:D04) garde identité,
+      engagements et validité des transitions. La généricité ne transfère pas les règles Commerce ou Finance au cœur Supply
+      ; aucun choix de plateforme.'
+    limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
+      produit retenu.'
+- source_dossier: C12
+  source_identifiers:
+  - I01
+  - I02
+  hotspot_id: HS-023
+  boundary: Regroupement de travail à deux volets, pas fusion validée. Une trace de changement ne suffit pas à expliquer un
+    arbitrage. Ancrage Control Plane provisoire.
+  qualification: candidate_not_validated
+  market_source_keys:
+  - log-ms
+  - log-sap
+  market_comparison:
+    common: Les deux éditeurs documentent une trace des changements de données. Cette trace ne constitue pas une gouvernance
+      des variantes ni une explication complète des décisions.
+    difference: Regroupement de travail à deux volets, pas fusion validée. Une trace de changement ne suffit pas à expliquer
+      un arbitrage. Ancrage [Control Plane](glossary:TER130) provisoire.
+    limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
+      produit retenu.'
+- source_dossier: C13
+  source_identifiers:
+  - I03
+  hotspot_id: HS-024
+  boundary: Distinct des échanges d’achat C18. Aucun retrait de CBS ni reprise du service après-vente Sarenza présumé ; Sarenza
+    reste non évalué. Les possibilités de reprise ne sont pas démontrées.
+  qualification: candidate_not_validated
+  market_source_keys:
+  - case-ms
+  - workflow-sap
+  market_comparison:
+    common: Le suivi de dossiers Microsoft et les étapes d’approbation SAP éclairent la poursuite des traitements ; aucun
+      ne prouve la reprise des dossiers CBS ou de service après-vente locaux.
+    difference: Distinct des échanges d’achat C18. Aucun retrait de CBS ni reprise du service après-vente Sarenza présumé
+      ; Sarenza reste non évalué. Les possibilités de reprise ne sont pas démontrées.
+    limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
+      produit retenu.'
+- source_dossier: C14
+  source_identifiers:
+  - I05
+  hotspot_id: HS-025
+  boundary: La politique Wholesale reste dans HS-008. Un bon résultat de calcul ne vaut pas autorisation d’engager ses changements
+    ; aucune performance ni architecture installée démontrée.
+  qualification: candidate_not_validated
+  market_source_keys:
+  - matching-ms
+  - matching-sap
+  market_comparison:
+    common: Microsoft décrit des règles de réservation ; SAP la sélection et priorisation de demandes pour réévaluer leurs
+      confirmations. Leur périmètre et leurs objectifs diffèrent du calcul global FLOW à éprouver.
+    difference: La politique [Wholesale](glossary:TER193) reste dans HS-008. Un bon résultat de calcul ne vaut pas autorisation
+      d’engager ses changements ; aucune performance ni architecture installée démontrée.
+    limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
+      produit retenu.'
+- source_dossier: C15
+  source_identifiers:
+  - I07
+  hotspot_id: HS-026
+  boundary: Ancrage Integration de contexte provisoire ; le sujet concerne aussi les échanges opérationnels. Ne pas créer
+    un hotspot par format ni confondre fichier et opération métier.
+  qualification: candidate_not_validated
+  market_source_keys:
+  - document-ms
+  - document-sap
+  market_comparison:
+    common: Microsoft décrit les modèles des documents sortants ; SAP leur émission et leurs statuts. Les originaux, corrections
+      et accusés de remise doivent être précisés au-delà de ces exemples.
+    difference: Ancrage Integration de contexte provisoire ; le sujet concerne aussi les échanges opérationnels. Ne pas créer
+      un hotspot par format ni confondre fichier et opération métier.
+    limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
+      produit retenu.'
+- source_dossier: C16
+  source_identifiers:
+  - T01
+  hotspot_id: HS-027
+  boundary: L’absence de gestionnaire d’interfaces rapportée dans les notes ne prouve pas absence de tous les contrôles. Les
+    appuis événements ne documentent qu’une partie des échanges, pas la sécurité complète.
+  qualification: candidate_not_validated
+  market_source_keys:
+  - events-ms
+  - events-sap
+  market_comparison:
+    common: Les deux éditeurs publient des événements métier. Appui partiel aux retours d’information ; la sécurité des appels
+      Commerce et leurs préconditions ne sont pas comparées par ces sources.
+    difference: L’absence de gestionnaire d’interfaces rapportée dans les notes ne prouve pas absence de tous les contrôles.
+      Les appuis événements ne documentent qu’une partie des échanges, pas la sécurité complète.
+    limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
+      produit retenu.'
+- source_dossier: C17
+  source_identifiers:
+  - T03
+  hotspot_id: HS-028
+  boundary: Plan Ingestion reçoit les plans ; Demand & Supply Planning conserve leur production hors du cœur Supply Chain
+    Orchestration. Les types et contrats réels restent à documenter.
+  qualification: candidate_not_validated
+  market_source_keys:
+  - plan-ms
+  - plan-sap
+  market_comparison:
+    common: Microsoft permet d’importer des prévisions ; SAP publie les changements de besoins prévisionnels. Ces objets ne
+      représentent pas tous les plans de ressources et engagements reçus par FLOW.
+    difference: '[Plan Ingestion](model:plans-ingestion) reçoit les plans ; [Demand & Supply Planning](glossary:TER111) conserve
+      leur production hors du cœur [Supply Chain Orchestration](model:supply-chain-orchestration). Les types et contrats réels
+      restent à documenter.'
+    limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
+      produit retenu.'
+- source_dossier: C18
+  source_identifiers: []
+  hotspot_id: HS-029
+  boundary: La commande d’achat dans FLOW est la cible de travail rapportée. Ce sujet ne décide pas de la reprise de fonctions
+    CBS/SAV C13 ; les interfaces réelles restent à éprouver.
+  qualification: candidate_not_validated
+  market_source_keys:
+  - purchase-ms
+  - purchase-sap
+  market_comparison:
+    common: Microsoft décrit les réponses et versions des commandes fournisseur ; SAP les confirmations de quantité et date.
+      Ces parcours ne démontrent pas l’interface actuelle CBS.
+    difference: La commande d’achat dans FLOW est la cible de travail rapportée. Ce sujet ne décide pas de la reprise de fonctions
+      CBS/SAV C13 ; les interfaces réelles restent à éprouver.
+    limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
+      produit retenu.'
+- source_dossier: C19
+  source_identifiers:
+  - HS-005
+  hotspot_id: HS-030
+  boundary: 'Le dossier reste candidat : usage précis et incidence métier à confirmer. C11 traite la continuité générale ;
+    C19 décide quels usages la mobilisent.'
+  qualification: candidate_not_validated
+  market_source_keys:
+  - case-ms
+  - workflow-sap
+  market_comparison:
+    common: Les dossiers Microsoft et approbations SAP montrent des attentes et tâches explicites. Ils ne décident pas quels
+      usages Excel ou transactions longues doivent devenir des parcours pilotés.
+    difference: 'Le dossier reste candidat : usage précis et incidence métier à confirmer. C11 traite la continuité générale
+      ; C19 décide quels usages la mobilisent.'
+    limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
+      produit retenu.'
+- source_dossier: HS-004
+  source_identifiers:
+  - HS-004
+  hotspot_id: HS-031
+  boundary: Sujet transversal conservé sur instruction U958 avec ancrage Enterprise Architecture de contexte provisoire ;
+    cet ancrage ne signifie ni réalisation commune ni lacune généralisée. Ne pas dupliquer les contrats des frontières précises.
+  qualification: candidate_not_validated
+  market_source_keys:
+  - events-ms
+  - events-sap
+  market_comparison:
+    common: Les deux éditeurs documentent des contrats d’événements. Les autres prérequis de coopération ou reprise, dont
+      interfaces d’action, exploitation et propriété, restent à qualifier.
+    difference: Sujet transversal conservé sur instruction U958 avec ancrage [Enterprise Architecture](model:beaumanoir-target-universe)
+      de contexte provisoire ; cet ancrage ne signifie ni réalisation commune ni lacune généralisée. Ne pas dupliquer les
+      contrats des frontières précises.
+    limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
+      produit retenu.'
+source_limits:
+- 'Extraction V21 : repères de support, pas fiches de preuves de même profondeur.'
+- 'Notes du 2 octobre : propos, analyses et cible de travail distingués ; identifiants de message originaux absents.'
+- Récits de pratiques ou absences rapportées non extrapolés à toutes les marques ni à Sarenza.
+consulted_files:
+- path: C:/Dev/Beaumanoir Cartographie/audits/2026-10-10-hotspots-sources/consolidation.md
+  sha256: ca4a3b8e8ce15ea2d04f6396f0c79092d2be96aed911dc7453e653b27eee3ca7
+- path: C:/Dev/Etude d'opportunité FLOW/output/00-ESSENTIEL/hotspots.md
+  sha256: 3419b6423166cfac75c078445cef8558b44371ecd470d79d2a436c8e5b0db010
+- path: C:/Dev/Etude d'opportunité FLOW/sources/notes/2026-10-02-case-management-plateforme-point-chaud.md
+  sha256: 29630457e968ef8bae9934476dcf5ddbf986024d7198f4568db335f27702a9a5
+- path: C:/Dev/Etude d'opportunité FLOW/sources/notes/2026-10-02-point-chaud-moteur-matching.md
+  sha256: 0e70240869c00580bfdce63c7e534e8145ee8bb0aebb8f283627369b53397e91
+- path: C:/Dev/Etude d'opportunité FLOW/sources/notes/2026-10-02-integration-beaumanoir-cinq-frontieres.md
+  sha256: c76583abe75618d289db0a76cfa6d6dc83bacd555b4aa5ef1f79de61ba1bed76
+market_references:
+- key: case-ms
+  publisher: Microsoft Dynamics 365
+  title: Help organizations manage case to resolution processes
+  url: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/case-to-resolution-introduction
+  relevance: Enregistrer, orienter et suivre les dossiers ; recouvrement partiel avec la conduite des parcours Supply.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: workflow-sap
+  publisher: SAP S/4HANA Cloud
+  title: Flexible Workflow for Purchase Orders
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/adbae5bcd5994f159bf2847a11397b61/fbc1a9b4600745c1939276a0d9ce62ec.html
+  relevance: Conditions, étapes et approbateurs ; processus d’approbation plus étroit que la continuité générale des parcours.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: events-ms
+  publisher: Microsoft Dynamics 365 Finance & Operations
+  title: Business events overview
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/business-events/home-page
+  relevance: Contrats d’événements métier pour les consommateurs ; ne fixe pas le mandat métier des systèmes.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: events-sap
+  publisher: SAP S/4HANA
+  title: Purchase Order Events
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/91af7f8d3acd47da90d33aaacfcd0d59/eeab037f56e24beeb5d729de18055a65.html?locale=en-US&state=PRODUCTION&version=2023.latest
+  relevance: Événements de création et modification de commandes ; couverture partielle des contrats à qualifier.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: import-ms
+  publisher: Microsoft Dynamics 365
+  title: Import sales order data
+  url: https://learn.microsoft.com/en-us/dynamics365/guidance/resources/import-sales-orders
+  relevance: Import de commandes ; appui partiel à la captation, pas couverture complète du Négoce.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: import-sap
+  publisher: SAP S/4HANA Cloud
+  title: Import Sales Orders
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/a376cd9ea00d476b96f18dea1247e6a5/fbf21ca2d6c1482c8473b7d76c0ed39d.html?locale=en-US&q=Import+Sales+Orders+App
+  relevance: Création et contrôle d’imports ; ne prouve pas la couverture des usages Négoce locaux.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: finance-ms
+  publisher: Microsoft Dynamics 365
+  title: Import general journals
+  url: https://learn.microsoft.com/en-us/dynamics365/guidance/resources/import-general-journals
+  relevance: Entités d’import des écritures ; distinctes de l’interprétation des faits opérationnels.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: finance-sap
+  publisher: SAP S/4HANA
+  title: Journal Entry
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/3ab6e6fc510f4840a5508e126ef01e22/92fed0579212c525e10000000a4450e5.html
+  relevance: Écritures et contrepassation ; une interface comptable ne décide pas qui traduit les faits FLOW.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: log-ms
+  publisher: Microsoft Dynamics 365 Finance & Operations
+  title: Configure database logging
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/sysadmin/configure-manage-database-log
+  relevance: Trace des modifications de données ; ne constitue pas une explication des arbitrages métier.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: log-sap
+  publisher: SAP S/4HANA
+  title: Displaying Change Documents
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/1a087e1593b24e4ebb9d5abf942b8758/666a9753858ced23e10000000a174cb4.html?locale=en-US
+  relevance: Anciennes et nouvelles valeurs ; appui à la provenance, pas gestion globale des variantes de règles.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: matching-ms
+  publisher: Microsoft Dynamics 365 SCM
+  title: Reserve inventory quantities
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/reserve-inventory-quantities
+  relevance: Règles de réservation ; périmètre plus étroit que la réévaluation globale du carnet.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: matching-sap
+  publisher: SAP S/4HANA
+  title: Backorder Processing
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-backorder-processing-for-advanced-atp-in-sap-s-4hana
+  relevance: Réévaluation des confirmations ; ne garantit pas performance, stabilité ou algorithme adapté au cas FLOW.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: document-ms
+  publisher: Microsoft Dynamics 365 Finance & Operations
+  title: Business document management overview
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/analytics/er-business-document-management
+  relevance: Formats et modèles des documents sortants ; ne couvre pas tout le cycle des corrections et accusés.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: document-sap
+  publisher: SAP S/4HANA Cloud
+  title: Output Management for Sales Documents and Billing Process Documents
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/a376cd9ea00d476b96f18dea1247e6a5/d9cc17d1aa404aee9bf2d10599c9a8d1.html?locale=en-us
+  relevance: Émissions et suivi des sorties documentaires ; appui partiel à la remise et à ses statuts.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: plan-ms
+  publisher: Microsoft Dynamics 365 SCM
+  title: Inventory forecasts
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
+  relevance: Import de lignes de prévision de demande et de ressources ; ne fixe pas la sémantique de tous les plans FLOW.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: plan-sap
+  publisher: SAP S/4HANA Cloud
+  title: Planned Independent Requirement Events
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/d35113ee62644d3abee1aaec148291d9/c0d28173576f495daf208e3e21653780.html
+  relevance: Événements de création et changement des besoins prévisionnels ; objet plus étroit que tous les plans amont.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: purchase-ms
+  publisher: Microsoft Dynamics 365 SCM
+  title: Vendor collaboration with external vendors
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/vendor-collaboration-work-external-vendors
+  relevance: Versions, réponses et modifications des commandes d’achat ; parcours fournisseur, pas preuve de l’interface CBS.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+- key: purchase-sap
+  publisher: SAP S/4HANA Cloud
+  title: Manage Supplier Confirmations
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/0e602d466b99490187fcbb30d1dc897c/9900dd93aec14047b483dc1a52561bf5.html
+  relevance: Confirmations de quantité et date ; ne remplace pas la réception physique faisant autorité.
+  consulted_on: '2026-10-12'
+  edition: Page évolutive ; version non relevée, sauf version indiquée dans URL.
+  access: 'Microsoft : texte primaire lisible. SAP : passage primaire indexé consulté, portail direct parfois sans corps exploitable.'
+alignment:
+  model: Responsabilités courantes réutilisées ; aucune hiérarchie ni réalisation modifiée.
+  business_glossary: Termes existants relus ; aucun nom, sens ou frontière modifié. Liens vers les entrées ou périmètres canoniques
+    dans les nouvelles rédactions.
+  methodology: Hotspot et Gap Analysis inchangés ; aucun écart artificiel créé sans observations comparables.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U958
+  summary: Douze candidats intégrés, publication distincte.
+  required_catalog:
+  - collection: hotspots
+    id: HS-020
+    content_sha256: 3744b8a9a0061c36dcb981e42dbedfc9253eb3e1375d80c60d2dc332608b89f7
+  - collection: hotspots
+    id: HS-021
+    content_sha256: bdda0b0d03bf9dbd623c48e813bf6c53277abc2c34612cf0a4b7a946c8740e6e
+  - collection: hotspots
+    id: HS-022
+    content_sha256: faa668e37d67579693bb26ca61ff569bac8359f4d81c9ece8960a151341770ef
+  - collection: hotspots
+    id: HS-023
+    content_sha256: 86a523ff76f43970d25a5525fd6144acd803b204157c8f3fb5915aa3c03a1a6d
+  - collection: hotspots
+    id: HS-024
+    content_sha256: 035b62a2955659983e63ed9d773cefe3464c793aedf8c5726b60699e3dc1c951
+  - collection: hotspots
+    id: HS-025
+    content_sha256: 4b993c49b65e357154ecf5d33b28d69092f45aa19889c949595f2548d3bcfc22
+  - collection: hotspots
+    id: HS-026
+    content_sha256: 41a22629bc2b5ca0dbab2601fa02ea048cab3e5959435a886f27d51617ab558b
+  - collection: hotspots
+    id: HS-027
+    content_sha256: ac552a46ed0465f8f3179a05a1097b96e7453087316f172e2e46a31dbd915e83
+  - collection: hotspots
+    id: HS-028
+    content_sha256: f3b0af02e4b019a99248140cf06d1d628b67ac85d1ae84aa0868ef6cd2fe388a
+  - collection: hotspots
+    id: HS-029
+    content_sha256: 177bba1fe7af530b51340def9a00aadbca1fe9edb35ae069c3fa7c27edf8d1bd
+  - collection: hotspots
+    id: HS-030
+    content_sha256: ac65ad7f7c736624803e96a212ad6c98e482991d6844383cbe0d6ed8ac03e251
+  - collection: hotspots
+    id: HS-031
+    content_sha256: c9def9654a5cb357adfee80920a2e685f0ef316a21d9f673dbdf5ac9b5343737
+  impact_annotation_update: 'U959–U961 : ajout de qualifications d’impact proposées, sans changement des contenus ou accords
+    antérieurs ; empreintes précédentes dans hotspot-framing-impact-U959.yaml.'
+  validation_update: 'U963 : seul lot HS-017/030/018 reformulé et validé ; empreintes antérieures conservées dans hotspot-validation-U963.yaml.
+    Autres accords inchangés.'
+capture_method: Verbatim enregistré avant application ; empreintes finales, les outils record_decision/record_intents ne prennent
+  pas en charge les hotspots. Cette capture constate l’intégration et ne valide pas les propositions détaillées.

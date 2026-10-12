@@ -1835,11 +1835,12 @@ terms:
 - id: MOD044
   name: Hotspot
   label_fr: Point chaud
-  short_description: Sujet à instruire ou arbitrer, situé sur un périmètre ou entre deux périmètres du modèle.
-  definition: Sujet transverse dont le problème, les options et les éléments à confirmer sont suivis dans une fiche autonome.
-    Un point chaud de périmètre est ancré sur un ou plusieurs objets du modèle ; un point chaud d’intégration relie exactement
-    deux objets. Sa gravité combine la difficulté politique et la difficulté d’implémentation selon une grille publiée, sans
-    mesurer automatiquement l’urgence ni l’impact.
+  short_description: Sujet à creuser et à arbitrer, avec ou sans écart entre modes de fonctionnement.
+  definition: Sujet à creuser et à arbitrer, suivi dans une fiche autonome. Il peut concerner un écart entre modes de fonctionnement,
+    une complexité d’implémentation, un irritant d’usage ou une autre question de cadrage. Sa révélation ne démontre pas un
+    dysfonctionnement. Un point chaud de périmètre est ancré sur un ou plusieurs objets du modèle ; un point chaud d’intégration
+    relie exactement deux objets. Sa gravité combine la difficulté politique et la difficulté d’implémentation selon une grille
+    publiée, sans mesurer automatiquement l’urgence ni l’impact.
   role: Rendre visibles les sujets à traiter sur les cartes et garder leurs options, sources, réserves et arbitrages.
   notes:
   - Les statuts Atlas découvert, partagé, validé et résolu ne remplacent pas les états de suivi du registre FLOW-Program.
@@ -1850,9 +1851,25 @@ terms:
     signifie absence d’évaluation, jamais absence de risque.
   - Résolu signifie qu’au moins une solution crédible est envisagée et argumentée avec ses hypothèses et réserves. Cela ne
     prouve ni choix définitif, ni mise en œuvre, ni disparition du problème opérationnel.
-  - La qualification du problème et l’avancement du cadrage sont distincts. La criticité reste inchangée par la progression
-    ; les flammes s’éteignent au cadrage résolu. Un blocage précise sa raison et la prochaine étape.
+  - La qualification du sujet et l’avancement du cadrage sont distincts. La criticité reste inchangée par la progression ;
+    les flammes s’éteignent au cadrage résolu. Un blocage précise sa raison et la prochaine étape.
   - Aucune progression ou résolution n’est propagée aux autres points chauds ou aux enfants des objets concernés.
+  - Une [Gap Analysis](method:MOD045) facultative compare plusieurs réalisations ou règles de gestion du même périmètre métier
+    ; chaque observation garde ses sources, sa nature de preuve et ses limites. Elle ne remplace ni criticité ni avancement
+    du cadrage.
+  - L’impact sur le cadrage est indépendant de la criticité, de la qualification du problème et de la progression. Structurant
+    signifie qu’une responsabilité, règle, donnée ou réalisation du modèle métier ou du Core System est concernée.
+  - 'Un irritant d’usage porte sur la praticité du travail avec l’outil : manipulations manuelles, navigation entre écrans
+    ou recours à des fichiers. Il reste suivi et est repris par le design produit ; l’utilisation d’Excel ne suffit pas à
+    le qualifier.'
+  - À qualifier conserve l’incertitude sur cet impact. Requalifier un irritant si sa résolution nécessite de changer règles,
+    engagements, données ou responsabilités ; aucune baisse automatique de criticité ni clôture de cadrage.
+  - Découvert ou validé qualifie le suivi du sujet et sa portée ; cela ne confirme pas automatiquement un problème opérationnel.
+  - Une [Gap Analysis](method:MOD045) reste facultative. Une complexité d’implémentation peut révéler un hotspot sans écart
+    entre SI ou modes de fonctionnement.
+  - Lorsqu’un écart est en jeu, une décision argumentée de convergence totale, partielle ou de non-convergence peut suffire
+    à résoudre le cadrage. Elle peut préserver les décisions propres aux marques ou aux pôles si leur compatibilité avec le
+    socle commun est établie ; aucun changement technique n’est exigé par principe.
   source_refs:
   - U917
   - U918
@@ -1861,9 +1878,79 @@ terms:
   - U921
   - U922
   - U949
+  - U951
+  - U952
+  - U953
+  - U954
+  - U959
+  - U960
+  - U961
+  - U964
+  - U965
+  - U966
   review:
     state: proposed
     note: Définition méthodologique pilote ; libellés, états et calcul de gravité restent à éprouver avant accord métier.
+- id: MOD045
+  name: Gap Analysis
+  label_fr: Analyse des écarts
+  short_description: Comparer les réalisations et règles d’une même responsabilité métier entre SI ou entre périmètres d’un
+    même SI.
+  definition: Analyse des différences de prise en charge par le SI, de moyens de réalisation ou de règles de gestion d’un
+    périmètre métier commun. Elle compare plusieurs SI, plusieurs parcours ou populations dans un même SI, ou les deux. Chaque
+    observation précise ses sources, ses limites et, si nécessaire, son périmètre ; les écarts alimentent la question de convergence
+    et les options à instruire.
+  role: Enrichir un Hotspot sans dupliquer la hiérarchie métier ni confondre différence de réalisation et absence de capacité.
+  notes:
+  - Dimension facultative, indépendante du type du hotspot, de sa criticité et de sa progression de cadrage.
+  - Documenté signifie que la déclaration ou la source est enregistrée ; la nature de preuve et les limites indiquent ce qui
+    est effectivement confirmé. Absence d’évaluation ne signifie jamais absence de fonction.
+  - Plusieurs écarts peuvent concerner un même hotspot ; ils ne se propagent pas aux enfants du périmètre.
+  - Une réalisation commune peut conserver des règles différentes. Aucune unification ou solution n’est déduite automatiquement.
+  - Le périmètre d’observation ne crée pas un nouveau SI ni un parent dans la hiérarchie métier.
+  - Deux observations du même SI exigent des périmètres explicites et distincts ; une variante peut être légitime.
+  - Une comparaison incomplète peut enregistrer un côté à instruire sans conclure à un écart établi ni à une absence de couverture.
+  - Un écart ne constitue pas automatiquement un problème. Une unification envisagée peut créer une difficulté ou désavantager
+    des marques ou des pôles ; apprécier ces effets avant de décider.
+  - L’issue peut être une convergence totale, une convergence partielle ou une non-convergence. Une décision argumentée peut
+    être la solution, sans changement technique obligatoire ; aucune de ces issues n’est déduite de la seule comparaison.
+  source_refs:
+  - U951
+  - U952
+  - U953
+  - U954
+  - U956
+  - U957
+  - U964
+  - U965
+  - U966
+  review:
+    state: proposed
+    note: Extension inter-SI/intra-SI autorisée par U957 ; les interprétations détaillées conservent leur qualification et
+      leurs réserves.
+- id: MOD046
+  name: Decision Provenance
+  label_fr: Provenance des décisions
+  short_description: Retrouver les données, règles, acteurs et effets qui ont conduit à une décision.
+  definition: Chaîne reliant les données connues au moment du choix, les règles et leurs versions, les personnes ou mécanismes
+    intervenus, le résultat et les effets qui en découlent. Elle aide à comprendre une décision produite à travers plusieurs
+    composants. Une trace de modification seule ne reconstitue pas cette chaîne.
+  role: Qualifier la question d’architecture de HS-023 sans déplacer l’autorité des règles ni imposer une solution technique.
+  notes:
+  - 'Singh, Cobbe et Norval, Decision Provenance: Harnessing data flow for accountable systems (IEEE Access, 2019, DOI 10.1109/ACCESS.2018.2887201),
+    étudient la chaîne des entrées, décisions et effets des systèmes interconnectés. Le résumé primaire arXiv v4 a été consulté
+    ; l’étude vise notamment les systèmes algorithmiques et ne définit pas un standard FLOW.'
+  - W3C PROV-DM (2013) décrit la provenance des entités, activités et agents en général. Son application aux décisions FLOW
+    reste à concevoir.
+  - Les versions des règles du [Control Plane](glossary:TER130) peuvent être des entrées de décision ; leur gouvernance reste
+    dans ce sous-domaine. La provenance traverse les responsabilités qui produisent et appliquent les choix.
+  - Les journaux de modifications Microsoft Dynamics et SAP S/4HANA apportent des traces partielles ; ils ne démontrent ni
+    chaîne complète ni réalisation installée chez Beaumanoir.
+  source_refs:
+  - U968
+  review:
+    state: proposed
+    note: Terme d’architecture demandé U968 ; définition FLOW détaillée proposée, sans choix de standard ou de produit.
 methodology_agreements:
 - id: AGREEMENT-U787
   source_refs:

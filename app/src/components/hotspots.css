@@ -543,6 +543,21 @@
   color: #9c513e;
   font-weight: 700;
 }
+
+.hotspot-framing-marker {
+  display: inline-block;
+  margin: 0.3rem 0;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 0.4rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.hotspot-framing-description p {
+  margin: 0.4rem 0;
+}
 .hotspot-detail {
   display: grid;
   gap: 0.5rem;
@@ -1411,4 +1426,50 @@
 .hotspot-map-point.is-framing-closed .hotspot-map-halo {
   opacity: 0.08;
   animation: none;
+}
+.hotspot-impact-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+.hotspot-impact-filters legend {
+  font-weight: 600;
+}
+.hotspot-impact-filters p {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: 12px;
+}
+.overview-global-hotspots {
+  margin: 12px 0;
+  border: 1px solid #cbdad0;
+  border-radius: 10px;
+  background: #f4f8f5;
+  padding: 8px 12px;
+}
+.overview-global-hotspots > p {
+  margin: 0;
+  font-size: 12px;
+}
+.overview-global-hotspot {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.overview-global-marker {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+.overview-global-hotspot > button {
+  border: 0;
+  background: none;
+  text-align: left;
+  color: #205a43;
+  cursor: pointer;
 }

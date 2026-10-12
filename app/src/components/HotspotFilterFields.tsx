@@ -84,6 +84,34 @@ export function HotspotFilterFields({
           Afficher les points chauds
         </label>
       )}
+      <fieldset className="hotspot-impact-filters">
+        <legend>Impact du sujet</legend>
+        <label className="hotspot-map-toggle">
+          <input
+            type="checkbox"
+            checked={filters.showModelHotspots !== false}
+            onChange={(event) => onChange({ showModelHotspots: event.target.checked, enabled: true })}
+          />
+          Hotspots modèle
+        </label>
+        <label className="hotspot-map-toggle">
+          <input
+            type="checkbox"
+            checked={filters.showUsageHotspots !== false}
+            onChange={(event) => onChange({ showUsageHotspots: event.target.checked, enabled: true })}
+          />
+          Hotspots usage
+        </label>
+        <label className="hotspot-map-toggle">
+          <input
+            type="checkbox"
+            checked={filters.showUnqualifiedHotspots !== false}
+            onChange={(event) => onChange({ showUnqualifiedHotspots: event.target.checked, enabled: true })}
+          />
+          Impact à qualifier
+        </label>
+        <p>Modèle métier ou Core System FLOW · Usage de l’outil · Impact encore incertain.</p>
+      </fieldset>
       <label className="hotspot-filter-select">
         Avancement du cadrage
         <select

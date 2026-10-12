@@ -40,6 +40,11 @@ FIELD_MEANINGS = {
     'relations.type': 'Type du lien, déclaré dans metamodel.relation_types.',
     'relations.qualification': 'Sens, rôle, conditions et effets propres à ce lien.',
     'display_index': 'Ordre, parenté de lecture et codes figés pour cette publication.',
+    'hotspot_catalog.hotspots': 'Sujets autonomes à instruire et arbitrer, hors de la hiérarchie métier.',
+    'hotspot_catalog.hotspots.status': 'Qualification du sujet ; validated ne confirme ni dysfonctionnement ni solution.',
+    'hotspot_catalog.hotspots.framing_impact': 'Impact sur le modèle métier, le Core System ou la praticité d’usage ; indépendant de la criticité.',
+    'hotspot_catalog.hotspots.gap_analysis': 'Comparaisons facultatives inter-SI ou intra-SI, avec observations sourcées et réserves.',
+    'hotspot_catalog.hotspots.resolution': 'Avancement du cadrage, solutions crédibles, blocage et prochaine étape ; distinct de la réalisation.',
 }
 
 RELATION_MEANINGS = {
@@ -170,10 +175,24 @@ def _constraints(model):
              'rule': 'Chaque lien va d’une information existante vers une autre information distincte.',
              'source': 'validation'},
         ])
+    if model.get('hotspot_catalog') is not None:
+        rules.extend([
+            {'id': 'hotspot-location', 'applies_to': 'hotspot_catalog.hotspots',
+             'rule': 'Un sujet de périmètre possède au moins un ancrage ; un sujet d’intégration exactement deux ancrages publiés. Ces ancrages ne créent pas de parent métier.', 'source': 'validation'},
+            {'id': 'hotspot-gap-optional', 'applies_to': 'hotspot_catalog.hotspots.gap_analysis',
+             'cardinality': {'gaps': {'min': 0, 'max': None}},
+             'rule': 'Une analyse d’écarts est facultative. Son sujet est une Business Area, capacité ou comportement ; plusieurs observations du même SI exigent des périmètres distincts.', 'source': 'validation'},
+            {'id': 'hotspot-independent-dimensions', 'applies_to': 'hotspot_catalog.hotspots',
+             'rule': 'Qualification du sujet, impact du cadrage, criticité et avancement restent distincts. Un écart ne prouve pas un dysfonctionnement et une décision de non-convergence peut résoudre le cadrage.', 'source': 'conventions Hotspot et Gap Analysis'},
+        ])
     return rules
 
 
 CATALOG_TERMS = (
+    ('hotspot_catalog.hotspots', 'Hotspot', 'Sujet à creuser et arbitrer, avec ou sans écart entre modes de fonctionnement.'),
+    ('hotspot_catalog.hotspots.gap_analysis', 'Gap Analysis', 'Comparaison inter-SI ou intra-SI d’une responsabilité métier commune ; observations et réserves restent explicites.'),
+    ('hotspot_catalog.hotspots.gap_analysis.observations_by_context', 'Gap Observation', 'Observation située et sourcée d’un mode de fonctionnement, avec sa preuve et ses limites.'),
+    ('hotspot_catalog.hotspots.resolution_options', 'Hotspot Resolution Option', 'Option à instruire ; être crédible, être retenue et être mise en œuvre sont trois choses distinctes.'),
     ('scenario_catalog.value_streams', 'Value Stream', None),
     ('scenario_catalog.value_streams.stages', 'Value Stream Stage', None),
     ('scenario_catalog.scenarios', 'Business Scenario', None),
@@ -190,10 +209,16 @@ CATALOG_TERMS = (
 
 
 def _catalog_types(model, terms):
+    hotspots = (model.get('hotspot_catalog') or {}).get('hotspots', [])
+    gaps = [gap for item in hotspots for gap in item.get('gap_analysis', [])]
     scenarios = model.get('scenario_catalog') or {}
     streams = scenarios.get('value_streams', [])
     paths = scenarios.get('paths', [])
     counts = {
+        'hotspot_catalog.hotspots': len(hotspots),
+        'hotspot_catalog.hotspots.gap_analysis': len(gaps),
+        'hotspot_catalog.hotspots.gap_analysis.observations_by_context': sum(len(gap['observations_by_context']) for gap in gaps),
+        'hotspot_catalog.hotspots.resolution_options': sum(len(item.get('resolution_options', [])) for item in hotspots),
         'scenario_catalog.value_streams': len(streams),
         'scenario_catalog.value_streams.stages': sum(len(item.get('stages', [])) for item in streams),
         'scenario_catalog.scenarios': len(scenarios.get('scenarios', [])),

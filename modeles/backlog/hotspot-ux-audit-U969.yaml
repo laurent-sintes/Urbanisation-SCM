@@ -1,0 +1,32 @@
+id: HOTSPOT-UX-AUDIT-U969
+status: applied
+source_refs: [U969, U968, U964, U965, U966]
+scope: Contrôle du catalogue courant et audit des parcours liste, détail, filtres, carte et téléchargement.
+catalog_review:
+  total: 27
+  pending_subject_validation: 0
+  validated_subjects: 27
+  structuring: 24
+  usage: [HS-017, HS-030]
+  impact_to_assess: [HS-018]
+  source_candidates: Les douze correspondances U958 sont intégrées ; les validations U963, U967 et U968 qualifient les sujets courants. Le libellé candidate_not_validated de l'extraction U958 décrit son état historique.
+  boundary: La validation reconnaît les sujets et périmètres. Les observations, preuves de réalisation, impacts hypothétiques, estimations et solutions restent qualifiés séparément ; aucun cadrage crédible n'est déduit.
+ux_findings:
+  list: Marqueurs d'impact présents ; ajout du bilan modèle/usage/à qualifier et du rappel validation distincte de résolution.
+  detail: Récit, observations inter-SI/intra-SI, preuves, options, avancement, prochaine étape et plein écran présents ; conservation de ce parcours.
+  filters: Absence de filtre d'impact corrigée par les deux sélections modèle/usage et une sélection indépendante des impacts à qualifier. Même fonction de filtrage pour liste et carte.
+  map: Qualification absente des aperçus et ancrage Enterprise Architecture invisible ; ajout aux infobulles et au sélecteur, puis espace transversal explicite pour HS-031 dans la vue générale. Une carte de système garde son périmètre propre, sans projection arbitraire du sujet transverse. Symboles de criticité et avancement conservés.
+metamodel_findings:
+  sufficient_contract: Le contrat distingue localisation, complexités, impact du cadrage, Gap Analysis facultative, observations situées et sourcées, options et résolution. Aucun nouveau champ métier requis pour les 27 sujets.
+  corrected: Catalogue des types Hotspot, Gap Analysis, observations et options ajouté aux exports, avec cardinalités et comptes. MOD044, MOD045 et MOD046 incorporés à une nouvelle édition figée du guide ; aucun recours au glossaire vivant pour une publication historique.
+  possible_later_extensions:
+  - Une issue de convergence typée pourrait faciliter des bilans automatisés ; elle reste actuellement portée par les options, le choix et la note. Ne pas déduire une issue du seul écart.
+  - Un responsable d'instruction et une date de réexamen pourraient aider le suivi opérationnel ; aucune attribution ou échéance Beaumanoir n'est inventée.
+  glossary_alignment: Glossaire métier relu dans le lot précédent et inchangé ici ; les trois termes méthodologiques existants alimentent le guide, sans réécriture sémantique.
+download_contract:
+  formats: [yaml, json]
+  completeness: Même modèle publié, tous ses catalogues et métamodèle avec schéma complet ; l'interface et les filtres ne réduisent jamais le fichier.
+  historical_provenance: source_files et source_version, présents dans certaines publications historiques, sont conservés plutôt qu'écartés à l'export.
+  integrity: Empreintes JSON et YAML dans le catalogue ; contrôle HTTP et égalité sémantique des deux fichiers pendant la release.
+  regressions: Téléchargements navigateur réels courant/historique et PDF ; tests d'export, réparation de cache corrompu, HTTP Unicode/gros fichier/HEAD et routes manquantes.
+publication: Nouvelle édition méthodologique demandée avec la release, distincte du commit et du push.

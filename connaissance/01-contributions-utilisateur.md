@@ -22872,3 +22872,227 @@ Verbatim :
 > Les autres, tu peux mettre le niveau le plus bas.
 
 Portée : évaluer HS-002 à partir des apports U925–U926 et initialiser les dix autres sujets à « À explorer », premier niveau de progression. L'évaluation de Codex retient « Options en qualification » pour HS-002 : une solution est décrite et discutée, ses garanties, sa durée de validité et le moment de l'engagement ferme restent à préciser. Cette évaluation ne vaut ni choix définitif, ni validation d'une solution, ni preuve de réalisation installée.
+
+## U951
+
+Date : 2026-10-12. Source : Laurent, extension du modèle Hotspot à l’analyse des écarts entre SI.
+
+Verbatim :
+
+> Je voudrais améliorer le modèle Hotspot.
+>
+> Je souhaite y introduire la notion de gap analysis : un point chaud peut avoir une autre dimension, celle d'une capacité, d'un comportement voire même d'un business area qui existe du côté "SI Marques Historiques" et qui n'existe pas côté "SI Boardriders" ou l'inverse. Ou dont les règles de gestion sont tellement différentes que ça peut poser question sur l'unification via un SI commun : Core System FLOW.
+
+Portée : demander une dimension d’analyse des écarts de couverture ou de règles de gestion entre le SI des marques historiques et le SI Boardriders, à la maille d’une Business Area, d’une capacité ou d’un comportement, pour éclairer leur convergence vers Core System FLOW. Cet apport ne constate aucune absence ou divergence sur un élément précis, ne valide aucune solution d’unification et ne modifie pas les preuves de réalisation installée.
+
+## U952
+
+Date : 2026-10-12. Source : Laurent, grille métier commune et différences de réalisation entre SI.
+
+Verbatim :
+
+> Le modèle Domaine / Capacité est un modèle qui normalement correspond aux deux SI car les deux entités juridiques "font" le même métier. Mais elles l'implémentent et le gère parfois très différemment.
+
+Portée : préciser U951 : le modèle métier constitue une grille commune aux deux entités juridiques. L’analyse des écarts porte sur leurs façons de réaliser et de gérer les mêmes responsabilités métier, notamment leurs prises en charge par les SI et leurs règles de gestion. Cette précision ne constate aucune divergence particulière et ne vaut pas évaluation automatique de l’applicabilité ou de la couverture de chaque élément.
+
+## U953
+
+Date : 2026-10-12. Source : Laurent, comparaison des modes de gestion Wholesale pour HS-008.
+
+Verbatim :
+
+> Prenons le Hotspot "Affectation et redistribution Wholesale avant promesse ferme" :
+>
+> - Côté Beaumanoir marques histo, le wholesale représente une part de 10% et observe l'adage / la logique "premier arrivé, premier servi ET on ne sert que le stock disponible aujourd'hui". Conséquence : on gère le wholesale comme le B2C => on accepte une commande ou on la rejète pour raison de pénurie au moment où la commande est postée.
+> - Côté Beaumanoir c'est différent. 60% de l'activité. Quand un client B2B poste une commande on tente de la satisfaire avec le stock disponible. Si le stock est insuffisant, la demande est "uncovered". Régulièrement, on "travaille" le carnet de commande comme une backlog (ref Oracle) : on prend les demandes pour lesquelles Boardriders ne s'est pas engagé définitivement (commande ferme) et on réattribue les ressources (stock disponible déjà attribué à des commandes) à des commandes jugées prioritaires. Les commandes prioritaires sont en général des gros clients gold qui passent de grosses commandes mais les priorisation est progressive et dépend du client, du stock, de l'avancée de la saison, de la catégorie de produits etc. Voilà pourquoi l'outil qui retravaille les allocations de la backlog (attention le terme allocation signifie affectation à des commandes et n'a pas le sens d'allocation dans le sens de protection du stock par canal), l'AllocationRun est complexe et a été largement customisé => cf étude SAP ppt dont le résumé est téléchargeable en pdf. Cette étude montre que l'implémentation est incomplete, notamment sur la prise en compte des stocks futurs
+>
+> La question est :
+>
+> - le wholesale doit-il être à terme unifié ?
+> - selon quel modèle ?
+>
+> Les premiers éléments de réponse montrent que Boardriders n'envisage pas avoir un modèle Marques Histos trop simpliste.
+>
+> Au vu de ce que je viens d'expliquer, le hotspot mérite d'être réécrit et enrichi selon le modèle Gap Analysis dont on vient de parler.
+
+Portée : demander la réécriture et l’enrichissement de HS-008 autour des différences de réalisation et de règles de gestion d’un métier commun. Le deuxième « Côté Beaumanoir » est interprété comme Boardriders d’après les mentions explicites qui suivent, sans correction du verbatim. Les parts de 10 % et 60 %, les pratiques et la position Boardriders sont des déclarations de Laurent ; période, dénominateur et généralisation des chiffres restent à préciser. L’étude SAP datée de juillet 2025 conserve sa portée documentaire ; elle ne prouve pas l’état installé actuel. Aucun arbitrage d’unification, choix d’option, niveau de progression supplémentaire ou publication n’est demandé.
+
+## U954
+
+Date : 2026-10-12. Source : Laurent, confirmation du cadrage de la réécriture HS-008.
+
+Verbatim :
+
+> Oui !
+
+Contexte : Codex propose de centrer l’écart sur le refus à la saisie côté Marques Historiques et le maintien dans le carnet avec réexamen des affectations côté Boardriders, en distinguant cet écart de règles de gestion de la couverture incomplète des stocks futurs et en laissant ouverte l’unification.
+
+Portée : confirmer ce cadrage dans la demande de réécriture U953. Les formulations détaillées, les nouvelles options et le contrat technique rédigés ensuite par Codex ne reçoivent aucun accord implicite ; aucune publication demandée.
+
+## U955
+
+Date : 2026-10-12. Source : Laurent, recherche d’écarts documentés dans la base de connaissance.
+
+Verbatim :
+
+> Tu peux rechercher dans ta base de connaissance si des éléments qui relevent du gap analysis peuvent être intégrés dans le modèle ?
+
+Portée : rechercher et rapprocher les connaissances existantes du contrat Gap Analysis et des hotspots du backlog. Préparer des enrichissements sourcés et distinguer les constats rapportés, les lacunes de comparaison et les hypothèses. Cette demande ne valide aucun nouvel écart installé, choix de convergence, niveau de progression ou publication.
+
+## U956
+
+Date : 2026-10-12. Source : Laurent, portée inter-SI et intra-SI de la recherche d’écarts.
+
+Verbatim :
+
+> Interessant d'identifier le gap analysis entre les 2 SI et aussi intra SI
+
+Portée : inclure dans la recherche les écarts entre SI et les écarts entre périmètres d’un même SI. La distinction ne transforme pas les marques, canaux ou parcours en SI autonomes et ne valide pas encore les candidats individuels ni un nouveau contrat de sous-contextes.
+
+## U957
+
+Date : 2026-10-12. Source : Laurent, accord sur l’extension et l’intégration des analyses d’écarts.
+
+Verbatim :
+
+> Go, étends le modèle Gap Analysis et prend en compte les connaissances analysées dans le modèle cible
+
+Portée : appliquer la proposition U955–U956 : comparer entre SI et entre périmètres d’un même SI, intégrer les enrichissements préparés de HS-002 et HS-011, renforcer la provenance HS-008 et prendre en compte les autres connaissances analysées avec leurs réserves. Les cas suffisamment décrits sont des pratiques rapportées ; les pistes produit, fraîcheur, promesse, protection par canal, Négoce et captation B2B restent qualifiées selon leurs preuves. Aucun écart installé non démontré, choix de convergence, progression de résolution ou publication n’est validé implicitement. Les compléments rédigés après cet accord restent proposés.
+
+## U958
+
+Date : 2026-10-12. Source : Laurent, intégration des hotspots encore présents dans les sources.
+
+Verbatim :
+
+> Intègre ces hotspots dans la backlog.
+
+Portée : intégrer les dossiers C09 à C19 de la consolidation et le sujet transversal HS-004 précédemment identifiés, avec leur provenance et leurs réserves. L’instruction autorise leur présence dans le backlog, pas la validation des problèmes détaillés, des estimations ou des solutions. Conserver le lot C01–C08, les enrichissements Gap Analysis et les différences de portée entre sujets voisins. Aucune publication demandée.
+
+## U959
+
+Date : 2026-10-12. Source : Laurent, distinction des impacts des hotspots.
+
+Verbatim :
+
+> Je note qu'il y a des hotspot structurants qui touchent le modèle (Business ou Core System) et d'autres qui ne touchent que l'usage. Ce dernier est moins impact, devra être repris par les product designers mais n'impacte vraisemblabement pas le cadrage. On peut garder ces irritants mais il faut les "marquer"
+
+Portée : distinguer l’impact structurant sur le modèle métier ou Core System des irritants d’usage à reprendre par le design produit. Conserver les irritants. Ne pas convertir cette distinction en baisse automatique de criticité, validation des fiches ou clôture de cadrage.
+
+## U960
+
+Date : 2026-10-12. Source : Laurent, réponse à la question des exemples d’irritants.
+
+Verbatim :
+
+> je ne sais pas. A toi de voir
+
+Portée : Codex prépare le classement à partir des sources. Ses affectations restent des qualifications proposées, sans accord automatique sur chaque hotspot.
+
+## U961
+
+Date : 2026-10-12. Source : Laurent, précision du critère d’usage.
+
+Verbatim :
+
+> Lorsque ce sont des irritant sur la praticité d'usage de l'outil : trop de tâches manuelles, être obligé d'ouvrir plusieurs écrans, travailler dans excel etc.
+
+Portée : l’irritant porte sur l’effort et la praticité du travail avec l’outil. Un fichier ou plusieurs parcours ne prouvent pas à eux seuls un irritant ni l’absence de changement métier. Requalifier si une règle, un engagement, une donnée ou une responsabilité doit évoluer.
+
+## U962
+
+Date : 2026-10-12. Source : Laurent, demande de revue de validation des hotspots.
+
+Verbatim :
+
+> Je veux valider la backlog des hotspots
+
+Portée : préparer et conduire la revue des problèmes, périmètres et qualifications proposés du backlog. Cette demande ouvre la validation ; elle ne vaut pas accord global déjà donné sur les 16 candidats, leurs descriptions, leurs classements d’impact ou leurs solutions. Les accords antérieurs restent conservés.
+
+## U963
+
+Date : 2026-10-12. Source : Laurent, validation du premier lot de revue des hotspots U962.
+
+Verbatim :
+
+> oui
+
+Proposition acceptée : HS-017 — réduire les manipulations manuelles et la dispersion de la saisie des commandes dans les marques historiques ; la couverture métier du Négoce reste dans HS-020. Classement Usage — design produit, à requalifier si les contrôles ou responsabilités doivent changer. HS-030 — simplifier les extractions, manipulations dans Excel et réimports ; les besoins de conduite des parcours restent dans HS-022 ; le cas des tarifs reste à corroborer. Classement Usage — design produit. HS-018 — examiner les parcours interactifs et par fichier des grands comptes Boardriders pour déterminer s’ils présentent un problème ; deux parcours peuvent être légitimes. Classement À qualifier, aucun irritant ni écart de règle démontré.
+
+Portée : reconnaître les sujets, leurs périmètres et les classements de ce premier lot avec les reformulations et réserves ci-dessus. Appliquer ces reformulations aux descriptions. Les observations des sources restent hypothétiques ou rapportées selon leur preuve. Les autres hotspots, les détails ajoutés ensuite, les ancrages, la criticité, les solutions et la réalisation ne reçoivent aucun accord implicite. La progression de cadrage reste non évaluée ; aucune publication demandée.
+
+## U964
+
+Date : 2026-10-12. Source : Laurent, distinction entre révélation d’un hotspot et problème de convergence.
+
+Verbatim :
+
+> Lorsqu'un hotspot est révélé, cela ne signifie pas que c'est un problème. C'est un problème si on veut unifier le mode de fonctionnement et peut être désavantager des marques ou des pôles. C'est peut être le cas de HS-016. Une décision qui conduirait à "chaque marque décide, ça ne pose pas de problème au Core System" est une forme de résolution.
+
+Portée : un hotspot révèle un sujet à instruire ; une différence ne constitue pas automatiquement un dysfonctionnement. Examiner si l’unification envisagée crée une difficulté ou désavantage des marques ou des pôles. Pour HS-016, conserver la décision de chaque marque est une option de résolution si sa compatibilité avec le Core System est établie. Le cas reste conditionnel : ni cette compatibilité, ni le choix de l’option, ni la résolution de HS-016 ne sont confirmés par cet apport. Aucun accord global sur le deuxième lot de revue ni publication.
+
+## U965
+
+Date : 2026-10-12. Source : Laurent, décision de convergence comme résolution d’un hotspot.
+
+Verbatim :
+
+> Oui, s'il y a un gap analysis, parfois, une simple décision de convergence totale / partielle / non convergence est la solution
+
+Portée : une analyse d’écarts peut être résolue en cadrage par une décision de convergence totale, partielle ou de non-convergence. Aucun changement opérationnel ou technique n’est requis par principe. Cette règle complète U964 ; elle ne choisit aucune de ces issues pour HS-016 ou un autre hotspot, ne prouve aucune compatibilité avec le Core System et ne valide pas globalement le deuxième lot de revue. Les développements rédigés ensuite restent proposés.
+
+## U966
+
+Date : 2026-10-12. Source : Laurent, portée générique de la notion de Hotspot.
+
+Verbatim :
+
+> Dans les hotspots, parfois, il peut ne pas y avoir de Gap  mais une complexité d'implémentation. Hotspot est une notion générique qui indique qu'il y a un sujet à creuser et à arbitrer.
+
+Portée : Hotspot désigne un sujet à creuser et à arbitrer. Une analyse d’écarts est une dimension facultative ; une complexité d’implémentation peut suffire à révéler un hotspot sans écart documenté. Cette précision complète U964–U965 sans imposer de Gap Analysis, nouveau type, niveau de criticité ou issue de résolution. Les décisions de convergence sont des formes possibles de résolution pour les sujets concernés, pas le parcours obligatoire de tous les hotspots. Aucun accord global sur le deuxième lot de revue ni publication.
+
+## U967
+
+Date : 2026-10-12. Source : Laurent, validation du deuxième lot de sujets Hotspot.
+
+Verbatim :
+
+> oui
+
+Proposition acceptée : HS-016 — unifier les modes de sélection ou préserver les décisions des marques, selon leurs besoins et la compatibilité avec FLOW. HS-019 — définir la protection du stock par canal et les transferts possibles ; sujet distinct de HS-008, ratio 35/65 à confirmer. HS-020 — répartir les responsabilités actuellement couvertes par Négoce ; inventaire à compléter, aucun remplacement décidé. HS-021 — clarifier les échanges et responsabilités entre FLOW et Finance ; FI/CO reste hors de la migration HS-001.
+
+Portée : valider la pertinence et le périmètre de ces quatre sujets avec leurs réserves, selon la notion générique U964–U966. La validation ne confirme pas automatiquement un dysfonctionnement. La piste de maintien des décisions des marques de HS-016 reste à qualifier, sans compatibilité FLOW démontrée ni solution retenue. Les observations, ancrages détaillés, classements d’impact, estimations, solutions et progressions ne reçoivent aucun accord implicite. Aucun accord sur les neuf autres candidats, aucune publication demandée.
+
+## U968
+
+Date : 2026-10-12. Source : Laurent, cadrage architectural de HS-023 et validation autonome des derniers hotspots.
+
+Verbatim :
+
+> H023, c'est une problématique architecturale de "Décision Provenance" => cherche la ref sur internet
+>
+> Je valide tout. Valide le reste tout seul on reprendra les éléments après la release
+
+Portée : recadrer HS-023 sur la provenance des décisions et rechercher une référence primaire. Valider les sujets et périmètres du lot HS-022, HS-023, HS-025, HS-026 présenté, puis qualifier et valider de manière autonome les cinq candidats restants, avec leurs réserves. La validation d’un sujet ne prouve pas un dysfonctionnement, une pratique installée, un classement d’impact, une solution ni une estimation. Les détails restant ouverts pourront être repris après la release ; cette phrase ne demande pas de déclencher la publication dans ce tour.
+
+## U969
+
+Date : 2026-10-12. Source : Laurent, contrôle de la backlog et audit Atlas Hotspots.
+
+Verbatim :
+
+> On est d'accord qu'il n'y a plus de hotspot en attente dans la backlog ?
+>
+> Si oui, vérifie le contenu, valide et relance une release.
+>
+> Maintenant qu'on a revu le metamodele, je voudrais un audit sur l'UX d'atlas concernant les hotspots : liste, détail, filtre et carte.
+>
+> Sur le filtre, je vois bien 2 coches : hotspot modèle vs hotspot usage
+>
+> N'hésite pas à auditer le metamodele hotspot pour voir s'il manque quelque chose.
+>
+> Ne jamais oublier que metamodele et modele complets doivent se trouver dans les extractions (téléchargement) yaml et json.
+>
+> Développe bien des tests de téléchargement, parfois, ça peut merder.
+
+Portée : vérifier les sujets encore en attente, leur contenu et le métamodèle ; qualifier les résultats du contrôle avant une nouvelle publication locale. Auditer et corriger les parcours liste, détail, filtre et carte, avec distinction modèle/usage et conservation explicite des impacts à qualifier. Garantir des extractions YAML/JSON complètes et développer des tests des téléchargements effectifs. L’absence de sujet en attente de validation ne signifie ni résolution, ni confirmation des observations, estimations ou solutions. Une release ne donne aucun accord implicite sur ces dimensions ; commit et push restent distincts.

@@ -47,6 +47,9 @@ test('published fingerprints reject truncated or substituted content even with t
   client.dispose();
   index.versions[0].guide_sha256 = 'broken';
   assert.throws(() => adaptCatalog(index), /Empreinte/);
+  delete index.versions[0].guide_sha256;
+  index.versions[0].model_yaml_sha256 = 'broken';
+  assert.throws(() => adaptCatalog(index), /Empreinte/);
 });
 const deferred = () => {
   let resolve, reject;

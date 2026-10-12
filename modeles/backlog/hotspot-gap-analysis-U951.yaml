@@ -1,0 +1,189 @@
+id: HOTSPOT-GAP-ANALYSIS-U951
+source_refs:
+- U951
+- U952
+- U953
+- U954
+status: pilot_applied
+scope: Dimension facultative d’analyse des différences de réalisation et de gestion d’un métier commun entre SI historiques,
+  pour éclairer la convergence vers Core System FLOW.
+application_status: Contrat facultatif et pilote HS-008 appliqués au backlog à la demande U953, cadrage confirmé U954. Aucun
+  accord global sur les autres hotspots, aucune publication.
+recommendation:
+  field: gap_analysis
+  cardinality: Zéro ou plusieurs écarts documentés dans une fiche Hotspot.
+  orthogonal_to:
+  - kind (scope / integration)
+  - criticité
+  - qualification du problème
+  - avancement du cadrage
+  reasons:
+  - Conserver les ancrages métier et les types existants.
+  - Distinguer les constats par SI de la question d’unification.
+  - Réutiliser les options du hotspot plutôt que créer un catalogue de solutions concurrent.
+  - Comparer deux réalisations sur les mêmes identifiants métier, sans dupliquer les arbres par SI.
+  limits:
+  - Tous les hotspots ne proviennent pas d’un écart entre SI.
+  - Un écart peut être légitime et n’impose ni harmonisation ni développement.
+  - L’existence d’une capacité métier ne prouve pas sa prise en charge logicielle.
+proposed_record:
+  id: Identité persistante à attribuer lors de la création ; aucun identifiant réel réservé dans cette proposition.
+  subject_node_id: 'Identifiant canonique du périmètre métier commun comparé : Business Area, capacité ou comportement ; la
+    maille est lue depuis le nœud.'
+  contexts:
+  - beaumanoir-historique
+  - boardriders
+  observations_by_context:
+    context_id: Référence à un contexte As Is du registre applicability.yaml.
+    assessment_refs: Références aux évaluations d’applicabilité existantes lorsqu’elles sont documentées.
+    business_need: Préciser le périmètre et les variantes du besoin commun dans ce contexte ; distinguer applicabilité métier
+      et prise en charge par le SI.
+    system_coverage:
+    - covered
+    - partly_covered
+    - not_covered
+    - not_assessed
+    - not_applicable
+    handling: Décrire la prise en charge observée, logicielle, manuelle ou mixte ; aucune réalisation par défaut.
+    business_rules: Règles comparables avec leurs conditions, résultats et exceptions ; aucune règle supposée.
+    source_refs: Preuves de chaque observation, avec périmètre et date lorsque connus.
+    evidence_state:
+    - to_investigate
+    - hypothesis
+    - documented
+    limits: Réserves et inconnues propres à cette observation.
+    evidence_kind: Déclaration utilisateur, document source ou analyse ; ne pas confondre enregistrement de preuve et réalisation
+      installée confirmée.
+  comparison: Comparer, pour le même périmètre métier, les moyens de réalisation et les règles de gestion ; décrire les effets
+    utiles de chaque différence, sans classement implicite de maturité.
+  convergence_question: Pour cette responsabilité commune, quelle réalisation commune Core System FLOW peut-il assurer et
+    quelles variantes de gestion faut-il préserver ? Sans assimilation automatique à toute Enterprise Architecture.
+  business_effects: Conséquences observées ou attendues, explicitement distinguées.
+  resolution_option_ids: Liens aux options existantes du hotspot, avec conditions et compromis déjà portés par ces options.
+  nature_definitions:
+    system_support_gap: Une prise en charge par le SI est absente ou partielle dans un contexte, pour une responsabilité métier
+      commune et un périmètre documenté.
+    realization_difference: La même responsabilité métier est réalisée par des moyens ou des enchaînements différents, même
+      lorsque les deux contextes la prennent en charge.
+    business_rule_divergence: Les conditions, décisions, résultats ou exceptions de gestion diffèrent pour une même responsabilité
+      métier.
+  natures:
+  - system_support_gap
+  - realization_difference
+  - business_rule_divergence
+  title: Libellé court de la différence à présenter dans la fiche narrative.
+rules:
+- Ne pas dupliquer la hiérarchie métier par SI ; rattacher les observations de chaque contexte au même sujet canonique.
+- Les trois natures d’écart peuvent se combiner ; une différence de moyens ne prouve ni manque de couverture ni divergence
+  de règle.
+- Absence de documentation ou d’évaluation ne prouve jamais une absence de couverture.
+- Non couvert par le SI ne signifie pas que le métier ne sait pas réaliser ce travail.
+- Ne pas conclure sur les enfants d’une Business Area à partir de son seul état ; qualifier chaque sujet utile.
+- Ne pas traiter toute différence de paramètre comme une incompatibilité ; expliciter la condition métier et son effet.
+- 'Ne pas déduire une impossibilité d’unification : règles communes, variantes justifiées et réalisations distinctes restent
+  des options à instruire.'
+- Aucune absence ou divergence réelle entre SI n’est constatée par U951 ou U952 sur un sujet précis.
+- Sarenza reste non évalué ; les identifiants existants permettent une extension future sans nouvelle étude implicite.
+- Une solution crédible peut résoudre le cadrage sans prouver la disparition de l’écart dans les SI installés.
+alignment:
+  model: 'Catalogue Hotspot inspecté : périmètre/intégration, localisation, problème, options et résolution conservés.'
+  business_glossary: TER017 précise le sens SAP dans ce dossier ; TER205 décrit le carnet de commandes. TER018, TER193, TER194
+    et TER195 contrôlés, sans changement de périmètre.
+  methodological_glossary: MOD044 complété et MOD045 créé ; MOD005 Couverture conservé, distinct d’une preuve de fonction
+    installée.
+  applicability: Quatre contextes existants ; aucune évaluation enregistrée. Réutiliser leurs identifiants et préserver ce
+    registre comme autorité des évaluations.
+  as_is: current.json identifie les deux SI partiellement documentés et Sarenza non évalué. Aucun enrichissement de réalisation
+    installée.
+  target: Core System FLOW repris des mots de Laurent. Aucun nœud portant ce nom retrouvé par inspection ; son identification
+    et son périmètre restent à préciser.
+market_comparison:
+- publisher: Microsoft Dynamics
+  title: Optimize your implementation by using fit-to-standard and fit-gap analysis
+  url: https://learn.microsoft.com/en-us/dynamics365/guidance/implementation-guide/process-focused-solution-fit-to-standard-fit-gap-analysis
+  edition: Page évolutive ; mise à jour affichée 2026-02-03
+  consulted_on: '2026-10-12'
+  source_locator: Fit-to-standard analysis ; Fit-gap analysis ; Common pitfalls
+  common: Comparer besoins, processus et variantes ; justifier les adaptations et leurs effets.
+  difference: Microsoft compare les besoins au standard Dynamics 365 ; FLOW compare ici deux réalisations d’un métier commun
+    avant un choix de convergence.
+  limit: Appui méthodologique uniquement ; aucune preuve sur Beaumanoir. Bandeau d’autorisation présent, mais ces sections
+    étaient lisibles.
+- publisher: SAP S/4HANA
+  title: Describing Fit-to-Standard Analysis Workshops
+  url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-private-edition/describing-fit-to-standard-analysis-workshops_c77f59be-0b11-45b3-a63d-524bc2a1731e
+  edition: Cours SAP S/4HANA Cloud Private Edition ; date d’édition non affichée
+  consulted_on: '2026-10-12'
+  source_locator: Fit-to-Standard Analysis / Design Workshops Overview ; Fit-to-Standard Workshop Tasks ; Design Workshop
+    Tasks
+  common: Éprouver les besoins, documenter les différences et préparer leur traitement.
+  difference: SAP part de ses processus standards ou de la conversion SAP ERP ; FLOW utilise sa grille métier commune pour
+    comparer deux réalisations existantes, sans les assimiler au standard SAP.
+  limit: Appui méthodologique uniquement ; aucune preuve de règles ou de déploiement dans les SI Beaumanoir.
+- publisher: Microsoft Dynamics 365 SCM
+  title: Reserve inventory quantities
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/reserve-inventory-quantities
+  edition: Page évolutive ; mise à jour 2025-08-29
+  consulted_on: '2026-10-12'
+  source_locator: Inventory reservation policies ; motifs de réservation
+  common: Priorité à certaines commandes, politiques au fil des commandes et stock commandé.
+  difference: Réservation du produit distincte de la décision d’affectation métier FLOW.
+  limit: Bandeau d’autorisation mais sections lisibles ; aucun état installé Beaumanoir déduit.
+- publisher: SAP S/4HANA
+  title: Backorder Processing — Supply Assignment
+  url: https://help.sap.com/docs/PRODUCT_ID/f132c385e0234fe68ae9ff35b2da178c/6b8eb017a1d1431abde00056a249f72b.html
+  edition: 2025 FPS01 (Feb 2026), version affichée dans le texte indexé
+  consulted_on: '2026-10-12'
+  source_locator: Requirement Sorting ; Supply Selection ; Assignment ; Reassignment
+  common: Réexamen des affectations, priorités et réceptions futures.
+  difference: Traitement produit plus large ; instance historique Boardriders non assimilée à S/4HANA.
+  limit: Passage primaire indexé lu, ouverture du portail sans corps exploitable ; aucun déploiement Boardriders déduit.
+- publisher: Oracle Fusion Cloud SCM
+  title: Start Backlog Planning
+  url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25c/faspc/start-backlog-planning.html
+  edition: 25C
+  consulted_on: '2026-10-12'
+  source_locator: Présentation ; When to Use ; Demand Priority Rule
+  common: Réexamen périodique du carnet selon les disponibilités et priorités actualisées.
+  difference: Planification du carnet plus large que seule réaffectation avant promesse ferme.
+  limit: Analogie méthodologique et fonctionnelle partielle ; aucune adoption d’Oracle ni preuve d’installation.
+business_foundation:
+  shared_reference: Un modèle métier commun aux deux entités juridiques ; les Domains, Business Areas, capacités et comportements
+    servent de grille de comparaison.
+  comparison_axis: 'Comparer la réalisation de la même responsabilité métier : moyens, prise en charge par le SI et règles
+    de gestion.'
+  boundary: Une différence de réalisation ne crée pas une capacité métier différente par défaut. Une fonction absente du SI
+    ne prouve pas une capacité absente de l’entité.
+  assessment_limit: La grille commune ne constitue pas une évaluation automatique de chaque élément dans chaque contexte.
+implementation:
+  hotspot_id: HS-008
+  gap_ids:
+  - hs-008-wholesale-rules
+  - hs-008-future-supply
+  methodological_term_id: MOD045
+  business_term_id: TER205
+  limits: Rédaction et options Codex proposées ; aucune couverture installée extrapolée, aucun choix d’unification.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U953
+  - U954
+  - U957
+  summary: Pilote HS-008 réécrit avec deux écarts, quatre options proposées et vocabulaire aligné ; aucune publication déclenchée.
+  required_catalog:
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 5769876e7e82f0d4cbe83af7263f4408569264d9ee3aafd3d354a5dd90af911a
+  required_glossary:
+  - id: TER205
+    field_sha256:
+      name: cced2b1bb2123aac0d757f949ea7ed9e51776f4e51000d811116d79c39fc5f96
+      short_description: 9fd8b0c63fe40c6560a5d12ddafe58a5fd6a10c9bc09b9f15646eca33104c2f0
+      definition: 49466e6be7abee23e256a0e58a5b82d0961ecec801c2ceacf0ade1a1a321586c
+  absent_nodes: []
+  impact_annotation_update: 'U959–U961 : ajout de qualifications d’impact proposées, sans changement des contenus ou accords
+    antérieurs ; empreintes précédentes dans hotspot-framing-impact-U959.yaml.'
+superseded_delivery_check:
+  content_sha256: 1cd7d02c846a68ffeb3294d18452bb58aac71dffd0c63f0622e5028887bc5437
+  scope: État pilote avant enrichissement des sources sous U957 ; empreinte conservée, accord antérieur non étendu.
+  successor: hotspot-gap-research-U955.yaml

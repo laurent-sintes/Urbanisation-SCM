@@ -1,0 +1,108 @@
+id: HOTSPOT-VALIDATION-U967
+status: applied
+source_refs:
+- U962
+- U964
+- U965
+- U966
+- U967
+approval_scope: Pertinence et périmètre des quatre sujets HS-016, HS-019, HS-020 et HS-021 avec leurs réserves ; validation
+  du sujet, pas preuve d’un dysfonctionnement.
+approved_statements:
+- id: HS-016
+  scope: Unifier les modes de sélection ou préserver les décisions des marques, selon leurs besoins et la compatibilité avec
+    FLOW.
+- id: HS-019
+  scope: Définir la protection du stock par canal et les transferts possibles. Distinct de HS-008 ; ratio 35/65 à confirmer.
+- id: HS-020
+  scope: Répartir les responsabilités actuellement couvertes par Négoce. Inventaire à compléter ; aucun remplacement décidé.
+- id: HS-021
+  scope: Clarifier les échanges et responsabilités entre FLOW et Finance. FI/CO reste hors de la migration HS-001.
+approved_fields:
+- id: HS-016
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+- id: HS-019
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+- id: HS-020
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+- id: HS-021
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+canonical_application: Descriptions et frontières déjà présentes conservées ; statut Validé et revue à portée limitée appliqués.
+  Pas d’accord global sur les champs détaillés.
+exclusions:
+- Observations rapportées ou hypothétiques non promues en réalisation installée.
+- Classements d’impact, ancrages détaillés et criticités non validés.
+- Aucune solution retenue, aucune progression supplémentaire ni résolution déclarée.
+- Neuf autres candidats non validés ; aucune publication.
+superseded_delivery_fingerprints:
+- path: modeles/backlog/hotspot-framing-impact-U959.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-016
+    content_sha256: 969aec0e75e0c6ef6e941b8d833550ed9582eff523dbf18f438d55d0a8bb7864
+  - collection: hotspots
+    id: HS-019
+    content_sha256: 890a8fac8b830e424da994c871cc974250b454dbb84d41a935f77d14123ea530
+  - collection: hotspots
+    id: HS-020
+    content_sha256: fd5707465f0141ddcf97498b4c80055d808933f83fefa556df1a8f7ced132d9f
+  - collection: hotspots
+    id: HS-021
+    content_sha256: 8bd40c522c148abfc60dd0a571f161c9593e8290ea185c3300c2e8a529ba2681
+- path: modeles/backlog/hotspot-gap-research-U955.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-016
+    content_sha256: 969aec0e75e0c6ef6e941b8d833550ed9582eff523dbf18f438d55d0a8bb7864
+  - collection: hotspots
+    id: HS-019
+    content_sha256: 890a8fac8b830e424da994c871cc974250b454dbb84d41a935f77d14123ea530
+- path: modeles/backlog/hotspot-source-candidates-U958.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-020
+    content_sha256: fd5707465f0141ddcf97498b4c80055d808933f83fefa556df1a8f7ced132d9f
+  - collection: hotspots
+    id: HS-021
+    content_sha256: 8bd40c522c148abfc60dd0a571f161c9593e8290ea185c3300c2e8a529ba2681
+- path: modeles/backlog/hotspot-subject-U964.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-016
+    content_sha256: 969aec0e75e0c6ef6e941b8d833550ed9582eff523dbf18f438d55d0a8bb7864
+alignment:
+  model: Lot appliqué au catalogue canonique ; questions et réserves conservées.
+  business_glossary: 'Contrôle réutilisé : aucun nom, sens ou frontière métier modifié ; glossaire inchangé.'
+  methodological_glossary: 'MOD044–MOD045 U964–U966 inchangés : Gap Analysis facultative et reconnaissance du sujet distincte
+    de sa résolution.'
+market_comparison:
+  reused: Appuis Microsoft Dynamics et SAP S/4HANA déjà consultés pour ces fiches ; comparaisons et limites conservées, aucun
+    changement de périmètre ni nouvelle étude.
+  source_annexes:
+  - modeles/backlog/hotspot-gap-research-U955.yaml
+  - modeles/backlog/hotspot-source-candidates-U958.yaml
+  - modeles/backlog/hotspot-subject-U964.yaml
+publication_delivery:
+  state: applied
+  source_refs:
+  - U967
+  summary: 'Deuxième lot : quatre sujets reconnus avec leurs périmètres et réserves.'
+  required_catalog:
+  - collection: hotspots
+    id: HS-016
+    content_sha256: d3d35ec4d9d3a4548942e8ad80e0cba8952f70bba821f49692101a43dd96dcf8
+  - collection: hotspots
+    id: HS-019
+    content_sha256: 626dd1a3af66658363d3eba9c31ba77972fa1f1b0a16fe48938184066b3fb184
+  - collection: hotspots
+    id: HS-020
+    content_sha256: 3744b8a9a0061c36dcb981e42dbedfc9253eb3e1375d80c60d2dc332608b89f7
+  - collection: hotspots
+    id: HS-021
+    content_sha256: bdda0b0d03bf9dbd623c48e813bf6c53277abc2c34612cf0a4b7a946c8740e6e
+capture_method: Verbatim et proposition complète enregistrés avant application. record_decision/record_intents ne prennent
+  pas en charge les hotspots ; portée, statut et empreintes conservés séparément.

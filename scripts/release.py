@@ -54,7 +54,7 @@ def verify_atlas(root, version, base_url='http://127.0.0.1:8765'):
     metamodel_document, expected_guide = separate_documentation(complete_guide, raw)
     schema_path = root / 'modeles/schemas/urbanism.schema.json'
     snapshot_schema = read_document(schema_path) if schema_path.is_file() else None
-    expected = {**{key: value for key, value in raw.items() if key not in {'source_files', 'source_version'}},
+    expected = {**raw,
                 'sourcePath': 'modeles/release/' + pointer['path'],
                 'metamodel': describe_metamodel(raw, complete_guide, snapshot_schema)}
     if metamodel_document:
@@ -77,7 +77,7 @@ def verify_atlas(root, version, base_url='http://127.0.0.1:8765'):
     if not isinstance(entries, list) or any(not isinstance(entry, dict) for entry in entries):
         raise ValueError('Atlas catalog differs')
     metadata = {**catalog, 'versions': [
-        {key: value for key, value in entry.items() if key not in ('model_sha256', 'guide_sha256')}
+        {key: value for key, value in entry.items() if key not in ('model_sha256', 'model_yaml_sha256', 'guide_sha256')}
         for entry in entries]}
     if metadata != expected_catalog:
         raise ValueError('Atlas catalog differs')
@@ -85,6 +85,13 @@ def verify_atlas(root, version, base_url='http://127.0.0.1:8765'):
     if (hashlib.sha256(model_payload).hexdigest() != entry.get('model_sha256')
             or entry.get('model_sha256') != hashlib.sha256(encoded(expected)).hexdigest()):
         raise ValueError('Atlas model hash differs')
+    with urlopen(base_url.rstrip('/') + '/data/' + version + '/model.yaml', timeout=10) as response:
+        yaml_payload = response.read()
+    if hashlib.sha256(yaml_payload).hexdigest() != entry.get('model_yaml_sha256'):
+        raise ValueError('Atlas YAML hash differs')
+    from scripts.structured_io import loads
+    if loads(yaml_payload.decode('utf-8'), '.yaml') != expected:
+        raise ValueError('Atlas YAML model or metamodel differs')
 
     guide, guide_payload = document('/data/' + version + '/guide.json')
     if guide != expected_guide:

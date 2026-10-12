@@ -1,6 +1,6 @@
-# Urbanisation 2026-10-11.2
+# Urbanisation 2026-10-12.1
 
-76 capacités. Sources : U950.
+76 capacités. Sources : U968.
 
 Publication et accord métier restent distincts. Comparaison détaillée disponible dans Git.
 
@@ -10,7 +10,7 @@ Publication et accord métier restent distincts. Comparaison détaillée disponi
 
 ## Points chauds
 
-11 points chauds localisés. La publication ne vaut ni arbitrage ni résolution.
+27 points chauds localisés. La publication ne vaut ni arbitrage ni résolution.
 
 ## Documents
 

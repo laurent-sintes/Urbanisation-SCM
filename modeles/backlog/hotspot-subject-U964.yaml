@@ -1,0 +1,93 @@
+id: HOTSPOT-SUBJECT-U964
+status: applied
+source_refs:
+- U964
+- U965
+- U966
+scope: Appliquer la portée générique du Hotspot et la décision de convergence comme forme possible de résolution. Enrichir
+  HS-016 avec une piste proposée, sans valider le deuxième lot.
+accepted_principles:
+- Révéler un hotspot ne démontre pas un problème.
+- Hotspot est un sujet à creuser et à arbitrer ; une complexité d’implémentation peut exister sans Gap Analysis.
+- Une décision de convergence totale, partielle ou de non-convergence peut suffire à résoudre le cadrage.
+aligned_proposals:
+- Définition et notes MOD044–MOD045 alignées ; formulations détaillées rédigées par Codex après les apports.
+- 'HS-016 : piste de maintien de la décision par marque, compatibilité FLOW à établir ; progression à Pistes identifiées,
+  aucune solution crédible ni retenue.'
+exclusions:
+- Aucun dysfonctionnement, désavantage réel ou compatibilité installée confirmé.
+- Aucune option choisie ni hotspot déclaré résolu.
+- Aucun accord global sur les quatre candidats du deuxième lot ; status HS-016 découvert conservé.
+- Aucune publication.
+alignment:
+  business_glossary: Relu avec Service Selection Decision D06.e ; aucune entrée homonyme, aucun changement de responsabilité
+    métier. Glossaire métier inchangé.
+  methodological_glossary: MOD044 et MOD045 alignés ; aucune Gap Analysis obligatoire ni nouveau type de hotspot.
+  technical_contract: Champ problem conservé pour compatibilité ; il décrit le sujet à instruire. Options et progression existantes
+    permettent de documenter une décision sans développement obligatoire.
+superseded_delivery_fingerprints:
+- path: modeles/backlog/hotspot-framing-impact-U959.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-016
+    content_sha256: 1e3fab088d074ed8a6d05797f24fe7bc43a865d4b14b75599e003104458aae40
+- path: modeles/backlog/hotspot-gap-research-U955.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-016
+    content_sha256: 1e3fab088d074ed8a6d05797f24fe7bc43a865d4b14b75599e003104458aae40
+superseded_methodological_fingerprints:
+- id: MOD044
+  field_sha256:
+    name: 23b7a5daed5fe49de4960b89fc0c5a72c8a6dee0a1272d5c8342a95c487772c7
+    short_description: 982b3824b01156c7126afc6f2ab6d8cf5976c7783805cf0bc5c53cb7f5aa9a01
+    definition: 38442ef9a760233a0735db02ea5589678adcaf597bc8ca15237faf06b76b6ff9
+    notes: bf4b35e6397ca174d95c8dd971b4cdcabffdf9ff72a41dc69146aa3ae2b514db
+- id: MOD045
+  field_sha256:
+    name: b14e0976998cb6875cde784535a6ffb67779662ebd4d19d9fb80193faec98778
+    short_description: 5feafc5f4d8f2fe6f510c5053f548d494673dd3da1203797cf1cdca1a1a6c187
+    definition: ed3619747495558ccb7cdf4867fd82c5d7e33281ebb64fe927e533c729161604
+    notes: 58a2ffb7e51bfde87a6dc01229b45f137ba1e0a96ab7a54d4906a991e355b05b
+methodology_capture:
+- id: MOD044
+  field_sha256:
+    name: 23b7a5daed5fe49de4960b89fc0c5a72c8a6dee0a1272d5c8342a95c487772c7
+    short_description: cc805a31d938f8bbe2615305afd667f507f842aa0d3511a48357400f8802bdef
+    definition: 97b37d30757ee900d71e63c1a3931e2a79610c4208e7fc40abb6bcb4bb18dd9e
+    notes: 2c5b88debdd339284f11e75a984e8ee751228d0767353a6e60588488603f56af
+- id: MOD045
+  field_sha256:
+    name: b14e0976998cb6875cde784535a6ffb67779662ebd4d19d9fb80193faec98778
+    short_description: 5feafc5f4d8f2fe6f510c5053f548d494673dd3da1203797cf1cdca1a1a6c187
+    definition: ed3619747495558ccb7cdf4867fd82c5d7e33281ebb64fe927e533c729161604
+    notes: 3526a5ffc13a01f9adf971cd17756bfa560d1cec5493666b450604cb07b69c5e
+market_comparison:
+  consulted_on: '2026-10-12'
+  microsoft:
+    url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom
+    edition: Dynamics 365 Commerce ; page mise à jour le 2026-06-03.
+    passage: Définition de plusieurs profils pour des stratégies distinctes selon activité ou segment.
+  sap:
+    url: https://learning.sap.com/courses/exploring-sap-s-4hana-cloud-public-edition-retail/executing-omnichannel-order-fulfillment-for-retail-5fz-_db648c00-65bf-4489-b638-23d3a38a27d7
+    edition: SAP S/4HANA Cloud Public Edition Retail ; version non relevée.
+    passage: Leçon 5FZ, variantes click-and-collect et click-and-reserve, options de configuration et de traitement en magasin.
+  common: Des variantes sont documentées dans des réalisations communes.
+  difference: FLOW décrit une responsabilité métier indépendante des produits ; autonomie des marques à éprouver, non prouvée
+    par ces fonctions.
+  limits: Ces appuis montrent des variantes possibles, pas la compatibilité des décisions de chaque marque avec FLOW. Les
+    profils Microsoft ne prouvent pas une délégation indépendante ; le parcours SAP étudié ne prouve pas une politique équivalente
+    de sélection du magasin. Aucune réalisation locale ni décision d’unification n’est confirmée.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U964
+  - U965
+  - U966
+  summary: Notion générique et formes de résolution alignées ; HS-016 enrichi avec une piste ouverte.
+  required_catalog:
+  - collection: hotspots
+    id: HS-016
+    content_sha256: d3d35ec4d9d3a4548942e8ad80e0cba8952f70bba821f49692101a43dd96dcf8
+capture_method: Verbatims enregistrés avant application. record_decision/record_intents ne prennent pas en charge hotspots
+  ou MOD ; portée et empreintes conservées séparément sans accord global sur les rédactions.

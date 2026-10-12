@@ -174,5 +174,53 @@ class ReleaseRunTests(unittest.TestCase):
         self.assertNotEqual(workflow.resolve_release(self.models / 'release')['version'], self.version)
 
 
+class AtlasDownloadChecks(unittest.TestCase):
+    def test_release_verifies_downloaded_yaml_hash_and_complete_semantics(self):
+        import hashlib
+        import io
+        import tempfile
+        from scripts.export_atlas import encoded
+        from scripts.structured_io import dumps
+        from scripts.atlas_metamodel import describe_metamodel
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            version = '2026-10-12.1'
+            raw = {'version': version, 'nodes': [], 'relations': [], 'hotspot_catalog': {'hotspots': []}}
+            guide = {'status': 'unavailable', 'publication_version': version}
+            expected = {**raw, 'sourcePath': f'modeles/release/{version}/model.yaml',
+                        'metamodel': describe_metamodel(raw, guide)}
+            model_bytes = encoded(expected)
+            yaml_bytes = dumps(expected).encode('utf-8')
+            guide_bytes = encoded(guide)
+            catalog = {'current_version': version, 'versions': [{'version': version}]}
+            actual_catalog = deepcopy(catalog)
+            entry = actual_catalog['versions'][0]
+            entry.update(model_sha256=hashlib.sha256(model_bytes).hexdigest(),
+                         model_yaml_sha256=hashlib.sha256(yaml_bytes).hexdigest(),
+                         guide_sha256=hashlib.sha256(guide_bytes).hexdigest())
+            routes = {'/__atlas__/identity.json': encoded({'appName': 'FLOW Atlas', 'mode': 'static', 'repositoryRoot': str(root)}),
+                      '/data/index.json': encoded(actual_catalog),
+                      f'/data/{version}/model.json': model_bytes,
+                      f'/data/{version}/model.yaml': yaml_bytes,
+                      f'/data/{version}/guide.json': guide_bytes}
+            with patch('scripts.release_catalog.PublicationReader') as reader_type, \
+                    patch('app.modeling_guide._load_associated_guide', return_value=guide), \
+                    patch.object(release, 'urlopen', side_effect=lambda url, **kw: io.BytesIO(routes[url.replace('http://127.0.0.1:8765', '')])):
+                reader = reader_type.return_value
+                reader.current_version = version
+                reader.load.return_value = ({'path': f'{version}/model.yaml'}, raw)
+                reader.catalog.return_value = catalog
+                self.assertTrue(release.verify_atlas(root, version)['verified'])
+                routes[f'/data/{version}/model.yaml'] = yaml_bytes[:-1]
+                with self.assertRaisesRegex(ValueError, 'YAML hash differs'):
+                    release.verify_atlas(root, version)
+                incomplete = dumps({**expected, 'hotspot_catalog': None}).encode('utf-8')
+                routes[f'/data/{version}/model.yaml'] = incomplete
+                entry['model_yaml_sha256'] = hashlib.sha256(incomplete).hexdigest()
+                routes['/data/index.json'] = encoded(actual_catalog)
+                with self.assertRaisesRegex(ValueError, 'YAML model or metamodel differs'):
+                    release.verify_atlas(root, version)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -45,6 +45,9 @@ export interface HotspotMapFilters {
   status: string;
   political: string;
   implementation: string;
+  showModelHotspots?: boolean;
+  showUsageHotspots?: boolean;
+  showUnqualifiedHotspots?: boolean;
 }
 
 export const defaultHotspotMapFilters: HotspotMapFilters = {
@@ -57,6 +60,9 @@ export const defaultHotspotMapFilters: HotspotMapFilters = {
   status: 'all',
   political: 'all',
   implementation: 'all',
+  showModelHotspots: true,
+  showUsageHotspots: true,
+  showUnqualifiedHotspots: true,
 };
 
 /** Result severity and its input axes are alternative ways to filter the same classification. */
@@ -85,6 +91,11 @@ export function filterMapHotspots(hotspots: Hotspot[], filters: HotspotMapFilter
   const selectedRank = LEVELS.indexOf(filters.severity);
   return hotspots.filter(
     (hotspot) =>
+      (hotspot.framing_impact?.category === 'structuring'
+        ? filters.showModelHotspots !== false
+        : hotspot.framing_impact?.category === 'usage'
+          ? filters.showUsageHotspots !== false
+          : filters.showUnqualifiedHotspots !== false) &&
       (filters.severity === 'all' ||
         (filters.severityMode === 'at_most' && selectedRank >= 0
           ? LEVELS.indexOf(hotspot.severity) >= 0 && LEVELS.indexOf(hotspot.severity) <= selectedRank

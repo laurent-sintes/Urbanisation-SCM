@@ -1837,6 +1837,8 @@ terms:
     U290 : la finalité de l’affectation est de maximiser une valeur multidimensionnelle sous contraintes. Service, engagements, coûts et risques sont des exemples éditoriaux ; leurs poids et modes d’arbitrage ne sont pas fixés.
 
     U436 : seule la réservation bloque les usages concurrents ; l’affectation seule ne les bloque pas. Créer, conserver ou réviser un lien d’affectation ne crée donc pas implicitement une réservation. Les protections de groupe conservent leurs règles d’admissibilité, et un gel d’affectation sa restriction de modification. Expiration, consommation, libération et déclenchement automatique éventuel d’une réservation restent à préciser ; aucun mécanisme technique de concurrence n’est déduit de cette frontière.
+
+    U953 : dans le dossier Wholesale Boardriders, « AllocationRun » désigne le traitement SAP d’affectation et de réaffectation aux commandes. Ce sens ne doit pas être confondu avec l’allocation de groupe ; le nom du traitement ne crée ni capacité autonome ni promesse ferme.
   source_refs:
   - U203
   - U275
@@ -1851,6 +1853,7 @@ terms:
   - ELM208
   - U903
   - U944
+  - U953
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -26823,8 +26826,9 @@ terms:
   short_description: Vue d’ensemble du SI Beaumanoir cible et de ses systèmes métier.
   definition: Représentation du SI Beaumanoir cible qui réunit les systèmes métier et permet de parcourir leurs responsabilités,
     domaines, sous-domaines, capacités et comportements documentés.
-  context: Enterprise Architecture décrit une cible. Elle ne recense pas les applications déjà installées et ne prouve pas leur couverture.
-    Les trois systèmes métier qui le composent sont Design & Development, Business Operations et Enterprise Management & Control.
+  context: Enterprise Architecture décrit une cible. Elle ne recense pas les applications déjà installées et ne prouve pas
+    leur couverture. Les trois systèmes métier qui le composent sont Design & Development, Business Operations et Enterprise
+    Management & Control.
   source_refs:
   - U915
   - U914
@@ -26844,7 +26848,10 @@ terms:
     Le pegging indique quelle ressource couvre quelle demande, éventuellement sur plusieurs niveaux de planification. Selon le système et les règles, le lien peut être recalculé ou maintenu. Dans FLOW, [Supply Assignment](model:D03.o) décide des affectations ; le pegging décrit le lien produit et suivi. Il ne signifie pas, à lui seul, que la ressource est [réservée](model:D02.c) ni qu'une promesse ferme a été communiquée au client.
 
     Exemple : 40 pièces d'une commande d'achat attendue sont liées à une commande client. Si l'arrivée change, le lien peut être maintenu, révisé ou supprimé selon les règles applicables. Le statut de la promesse client doit être déterminé séparément.
-  notes: Le terme est employé comme rapprochement de marché pour le lien demande–ressource. Il ne renomme pas la capacité Supply Assignment et n'impose ni chaîne de nomenclature multi-niveaux ni mécanisme technique SAP à FLOW. Le support Boardriders de juillet 2025 décrit des affectations ARun entre commandes, stock physique et réceptions futures, mais ne nomme pas ces liens « pegging ».
+  notes: Le terme est employé comme rapprochement de marché pour le lien demande–ressource. Il ne renomme pas la capacité
+    Supply Assignment et n'impose ni chaîne de nomenclature multi-niveaux ni mécanisme technique SAP à FLOW. Le support Boardriders
+    de juillet 2025 décrit des affectations ARun entre commandes, stock physique et réceptions futures, mais ne nomme pas
+    ces liens « pegging ».
   source_refs:
   - U942
   - U944
@@ -26853,7 +26860,8 @@ terms:
     anchor: u944
   review:
     state: proposed
-    note: Correspondance terminologique proposée par Codex à la suite de la question U944 ; aucune adoption du terme comme nom de capacité.
+    note: Correspondance terminologique proposée par Codex à la suite de la question U944 ; aucune adoption du terme comme
+      nom de capacité.
   market_comparisons:
   - vendor: SAP
     product: SAP S/4HANA
@@ -26864,14 +26872,16 @@ terms:
     scope_summary: Relie éléments de stock ou de réception aux éléments de besoin dans un périmètre de planification.
     approach_summary: Distingue des liens dynamiques recalculables et des liens fixés selon les règles du calcul.
     similarities: Décrit le lien ressource–demande que produit une affectation.
-    differences: Le pegging documenté concerne la planification SAP ; il ne décrit pas toute la logique ARun ni l'engagement client FLOW.
+    differences: Le pegging documenté concerne la planification SAP ; il ne décrit pas toute la logique ARun ni l'engagement
+      client FLOW.
     flow_position: FLOW conserve Supply Assignment comme capacité de décision et Pegging comme nom du lien résultant.
     source_title: Pegging
     source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/02e4ab50135e0c0be10000000a423f68.html
     source_version: SAP S/4HANA On-Premise ; documentation consultée le 10 octobre 2026.
     source_locator: Pegging Procedure ; dynamic pegging ; fixed pegging
     consulted_on: '2026-10-10'
-    evidence_limits: La source explique le terme dans SAP S/4HANA ; elle ne prouve ni que Boardriders nomme les liens ARun pegging ni qu'un produit SAP est retenu pour FLOW.
+    evidence_limits: La source explique le terme dans SAP S/4HANA ; elle ne prouve ni que Boardriders nomme les liens ARun
+      pegging ni qu'un produit SAP est retenu pour FLOW.
     status: proposed
     source_refs:
     - U944
@@ -26891,10 +26901,30 @@ terms:
     source_version: Documentation Microsoft ; prérequis 10.0.48 indiqué par la page.
     source_locator: What data is preserved ; Control how on-hand inventory is pegged
     consulted_on: '2026-10-10'
-    evidence_limits: Appui terminologique primaire, sans équivalence fonctionnelle complète à ARun ni preuve de déploiement Beaumanoir.
+    evidence_limits: Appui terminologique primaire, sans équivalence fonctionnelle complète à ARun ni preuve de déploiement
+      Beaumanoir.
     status: proposed
     source_refs:
     - U944
+- id: TER205
+  name: Order Backlog
+  short_description: Carnet des commandes restant à satisfaire, y compris les demandes non couvertes.
+  definition: Ensemble des commandes restant à satisfaire sur un périmètre défini. Le carnet permet de suivre les quantités
+    non couvertes et de réexaminer leur couverture selon les règles de gestion applicables.
+  context: Dans HS-008, Boardriders conserve les demandes non couvertes et retravaille régulièrement les [affectations](glossary:TER017)
+    avant [promesse](glossary:TER014) ferme, selon la pratique rapportée par Laurent. « Uncovered » désigne ici la partie
+    de demande sans ressource retenue pour la couvrir ; cela ne signifie pas automatiquement commande rejetée.
+  notes: Ne pas confondre avec un backlog de développement ou le backlog du modèle FLOW. La présence dans le carnet ne prouve
+    ni engagement client ferme ni autorisation de réaffecter toutes les ressources. Oracle Backlog Planning est un traitement
+    de planification du carnet, pas un nouveau parent de capacités.
+  source_refs:
+  - U953
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u953
+  review:
+    state: proposed
+    note: Définition rédigée pour HS-008 à partir de U953 ; aucun arbitrage de convergence.
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées. as_of indique la date du dernier lot éditorial appliqué
   au brouillon, sans modifier les dates des publications figées.

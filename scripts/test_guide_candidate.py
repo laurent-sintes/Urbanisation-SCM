@@ -13,6 +13,17 @@ DRAFT = 'modeles/backlog/atlas-transformation-methodology.yaml'
 
 
 class GuideSourceTests(unittest.TestCase):
+    def test_current_draft_includes_canonical_hotspot_definitions(self):
+        frozen = guide.load_draft(ROOT, DRAFT)
+        terms = {term['id']: term for term in frozen['glossary']['terms']}
+        canonical = {term['id']: term for term in read(ROOT / guide.CANONICAL_GLOSSARY)['terms']}
+        for identifier in ('MOD044', 'MOD045', 'MOD046'):
+            for field in guide.SHARED_FIELDS:
+                self.assertEqual(terms[identifier][field], canonical[identifier][field])
+        groups = {group['id']: group['term_ids'] for group in frozen['glossary']['groups']}
+        self.assertIn('MOD044', groups['objects'])
+        self.assertIn('MOD045', groups['objects'])
+        self.assertIn('MOD046', groups['related'])
     def test_reference_notice_links_use_existing_chapters_and_sections(self):
         from app.modeling_guide import _validate_guide
         document = deepcopy(self.expected)

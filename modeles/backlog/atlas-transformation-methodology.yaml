@@ -1,12 +1,17 @@
-id: flow-methodology-2026-10-09.2
-version: 2026-10-09.2
-as_of: '2026-10-09'
+id: flow-methodology-2026-10-12.1
+version: 2026-10-12.1
+as_of: '2026-10-12'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
 editorial_status: implementation_wording
 scope: Méthodologie de transformation et métamodèle ; Business Area obligatoire entre sous-domaine et capacité (U880). Les
   éditions historiques restent figées.
 source_refs:
+- U969
+- U964
+- U965
+- U966
+- U968
 - U319
 - U320
 - U321
@@ -308,6 +313,26 @@ lessons:
     - U482
   model_links: []
 sources:
+- id: U969
+  title: Audit Hotspots et extractions complètes
+  excerpt: Ne jamais oublier que metamodele et modele complets doivent se trouver dans les extractions (téléchargement) yaml et json.
+  scope: Demande de contrôle du catalogue, audit UX et tests de téléchargement ; aucune résolution ou réalisation déduite.
+- id: U964
+  title: Une différence ne constitue pas automatiquement un problème
+  excerpt: Une décision qui conduirait à "chaque marque décide, ça ne pose pas de problème au Core System" est une forme de résolution.
+  scope: Option conditionnelle pour HS-016 ; compatibilité et choix restent à établir.
+- id: U965
+  title: Une décision de convergence peut résoudre le cadrage
+  excerpt: Oui, s'il y a un gap analysis, parfois, une simple décision de convergence totale / partielle / non convergence est la solution
+  scope: Formes possibles de résolution, aucune issue choisie automatiquement.
+- id: U966
+  title: Hotspot comme sujet générique à creuser
+  excerpt: Hotspot est une notion générique qui indique qu'il y a un sujet à creuser et à arbitrer.
+  scope: Une complexité d'implémentation peut suffire sans analyse d'écarts.
+- id: U968
+  title: Provenance des décisions et validation des sujets
+  excerpt: H023, c'est une problématique architecturale de "Décision Provenance" => cherche la ref sur internet
+  scope: Recadrage architectural de HS-023 ; la définition détaillée conserve ses réserves et aucun produit n'est retenu.
 - id: U507
   title: Authoritative Data comme Area et visibilité des référentiels
   excerpt: Go, je valide
@@ -1309,6 +1334,22 @@ glossary:
     - short_description
     notes:
     - Objet racine du modèle cible, distinct de la pratique Enterprise Architecture Practice (MOD032).
+  - id: MOD044
+    canonical_fields: [name, label_fr, definition, short_description]
+    notes:
+    - La validation reconnaît le sujet et son périmètre ; elle ne confirme pas un dysfonctionnement ni une solution.
+    - Impact sur le modèle, irritant d’usage, criticité et avancement du cadrage restent distincts. Les impacts à qualifier ne sont pas classés par défaut comme irritants.
+    - Une décision argumentée de convergence totale, partielle ou de non-convergence peut résoudre le cadrage sans changement technique obligatoire. Une solution crédible ne prouve ni choix définitif ni réalisation.
+  - id: MOD045
+    canonical_fields: [name, label_fr, definition, short_description]
+    notes:
+    - Dimension facultative d’un hotspot ; comparer les SI, les périmètres d’un même SI, ou les deux, sans confondre différence et problème.
+    - Chaque observation conserve son périmètre, ses sources, la nature de sa preuve et ses limites. Non évalué ne signifie pas absent.
+  - id: MOD046
+    canonical_fields: [name, label_fr, definition, short_description]
+    notes:
+    - Question d’architecture transverse de HS-023 ; l’autorité des règles reste dans Control Plane. Une trace de modification seule ne démontre pas la chaîne complète.
+    - Références et limites de comparaison conservées dans la fiche HS-023 ; aucun standard, produit ou composant installé n’est déduit.
   model_term_ids:
   - TER001
   - TER002
@@ -1332,6 +1373,8 @@ glossary:
   - id: objects
     label: Objets et liens
     term_ids:
+    - MOD044
+    - MOD045
     - MOD043
     - MOD022
     - MOD008
@@ -1358,6 +1401,7 @@ glossary:
   - id: related
     label: Notions connexes
     term_ids:
+    - MOD046
     - TER024
     - TER025
     - MOD016
@@ -1825,6 +1869,12 @@ chapters:
     text: Dans le flux de valeur de traitement d’une commande, une étape de valeur décrit une progression pour le client,
       par exemple obtenir un engagement de livraison. Dans un scénario de stock partiel, une étape de mobilisation décrit
       comment les capacités évaluent les options puis sélectionnent une promesse. Les deux vues se relient sans se confondre.
+  - title: Des sujets à instruire et à arbitrer
+    text: Un [Hotspot](method:MOD044) porte une question à creuser, sans présumer d’un dysfonctionnement. Sa fiche relie le sujet, les observations, les options et les décisions. Il reste hors de la hiérarchie métier et peut concerner un ou plusieurs périmètres.
+    detail: Distinguer impact sur le modèle métier ou le Core System, irritant d’usage et impact à qualifier. La criticité et l’avancement du cadrage sont des dimensions séparées ; « validé » reconnaît le sujet, « résolu » qualifie le cadrage.
+  - title: Comparer sans imposer l’unification
+    text: Une [Gap Analysis](method:MOD045) est facultative. Elle compare des règles ou réalisations entre SI, entre périmètres d’un même SI, ou les deux. Chaque observation garde ses sources, son périmètre et ses réserves.
+    detail: Une différence peut rester légitime. Une décision argumentée de convergence totale, partielle ou de non-convergence peut suffire ; sa compatibilité avec le Core System reste à établir sur preuve.
 - id: method
   title: Conventions de cartographie
   intro: Partir du service concret rendu, préciser les frontières, puis éprouver les [capacités](method:MOD015) sur des [scénarios](method:MOD027)

@@ -61,6 +61,8 @@ def built_file(root: Path, route: str) -> tuple[Path, str] | None:
         filename, content_type = route.lstrip('/'), 'application/json; charset=utf-8'
     elif re.fullmatch(r'/data/\d{4}-\d{2}-\d{2}\.[1-9]\d*/model\.yaml', route):
         filename, content_type = route.lstrip('/'), 'application/yaml; charset=utf-8'
+    elif re.fullmatch(r'/data/\d{4}-\d{2}-\d{2}\.[1-9]\d*/documents/[A-Za-z0-9][A-Za-z0-9_-]*\.pdf', route):
+        filename, content_type = route.lstrip('/'), 'application/pdf'
     else:
         return None
     build_dir = root / "app" / "dist"

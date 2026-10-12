@@ -234,7 +234,7 @@ export function Sidebar({
           >
             <span>Modèle (JSON compact)</span>
             <small>
-              {revision} · {model.version}
+              Modèle et métamodèle complets · {revision} · {model.version}
             </small>
           </a>
           <a
@@ -244,7 +244,7 @@ export function Sidebar({
           >
             <span>Modèle (YAML lisible)</span>
             <small>
-              {revision} · {model.version}
+              Modèle et métamodèle complets · {revision} · {model.version}
             </small>
           </a>
           {model.raw.workshop && (

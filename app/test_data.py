@@ -110,6 +110,25 @@ class HTTPTests(unittest.TestCase):
         self.assertEqual(body, b"")
         self.assertGreater(int(headers["Content-Length"]), 0)
 
+    def test_published_pdf_download_and_head_preserve_bytes(self):
+        folder = self.dist / 'data/2026-10-11.2/documents'
+        folder.mkdir(parents=True)
+        pdf = b'%PDF-1.4\nPublished document\n%%EOF\n'
+        (folder / 'DOC001.pdf').write_bytes(pdf)
+        route = '/data/2026-10-11.2/documents/DOC001.pdf'
+        status, headers, body = self.request(route)
+        self.assertEqual(status, 200)
+        self.assertEqual(headers['Content-Type'], 'application/pdf')
+        self.assertEqual(body, pdf)
+        status, headers, body = self.request(route, method='HEAD')
+        self.assertEqual(status, 200)
+        self.assertEqual(int(headers['Content-Length']), len(pdf))
+        self.assertEqual(body, b'')
+        self.assertEqual(self.request('/data/2026-10-11.2/documents/DOC999.pdf')[0], 404)
+        self.assertEqual(self.request('/data/2026-10-11.2/documents/DOC001.yaml')[0], 404)
+        self.assertEqual(self.request('/data/2026-10-11.2/documents/../model.json')[0], 404)
+        self.assertEqual(self.request('/modeles/documents/DOC001.pdf')[0], 404)
+
     def test_missing_build_has_diagnostic_without_old_interface_fallback(self):
         (self.dist / "index.html").unlink()
         status, _, body = self.request("/")
@@ -251,6 +270,33 @@ class HTTPTests(unittest.TestCase):
         for route in ['/data/delivery.json', '/data/2026-09-26.2/delivery.json',
                       '/assets/delivery.json', '/report.json']:
             self.assertEqual(self.request(route)[0], 404, route)
+
+    def test_full_model_downloads_preserve_unicode_large_payload_and_head(self):
+        from scripts.structured_io import dumps, loads
+        folder = self.dist / 'data/2026-10-12.1'
+        folder.mkdir(parents=True)
+        model = {'version': '2026-10-12.1', 'nodes': [], 'relations': [],
+                 'hotspot_catalog': {'hotspots': [{'id': 'HS-023', 'title': 'Décision → provenance',
+                    'gap_analysis': [], 'notes': 'Écart été — ' * 30000}]},
+                 'metamodel': {'snapshot_schema': {'$defs': {'hotspot': {'type': 'object'}}},
+                    'catalog_types': [{'path': 'hotspot_catalog.hotspots', 'label': 'Hotspot'}]}}
+        formats = {'json': (json.dumps(model, ensure_ascii=False).encode('utf-8'), 'application/json; charset=utf-8'),
+                   'yaml': (dumps(model).encode('utf-8'), 'application/yaml; charset=utf-8')}
+        for extension, (payload, content_type) in formats.items():
+            (folder / f'model.{extension}').write_bytes(payload)
+            route = f'/data/2026-10-12.1/model.{extension}'
+            for _ in range(2):
+                status, headers, downloaded = self.request(route)
+                self.assertEqual(status, 200)
+                self.assertEqual(headers['Content-Type'], content_type)
+                self.assertEqual(int(headers['Content-Length']), len(payload))
+                self.assertEqual(downloaded, payload)
+                self.assertEqual(loads(downloaded.decode('utf-8'), '.' + extension), model)
+            status, headers, downloaded = self.request(route, method='HEAD')
+            self.assertEqual(status, 200)
+            self.assertEqual(int(headers['Content-Length']), len(payload))
+            self.assertEqual(downloaded, b'')
+        self.assertEqual(self.request('/data/2026-10-12.2/model.yaml')[0], 404)
 
 if __name__ == '__main__':
     unittest.main()

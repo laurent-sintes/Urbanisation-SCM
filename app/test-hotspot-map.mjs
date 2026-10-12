@@ -12,6 +12,47 @@ import { mapRouteForNode } from './src/mapNavigation.ts';
 import { adaptPublication } from './src/model.ts';
 
 const node = (id, kind) => ({ id, kind, fields: { name: id } });
+test('model and usage filters stay independent and keep unqualified and historical subjects explicit', () => {
+  const cases = ['structuring', 'usage', 'to_assess', undefined].map((category, index) => ({
+    id: `impact-${index}`,
+    severity: 'unassessed',
+    kind: 'scope',
+    status: 'validated',
+    complexity: { political: 'unassessed', implementation: 'unassessed' },
+    ...(category ? { framing_impact: { category } } : {}),
+  }));
+  const filters = { ...defaultHotspotMapFilters, enabled: true };
+  assert.deepEqual(
+    filterMapHotspots(cases, filters).map((item) => item.id),
+    cases.map((item) => item.id),
+  );
+  assert.deepEqual(
+    filterMapHotspots(cases, { ...filters, showModelHotspots: false }).map((item) => item.id),
+    ['impact-1', 'impact-2', 'impact-3'],
+  );
+  assert.deepEqual(
+    filterMapHotspots(cases, { ...filters, showUsageHotspots: false, showUnqualifiedHotspots: false }).map(
+      (item) => item.id,
+    ),
+    ['impact-0'],
+  );
+  assert.deepEqual(
+    filterMapHotspots(cases, { ...filters, showModelHotspots: false, showUnqualifiedHotspots: false }).map(
+      (item) => item.id,
+    ),
+    ['impact-1'],
+  );
+  assert.deepEqual(
+    filterMapHotspots(cases, {
+      ...filters,
+      showModelHotspots: false,
+      showUsageHotspots: false,
+      showUnqualifiedHotspots: false,
+    }),
+    [],
+  );
+  assert.equal(updateHotspotMapFilters(filters, { severity: 'L' }).showUsageHotspots, true);
+});
 const relation = (id, source_id, target_id) => ({ id, type: 'contains', source_id, target_id });
 const model = adaptPublication({
   space: 'release',

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-
+import { downloadServer } from './browser-download-server.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 
 const directory = path.dirname(fileURLToPath(import.meta.url));
@@ -15,7 +15,8 @@ const rootName = currentModel.nodes.find((node) => node.kind === 'universe')?.fi
 assert.ok(rootName, 'The selected publication has a named root');
 const historical = catalog.versions.find((item) => item.version !== version).version;
 const prefix = '/Urbanisation/';
-const base = `https://atlas.test${prefix}`;
+const downloadFixture = await downloadServer(dist, prefix);
+const base = downloadFixture.base;
 const types = {
   '.js': 'text/javascript',
   '.css': 'text/css',
@@ -42,13 +43,15 @@ try {
   await page.route('**/*', async (route) => {
     const url = new URL(route.request().url());
     requests.push(url.pathname);
-    if (url.origin !== 'https://atlas.test' || !url.pathname.startsWith(prefix) || url.pathname.includes('/api/')) {
+    if (url.origin !== new URL(base).origin || !url.pathname.startsWith(prefix) || url.pathname.includes('/api/')) {
       unexpected.push(url.pathname);
       return route.abort();
     }
     const relative = decodeURIComponent(url.pathname.slice(prefix.length)) || 'index.html';
+    if (relative === '__atlas__/workshop/staging.json') return route.fulfill({ status: 404, body: '{}' });
     const target = path.resolve(dist, relative);
     if (!target.startsWith(dist + path.sep)) return route.abort();
+    if (route.request().isNavigationRequest() && /\/model\.(json|yaml)$/.test(relative)) return route.continue();
     if (relative === 'delivery.json' && newerBuild)
       return route.fulfill({ json: { schema_version: 1, files: { 'index.html': 'new-build' } } });
     if (failGuideModule && /ModelingGuidePage-.*\.js$/.test(relative))
@@ -98,7 +101,15 @@ try {
   const downloaded = await downloadPending;
   assert.equal(downloaded.suggestedFilename(), `flow-atlas-model-${version}.json`);
   assert.equal(new URL(downloaded.url()).pathname, `${prefix}data/${version}/model.json`);
-  const downloadedModel = JSON.parse(await readFile(path.join(dist, 'data', version, 'model.json'), 'utf8'));
+  assert.equal(await downloaded.failure(), null, 'JSON download completes');
+  const downloadedBytes = await readFile(await downloaded.path());
+  assert.deepEqual(
+    downloadedBytes,
+    await readFile(path.join(dist, 'data', version, 'model.json')),
+    'Actual JSON download preserves every byte',
+  );
+  const downloadedModel = JSON.parse(downloadedBytes.toString('utf8'));
+  assert.deepEqual(downloadedModel, currentModel, 'Every root, catalog and metamodel survives the download');
   assert.equal(downloadedModel.version, version);
   assert.ok(downloadedModel.metamodel?.node_types?.length, 'The downloaded model carries its metamodel');
   const yamlPending = page.waitForEvent('download');
@@ -108,7 +119,14 @@ try {
   const yamlDownload = await yamlPending;
   assert.equal(yamlDownload.suggestedFilename(), `flow-atlas-model-${version}.yaml`);
   assert.equal(new URL(yamlDownload.url()).pathname, `${prefix}data/${version}/model.yaml`);
-  assert.match(await readFile(path.join(dist, 'data', version, 'model.yaml'), 'utf8'), /^schema_version:/);
+  assert.equal(await yamlDownload.failure(), null, 'YAML download completes');
+  const downloadedYaml = await readFile(await yamlDownload.path());
+  assert.deepEqual(
+    downloadedYaml,
+    await readFile(path.join(dist, 'data', version, 'model.yaml')),
+    'Actual YAML download preserves every byte',
+  );
+  assert.match(downloadedYaml.toString('utf8'), /^schema_version:/);
   assert.equal(new URL(page.url()).pathname, prefix);
   await page.goto(`${base}#/glossary?version=${historical}`);
   await page.locator(`#fa-version[data-version="${historical}"]`).waitFor({ state: 'attached' });
@@ -127,6 +145,21 @@ try {
   const historicYaml = await historicYamlPending;
   assert.equal(historicYaml.suggestedFilename(), `flow-atlas-model-${historical}.yaml`);
   assert.equal(new URL(historicYaml.url()).pathname, `${prefix}data/${historical}/model.yaml`);
+  assert.equal(await historicYaml.failure(), null);
+  assert.deepEqual(
+    await readFile(await historicYaml.path()),
+    await readFile(path.join(dist, 'data', historical, 'model.yaml')),
+    'Historic YAML downloads its selected snapshot',
+  );
+  const historicJsonPending = page.waitForEvent('download');
+  await page.getByRole('link', { name: /Modèle \(JSON compact\)/ }).click();
+  const historicJson = await historicJsonPending;
+  assert.equal(await historicJson.failure(), null);
+  assert.deepEqual(
+    await readFile(await historicJson.path()),
+    await readFile(path.join(dist, 'data', historical, 'model.json')),
+    'Historic JSON downloads its selected snapshot',
+  );
   await page.getByRole('button', { name: 'FLOW Atlas, accueil', exact: true }).click();
   assert.equal(new URL(page.url()).pathname, prefix);
   assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('version'), historical);
@@ -180,4 +213,5 @@ try {
 } finally {
   releaseModel();
   await browser.close();
+  await downloadFixture.close();
 }

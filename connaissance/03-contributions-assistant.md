@@ -2144,3 +2144,57 @@ Voir modeles/README.md et audits/2026-09-13-structure-modeles.md. Les extensions
 **statut**
 
 Reprise documentaire et réalisation technique ; aucune nouvelle validation des capacités ou réalisation installée n’est déduite de l’extraction.
+
+## A76
+
+**id**
+
+A76
+
+**source**
+
+U955–U957 ; recherche du 12 octobre 2026 ; modeles/backlog/hotspot-gap-research-U955.yaml
+
+**titre**
+
+Écarts entre SI et entre parcours d'un même SI
+
+**contenu**
+
+Analyse ciblée des contributions U03–U07, U10, U306 et U925–U933, complétée par les dossiers FLOW référencés dans l'annexe. Les déclarations directes étayent le partage des décisions C-LOG, les partenaires logistiques et les parcours entrepôt/magasin. La comparaison des alimentations de stock demeure incomplète ; consulter une API ne démontre pas une alimentation en temps réel. Aucune pratique comparable des Marques Historiques n'est établie pour les précommandes d'implantation Boardriders.
+
+**developpement**
+
+Les analyses externes sont consultées sans modification : `C:/Dev/FLOW-Program/src/docs/as-is/hotspots/plm-catalogue-article-ean.md` (sections sur la conception et les collections fournisseurs), `hotspots/module-negoce-storeland.md` (couverture différenciée, page à qualifier), `sources/SRC-2026-07-31-BRD-CANAUX-B2B/analyse.md` (CB2B-01/02/03/07, mémoire qualifiée) et `sources/SRC-2025-09-17-SYNVANCE-ACHATS-VENTES/analyse.md` (SYN-SPD-04/05, corpus daté 2025, règle à rejouer). Leurs chemins complets et empreintes figurent dans l'annexe de recherche. Les collections et marques concernées restent à préciser. Le format Excel des commandes de grands comptes n'est pas confirmé. La répartition de protection 35/65 ne représente pas la part Wholesale de l'activité 60 % rapportée en U953. Sarenza demeure non évalué.
+
+**statut**
+
+Intégration autorisée par U957 des connaissances analysées, avec leurs réserves. Les interprétations restent des hypothèses ; aucune solution de convergence, criticité nouvelle ou réalisation installée n'est validée par cette intégration.
+
+## A77
+
+**id**
+
+A77
+
+**source**
+
+U958 ; audits/2026-10-10-hotspots-sources/consolidation.md, dossiers C09–C19 et réserve HS-004 ; consultation ciblée du 12 octobre 2026.
+
+**titre**
+
+Intégration des candidats restants du registre de hotspots
+
+**contenu**
+
+Les dossiers C09–C19 deviennent des hotspots autonomes à qualifier, avec des identités canoniques nouvelles HS-020–HS-030. HS-031 conserve le sujet transversal HS-004 des sources, avec un ancrage de contexte provisoire à Enterprise Architecture. Les identifiants des sources restent dans la provenance, distincts des identifiants canoniques. Les estimations de la consolidation restent documentaires et ne deviennent pas des criticités évaluées.
+
+**developpement**
+
+Les sources comprennent le registre `C:/Dev/FLOW-Program/src/docs/as-is/hotspots/`, l’extraction `C:/Dev/Etude d'opportunité FLOW/output/00-ESSENTIEL/hotspots.md` (I01–I07 et T01–T06), ainsi que les notes du 2 octobre sur la plateforme de Case Management, le moteur de Matching et les cinq frontières d’intégration. Les notes distinguent paroles utilisateur, cible de travail et interprétations, sans identifiant de message original ; elles ne démontrent pas de déploiement. Les localisateurs, empreintes et comparaisons Microsoft Dynamics / SAP S/4HANA figurent dans `modeles/backlog/hotspot-source-candidates-U958.yaml`.
+
+Négoce conserve une question de couverture plus large que la captation HS-017. La politique Wholesale HS-008 reste distincte du mécanisme de calcul C14. C11 traite la continuité des parcours ; C19 les critères d’éligibilité des transactions longues. La continuité CBS/SAV C13 ne préjuge ni retrait de CBS ni reprise du SAV Sarenza ; C18 porte les échanges du suivi des achats. C12 garde I01 et I02 comme deux volets dont une éventuelle scission reste ouverte. Les frontières courantes de Process Management, Order Management, Integration et Accounting Data Provision sont conservées.
+
+**statut**
+
+Intégration autorisée U958 ; hotspots découverts, revue proposée, cadrage et complexités non évalués. Aucune solution adoptée ni validation globale des réalisations ou des comparaisons.

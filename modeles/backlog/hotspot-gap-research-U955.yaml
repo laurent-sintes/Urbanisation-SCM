@@ -1,0 +1,632 @@
+id: HOTSPOT-GAP-RESEARCH-U955
+status: applied
+searched_on: '2026-10-12'
+source_refs:
+- U951
+- U952
+- U955
+- U956
+- U957
+scope: Recherche ciblée inter-SI et intra-SI dans les contributions, corrections, panoramas et dossiers FLOW déjà liés ; ni
+  audit exhaustif des capacités ni observation des installations.
+canonical_changes: Extension du contrat observation_scope et intégration dans le modèle cible ; observations rapportées, hypothèses
+  et comparaisons incomplètes restent distinctes. Aucun panorama ni snapshot modifié.
+integration_candidates:
+- hotspot_id: HS-002
+  readiness: ready_as_reported
+  basis: Deux côtés décrits directement par Laurent, avec une frontière explicitement limitée au choix des prestations confiées
+    à C-LOG.
+  proposed_gap:
+    id: hs-002-decision-location
+    title: Responsabilité du choix des prestations et exécutants
+    subject_node_id: D06.e
+    natures:
+    - realization_difference
+    observations_by_context:
+    - context_id: beaumanoir-historique
+      business_need: Déterminer les services et exécutants à mobiliser pour les prestations nécessaires.
+      system_coverage: not_assessed
+      handling: Pour les demandes confiées à C-LOG, Laurent décrit un choix de l’entrepôt et du transporteur par l’OMS C-LOG,
+        selon les opérations requises et les exécutants admissibles.
+      business_rules:
+      - C-LOG choisit l’entrepôt capable de réaliser les opérations demandées et le transporteur.
+      source_refs:
+      - U04
+      - U06
+      - U07
+      evidence_state: documented
+      evidence_kind: user_report
+      limits: 'Pratique rapportée dans le récit historique. Ne concerne pas tous les parcours : le ship-from-store a son fonctionnement
+        propre. Aucun audit actuel du partage des décisions.'
+    - context_id: boardriders
+      business_need: Déterminer les services et exécutants à mobiliser pour les prestations nécessaires.
+      system_coverage: not_assessed
+      handling: Laurent décrit Boardriders comme détenteur du réseau de fulfillment et constructeur du plan ; les prestataires
+        exécutent les ordres reçus et C-LOG pilote localement sans initiative sur le plan.
+      business_rules:
+      - Boardriders construit le plan, passe les ordres et choisit leur moment de libération.
+      - C-LOG exécute et pilote localement, sans initiative sur le plan dans le fonctionnement décrit.
+      source_refs:
+      - U925
+      evidence_state: documented
+      evidence_kind: user_report
+      limits: Déclaration de Laurent du 10 octobre 2026 ; le rôle global ne prouve pas le porteur de chaque décision détaillée
+        ni les exceptions.
+    comparison: Pour les prestations confiées à C-LOG, le choix des moyens est décrit côté logisticien dans le récit Marques
+      Historiques et côté Boardriders dans U925. Cette différence de responsabilité ne signifie pas absence de capacité métier
+      dans l’une des entités.
+    convergence_question: Quelle répartition commune des choix entre marques, Core System FLOW et C-LOG faut-il retenir, et
+      quelles décisions locales restent à l’exécutant ?
+    business_effects:
+    - Une convergence doit expliciter qui propose, choisit et engage le plan, afin d’éviter décisions contradictoires ou délégation
+      implicite. Il s’agit d’un risque à instruire, pas d’un incident établi.
+    open_questions:
+    - Quelles décisions portent exactement sur les ressources, les services, les exécutants et la libération des ordres ?
+    - Quelles garanties le plan proposé apporte-t-il, pendant combien de temps et quand devient-il engageant ?
+    - Quels parcours actuels des Marques Historiques diffèrent du récit initial ?
+    resolution_option_ids:
+    - hs-002-joint-plan
+    - hs-002-brand-plan
+    source_refs:
+    - U04
+    - U06
+    - U07
+    - U925
+    - U926
+- hotspot_id: HS-011
+  readiness: ready_as_reported
+  basis: Comparaison explicite des deux côtés dans U925 ; besoin de conservation multi-prestataires demandé.
+  proposed_gap:
+    id: hs-011-provider-landscape
+    title: Un prestataire logistique ou plusieurs partenaires
+    subject_node_id: D06.e
+    natures:
+    - realization_difference
+    observations_by_context:
+    - context_id: beaumanoir-historique
+      business_need: Déterminer les services et exécutants à mobiliser pour les prestations nécessaires.
+      system_coverage: not_assessed
+      handling: Laurent indique que les Marques Historiques travaillent uniquement avec C-LOG pour le périmètre des prestataires
+        logistiques comparé.
+      business_rules:
+      - C-LOG est le partenaire logistique décrit dans ce périmètre.
+      source_refs:
+      - U925
+      evidence_state: documented
+      evidence_kind: user_report
+      limits: Le périmètre de comparaison est celui des prestataires logistiques du hotspot ; ne pas l’étendre à tous les
+        transporteurs ou opérations physiques. Aucun manque technique multi-prestataires n’est démontré.
+    - context_id: boardriders
+      business_need: Déterminer les services et exécutants à mobiliser pour les prestations nécessaires.
+      system_coverage: not_assessed
+      handling: Laurent indique que Boardriders travaille avec C-LOG et d’autres prestataires logistiques ; Boardriders construit
+        et libère leurs ordres.
+      business_rules:
+      - Plusieurs prestataires peuvent être mobilisés selon le plan tenu par Boardriders.
+      source_refs:
+      - U925
+      evidence_state: documented
+      evidence_kind: user_report
+      limits: Identité des autres prestataires, variantes de contrat et couverture technique détaillée non documentées dans
+        cette contribution.
+    comparison: Même responsabilité de sélection des services et exécutants, sur des périmètres partenaires différents. Le
+      fait de n’utiliser que C-LOG ne prouve pas que le SI historique soit incapable de gérer plusieurs prestataires.
+    convergence_question: Comment conserver dans Core System FLOW le fonctionnement multi-prestataires Boardriders, avec un
+      contrat commun et des variantes, ou avec des contrats propres aux prestataires ?
+    business_effects:
+    - Une cible conçue uniquement pour C-LOG risque de ne pas reconduire les autres partenaires Boardriders. Cette conséquence
+      est une analyse du besoin déclaré.
+    open_questions:
+    - Quels prestataires, services et périmètres doivent être reconduits ?
+    - Quels événements, engagements et règles de libération diffèrent réellement par prestataire ?
+    resolution_option_ids:
+    - hs-011-common-contract
+    - hs-011-provider-contracts
+    source_refs:
+    - U925
+other_findings:
+- id: RESEARCH-WHOLESALE-PROVENANCE
+  hotspot_ids:
+  - HS-008
+  classification: reinforces_existing_gap
+  source_refs:
+  - U02
+  - U10
+  - U30
+  - U31
+  - U953
+  finding: Les règles stock présent/premier arrivé des Marques Historiques et le besoin Boardriders de ressources futures
+    et de réaffectation étaient déjà consignés en septembre.
+  integration: Compléter la provenance des écarts HS-008 existants, sans créer un doublon.
+  limits: U30 exprime un besoin Boardriders, pas une preuve de couverture installée. U953 précise le périmètre avant engagement
+    définitif ; ne pas remettre en cause les promesses fermes par reprise littérale de la rédaction historique.
+- id: RESEARCH-PRODUCT
+  hotspot_ids:
+  - HS-006
+  - HS-015
+  classification: comparison_to_corroborate
+  source_locator:
+    path: C:/Dev/FLOW-Program/src/docs/as-is/hotspots/plm-catalogue-article-ean.md
+    sections:
+    - Pourquoi c’est un hotspot
+    - Une autre stratégie de collection apparaît
+  finding: Le dossier oppose produits conçus dans le PLM historique et références déjà conçues par les fournisseurs, livrées
+    à la variante avec identifiants, pour certaines collections Boardriders.
+  integration: Candidat d’écart de réalisation sur la provenance et la structure des données produit ; séparer autorité de
+    construction des identifiants et maille nécessaire à Supply.
+  limits: Synthèse appuyée sur corpus génériques, sans occurrence datée par collection ; ne pas généraliser à tout Boardriders.
+    Sarenza cité dans la source reste non évalué dans le modèle.
+- id: RESEARCH-STOCK-FRESHNESS
+  hotspot_ids:
+  - HS-003
+  - HS-012
+  classification: comparison_incomplete
+  source_refs:
+  - U03
+  - U927
+  - U929
+  - U306
+  source_locator:
+    path: connaissance/sources/SRC-2026-09-18-BRD-FLUX/analyse.md
+    anchors:
+    - E06
+    - E10
+    - I03
+  finding: Les remontées batch Storeland–UR et les états C-LOG sont décrits ; le schéma Boardriders présente des contrôles
+    prix/stock par API vers SAP.
+  integration: Préparer la comparaison des chemins d’alimentation et de consultation, puis mesurer les exigences et latences
+    par usage.
+  limits: Contrôle par API ne prouve ni alimentation événementielle ni temps réel ni meilleure fraîcheur. Document Boardriders
+    à mise à jour probablement 2021, pas photographie actuelle ; ne pas écrire batch contre temps réel comme constat.
+- id: RESEARCH-PROMISE
+  hotspot_ids:
+  - HS-013
+  classification: comparison_incomplete
+  source_refs:
+  - U933
+  - U931
+  - U932
+  finding: Boardriders annonce un mois cible non affiné pour certaines précommandes d’implantation ; aucune pratique historique
+    comparable n’est suffisamment décrite dans les sources lues.
+  integration: Conserver le cas Boardriders et compléter le second contexte avant de qualifier un écart entre SI.
+  limits: L’opposition B2B/B2C ou commande présente/précommande ne constitue pas à elle seule un écart entre entités.
+- id: RESEARCH-CHANNEL-PROTECTION
+  hotspot_ids: []
+  classification: historical_hypothesis
+  source_refs:
+  - U10
+  source_locator:
+    path: C:/Dev/FLOW-Program/src/docs/as-is/sources/SRC-2025-09-17-SYNVANCE-ACHATS-VENTES/analyse.md
+    unit_ids:
+    - SYN-SPD-04
+    - SYN-SPD-05
+    section: Un cas de pools Retail et Wholesale à rejouer
+  finding: La source 2025 rapporte des pools Retail/Wholesale Boardriders, une répartition 35/65 et des transferts manuels
+    ; MAP porte des protections par marque/canal dans le récit historique.
+  integration: Candidat autonome sur les règles de protection par canal, à rattacher à une capacité de protection après qualification
+    ; ne pas l’ajouter à HS-008 dont le sujet est l’affectation aux commandes.
+  limits: La règle 35/65, son périmètre et son actualité restent à corroborer. Elle n’est pas la part de chiffre d’affaires
+    Wholesale 60 % rapportée en U953.
+- id: RESEARCH-NEGOCE
+  hotspot_ids: []
+  external_hotspot_id: HS-009
+  classification: within_context_candidate
+  source_locator:
+    path: C:/Dev/FLOW-Program/src/docs/as-is/hotspots/module-negoce-storeland.md
+    section: Couverture différenciée dans Beaumanoir
+  finding: La page rapporte Négoce Storeland chez les marques premium et des traitements plus manuels/dispersés ailleurs.
+  integration: Candidat d’écart de réalisation intra-Marques Historiques ; préciser les périmètres comparés sans inventer
+    de nouveaux SI.
+  limits: Page elle-même à qualifier, marques et occurrences datées manquantes ; le contrat actuel identifie les SI mais ne
+    distingue pas deux périmètres au sein du même contexte. Aucun hotspot HS-009 créé dans le backlog.
+- id: RESEARCH-B2B-CAPTURE
+  hotspot_ids:
+  - HS-008
+  classification: within_context_candidate
+  source_locator:
+    path: C:/Dev/FLOW-Program/src/docs/as-is/sources/SRC-2026-07-31-BRD-CANAUX-B2B/analyse.md
+    unit_ids:
+    - CB2B-01
+    - CB2B-02
+    - CB2B-03
+    - CB2B-07
+  finding: Mémoire qualifiée de parcours Elastic interactif et de fichiers de commandes de grands comptes contournant Elastic
+    vers AFS chez Boardriders.
+  integration: Candidat sur la captation des commandes, distinct du calcul d’affectation HS-008 ; rechercher une comparaison
+    avec les parcours Marques Historiques.
+  limits: Mémoire qualifiée, format Excel incertain ; ne pas confondre fichier de saisie et fichier de simulation ou d’arbitrage
+    du stock.
+excluded_inferences:
+- Différents noms d’applications ne prouvent pas une différence de capacité ou de règle métier.
+- Un contexte non décrit ne reçoit pas un constat not_covered.
+- Le chiffre 5 % de décisions SAP contredisant NewStore ne repose pas sur une mesure datée dans le dossier consulté ; non
+  intégré.
+- Les besoins cibles Synvance ne sont pas convertis en fonctions existantes.
+- Aucun accord historique ou statut de source intégrée dans FLOW-Program n’est étendu à ces propositions.
+market_comparison:
+- publisher: Microsoft Dynamics 365 SCM
+  title: Warehouse management only mode with external ERP systems
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-external-erp
+  edition: Page évolutive ; mise à jour 2026-05-22
+  consulted_on: '2026-10-12'
+  source_locator: High-level implementation example ; Outbound process example
+  common: Distinction entre tenue des commandes dans un système externe et opérations d’entrepôt.
+  difference: Découpage produit ERP/WMS ne décide pas de qui choisit le plan, l’entrepôt et le transporteur chez FLOW.
+  limit: Texte primaire lisible malgré bandeau d’autorisation ; aucune réalisation Beaumanoir déduite.
+- publisher: Microsoft Dynamics 365 SCM
+  title: Exchange data between systems
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-exchange-data
+  edition: Page évolutive ; édition non relevée
+  consulted_on: '2026-10-12'
+  source_locator: Interaction categories
+  common: Distinguer références, commandes, progression et informations de stock dans les échanges.
+  difference: La source ne prouve pas la liste ni les variantes des contrats des prestataires Boardriders.
+  limit: Appui au cadrage du contrat multi-prestataires, pas une équivalence complète ni un déploiement local.
+- publisher: SAP S/4HANA
+  title: External Warehouse Management Services
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/2f36056ae9a044bba55bcbad204b7bc5/6cb085242fce4c4abd480ef3650e669a.html
+  edition: 2025 FPS01 (Feb 2026), version affichée dans le passage indexé
+  consulted_on: '2026-10-12'
+  source_locator: Présentation ; Process Flows ; Sending Goods to a Recipient
+  common: Échanges d’ordres de livraison, modifications et confirmations avec un prestataire tiers.
+  difference: Le contrat de messages ne fixe pas le partage des décisions ni l’uniformité des règles entre partenaires.
+  limit: Texte primaire indexé lu ; portail direct sans corps exploitable. Aucune preuve sur les instances historiques.
+- publisher: Microsoft Dynamics 365 Commerce
+  title: Distributed order management (DOM)
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; version non relevée sauf précision dans la source.
+  common: Sélection des sources selon stock, coûts et contraintes.
+  difference: Partager la sélection des moyens dans Service Selection Decision tout en explicitant les critères propres aux
+    magasins.
+  limit: Les exemples produits ne fixent pas la délégation C-LOG/Socloz. Le parcours SAP étudié ne prouve pas une politique
+    équivalente de sélection du magasin.
+- publisher: SAP S/4HANA Cloud Public Edition Retail
+  title: Executing Omnichannel Order Fulfillment for Retail (5FZ)
+  url: https://learning.sap.com/courses/exploring-sap-s-4hana-cloud-public-edition-retail/executing-omnichannel-order-fulfillment-for-retail-5fz-_db648c00-65bf-4489-b638-23d3a38a27d7
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; version non relevée sauf précision dans la source.
+  common: Préparation de commandes dans un magasin ; appui partiel, sans règle de sélection équivalente.
+  difference: Partager la sélection des moyens dans Service Selection Decision tout en explicitant les critères propres aux
+    magasins.
+  limit: Les exemples produits ne fixent pas la délégation C-LOG/Socloz. Le parcours SAP étudié ne prouve pas une politique
+    équivalente de sélection du magasin.
+- publisher: Microsoft Dynamics 365
+  title: Import sales order data
+  url: https://learn.microsoft.com/en-us/dynamics365/guidance/resources/import-sales-orders
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; version non relevée sauf précision dans la source.
+  common: Décrit l’import des commandes ; ne démontre pas les pratiques ni règles d’engagement locales.
+  difference: Sales Order garde l’identité et la validité des commandes, quel que soit le moyen de captation.
+  limit: Ces fonctions ne prouvent ni équipement local, ni formats, ni règles de contrôle identiques. La comparaison des règles
+    de chaque parcours reste à documenter.
+- publisher: SAP S/4HANA Cloud
+  title: Import Sales Orders
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/a376cd9ea00d476b96f18dea1247e6a5/fbf21ca2d6c1482c8473b7d76c0ed39d.html?locale=en-US&q=Import+Sales+Orders+App
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; version non relevée sauf précision dans la source.
+  common: Décrit création, aperçu et suivi des imports ; format et parcours locaux restent à vérifier.
+  difference: Sales Order garde l’identité et la validité des commandes, quel que soit le moyen de captation.
+  limit: Ces fonctions ne prouvent ni équipement local, ni formats, ni règles de contrôle identiques. La comparaison des règles
+    de chaque parcours reste à documenter.
+- publisher: Microsoft Dynamics 365 SCM
+  title: Inventory Visibility inventory allocation
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; version non relevée sauf précision dans la source.
+  common: Protection de quantités par groupes et canaux.
+  difference: Rattacher les règles de protection à Logical Stock Protection Optimization ; conserver l’affectation aux commandes
+    dans HS-008.
+  limit: Les mécanismes produits ne prouvent ni règle de transfert commune ni pertinence actuelle du ratio historique.
+- publisher: SAP S/4HANA Cloud
+  title: Supply Protection Object
+  url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/32da8359c8ee4e8b8e8c5e15cacba5aa/e37431b6ec2e4ab5b3ff64abfba93d43.html
+  consulted_on: '2026-10-12'
+  edition: Documentation évolutive ; version non relevée sauf précision dans la source.
+  common: Quantités protégées par groupes et périodes, avec priorités.
+  difference: Rattacher les règles de protection à Logical Stock Protection Optimization ; conserver l’affectation aux commandes
+    dans HS-008.
+  limit: Les mécanismes produits ne prouvent ni règle de transfert commune ni pertinence actuelle du ratio historique.
+alignment_review:
+  model: Hotspots et capacités courants utilisés comme ancrages ; D06.e porte la sélection des services et exécutants, sans
+    absorber la promesse ou les décisions de couverture.
+  business_glossary: 'Entrées existantes relues : responsabilités communes et frontières inchangées. TER205 conservé ; aucun
+    nouveau sens métier introduit. Termes spécialisés reliés ou expliqués en français dans les nouvelles observations.'
+  methodological_glossary: MOD045 aligné dans le même lot ; vocabulaire métier contrôlé sans changement de sens ni de frontière.
+  publication: Aucune publication ou opération Atlas.
+consulted_files:
+- path: connaissance/01-contributions-utilisateur.md
+  sha256: 4b0ce8895414d84769363960ddea3e32828a085cd2822c924e71014363febfda
+- path: connaissance/04-corrections.md
+  sha256: 6e15394cd3131fe2ab1ec5819684434d1471ea67133bc9251b859d4f87ea5a53
+- path: connaissance/18-politiques-engagement-gbm-brd.md
+  sha256: 60eb90554cc905f5b604d48241556294d176f2f539f293d088376d352c741dee
+- path: connaissance/sources/SRC-2026-09-18-BRD-FLUX/analyse.md
+  sha256: fc83c56d441de22ab536f8178ca5f9368d22ba228ebc5d2d2321eaa265f1cdc2
+- path: modeles/panorama-as-is/current.json
+  sha256: 8dbaa18de2e74f785409155b602d71503969248f8f780d7ce9aeab14bbda5b8c
+- path: C:/Dev/FLOW-Program/src/docs/as-is/sources/SRC-2026-06-30-GBM-CLOG-OMS/analyse.md
+  sha256: c9809e111a65ef354e935b45db489fc30b7208d769e5ef4b596402d5cc18934d
+- path: C:/Dev/FLOW-Program/src/docs/as-is/sources/SRC-2025-09-17-SYNVANCE-ACHATS-VENTES/analyse.md
+  sha256: d94583d0eef6ccfb4131b5048eec893db5847633a3404eca7b3fcfcb12c4edbd
+- path: C:/Dev/FLOW-Program/src/docs/as-is/sources/SRC-2025-09-17-SYNVANCE-ACHATS-VENTES/validation.md
+  sha256: 08abc512274e51537d695751a2de010d78fca67f02ee91fbf56b849451c74d81
+- path: C:/Dev/FLOW-Program/src/docs/as-is/sources/SRC-2026-07-31-BRD-CANAUX-B2B/analyse.md
+  sha256: 0f295ae3a21b8bcfec1f484297847c54ae00727e6727db4f012c6dc5d674936f
+- path: C:/Dev/FLOW-Program/src/docs/as-is/hotspots/plm-catalogue-article-ean.md
+  sha256: f3f73c72b9370100378e748f801a475ba7c3521be5c9b09334186a50a8d9e05e
+- path: C:/Dev/FLOW-Program/src/docs/as-is/hotspots/module-negoce-storeland.md
+  sha256: 3951476f8cac65f1e75c2f8386b54a03ce41e71869cc6434292175161662d1d1
+- path: C:/Dev/FLOW-Program/src/docs/as-is/panoramas/analyse-gouvernance-logistique-brd-gbm.md
+  sha256: ba0a5a889e39449be8f9b42fc78a63b72580a7633fda4765e0de73801892ef30
+comparison_axes:
+  inter_system: Comparer des observations dans plusieurs contextes SI canoniques, pour une même responsabilité métier.
+  within_system: 'Comparer des périmètres documentés du même contexte SI : marques, parcours ou populations, sans en faire
+    de nouveaux systèmes.'
+  mixed: Une même analyse peut comparer plusieurs SI et plusieurs périmètres dans l’un d’eux ; chaque observation garde ses
+    sources propres.
+  boundary: Une variante peut être légitime. Une différence de parcours n’est un écart pertinent que si le service, les moyens
+    ou les règles comparés sont explicités.
+scope_contract_proposal:
+  state: implemented
+  observation_scope:
+    id: Identité stable du périmètre comparé au sein du contexte, distincte de context_id.
+    label: Libellé compréhensible du périmètre.
+    description: Marques, parcours ou population concernés, avec les limites connues.
+  validation: Le couple context_id + observation_scope.id identifie un côté de la comparaison ; les périmètres sont obligatoires
+    si le même SI apparaît plusieurs fois. Ne pas autoriser deux observations indifférenciées du même SI.
+  display: Afficher le nom du SI et le libellé du périmètre ; deux côtés intra-SI ne doivent pas porter le même seul titre.
+  current_limit: Anciennes observations sans périmètre conservées ; identité du couple contexte/périmètre contrôlée.
+  applicability: Ne pas ajouter artificiellement des contextes SI pour contourner cette limite ; aucune évaluation globale
+    héritée des sous-périmètres.
+within_system_candidates:
+- id: RESEARCH-HISTORICAL-FULFILMENT-PATHS
+  classification: ready_as_reported_if_scoped_contract
+  canonical_hotspot_ids: []
+  related_hotspot_id: HS-002
+  subject_node_id: D06.e
+  title: Choix des moyens de livraison entrepôt ou magasin
+  context_id: beaumanoir-historique
+  natures:
+  - realization_difference
+  compared_scopes:
+  - id: warehouse-fulfilment
+    label: Commandes servies depuis un entrepôt
+    handling: UR porte le parcours décrit ; C-LOG choisit l’entrepôt et le transporteur pour les opérations qui lui sont demandées.
+    source_refs:
+    - U03
+    - U04
+    - U06
+  - id: ship-from-store
+    label: Commandes servies depuis un magasin
+    handling: Socloz prend en charge le ship-from-store et l’extension de gamme dans le récit U03, car UR n’est pas décrit
+      comme capable de cette complexité. Les magasins éligibles sont sollicités selon leur charge et leurs quotas ; refus
+      ou absence de réponse conduisent à essayer un autre magasin.
+    source_refs:
+    - U03
+    - U04
+    - U05
+  comparison: Dans le même SI historique, choisir un exécutant ne repose pas sur le même porteur ni les mêmes critères selon
+    entrepôt ou magasin. L’écart de réalisation est rapporté ; la règle de canal est une variante légitime à qualifier, pas
+    une anomalie démontrée.
+  convergence_question: Quel mécanisme commun de sélection et de coordination faut-il partager, et quelles règles d’éligibilité
+    et de charge restent propres aux magasins ou aux entrepôts ?
+  limits:
+  - Récit utilisateur, sans vérification actuelle des instances ou latences.
+  - Ne pas étendre l’incapacité rapportée d’UR à toute la capacité Service Selection Decision.
+  - Le délai de réponse et l’escalade de fin de journée comportent des réserves dans U04 ; ne pas les convertir en SLA ferme.
+  - 'HS-002 porte l’accord avec C-LOG : ce cas magasin doit rester un périmètre distinct, à localiser avant de décider d’un
+    rattachement ou d’un autre hotspot.'
+  - Comparaison marché spécifique au ship-from-store non réalisée dans cette recherche ; appuis ERP/WMS seulement partiels.
+- id: RESEARCH-NEGOCE
+  classification: within_context_candidate
+  comparison: Marques premium avec Négoce Storeland / autres marques avec pratiques plus manuelles ou dispersées.
+  source_finding_ref: RESEARCH-NEGOCE
+  limits: Marques, dates et cas à acquérir ; le module applicatif ne doit pas devenir un nouveau périmètre métier par défaut.
+- id: RESEARCH-B2B-CAPTURE
+  classification: within_context_candidate
+  comparison: Parcours Boardriders interactif Elastic / commandes de masse de grands comptes par fichier vers AFS.
+  source_finding_ref: RESEARCH-B2B-CAPTURE
+  limits: Mémoire qualifiée ; pas de preuve sur format Excel, refus ou engagement client. Écart de captation distinct de l’affectation.
+integration_map:
+  reported_inter_system:
+  - HS-002
+  - HS-011
+  reported_within_system:
+  - HS-016
+  hypotheses:
+  - HS-006
+  - HS-015
+  - HS-017
+  - HS-018
+  - HS-019
+  incomplete_comparisons:
+  - HS-003
+  - HS-012
+  - HS-013
+  provenance_enriched:
+  - HS-008
+approval_scope:
+  source_ref: U957
+  scope: Extension inter-SI/intra-SI et intégration des connaissances analysées avec leurs limites.
+  excluded: Aucune validation de réalisation installée, règle de convergence, estimation ou solution. Les textes détaillés
+    rédigés après le Go restent propositions.
+publication_delivery:
+  state: applied
+  summary: Lots canoniques intégrés, publication distincte et non demandée.
+  source_refs:
+  - U957
+  required_catalog:
+  - collection: hotspots
+    id: HS-002
+    content_sha256: da5ddf2008253a93d32d979616f2276e64e46dd0a7bf7d5e0692ae4a4d2dc14b
+  - collection: hotspots
+    id: HS-011
+    content_sha256: d9dbbae8b05b20c1b842a70c961f379bdff64013aa96a5838d53490904c59d63
+  - collection: hotspots
+    id: HS-003
+    content_sha256: 207914e1c2d094bb61b6ce4492d93f42fdbaafb9ae74ee3bfe71b371e9f3ab8e
+  - collection: hotspots
+    id: HS-012
+    content_sha256: ad3e973ae2a05fcb2c039698c5ed0ede44b78e621e138bc481ba43293107c3d1
+  - collection: hotspots
+    id: HS-013
+    content_sha256: a677952e18074ac5d5216a0df0a85c811037f6acac56e8641cd517b1252799e0
+  - collection: hotspots
+    id: HS-006
+    content_sha256: 5aa3dc4451a647dbb82095ca12ccbc310dccb14184570a748b32180826b9cb2f
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 290f619962a3e689b3e85a242e3ace8993fe95aca1137e79eb75419206c14b9a
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 5769876e7e82f0d4cbe83af7263f4408569264d9ee3aafd3d354a5dd90af911a
+  - collection: hotspots
+    id: HS-016
+    content_sha256: d3d35ec4d9d3a4548942e8ad80e0cba8952f70bba821f49692101a43dd96dcf8
+  - collection: hotspots
+    id: HS-017
+    content_sha256: 935a6c83a381677254ca1b9fc891eedb418151a585e0cc617892834d11c1884a
+  - collection: hotspots
+    id: HS-018
+    content_sha256: 41963cfc70786ea2c964b6892a619df28a510a166fed149ca27d80bdbec533d5
+  - collection: hotspots
+    id: HS-019
+    content_sha256: 626dd1a3af66658363d3eba9c31ba77972fa1f1b0a16fe48938184066b3fb184
+  required_glossary: []
+  impact_annotation_update: 'U959–U961 : ajout de qualifications d’impact proposées, sans changement des contenus ou accords
+    antérieurs ; empreintes précédentes dans hotspot-framing-impact-U959.yaml.'
+  validation_update: 'U963 : seul lot HS-017/030/018 reformulé et validé ; empreintes antérieures conservées dans hotspot-validation-U963.yaml.
+    Autres accords inchangés.'
+comparison_readings:
+- hotspot_ids:
+  - HS-006
+  - HS-015
+  sources:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-identifiers
+  - https://help.sap.com/docs/SAP_S4HANA_CLOUD_PE/af9ef57f504840d2b81be8667206d485/af7eb65334e6b54ce10000000a174cb4.html
+  common: Identifiants et unités permettent de distinguer les références consommées par les opérations.
+  difference: Ces documents ne décrivent pas l’origine conception interne ou fournisseur de chaque collection.
+  limits: 'SAP : texte primaire indexé lu, corps direct inexploitable. Hypothèse locale à corroborer.'
+- hotspot_ids:
+  - HS-003
+  - HS-012
+  sources:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility
+  - https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/2f36056ae9a044bba55bcbad204b7bc5/6cb085242fce4c4abd480ef3650e669a.html
+  common: Informations de stock provenant de systèmes ou prestataires externes.
+  difference: L’interface de consultation ne détermine pas la fraîcheur ni le protocole de rapprochement.
+  limits: Aucune mesure des instances locales ; comparaison incomplète.
+- hotspot_ids:
+  - HS-013
+  sources:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+  - https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-availability-check-in-detail
+  common: Dates proposées selon les ressources disponibles et les règles de contrôle.
+  difference: Le mois cible commercial Boardriders ne correspond pas automatiquement à une date calculée par ces fonctions.
+  limits: Pratique historique comparable absente ; pas d’écart inter-SI établi.
+superseded_delivery_fingerprints:
+- path: modeles/backlog/hotspot-first-lot-U948.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-002
+    content_sha256: dd78e0bed2d317c6ebe07e71038babd8b5c7f281150b1a043f9ec1325a9dc0f6
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 96c4b107b234a36069719e9154c71dd4867701d97c0b966dbae472d284e30e93
+  - collection: hotspots
+    id: HS-003
+    content_sha256: 471b94b951de2c6f44989065be4aff002cc58bf904ffae4b34066c36e186ba3b
+  - collection: hotspots
+    id: HS-012
+    content_sha256: f04232c2f06e71a0b6cbc9964c392181f1d24da1043a98c27802f7fa41289c44
+  - collection: hotspots
+    id: HS-013
+    content_sha256: 17b2fb9906d284f43957fa4acd1326bc3d5deb00a66388ee95527d4ae3e3ea33
+  - collection: hotspots
+    id: HS-006
+    content_sha256: 05a2bbba0e8192ac81ecab55b02907eeb00c5b5cb34188aa9b1777ec8174a72d
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 395ebe4b2000556769a46ca9689a14421ab14fbfcb4ab2fb309de10d52bd3fd6
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 91b27738589435ad13e9a51e87634b66be1e7a84feaf26f68215cc5e55dad372
+- path: modeles/backlog/hotspot-stock-freshness-U928.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-003
+    content_sha256: 471b94b951de2c6f44989065be4aff002cc58bf904ffae4b34066c36e186ba3b
+- path: modeles/backlog/hotspot-resolution-U949.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-002
+    content_sha256: dd78e0bed2d317c6ebe07e71038babd8b5c7f281150b1a043f9ec1325a9dc0f6
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 96c4b107b234a36069719e9154c71dd4867701d97c0b966dbae472d284e30e93
+  - collection: hotspots
+    id: HS-003
+    content_sha256: 471b94b951de2c6f44989065be4aff002cc58bf904ffae4b34066c36e186ba3b
+  - collection: hotspots
+    id: HS-012
+    content_sha256: f04232c2f06e71a0b6cbc9964c392181f1d24da1043a98c27802f7fa41289c44
+  - collection: hotspots
+    id: HS-013
+    content_sha256: 17b2fb9906d284f43957fa4acd1326bc3d5deb00a66388ee95527d4ae3e3ea33
+  - collection: hotspots
+    id: HS-006
+    content_sha256: 05a2bbba0e8192ac81ecab55b02907eeb00c5b5cb34188aa9b1777ec8174a72d
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 395ebe4b2000556769a46ca9689a14421ab14fbfcb4ab2fb309de10d52bd3fd6
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 91b27738589435ad13e9a51e87634b66be1e7a84feaf26f68215cc5e55dad372
+- path: modeles/backlog/hotspot-progress-U950.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-002
+    content_sha256: dd78e0bed2d317c6ebe07e71038babd8b5c7f281150b1a043f9ec1325a9dc0f6
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 96c4b107b234a36069719e9154c71dd4867701d97c0b966dbae472d284e30e93
+  - collection: hotspots
+    id: HS-003
+    content_sha256: 471b94b951de2c6f44989065be4aff002cc58bf904ffae4b34066c36e186ba3b
+  - collection: hotspots
+    id: HS-012
+    content_sha256: f04232c2f06e71a0b6cbc9964c392181f1d24da1043a98c27802f7fa41289c44
+  - collection: hotspots
+    id: HS-013
+    content_sha256: 17b2fb9906d284f43957fa4acd1326bc3d5deb00a66388ee95527d4ae3e3ea33
+  - collection: hotspots
+    id: HS-006
+    content_sha256: 05a2bbba0e8192ac81ecab55b02907eeb00c5b5cb34188aa9b1777ec8174a72d
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 395ebe4b2000556769a46ca9689a14421ab14fbfcb4ab2fb309de10d52bd3fd6
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 91b27738589435ad13e9a51e87634b66be1e7a84feaf26f68215cc5e55dad372
+capture_method: U957 enregistré avant application ; empreintes du lot final capturées après actualisation des sources. record_decision/record_intents
+  ne prennent pas en charge hotspots ou termes MOD ; cette capture conserve leur portée sans accord global.
+scope_contract_checks:
+  schema: modeles/schemas/urbanism.schema.json
+  validator: scripts/hotspot_catalog.py
+  methodological_term: MOD045
+agreement_capture:
+  source_ref: U957
+  scope: Extension du contrat et intégration avec qualification ; détails rédigés après le Go proposés, aucun accord étendu
+    aux réalisations installées.
+  methodological_term:
+    id: MOD045
+    field_sha256:
+      name: b14e0976998cb6875cde784535a6ffb67779662ebd4d19d9fb80193faec98778
+      short_description: 5feafc5f4d8f2fe6f510c5053f548d494673dd3da1203797cf1cdca1a1a6c187
+      definition: ed3619747495558ccb7cdf4867fd82c5d7e33281ebb64fe927e533c729161604
+      role: d2810aa4e66d3a70e3dda8983df5ee4a9c31267fa0a651043d9ffdda378a5db7
+      notes: 58a2ffb7e51bfde87a6dc01229b45f137ba1e0a96ab7a54d4906a991e355b05b
+  contract_sha256:
+    modeles/schemas/urbanism.schema.json: 3cab8125de07df971ac8d333926a053cacc8323c469aa2ca0ad555d635e14293
+    scripts/hotspot_catalog.py: 3d4dddab11930dfb24b361d537aacdae4571e09329cff4cb92e61a5bbbaef668

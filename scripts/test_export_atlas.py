@@ -51,9 +51,9 @@ class StaticExportTests(unittest.TestCase):
             self.assertEqual(metamodel['node_types'], [])
             self.assertEqual(metamodel['relation_types'], [])
             archived = json.loads((self.release / version / 'model.json').read_bytes())
-            self.assertEqual(model, {key: value for key, value in archived.items()
-                                     if key not in {'source_version', 'source_files'}})
+            self.assertEqual(model, archived)
             self.assertEqual(hashlib.sha256(payload).hexdigest(), entry['model_sha256'])
+            self.assertEqual(hashlib.sha256(yaml_payload.encode('utf-8')).hexdigest(), entry['model_yaml_sha256'])
             guide = json.loads((self.output / version / 'guide.json').read_bytes())
             self.assertEqual(guide['publication_version'], version)
             self.assertEqual(guide['status'], 'unavailable')
@@ -93,6 +93,51 @@ class StaticExportTests(unittest.TestCase):
         asset.write_bytes(b'%PDF-1.4\ntampered')
         with self.assertRaisesRegex(ValueError, 'fingerprint or format differs'):
             export_atlas(self.root, [self.output])
+
+    def test_yaml_and_json_keep_complete_model_metamodel_and_nested_hotspots(self):
+        from unittest.mock import patch
+        from scripts.structured_io import read
+        from scripts import export_atlas as module
+        project = Path(__file__).resolve().parents[1]
+        version = '2026-09-25.1'
+        model_path = self.release / version / 'model.json'
+        original = json.loads(model_path.read_bytes())
+        hotspot = read(project / 'modeles/backlog/model.yaml')['hotspot_catalog']['hotspots'][-1]
+        original.update(hotspot_catalog={'schema_version': 1, 'hotspots': [hotspot]},
+                        information_catalog={'items': [], 'links': []},
+                        arbitrary_published_extension={'unicode': 'Écart été → décision', 'nested': {'kept': True}})
+        payload = encoded(original)
+        model_path.write_bytes(payload)
+        descriptor_path = self.release / f'{version}.json'
+        descriptor = json.loads(descriptor_path.read_bytes())
+        descriptor['sha256'] = hashlib.sha256(payload).hexdigest()
+        descriptor_payload = encoded(descriptor)
+        descriptor_path.write_bytes(descriptor_payload)
+        index_path = self.release / 'index.json'
+        index = json.loads(index_path.read_bytes())
+        index['publications'][0]['sha256'] = hashlib.sha256(descriptor_payload).hexdigest()
+        index_path.write_bytes(encoded(index))
+        schema_path = self.root / 'modeles/schemas/urbanism.schema.json'
+        schema_path.parent.mkdir()
+        schema = read(project / 'modeles/schemas/urbanism.schema.json')
+        schema_path.write_bytes(encoded(schema))
+        guide = {'status': 'available', 'guide': {'version': version, 'glossary': {'terms': [
+            {'id': 'MOD044', 'name': 'Hotspot', 'definition': 'Sujet à creuser et arbitrer.'},
+            {'id': 'MOD045', 'name': 'Gap Analysis', 'definition': 'Comparaison facultative.'}]}}}
+        with patch.object(module, '_load_associated_guide', return_value=guide):
+            export_atlas(self.root, [self.output])
+        downloaded_json = json.loads((self.output / version / 'model.json').read_bytes())
+        downloaded_yaml = loads((self.output / version / 'model.yaml').read_text(encoding='utf-8'), '.yaml')
+        self.assertEqual(downloaded_json, downloaded_yaml)
+        for key, value in original.items():
+            self.assertEqual(downloaded_json[key], value, key)
+        meta = downloaded_json['metamodel']
+        self.assertEqual(meta['snapshot_schema'], schema)
+        types = {item['path']: item for item in meta['catalog_types']}
+        self.assertEqual(types['hotspot_catalog.hotspots']['definition_source'], 'method:MOD044')
+        self.assertEqual(types['hotspot_catalog.hotspots.gap_analysis']['definition_source'], 'method:MOD045')
+        self.assertEqual(meta['profile']['catalog_counts']['hotspot_catalog.hotspots'], 1)
+        self.assertIn('hotspot-gap-optional', {rule['id'] for rule in meta['constraints']})
 
     def test_incremental_export_reuses_serialization_and_repairs_corrupt_output(self):
         from unittest.mock import patch

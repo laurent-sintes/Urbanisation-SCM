@@ -1,6 +1,7 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { documentsForHotspot, documentUrl } from '../documentCatalog';
+import { framingLabel } from '../hotspotFraming';
 import { RESOLUTION_STAGES, resolutionFor } from '../hotspotResolution';
 import { mapRouteForNode } from '../mapNavigation';
 import type { RouteState } from '../navigation';
@@ -70,6 +71,24 @@ export function HotspotDetail({
         <h3 id="hotspot-detail-title">
           <ModelText text={hotspot.title} />
         </h3>
+        <p className="hotspot-framing-marker">{framingLabel(hotspot)}</p>
+        {hotspot.framing_impact && (
+          <div className="hotspot-framing-description">
+            <p>
+              {hotspot.framing_impact.evidence_state === 'hypothesis' ? 'Qualification proposée · ' : ''}
+              <ModelText text={hotspot.framing_impact.rationale} />
+            </p>
+            <p className="hotspot-story-caption">
+              {hotspot.framing_impact.targets
+                .map((target) => (target === 'business_model' ? 'Modèle métier' : 'Core System FLOW'))
+                .join(' · ')}
+              {hotspot.framing_impact.category === 'usage' &&
+                'À reprendre par le design produit ; requalifier si une règle ou responsabilité métier doit changer.'}
+              {hotspot.framing_impact.category === 'to_assess' &&
+                'Qualifier l’impact avant de décider du traitement en cadrage ou en design produit.'}
+            </p>
+          </div>
+        )}
       </header>
 
       <section className="hotspot-resolution-summary hotspot-story-overview" aria-labelledby="hotspot-progress-title">
@@ -90,7 +109,7 @@ export function HotspotDetail({
           </p>
         )}
         {hotspot.status === 'validated' && !hotspot.selected_option_id && (
-          <p>Problème et périmètre validés ; aucune option de résolution retenue.</p>
+          <p>Sujet et périmètre validés ; aucune option de résolution retenue.</p>
         )}
         {credibleIds.size > 0 && (
           <p>
@@ -115,7 +134,7 @@ export function HotspotDetail({
         </p>
         <p className="hotspot-story-caption">
           Une solution crédible résout le cadrage. Le choix définitif, la mise en œuvre et le résultat sur le terrain
-          restent distincts.
+          restent distincts. Selon le sujet, une décision argumentée peut suffire.
         </p>
         {resolution.assessed_on && (
           <p className="hotspot-story-caption">
@@ -136,7 +155,7 @@ export function HotspotDetail({
             <span className="hotspot-story-step" aria-hidden="true">
               1
             </span>
-            Le problème à traiter
+            Le sujet à instruire
           </h4>
           {canEdit && (
             <button type="button" onClick={(event) => onEdit(event, 'location')}>
@@ -147,6 +166,12 @@ export function HotspotDetail({
         <p className="hotspot-story-lead">
           <ModelText text={hotspot.problem} />
         </p>
+        {Boolean(hotspot.gap_analysis?.length) && (
+          <p className="hotspot-story-caption">
+            Une différence ne constitue pas automatiquement un problème. L’analyse peut conduire à une convergence
+            totale, partielle ou à la conservation de modes de fonctionnement distincts.
+          </p>
+        )}
         <div className="hotspot-anchors" role="group" aria-label="Périmètres concernés">
           {hotspot.location.node_ids.map((id) => {
             const node = model.nodeById.get(id);
@@ -171,6 +196,93 @@ export function HotspotDetail({
         ) : (
           <p className="hotspot-story-empty">Aucun cas concret documenté.</p>
         )}
+        {hotspot.gap_analysis?.map((gap) => (
+          <article key={gap.id} className="hotspot-gap-analysis">
+            <p className="hotspot-story-caption">
+              {new Set(gap.observations_by_context.map((item) => item.context_id)).size === 1
+                ? 'Écart dans un même SI'
+                : new Set(gap.observations_by_context.map((item) => item.context_id)).size <
+                    gap.observations_by_context.length
+                  ? 'Écart entre SI et entre périmètres'
+                  : 'Écart entre SI'}
+            </p>
+            <h5>
+              <ModelText text={gap.title} />
+            </h5>
+            <p>
+              <ModelText text={gap.comparison} />
+            </p>
+            {gap.observations_by_context.map((observation) => (
+              <section key={`${observation.context_id}:${observation.observation_scope?.id || ''}`}>
+                <h6>
+                  {observation.context_id === 'beaumanoir-historique'
+                    ? 'SI Marques Historiques'
+                    : observation.context_id === 'boardriders'
+                      ? 'SI Boardriders'
+                      : 'SI Sarenza'}
+                  {observation.observation_scope && (
+                    <>
+                      {' '}
+                      · <ModelText text={observation.observation_scope.label} />
+                    </>
+                  )}
+                </h6>
+                {observation.observation_scope && (
+                  <p className="hotspot-story-caption">
+                    <ModelText text={observation.observation_scope.description} />
+                  </p>
+                )}
+                <p>
+                  <ModelText text={observation.handling} />
+                </p>
+                <ul>
+                  {observation.business_rules.map((rule) => (
+                    <li key={rule}>
+                      <ModelText text={rule} />
+                    </li>
+                  ))}
+                </ul>
+                <p className="hotspot-story-caption">
+                  {observation.evidence_kind === 'user_report'
+                    ? 'Déclaration rapportée'
+                    : observation.evidence_kind === 'source_document'
+                      ? 'Source documentaire'
+                      : 'Analyse'}
+                  {' · '}
+                  {observation.evidence_state === 'hypothesis'
+                    ? 'Hypothèse · '
+                    : observation.evidence_state === 'to_investigate'
+                      ? 'À instruire · '
+                      : ''}
+                  <ModelText text={observation.limits} />
+                </p>
+              </section>
+            ))}
+            <h6>La question pour FLOW</h6>
+            <p>
+              <ModelText text={gap.convergence_question} />
+            </p>
+            <ul>
+              {gap.business_effects.map((effect) => (
+                <li key={effect}>
+                  <ModelText text={effect} />
+                </li>
+              ))}
+            </ul>
+            {gap.open_questions.length > 0 && (
+              <>
+                <h6>À préciser</h6>
+                <ul>
+                  {gap.open_questions.map((question) => (
+                    <li key={question}>
+                      <ModelText text={question} />
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </article>
+        ))}
       </section>
 
       <section className="hotspot-story-section" aria-labelledby="hotspot-difficulty-title">

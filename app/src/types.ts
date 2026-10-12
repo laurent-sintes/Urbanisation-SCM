@@ -220,11 +220,43 @@ export interface HotspotResolution {
   assessment_source: string;
 }
 export interface Hotspot {
+  gap_analysis?: {
+    id: string;
+    title: string;
+    subject_node_id: string;
+    natures: ('system_support_gap' | 'realization_difference' | 'business_rule_divergence')[];
+    observations_by_context: {
+      context_id: 'beaumanoir-historique' | 'boardriders' | 'sarenza';
+      observation_scope?: { id: string; label: string; description: string };
+      business_need: string;
+      system_coverage: 'covered' | 'partly_covered' | 'not_covered' | 'not_assessed' | 'not_applicable';
+      handling: string;
+      business_rules: string[];
+      source_refs: string[];
+      evidence_state: 'to_investigate' | 'hypothesis' | 'documented';
+      evidence_kind: 'user_report' | 'source_document' | 'analysis';
+      limits: string;
+    }[];
+    comparison: string;
+    convergence_question: string;
+    business_effects: string[];
+    open_questions: string[];
+    resolution_option_ids: string[];
+    source_refs: string[];
+  }[];
   resolution?: HotspotResolution;
   workshop?: { session_id: string; revision: number };
   id: string;
   title: string;
   kind: 'scope' | 'integration';
+  framing_impact?: {
+    category: 'structuring' | 'usage' | 'to_assess';
+    targets: ('business_model' | 'core_system')[];
+    rationale: string;
+    follow_up: 'framing' | 'product_design' | 'qualification';
+    evidence_state: 'documented' | 'hypothesis' | 'to_investigate';
+    source_refs: string[];
+  };
   location: { node_ids: string[] };
   problem: string;
   examples: string[];

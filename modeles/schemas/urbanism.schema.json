@@ -333,6 +333,19 @@
               "id": { "type": "string", "minLength": 1 },
               "title": { "type": "string", "minLength": 1 },
               "kind": { "enum": ["scope", "integration"] },
+              "framing_impact": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["category", "targets", "rationale", "follow_up", "evidence_state", "source_refs"],
+                "properties": {
+                  "category": { "enum": ["structuring", "usage", "to_assess"] },
+                  "targets": { "type": "array", "items": { "enum": ["business_model", "core_system"] }, "uniqueItems": true },
+                  "rationale": { "type": "string", "minLength": 1 },
+                  "follow_up": { "enum": ["framing", "product_design", "qualification"] },
+                  "evidence_state": { "enum": ["documented", "hypothesis", "to_investigate"] },
+                  "source_refs": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true }
+                }
+              },
               "location": {
                 "type": "object",
                 "properties": {
@@ -341,8 +354,9 @@
                 "required": ["node_ids"],
                 "additionalProperties": false
               },
-              "problem": { "type": "string", "minLength": 1 },
+              "problem": { "type": "string", "minLength": 1, "description": "Sujet à creuser et à arbitrer ; le nom historique du champ ne présume pas un dysfonctionnement. Une Gap Analysis reste facultative." },
               "examples": { "type": "array", "items": { "type": "string" } },
+              "gap_analysis": { "type": "array", "items": { "$ref": "#/$defs/hotspotGapAnalysis" } },
               "document_ids": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
               "market_view": {
                 "type": "object",
@@ -1300,6 +1314,190 @@
   ],
   "additionalProperties": false,
   "$defs": {
+    "hotspotGapAnalysis": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "subject_node_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "natures": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "system_support_gap",
+              "realization_difference",
+              "business_rule_divergence"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "observations_by_context": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "context_id": {
+                "enum": [
+                  "beaumanoir-historique",
+                  "boardriders",
+                  "sarenza"
+                ]
+              },
+              "business_need": {
+                "type": "string",
+                "minLength": 1
+              },
+              "system_coverage": {
+                "enum": [
+                  "covered",
+                  "partly_covered",
+                  "not_covered",
+                  "not_assessed",
+                  "not_applicable"
+                ]
+              },
+              "handling": {
+                "type": "string",
+                "minLength": 1
+              },
+              "business_rules": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "source_refs": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              },
+              "evidence_state": {
+                "enum": [
+                  "to_investigate",
+                  "hypothesis",
+                  "documented"
+                ]
+              },
+              "evidence_kind": {
+                "enum": [
+                  "user_report",
+                  "source_document",
+                  "analysis"
+                ]
+              },
+              "limits": {
+                "type": "string",
+                "minLength": 1
+              },
+              "observation_scope": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "label": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 1
+                  }
+                },
+                "required": [
+                  "id",
+                  "label",
+                  "description"
+                ]
+              }
+            },
+            "required": [
+              "context_id",
+              "business_need",
+              "system_coverage",
+              "handling",
+              "business_rules",
+              "source_refs",
+              "evidence_state",
+              "evidence_kind",
+              "limits"
+            ]
+          },
+          "minItems": 2
+        },
+        "comparison": {
+          "type": "string",
+          "minLength": 1
+        },
+        "convergence_question": {
+          "type": "string",
+          "minLength": 1
+        },
+        "business_effects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "open_questions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "resolution_option_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "source_refs": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "title",
+        "id",
+        "subject_node_id",
+        "natures",
+        "observations_by_context",
+        "comparison",
+        "convergence_question",
+        "business_effects",
+        "open_questions",
+        "resolution_option_ids",
+        "source_refs"
+      ]
+    },
     "node": {
       "type": "object",
       "properties": {

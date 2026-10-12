@@ -1,0 +1,425 @@
+id: HOTSPOT-FRAMING-IMPACT-U959
+status: applied
+source_refs:
+- U959
+- U960
+- U961
+scope: Marqueur d’impact indépendant ; qualification initiale Codex proposée, sans validation des fiches ni changement de
+  criticité.
+criteria:
+  structuring: Modèle métier ou réalisation Core System touchés.
+  usage: Effort de manipulation et praticité sans changement métier établi.
+  to_assess: Impact ou irritant non démontré.
+classification:
+- hotspot_id: HS-001
+  category: structuring
+  rationale: La trajectoire de migration et la coexistence des responsabilités changent la réalisation du cœur.
+  evidence_state: hypothesis
+- hotspot_id: HS-002
+  category: structuring
+  rationale: Le partage des décisions et des engagements entre marques et C-LOG modifie les responsabilités.
+  evidence_state: hypothesis
+- hotspot_id: HS-011
+  category: structuring
+  rationale: Les contrats de pilotage doivent prendre en charge plusieurs prestataires.
+  evidence_state: hypothesis
+- hotspot_id: HS-003
+  category: structuring
+  rationale: La fraîcheur et la justesse des données conditionnent les décisions de disponibilité et de promesse.
+  evidence_state: hypothesis
+- hotspot_id: HS-012
+  category: structuring
+  rationale: Le rapprochement des états et faits de stock exige des règles de cohérence des données.
+  evidence_state: hypothesis
+- hotspot_id: HS-013
+  category: structuring
+  rationale: La réponse au client distingue estimation et engagement, puis précise les conditions de révision.
+  evidence_state: hypothesis
+- hotspot_id: HS-006
+  category: structuring
+  rationale: L’autorité de construction et de validation des identifiants produit doit être attribuée.
+  evidence_state: hypothesis
+- hotspot_id: HS-014
+  category: structuring
+  rationale: L’interprétation des états complets et changements exige un contrat de données et de reprise.
+  evidence_state: hypothesis
+- hotspot_id: HS-015
+  category: structuring
+  rationale: La maille produit consommée par les commandes et stocks concerne le modèle des objets métier.
+  evidence_state: hypothesis
+- hotspot_id: HS-007
+  category: structuring
+  rationale: Les rôles et documents des échanges entre entités concernent les responsabilités et engagements.
+  evidence_state: hypothesis
+- hotspot_id: HS-008
+  category: structuring
+  rationale: Les politiques de couverture et de priorité avant engagement ferme déterminent la convergence Wholesale.
+  evidence_state: hypothesis
+- hotspot_id: HS-016
+  category: structuring
+  rationale: La sélection des exécutants et ses critères diffèrent selon les parcours entrepôt et magasin.
+  evidence_state: hypothesis
+- hotspot_id: HS-017
+  category: usage
+  rationale: 'La source décrit des traitements manuels et dispersés : simplifier le travail est le premier angle proposé.
+    Vérifier les cas et requalifier si les contrôles ou responsabilités diffèrent entre marques.'
+  evidence_state: hypothesis
+- hotspot_id: HS-018
+  category: to_assess
+  rationale: 'Un parcours interactif et un fichier de grands comptes peuvent être deux usages légitimes. Aucun effort excessif
+    ni changement des règles n’est établi : qualifier avant de choisir usage ou cadrage.'
+  evidence_state: hypothesis
+- hotspot_id: HS-019
+  category: structuring
+  rationale: Les droits d’usage et transferts de ressources entre canaux sont des règles métier.
+  evidence_state: hypothesis
+- hotspot_id: HS-020
+  category: structuring
+  rationale: La convergence du Négoce répartit les responsabilités de vente, achat et exécution.
+  evidence_state: hypothesis
+- hotspot_id: HS-021
+  category: structuring
+  rationale: La frontière FLOW/Finance attribue production des faits, interprétation et comptabilisation.
+  evidence_state: hypothesis
+- hotspot_id: HS-022
+  category: structuring
+  rationale: La continuité des états, tâches et engagements concerne les mécanismes de conduite des parcours.
+  evidence_state: hypothesis
+- hotspot_id: HS-023
+  category: structuring
+  rationale: Les autorités des règles, variantes et explications des décisions concernent la gouvernance métier.
+  evidence_state: hypothesis
+- hotspot_id: HS-024
+  category: structuring
+  rationale: La reprise des dossiers ouverts et engagements concerne la continuité de la réalisation cible.
+  evidence_state: hypothesis
+- hotspot_id: HS-025
+  category: structuring
+  rationale: La faisabilité, performance et stabilité du calcul conditionnent le mécanisme de couverture du carnet.
+  evidence_state: hypothesis
+- hotspot_id: HS-026
+  category: structuring
+  rationale: Les versions, originaux et corrections des documents imposent des contrats de traçabilité et de remise.
+  evidence_state: hypothesis
+- hotspot_id: HS-027
+  category: structuring
+  rationale: Les actions autorisées du Commerce et les préconditions d’engagement définissent une frontière de responsabilité.
+  evidence_state: hypothesis
+- hotspot_id: HS-028
+  category: structuring
+  rationale: Les versions et identités des plans reçus conditionnent leur interprétation sans double compte.
+  evidence_state: hypothesis
+- hotspot_id: HS-029
+  category: structuring
+  rationale: L’articulation entre commande d’achat et suivi CBS répartit les autorités et contrats de changement.
+  evidence_state: hypothesis
+- hotspot_id: HS-030
+  category: usage
+  rationale: Les extractions, manipulations de fichiers et réimports suggèrent un effort d’usage à réduire. Le cas des tarifs
+    reste à corroborer ; si une conduite de parcours ou de nouveaux engagements est requise, relier ce volet structurant à
+    HS-022.
+  evidence_state: hypothesis
+- hotspot_id: HS-031
+  category: structuring
+  rationale: Les prérequis de coopération ou reprise déterminent les contrats et responsabilités de réalisation.
+  evidence_state: hypothesis
+alignment:
+  model: Responsabilités et contenus inchangés ; annotations seulement.
+  business_glossary: Relu ; aucun changement de nom, sens ou frontière métier.
+  methodological_glossary: MOD044 aligné sur la distinction U959–U961.
+market_comparison:
+  reused: 'Comparaisons Microsoft Dynamics et SAP S/4HANA déjà consultées dans les lots de hotspots : périmètres inchangés.'
+  common: Les sources distinguent suivi de dossiers, approbations, opérations et échanges.
+  difference: Le marqueur de cadrage FLOW est une convention locale ; aucun classement éditeur équivalent revendiqué.
+  limits: Les documents produits ne déterminent ni l’effort utilisateur local ni la criticité des hotspots.
+superseded_delivery_fingerprints:
+- path: modeles/backlog/hotspot-first-lot-U948.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-001
+    content_sha256: 81ce4b617f529524ceba21f5f4fafe87a2d07716f86b987cb509663e896391f0
+  - collection: hotspots
+    id: HS-002
+    content_sha256: 8fd18a87bdb95d984d08572c70c60ece8a47de06cd41ba7c9780c3091fe48694
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 141be1989aa4a1163ee803cae1e0aaf84e964e71d10992cf94e274cbea8ab07e
+  - collection: hotspots
+    id: HS-003
+    content_sha256: de18c53b0e9bb056a6c2112372f6fb88212a8887d0dd2312f655cd6ba4721f5d
+  - collection: hotspots
+    id: HS-012
+    content_sha256: b769a3b3697c05ae8f5902786706491350672898f238d9f64f23c58b8ba0e884
+  - collection: hotspots
+    id: HS-013
+    content_sha256: e0d370cb8ec79bf88c505dc7eec95dc087f790baa89695b12d832cda84703857
+  - collection: hotspots
+    id: HS-006
+    content_sha256: 151a6e79565e8590335773c383b1ba2c720cc3232e0a72803b3721b3bf423cc7
+  - collection: hotspots
+    id: HS-014
+    content_sha256: bfb6b867ca606a20633f72bca6943eadec6546217c4e4190c9e54c609cfa08df
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 61a172c85f0fc06acfa2928cf80446e7a5eaee54cef4d28d7b3a48576bd8f770
+  - collection: hotspots
+    id: HS-007
+    content_sha256: f2bae31ad22f8f6c347915357222689cef624dc2e438c0d63f302744f870e11b
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 951ed0477b8fdc587dc8dc426a5b42285502a4d4d3caa698c0a34ae11c9994bf
+- path: modeles/backlog/hotspot-gap-analysis-U951.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 951ed0477b8fdc587dc8dc426a5b42285502a4d4d3caa698c0a34ae11c9994bf
+- path: modeles/backlog/hotspot-gap-research-U955.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-002
+    content_sha256: 8fd18a87bdb95d984d08572c70c60ece8a47de06cd41ba7c9780c3091fe48694
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 141be1989aa4a1163ee803cae1e0aaf84e964e71d10992cf94e274cbea8ab07e
+  - collection: hotspots
+    id: HS-003
+    content_sha256: de18c53b0e9bb056a6c2112372f6fb88212a8887d0dd2312f655cd6ba4721f5d
+  - collection: hotspots
+    id: HS-012
+    content_sha256: b769a3b3697c05ae8f5902786706491350672898f238d9f64f23c58b8ba0e884
+  - collection: hotspots
+    id: HS-013
+    content_sha256: e0d370cb8ec79bf88c505dc7eec95dc087f790baa89695b12d832cda84703857
+  - collection: hotspots
+    id: HS-006
+    content_sha256: 151a6e79565e8590335773c383b1ba2c720cc3232e0a72803b3721b3bf423cc7
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 61a172c85f0fc06acfa2928cf80446e7a5eaee54cef4d28d7b3a48576bd8f770
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 951ed0477b8fdc587dc8dc426a5b42285502a4d4d3caa698c0a34ae11c9994bf
+  - collection: hotspots
+    id: HS-016
+    content_sha256: 741e159d44cadea82daf35197db59e9f3f51729d984de820161aba552e68459b
+  - collection: hotspots
+    id: HS-017
+    content_sha256: 873128aaa6c74e308c531b2c0e86bffff9a1b0f2d1f907c01de25e0bad2b0785
+  - collection: hotspots
+    id: HS-018
+    content_sha256: 94025e5c018c1da3f63960daa60da7b296693dd5104469934dfa877b429cd5ea
+  - collection: hotspots
+    id: HS-019
+    content_sha256: 3cf514d9aea97bac51305576f3c6e5f5766ffc6f10692fdb4db27ff5e12b63bc
+- path: modeles/backlog/hotspot-progress-U950.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-001
+    content_sha256: 81ce4b617f529524ceba21f5f4fafe87a2d07716f86b987cb509663e896391f0
+  - collection: hotspots
+    id: HS-002
+    content_sha256: 8fd18a87bdb95d984d08572c70c60ece8a47de06cd41ba7c9780c3091fe48694
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 141be1989aa4a1163ee803cae1e0aaf84e964e71d10992cf94e274cbea8ab07e
+  - collection: hotspots
+    id: HS-003
+    content_sha256: de18c53b0e9bb056a6c2112372f6fb88212a8887d0dd2312f655cd6ba4721f5d
+  - collection: hotspots
+    id: HS-012
+    content_sha256: b769a3b3697c05ae8f5902786706491350672898f238d9f64f23c58b8ba0e884
+  - collection: hotspots
+    id: HS-013
+    content_sha256: e0d370cb8ec79bf88c505dc7eec95dc087f790baa89695b12d832cda84703857
+  - collection: hotspots
+    id: HS-006
+    content_sha256: 151a6e79565e8590335773c383b1ba2c720cc3232e0a72803b3721b3bf423cc7
+  - collection: hotspots
+    id: HS-014
+    content_sha256: bfb6b867ca606a20633f72bca6943eadec6546217c4e4190c9e54c609cfa08df
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 61a172c85f0fc06acfa2928cf80446e7a5eaee54cef4d28d7b3a48576bd8f770
+  - collection: hotspots
+    id: HS-007
+    content_sha256: f2bae31ad22f8f6c347915357222689cef624dc2e438c0d63f302744f870e11b
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 951ed0477b8fdc587dc8dc426a5b42285502a4d4d3caa698c0a34ae11c9994bf
+- path: modeles/backlog/hotspot-resolution-U949.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-001
+    content_sha256: 81ce4b617f529524ceba21f5f4fafe87a2d07716f86b987cb509663e896391f0
+  - collection: hotspots
+    id: HS-002
+    content_sha256: 8fd18a87bdb95d984d08572c70c60ece8a47de06cd41ba7c9780c3091fe48694
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 141be1989aa4a1163ee803cae1e0aaf84e964e71d10992cf94e274cbea8ab07e
+  - collection: hotspots
+    id: HS-003
+    content_sha256: de18c53b0e9bb056a6c2112372f6fb88212a8887d0dd2312f655cd6ba4721f5d
+  - collection: hotspots
+    id: HS-012
+    content_sha256: b769a3b3697c05ae8f5902786706491350672898f238d9f64f23c58b8ba0e884
+  - collection: hotspots
+    id: HS-013
+    content_sha256: e0d370cb8ec79bf88c505dc7eec95dc087f790baa89695b12d832cda84703857
+  - collection: hotspots
+    id: HS-006
+    content_sha256: 151a6e79565e8590335773c383b1ba2c720cc3232e0a72803b3721b3bf423cc7
+  - collection: hotspots
+    id: HS-014
+    content_sha256: bfb6b867ca606a20633f72bca6943eadec6546217c4e4190c9e54c609cfa08df
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 61a172c85f0fc06acfa2928cf80446e7a5eaee54cef4d28d7b3a48576bd8f770
+  - collection: hotspots
+    id: HS-007
+    content_sha256: f2bae31ad22f8f6c347915357222689cef624dc2e438c0d63f302744f870e11b
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 951ed0477b8fdc587dc8dc426a5b42285502a4d4d3caa698c0a34ae11c9994bf
+- path: modeles/backlog/hotspot-source-candidates-U958.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-020
+    content_sha256: 308cf1325a93608b8af35e78002982a3772a24bd93d48e7a63e518a874059259
+  - collection: hotspots
+    id: HS-021
+    content_sha256: 00e6dec30ec18ebf96199650ee56350cae6a1a46aee9691d262936c9bb269a6c
+  - collection: hotspots
+    id: HS-022
+    content_sha256: 2a6338613c1beeb072da550b5f95817b7ce896c9a84e1261d547053e366571cf
+  - collection: hotspots
+    id: HS-023
+    content_sha256: 2a8336cee083eb95c2d111958c00794e128b05cbd4d3e2bd0e44983c55dfdd82
+  - collection: hotspots
+    id: HS-024
+    content_sha256: bdcc6bff4df5cccdcf51e3df5821c74c300d586c29810ad3615eaeb5c95a56f1
+  - collection: hotspots
+    id: HS-025
+    content_sha256: 838a73b4af815d9dfdbba2f39a72394b46d6b5a9fe0cc94edff8fe5cd0e80428
+  - collection: hotspots
+    id: HS-026
+    content_sha256: a030f6ca4fd94dff629ead9ed5baa475cf2ea169b8e4e29bf11972c23f169312
+  - collection: hotspots
+    id: HS-027
+    content_sha256: 8dbf7c58a178b125a875abf920fefd963eb35246d2543eaa77ac5b096c85bf7c
+  - collection: hotspots
+    id: HS-028
+    content_sha256: 2184a22aed12b4bbf37cfb3222f8cd73f59e6835873e93c0780887d3fc27ab87
+  - collection: hotspots
+    id: HS-029
+    content_sha256: d30b442077e01e5a68bb68929d278f346c58754cf0e0f25198d9791200fb0f61
+  - collection: hotspots
+    id: HS-030
+    content_sha256: 9a36cb7b4e7e83fef1ab170c40d8c9037bbaac5405bef7735810ec3a2bedbec8
+  - collection: hotspots
+    id: HS-031
+    content_sha256: 3761f3b3ceb332a22ac96fe5b6045dd1e56d10c08d62e11bac853fbe1c05fb8f
+- path: modeles/backlog/hotspot-stock-freshness-U928.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-003
+    content_sha256: de18c53b0e9bb056a6c2112372f6fb88212a8887d0dd2312f655cd6ba4721f5d
+methodology_capture:
+  id: MOD044
+  field_sha256:
+    name: 23b7a5daed5fe49de4960b89fc0c5a72c8a6dee0a1272d5c8342a95c487772c7
+    definition: 38442ef9a760233a0735db02ea5589678adcaf597bc8ca15237faf06b76b6ff9
+    notes: bf4b35e6397ca174d95c8dd971b4cdcabffdf9ff72a41dc69146aa3ae2b514db
+publication_delivery:
+  state: applied
+  source_refs:
+  - U959
+  - U960
+  - U961
+  summary: Marqueur d’impact ajouté ; classements détaillés proposés, publication distincte.
+  required_catalog:
+  - collection: hotspots
+    id: HS-001
+    content_sha256: 10aac194f5f1a5c515bfe96caf93666b19397bb5b53344eacea58c7d17f6b197
+  - collection: hotspots
+    id: HS-002
+    content_sha256: da5ddf2008253a93d32d979616f2276e64e46dd0a7bf7d5e0692ae4a4d2dc14b
+  - collection: hotspots
+    id: HS-011
+    content_sha256: d9dbbae8b05b20c1b842a70c961f379bdff64013aa96a5838d53490904c59d63
+  - collection: hotspots
+    id: HS-003
+    content_sha256: 207914e1c2d094bb61b6ce4492d93f42fdbaafb9ae74ee3bfe71b371e9f3ab8e
+  - collection: hotspots
+    id: HS-012
+    content_sha256: ad3e973ae2a05fcb2c039698c5ed0ede44b78e621e138bc481ba43293107c3d1
+  - collection: hotspots
+    id: HS-013
+    content_sha256: a677952e18074ac5d5216a0df0a85c811037f6acac56e8641cd517b1252799e0
+  - collection: hotspots
+    id: HS-006
+    content_sha256: 5aa3dc4451a647dbb82095ca12ccbc310dccb14184570a748b32180826b9cb2f
+  - collection: hotspots
+    id: HS-014
+    content_sha256: 3a27b874f073d0938cbe6c6e7821632da6612b891466bec871b014f4e36b794c
+  - collection: hotspots
+    id: HS-015
+    content_sha256: 290f619962a3e689b3e85a242e3ace8993fe95aca1137e79eb75419206c14b9a
+  - collection: hotspots
+    id: HS-007
+    content_sha256: 8b8acd82d380bc2265f53f844aee4a0fc26737216d0cdb3324d3e60e9f7d5f80
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 5769876e7e82f0d4cbe83af7263f4408569264d9ee3aafd3d354a5dd90af911a
+  - collection: hotspots
+    id: HS-016
+    content_sha256: d3d35ec4d9d3a4548942e8ad80e0cba8952f70bba821f49692101a43dd96dcf8
+  - collection: hotspots
+    id: HS-017
+    content_sha256: 935a6c83a381677254ca1b9fc891eedb418151a585e0cc617892834d11c1884a
+  - collection: hotspots
+    id: HS-018
+    content_sha256: 41963cfc70786ea2c964b6892a619df28a510a166fed149ca27d80bdbec533d5
+  - collection: hotspots
+    id: HS-019
+    content_sha256: 626dd1a3af66658363d3eba9c31ba77972fa1f1b0a16fe48938184066b3fb184
+  - collection: hotspots
+    id: HS-020
+    content_sha256: 3744b8a9a0061c36dcb981e42dbedfc9253eb3e1375d80c60d2dc332608b89f7
+  - collection: hotspots
+    id: HS-021
+    content_sha256: bdda0b0d03bf9dbd623c48e813bf6c53277abc2c34612cf0a4b7a946c8740e6e
+  - collection: hotspots
+    id: HS-022
+    content_sha256: faa668e37d67579693bb26ca61ff569bac8359f4d81c9ece8960a151341770ef
+  - collection: hotspots
+    id: HS-023
+    content_sha256: 86a523ff76f43970d25a5525fd6144acd803b204157c8f3fb5915aa3c03a1a6d
+  - collection: hotspots
+    id: HS-024
+    content_sha256: 035b62a2955659983e63ed9d773cefe3464c793aedf8c5726b60699e3dc1c951
+  - collection: hotspots
+    id: HS-025
+    content_sha256: 4b993c49b65e357154ecf5d33b28d69092f45aa19889c949595f2548d3bcfc22
+  - collection: hotspots
+    id: HS-026
+    content_sha256: 41a22629bc2b5ca0dbab2601fa02ea048cab3e5959435a886f27d51617ab558b
+  - collection: hotspots
+    id: HS-027
+    content_sha256: ac552a46ed0465f8f3179a05a1097b96e7453087316f172e2e46a31dbd915e83
+  - collection: hotspots
+    id: HS-028
+    content_sha256: f3b0af02e4b019a99248140cf06d1d628b67ac85d1ae84aa0868ef6cd2fe388a
+  - collection: hotspots
+    id: HS-029
+    content_sha256: 177bba1fe7af530b51340def9a00aadbca1fe9edb35ae069c3fa7c27edf8d1bd
+  - collection: hotspots
+    id: HS-030
+    content_sha256: ac65ad7f7c736624803e96a212ad6c98e482991d6844383cbe0d6ed8ac03e251
+  - collection: hotspots
+    id: HS-031
+    content_sha256: c9def9654a5cb357adfee80920a2e685f0ef316a21d9f673dbdf5ac9b5343737
+  validation_update: 'U963 : seul lot HS-017/030/018 reformulé et validé ; empreintes antérieures conservées dans hotspot-validation-U963.yaml.
+    Autres accords inchangés.'
+capture_method: Verbatims avant application ; empreintes finales après annotations. Aucun accord global ou individuel sur
+  les classements détaillés déduit de la demande de marquage.

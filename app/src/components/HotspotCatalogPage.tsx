@@ -2,6 +2,7 @@ import { ChevronDown, Flame, Info } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { framingLabel } from '../hotspotFraming';
 import {
   defaultHotspotMapFilters,
   filterMapHotspots,
@@ -460,6 +461,16 @@ export function HotspotCatalogPage({
               {filtered.length} sur {groupHotspots.length} · Publication {model.version}
               {workshopCount ? ` · ${workshopCount} en atelier` : ''}
             </p>
+            <p className="hotspot-story-caption">
+              Dans ce périmètre :{' '}
+              {groupHotspots.filter((item) => item.framing_impact?.category === 'structuring').length} modèle ·{' '}
+              {groupHotspots.filter((item) => item.framing_impact?.category === 'usage').length} usage ·{' '}
+              {
+                groupHotspots.filter((item) => !item.framing_impact || item.framing_impact.category === 'to_assess')
+                  .length
+              }{' '}
+              à qualifier. La validation du sujet ne vaut pas résolution du cadrage.
+            </p>
           </div>
           {!chosen && (
             <div className="hotspot-page-tools">
@@ -587,6 +598,7 @@ export function HotspotCatalogPage({
                 return (
                   <tr key={item.id} className={changes.some((change) => change.id === item.id) ? 'is-draft' : ''}>
                     <td className="hotspot-table-subject">
+                      <p className="hotspot-framing-marker">{framingLabel(item)}</p>
                       <div className="hotspot-subject-line">
                         {canEdit ? (
                           <input
@@ -598,7 +610,7 @@ export function HotspotCatalogPage({
                           <HotspotTooltipButton
                             tip={
                               <>
-                                <strong>Problème</strong>
+                                <strong>Sujet à instruire</strong>
                                 <span>{item.problem}</span>
                                 {item.examples[0] && (
                                   <span>
@@ -622,7 +634,7 @@ export function HotspotCatalogPage({
                             <HotspotTooltipButton
                               tip={
                                 <>
-                                  <strong>Problème</strong>
+                                  <strong>Sujet à instruire</strong>
                                   <span>{item.problem}</span>
                                   {item.examples[0] && (
                                     <span>

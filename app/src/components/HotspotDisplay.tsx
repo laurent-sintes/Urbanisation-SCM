@@ -24,6 +24,7 @@ import {
   useState,
   useSyncExternalStore,
 } from 'react';
+import { framingLabel } from '../hotspotFraming';
 import { isClosedHotspot, isFramingResolved, RESOLUTION_STAGES, resolutionFor } from '../hotspotResolution';
 import type { Hotspot, PublishedModel } from '../types';
 
@@ -190,6 +191,7 @@ export function HotspotMapMarker({
   const tip = (
     <>
       <strong>{title}</strong>
+      {!grouped && <span>{framingLabel(items[0])}</span>}
       <span>
         Criticité {grouped ? 'maximale ' : ''}
         {severityLabel(severity)}
@@ -289,6 +291,7 @@ export function HotspotMapMarker({
                       tip={
                         <>
                           <strong>{item.title}</strong>
+                          <span>{framingLabel(item)}</span>
                           <span>
                             {STATUS[item.status]} · {RESOLUTION_STAGES[resolutionFor(item).stage]} · Criticité{' '}
                             {severityLabel(item.severity)}

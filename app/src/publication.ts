@@ -9,6 +9,7 @@ export interface ReleaseEntry {
   readonly release_notes?: string | null;
   readonly descriptor?: string | null;
   readonly model_sha256?: string;
+  readonly model_yaml_sha256?: string;
   readonly guide_sha256?: string;
 }
 export interface PublicationCatalog {
@@ -99,7 +100,7 @@ export function adaptCatalog(input: unknown): PublicationCatalog {
   const entries = raw.versions.map((value) => {
     if (!value || typeof value !== 'object' || typeof value.version !== 'string' || !value.version)
       throw new Error('Identité de publication invalide.');
-    for (const field of ['model_sha256', 'guide_sha256']) {
+    for (const field of ['model_sha256', 'model_yaml_sha256', 'guide_sha256']) {
       if (value[field] !== undefined && (typeof value[field] !== 'string' || !/^[a-f0-9]{64}$/.test(value[field])))
         throw new Error('Empreinte de publication invalide.');
     }

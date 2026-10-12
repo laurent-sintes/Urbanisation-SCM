@@ -1,0 +1,102 @@
+id: HOTSPOT-VALIDATION-U963
+status: applied
+source_refs:
+- U962
+- U963
+approval_scope: Reconnaissance, périmètre et classement du lot HS-017, HS-030 et HS-018, avec les reformulations présentées
+  et leurs réserves.
+exclusions:
+- Observations hypothétiques non promues en faits installés.
+- Aucun accord sur les autres hotspots, les ancrages ou les criticités.
+- Aucune solution ni progression de cadrage validée.
+- Aucune publication.
+approved_fields:
+- id: HS-017
+  field_sha256:
+    title: e60cbb91449f79d50eaead80897356c006bdf183a3a221aa38d3f552400c08a6
+    problem: c1a01ddc79a134f37108fb23148ae7aa5a8b2b8f1a2183fb67a7618f314666a9
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+    framing_impact.category: 593e93fc4f6e1640ccc0120e16efa22ac880d85c93ddadbc42c04887e7b5c49e
+- id: HS-030
+  field_sha256:
+    title: 13172ef324899fa27e0d29f9363181e3ebb9f1c7cf14754f525fefa217ccb282
+    problem: 3cbe937ce6dfb5c74c479de8332c8c8f9010e7c20b482064b14539c851b4e24a
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+    framing_impact.category: 593e93fc4f6e1640ccc0120e16efa22ac880d85c93ddadbc42c04887e7b5c49e
+- id: HS-018
+  field_sha256:
+    title: f9ef20d7b31fa938ed76428c7c03f51374f9d33ffb4ddd85e0f71e1f7336b045
+    problem: 257df82f111c9c0718ac07d3e208c4ae8be588b854070ab8d48c95202b601a16
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+    framing_impact.category: 2a10f2ce6b30e4d074d6bb3083d819ddc17c84fc9091a3d44fa9124fcb0804ac
+aligned_proposals:
+- Questions des analyses d’écarts et prochaines étapes alignées sur le lot ; détails rédigés après le oui proposés.
+- Correction typographique des identifiants source CB2B, sans modification de leur preuve.
+superseded_delivery_fingerprints:
+- path: modeles/backlog/hotspot-framing-impact-U959.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-017
+    content_sha256: 4fc8d1100b127649d0ad8293486fb55b82d91ebce17cb028793fb6f30d5d757e
+  - collection: hotspots
+    id: HS-018
+    content_sha256: 87d6cad1ca3529e5ff103fe8d856a6e1a3b87a791edcaee33253360ea471c1e2
+  - collection: hotspots
+    id: HS-030
+    content_sha256: bc1b52975e2fa194b6e2a0dc1e0c2766b73b778ae7aebf1be311ecd85884cb7b
+- path: modeles/backlog/hotspot-gap-research-U955.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-017
+    content_sha256: 4fc8d1100b127649d0ad8293486fb55b82d91ebce17cb028793fb6f30d5d757e
+  - collection: hotspots
+    id: HS-018
+    content_sha256: 87d6cad1ca3529e5ff103fe8d856a6e1a3b87a791edcaee33253360ea471c1e2
+- path: modeles/backlog/hotspot-source-candidates-U958.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-030
+    content_sha256: bc1b52975e2fa194b6e2a0dc1e0c2766b73b778ae7aebf1be311ecd85884cb7b
+alignment:
+  model: Lot appliqué dans le catalogue canonique.
+  business_glossary: 'Relu : aucun nom, sens ou frontière modifié ; identité des commandes et définition du fichier conservées.'
+  methodological_glossary: MOD044 et MOD045 inchangés ; application des distinctions de qualification, impact et preuve.
+market_comparison:
+  reused:
+  - 'HS-017 et HS-018 : imports Microsoft et SAP déjà consultés, limites conservées.'
+  reexamined:
+  - publisher: Microsoft Dynamics 365 Finance & Operations
+    title: View and update entity data with Excel
+    url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/mobile-apps/use-excel-add-in
+    consulted_on: '2026-10-12'
+    edition: Documentation évolutive ; version non relevée.
+    common: Lecture, édition et publication des données depuis Excel ; appui au parcours de manipulation, pas preuve d’un
+      irritant local.
+  - publisher: SAP S/4HANA
+    title: Manage Prices - Sales
+    url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/7b24a64d9d0941bda1afa753263d9e39/b2a4b6024aa54e30af5a523ff62f43bc.html
+    consulted_on: '2026-10-12'
+    edition: SAP S/4HANA 2025 FPS02 (octobre 2026), version affichée dans le texte primaire indexé.
+    common: Export et import de conditions tarifaires par tableur ; appui spécifique au cas candidat, sans preuve des usages
+      FLOW.
+  difference: Comparer l’effort du parcours complet, les contrôles et les retours d’erreur. La simplification des manipulations
+    relève du design produit ; les mécanismes de conduite restent dans HS-022.
+  limits: 'SAP : texte primaire indexé consulté ; portail direct parfois vide. Aucun déploiement ni gain de praticité local
+    prouvé.'
+publication_delivery:
+  state: applied
+  source_refs:
+  - U963
+  summary: Premier lot de validation intégré ; autres candidats conservés.
+  required_catalog:
+  - collection: hotspots
+    id: HS-017
+    content_sha256: 935a6c83a381677254ca1b9fc891eedb418151a585e0cc617892834d11c1884a
+  - collection: hotspots
+    id: HS-030
+    content_sha256: ac65ad7f7c736624803e96a212ad6c98e482991d6844383cbe0d6ed8ac03e251
+  - collection: hotspots
+    id: HS-018
+    content_sha256: 41963cfc70786ea2c964b6892a619df28a510a166fed149ca27d80bdbec533d5
+capture_method: Verbatim et proposition complète enregistrés avant application ; capture champ par champ sur l’état final.
+  record_decision/record_intents ne prennent pas en charge les hotspots ; l’annexe conserve la portée de cet accord.

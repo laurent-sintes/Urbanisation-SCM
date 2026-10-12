@@ -1,0 +1,221 @@
+id: HOTSPOT-VALIDATION-U968
+status: applied
+source_refs:
+- U958
+- U962
+- U964
+- U965
+- U966
+- U968
+approval_scope: Neuf derniers sujets et périmètres validés sous U968, dont HS-023 comme question architecturale Decision Provenance.
+validated_subjects:
+- id: HS-022
+  subject: Continuité des parcours, tâches et engagements
+  boundary: '[Process Management](glossary:TER164) conduit les parcours ; [Order Management](model:D04) garde identité, engagements
+    et validité des transitions. La généricité ne transfère pas les règles Commerce ou Finance au cœur Supply ; aucun choix
+    de plateforme.'
+- id: HS-023
+  subject: Provenance des décisions prises dans FLOW
+  boundary: C12 regroupait I01 (autorité des règles) et I02 (explication/version de décision). U968 recentre HS-023 sur la
+    provenance des décisions. I01 reste traité par [Control Plane](glossary:TER130) ; sa source est conservée. Ancrage transversal
+    dans le cœur Supply proposé, sans preuve de composant ou de traçabilité installés.
+- id: HS-024
+  subject: Continuité des dossiers CBS et de service après-vente
+  boundary: Distinct des échanges d’achat C18. Aucun retrait de CBS ni reprise du service après-vente Sarenza présumé ; Sarenza
+    reste non évalué. Les possibilités de reprise ne sont pas démontrées.
+- id: HS-025
+  subject: Performance et stabilité du calcul de couverture du carnet
+  boundary: La politique [Wholesale](glossary:TER193) reste dans HS-008. Un bon résultat de calcul ne vaut pas autorisation
+    d’engager ses changements ; aucune performance ni architecture installée démontrée.
+- id: HS-026
+  subject: Versions, remise et corrections des documents opérationnels
+  boundary: Ancrage Integration de contexte provisoire ; le sujet concerne aussi les échanges opérationnels. Ne pas créer
+    un hotspot par format ni confondre fichier et opération métier.
+- id: HS-027
+  subject: Actions du Commerce et engagements pris dans FLOW
+  boundary: L’absence de gestionnaire d’interfaces rapportée dans les notes ne prouve pas absence de tous les contrôles. Les
+    appuis événements ne documentent qu’une partie des échanges, pas la sécurité complète.
+- id: HS-028
+  subject: Versions et interprétation des plans amont reçus par FLOW
+  boundary: '[Plan Ingestion](model:plans-ingestion) reçoit les plans ; [Demand & Supply Planning](glossary:TER111) conserve
+    leur production hors du cœur [Supply Chain Orchestration](model:supply-chain-orchestration). Les types et contrats réels
+    restent à documenter.'
+- id: HS-029
+  subject: Commande d’achat FLOW et suivi d’approvisionnement CBS
+  boundary: La commande d’achat dans FLOW est la cible de travail rapportée. Ce sujet ne décide pas de la reprise de fonctions
+    CBS/SAV C13 ; les interfaces réelles restent à éprouver.
+- id: HS-031
+  subject: Prérequis de coopération ou de reprise des services existants
+  boundary: Sujet transversal conservé sur instruction U958 avec ancrage [Enterprise Architecture](model:beaumanoir-target-universe)
+    de contexte provisoire ; cet ancrage ne signifie ni réalisation commune ni lacune généralisée. Ne pas dupliquer les contrats
+    des frontières précises.
+accepted_fields:
+- id: HS-022
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+- id: HS-023
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+- id: HS-024
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+- id: HS-025
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+- id: HS-026
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+- id: HS-027
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+- id: HS-028
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+- id: HS-029
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+- id: HS-031
+  field_sha256:
+    status: f495df2d4f8aaac99b796329936e97539d7bf5719f0fc26c40b67e1fa50fa4eb
+aligned_proposals:
+- 'HS-023 : ancrage transversal dans Supply Chain Orchestration, rédaction et comparaison proposées après le recadrage U968
+  ; source I01 préservée sous Control Plane.'
+- MOD046 ajouté au glossaire méthodologique pour expliquer le terme ; définition détaillée proposée.
+- Les huit autres sujets conservent descriptions, sources, comparaisons et réserves.
+exclusions:
+- Aucune pratique installée, anomalie ou gravité déduite.
+- Impacts des huit autres sujets encore hypothétiques.
+- Aucun choix de solution ou produit, aucune progression de résolution ni publication.
+alignment:
+  model: Neuf sujets appliqués au catalogue ; HS-023 recentré sur une question d’architecture transverse.
+  business_glossary: 'TER130 Control Plane relu : autorité des règles actives conservée, aucune entrée métier modifiée.'
+  methodological_glossary: MOD046 créé ; MOD044 Hotspot et MOD045 Gap Analysis restent cohérents, aucun écart obligatoire
+    pour HS-023.
+research:
+  consulted_on: '2026-10-12'
+  primary_references:
+  - title: 'Decision Provenance: Harnessing data flow for accountable systems'
+    authors: Jatinder Singh, Jennifer Cobbe, Chris Norval
+    publisher: IEEE Access
+    publication: '2019'
+    doi: 10.1109/ACCESS.2018.2887201
+    url: https://arxiv.org/abs/1804.05741
+    portion_consulted: Résumé primaire arXiv v4 ; texte complet non analysé.
+  - title: 'PROV-DM: The PROV Data Model'
+    publisher: W3C
+    publication: '2013'
+    url: https://www.w3.org/TR/prov-dm/
+    portion_consulted: Résumé, introduction, composants.
+  - title: Configure database logging
+    publisher: Microsoft Dynamics 365 Finance & Operations
+    edition: Page mise à jour le 2026-03-14.
+    url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/sysadmin/configure-manage-database-log
+    portion_consulted: Description, opérations tracées et limite pour traitements batch.
+  - title: Displaying Change Documents
+    publisher: SAP S/4HANA On-Premise
+    edition: Change Document Tool, 2023 FPS01 dans le texte indexé.
+    url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/1a087e1593b24e4ebb9d5abf942b8758/666a9753858ced23e10000000a174cb4.html?locale=en-US
+    portion_consulted: Texte primaire indexé ; portail direct vide.
+  comparison: La littérature spécialisée décrit la provenance des décisions ; W3C fournit un modèle général ; Microsoft et
+    SAP montrent des traces partielles. Le contrat FLOW reste à concevoir.
+superseded_delivery_fingerprints:
+- path: modeles/backlog/hotspot-framing-impact-U959.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-022
+    content_sha256: cbb0ad01c8c71d3876e99a82929af3e2b37c08ca023777dc3cc8c269a3944033
+  - collection: hotspots
+    id: HS-023
+    content_sha256: 5be36edc8cf544e5c106279f2eb7b2d05488eac0ef09c67c5ff11c7e99f368f1
+  - collection: hotspots
+    id: HS-024
+    content_sha256: d7f0b0cd9dfb5a82694e910e2e85804285c758e052d0664b376187e24595102e
+  - collection: hotspots
+    id: HS-025
+    content_sha256: f9c32ed8ec38a03aaf228eaf8996725fd655cd6ed44f2894af2934ef4665157b
+  - collection: hotspots
+    id: HS-026
+    content_sha256: 4ccebbd0808d0cc07eecd30949ee5a668d12f73d010f74b3237297260f592bb6
+  - collection: hotspots
+    id: HS-027
+    content_sha256: 3d2db6417e2bbb673b82d1782f3921a6a1fa58faaa17f3342513c62bd0e89341
+  - collection: hotspots
+    id: HS-028
+    content_sha256: c5538b876fa4208d570fb213fb45215e98439156ef1701588cb1d4e2cd9d7552
+  - collection: hotspots
+    id: HS-029
+    content_sha256: 45341735f51e05ca7177017f2ced998a53327130b1093d8a900651b7b6d73fef
+  - collection: hotspots
+    id: HS-031
+    content_sha256: 2220a88a6a5fc260a0cba638b18117426869bd0b43ad1f79cc01786354543aaa
+- path: modeles/backlog/hotspot-source-candidates-U958.yaml
+  required_catalog:
+  - collection: hotspots
+    id: HS-022
+    content_sha256: cbb0ad01c8c71d3876e99a82929af3e2b37c08ca023777dc3cc8c269a3944033
+  - collection: hotspots
+    id: HS-023
+    content_sha256: 5be36edc8cf544e5c106279f2eb7b2d05488eac0ef09c67c5ff11c7e99f368f1
+  - collection: hotspots
+    id: HS-024
+    content_sha256: d7f0b0cd9dfb5a82694e910e2e85804285c758e052d0664b376187e24595102e
+  - collection: hotspots
+    id: HS-025
+    content_sha256: f9c32ed8ec38a03aaf228eaf8996725fd655cd6ed44f2894af2934ef4665157b
+  - collection: hotspots
+    id: HS-026
+    content_sha256: 4ccebbd0808d0cc07eecd30949ee5a668d12f73d010f74b3237297260f592bb6
+  - collection: hotspots
+    id: HS-027
+    content_sha256: 3d2db6417e2bbb673b82d1782f3921a6a1fa58faaa17f3342513c62bd0e89341
+  - collection: hotspots
+    id: HS-028
+    content_sha256: c5538b876fa4208d570fb213fb45215e98439156ef1701588cb1d4e2cd9d7552
+  - collection: hotspots
+    id: HS-029
+    content_sha256: 45341735f51e05ca7177017f2ced998a53327130b1093d8a900651b7b6d73fef
+  - collection: hotspots
+    id: HS-031
+    content_sha256: 2220a88a6a5fc260a0cba638b18117426869bd0b43ad1f79cc01786354543aaa
+methodological_capture:
+  id: MOD046
+  field_sha256:
+    name: 5853eb0d55d7d061f7dd7d4e61af8ecb3547d25d5ff8501f76d613577d21c683
+    short_description: 745531ba72d33fc91c8b7aa5519bdd335847b0b208ef3ff60192995265bb8b3c
+    definition: 7785ea7aa042268f8d65a4e74ffd1ad858b9de7225b11aaafc0f5437cda1ec6c
+    notes: 48260ae1bf437dbe8f61219d9a872b9f214750206a4d23f80879220f902064b3
+publication_delivery:
+  state: applied
+  source_refs:
+  - U968
+  summary: Tous les sujets du catalogue qualifiés ; HS-023 recentré sur Decision Provenance.
+  required_catalog:
+  - collection: hotspots
+    id: HS-022
+    content_sha256: faa668e37d67579693bb26ca61ff569bac8359f4d81c9ece8960a151341770ef
+  - collection: hotspots
+    id: HS-023
+    content_sha256: 86a523ff76f43970d25a5525fd6144acd803b204157c8f3fb5915aa3c03a1a6d
+  - collection: hotspots
+    id: HS-024
+    content_sha256: 035b62a2955659983e63ed9d773cefe3464c793aedf8c5726b60699e3dc1c951
+  - collection: hotspots
+    id: HS-025
+    content_sha256: 4b993c49b65e357154ecf5d33b28d69092f45aa19889c949595f2548d3bcfc22
+  - collection: hotspots
+    id: HS-026
+    content_sha256: 41a22629bc2b5ca0dbab2601fa02ea048cab3e5959435a886f27d51617ab558b
+  - collection: hotspots
+    id: HS-027
+    content_sha256: ac552a46ed0465f8f3179a05a1097b96e7453087316f172e2e46a31dbd915e83
+  - collection: hotspots
+    id: HS-028
+    content_sha256: f3b0af02e4b019a99248140cf06d1d628b67ac85d1ae84aa0868ef6cd2fe388a
+  - collection: hotspots
+    id: HS-029
+    content_sha256: 177bba1fe7af530b51340def9a00aadbca1fe9edb35ae069c3fa7c27edf8d1bd
+  - collection: hotspots
+    id: HS-031
+    content_sha256: c9def9654a5cb357adfee80920a2e685f0ef316a21d9f673dbdf5ac9b5343737
+capture_method: Apport utilisateur enregistré avant application. L’annexe conserve la portée et les empreintes ; record_decision
+  ne capture pas les hotspots ou termes MOD.

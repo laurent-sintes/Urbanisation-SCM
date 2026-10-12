@@ -23,6 +23,25 @@ class ResolutionTests(unittest.TestCase):
         self.assertEqual(validate_resolution(item), [])
         self.assertEqual(checked_hotspot(item, nodes)['status'], 'resolved')
 
+    def test_non_convergence_decision_can_resolve_framing(self):
+        item, nodes = self.item()
+        item['resolution_options'] = [{
+            'id': 'keep-local-decisions', 'title': 'Préserver les décisions locales',
+            'principle': 'Décider de ne pas unifier les modes de fonctionnement.',
+            'conditions': ['Compatibilité avec le socle commun établie.'],
+            'implementation_complexity': 'unassessed', 'evidence_state': 'documented',
+        }]
+        item.pop('gap_analysis', None)
+        item['resolution'].update(
+            credible_option_ids=['keep-local-decisions'],
+            summary='Non-convergence argumentée, sans changement technique nécessaire.',
+            credibility_note='Cas de test : les variantes locales respectent les contraintes communes.',
+        )
+        self.assertEqual(validate_resolution(item), [])
+        self.assertEqual(checked_hotspot(item, nodes)['status'], 'resolved')
+        item['resolution']['credibility_note'] = ''
+        self.assertTrue(validate_resolution(item))
+
     def test_null_unknown_fields_dates_and_missing_arguments_fail(self):
         for field, value in [('resolution', None), ('extra', True), ('assessed_on', '2026-02-30'),
                              ('credible_option_ids', ['absent']), ('credible_option_ids', []),

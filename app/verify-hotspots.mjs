@@ -3,6 +3,8 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
+import { hotspotsInScope } from './src/hotspotMap.ts';
+import { adaptPublication } from './src/model.ts';
 
 const dist = resolve(import.meta.dirname, process.env.ATLAS_HOTSPOT_DIST || 'dist');
 const output = resolve(import.meta.dirname, '.runtime/qa-hotspots');
@@ -45,6 +47,23 @@ try {
       await trigger.click();
       const filter = page.getByRole('dialog', { name: 'Filtres des points chauds' });
       await filter.getByRole('checkbox', { name: 'Afficher les points chauds' }).check();
+      await filter.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).uncheck();
+      await filter.getByRole('checkbox', { name: 'Impact à qualifier', exact: true }).uncheck();
+      const usageTitles = hotspots
+        .filter((item) => item.framing_impact?.category === 'usage')
+        .map((item) => item.title);
+      assert.deepEqual(
+        await filter.locator('.hotspot-filter-list-label strong').allTextContents(),
+        usageTitles,
+        'Map picker follows usage filter',
+      );
+      await filter.getByRole('checkbox', { name: 'Hotspots usage', exact: true }).uncheck();
+      await page.waitForFunction(
+        () => !document.querySelector('.overview-system .hotspot-map-marker, .graph-canvas .hotspot-map-marker'),
+      );
+      await filter.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).check();
+      await filter.getByRole('checkbox', { name: 'Hotspots usage', exact: true }).check();
+      await filter.getByRole('checkbox', { name: 'Impact à qualifier', exact: true }).check();
       await filter.getByRole('combobox', { name: 'Criticité', exact: true }).selectOption('exact:S');
       await page.waitForFunction(
         () => !document.querySelector('.overview-system .hotspot-map-marker, .graph-canvas .hotspot-map-marker'),
@@ -63,7 +82,7 @@ try {
       assert.equal(await filter.count(), 0);
       assert.equal(await trigger.evaluate((element) => element === document.activeElement), true);
       const markerSelector =
-        view === 'overview' ? '.overview-system .hotspot-map-marker' : '.graph-canvas .hotspot-map-marker';
+        view === 'overview' ? '.universe-overview .hotspot-map-marker' : '.graph-canvas .hotspot-map-marker';
       const markers = page.locator(markerSelector);
       await markers.first().waitFor();
       await page.waitForTimeout(500);
@@ -76,7 +95,7 @@ try {
             x: rect.x + rect.width / 2,
             y: rect.y + rect.height / 2,
             diameter: rect.width,
-            parent: element.closest('.overview-system, .map-flow-surface'),
+            parent: element.closest('.overview-system, .overview-global-hotspot, .map-flow-surface'),
           };
         });
         let overlaps = 0,
@@ -97,7 +116,7 @@ try {
             if (hit?.getAttribute('data-id') !== circle.id) interceptedTargets++;
           }
           const regions = circle.parent.querySelectorAll(
-            '.business-card, .container-label, .category-banner, small, h3, p, .overview-stats, .overview-hierarchy',
+            '.business-card, .container-label, .category-banner, small, h3, p, .overview-stats, .overview-hierarchy, .overview-global-hotspot > button',
           );
           for (const element of regions) {
             const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
@@ -143,7 +162,14 @@ try {
         'hit targets stay readable at every zoom',
       );
       const represented = new Set(geometry.ids.flatMap((id) => id.replace(/^hotspot:(cluster:)?/, '').split('|')));
-      assert.deepEqual([...represented].sort(), hotspots.map((item) => item.id).sort());
+      const expectedIds = (
+        view === 'overview' ? hotspots : hotspotsInScope(adaptPublication(model), 'system-business-operations')
+      ).map((item) => item.id);
+      assert.deepEqual(
+        [...represented].sort(),
+        expectedIds.sort(),
+        `${width}/${view}: every subject in this scope remains visible`,
+      );
       const individual = page.locator(`${markerSelector}:not(:has(.hotspot-map-count))`).first();
       await individual.hover();
       const tooltip = page

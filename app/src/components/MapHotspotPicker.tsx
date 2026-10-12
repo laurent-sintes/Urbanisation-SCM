@@ -8,6 +8,7 @@ import {
 } from '@floating-ui/react';
 import { ChevronDown, Flame, X } from 'lucide-react';
 import { useId, useState } from 'react';
+import { framingLabel } from '../hotspotFraming';
 import { filterMapHotspots, type HotspotMapFilters } from '../hotspotMap';
 import type { Hotspot } from '../types';
 import { useHotspotFloating } from './HotspotDisplay';
@@ -93,7 +94,8 @@ export function MapHotspotPicker({
                           <span className="hotspot-filter-list-label">
                             <strong>{hotspot.title}</strong>
                             <small>
-                              Criticité {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}
+                              {framingLabel(hotspot)} · Criticité{' '}
+                              {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}
                             </small>
                           </span>
                         </button>

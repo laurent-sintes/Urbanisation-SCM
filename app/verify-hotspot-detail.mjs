@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { mkdir, readFile } from 'node:fs/promises';
 import { extname, resolve } from 'node:path';
+import { downloadServer } from './browser-download-server.mjs';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { plainInlineText } from './src/inlineLinks.ts';
 import { publicText } from './src/publicText.ts';
@@ -16,7 +17,8 @@ assert.ok(original, 'the selected publication contains options to compare');
 const output = resolve(import.meta.dirname, '.runtime/qa-hotspot-detail');
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch(browserOptions);
-const base = 'http://localhost:9876/Urbanisation-SCM/';
+const downloadFixture = await downloadServer(dist, '/Urbanisation-SCM/');
+const base = downloadFixture.base;
 const errors = [];
 const posts = [];
 let staging = null;
@@ -31,6 +33,7 @@ try {
     const url = new URL(route.request().url());
     if (!url.href.startsWith(base)) return route.abort();
     const relative = decodeURIComponent(url.pathname.slice(new URL(base).pathname.length)) || 'index.html';
+    if (relative.endsWith('.pdf')) return route.continue();
     if (relative === '__atlas__/workshop/staging.json') {
       return staging ? route.fulfill({ json: staging }) : route.fulfill({ status: 404, body: '{}' });
     }
@@ -66,7 +69,13 @@ try {
     if (relative === `data/${index.current_version}/model.json`)
       return route.fulfill({ body: servedPayload, contentType: 'application/json' });
     if (relative.startsWith('__atlas__/')) return route.fulfill({ status: 404, body: '{}' });
-    const mime = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json' };
+    const mime = {
+      '.html': 'text/html',
+      '.js': 'text/javascript',
+      '.css': 'text/css',
+      '.json': 'application/json',
+      '.pdf': 'application/pdf',
+    };
     return route.fulfill({
       body: await readFile(resolve(dist, relative)),
       contentType: mime[extname(relative)] || 'application/octet-stream',
@@ -79,6 +88,24 @@ try {
   };
   await open();
   const detail = page.locator('.hotspot-detail');
+  const documentHotspot = model.hotspot_catalog.hotspots.find((item) => item.document_ids?.length);
+  assert.ok(documentHotspot, 'a hotspot links a published PDF');
+  await page.goto(`${base}#/hotspots?version=${index.current_version}&hotspot=${documentHotspot.id}`);
+  const pdfLink = detail.getByRole('link', { name: /Télécharger.*PDF/i });
+  await pdfLink.waitFor();
+  const pdfPending = page.waitForEvent('download');
+  await pdfLink.click();
+  const pdf = await pdfPending;
+  assert.equal(await pdf.failure(), null, 'PDF download completes');
+  const documentId = documentHotspot.document_ids[0];
+  assert.equal(pdf.suggestedFilename(), `flow-atlas-${documentId}.pdf`);
+  const pdfBytes = await readFile(await pdf.path());
+  assert.deepEqual(
+    pdfBytes,
+    await readFile(resolve(dist, `data/${index.current_version}/documents/${documentId}.pdf`)),
+  );
+  assert.equal(pdfBytes.subarray(0, 5).toString(), '%PDF-');
+  await open();
   assert.equal(await detail.getByRole('heading', { level: 3 }).innerText(), text(original.title));
   for (const field of [original.problem, ...original.examples, original.complexity.rationale]) {
     assert.ok((await detail.innerText()).includes(text(field)), 'the story retains the published content');
@@ -138,6 +165,7 @@ try {
   delete legacy.resolution;
   delete legacy.selected_option_id;
   delete legacy.resolution_note;
+  delete legacy.framing_impact;
   legacy.status = 'validated';
   legacy.examples = [];
   legacy.resolution_options = [];
@@ -145,6 +173,7 @@ try {
   servedModel = { ...model, hotspot_catalog: { ...model.hotspot_catalog, hotspots: [legacy] } };
   await open();
   for (const missing of [
+    'Impact non renseigné',
     'Avancement du cadrage non renseigné',
     'Aucun cas concret documenté.',
     'Aucune option documentée à ce stade.',
@@ -154,6 +183,125 @@ try {
   }
   assert.equal(await detail.locator('.hotspot-option-tag').count(), 0);
   assert.equal(await detail.locator('.hotspot-story-caption').filter({ hasText: 'Évaluation du' }).count(), 0);
+
+  // A published comparison renders its own observations, never facts from another snapshot.
+  const compared = structuredClone(original);
+  compared.framing_impact = {
+    category: 'usage',
+    targets: [],
+    rationale: 'Manipulations manuelles à simplifier.',
+    follow_up: 'product_design',
+    evidence_state: 'hypothesis',
+    source_refs: ['QA'],
+  };
+  compared.gap_analysis = [
+    {
+      id: 'qa-wholesale-gap',
+      title: 'Deux politiques de gestion',
+      subject_node_id: original.location.node_ids[0],
+      natures: ['business_rule_divergence'],
+      observations_by_context: [
+        {
+          context_id: 'beaumanoir-historique',
+          handling: 'Contrôle du stock présent.',
+          business_rules: ['Refus immédiat.'],
+          evidence_kind: 'user_report',
+          limits: 'Pratique rapportée.',
+        },
+        {
+          context_id: 'boardriders',
+          handling: 'Réexamen du carnet.',
+          business_rules: ['Priorités évolutives.'],
+          evidence_kind: 'source_document',
+          limits: 'Support daté.',
+        },
+      ],
+      comparison: 'Même responsabilité, deux règles.',
+      convergence_question: 'Quel socle commun ?',
+      business_effects: ['Conserver les besoins essentiels.'],
+      open_questions: ['Quelle règle protéger ?'],
+      resolution_option_ids: [],
+      source_refs: ['QA'],
+    },
+  ];
+  servedModel = { ...model, hotspot_catalog: { ...model.hotspot_catalog, hotspots: [compared] } };
+  await open();
+  const comparison = detail.locator('.hotspot-gap-analysis');
+  assert.ok((await detail.innerText()).includes('Irritant d’usage · design produit'));
+  assert.ok((await detail.innerText()).includes('Qualification proposée'));
+  assert.ok((await detail.innerText()).includes('Manipulations manuelles à simplifier.'));
+  assert.ok((await detail.innerText()).includes('requalifier si une règle ou responsabilité métier doit changer'));
+  await detail.getByRole('button', { name: 'Tous les points chauds' }).click();
+  const markedRow = page.locator('.hotspot-table tbody tr').filter({ hasText: text(compared.title) });
+  assert.ok((await markedRow.innerText()).includes('Irritant d’usage · design produit'));
+  await page.getByRole('button', { name: 'Filtres', exact: true }).click();
+  const subjectFilters = page.getByRole('group', { name: 'Filtres des points chauds', exact: true });
+  await subjectFilters.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).uncheck();
+  assert.equal(await markedRow.count(), 1, 'Usage stays visible when model subjects are hidden');
+  await subjectFilters.getByRole('checkbox', { name: 'Hotspots usage', exact: true }).uncheck();
+  assert.equal(await markedRow.count(), 0, 'Usage checkbox filters the table');
+  await subjectFilters.getByRole('checkbox', { name: 'Hotspots usage', exact: true }).check();
+  assert.equal(await markedRow.count(), 1);
+  await open();
+  for (const content of [
+    'Deux politiques de gestion',
+    'SI Marques Historiques',
+    'SI Boardriders',
+    'Refus immédiat.',
+    'Priorités évolutives.',
+    'Déclaration rapportée',
+    'Source documentaire',
+    'Quel socle commun ?',
+    'Quelle règle protéger ?',
+  ]) {
+    assert.ok((await comparison.innerText()).includes(content), content);
+  }
+  for (const width of [1440, 390, 320]) {
+    await page.setViewportSize({ width, height: 950 });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), true);
+  }
+  await page.setViewportSize({ width: 1440, height: 950 });
+
+  // Two observations in the same SI keep distinct scopes and explicit evidence states.
+  const intra = compared.gap_analysis[0];
+  intra.observations_by_context[0].observation_scope = {
+    id: 'warehouse',
+    label: 'Parcours entrepôt',
+    description: 'Commandes servies depuis un entrepôt.',
+  };
+  intra.observations_by_context[1].context_id = 'beaumanoir-historique';
+  intra.observations_by_context[1].observation_scope = {
+    id: 'store',
+    label: 'Parcours magasin',
+    description: 'Commandes servies depuis un magasin.',
+  };
+  intra.observations_by_context[1].evidence_state = 'hypothesis';
+  await open();
+  for (const content of [
+    'Écart dans un même SI',
+    'Parcours entrepôt',
+    'Parcours magasin',
+    'Hypothèse',
+    'Commandes servies depuis un magasin.',
+  ]) {
+    assert.ok((await comparison.innerText()).includes(content), content);
+  }
+  intra.observations_by_context.push({
+    context_id: 'boardriders',
+    handling: 'Parcours à décrire.',
+    business_rules: [],
+    evidence_kind: 'analysis',
+    evidence_state: 'to_investigate',
+    limits: 'Description absente.',
+  });
+  await open();
+  assert.ok((await comparison.innerText()).includes('Écart entre SI et entre périmètres'));
+  assert.ok((await comparison.innerText()).includes('À instruire'));
+  for (const width of [390, 320]) {
+    await page.setViewportSize({ width, height: 950 });
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1), true);
+  }
+  await page.setViewportSize({ width: 1440, height: 950 });
 
   // Use an unchanged base snapshot with a local overlay; credible and selected options stay independent.
   servedModel = model;
@@ -223,6 +371,7 @@ try {
     JSON.stringify({
       narrative: true,
       missingData: true,
+      gapAnalysis: true,
       fullscreenWidths: [1440, 900, 390, 320],
       workshopEdit: true,
       publicationUnchanged: true,
@@ -231,4 +380,5 @@ try {
   );
 } finally {
   await browser.close();
+  await downloadFixture.close();
 }

@@ -57,6 +57,7 @@ export function Overview({
   }, []);
   const hotspots = model.raw.hotspot_catalog?.hotspots || [];
   const visibleHotspots = useMemo(() => filterMapHotspots(hotspots, hotspotFilters), [hotspots, hotspotFilters]);
+  const rootHotspots = universe ? visibleHotspots.filter((item) => item.location.node_ids.includes(universe.id)) : [];
   const visibleIds = new Set(
     systems.flatMap((system) => [
       system.id,
@@ -243,9 +244,36 @@ export function Overview({
                   (id) => id === system.id || lineageOf(model, id).some((node) => node.id === system.id),
                 ),
               ).length,
-            0,
+            rootHotspots.length,
           )}
         />
+      )}
+      {rootHotspots.length > 0 && (
+        <div
+          className="overview-global-hotspots"
+          role="group"
+          aria-label="Sujets transversaux à Enterprise Architecture"
+        >
+          <p>Sujets transversaux · {universe?.name}</p>
+          {rootHotspots.map((item) => (
+            <div className="overview-global-hotspot" key={item.id}>
+              <div className="overview-global-marker">
+                <HotspotMapMarker
+                  id={item.id}
+                  items={[item]}
+                  x={32}
+                  y={32}
+                  model={model}
+                  onOpen={onOpenHotspot}
+                  onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
+                />
+              </div>
+              <button type="button" onClick={() => onOpenHotspot(item.id)}>
+                <ModelText text={item.title} />
+              </button>
+            </div>
+          ))}
+        </div>
       )}
       <div
         className={`urbanisation-overview layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}
