@@ -11,6 +11,8 @@ await mkdir(output, { recursive: true });
 const catalog = JSON.parse(await readFile(resolve(dist, 'data/index.json'), 'utf8'));
 const payload = await readFile(resolve(dist, `data/${catalog.current_version}/model.json`));
 const model = JSON.parse(payload);
+const clusterDomain = 'supply-chain-orchestration';
+assert.ok(model.nodes.some((node) => node.id === clusterDomain && node.kind === 'domain'));
 const prototype = model.hotspot_catalog.hotspots[0];
 const severities = ['S', 'M', 'L', 'XL', 'unassessed'];
 const stages = ['to_explore', 'identified', 'qualifying', 'credible', 'unassessed'];
@@ -18,12 +20,12 @@ const subjects = Array.from({ length: 45 }, (_, index) => ({
   ...structuredClone(prototype),
   id: `qa-cluster-${index}`,
   title: `Sujet ${index + 1} — ${index === 20 ? 'TitreSansEspaces'.repeat(30) : ''}`,
-  problem: `[Périmètre de recette](model:domain-logistics-execution). Problème ${index + 1}. ${'Description longue pour tester les aperçus. '.repeat(60)}`,
+  problem: `[Périmètre de recette](model:${clusterDomain}). Problème ${index + 1}. ${'Description longue pour tester les aperçus. '.repeat(60)}`,
   kind: 'scope',
   status: stages[Math.floor(index / 5) % 5] === 'credible' ? 'resolved' : 'validated',
   severity: severities[index % 5],
   visible: true,
-  location: { ...prototype.location, node_ids: ['domain-logistics-execution'] },
+  location: { ...prototype.location, node_ids: [clusterDomain] },
   resolution: {
     stage: stages[Math.floor(index / 5) % 5],
     blocked_reason: index % 7 === 2 ? 'Blocage de recette' : '',
@@ -106,7 +108,7 @@ async function setup(width = 390, height = 900, touch = false, view = 'overview'
   if (view === 'system') {
     params.set('node', 'system-business-operations');
     params.set('scope', 'system-business-operations');
-    params.set('mapFocus', 'domain-logistics-execution');
+    params.set('mapFocus', clusterDomain);
   }
   await page.goto(`${base}#/map?${params}`);
   if (view === 'system') {

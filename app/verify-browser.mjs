@@ -65,6 +65,12 @@ try {
     await page.locator(`#fa-version[data-version="${params.version || model.version}"]`).waitFor({ state: 'attached' });
   };
   const route = () => new URLSearchParams(new URL(page.url()).hash.split('?')[1] || '');
+  const expectInputValue = async (locator, expected) => {
+    for (let poll = 0; poll < 40 && (await locator.inputValue()) !== expected; poll++) {
+      await page.waitForTimeout(50);
+    }
+    assert.equal(await locator.inputValue(), expected);
+  };
   const expectTooltip = async (target, expected, fullscreen = false) => {
     let tooltip;
     let actual = '';
@@ -140,11 +146,11 @@ try {
   await hotspotFilters.getByLabel('Afficher les points chauds').check();
   const severityChoices = hotspotFilters.getByRole('combobox', { name: 'Criticité' });
   await severityChoices.selectOption('exact:L');
-  assert.equal(await severityChoices.inputValue(), 'exact:L');
+  await expectInputValue(severityChoices, 'exact:L');
   await severityChoices.selectOption('at_most:L');
-  assert.equal(await severityChoices.inputValue(), 'at_most:L');
+  await expectInputValue(severityChoices, 'at_most:L');
   await severityChoices.selectOption('at_least:L');
-  assert.equal(await severityChoices.inputValue(), 'at_least:L');
+  await expectInputValue(severityChoices, 'at_least:L');
   assert.equal(await hotspotFilters.locator('.hotspot-filter-list').count(), 1);
   await hotspotFilters.getByRole('button', { name: /Affiner par complexité/ }).click();
   await hotspotFilters
@@ -490,12 +496,12 @@ try {
   await page.waitForFunction(() => !document.fullscreenElement);
   checks.push('Full screen controls and readable page framing');
 
-  const sparseSystem = model.nodes.find(
+  const sparseScope = model.nodes.find(
     (node) =>
-      node.kind === 'business_system' && children(node.id).filter((id) => byId.get(id)?.kind === 'domain').length === 1,
+      ['business_system', 'domain', 'area', 'business_area'].includes(node.kind) && children(node.id).length === 1,
   );
-  assert.ok(sparseSystem, 'A sparse Business System is needed to check card redistribution');
-  await visit({ view: 'map', node: sparseSystem.id, scope: sparseSystem.id, mapDepth: '0' });
+  assert.ok(sparseScope, 'A published scope with one card is needed to check card redistribution');
+  await visit({ view: 'map', node: sparseScope.id, scope: sparseScope.id, mapDepth: '0' });
   await page.getByRole('button', { name: 'Pleine page' }).click();
   const sparseCard = page.locator('.graph-canvas .business-card').first();
   await sparseCard.waitFor();

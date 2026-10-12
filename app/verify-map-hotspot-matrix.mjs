@@ -359,10 +359,16 @@ try {
   if (!selectedCase) {
     report.navigation = [];
     await page.setViewportSize({ width: 390, height: 844 });
-    const subject = model.hotspot_catalog.hotspots.find(
-      (h) => h.visible !== false && h.location.node_ids.includes('domain-logistics-execution'),
+    const subject = model.hotspot_catalog.hotspots.findLast(
+      (h) =>
+        h.visible !== false &&
+        h.location.node_ids.some(
+          (id) =>
+            belongs(id, 'supply-chain-orchestration') &&
+            model.nodes.some((node) => node.id === id && node.kind === 'capability'),
+        ),
     );
-    assert.ok(subject, 'A published Logistics hotspot exercises deep-map navigation');
+    assert.ok(subject, 'A published Supply capability hotspot exercises deep-map navigation');
     for (const action of ['return-link', 'browser-back']) {
       currentCase = {
         scope: 'system-business-operations',
@@ -380,7 +386,7 @@ try {
       await page.waitForTimeout(700);
       await marker.scrollIntoViewIfNeeded();
       const before = await page.locator('.map-scroll-viewport').evaluate((e) => Math.round(e.scrollTop));
-      assert.ok(before > 0, 'Logistics is reached by vertical map scrolling');
+      assert.ok(before > 0, 'The deep Supply hotspot is reached by vertical map scrolling');
       await marker.click();
       const returnLink = page.getByRole('link', { name: /^Retour à la carte/ });
       await returnLink.waitFor();
