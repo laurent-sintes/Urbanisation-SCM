@@ -155,7 +155,10 @@ def run(root=ROOT, *, base=None, working=False, offline=False, execute=False, fu
             key['inputs'] = after
             path.write_text(json.dumps(key, ensure_ascii=False), encoding='utf-8')
         results.append({'check': name, 'reused': reused})
-    final = context(root, base=ctx['base'], working=working, offline=offline)
+    # A new branch has no upstream: preserve its observed origin base rather
+    # than passing the resolved SHA as an upstream name on the second check.
+    final = context(root, base=ctx['upstream'] if ctx['first_push'] else ctx['base'],
+                    working=working, offline=offline)
     if any(final[k] != ctx[k] for k in ('head', 'branch', 'upstream', 'paths')):
         raise ValueError('Git context changed during checks')
     final_inputs = fingerprint(root)

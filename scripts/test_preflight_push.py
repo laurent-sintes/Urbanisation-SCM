@@ -8,6 +8,18 @@ from scripts.preflight_push import context, run, check_inputs, ALLOWED
 
 
 class PreflightPushTests(unittest.TestCase):
+    def test_first_push_preserves_origin_base_in_final_context_check(self):
+        with tempfile.TemporaryDirectory() as folder:
+            ctx = {'head': 'commit', 'branch': 'codex/new', 'upstream': 'origin/main',
+                   'base': 'resolved-base-sha', 'paths': [], 'plan': {'frontend': False},
+                   'offline': True, 'working': True, 'first_push': True}
+            with patch('scripts.preflight_push.context', return_value=ctx) as context_check, \
+                 patch('scripts.preflight_push.commands', return_value=[]), \
+                 patch('scripts.preflight_push.fingerprint', return_value={}), \
+                 patch('scripts.preflight_push.platform.platform', return_value='test'):
+                run(Path(folder), base='origin/main', working=True, offline=True, execute=True)
+                self.assertEqual(context_check.call_args.kwargs['base'], 'origin/main')
+
     def test_browser_receipt_binds_served_assets_and_data_but_not_commit_metadata(self):
         inputs = {'scripts/code.py': 'a', 'app/dist/delivery.json': 'head',
                   'app/dist/assets/app.js': 'ui', 'app/dist/data/index.json': 'data'}
@@ -71,7 +83,8 @@ class PreflightPushTests(unittest.TestCase):
 
     def test_changed_source_after_check_cannot_create_receipt(self):
         ctx = {'head': 'commit', 'branch': 'codex/test', 'upstream': 'origin/main', 'base': 'base',
-               'paths': ['script'], 'plan': {'frontend': False}, 'offline': True, 'working': True}
+               'paths': ['script'], 'plan': {'frontend': False}, 'offline': True, 'working': True,
+               'first_push': False}
         with patch('scripts.preflight_push.context', return_value=ctx), \
              patch('scripts.preflight_push.commands', return_value=[('check', ['fake'])]), \
              patch('scripts.preflight_push.fingerprint', side_effect=[{'script': 'old'}, {'script': 'old'}, {'script': 'new'}]), \
