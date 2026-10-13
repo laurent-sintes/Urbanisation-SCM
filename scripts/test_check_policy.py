@@ -2,6 +2,7 @@
 import json
 from pathlib import Path
 import unittest
+from unittest.mock import patch
 
 from scripts.structured_io import read
 from scripts.plan_checks import plan
@@ -84,7 +85,8 @@ class CheckPolicyTests(unittest.TestCase):
             (['modeles/release/index.json'], ['--release']),
             (['app/src/components/MapPanel.tsx'], []),
         ):
-            browser = dict(commands(plan(paths), ROOT))['browser']
+            with patch('scripts.preflight_push.shutil.which', return_value='pnpm'):
+                browser = dict(commands(plan(paths), ROOT))['browser']
             self.assertEqual(browser[-1:] if suffix else browser[2:], suffix)
 
 

@@ -10,7 +10,7 @@ import {
   Search,
   X,
 } from 'lucide-react';
-import { type RefObject, useEffect, useRef, useState } from 'react';
+import { type RefObject, useEffect, useMemo, useRef, useState } from 'react';
 import { NodeIcon } from '../icons';
 import { lineageOf } from '../model';
 import type { ModelingGuide } from '../modelingGuide';
@@ -89,15 +89,19 @@ export function Sidebar({
       previous?.focus();
     };
   }, [open, mobile, onClose]);
-  const matches = searching
-    ? searchPublication(model, route.query, guide, model.raw.metamodel?.documentation).filter(
-        (result) =>
-          resultType === 'all' ||
-          (['glossary', 'scenario', 'value_stream', 'method', 'guide'].includes(resultType)
-            ? result.kind === resultType
-            : result.node?.kind === resultType),
-      )
-    : [];
+  const matches = useMemo(
+    () =>
+      searching
+        ? searchPublication(model, route.query, guide, model.raw.metamodel?.documentation).filter(
+            (result) =>
+              resultType === 'all' ||
+              (['glossary', 'scenario', 'value_stream', 'method', 'guide'].includes(resultType)
+                ? result.kind === resultType
+                : result.node?.kind === resultType),
+          )
+        : [],
+    [model, route.query, guide, resultType, searching],
+  );
   const revision = model.revision ? `v${String(model.revision).padStart(3, '0')}` : model.version;
   const publicationLabel = `Version du modèle complet : ${revision} · ${model.version}. ${route.version ? 'Publication fixe' : 'Publication courante, actualisée automatiquement'}.`;
   return (
