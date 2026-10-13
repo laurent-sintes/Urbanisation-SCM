@@ -141,7 +141,7 @@ try {
   const panelToggle = page.locator('#fa-tree-open');
   if ((await panelToggle.getAttribute('aria-expanded')) === 'false') await panelToggle.click();
   const atlasSpaces = page.getByRole('navigation', { name: 'Espaces Atlas' });
-  assert.equal(await atlasSpaces.getByRole('button').count(), 7);
+  assert.equal(await atlasSpaces.getByRole('button').count(), 9);
   assert.equal(await atlasSpaces.getByRole('button', { name: 'Points chauds' }).count(), 1);
   const cap = page.locator('.method-chapter a[href*="term=MOD015"]').first();
   await page.mouse.move(0, 0);

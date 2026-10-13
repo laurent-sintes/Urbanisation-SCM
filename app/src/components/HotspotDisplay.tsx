@@ -21,6 +21,7 @@ import {
   type CSSProperties,
   type FocusEvent,
   Fragment,
+  type KeyboardEvent,
   type MouseEvent,
   type PointerEvent,
   type ReactNode,
@@ -115,6 +116,7 @@ export function HotspotTooltipButton({
   const [open, setOpen] = useState(false);
   const [pinned, setPinned] = useState(false);
   const touchPreview = useRef(false);
+  const escapeDismissed = useRef(false);
   const [touchHint, setTouchHint] = useState(false);
   const id = useId();
   useEffect(() => {
@@ -153,6 +155,7 @@ export function HotspotTooltipButton({
             props.onPointerDown?.(event);
           },
           onClick(event: MouseEvent<HTMLButtonElement>) {
+            escapeDismissed.current = false;
             if (pinOnClick) {
               setPinned(!pinned);
               setOpen(!pinned);
@@ -166,12 +169,22 @@ export function HotspotTooltipButton({
             props.onClick?.(event);
           },
           onFocus(event: FocusEvent<HTMLButtonElement>) {
-            setOpen(true);
+            if (!escapeDismissed.current) setOpen(true);
             props.onFocus?.(event);
           },
           onBlur(event: FocusEvent<HTMLButtonElement>) {
+            escapeDismissed.current = false;
             if (!pinned && !refs.floating.current?.contains(event.relatedTarget)) setOpen(false);
             props.onBlur?.(event);
+          },
+          onKeyDown(event: KeyboardEvent<HTMLButtonElement>) {
+            if (event.key === 'Escape') {
+              escapeDismissed.current = true;
+              setOpen(false);
+              setPinned(false);
+              event.stopPropagation();
+            }
+            props.onKeyDown?.(event);
           },
         })}
         ref={refs.setReference}
