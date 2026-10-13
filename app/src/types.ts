@@ -220,10 +220,12 @@ export interface RawPublication extends JsonRecord {
   published_at?: string;
 }
 export interface HotspotResolution {
-  stage: 'unassessed' | 'to_explore' | 'identified' | 'qualifying' | 'credible';
+  stage: 'unassessed' | 'to_explore' | 'identified' | 'qualifying' | 'ready_for_arbitration' | 'credible';
   summary: string;
   credible_option_ids: string[];
   credibility_note: string;
+  recommended_option_id?: string;
+  recommendation_note?: string;
   blocked_reason: string;
   next_step: string;
   assessed_on?: string;

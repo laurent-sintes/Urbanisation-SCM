@@ -1,8 +1,7 @@
-import { ChevronDown, Flame, Info } from 'lucide-react';
+import { BadgeCheck, ChevronDown, CircleDot, Compass, Flame, Info, Lightbulb, ListChecks, Share2 } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { hotspotImpactScopes } from '../hotspotFraming';
 import { filterMapHotspots, type HotspotMapFilters, isHotspotVisible, severityForComplexities } from '../hotspotMap';
 import { emptyResolution, RESOLUTION_STAGES, resolutionErrors, resolutionFor } from '../hotspotResolution';
 import type { RouteState } from '../navigation';
@@ -41,6 +40,20 @@ type SortKey =
   | 'resolution'
   | 'arbitration_level';
 const STATUS_RANK = ['discovered', 'shared', 'validated', 'resolved'];
+const STATUS_ICON = {
+  discovered: CircleDot,
+  shared: Share2,
+  validated: BadgeCheck,
+  resolved: ListChecks,
+};
+const STAGE_ICON = {
+  unassessed: CircleDot,
+  to_explore: Compass,
+  identified: Lightbulb,
+  qualifying: ListChecks,
+  ready_for_arbitration: BadgeCheck,
+  credible: BadgeCheck,
+};
 type HotspotDraft = {
   visible: boolean;
   title: string;
@@ -262,7 +275,6 @@ export function HotspotCatalogPage({
     };
   };
   const scoped = groupHotspots.map(effective);
-  const visibleScope = scoped.filter(isHotspotVisible);
   const hiddenScope = scoped.filter((item) => !isHotspotVisible(item));
   const filtered = [...filterMapHotspots(scoped, { ...filters, enabled: true }), ...hiddenScope]
     .filter((item) =>
@@ -305,6 +317,8 @@ export function HotspotCatalogPage({
         a.id.localeCompare(b.id)
       );
     });
+  const displayedCount = filtered.filter(isHotspotVisible).length;
+  const displayedHiddenCount = filtered.length - displayedCount;
   const changes: WorkshopTableChange[] = Object.entries(drafts).flatMap(([id, draft]) => {
     const item = hotspots.find((hotspot) => hotspot.id === id);
     if (!item) return [];
@@ -401,6 +415,10 @@ export function HotspotCatalogPage({
       resolution.assessment_source ||= `Atelier Atlas ${workshopStage?.session_id || ''}`;
     }
     if (resolution.stage !== 'credible') resolution.credible_option_ids = [];
+    if (resolution.stage !== 'ready_for_arbitration' && resolution.stage !== 'credible') {
+      resolution.recommended_option_id = '';
+      resolution.recommendation_note = '';
+    }
     editFields(item, {
       resolution,
       status: resolution.stage === 'credible' ? 'resolved' : draft.status === 'resolved' ? 'validated' : draft.status,
@@ -498,21 +516,11 @@ export function HotspotCatalogPage({
       {!chosen && (
         <header className="hotspot-page-header">
           <div>
-            <h2>Points chauds</h2>
-            <p>
-              {filtered.filter(isHotspotVisible).length} sur {visibleScope.length} visibles
-              {hiddenScope.length ? ` · ${hiddenScope.length} non visibles` : ''} · Publication {model.version}
+            <p className="hotspot-list-count">
+              <strong>{displayedCount}</strong>{' '}
+              {`point${displayedCount > 1 ? 's' : ''} chaud${displayedCount > 1 ? 's' : ''} affiché${displayedCount > 1 ? 's' : ''}`}
+              {displayedHiddenCount ? ` · ${displayedHiddenCount} masqué${displayedHiddenCount > 1 ? 's' : ''}` : ''}
               {workshopCount ? ` · ${workshopCount} en atelier` : ''}
-            </p>
-            <p className="hotspot-story-caption">
-              Dans ce périmètre : {visibleScope.filter((item) => hotspotImpactScopes(item).includes('model')).length}{' '}
-              modèle · {visibleScope.filter((item) => hotspotImpactScopes(item).includes('transition')).length}{' '}
-              transition · {visibleScope.filter((item) => hotspotImpactScopes(item).includes('usage')).length} usage ·{' '}
-              {
-                visibleScope.filter((item) => !item.framing_impact || item.framing_impact.category === 'to_assess')
-                  .length
-              }{' '}
-              à qualifier. La validation du sujet ne vaut pas résolution du cadrage.
             </p>
           </div>
           {!chosen && (
@@ -635,10 +643,32 @@ export function HotspotCatalogPage({
                 const draft = drafts[item.id] || draftFor(item);
                 const severity = severityForComplexities(draft.political, draft.implementation) || item.severity;
                 const canEdit = Boolean(workshopStage);
+                const StatusIcon = STATUS_ICON[draft.status];
+                const StageIcon = STAGE_ICON[draft.resolution.stage];
+                const credibleOptions = item.resolution_options.filter((option) =>
+                  draft.resolution.credible_option_ids.includes(option.id),
+                );
+                const recommendedOption = item.resolution_options.find(
+                  (option) => option.id === draft.resolution.recommended_option_id,
+                );
                 const progress = (
                   <>
-                    <span>Sujet : {STATUS[draft.status]}</span>
-                    <span>Cadrage : {RESOLUTION_STAGES[draft.resolution.stage]}</span>
+                    <span className={`hotspot-progress-badge status-${draft.status}`}>
+                      <StatusIcon size={15} aria-hidden="true" /> Sujet {STATUS[draft.status]}
+                    </span>
+                    <span className={`hotspot-progress-badge stage-${draft.resolution.stage}`}>
+                      <StageIcon size={15} aria-hidden="true" /> {RESOLUTION_STAGES[draft.resolution.stage]}
+                    </span>
+                    {draft.resolution.stage === 'ready_for_arbitration' && recommendedOption && (
+                      <span className="hotspot-option-to-arbitrate">À arbitrer : {recommendedOption.title}</span>
+                    )}
+                    {draft.resolution.stage === 'credible' &&
+                      credibleOptions.length > 0 &&
+                      !draft.selected_option_id && (
+                        <span className="hotspot-option-to-arbitrate">
+                          Solutions crédibles : {credibleOptions.map((option) => option.title).join(' · ')}
+                        </span>
+                      )}
                     {draft.resolution.blocked_reason && <span>Bloqué : {draft.resolution.blocked_reason}</span>}
                   </>
                 );
@@ -720,12 +750,6 @@ export function HotspotCatalogPage({
                         >
                           <Flame size={15} aria-hidden="true" /> {SIZE(severity)}
                         </HotspotTooltipButton>
-                        <small
-                          title={`Politique : ${SIZE(draft.political)} · Implémentation : ${SIZE(draft.implementation)}`}
-                        >
-                          P {draft.political === 'unassessed' ? '—' : draft.political} · I{' '}
-                          {draft.implementation === 'unassessed' ? '—' : draft.implementation}
-                        </small>
                       </td>
                       <td data-label="Qualification et avancement">
                         {canEdit ? (
@@ -754,10 +778,6 @@ export function HotspotCatalogPage({
               )}
             </tbody>
           </table>
-          <p className="hotspot-table-legend">
-            P : complexité politique · I : complexité d’implémentation. Résumé complet via ⓘ ; détails et arbitrage dans
-            la fiche.
-          </p>
         </div>
       )}
       {dialog &&
@@ -882,7 +902,10 @@ export function HotspotCatalogPage({
                 )}
                 {dialog.mode === 'resolution' && (
                   <div className="hotspot-dialog-body hotspot-resolution-fields">
-                    <p>Une solution crédible suffit au cadrage ; le choix définitif reste distinct.</p>
+                    <p>
+                      Une option recommandée attend l’arbitrage ; une solution crédible clôt le cadrage. Le choix
+                      définitif reste distinct.
+                    </p>
                     <label>
                       Qualification du sujet
                       <select
@@ -895,7 +918,15 @@ export function HotspotCatalogPage({
                             editFields(item, {
                               status,
                               ...(draft.resolution.stage === 'credible'
-                                ? { resolution: { ...draft.resolution, stage: 'qualifying', credible_option_ids: [] } }
+                                ? {
+                                    resolution: {
+                                      ...draft.resolution,
+                                      stage: 'qualifying',
+                                      credible_option_ids: [],
+                                      recommended_option_id: '',
+                                      recommendation_note: '',
+                                    },
+                                  }
                                 : {}),
                             });
                         }}
@@ -930,7 +961,9 @@ export function HotspotCatalogPage({
                         onChange={(event) =>
                           editResolution(item, {
                             stage: event.target.value as HotspotResolution['stage'],
-                            ...(event.target.value === 'credible' ? { blocked_reason: '' } : {}),
+                            ...(['ready_for_arbitration', 'credible'].includes(event.target.value)
+                              ? { blocked_reason: '' }
+                              : {}),
                           })
                         }
                       >
@@ -948,6 +981,32 @@ export function HotspotCatalogPage({
                         onChange={(event) => editResolution(item, { summary: event.target.value })}
                       />
                     </label>
+                    {draft.resolution.stage === 'ready_for_arbitration' && (
+                      <fieldset>
+                        <legend>Proposition à soumettre à l’arbitrage</legend>
+                        <label>
+                          Option recommandée
+                          <select
+                            value={draft.resolution.recommended_option_id || ''}
+                            onChange={(event) => editResolution(item, { recommended_option_id: event.target.value })}
+                          >
+                            <option value="">Choisir une option</option>
+                            {item.resolution_options.map((option) => (
+                              <option key={option.id} value={option.id}>
+                                {option.title}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+                        <label>
+                          Pourquoi cette option ? Hypothèses et réserves
+                          <textarea
+                            value={draft.resolution.recommendation_note || ''}
+                            onChange={(event) => editResolution(item, { recommendation_note: event.target.value })}
+                          />
+                        </label>
+                      </fieldset>
+                    )}
                     {draft.resolution.stage === 'credible' && (
                       <fieldset>
                         <legend>Solutions crédibles (au moins une)</legend>
@@ -979,7 +1038,9 @@ export function HotspotCatalogPage({
                     <label>
                       Raison du blocage (facultative)
                       <textarea
-                        disabled={draft.resolution.stage === 'credible'}
+                        disabled={
+                          draft.resolution.stage === 'credible' || draft.resolution.stage === 'ready_for_arbitration'
+                        }
                         value={draft.resolution.blocked_reason}
                         onChange={(event) => editResolution(item, { blocked_reason: event.target.value })}
                       />
@@ -1010,6 +1071,7 @@ export function HotspotCatalogPage({
                       Option retenue (choix définitif facultatif){' '}
                       <select
                         value={draft.selected_option_id}
+                        disabled={draft.resolution.stage === 'ready_for_arbitration'}
                         onChange={(event) => edit(item, 'selected_option_id', event.target.value)}
                       >
                         <option value="">Aucun choix définitif</option>

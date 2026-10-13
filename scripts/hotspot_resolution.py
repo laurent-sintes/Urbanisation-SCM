@@ -1,7 +1,7 @@
 """Framing resolution is an argued credible option, independent of implementation."""
 from datetime import date
 
-STAGES = ('unassessed', 'to_explore', 'identified', 'qualifying', 'credible')
+STAGES = ('unassessed', 'to_explore', 'identified', 'qualifying', 'ready_for_arbitration', 'credible')
 TEXTS = ('summary', 'credibility_note', 'blocked_reason', 'next_step', 'assessment_source')
 
 
@@ -14,13 +14,18 @@ def validate_resolution(hotspot):
     resolution = hotspot.get('resolution')
     if 'resolution' not in hotspot:
         return []  # Historical contracts retain their own meaning.
-    if not isinstance(resolution, dict) or set(resolution) - set((*TEXTS, 'stage', 'credible_option_ids', 'assessed_on')):
+    if not isinstance(resolution, dict) or set(resolution) - set((*TEXTS, 'stage', 'credible_option_ids', 'assessed_on',
+                                                                  'recommended_option_id', 'recommendation_note')):
         return ['invalid framing resolution fields']
     if resolution.get('stage') not in STAGES or any(not isinstance(resolution.get(key), str) for key in TEXTS):
         return ['invalid framing resolution stage or text']
     ids = resolution.get('credible_option_ids')
     if not isinstance(ids, list) or any(not isinstance(identifier, str) for identifier in ids):
         return ['invalid credible options']
+    recommended = resolution.get('recommended_option_id', '')
+    recommendation_note = resolution.get('recommendation_note', '')
+    if not isinstance(recommended, str) or not isinstance(recommendation_note, str):
+        return ['invalid recommendation fields']
     errors = []
     stage = resolution['stage']
     if stage != 'unassessed':
@@ -39,13 +44,30 @@ def validate_resolution(hotspot):
         except (ValueError, TypeError):
             errors.append('invalid assessment date')
     options = {option['id'] for option in hotspot['resolution_options']}
-    if stage in ('identified', 'qualifying', 'credible') and not options:
+    if stage in ('identified', 'qualifying', 'ready_for_arbitration', 'credible') and not options:
         errors.append('identified resolution requires an option')
+    if recommended and recommended not in options:
+        errors.append('recommended option must be an existing option')
+    if stage == 'ready_for_arbitration':
+        if not recommended or not recommendation_note.strip():
+            errors.append('arbitration-ready resolution requires a recommended option and rationale')
+        if hotspot['status'] == 'resolved':
+            errors.append('arbitration-ready hotspot cannot be resolved')
+        if resolution['blocked_reason'].strip():
+            errors.append('arbitration-ready resolution cannot be blocked')
+        if hotspot.get('selected_option_id'):
+            errors.append('arbitration-ready resolution cannot have a final choice')
+    elif stage != 'credible' and (recommended or recommendation_note.strip()):
+        errors.append('recommendation requires arbitration-ready or credible stage')
     if len(ids) != len(set(ids)) or set(ids) - options:
         errors.append('credible options must be distinct existing options')
     if stage == 'credible':
         if not ids or not resolution['credibility_note'].strip():
             errors.append('resolved hotspot requires a credible option and credibility rationale')
+        if bool(recommended) != bool(recommendation_note.strip()):
+            errors.append('retained recommendation requires option and rationale together')
+        if recommended and recommended not in ids:
+            errors.append('retained recommendation must remain a credible option')
         if hotspot['status'] != 'resolved':
             errors.append('credible resolution requires resolved status')
         if resolution['blocked_reason'].strip():

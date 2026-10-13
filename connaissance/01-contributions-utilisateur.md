@@ -24571,3 +24571,85 @@ Verbatim :
 Je valide, commit et release
 
 Portée : validation de la proposition complète appliquée à HS-021 sous U1031 : deux décisions distinctes (frontière FLOW / Finance / SAP SD et circuit d'échange), maintien des variantes historiques d'interprétation, ajout des pistes SD et hybride, cas B2B et correction, PDF pédagogique DOC004 lié au hotspot. Autorise le commit local et la publication Atlas. Les quatre options restent ouvertes ; aucune fonction SD installée, interface FI/CO applicable, estimation, solution retenue ni réalisation Beaumanoir n'est validée par extension. Les sources et réserves de U1031 restent applicables. Aucun push demandé.
+
+## U1033
+
+Date : 2026-10-13. Source : Laurent, demande d'audit de la cartographie des applications.
+
+Verbatim :
+
+> Maintenant, je souhaite que les applications du "SI Beaumanoir Marques Historiques" et du "SI Boardriders" soient "mappables" sur la cartographie métier.
+>
+> Dans la vue carte, on peut imaginer un sélecteur comme les hotspots qui présente les apps de chacun des SI et la sélection d'un app illumine la carto. On peut imaginer récupérer sur internet les logos des apps sauf si c'est une app "maison".
+>
+> Le problème qu'il peut y avoir est triple :
+> - ce que sait faire l'application n'implique pas qu'on utilise toutes les fonctionnalités
+> - Certaines apps ont été customisées par les directions IT
+> - les apps ont des modules ou des options : il faut voir ce qui a été réellement activé / acheté
+>
+> Ce serait bien d'avoir dans le modèle :
+> - des applications (core)
+> - munies d'options ou de modules (extensions)
+> - chacun mappé sur un ou plusieurs éléments du modèle métier
+>
+> Ca me permettra de faire apparaitre le produit majeur cible : Flow Core system
+>
+> Je souhaite tout d'abord un audit et une analyse pour savoir ce qu'on peut faire.
+
+Portée : demander un audit et une analyse avant toute évolution du modèle ou d'Atlas. Explorer un catalogue d'applications par SI, les extensions, leur correspondance avec les éléments métier, une visualisation sur la carte et le produit cible Flow Core system. L'apport souligne que les fonctions du produit, les achats, l'activation, les personnalisations et les usages effectifs sont distincts ; il n'atteste aucune configuration ou couverture installée.
+
+## U1034
+
+Date : 2026-10-13. Source : Laurent, précision sur la navigation et la carte applicative.
+
+Verbatim :
+
+> On peut imaginer une nouvelle entrée avec la liste des applications par SI.
+>
+> Mais pour le positionnement sur une carte, je vois plutot une option qui permet de les voir sur la carto entreprise métier.
+
+Portée : préciser l'option analysée sous U1033. Le catalogue des applications se parcourt dans une entrée propre, organisée par SI. Leur positionnement s'affiche au choix sur la carte de l'entreprise métier, sans créer une carte applicative distincte. Cette précision ne valide ni les correspondances particulières, ni leur statut de preuve, ni une mise en œuvre immédiate.
+
+## U1035
+
+Date : 2026-10-13. Source : Laurent, état intermédiaire des points chauds.
+
+Verbatim :
+
+> Je veux ce nouvel état.
+
+Portée : ajouter au suivi des points chauds un état distinct avant la clôture du cadrage : une option recommandée, justifiée et prête à être soumise à l'arbitrage. L'option doit être visible dans la liste Atlas. Cette recommandation ne vaut ni option définitivement retenue, ni solution crédible clôturant le cadrage, ni mise en œuvre. Aucun point chaud existant ne reçoit automatiquement cette qualification.
+
+## U1036
+
+Date : 2026-10-13. Source : Laurent, précision sur la structure applicative.
+
+Verbatim :
+
+> Les notions de modules ou d'extension sont associé à des produits applicatifs voire des modules eux même. Ca donnerait une vue arborescente.
+
+Portée : préciser U1033/U1034. La navigation applicative envisagée est arborescente par SI : un produit applicatif peut contenir des modules ou extensions, et un module peut à son tour en contenir. Les correspondances avec le modèle métier peuvent être portées par chaque élément de cet arbre. Cette précision ne constate aucune composition ou activation effective d'un produit nommé.
+
+## U1037
+
+Date : 2026-10-13. Source : Laurent, distinction entre offre éditeur et sélection par SI.
+
+Verbatim :
+
+> Attention, un produit peut être présent dans les deux SI mais avec une activation différente.
+>
+> Donc je vois bien un référentiel éditeur avec toutes les options possibles et une vue de sélection par SI.
+
+Portée : préciser U1033/U1034/U1036. Le référentiel éditeur décrit une seule fois le produit et l'arborescence de ses options possibles ; chaque SI porte sa propre sélection et ses états d'activation, même pour un produit commun. La vue par SI projette cette sélection sur l'arbre de référence. Aucune option, licence, activation ou couverture installée particulière n'est attestée par cet apport.
+
+## U1038
+
+Date : 2026-10-13. Source : Laurent, proposition de pilote applicatif Elastic.
+
+Verbatim :
+
+> Pour tester, je voulais prendre comme exemple de base l'outil B2B Elastic parce qu'il est pas trop compliqué et présent dans les 2 SI.
+>
+> Ton avis ?
+
+Portée : proposer Elastic comme pilote pour éprouver le référentiel éditeur commun, les sélections propres aux SI historiques et Boardriders et leur positionnement sur la carte métier. Laurent déclare sa présence dans les deux SI ; les instances, options acquises ou activées et usages détaillés restent à qualifier. Cette demande sollicite un avis avant une réalisation ou une modification canonique.

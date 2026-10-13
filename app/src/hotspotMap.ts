@@ -87,7 +87,15 @@ export function readHotspotFilters(value?: string): HotspotMapFilters {
     ] as const)
       if (typeof input[key] === 'boolean') result[key] = input[key];
     const choices = {
-      resolutionStage: ['all', 'unassessed', 'to_explore', 'identified', 'qualifying', 'credible'],
+      resolutionStage: [
+        'all',
+        'unassessed',
+        'to_explore',
+        'identified',
+        'qualifying',
+        'ready_for_arbitration',
+        'credible',
+      ],
       severity: ['all', 'unassessed', ...LEVELS],
       severityMode: ['exact', 'at_most', 'at_least'],
       kind: ['all', 'scope', 'integration'],

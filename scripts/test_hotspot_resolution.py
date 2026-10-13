@@ -23,6 +23,21 @@ class ResolutionTests(unittest.TestCase):
         self.assertEqual(validate_resolution(item), [])
         self.assertEqual(checked_hotspot(item, nodes)['status'], 'resolved')
 
+    def test_recommendation_is_ready_for_arbitration_without_closing_framing(self):
+        item, nodes = self.item()
+        option_id = item['resolution_options'][0]['id']
+        item['status'] = 'validated'
+        item['resolution'].update(stage='ready_for_arbitration', credible_option_ids=[],
+                                  credibility_note='', recommended_option_id=option_id,
+                                  recommendation_note='Préférée sous réserve de validation des impacts.')
+        self.assertEqual(validate_resolution(item), [])
+        self.assertEqual(checked_hotspot(item, nodes)['resolution']['recommended_option_id'], option_id)
+        item['resolution']['recommendation_note'] = ''
+        self.assertTrue(validate_resolution(item))
+        item['resolution']['recommendation_note'] = 'Justification rétablie'
+        item['status'] = 'resolved'
+        self.assertTrue(validate_resolution(item))
+
     def test_non_convergence_decision_can_resolve_framing(self):
         item, nodes = self.item()
         item['resolution_options'] = [{

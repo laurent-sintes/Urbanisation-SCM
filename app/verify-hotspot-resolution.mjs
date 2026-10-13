@@ -8,7 +8,7 @@ const dist = resolve(import.meta.dirname, process.env.ATLAS_HOTSPOT_DIST || 'dis
 const index = JSON.parse(await readFile(resolve(dist, 'data/index.json'), 'utf8'));
 const payload = await readFile(resolve(dist, `data/${index.current_version}/model.json`));
 const model = JSON.parse(payload);
-const stages = ['unassessed', 'to_explore', 'identified', 'qualifying', 'credible'];
+const stages = ['unassessed', 'to_explore', 'identified', 'qualifying', 'ready_for_arbitration', 'credible'];
 const stage = {
   active: true,
   schema_version: 1,
@@ -43,6 +43,8 @@ const stage = {
           summary: progress === 'unassessed' ? '' : 'Hypothèses de cadrage',
           credible_option_ids: progress === 'credible' ? [options[0].id] : [],
           credibility_note: progress === 'credible' ? 'Crédibilité avec réserves' : '',
+          recommended_option_id: progress === 'ready_for_arbitration' ? options[0].id : '',
+          recommendation_note: progress === 'ready_for_arbitration' ? 'Option proposée avec réserves' : '',
           blocked_reason: progress === 'qualifying' ? 'Volumes inconnus' : '',
           next_step: progress === 'qualifying' ? 'Obtenir les volumes' : '',
           assessment_source: progress === 'unassessed' ? '' : 'Séance QA',
@@ -107,7 +109,10 @@ try {
   for (const progress of stages) {
     const ring = page.locator(`.overview-system .hotspot-resolution-ring[data-stage="${progress}"]`).first();
     assert.ok(await ring.count(), progress);
-    assert.equal(await ring.locator('circle.is-complete').count(), Math.max(0, stages.indexOf(progress) - 1));
+    assert.equal(
+      await ring.locator('circle.is-complete').count(),
+      Math.min(3, Math.max(0, stages.indexOf(progress) - 1)),
+    );
     if (progress === 'credible') {
       const marker = ring.locator('..');
       assert.equal(await marker.locator('.hotspot-map-flames').count(), 0);
@@ -115,6 +120,21 @@ try {
     }
   }
   assert.ok((await rings.count()) >= 5);
+  await trigger.click();
+  await filters.getByLabel('Avancement du cadrage').selectOption('ready_for_arbitration');
+  await filters.getByRole('button', { name: 'Fermer les filtres' }).click();
+  await page.locator('.overview-system .hotspot-resolution-ring[data-stage="ready_for_arbitration"]').first().waitFor();
+  assert.equal(
+    await page
+      .locator('.overview-system .hotspot-resolution-ring')
+      .evaluateAll((elements) =>
+        elements.every((element) => element.getAttribute('data-stage') === 'ready_for_arbitration'),
+      ),
+    true,
+  );
+  await trigger.click();
+  await filters.getByLabel('Avancement du cadrage').selectOption('all');
+  await filters.getByRole('button', { name: 'Fermer les filtres' }).click();
   await page.screenshot({ path: resolve(output, 'desktop.png'), fullPage: true });
   await page.setViewportSize({ width: 390, height: 900 });
   const group = page.locator('.overview-system .hotspot-map-marker[aria-expanded]').first();
@@ -169,6 +189,28 @@ try {
 
   await page.setViewportSize({ width: 1440, height: 950 });
   await page.goto(`${base}#/hotspots?version=${index.current_version}`);
+  const credibleInList = stage.operations.find((operation) => operation.value.resolution.stage === 'credible').value;
+  const credibleRow = page.locator(`[data-hotspot-id="${credibleInList.id}"]`);
+  await credibleRow.getByText(`Solutions crédibles : ${credibleInList.resolution_options[0].title}`).waitFor();
+  const recommendedInList = stage.operations.find(
+    (operation) => operation.value.resolution.stage === 'ready_for_arbitration',
+  ).value;
+  await page
+    .locator(`[data-hotspot-id="${recommendedInList.id}"]`)
+    .getByText(`À arbitrer : ${recommendedInList.resolution_options[0].title}`)
+    .waitFor();
+  await page.getByRole('button', { name: 'Filtres', exact: false }).click();
+  const listFilter = page.locator('.hotspot-catalog-filters').getByLabel('Avancement du cadrage');
+  await listFilter.selectOption('ready_for_arbitration');
+  assert.ok(await page.locator('.hotspot-table tr[data-hotspot-id]:not(.hotspot-is-hidden)').count());
+  assert.equal(
+    await page
+      .locator('.hotspot-table tr[data-hotspot-id]:not(.hotspot-is-hidden)')
+      .evaluateAll((rows) => rows.every((row) => Boolean(row.querySelector('.stage-ready_for_arbitration')))),
+    true,
+  );
+  await listFilter.selectOption('all');
+  await page.screenshot({ path: resolve(output, 'catalog.png'), fullPage: true });
   const item = model.hotspot_catalog.hotspots[0];
   const edit = page.getByRole('button', { name: `Qualification et avancement de ${item.title}`, exact: true });
   await edit.click();
@@ -198,6 +240,17 @@ try {
   assert.equal(posts.length, 2);
   assert.equal(posts[1].changes[0].fields.status, 'validated');
   assert.deepEqual(posts[1].changes[0].fields.resolution.credible_option_ids, []);
+  await edit.click();
+  await dialog.getByLabel('Avancement du cadrage').selectOption('ready_for_arbitration');
+  await dialog.locator('fieldset select').selectOption(item.resolution_options[0].id);
+  await dialog.getByLabel('Pourquoi cette option ? Hypothèses et réserves').fill('Préférée sous réserve d’arbitrage.');
+  assert.equal(await save.isDisabled(), false);
+  await dialog.getByRole('button', { name: 'Fermer', exact: true }).click();
+  await save.click();
+  await page.waitForFunction(() => document.querySelector('.hotspot-save-message')?.textContent.includes('enregistré'));
+  assert.equal(posts.length, 3);
+  assert.equal(posts[2].changes[0].fields.resolution.stage, 'ready_for_arbitration');
+  assert.equal(posts[2].changes[0].fields.resolution.recommended_option_id, item.resolution_options[0].id);
   assert.deepEqual(errors, []);
   console.log(
     JSON.stringify({

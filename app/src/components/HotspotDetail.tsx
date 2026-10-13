@@ -49,6 +49,7 @@ export function HotspotDetail({
   const resolution = resolutionFor(hotspot);
   const documents = documentsForHotspot(model, hotspot.document_ids || []);
   const selected = hotspot.resolution_options.find((option) => option.id === hotspot.selected_option_id);
+  const recommended = hotspot.resolution_options.find((option) => option.id === resolution.recommended_option_id);
   const credibleIds = new Set(resolution.credible_option_ids);
   const hasResolution = Boolean(hotspot.resolution);
   const header = useRef<HTMLElement>(null);
@@ -152,6 +153,12 @@ export function HotspotDetail({
           )}
           {hotspot.status === 'validated' && !hotspot.selected_option_id && (
             <p>Sujet et périmètre validés ; aucune option de résolution retenue.</p>
+          )}
+          {resolution.stage === 'ready_for_arbitration' && recommended && (
+            <p>
+              <strong>Option proposée à l’arbitrage : </strong>
+              <ModelText text={recommended.title} />
+            </p>
           )}
           {credibleIds.size > 0 && (
             <p>
@@ -448,6 +455,9 @@ export function HotspotDetail({
                     </h5>
                     <div className="hotspot-option-labels">
                       {option.id === selected?.id && <span className="hotspot-option-tag">Option retenue</span>}
+                      {resolution.stage === 'ready_for_arbitration' && option.id === recommended?.id && (
+                        <span className="hotspot-option-tag">À arbitrer</span>
+                      )}
                       {credibleIds.has(option.id) && <span className="hotspot-option-tag">Solution crédible</span>}
                       <span className="hotspot-story-caption">{EVIDENCE[option.evidence_state]}</span>
                     </div>

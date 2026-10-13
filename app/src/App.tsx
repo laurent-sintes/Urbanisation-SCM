@@ -5,6 +5,7 @@ import {
   Compass,
   Copy,
   FileText,
+  Flame,
   GitBranch,
   LayoutGrid,
   Lightbulb,
@@ -790,7 +791,9 @@ export function App() {
                         <NodeIcon node={headingNode} size={30} framed />
                       ) : (
                         <span className="node-icon framed tone-context">
-                          {view === 'principles' || view === 'metamodel' || view === 'help' ? (
+                          {view === 'hotspots' ? (
+                            <Flame size={30} />
+                          ) : view === 'principles' || view === 'metamodel' || view === 'help' ? (
                             <Lightbulb size={30} />
                           ) : (
                             <Compass size={30} />
@@ -851,7 +854,7 @@ export function App() {
                                   ? 'Préparer une séance de travail collective autour de la cartographie.'
                                   : 'Un parcours rapide pour explorer le modèle publié.'
                                 : view === 'hotspots'
-                                  ? 'Explorer les sujets localisés sur la cartographie et leurs options de résolution.'
+                                  ? 'Un point chaud est un sujet qui demande une clarification ou un arbitrage. Il peut révéler un écart, une responsabilité à préciser ou une décision de convergence à prendre.'
                                   : view === 'documents'
                                     ? 'Consulter et télécharger les documents associés à cette publication.'
                                     : view === 'scenarios'

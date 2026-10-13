@@ -5,6 +5,7 @@ export const RESOLUTION_STAGES = {
   to_explore: 'À explorer',
   identified: 'Pistes identifiées',
   qualifying: 'Options en qualification',
+  ready_for_arbitration: 'Option recommandée — à arbitrer',
   credible: 'Solution crédible — cadrage résolu',
 } as const;
 
@@ -13,6 +14,8 @@ export const emptyResolution = (): HotspotResolution => ({
   summary: '',
   credible_option_ids: [],
   credibility_note: '',
+  recommended_option_id: '',
+  recommendation_note: '',
   blocked_reason: '',
   next_step: '',
   assessment_source: '',
@@ -40,13 +43,32 @@ export function resolutionErrors(hotspot: Hotspot): string[] {
   }
   if (resolution.stage === 'unassessed' && resolution.assessed_on !== undefined && !validDate(resolution.assessed_on))
     errors.push('date d’évaluation invalide');
-  if (['identified', 'qualifying', 'credible'].includes(resolution.stage) && !hotspot.resolution_options.length)
+  if (
+    ['identified', 'qualifying', 'ready_for_arbitration', 'credible'].includes(resolution.stage) &&
+    !hotspot.resolution_options.length
+  )
     errors.push('au moins une option décrite est requise');
+  const recommended = resolution.recommended_option_id || '';
+  const recommendationNote = resolution.recommendation_note || '';
+  if (recommended && !hotspot.resolution_options.some((option) => option.id === recommended))
+    errors.push('option recommandée absente des options');
+  if (resolution.stage === 'ready_for_arbitration') {
+    if (!recommended || !recommendationNote.trim()) errors.push('option recommandée et justification requises');
+    if (hotspot.status === 'resolved') errors.push('une option à arbitrer ne clôt pas le cadrage');
+    if (resolution.blocked_reason.trim()) errors.push('une option prête à arbitrer ne peut pas être bloquée');
+    if (hotspot.selected_option_id) errors.push('une option à arbitrer ne peut pas être déjà retenue');
+  } else if (resolution.stage !== 'credible' && (recommended || recommendationNote.trim())) {
+    errors.push('la recommandation exige l’étape prête à arbitrer ou résolue');
+  }
   if (resolution.stage === 'credible') {
     if (!resolution.credible_option_ids.length) errors.push('au moins une solution crédible requise');
     if (!resolution.credibility_note.trim()) errors.push('justification de crédibilité requise');
     if (hotspot.status !== 'resolved') errors.push('une solution crédible exige le statut résolu');
     if (resolution.blocked_reason.trim()) errors.push('un cadrage résolu ne peut pas être bloqué');
+    if (Boolean(recommended) !== Boolean(recommendationNote.trim()))
+      errors.push('recommandation conservée sans option ou justification');
+    if (recommended && !resolution.credible_option_ids.includes(recommended))
+      errors.push('l’option recommandée conservée doit être crédible');
   } else {
     if (hotspot.status === 'resolved') errors.push('le statut résolu exige une solution crédible');
     if (resolution.credible_option_ids.length) errors.push('les solutions crédibles exigent l’étape solution crédible');

@@ -173,7 +173,9 @@ export function HotspotGlyph({ severity }: { severity: string }) {
 
 export function HotspotResolutionGlyph({ item }: { item: Hotspot }) {
   const resolution = resolutionFor(item);
-  const step = ['to_explore', 'identified', 'qualifying', 'credible'].indexOf(resolution.stage);
+  const step = ['to_explore', 'identified', 'qualifying', 'ready_for_arbitration', 'credible'].indexOf(
+    resolution.stage,
+  );
   return (
     <>
       <svg className="hotspot-resolution-ring" viewBox="0 0 40 40" aria-hidden="true" data-stage={resolution.stage}>
@@ -716,8 +718,8 @@ export function HotspotLegend({ count, projections }: { count: number; projectio
   return (
     <div className="hotspot-map-legend" role="group" aria-label="Légende des points chauds">
       <span>
-        Anneau : 0 / 1 / 2 / 3 jalons — à explorer / pistes / qualification / solution crédible. ✓ : cadrage résolu ;
-        pause : bloqué. Anneau discontinu gris : non renseigné.
+        Anneau : à explorer / pistes / qualification / option à arbitrer / solution crédible. ✓ : cadrage résolu ; pause
+        : bloqué. Anneau discontinu gris : non renseigné.
       </span>
       <span>Criticité</span>
       {['S', 'M', 'L', 'XL', 'unassessed'].map((severity) => (

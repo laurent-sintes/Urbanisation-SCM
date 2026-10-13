@@ -1245,6 +1245,13 @@ select {
   padding-top: 9px;
   border-top: 1px solid #e5ece5;
 }
+@container (min-width: 580px) {
+  .card-child-list > ul > .domain-subdomain-group + .domain-subdomain-group {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+}
 .card-child-list .domain-subdomain-contents {
   margin: 2px 0 8px 15px;
   padding-left: 10px;

@@ -1,6 +1,6 @@
 id: flow-modeling-glossary
 kind: modeling_glossary
-as_of: '2026-10-12'
+as_of: '2026-10-13'
 source_refs:
 - U229
 - U230
@@ -72,6 +72,7 @@ source_refs:
 - U920
 - U921
 - U922
+- U1035
 purpose: Vocabulaire de modélisation en support à la définition des objets du modèle ; distinct du glossaire métier.
 boundary:
   business_glossary: modeles/backlog/glossary.yaml
@@ -1871,8 +1872,8 @@ terms:
   - La fiche reste hors de la hiérarchie métier ; sa localisation ne crée pas une relation de décomposition.
   - Une lecture du marché peut distinguer pratiques documentées, avis pour FLOW et limites, avec des sources primaires consultées.
     Elle n'attribue pas une décision métier à Laurent.
-  - Le cadrage progresse de À explorer à Pistes identifiées, puis Options en qualification et Solution crédible. Non renseigné
-    signifie absence d’évaluation, jamais absence de risque.
+  - Le cadrage progresse de À explorer à Pistes identifiées, puis Options en qualification, Option recommandée à arbitrer
+    et Solution crédible. Non renseigné signifie absence d’évaluation, jamais absence de risque.
   - Résolu signifie qu’au moins une solution crédible est envisagée et argumentée avec ses hypothèses et réserves. Cela ne
     prouve ni choix définitif, ni mise en œuvre, ni disparition du problème opérationnel.
   - La qualification du sujet et l’avancement du cadrage sont distincts. La criticité reste inchangée par la progression ;
@@ -1913,6 +1914,9 @@ terms:
     business_model et core_system ne sont renseignées que pour une portée Modèle.
   - consolidated_into relie une fiche conservée à la fiche commune qui reprend son traitement. La fiche source reste non visible,
     accessible après le séparateur ; sa résolution et son identité ne sont pas effacées.
+  - 'Option recommandée à arbitrer désigne une proposition motivée, avec ses hypothèses et réserves, soumise à une instance
+    de décision. Le sujet reste ouvert : aucune option retenue, résolution du cadrage ou mise en œuvre n’en découle. La fiche
+    conserve l’identifiant de l’option et la justification de la recommandation.'
   source_refs:
   - U917
   - U918
@@ -1934,9 +1938,11 @@ terms:
   - U970
   - U972
   - U973
+  - U1035
   review:
-    state: proposed
-    note: Définition méthodologique pilote ; libellés, états et calcul de gravité restent à éprouver avant accord métier.
+    state: partial
+    adopted_scope: U1035 valide l’état Option recommandée à arbitrer, distinct de la clôture du cadrage, sans qualifier automatiquement les points chauds existants.
+    proposed_scope: Les autres libellés, états et calculs de gravité restent à éprouver.
 - id: MOD045
   name: Gap Analysis
   label_fr: Analyse des écarts

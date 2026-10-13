@@ -70385,6 +70385,7 @@ hotspot_catalog:
   - U973
   - U1031
   - U1032
+  - U1035
   hotspots:
   - id: HS-001
     title: Migration ECC MM / PP / SD chez Boardriders
@@ -73113,8 +73114,8 @@ hotspot_catalog:
       evidence_state: hypothesis
     - id: hs-021-sd
       title: Passage par SAP SD pour les flux qui le justifient
-      principle: Faire produire ou reprendre par SD les documents commerciaux nécessaires, puis utiliser son intégration
-        à FI/CO pour les écritures associées.
+      principle: Faire produire ou reprendre par SD les documents commerciaux nécessaires, puis utiliser son intégration à
+        FI/CO pour les écritures associées.
       conditions:
       - Démontrer les fonctions de facturation ou de contrôle réellement confiées à SD, flux par flux.
       - Préserver le lien entre facture, fait d’origine et écriture ; éviter un second cycle de commande concurrent de FLOW.
@@ -73144,8 +73145,8 @@ hotspot_catalog:
     severity: XL
     severity_policy: matrix-v1
     arbitration_level: to_confirm
-    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : responsables FLOW, Finance, facturation B2B et
-      programme SAP doivent qualifier les responsabilités et comparer les contrats d’échange.'
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : responsables FLOW, Finance, facturation B2B et programme
+      SAP doivent qualifier les responsabilités et comparer les contrats d’échange.'
     status: validated
     source_refs:
     - U958
@@ -73165,21 +73166,21 @@ hotspot_catalog:
         preuves datées.'
     review:
       state: under_review
-      note: 'U967 reconnaît le sujet avec ses réserves. U1031 demande de distinguer frontière FLOW / Finance et solution
-        d’échange, avec une alternative à SD et un document pédagogique. U1032 valide cette restructuration et la mise à
-        disposition du PDF, sans retenir une option ni confirmer le rôle réel de SD, les flux installés ou la solution cible.
-        FI/CO reste hors du périmètre migré de HS-001. Les estimations préparatoires U973 restent à éprouver.'
+      note: U967 reconnaît le sujet avec ses réserves. U1031 demande de distinguer frontière FLOW / Finance et solution d’échange,
+        avec une alternative à SD et un document pédagogique. U1032 valide cette restructuration et la mise à disposition
+        du PDF, sans retenir une option ni confirmer le rôle réel de SD, les flux installés ou la solution cible. FI/CO reste
+        hors du périmètre migré de HS-001. Les estimations préparatoires U973 restent à éprouver.
     market_view:
-      finding: 'Microsoft documente l’import de journaux depuis des systèmes externes. SAP documente à la fois des écritures
-        reçues par interface et des documents de facturation Sales transmis à la comptabilité. Ce sont des mécanismes distincts ;
-        ils ne fixent pas la frontière FLOW / Finance ni la solution Beaumanoir.'
+      finding: Microsoft documente l’import de journaux depuis des systèmes externes. SAP documente à la fois des écritures
+        reçues par interface et des documents de facturation Sales transmis à la comptabilité. Ce sont des mécanismes distincts
+        ; ils ne fixent pas la frontière FLOW / Finance ni la solution Beaumanoir.
       flow_assessment: '[Billing](model:service-order-billing) tient le résultat de facturation ; [Accounting Data Provision](model:accounting-data-provision)
         fournit les faits et suit les retours ; [Financial Accounting](model:subdomain-financial-accounting) interprète et
         comptabilise. Déterminer si SD réalise une fonction de facturation nécessaire ou ne sert que de passerelle. Un bus
         transporte les faits mais ne porte pas à lui seul l’interprétation comptable.'
-      limits: 'Comparaison de mécanismes produit, sans preuve des fonctions installées, de la licence, du paramétrage ni des
-        contraintes de la cible S/4HANA Beaumanoir. Les pages SAP consultées décrivent une édition Cloud Public ; leur
-        applicabilité au projet doit être confirmée. Le passage SAP historique sur les écritures reste non revalidé.'
+      limits: Comparaison de mécanismes produit, sans preuve des fonctions installées, de la licence, du paramétrage ni des
+        contraintes de la cible S/4HANA Beaumanoir. Les pages SAP consultées décrivent une édition Cloud Public ; leur applicabilité
+        au projet doit être confirmée. Le passage SAP historique sur les écritures reste non revalidé.
       sources:
       - publisher: Microsoft Dynamics 365
         title: Import general journals
@@ -73188,11 +73189,13 @@ hotspot_catalog:
       - publisher: SAP S/4HANA
         title: Journal Entry
         url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/3ab6e6fc510f4840a5508e126ef01e22/92fed0579212c525e10000000a4450e5.html
-        relevance: Appui historique non revalidé sur écritures et contrepassation ; une interface ne traduit pas les faits FLOW.
+        relevance: Appui historique non revalidé sur écritures et contrepassation ; une interface ne traduit pas les faits
+          FLOW.
       - publisher: SAP S/4HANA Cloud Public Edition
         title: Journal Entry - Post (Asynchronous)
         url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/b978f98fc5884ff2aeb10c8fdeb8a43b/22a267e571e948499fda007a65b27c64.html
-        relevance: Entrée d’écritures depuis un système externe ; ne prouve ni l’applicabilité au projet ni la traduction des faits.
+        relevance: Entrée d’écritures depuis un système externe ; ne prouve ni l’applicabilité au projet ni la traduction
+          des faits.
       - publisher: SAP S/4HANA Cloud Public Edition
         title: Billing Documents
         url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/a376cd9ea00d476b96f18dea1247e6a5/7269b753128eb44ce10000000a174cb4.html
@@ -74627,6 +74630,11 @@ hotspot_catalog:
     kind: internal_contribution
     access: Source interne non consultable dans Atlas.
     date: '2026-10-13'
+  - id: U1035
+    title: Laurent, état intermédiaire des points chauds prêt pour arbitrage
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-13'
 document_catalog:
   schema_version: 1
   source_refs:
@@ -74700,8 +74708,8 @@ document_catalog:
     title: FLOW, SAP SD et Finance — comprendre le hotspot
     summary: Frontière entre le service Billing de FLOW, la comptabilité Finance et le rôle éventuel de SAP SD ; comparaison
       des circuits d’échange et des preuves nécessaires à l’arbitrage.
-    context: Analyse pédagogique du 13 octobre 2026 liée à HS-021. Les fonctions SAP documentées ne prouvent pas leur
-      installation ou leur nécessité dans le projet Beaumanoir ; aucune option de solution n’est retenue.
+    context: Analyse pédagogique du 13 octobre 2026 liée à HS-021. Les fonctions SAP documentées ne prouvent pas leur installation
+      ou leur nécessité dans le projet Beaumanoir ; aucune option de solution n’est retenue.
     category: analysis
     asset:
       path: modeles/documents/c77fbfe7def21bcd39be22f2a13cd30848adec8c69e112fd0b227db0ae3cffb4.pdf
@@ -74712,5 +74720,5 @@ document_catalog:
     - U1032
     review:
       state: proposed
-      note: U1032 valide la mise à disposition du document de compréhension ; ses options et hypothèses ne constituent
-        pas un arbitrage SAP ou Finance. Les observations locales anciennes restent à sourcer.
+      note: U1032 valide la mise à disposition du document de compréhension ; ses options et hypothèses ne constituent pas
+        un arbitrage SAP ou Finance. Les observations locales anciennes restent à sourcer.

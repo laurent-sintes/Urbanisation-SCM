@@ -13,15 +13,21 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
-  padding-bottom: 12px;
+  padding: 4px 0 16px;
 }
 .hotspot-page-header h2 {
   font-size: 1.35rem;
   line-height: 1.25;
 }
 .hotspot-page-header p {
-  color: #627b6c;
-  font-size: 12px;
+  margin: 0;
+  color: #506a5d;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.hotspot-list-count strong {
+  color: #173e43;
+  font-size: 18px;
 }
 .hotspot-page-tools {
   display: flex;
@@ -118,17 +124,17 @@
 }
 .hotspot-table {
   width: 100%;
-  min-width: 700px;
+  min-width: 760px;
   border-collapse: separate;
   border-spacing: 0 4px;
   table-layout: fixed;
   color: #243b3e;
-  font-size: 12px;
+  font-size: 13px;
 }
 .hotspot-table th {
-  padding: 4px 12px 2px;
+  padding: 6px 14px;
   color: #5b746a;
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   text-align: left;
 }
@@ -152,23 +158,23 @@
   color: #61877a;
 }
 .hotspot-table td {
-  padding: 10px 12px;
+  padding: 14px;
   border-top: 1px solid #dce7df;
   border-bottom: 1px solid #dce7df;
   background: white;
   vertical-align: top;
 }
 .hotspot-table th:first-child {
-  width: 45%;
+  width: 40%;
 }
 .hotspot-table th:nth-child(2) {
-  width: 22%;
+  width: 20%;
 }
 .hotspot-table th:nth-child(3) {
-  width: 13%;
+  width: 12%;
 }
 .hotspot-table th:nth-child(4) {
-  width: 20%;
+  width: 28%;
 }
 .hotspot-table td:first-child {
   border-left: 1px solid #dce7df;
@@ -205,9 +211,67 @@
   line-height: 1.4;
 }
 .hotspot-qualification {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  width: 100%;
   text-align: left;
   font: inherit;
   color: inherit;
+}
+.hotspot-progress-badge {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+  margin: 0 !important;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.3 !important;
+}
+.hotspot-progress-badge svg {
+  flex: none;
+}
+.hotspot-progress-badge.status-discovered,
+.hotspot-progress-badge.stage-unassessed {
+  background: #edf0f2;
+  color: #405562;
+}
+.hotspot-progress-badge.status-shared,
+.hotspot-progress-badge.stage-to_explore {
+  background: #e8f1fc;
+  color: #20538b;
+}
+.hotspot-progress-badge.stage-identified {
+  background: #fff2d8;
+  color: #80520a;
+}
+.hotspot-progress-badge.stage-qualifying {
+  background: #f9e8d6;
+  color: #8a4718;
+}
+.hotspot-progress-badge.stage-ready_for_arbitration {
+  background: #fff0d0;
+  color: #85500a;
+}
+.hotspot-progress-badge.status-validated {
+  background: #e9f2e9;
+  color: #286344;
+}
+.hotspot-progress-badge.status-resolved,
+.hotspot-progress-badge.stage-credible {
+  background: #ddf1e7;
+  color: #145b43;
+}
+.hotspot-option-to-arbitrate {
+  display: block;
+  margin: 2px 0 0 !important;
+  color: #754a14;
+  font-size: 12px;
+  font-weight: 650;
+  line-height: 1.45 !important;
 }
 button.hotspot-qualification {
   background: transparent;
@@ -234,8 +298,8 @@ button.hotspot-qualification:hover {
   flex-shrink: 0;
 }
 .hotspot-list-summary {
-  font-size: 12px;
-  line-height: 18px;
+  font-size: 13px;
+  line-height: 1.45;
   margin: 4px 0 6px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
@@ -601,13 +665,19 @@ button.hotspot-qualification:hover {
   font-weight: 400;
 }
 .hotspot-is-hidden {
-  color: #596364;
-  background: #f2f3f3;
-  filter: grayscale(1);
+  color: #879195;
+}
+.hotspot-table .hotspot-is-hidden td {
+  background: #f8faf9;
+  border-color: #edf1ee;
+}
+.hotspot-is-hidden .hotspot-progress-badge {
+  background: #eef1f0;
+  color: #7c8989;
 }
 .hotspot-is-hidden .hotspot-title-button,
 .hotspot-is-hidden strong {
-  color: #596364;
+  color: #879195;
 }
 .hotspot-hidden-separator {
   border-top: 2px solid #9ba8a8;
