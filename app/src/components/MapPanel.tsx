@@ -107,7 +107,7 @@ export function MapPanel({
               }}
             />
           )}
-          {!!catalog?.selections.length && (
+          {!!(catalog?.selections.length || catalog?.products.some((item) => item.kind === 'vendor_product')) && (
             <MapApplicationPicker
               catalog={catalog}
               selectionId={applicationSelectionId}

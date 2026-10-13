@@ -363,7 +363,10 @@ export function Overview({
               onOpenHotspot={onOpenHotspot}
             />
           )}
-          {!!applicationCatalog?.selections.length && (
+          {!!(
+            applicationCatalog?.selections.length ||
+            applicationCatalog?.products.some((item) => item.kind === 'vendor_product')
+          ) && (
             <MapApplicationPicker
               catalog={applicationCatalog}
               selectionId={applicationSelectionId}

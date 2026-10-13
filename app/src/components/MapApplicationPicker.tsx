@@ -31,7 +31,9 @@ export function MapApplicationPicker({
   const role = useRole(context, { role: 'dialog' });
   const { getReferenceProps, getFloatingProps } = useInteractions([click, dismiss, role]);
   const selected = catalog.selections.find((item) => item.id === selectionId);
-  const product = selected && productFor(catalog, selected);
+  const product = selected
+    ? productFor(catalog, selected)
+    : catalog.products.find((item) => item.id === selectionId && item.kind === 'vendor_product');
   const component = product?.components.find((item) => item.id === componentId);
   const contexts = [...new Set(catalog.selections.map((item) => item.context_id))];
   const choose = (nextSelection: string, nextComponent = '') => {
@@ -51,7 +53,8 @@ export function MapApplicationPicker({
       >
         <Layers3 size={15} />
         <span>
-          Applications <strong>{selected ? product?.name || selected.product_id : 'masquées'}</strong>
+          Applications <strong>{product?.name || selected?.product_id || 'masquées'}</strong>
+          {product && !selected && <span> · Offre éditeur</span>}
           {component && <span> · {component.name}</span>}
         </span>
         <ChevronDown size={14} className={open ? 'is-open' : ''} />
@@ -74,16 +77,32 @@ export function MapApplicationPicker({
                   <X size={16} />
                 </button>
               </div>
-              <p>Choisis le produit d’un SI pour éclairer ses correspondances métier.</p>
+              <p>Produits du marché : couverture de l’offre éditeur. Par SI : couverture documentée dans ce SI.</p>
               <button
                 type="button"
                 className="application-picker-option"
-                aria-pressed={!selected}
+                aria-pressed={!product && !selected}
                 onClick={() => choose('')}
               >
                 Masquer les applications
               </button>
               <div className="application-picker-list">
+                <section>
+                  <h3>Produits du marché</h3>
+                  {catalog.products
+                    .filter((item) => item.kind === 'vendor_product')
+                    .map((item) => (
+                      <button
+                        type="button"
+                        className="application-picker-option"
+                        key={item.id}
+                        aria-pressed={!selected && item.id === product?.id}
+                        onClick={() => choose(item.id)}
+                      >
+                        {item.name}
+                      </button>
+                    ))}
+                </section>
                 {contexts.map((contextId) => (
                   <section key={contextId}>
                     <h3>{contextName[contextId] || contextId}</h3>
@@ -103,14 +122,14 @@ export function MapApplicationPicker({
                   </section>
                 ))}
               </div>
-              {selected && product && product.components.length > 1 && (
+              {product && product.components.length > 1 && (
                 <div className="application-picker-components" role="group" aria-label="Fonctionnalité affichée">
                   <strong>Fonctionnalité affichée</strong>
                   <button
                     type="button"
                     className="application-picker-option"
                     aria-pressed={!component}
-                    onClick={() => choose(selected.id)}
+                    onClick={() => choose(selected?.id || product.id)}
                   >
                     Tout le produit
                   </button>
@@ -122,7 +141,7 @@ export function MapApplicationPicker({
                         className="application-picker-option"
                         key={item.id}
                         aria-pressed={item.id === component?.id}
-                        onClick={() => choose(selected.id, item.id)}
+                        onClick={() => choose(selected?.id || product.id, item.id)}
                       >
                         {item.name}
                       </button>

@@ -75305,7 +75305,7 @@ hotspot_catalog:
       - model
     visible: false
   - id: HS-024
-    title: 'Achats CBS et FLOW : répartir le cycle et les services communs'
+    title: Réintégration CBS sur Flow Core System
     kind: scope
     location:
       node_ids:
@@ -75342,14 +75342,14 @@ hotspot_catalog:
       implementation_complexity: unassessed
       evidence_state: hypothesis
     complexity:
-      arbitration: unassessed
-      implementation: unassessed
-      rationale: Les notes L/L de l’ancien hotspot CBS et SAV portaient sur un sujet regroupé ; elles ne sont pas reprises
-        après la séparation.
+      arbitration: L
+      implementation: M
+      rationale: Complexité d’arbitrage estimée à L et complexité d’implémentation à M (U1069). Les responsabilités, interfaces
+        et le périmètre de réalisation restent à qualifier.
       arbitration_rationale: Répartir l’autorité sur la commande d’achat, les tâches et la visibilité entre CBS et FLOW.
       implementation_rationale: Tester les interfaces, les services CBS séparables et les adaptations avant de chiffrer la
         réécriture.
-    severity: unassessed
+    severity: L
     severity_policy: matrix-v1
     arbitration_level: to_confirm
     arbitration_note: Décision sur les responsabilités CBS et FLOW à instruire ; instance à confirmer.
@@ -75363,6 +75363,7 @@ hotspot_catalog:
     - U1065
     - U1066
     - U1067
+    - U1069
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -75374,7 +75375,8 @@ hotspot_catalog:
       state: under_review
       note: U1058 recentre HS-024 sur CBS et l’achat. Les notes et options du sujet anciennement regroupé ne sont pas propagées
         ; interfaces, responsabilités et périmètre de réécriture à qualifier. U1066 valide l’ajout de Process Management à
-        l’ancre Purchase Order ; fonctions séparables, interfaces et coût restent inconnus.
+        l’ancre Purchase Order ; fonctions séparables, interfaces et coût restent inconnus. U1069 précise le titre et/ou les
+        deux estimations de complexité ; aucune solution détaillée ni réalisation installée déduite.
     market_view:
       finding: Les sources Microsoft sur le suivi de dossiers et SAP sur les approbations d’achat montrent des mécanismes
         distincts. Elles n’établissent ni la séparation technique des services CBS ni une architecture de plateforme commune
@@ -75425,7 +75427,7 @@ hotspot_catalog:
       - transition
     visible: true
   - id: HS-033
-    title: 'Service client Sarenza : quels services partager avec FLOW ?'
+    title: Réintégration Service Client Sarenza sur Flow Core System
     kind: scope
     location:
       node_ids:
@@ -75464,13 +75466,13 @@ hotspot_catalog:
       implementation_complexity: unassessed
       evidence_state: to_investigate
     complexity:
-      arbitration: unassessed
-      implementation: unassessed
-      rationale: La couverture et la réalisation Sarenza n’ont pas encore été évaluées ; les notes de l’ancien sujet regroupé
-        ne s’appliquent pas.
+      arbitration: L
+      implementation: M
+      rationale: Complexité d’arbitrage estimée à L et complexité d’implémentation à M (U1069). Les responsabilités, interfaces
+        et le périmètre de réalisation restent à qualifier.
       arbitration_rationale: Préciser la frontière entre service client, commandes et services Supply communs.
       implementation_rationale: Les services Sarenza, leur séparation technique et leurs interfaces avec FLOW restent inconnus.
-    severity: unassessed
+    severity: L
     severity_policy: matrix-v1
     arbitration_level: to_confirm
     arbitration_note: Responsabilités du service client et de FLOW à préciser avant toute décision ; instance à confirmer.
@@ -75483,6 +75485,7 @@ hotspot_catalog:
     - U1065
     - U1066
     - U1067
+    - U1069
     origin:
       repository: Contribution de Laurent
       path: connaissance/01-contributions-utilisateur.md
@@ -75495,7 +75498,8 @@ hotspot_catalog:
       note: Sujet séparé de C13 sur demande U1058. Ancrages Sales Order et Return Order indicatifs pour les parcours concernés
         ; le service client avant-vente peut dépasser ces commandes. U1066 valide la présentation en enquête et l’affichage
         explicite de la couverture cartographique partielle. L’avant-vente sans commande reste à ancrer après inventaire ;
-        aucune réalisation Sarenza n’est validée.
+        aucune réalisation Sarenza n’est validée. U1069 précise le titre et/ou les deux estimations de complexité ; aucune
+        solution détaillée ni réalisation installée déduite.
     resolution:
       stage: to_explore
       summary: Quels parcours du service client Sarenza pourraient réutiliser les services communs de FLOW ? Aucune option
@@ -76309,13 +76313,13 @@ hotspot_catalog:
       implementation_complexity: unassessed
       evidence_state: hypothesis
     complexity:
-      arbitration: L
-      implementation: M
-      rationale: La complexité d’arbitrage est estimée à L et la complexité d’implémentation à M (U1057). Les deux options
-        de réalisation restent à qualifier.
+      arbitration: XL
+      implementation: L
+      rationale: Complexité d’arbitrage estimée à XL et complexité d’implémentation à L (U1069). Les responsabilités, interfaces
+        et le périmètre de réalisation restent à qualifier.
       arbitration_rationale: Le choix déplacerait les responsabilités entre marques, équipe Retail, éditeur et programme FLOW.
       implementation_rationale: Les instances, personnalisations, volumes, interfaces, pays et licences ne sont pas inventoriés.
-    severity: L
+    severity: XL
     severity_policy: matrix-v1
     arbitration_level: to_confirm
     arbitration_note: Choix de périmètre et de solution entre marques et programme ; instance de décision à confirmer.
@@ -76339,6 +76343,7 @@ hotspot_catalog:
     - U1065
     - U1066
     - U1067
+    - U1069
     origin:
       repository: Urbanisation-SCM
       path: connaissance/01-contributions-utilisateur.md
@@ -76351,7 +76356,8 @@ hotspot_catalog:
       note: L'écart à instruire inclut backoffice, réassort et relation client GBM. La disparition de tout Retail GBM, le
         détail de Y2 chez Boardriders et une différence quantifiée de taille de refonte ne sont pas validés. Deux options
         proposées par Laurent, aucune retenue. U1066 valide la lecture simplifiée et les cinq ancres Business Areas déjà décrites
-        par l’analyse d’écart. Usages GBM, modules Y2 et choix de réalisation restent à qualifier.
+        par l’analyse d’écart. Usages GBM, modules Y2 et choix de réalisation restent à qualifier. U1069 précise le titre
+        et/ou les deux estimations de complexité ; aucune solution détaillée ni réalisation installée déduite.
     gap_analysis:
     - id: hs-032-store-sales
       title: Vente et caisse en magasin

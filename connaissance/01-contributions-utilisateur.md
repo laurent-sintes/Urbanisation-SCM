@@ -25082,3 +25082,22 @@ Verbatim :
 > - Le bloc "6 partage de données" alourdit la vue, sans intéret.
 
 Portée : adopter le libellé de synthèse « Faits de gestion », maintenir le texte sur la flèche sans recouvrir le hotspot et supprimer le panneau récapitulatif des partages dans la vue globale. Les relations détaillées, contenus et responsabilités restent conservés. Aucune release, commit ou push demandé.
+
+
+## U1069
+
+Date : 2026-10-13. Source : Laurent, complexités visibles dans la liste et corrections de trois hotspots.
+
+Verbatim :
+
+> Points chauds :
+>
+> - dans la liste, on a la criticité mais on a perdu le détail de complexité
+>
+> "Responsabilités Retail à couvrir après Storeland et United Retail" => arbitrage XL, implémentation: L
+>
+> "Achats CBS et FLOW : répartir le cycle et les services communs" => renommer "Réintrégration CBS sur Flow Core System" + arbitrage L, implémentation: M
+>
+> "Service client Sarenza : quels services partager avec FLOW ?" => renommer "Réintrégration Service Client Sarenza sur Flow Core System" + arbitrage L, implémentation: M
+
+Portée : afficher les deux axes de complexité dans la liste. Appliquer XL/L à HS-032 et L/M à HS-024 et HS-033 ; renommer les deux derniers, avec correction orthographique « Réintégration ». Les niveaux sont des estimations explicites ; ils ne prouvent ni réalisation installée ni choix détaillé de migration. Les réserves sur le périmètre de réécriture et les services séparables restent conservées. Aucune release, commit ni push demandé.

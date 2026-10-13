@@ -79,6 +79,16 @@ try {
   assert.match(await page.locator('.hotspot-workshop-note').innerText(), /obsolete-version/);
   assert.equal(await page.getByRole('button', { name: /^Qualification et avancement de/ }).count(), 0);
   assert.equal(await page.locator('.hotspot-table th').count(), 4);
+  for (const hotspot of model.hotspot_catalog.hotspots) {
+    const row = page.locator(`[data-hotspot-id="${hotspot.id}"]`);
+    if (!(await row.count())) continue;
+    const size = (value) => (value === 'unassessed' ? 'Non évaluée' : value);
+    const values = await row.locator('.hotspot-list-complexities dd').allTextContents();
+    assert.equal(values.length, 2, `${hotspot.id}: both complexities remain visible in the list`);
+    if (hotspot.complexity.arbitration !== 'unassessed') assert.equal(values[0], size(hotspot.complexity.arbitration));
+    if (hotspot.complexity.implementation !== 'unassessed')
+      assert.equal(values[1], size(hotspot.complexity.implementation));
+  }
   assert.ok(
     await page
       .locator('.hotspot-list-summary')

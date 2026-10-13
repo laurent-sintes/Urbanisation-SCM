@@ -74,6 +74,8 @@ try {
   await desktop.locator('.map-application-picker > button').click();
   await desktop
     .getByRole('dialog', { name: 'Applications sur la carte' })
+    .locator('section')
+    .filter({ has: desktop.getByRole('heading', { name: 'SI Boardriders', exact: true }) })
     .getByRole('button', { name: 'NewStore' })
     .click();
   await desktop.getByRole('button', { name: 'Applications NewStore' }).waitFor();
@@ -200,9 +202,8 @@ try {
     .getByRole('button', { name: 'Whiteboard' })
     .click();
   await desktop.getByRole('button', { name: 'Applications Elastic Suite · Whiteboard' }).waitFor();
-  await desktop.getByText('Aucun lien métier enregistré pour ce composant.').waitFor();
   assert.equal(await desktop.locator('.application-related-item').count(), 0);
-  assert.ok(await desktop.getByText('Aucun lien métier enregistré pour ce composant.').isVisible());
+  assert.equal(await desktop.locator('.application-map-note').count(), 0);
   await desktop.locator('.map-application-picker > button').click();
   await desktop
     .getByRole('dialog', { name: 'Applications sur la carte' })

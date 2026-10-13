@@ -750,6 +750,16 @@ export function HotspotCatalogPage({
                         >
                           <Flame size={15} aria-hidden="true" /> {SIZE(severity)}
                         </HotspotTooltipButton>
+                        <dl className="hotspot-list-complexities">
+                          <div>
+                            <dt>Arbitrage</dt>
+                            <dd>{SIZE(draft.arbitration)}</dd>
+                          </div>
+                          <div>
+                            <dt>Implémentation</dt>
+                            <dd>{SIZE(draft.implementation)}</dd>
+                          </div>
+                        </dl>
                       </td>
                       <td data-label="Qualification et avancement">
                         {canEdit ? (

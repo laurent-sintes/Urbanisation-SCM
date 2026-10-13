@@ -67,7 +67,7 @@ class HotspotCatalogTests(unittest.TestCase):
     def test_retail_assessment_and_legacy_axis(self):
         item = next(h for h in self.model['hotspot_catalog']['hotspots'] if h['id'] == 'HS-032')
         self.assertEqual((item['complexity']['arbitration'], item['complexity']['implementation'], item['severity']),
-                         ('L', 'M', 'L'))
+                         ('XL', 'L', 'XL'))
         legacy = copy.deepcopy(self.model)
         for hotspot in legacy['hotspot_catalog']['hotspots']:
             complexity = hotspot['complexity']
@@ -82,10 +82,12 @@ class HotspotCatalogTests(unittest.TestCase):
         self.assertEqual(items['HS-033']['location']['node_ids'], ['D04.i', 'D04.l'])
         self.assertIn('Couverture cartographique partielle', items['HS-033']['problem'])
         self.assertIn('avant-vente sans commande', items['HS-033']['problem'])
-        self.assertEqual(items['HS-024']['complexity']['arbitration'], 'unassessed')
-        self.assertEqual(items['HS-033']['complexity']['implementation'], 'unassessed')
-        self.assertEqual(items['HS-024']['severity'], 'unassessed')
-        self.assertEqual(items['HS-033']['severity'], 'unassessed')
+        for identifier in ('HS-024', 'HS-033'):
+            self.assertEqual((items[identifier]['complexity']['arbitration'],
+                              items[identifier]['complexity']['implementation'], items[identifier]['severity']),
+                             ('L', 'M', 'L'))
+        self.assertEqual(items['HS-024']['title'], 'Réintégration CBS sur Flow Core System')
+        self.assertEqual(items['HS-033']['title'], 'Réintégration Service Client Sarenza sur Flow Core System')
 
     def test_retail_map_anchors_cover_each_documented_gap_without_assuming_installed_usage(self):
         hotspot = next(h for h in self.model['hotspot_catalog']['hotspots'] if h['id'] == 'HS-032')

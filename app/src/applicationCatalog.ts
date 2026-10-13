@@ -43,12 +43,17 @@ export function selectionMappings(
   selectionId?: string,
   componentId?: string,
 ): ApplicationMapping[] {
-  const selection = catalog?.selections.find((item) => item.id === selectionId);
-  if (!catalog || !selection) return [];
-  const product = productFor(catalog, selection);
+  if (!catalog) return [];
+  const selection = catalog.selections.find((item) => item.id === selectionId);
+  const product = selection
+    ? productFor(catalog, selection)
+    : catalog.products.find((item) => item.id === selectionId && item.kind === 'vendor_product');
   if (!product) return [];
   const ids = new Set(componentBranch(product, componentId).map((component) => component.id));
-  return selection.mappings.filter((mapping) => ids.has(mapping.component_id));
+  // An editor's offering never fills gaps in the documented use of an SI.
+  return (selection ? selection.mappings : product.offering_mappings || []).filter((mapping) =>
+    ids.has(mapping.component_id),
+  );
 }
 
 /** Project each exact business link to visible ancestors; never infer coverage of descendants. */

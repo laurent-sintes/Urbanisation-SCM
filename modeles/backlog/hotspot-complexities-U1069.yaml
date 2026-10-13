@@ -1,0 +1,43 @@
+id: hotspot-complexities-U1069
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1069
+scope: Titres CBS/Sarenza et estimations des trois hotspots ; complexités directement visibles dans la liste.
+glossary_alignment:
+  checked: Hotspot, complexité d’arbitrage, complexité d’implémentation et criticité (MOD044) ; Purchase Order, Sales Order,
+    Return Order et Process Management.
+  result: Aucun changement de responsabilité ou de sens ; définitions et ancrages existants conservés. Aucun glossaire modifié.
+market_comparison: Correction de titres et estimations utilisateur ; comparaisons existantes conservées, aucune recherche
+  marché nécessaire.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1069
+  summary: HS-032 XL/L ; HS-024 et HS-033 renommés, L/M.
+  required_catalog:
+  - collection: hotspots
+    id: HS-024
+    content_sha256: 3e0dfad9e96bf1ee35928403aebfd2cd4610bafea268f4676249aca03d3fb918
+  - collection: hotspots
+    id: HS-033
+    content_sha256: 5b172d7a7c97b262f7c012e6a8218f3de057a0430a9fe11c14172e38e58bce8f
+  - collection: hotspots
+    id: HS-032
+    content_sha256: f8c59a69d08c60eb5f38a3c69164c02e3096750e39ef8c7ef38e105fc2bad758
+  supersedes_requirements:
+  - annex: hotspot-professional-review-U1067.yaml
+    collection: hotspots
+    id: HS-024
+    fields:
+    - content_sha256
+  - annex: hotspot-professional-review-U1067.yaml
+    collection: hotspots
+    id: HS-033
+    fields:
+    - content_sha256
+  - annex: hotspot-professional-review-U1067.yaml
+    collection: hotspots
+    id: HS-032
+    fields:
+    - content_sha256
