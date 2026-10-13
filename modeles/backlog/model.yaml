@@ -70383,6 +70383,8 @@ hotspot_catalog:
   - U971
   - U972
   - U973
+  - U1031
+  - U1032
   hotspots:
   - id: HS-001
     title: Migration ECC MM / PP / SD chez Boardriders
@@ -73075,17 +73077,21 @@ hotspot_catalog:
       - model
     visible: true
   - id: HS-021
-    title: Transmission et acceptation des faits FLOW par Finance
+    title: 'FLOW, SAP SD et Finance : responsabilités et échanges comptables'
     kind: integration
     location:
       node_ids:
       - accounting-data-provision
       - subdomain-financial-accounting
-    problem: Définir les faits, justificatifs et corrections fournis à Finance, ainsi que les retours d’acceptation et de
-      rejet, pendant et après la migration.
+    problem: 'Deux décisions liées : préciser ce que FLOW porte dans la commande et le service de facturation, ce que Finance
+      interprète et comptabilise, et ce que SAP SD réalise éventuellement ; choisir ensuite comment transmettre les faits,
+      factures, corrections et accusés vers FI/CO. Conserver SD seulement pour sa liaison native à FI/CO pourrait dupliquer
+      des responsabilités FLOW et résumer trop tôt les faits. Son rôle réel dans le projet S/4HANA reste à confirmer.'
     examples:
+    - 'Épreuve proposée : une vente B2B est facturable. FLOW tient la demande, les engagements et le résultat de Billing ;
+      préciser qui émet la facture, qui applique les règles fiscales et qui crée l’écriture.'
     - 'Épreuve proposée : relier un rejet comptable au fait opérationnel original, le corriger et le transmettre sans double
-      comptabilisation.'
+      comptabilisation ni perte du détail utile à l’audit.'
     resolution_options:
     - id: hs-021-audit-1
       title: FLOW fournit les faits, Finance les traduit
@@ -73105,19 +73111,41 @@ hotspot_catalog:
       - Ajoute une dépendance au service financier.
       implementation_complexity: unassessed
       evidence_state: hypothesis
+    - id: hs-021-sd
+      title: Passage par SAP SD pour les flux qui le justifient
+      principle: Faire produire ou reprendre par SD les documents commerciaux nécessaires, puis utiliser son intégration
+        à FI/CO pour les écritures associées.
+      conditions:
+      - Démontrer les fonctions de facturation ou de contrôle réellement confiées à SD, flux par flux.
+      - Préserver le lien entre facture, fait d’origine et écriture ; éviter un second cycle de commande concurrent de FLOW.
+      tradeoffs:
+      - Peut dupliquer des objets et règles FLOW et augmenter le couplage avec SAP.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-021-hybrid
+      title: Trajectoire hybride par type de fait
+      principle: Réserver SD aux factures qui exigent ses fonctions et transmettre les autres faits par un contrat Finance
+        avec interprétation comptable distincte.
+      conditions:
+      - Classer les faits et factures, préciser leur autorité et vérifier les deux chemins avec Finance et le programme SAP.
+      tradeoffs:
+      - Deux circuits exigent une réconciliation et une gouvernance communes.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
     complexity:
       political: L
       implementation: L
       rationale: Estimations de préparation conservées dans la consolidation ; non confirmées pour ce candidat. Estimation
         préparatoire de faible confiance, proposée lors de l’audit ; à vérifier sur les cas, volumes et options.
-      political_rationale: FLOW et Finance doivent reconnaître qui interprète les faits et qui corrige leur origine.
-      implementation_rationale: Identités, versions et retours doivent éviter écriture perdue, doublon ou correction sans
-        lien avec l’original.
+      political_rationale: FLOW, Finance et le programme SAP doivent qualifier la facturation, l'interprétation des faits,
+        la comptabilisation et le rôle éventuel de SD.
+      implementation_rationale: Les deux circuits possibles, les identités, versions et retours doivent éviter la perte du
+        détail, les doublons et les corrections sans lien avec l’original.
     severity: XL
     severity_policy: matrix-v1
     arbitration_level: to_confirm
-    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : FLOW et Finance doivent reconnaître qui interprète
-      les faits et qui corrige leur origine.'
+    arbitration_note: 'Instance proposée pour ce mandat, à confirmer : responsables FLOW, Finance, facturation B2B et
+      programme SAP doivent qualifier les responsabilités et comparer les contrats d’échange.'
     status: validated
     source_refs:
     - U958
@@ -73125,6 +73153,8 @@ hotspot_catalog:
     - U967
     - U973
     - U981
+    - U1031
+    - U1032
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -73135,20 +73165,21 @@ hotspot_catalog:
         preuves datées.'
     review:
       state: under_review
-      note: 'U967 valide la pertinence et le périmètre du sujet avec ses réserves : Clarifier les échanges et responsabilités
-        entre FLOW et Finance. FI/CO reste hors de la migration HS-001. Aucun dysfonctionnement, observation installée, ancrage
-        détaillé, classement d’impact, estimation ou solution n’est confirmé automatiquement ; les autres champs conservent
-        leur qualification. U973 : compléments de l’audit appliqués ; estimations préparatoires et options restent à éprouver.
-        Les mandats, la réalisation installée et la crédibilité ne sont pas déduits de cette application.'
+      note: 'U967 reconnaît le sujet avec ses réserves. U1031 demande de distinguer frontière FLOW / Finance et solution
+        d’échange, avec une alternative à SD et un document pédagogique. U1032 valide cette restructuration et la mise à
+        disposition du PDF, sans retenir une option ni confirmer le rôle réel de SD, les flux installés ou la solution cible.
+        FI/CO reste hors du périmètre migré de HS-001. Les estimations préparatoires U973 restent à éprouver.'
     market_view:
-      finding: 'Appui partiel à reconfirmer : Microsoft documente l’import des journaux ; SAP une interface de comptabilisation
-        et contrepassation. La traduction du fait opérationnel reste une responsabilité à attribuer.'
-      flow_assessment: '[Accounting Data Provision](model:accounting-data-provision) prépare et transmet les faits ; Finance
-        comptabilise. FI/CO reste hors de la migration HS-001. Les observations sources ne sont pas toutes rattachées à des
-        preuves datées.'
-      limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
-        produit retenu. Le passage SAP lié n’a pas pu être revalidé : page sans texte lisible lors de l’audit. La comparaison
-        avec cet éditeur reste une lacune documentaire explicite.'
+      finding: 'Microsoft documente l’import de journaux depuis des systèmes externes. SAP documente à la fois des écritures
+        reçues par interface et des documents de facturation Sales transmis à la comptabilité. Ce sont des mécanismes distincts ;
+        ils ne fixent pas la frontière FLOW / Finance ni la solution Beaumanoir.'
+      flow_assessment: '[Billing](model:service-order-billing) tient le résultat de facturation ; [Accounting Data Provision](model:accounting-data-provision)
+        fournit les faits et suit les retours ; [Financial Accounting](model:subdomain-financial-accounting) interprète et
+        comptabilise. Déterminer si SD réalise une fonction de facturation nécessaire ou ne sert que de passerelle. Un bus
+        transporte les faits mais ne porte pas à lui seul l’interprétation comptable.'
+      limits: 'Comparaison de mécanismes produit, sans preuve des fonctions installées, de la licence, du paramétrage ni des
+        contraintes de la cible S/4HANA Beaumanoir. Les pages SAP consultées décrivent une édition Cloud Public ; leur
+        applicabilité au projet doit être confirmée. Le passage SAP historique sur les écritures reste non revalidé.'
       sources:
       - publisher: Microsoft Dynamics 365
         title: Import general journals
@@ -73157,22 +73188,33 @@ hotspot_catalog:
       - publisher: SAP S/4HANA
         title: Journal Entry
         url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/3ab6e6fc510f4840a5508e126ef01e22/92fed0579212c525e10000000a4450e5.html
-        relevance: Écritures et contrepassation ; une interface comptable ne décide pas qui traduit les faits FLOW.
+        relevance: Appui historique non revalidé sur écritures et contrepassation ; une interface ne traduit pas les faits FLOW.
+      - publisher: SAP S/4HANA Cloud Public Edition
+        title: Journal Entry - Post (Asynchronous)
+        url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/b978f98fc5884ff2aeb10c8fdeb8a43b/22a267e571e948499fda007a65b27c64.html
+        relevance: Entrée d’écritures depuis un système externe ; ne prouve ni l’applicabilité au projet ni la traduction des faits.
+      - publisher: SAP S/4HANA Cloud Public Edition
+        title: Billing Documents
+        url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/a376cd9ea00d476b96f18dea1247e6a5/7269b753128eb44ce10000000a174cb4.html
+        relevance: Documents Sales et transmission comptable ; appui au rôle de facturation possible de SD, sans preuve locale.
     resolution:
       stage: unassessed
-      summary: Quels faits FLOW fournit-il à Finance, et comment traiter un rejet ou une correction ? Aucun résultat de qualification
-        des options n’est encore établi.
+      summary: 'Deux questions à trancher ensemble : qui porte commande, service de facturation, document fiscal, interprétation
+        et écriture ; quel circuit transmet chaque fait et son résultat à Finance ? SD, interface comptable et hybride restent
+        des hypothèses. Aucune option retenue.'
       credible_option_ids: []
       credibility_note: ''
       blocked_reason: ''
-      next_step: Faire accepter, rejeter puis corriger un fait d’expédition ; vérifier l’accusé et le propriétaire de chaque
-        étape.
-      assessment_source: U958 — intégration des candidats, aucune progression de résolution évaluée.
+      next_step: Cartographier trois cas B2C, B2B et correction/avoir avec Finance et le programme SAP ; comparer pour chacun
+        autorité, facture, fait, écriture, identifiants, rejet, correction, coût et dépendance à SD. Éprouver un passage direct
+        et un passage SD sur un même cas documenté.
+      assessment_source: U1031 — restructuration demandée ; options non évaluées.
     framing_impact:
       category: structuring
       targets:
       - business_model
-      rationale: La frontière FLOW/Finance attribue production des faits, interprétation et comptabilisation.
+      rationale: La frontière FLOW / Finance et le rôle éventuel de SD conditionnent le service de facturation, la production
+        des faits, leur interprétation et la comptabilisation.
       follow_up: framing
       evidence_state: hypothesis
       source_refs:
@@ -73180,9 +73222,13 @@ hotspot_catalog:
       - U960
       - U961
       - U973
+      - U1031
+      - U1032
       scopes:
       - model
     visible: true
+    document_ids:
+    - DOC004
   - id: HS-022
     title: Continuité des parcours, tâches et engagements
     kind: scope
@@ -74571,6 +74617,16 @@ hotspot_catalog:
     kind: internal_contribution
     access: Source interne non consultable dans Atlas.
     date: '2026-10-13'
+  - id: U1031
+    title: Laurent, restructuration du hotspot FLOW / Finance / SAP SD
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-13'
+  - id: U1032
+    title: Laurent, validation, commit et release de HS-021
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-13'
 document_catalog:
   schema_version: 1
   source_refs:
@@ -74579,6 +74635,8 @@ document_catalog:
   - U948
   - U1029
   - U1030
+  - U1031
+  - U1032
   documents:
   - id: DOC001
     title: Allocation Run Boardriders — synthèse et écart au standard
@@ -74638,3 +74696,21 @@ document_catalog:
       state: proposed
       note: U1030 valide la mise à disposition liée à HS-008 ; la publication du document ne valide pas ses hypothèses ni
         une réalisation installée actuelle.
+  - id: DOC004
+    title: FLOW, SAP SD et Finance — comprendre le hotspot
+    summary: Frontière entre le service Billing de FLOW, la comptabilité Finance et le rôle éventuel de SAP SD ; comparaison
+      des circuits d’échange et des preuves nécessaires à l’arbitrage.
+    context: Analyse pédagogique du 13 octobre 2026 liée à HS-021. Les fonctions SAP documentées ne prouvent pas leur
+      installation ou leur nécessité dans le projet Beaumanoir ; aucune option de solution n’est retenue.
+    category: analysis
+    asset:
+      path: modeles/documents/c77fbfe7def21bcd39be22f2a13cd30848adec8c69e112fd0b227db0ae3cffb4.pdf
+      sha256: c77fbfe7def21bcd39be22f2a13cd30848adec8c69e112fd0b227db0ae3cffb4
+      media_type: application/pdf
+    source_refs:
+    - U1031
+    - U1032
+    review:
+      state: proposed
+      note: U1032 valide la mise à disposition du document de compréhension ; ses options et hypothèses ne constituent
+        pas un arbitrage SAP ou Finance. Les observations locales anciennes restent à sourcer.

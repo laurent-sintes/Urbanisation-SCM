@@ -24536,3 +24536,38 @@ Parfait. Je veux un style clair et percutent.
 Je valide.
 
 Portée : valider la proposition complète construite après U1029 : titre « Carnet Wholesale : écarts de gestion et complexité de convergence », phrase centrale, comparaison des pratiques, complexité métier et de réalisation, amélioration des ressources futures qualifiée, décisions à instruire et deux téléchargements distincts. Autorise la réécriture et la prise en charge documentaire du PPTX. Le scénario budgétaire de construction inclut le cœur métier et l’outil complet, avec des briques réutilisables éventuelles ; aucun choix de convergence, de solveur, budget ferme, preuve installée actuelle, changement de score, release, commit ou push n’est adopté par extension. Les raffinements éditoriaux d’exécution restent limités à ce cadrage.
+
+## U1031
+
+Date : 2026-10-13. Source : Laurent, reprise du hotspot FLOW / Finance / SAP SD.
+
+Verbatim :
+
+Et surtout, pourquoi avoir le module SD (Sales And Distribution) alors que c'est le périmètre de FLOW ? regarde dans FLOW-Program on parle d'interpréteur comptable ou de bus de données qui permettent d'ingérer des faits de gestion sans avoir besoin de SD.
+
+On a bien un Hotspot qui doit définir clairement deux choses :
+
+- les responsabilités FLOW vs FI/CO
+- La solution d'échange.
+
+Les études permettent de mieux comprendre le problème et d'évoquer des options alternatives et pas que SD.
+
+Je pense qu'on a ce qu'il faut pour repenser ce hotspot majeur.
+
+Est-ce que le contenu de FLOW-Program, surtout la pré étude, mérite un pdf de compréhension approfondie à télécharger ?
+
+Je voudrais ton avis pour savoir si tu as tout ce qu'il te faut pour un story telling etayé.
+
+Propose un plan de restructuration et go
+
+Portée : demande de restructurer HS-021 autour de deux décisions distinctes, frontière FLOW / Finance et mode d'échange vers FI/CO, en confrontant SAP SD aux pistes d'interpréteur comptable et de bus de données décrites dans FLOW-Program. Autorise un PDF pédagogique approfondi et téléchargeable. Le rôle exact de SD, les flux installés, les contraintes de l'instance S/4HANA et la solution cible restent à confirmer ; aucune option n'est validée par cette demande.
+
+## U1032
+
+Date : 2026-10-13. Source : Laurent, validation de la restructuration HS-021.
+
+Verbatim :
+
+Je valide, commit et release
+
+Portée : validation de la proposition complète appliquée à HS-021 sous U1031 : deux décisions distinctes (frontière FLOW / Finance / SAP SD et circuit d'échange), maintien des variantes historiques d'interprétation, ajout des pistes SD et hybride, cas B2B et correction, PDF pédagogique DOC004 lié au hotspot. Autorise le commit local et la publication Atlas. Les quatre options restent ouvertes ; aucune fonction SD installée, interface FI/CO applicable, estimation, solution retenue ni réalisation Beaumanoir n'est validée par extension. Les sources et réserves de U1031 restent applicables. Aucun push demandé.

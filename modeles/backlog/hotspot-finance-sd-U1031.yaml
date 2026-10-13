@@ -1,0 +1,64 @@
+id: hotspot-finance-sd-U1031
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1031
+request:
+  summary: Restructurer HS-021 autour des responsabilités FLOW / Finance et des options d’échange, dont SAP SD, interpréteur
+    comptable et transport des faits ; produire un PDF de compréhension.
+  qualification: Mandat de rédaction et d’instruction, sans choix de solution ni validation des observations locales.
+glossary_alignment:
+  checked_terms:
+  - TER118
+  - TER119
+  - TER120
+  - TER121
+  - TER153
+  result: Billing, faits de gestion, interprétation et écriture restent cohérents avec les définitions et frontières du
+    glossaire ; aucun terme métier modifié.
+preserved:
+- Identité HS-021 et deux ancrages d’intégration
+- Scores L/L et criticité XL, estimations préparatoires non réévaluées
+- Options historiques hs-021-audit-1 et hs-021-audit-2, toujours hypothétiques
+- Sources historiques et publications figées
+document_delivery:
+- id: DOC004
+  asset:
+    path: modeles/documents/c77fbfe7def21bcd39be22f2a13cd30848adec8c69e112fd0b227db0ae3cffb4.pdf
+    sha256: c77fbfe7def21bcd39be22f2a13cd30848adec8c69e112fd0b227db0ae3cffb4
+    media_type: application/pdf
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1031
+  summary: HS-021 distingue la frontière de responsabilité et le circuit d’échange ; les options restent à qualifier.
+  required_catalog:
+  - collection: hotspots
+    id: HS-021
+    content_sha256: 80dd7d8228a836702848bc6945cb929f60abe8a8bc1583056b815aadf18ee4f0
+  supersedes_requirements:
+  - annex: hotspot-audit-application-U973.yaml
+    collection: hotspots
+    id: HS-021
+    fields:
+    - content_sha256
+  - annex: hotspot-framing-impact-U959.yaml
+    collection: hotspots
+    id: HS-021
+    fields:
+    - content_sha256
+  - annex: hotspot-source-candidates-U958.yaml
+    collection: hotspots
+    id: HS-021
+    fields:
+    - content_sha256
+  - annex: hotspot-validation-U967.yaml
+    collection: hotspots
+    id: HS-021
+    fields:
+    - content_sha256
+  - annex: orchestration-detail-scope-U981.yaml
+    collection: hotspots
+    id: HS-021
+    fields:
+    - content_sha256

@@ -1,0 +1,32 @@
+id: hotspot-finance-sd-validation-U1032
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1031
+- U1032
+agreement:
+  verbatim: Je valide, commit et release
+  scope: Valider la restructuration de HS-021 et le téléchargement de DOC004, puis créer un commit local et une release
+    Atlas. Les responsabilités de réalisation et les circuits proposés restent à qualifier ; aucun choix de solution.
+  catalog_capture: Accord borné au hotspot HS-021 et au document associé dans le lot final. record_intents ne prend en
+    charge que nodes/relations ; aucune adoption implicite des capacités et relations liées.
+preserved:
+- Identité HS-021, deux ancrages et historique des sources
+- Quatre options sans sélection
+- Scores L/L et criticité XL non réévalués
+- Publications historiques figées
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1032
+  summary: HS-021 restructuré et DOC004 disponible, sans solution d’intégration retenue.
+  required_catalog:
+  - collection: hotspots
+    id: HS-021
+    content_sha256: 32dab5ffc1fada9b53ec30c7d5039d08b095718d1eaee3a47f516b9ddf837120
+  supersedes_requirements:
+  - annex: hotspot-finance-sd-U1031.yaml
+    collection: hotspots
+    id: HS-021
+    fields:
+    - content_sha256
