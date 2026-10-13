@@ -94,24 +94,7 @@ try {
   assert.equal(await panelToggle.getAttribute('aria-expanded'), 'false', 'A saved collapse is respected');
   await panelToggle.click();
   await page.locator('.download-menu summary').click();
-  const modelDownload = page.getByRole('link', { name: /Modèle \(JSON compact\)/ });
-  assert.equal(new URL(await modelDownload.getAttribute('href'), base).pathname, `${prefix}data/${version}/model.json`);
-  const downloadPending = page.waitForEvent('download');
-  await modelDownload.click();
-  const downloaded = await downloadPending;
-  assert.equal(downloaded.suggestedFilename(), `flow-atlas-model-${version}.json`);
-  assert.equal(new URL(downloaded.url()).pathname, `${prefix}data/${version}/model.json`);
-  assert.equal(await downloaded.failure(), null, 'JSON download completes');
-  const downloadedBytes = await readFile(await downloaded.path());
-  assert.deepEqual(
-    downloadedBytes,
-    await readFile(path.join(dist, 'data', version, 'model.json')),
-    'Actual JSON download preserves every byte',
-  );
-  const downloadedModel = JSON.parse(downloadedBytes.toString('utf8'));
-  assert.deepEqual(downloadedModel, currentModel, 'Every root, catalog and metamodel survives the download');
-  assert.equal(downloadedModel.version, version);
-  assert.ok(downloadedModel.metamodel?.node_types?.length, 'The downloaded model carries its metamodel');
+  assert.equal(await page.locator('.download-menu a[download$=".json"]').count(), 0);
   const yamlPending = page.waitForEvent('download');
   const yamlLink = page.getByRole('link', { name: /Modèle \(YAML lisible\)/ });
   assert.equal(new URL(await yamlLink.getAttribute('href'), base).pathname, `${prefix}data/${version}/model.yaml`);
@@ -131,10 +114,7 @@ try {
   await page.goto(`${base}#/glossary?version=${historical}`);
   await page.locator(`#fa-version[data-version="${historical}"]`).waitFor({ state: 'attached' });
   await page.locator('.download-menu summary').click();
-  assert.equal(
-    new URL(await page.getByRole('link', { name: /Modèle \(JSON compact\)/ }).getAttribute('href'), base).pathname,
-    `${prefix}data/${historical}/model.json`,
-  );
+  assert.equal(await page.locator('.download-menu a[download$=".json"]').count(), 0);
   const historicYamlPending = page.waitForEvent('download');
   const historicYamlLink = page.getByRole('link', { name: /Modèle \(YAML lisible\)/ });
   assert.equal(
@@ -150,15 +130,6 @@ try {
     await readFile(await historicYaml.path()),
     await readFile(path.join(dist, 'data', historical, 'model.yaml')),
     'Historic YAML downloads its selected snapshot',
-  );
-  const historicJsonPending = page.waitForEvent('download');
-  await page.getByRole('link', { name: /Modèle \(JSON compact\)/ }).click();
-  const historicJson = await historicJsonPending;
-  assert.equal(await historicJson.failure(), null);
-  assert.deepEqual(
-    await readFile(await historicJson.path()),
-    await readFile(path.join(dist, 'data', historical, 'model.json')),
-    'Historic JSON downloads its selected snapshot',
   );
   await page.getByRole('button', { name: 'FLOW Atlas, accueil', exact: true }).click();
   assert.equal(new URL(page.url()).pathname, prefix);
@@ -200,7 +171,7 @@ try {
         'retry',
         'current model',
         'Explorer default and saved collapse',
-        'compact JSON download with metamodel',
+        'no public JSON download action',
         'current and historical YAML downloads',
         'fixed history',
         'home links',

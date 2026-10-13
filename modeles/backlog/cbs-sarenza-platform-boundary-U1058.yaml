@@ -1,0 +1,41 @@
+id: cbs-sarenza-platform-boundary-U1058
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1058
+assessment:
+  finding: Laurent décrit CBS et le service client Sarenza comme des applications verticales autonomes. FLOW pourrait réutiliser
+    certains services, sous réserve de distinguer leurs familles de demandes et leurs autorités.
+  qualification: CBS concerne les achats ; Sarenza couvre l’avant et l’après-vente. La disponibilité de services réutilisables,
+    la réalisation Sarenza et le périmètre d’une réécriture restent inconnus. Les notes L/L de l’ancien sujet regroupé ne
+    sont pas transférées.
+  decision: Conserver HS-024 pour les achats CBS et créer HS-033 pour le service client Sarenza. Ancrer CBS sur Purchase Order
+    ; ancrer Sarenza sur Sales Order et Return Order comme points d’accueil partiels du parcours.
+market_comparison:
+  common_points: Les sources Microsoft Dynamics et SAP S/4HANA déjà consultées sur les dossiers et les workflows d’achat éclairent
+    seulement certains mécanismes du volet CBS.
+  differences_and_limits: Ces sources ne démontrent ni plateforme commune chez Beaumanoir ni services séparables dans CBS.
+    Le volet Sarenza n’a pas de comparaison produit assez précise ; aucune équivalence ou solution de réalisation n’est annoncée.
+glossary_alignment:
+  checked: Purchase Order, Sales Order, Return Order, Order Management et Process Management restent cohérents entre le modèle
+    et le glossaire métier ; aucun sens, parent ou périmètre de ces éléments ne change.
+  result: Aucune modification du glossaire métier nécessaire ; les deux hotspots lient les éléments métier concernés.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1058
+  summary: HS-024 recentré sur CBS et les achats ; HS-033 créé pour le service client Sarenza avant et après-vente, avec ancrages
+    distincts et complexités non évaluées.
+  required_catalog:
+  - collection: hotspots
+    id: HS-024
+    content_sha256: e811894eefa4effa341141ebe16ccc2e89fe1d508ea609ef8a912351772070d8
+  - collection: hotspots
+    id: HS-033
+    content_sha256: 8864984a9e7cab5dadc4e8cd59e52b00006e1423a6588b547cd9f822e50e7bb2
+  supersedes_requirements:
+  - annex: hotspot-arbitration-complexity-U1057.yaml
+    collection: hotspots
+    id: HS-024
+    fields:
+    - content_sha256

@@ -15,10 +15,10 @@ MATRIX = (
 )
 
 
-def severity_for(political, implementation):
-    if political == 'unassessed' or implementation == 'unassessed':
+def severity_for(arbitration, implementation):
+    if arbitration == 'unassessed' or implementation == 'unassessed':
         return 'unassessed'
-    return MATRIX[LEVELS.index(political)][LEVELS.index(implementation)]
+    return MATRIX[LEVELS.index(arbitration)][LEVELS.index(implementation)]
 
 
 def validate_catalog(model):
@@ -111,10 +111,12 @@ def validate_catalog(model):
         if 'resolution' not in hotspot and hotspot['status'] != 'resolved' and selected:
             errors.append(f'{identifier}: selected option requires resolved status')
         complexity = hotspot['complexity']
-        if hotspot['severity'] != severity_for(complexity['political'], complexity['implementation']):
+        # Historical published snapshots still use the former axis key.
+        arbitration = complexity.get('arbitration', complexity.get('political'))
+        if hotspot['severity'] != severity_for(arbitration, complexity['implementation']):
             errors.append(f'{identifier}: severity does not match matrix-v1')
-        if any(not isinstance(complexity.get(key, ''), str) for key in ('political_rationale', 'implementation_rationale')):
+        if any(not isinstance(complexity.get(key, ''), str) for key in ('arbitration_rationale', 'political_rationale', 'implementation_rationale')):
             errors.append(f'{identifier}: per-axis rationale must be text')
-        if any(complexity[axis] != 'unassessed' for axis in ('political', 'implementation')) and not complexity['rationale'].strip():
+        if (arbitration != 'unassessed' or complexity['implementation'] != 'unassessed') and not complexity['rationale'].strip():
             errors.append(f'{identifier}: assessed complexity requires a rationale')
     return errors

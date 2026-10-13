@@ -65,9 +65,9 @@ export function HotspotFilterFields({
   showDisplayToggle?: boolean;
 }) {
   const [advancedOpen, setAdvancedOpen] = useState(
-    () => filters.political !== 'all' || filters.implementation !== 'all',
+    () => filters.arbitration !== 'all' || filters.implementation !== 'all',
   );
-  const computedSeverity = severityForComplexities(filters.political, filters.implementation);
+  const computedSeverity = severityForComplexities(filters.arbitration, filters.implementation);
   const active = [
     !filters.showModelHotspots && 'Modèle masqué',
     !filters.showTransitionHotspots && 'Transition masquée',
@@ -80,7 +80,7 @@ export function HotspotFilterFields({
     filters.kind !== 'all' && `Type : ${typeOptions.find((option) => option.value === filters.kind)?.label}`,
     filters.severity !== 'all' &&
       `Criticité : ${filters.severityMode === 'at_least' ? 'au moins ' : filters.severityMode === 'at_most' ? 'au plus ' : ''}${filters.severity === 'unassessed' ? 'Non évaluée' : filters.severity}`,
-    filters.political !== 'all' && `Politique : ${filters.political}`,
+    filters.arbitration !== 'all' && `Arbitrage : ${filters.arbitration}`,
     filters.implementation !== 'all' && `Implémentation : ${filters.implementation}`,
   ].filter(Boolean);
   const severityChoice =
@@ -223,9 +223,9 @@ export function HotspotFilterFields({
         onClick={() => setAdvancedOpen((value) => !value)}
       >
         Affiner par complexité
-        {(filters.political !== 'all' || filters.implementation !== 'all') && (
+        {(filters.arbitration !== 'all' || filters.implementation !== 'all') && (
           <strong>
-            Politique {filters.political} · Implémentation {filters.implementation}
+            Arbitrage {filters.arbitration} · Implémentation {filters.implementation}
           </strong>
         )}
         <ChevronDown size={14} className={advancedOpen ? 'is-open' : ''} />
@@ -234,10 +234,10 @@ export function HotspotFilterFields({
         <div className="hotspot-filter-advanced" role="group" aria-label="Composantes de la criticité">
           <p>La criticité résulte de ces deux complexités. Leur choix remplace le filtre de criticité.</p>
           <FilterChoices
-            label="Complexité politique"
+            label="Complexité d’arbitrage"
             options={sizeOptions}
-            value={filters.political}
-            onChange={(political) => onChange({ political, enabled: true })}
+            value={filters.arbitration}
+            onChange={(arbitration) => onChange({ arbitration, enabled: true })}
           />
           <FilterChoices
             label="Complexité d’implémentation"

@@ -364,14 +364,14 @@ export function HotspotDetail({
             </p>
             <dl className="hotspot-criticality-components">
               <div>
-                <dt>Complexité politique · {size(hotspot.complexity.political)}</dt>
+                <dt>Complexité d’arbitrage · {size(hotspot.complexity.arbitration)}</dt>
                 <dd>
                   Difficulté à obtenir un accord sur les règles, les responsabilités et les compromis entre marques ou
                   pôles.
                   <p>
                     <ModelText
                       text={
-                        hotspot.complexity.political_rationale ||
+                        hotspot.complexity.arbitration_rationale ||
                         'Justification propre à cet axe non documentée ; voir la justification commune.'
                       }
                     />

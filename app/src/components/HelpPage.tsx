@@ -81,7 +81,8 @@ export function HelpPage({
             <li>« Place un post-it sur Order Management : clarifier le traitement des commandes partielles. »</li>
             <li>« Ajoute à ce point chaud l’exemple discuté : une commande est préparée depuis deux sites. »</li>
             <li>
-              « Déplace ce point chaud vers Process Management et précise que la difficulté politique reste à évaluer. »
+              « Déplace ce point chaud vers Process Management et précise que la complexité d’arbitrage reste à évaluer.
+              »
             </li>
             <li>« Retire le post-it créé par erreur pendant cette séance. »</li>
             <li>« Liste les points chauds ajoutés aujourd’hui et prépare le fichier de staging. »</li>
@@ -137,8 +138,8 @@ export function HelpPage({
           termes métier employés dans les fiches.
         </p>
         <p>
-          Atlas affiche une publication du modèle. Le menu Télécharger fournit son JSON et son YAML complets, y compris
-          les points chauds publiés. Une publication historique reste fixée à son état d’origine.
+          Atlas affiche une publication du modèle. Le menu Télécharger fournit son YAML complet, y compris les points
+          chauds publiés. Une publication historique reste fixée à son état d’origine.
         </p>
       </section>
       <section>

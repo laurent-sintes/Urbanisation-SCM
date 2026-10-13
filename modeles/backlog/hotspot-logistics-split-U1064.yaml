@@ -1,0 +1,50 @@
+id: hotspot-logistics-split-U1064
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1064
+assessment:
+  finding: Deux relations doivent être instruites séparément. FLOW et C-LOG négocient un plan proposé par C-LOG dans la
+    cible discutée ; FLOW doit aussi reconduire le pilotage des autres logisticiens utilisés par Boardriders.
+  decision: Conserver HS-002 pour FLOW/C-LOG et rétablir HS-011 pour FLOW/autres logisticiens Boardriders. Rendre HS-011 visible,
+    retirer de HS-002 les options et l'analyse d'écart déjà présentes dans HS-011, et conserver l'option historique de mandat
+    mixte dans HS-011.
+  qualification: Les capacités, contrats et identités des autres partenaires restent à inventorier. La proposition du plan
+    par C-LOG, ses garanties et la conversation technique ne sont pas déclarées installées. Les scores propres à chaque
+    hotspot restent préparatoires.
+market_comparison:
+  microsoft:
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-external-erp
+    relevance: Sépare les ordres portés par le système externe des opérations logistiques en entrepôt.
+  sap:
+    url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/2f36056ae9a044bba55bcbad204b7bc5/6cb085242fce4c4abd480ef3650e669a.html
+    relevance: Décrit les échanges de livraison et de confirmation avec un entrepôt ou prestataire externe.
+  limits: Ces interfaces documentent une frontière d'exécution, pas une API de négociation de plans chez C-LOG ni un contrat
+    unique couvrant tous les partenaires Boardriders. La séparation des hotspots vient des mandats rapportés par Laurent.
+glossary_alignment:
+  checked: Fulfilment, Supply Chain Orchestration et Service Order dans le modèle et le glossaire métier.
+  result: Aucun nom, sens ou périmètre de capacité ne change ; le glossaire métier reste cohérent.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1064
+  summary: HS-002 recentré sur la négociation FLOW/C-LOG ; HS-011 rétabli et visible pour les autres logisticiens Boardriders.
+    HS-016 reste masqué.
+  required_catalog:
+  - collection: hotspots
+    id: HS-002
+    content_sha256: 651fa3353dcc6d28c1dda7e3f9998eddb48f31dc45c2e362a4c215eae62e5c47
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 9f4c141c5b670fa5437eb87f5770a8b394f338452746cb4f8b5ee26bf495b36d
+  supersedes_requirements:
+  - annex: hotspot-clog-negotiation-visibility-U1063.yaml
+    collection: hotspots
+    id: HS-002
+    fields:
+    - content_sha256
+  - annex: hotspot-arbitration-complexity-U1057.yaml
+    collection: hotspots
+    id: HS-011
+    fields:
+    - content_sha256

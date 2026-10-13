@@ -119,7 +119,10 @@ async function setup(width = 390, height = 900, touch = false, view = 'overview'
   const cluster = page.locator('.hotspot-map-marker[aria-expanded]').first();
   try {
     await cluster.waitFor();
-    await cluster.click();
+    if (height <= 320) {
+      await cluster.focus();
+      await page.keyboard.press('Enter');
+    } else await cluster.click();
   } catch (error) {
     await page.screenshot({ path: resolve(output, `setup-${view}-${width}x${height}.png`) });
     await page.close();
@@ -274,13 +277,13 @@ try {
       }
     });
   }
-  await check('touch-preview-before-opening', async () => {
+  await check('touch-info-and-direct-opening', async () => {
     const { page, dialog } = await setup(390, 844, true);
     try {
       const item = dialog.locator('.hotspot-expanded-item').first();
-      await item.tap();
+      await dialog.locator('.hotspot-expanded-info').first().tap();
       await page.getByRole('tooltip').waitFor();
-      assert.ok(await dialog.count(), 'first tap keeps the circle and identifies the hotspot');
+      assert.ok(await dialog.count(), 'information tap keeps the circle open');
       await item.tap();
       await page.locator('.hotspot-detail').waitFor();
     } finally {
@@ -345,7 +348,7 @@ try {
   await check('long-preview-is-bounded-scrollable-and-readable', async () => {
     const { page, dialog } = await setup(390, 844);
     try {
-      await dialog.locator('.hotspot-expanded-item').first().focus();
+      await dialog.locator('.hotspot-expanded-info').first().focus();
       const tooltip = page.getByRole('tooltip');
       await tooltip.waitFor();
       const rect = await tooltip.boundingBox();
@@ -365,8 +368,8 @@ try {
   await check('touch-selection-paging-and-outside-dismiss', async () => {
     const { page, cluster, dialog } = await setup(390, 844, true);
     try {
-      await dialog.locator('.hotspot-expanded-item').nth(0).tap();
-      await dialog.locator('.hotspot-expanded-item').nth(1).tap();
+      await dialog.locator('.hotspot-expanded-info').nth(0).tap();
+      await dialog.locator('.hotspot-expanded-info').nth(1).tap();
       await page.getByRole('tooltip').waitFor();
       assert.equal(await page.locator('.hotspot-detail').count(), 0);
       assert.equal(await page.getByRole('tooltip').count(), 1);
@@ -399,9 +402,7 @@ try {
         );
         assert.deepEqual(await page.evaluate(() => ({ x: window.scrollX, y: window.scrollY })), scroll);
         assert.equal(await mapTransform(), viewport);
-        const background = page.getByRole('button', { name: 'Étendre la carte', includeHidden: true });
-        const box = await background.boundingBox();
-        await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+        await page.mouse.click(2, 2);
         await dialog.waitFor({ state: 'detached' });
         assert.equal(
           await page.evaluate(() => Boolean(document.fullscreenElement)),
@@ -593,7 +594,7 @@ try {
   await check('preview-links-are-accessible-inside-the-modal', async () => {
     const { page, dialog } = await setup(390, 844);
     try {
-      await dialog.locator('.hotspot-expanded-item').first().focus();
+      await dialog.locator('.hotspot-expanded-info').first().focus();
       const link = page.locator('.hotspot-map-tooltip a.model-reference');
       await link.waitFor();
       assert.equal(await link.evaluate((element) => Boolean(element.closest('[inert]'))), false);
@@ -637,7 +638,7 @@ try {
       const item = dialog.getByRole('button', { name: /^Sujet 21 —/ });
       while (!(await item.count()) && !(await dialog.getByRole('button', { name: 'Pastilles suivantes' }).isDisabled()))
         await dialog.getByRole('button', { name: 'Pastilles suivantes' }).click();
-      await item.focus();
+      await dialog.getByRole('button', { name: /^Résumé de Sujet 21 —/ }).focus();
       const tooltip = page.locator('.hotspot-map-tooltip');
       await tooltip.waitFor();
       assert.equal(await tooltip.evaluate((element) => element.scrollWidth <= element.clientWidth + 1), true);
@@ -659,7 +660,7 @@ try {
         assert.equal(await remaining.evaluate((element) => Boolean(element.closest('[inert]'))), false);
         const individual = page.locator('.hotspot-map-marker:not([aria-expanded])').first();
         if (await individual.count()) {
-          await individual.hover();
+          await individual.locator('xpath=..').locator('.hotspot-info-button').hover();
           const preview = page.locator('.hotspot-map-tooltip').first();
           await preview.waitFor();
           await page.waitForFunction(() => {

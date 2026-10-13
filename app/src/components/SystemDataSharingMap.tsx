@@ -4,6 +4,7 @@ import type { PublishedModel } from '../types';
 import { ModelText } from './ModelLinks';
 
 type Box = { x: number; y: number; width: number; height: number };
+export type ExchangeMarkerAnchor = { exchangeId: string; x: number; y: number };
 type Arrow = {
   exchange: SystemDataSharing;
   path: string;
@@ -13,6 +14,8 @@ type Arrow = {
   lines: string[];
   returning: boolean;
   vertical: boolean;
+  markerX: number;
+  markerY: number;
 };
 const linesFor = (label: string, limit: number) => {
   const lines: string[] = [];
@@ -42,13 +45,15 @@ const ribbon = (length: number, body: number, head: number, tip: number) => {
 export function SystemDataSharingMap({
   model,
   exchanges,
+  markedExchangeIds,
   detail,
   onGeometryChange,
 }: {
   model: PublishedModel;
   exchanges: readonly SystemDataSharing[];
+  markedExchangeIds: ReadonlySet<string>;
   detail: number;
-  onGeometryChange: () => void;
+  onGeometryChange: (anchors: ExchangeMarkerAnchor[]) => void;
 }) {
   const paintId = useId().replaceAll(':', '');
   const svg = useRef<SVGSVGElement>(null);
@@ -58,7 +63,9 @@ export function SystemDataSharingMap({
     arrows: [],
   });
   useLayoutEffect(() => {
-    if (drawing.arrows.length) onGeometryChange();
+    onGeometryChange(
+      drawing.arrows.map(({ exchange, markerX, markerY }) => ({ exchangeId: exchange.id, x: markerX, y: markerY })),
+    );
   }, [drawing, onGeometryChange]);
   // Detail changes the cards' natural height; arrows follow measured boxes at every framing scale.
   // biome-ignore lint/correctness/useExhaustiveDependencies: Detail changes the measured DOM before painting.
@@ -81,6 +88,7 @@ export function SystemDataSharingMap({
         const source = boxes.get(exchange.sourceId);
         const target = boxes.get(exchange.targetId);
         if (!source || !target) continue;
+        const marked = markedExchangeIds.has(exchange.id);
         if (Math.abs(source.x - target.x) < 1) {
           const down = source.y < target.y;
           const x = source.x + source.width * (down ? 0.28 : 0.72);
@@ -93,10 +101,12 @@ export function SystemDataSharingMap({
             path: ribbon(length, 88, 136, 56),
             transform: `translate(${x} ${start}) rotate(${down ? 90 : -90})`,
             x,
-            y: start + (down ? 1 : -1) * ((length - 56) / 2) + 4 - ((lines.length - 1) * 16) / 2,
+            y: start + (down ? 1 : -1) * (length - 56) * (marked ? 0.82 : 0.5) + 4 - ((lines.length - 1) * 16) / 2,
             lines,
             returning: !down,
             vertical: true,
+            markerX: x,
+            markerY: start + (down ? 1 : -1) * (length - 56) * 0.5,
           });
         } else {
           const right = source.x < target.x;
@@ -116,11 +126,13 @@ export function SystemDataSharingMap({
             exchange,
             path: ribbon(length, 44, 68, 42),
             transform: `translate(${startX} ${y}) rotate(${right ? 0 : 180})`,
-            x: startX + (right ? 1 : -1) * ((length - 42) / 2),
-            y: y + 5 - ((lines.length - 1) * 16) / 2,
+            x: startX + (right ? 1 : -1) * (length - 42) * 0.5,
+            y: y + (marked ? 52 : 5) - ((lines.length - 1) * 16) / 2,
             lines,
             returning: !right,
             vertical: false,
+            markerX: startX + (right ? 1 : -1) * (length - 42) * 0.5,
+            markerY: y,
           });
         }
       }
@@ -132,7 +144,7 @@ export function SystemDataSharingMap({
     for (const card of grid.querySelectorAll('.overview-system')) observer.observe(card);
     measure();
     return () => observer.disconnect();
-  }, [exchanges, detail]);
+  }, [exchanges, markedExchangeIds, detail]);
   if (!exchanges.length) return null;
   return (
     <svg

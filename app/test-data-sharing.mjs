@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { loadPublication } from '../scripts/load-publication.mjs';
-import { systemDataSharing } from './src/dataSharing.ts';
+import { hotspotDataSharing, systemDataSharing } from './src/dataSharing.ts';
 import { adaptPublication, childrenOf } from './src/model.ts';
 
 const original = (await loadPublication({ version: '2026-10-12.6' })).raw;
@@ -64,6 +64,31 @@ test('several detailed exchanges aggregate without losing relation identities an
   );
   assert.equal(arrows[0].label, 'Demandes · Adaptations');
   assert.equal(arrows[1].sourceId, 'domain-logistics-execution');
+});
+
+test('integration hotspots project onto the unique published exchange joining their two anchors', () => {
+  const raw = structuredClone(original);
+  raw.relations.push(
+    relation('TEST-ACCOUNTING', 'accounting-data-provision', 'subdomain-financial-accounting', 'Faits de gestion'),
+  );
+  raw.relations.push(
+    relation('TEST-OTHER', 'domain-sales', 'subdomain-financial-accounting', 'Conditions commerciales'),
+  );
+  const exchanges = systemDataSharing(adaptPublication(raw));
+  const hotspot = {
+    kind: 'integration',
+    location: { node_ids: ['accounting-data-provision', 'subdomain-financial-accounting'] },
+  };
+  assert.equal(hotspotDataSharing(hotspot, exchanges)?.relations[0].id, 'TEST-ACCOUNTING');
+  assert.equal(hotspotDataSharing({ ...hotspot, kind: 'scope' }, exchanges), undefined);
+  assert.equal(
+    hotspotDataSharing({ ...hotspot, location: { node_ids: ['accounting-data-provision'] } }, exchanges),
+    undefined,
+  );
+  raw.relations.push(
+    relation('TEST-REVERSE', 'subdomain-financial-accounting', 'accounting-data-provision', 'Retours'),
+  );
+  assert.equal(hotspotDataSharing(hotspot, systemDataSharing(adaptPublication(raw))), undefined);
 });
 
 test('malformed contents, missing glossary references and self exchanges are rejected', () => {

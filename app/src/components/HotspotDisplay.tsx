@@ -15,11 +15,12 @@ import {
   useInteractions,
   useRole,
 } from '@floating-ui/react';
-import { Check, ChevronLeft, ChevronRight, Flame, Pause, X } from 'lucide-react';
+import { Check, ChevronLeft, ChevronRight, Flame, Info, Pause, X } from 'lucide-react';
 import {
   type ButtonHTMLAttributes,
   type CSSProperties,
   type FocusEvent,
+  Fragment,
   type MouseEvent,
   type PointerEvent,
   type ReactNode,
@@ -101,20 +102,43 @@ export function HotspotTooltipButton({
   tip,
   tooltipClass = 'hotspot-map-tooltip',
   previewOnTouch = false,
+  pinOnClick = false,
   tooltipRoot,
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & {
   tip: ReactNode;
   tooltipClass?: string;
   previewOnTouch?: boolean;
+  pinOnClick?: boolean;
   tooltipRoot?: HTMLElement | null;
 }) {
   const [open, setOpen] = useState(false);
+  const [pinned, setPinned] = useState(false);
   const touchPreview = useRef(false);
   const [touchHint, setTouchHint] = useState(false);
   const id = useId();
-  const { refs, floatingStyles, context, host } = useHotspotFloating(open, setOpen, 0.45);
-  const hover = useHover(context, { handleClose: safePolygon(), delay: { open: 120, close: 100 } });
+  useEffect(() => {
+    if (!pinOnClick) return;
+    const closeOtherInfo = (event: Event) => {
+      if ((event as CustomEvent<string>).detail === id) return;
+      setOpen(false);
+      setPinned(false);
+    };
+    document.addEventListener('atlas-hotspot-info-open', closeOtherInfo);
+    return () => document.removeEventListener('atlas-hotspot-info-open', closeOtherInfo);
+  }, [pinOnClick, id]);
+  useEffect(() => {
+    if (pinOnClick && open) document.dispatchEvent(new CustomEvent('atlas-hotspot-info-open', { detail: id }));
+  }, [pinOnClick, open, id]);
+  const { refs, floatingStyles, context, host } = useHotspotFloating(
+    open,
+    (next) => {
+      setOpen(next);
+      if (!next) setPinned(false);
+    },
+    0.45,
+  );
+  const hover = useHover(context, { enabled: !pinned, handleClose: safePolygon(), delay: { open: 120, close: 100 } });
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: 'tooltip' });
   const { getReferenceProps, getFloatingProps } = useInteractions([hover, dismiss, role]);
@@ -129,6 +153,11 @@ export function HotspotTooltipButton({
             props.onPointerDown?.(event);
           },
           onClick(event: MouseEvent<HTMLButtonElement>) {
+            if (pinOnClick) {
+              setPinned(!pinned);
+              setOpen(!pinned);
+              return;
+            }
             if (touchPreview.current) {
               touchPreview.current = false;
               setOpen(true);
@@ -141,12 +170,13 @@ export function HotspotTooltipButton({
             props.onFocus?.(event);
           },
           onBlur(event: FocusEvent<HTMLButtonElement>) {
-            if (!refs.floating.current?.contains(event.relatedTarget)) setOpen(false);
+            if (!pinned && !refs.floating.current?.contains(event.relatedTarget)) setOpen(false);
             props.onBlur?.(event);
           },
         })}
         ref={refs.setReference}
         aria-describedby={open ? id : undefined}
+        aria-expanded={pinOnClick ? open : undefined}
       />
       {open && (
         <FloatingPortal root={tooltipRoot || host}>
@@ -471,7 +501,7 @@ export function HotspotMapMarker({
       )}
       {!grouped && (
         <span>
-          Politique {severityLabel(items[0].complexity.political)} · Implémentation{' '}
+          Arbitrage {severityLabel(items[0].complexity.arbitration)} · Implémentation{' '}
           {severityLabel(items[0].complexity.implementation)}
         </span>
       )}
@@ -522,10 +552,13 @@ export function HotspotMapMarker({
           </span>
         </button>
       ) : (
-        <HotspotTooltipButton {...markerProps} tip={tip} onClick={() => onOpen(items[0].id)}>
+        <button {...markerProps} onClick={() => onOpen(items[0].id)}>
           <HotspotResolutionGlyph item={items[0]} />
-        </HotspotTooltipButton>
+        </button>
       )}
+      <HotspotTooltipButton pinOnClick className="hotspot-info-button" aria-label={`Résumé de ${title}`} tip={tip}>
+        <Info size={16} aria-hidden="true" />
+      </HotspotTooltipButton>
       {expanded && (
         <FloatingPortal root={host}>
           <FloatingOverlay
@@ -534,7 +567,7 @@ export function HotspotMapMarker({
             className="hotspot-cluster-backdrop"
             data-closing={closing}
             style={{ '--cluster-return-duration': `${returnDuration}ms` } as CSSProperties}
-            onPointerDown={(event) => {
+            onClick={(event) => {
               if (event.target === event.currentTarget) closeGroup(false);
             }}
           >
@@ -598,7 +631,7 @@ export function HotspotMapMarker({
                   className="hotspot-expanded-grid"
                   role="group"
                   aria-label="Points chauds du groupe"
-                  onPointerDown={(event) => {
+                  onClick={(event) => {
                     if (event.target === event.currentTarget) closeGroup(false);
                   }}
                   onKeyDown={(event) => {
@@ -630,49 +663,60 @@ export function HotspotMapMarker({
                         } as CSSProperties)
                       : undefined;
                     return (
-                      <HotspotTooltipButton
-                        key={item.id}
-                        previewOnTouch
-                        tooltipRoot={elements.floating}
-                        className={`hotspot-expanded-item severity-${item.severity}${item.workshop ? ' is-workshop' : ''}${isClosedHotspot(item) ? ' is-framing-closed' : ''}`}
-                        style={style}
-                        onMouseEnter={() => onHighlight?.(true, [item.id])}
-                        onMouseLeave={() => onHighlight?.(false, [])}
-                        onFocus={() => onHighlight?.(true, [item.id])}
-                        onBlur={() => onHighlight?.(false, [])}
-                        aria-label={`${item.title}, criticité ${severityLabel(item.severity)}, ${RESOLUTION_STAGES[resolutionFor(item).stage]}${resolutionFor(item).blocked_reason ? ', bloqué' : ''}`}
-                        onClick={() => {
-                          requestClose(() => onOpen(item.id));
-                        }}
-                        tip={
-                          <>
-                            <strong>{item.title}</strong>
-                            <span>
-                              <ModelText text={item.problem} />
-                            </span>
-                            {item.gap_analysis?.[0]?.convergence_question && (
+                      <Fragment key={item.id}>
+                        <button
+                          type="button"
+                          className={`hotspot-expanded-item severity-${item.severity}${item.workshop ? ' is-workshop' : ''}${isClosedHotspot(item) ? ' is-framing-closed' : ''}`}
+                          style={style}
+                          onMouseEnter={() => onHighlight?.(true, [item.id])}
+                          onMouseLeave={() => onHighlight?.(false, [])}
+                          onFocus={() => onHighlight?.(true, [item.id])}
+                          onBlur={() => onHighlight?.(false, [])}
+                          aria-label={`${item.title}, criticité ${severityLabel(item.severity)}, ${RESOLUTION_STAGES[resolutionFor(item).stage]}${resolutionFor(item).blocked_reason ? ', bloqué' : ''}`}
+                          onClick={() => {
+                            requestClose(() => onOpen(item.id));
+                          }}
+                        >
+                          <span className="hotspot-map-marker" aria-hidden="true">
+                            <HotspotResolutionGlyph item={item} />
+                          </span>
+                        </button>
+                        <HotspotTooltipButton
+                          pinOnClick
+                          tooltipRoot={elements.floating}
+                          className="hotspot-info-button hotspot-expanded-info"
+                          style={point ? { left: point.x + 5, top: point.y + 5 } : undefined}
+                          aria-label={`Résumé de ${item.title}`}
+                          tip={
+                            <>
+                              <strong>{item.title}</strong>
                               <span>
-                                À arbitrer : <ModelText text={item.gap_analysis[0].convergence_question} />
+                                <ModelText text={item.problem} />
                               </span>
-                            )}
-                            <span>{framingLabel(item)}</span>
-                            <span>
-                              {STATUS[item.status]} · {RESOLUTION_STAGES[resolutionFor(item).stage]} · Criticité{' '}
-                              {severityLabel(item.severity)}
-                            </span>
-                            {resolutionFor(item).blocked_reason && (
-                              <span>Bloqué : {resolutionFor(item).blocked_reason}</span>
-                            )}
-                            <span>
-                              {item.location.node_ids.map((node) => model.nodeById.get(node)?.name || node).join(' · ')}
-                            </span>
-                          </>
-                        }
-                      >
-                        <span className="hotspot-map-marker" aria-hidden="true">
-                          <HotspotResolutionGlyph item={item} />
-                        </span>
-                      </HotspotTooltipButton>
+                              {item.gap_analysis?.[0]?.convergence_question && (
+                                <span>
+                                  À arbitrer : <ModelText text={item.gap_analysis[0].convergence_question} />
+                                </span>
+                              )}
+                              <span>{framingLabel(item)}</span>
+                              <span>
+                                {STATUS[item.status]} · {RESOLUTION_STAGES[resolutionFor(item).stage]} · Criticité{' '}
+                                {severityLabel(item.severity)}
+                              </span>
+                              {resolutionFor(item).blocked_reason && (
+                                <span>Bloqué : {resolutionFor(item).blocked_reason}</span>
+                              )}
+                              <span>
+                                {item.location.node_ids
+                                  .map((node) => model.nodeById.get(node)?.name || node)
+                                  .join(' · ')}
+                              </span>
+                            </>
+                          }
+                        >
+                          <Info size={16} aria-hidden="true" />
+                        </HotspotTooltipButton>
+                      </Fragment>
                     );
                   })}
                 </div>

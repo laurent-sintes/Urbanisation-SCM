@@ -34,7 +34,7 @@ type SortKey =
   | 'kind'
   | 'scope'
   | 'severity'
-  | 'political'
+  | 'arbitration'
   | 'implementation'
   | 'status'
   | 'resolution'
@@ -59,10 +59,10 @@ type HotspotDraft = {
   title: string;
   kind: Hotspot['kind'];
   node_ids: string[];
-  political: string;
+  arbitration: string;
   implementation: string;
   rationale: string;
-  political_rationale: string;
+  arbitration_rationale: string;
   implementation_rationale: string;
   status: Hotspot['status'];
   resolution: HotspotResolution;
@@ -75,10 +75,10 @@ const draftFor = (item: Hotspot): HotspotDraft => ({
   title: item.title,
   kind: item.kind,
   node_ids: [...item.location.node_ids],
-  political: item.complexity.political,
+  arbitration: item.complexity.arbitration,
   implementation: item.complexity.implementation,
   rationale: item.complexity.rationale,
-  political_rationale: item.complexity.political_rationale || '',
+  arbitration_rationale: item.complexity.arbitration_rationale || '',
   implementation_rationale: item.complexity.implementation_rationale || '',
   status: item.status,
   resolution: structuredClone(resolutionFor(item)),
@@ -264,13 +264,13 @@ export function HotspotCatalogPage({
       arbitration_level: draft.arbitration_level,
       complexity: {
         ...item.complexity,
-        political: draft.political,
+        arbitration: draft.arbitration,
         implementation: draft.implementation,
         rationale: draft.rationale,
-        political_rationale: draft.political_rationale,
+        arbitration_rationale: draft.arbitration_rationale,
         implementation_rationale: draft.implementation_rationale,
       },
-      severity: (severityForComplexities(draft.political, draft.implementation) ||
+      severity: (severityForComplexities(draft.arbitration, draft.implementation) ||
         item.severity) as Hotspot['severity'],
     };
   };
@@ -291,8 +291,8 @@ export function HotspotCatalogPage({
             return item.location.node_ids.map((id) => model.nodeById.get(id)?.name || id).join(' · ');
           case 'severity':
             return SIZE_RANK.indexOf(item.severity);
-          case 'political':
-            return SIZE_RANK.indexOf(item.complexity.political);
+          case 'arbitration':
+            return SIZE_RANK.indexOf(item.complexity.arbitration);
           case 'implementation':
             return SIZE_RANK.indexOf(item.complexity.implementation);
           case 'resolution':
@@ -330,18 +330,18 @@ export function HotspotCatalogPage({
     if (!sameDraftValue(draft.node_ids, base.node_ids))
       fields.location = { ...item.location, node_ids: draft.node_ids };
     if (
-      draft.political !== base.political ||
+      draft.arbitration !== base.arbitration ||
       draft.implementation !== base.implementation ||
       draft.rationale !== base.rationale ||
-      draft.political_rationale !== base.political_rationale ||
+      draft.arbitration_rationale !== base.arbitration_rationale ||
       draft.implementation_rationale !== base.implementation_rationale
     )
       fields.complexity = {
         ...item.complexity,
-        political: draft.political,
+        arbitration: draft.arbitration,
         implementation: draft.implementation,
         rationale: draft.rationale.trim(),
-        political_rationale: draft.political_rationale.trim(),
+        arbitration_rationale: draft.arbitration_rationale.trim(),
         implementation_rationale: draft.implementation_rationale.trim(),
       };
     if (draft.status !== base.status) fields.status = draft.status;
@@ -376,7 +376,7 @@ export function HotspotCatalogPage({
       )
       .map(
         (key) =>
-          `${item.title} · ${key === 'political' ? 'politique' : key === 'implementation' ? 'implémentation' : key === 'arbitration_level' ? 'arbitrage' : key === 'status' ? 'statut' : key === 'kind' ? 'type' : key === 'node_ids' ? 'périmètre' : key === 'rationale' ? 'justification' : key === 'selected_option_id' ? 'option retenue' : key === 'resolution_note' ? 'note de résolution' : key === 'resolution' ? 'avancement du cadrage' : 'titre'}`,
+          `${item.title} · ${key === 'arbitration' ? 'd’arbitrage' : key === 'implementation' ? 'implémentation' : key === 'arbitration_level' ? 'arbitrage' : key === 'status' ? 'statut' : key === 'kind' ? 'type' : key === 'node_ids' ? 'périmètre' : key === 'rationale' ? 'justification' : key === 'selected_option_id' ? 'option retenue' : key === 'resolution_note' ? 'note de résolution' : key === 'resolution' ? 'avancement du cadrage' : 'titre'}`,
       );
   });
   const draftErrors = Object.entries(drafts).flatMap(([id, draft]) => {
@@ -387,7 +387,7 @@ export function HotspotCatalogPage({
     if (draft.kind === 'integration' && draft.node_ids.length !== 2)
       errors.push('deux objets requis pour une intégration');
     if (draft.kind === 'scope' && draft.node_ids.length < 1) errors.push('un objet requis pour un périmètre');
-    if ((draft.political !== 'unassessed' || draft.implementation !== 'unassessed') && !draft.rationale.trim())
+    if ((draft.arbitration !== 'unassessed' || draft.implementation !== 'unassessed') && !draft.rationale.trim())
       errors.push('justification des complexités requise');
     errors.push(...resolutionErrors(effective(item)));
     if (draft.status === 'resolved' && !effective(item).resolution) {
@@ -641,7 +641,7 @@ export function HotspotCatalogPage({
             <tbody>
               {filtered.map((item, index) => {
                 const draft = drafts[item.id] || draftFor(item);
-                const severity = severityForComplexities(draft.political, draft.implementation) || item.severity;
+                const severity = severityForComplexities(draft.arbitration, draft.implementation) || item.severity;
                 const canEdit = Boolean(workshopStage);
                 const StatusIcon = STATUS_ICON[draft.status];
                 const StageIcon = STAGE_ICON[draft.resolution.stage];
@@ -740,7 +740,7 @@ export function HotspotCatalogPage({
                             <>
                               <strong>Criticité : {SIZE(severity)}</strong>
                               <span>
-                                Politique : {SIZE(draft.political)} · Implémentation : {SIZE(draft.implementation)}
+                                Arbitrage : {SIZE(draft.arbitration)} · Implémentation : {SIZE(draft.implementation)}
                               </span>
                               <span>
                                 <ModelText text={draft.rationale || 'Justification non documentée.'} />
@@ -1100,10 +1100,10 @@ export function HotspotCatalogPage({
                   <div className="hotspot-dialog-body">
                     <HotspotAssessmentGuide model={model} />
                     <label>
-                      Justification politique
+                      Justification d’arbitrage
                       <textarea
-                        value={draft.political_rationale}
-                        onChange={(event) => edit(item, 'political_rationale', event.target.value)}
+                        value={draft.arbitration_rationale}
+                        onChange={(event) => edit(item, 'arbitration_rationale', event.target.value)}
                       />
                     </label>
                     <label>
@@ -1115,13 +1115,13 @@ export function HotspotCatalogPage({
                     </label>
                     <p>La criticité est calculée à partir des deux complexités.</p>
                     <label>
-                      Complexité politique{' '}
+                      Complexité d’arbitrage{' '}
                       <select
                         ref={(element) => {
                           dialogFocus.current = element;
                         }}
-                        value={draft.political}
-                        onChange={(event) => edit(item, 'political', event.target.value)}
+                        value={draft.arbitration}
+                        onChange={(event) => edit(item, 'arbitration', event.target.value)}
                       >
                         {SIZE_RANK.map((level) => (
                           <option key={level} value={level}>

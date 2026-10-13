@@ -139,7 +139,9 @@ try {
           x: r.x + r.width / 2,
           y: r.y + r.height / 2,
           radius: r.width / 2,
-          parent: e.closest('.overview-system, .overview-global-hotspot, .map-flow-surface'),
+          parent: e.closest(
+            '.overview-system, .overview-exchange-hotspots, .overview-global-hotspot, .map-flow-surface',
+          ),
         };
       });
       const failures = [];
@@ -194,6 +196,33 @@ try {
         }
       const overview = document.querySelector('.urbanisation-overview.layout-fixed');
       if (overview) {
+        const accounting = overview.querySelectorAll('.hotspot-map-marker[data-hotspot-ids="HS-021"]');
+        const accountingRibbon = overview.querySelector(
+          '[data-sharing-ids*="REL-U981-accounting-facts"] .data-sharing-ribbon',
+        );
+        if (accountingRibbon && accounting.length === 1) {
+          const marker = accounting[0].getBoundingClientRect();
+          const ribbon = accountingRibbon.getBoundingClientRect();
+          const x = marker.left + marker.width / 2;
+          const y = marker.top + marker.height / 2;
+          if (
+            !accounting[0].closest('.overview-exchange-hotspots') ||
+            x < ribbon.left ||
+            x > ribbon.right ||
+            y < ribbon.top ||
+            y > ribbon.bottom
+          )
+            failures.push('accounting-hotspot-off-exchange');
+          const label = accountingRibbon.closest('[data-sharing-ids]')?.querySelector('text')?.getBoundingClientRect();
+          if (
+            label &&
+            marker.right + 4 > label.left &&
+            marker.left - 4 < label.right &&
+            marker.bottom + 4 > label.top &&
+            marker.top - 4 < label.bottom
+          )
+            failures.push('accounting-hotspot-covers-exchange-label');
+        } else if (accountingRibbon) failures.push('accounting-hotspot-missing-or-duplicated');
         const ids = [
           'system-design-development',
           'system-business-operations',

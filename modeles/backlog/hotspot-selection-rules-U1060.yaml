@@ -1,0 +1,38 @@
+id: hotspot-selection-rules-U1060
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1059
+- U1060
+assessment:
+  finding: Les deux variantes de mandat décrites par Laurent relèvent de HS-002. HS-016 conserve la question distincte de
+    convergence des règles de sélection entre parcours entrepôt et magasin.
+  qualification: Aucun mandat de partenaire, engagement de plan ou degré de convergence n'est choisi par cette clarification.
+  decision: Conserver les deux identités. Rendre la frontière explicite dans HS-016 et conserver HS-002 sans réécriture.
+market_comparison:
+  common_points: Microsoft Dynamics Commerce décrit des profils de sélection selon l'activité ou le segment ; SAP S/4HANA
+    Retail documente des parcours de magasin configurables. Microsoft Dynamics Supply Chain Management documente aussi une
+    frontière entre gestion des ordres et exécution en entrepôt.
+  differences_and_limits: Ces exemples étayent des variantes de sélection et des responsabilités distinctes, sans fixer le
+    mandat de C-LOG ou des autres prestataires, ni la politique de convergence Beaumanoir. Les appuis et limites des deux
+    fiches restent inchangés.
+glossary_alignment:
+  checked: Service Selection Decision, Fulfilment, Service Order et les termes de mandat dans le modèle et le glossaire métier.
+  result: Aucune responsabilité ou définition métier ne change ; aucune modification du glossaire métier nécessaire.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1059
+  - U1060
+  summary: HS-016 recentré sur la convergence des règles de sélection entre parcours ; HS-002 conserve l'arbitrage du mandat
+    de construction, de choix et d'engagement du plan selon le logisticien.
+  required_catalog:
+  - collection: hotspots
+    id: HS-016
+    content_sha256: 0e4e442f8a74911071b704d17f78d92a1c8fe78d9ab9f1a39b503a8a37305310
+  supersedes_requirements:
+  - annex: hotspot-arbitration-complexity-U1057.yaml
+    collection: hotspots
+    id: HS-016
+    fields:
+    - content_sha256

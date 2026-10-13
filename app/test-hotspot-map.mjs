@@ -22,7 +22,7 @@ test('impact scopes distinguish transition and combine selections without hiding
     severity: 'M',
     kind: 'scope',
     status: 'validated',
-    complexity: { political: 'S', implementation: 'M' },
+    complexity: { arbitration: 'S', implementation: 'M' },
     framing_impact: { category: 'structuring', scopes },
   });
   const items = [item('model', ['model']), item('transition', ['transition']), item('mixed', ['model', 'transition'])];
@@ -49,7 +49,7 @@ test('technical visibility defaults to true and excludes only explicitly hidden 
     severity: 'L',
     kind: 'scope',
     status: 'validated',
-    complexity: { political: 'M', implementation: 'L' },
+    complexity: { arbitration: 'M', implementation: 'L' },
   };
   const items = [
     { ...base, id: 'historic' },
@@ -73,6 +73,7 @@ test('shared filters round-trip safely without accepting malformed or unknown cr
   assert.deepEqual(readHotspotFilters(encodeHotspotFilters(filters)), filters);
   assert.deepEqual(readHotspotFilters('{'), defaultHotspotMapFilters);
   assert.deepEqual(readHotspotFilters('[]'), defaultHotspotMapFilters);
+  assert.equal(readHotspotFilters('{"political":"L"}').arbitration, 'L');
   assert.deepEqual(
     readHotspotFilters(JSON.stringify({ status: 'arbitrary', enabled: 'yes', unknown: true })),
     defaultHotspotMapFilters,
@@ -84,7 +85,7 @@ test('model and usage filters stay independent and keep unqualified and historic
     severity: 'unassessed',
     kind: 'scope',
     status: 'validated',
-    complexity: { political: 'unassessed', implementation: 'unassessed' },
+    complexity: { arbitration: 'unassessed', implementation: 'unassessed' },
     ...(category ? { framing_impact: { category } } : {}),
   }));
   const filters = { ...defaultHotspotMapFilters, enabled: true };
@@ -146,7 +147,7 @@ const model = adaptPublication({
         severity: 'XL',
         kind: 'integration',
         status: 'shared',
-        complexity: { political: 'XL', implementation: 'L' },
+        complexity: { arbitration: 'XL', implementation: 'L' },
       },
       {
         id: 'h2',
@@ -154,10 +155,23 @@ const model = adaptPublication({
         severity: 'S',
         kind: 'scope',
         status: 'resolved',
-        complexity: { political: 'S', implementation: 'M' },
+        complexity: { arbitration: 'S', implementation: 'M' },
       },
     ],
   },
+});
+
+test('historical hotspot axis is normalized for the current map without changing the source snapshot', () => {
+  const legacy = structuredClone(model.raw);
+  const complexity = legacy.hotspot_catalog.hotspots[0].complexity;
+  legacy.hotspot_catalog.hotspots[0].title = 'Carnet [Wholesale](glossary:TER193) : convergence';
+  complexity.political = complexity.arbitration;
+  delete complexity.arbitration;
+  const adapted = adaptPublication(legacy);
+  assert.equal(adapted.raw.hotspot_catalog.hotspots[0].complexity.arbitration, 'XL');
+  assert.equal(adapted.raw.hotspot_catalog.hotspots[0].title, 'Carnet Wholesale\u00a0: convergence');
+  assert.equal(legacy.hotspot_catalog.hotspots[0].title, 'Carnet [Wholesale](glossary:TER193) : convergence');
+  assert.equal(legacy.hotspot_catalog.hotspots[0].complexity.arbitration, undefined);
 });
 
 test('hotspot illumination includes actual descendants without extending a projected ancestor to other branches', () => {
@@ -207,7 +221,7 @@ test('same filters apply to scoped and overview hotspots without mutating public
     severityMode: 'exact',
     kind: 'all',
     status: 'all',
-    political: 'all',
+    arbitration: 'all',
     implementation: 'all',
   };
   assert.deepEqual(
@@ -216,10 +230,10 @@ test('same filters apply to scoped and overview hotspots without mutating public
   );
   assert.deepEqual(filterMapHotspots(all, { ...filters, enabled: false }), []);
   assert.deepEqual(
-    filterMapHotspots(all, { ...filters, political: 'XL', implementation: 'L' }).map((item) => item.id),
+    filterMapHotspots(all, { ...filters, arbitration: 'XL', implementation: 'L' }).map((item) => item.id),
     ['h1'],
   );
-  assert.deepEqual(filterMapHotspots(all, { ...filters, political: 'S' }), []);
+  assert.deepEqual(filterMapHotspots(all, { ...filters, arbitration: 'S' }), []);
   assert.deepEqual(
     filterMapHotspots(all, { ...filters, status: 'resolved', severity: 'all' }).map((item) => item.id),
     ['h2'],
@@ -251,17 +265,17 @@ test('same filters apply to scoped and overview hotspots without mutating public
 });
 
 test('severity result and complexity components are alternative filters', () => {
-  const political = updateHotspotMapFilters(defaultHotspotMapFilters, { political: 'XL', enabled: true });
-  const axes = updateHotspotMapFilters(political, { implementation: 'L' });
-  assert.equal(axes.political, 'XL');
+  const arbitration = updateHotspotMapFilters(defaultHotspotMapFilters, { arbitration: 'XL', enabled: true });
+  const axes = updateHotspotMapFilters(arbitration, { implementation: 'L' });
+  assert.equal(axes.arbitration, 'XL');
   assert.equal(axes.implementation, 'L');
   assert.equal(axes.severity, 'all');
   const result = updateHotspotMapFilters(axes, { severity: 'XL' });
-  assert.equal(result.political, 'all');
+  assert.equal(result.arbitration, 'all');
   assert.equal(result.implementation, 'all');
   assert.equal(result.severity, 'XL');
   const range = updateHotspotMapFilters(axes, { severityMode: 'at_most' });
-  assert.equal(range.political, 'all');
+  assert.equal(range.arbitration, 'all');
   assert.equal(range.implementation, 'all');
   assert.equal(severityForComplexities('XL', 'L'), 'XL');
   assert.equal(severityForComplexities('M', 'M'), 'L');

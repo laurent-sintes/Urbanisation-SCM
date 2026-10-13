@@ -24903,3 +24903,151 @@ Verbatim :
 > Regarde dans Storeland ce que fait le module négoce (j'espère qu'il est répertorié dans la fiche produit) et mappe le sur une capacité ou un business area. Si ça n'existe pas, on en discute.
 
 Portée : rétablir la taille des halos sur la carte, vérifier la documentation éditeur du module Négoce Storeland, ajouter ses fonctions au référentiel de l'offre et situer HS-020 sur la responsabilité métier correspondante. Distinguer l'offre Cegid de la licence, de l'activation et des usages propres aux marques GBM ; ne pas déduire une nouvelle capacité du nom du module.
+
+## U1057
+
+Date : 2026-10-13. Source : Laurent, renommage de l'axe de complexité des points chauds et évaluation du point chaud Retail.
+
+Verbatim :
+
+> Concernant le modèle hotspot, je souhaite changer le nom de l'attribut qui donne une complexité politique en complexité d'arbitrage.
+>
+> Pour le hotspot « Responsabilités Retail à couvrir après Storeland et United Retail », la complexité d'arbitrage est L et la complexité d'implémentation est M.
+
+Portée : renommer l'axe de complexité des hotspots sans modifier le sens des évaluations historiques ; attribuer à HS-032 les niveaux L et M demandés. La criticité est calculée selon la matrice en vigueur.
+
+## U1058
+
+Date : 2026-10-13. Source : Laurent, réexamen du point chaud CBS et service après-vente.
+
+Verbatim :
+
+> Le hotspot « Continuité des dossiers CBS et de service après-vente » doit être revu :
+>
+> - le hotspot est mal positionné : dans la vue domaine Orchestration avec détail maxi, le hotspot est complétement décalé sur la gauche.
+> - Le hotspot doit être revu dans le titre et la rédaction
+>   - L'idée est que la logique architecturale du SI Beaumanoir est de développer des applications autonomes et complètes et découpées verticalement. Par exemple, CBS traite les demandes d'achat selon tous les angmes de vue : cycle de vie, suivi, tâches d'effet de bord, relation avec le fournisseur pour échage documentaire etc. => ça traite tous les processus de l'activité Achat. Pour le service client Sarenza, c'est la même logique. De plus, il n'y a pas d'approche plateforme dans le sens où une plateforme traiterait des capacités IT transverses et communes comme la visualisation des demandes : chacun redéveloppe avec ses technologies propres toute la problématique d' Order Management
+>   - Comme Flow Core System gère une plateforme unifiée des demandes du cycle de vie des processus des achats jusqu'au destockage, certaines capacités plateforme seraient à réutiliser. On peut imaginer récupérer des services de ces applications et les faire piloter par Flow Core System. Cela signifierait une réécriture partielle dont le périmètre est à affiner.
+> - Le hotspot doit être découpé en deux car ça touche des orders totalement différents.
+
+Précision de Laurent, même échange :
+
+> « Service Client » => processus avant et après la vente
+
+Portée : séparer le sujet CBS lié aux achats du sujet service client Sarenza, revoir leur rédaction et leur ancrage cartographique. Les constats d'architecture et pistes de réutilisation sont des apports de Laurent ; les services réutilisables et la réécriture nécessaire restent à qualifier.
+
+## U1059
+
+Date : 2026-10-13. Source : Laurent, comparaison des points chauds relatifs au plan de fulfilment et au choix des moyens de livraison.
+
+Verbatim :
+
+> "**Choix des moyens de livraison selon le parcours entrepôt ou magasin**  " => c'est très proche voire identique au hotspot sur le plan de fullfilment, non ?
+>
+> Il y a deux idées :
+>
+> - Boardriders a besoin de construire et piloter finement le plan de fulfillment quand il s'adresse à des logisticiens simples
+> - Entre porter la promesse client et être simple exécutant logisticien, la vérité est au milieu : proposer des plans aux marques (à l'orchestration centralisée FLOW) et FLOW choisit.
+>
+> C'est un seul hotspot ou plusieurs ?
+
+Portée : réexaminer le recouvrement entre HS-002 et HS-016. Distinguer le mandat de construction et de choix du plan selon les prestataires de la question d'une éventuelle convergence des critères de sélection entre parcours entrepôt et magasin. Les deux idées sont des apports et une piste de cible à qualifier, sans fusion ni arbitrage implicite.
+
+## U1060
+
+Date : 2026-10-13. Source : Laurent, accord pour la clarification de HS-002 et HS-016 proposée après U1059.
+
+Verbatim :
+
+> Ok, go
+
+Portée : conserver HS-002 pour l'arbitrage du partage de la construction et du choix du plan selon le mandat du logisticien ; conserver HS-016 pour la convergence éventuelle des règles de sélection entre parcours entrepôt et magasin, avec un titre et une rédaction qui évitent le doublon. Cet accord ne choisit aucune option de réalisation et ne confirme aucune garantie des prestataires.
+
+## U1061
+
+Date : 2026-10-13. Source : Laurent, correction éditoriale du titre de HS-016.
+
+Verbatim :
+
+> "Convergence des règles de sélection entre parcours entrepôt et magasin" => ce titre ne veut rien dire.
+
+Portée : remplacer le titre abstrait de HS-016 par une formulation concrète sur les critères utilisés pour choisir un entrepôt ou un magasin. Le périmètre, les options ouvertes et la distinction avec HS-002 restent ceux du lot U1060.
+
+## U1062
+
+Date : 2026-10-13. Source : Laurent, correction du problème exprimé par le titre de HS-016.
+
+Verbatim :
+
+> "Faut-il utiliser les mêmes critères pour choisir un entrepôt ou un magasin ?" => je ne comprends pas le sujet. Les mêmes critères par rapport à quoi ? Le titre est meilleur, plus concret mais il ne dévoila pas le problème
+
+Portée : expliciter dans le titre et l'ouverture de la fiche le risque conditionnel identifié en U964 : une unification des modes de sélection pourrait désavantager certaines marques ou certains pôles. Conserver les parcours rapportés comme exemples et ne pas présumer d'un dysfonctionnement, d'une solution ou d'une incompatibilité avec FLOW.
+
+## U1063
+
+Date : 2026-10-13. Source : Laurent, visibilité de HS-016 et précision du sujet de négociation logistique.
+
+Verbatim :
+
+> Rends invisible HS-016
+>
+> Le sujet que j'évoquais auparavant était :
+>
+> - la relation de négociation par api conversationnelle entre C-LOG et
+
+Précision de Laurent, même échange :
+
+> Supply chain Orchestration
+
+Précision sur la présence de contre-propositions successives avant accord :
+
+> À qualifier
+
+Portée : masquer HS-016 dans le backlog sans retirer son identité ni ses preuves. Le sujet précisé concerne une relation de négociation par API conversationnelle entre C-LOG et Supply Chain Orchestration. Les tours de proposition, contre-proposition et engagement restent à qualifier ; ne pas les déduire du seul terme « conversationnelle ».
+
+## U1064
+
+Date : 2026-10-13. Source : Laurent, réexamen du découpage des points chauds logistiques.
+
+Verbatim :
+
+> Ce que je disais toute à l'heure est :
+>
+> - on a un hotspot FLOW/C-LOG
+> - on a un hotspot FLOW/<autre logisticien> pour les besoins Boardriders
+>
+> HS-002 semble traiter les 2. Pour moi, ce sont 2 hotspots différents.
+>
+> Qu'ne penses-tu ?
+
+Précision de Laurent, même échange :
+
+> Si tu réactives un ancien hotspot, rends le visible
+
+Portée : réexaminer la consolidation antérieure de HS-011 dans HS-002 à la lumière de deux relations d'intégration distinctes. Rétablir HS-011 comme sujet autonome et le rendre visible ; recentrer HS-002 sur FLOW/C-LOG. Ne pas déduire les contrats, les capacités ou l'identité des autres logisticiens ni choisir une solution. HS-016 reste masqué.
+
+## U1065
+
+Date : 2026-10-13. Source : Laurent, demande de revue des hotspots visibles.
+
+Verbatim :
+
+> Je veux une revue complète des hotspots visibles :
+>
+> - problème bien posé
+> - Titre clair
+> - statut adapté au contenu
+> - couverture carto cohérente
+> - story telling clair et présentable.
+
+Portée : examiner les huit hotspots visibles du backlog courant, HS-002, HS-011, HS-008, HS-020, HS-021, HS-024, HS-033 et HS-032. La revue distingue la pertinence du sujet, le cadrage des solutions, les responsabilités à instruire et les preuves d'usage installé. Elle ne publie pas le backlog dans Atlas.
+
+## U1066
+
+Date : 2026-10-13. Source : Laurent, validation de la revue U1065 et des corrections recommandées.
+
+Verbatim :
+
+> Je valide
+
+Portée : appliquer le lot cohérent de corrections de la revue des huit hotspots visibles. Qualifier HS-011 comme interaction distincte de HS-002, clarifier les titres et l'ouverture des fiches, compléter les ancrages CBS et Retail, préciser le périmètre étudié pour Négoce et rendre explicite la couverture partielle du service client Sarenza. Conserver les statuts de reconnaissance jugés adaptés et les incertitudes de cadrage. Les prestataires et parcours réellement utilisés restent à documenter ; cet accord n'apporte ni exemple observé supplémentaire, ni solution choisie, ni couverture installée, ni nouvelle Business Area. Il n'autorise pas implicitement une release, un commit ou un push.

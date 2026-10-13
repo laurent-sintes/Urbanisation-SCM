@@ -30,10 +30,10 @@ const MATRIX_V1 = [
 ];
 
 /** Mirror the published matrix-v1 rule for the filter preview; the snapshot keeps its own severity. */
-export function severityForComplexities(political: string, implementation: string): string | undefined {
-  if (political === 'all' || implementation === 'all') return undefined;
-  if (political === 'unassessed' || implementation === 'unassessed') return 'unassessed';
-  const row = LEVELS.indexOf(political);
+export function severityForComplexities(arbitration: string, implementation: string): string | undefined {
+  if (arbitration === 'all' || implementation === 'all') return undefined;
+  if (arbitration === 'unassessed' || implementation === 'unassessed') return 'unassessed';
+  const row = LEVELS.indexOf(arbitration);
   const column = LEVELS.indexOf(implementation);
   return row >= 0 && column >= 0 ? MATRIX_V1[row][column] : undefined;
 }
@@ -46,7 +46,7 @@ export interface HotspotMapFilters {
   severityMode: 'exact' | 'at_most' | 'at_least';
   kind: string;
   status: string;
-  political: string;
+  arbitration: string;
   implementation: string;
   showModelHotspots?: boolean;
   showTransitionHotspots?: boolean;
@@ -62,7 +62,7 @@ export const defaultHotspotMapFilters: HotspotMapFilters = {
   severityMode: 'exact',
   kind: 'all',
   status: 'all',
-  political: 'all',
+  arbitration: 'all',
   implementation: 'all',
   showModelHotspots: true,
   showTransitionHotspots: true,
@@ -77,6 +77,7 @@ export function readHotspotFilters(value?: string): HotspotMapFilters {
   try {
     const input = JSON.parse(value);
     if (!input || typeof input !== 'object' || Array.isArray(input)) return result;
+    if (input.arbitration === undefined && input.political !== undefined) input.arbitration = input.political;
     for (const key of [
       'enabled',
       'showResolved',
@@ -100,7 +101,7 @@ export function readHotspotFilters(value?: string): HotspotMapFilters {
       severityMode: ['exact', 'at_most', 'at_least'],
       kind: ['all', 'scope', 'integration'],
       status: ['all', 'discovered', 'shared', 'validated', 'resolved'],
-      political: ['all', 'unassessed', ...LEVELS],
+      arbitration: ['all', 'unassessed', ...LEVELS],
       implementation: ['all', 'unassessed', ...LEVELS],
     };
     for (const [key, values] of Object.entries(choices))
@@ -135,8 +136,8 @@ export function updateHotspotMapFilters(
       status: current.status === 'resolved' ? 'all' : current.status,
     };
   if (changes.severity !== undefined || changes.severityMode !== undefined)
-    return { ...current, ...changes, political: 'all', implementation: 'all' };
-  if (changes.political !== undefined || changes.implementation !== undefined)
+    return { ...current, ...changes, arbitration: 'all', implementation: 'all' };
+  if (changes.arbitration !== undefined || changes.implementation !== undefined)
     return { ...current, ...changes, severity: 'all' };
   return { ...current, ...changes };
 }
@@ -171,7 +172,7 @@ export function filterMapHotspots(hotspots: Hotspot[], filters: HotspotMapFilter
         resolutionFor(hotspot).stage === filters.resolutionStage) &&
       (filters.kind === 'all' || hotspot.kind === filters.kind) &&
       (filters.status === 'all' || hotspot.status === filters.status) &&
-      (filters.political === 'all' || hotspot.complexity.political === filters.political) &&
+      (filters.arbitration === 'all' || hotspot.complexity.arbitration === filters.arbitration) &&
       (filters.implementation === 'all' || hotspot.complexity.implementation === filters.implementation),
   );
 }

@@ -1,5 +1,5 @@
 import type { MapSlot } from './mapPlacement.ts';
-import type { AtlasRelation, DataExchange, PublishedModel, RawRelation } from './types.ts';
+import type { AtlasRelation, DataExchange, Hotspot, PublishedModel, RawRelation } from './types.ts';
 
 export function readDataExchange(relation: RawRelation, glossaryIds: ReadonlySet<string>): DataExchange | undefined {
   const raw = relation.fields?.data_exchange;
@@ -45,6 +45,19 @@ export interface SystemDataSharing {
   label: string;
   detailLabel: string;
   relations: readonly AtlasRelation[];
+}
+
+/** An integration hotspot belongs on a published exchange only when it names both ends. */
+export function hotspotDataSharing(
+  hotspot: Hotspot,
+  exchanges: readonly SystemDataSharing[],
+): SystemDataSharing | undefined {
+  if (hotspot.kind !== 'integration') return undefined;
+  const anchors = new Set(hotspot.location.node_ids);
+  const matches = exchanges.filter((exchange) =>
+    exchange.relations.some((relation) => anchors.has(relation.sourceId) && anchors.has(relation.targetId)),
+  );
+  return matches.length === 1 ? matches[0] : undefined;
 }
 
 /** Floating ribbons straddle card borders; only their shadow needs space above the map. */

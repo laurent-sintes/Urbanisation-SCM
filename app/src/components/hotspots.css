@@ -1559,6 +1559,42 @@ button.hotspot-qualification:hover {
   cursor: pointer;
   pointer-events: auto;
 }
+.hotspot-info-button {
+  position: absolute;
+  left: calc(var(--marker-size) / 3 - 10px);
+  top: calc(var(--marker-size) / 3 - 10px);
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #205a50;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.hotspot-info-button svg {
+  fill: #fffefc;
+}
+.hotspot-info-button:hover,
+.hotspot-info-button:focus-visible,
+.hotspot-info-button[aria-expanded="true"] {
+  color: #123d35;
+}
+.hotspot-info-button:hover svg,
+.hotspot-info-button:focus-visible svg,
+.hotspot-info-button[aria-expanded="true"] svg {
+  fill: #eaf5ef;
+}
+.hotspot-info-button:focus-visible {
+  outline: 3px solid #236159;
+  outline-offset: 0;
+}
+.hotspot-expanded-info {
+  z-index: 2;
+}
 .hotspot-map-point.is-workshop .hotspot-map-marker {
   border-style: dashed;
   border-width: 2px;

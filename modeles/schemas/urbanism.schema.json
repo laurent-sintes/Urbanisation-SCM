@@ -584,7 +584,7 @@
               "complexity": {
                 "type": "object",
                 "properties": {
-                  "political": {
+                  "arbitration": {
                     "enum": [
                       "S",
                       "M",
@@ -592,6 +592,9 @@
                       "XL",
                       "unassessed"
                     ]
+                  },
+                  "political": {
+                    "enum": ["S", "M", "L", "XL", "unassessed"]
                   },
                   "implementation": {
                     "enum": [
@@ -605,6 +608,9 @@
                   "rationale": {
                     "type": "string"
                   },
+                  "arbitration_rationale": {
+                    "type": "string"
+                  },
                   "political_rationale": {
                     "type": "string"
                   },
@@ -613,9 +619,12 @@
                   }
                 },
                 "required": [
-                  "political",
                   "implementation",
                   "rationale"
+                ],
+                "anyOf": [
+                  { "required": ["arbitration"] },
+                  { "required": ["political"] }
                 ],
                 "additionalProperties": false
               },
@@ -863,12 +872,15 @@
             "axes": {
               "type": "object",
               "required": [
-                "political",
                 "implementation"
+              ],
+              "anyOf": [
+                { "required": ["arbitration"] },
+                { "required": ["political"] }
               ],
               "additionalProperties": false,
               "properties": {
-                "political": {
+                "arbitration": {
                   "type": "object",
                   "required": [
                     "definition",
@@ -889,6 +901,19 @@
                       "additionalProperties": {
                         "type": "string"
                       }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "political": {
+                  "type": "object",
+                  "required": ["definition", "guidance"],
+                  "properties": {
+                    "definition": { "type": "string" },
+                    "guidance": {
+                      "type": "object",
+                      "required": ["S", "M", "L", "XL"],
+                      "additionalProperties": { "type": "string" }
                     }
                   },
                   "additionalProperties": false

@@ -119,6 +119,11 @@ def effective_hotspots(model, stage):
 
 
 def checked_hotspot(value, nodes):
+    complexity = value.get('complexity')
+    if isinstance(complexity, dict) and 'arbitration' not in complexity and 'political' in complexity:
+        complexity['arbitration'] = complexity.pop('political')
+        if 'political_rationale' in complexity:
+            complexity['arbitration_rationale'] = complexity.pop('political_rationale')
     if 'visible' in value and not isinstance(value['visible'], bool):
         raise ValueError('La visibilité doit être un booléen.')
     if not isinstance(value.get('title'), str) or not value['title'].strip():
@@ -139,12 +144,12 @@ def checked_hotspot(value, nodes):
     complexity = value.get('complexity', {})
     if not isinstance(complexity, dict) or not isinstance(complexity.get('rationale'), str):
         raise ValueError('La justification de complexité doit être un texte.')
-    if any(not isinstance(complexity.get(key, ''), str) for key in ('political_rationale', 'implementation_rationale')):
+    if any(not isinstance(complexity.get(key, ''), str) for key in ('arbitration_rationale', 'implementation_rationale')):
         raise ValueError('Les justifications par axe doivent être des textes.')
-    political, implementation = complexity.get('political'), complexity.get('implementation')
-    if political not in (*LEVELS, 'unassessed') or implementation not in (*LEVELS, 'unassessed'):
+    arbitration, implementation = complexity.get('arbitration'), complexity.get('implementation')
+    if arbitration not in (*LEVELS, 'unassessed') or implementation not in (*LEVELS, 'unassessed'):
         raise ValueError('Les difficultés doivent être S, M, L, XL ou non évaluées.')
-    value['severity'] = severity_for(political, implementation)
+    value['severity'] = severity_for(arbitration, implementation)
     if value.get('status') not in ('discovered', 'shared', 'validated', 'resolved'):
         raise ValueError('Statut de point chaud inconnu.')
     if value.get('arbitration_level') not in ('to_confirm', 'business_direction', 'flow_internal', 'flow_steering'):
@@ -193,7 +198,7 @@ def checked_hotspot(value, nodes):
         raise ValueError('Un point chaud résolu exige une option retenue et une note de résolution.')
     if 'resolution' not in value and value['status'] != 'resolved' and selected:
         raise ValueError('Une option retenue exige le statut résolu.')
-    if any(complexity[axis] != 'unassessed' for axis in ('political', 'implementation')) and not complexity['rationale'].strip():
+    if any(complexity[axis] != 'unassessed' for axis in ('arbitration', 'implementation')) and not complexity['rationale'].strip():
         raise ValueError('Une complexité évaluée exige une justification.')
     return value
 
@@ -235,7 +240,7 @@ def apply_request(root, request):
                 'id': identifier, 'title': fields.get('title'), 'kind': fields.get('kind', 'scope'),
                 'location': fields.get('location', {}), 'problem': fields.get('problem'),
                 'examples': fields.get('examples', []), 'resolution_options': fields.get('resolution_options', []),
-                'complexity': fields.get('complexity', {'political': 'unassessed', 'implementation': 'unassessed', 'rationale': ''}),
+                'complexity': fields.get('complexity', {'arbitration': 'unassessed', 'implementation': 'unassessed', 'rationale': ''}),
                 'severity_policy': 'matrix-v1', 'arbitration_level': fields.get('arbitration_level', 'to_confirm'),
                 'arbitration_note': fields.get('arbitration_note', ''), 'status': fields.get('status', 'discovered'),
                 'source_refs': [],
@@ -313,8 +318,8 @@ def apply_table_changes(root, request):
             if not isinstance(fields, dict) or not fields or set(fields) - TABLE_EDITABLE:
                 raise ValueError('Champs de tableau non autorisés.')
             if 'complexity' in fields and (not isinstance(fields['complexity'], dict)
-                                           or not {'political', 'implementation', 'rationale'} <= set(fields['complexity'])
-                                           or not set(fields['complexity']) <= {'political', 'implementation', 'rationale', 'political_rationale', 'implementation_rationale'}):
+                                           or not {'arbitration', 'implementation', 'rationale'} <= set(fields['complexity'])
+                                           or not set(fields['complexity']) <= {'arbitration', 'implementation', 'rationale', 'arbitration_rationale', 'implementation_rationale'}):
                 raise ValueError('Complexité de tableau invalide.')
             if 'status' in fields and fields['status'] not in ('discovered', 'shared', 'validated', 'resolved'):
                 raise ValueError('Statut de tableau inconnu.')

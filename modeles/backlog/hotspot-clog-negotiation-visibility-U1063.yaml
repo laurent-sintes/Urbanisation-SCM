@@ -1,0 +1,41 @@
+id: hotspot-clog-negotiation-visibility-U1063
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1063
+assessment:
+  finding: Laurent retire HS-016 de la vue et précise que le sujet évoqué porte sur la négociation par interface entre C-LOG
+    et Supply Chain Orchestration.
+  decision: Masquer HS-016 sans retirer son contenu historique ; préciser dans HS-002 cette relation de négociation et les
+    échanges à qualifier.
+  qualification: L'existence de contre-propositions successives, les messages et le moment de l'engagement restent inconnus.
+    Aucun fonctionnement installé ni solution retenue n'est déduit de cette précision.
+market_comparison:
+  reused: Les appuis Microsoft Dynamics et SAP S/4HANA de HS-002 distinguent ordres, exécution et échanges avec un prestataire.
+  limits: Ils ne démontrent pas une interface de négociation itérative chez C-LOG ; celle-ci reste à concevoir et à qualifier.
+glossary_alignment:
+  checked: Fulfilment et Supply Chain Orchestration dans le modèle et le glossaire métier.
+  result: Aucun nom, sens ou périmètre métier ne change ; aucune modification du glossaire métier nécessaire.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1063
+  summary: HS-016 masqué ; HS-002 précise le sujet de négociation par interface entre C-LOG et FLOW, sans supposer le protocole.
+  required_catalog:
+  - collection: hotspots
+    id: HS-016
+    content_sha256: d76184aa1b908306b079fe2fcb500f20b7488b2a052ea859945739044318447d
+  - collection: hotspots
+    id: HS-002
+    content_sha256: 43a1bd7aa143b79307aa828eacb90ecee660e5f1a6a01efcd82372c7bad0fae8
+  supersedes_requirements:
+  - annex: hotspot-selection-risk-U1062.yaml
+    collection: hotspots
+    id: HS-016
+    fields:
+    - content_sha256
+  - annex: hotspot-arbitration-complexity-U1057.yaml
+    collection: hotspots
+    id: HS-002
+    fields:
+    - content_sha256

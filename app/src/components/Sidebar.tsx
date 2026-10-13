@@ -16,7 +16,7 @@ import { lineageOf } from '../model';
 import type { ModelingGuide } from '../modelingGuide';
 import type { RouteState } from '../navigation';
 import { kindLabel } from '../presentation';
-import { publicationUrl, publicationYamlUrl, staticUrl } from '../publication';
+import { publicationYamlUrl, staticUrl } from '../publication';
 import { catalogOf } from '../scenarioCatalog';
 import { type SearchResult, searchPublication } from '../search';
 import type { PublishedModel } from '../types';
@@ -324,16 +324,6 @@ export function Sidebar({
             Télécharger
             <ChevronDown className="download-chevron" size={15} />
           </summary>
-          <a
-            href={publicationUrl(model.version)}
-            download={`flow-atlas-model-${model.version}.json`}
-            onClick={mobile ? onClose : undefined}
-          >
-            <span>Modèle (JSON compact)</span>
-            <small>
-              Modèle et métamodèle complets · {revision} · {model.version}
-            </small>
-          </a>
           <a
             href={publicationYamlUrl(model.version)}
             download={`flow-atlas-model-${model.version}.yaml`}

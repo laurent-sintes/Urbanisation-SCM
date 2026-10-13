@@ -49,7 +49,22 @@ export function adaptPublication(input: RawPublication): PublishedModel {
     throw new Error('Une publication release explicite avec nodes et relations est requise.');
   }
   // Cloning prevents either renderer from altering the API response or another view.
-  const raw = freezeDeep(structuredClone(input));
+  const normalized = structuredClone(input);
+  // Published snapshots retain their original field names. Adapt older hotspots for current views.
+  for (const hotspot of normalized.hotspot_catalog?.hotspots ?? []) {
+    // Headings are plain text; glossary links remain available in the hotspot body.
+    if (typeof hotspot.title === 'string') hotspot.title = plainInlineText(hotspot.title).replace(/ (?=:)/g, '\u00a0');
+    const legacy = hotspot.complexity as typeof hotspot.complexity & {
+      political?: string;
+      political_rationale?: string;
+    };
+    if (legacy.arbitration === undefined && legacy.political !== undefined) legacy.arbitration = legacy.political;
+    if (legacy.arbitration_rationale === undefined && legacy.political_rationale !== undefined)
+      legacy.arbitration_rationale = legacy.political_rationale;
+  }
+  const axes = normalized.hotspot_catalog?.criticality_policy?.axes;
+  if (axes?.political && !axes.arbitration) axes.arbitration = axes.political;
+  const raw = freezeDeep(normalized);
   validateDisplayIndex(raw);
   const usesPurposes =
     Array.isArray(raw.principles) && raw.principles.some((p) => p?.id === 'PRINCIPLE-DOMAIN-PURPOSE');

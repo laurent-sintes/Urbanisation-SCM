@@ -358,10 +358,10 @@ export interface Hotspot {
     evidence_state: 'documented' | 'hypothesis' | 'to_investigate';
   }[];
   complexity: {
-    political: string;
+    arbitration: string;
     implementation: string;
     rationale: string;
-    political_rationale?: string;
+    arbitration_rationale?: string;
     implementation_rationale?: string;
   };
   severity: 'S' | 'M' | 'L' | 'XL' | 'unassessed';

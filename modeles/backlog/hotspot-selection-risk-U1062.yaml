@@ -1,0 +1,35 @@
+id: hotspot-selection-risk-U1062
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U964
+- U967
+- U1062
+assessment:
+  finding: Le titre précédent ne rendait pas intelligible le risque conditionnel validé pour HS-016.
+  decision: Nommer le risque de désavantager certaines marques si FLOW unifie le choix des entrepôts et des magasins ; ouvrir
+    la fiche par les parcours concrets rapportés et les degrés possibles de convergence.
+  boundary: HS-002 conserve le mandat du plan avec les logisticiens. Aucun dysfonctionnement, choix d'unification ou effet
+    installé n'est conclu de cette correction rédactionnelle.
+market_comparison:
+  reused: Les appuis primaires Microsoft Dynamics Commerce et SAP S/4HANA Retail de la fiche restent pertinents pour les
+    variantes de parcours ; leurs limites ne changent pas.
+  limits: Ces sources ne prouvent pas qu'une règle commune pénaliserait une marque, ni qu'une variante serait compatible avec FLOW.
+glossary_alignment:
+  checked: Service Selection Decision et Fulfilment dans le modèle et le glossaire métier.
+  result: La responsabilité et les définitions restent inchangées ; aucune modification du glossaire métier nécessaire.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1062
+  summary: HS-016 explicite le risque conditionnel d'une unification des modes de sélection entre entrepôt et magasin.
+  required_catalog:
+  - collection: hotspots
+    id: HS-016
+    content_sha256: d4aa0016c12521696290afa7525e7bd5dfa07b7dfad88cd8cfec8cd8cfa3ec77
+  supersedes_requirements:
+  - annex: hotspot-selection-title-U1061.yaml
+    collection: hotspots
+    id: HS-016
+    fields:
+    - content_sha256

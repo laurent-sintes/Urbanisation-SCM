@@ -1,6 +1,6 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
-import { type CSSProperties, lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { productFor, selectionMappings } from '../applicationCatalog';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { selectionMappings } from '../applicationCatalog';
 import { filterMapHotspots, type HotspotMapFilters, hotspotsInScope } from '../hotspotMap';
 import type { AtlasNode, PublishedModel } from '../types';
 import { HotspotLegend } from './HotspotDisplay';
@@ -61,8 +61,6 @@ export function MapPanel({
   const visibleHotspots = filterMapHotspots(scopedHotspots, hotspotFilters);
   const catalog = model.raw.application_catalog;
   const applicationMappings = selectionMappings(catalog, applicationSelectionId, applicationComponentId);
-  const applicationSelection = catalog?.selections.find((item) => item.id === applicationSelectionId);
-  const applicationProduct = applicationSelection && catalog ? productFor(catalog, applicationSelection) : undefined;
   const [zoomChoice, setZoomChoice] = useMapZoomChoice();
   useEffect(() => {
     const update = () => setExpanded(document.fullscreenElement === panel.current);
@@ -85,7 +83,6 @@ export function MapPanel({
       className="map-panel"
       ref={panel}
       aria-label="Carte du modèle"
-      style={{ '--application-accent': applicationProduct?.branding?.accent_color || '#54a872' } as CSSProperties}
     >
       <div className="map-toolbar">
         <div>

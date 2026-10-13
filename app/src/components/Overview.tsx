@@ -1,8 +1,8 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { type CSSProperties, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { MIN_READABLE_ZOOM, overviewLayout, prominentChildIndex } from '../adaptiveLayout';
-import { applicationMapIds, productFor, projectedApplicationMapIds, selectionMappings } from '../applicationCatalog';
-import { dataSharingCardInsets, dataSharingHeadroom, systemDataSharing } from '../dataSharing';
+import { applicationMapIds, projectedApplicationMapIds, selectionMappings } from '../applicationCatalog';
+import { dataSharingCardInsets, dataSharingHeadroom, hotspotDataSharing, systemDataSharing } from '../dataSharing';
 import { filterMapHotspots, type HotspotMapFilters, hotspotRelatedElementIds } from '../hotspotMap';
 import { HOTSPOT_DIAMETERS, type HotspotPlacementGroup, layoutHotspots } from '../hotspotPlacement';
 import { operationsMapSlots, systemMapSlots } from '../mapPlacement';
@@ -15,7 +15,7 @@ import { MapHotspotPicker } from './MapHotspotPicker';
 import { MapZoomPicker, useMapZoomChoice } from './MapZoomPicker';
 import { MapNodeButton, MetaTypeLabel, ModelText } from './ModelLinks';
 import { OverviewColumns } from './OverviewColumns';
-import { SystemDataSharingDetails, SystemDataSharingMap } from './SystemDataSharingMap';
+import { type ExchangeMarkerAnchor, SystemDataSharingDetails, SystemDataSharingMap } from './SystemDataSharingMap';
 import './hotspots.css';
 
 const plainDefinition = (text: string) => text.replace(/^\[[^\]]+\]\([^)]*\)\s*:\s*/, '');
@@ -70,7 +70,11 @@ export function Overview({
   }, [detail, zoomChoice]);
   const [availableWidth, setAvailableWidth] = useState(0);
   const [measurementVersion, setMeasurementVersion] = useState(0);
-  const exchangeGeometryChanged = useCallback(() => setMeasurementVersion((version) => version + 1), []);
+  const [exchangeAnchors, setExchangeAnchors] = useState<ExchangeMarkerAnchor[]>([]);
+  const exchangeGeometryChanged = useCallback((anchors: ExchangeMarkerAnchor[]) => {
+    setExchangeAnchors((previous) => (JSON.stringify(previous) === JSON.stringify(anchors) ? previous : anchors));
+    setMeasurementVersion((version) => version + 1);
+  }, []);
   const [markerPlacement, setMarkerPlacement] = useState<Record<string, OverviewPlacement>>({});
   const [clusterExpanded, setClusterExpanded] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -83,8 +87,6 @@ export function Overview({
   const hotspots = model.raw.hotspot_catalog?.hotspots || [];
   const applicationCatalog = model.raw.application_catalog;
   const applicationSelection = applicationCatalog?.selections.find((item) => item.id === applicationSelectionId);
-  const applicationProduct =
-    applicationSelection && applicationCatalog ? productFor(applicationCatalog, applicationSelection) : undefined;
   const applicationMappings = useMemo(
     () => selectionMappings(applicationCatalog, applicationSelectionId, applicationComponentId),
     [applicationCatalog, applicationSelectionId, applicationComponentId],
@@ -190,6 +192,26 @@ export function Overview({
   const layout = overviewLayout(weights, availableWidth);
   const systemSlots = useMemo(() => systemMapSlots(systems.map((system) => system.id)), [systems]);
   const dataSharing = useMemo(() => systemDataSharing(model), [model]);
+  const exchangeHotspots = useMemo(
+    () =>
+      visibleHotspots.flatMap((hotspot) => {
+        const exchange = hotspotDataSharing(hotspot, dataSharing);
+        return exchange ? [{ hotspot, exchangeId: exchange.id }] : [];
+      }),
+    [visibleHotspots, dataSharing],
+  );
+  const exchangeHotspotIds = useMemo(
+    () => new Set(exchangeHotspots.map(({ hotspot }) => hotspot.id)),
+    [exchangeHotspots],
+  );
+  const markedExchangeIds = useMemo(
+    () => new Set(exchangeHotspots.map(({ exchangeId }) => exchangeId)),
+    [exchangeHotspots],
+  );
+  const cardHotspots = useMemo(
+    () => visibleHotspots.filter((hotspot) => !exchangeHotspotIds.has(hotspot.id)),
+    [visibleHotspots, exchangeHotspotIds],
+  );
   const exchangeInsets = useMemo(
     () =>
       dataSharingCardInsets(
@@ -276,7 +298,7 @@ export function Overview({
           height: rect.height + 20 * scale,
         });
       }
-      const markers = visibleHotspots.filter((hotspot) =>
+      const markers = cardHotspots.filter((hotspot) =>
         hotspot.location.node_ids.some(
           (id) => id === system.id || lineageOf(model, id).some((node) => node.id === system.id),
         ),
@@ -321,12 +343,11 @@ export function Overview({
       next[system.id] = { groups: layoutHotspots(anchors, bounds) };
     }
     setMarkerPlacement((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));
-  }, [systems, visibleHotspots, model, detail, availableWidth, measurementVersion, clusterExpanded, scale]);
+  }, [systems, cardHotspots, model, detail, availableWidth, measurementVersion, clusterExpanded, scale]);
   return (
     <section
       ref={section}
       className="universe-overview"
-      style={{ '--application-accent': applicationProduct?.branding?.accent_color || '#54a872' } as CSSProperties}
       aria-label={`${universe?.name || 'Univers'} des systèmes métier`}
     >
       <div className="universe-toolbar">
@@ -399,12 +420,12 @@ export function Overview({
             projections={systems.reduce(
               (total, system) =>
                 total +
-                visibleHotspots.filter((hotspot) =>
+                cardHotspots.filter((hotspot) =>
                   hotspot.location.node_ids.some(
                     (id) => id === system.id || lineageOf(model, id).some((node) => node.id === system.id),
                   ),
                 ).length,
-              rootHotspots.length,
+              rootHotspots.length + exchangeHotspots.length,
             )}
           />
         )}
@@ -455,13 +476,41 @@ export function Overview({
             <SystemDataSharingMap
               model={model}
               exchanges={dataSharing}
+              markedExchangeIds={markedExchangeIds}
               detail={detail}
               onGeometryChange={exchangeGeometryChanged}
             />
+            {exchangeHotspots.length > 0 && (
+              <div
+                className="overview-exchange-hotspots"
+                role="group"
+                aria-label="Points chauds sur les échanges entre systèmes"
+              >
+                {exchangeAnchors.map(({ exchangeId, x, y }) => {
+                  const items = exchangeHotspots
+                    .filter((entry) => entry.exchangeId === exchangeId)
+                    .map((entry) => entry.hotspot);
+                  if (!items.length) return null;
+                  return (
+                    <HotspotMapMarker
+                      key={exchangeId}
+                      id={items.length === 1 ? items[0].id : `exchange:${exchangeId}`}
+                      items={items}
+                      x={x}
+                      y={y}
+                      model={model}
+                      onOpen={onOpenHotspot}
+                      onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
+                      onExpansionChange={setClusterExpanded}
+                    />
+                  );
+                })}
+              </div>
+            )}
             <OverviewColumns slots={systemSlots}>
               {displayedSystems.map((system, index) => {
                 const systemSlot = systemSlots?.[index];
-                const systemHotspots = visibleHotspots.filter((hotspot) =>
+                const systemHotspots = cardHotspots.filter((hotspot) =>
                   hotspot.location.node_ids.some(
                     (anchor) => anchor === system.id || lineageOf(model, anchor).some((node) => node.id === system.id),
                   ),

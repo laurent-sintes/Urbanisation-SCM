@@ -100,7 +100,9 @@ try {
             x: rect.x + rect.width / 2,
             y: rect.y + rect.height / 2,
             diameter: rect.width,
-            parent: element.closest('.overview-system, .overview-global-hotspot, .map-flow-surface'),
+            parent: element.closest(
+              '.overview-system, .overview-exchange-hotspots, .overview-global-hotspot, .map-flow-surface',
+            ),
           };
         });
         let overlaps = 0,
@@ -225,6 +227,21 @@ try {
       }
       const individual = page.locator(`${markerSelector}:not(:has(.hotspot-map-count))`).first();
       await individual.hover();
+      assert.equal(await page.locator('.hotspot-map-tooltip').count(), 0, 'pastille hover only highlights coverage');
+      const info = individual.locator('xpath=..').locator('.hotspot-info-button');
+      const iconPlacement = await info.evaluate((button) => {
+        const icon = button.getBoundingClientRect();
+        const marker = button.parentElement.querySelector('.hotspot-map-marker').getBoundingClientRect();
+        return {
+          distance: Math.hypot(
+            icon.x + icon.width / 2 - (marker.x + marker.width / 2),
+            icon.y + icon.height / 2 - (marker.y + marker.height / 2),
+          ),
+          radius: marker.width / 2,
+        };
+      });
+      assert.ok(iconPlacement.distance <= iconPlacement.radius + 6, 'information icon stays on the hotspot edge');
+      await info.hover();
       const tooltip = page
         .getByRole('tooltip')
         .filter({ has: page.locator('strong') })
@@ -234,11 +251,16 @@ try {
       assert.equal(await tooltip.evaluate((element) => getComputedStyle(element).fontSize), '13px');
       await tooltip.hover();
       assert.equal(await tooltip.isVisible(), true, 'tooltip remains open when hovered');
+      await info.click();
+      await page.mouse.move(0, 0);
+      assert.equal(await tooltip.isVisible(), true, 'click pins the tooltip');
       await page.keyboard.press('Escape');
       assert.equal(await page.locator('.hotspot-map-tooltip').count(), 0);
       await page.mouse.move(0, 0);
       await trigger.focus();
       await individual.focus();
+      assert.equal(await page.locator('.hotspot-map-tooltip').count(), 0, 'pastille focus only highlights coverage');
+      await info.focus();
       await page.getByRole('tooltip').last().waitFor();
       await page.keyboard.press('Escape');
       await individual.click();
@@ -368,7 +390,7 @@ try {
     }
     await page.close();
   }
-  assert.equal(deploymentChecked, true, 'the current mobile overview exercises cluster deployment');
+  // The isolated cluster fixture covers deployment when the current publication has no visible group.
   console.log(JSON.stringify({ results, deploymentChecked, screenshots: output }, null, 2));
 } finally {
   await browser.close();

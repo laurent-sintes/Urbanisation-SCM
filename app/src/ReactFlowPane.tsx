@@ -68,7 +68,7 @@ interface HotspotMarker {
   hotspotIds: string[];
   count: number;
   severity: string;
-  political: string;
+  arbitration: string;
   implementation: string;
   workshop: boolean;
   projectedElementIds: string[];
@@ -589,7 +589,7 @@ function Canvas(props: ReactFlowPaneProps) {
           hotspotIds: [hotspot.id],
           count: 1,
           severity: hotspot.severity,
-          political: hotspot.complexity.political,
+          arbitration: hotspot.complexity.arbitration,
           implementation: hotspot.complexity.implementation,
           workshop: Boolean(hotspot.workshop),
           projectedElementIds: distinct.map((anchor) => anchor.elementId),
@@ -639,13 +639,16 @@ function Canvas(props: ReactFlowPaneProps) {
       }
       const next: Record<string, { x: number; y: number }> = {};
       for (const marker of hotspotMarkers) {
-        if (marker.projectedElementIds.length !== 1) continue;
-        const id = marker.projectedElementIds[0];
-        const target = targetById.get(id);
-        if (!target) continue;
-        const rect = target.getBoundingClientRect();
-        const x = (rect.right - 16 - surfaceRect.left - panX) / zoom;
-        const y = (rect.top + rect.height / 2 - surfaceRect.top - panY) / zoom;
+        const targetsForMarker = marker.projectedElementIds.map((id) => targetById.get(id));
+        if (!targetsForMarker.length || targetsForMarker.some((target) => !target)) continue;
+        const targets = targetsForMarker as HTMLElement[];
+        if (targets.length > 1) {
+          const card = targets[0].closest('.business-card');
+          if (!card || targets.some((target) => target.closest('.business-card') !== card)) continue;
+        }
+        const rects = targets.map((target) => target.getBoundingClientRect());
+        const x = (Math.max(...rects.map((rect) => rect.right)) - 16 - surfaceRect.left - panX) / zoom;
+        const y = (rects[0].top + rects[0].height / 2 - surfaceRect.top - panY) / zoom;
         next[marker.id] = { x, y };
       }
       const obstacles: { x: number; y: number; width: number; height: number }[] = [];

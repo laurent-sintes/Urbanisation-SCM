@@ -20,7 +20,7 @@ export function HotspotAssessmentGuide({ model }: { model: PublishedModel }) {
         <div>
           <dt>Criticité</dt>
           <dd>
-            Croisement des difficultés politique et d’implémentation ; distinct de l’urgence et de l’impact business.
+            Croisement des difficultés d’arbitrage et d’implémentation ; distinct de l’urgence et de l’impact business.
           </dd>
         </div>
         <div>
@@ -41,10 +41,10 @@ export function HotspotAssessmentGuide({ model }: { model: PublishedModel }) {
           </p>
           <div className="hotspot-matrix-scroll">
             <table className="hotspot-matrix">
-              <caption>Grille publiée {policy.id} · politique en lignes, implémentation en colonnes</caption>
+              <caption>Grille publiée {policy.id} · arbitrage en lignes, implémentation en colonnes</caption>
               <thead>
                 <tr>
-                  <th scope="col">Politique / implémentation</th>
+                  <th scope="col">Arbitrage / implémentation</th>
                   {policy.levels.map((level) => (
                     <th scope="col" key={level}>
                       {level}
@@ -64,21 +64,23 @@ export function HotspotAssessmentGuide({ model }: { model: PublishedModel }) {
               </tbody>
             </table>
           </div>
-          <p>Exemple : politique L × implémentation XL → criticité XL.</p>
-          {Object.entries(policy.axes).map(([axis, value]) => (
-            <section key={axis}>
-              <h5>{axis === 'political' ? 'Complexité politique' : 'Complexité d’implémentation'}</h5>
-              <p>{value.definition}</p>
-              <dl>
-                {Object.entries(value.guidance).map(([level, description]) => (
-                  <div key={level}>
-                    <dt>{level}</dt>
-                    <dd>{description}</dd>
-                  </div>
-                ))}
-              </dl>
-            </section>
-          ))}
+          <p>Exemple : arbitrage L × implémentation XL → criticité XL.</p>
+          {Object.entries(policy.axes)
+            .filter(([axis]) => axis !== 'political')
+            .map(([axis, value]) => (
+              <section key={axis}>
+                <h5>{axis === 'arbitration' ? 'Complexité d’arbitrage' : 'Complexité d’implémentation'}</h5>
+                <p>{value.definition}</p>
+                <dl>
+                  {Object.entries(value.guidance).map(([level, description]) => (
+                    <div key={level}>
+                      <dt>{level}</dt>
+                      <dd>{description}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </section>
+            ))}
           <p>{policy.assessment_note}</p>
         </>
       ) : (

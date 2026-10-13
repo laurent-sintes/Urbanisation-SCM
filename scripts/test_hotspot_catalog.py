@@ -11,12 +11,12 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class HotspotCatalogTests(unittest.TestCase):
-    def test_transition_impact_and_consolidated_identity_are_preserved(self):
+    def test_transition_impact_and_reactivated_hotspot_identity_are_preserved(self):
         items = {h['id']: h for h in self.model['hotspot_catalog']['hotspots']}
         self.assertEqual(items['HS-001']['framing_impact']['scopes'], ['transition'])
         self.assertEqual(items['HS-001']['framing_impact']['targets'], [])
-        self.assertEqual(items['HS-011']['consolidated_into'], 'HS-002')
-        self.assertFalse(items['HS-011']['visible'])
+        self.assertNotIn('consolidated_into', items['HS-011'])
+        self.assertTrue(items['HS-011']['visible'])
         self.assertTrue(items['HS-011']['source_refs'])
         self.assertEqual(items['HS-011']['status'], 'validated')
         self.assertFalse(items['HS-002']['resolution']['credible_option_ids'])
@@ -42,14 +42,20 @@ class HotspotCatalogTests(unittest.TestCase):
     def setUpClass(cls):
         cls.model = read(ROOT / 'modeles/backlog/model.yaml')
 
-    def test_clog_pilot_is_located_on_two_domains(self):
+    def test_logistics_hotspots_keep_distinct_mandates_on_the_shared_boundary(self):
         self.assertEqual(validate_catalog(self.model), [])
         hotspot = next(item for item in self.model['hotspot_catalog']['hotspots'] if item['id'] == 'HS-002')
         self.assertEqual(hotspot['id'], hotspot['origin']['id'])
         self.assertEqual(hotspot['kind'], 'integration')
         self.assertEqual(set(hotspot['location']['node_ids']), {
-            'domain-logistics-execution', 'D06'})
-        self.assertEqual(hotspot['complexity']['political'], 'XL')
+            'domain-logistics-execution', 'ba-service-planning'})
+        other = next(item for item in self.model['hotspot_catalog']['hotspots'] if item['id'] == 'HS-011')
+        self.assertTrue(other['visible'])
+        self.assertEqual(other['kind'], 'integration')
+        self.assertEqual(set(other['location']['node_ids']), {'domain-logistics-execution', 'D06'})
+        parents = {r['target_id']: r['source_id'] for r in self.model['relations'] if r['type'] == 'contains'}
+        self.assertEqual(parents['ba-service-planning'], 'D06')
+        self.assertEqual(hotspot['complexity']['arbitration'], 'XL')
         self.assertEqual(hotspot['complexity']['implementation'], 'L')
         self.assertEqual(hotspot['severity'], severity_for('XL', 'L'))
 
@@ -58,12 +64,42 @@ class HotspotCatalogTests(unittest.TestCase):
         self.assertEqual(severity_for('L', 'L'), 'XL')
         self.assertEqual(severity_for('unassessed', 'XL'), 'unassessed')
 
+    def test_retail_assessment_and_legacy_axis(self):
+        item = next(h for h in self.model['hotspot_catalog']['hotspots'] if h['id'] == 'HS-032')
+        self.assertEqual((item['complexity']['arbitration'], item['complexity']['implementation'], item['severity']),
+                         ('L', 'M', 'L'))
+        legacy = copy.deepcopy(self.model)
+        for hotspot in legacy['hotspot_catalog']['hotspots']:
+            complexity = hotspot['complexity']
+            complexity['political'] = complexity.pop('arbitration')
+            if 'arbitration_rationale' in complexity:
+                complexity['political_rationale'] = complexity.pop('arbitration_rationale')
+        self.assertEqual(validate_catalog(legacy), [])
+
+    def test_cbs_and_sarenza_have_distinct_order_anchors(self):
+        items = {item['id']: item for item in self.model['hotspot_catalog']['hotspots']}
+        self.assertEqual(set(items['HS-024']['location']['node_ids']), {'D04.j', 'subdomain-process-management'})
+        self.assertEqual(items['HS-033']['location']['node_ids'], ['D04.i', 'D04.l'])
+        self.assertIn('Couverture cartographique partielle', items['HS-033']['problem'])
+        self.assertIn('avant-vente sans commande', items['HS-033']['problem'])
+        self.assertEqual(items['HS-024']['complexity']['arbitration'], 'unassessed')
+        self.assertEqual(items['HS-033']['complexity']['implementation'], 'unassessed')
+        self.assertEqual(items['HS-024']['severity'], 'unassessed')
+        self.assertEqual(items['HS-033']['severity'], 'unassessed')
+
+    def test_retail_map_anchors_cover_each_documented_gap_without_assuming_installed_usage(self):
+        hotspot = next(h for h in self.model['hotspot_catalog']['hotspots'] if h['id'] == 'HS-032')
+        subjects = {gap['subject_node_id'] for gap in hotspot['gap_analysis']}
+        self.assertEqual(set(hotspot['location']['node_ids']), subjects)
+        self.assertTrue(all(o['system_coverage'] == 'not_assessed'
+                            for gap in hotspot['gap_analysis'] for o in gap['observations_by_context']))
+
     def test_published_matrix_cannot_disagree_with_criticality_calculation(self):
         model = copy.deepcopy(self.model)
         policy = model['hotspot_catalog']['criticality_policy']
-        for row, political in enumerate(policy['levels']):
+        for row, arbitration in enumerate(policy['levels']):
             for column, implementation in enumerate(policy['levels']):
-                self.assertEqual(policy['matrix'][row][column], severity_for(political, implementation))
+                self.assertEqual(policy['matrix'][row][column], severity_for(arbitration, implementation))
         policy['matrix'][0][0] = 'XL'
         self.assertTrue(any('criticality policy' in error for error in validate_catalog(model)))
 
@@ -71,8 +107,11 @@ class HotspotCatalogTests(unittest.TestCase):
         from scripts.structured_io import read
         candidates = read(ROOT / 'modeles/backlog/hotspot-source-candidates-U958.yaml')
         hotspots = {item['id']: item for item in self.model['hotspot_catalog']['hotspots']}
-        self.assertEqual(len(hotspots), 28)
-        self.assertTrue(all(item['status'] == 'validated' for identifier, item in hotspots.items() if identifier != 'HS-032'))
+        self.assertEqual(len(hotspots), 29)
+        self.assertTrue(all(item['status'] == 'validated' for identifier, item in hotspots.items()
+                            if identifier not in {'HS-024', 'HS-032', 'HS-033'}))
+        self.assertEqual(hotspots['HS-024']['status'], 'shared')
+        self.assertEqual(hotspots['HS-033']['status'], 'shared')
         self.assertEqual(hotspots['HS-032']['status'], 'discovered')
         self.assertTrue(all(row['hotspot_id'] in hotspots for row in candidates['integration_map']))
         self.assertEqual(hotspots['HS-018']['framing_impact']['category'], 'to_assess')

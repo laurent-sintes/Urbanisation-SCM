@@ -1,0 +1,335 @@
+id: hotspot-visible-review-U1066
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1065
+- U1066
+approval:
+  author: Laurent
+  source_ref: U1066
+  verbatim: Je valide
+  scope: Corrections de la revue U1065 des huit hotspots visibles ; les choix de solution, preuves installées et nouvelles
+    valeurs de complexité restent exclus.
+  unchanged_subject_statuses:
+    HS-002: validated
+    HS-011: validated
+    HS-008: validated
+    HS-020: validated
+    HS-021: validated
+    HS-024: shared
+    HS-033: shared
+    HS-032: discovered
+  changes:
+  - hotspot_id: HS-002
+    approved_fields:
+    - location.node_ids
+    - problem
+    - examples
+    - market_view.flow_assessment
+    previous_values:
+      location.node_ids:
+      - D06
+      - domain-logistics-execution
+      problem: Définir comment C-LOG propose un plan de [fulfilment](glossary:TER085), comment FLOW le choisit et à quel moment
+        chacun s'engage. Laurent situe cette négociation entre C-LOG et [Supply Chain Orchestration](model:supply-chain-orchestration)
+        de FLOW, par une interface entre leurs systèmes. La validité du plan, ses garanties, la réservation éventuelle des
+        ressources, les messages et les possibles contre-propositions restent à qualifier. Le pilotage des autres logisticiens
+        utilisés par Boardriders relève de HS-011.
+      examples:
+      - Aujourd’hui, Boardriders maintient le réseau de fulfillment, construit et libère les ordres ; C-LOG exécute et pilote
+        localement sans initiative sur le plan.
+      - Dans la cible discutée, BMN demande des plans valides à C-LOG, en sélectionne un et demande son exécution ; C-LOG
+        porte alors l’optimisation logistique.
+      market_view.flow_assessment: Formaliser la proposition de plan, son choix, sa validité et l’accusé d’exécution comme
+        des engagements distincts entre BMN et C-LOG.
+    previous_content_sha256: 651fa3353dcc6d28c1dda7e3f9998eddb48f31dc45c2e362a4c215eae62e5c47
+    qualification: U1066 valide la clarification du récit et l’ancrage Service Planning–Logistics pour la proposition et le
+      choix du plan ; garanties, séquence d’échanges et score restent à qualifier.
+  - hotspot_id: HS-011
+    approved_fields:
+    - kind
+    - problem
+    - examples
+    - resolution.next_step
+    previous_values:
+      kind: scope
+      problem: Boardriders construit aujourd'hui le plan de [fulfilment](glossary:TER085), choisit ses autres logisticiens
+        et libère leurs ordres. FLOW doit pouvoir reprendre ce pilotage sans supposer que ces partenaires proposent un plan
+        garanti comme celui envisagé avec C-LOG dans HS-002. Les prestataires, leurs services, les ordres, les confirmations
+        et les variantes de contrat restent à inventorier.
+      examples:
+      - Un ordre Boardriders est confié à un prestataire externe selon le plan et le moment de libération choisis par la marque.
+      resolution.next_step: Inventorier les autres logisticiens Boardriders, leurs services, les ordres et confirmations échangés,
+        puis établir les décisions de plan et de libération que FLOW doit conserver pour chacun.
+    previous_content_sha256: 9f4c141c5b670fa5437eb87f5770a8b394f338452746cb4f8b5ee26bf495b36d
+    qualification: U1066 valide le type intégration et le récit de pilotage des autres logisticiens ; prestataire et parcours
+      réel restent à documenter. La frontière commune avec HS-002 n’en fait pas un sujet unique.
+  - hotspot_id: HS-008
+    approved_fields:
+    - title
+    - problem
+    - resolution.summary
+    previous_values:
+      title: 'Carnet [Wholesale](glossary:TER193) : écarts de gestion et complexité de convergence'
+      problem: Les Marques Historiques décident sur le stock présent ; Boardriders travaille le [carnet](glossary:TER205)
+        dans le temps. FLOW doit choisir les règles à partager et les différences à préserver, puis mesurer la complexité
+        du cœur métier et de l’outil complet à construire.
+      resolution.summary: 'Deux sujets à instruire ensemble : les écarts de gestion du carnet et la complexité de convergence
+        et de construction. Aucune option retenue.'
+    previous_content_sha256: bd60d1c14c57255cf9c43e91dfebb9c9a377b63dc0955f4caa66d60c9478edfd
+    qualification: U1066 valide un titre concret et une ouverture centrée sur les commandes refusées ou conservées ; les quatre
+      options et les réserves de complexité sont préservées.
+  - hotspot_id: HS-020
+    approved_fields:
+    - title
+    - location.node_ids
+    - problem
+    - examples
+    - resolution_options
+    - market_view.finding
+    - market_view.flow_assessment
+    - resolution.summary
+    - resolution.next_step
+    previous_values:
+      title: Couverture et convergence des responsabilités du Négoce
+      location.node_ids:
+      - ba-wholesale-account-management
+      - ba-wholesale-sales
+      problem: Identifier les fonctions réellement utilisées dans Négoce Storeland et leur répartition cible entre vente,
+        engagement, achat et exécution.
+      examples:
+      - 'Cas à recueillir : suivre une commande d’une marque utilisant Négoce, de la préparation commerciale à son exécution.'
+      resolution_options:
+      - id: hs-020-audit-1
+        title: Reprendre les responsabilités qualifiées
+        principle: Transférer dans FLOW les responsabilités dont les usages et contrats sont établis.
+        conditions:
+        - Tester chaque parcours Négoce et ses objets ouverts.
+        tradeoffs:
+        - Augmente le risque de migration si l’inventaire est incomplet.
+        implementation_complexity: unassessed
+        evidence_state: hypothesis
+      - id: hs-020-audit-2
+        title: Conserver Négoce et organiser sa coopération
+        principle: Laisser les fonctions utiles dans l’existant avec des responsabilités d’échange explicites.
+        conditions:
+        - Fixer l’autorité des commandes, achats et engagements.
+        tradeoffs:
+        - Conserve une coexistence et des coûts d’interface.
+        implementation_complexity: unassessed
+        evidence_state: hypothesis
+      market_view.finding: Microsoft et SAP documentent la captation de commandes ; Cegid décrit en plus les modes de traitement
+        Négoce de Storeland. Ces offres ne prouvent pas les fonctions effectivement utilisées par GBM.
+      market_view.flow_assessment: Ancrage de lecture sur Wholesale Account Management et Wholesale Sales ; engagements, achats
+        et facturation sont des responsabilités adjacentes à répartir après inventaire des usages GBM.
+      resolution.summary: Quelles responsabilités réellement exercées par Négoce Storeland faut-il reconduire ou laisser dans
+        l’existant ? Aucun résultat de qualification des options n’est encore établi.
+      resolution.next_step: Inventorier un parcours complet du Négoce par marque avant de décider ce qui relève de Sales,
+        Order Management ou des achats.
+    previous_content_sha256: 597c5f478dc645986e0be355be6f7daef8fb2794dc83cb5b7e812eaebd1bd665
+    qualification: U1066 valide le périmètre d’analyse et sa localisation sur les responsabilités commerciales, de commande
+      et d’exécution ; ces ancres ne prouvent pas leur usage dans Négoce. Les exemples restent des scénarios d’étude.
+  - hotspot_id: HS-021
+    approved_fields:
+    - title
+    - problem
+    - examples
+    - resolution.summary
+    previous_values:
+      title: 'FLOW, SAP SD et Finance : responsabilités et échanges comptables'
+      problem: 'Deux décisions liées : préciser ce que FLOW porte dans la commande et le service de facturation, ce que Finance
+        interprète et comptabilise, et ce que SAP SD réalise éventuellement ; choisir ensuite comment transmettre les faits,
+        factures, corrections et accusés vers FI/CO. Conserver SD seulement pour sa liaison native à FI/CO pourrait dupliquer
+        des responsabilités FLOW et résumer trop tôt les faits. Son rôle réel dans le projet S/4HANA reste à confirmer.'
+      examples:
+      - 'Épreuve proposée : une vente B2B est facturable. FLOW tient la demande, les engagements et le résultat de Billing
+        ; préciser qui émet la facture, qui applique les règles fiscales et qui crée l’écriture.'
+      - 'Épreuve proposée : relier un rejet comptable au fait opérationnel original, le corriger et le transmettre sans double
+        comptabilisation ni perte du détail utile à l’audit.'
+      resolution.summary: 'Deux questions à trancher ensemble : qui porte commande, service de facturation, document fiscal,
+        interprétation et écriture ; quel circuit transmet chaque fait et son résultat à Finance ? SD, interface comptable
+        et hybride restent des hypothèses. Aucune option retenue.'
+    previous_content_sha256: fdd1a311d44795d945edc34d01eb6ee246d3fb4b2f51000a79accdd36f1d5d2c
+    qualification: U1066 valide le titre et le récit clarifiés ; l’ancrage sur l’échange Faits de gestion est conservé. Aucun
+      rôle réel de SD ni circuit cible n’est confirmé.
+  - hotspot_id: HS-024
+    approved_fields:
+    - location.node_ids
+    - problem
+    - examples
+    - market_view.flow_assessment
+    previous_values:
+      location.node_ids:
+      - D04.j
+      problem: 'Selon Laurent, CBS traite les demandes d’achat comme une application verticale complète : cycle de vie, suivi,
+        tâches liées et échanges documentaires avec le fournisseur. Selon lui, l’application redéveloppe sa gestion des demandes
+        et leur visibilité, sans services de plateforme communs. FLOW vise un socle partagé d’[Order Management](model:D04),
+        de conduite des processus et de [visibilité des demandes et tâches](model:BHV082) pour les parcours Supply. Il faut
+        déterminer quelles responsabilités et quels services CBS conserver, exposer ou reprendre sous pilotage FLOW, sans
+        créer deux autorités sur un même [Purchase Order](model:D04.j). Une réécriture partielle est envisageable ; son périmètre
+        et la réalisation installée restent à instruire.'
+      examples:
+      - 'Une demande d’achat suivie dans CBS reçoit une nouvelle date fournisseur et une pièce documentaire : identifier qui
+        tient la commande, qui conduit les tâches et quel service restitue l’avancement dans FLOW.'
+      market_view.flow_assessment: Comparer le maintien de CBS autonome à l’exposition de services pilotés par FLOW ; distinguer
+        le cycle [Purchase Order](model:D04.j), la conduite du parcours et les échanges fournisseur. Le suivi d’approvisionnement
+        C18 reste un sujet distinct.
+    previous_content_sha256: e811894eefa4effa341141ebe16ccc2e89fe1d508ea609ef8a912351772070d8
+    qualification: U1066 valide l’ajout de Process Management à l’ancre Purchase Order ; fonctions séparables, interfaces
+      et coût restent inconnus.
+  - hotspot_id: HS-033
+    approved_fields:
+    - title
+    - problem
+    - examples
+    - resolution.next_step
+    previous_values:
+      title: 'Service client Sarenza et FLOW : articuler l’avant et l’après-vente'
+      problem: 'Selon Laurent, le service client Sarenza suit une logique d’application verticale autonome pour les demandes
+        avant et après la vente, avec ses propres fonctions de cycle, tâches et visibilité plutôt qu’une plateforme transverse
+        réutilisée. FLOW vise des services communs d’[Order Management](model:D04) et de [visibilité](model:BHV082) pour les
+        demandes et processus Supply, mais le périmètre Sarenza n’a pas été évalué : les parcours avant-vente, les [Sales
+        Orders](model:D04.i) et les [Return Orders](model:D04.l) ne doivent pas être assimilés. Il faut déterminer quels services
+        Sarenza peuvent rester locaux, être exposés à FLOW ou être remplacés par des services communs. Un pilotage par FLOW
+        pourrait nécessiter une réécriture partielle, à délimiter sans présumer d’une reprise du service client entier.'
+      examples:
+      - 'Suivre séparément une demande avant vente, une commande client puis un retour éventuel : repérer qui tient chaque
+        demande, les tâches et la réponse au client avant d’envisager un service commun de visibilité.'
+      resolution.next_step: Inventorier un parcours avant vente et un parcours après-vente Sarenza ; distinguer demande, commande,
+        retour, tâches, visibilité et frontière Supply.
+    previous_content_sha256: 8864984a9e7cab5dadc4e8cd59e52b00006e1423a6588b547cd9f822e50e7bb2
+    qualification: U1066 valide la présentation en enquête et l’affichage explicite de la couverture cartographique partielle.
+      L’avant-vente sans commande reste à ancrer après inventaire ; aucune réalisation Sarenza n’est validée.
+  - hotspot_id: HS-032
+    approved_fields:
+    - location.node_ids
+    - problem
+    - examples
+    previous_values:
+      location.node_ids:
+      - subdomain-retail-commerce
+      problem: 'Le retrait de Storeland et United Retail chez les Marques Historiques impose d''identifier qui assurera la
+        vente et la caisse, le stock et le réassort magasin, le réseau, la relation client et la fidélité, ainsi que les parcours
+        numériques de [Retail Commerce](model:subdomain-retail-commerce). Les documentations éditeur montrent que Storeland
+        et UR proposent ces fonctions, mais ne prouvent pas leur activation ni leur partage actuel par marque. UR est aussi
+        couplé à Storeland pour le backoffice ; SoCloz complète les parcours omnicanaux GBM selon Laurent. Winstore et les
+        autres outils conservés restent à inventorier. La refonte potentielle dépasse [Supply Chain Orchestration](model:supply-chain-orchestration)
+        : FLOW peut contribuer aux décisions et aux flux Supply sans reprendre la caisse, la fidélité ni l''exploitation du
+        magasin. Laurent attribue le socle Retail Boardriders à Cegid Y2 ; ses modules et usages installés doivent être corroborés
+        avant de comparer la taille des deux refontes.'
+      examples:
+      - 'Parcours à vérifier : une marque GBM reçoit des articles, tient le stock magasin, décide son réassort, reconnaît
+        un client fidèle, encaisse une vente et prépare une commande web après retrait de Storeland et UR.'
+      - Comparer le même parcours dans une marque Boardriders après confirmation du déploiement et des modules de Cegid Y2.
+    previous_content_sha256: 1db0c90e2b59652df93d63d9a6576c77a0cb390fa2655aecc9eac99eaa18ccc5
+    qualification: U1066 valide la lecture simplifiée et les cinq ancres Business Areas déjà décrites par l’analyse d’écart.
+      Usages GBM, modules Y2 et choix de réalisation restent à qualifier.
+assessment:
+  criteria:
+  - Problème bien posé
+  - Titre clair
+  - Statut adapté
+  - Couverture cartographique cohérente
+  - Récit présentable
+  logistics_location: HS-002 situe la proposition et le choix du plan sur Service Planning et Logistics ; HS-011 garde Fulfilment
+    Orchestration et Logistics pour le pilotage plus large du plan et des ordres. À faible détail, leur projection peut partager
+    la même frontière et former un groupe de deux sujets distincts.
+  negotiation_limit: La forme des échanges et les contre-propositions C-LOG restent à qualifier.
+  negoce_location: Les ancres localisent les responsabilités étudiées et non des fonctions déclarées installées dans Négoce.
+  sarenza_location: La branche retenue de la recommandation rend la couverture partielle explicite dans la fiche ; aucune
+    Business Area Customer Service n’est ajoutée sans parcours documenté.
+market_comparison:
+  reuse: Appuis primaires Microsoft Dynamics, SAP S/4HANA et Cegid déjà consultés et conservés dans les fiches ; aucune nouvelle
+    étude de produits déclenchée par cet acquiescement.
+  common_points: Ordres, exécution externe et confirmations restent distincts ; conduite des processus et identité des commandes
+    se complètent ; les offres Retail documentent plusieurs responsabilités.
+  differences_and_limits: Ces mécanismes ne prouvent ni contrats des logisticiens Boardriders, ni négociation C-LOG, ni services
+    CBS séparables, ni usages GBM/Y2/Sarenza. La comparaison SAP du Négoce reste partielle et son passage non revalidé est
+    signalé.
+glossary_alignment:
+  checked: Fulfilment, Wholesale Commerce, Order Backlog, Purchase Order, Sales Order, Return Order, Process Management, Billing,
+    Business Fact et les cinq Business Areas Retail.
+  result: Noms, définitions, frontières et parents métier restent inchangés ; les ancres et les liens utilisent les responsabilités
+    existantes. Aucun changement du glossaire métier nécessaire.
+remaining_evidence:
+- hotspot_id: HS-011
+  need: Nom d’un autre logisticien Boardriders, contrat et parcours observé avec ordres et confirmations.
+- hotspot_id: HS-020
+  need: Parcours Négoce réellement utilisé par une marque et revalidation de l’appui SAP ; les scénarios d’étude ne valent
+    pas preuve.
+- hotspot_id: HS-033
+  need: Parcours Sarenza avant-vente sans commande et après-vente, ancrage métier et applicabilité des services FLOW.
+- hotspot_id: HS-032
+  need: Fonctions actives par marque GBM, couverture des outils conservés et modules Y2 Boardriders.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1066
+  summary: Les huit hotspots visibles sont clarifiés ; interactions logistiques distinguées, ancrages CBS/Négoce/Retail précisés
+    et couverture Sarenza partielle explicitée. Statuts, complexités et solutions non choisies préservés.
+  required_catalog:
+  - collection: hotspots
+    id: HS-002
+    content_sha256: 646de73ee825c8f5b861cff014f44e26785c34cbb812b1bfc1b100e03d147031
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 4751234610e7ed6af327485bd92435b979d8df289c97a12913717d53056fcc46
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 9df501c3c3412a5d8b47f8fbd532a9d59dd7c77ef29d184a185023ff4925bf52
+  - collection: hotspots
+    id: HS-020
+    content_sha256: b424a79f5f87a0e171a0d2870411d35869a2d690743d3abf17d3787f3cc647b2
+  - collection: hotspots
+    id: HS-021
+    content_sha256: 62784615f51bc21b04a7d30282090d2fd9b13ac1c52559754a3199bd4ba71300
+  - collection: hotspots
+    id: HS-024
+    content_sha256: 6a56bbb9fef287b2d395513ee235e82fc09a073c6366f9a505fdb8f7b268849a
+  - collection: hotspots
+    id: HS-033
+    content_sha256: 9ca87d770a0a547eebec343e4caf3445e7d740109b9ae24bfbe2fabb21349b88
+  - collection: hotspots
+    id: HS-032
+    content_sha256: a435486302312341bf2e896e708c4f4809838d1f415e5e04b5dc22a6986de933
+  supersedes_requirements:
+  - annex: cbs-sarenza-platform-boundary-U1058.yaml
+    collection: hotspots
+    id: HS-024
+    fields:
+    - content_sha256
+  - annex: cbs-sarenza-platform-boundary-U1058.yaml
+    collection: hotspots
+    id: HS-033
+    fields:
+    - content_sha256
+  - annex: hotspot-arbitration-complexity-U1057.yaml
+    collection: hotspots
+    id: HS-008
+    fields:
+    - content_sha256
+  - annex: hotspot-arbitration-complexity-U1057.yaml
+    collection: hotspots
+    id: HS-020
+    fields:
+    - content_sha256
+  - annex: hotspot-arbitration-complexity-U1057.yaml
+    collection: hotspots
+    id: HS-021
+    fields:
+    - content_sha256
+  - annex: hotspot-arbitration-complexity-U1057.yaml
+    collection: hotspots
+    id: HS-032
+    fields:
+    - content_sha256
+  - annex: hotspot-logistics-split-U1064.yaml
+    collection: hotspots
+    id: HS-002
+    fields:
+    - content_sha256
+  - annex: hotspot-logistics-split-U1064.yaml
+    collection: hotspots
+    id: HS-011
+    fields:
+    - content_sha256

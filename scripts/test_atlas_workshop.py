@@ -46,7 +46,7 @@ class WorkshopTests(unittest.TestCase):
         apply_request(self.root, {'expected_revision': 1, 'entity': 'hotspot', 'action': 'update',
                                   'verbatim': 'La difficulté politique est XL, l’implémentation L.',
                                   'id': 'AT-HS-001', 'fields': {'complexity': {
-                                      'political': 'XL', 'implementation': 'L', 'rationale': 'Décision transverse.'}}})
+                                      'arbitration': 'XL', 'implementation': 'L', 'rationale': 'Décision transverse.'}}})
         self.assertEqual(effective_hotspots(model, load_stage(self.root))['AT-HS-001']['severity'], 'XL')
         apply_request(self.root, {'expected_revision': 2, 'entity': 'hotspot', 'action': 'remove', 'id': 'AT-HS-001',
                                   'verbatim': 'Retire le post-it créé par erreur.'})
@@ -111,8 +111,8 @@ class WorkshopTests(unittest.TestCase):
         batch = {'session_id': stage['session_id'], 'expected_revision': 2,
                  'changes': [
                      {'id': 'AT-HS-001', 'fields': {'title': 'Premier précisé', 'complexity': {
-                         'political': 'XL', 'implementation': 'L', 'rationale': 'Décision transverse.',
-                         'political_rationale': 'Compromis entre pôles.',
+                         'arbitration': 'XL', 'implementation': 'L', 'rationale': 'Décision transverse.',
+                         'arbitration_rationale': 'Compromis entre pôles.',
                          'implementation_rationale': 'Interfaces interdépendantes.'}}},
                      {'id': 'AT-HS-002', 'fields': {'status': 'shared', 'visible': False}},
                  ]}
@@ -120,7 +120,7 @@ class WorkshopTests(unittest.TestCase):
         self.assertEqual(result['revision'], 4)
         items = effective_hotspots(model, result)
         self.assertEqual(items['AT-HS-001']['severity'], 'XL')
-        self.assertEqual(items['AT-HS-001']['complexity']['political_rationale'], 'Compromis entre pôles.')
+        self.assertEqual(items['AT-HS-001']['complexity']['arbitration_rationale'], 'Compromis entre pôles.')
         self.assertEqual(items['AT-HS-001']['complexity']['implementation_rationale'], 'Interfaces interdépendantes.')
         self.assertEqual(items['AT-HS-002']['status'], 'shared')
         self.assertFalse(items['AT-HS-002']['visible'])
