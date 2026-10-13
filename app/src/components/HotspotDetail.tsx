@@ -1,4 +1,4 @@
-import { Maximize2, Minimize2 } from 'lucide-react';
+import { Download, Maximize2, Minimize2 } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef } from 'react';
 import { documentDownloadName, documentFormat, documentsForHotspot, documentUrl } from '../documentCatalog';
@@ -51,6 +51,16 @@ export function HotspotDetail({
   const selected = hotspot.resolution_options.find((option) => option.id === hotspot.selected_option_id);
   const recommended = hotspot.resolution_options.find((option) => option.id === resolution.recommended_option_id);
   const credibleIds = new Set(resolution.credible_option_ids);
+  const optionById = new Map(hotspot.resolution_options.map((option) => [option.id, option]));
+  const optionGroups = hotspot.problems?.map((problem) => ({
+    id: problem.id,
+    title: problem.title,
+    question: problem.question,
+    options: problem.option_ids.flatMap((id) => {
+      const option = optionById.get(id);
+      return option ? [option] : [];
+    }),
+  })) || [{ id: 'legacy', title: '', question: '', options: hotspot.resolution_options }];
   const hasResolution = Boolean(hotspot.resolution);
   const header = useRef<HTMLElement>(null);
 
@@ -126,13 +136,13 @@ export function HotspotDetail({
 
         <section className="hotspot-resolution-summary hotspot-story-overview" aria-labelledby="hotspot-progress-title">
           <p className="hotspot-story-lead">
-            <strong>Le sujet : </strong>
+            <strong>Le signal initial : </strong>
             <ModelText text={hotspot.problem} />
           </p>
-          {hotspot.gap_analysis?.map((gap) => (
-            <p key={gap.id}>
-              <strong>Question de cadrage : </strong>
-              <ModelText text={gap.convergence_question} />
+          {(hotspot.problems || hotspot.gap_analysis || []).map((item) => (
+            <p key={item.id}>
+              <strong>Question à traiter : </strong>
+              <ModelText text={'question' in item ? item.question : item.convergence_question} />
             </p>
           ))}
           <div className="hotspot-story-heading">
@@ -315,10 +325,14 @@ export function HotspotDetail({
                   </section>
                 ))}
               </div>
-              <h6>La question pour FLOW</h6>
-              <p>
-                <ModelText text={gap.convergence_question} />
-              </p>
+              {!hotspot.problems?.some((problem) => problem.analysis_ids.includes(gap.id)) && (
+                <>
+                  <h6>La question pour FLOW</h6>
+                  <p>
+                    <ModelText text={gap.convergence_question} />
+                  </p>
+                </>
+              )}
               <ul>
                 {gap.business_effects.map((effect) => (
                   <li key={effect}>
@@ -443,67 +457,90 @@ export function HotspotDetail({
             <span className="hotspot-story-step" aria-hidden="true">
               3
             </span>
-            Les chemins possibles
+            Les options possibles
           </h4>
-          {hotspot.resolution_options.length > 0 ? (
-            <div className="hotspot-options">
-              {hotspot.resolution_options.map((option) => (
-                <section key={option.id} className="hotspot-story-option" data-selected={option.id === selected?.id}>
-                  <div className="hotspot-story-heading">
-                    <h5>
-                      <ModelText text={option.title} />
-                    </h5>
-                    <div className="hotspot-option-labels">
-                      {option.id === selected?.id && <span className="hotspot-option-tag">Option retenue</span>}
-                      {resolution.stage === 'ready_for_arbitration' && option.id === recommended?.id && (
-                        <span className="hotspot-option-tag">À arbitrer</span>
+          {optionGroups.map((group) => (
+            <section key={group.id} className="hotspot-problem">
+              {group.title && (
+                <h5>
+                  <ModelText text={group.title} />
+                </h5>
+              )}
+              {group.question && (
+                <p className="hotspot-problem-question">
+                  <strong>Question : </strong>
+                  <ModelText text={group.question} />
+                </p>
+              )}
+              {group.options.length > 0 ? (
+                <div className="hotspot-options">
+                  {group.options.map((option) => (
+                    <section
+                      key={option.id}
+                      className="hotspot-story-option"
+                      data-selected={option.id === selected?.id}
+                    >
+                      <div className="hotspot-story-heading">
+                        <h5>
+                          <ModelText text={option.title} />
+                        </h5>
+                        <div className="hotspot-option-labels">
+                          {option.id === selected?.id && <span className="hotspot-option-tag">Option retenue</span>}
+                          {resolution.stage === 'ready_for_arbitration' && option.id === recommended?.id && (
+                            <span className="hotspot-option-tag">À arbitrer</span>
+                          )}
+                          {credibleIds.has(option.id) && <span className="hotspot-option-tag">Solution crédible</span>}
+                          <span className="hotspot-story-caption">{EVIDENCE[option.evidence_state]}</span>
+                        </div>
+                      </div>
+                      <p>
+                        <ModelText text={option.principle} />
+                      </p>
+                      {option.effect && (
+                        <p>
+                          <strong>Effet attendu : </strong>
+                          <ModelText text={option.effect} />
+                        </p>
                       )}
-                      {credibleIds.has(option.id) && <span className="hotspot-option-tag">Solution crédible</span>}
-                      <span className="hotspot-story-caption">{EVIDENCE[option.evidence_state]}</span>
-                    </div>
-                  </div>
-                  <p>
-                    <ModelText text={option.principle} />
-                  </p>
-                  {option.effect && (
-                    <p>
-                      <strong>Effet attendu : </strong>
-                      <ModelText text={option.effect} />
-                    </p>
-                  )}
-                  {!!option.conditions?.length && (
-                    <div>
-                      <h6>Conditions à réunir</h6>
-                      <ul>
-                        {option.conditions.map((condition) => (
-                          <li key={condition}>
-                            <ModelText text={condition} />
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  {!!option.tradeoffs?.length && (
-                    <div>
-                      <h6>Compromis</h6>
-                      <ul>
-                        {option.tradeoffs.map((tradeoff) => (
-                          <li key={tradeoff}>
-                            <ModelText text={tradeoff} />
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-                  <p className="hotspot-story-caption">
-                    Difficulté d’implémentation : {size(option.implementation_complexity)}
-                  </p>
-                </section>
-              ))}
-            </div>
-          ) : (
-            <p className="hotspot-story-empty">Aucune option documentée à ce stade.</p>
-          )}
+                      {!!option.conditions?.length && (
+                        <div>
+                          <h6>Conditions à réunir</h6>
+                          <ul>
+                            {option.conditions.map((condition) => (
+                              <li key={condition}>
+                                <ModelText text={condition} />
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      {!!option.tradeoffs?.length && (
+                        <div>
+                          <h6>Compromis</h6>
+                          <ul>
+                            {option.tradeoffs.map((tradeoff) => (
+                              <li key={tradeoff}>
+                                <ModelText text={tradeoff} />
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      )}
+                      <p className="hotspot-story-caption">
+                        Difficulté d’implémentation : {size(option.implementation_complexity)}
+                      </p>
+                    </section>
+                  ))}
+                </div>
+              ) : (
+                <p className="hotspot-story-empty">
+                  {group.id === 'legacy'
+                    ? 'Aucune option documentée à ce stade.'
+                    : 'Options à définir pour cette question.'}
+                </p>
+              )}
+            </section>
+          ))}
         </section>
 
         <section className="hotspot-story-section" aria-labelledby="hotspot-choice-title">
@@ -576,6 +613,7 @@ export function HotspotDetail({
                   </button>
                   {' · '}
                   <a href={documentUrl(model, document)} download={documentDownloadName(document)}>
+                    <Download size={16} aria-hidden="true" />
                     Télécharger le {documentFormat(document)}
                   </a>
                 </li>

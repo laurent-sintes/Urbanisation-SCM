@@ -105,6 +105,27 @@ def validate_catalog(model):
                 errors.append(f'{identifier}/{gap_id}: unknown As Is context')
             if any(option_id not in options for option_id in gap['resolution_option_ids']):
                 errors.append(f'{identifier}/{gap_id}: gap resolution option is missing')
+        problems = hotspot.get('problems', [])
+        problem_ids = set()
+        assigned_options = set()
+        for problem in problems:
+            problem_id = problem['id']
+            if problem_id in problem_ids:
+                errors.append(f'{identifier}: duplicate problem identity {problem_id}')
+            problem_ids.add(problem_id)
+            if not problem['question'].strip():
+                errors.append(f'{identifier}/{problem_id}: problem requires a clear question')
+            for gap_id in problem['analysis_ids']:
+                if gap_id not in gap_ids:
+                    errors.append(f'{identifier}/{problem_id}: missing analysis {gap_id}')
+            for option_id in problem['option_ids']:
+                if option_id not in options:
+                    errors.append(f'{identifier}/{problem_id}: missing option {option_id}')
+                if option_id in assigned_options:
+                    errors.append(f'{identifier}: option {option_id} belongs to multiple problems')
+                assigned_options.add(option_id)
+        if problems and assigned_options != options:
+            errors.append(f'{identifier}: every option must belong to one problem')
         errors.extend(f'{identifier}: {error}' for error in validate_resolution(hotspot))
         if 'resolution' not in hotspot and hotspot['status'] == 'resolved' and (not selected or not hotspot.get('resolution_note')):
             errors.append(f'{identifier}: resolved hotspot requires a selected option and resolution note')

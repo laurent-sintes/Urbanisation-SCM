@@ -1,3 +1,4 @@
+import { Download } from 'lucide-react';
 import type { View } from '../navigation';
 import type { WorkshopStage } from '../workshop';
 import { workshopUrl } from '../workshop';
@@ -30,10 +31,12 @@ export function HelpPage({
               {stage.operations.length} changement(s) enregistré(s) sur la publication {stage.base_version}.
             </p>
             <a href={workshopUrl()} download={`flow-atlas-staging-${stage.session_id}.json`}>
+              <Download size={16} aria-hidden="true" />
               Télécharger le staging
             </a>
             {' · '}
             <button type="button" className="help-link" onClick={onDownloadWorkingModel}>
+              <Download size={16} aria-hidden="true" />
               Télécharger le modèle de travail
             </button>
           </div>

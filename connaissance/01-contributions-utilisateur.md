@@ -25101,3 +25101,18 @@ Verbatim :
 > "Service client Sarenza : quels services partager avec FLOW ?" => renommer "Réintrégration Service Client Sarenza sur Flow Core System" + arbitrage L, implémentation: M
 
 Portée : afficher les deux axes de complexité dans la liste. Appliquer XL/L à HS-032 et L/M à HS-024 et HS-033 ; renommer les deux derniers, avec correction orthographique « Réintégration ». Les niveaux sont des estimations explicites ; ils ne prouvent ni réalisation installée ni choix détaillé de migration. Les réserves sur le périmètre de réécriture et les services séparables restent conservées. Aucune release, commit ni push demandé.
+
+
+## U1070
+
+Date : 2026-10-13. Source : Laurent, structure des Hotspots et vocabulaire des Options.
+
+Verbatim :
+
+> Ah ok. Lorsqu'un Hotspot pose plusieurs problèmes, ce n'est pas très clair dans la fiche.
+> Il faudrait peut être modifier le modèle pour avoir :
+> Un Hotspot identifie une douleur mais l'analyse nous conduit à plusieurs problèmes dont chacun est défini par une question claire et un ensemble de chemins possibles. Plutot que chemin je préfère le terme Option, c'est celui qu'on utilise.
+>
+> Dans le metamodele, je veux un alignement des termes : ça doit être option
+
+Portée : distinguer le signal initial d'un Hotspot des problèmes de cadrage révélés par son analyse ; chaque problème porte une question explicite et ses Options. Employer « Option » dans le métamodèle et la fiche. Autorise la mise en œuvre du nouveau découpage dans le modèle et Atlas ; ne choisit aucune Option et ne demande ni release, ni commit, ni push.

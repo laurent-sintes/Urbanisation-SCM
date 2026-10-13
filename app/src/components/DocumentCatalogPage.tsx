@@ -1,3 +1,4 @@
+import { Download } from 'lucide-react';
 import { useState } from 'react';
 import { DOCUMENT_CATEGORY, documentDownloadName, documentFormat, documentUrl } from '../documentCatalog';
 import type { RouteState } from '../navigation';
@@ -43,6 +44,7 @@ export function DocumentCatalogPage({
             href={documentUrl(model, selected)}
             download={documentDownloadName(selected)}
           >
+            <Download size={17} aria-hidden="true" />
             Télécharger le {documentFormat(selected)}
           </a>
           {relatedHotspots.length > 0 && (

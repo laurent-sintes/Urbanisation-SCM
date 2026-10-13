@@ -163,6 +163,7 @@ try {
   const wholesale = model.hotspot_catalog.hotspots.find((item) => item.id === 'HS-008');
   assert.ok(wholesale);
   await page.goto(`${base}#/hotspots?version=${index.current_version}&hotspot=${wholesale.id}`);
+  assert.equal(await detail.locator('.hotspot-documents a[download] svg').count(), wholesale.document_ids.length);
   const criticality = detail.getByRole('group', { name: `Criticité · ${wholesale.severity}` });
   await criticality.waitFor();
   assert.ok((await criticality.innerText()).includes('résulte du croisement'));
@@ -180,6 +181,31 @@ try {
     assert.equal(/\bU(?:02|10|30|31|953)\b/.test(await rendered.first().innerText()), false);
   }
   await criticality.screenshot({ path: resolve(output, 'wholesale-criticality.png') });
+  const structuredWholesale = structuredClone(wholesale);
+  structuredWholesale.problems = [
+    {
+      id: 'rules',
+      title: 'Règles du carnet',
+      question: 'Quelles règles partager ?',
+      analysis_ids: [wholesale.gap_analysis[0].id],
+      option_ids: wholesale.resolution_options.map((option) => option.id),
+    },
+    {
+      id: 'future',
+      title: 'Ressources futures',
+      question: 'Quelles ressources futures couvrir ?',
+      analysis_ids: [wholesale.gap_analysis[1].id],
+      option_ids: [],
+    },
+  ];
+  servedModel = { ...model, hotspot_catalog: { ...model.hotspot_catalog, hotspots: [structuredWholesale] } };
+  await page.goto(`${base}?qa=${++fixtureRead}#/hotspots?version=${index.current_version}&hotspot=${wholesale.id}`);
+  await detail.locator('.hotspot-problem').first().waitFor();
+  assert.equal(await detail.locator('.hotspot-problem').count(), 2);
+  assert.equal(await detail.locator('.hotspot-problem').first().locator('.hotspot-story-option').count(), 4);
+  assert.equal(await detail.locator('.hotspot-problem').last().locator('.hotspot-story-option').count(), 0);
+  assert.ok((await detail.locator('.hotspot-problem').last().innerText()).includes('Options à définir'));
+  servedModel = model;
   await open();
   assert.equal(await detail.getByRole('heading', { level: 3 }).innerText(), text(original.title));
   for (const field of [original.problem, ...original.examples, original.complexity.rationale]) {

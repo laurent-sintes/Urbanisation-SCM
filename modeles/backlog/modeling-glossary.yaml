@@ -1866,10 +1866,11 @@ terms:
     révélation ne démontre pas un dysfonctionnement. Un point chaud de périmètre est ancré sur un ou plusieurs objets du modèle
     ; un point chaud d’intégration relie exactement deux objets. Sa gravité combine la complexité d’arbitrage et la difficulté
     d’implémentation selon une grille publiée, sans mesurer automatiquement l’urgence ni l’impact.
-  role: Rendre visibles les sujets à traiter sur les cartes et garder leurs options, sources, réserves et arbitrages.
+  role: Rendre visibles les sujets à traiter sur les cartes et garder leurs problèmes de cadrage, Options, sources, réserves et arbitrages.
   notes:
   - Les statuts Atlas découvert, partagé, validé et résolu ne remplacent pas les états de suivi du registre FLOW-Program.
   - La fiche reste hors de la hiérarchie métier ; sa localisation ne crée pas une relation de décomposition.
+  - Le signal initial peut conduire à plusieurs [problèmes de cadrage](method:MOD049). Chacun porte une question et ses [Options](method:MOD050) ; une analyse d’écarts fournit des observations, sans imposer la même liste d’Options à toutes les questions.
   - Une lecture du marché peut distinguer pratiques documentées, avis pour FLOW et limites, avec des sources primaires consultées.
     Elle n'attribue pas une décision métier à Laurent.
   - Le cadrage progresse de À explorer à Pistes identifiées, puis Options en qualification, Option recommandée à arbitrer
@@ -1957,7 +1958,7 @@ terms:
   - Dimension facultative, indépendante du type du hotspot, de sa criticité et de sa progression de cadrage.
   - Documenté signifie que la déclaration ou la source est enregistrée ; la nature de preuve et les limites indiquent ce qui
     est effectivement confirmé. Absence d’évaluation ne signifie jamais absence de fonction.
-  - Plusieurs écarts peuvent concerner un même hotspot ; ils ne se propagent pas aux enfants du périmètre.
+  - Plusieurs écarts peuvent concerner un même hotspot ; ils ne se propagent pas aux enfants du périmètre. Ils peuvent alimenter des problèmes de cadrage distincts.
   - Une réalisation commune peut conserver des règles différentes. Aucune unification ou solution n’est déduite automatiquement.
   - Le périmètre d’observation ne crée pas un nouveau SI ni un parent dans la hiérarchie métier.
   - Deux observations du même SI exigent des périmètres explicites et distincts ; une variante peut être légitime.
@@ -2038,6 +2039,38 @@ terms:
   review:
     state: proposed
     note: Deux accès distincts, produits de marché et SI à faire converger ; aucune activation ou couverture installée validée par cette définition.
+- id: MOD049
+  name: Hotspot Problem
+  label_fr: Problème de cadrage
+  short_description: Question de décision révélée par l’analyse d’un Hotspot, avec ses Options propres.
+  definition: Un problème de cadrage formule une question précise issue du signal initial et de son analyse. Il peut s’appuyer
+    sur une ou plusieurs analyses d’écarts sans se confondre avec elles. Chaque problème possède ses propres Options ; si
+    elles ne sont pas encore définies, la liste reste vide et la question ouverte. Plusieurs problèmes peuvent appartenir
+    au même Hotspot, sans partager implicitement leurs Options.
+  role: Distinguer les décisions à instruire au sein d’un Hotspot et rattacher chaque Option à la bonne question.
+  notes:
+  - Le champ historique problem du Hotspot décrit son signal initial ; il ne constitue pas la liste des problèmes de cadrage.
+  - Une question ouverte sans Option documentée n’autorise pas à inventer une réponse.
+  - L’état global du Hotspot ne vaut pas décision pour chacun de ses problèmes.
+  source_refs: [U1070]
+  review:
+    state: proposed
+    note: Découpage demandé par Laurent ; questions et rattachements des Hotspots visibles préparés sans choix d’Option.
+- id: MOD050
+  name: Hotspot Option
+  label_fr: Option
+  short_description: Réponse possible à la question d’un problème de cadrage, sans choix implicite.
+  definition: Une Option décrit une réponse possible à la question d’un problème de cadrage. Son principe, ses effets,
+    conditions, compromis, complexité et niveau de preuve restent qualifiés. Une Option peut être proposée, crédible,
+    recommandée ou retenue selon les champs explicites de la fiche ; sa présence seule ne la valide pas.
+  role: Comparer les réponses possibles à un problème sans mélanger les questions ni présumer d’un arbitrage.
+  notes:
+  - Dans une fiche structurée en problèmes, chaque Option appartient à un seul problème.
+  - Le terme d’interface et de métamodèle est Option, pas chemin.
+  source_refs: [U1070]
+  review:
+    state: proposed
+    note: Terme demandé par Laurent ; les Options existantes restent ouvertes et conservent leurs réserves.
 methodology_agreements:
 - id: AGREEMENT-U787
   source_refs:

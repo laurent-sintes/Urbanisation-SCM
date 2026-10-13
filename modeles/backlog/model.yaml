@@ -72584,6 +72584,7 @@ hotspot_catalog:
     - U1065
     - U1066
     - U1067
+    - U1070
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -72678,6 +72679,7 @@ hotspot_catalog:
       resolution_option_ids:
       - hs-011-common-contract
       - hs-011-provider-contracts
+      - hs-002-mandate-3
       source_refs:
       - U925
     framing_impact:
@@ -73804,6 +73806,17 @@ hotspot_catalog:
       - Limite la mutualisation et conserve des coûts de coordination.
       implementation_complexity: unassessed
       evidence_state: hypothesis
+    problems:
+    - id: hs-008-rules-problem
+      title: Règles de gestion du carnet Wholesale
+      question: Quelles règles du carnet partager entre les entités et quelles variantes préserver ?
+      analysis_ids: [hs-008-wholesale-rules]
+      option_ids: [hs-008-priority, hs-008-limited, hs-008-variants, hs-008-separate]
+    - id: hs-008-future-supply-problem
+      title: Prise en compte des ressources futures
+      question: Quelles ressources futures couvrir ou simuler, et quand réexaminer les affectations après un aléa ?
+      analysis_ids: [hs-008-future-supply]
+      option_ids: []
     complexity:
       arbitration: L
       implementation: XL
@@ -73858,6 +73871,7 @@ hotspot_catalog:
     - U1065
     - U1066
     - U1067
+    - U1070
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -74055,11 +74069,7 @@ hotspot_catalog:
       - Quels retards, changements de quantité ou événements imposent un réexamen du [pegging](glossary:TER204) ?
       - Quelles améliorations du support 2025 ont été livrées depuis ?
       - Comment conserver la filiation des apports et les responsabilités de planification d’achat MAP ?
-      resolution_option_ids:
-      - hs-008-priority
-      - hs-008-limited
-      - hs-008-variants
-      - hs-008-separate
+      resolution_option_ids: []
       source_refs:
       - U942
       - U945
@@ -74962,6 +74972,17 @@ hotspot_catalog:
       - Deux circuits exigent une réconciliation et une gouvernance communes.
       implementation_complexity: unassessed
       evidence_state: hypothesis
+    problems:
+    - id: hs-021-responsibilities
+      title: Frontière entre FLOW et Finance
+      question: Qui tient la facture, qui interprète les faits de gestion et qui crée l’écriture comptable ?
+      analysis_ids: []
+      option_ids: []
+    - id: hs-021-exchange
+      title: Mode d’échange avec Finance
+      question: Comment transmettre les faits et leurs corrections à Finance, et quel rôle éventuel confier à SAP SD ?
+      analysis_ids: []
+      option_ids: [hs-021-audit-1, hs-021-audit-2, hs-021-sd, hs-021-hybrid]
     complexity:
       arbitration: L
       implementation: L
@@ -74988,6 +75009,7 @@ hotspot_catalog:
     - U1065
     - U1066
     - U1067
+    - U1070
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -76312,6 +76334,37 @@ hotspot_catalog:
       - Potentiel de mutualisation, mais adaptation, migration et dépendance à l’éditeur à mesurer.
       implementation_complexity: unassessed
       evidence_state: hypothesis
+    problems:
+    - id: hs-032-product-choice
+      title: Produit Retail cible
+      question: Faut-il construire un produit Retail pour GBM ou étendre Cegid Y2, après vérification des fonctions à reprendre ?
+      analysis_ids: []
+      option_ids: [hs-032-build-retail, hs-032-extend-y2]
+    - id: hs-032-store-sales-problem
+      title: Vente et caisse en magasin
+      question: Quel produit assurera la vente et la caisse GBM, et quels outils actuels resteront utilisés ?
+      analysis_ids: [hs-032-store-sales]
+      option_ids: []
+    - id: hs-032-store-operations-problem
+      title: Opérations et stock magasin
+      question: Qui assurera les opérations, le stock cible et le réassort magasin, et que décidera FLOW ?
+      analysis_ids: [hs-032-store-operations]
+      option_ids: []
+    - id: hs-032-retail-network-problem
+      title: Réseau de magasins
+      question: Quels référentiels et règles de réseau doivent converger, et où seront-ils tenus ?
+      analysis_ids: [hs-032-retail-network]
+      option_ids: []
+    - id: hs-032-digital-commerce-problem
+      title: Vente en ligne et parcours omnicanaux
+      question: Quelles fonctions omnicanales d’UR doivent rester hors du Core FLOW, et dans quel produit ?
+      analysis_ids: [hs-032-digital-commerce]
+      option_ids: []
+    - id: hs-032-customer-relationship-problem
+      title: Relation client et fidélité Retail
+      question: Qui portera les profils, la fidélité et les campagnes GBM après le retrait de Storeland et UR ?
+      analysis_ids: [hs-032-customer-relationship]
+      option_ids: []
     complexity:
       arbitration: XL
       implementation: L
@@ -76344,6 +76397,7 @@ hotspot_catalog:
     - U1066
     - U1067
     - U1069
+    - U1070
     origin:
       repository: Urbanisation-SCM
       path: connaissance/01-contributions-utilisateur.md
@@ -76398,9 +76452,7 @@ hotspot_catalog:
       - Une refonte de la caisse ne doit pas être déduite du seul retrait de Storeland et UR.
       open_questions:
       - Inventorier les logiciels de caisse et les parcours de vente par marque.
-      resolution_option_ids:
-      - hs-032-build-retail
-      - hs-032-extend-y2
+      resolution_option_ids: []
       source_refs:
       - U03
       - U06
@@ -76449,9 +76501,7 @@ hotspot_catalog:
       open_questions:
       - Qualifier les gestes, données maîtresses, seuils, règles de calcul, interfaces et volumes par marque ; préciser la
         frontière avec Supply Policy Management et les décisions de réapprovisionnement FLOW.
-      resolution_option_ids:
-      - hs-032-build-retail
-      - hs-032-extend-y2
+      resolution_option_ids: []
       source_refs:
       - U03
       - U06
@@ -76493,9 +76543,7 @@ hotspot_catalog:
       - Une reprise limitée aux écrans de magasin peut omettre les règles centrales du réseau.
       open_questions:
       - Identifier le maître des magasins et les règles communes actuelles dans chaque SI.
-      resolution_option_ids:
-      - hs-032-build-retail
-      - hs-032-extend-y2
+      resolution_option_ids: []
       source_refs:
       - U03
       - U06
@@ -76538,9 +76586,7 @@ hotspot_catalog:
       - Un produit Retail complet peut chevaucher le Core sur commandes, disponibilité et orchestration.
       open_questions:
       - Tracer un parcours web et un parcours magasin pour chaque marque, avec systèmes et autorités.
-      resolution_option_ids:
-      - hs-032-build-retail
-      - hs-032-extend-y2
+      resolution_option_ids: []
       source_refs:
       - U03
       - U06
@@ -76591,9 +76637,7 @@ hotspot_catalog:
       open_questions:
       - Inventorier programmes, règles, données clients, consentements et campagnes réellement utilisés par marque, puis leur
         autorité dans chaque SI.
-      resolution_option_ids:
-      - hs-032-build-retail
-      - hs-032-extend-y2
+      resolution_option_ids: []
       source_refs:
       - U1053
       - U1054

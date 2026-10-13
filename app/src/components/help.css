@@ -19,7 +19,9 @@
 }
 
 .help-page .help-link {
-  display: inline;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
   padding: 0;
   border: 0;
   background: none;
@@ -29,6 +31,11 @@
   text-decoration: underline;
   text-underline-offset: 3px;
   cursor: pointer;
+}
+.help-notice a[download] {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .help-page .help-link:hover,

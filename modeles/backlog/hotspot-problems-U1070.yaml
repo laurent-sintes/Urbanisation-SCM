@@ -1,0 +1,50 @@
+id: hotspot-problems-U1070
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs: [U1070]
+scope: Séparer le signal initial des problèmes de cadrage et rattacher les Options aux questions des Hotspots visibles multiproblèmes.
+assessment:
+  reviewed_visible_hotspots: [HS-002, HS-011, HS-008, HS-020, HS-021, HS-024, HS-033, HS-032]
+  structured_multi_problem: [HS-008, HS-021, HS-032]
+  single_question_retained: [HS-002, HS-011, HS-020, HS-024, HS-033]
+  corrected_link: HS-011 rattache son Option de mandat adapté à l’analyse des prestataires.
+  open_questions: Les questions sur les ressources futures, la frontière FLOW/Finance et les cinq couvertures Retail n’ont pas encore d’Options propres documentées.
+  boundary: Aucune Option nouvelle, crédible, recommandée ou retenue n’est déduite de ce découpage. Criticités et statuts sont conservés.
+glossary_alignment:
+  methodological: MOD044, MOD045, MOD049 et MOD050 alignés sur signal initial, problème de cadrage et Option.
+  business: Les termes métier des fiches, leurs liens et leurs frontières sont conservés ; aucun changement de sens métier.
+market_comparison: Les Options et leurs appuis marché existants sont conservés. Le découpage éditorial ne conclut à aucune équivalence produit ni réalisation installée.
+publication_delivery:
+  state: applied
+  source_refs: [U1070]
+  summary: Trois Hotspots multiproblèmes structurés et un lien d’Option corrigé pour HS-011 ; aucune nouvelle Option.
+  required_catalog:
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 64c714cb79798d4e5047f101e192d865edd3e487a92f77538ba7472801c217d1
+  - collection: hotspots
+    id: HS-008
+    content_sha256: a2b50025dea2351c3394be2e3388de3d4920d286e7d3a52976988466665991af
+  - collection: hotspots
+    id: HS-021
+    content_sha256: 4b4efbfec797f65d77e4368cd1705c418f92add3c8f78fb09bfba40eb5cd5dc5
+  - collection: hotspots
+    id: HS-032
+    content_sha256: 42bf35538cbb767213c483b97452e018eb964a4e1d03f37ecdb7290b7b089dd3
+  supersedes_requirements:
+  - annex: hotspot-professional-review-U1067.yaml
+    collection: hotspots
+    id: HS-011
+    fields: [content_sha256]
+  - annex: hotspot-professional-review-U1067.yaml
+    collection: hotspots
+    id: HS-008
+    fields: [content_sha256]
+  - annex: hotspot-professional-review-U1067.yaml
+    collection: hotspots
+    id: HS-021
+    fields: [content_sha256]
+  - annex: hotspot-complexities-U1069.yaml
+    collection: hotspots
+    id: HS-032
+    fields: [content_sha256]

@@ -8555,6 +8555,14 @@
       "captured_text": "## U1069\n\nDate : 2026-10-13. Source : Laurent, complexités visibles dans la liste et corrections de trois hotspots.\n\nVerbatim :\n\n> Points chauds :\n>\n> - dans la liste, on a la criticité mais on a perdu le détail de complexité\n>\n> \"Responsabilités Retail à couvrir après Storeland et United Retail\" => arbitrage XL, implémentation: L\n>\n> \"Achats CBS et FLOW : répartir le cycle et les services communs\" => renommer \"Réintrégration CBS sur Flow Core System\" + arbitrage L, implémentation: M\n>\n> \"Service client Sarenza : quels services partager avec FLOW ?\" => renommer \"Réintrégration Service Client Sarenza sur Flow Core System\" + arbitrage L, implémentation: M\n\nPortée : afficher les deux axes de complexité dans la liste. Appliquer XL/L à HS-032 et L/M à HS-024 et HS-033 ; renommer les deux derniers, avec correction orthographique « Réintégration ». Les niveaux sont des estimations explicites ; ils ne prouvent ni réalisation installée ni choix détaillé de migration. Les réserves sur le périmètre de réécriture et les services séparables restent conservées. Aucune release, commit ni push demandé."
     },
     {
+      "id": "U1070",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1070",
+      "line": 25106,
+      "content_sha256": "97ae9f25b7122d04842dc489a86ee19d8acd83c1abfe086d8fb1cf362e7caf09",
+      "captured_text": "## U1070\n\nDate : 2026-10-13. Source : Laurent, structure des Hotspots et vocabulaire des Options.\n\nVerbatim :\n\n> Ah ok. Lorsqu'un Hotspot pose plusieurs problèmes, ce n'est pas très clair dans la fiche.\n> Il faudrait peut être modifier le modèle pour avoir :\n> Un Hotspot identifie une douleur mais l'analyse nous conduit à plusieurs problèmes dont chacun est défini par une question claire et un ensemble de chemins possibles. Plutot que chemin je préfère le terme Option, c'est celui qu'on utilise.\n>\n> Dans le metamodele, je veux un alignement des termes : ça doit être option\n\nPortée : distinguer le signal initial d'un Hotspot des problèmes de cadrage révélés par son analyse ; chaque problème porte une question explicite et ses Options. Employer « Option » dans le métamodèle et la fiche. Autorise la mise en œuvre du nouveau découpage dans le modèle et Atlas ; ne choisit aucune Option et ne demande ni release, ni commit, ni push."
+    },
+    {
       "id": "F001",
       "path": "connaissance/02-assertions.md",
       "anchor": "f001",

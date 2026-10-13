@@ -444,7 +444,7 @@
               "problem": {
                 "type": "string",
                 "minLength": 1,
-                "description": "Sujet à creuser et à arbitrer ; le nom historique du champ ne présume pas un dysfonctionnement. Une Gap Analysis reste facultative."
+                "description": "Signal initial du Hotspot ; le nom historique du champ ne désigne pas les problèmes de cadrage révélés par l'analyse et ne présume pas un dysfonctionnement."
               },
               "examples": {
                 "type": "array",
@@ -456,6 +456,14 @@
                 "type": "array",
                 "items": {
                   "$ref": "#/$defs/hotspotGapAnalysis"
+                }
+              },
+              "problems": {
+                "type": "array",
+                "minItems": 1,
+                "description": "Problèmes de cadrage distincts révélés par l'analyse du Hotspot ; chacun porte sa question et ses Options. Les publications historiques peuvent omettre ce champ.",
+                "items": {
+                  "$ref": "#/$defs/hotspotProblem"
                 }
               },
               "document_ids": {
@@ -2027,6 +2035,26 @@
         "source_refs": { "$ref": "#/$defs/applicationSourceRefs" }
       },
       "required": ["id", "component_id", "node_id", "role", "evidence_state", "note", "source_refs"]
+    },
+    "hotspotProblem": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "question": { "type": "string", "minLength": 1 },
+        "analysis_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        },
+        "option_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      },
+      "required": ["id", "title", "question", "analysis_ids", "option_ids"]
     },
     "hotspotGapAnalysis": {
       "type": "object",

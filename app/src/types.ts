@@ -323,6 +323,13 @@ export interface Hotspot {
     resolution_option_ids: string[];
     source_refs: string[];
   }[];
+  problems?: {
+    id: string;
+    title: string;
+    question: string;
+    analysis_ids: string[];
+    option_ids: string[];
+  }[];
   resolution?: HotspotResolution;
   workshop?: { session_id: string; revision: number };
   id: string;

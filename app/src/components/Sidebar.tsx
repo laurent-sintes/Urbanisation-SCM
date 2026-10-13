@@ -329,7 +329,10 @@ export function Sidebar({
             download={`flow-atlas-model-${model.version}.yaml`}
             onClick={mobile ? onClose : undefined}
           >
-            <span>Modèle (YAML lisible)</span>
+            <span className="download-menu-label">
+              <Download size={15} aria-hidden="true" />
+              Modèle (YAML lisible)
+            </span>
             <small>
               Modèle et métamodèle complets · {revision} · {model.version}
             </small>
@@ -337,10 +340,14 @@ export function Sidebar({
           {model.raw.workshop && (
             <>
               <a href={workshopUrl()} download={`flow-atlas-staging-${model.raw.workshop.session_id}.json`}>
-                <span>Staging de l’atelier</span>
+                <span className="download-menu-label">
+                  <Download size={15} aria-hidden="true" />
+                  Staging de l’atelier
+                </span>
                 <small>Séance {model.raw.workshop.session_id}</small>
               </a>
               <button type="button" className="workshop-download" onClick={() => downloadWorkingModel(model)}>
+                <Download size={15} aria-hidden="true" />
                 Modèle de travail (JSON)
               </button>
             </>
