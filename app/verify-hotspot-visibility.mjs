@@ -3,15 +3,25 @@ import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
+import { defaultHotspotMapFilters, filterMapHotspots } from './src/hotspotMap.ts';
+import { adaptPublication } from './src/model.ts';
 
 const dist = resolve(import.meta.dirname, 'dist');
 const index = JSON.parse(await readFile(resolve(dist, 'data/index.json'), 'utf8'));
 const modelPath = `data/${index.current_version}/model.json`;
 const model = JSON.parse(await readFile(resolve(dist, modelPath), 'utf8'));
+for (const item of model.hotspot_catalog.hotspots) item.visible = !['HS-008', 'HS-011'].includes(item.id);
 const hidden = model.hotspot_catalog.hotspots.find((h) => h.id === 'HS-008');
 hidden.visible = false;
 const historicDefault = model.hotspot_catalog.hotspots.find((h) => h.id === 'HS-002');
 delete historicDefault.visible;
+const visibleCount = model.hotspot_catalog.hotspots.filter((item) => item.visible !== false).length;
+const nonModelCount = filterMapHotspots(model.hotspot_catalog.hotspots, {
+  ...defaultHotspotMapFilters,
+  enabled: true,
+  showModelHotspots: false,
+}).length;
+const hiddenTitle = adaptPublication(model).raw.hotspot_catalog.hotspots.find((item) => item.id === hidden.id).title;
 const payload = Buffer.from(JSON.stringify(model));
 index.versions.find((entry) => entry.version === index.current_version).model_sha256 = createHash('sha256')
   .update(payload)
@@ -88,8 +98,8 @@ try {
   await hiddenRow.waitFor();
   assert.equal(
     await page.locator('.hotspot-table tr[data-hotspot-id]').count(),
-    7,
-    '5 matching visible subjects plus two separately retained hidden subjects',
+    nonModelCount + 2,
+    'matching visible subjects plus two separately retained hidden subjects',
   );
   await page.setViewportSize({ width: 390, height: 950 });
   assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), true);
@@ -110,14 +120,20 @@ try {
     ['HS-008', 'HS-011'],
   );
   assert.ok(await picker.locator('.hotspot-hidden-separator').isVisible());
-  assert.match(await picker.locator('.hotspot-filter-results-heading').innerText(), /25/);
+  assert.match(
+    await picker.locator('.hotspot-filter-results-heading').innerText(),
+    new RegExp(`\\b${visibleCount}\\b`),
+  );
   await picker.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).uncheck();
   await hiddenChoice.waitFor();
-  assert.match(await picker.locator('.hotspot-filter-results-heading').innerText(), /5/);
+  assert.match(
+    await picker.locator('.hotspot-filter-results-heading').innerText(),
+    new RegExp(`\\b${nonModelCount}\\b`),
+  );
   await picker.getByRole('button', { name: 'Fermer les filtres' }).click();
   assert.equal(await page.locator('[data-id="hotspot:HS-008"]').count(), 0, 'hidden hotspot has no halo');
   await page.goto(`${base}#/hotspots`);
-  await page.getByRole('button', { name: `Modifier le périmètre de ${hidden.title}`, exact: true }).click();
+  await page.getByRole('button', { name: `Modifier le périmètre de ${hiddenTitle}`, exact: true }).click();
   const dialog = page.getByRole('dialog', { name: /^Type et périmètre/ });
   const visible = dialog.getByRole('checkbox', { name: 'Visible dans la carte et les filtres', exact: true });
   assert.equal(await visible.isChecked(), false);
@@ -131,7 +147,7 @@ try {
   assert.equal(
     await page.locator('.hotspot-hidden-separator').count(),
     1,
-    'the consolidated subject retains its separate access',
+    'the second hidden subject retains its separate access',
   );
   assert.deepEqual(errors, []);
   console.log(

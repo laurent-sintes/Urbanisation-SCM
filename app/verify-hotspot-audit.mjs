@@ -3,11 +3,25 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
+import { hotspotImpactScopes } from './src/hotspotFraming.ts';
+import { adaptPublication } from './src/model.ts';
 
 const dist = resolve(import.meta.dirname, process.env.ATLAS_HOTSPOT_DIST || 'dist');
 const index = JSON.parse(await readFile(resolve(dist, 'data/index.json'), 'utf8'));
 const payload = await readFile(resolve(dist, `data/${index.current_version}/model.json`));
 const model = JSON.parse(payload);
+const expectedSubjects = (showModel, showTransition) =>
+  model.hotspot_catalog.hotspots
+    .filter((item) => {
+      if (item.visible === false) return true; // Hidden subjects remain accessible below the separator.
+      const scopes = hotspotImpactScopes(item);
+      return (
+        !scopes.length ||
+        scopes.some((scope) => (scope === 'model' ? showModel : scope === 'transition' ? showTransition : true))
+      );
+    })
+    .map((item) => item.id)
+    .sort();
 const base = 'http://localhost:9876/Urbanisation-SCM/';
 const output = resolve(import.meta.dirname, '.runtime/qa-hotspot-audit-applied');
 await mkdir(output, { recursive: true });
@@ -69,7 +83,13 @@ try {
     await page
       .locator('.hotspot-list-summary')
       .first()
-      .evaluate((element) => element.getBoundingClientRect().height <= 36.5),
+      .evaluate((element) => {
+        const style = getComputedStyle(element);
+        return (
+          style.webkitLineClamp === '2' &&
+          element.getBoundingClientRect().height <= 2 * Number.parseFloat(style.lineHeight) + 0.5
+        );
+      }),
     'description preview uses at most two lines',
   );
   assert.ok(
@@ -87,31 +107,46 @@ try {
   assert.match(await impact.innerText(), /Justification :/);
   assert.match(await impact.innerText(), /Preuve :/);
   await page.getByRole('button', { name: 'Filtres', exact: true }).click();
+  const waitForSubjects = async (showModel, showTransition) => {
+    await page.waitForFunction(
+      (ids) =>
+        JSON.stringify(
+          [...document.querySelectorAll('.hotspot-table tr[data-hotspot-id]')]
+            .map((row) => row.dataset.hotspotId)
+            .sort(),
+        ) === JSON.stringify(ids),
+      expectedSubjects(showModel, showTransition),
+    );
+  };
   await page.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).uncheck();
-  assert.equal(await page.locator('.hotspot-table tr[data-hotspot-id]').count(), 6);
+  await waitForSubjects(false, true);
+  const transition = model.hotspot_catalog.hotspots.find(
+    (item) => item.visible !== false && hotspotImpactScopes(item).includes('transition'),
+  );
+  assert.ok(transition, 'the snapshot has a visible transition subject');
   assert.ok(
-    await page.locator('[data-hotspot-id="HS-001"]').isVisible(),
+    await page.locator(`[data-hotspot-id="${transition.id}"]`).isVisible(),
     'transition remains selectable independently of model',
   );
   await page.getByRole('checkbox', { name: 'Hotspots transition', exact: true }).uncheck();
-  assert.equal(await page.locator('.hotspot-table tr[data-hotspot-id]').count(), 4);
+  await waitForSubjects(false, false);
   await page.getByRole('checkbox', { name: 'Hotspots transition', exact: true }).check();
   const shared = page.url();
   assert.ok(new URLSearchParams(new URL(shared).hash.split('?')[1]).has('hf'));
   await page.reload();
   await page.locator('.hotspot-table').waitFor();
-  assert.equal(await page.locator('.hotspot-table tr[data-hotspot-id]').count(), 6);
+  await waitForSubjects(false, true);
   await page.goto(shared.replace('#/hotspots', '#/map'));
   await page.locator('.map-hotspot-picker .detail-trigger').click();
   const filters = page.getByRole('dialog', { name: 'Filtres des points chauds' });
   assert.equal(await filters.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).isChecked(), false);
-  assert.equal(await filters.locator('.hotspot-filter-list-label').count(), 6);
+  assert.equal(await filters.locator('.hotspot-filter-list-label').count(), expectedSubjects(false, true).length);
   await filters.getByRole('button', { name: 'Réinitialiser', exact: true }).click();
   await filters.getByRole('button', { name: 'Fermer les filtres' }).click();
   const marker = page.locator('.hotspot-map-marker:not(:has(.hotspot-map-count))').first();
   await marker.waitFor();
   const id = (await marker.getAttribute('data-id')).replace('hotspot:', '');
-  await marker.focus();
+  await marker.locator('xpath=..').locator('.hotspot-info-button').focus();
   const tooltip = page.locator('.hotspot-map-tooltip').last();
   await tooltip.waitFor();
   const subject = model.hotspot_catalog.hotspots.find((item) => item.id === id);
@@ -158,7 +193,7 @@ try {
   };
   await page.setViewportSize({ width: 1440, height: 950 });
   await page.reload();
-  const wholesale = model.hotspot_catalog.hotspots.find((item) => item.id === 'HS-008');
+  const wholesale = adaptPublication(model).raw.hotspot_catalog.hotspots.find((item) => item.id === 'HS-008');
   await page.getByRole('button', { name: `Qualification et avancement de ${wholesale.title}`, exact: true }).waitFor();
   await page.evaluate(() => {
     window.originalStorageWrite = Storage.prototype.setItem;

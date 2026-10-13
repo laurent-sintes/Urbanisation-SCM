@@ -57,7 +57,7 @@ try {
         .filter((item) => item.visible !== false && hotspotImpactScopes(item).includes('usage'))
         .map((item) => item.title);
       assert.deepEqual(
-        await filter.locator('.hotspot-filter-list > button:not(.hotspot-is-hidden) strong').allTextContents(),
+        await filter.locator('.hotspot-picker-row > button:not(.hotspot-picker-open) strong').allTextContents(),
         usageTitles,
         'Map picker follows usage filter',
       );
@@ -254,6 +254,12 @@ try {
       await info.click();
       await page.mouse.move(0, 0);
       assert.equal(await tooltip.isVisible(), true, 'click pins the tooltip');
+      const nestedHelp = page.locator('.reference-tooltip');
+      if (await nestedHelp.count()) {
+        await page.keyboard.press('Escape');
+        await nestedHelp.waitFor({ state: 'detached' });
+        assert.equal(await tooltip.isVisible(), true, 'Escape closes nested glossary help before the pinned summary');
+      }
       await page.keyboard.press('Escape');
       await tooltip.waitFor({ state: 'detached' });
       assert.equal(await page.locator('.hotspot-map-tooltip').count(), 0);

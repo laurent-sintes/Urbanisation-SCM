@@ -32,11 +32,12 @@ const stage = {
       id: item.id,
       value: {
         ...item,
+        visible: true,
         resolution_options: options,
         status: progress === 'credible' ? 'resolved' : 'validated',
         kind: 'scope',
         location: { ...item.location, node_ids: ['domain-logistics-execution'] },
-        complexity: { political: progress === 'credible' ? 'XL' : 'M', implementation: 'S', rationale: 'Fixture' },
+        complexity: { arbitration: progress === 'credible' ? 'XL' : 'M', implementation: 'S', rationale: 'Fixture' },
         severity: progress === 'credible' ? 'XL' : 'M',
         resolution: {
           stage: progress,

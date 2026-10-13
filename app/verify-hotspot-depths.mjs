@@ -2,10 +2,13 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
+import { adaptPublication } from './src/model.ts';
 
 const dist = resolve(import.meta.dirname, process.env.ATLAS_HOTSPOT_DIST || 'dist');
 const catalog = JSON.parse(await readFile(resolve(dist, 'data/index.json'), 'utf8'));
-const model = JSON.parse(await readFile(resolve(dist, `data/${catalog.current_version}/model.json`), 'utf8'));
+const model = adaptPublication(
+  JSON.parse(await readFile(resolve(dist, `data/${catalog.current_version}/model.json`), 'utf8')),
+).raw;
 const visibleHotspots = model.hotspot_catalog.hotspots.filter((item) => item.visible !== false);
 const parent = new Map(
   model.relations
@@ -96,7 +99,9 @@ try {
               x: rect.x + rect.width / 2,
               y: rect.y + rect.height / 2,
               radius: rect.width / 2,
-              parent: element.closest('.overview-system, .overview-global-hotspot, .map-flow-surface'),
+              parent: element.closest(
+                '.overview-system, .overview-exchange-hotspots, .overview-global-hotspot, .map-flow-surface',
+              ),
             };
           });
           const failures = [];
@@ -239,11 +244,11 @@ try {
               : item.severity === level),
       );
     await page.waitForFunction(
-      (count) => document.querySelectorAll('.hotspot-filter-list > button:not(.hotspot-is-hidden)').length === count,
+      (count) => document.querySelectorAll('.hotspot-picker-row > button:not(.hotspot-picker-open)').length === count,
       expected.length,
     );
     assert.deepEqual(
-      (await filter.locator('.hotspot-filter-list > button:not(.hotspot-is-hidden) strong').allTextContents()).sort(),
+      (await filter.locator('.hotspot-picker-row > button:not(.hotspot-picker-open) strong').allTextContents()).sort(),
       expected.map((item) => item.title).sort(),
     );
   }
@@ -259,11 +264,13 @@ try {
           (value === 'all' || item[field] === value),
       );
       await page.waitForFunction(
-        (count) => document.querySelectorAll('.hotspot-filter-list > button:not(.hotspot-is-hidden)').length === count,
+        (count) => document.querySelectorAll('.hotspot-picker-row > button:not(.hotspot-picker-open)').length === count,
         expected.length,
       );
       assert.deepEqual(
-        (await filter.locator('.hotspot-filter-list > button:not(.hotspot-is-hidden) strong').allTextContents()).sort(),
+        (
+          await filter.locator('.hotspot-picker-row > button:not(.hotspot-picker-open) strong').allTextContents()
+        ).sort(),
         expected.map((item) => item.title).sort(),
       );
     }

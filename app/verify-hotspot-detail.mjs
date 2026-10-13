@@ -172,11 +172,13 @@ try {
   );
   assert.ok((await criticality.innerText()).includes(text(wholesale.complexity.rationale)));
   assert.equal(await criticality.locator('dd').count(), 2, 'both complexity axes have a textual explanation');
-  const questions = detail
-    .locator('.hotspot-gap-analysis li')
-    .filter({ hasText: 'Quelles règles de réservation du stock' });
-  assert.equal(await questions.count(), 2);
-  assert.equal(/\bU(?:02|10|30|31|953)\b/.test(await questions.first().innerText()), false);
+  const questions = wholesale.gap_analysis.flatMap((gap) => gap.open_questions);
+  assert.ok(questions.length, 'the reviewed Wholesale comparison has questions to qualify');
+  for (const question of new Set(questions)) {
+    const rendered = detail.locator('.hotspot-gap-analysis li').filter({ hasText: text(question) });
+    assert.equal(await rendered.count(), questions.filter((item) => item === question).length);
+    assert.equal(/\bU(?:02|10|30|31|953)\b/.test(await rendered.first().innerText()), false);
+  }
   await criticality.screenshot({ path: resolve(output, 'wholesale-criticality.png') });
   await open();
   assert.equal(await detail.getByRole('heading', { level: 3 }).innerText(), text(original.title));
@@ -284,6 +286,7 @@ try {
 
   // A published comparison renders its own observations, never facts from another snapshot.
   const compared = structuredClone(original);
+  compared.visible = true;
   compared.framing_impact = {
     category: 'usage',
     targets: [],
@@ -337,8 +340,10 @@ try {
   await subjectFilters.getByRole('checkbox', { name: 'Hotspots modèle', exact: true }).uncheck();
   assert.equal(await markedRow.count(), 1, 'Usage stays visible when model subjects are hidden');
   await subjectFilters.getByRole('checkbox', { name: 'Hotspots usage', exact: true }).uncheck();
+  await markedRow.waitFor({ state: 'detached' });
   assert.equal(await markedRow.count(), 0, 'Usage checkbox filters the table');
   await subjectFilters.getByRole('checkbox', { name: 'Hotspots usage', exact: true }).check();
+  await markedRow.waitFor({ state: 'attached' });
   assert.equal(await markedRow.count(), 1);
   await open();
   for (const content of [
