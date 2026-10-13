@@ -106,9 +106,12 @@ export function HotspotCatalogPage({
   const [drafts, setDrafts] = useState<Record<string, HotspotDraft>>({});
   const [draftBases, setDraftBases] = useState<Record<string, HotspotDraft>>({});
   const [draftRevision, setDraftRevision] = useState<number | null>(null);
+  const draftEditSequence = useRef(0);
   const [restoredKey, setRestoredKey] = useState('');
+  const [storageReadFailedKey, setStorageReadFailedKey] = useState('');
   const [saving, setSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState('');
+  const [storageWarning, setStorageWarning] = useState('');
   const [dialog, setDialog] = useState<{ id: string; mode: 'location' | 'resolution' | 'complexity' } | null>(null);
   const [nodeQuery, setNodeQuery] = useState('');
   const dialogReturnFocus = useRef<HTMLElement | null>(null);
@@ -147,7 +150,11 @@ export function HotspotCatalogPage({
   };
   const storageKey = workshopStage ? `atlas-hotspot-drafts:${model.version}:${workshopStage.session_id}` : '';
   useEffect(() => {
-    if (!storageKey || restoredKey === storageKey) return;
+    if (!storageKey) {
+      setStorageWarning('');
+      return;
+    }
+    if (restoredKey === storageKey) return;
     try {
       const saved = JSON.parse(sessionStorage.getItem(storageKey) || '{}');
       const restore = (entries: Record<string, Partial<HotspotDraft>> | undefined) =>
@@ -160,19 +167,31 @@ export function HotspotCatalogPage({
       setDrafts(restore(saved.drafts));
       setDraftBases(restore(saved.bases));
       setDraftRevision(typeof saved.revision === 'number' ? saved.revision : null);
+      setStorageReadFailedKey('');
     } catch {
       setDrafts({});
       setDraftBases({});
       setDraftRevision(null);
+      setStorageReadFailedKey(storageKey);
+      setStorageWarning(
+        'Le stockage local est indisponible. Les brouillons restent accessibles jusqu’à ce que tu quittes ce tableau.',
+      );
     }
     setRestoredKey(storageKey);
   }, [storageKey, restoredKey, hotspots]);
   useEffect(() => {
-    if (!storageKey || restoredKey !== storageKey) return;
-    if (Object.keys(drafts).length)
-      sessionStorage.setItem(storageKey, JSON.stringify({ drafts, bases: draftBases, revision: draftRevision }));
-    else sessionStorage.removeItem(storageKey);
-  }, [storageKey, restoredKey, drafts, draftBases, draftRevision]);
+    if (!storageKey || restoredKey !== storageKey || storageReadFailedKey === storageKey) return;
+    try {
+      if (Object.keys(drafts).length)
+        sessionStorage.setItem(storageKey, JSON.stringify({ drafts, bases: draftBases, revision: draftRevision }));
+      else sessionStorage.removeItem(storageKey);
+      setStorageWarning('');
+    } catch {
+      setStorageWarning(
+        'Le stockage local est indisponible. Les brouillons restent accessibles jusqu’à ce que tu quittes ce tableau.',
+      );
+    }
+  }, [storageKey, restoredKey, storageReadFailedKey, drafts, draftBases, draftRevision]);
   useEffect(() => {
     if (!Object.keys(drafts).length) return;
     const warn = (event: BeforeUnloadEvent) => {
@@ -367,6 +386,7 @@ export function HotspotCatalogPage({
   const invalidDrafts = draftErrors.length > 0;
   const editFields = (item: Hotspot, updates: Partial<HotspotDraft>) => {
     if (!workshopStage) return;
+    draftEditSequence.current += 1;
     if (draftRevision === null) setDraftRevision(workshopStage.revision);
     setDraftBases((current) => (current[item.id] ? current : { ...current, [item.id]: draftFor(item) }));
     setDrafts((current) => ({ ...current, [item.id]: { ...(current[item.id] || draftFor(item)), ...updates } }));
@@ -401,15 +421,20 @@ export function HotspotCatalogPage({
   };
   const save = async () => {
     if (!changes.length || staleDrafts || invalidDrafts || saving) return;
+    const submittedSequence = draftEditSequence.current;
     setSaving(true);
     setSaveMessage('');
     try {
       await onSaveWorkshopChanges(changes);
-      setDrafts({});
-      setDraftBases({});
-      setDraftRevision(null);
+      // Edits made while the request is in flight must remain available for review.
+      const hasLaterEdits = draftEditSequence.current !== submittedSequence;
+      if (!hasLaterEdits) {
+        setDrafts({});
+        setDraftBases({});
+        setDraftRevision(null);
+      }
       setSaveMessage(
-        `${changes.length} point${changes.length > 1 ? 's' : ''} chaud${changes.length > 1 ? 's' : ''} enregistré${changes.length > 1 ? 's' : ''} dans la séance — à intégrer au backlog.`,
+        `${changes.length} point${changes.length > 1 ? 's' : ''} chaud${changes.length > 1 ? 's' : ''} enregistré${changes.length > 1 ? 's' : ''} dans la séance${hasLaterEdits ? '. Des modifications plus récentes restent à examiner avant un nouvel enregistrement.' : ' — à intégrer au backlog.'}`,
       );
     } catch (error) {
       setSaveMessage(error instanceof Error ? error.message : 'Enregistrement impossible.');
@@ -419,6 +444,7 @@ export function HotspotCatalogPage({
   };
   const rebaseDrafts = () => {
     if (!workshopStage) return;
+    draftEditSequence.current += 1;
     setDrafts((current) =>
       Object.fromEntries(
         Object.entries(current).flatMap(([id, draft]) => {
@@ -558,6 +584,11 @@ export function HotspotCatalogPage({
       {saveMessage && (
         <p className="hotspot-save-message" role="status">
           {saveMessage}
+        </p>
+      )}
+      {storageWarning && (
+        <p className="hotspot-save-message" role="status">
+          {storageWarning}
         </p>
       )}
       {!workshopStage && (

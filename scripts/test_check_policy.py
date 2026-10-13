@@ -47,7 +47,9 @@ class CheckPolicyTests(unittest.TestCase):
 
     def test_frontend_python_and_global_config_select_conservative_checks(self):
         self.assertTrue(plan(['app/modeling_guide.py'])['contracts'])
-        self.assertTrue(plan(['modeles/backlog/glossary.yaml'])['browser'])
+        self.assertTrue(plan(['modeles/backlog/glossary.yaml'])['contracts'])
+        self.assertFalse(plan(['modeles/backlog/glossary.yaml'])['browser'])
+        self.assertTrue(plan(['modeles/release/index.json'])['browser'])
         self.assertTrue(plan(['.github/workflows/atlas-pages.yml'])['launcher'])
 
 

@@ -12,7 +12,11 @@ def plan(paths):
     reasons = []
     for path in paths:
         flags = set()
-        if path.startswith('modeles/'):
+        if path.startswith('modeles/backlog/'):
+            # Atlas renders only activated snapshots. Backlog edits are checked by
+            # Python contracts; their future publication will trigger the UI gate.
+            flags = {'contracts'}
+        elif path.startswith('modeles/'):
             flags = {'contracts', 'frontend', 'browser'}
         elif path.startswith('scripts/') and path.endswith('.py'):
             flags = {'contracts'} if Path(path).name.startswith(('test_', 'benchmark_')) else {'contracts', 'frontend', 'browser'}

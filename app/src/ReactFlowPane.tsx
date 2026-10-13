@@ -594,6 +594,8 @@ function Canvas(props: ReactFlowPaneProps) {
   const [textObstacles, setTextObstacles] = useState<{ x: number; y: number; width: number; height: number }[]>([]);
   const [measuredMarkerPositions, setMeasuredMarkerPositions] = useState<Record<string, { x: number; y: number }>>({});
   const [textMeasurementVersion, setTextMeasurementVersion] = useState(0);
+  const measurementViewport = useRef(viewport);
+  measurementViewport.current = viewport;
   // biome-ignore lint/correctness/useExhaustiveDependencies: A new layout replaces the card elements being observed.
   useEffect(() => {
     const surface = container.current?.querySelector<HTMLElement>('.map-flow-surface');
@@ -617,21 +619,26 @@ function Canvas(props: ReactFlowPaneProps) {
   useLayoutEffect(() => {
     const frame = requestAnimationFrame(() => {
       const surface = container.current?.querySelector<HTMLElement>('.map-flow-surface');
-      if (!surface || !viewport.zoom) return;
+      const { x: panX, y: panY, zoom } = measurementViewport.current;
+      if (!surface || !zoom) return;
       const surfaceRect = surface.getBoundingClientRect();
       const targets = [...surface.querySelectorAll<HTMLElement>('[data-business-area-summary], [data-map-item-id]')];
+      const targetById = new Map<string, HTMLElement>();
+      for (const target of targets) {
+        for (const attribute of ['data-business-area-summary', 'data-map-item-id']) {
+          const id = target.getAttribute(attribute);
+          if (id && !targetById.has(id)) targetById.set(id, target);
+        }
+      }
       const next: Record<string, { x: number; y: number }> = {};
       for (const marker of hotspotMarkers) {
         if (marker.projectedElementIds.length !== 1) continue;
         const id = marker.projectedElementIds[0];
-        const target = targets.find(
-          (item) =>
-            item.getAttribute('data-business-area-summary') === id || item.getAttribute('data-map-item-id') === id,
-        );
+        const target = targetById.get(id);
         if (!target) continue;
         const rect = target.getBoundingClientRect();
-        const x = (rect.right - 16 - surfaceRect.left - viewport.x) / viewport.zoom;
-        const y = (rect.top + rect.height / 2 - surfaceRect.top - viewport.y) / viewport.zoom;
+        const x = (rect.right - 16 - surfaceRect.left - panX) / zoom;
+        const y = (rect.top + rect.height / 2 - surfaceRect.top - panY) / zoom;
         next[marker.id] = { x, y };
       }
       const obstacles: { x: number; y: number; width: number; height: number }[] = [];
@@ -646,10 +653,10 @@ function Canvas(props: ReactFlowPaneProps) {
           for (const rect of range.getClientRects())
             if (rect.width && rect.height)
               obstacles.push({
-                x: rect.left - surfaceRect.left,
-                y: rect.top - surfaceRect.top,
-                width: rect.width,
-                height: rect.height,
+                x: (rect.left - surfaceRect.left - panX) / zoom,
+                y: (rect.top - surfaceRect.top - panY) / zoom,
+                width: rect.width / zoom,
+                height: rect.height / zoom,
               });
         }
       }
@@ -657,7 +664,17 @@ function Canvas(props: ReactFlowPaneProps) {
       setMeasuredMarkerPositions((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));
     });
     return () => cancelAnimationFrame(frame);
-  }, [hotspotMarkers, viewport.x, viewport.y, viewport.zoom, canvasWidth, textMeasurementVersion]);
+  }, [hotspotMarkers, canvasWidth, textMeasurementVersion]);
+  const visibleTextObstacles = useMemo(
+    () =>
+      textObstacles.map((rect) => ({
+        x: viewport.x + rect.x * viewport.zoom,
+        y: viewport.y + rect.y * viewport.zoom,
+        width: rect.width * viewport.zoom,
+        height: rect.height * viewport.zoom,
+      })),
+    [textObstacles, viewport.x, viewport.y, viewport.zoom],
+  );
   const markerLayout = useMemo(() => {
     const width = surfaceWidth || canvasWidth;
     const height = effectiveZoomMode === 'width' ? widthFrame?.height || minimumHeight : minimumHeight;
@@ -673,9 +690,13 @@ function Canvas(props: ReactFlowPaneProps) {
     const visible = hotspotMarkers
       .map(screen)
       .filter((item) => item.x >= 0 && item.x <= width && item.y >= 0 && item.y <= height);
-    const groups = layoutHotspots(visible, { width, height, obstacles: textObstacles });
+    const groups = layoutHotspots(visible, { width, height, obstacles: visibleTextObstacles });
+    const markerById = new Map(hotspotMarkers.map((marker) => [marker.id, marker]));
     const markers = groups.map((group) => {
-      const members = hotspotMarkers.filter((marker) => group.ids.includes(marker.id));
+      const members = group.ids.flatMap((id) => {
+        const marker = markerById.get(id);
+        return marker ? [marker] : [];
+      });
       return {
         ...members[0],
         id: group.id,
@@ -690,7 +711,7 @@ function Canvas(props: ReactFlowPaneProps) {
   }, [
     hotspotMarkers,
     measuredMarkerPositions,
-    textObstacles,
+    visibleTextObstacles,
     canvasWidth,
     surfaceWidth,
     effectiveZoomMode,

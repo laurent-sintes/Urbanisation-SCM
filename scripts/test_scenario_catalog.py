@@ -1,6 +1,7 @@
 from copy import deepcopy
 import unittest
 from scripts.structured_io import read
+from scripts.json_contract import validate
 from scripts.scenario_catalog import validate_catalog, assign_catalog_versions, record_field_agreement
 from scripts.migrate_scenarios import migrate
 
@@ -17,6 +18,15 @@ class ScenarioCatalogTests(unittest.TestCase):
         report=read('modeles/backlog/scenario-migration-U793.yaml')
         self.assertEqual(len(report['items']),49)
         self.assertEqual(sum(i['action']=='migrate_scenario' for i in report['items']),26)
+
+    def test_market_source_urls_require_http_or_https(self):
+        schema = read('modeles/schemas/urbanism.schema.json')
+        contract = (schema['properties']['scenario_catalog']['properties']['value_streams']['items']
+                    ['properties']['market_sources']['items']['properties']['url'])
+        for url in ('https://example.com/source', 'http://example.com/source'):
+            self.assertEqual(validate(url, contract), [])
+        for url in ('javascript:alert(1)', 'data:text/html,source', 'https://example.com/bad path'):
+            self.assertTrue(validate(url, contract))
 
     def test_missing_endpoints_and_wrong_contributor_rejected(self):
         path=self.model['scenario_catalog']['paths'][0]

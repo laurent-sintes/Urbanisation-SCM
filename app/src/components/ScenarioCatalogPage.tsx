@@ -5,6 +5,15 @@ import type { PublishedModel } from '../types';
 import { CatalogLink, MethodLink, ModelText, ReferenceLink } from './ModelLinks';
 import './scenario-catalog.css';
 
+function marketSourceUrl(value: string): string | null {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : null;
+  } catch {
+    return null;
+  }
+}
+
 export function ScenarioCatalogPage({
   model,
   route,
@@ -352,14 +361,21 @@ export function ScenarioCatalogPage({
                 <p>
                   <ModelText text={stream.market_position} />
                 </p>
-                {stream.market_sources.map((s) => (
-                  <p key={`${s.vendor}:${s.url}`}>
-                    <a href={s.url} target="_blank" rel="noreferrer">
-                      {s.vendor}
-                    </a>{' '}
-                    — <ModelText text={s.support} /> <ModelText text={s.limit} />
-                  </p>
-                ))}
+                {stream.market_sources.map((s) => {
+                  const url = marketSourceUrl(s.url);
+                  return (
+                    <p key={`${s.vendor}:${s.url}`}>
+                      {url ? (
+                        <a href={url} target="_blank" rel="noreferrer">
+                          {s.vendor}
+                        </a>
+                      ) : (
+                        s.vendor
+                      )}{' '}
+                      — <ModelText text={s.support} /> <ModelText text={s.limit} />
+                    </p>
+                  );
+                })}
               </details>
             </section>
           ) : (

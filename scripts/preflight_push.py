@@ -24,6 +24,12 @@ def git(root, *args):
     return subprocess.check_output(['git', *args], cwd=root).decode('utf-8').strip()
 
 
+def git_paths(root, *args):
+    # NUL output must not be stripped: a tracked filename may begin with whitespace.
+    raw = subprocess.check_output(['git', *args, '-z'], cwd=root)
+    return {os.fsdecode(name) for name in raw.split(b'\0') if name}
+
+
 def context(root, *, base=None, working=False, offline=False):
     root = Path(root).resolve()
     if sys.flags.optimize:
@@ -66,16 +72,26 @@ def context(root, *, base=None, working=False, offline=False):
             'target_branch': branch if first_push else remote_branch, 'first_push': first_push}
 
 
-def fingerprint(root, *, include_generated=True):
-    names = set(git(root, 'ls-files', '-z').split('\0'))
-    names.update(git(root, 'ls-files', '--others', '--exclude-standard', '-z').split('\0'))
+def fingerprint(root, *, include_generated=True, generated_folders=None):
+    root = Path(root)
+    names = git_paths(root, 'ls-files')
+    names.update(git_paths(root, 'ls-files', '--others', '--exclude-standard'))
     result = {}
-    for name in sorted(filter(None, names)):
+    for name in sorted(names):
         path = root / name
-        result[name] = sha256(path.read_bytes()).hexdigest() if path.is_file() else None
+        # Git records a link's destination, not the contents outside this checkout.
+        content = (os.fsencode(os.readlink(path)) if path.is_symlink()
+                   else path.read_bytes() if path.is_file() else None)
+        result[name] = sha256(content).hexdigest() if content is not None else None
     # Browser checks and build operate on ignored derived outputs too.
-    for folder in ('app/dist', 'app/public/data') if include_generated else ():
+    folders = (generated_folders if generated_folders is not None
+               else ('app/dist', 'app/public/data') if include_generated else ())
+    for folder in folders:
+        if (root / folder).is_symlink():
+            raise ValueError(f'Generated output contains a symlink: {root / folder}')
         for path in sorted((root / folder).rglob('*')):
+            if path.is_symlink():
+                raise ValueError(f'Generated output contains a symlink: {path}')
             if path.is_file():
                 result[path.relative_to(root).as_posix()] = sha256(path.read_bytes()).hexdigest()
     return result
@@ -101,7 +117,11 @@ def commands(checks, root):
 
 
 def check_inputs(root, name):
-    inputs = fingerprint(root, include_generated=name in ('build', 'browser'))
+    # Browser verification reads dist only; public/data is a build input, not a served output.
+    if name == 'browser':
+        inputs = fingerprint(root, generated_folders=('app/dist',))
+    else:
+        inputs = fingerprint(root, include_generated=name == 'build')
     if name == 'browser':
         # Delivery provenance is checked separately for the final commit. Its SHA
         # does not change the UI; all served assets and data remain byte-bound.

@@ -506,6 +506,26 @@ try {
   const sparseCard = page.locator('.graph-canvas .business-card').first();
   await sparseCard.waitFor();
   await page.waitForFunction(() => document.querySelector('.graph-canvas.zoom-page .business-card'));
+  await page.evaluate(() => {
+    window.originalTreeWalker = document.createTreeWalker.bind(document);
+    window.mapTextWalks = 0;
+    document.createTreeWalker = (...args) => {
+      window.mapTextWalks++;
+      return window.originalTreeWalker(...args);
+    };
+  });
+  const zoomBefore = await page.locator('.react-flow__viewport').getAttribute('style');
+  await page.locator('.react-flow__controls-zoomin').click();
+  await page.waitForFunction(
+    (before) => document.querySelector('.react-flow__viewport')?.getAttribute('style') !== before,
+    zoomBefore,
+  );
+  await page.evaluate(() => new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  const mapTextWalks = await page.evaluate(() => {
+    document.createTreeWalker = window.originalTreeWalker;
+    return window.mapTextWalks;
+  });
+  assert.equal(mapTextWalks, 0, 'zoom must reuse text measurements instead of scanning every card');
   const cardLayoutWidth = () =>
     sparseCard.evaluate((element) => Number.parseFloat(element.closest('.react-flow__node')?.style.width || '0'));
   const pageCardWidth = await cardLayoutWidth();
