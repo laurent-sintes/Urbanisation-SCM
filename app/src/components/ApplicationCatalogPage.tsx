@@ -1,8 +1,15 @@
+import { CircleCheck, CircleHelp, CircleMinus, CircleX } from 'lucide-react';
 import { type CSSProperties, type Ref, useEffect, useRef } from 'react';
-import { contextName, productFor, selectionMappings } from '../applicationCatalog';
+import { componentBranch, contextName, productFor, selectionMappings } from '../applicationCatalog';
 import type { RouteState } from '../navigation';
 import { staticUrl } from '../publication';
-import type { ApplicationComponent, ApplicationProduct, ApplicationSelection, PublishedModel } from '../types';
+import type {
+  ApplicationCatalog,
+  ApplicationComponent,
+  ApplicationProduct,
+  ApplicationSelection,
+  PublishedModel,
+} from '../types';
 import './applications.css';
 
 const usageLabel: Record<string, string> = {
@@ -122,12 +129,16 @@ function rootOf(product: ApplicationProduct) {
 }
 
 function ComponentList({
+  catalog,
   product,
+  selection,
   parentId,
   currentId,
   onSelect,
 }: {
+  catalog: ApplicationCatalog;
   product: ApplicationProduct;
+  selection?: ApplicationSelection;
   parentId: string;
   currentId: string;
   onSelect: (componentId: string) => void;
@@ -137,32 +148,123 @@ function ComponentList({
   return (
     <ul className="application-component-list">
       {children.map((component) => (
-        <li key={component.id}>
+        <li
+          key={component.id}
+          className={
+            selection?.component_states.find((item) => item.component_id === component.id)?.activated === 'no'
+              ? 'application-component-disabled'
+              : undefined
+          }
+        >
           <button
             type="button"
             aria-current={currentId === component.id ? 'true' : undefined}
             onClick={() => onSelect(component.id)}
           >
-            {component.name}
+            <span>{component.name}</span>
+            <ComponentCoverageBadge catalog={catalog} product={product} component={component} selection={selection} />
           </button>
-          <ComponentList product={product} parentId={component.id} currentId={currentId} onSelect={onSelect} />
+          <ComponentList
+            catalog={catalog}
+            product={product}
+            selection={selection}
+            parentId={component.id}
+            currentId={currentId}
+            onSelect={onSelect}
+          />
         </li>
       ))}
     </ul>
   );
 }
 
+function coverageFor(
+  catalog: ApplicationCatalog,
+  product: ApplicationProduct,
+  component: ApplicationComponent,
+  selection?: ApplicationSelection,
+) {
+  const ids = new Set(componentBranch(product, component.id).map((item) => item.id));
+  const selections = selection ? [selection] : catalog.selections.filter((item) => item.product_id === product.id);
+  return selections.flatMap((item) =>
+    item.mappings.filter((mapping) => ids.has(mapping.component_id)).map((mapping) => ({ selection: item, mapping })),
+  );
+}
+
+function offeringCoverageFor(product: ApplicationProduct, component: ApplicationComponent) {
+  const ids = new Set(componentBranch(product, component.id).map((item) => item.id));
+  return (product.offering_mappings || []).filter((mapping) => ids.has(mapping.component_id));
+}
+
+function ComponentCoverageBadge({
+  catalog,
+  product,
+  component,
+  selection,
+}: {
+  catalog: ApplicationCatalog;
+  product: ApplicationProduct;
+  component: ApplicationComponent;
+  selection?: ApplicationSelection;
+}) {
+  const coverage = coverageFor(catalog, product, component, selection);
+  if (!selection) {
+    const offering = offeringCoverageFor(product, component);
+    return (
+      <small>
+        {offering.length ? `${offering.length} lien${offering.length > 1 ? 's' : ''} de l’offre` : 'Offre à documenter'}
+        {coverage.length ? ` · ${coverage.length} lien${coverage.length > 1 ? 's' : ''} par SI` : ''}
+      </small>
+    );
+  }
+  const state = selection.component_states.find((item) => item.component_id === component.id);
+  const activated = state?.activated || 'unknown';
+  const activationLabel =
+    activated === 'no'
+      ? 'Désactivé'
+      : activated === 'unknown'
+        ? 'Activation inconnue'
+        : `Activé · ${selectionStateLabel[activated]}`;
+  const ActivationIcon = activated === 'no' ? CircleX : activated === 'unknown' ? CircleHelp : CircleCheck;
+  return (
+    <small className="application-component-status">
+      <span className={`application-activation-${activated}`}>
+        <ActivationIcon size={12} aria-hidden="true" /> {activationLabel}
+      </span>
+      {state?.used === 'no' ? (
+        <span>
+          <CircleMinus size={12} aria-hidden="true" /> Non utilisé
+        </span>
+      ) : state?.used && state.used !== 'unknown' ? (
+        <span>{usageLabel[state.used]}</span>
+      ) : null}
+      <span>
+        {coverage.length ? `${coverage.length} lien${coverage.length > 1 ? 's' : ''} métier` : 'Carto à documenter'}
+      </span>
+    </small>
+  );
+}
+
 function ComponentDetail({
+  catalog,
+  product,
   component,
   selection,
   model,
+  onShowOnMap,
+  onShowBusinessNode,
 }: {
+  catalog: ApplicationCatalog;
+  product: ApplicationProduct;
   component: ApplicationComponent;
   selection?: ApplicationSelection;
   model: PublishedModel;
+  onShowOnMap: (selectionId: string, componentId?: string) => void;
+  onShowBusinessNode: (nodeId: string) => void;
 }) {
   const state = selection?.component_states.find((item) => item.component_id === component.id);
-  const mappings = selection?.mappings.filter((item) => item.component_id === component.id) || [];
+  const coverage = coverageFor(catalog, product, component, selection);
+  const offeringCoverage = offeringCoverageFor(product, component);
   return (
     <section className="application-component-detail" aria-label={`Détail de ${component.name}`}>
       {component.kind !== 'product' && <h4>{component.name}</h4>}
@@ -183,18 +285,60 @@ function ComponentDetail({
             {state ? selectionStateLabel[state.activated] || state.activated : 'inconnue'} ·{' '}
             {state ? usageLabel[state.used] || state.used : 'Usage non évalué'}
           </p>
-          <h5>Positionnement métier</h5>
-          {mappings.length ? (
-            mappings.map((mapping) => (
-              <p className="application-mapping" key={mapping.id}>
-                <strong>{model.nodeById.get(mapping.node_id)?.name || mapping.node_id}</strong> ·{' '}
-                {evidenceLabel[mapping.evidence_state]} · {mapping.note}
-              </p>
+        </>
+      )}
+      {!selection && (
+        <>
+          <h5>Périmètre possible de l’offre éditeur</h5>
+          <p>Ces correspondances décrivent l’offre documentée, sans prouver son activation dans un SI.</p>
+          {offeringCoverage.length ? (
+            offeringCoverage.map((mapping) => (
+              <div className="application-mapping" key={mapping.id}>
+                {component.id !== mapping.component_id && (
+                  <small>{product.components.find((item) => item.id === mapping.component_id)?.name}</small>
+                )}
+                <strong>{model.nodeById.get(mapping.node_id)?.name || mapping.node_id}</strong>
+                <span>{mapping.note}</span>
+                <div className="application-mapping-actions">
+                  <button type="button" onClick={() => onShowBusinessNode(mapping.node_id)}>
+                    Voir dans la cartographie métier
+                  </button>
+                  {mapping.source_url && (
+                    <a href={mapping.source_url} target="_blank" rel="noopener noreferrer">
+                      Source éditeur
+                    </a>
+                  )}
+                </div>
+              </div>
             ))
           ) : (
-            <p>Aucun lien métier enregistré pour cet élément.</p>
+            <p>Aucune correspondance de l’offre suffisamment documentée pour cette fonctionnalité.</p>
           )}
         </>
+      )}
+      <h5>{selection ? 'Couverture métier dans ce SI' : 'Correspondances documentées par SI'}</h5>
+      {coverage.length ? (
+        coverage.map(({ selection: context, mapping }) => (
+          <div className="application-mapping" key={mapping.id}>
+            {!selection && <small>{contextName[context.context_id] || context.context_id}</small>}
+            {component.id !== mapping.component_id && (
+              <small>{product.components.find((item) => item.id === mapping.component_id)?.name}</small>
+            )}
+            <strong>{model.nodeById.get(mapping.node_id)?.name || mapping.node_id}</strong>
+            <span>
+              {evidenceLabel[mapping.evidence_state]} · {mapping.note}
+            </span>
+            <button type="button" onClick={() => onShowOnMap(context.id, mapping.component_id)}>
+              Voir sur la carte
+            </button>
+          </div>
+        ))
+      ) : (
+        <p>
+          {selection
+            ? 'Aucune correspondance métier documentée pour cette fonctionnalité dans ce SI.'
+            : 'Aucune correspondance documentée dans un SI pour cette fonctionnalité. Les liens de l’offre ne prouvent pas son activation.'}
+        </p>
       )}
     </section>
   );
@@ -206,12 +350,14 @@ export function ApplicationCatalogPage({
   route,
   onChange,
   onShowOnMap,
+  onShowBusinessNode,
 }: {
   model: PublishedModel;
   mode: 'systems' | 'products';
   route: RouteState;
   onChange: (changes: Partial<RouteState>) => void;
   onShowOnMap: (selectionId: string, componentId?: string) => void;
+  onShowBusinessNode: (nodeId: string) => void;
 }) {
   const catalog = model.raw.application_catalog;
   const detailTitle = useRef<HTMLHeadingElement>(null);
@@ -390,10 +536,18 @@ export function ApplicationCatalogPage({
                         aria-current={component.id === root.id ? 'true' : undefined}
                         onClick={() => selectItem(selection?.id || '', root.id)}
                       >
-                        Vue d’ensemble
+                        <span>Vue d’ensemble</span>
+                        <ComponentCoverageBadge
+                          catalog={catalog}
+                          product={product}
+                          component={root}
+                          selection={selection}
+                        />
                       </button>
                       <ComponentList
+                        catalog={catalog}
                         product={product}
+                        selection={selection}
                         parentId={root.id}
                         currentId={component.id}
                         onSelect={(id) => selectItem(selection?.id || '', id)}
@@ -402,9 +556,15 @@ export function ApplicationCatalogPage({
                   </ul>
                 </nav>
               )}
-              {(selection || component.kind !== 'product' || component.note || component.source_url) && (
-                <ComponentDetail component={component} selection={selection} model={model} />
-              )}
+              <ComponentDetail
+                catalog={catalog}
+                product={product}
+                component={component}
+                selection={selection}
+                model={model}
+                onShowOnMap={onShowOnMap}
+                onShowBusinessNode={onShowBusinessNode}
+              />
             </div>
           </article>
         )}

@@ -1,0 +1,73 @@
+id: application-inventory-gap-U1045
+as_of: '2026-10-13'
+status: reviewed
+source_refs:
+- U1044
+- U1045
+- U1046
+scope: Écarts entre le catalogue applicatif Atlas et les panoramas As Is de FLOW-Program, complétés par le panorama structuré de ce dépôt.
+sources:
+- path: C:/Dev/FLOW-Program/src/docs/as-is/panoramas/panorama-gbm.md
+  role: Dossier narratif Beaumanoir ; mentions et réserves, non inventaire de déploiement exhaustif.
+- path: C:/Dev/FLOW-Program/src/docs/as-is/panoramas/panorama-brd.md
+  role: Dossier narratif Boardriders ; zones applicatives et responsabilités à corroborer.
+- path: C:/Dev/FLOW-Program/src/docs/assets/images/panorama-gbm-ecosystem.svg
+  role: Synthèse visuelle ; mélange de produits, familles et fonctions.
+- path: C:/Dev/FLOW-Program/src/docs/assets/images/panorama-brd-ecosystem.svg
+  role: Synthèse visuelle ; mélange de produits, familles et acteurs d'exécution.
+- path: modeles/panorama-as-is/current.json
+  role: Index du panorama structuré local, avec affectations par SI et contexte partagé.
+findings:
+- context: SI Beaumanoir Marques Historiques
+  already_in_catalog: Elastic Suite, SoCloz, United Retail, Storeland
+  named_products_to_qualify:
+  - name: Zoho
+    evidence: Objet APP-ZOH du panorama structuré ; FLOW-Program parle aussi de Zoho CRM pour le B2B.
+    gap: Édition et usage exacts à vérifier avant d'identifier le produit comme Zoho CRM.
+  - name: Talend transverse
+    evidence: Objet APP-TAL du panorama structuré.
+    gap: Produit, version et rôle d'intégration propres à Beaumanoir à établir ; ne pas assimiler au portefeuille Qlik actuel.
+  - name: Salesforce Commerce Cloud
+    evidence: SFCC dans le schéma de synthèse FLOW-Program Beaumanoir.
+    gap: Ajouté comme sélection à présence inconnue ; périmètre et période d'emploi dans ce SI non corroborés par le panorama structuré.
+  - name: Mirakl
+    evidence: Mirakl dans le schéma de synthèse FLOW-Program Beaumanoir.
+    gap: Identité du produit ou module, marques et période non établies.
+  - name: Winstore
+    evidence: Cas client Cegid Beaumanoir citant Storeland, Winstore et United Retail.
+    gap: Fiche et sélection ajoutées ; instances et périmètres par marque non documentés, le panorama structuré n'ayant qu'une famille POS.
+  - name: Product-Live
+    evidence: Mention historique dans le dossier Beaumanoir FLOW-Program.
+    gap: Identité de l'éditeur et activité actuelle à confirmer.
+  internal_or_unresolved:
+  - IRMA, SCORTEX et MAP sont des applications nommées dans APP-IRM, APP-SCO et APP-MAP ; elles ne sont pas des produits éditeur établis.
+  - CBS est nommé dans APP-CBS, mais son identité commerciale et son éditeur ne sont pas établis.
+  - Les sites eCommerce et les logiciels POS spécialisés sont des collections, pas des produits identifiés.
+  - Crossroad (KBRW) relève du contexte C-LOG partagé dans le panorama structuré ; ne pas l'affecter automatiquement au SI historique.
+- context: SI Boardriders
+  already_in_catalog: Elastic Suite, SAP ECC avec AFS, NewStore, Salesforce Commerce Cloud
+  named_products_to_qualify:
+  - name: Cegid Retail Y2
+    evidence: Cegid Y2 dans le schéma de synthèse FLOW-Program Boardriders.
+    gap: Fiche et sélection à présence inconnue ajoutées ; pays, magasins et version installée à vérifier.
+  - name: Centric PLM
+    evidence: PLM Centric dans le dossier Boardriders FLOW-Program.
+    gap: Fiche et sélection à présence inconnue ajoutées ; modules et implantation à vérifier.
+  - name: SAP BPC
+    evidence: SAP BPC dans la zone Planning du dossier FLOW-Program.
+    gap: Fiche et sélection à présence inconnue ajoutées ; version et fonctions déployées à vérifier.
+  - name: Optimate / APS
+    evidence: Optimate / APS dans la zone Planning du dossier FLOW-Program.
+    gap: Identité éditoriale et édition du produit à établir.
+  - name: Connex
+    evidence: Connex cité pour les douanes et le transport dans les panoramas FLOW-Program.
+    gap: Produit exact, édition et périmètre d'emploi à confirmer.
+  unresolved_families:
+  - PIM, DAM, SRM, CBS, WMS, BI, CMS/Web Platform et transport sont des zones ou familles ; ne pas créer un produit unique sous ces seuls noms.
+  - Maersk 4PL, C-LOG et Bleckmann sont des acteurs ou prestataires, pas des produits logiciels.
+  qualification_note: Le dossier FLOW-Program attribue à NewStore une orchestration OMS large ; l'apport plus récent de Laurent U1043 limite l'usage Boardriders à la gestion de commande jusqu'à engagement, avec le fulfillment orchestré par SAP. La fiche SI conserve cette dernière précision ; l'offre éditeur garde son périmètre propre.
+decision_for_this_lot: Les fiches des produits déjà identifiés sont enrichies ; Winstore, Cegid Retail Y2, Centric PLM et SAP BPC sont ajoutés avec des réserves explicites, ainsi qu'une sélection SFCC Beaumanoir à présence inconnue. Les autres noms restent dans cette revue jusqu'à qualification du produit exact et de sa présence par SI. Une fonction de l'offre ne devient jamais une réalisation installée par simple rapprochement.
+validation:
+  source_ref: U1046
+  scope: Laurent valide le lot applicatif présenté et sa publication, avec les réserves de qualification ci-dessus.
+  capture_method: Le registre record_decision ne prend en charge que les nœuds et relations métier ; l'accord portant sur application_catalog et cette revue est conservé ici avec son verbatim dans les contributions.

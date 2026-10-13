@@ -1,6 +1,6 @@
-# Urbanisation 2026-10-13.8
+# Urbanisation 2026-10-13.9
 
-77 capacités. Sources : U1033, U1034, U1036, U1037, U1038, U1039, U1040, U1041, U1042, U1043.
+77 capacités. Sources : U1044, U1045, U1046.
 
 Publication et accord métier restent distincts. Comparaison détaillée disponible dans Git.
 

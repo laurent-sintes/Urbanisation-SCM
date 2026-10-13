@@ -24728,3 +24728,35 @@ Verbatim :
 > Qu'en penses-tu ?
 
 Portée : distinguer l'offre NewStore, qui couvre potentiellement le point de vente et la gestion distribuée des commandes, de son usage déclaré chez Boardriders. Laurent situe NewStore entre SFCC pour le eCommerce et SAP ECC pour la suite, lui attribue le processus de commande de vente jusqu'à l'engagement et attribue l'orchestration du fulfillment à SAP. Ajouter SFCC comme produit présent dans le SI Boardriders. Les modules achetés ou activés, la configuration exacte des API, le calcul de disponibilité et les responsabilités détaillées d'engagement restent à vérifier. La description ne démontre aucun usage Boardriders du POS ou du routage NewStore.
+
+## U1044
+
+Date : 2026-10-13. Source : Laurent, enrichissement des produits logiciels de marché.
+
+Verbatim :
+
+> Pas mal du tout.
+>
+> Ce serait bien d'analyser les produits du marché, de remplir les fiches et trouver les correspondances avec la carto métier.
+
+Portée : demander l'analyse des produits de marché déjà inventoriés, l'enrichissement de leurs fiches à partir de sources fiables et l'identification de correspondances avec les responsabilités de la cartographie métier. Cette demande n'atteste pas de l'acquisition, de l'activation ou de l'usage dans un SI. Les identités éditoriales ambiguës et les correspondances insuffisamment étayées doivent rester explicites.
+
+## U1045
+
+Date : 2026-10-13. Source : Laurent, extension de l'inventaire applicatif.
+
+Verbatim :
+
+> Regarde dans le projet FLOW-program le panorama des applis par SI pour voir celles qui manquent
+
+Portée : croiser le catalogue d'Atlas avec les panoramas applicatifs par SI de FLOW-Program et identifier les absences. Les schémas de synthèse et les dossiers As Is mêlent produits, familles, acteurs et outils mentionnés à des degrés de preuve différents ; leur lecture n'atteste pas automatiquement un déploiement dans un SI ni l'activation de leurs fonctions.
+
+## U1046
+
+Date : 2026-10-13. Source : Laurent, validation du lot applicatif U1044–U1045 et demande de publication.
+
+Verbatim :
+
+> Je valide. Commit & release
+
+Portée : validation du lot présenté : enrichissement des fiches de produits de marché, correspondances documentées avec la cartographie métier, revue des écarts avec FLOW-Program et ajouts qualifiés au catalogue. Les réserves indiquées sur la présence par SI, les modules activés et les usages réellement installés sont maintenues. Autorise un commit local et une release Atlas ; aucun push demandé.

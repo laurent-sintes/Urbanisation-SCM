@@ -17,26 +17,30 @@ application_catalog:
   - U1041
   - U1042
   - U1043
+  - U1044
+  - U1045
+  - U1046
   products:
   - id: product-elastic-suite
     name: Elastic Suite
     publisher: Elastic Suite / Emerald
     kind: vendor_product
     inventory_status: partial
-    scope: Plateforme de vente B2B de gros combinant catalogues numériques, présentation de l'offre, prise de commande et
-      outils pour les équipes commerciales.
+    scope: 'Vente wholesale B2B : catalogues et collections présentés aux acheteurs, construction de propositions et saisie
+      de commandes.'
     website_url: https://www.elasticsuite.com/
     branding:
       logo_path: assets/elastic-suite-logo.png
       accent_color: '#EC6A56'
       source_url: https://staging-elasticsuite.kinsta.cloud/wp-content/uploads/2025/06/Elastic-Logo_x1.png
       checked_on: '2026-10-13'
-    note: Fonctions documentées pour le pilote ; liste des modules commerciaux, éditions et options contractuelles à vérifier.
+    note: Fonctions de l’offre documentées par l’éditeur ; éditions, licences et activation propres à chaque SI restent inconnues.
     source_refs:
     - U03
     - U982
     - U1038
     - U1041
+    - U1044
     components:
     - id: elastic-suite-core
       name: Elastic Suite
@@ -66,6 +70,61 @@ application_catalog:
       source_url: https://support.elasticsuite.com/what-is-a-whiteboard
       source_refs:
       - U982
+    - id: elastic-assortment-builder
+      parent_id: elastic-suite-core
+      name: Assortment Builder
+      kind: feature
+      note: Construit une sélection commerciale pour un revendeur ; ne gouverne pas à lui seul l’assortiment d’entreprise.
+      source_url: https://www.elasticsuite.com/
+      source_refs:
+      - U1044
+    - id: elastic-custom-collections
+      parent_id: elastic-suite-core
+      name: Custom Collections
+      kind: feature
+      note: Présente des collections ciblées et des prix propres à un client, sans attribuer la maîtrise des prix à Elastic.
+      source_url: https://www.elasticsuite.com/
+      source_refs:
+      - U1044
+    offering_mappings:
+    - id: offer-elastic-order-entry
+      component_id: elastic-order-entry
+      node_id: subdomain-sales-wholesale
+      role: supports
+      evidence_state: documented
+      note: La construction et la soumission de commandes contribuent au parcours wholesale ; l’autorité sur la commande reste
+        à établir par SI.
+      source_url: https://www.elasticsuite.com/insights/create-catalog/
+      source_refs:
+      - U1044
+    - id: offer-elastic-catalog
+      component_id: elastic-catalog-presentation
+      node_id: subdomain-sales-wholesale
+      role: supports
+      evidence_state: documented
+      note: Présente aux acheteurs une offre numérique et des sélections commerciales ; ne prouve pas la gouvernance du catalogue
+        maître.
+      source_url: https://www.elasticsuite.com/insights/create-catalog/
+      source_refs:
+      - U1044
+    - id: offer-elastic-assortment
+      component_id: elastic-assortment-builder
+      node_id: subdomain-sales-wholesale
+      role: supports
+      evidence_state: documented
+      note: Aide à composer une proposition d’achat pour un revendeur.
+      source_url: https://www.elasticsuite.com/
+      source_refs:
+      - U1044
+    - id: offer-elastic-whiteboard
+      component_id: elastic-whiteboard
+      node_id: subdomain-sales-wholesale
+      role: supports
+      evidence_state: documented
+      note: Présente visuellement les produits dans le parcours de vente B2B.
+      source_url: https://www.elasticsuite.com/
+      source_refs:
+      - U1044
   - id: product-flow-core
     name: Flow Core System
     publisher: Beaumanoir / FLOW
@@ -87,58 +146,254 @@ application_catalog:
       - U1040
   - id: product-socloz
     name: SoCloz
-    publisher: Éditeur à documenter
+    publisher: Socloz
     kind: vendor_product
-    inventory_status: undetermined
-    scope: Plateforme citée dans le SI historique ; offre et modules à documenter.
-    note: Repère d’inventaire déclaré ; fiche éditeur et composition commerciale à instruire.
+    inventory_status: partial
+    scope: Suite omnicanale composée d’un OMS, d’un point de vente mobile et d’un outil de préparation des commandes en magasin.
+    note: Composition de l’offre éditeur ; modules acquis, activés et utilisés dans le SI historique non qualifiés.
     source_refs:
     - U1042
+    - U1044
     components:
     - id: socloz-core
       name: SoCloz
       kind: product
       source_refs:
       - U1042
+    - id: socloz-oms
+      parent_id: socloz-core
+      name: OMS
+      kind: module
+      note: Agrège la disponibilité des stocks et route des commandes omnicanales selon des règles configurées.
+      source_url: https://www.socloz.com/plateforme/oms/
+      source_refs:
+      - U1044
+    - id: socloz-mpos
+      parent_id: socloz-core
+      name: mPOS
+      kind: module
+      note: Prise de commande, encaissement mobile et relation client en magasin.
+      source_url: https://www.socloz.com/plateforme/
+      source_refs:
+      - U1044
+    - id: socloz-store-wms
+      parent_id: socloz-core
+      name: Store WMS
+      kind: module
+      note: Préparation et retours des commandes omnicanales en magasin.
+      source_url: https://www.socloz.com/plateforme/
+      source_refs:
+      - U1044
+    website_url: https://www.socloz.com/plateforme/
+    offering_mappings:
+    - id: offer-socloz-availability
+      component_id: socloz-oms
+      node_id: D03
+      role: supports
+      evidence_state: documented
+      note: L’OMS expose une disponibilité omnicanale et des règles de réservation ; les sources de stock restent externes
+        ou à qualifier.
+      source_url: https://www.socloz.com/plateforme/oms/
+      source_refs:
+      - U1044
+    - id: offer-socloz-orchestration
+      component_id: socloz-oms
+      node_id: D06
+      role: supports
+      evidence_state: documented
+      note: Le moteur de règles choisit un lieu de préparation ; la portée installée dans Beaumanoir n’est pas déduite.
+      source_url: https://www.socloz.com/plateforme/oms/
+      source_refs:
+      - U1044
+    - id: offer-socloz-mpos
+      component_id: socloz-mpos
+      node_id: subdomain-sales-b2c-store
+      role: supports
+      evidence_state: documented
+      note: Prise de commande et encaissement mobile en magasin.
+      source_url: https://www.socloz.com/plateforme/
+      source_refs:
+      - U1044
+    - id: offer-socloz-store-wms
+      component_id: socloz-store-wms
+      node_id: subdomain-store-backoffice-operations
+      role: supports
+      evidence_state: documented
+      note: Préparation des commandes web et traitement des retours en magasin.
+      source_url: https://www.socloz.com/plateforme/
+      source_refs:
+      - U1044
   - id: product-united-retail
     name: United Retail
-    publisher: Éditeur à documenter
+    publisher: Cegid (ex-Cylande)
     kind: vendor_product
-    inventory_status: undetermined
-    scope: Produit cité dans le SI historique ; offre et modules à documenter.
-    note: Repère d’inventaire déclaré ; fiche éditeur et composition commerciale à instruire.
+    inventory_status: partial
+    scope: 'Plateforme Cegid Retail UR de commerce unifié : opérations de vente en magasin, ventes assistées, CRM et parcours
+      omnicanaux selon les composants retenus.'
+    note: Cegid cite explicitement United Retail avec Storeland et Winstore chez Beaumanoir. L’identité de l’UR transverse
+      décrite dans les dossiers FLOW, ses adaptations et ses modules actifs restent à corroborer.
     source_refs:
     - U1042
+    - U1044
     components:
     - id: united-retail-core
       name: United Retail
       kind: product
       source_refs:
       - U1042
+    - id: ur-pos
+      parent_id: united-retail-core
+      name: UR POS
+      kind: module
+      note: Composant de caisse cité dans les prérequis Cegid ; son déploiement exact par marque n’est pas établi ici.
+      source_url: https://www.cegid.com/fr/cgv/?slugFileName=pr-requis-techniques_cegid-retail-ur_on-premise-licence
+      source_refs:
+      - U1044
+    - id: ur-assisted-sales
+      parent_id: united-retail-core
+      name: Assisted Sales
+      kind: module
+      note: Réservation et commande client avec plusieurs modes de délivrance dans la documentation UR.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Fonctionnalites-du-module-ventes-assistees/563
+      source_refs:
+      - U1044
+    - id: ur-crm
+      parent_id: united-retail-core
+      name: CRM
+      kind: module
+      note: Module CRM identifié dans la documentation de paramétrage UR ; périmètre commercial et usage Beaumanoir à qualifier.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Definir-les-parametres-generaux/555
+      source_refs:
+      - U1044
+    website_url: https://www.cegid.com/fr/cas-client/le-groupe-beaumanoir-choisit-plateforme-commerce-connecte-cegid-retail-equiper-la-halle/
+    offering_mappings:
+    - id: offer-ur-pos
+      component_id: ur-pos
+      node_id: subdomain-sales-b2c-store
+      role: supports
+      evidence_state: documented
+      note: La plateforme Cegid Retail couvre l’encaissement et la mobilité en magasin ; l’instance et les variantes UR restent
+        à vérifier.
+      source_url: https://www.cegid.com/fr/cas-client/le-groupe-beaumanoir-choisit-plateforme-commerce-connecte-cegid-retail-equiper-la-halle/
+      source_refs:
+      - U1044
+    - id: offer-ur-assisted-sales
+      component_id: ur-assisted-sales
+      node_id: subdomain-sales-b2c-store
+      role: supports
+      evidence_state: documented
+      note: La vente assistée gère réservation ou commande client au point de vente.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Fonctionnalites-du-module-ventes-assistees/563
+      source_refs:
+      - U1044
   - id: product-storeland
     name: Storeland
-    publisher: Éditeur à documenter
+    publisher: Cegid (ex-Cylande)
     kind: vendor_product
-    inventory_status: undetermined
-    scope: Produit cité dans le SI historique ; offre et modules à documenter.
-    note: Repère d’inventaire déclaré ; fiche éditeur et composition commerciale à instruire.
+    inventory_status: partial
+    scope: 'Gestion commerciale centrale d’un réseau de magasins : produits, achats, pilotage magasin, stock, dépôt et CRM
+      selon paramétrage.'
+    note: La documentation Cegid décrit des fonctions et des paramètres ; les instances par marque, leurs modules et leurs
+      personnalisations restent à vérifier.
     source_refs:
     - U1042
+    - U1044
     components:
     - id: storeland-core
       name: Storeland
       kind: product
       source_refs:
       - U1042
+    - id: storeland-products
+      parent_id: storeland-core
+      name: Product & Supplier Reference
+      kind: module
+      note: Référencement des articles et fournisseurs dans Storeland ; autorité de référence à qualifier dans chaque SI.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1044
+    - id: storeland-purchasing
+      parent_id: storeland-core
+      name: Purchasing
+      kind: module
+      note: Gestion d’achats dans l’offre Storeland ; les pratiques réelles diffèrent selon les marques.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1044
+    - id: storeland-store-management
+      parent_id: storeland-core
+      name: Store Management
+      kind: module
+      note: Pilotage du réseau, des stocks et des inventaires magasins.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1044
+    - id: storeland-warehouse
+      parent_id: storeland-core
+      name: Warehouse Operations
+      kind: module
+      note: Réception, mise en stock, picking et inventaire de dépôt.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1044
+    - id: storeland-crm
+      parent_id: storeland-core
+      name: CRM
+      kind: module
+      note: Module CRM et fidélité paramétrable ; ne prouve pas sa licence ni son activation.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Parametrage-du-module-CRM/556
+      source_refs:
+      - U1044
+    website_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+    offering_mappings:
+    - id: offer-storeland-products
+      component_id: storeland-products
+      node_id: ba-catalog-management
+      role: supports
+      evidence_state: documented
+      note: Le référencement des articles recoupe la gestion du catalogue ; la source de vérité d’entreprise reste à établir.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1044
+    - id: offer-storeland-purchasing
+      component_id: storeland-purchasing
+      node_id: subdomain-operational-procurement
+      role: supports
+      evidence_state: documented
+      note: L’offre décrit des achats fournisseur, sans préciser le partage de responsabilités avec les autres systèmes.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1044
+    - id: offer-storeland-stores
+      component_id: storeland-store-management
+      node_id: subdomain-retail-network-management
+      role: supports
+      evidence_state: documented
+      note: Pilotage des magasins et suivi des stocks à l’échelle du réseau.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1044
+    - id: offer-storeland-warehouse
+      component_id: storeland-warehouse
+      node_id: subdomain-warehouse-operations-control
+      role: supports
+      evidence_state: documented
+      note: Fonctions de dépôt documentées ; n’établit pas que Storeland orchestre les prestataires logistiques Beaumanoir.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1044
   - id: product-sap-ecc
     name: SAP ECC
     publisher: SAP
     kind: vendor_product
-    inventory_status: undetermined
-    scope: Progiciel SAP ECC ; modules et options de l’offre à inventorier.
-    note: Repère d’inventaire déclaré ; fiche éditeur et composition commerciale à instruire.
+    inventory_status: partial
+    scope: ERP SAP ECC avec extension sectorielle Apparel and Footwear Solution (AFS) ; les composants installés et leur paramétrage
+      Boardriders restent à vérifier.
+    note: SAP documente AFS comme extension du socle ERP et Allocation Run comme composant distinct ; cela ne démontre pas
+      son activation chez Boardriders.
     source_refs:
     - U1042
+    - U1044
     components:
     - id: sap-ecc-core
       name: SAP ECC
@@ -149,9 +404,12 @@ application_catalog:
       parent_id: sap-ecc-core
       name: AFS
       kind: module
-      note: Rattachement à SAP ECC déclaré pour Boardriders ; contenu de l’offre et licence à vérifier.
+      note: Extension sectorielle SAP pour l’habillement et la chaussure ; installation, licence et configuration Boardriders
+        à confirmer.
       source_refs:
       - U1042
+      - U1044
+      source_url: https://help.sap.com/docs/SAP_ERP/98c2704cf26a4120ae7168868b2e7da5/c1d1c353b677b44ce10000000a174cb4.html
     - id: sap-allocation-run
       parent_id: sap-afs
       name: AllocationRun
@@ -159,6 +417,20 @@ application_catalog:
       note: Traitement Boardriders mentionné par Laurent ; configuration et personnalisations à qualifier.
       source_refs:
       - U1042
+      - U1044
+      source_url: https://help.sap.com/saphelp_ve-planner80/helpdata/en/36/f8050ee8b030fbe10000009b38f982/content.htm
+    website_url: https://help.sap.com/docs/SAP_ERP/98c2704cf26a4120ae7168868b2e7da5/c1d1c353b677b44ce10000000a174cb4.html
+    offering_mappings:
+    - id: offer-sap-afs-arun
+      component_id: sap-allocation-run
+      node_id: D03.o
+      role: supports
+      evidence_state: documented
+      note: Allocation Run fixe une affectation entre demandes ouvertes et stock disponible, sous règles de priorité ; l’usage
+        Boardriders reste inconnu.
+      source_url: https://help.sap.com/saphelp_ve-planner80/helpdata/en/36/f8050ee8b030fbe10000009b38f982/content.htm
+      source_refs:
+      - U1044
   - id: product-newstore
     name: NewStore
     publisher: NewStore
@@ -167,11 +439,13 @@ application_catalog:
     scope: Plateforme de vente en magasin et de commerce omnicanal ; l'offre éditeur présente le POS comme cœur, avec des
       modules d'inventaire, de clienteling, de gestion des commandes, de fulfillment magasin et de paiement.
     website_url: https://www.newstore.com/
-    note: Composition de l'offre constatée sur le site éditeur le 2026-10-13. Le périmètre vendu et activé chez Boardriders
-      n'est pas établi ; les modules de l'offre ne prouvent pas leur usage dans ce SI.
+    note: L’offre comprend POS, inventaire, OMS, routage et fulfillment magasin. Chez Boardriders, Laurent décrit un usage
+      d’API et de gestion de commande jusqu’à engagement, sans routage de fulfillment NewStore ; licences et configuration
+      restent à confirmer.
     source_refs:
     - U1042
     - U1043
+    - U1044
     components:
     - id: newstore-core
       name: NewStore
@@ -233,23 +507,221 @@ application_catalog:
       source_url: https://www.newstore.com/integrations-and-apis/
       source_refs:
       - U1043
+    offering_mappings:
+    - id: offer-newstore-pos
+      component_id: newstore-pos
+      node_id: subdomain-sales-b2c-store
+      role: supports
+      evidence_state: documented
+      note: Le POS couvre le parcours de vente en magasin ; son usage Boardriders n’est pas établi.
+      source_url: https://docs.newstore.com/docs/getting-started-with-the-newstore-platform
+      source_refs:
+      - U1044
+    - id: offer-newstore-inventory
+      component_id: newstore-inventory
+      node_id: D01.c
+      role: supports
+      evidence_state: documented
+      note: L’offre donne une visibilité de stock entre magasins et entrepôts ; elle ne détermine pas la source de vérité
+        dans Boardriders.
+      source_url: https://docs.newstore.com/docs/set-up-stores-and-warehouses
+      source_refs:
+      - U1044
+    - id: offer-newstore-oms
+      component_id: newstore-order-management
+      node_id: D04
+      role: supports
+      evidence_state: documented
+      note: L’OMS éditeur suit les commandes de leur création à leur exécution ; cette étendue n’est pas imputée à l’installation
+        Boardriders.
+      source_url: https://docs.newstore.com/docs/set-up-your-oms
+      source_refs:
+      - U1044
+    - id: offer-newstore-routing
+      component_id: newstore-order-routing
+      node_id: D06
+      role: supports
+      evidence_state: documented
+      note: L’option route les commandes vers des lieux de fulfillment ; Laurent indique qu’elle n’est pas utilisée chez Boardriders.
+      source_url: https://docs.newstore.com/v1/docs/about-order-routing
+      source_refs:
+      - U1044
+    - id: offer-newstore-store-fulfillment
+      component_id: newstore-store-fulfillment
+      node_id: subdomain-store-backoffice-operations
+      role: supports
+      evidence_state: documented
+      note: L’offre permet l’exécution de demandes de préparation en magasin ; usage Boardriders non établi.
+      source_url: https://docs.newstore.com/docs/about-order-fulfillment-1
+      source_refs:
+      - U1044
   - id: product-sfcc
     name: Salesforce Commerce Cloud
     publisher: Salesforce
     kind: vendor_product
-    inventory_status: undetermined
-    scope: Plateforme eCommerce citée pour le SI Boardriders ; édition, composants et rôle détaillé à qualifier.
+    inventory_status: partial
+    scope: Plateforme Salesforce Commerce Cloud pour la vitrine, le catalogue exposé, le panier et le passage de commande
+      en ligne ; les fonctions varient selon l’édition et les intégrations.
     website_url: https://www.salesforce.com/commerce/
-    note: SFCC est cité comme extrémité eCommerce de l'intégration avec NewStore ; la version et les modules utilisés ne sont
-      pas documentés par cet apport.
+    note: La sélection Boardriders est déclarée par Laurent. Les liens d’offre ci-dessous concernent la documentation B2C
+      Commerce ; l’édition, les extensions et les responsabilités installées restent à vérifier.
     source_refs:
     - U1043
+    - U1044
     components:
     - id: sfcc-core
       name: Salesforce Commerce Cloud
       kind: product
       source_refs:
       - U1043
+    - id: sfcc-storefront
+      parent_id: sfcc-core
+      name: B2C Storefront & Checkout
+      kind: module
+      note: Vitrine et passage de commande B2C ; la gestion aval peut être confiée à un OMS externe.
+      source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/order-mgmt.html
+      source_refs:
+      - U1044
+    - id: sfcc-promotions
+      parent_id: sfcc-core
+      name: Promotions
+      kind: feature
+      note: Promotions de produit, de commande ou d’expédition ; autorité commerciale et configuration Boardriders non établies.
+      source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/promotion-details.html
+      source_refs:
+      - U1044
+    offering_mappings:
+    - id: offer-sfcc-storefront
+      component_id: sfcc-storefront
+      node_id: subdomain-sales-b2c-ecommerce
+      role: supports
+      evidence_state: documented
+      note: La vitrine B2C permet l’achat en ligne ; la gestion aval de commande dépend des intégrations.
+      source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/order-mgmt.html
+      source_refs:
+      - U1044
+    - id: offer-sfcc-promotions
+      component_id: sfcc-promotions
+      node_id: subdomain-pricing-promotions-management
+      role: supports
+      evidence_state: documented
+      note: Le moteur de promotions couvre des remises en ligne ; ne prouve pas la maîtrise des politiques commerciales dans
+        SFCC Boardriders.
+      source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/promotion-details.html
+      source_refs:
+      - U1044
+  - id: product-cegid-y2
+    name: Cegid Retail Y2
+    publisher: Cegid
+    kind: vendor_product
+    inventory_status: partial
+    scope: Plateforme retail de vente et d’opérations en magasin, avec back-office central pour les stocks et le catalogue
+      selon l’offre retenue.
+    website_url: https://www.cegid.com/fr/produits/cegid-retail/
+    note: Cité dans le schéma Boardriders de FLOW-Program ; pays, magasins, édition et modules réellement déployés à confirmer.
+    source_refs:
+    - U1045
+    components:
+    - id: cegid-y2-core
+      name: Cegid Retail Y2
+      kind: product
+      source_refs:
+      - U1045
+    - id: cegid-y2-pos
+      parent_id: cegid-y2-core
+      name: Store POS
+      kind: module
+      note: Encaissement et opérations front-office de l’offre.
+      source_url: https://www.cegid.com/fr/cas-client/arena-optimise-la-gestion-de-ses-boutiques-et-lexperience-client-grace-a-cegid-retail-y2/
+      source_refs:
+      - U1045
+    - id: cegid-y2-backoffice
+      parent_id: cegid-y2-core
+      name: Store Back Office
+      kind: module
+      note: Pilotage central des stocks et du catalogue dans l’offre décrite par Cegid.
+      source_url: https://www.cegid.com/fr/cas-client/arena-optimise-la-gestion-de-ses-boutiques-et-lexperience-client-grace-a-cegid-retail-y2/
+      source_refs:
+      - U1045
+    offering_mappings:
+    - id: offer-cegid-y2-pos
+      component_id: cegid-y2-pos
+      node_id: subdomain-sales-b2c-store
+      role: supports
+      evidence_state: documented
+      note: L’offre couvre les ventes et encaissements en magasin ; ce périmètre n’est pas attribué à l’instance Boardriders.
+      source_url: https://www.cegid.com/fr/cas-client/arena-optimise-la-gestion-de-ses-boutiques-et-lexperience-client-grace-a-cegid-retail-y2/
+      source_refs:
+      - U1045
+    - id: offer-cegid-y2-backoffice
+      component_id: cegid-y2-backoffice
+      node_id: subdomain-store-backoffice-operations
+      role: supports
+      evidence_state: documented
+      note: L’offre décrit un back-office magasin et stock ; le paramétrage Boardriders reste inconnu.
+      source_url: https://www.cegid.com/fr/cas-client/arena-optimise-la-gestion-de-ses-boutiques-et-lexperience-client-grace-a-cegid-retail-y2/
+      source_refs:
+      - U1045
+  - id: product-centric-plm
+    name: Centric PLM
+    publisher: Centric Software
+    kind: vendor_product
+    inventory_status: partial
+    scope: 'Gestion du cycle de développement produit : conception, spécifications, échantillons et collaboration fournisseur.'
+    website_url: https://www.centricsoftware.com/en-gb/what-is-centric-plm
+    note: PLM Centric cité dans le dossier Boardriders de FLOW-Program ; produit exact, modules et déploiement à confirmer.
+    source_refs:
+    - U1045
+    components:
+    - id: centric-plm-core
+      name: Centric PLM
+      kind: product
+      source_refs:
+      - U1045
+    offering_mappings:
+    - id: offer-centric-plm-development
+      component_id: centric-plm-core
+      node_id: domain-product-development
+      role: supports
+      evidence_state: documented
+      note: L’offre couvre la conception, la spécification, les essais et la collaboration autour du développement produit.
+      source_url: https://www.centricsoftware.com/en-gb/what-is-centric-plm
+      source_refs:
+      - U1045
+  - id: product-sap-bpc
+    name: SAP Business Planning and Consolidation
+    publisher: SAP
+    kind: vendor_product
+    inventory_status: undetermined
+    scope: Planification et consolidation de données de gestion selon l’édition SAP BPC.
+    website_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/48f4b4785b8e45938ac44a67be8032d9/4215dc52f2d2a91ae10000000a44538d.html
+    note: SAP BPC cité dans la zone Planning du dossier Boardriders ; édition, usage et frontière avec le planning Supply
+      non établis.
+    source_refs:
+    - U1045
+    components:
+    - id: sap-bpc-core
+      name: SAP Business Planning and Consolidation
+      kind: product
+      source_refs:
+      - U1045
+  - id: product-winstore
+    name: Winstore
+    publisher: Cegid (ex-Cylande)
+    kind: vendor_product
+    inventory_status: undetermined
+    scope: Progiciel retail en magasin cité par Cegid avec Storeland et United Retail chez Beaumanoir ; fonctions et éditions
+      à documenter.
+    website_url: https://www.cegid.com/fr/cas-client/le-groupe-beaumanoir-choisit-plateforme-commerce-connecte-cegid-retail-equiper-la-halle/
+    note: La source Cegid confirme le nom dans l’écosystème Beaumanoir, mais les instances et l’usage par marque restent inconnus.
+    source_refs:
+    - U1045
+    components:
+    - id: winstore-core
+      name: Winstore
+      kind: product
+      source_refs:
+      - U1045
   selections:
   - id: selection-elastic-historique
     context_id: beaumanoir-historique
@@ -414,8 +886,8 @@ application_catalog:
     product_id: product-sap-ecc
     panorama_ref: APP-ECC
     presence: declared
-    note: SAP ECC reçoit les commandes de NewStore et orchestre leur fulfillment selon Laurent ; le module responsable,
-      la configuration et la version restent à qualifier.
+    note: SAP ECC reçoit les commandes de NewStore et orchestre leur fulfillment selon Laurent ; le module responsable, la
+      configuration et la version restent à qualifier.
     source_refs:
     - U1042
     - U1043
@@ -436,9 +908,9 @@ application_catalog:
     product_id: product-newstore
     panorama_ref: APP-NEW
     presence: declared
-    note: 'Usage déclaré : plateforme d’API à brancher à SFCC et connectée à SAP ECC ; NewStore gère la commande de vente jusqu’à
-      l’engagement, puis SAP orchestre le fulfillment. Le routage NewStore n’est pas utilisé selon Laurent ; POS, licences
-      et configuration précise non établis.'
+    note: 'Usage déclaré : plateforme d’API à brancher à SFCC et connectée à SAP ECC ; NewStore gère la commande de vente
+      jusqu’à l’engagement, puis SAP orchestre le fulfillment. Le routage NewStore n’est pas utilisé selon Laurent ; POS,
+      licences et configuration précise non établis.'
     source_refs:
     - U1042
     - U1043
@@ -470,8 +942,8 @@ application_catalog:
     perspective: as_is
     product_id: product-sfcc
     presence: declared
-    note: Plateforme eCommerce citée par Laurent comme devant être branchée à NewStore ; édition, version, fonctions et échanges exacts à
-      documenter.
+    note: Plateforme eCommerce citée par Laurent comme devant être branchée à NewStore ; édition, version, fonctions et échanges
+      exacts à documenter.
     source_refs:
     - U1043
     component_states:
@@ -487,10 +959,60 @@ application_catalog:
       node_id: subdomain-sales-b2c-ecommerce
       role: supports
       evidence_state: declared
-      note: Usage eCommerce déclaré par Laurent ; la prise de commande, le paiement et la frontière avec NewStore restent à
-        documenter.
+      note: Usage eCommerce déclaré par Laurent ; la prise de commande, le paiement et la frontière avec NewStore restent
+        à documenter.
       source_refs:
       - U1043
+  - id: selection-cegid-y2-boardriders
+    context_id: boardriders
+    perspective: as_is
+    product_id: product-cegid-y2
+    presence: unknown
+    note: Nom cité dans le panorama synthétique FLOW-Program ; installation, périmètre et version à corroborer.
+    source_refs:
+    - U1045
+    component_states: []
+    mappings: []
+  - id: selection-centric-plm-boardriders
+    context_id: boardriders
+    perspective: as_is
+    product_id: product-centric-plm
+    presence: unknown
+    note: PLM Centric cité dans le dossier FLOW-Program ; identité du déploiement à vérifier.
+    source_refs:
+    - U1045
+    component_states: []
+    mappings: []
+  - id: selection-sap-bpc-boardriders
+    context_id: boardriders
+    perspective: as_is
+    product_id: product-sap-bpc
+    presence: unknown
+    note: SAP BPC cité dans la zone Planning ; édition et usage à vérifier.
+    source_refs:
+    - U1045
+    component_states: []
+    mappings: []
+  - id: selection-winstore-beaumanoir-historique
+    context_id: beaumanoir-historique
+    perspective: as_is
+    product_id: product-winstore
+    presence: documented
+    note: Cegid cite Winstore dans l’écosystème Beaumanoir ; répartition par marque et fonctions actives inconnues.
+    source_refs:
+    - U1045
+    component_states: []
+    mappings: []
+  - id: selection-sfcc-beaumanoir-historique
+    context_id: beaumanoir-historique
+    perspective: as_is
+    product_id: product-sfcc
+    presence: unknown
+    note: SFCC figure dans la synthèse FLOW-Program Beaumanoir ; période et déploiement à vérifier.
+    source_refs:
+    - U1045
+    component_states: []
+    mappings: []
 nodes:
 - id: beaumanoir-target-universe
   revision: 3

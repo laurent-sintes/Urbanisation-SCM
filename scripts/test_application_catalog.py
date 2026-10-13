@@ -41,8 +41,21 @@ class ApplicationCatalogTests(unittest.TestCase):
         types, counts = _catalog_types(self.model, {})
         paths = {item['path'] for item in types}
         self.assertIn('application_catalog.selections.mappings', paths)
-        self.assertEqual(counts['application_catalog.products'], 8)
-        self.assertEqual(counts['application_catalog.selections'], 9)
+        self.assertEqual(counts['application_catalog.products'], 12)
+        self.assertEqual(counts['application_catalog.selections'], 14)
+
+    def test_offering_links_require_a_primary_source_and_never_imply_si_use(self):
+        catalog = self.model['application_catalog']
+        newstore = next(item for item in catalog['products'] if item['id'] == 'product-newstore')
+        selection = next(item for item in catalog['selections'] if item['id'] == 'selection-newstore-boardriders')
+        self.assertTrue(any(item['component_id'] == 'newstore-order-routing' and item['node_id'] == 'D06'
+                            for item in newstore['offering_mappings']))
+        self.assertFalse(any(item['node_id'] == 'D06' for item in selection['mappings']))
+        model = deepcopy(self.model)
+        mapping = next(item for item in model['application_catalog']['products']
+                       if item['id'] == 'product-newstore')['offering_mappings'][0]
+        del mapping['source_url']
+        self.assertTrue(any('vendor offering needs documented source' in error for error in validate_catalog(model)))
 
     def test_newstore_boardriders_distinguishes_offering_and_use(self):
         catalog = self.model['application_catalog']

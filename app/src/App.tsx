@@ -1052,6 +1052,13 @@ export function App() {
                       route={route}
                       onChange={changeRoute}
                       onShowOnMap={showApplicationOnMap}
+                      onShowBusinessNode={(nodeId) =>
+                        changeRoute({
+                          ...mapRouteForNode(model, nodeId),
+                          appSelection: '',
+                          appComponent: '',
+                        })
+                      }
                     />
                   ) : view === 'documents' ? (
                     <DocumentCatalogPage model={displayModel || model} route={route} onChange={changeRoute} />

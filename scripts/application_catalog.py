@@ -76,6 +76,23 @@ def validate_catalog(model):
     nodes = {item['id']: item for item in model['nodes']}
     selections = set()
     mappings = set()
+    for product in catalog['products']:
+        if product['kind'] == 'internal_product' and product.get('offering_mappings'):
+            errors.append(f'application_catalog/{product["id"]}: internal product cannot claim a vendor offering')
+        for mapping in product.get('offering_mappings', []):
+            mapping_id = mapping['id']
+            if mapping_id in mappings:
+                errors.append(f'application_catalog: duplicate mapping {mapping_id}')
+            mappings.add(mapping_id)
+            if component_owner.get(mapping['component_id']) != product['id']:
+                errors.append(f'application_catalog/{mapping_id}: foreign component')
+            node = nodes.get(mapping['node_id'])
+            if not node or node.get('kind') not in BUSINESS_KINDS:
+                errors.append(f'application_catalog/{mapping_id}: unknown business node {mapping["node_id"]}')
+            if mapping['evidence_state'] != 'documented' or not mapping.get('source_url'):
+                errors.append(f'application_catalog/{mapping_id}: vendor offering needs documented source')
+            if mapping['role'] == 'planned_support':
+                errors.append(f'application_catalog/{mapping_id}: vendor offering cannot be planned support')
     for selection in catalog['selections']:
         identifier = selection['id']
         if identifier in selections:

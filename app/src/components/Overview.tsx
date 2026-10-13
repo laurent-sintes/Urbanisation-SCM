@@ -1,7 +1,7 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { type CSSProperties, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { MIN_READABLE_ZOOM, overviewLayout, prominentChildIndex } from '../adaptiveLayout';
-import { applicationMapIds, contextName, productFor, selectionMappings } from '../applicationCatalog';
+import { applicationMapIds, productFor, selectionMappings } from '../applicationCatalog';
 import { dataSharingCardInsets, dataSharingHeadroom, systemDataSharing } from '../dataSharing';
 import { filterMapHotspots, type HotspotMapFilters, hotspotRelatedElementIds } from '../hotspotMap';
 import { HOTSPOT_DIAMETERS, type HotspotPlacementGroup, layoutHotspots } from '../hotspotPlacement';
@@ -9,6 +9,7 @@ import { operationsMapSlots, systemMapSlots } from '../mapPlacement';
 import { childrenOf, descendantsOf, lineageOf, rootsOf } from '../model';
 import type { PublishedModel } from '../types';
 import { HotspotLegend, HotspotMapMarker } from './HotspotDisplay';
+import { MapApplicationPicker } from './MapApplicationPicker';
 import { MapDetailPicker } from './MapDetailPicker';
 import { MapHotspotPicker } from './MapHotspotPicker';
 import { MapZoomPicker, useMapZoomChoice } from './MapZoomPicker';
@@ -341,36 +342,12 @@ export function Overview({
             />
           )}
           {!!applicationCatalog?.selections.length && (
-            <div className="application-map-controls" role="group" aria-label="Positionnement des applications">
-              <label htmlFor="application-map-selection">Applications</label>
-              <select
-                id="application-map-selection"
-                value={applicationSelection?.id || ''}
-                onChange={(event) => onApplicationChange(event.target.value, '')}
-              >
-                <option value="">Masquées</option>
-                {applicationCatalog.selections.map((selection) => (
-                  <option key={selection.id} value={selection.id}>
-                    {contextName[selection.context_id] || selection.context_id} ·{' '}
-                    {productFor(applicationCatalog, selection)?.name || selection.product_id}
-                  </option>
-                ))}
-              </select>
-              {applicationProduct && (
-                <select
-                  aria-label="Composant applicatif"
-                  value={applicationComponentId || ''}
-                  onChange={(event) => onApplicationChange(applicationSelection?.id || '', event.target.value)}
-                >
-                  <option value="">Tout le produit</option>
-                  {applicationProduct.components.map((component) => (
-                    <option key={component.id} value={component.id}>
-                      {component.name}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
+            <MapApplicationPicker
+              catalog={applicationCatalog}
+              selectionId={applicationSelectionId}
+              componentId={applicationComponentId}
+              onChange={onApplicationChange}
+            />
           )}
           <MapZoomPicker choice={zoomChoice} onChange={setZoomChoice} pageFallback={pageFallback} />
           <button

@@ -244,6 +244,7 @@ export interface ApplicationProduct {
   note?: string;
   source_refs: string[];
   components: ApplicationComponent[];
+  offering_mappings?: ApplicationMapping[];
 }
 export interface ApplicationComponentState {
   component_id: string;
@@ -259,6 +260,7 @@ export interface ApplicationMapping {
   role: 'supports' | 'contributes' | 'consumes_information' | 'planned_support';
   evidence_state: 'candidate' | 'declared' | 'historical_document' | 'documented' | 'confirmed' | 'planned';
   note: string;
+  source_url?: string;
   source_refs: string[];
 }
 export interface ApplicationSelection {

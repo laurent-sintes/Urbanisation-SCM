@@ -128,12 +128,39 @@
   margin: 3px 0;
 }
 .application-page .application-components button {
+  display: grid;
+  gap: 3px;
   width: 100%;
   border: 0;
   padding: 7px 9px;
   background: transparent;
   text-align: left;
   font-weight: 500;
+}
+.application-components button small {
+  color: #63796d;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.35;
+}
+.application-component-status,
+.application-component-status > span {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 3px;
+}
+.application-component-status {
+  gap: 3px 8px;
+}
+.application-component-status .application-activation-no,
+.application-component-disabled > button > span:first-child {
+  color: #7a8580;
+}
+.application-component-status .application-activation-declared,
+.application-component-status .application-activation-documented,
+.application-component-status .application-activation-confirmed {
+  color: #216249;
 }
 .application-page .application-components button[aria-current="true"] {
   background: #dcece3;
@@ -217,13 +244,27 @@
   color: #627970;
 }
 .application-mapping {
+  display: grid;
+  gap: 5px;
+  padding: 10px;
+  border: 1px solid #dce8df;
+  border-radius: 8px;
+  background: #f8fbf9;
   font-size: 12px;
 }
-.application-mapping span {
-  font-weight: 650;
+.application-mapping small {
+  color: #61796a;
 }
-.application-page button,
-.application-map-controls button {
+.application-mapping button {
+  justify-self: start;
+}
+.application-mapping-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+.application-page button {
   border: 1px solid #b8d2c1;
   border-radius: 7px;
   background: white;
@@ -231,19 +272,83 @@
   color: #315e48;
   cursor: pointer;
 }
-.application-page button:hover,
-.application-map-controls button:hover {
+.application-page button:hover {
   background: #e9f3ec;
 }
-.application-map-controls {
+.map-application-picker {
+  position: relative;
+  z-index: 5;
+}
+.map-application-picker:focus-within {
+  z-index: 12;
+}
+.application-picker-popover {
+  z-index: 3000;
+  width: min(390px, calc(100vw - 28px));
+  overflow: auto;
+  padding: 16px;
+  border: 1px solid #d9e4db;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 15px 40px #243b3029;
+  color: #315e48;
+}
+.application-picker-heading {
   display: flex;
   align-items: center;
-  gap: 8px;
-  min-width: 0;
+  justify-content: space-between;
+  gap: 12px;
 }
-.application-map-controls select {
-  max-width: 205px;
-  min-width: 0;
+.application-picker-heading button {
+  display: inline-grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: #315e48;
+}
+.application-picker-popover p {
+  margin: 6px 0 12px;
+  color: #60766a;
+  font-size: 12px;
+}
+.application-picker-list {
+  max-height: 220px;
+  overflow: auto;
+  margin-top: 8px;
+}
+.application-picker-list section + section,
+.application-picker-components {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #d9e4db;
+}
+.application-picker-list h3,
+.application-picker-components > strong {
+  display: block;
+  margin: 0 0 5px;
+  color: #526a5b;
+  font-size: 11px;
+}
+.application-picker-option {
+  display: block;
+  width: 100%;
+  padding: 8px 10px !important;
+  border: 0;
+  border-radius: 7px;
+  background: #fff;
+  color: #315e48;
+  text-align: left;
+}
+.application-picker-option:hover,
+.application-picker-option[aria-pressed="true"] {
+  background: #dcece3;
+}
+.application-picker-option[aria-pressed="true"] {
+  font-weight: 700;
+}
+.application-picker-components {
+  max-height: 170px;
+  overflow: auto;
 }
 .application-map-note {
   margin: 0 0 8px;
@@ -259,6 +364,10 @@
 }
 .application-related-item {
   border-radius: 5px;
+}
+.overview-system.application-context {
+  outline: 2px dashed color-mix(in srgb, var(--application-accent, #54a872) 60%, white);
+  outline-offset: 3px;
 }
 .application-context-item {
   outline: 2px dashed color-mix(in srgb, var(--application-accent, #54a872) 60%, white);
@@ -300,15 +409,11 @@
   .application-page {
     padding: 16px;
   }
-  .application-map-controls {
-    flex: 1 1 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    align-items: stretch;
+  .map-application-picker .detail-trigger {
+    max-width: calc(100vw - 48px);
   }
-  .application-map-controls select {
-    width: 100%;
-    max-width: 100%;
-    min-height: 36px;
+  .map-application-picker .detail-trigger strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

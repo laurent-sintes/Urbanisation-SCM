@@ -1925,7 +1925,8 @@
               },
               "note": { "type": "string" },
               "source_refs": { "$ref": "#/$defs/applicationSourceRefs" },
-              "components": { "type": "array", "items": { "$ref": "#/$defs/applicationComponent" } }
+              "components": { "type": "array", "items": { "$ref": "#/$defs/applicationComponent" } },
+              "offering_mappings": { "type": "array", "items": { "$ref": "#/$defs/applicationMapping" } }
             },
             "required": ["id", "name", "publisher", "kind", "inventory_status", "scope", "source_refs", "components"]
           }
@@ -1997,6 +1998,7 @@
         "role": { "enum": ["supports", "contributes", "consumes_information", "planned_support"] },
         "evidence_state": { "enum": ["candidate", "declared", "historical_document", "documented", "confirmed", "planned"] },
         "note": { "type": "string", "minLength": 1 },
+        "source_url": { "type": "string", "pattern": "^https://" },
         "source_refs": { "$ref": "#/$defs/applicationSourceRefs" }
       },
       "required": ["id", "component_id", "node_id", "role", "evidence_state", "note", "source_refs"]
