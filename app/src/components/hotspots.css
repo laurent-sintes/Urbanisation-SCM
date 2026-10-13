@@ -341,11 +341,6 @@ button.hotspot-qualification:hover {
 .hotspot-filter-summary button {
   flex-shrink: 0;
 }
-.hotspot-gap-observations {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-  gap: 16px;
-}
 .hotspot-assessment-guide {
   margin: 16px 0;
   padding: 12px;
@@ -844,16 +839,6 @@ button.hotspot-qualification:hover {
   border-left: 3px solid #699280;
   background: #f1f7f3;
 }
-.hotspot-provenance {
-  margin-top: 1rem;
-  padding: 0.7rem;
-  border: 1px solid #d4dfdb;
-  border-radius: 0.5rem;
-}
-.hotspot-provenance summary {
-  cursor: pointer;
-  font-weight: 650;
-}
 .hotspot-kicker {
   color: #9c513e;
   font-weight: 700;
@@ -898,43 +883,34 @@ button.hotspot-qualification:hover {
   gap: 0.7rem;
 }
 .hotspot-criticality {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0 0 1.1rem;
+}
+.hotspot-criticality > :is(strong, span) {
+  padding: 0.35rem 0.65rem;
   border: 1px solid #d9e0dc;
-  border-radius: 0.6rem;
-  padding: 1rem;
+  border-radius: 0.45rem;
   background: #f4f8f5;
+  font-size: 0.82rem;
 }
-.hotspot-criticality h5,
-.hotspot-criticality h6 {
-  margin: 0 0 0.5rem;
-  font-size: 1rem;
-}
-.hotspot-criticality-components {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
-  gap: 1rem;
-  margin: 1rem 0;
-  padding: 1rem 0;
-  border-top: 1px solid #d9e0dc;
-  border-bottom: 1px solid #d9e0dc;
-}
-.hotspot-criticality-components dt {
-  font-weight: 700;
-}
-.hotspot-criticality-components dd {
-  margin: 0.4rem 0 0;
+.hotspot-criticality > strong {
+  color: #794822;
+  background: #f7e9dc;
 }
 .hotspot-facts div,
-.hotspot-options section,
-.hotspot-market {
+.hotspot-options section {
   border: 1px solid #d9e0dc;
   border-radius: 0.6rem;
   padding: 0.9rem;
   background: #fff;
 }
-.hotspot-market ul {
+.hotspot-market-links {
   padding-left: 1.25rem;
 }
-.hotspot-market li + li {
+.hotspot-market-links li + li {
   margin-top: 0.4rem;
 }
 .hotspot-facts dt {
@@ -983,7 +959,7 @@ button.hotspot-qualification:hover {
 }
 .hotspot-detail-body {
   display: grid;
-  gap: 0.5rem;
+  gap: 1rem;
   min-width: 0;
 }
 .hotspot-detail-body :is(a, button, summary, [tabindex]) {
@@ -992,6 +968,7 @@ button.hotspot-qualification:hover {
 }
 .hotspot-detail-toolbar button,
 .hotspot-story-heading button,
+.hotspot-criticality button,
 .hotspot-documents button {
   display: inline-flex;
   align-items: center;
@@ -1011,7 +988,7 @@ button.hotspot-qualification:hover {
   outline-offset: 3px;
 }
 .hotspot-story-context {
-  padding: 0.5rem 0 0.75rem;
+  padding: 0.5rem 0 0;
 }
 .hotspot-story-context .hotspot-kicker {
   color: var(--muted);
@@ -1019,16 +996,52 @@ button.hotspot-qualification:hover {
   font-weight: 500;
 }
 .hotspot-story-section {
-  padding: 1.5rem 0;
+  padding: 1.5rem 0 2rem;
   border-bottom: 1px solid var(--line);
   min-width: 0;
+}
+.hotspot-dossier {
+  margin: 0.5rem 0 2rem;
+  border: 1px solid #cadbd3;
+  border-radius: 0.7rem;
+  background: #f8fbf9;
+}
+.hotspot-dossier > summary {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 1rem 1.2rem;
+  color: var(--flow-green);
+  font-weight: 700;
+  cursor: pointer;
+}
+.hotspot-dossier > summary::after {
+  content: "⌄";
+  margin-left: auto;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+.hotspot-dossier[open] > summary::after {
+  transform: rotate(180deg);
+}
+.hotspot-dossier-body {
+  padding: 0 1.2rem 0.5rem;
+  background: white;
+  border-radius: 0 0 0.7rem 0.7rem;
 }
 .hotspot-detail h4,
 .hotspot-detail h5 {
   margin: 0 0 0.75rem;
 }
 .hotspot-detail h4 {
-  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.2rem;
+}
+.hotspot-detail h4 svg {
+  flex: none;
+  color: var(--flow-green);
 }
 .hotspot-detail h5 {
   font-size: 1rem;
@@ -1046,19 +1059,68 @@ button.hotspot-qualification:hover {
   line-height: 1.65;
   overflow-wrap: anywhere;
 }
-.hotspot-story-step {
-  margin-right: 0.6rem;
-  color: var(--muted);
-  font-size: 0.9rem;
-  font-weight: 500;
-}
 .hotspot-story-overview {
-  padding: 1.2rem 1.4rem;
-  border-left: 4px solid var(--flow-green);
-  border-radius: 0 0.6rem 0.6rem 0;
-  background: #f0faf7;
+  padding: 1.35rem 1.5rem;
+  border: 1px solid #e8d7c8;
+  border-left: 4px solid #b66b39;
+  border-radius: 0.7rem;
+  background: #fffbf6;
+}
+.hotspot-story-overview > h4 {
+  color: #794822;
+}
+.hotspot-story-overview .hotspot-story-lead {
+  margin: 0.35rem 0 1.5rem;
+}
+.hotspot-question-index {
+  padding-top: 1.1rem;
+  border-top: 1px solid #eaded2;
+}
+.hotspot-question-index > h5 {
+  margin-bottom: 0.9rem;
+}
+.hotspot-question-index-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+.hotspot-question-index-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 1rem;
+  border: 1px solid #e3d9ce;
+  border-radius: 0.65rem;
+  background: #fff;
+}
+.hotspot-question-index-item strong,
+.hotspot-question-index-item small {
+  display: block;
+  line-height: 1.45;
+}
+.hotspot-question-index-item strong {
+  font-size: 0.96rem;
+}
+.hotspot-question-index-item small {
+  margin-top: 0.55rem;
+  color: #79583e;
+}
+.hotspot-question-number {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: #f5e8dc;
+  color: #804b27;
+  font-weight: 700;
 }
 .hotspot-progress-stage {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.25rem 0 0;
   color: var(--flow-green);
   font-weight: 650;
 }
@@ -1071,12 +1133,18 @@ button.hotspot-qualification:hover {
   color: #874226;
 }
 .hotspot-story-lead {
-  font-size: 1.05rem;
+  font-size: 1.08rem;
   font-weight: 600;
 }
 .hotspot-story-examples,
 .hotspot-documents {
   padding-left: 1.4rem;
+}
+.hotspot-gap-summary {
+  padding-left: 1.2rem;
+}
+.hotspot-gap-summary li + li {
+  margin-top: 0.55rem;
 }
 .hotspot-story-examples li + li,
 .hotspot-documents li + li {
@@ -1085,23 +1153,93 @@ button.hotspot-qualification:hover {
 .hotspot-story-section .hotspot-anchors {
   margin: 1rem 0 1.25rem;
 }
-.hotspot-story-support summary {
-  color: var(--flow-green);
-  cursor: pointer;
-  line-height: 1.6;
+.hotspot-story-support {
+  margin-top: 1.5rem;
 }
-.hotspot-story-support .hotspot-market {
-  margin-top: 0.75rem;
+.hotspot-story-support h5 {
+  margin-bottom: 0.65rem;
+}
+.hotspot-problem {
+  padding: 1.3rem;
+  border: 1px solid #e3d9ce;
+  border-radius: 0.7rem;
+  background: #fffcf8;
+  scroll-margin-top: calc(var(--hotspot-header-height, 150px) + 1rem);
 }
 .hotspot-problem + .hotspot-problem {
-  margin-top: 1.5rem;
-  padding-top: 1.3rem;
-  border-top: 1px solid #ccd8d5;
+  margin-top: 1.2rem;
+}
+.hotspot-problem > h5 {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.hotspot-problem-number {
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.35rem;
+  background: #f5e8dc;
+  color: #794822;
+  font-size: 0.78rem;
 }
 .hotspot-problem-question {
-  padding: 0.7rem 0.9rem;
-  border-left: 3px solid var(--flow-green);
-  background: #f0faf7;
+  margin: 0.2rem 0 0.6rem;
+  font-size: 1.04rem;
+  font-weight: 650;
+}
+.hotspot-problem-analysis {
+  margin: 0.2rem 0 0.7rem;
+  color: #40524b;
+}
+.hotspot-problem-document {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.85rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--flow-green);
+  font: inherit;
+  font-size: 0.86rem;
+  font-weight: 700;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.hotspot-problem-option-count {
+  margin: 0 0 1rem;
+  color: #79583e;
+  font-size: 0.82rem;
+  font-weight: 650;
+}
+.hotspot-problem .hotspot-options {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.hotspot-story-option {
+  border-color: #bbd7c7 !important;
+  background: #fff !important;
+}
+.hotspot-story-option h5 {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--flow-green);
+}
+.hotspot-story-option p {
+  margin-bottom: 0;
+}
+.hotspot-option-detail-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem 1.5rem;
+}
+.hotspot-option-detail-list article {
+  padding: 0.65rem 0;
+  border-top: 1px solid var(--line);
+}
+.hotspot-option-detail-list article p {
+  margin: 0.45rem 0;
 }
 .hotspot-documents a {
   display: inline-flex;
@@ -1146,6 +1284,14 @@ button.hotspot-qualification:hover {
 }
 @media (max-width: 760px) {
   .hotspot-story-overview {
+    padding: 1rem;
+  }
+  .hotspot-question-index-list,
+  .hotspot-problem .hotspot-options,
+  .hotspot-option-detail-list {
+    grid-template-columns: 1fr;
+  }
+  .hotspot-problem {
     padding: 1rem;
   }
   .hotspot-story-section {

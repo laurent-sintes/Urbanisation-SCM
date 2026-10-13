@@ -70,7 +70,24 @@ class ContextIndex:
             if edge.get('type') in ('contains', 'presents'):
                 self.parents.setdefault(edge['target_id'], set()).add(identifier)
         self.root = {key: value for key, value in snapshot.items()
-                     if key not in ROOT_METADATA | {'nodes', 'relations', 'principles', 'glossary', 'scenario_catalog'}}
+                     if key not in ROOT_METADATA | {'nodes', 'relations', 'principles', 'glossary',
+                                                    'scenario_catalog', 'hotspot_catalog'}}
+        hotspots = snapshot.get('hotspot_catalog', {})
+        if hotspots:
+            # Shared policies and unknown catalogue fields remain global.
+            # Source descriptions are provenance, not an approval context.
+            # Each Hotspot is scoped through its explicit model anchors below.
+            self.root['hotspot_catalog'] = business_record({key: value for key, value in hotspots.items()
+                                                            if key not in {'hotspots', 'sources'}})
+        self.hotspots = {identifier: business_record(value) for identifier, value in
+                         _index(hotspots.get('hotspots', [])).items()}
+        self.hotspot_anchors = {}
+        for identifier, hotspot in self.hotspots.items():
+            anchors = hotspot.get('location', {}).get('node_ids')
+            if not isinstance(anchors, list) or not anchors or any(not isinstance(anchor, str) for anchor in anchors):
+                raise ValueError('Hotspot context missing model anchors')
+            for anchor in anchors:
+                self.hotspot_anchors.setdefault(anchor, set()).add(identifier)
         catalog = snapshot.get('scenario_catalog', {})
         if catalog:
             # Unknown catalogue metadata and shared taxonomies remain global.
@@ -113,6 +130,10 @@ class ContextIndex:
         self.scenario_contexts[key] = result
         return result
 
+    def hotspot_context(self, nodes):
+        identifiers = {identifier for node in nodes for identifier in self.hotspot_anchors.get(node, ())}
+        return {identifier: self.hotspots[identifier] for identifier in identifiers}
+
 
 def _model_context(index, seed_ids):
     cache_key = frozenset(seed_ids)
@@ -141,6 +162,19 @@ def _model_context(index, seed_ids):
     result = ({identifier: nodes.get(identifier) for identifier in selected}, incident)
     index.contexts[cache_key] = result
     return result
+
+
+def _responsibility_ancestors(index, seed_ids):
+    """Scope Hotspots to their anchored responsibility, not adjacent peers."""
+    selected = set(seed_ids)
+    pending = list(selected)
+    while pending:
+        for edge_id in index.parents.get(pending.pop(), ()):
+            parent = index.business['relations'][edge_id]['source_id']
+            if parent not in selected:
+                selected.add(parent)
+                pending.append(parent)
+    return selected
 
 
 def _glossary_context(index, context, seeds):
@@ -208,6 +242,9 @@ def classify_context(original, previous_snapshot, snapshot, *, indexes=None):
             reasons.append('neighbor_or_ancestor_business_changed')
         if old_relations != new_relations:
             reasons.append('incident_or_membership_relation_changed')
+        if (old_index.hotspot_context(_responsibility_ancestors(old_index, seeds))
+                != new_index.hotspot_context(_responsibility_ancestors(new_index, seeds))):
+            reasons.append('anchored_hotspot_changed')
         if any(value is None for value in [*old_nodes.values(), *new_nodes.values()]):
             reasons.append('context_node_missing')
         old_principles, new_principles = old_index.business['principles'], new_index.business['principles']

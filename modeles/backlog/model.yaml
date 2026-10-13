@@ -73739,12 +73739,11 @@ hotspot_catalog:
       - ba-order-backlog-management
       - ba-master-plan-management
       - subdomain-policies
-    problem: 'La gestion du [carnet de commandes](glossary:TER205) [Wholesale](glossary:TER193) diffère entre les deux SI.
-      En cas de stock insuffisant à la saisie, les Marques Historiques refusent la commande ; Boardriders conserve les demandes
-      non couvertes et réexamine leur affectation dans le temps. La convergence doit préciser les règles communes et les variantes
-      à préserver : admission des demandes, priorités, mobilisation des ressources futures et protection des engagements.
-      Elle doit aussi évaluer le cœur métier et les fonctions de l’outil complet nécessaires au mode de gestion retenu. Les
-      pratiques détaillées et les règles actives restent à corroborer sur des cas opérationnels.'
+    problem: 'Boardriders pilote les demandes non couvertes dans son [carnet de commandes](glossary:TER205) [Wholesale](glossary:TER193),
+      tandis que les Marques Historiques refusent actuellement une commande si le stock manque à la saisie. Ce contraste
+      conduit à trois questions : quelles marques ont besoin du pilotage du carnet, comment construire l’outil nécessaire
+      et comment faire évoluer ses stratégies sans intégrations coûteuses répétées ? Les pratiques détaillées restent à
+      corroborer sur des cas opérationnels.'
     examples:
     - 'Pénurie à la saisie : les Marques Historiques refusent la commande ; Boardriders conserve la demande non couverte dans
       le [carnet](glossary:TER205).'
@@ -73753,74 +73752,60 @@ hotspot_catalog:
     - 'Un arrivage est retardé : le [pegging](glossary:TER204), lien entre demande et ressource, doit être réexaminé avant
       de maintenir la couverture ou de libérer la livraison. Cas d’analyse à éprouver, pas constat d’une automatisation installée.'
     resolution_options:
-    - id: hs-008-priority
-      title: Unifier sur une gestion avancée du carnet
-      principle: Faire converger les entités vers un pilotage du carnet conservant les demandes non couvertes et composant
-        priorités, affectations, propositions d’apport et décisions de livraison selon une stratégie explicite.
-      effect: Préserve les mécanismes nécessaires à Boardriders et permet leur utilisation commune.
-      conditions:
-      - Confirmer les besoins des deux entités, les règles actives et le point d’engagement ferme.
-      - Évaluer la couverture des réceptions futures et les adaptations réellement utiles.
-      - Conserver MAP pour la planification et le carnet d’achat ; préciser le traitement des propositions FLOW.
-      tradeoffs:
-      - Peut imposer aux Marques Historiques une complexité sans bénéfice proportionné.
-      - Ne signifie pas recopier tous les développements spécifiques SAP.
-      implementation_complexity: unassessed
-      evidence_state: hypothesis
-    - id: hs-008-limited
-      title: Unifier sur une gestion simplifiée
-      principle: Définir un jeu restreint de priorités et de réaffectations ; la version limitée au stock présent et au refus
-        immédiat reste un cas à tester.
-      effect: Réduit la complexité du socle commun si les cas essentiels restent satisfaits.
-      conditions:
-      - Démontrer la satisfaction des cas Boardriders ; aucun accord sur un alignement au mode Marques Historiques.
-      - Conserver MAP pour la planification et le carnet d’achat ; préciser le traitement des propositions FLOW.
-      tradeoffs:
-      - Risque de perdre le maintien des demandes non couvertes et la différenciation commerciale par priorités évolutives.
-      - Les premiers retours Boardriders consignés dans les sources écartent le mode Marques Historiques comme réponse suffisante.
-      implementation_complexity: unassessed
-      evidence_state: hypothesis
     - id: hs-008-variants
-      title: Partager un socle et conserver des variantes de gestion
-      principle: Partager les capacités de pilotage du carnet, tout en distinguant par stratégies explicites la décision transactionnelle
-        immédiate et la planification continue des flux.
-      effect: Permet une réalisation commune sans imposer la même politique commerciale aux deux entités.
+      title: Étendre le pilotage du carnet aux marques qui en ont besoin
+      principle: Proposer un socle commun de pilotage aux marques Beaumanoir dont les cas [B2B](glossary:TER195) le justifient, avec des stratégies
+        distinctes pour l’admission, les priorités et les affectations.
+      effect: Les marques concernées utilisent le carnet sans devoir adopter la politique commerciale de Boardriders.
       conditions:
-      - Éprouver les variantes sur les mêmes cas et vérifier qu’elles sont configurables dans la solution candidate.
-      - Définir les engagements protégés et les règles d’évolution des priorités.
+      - Vérifier marque par marque la fréquence des pénuries, les commandes à maintenir et les réarbitrages utiles.
+      - Éprouver les variantes sur les mêmes cas et vérifier leur configuration dans la solution candidate.
       - Conserver MAP pour la planification et le carnet d’achat ; préciser le traitement des propositions FLOW.
       tradeoffs:
-      - Conserve une complexité de paramétrage, de tests et de gouvernance des variantes.
+      - Étend le coût de paramétrage, de tests et de gouvernance à des marques dont le bénéfice reste à démontrer.
       implementation_complexity: unassessed
       evidence_state: hypothesis
     - id: hs-008-separate
-      title: Conserver deux modes de gestion coordonnés
-      principle: Maintenir des réalisations Wholesale distinctes sur une grille métier commune, avec échanges et responsabilités
-        explicites.
-      effect: Préserve les spécificités lorsque l’unification n’apporte pas de bénéfice suffisant.
+      title: Réserver le pilotage avancé aux activités qui en ont besoin
+      principle: Garder le pilotage du carnet pour Boardriders et les activités où il est nécessaire ; les autres marques
+        conservent un traitement [B2B](glossary:TER195) plus simple, avec des échanges et responsabilités explicites.
+      effect: Évite d’imposer aux autres marques une complexité dont l’utilité n’est pas établie.
       conditions:
-      - Comparer le bénéfice de l’unification aux coûts de maintien et d’interopérabilité.
-      - Définir le périmètre restant commun et le rôle de Core System FLOW.
+      - Vérifier que le refus immédiat reste acceptable pour les marques concernées et leurs clients.
+      - Définir les données et services communs et le rôle de Core System FLOW.
       - Conserver MAP pour la planification et le carnet d’achat ; préciser le traitement des propositions FLOW.
       tradeoffs:
-      - Limite la mutualisation et conserve des coûts de coordination.
+      - Maintient des modes de gestion distincts et leurs coûts de coordination.
       implementation_complexity: unassessed
       evidence_state: hypothesis
     problems:
     - id: hs-008-rules-problem
-      title: Règles de gestion du carnet Wholesale
-      question: Quelles règles du carnet partager entre les entités et quelles variantes préserver ?
+      title: Besoin de pilotage du carnet selon les marques
+      question: Les marques Beaumanoir qui vendent en [B2B](glossary:TER195) ont-elles besoin d’un pilotage du carnet comparable à Boardriders ?
       analysis_ids: [hs-008-wholesale-rules]
-      option_ids: [hs-008-priority, hs-008-limited, hs-008-variants, hs-008-separate]
-    - id: hs-008-future-supply-problem
-      title: Prise en compte des ressources futures
-      question: Quelles ressources futures couvrir ou simuler, et quand réexaminer les affectations après un aléa ?
+      option_ids: [hs-008-variants, hs-008-separate]
+    - id: hs-008-tool-problem
+      title: Construction de l’outil de gestion du carnet
+      question: Comment construire l’outil de gestion du carnet de commandes ?
+      analysis_summary: 'Le PDF distingue le moteur de décision de l’outil complet : données, stratégies, simulation, écrans,
+        interventions et échanges. Des briques de calcul peuvent aider ; les règles métier et leur application restent à construire.'
+      document_ids: [DOC002]
+      analysis_ids: []
+      option_ids: []
+    - id: hs-008-evolution-problem
+      title: Adaptation continue de la stratégie
+      question: Comment faire évoluer la stratégie et l’optimisation sans nouveau cahier des charges ni intégration coûteuse à chaque changement ?
+      analysis_summary: 'Piste à éprouver : rendre les priorités et critères configurables, tester les changements sur des scénarios
+        avant application et réserver le développement aux règles qui ne peuvent être paramétrées. Le gain de coût et l’autonomie
+        métier ne sont pas démontrés.'
+      document_ids: [DOC002]
       analysis_ids: [hs-008-future-supply]
       option_ids: []
     complexity:
       arbitration: L
       implementation: XL
-      rationale: 'Deux difficultés se cumulent : choisir un socle commun de règles et le réaliser sans perdre les cas essentiels.
+      rationale: 'Trois questions se cumulent : définir quelles marques ont besoin du carnet, construire l’outil et rendre ses
+        stratégies évolutives sans intégrations répétées. Il faut choisir les règles et les réaliser sans perdre les cas essentiels.
         Les arrivages par vagues, les grosses commandes, les priorités évolutives et les liens protégés rendent les arbitrages
         interdépendants. Dans le scénario de construction, réutiliser du code ouvert ne dispense pas de développer le cœur
         métier, les simulations, les écrans et l’intégration. Scores L/XL conservés ; les enveloppes du PDF restent provisoires
@@ -73828,8 +73813,8 @@ hotspot_catalog:
       arbitration_rationale: Partager les priorités suppose un accord sur les clients à servir et sur les différences de gestion
         à conserver entre marques.
       implementation_rationale: Combiner priorités saisonnières, ressources présentes ou attendues et engagements protégés
-        ; maintenir le résultat cohérent lorsque les données changent. Construire et valider le cœur métier, l’outil de carnet
-        et leurs échanges avec les systèmes existants.
+        ; maintenir le résultat cohérent lorsque les données changent. Construire et valider le cœur métier, l’outil de carnet,
+        ses stratégies configurables et ses échanges avec les systèmes existants.
     severity: XL
     severity_policy: matrix-v1
     arbitration_level: to_confirm
@@ -73872,6 +73857,7 @@ hotspot_catalog:
     - U1066
     - U1067
     - U1070
+    - U1071
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -73888,8 +73874,9 @@ hotspot_catalog:
         Aucune option de convergence sélectionnée. U1019 distingue les décisions du carnet de leur pilotage ; les ancrages
         suivent ces responsabilités et les stratégies actives. U1030 valide la réécriture autour des écarts de gestion et
         de la complexité, avec PDF et PPTX distincts. Scores et options conservés ; ni convergence choisie ni budget ferme.
-        U1066 valide un titre concret et une ouverture centrée sur les commandes refusées ou conservées ; les quatre options
-        et les réserves de complexité sont préservées.'
+        U1066 valide un titre concret et une ouverture centrée sur les commandes refusées ou conservées. U1071 distingue
+        trois problèmes et limite à deux les options du besoin de pilotage selon les marques ; la construction et l’évolution
+        de l’outil restent à instruire, sans solution retenue.'
     market_view:
       finding: Microsoft documente la réservation au fil des commandes ou selon des priorités, sur stock présent ou commandé.
         SAP S/4HANA documente affectation, désaffectation et réaffectation avec tri des demandes et réceptions futures. Oracle
@@ -73934,14 +73921,16 @@ hotspot_catalog:
     - DOC003
     resolution:
       stage: to_explore
-      summary: Choisir les règles communes et les variantes de gestion du carnet, puis évaluer leur réalisation. Les quatre
-        options restent ouvertes ; aucune convergence ni enveloppe de construction n’est retenue.
+      summary: 'Trois questions à instruire : besoin de pilotage selon les marques, construction de l’outil et adaptation
+        continue des stratégies. Deux options de périmètre restent ouvertes pour la première ; aucune solution ni enveloppe
+        de construction n’est retenue.'
       credible_option_ids: []
       credibility_note: ''
       blocked_reason: ''
-      next_step: 'Comparer les quatre options sur trois cas : pénurie à la saisie, client devenu prioritaire, arrivage retardé.
-        Préciser les règles indispensables et les variantes, puis éprouver le cœur métier et l’outil complet à construire.'
-      assessment_source: U950 — initialisation demandée par Laurent.
+      next_step: 'Vérifier le besoin de chaque marque sur trois cas : pénurie à la saisie, client devenu prioritaire et arrivage
+        retardé. À partir du PDF, préciser le périmètre du moteur et de l’outil complet, puis tester comment les stratégies
+        pourraient évoluer sans nouvelle intégration à chaque changement.'
+      assessment_source: U950 — initialisation demandée par Laurent ; cadrage des problèmes révisé U1071.
       assessed_on: '2026-10-11'
     gap_analysis:
     - id: hs-008-wholesale-rules
@@ -73988,10 +73977,10 @@ hotspot_catalog:
       comparison: 'Même besoin de servir les commandes de revendeurs, deux modes de gestion : décision immédiate sur stock
         présent ou maintien des demandes non couvertes et réarbitrage du carnet. Ce sont des pratiques rapportées ; elles
         ne prouvent pas l’absence d’une capacité technique dans un SI.'
-      convergence_question: Quelles règles partager, quelles variantes préserver et sur quel socle commun gérer le [carnet
-        Wholesale](glossary:TER205) ?
+      convergence_question: Quelles marques Beaumanoir ont besoin du pilotage du [carnet de commandes](glossary:TER205),
+        et avec quelles variantes de règles ?
       business_effects:
-      - Un socle limité au refus immédiat peut perdre la gestion des demandes non couvertes et des priorités évolutives nécessaires
+      - Un traitement limité au refus immédiat peut perdre la gestion des demandes non couvertes et des priorités évolutives nécessaires
         à Boardriders.
       - Reprendre toutes les règles Boardriders peut imposer une complexité sans bénéfice aux Marques Historiques. La couverture
         des mêmes cas doit guider l’arbitrage.
@@ -74002,8 +73991,6 @@ hotspot_catalog:
       - Quelles variantes sont nécessaires aux marques, et qui rend les stratégies applicables ?
       - Quels critères autorisent la livraison complète ou partielle ?
       resolution_option_ids:
-      - hs-008-priority
-      - hs-008-limited
       - hs-008-variants
       - hs-008-separate
       source_refs:
@@ -74020,6 +74007,7 @@ hotspot_catalog:
       - U1009
       - U1029
       - U1030
+      - U1071
       title: 'Écart métier : décider à la saisie ou travailler le carnet'
     - id: hs-008-future-supply
       subject_node_id: ba-order-backlog-management
@@ -74083,6 +74071,7 @@ hotspot_catalog:
       - U1009
       - U1029
       - U1030
+      - U1071
       title: 'Ressources futures : distinguer couverture existante et améliorations'
     framing_impact:
       category: structuring

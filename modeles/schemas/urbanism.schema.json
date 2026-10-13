@@ -2043,6 +2043,13 @@
         "id": { "type": "string", "minLength": 1 },
         "title": { "type": "string", "minLength": 1 },
         "question": { "type": "string", "minLength": 1 },
+        "analysis_summary": { "type": "string", "minLength": 1 },
+        "document_ids": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1,
+          "uniqueItems": true
+        },
         "analysis_ids": {
           "type": "array",
           "items": { "type": "string", "minLength": 1 },

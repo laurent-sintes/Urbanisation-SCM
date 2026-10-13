@@ -221,13 +221,14 @@ class HotspotCatalogTests(unittest.TestCase):
         visible = {item['id']: item for item in model['hotspot_catalog']['hotspots'] if item.get('visible', True)}
         self.assertEqual(set(visible), {'HS-002', 'HS-011', 'HS-008', 'HS-020', 'HS-021', 'HS-024', 'HS-033', 'HS-032'})
         self.assertEqual({key: len(visible[key]['problems']) for key in ('HS-008', 'HS-021', 'HS-032')},
-                         {'HS-008': 2, 'HS-021': 2, 'HS-032': 6})
+                         {'HS-008': 3, 'HS-021': 2, 'HS-032': 6})
         self.assertEqual(visible['HS-011']['gap_analysis'][0]['resolution_option_ids'],
                          [option['id'] for option in visible['HS-011']['resolution_options']])
         hotspot = visible['HS-008']
-        self.assertEqual(len(hotspot['problems']), 2)
-        self.assertEqual(len(hotspot['problems'][0]['option_ids']), 4)
-        self.assertEqual(hotspot['problems'][1]['option_ids'], [])
+        self.assertEqual(len(hotspot['problems']), 3)
+        self.assertEqual(len(hotspot['problems'][0]['option_ids']), 2)
+        self.assertEqual([problem['option_ids'] for problem in hotspot['problems'][1:]], [[], []])
+        self.assertEqual(hotspot['problems'][1]['document_ids'], ['DOC002'])
         self.assertEqual(visible['HS-021']['problems'][0]['option_ids'], [])
         self.assertTrue(all(not problem['option_ids'] for problem in visible['HS-032']['problems'][1:]))
         hotspot['problems'][1]['option_ids'] = [hotspot['problems'][0]['option_ids'][0]]
@@ -235,6 +236,9 @@ class HotspotCatalogTests(unittest.TestCase):
         hotspot['problems'][1]['option_ids'] = []
         hotspot['problems'][1]['analysis_ids'] = ['missing-analysis']
         self.assertTrue(any('missing analysis' in error for error in validate_catalog(model)))
+        hotspot['problems'][1]['analysis_ids'] = []
+        hotspot['problems'][1]['document_ids'] = ['missing-document']
+        self.assertTrue(any('problem document must belong to hotspot' in error for error in validate_catalog(model)))
 
     def test_framing_impact_is_independent_and_legacy_optional(self):
         model = copy.deepcopy(self.model)

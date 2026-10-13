@@ -25116,3 +25116,19 @@ Verbatim :
 > Dans le metamodele, je veux un alignement des termes : ça doit être option
 
 Portée : distinguer le signal initial d'un Hotspot des problèmes de cadrage révélés par son analyse ; chaque problème porte une question explicite et ses Options. Employer « Option » dans le métamodèle et la fiche. Autorise la mise en œuvre du nouveau découpage dans le modèle et Atlas ; ne choisit aucune Option et ne demande ni release, ni commit, ni push.
+
+## U1071
+
+Date : 2026-10-13. Source : Laurent, correction du découpage de HS-008.
+
+Verbatim :
+
+> En fait la fiche présente 3 problèmes :
+>
+> - les marques beaumanoir qui font du B2B mais pas de wholesale avec pilotage du carnet de commandes en ont-elle besoin ?
+> - Comment développer un outils de gestion de carnet commandes ? => réponses dans le pdf
+> - Comment simplifier l'adaptation continue de la stratégie et de l'optimisation sans passer par éditeur / cahier des charges / coût d'intégration élevé ?
+>
+> Les options présentes répondent au premier problème. 4 options pour le premier problème c'est trop il en faut 2 maxi.
+
+Portée : corriger HS-008 autour de trois problèmes distincts et ramener à deux au maximum les Options du premier. Le PDF lié à la fiche est une source d'analyse pour la construction de l'outil ; la question d'adaptation continue est distincte de la construction initiale. Cette correction ne sélectionne aucune Option, ne valide aucun budget ni réalisation installée et ne demande pas de publication ou d'opération Git.

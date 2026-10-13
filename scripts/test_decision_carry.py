@@ -94,6 +94,38 @@ class DecisionCarryTests(unittest.TestCase):
         self.after['scenario_catalog']['unknown_rule'] = 'New global meaning'
         self.assertIn('global_business_context_changed', self.classify()['reasons'])
 
+    def test_hotspot_edits_follow_model_anchors_without_global_reassessment(self):
+        self.before['nodes'].append({'id': 'unrelated', 'kind': 'capability', 'fields': {'name': 'Elsewhere'}})
+        self.before['hotspot_catalog'] = {'schema_version': 1, 'hotspots': [
+            {'id': 'HS-LINKED', 'location': {'node_ids': ['cap']}, 'problem': 'Initial pain'},
+            {'id': 'HS-OTHER', 'location': {'node_ids': ['unrelated']}, 'problem': 'Other pain'},
+            {'id': 'HS-PEER', 'location': {'node_ids': ['peer']}, 'problem': 'Peer pain'},
+        ]}
+        self.after = deepcopy(self.before)
+        self.after['hotspot_catalog']['hotspots'][1]['problem'] = 'Other pain clarified'
+        self.after['hotspot_catalog']['hotspots'][2]['problem'] = 'Peer pain clarified'
+        self.assertTrue(self.classify()['safe'])
+        self.after['hotspot_catalog']['hotspots'][0]['problem'] = 'Linked pain clarified'
+        self.assertIn('anchored_hotspot_changed', self.classify()['reasons'])
+        self.after = deepcopy(self.before)
+        self.after['hotspot_catalog']['sources'] = [{'id': 'SOURCE', 'title': 'New source description'}]
+        self.assertTrue(self.classify()['safe'])
+
+    def test_hotspot_anchor_moves_and_catalogue_policy_remain_significant(self):
+        self.before['nodes'].append({'id': 'unrelated', 'kind': 'capability', 'fields': {'name': 'Elsewhere'}})
+        self.before['hotspot_catalog'] = {'schema_version': 1, 'hotspots': [
+            {'id': 'HS-OTHER', 'location': {'node_ids': ['unrelated']}, 'problem': 'Other pain'},
+        ]}
+        self.after = deepcopy(self.before)
+        self.after['hotspot_catalog']['hotspots'][0]['location']['node_ids'] = ['cap']
+        self.assertIn('anchored_hotspot_changed', self.classify()['reasons'])
+        self.after = deepcopy(self.before)
+        self.after['hotspot_catalog']['hotspots'][0]['location']['node_ids'] = ['area']
+        self.assertIn('anchored_hotspot_changed', self.classify()['reasons'])
+        self.after = deepcopy(self.before)
+        self.after['hotspot_catalog']['criticality_policy'] = {'high': 'Review promptly'}
+        self.assertIn('global_business_context_changed', self.classify()['reasons'])
+
     def test_known_editorial_metadata_and_market_changes_are_safe(self):
         cap = self.after['nodes'][2]
         cap.update(source_refs=['NEW-SOURCE'], review={'state': 'partial'}, editorial_basis='Editorial clarification',

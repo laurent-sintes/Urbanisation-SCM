@@ -1,13 +1,12 @@
-import { Download, Maximize2, Minimize2 } from 'lucide-react';
+import { BookOpen, CircleHelp, Download, FileText, Lightbulb, Maximize2, Minimize2, Scale } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef } from 'react';
 import { documentDownloadName, documentFormat, documentsForHotspot, documentUrl } from '../documentCatalog';
+import { framingLabel } from '../hotspotFraming';
 import { RESOLUTION_STAGES, resolutionFor } from '../hotspotResolution';
 import { mapRouteForNode } from '../mapNavigation';
 import type { RouteState } from '../navigation';
 import type { Hotspot, PublishedModel } from '../types';
-import { HotspotAssessmentGuide } from './HotspotAssessmentGuide';
-import { HotspotImpact } from './HotspotImpact';
 import { ModelText } from './ModelLinks';
 
 const STATUS: Record<Hotspot['status'], string> = {
@@ -56,12 +55,38 @@ export function HotspotDetail({
     id: problem.id,
     title: problem.title,
     question: problem.question,
+    analysisSummary: problem.analysis_summary,
+    documentIds: problem.document_ids || [],
     options: problem.option_ids.flatMap((id) => {
       const option = optionById.get(id);
       return option ? [option] : [];
     }),
-  })) || [{ id: 'legacy', title: '', question: '', options: hotspot.resolution_options }];
+  })) || [
+    {
+      id: 'legacy',
+      title: '',
+      question: '',
+      analysisSummary: '',
+      documentIds: [],
+      options: hotspot.resolution_options,
+    },
+  ];
+  const questions =
+    hotspot.problems?.map((problem) => ({
+      id: problem.id,
+      title: problem.title,
+      question: problem.question,
+      optionCount: problem.option_ids.length,
+    })) ||
+    hotspot.gap_analysis?.map((gap) => ({
+      id: gap.id,
+      title: gap.title,
+      question: gap.convergence_question,
+      optionCount: gap.resolution_option_ids.length,
+    })) ||
+    [];
   const hasResolution = Boolean(hotspot.resolution);
+  const signalSummary = hotspot.problem.match(/^.*?[.!?](?=\s|$)/s)?.[0] || hotspot.problem;
   const header = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -74,6 +99,16 @@ export function HotspotDetail({
     observer.observe(element);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const element = header.current;
+    if (!element) return;
+    const key = `${model.version}:${hotspot.id}`;
+    if (element.dataset.scrollKey === key) return;
+    element.dataset.scrollKey = key;
+    element.closest<HTMLElement>('.workspace-content')?.scrollTo(0, 0);
+    element.closest<HTMLElement>('.hotspot-page')?.scrollTo(0, 0);
+  }, [hotspot.id, model.version]);
 
   return (
     <article className="hotspot-detail" aria-labelledby="hotspot-detail-title">
@@ -114,86 +149,50 @@ export function HotspotDetail({
             {hasResolution && hotspot.status === 'resolved' ? 'Résolu en cadrage' : STATUS[hotspot.status]}
             {pending ? ' · Modifications non enregistrées' : ''}
           </p>
-          <HotspotImpact item={hotspot} />
-          {hotspot.framing_impact && (
-            <div className="hotspot-framing-description">
-              <p>
-                {hotspot.framing_impact.evidence_state === 'hypothesis' ? 'Qualification proposée · ' : ''}
-                <ModelText text={hotspot.framing_impact.rationale} />
-              </p>
-              <p className="hotspot-story-caption">
-                {hotspot.framing_impact.targets
-                  .map((target) => (target === 'business_model' ? 'Modèle métier' : 'Core System FLOW'))
-                  .join(' · ')}
-                {hotspot.framing_impact.category === 'usage' &&
-                  'À reprendre par le design produit ; requalifier si une règle ou responsabilité métier doit changer.'}
-                {hotspot.framing_impact.category === 'to_assess' &&
-                  'Qualifier l’impact avant de décider du traitement en cadrage ou en design produit.'}
-              </p>
-            </div>
-          )}
         </div>
 
-        <section className="hotspot-resolution-summary hotspot-story-overview" aria-labelledby="hotspot-progress-title">
+        <section className="hotspot-story-overview" aria-labelledby="hotspot-signal-title">
+          <h4 id="hotspot-signal-title">Le signal initial</h4>
           <p className="hotspot-story-lead">
-            <strong>Le signal initial : </strong>
-            <ModelText text={hotspot.problem} />
+            <ModelText text={signalSummary} />
           </p>
-          {(hotspot.problems || hotspot.gap_analysis || []).map((item) => (
-            <p key={item.id}>
-              <strong>Question à traiter : </strong>
-              <ModelText text={'question' in item ? item.question : item.convergence_question} />
-            </p>
-          ))}
-          <div className="hotspot-story-heading">
-            <h4 id="hotspot-progress-title">Où en sommes-nous ?</h4>
+          <div className="hotspot-criticality" role="group" aria-labelledby="hotspot-criticality-title">
+            <strong id="hotspot-criticality-title">Criticité · {size(hotspot.severity)}</strong>
+            <span>Complexité d’arbitrage · {size(hotspot.complexity.arbitration)}</span>
+            <span>Complexité d’implémentation · {size(hotspot.complexity.implementation)}</span>
             {canEdit && (
-              <button type="button" onClick={(event) => onEdit(event, 'resolution')}>
-                Compléter l’avancement
+              <button type="button" onClick={(event) => onEdit(event, 'complexity')}>
+                Compléter l’évaluation
               </button>
             )}
           </div>
+          {questions.length > 0 && (
+            <div className="hotspot-question-index">
+              <h5>{questions.length === 1 ? 'La question à traiter' : `${questions.length} questions à traiter`}</h5>
+              <div className="hotspot-question-index-list">
+                {questions.map((item, index) => (
+                  <div key={item.id} className="hotspot-question-index-item">
+                    <span className="hotspot-question-number" aria-hidden="true">
+                      {index + 1}
+                    </span>
+                    <span>
+                      <strong>
+                        <ModelText text={item.question} />
+                      </strong>
+                      <small>
+                        {item.optionCount > 0
+                          ? `${item.optionCount} ${item.optionCount > 1 ? 'Options documentées' : 'Option documentée'}`
+                          : 'Aucune Option documentée'}
+                      </small>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           <p className="hotspot-progress-stage">
+            <Scale size={16} aria-hidden="true" />
             {hasResolution ? RESOLUTION_STAGES[resolution.stage] : 'Avancement du cadrage non renseigné'}
-          </p>
-          {resolution.summary && (
-            <p>
-              <ModelText text={resolution.summary} />
-            </p>
-          )}
-          {hotspot.status === 'validated' && !hotspot.selected_option_id && (
-            <p>Sujet et périmètre validés ; aucune option de résolution retenue.</p>
-          )}
-          {resolution.stage === 'ready_for_arbitration' && recommended && (
-            <p>
-              <strong>Option proposée à l’arbitrage : </strong>
-              <ModelText text={recommended.title} />
-            </p>
-          )}
-          {credibleIds.size > 0 && (
-            <p>
-              <strong>Solutions crédibles : </strong>
-              <ModelText
-                text={hotspot.resolution_options
-                  .filter((option) => credibleIds.has(option.id))
-                  .map((option) => option.title)
-                  .join(' · ')}
-              />
-            </p>
-          )}
-          {resolution.blocked_reason && (
-            <p className="hotspot-story-blocked">
-              <strong>Ce qui bloque : </strong>
-              <ModelText text={resolution.blocked_reason} />
-            </p>
-          )}
-          <p>
-            <strong>Prochain pas : </strong>
-            {resolution.next_step ? <ModelText text={resolution.next_step} /> : 'Prochaine étape non documentée.'}
-          </p>
-          <p className="hotspot-story-caption">
-            Une solution crédible résout le cadrage. Le choix définitif, la mise en œuvre et le résultat sur le terrain
-            restent distincts. Selon le sujet, une décision argumentée peut suffire.
           </p>
           {hotspot.visible === false && (
             <p className="hotspot-visibility-label">
@@ -201,275 +200,47 @@ export function HotspotDetail({
               sont inchangés.
             </p>
           )}
-          {resolution.assessed_on && (
-            <p className="hotspot-story-caption">
-              Évaluation du {resolution.assessed_on}
-              {resolution.assessment_source && (
-                <>
-                  {' '}
-                  · <ModelText text={resolution.assessment_source} />
-                </>
-              )}
-            </p>
-          )}
-        </section>
-
-        <section className="hotspot-story-section" aria-labelledby="hotspot-problem-title">
-          <div className="hotspot-story-heading">
-            <h4 id="hotspot-problem-title">
-              <span className="hotspot-story-step" aria-hidden="true">
-                1
-              </span>
-              Le sujet à instruire
-            </h4>
-            {canEdit && (
-              <button type="button" onClick={(event) => onEdit(event, 'location')}>
-                Préciser le périmètre
-              </button>
-            )}
-          </div>
-          <p className="hotspot-story-lead">
-            <ModelText text={hotspot.problem} />
-          </p>
-          {Boolean(hotspot.gap_analysis?.length) && (
-            <p className="hotspot-story-caption">
-              Une différence ne constitue pas automatiquement un problème. L’analyse peut conduire à une convergence
-              totale, partielle ou à la conservation de modes de fonctionnement distincts.
-            </p>
-          )}
-          <div className="hotspot-anchors" role="group" aria-label="Périmètres concernés">
-            {hotspot.location.node_ids.map((id) => {
-              const node = model.nodeById.get(id);
-              return (
-                node && (
-                  <button type="button" key={id} onClick={() => onChange(mapRouteForNode(model, id))}>
-                    {node.name}
-                  </button>
-                )
-              );
-            })}
-          </div>
-          <h5>Les cas concrets</h5>
-          {hotspot.examples.length > 0 ? (
-            <ul className="hotspot-story-examples">
-              {hotspot.examples.map((example) => (
-                <li key={example}>
-                  <ModelText text={example} />
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="hotspot-story-empty">Aucun cas concret documenté.</p>
-          )}
-          {hotspot.gap_analysis?.map((gap) => (
-            <article key={gap.id} className="hotspot-gap-analysis">
-              <p className="hotspot-story-caption">
-                {new Set(gap.observations_by_context.map((item) => item.context_id)).size === 1
-                  ? 'Écart dans un même SI'
-                  : new Set(gap.observations_by_context.map((item) => item.context_id)).size <
-                      gap.observations_by_context.length
-                    ? 'Écart entre SI et entre périmètres'
-                    : 'Écart entre SI'}
-              </p>
-              <h5>
-                <ModelText text={gap.title} />
-              </h5>
-              <p>
-                <ModelText text={gap.comparison} />
-              </p>
-              <div className="hotspot-gap-observations">
-                {gap.observations_by_context.map((observation) => (
-                  <section key={`${observation.context_id}:${observation.observation_scope?.id || ''}`}>
-                    <h6>
-                      {observation.context_id === 'beaumanoir-historique'
-                        ? 'SI Marques Historiques'
-                        : observation.context_id === 'boardriders'
-                          ? 'SI Boardriders'
-                          : 'SI Sarenza'}
-                      {observation.observation_scope && (
-                        <>
-                          {' '}
-                          · <ModelText text={observation.observation_scope.label} />
-                        </>
-                      )}
-                    </h6>
-                    {observation.observation_scope && (
-                      <p className="hotspot-story-caption">
-                        <ModelText text={observation.observation_scope.description} />
-                      </p>
-                    )}
-                    <p>
-                      <ModelText text={observation.handling} />
-                    </p>
-                    <ul>
-                      {observation.business_rules.map((rule) => (
-                        <li key={rule}>
-                          <ModelText text={rule} />
-                        </li>
-                      ))}
-                    </ul>
-                    <p className="hotspot-story-caption">
-                      {observation.evidence_kind === 'user_report'
-                        ? 'Déclaration rapportée'
-                        : observation.evidence_kind === 'source_document'
-                          ? 'Source documentaire'
-                          : 'Analyse'}
-                      {' · '}
-                      {observation.evidence_state === 'hypothesis'
-                        ? 'Hypothèse · '
-                        : observation.evidence_state === 'to_investigate'
-                          ? 'À instruire · '
-                          : ''}
-                      <ModelText text={observation.limits} />
-                    </p>
-                  </section>
-                ))}
-              </div>
-              {!hotspot.problems?.some((problem) => problem.analysis_ids.includes(gap.id)) && (
-                <>
-                  <h6>La question pour FLOW</h6>
-                  <p>
-                    <ModelText text={gap.convergence_question} />
-                  </p>
-                </>
-              )}
-              <ul>
-                {gap.business_effects.map((effect) => (
-                  <li key={effect}>
-                    <ModelText text={effect} />
-                  </li>
-                ))}
-              </ul>
-              {gap.open_questions.length > 0 && (
-                <>
-                  <h6>À préciser</h6>
-                  <ul>
-                    {gap.open_questions.map((question) => (
-                      <li key={question}>
-                        <ModelText text={question} />
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
-            </article>
-          ))}
-        </section>
-
-        <section className="hotspot-story-section" aria-labelledby="hotspot-difficulty-title">
-          <div className="hotspot-story-heading">
-            <h4 id="hotspot-difficulty-title">
-              <span className="hotspot-story-step" aria-hidden="true">
-                2
-              </span>
-              Ce qui rend le sujet difficile
-            </h4>
-            {canEdit && (
-              <button type="button" onClick={(event) => onEdit(event, 'complexity')}>
-                Compléter l’évaluation
-              </button>
-            )}
-          </div>
-          <div className="hotspot-criticality" role="group" aria-labelledby="hotspot-criticality-title">
-            <h5 id="hotspot-criticality-title">Criticité · {size(hotspot.severity)}</h5>
-            <p className="hotspot-story-caption">
-              La criticité résulte du croisement des deux complexités ci-dessous.
-              {hotspot.severity === 'unassessed' && ' Elle reste non évaluée tant qu’un des deux axes ne l’est pas.'}
-            </p>
-            <dl className="hotspot-criticality-components">
-              <div>
-                <dt>Complexité d’arbitrage · {size(hotspot.complexity.arbitration)}</dt>
-                <dd>
-                  Difficulté à obtenir un accord sur les règles, les responsabilités et les compromis entre marques ou
-                  pôles.
-                  <p>
-                    <ModelText
-                      text={
-                        hotspot.complexity.arbitration_rationale ||
-                        'Justification propre à cet axe non documentée ; voir la justification commune.'
-                      }
-                    />
-                  </p>
-                </dd>
-              </div>
-              <div>
-                <dt>Complexité d’implémentation · {size(hotspot.complexity.implementation)}</dt>
-                <dd>
-                  Difficulté à réaliser la solution : règles à gérer, données à intégrer, adaptations et contraintes
-                  techniques.
-                  <p>
-                    <ModelText
-                      text={
-                        hotspot.complexity.implementation_rationale ||
-                        'Justification propre à cet axe non documentée ; voir la justification commune.'
-                      }
-                    />
-                  </p>
-                </dd>
-              </div>
-            </dl>
-            <h6>Pourquoi cette évaluation ?</h6>
-            {hotspot.complexity.rationale ? (
-              <p>
-                <ModelText text={hotspot.complexity.rationale} />
-              </p>
-            ) : (
-              <p className="hotspot-story-empty">Justification des complexités non documentée.</p>
-            )}
-          </div>
-          <HotspotAssessmentGuide model={model} />
-          {hotspot.market_view ? (
-            <details className="hotspot-story-support">
-              <summary>Ce que les références marché apportent à l’analyse</summary>
-              <div className="hotspot-market">
-                <p>
-                  <strong>Pratiques documentées : </strong>
-                  <ModelText text={hotspot.market_view.finding} />
-                </p>
-                <p>
-                  <strong>Avis pour FLOW : </strong>
-                  <ModelText text={hotspot.market_view.flow_assessment} />
-                </p>
-                <p>
-                  <strong>Limites : </strong>
-                  <ModelText text={hotspot.market_view.limits} />
-                </p>
-                <ul>
-                  {hotspot.market_view.sources.map((source) => (
-                    <li key={source.url}>
-                      <a href={source.url} target="_blank" rel="noopener noreferrer">
-                        {source.publisher} — {source.title}
-                      </a>
-                      {' : '}
-                      <ModelText text={source.relevance} />
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </details>
-          ) : (
-            <p className="hotspot-story-empty">Comparaison marché non documentée pour ce point chaud.</p>
-          )}
         </section>
 
         <section className="hotspot-story-section" aria-labelledby="hotspot-options-title">
           <h4 id="hotspot-options-title">
-            <span className="hotspot-story-step" aria-hidden="true">
-              3
-            </span>
-            Les options possibles
+            <CircleHelp size={20} aria-hidden="true" />
+            Problèmes et Options
           </h4>
-          {optionGroups.map((group) => (
-            <section key={group.id} className="hotspot-problem">
+          {optionGroups.map((group, index) => (
+            <section key={group.id} id={`hotspot-problem-${group.id}`} className="hotspot-problem">
               {group.title && (
                 <h5>
+                  <span className="hotspot-problem-number">Problème {index + 1}</span>
                   <ModelText text={group.title} />
                 </h5>
               )}
               {group.question && (
                 <p className="hotspot-problem-question">
-                  <strong>Question : </strong>
                   <ModelText text={group.question} />
+                </p>
+              )}
+              {group.analysisSummary && (
+                <p className="hotspot-problem-analysis">
+                  <ModelText text={group.analysisSummary} />
+                </p>
+              )}
+              {group.documentIds.map((id) => {
+                const document = documents.find((item) => item.id === id);
+                return document ? (
+                  <button
+                    key={id}
+                    type="button"
+                    className="hotspot-problem-document"
+                    onClick={() => onChange({ view: 'documents', document: id, hotspot: '' })}
+                  >
+                    <FileText size={16} aria-hidden="true" /> Lire l’analyse ({documentFormat(document)})
+                  </button>
+                ) : null;
+              })}
+              {group.options.length > 0 && (
+                <p className="hotspot-problem-option-count">
+                  {group.options.length} {group.options.length > 1 ? 'Options documentées' : 'Option documentée'}
                 </p>
               )}
               {group.options.length > 0 ? (
@@ -482,6 +253,7 @@ export function HotspotDetail({
                     >
                       <div className="hotspot-story-heading">
                         <h5>
+                          <Lightbulb size={17} aria-hidden="true" />
                           <ModelText text={option.title} />
                         </h5>
                         <div className="hotspot-option-labels">
@@ -494,69 +266,39 @@ export function HotspotDetail({
                         </div>
                       </div>
                       <p>
-                        <ModelText text={option.principle} />
-                      </p>
-                      {option.effect && (
-                        <p>
-                          <strong>Effet attendu : </strong>
-                          <ModelText text={option.effect} />
-                        </p>
-                      )}
-                      {!!option.conditions?.length && (
-                        <div>
-                          <h6>Conditions à réunir</h6>
-                          <ul>
-                            {option.conditions.map((condition) => (
-                              <li key={condition}>
-                                <ModelText text={condition} />
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      {!!option.tradeoffs?.length && (
-                        <div>
-                          <h6>Compromis</h6>
-                          <ul>
-                            {option.tradeoffs.map((tradeoff) => (
-                              <li key={tradeoff}>
-                                <ModelText text={tradeoff} />
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      )}
-                      <p className="hotspot-story-caption">
-                        Difficulté d’implémentation : {size(option.implementation_complexity)}
+                        {option.effect && <strong>Effet attendu : </strong>}
+                        <ModelText text={option.effect || option.principle} />
                       </p>
                     </section>
                   ))}
                 </div>
-              ) : (
+              ) : !group.analysisSummary ? (
                 <p className="hotspot-story-empty">
                   {group.id === 'legacy'
                     ? 'Aucune option documentée à ce stade.'
                     : 'Options à définir pour cette question.'}
                 </p>
-              )}
+              ) : null}
             </section>
           ))}
         </section>
 
         <section className="hotspot-story-section" aria-labelledby="hotspot-choice-title">
-          <h4 id="hotspot-choice-title">
-            <span className="hotspot-story-step" aria-hidden="true">
-              4
-            </span>
-            Le choix et la suite
-          </h4>
-          {selected ? (
+          <div className="hotspot-story-heading">
+            <h4 id="hotspot-choice-title">
+              <Scale size={20} aria-hidden="true" /> Décision et prochaine étape
+            </h4>
+            {canEdit && (
+              <button type="button" onClick={(event) => onEdit(event, 'resolution')}>
+                Compléter l’avancement
+              </button>
+            )}
+          </div>
+          {selected && (
             <p>
               <strong>Option retenue : </strong>
               <ModelText text={selected.title} />
             </p>
-          ) : (
-            <p className="hotspot-story-empty">Aucune option retenue n’est documentée.</p>
           )}
           {hotspot.resolution_note && (
             <p>
@@ -564,21 +306,15 @@ export function HotspotDetail({
               <ModelText text={hotspot.resolution_note} />
             </p>
           )}
-          {resolution.credibility_note && (
+          {resolution.stage === 'ready_for_arbitration' && recommended && (
             <p>
-              <strong>Pourquoi ces pistes sont crédibles : </strong>
-              <ModelText text={resolution.credibility_note} />
+              <strong>Option proposée à l’arbitrage : </strong>
+              <ModelText text={recommended.title} />
             </p>
           )}
-          <p>
-            <strong>Niveau d’arbitrage : </strong>
-            {LEVEL[hotspot.arbitration_level] || hotspot.arbitration_level}
+          <p className="hotspot-story-caption">
+            Arbitrage : {LEVEL[hotspot.arbitration_level] || hotspot.arbitration_level}
           </p>
-          {hotspot.arbitration_note && (
-            <p>
-              <ModelText text={hotspot.arbitration_note} />
-            </p>
-          )}
           <div className="hotspot-story-next">
             <h5>Le prochain pas</h5>
             <p>
@@ -593,65 +329,204 @@ export function HotspotDetail({
           </div>
         </section>
 
-        <section className="hotspot-story-section" aria-labelledby="hotspot-evidence-title">
-          {canEdit && (
-            <p className="hotspot-story-caption">
-              Modifier dans la séance : périmètre, complexités et avancement. Pour enrichir le sujet, son impact, les
-              observations ou les options, demande à Codex de préparer une modification du modèle avec ses preuves.
-            </p>
-          )}
-          <h4 id="hotspot-evidence-title">Les documents et les sources</h4>
-          {documents.length > 0 && (
-            <ul className="hotspot-documents">
-              {documents.map((document) => (
-                <li key={document.id}>
-                  <button
-                    type="button"
-                    onClick={() => onChange({ view: 'documents', document: document.id, hotspot: '' })}
-                  >
-                    {document.title}
+        <details className="hotspot-dossier">
+          <summary>
+            <BookOpen size={20} aria-hidden="true" />
+            <span>Voir les constats, les conditions et les documents</span>
+          </summary>
+          <div className="hotspot-dossier-body">
+            <section className="hotspot-story-section" aria-labelledby="hotspot-problem-title">
+              <div className="hotspot-story-heading">
+                <h4 id="hotspot-problem-title">
+                  <BookOpen size={20} aria-hidden="true" /> Constats à vérifier
+                </h4>
+                {canEdit && (
+                  <button type="button" onClick={(event) => onEdit(event, 'location')}>
+                    Préciser le périmètre
                   </button>
-                  {' · '}
-                  <a href={documentUrl(model, document)} download={documentDownloadName(document)}>
-                    <Download size={16} aria-hidden="true" />
-                    Télécharger le {documentFormat(document)}
-                  </a>
-                </li>
+                )}
+              </div>
+              {hotspot.framing_impact && (
+                <p className="hotspot-story-caption">
+                  <span className="hotspot-framing-marker">{framingLabel(hotspot)}</span>
+                  {hotspot.framing_impact.evidence_state === 'hypothesis' && ' · Hypothèse'}
+                </p>
+              )}
+              <div className="hotspot-anchors" role="group" aria-label="Périmètres concernés">
+                {hotspot.location.node_ids.map((id) => {
+                  const node = model.nodeById.get(id);
+                  return (
+                    node && (
+                      <button type="button" key={id} onClick={() => onChange(mapRouteForNode(model, id))}>
+                        {node.name}
+                      </button>
+                    )
+                  );
+                })}
+              </div>
+              <h5>Cas concrets</h5>
+              {hotspot.examples.length > 0 ? (
+                <ul className="hotspot-story-examples">
+                  {hotspot.examples.map((example) => (
+                    <li key={example}>
+                      <ModelText text={example} />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="hotspot-story-empty">Aucun cas concret documenté.</p>
+              )}
+              {hotspot.gap_analysis?.map((gap) => (
+                <article key={gap.id} className="hotspot-gap-analysis">
+                  <p className="hotspot-story-caption">
+                    {new Set(gap.observations_by_context.map((item) => item.context_id)).size === 1
+                      ? 'Écart dans un même SI'
+                      : new Set(gap.observations_by_context.map((item) => item.context_id)).size <
+                          gap.observations_by_context.length
+                        ? 'Écart entre SI et entre périmètres'
+                        : 'Écart entre SI'}
+                  </p>
+                  <h5>
+                    <ModelText text={gap.title} />
+                  </h5>
+                  <p>
+                    <ModelText text={gap.comparison} />
+                  </p>
+                  <ul className="hotspot-gap-summary">
+                    {gap.observations_by_context.map((observation) => (
+                      <li key={`${observation.context_id}:${observation.observation_scope?.id || ''}`}>
+                        <strong>
+                          {observation.context_id === 'beaumanoir-historique'
+                            ? 'Marques Historiques'
+                            : observation.context_id === 'boardriders'
+                              ? 'Boardriders'
+                              : 'Sarenza'}
+                          {observation.observation_scope && (
+                            <>
+                              {' '}
+                              · <ModelText text={observation.observation_scope.label} />
+                            </>
+                          )}
+                          {' : '}
+                        </strong>
+                        <ModelText text={observation.handling} />
+                        {observation.evidence_state === 'hypothesis' && (
+                          <span className="hotspot-story-caption"> · Hypothèse</span>
+                        )}
+                        {observation.evidence_state === 'to_investigate' && (
+                          <span className="hotspot-story-caption"> · À instruire</span>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                  {gap.business_effects[0] && (
+                    <p className="hotspot-story-caption">
+                      <strong>Enjeu : </strong>
+                      <ModelText text={gap.business_effects[0]} />
+                    </p>
+                  )}
+                </article>
               ))}
-            </ul>
-          )}
-          {hotspot.origin.evidence_limit && (
-            <p>
-              <strong>Limites des preuves : </strong>
-              <ModelText text={hotspot.origin.evidence_limit} />
-            </p>
-          )}
-          <details className="hotspot-provenance">
-            <summary>Sources et réserves détaillées</summary>
-            <ul>
-              {hotspot.source_refs.map((id) => {
-                const source = model.raw.hotspot_catalog?.sources?.find((item) => item.id === id);
-                return (
-                  <li key={id}>
-                    <strong>{source?.title || 'Source interne — intitulé non fourni par cette publication'}</strong>
-                    {source?.date && ` · ${source.date}`}
-                    <p>{source?.access || 'Source interne non consultable dans Atlas.'}</p>
-                    <small>Référence de provenance : {id}</small>
-                  </li>
-                );
-              })}
-            </ul>
-            <p>
-              {hotspot.origin.repository} · {hotspot.origin.source_id}
-            </p>
-            <code>{hotspot.origin.path}</code>
-            <p>
-              <strong>Références : </strong>
-              {hotspot.source_refs.join(' · ') || 'Non renseignées'}
-            </p>
-            <p>{hotspot.review.note}</p>
-          </details>
-        </section>
+            </section>
+
+            <section className="hotspot-story-section" aria-labelledby="hotspot-market-title">
+              <h4 id="hotspot-market-title">
+                <BookOpen size={20} aria-hidden="true" /> Repères du marché
+              </h4>
+              {hotspot.market_view ? (
+                <div className="hotspot-story-support">
+                  <p>
+                    <ModelText text={hotspot.market_view.flow_assessment} />
+                  </p>
+                  <p className="hotspot-story-caption">
+                    <ModelText text={hotspot.market_view.limits} />
+                  </p>
+                  <ul className="hotspot-market-links">
+                    {hotspot.market_view.sources.map((source) => (
+                      <li key={source.url}>
+                        <a href={source.url} target="_blank" rel="noopener noreferrer">
+                          {source.publisher} — {source.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <p className="hotspot-story-empty">Comparaison marché non documentée pour ce point chaud.</p>
+              )}
+            </section>
+
+            {hotspot.resolution_options.length > 0 && (
+              <section
+                className="hotspot-story-section hotspot-option-details"
+                aria-labelledby="hotspot-option-details-title"
+              >
+                <h4 id="hotspot-option-details-title">
+                  <Lightbulb size={20} aria-hidden="true" /> Conditions et compromis des Options
+                </h4>
+                <div className="hotspot-option-detail-list">
+                  {hotspot.resolution_options.map((option) => (
+                    <article key={option.id}>
+                      <h5>
+                        <ModelText text={option.title} />
+                      </h5>
+                      <p>
+                        <strong>Principe : </strong>
+                        <ModelText text={option.principle} />
+                      </p>
+                      {option.effect && (
+                        <p>
+                          <strong>Effet attendu : </strong>
+                          <ModelText text={option.effect} />
+                        </p>
+                      )}
+                      {!!option.conditions?.length && (
+                        <p>
+                          <strong>Conditions : </strong>
+                          <ModelText text={option.conditions.join(' · ')} />
+                        </p>
+                      )}
+                      {!!option.tradeoffs?.length && (
+                        <p>
+                          <strong>Compromis : </strong>
+                          <ModelText text={option.tradeoffs.join(' · ')} />
+                        </p>
+                      )}
+                      <p className="hotspot-story-caption">
+                        Difficulté d’implémentation : {size(option.implementation_complexity)}
+                      </p>
+                    </article>
+                  ))}
+                </div>
+              </section>
+            )}
+
+            <section className="hotspot-story-section" aria-labelledby="hotspot-evidence-title">
+              <h4 id="hotspot-evidence-title">
+                <FileText size={20} aria-hidden="true" /> Documents
+              </h4>
+              {documents.length > 0 && (
+                <ul className="hotspot-documents">
+                  {documents.map((document) => (
+                    <li key={document.id}>
+                      <button
+                        type="button"
+                        onClick={() => onChange({ view: 'documents', document: document.id, hotspot: '' })}
+                      >
+                        {document.title}
+                      </button>
+                      {' · '}
+                      <a href={documentUrl(model, document)} download={documentDownloadName(document)}>
+                        <Download size={16} aria-hidden="true" />
+                        Télécharger le {documentFormat(document)}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+          </div>
+        </details>
       </div>
     </article>
   );

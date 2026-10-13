@@ -115,6 +115,8 @@ def validate_catalog(model):
             problem_ids.add(problem_id)
             if not problem['question'].strip():
                 errors.append(f'{identifier}/{problem_id}: problem requires a clear question')
+            if any(document_id not in hotspot.get('document_ids', []) for document_id in problem.get('document_ids', [])):
+                errors.append(f'{identifier}/{problem_id}: problem document must belong to hotspot')
             for gap_id in problem['analysis_ids']:
                 if gap_id not in gap_ids:
                     errors.append(f'{identifier}/{problem_id}: missing analysis {gap_id}')

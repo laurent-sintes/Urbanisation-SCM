@@ -327,6 +327,8 @@ export interface Hotspot {
     id: string;
     title: string;
     question: string;
+    analysis_summary?: string;
+    document_ids?: string[];
     analysis_ids: string[];
     option_ids: string[];
   }[];

@@ -88,6 +88,10 @@ try {
   };
   await open();
   const detail = page.locator('.hotspot-detail');
+  const openDossier = async () => {
+    const dossier = detail.locator('.hotspot-dossier');
+    if ((await dossier.getAttribute('open')) === null) await dossier.locator('summary').click();
+  };
   assert.equal(await page.locator('.workspace-header .page-heading').count(), 0, 'no duplicate visual title band');
   assert.equal(await page.getByRole('heading', { level: 1, name: 'Points chauds', exact: true }).count(), 1);
   const verifyPinnedHeader = async (fullscreen, screenshot) => {
@@ -118,7 +122,7 @@ try {
       );
     }
     // Native keyboard scrolling must not put the focused control behind the title.
-    await detail.locator('.hotspot-provenance summary').focus();
+    await detail.locator('.hotspot-dossier summary').focus();
     for (let step = 0; step < 8; step++) {
       await page.keyboard.press('Shift+Tab');
       const focused = await detail.evaluate((element) => {
@@ -146,6 +150,7 @@ try {
   const documentHotspot = model.hotspot_catalog.hotspots.find((item) => item.document_ids?.length);
   assert.ok(documentHotspot, 'a hotspot links a published PDF');
   await page.goto(`${base}#/hotspots?version=${index.current_version}&hotspot=${documentHotspot.id}`);
+  await detail.locator('.hotspot-dossier summary').click();
   const pdfLink = detail.getByRole('link', { name: /Télécharger.*PDF/i });
   await pdfLink.waitFor();
   const pdfPending = page.waitForEvent('download');
@@ -160,40 +165,54 @@ try {
     await readFile(resolve(dist, `data/${index.current_version}/documents/${documentId}.pdf`)),
   );
   assert.equal(pdfBytes.subarray(0, 5).toString(), '%PDF-');
+  await detail.locator('.hotspot-dossier summary').click();
   const wholesale = model.hotspot_catalog.hotspots.find((item) => item.id === 'HS-008');
   assert.ok(wholesale);
   await page.goto(`${base}#/hotspots?version=${index.current_version}&hotspot=${wholesale.id}`);
+  assert.equal(await detail.locator('.hotspot-dossier').getAttribute('open'), null);
   assert.equal(await detail.locator('.hotspot-documents a[download] svg').count(), wholesale.document_ids.length);
   const criticality = detail.getByRole('group', { name: `Criticité · ${wholesale.severity}` });
+  const questionIndex = detail.locator('.hotspot-question-index-item');
+  assert.equal(await questionIndex.count(), 2, 'both Wholesale questions are visible before the Options');
+  assert.ok((await questionIndex.first().innerText()).includes('4 Options documentées'));
+  assert.ok((await questionIndex.last().innerText()).includes('Aucune Option documentée'));
+  await page.locator('.workspace-content').evaluate((element) => {
+    element.scrollTop = 0;
+  });
+  await page.screenshot({ path: resolve(output, 'wholesale-overview.png') });
+  await detail.locator('.hotspot-dossier summary').click();
   await criticality.waitFor();
-  assert.ok((await criticality.innerText()).includes('résulte du croisement'));
   assert.ok((await criticality.innerText()).includes(`Complexité d’arbitrage · ${wholesale.complexity.arbitration}`));
   assert.ok(
     (await criticality.innerText()).includes(`Complexité d’implémentation · ${wholesale.complexity.implementation}`),
   );
-  assert.ok((await criticality.innerText()).includes(text(wholesale.complexity.rationale)));
-  assert.equal(await criticality.locator('dd').count(), 2, 'both complexity axes have a textual explanation');
-  const questions = wholesale.gap_analysis.flatMap((gap) => gap.open_questions);
-  assert.ok(questions.length, 'the reviewed Wholesale comparison has questions to qualify');
-  for (const question of new Set(questions)) {
-    const rendered = detail.locator('.hotspot-gap-analysis li').filter({ hasText: text(question) });
-    assert.equal(await rendered.count(), questions.filter((item) => item === question).length);
-    assert.equal(/\bU(?:02|10|30|31|953)\b/.test(await rendered.first().innerText()), false);
-  }
+  assert.equal(await detail.getByText('Limites des preuves :').count(), 0);
+  assert.equal(await detail.getByText('Sources et réserves détaillées').count(), 0);
   await criticality.screenshot({ path: resolve(output, 'wholesale-criticality.png') });
   const structuredWholesale = structuredClone(wholesale);
+  structuredWholesale.resolution_options = wholesale.resolution_options.slice(2);
   structuredWholesale.problems = [
     {
       id: 'rules',
-      title: 'Règles du carnet',
-      question: 'Quelles règles partager ?',
+      title: 'Besoin de pilotage selon les marques',
+      question: 'Quelles marques ont besoin du pilotage du carnet ?',
       analysis_ids: [wholesale.gap_analysis[0].id],
-      option_ids: wholesale.resolution_options.map((option) => option.id),
+      option_ids: structuredWholesale.resolution_options.map((option) => option.id),
     },
     {
-      id: 'future',
-      title: 'Ressources futures',
-      question: 'Quelles ressources futures couvrir ?',
+      id: 'tool',
+      title: 'Construction de l’outil',
+      question: 'Comment construire l’outil ?',
+      analysis_summary: 'Le PDF distingue le moteur de l’outil complet.',
+      document_ids: [wholesale.document_ids[0]],
+      analysis_ids: [],
+      option_ids: [],
+    },
+    {
+      id: 'evolution',
+      title: 'Adaptation des stratégies',
+      question: 'Comment faire évoluer les stratégies ?',
+      analysis_summary: 'Les règles configurables restent à éprouver.',
       analysis_ids: [wholesale.gap_analysis[1].id],
       option_ids: [],
     },
@@ -201,14 +220,22 @@ try {
   servedModel = { ...model, hotspot_catalog: { ...model.hotspot_catalog, hotspots: [structuredWholesale] } };
   await page.goto(`${base}?qa=${++fixtureRead}#/hotspots?version=${index.current_version}&hotspot=${wholesale.id}`);
   await detail.locator('.hotspot-problem').first().waitFor();
-  assert.equal(await detail.locator('.hotspot-problem').count(), 2);
-  assert.equal(await detail.locator('.hotspot-problem').first().locator('.hotspot-story-option').count(), 4);
+  assert.equal(await detail.locator('.hotspot-question-index-item').count(), 3);
+  assert.equal(await detail.locator('.hotspot-problem').count(), 3);
+  assert.equal(await detail.locator('.hotspot-problem').first().locator('.hotspot-story-option').count(), 2);
+  assert.ok((await detail.locator('.hotspot-problem').nth(1).innerText()).includes('Le PDF distingue'));
+  assert.equal(await detail.locator('.hotspot-problem-document').count(), 1);
   assert.equal(await detail.locator('.hotspot-problem').last().locator('.hotspot-story-option').count(), 0);
-  assert.ok((await detail.locator('.hotspot-problem').last().innerText()).includes('Options à définir'));
+  assert.ok(!(await detail.locator('.hotspot-problem').last().innerText()).includes('Options à définir'));
+  await detail
+    .locator('.hotspot-problem')
+    .nth(1)
+    .screenshot({ path: resolve(output, 'wholesale-tool-problem.png') });
   servedModel = model;
   await open();
+  await detail.locator('.hotspot-dossier summary').click();
   assert.equal(await detail.getByRole('heading', { level: 3 }).innerText(), text(original.title));
-  for (const field of [original.problem, ...original.examples, original.complexity.rationale]) {
+  for (const field of original.examples) {
     assert.ok((await detail.innerText()).includes(text(field)), 'the story retains the published content');
   }
   assert.equal(await detail.locator('.hotspot-story-option').count(), original.resolution_options.length);
@@ -231,14 +258,11 @@ try {
   );
   const market = detail.locator('.hotspot-story-support');
   if (original.market_view) {
-    assert.equal(await market.getAttribute('open'), null);
-    await market.locator('summary').click();
     assert.ok((await market.innerText()).includes(text(original.market_view.limits)));
     assert.equal(await market.getByRole('link').count(), original.market_view.sources.length);
   }
-  await detail.locator('.hotspot-provenance summary').click();
-  assert.ok((await detail.innerText()).includes(original.origin.path));
-  assert.ok((await detail.innerText()).includes(original.review.note));
+  assert.ok(!(await detail.innerText()).includes(original.origin.path));
+  assert.ok(!(await detail.innerText()).includes(original.review.note));
 
   for (const width of [1440, 900, 390, 320]) {
     await page.setViewportSize({ width, height: 950 });
@@ -298,8 +322,8 @@ try {
   legacy.market_view = undefined;
   servedModel = { ...model, hotspot_catalog: { ...model.hotspot_catalog, hotspots: [legacy] } };
   await open();
+  await openDossier();
   for (const missing of [
-    'Impact non renseigné',
     'Avancement du cadrage non renseigné',
     'Aucun cas concret documenté.',
     'Aucune option documentée à ce stade.',
@@ -353,11 +377,10 @@ try {
   ];
   servedModel = { ...model, hotspot_catalog: { ...model.hotspot_catalog, hotspots: [compared] } };
   await open();
+  await openDossier();
   const comparison = detail.locator('.hotspot-gap-analysis');
   assert.ok((await detail.innerText()).includes('Irritant d’usage · design produit'));
-  assert.ok((await detail.innerText()).includes('Qualification proposée'));
-  assert.ok((await detail.innerText()).includes('Manipulations manuelles à simplifier.'));
-  assert.ok((await detail.innerText()).includes('requalifier si une règle ou responsabilité métier doit changer'));
+  assert.ok((await detail.innerText()).includes('Hypothèse'));
   await detail.getByRole('button', { name: 'Tous les points chauds' }).click();
   const markedRow = page.locator('.hotspot-table tbody tr').filter({ hasText: text(compared.title) });
   assert.ok((await markedRow.innerText()).includes('Irritant d’usage · design produit'));
@@ -372,16 +395,14 @@ try {
   await markedRow.waitFor({ state: 'attached' });
   assert.equal(await markedRow.count(), 1);
   await open();
+  await openDossier();
   for (const content of [
     'Deux politiques de gestion',
-    'SI Marques Historiques',
-    'SI Boardriders',
-    'Refus immédiat.',
-    'Priorités évolutives.',
-    'Déclaration rapportée',
-    'Source documentaire',
-    'Quel socle commun ?',
-    'Quelle règle protéger ?',
+    'Marques Historiques',
+    'Boardriders',
+    'Contrôle du stock présent.',
+    'Réexamen du carnet.',
+    'Conserver les besoins essentiels.',
   ]) {
     assert.ok((await comparison.innerText()).includes(content), content);
   }
@@ -406,12 +427,13 @@ try {
   };
   intra.observations_by_context[1].evidence_state = 'hypothesis';
   await open();
+  await openDossier();
   for (const content of [
     'Écart dans un même SI',
     'Parcours entrepôt',
     'Parcours magasin',
     'Hypothèse',
-    'Commandes servies depuis un magasin.',
+    'Réexamen du carnet.',
   ]) {
     assert.ok((await comparison.innerText()).includes(content), content);
   }
@@ -424,6 +446,7 @@ try {
     limits: 'Description absente.',
   });
   await open();
+  await openDossier();
   assert.ok((await comparison.innerText()).includes('Écart entre SI et entre périmètres'));
   assert.ok((await comparison.innerText()).includes('À instruire'));
   for (const width of [390, 320]) {
@@ -463,11 +486,8 @@ try {
   assert.equal(await options.nth(0).getByText('Solution crédible', { exact: true }).count(), 1);
   assert.equal(await options.nth(0).getByText('Option retenue', { exact: true }).count(), 0);
   assert.equal(await options.nth(1).getByText('Option retenue', { exact: true }).count(), 1);
-  assert.ok(
-    (await detail.innerText()).includes(
-      'Le choix définitif, la mise en œuvre et le résultat sur le terrain restent distincts.',
-    ),
-  );
+  assert.ok((await detail.locator('#hotspot-choice-title').innerText()).includes('Décision et prochaine étape'));
+  assert.ok((await detail.innerText()).includes('Confirmer les volumes.'));
   await detail.getByRole('button', { name: 'Étendre la fiche' }).click();
   await detail.getByRole('button', { name: 'Compléter l’avancement' }).click();
   const dialog = page.getByRole('dialog', { name: /^Qualification et avancement/ });
@@ -492,6 +512,7 @@ try {
   await detail.getByRole('button', { name: 'Réduire la fiche' }).click();
   await page.waitForFunction(() => !document.fullscreenElement);
   const anchor = detail.locator('.hotspot-anchors button').first();
+  await openDossier();
   await anchor.click();
   assert.match(page.url(), /#\/map/);
   assert.deepEqual(errors, []);

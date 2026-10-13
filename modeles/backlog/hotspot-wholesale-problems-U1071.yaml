@@ -1,0 +1,30 @@
+id: hotspot-wholesale-problems-U1071
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs: [U1071, U1029, U1030]
+scope: Corriger HS-008 en trois problèmes distincts et limiter à deux les Options de son premier problème.
+assessment:
+  problems:
+  - Besoin du pilotage du carnet pour les marques Beaumanoir B2B.
+  - Construction du moteur et de l’outil complet, analysée dans DOC002.
+  - Évolution régulière des stratégies et de l’optimisation sans intégration coûteuse répétée.
+  first_problem_options: Étendre le pilotage aux marques qui en ont besoin ou le réserver aux activités qui en ont besoin.
+  withdrawn_options: Les anciennes options de convergence avancée et simplifiée sont retirées du backlog courant ; Git et les publications conservent leur historique.
+  boundary: Aucune Option n’est retenue. Le PDF décrit un scénario de construction et des pistes de conception, sans prouver leur faisabilité, leurs économies ou un budget ferme.
+glossary_alignment:
+  business: TER193, TER195 et TER205 relus ; leurs définitions couvrent déjà la vente B2B, le Wholesale et le carnet. Aucun changement de sens nécessaire.
+  methodological: Option et problème conservent le sens défini par U1070 ; la correction porte sur la fiche HS-008.
+market_comparison: Les appuis Microsoft Dynamics et SAP S/4HANA déjà consultés restent des repères partiels pour les règles de carnet. Ils ne tranchent ni le besoin de chaque marque, ni le mode de construction et son coût. DOC002 distingue le moteur et l’outil complet.
+publication_delivery:
+  state: applied
+  source_refs: [U1071]
+  summary: HS-008 contient trois problèmes, deux Options pour le premier, et une synthèse documentaire pour les deux autres.
+  required_catalog:
+  - collection: hotspots
+    id: HS-008
+    content_sha256: bbb5cd21f86869614181c956fad6961cfae6805d3ecc945071d27c96a95cf1df
+  supersedes_requirements:
+  - annex: hotspot-problems-U1070.yaml
+    collection: hotspots
+    id: HS-008
+    fields: [content_sha256]
