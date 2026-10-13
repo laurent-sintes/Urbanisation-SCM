@@ -1,9 +1,11 @@
 """Static export boundaries: explicit index, immutable snapshots, atomic activation."""
 import hashlib
+import io
 import json
 from pathlib import Path
 import tempfile
 import unittest
+import zipfile
 
 from scripts.export_atlas import export_atlas, encoded
 from scripts.structured_io import loads
@@ -76,6 +78,23 @@ class StaticExportTests(unittest.TestCase):
                       'media_type': 'application/pdf'}, 'source_refs': ['U946'],
             'review': {'state': 'proposed', 'note': 'Test'},
         }]}
+        stream = io.BytesIO()
+        with zipfile.ZipFile(stream, 'w') as archive:
+            archive.writestr('[Content_Types].xml',
+                '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
+                '<Override PartName="/ppt/presentation.xml" ContentType="application/vnd.openxmlformats-officedocument.presentationml.presentation.main+xml"/>'
+                '</Types>')
+            archive.writestr('ppt/presentation.xml', '<presentation/>')
+        presentation = stream.getvalue()
+        pptx_digest = hashlib.sha256(presentation).hexdigest()
+        pptx_asset = self.root / 'modeles/documents' / f'{pptx_digest}.pptx'
+        pptx_asset.write_bytes(presentation)
+        model['document_catalog']['documents'].append({
+            'id': 'DOC002', 'title': 'Support original', 'summary': 'Test', 'context': 'Test', 'category': 'source',
+            'asset': {'path': f'modeles/documents/{pptx_digest}.pptx', 'sha256': pptx_digest,
+                      'media_type': 'application/vnd.openxmlformats-officedocument.presentationml.presentation'},
+            'source_refs': ['U946'], 'review': {'state': 'proposed', 'note': 'Test'},
+        })
         model_payload = encoded(model)
         model_path.write_bytes(model_payload)
         descriptor_path = self.release / f'{version}.json'
@@ -90,6 +109,8 @@ class StaticExportTests(unittest.TestCase):
 
         export_atlas(self.root, [self.output])
         self.assertEqual((self.output / version / 'documents/DOC001.pdf').read_bytes(), payload)
+        self.assertEqual((self.output / version / 'documents/DOC002.pptx').read_bytes(), presentation)
+        self.assertFalse((self.output / '2026-09-26.1/documents/DOC002.pptx').exists())
         asset.write_bytes(b'%PDF-1.4\ntampered')
         with self.assertRaisesRegex(ValueError, 'fingerprint or format differs'):
             export_atlas(self.root, [self.output])

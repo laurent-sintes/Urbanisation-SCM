@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DOCUMENT_CATEGORY, documentUrl } from '../documentCatalog';
+import { DOCUMENT_CATEGORY, documentDownloadName, documentFormat, documentUrl } from '../documentCatalog';
 import type { RouteState } from '../navigation';
 import type { PublishedModel } from '../types';
 import './documents.css';
@@ -32,16 +32,18 @@ export function DocumentCatalogPage({
           <button type="button" onClick={() => onChange({ document: '' })}>
             ← Tous les documents
           </button>
-          <p className="documents-category">{DOCUMENT_CATEGORY[selected.category]} · PDF</p>
+          <p className="documents-category">
+            {DOCUMENT_CATEGORY[selected.category]} · {documentFormat(selected)}
+          </p>
           <h2>{selected.title}</h2>
           <p>{selected.summary}</p>
           <p>{selected.context}</p>
           <a
             className="documents-download"
             href={documentUrl(model, selected)}
-            download={`flow-atlas-${selected.id}.pdf`}
+            download={documentDownloadName(selected)}
           >
-            Télécharger le PDF
+            Télécharger le {documentFormat(selected)}
           </a>
           {relatedHotspots.length > 0 && (
             <section>
@@ -77,7 +79,9 @@ export function DocumentCatalogPage({
           <div className="documents-list">
             {filtered.map((document) => (
               <button type="button" key={document.id} onClick={() => onChange({ document: document.id })}>
-                <span className="documents-category">{DOCUMENT_CATEGORY[document.category]} · PDF</span>
+                <span className="documents-category">
+                  {DOCUMENT_CATEGORY[document.category]} · {documentFormat(document)}
+                </span>
                 <strong>{document.title}</strong>
                 <span>{document.summary}</span>
               </button>

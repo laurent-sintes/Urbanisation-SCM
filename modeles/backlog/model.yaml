@@ -71951,22 +71951,23 @@ hotspot_catalog:
       - model
     visible: true
   - id: HS-008
-    title: Pilotage du carnet Wholesale et stratégies de couverture
+    title: 'Carnet [Wholesale](glossary:TER193) : écarts de gestion et complexité de convergence'
     kind: scope
     location:
       node_ids:
       - ba-order-backlog-management
       - ba-master-plan-management
       - subdomain-policies
-    problem: Les pratiques rapportées pour les Marques Historiques privilégient une décision immédiate sur le stock présent
-      ; Boardriders conserve les demandes non couvertes et réarbitre le carnet dans le temps. Quel socle de capacités et quelles
-      stratégies configurables permettent de couvrir ces besoins, les réceptions futures, les priorités, les engagements et
-      la préparation à la livraison, tout en conservant MAP pour la planification et le carnet d’achat ?
+    problem: Les Marques Historiques décident sur le stock présent ; Boardriders travaille le [carnet](glossary:TER205) dans
+      le temps. FLOW doit choisir les règles à partager et les différences à préserver, puis mesurer la complexité du cœur
+      métier et de l’outil complet à construire.
     examples:
-    - 'Cas rapporté par Laurent : une commande [Wholesale Commerce](glossary:TER193) manque de stock à la saisie. Les Marques
-      Historiques la refusent ; Boardriders maintient la demande non couverte dans le [carnet de commandes](glossary:TER205).'
-    - 'Cas rapporté par Laurent : une commande d’un grand client « gold » devient prioritaire. Boardriders peut lui [réaffecter](glossary:TER017)
-      du stock déjà lié à d’autres demandes, dans le périmètre des engagements encore révisables.'
+    - 'Pénurie à la saisie : selon Laurent, les Marques Historiques refusent la commande ; Boardriders conserve la demande
+      non couverte dans le [carnet](glossary:TER205).'
+    - 'Un grand client devient prioritaire en cours de saison : Boardriders peut revoir des [affectations](glossary:TER017)
+      encore révisables. Les engagements protégés doivent rester respectés.'
+    - 'Un arrivage est retardé : le [pegging](glossary:TER204), lien entre demande et ressource, doit être réexaminé avant
+      de maintenir la couverture ou de libérer la livraison. Cas d’analyse à éprouver, pas constat d’une automatisation installée.'
     resolution_options:
     - id: hs-008-priority
       title: Unifier sur une gestion avancée du carnet
@@ -72024,14 +72025,16 @@ hotspot_catalog:
     complexity:
       political: L
       implementation: XL
-      rationale: Les modes de gestion rapportés répondent à des poids Wholesale différents (10 % et 60 %, selon Laurent).
-        La difficulté tient au choix d’unification, aux stratégies de pilotage du carnet, aux priorités évolutives et aux
-        engagements protégés, ainsi qu’aux adaptations SAP et à la couverture des réceptions futures. Estimation L/XL antérieure
-        conservée ; ampleur et coût à éprouver selon l’option retenue.
-      political_rationale: Les poids [Wholesale Commerce](glossary:TER193) et les priorités commerciales diffèrent ; une règle
-        unique peut désavantager une entité.
-      implementation_rationale: La redistribution doit préserver les engagements et prendre en compte ressources présentes
-        ou futures sans reproduire des développements inutiles.
+      rationale: 'Deux difficultés se cumulent : choisir un socle commun de règles et le réaliser sans perdre les cas essentiels.
+        Les arrivages par vagues, les grosses commandes, les priorités évolutives et les liens protégés rendent les arbitrages
+        interdépendants. Dans le scénario de construction, réutiliser du code ouvert ne dispense pas de développer le cœur
+        métier, les simulations, les écrans et l’intégration. Scores L/XL conservés ; les enveloppes du PDF restent provisoires
+        et dépendent du périmètre retenu.'
+      political_rationale: Partager les priorités suppose un accord sur les clients à servir et sur les différences de gestion
+        à conserver entre marques.
+      implementation_rationale: Combiner priorités saisonnières, ressources présentes ou attendues et engagements protégés
+        ; maintenir le résultat cohérent lorsque les données changent. Construire et valider le cœur métier, l’outil de carnet
+        et leurs échanges avec les systèmes existants.
     severity: XL
     severity_policy: matrix-v1
     arbitration_level: to_confirm
@@ -72068,6 +72071,8 @@ hotspot_catalog:
     - U1015
     - U1018
     - U1019
+    - U1029
+    - U1030
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -72082,7 +72087,8 @@ hotspot_catalog:
         scores et quatre options conservés. Pas de solution de convergence choisie ; nouvelles formulations détaillées restent
         proposées. U1014 valide le lot complet ; U1015 confirme les ancrages de pilotage du carnet et de stratégies actives.
         Aucune option de convergence sélectionnée. U1019 distingue les décisions du carnet de leur pilotage ; les ancrages
-        suivent ces responsabilités et les stratégies actives.'
+        suivent ces responsabilités et les stratégies actives. U1030 valide la réécriture autour des écarts de gestion et
+        de la complexité, avec PDF et PPTX distincts. Scores et options conservés ; ni convergence choisie ni budget ferme.'
     market_view:
       finding: Microsoft documente la réservation au fil des commandes ou selon des priorités, sur stock présent ou commandé.
         SAP S/4HANA documente affectation, désaffectation et réaffectation avec tri des demandes et réceptions futures. Oracle
@@ -72123,15 +72129,17 @@ hotspot_catalog:
         url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-backorder-processing-for-advanced-atp-in-sap-s-4hana
         relevance: Réévaluation des confirmations ; ne garantit pas performance, stabilité ou algorithme adapté au cas FLOW.
     document_ids:
-    - DOC001
+    - DOC002
+    - DOC003
     resolution:
       stage: to_explore
-      summary: Écart de règles de gestion explicité ; l’unification Wholesale et son modèle restent à explorer.
+      summary: 'Deux sujets à instruire ensemble : les écarts de gestion du carnet et la complexité de convergence et de construction.
+        Aucune option retenue.'
       credible_option_ids: []
       credibility_note: ''
       blocked_reason: ''
-      next_step: Éprouver les quatre options sur des commandes refusées, non couvertes et prioritaires, avec stock présent
-        et réception future.
+      next_step: 'Comparer les quatre options sur trois cas : pénurie à la saisie, client devenu prioritaire, arrivage retardé.
+        Préciser les règles indispensables et les variantes, puis éprouver le cœur métier et l’outil complet à construire.'
       assessment_source: U950 — initialisation demandée par Laurent.
       assessed_on: '2026-10-11'
     gap_analysis:
@@ -72175,27 +72183,22 @@ hotspot_catalog:
         evidence_kind: user_report
         limits: Déclaration de Laurent. Les statuts techniques SAP R/F ne suffisent pas à déterminer l’engagement client ;
           règles actives et point d’affermissement à vérifier. Période et dénominateur des 60 % à préciser.
-      comparison: 'Même responsabilité métier de couverture des demandes, mais deux politiques : décision immédiate sur stock
-        présent ou maintien et réarbitrage du carnet avant engagement ferme. Cet écart ne prouve pas l’absence de [Supply
-        Assignment](model:D03.o) dans l’un des SI. Selon les premiers retours rapportés par Laurent, Boardriders n’envisage
-        pas d’adopter le mode Marques Historiques jugé trop simple ; aucun arbitrage FLOW n’est acquis.'
-      convergence_question: Faut-il unifier la gestion [Wholesale Commerce](glossary:TER193) ? Si oui, quel socle commun permet
-        de conserver les règles nécessaires à Boardriders et quelles variantes sont justifiées pour les Marques Historiques
-        ?
+      comparison: 'Même besoin de servir les commandes de revendeurs, deux modes de gestion : décision immédiate sur stock
+        présent ou maintien des demandes non couvertes et réarbitrage du carnet. Ce sont des pratiques rapportées ; elles
+        ne prouvent pas l’absence d’une capacité technique dans un SI.'
+      convergence_question: Quelles règles partager, quelles variantes préserver et sur quel socle commun gérer le [carnet
+        Wholesale](glossary:TER205) ?
       business_effects:
-      - Une convergence limitée au refus immédiat risque de perdre la gestion des demandes non couvertes et des priorités
-        évolutives décrite pour Boardriders.
-      - Une reprise complète des règles Boardriders peut ajouter une complexité inutile aux Marques Historiques. Ces conséquences
-        sont des risques à éprouver, sans chiffrage acquis.
+      - Un socle limité au refus immédiat peut perdre la gestion des demandes non couvertes et des priorités évolutives nécessaires
+        à Boardriders.
+      - Reprendre toutes les règles Boardriders peut imposer une complexité sans bénéfice aux Marques Historiques. La couverture
+        des mêmes cas doit guider l’arbitrage.
       open_questions:
-      - Quels besoins sont communs et quelles variantes apportent une valeur métier à chaque entité ?
-      - À quel événement une promesse devient-elle ferme et quelles affectations cessent-elles alors d’être révisables ?
-      - Quelles règles de priorité sont indispensables, configurables ou devenues inutiles ?
-      - Quelles règles de réservation du stock, de couverture par les réceptions futures et de réaffectation entre commandes
-        restent actuelles avant engagement ferme ?
-      - Quelles stratégies de carnet doivent être configurables et qui les rend applicables ?
-      - Comment les propositions d’apport FLOW sont-elles examinées par MAP sans reprendre le carnet d’achat ?
-      - Quels critères distincts règlent l’engagement, la protection des ressources et la libération en livraison ?
+      - Quelles demandes maintenir dans le carnet et pendant combien de temps ?
+      - Quelles priorités faire évoluer selon client, catégorie de produit et avancement de saison ?
+      - Quels engagements et quels liens de [pegging](glossary:TER204) protéger, et à quel événement ?
+      - Quelles variantes sont nécessaires aux marques, et qui rend les stratégies applicables ?
+      - Quels critères autorisent la livraison complète ou partielle ?
       resolution_option_ids:
       - hs-008-priority
       - hs-008-limited
@@ -72213,7 +72216,9 @@ hotspot_catalog:
       - U957
       - U1007
       - U1009
-      title: Stratégie transactionnelle et pilotage planifié du carnet
+      - U1029
+      - U1030
+      title: 'Écart métier : décider à la saisie ou travailler le carnet'
     - id: hs-008-future-supply
       subject_node_id: ba-order-backlog-management
       natures:
@@ -72234,35 +72239,34 @@ hotspot_catalog:
       - context_id: boardriders
         business_need: Prise en compte des réceptions attendues dans l’affectation et la réaffectation du carnet.
         system_coverage: partly_covered
-        handling: Couverture incomplète des stocks futurs signalée par Laurent. Le support de juillet 2025 décrit certaines
-          affectations sur réceptions futures et des chantiers Preview (simulation sans modification des liens)/Optimizer
-          (outil SAP d’ajustement des affectations) encore ouverts ; cela ne permet pas de conclure que tous les stocks futurs
-          sont exclus.
+        handling: Le support SAP de juillet 2025 décrit Early Allocation sur stock physique, commandes d’achat et avis d’expédition.
+          Les améliorations portent notamment sur la simulation de ressources plus prévisionnelles et le réexamen de certains
+          liens après aléas. [AllocationRun](glossary:TER017) ne peut donc pas être décrit comme ignorant tous les stocks
+          futurs.
         business_rules: []
         source_refs:
         - U942
         - U945
         - U953
         evidence_state: documented
-        evidence_kind: user_report
-        limits: Couverture partielle rapportée, à préciser par type de réception et traitement. État actuel des chantiers
-          de juillet 2025 non vérifié.
-      comparison: Distinguer le choix métier de servir uniquement le stock présent, côté Marques Historiques, du manque de
-        couverture de certains besoins futurs rapporté côté Boardriders. Le périmètre exact du manque reste à établir.
-      convergence_question: Quelles ressources futures et quels horizons Core System FLOW doit-il prendre en compte pour servir
-        le modèle [Wholesale Commerce](glossary:TER193) retenu ?
+        evidence_kind: source_document
+        limits: 'Source datée : certaines configurations et certains calendriers sont plus anciens. L’état des fonctions et
+          chantiers dans l’instance actuelle reste à vérifier ; un statut technique ne suffit pas à établir une promesse ferme
+          au client.'
+      comparison: Early Allocation utilise déjà le stock physique et certaines réceptions attendues. Le support SAP distingue
+        cette affectation des simulations sur des ressources plus prévisionnelles et des remises à jour après aléas encore
+        ouvertes. Le manque exact doit être qualifié par type de ressource et de traitement.
+      convergence_question: Quelles ressources futures couvrir réellement, lesquelles simuler et quand réexaminer les liens
+        après un aléa ?
       business_effects:
-      - Une couverture insuffisante des réceptions attendues peut limiter l’arbitrage du carnet ; impact réel à documenter.
+      - Anticiper la couverture du carnet sans traiter une ressource simulée comme acquise ; éviter de compter plusieurs fois
+        le même apport. Besoins à éprouver sur les cas de référence.
       open_questions:
-      - Quels types de ressources futures sont effectivement utilisables, absents ou incomplets dans l’instance Boardriders
-        actuelle ?
-      - Quels chantiers Preview (simulation sans modification des liens), Optimizer (outil SAP d’ajustement des affectations)
-        et désallocation ont été livrés depuis juillet 2025 ?
-      - Quelles règles de réservation du stock, de couverture par les réceptions futures et de réaffectation entre commandes
-        restent actuelles avant engagement ferme ?
-      - Quelles stratégies de carnet doivent être configurables et qui les rend applicables ?
-      - Comment les propositions d’apport FLOW sont-elles examinées par MAP sans reprendre le carnet d’achat ?
-      - Quels critères distincts règlent l’engagement, la protection des ressources et la libération en livraison ?
+      - Quels achats et réceptions annoncées sont utilisables aujourd’hui, avec quelles dates et quantités ?
+      - Quels apports plus prévisionnels faut-il simuler sans créer de [réservation](model:D02.c) réelle ?
+      - Quels retards, changements de quantité ou événements imposent un réexamen du [pegging](glossary:TER204) ?
+      - Quelles améliorations du support 2025 ont été livrées depuis ?
+      - Comment conserver la filiation des apports et les responsabilités de planification d’achat MAP ?
       resolution_option_ids:
       - hs-008-priority
       - hs-008-limited
@@ -72279,13 +72283,15 @@ hotspot_catalog:
       - U957
       - U1007
       - U1009
-      title: Prise en compte des ressources futures dans le pilotage du carnet
+      - U1029
+      - U1030
+      title: 'Ressources futures : distinguer couverture existante et améliorations'
     framing_impact:
       category: structuring
       targets:
       - business_model
-      rationale: Les stratégies de pilotage du carnet, les règles d’engagement et de libération et la prise en compte des
-        ressources futures déterminent la convergence Wholesale ; MAP conserve le carnet d’achat.
+      rationale: Les règles à partager ou à préserver déterminent le socle commun. Leur combinaison et la construction du
+        cœur métier et de l’outil complet déterminent la complexité à instruire ; MAP conserve le carnet d’achat.
       follow_up: framing
       evidence_state: hypothesis
       source_refs:
@@ -72293,6 +72299,7 @@ hotspot_catalog:
       - U960
       - U961
       - U973
+      - U1030
       scopes:
       - model
     visible: true
@@ -74554,12 +74561,24 @@ hotspot_catalog:
     kind: internal_contribution
     access: Source interne non consultable dans Atlas.
     date: '2026-10-12'
+  - id: U1029
+    title: 'Laurent, reprise de HS-008 : écarts, complexité et documents'
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-13'
+  - id: U1030
+    title: Laurent, validation de la réécriture HS-008
+    kind: internal_contribution
+    access: Source interne non consultable dans Atlas.
+    date: '2026-10-13'
 document_catalog:
   schema_version: 1
   source_refs:
   - U945
   - U946
   - U948
+  - U1029
+  - U1030
   documents:
   - id: DOC001
     title: Allocation Run Boardriders — synthèse et écart au standard
@@ -74581,3 +74600,41 @@ document_catalog:
       state: proposed
       note: Synthèse de source préparée pour C08. La comparaison du standard SAP et les évolutions postérieures à juillet
         2025 restent à confirmer sur l'instance Boardriders.
+  - id: DOC002
+    title: AllocationRun — fonctionnement, complexité et scénario de construction
+    summary: Analyse du moteur, des stratégies saisonnières, des ressources futures et des améliorations ; complexité et budget
+      provisoire de construction du cœur et de l’outil complet.
+    context: Analyse du 13 octobre 2026. Les rapprochements FLOW et les estimations restent qualifiés dans le PDF ; les références
+      d’implantation ne prouvent pas un coût de fabrication du cœur.
+    category: analysis
+    asset:
+      path: modeles/documents/dcdf5f700af5d44d80b077c50f30f1f3927213d83eca6242e8d8865cc6d95ed8.pdf
+      sha256: dcdf5f700af5d44d80b077c50f30f1f3927213d83eca6242e8d8865cc6d95ed8
+      media_type: application/pdf
+    source_refs:
+    - U942
+    - U1029
+    - U1030
+    review:
+      state: proposed
+      note: U1030 valide la mise à disposition liée à HS-008 ; la publication du document ne valide pas ses hypothèses ni
+        une réalisation installée actuelle.
+  - id: DOC003
+    title: Boardriders — support SAP AllocationRun, juillet 2025
+    summary: 'Présentation SAP originale : processus d’affectation, configuration Early Allocation et améliorations évoquées
+      dans les dernières diapositives.'
+    context: Nathalie Alves, présentation des 23-24 juillet 2025, 73 diapositives. Reprend aussi des configurations et calendriers
+      plus anciens ; ne prouve pas l’état installé actuel.
+    category: source
+    asset:
+      path: modeles/documents/59ffaeff55d5f6fcf922fa1e018176eba25efaeb40ae9820fcdad681e302c97b.pptx
+      sha256: 59ffaeff55d5f6fcf922fa1e018176eba25efaeb40ae9820fcdad681e302c97b
+      media_type: application/vnd.openxmlformats-officedocument.presentationml.presentation
+    source_refs:
+    - U942
+    - U1029
+    - U1030
+    review:
+      state: proposed
+      note: U1030 valide la mise à disposition liée à HS-008 ; la publication du document ne valide pas ses hypothèses ni
+        une réalisation installée actuelle.

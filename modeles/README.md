@@ -24,7 +24,7 @@ HS-023 traite la provenance des décisions comme question d’architecture du c�
 
 ## Documents associés aux publications
 
-Le backlog peut porter un `document_catalog` autonome : identifiant, titre, résumé, contexte, catégorie, source et empreinte SHA-256 de chaque PDF. Les octets sont conservés sous `modeles/documents/<sha256>.pdf`. Un hotspot du même snapshot peut le citer par `document_ids`. La validation contrôle les empreintes et les références ; l'export Atlas copie seulement les PDF du snapshot publié dans `data/VERSION/documents/`. Une publication historique ne lit ni le catalogue documentaire courant ni un fichier modifié sous le même nom.
+Le backlog peut porter un `document_catalog` autonome : identifiant, titre, résumé, contexte, catégorie, source et empreinte SHA-256 de chaque PDF ou PPTX. Les octets sont conservés sous `modeles/documents/<sha256>.<extension>`. Le type MIME doit correspondre au format ; la validation contrôle aussi la structure du PPTX. Un hotspot du même snapshot peut les citer par `document_ids`. L'export Atlas copie uniquement les documents de la publication sélectionnée dans `data/VERSION/documents/`, avec leur extension native. Une publication historique ne lit ni le catalogue courant ni un fichier modifié sous le même nom. Une nouvelle analyse reçoit une nouvelle identité documentaire : les sources et analyses antérieures restent conservées.
 
 La nouvelle édition de la méthode de transformation est préparée dans
 [`backlog/atlas-transformation-methodology.yaml`](backlog/atlas-transformation-methodology.yaml)

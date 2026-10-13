@@ -129,6 +129,24 @@ class HTTPTests(unittest.TestCase):
         self.assertEqual(self.request('/data/2026-10-11.2/documents/../model.json')[0], 404)
         self.assertEqual(self.request('/modeles/documents/DOC001.pdf')[0], 404)
 
+    def test_published_pptx_download_and_head_preserve_bytes(self):
+        folder = self.dist / 'data/2026-10-13.2/documents'
+        folder.mkdir(parents=True)
+        payload = b'PK\x03\x04Published native presentation bytes'
+        (folder / 'DOC003.pptx').write_bytes(payload)
+        route = '/data/2026-10-13.2/documents/DOC003.pptx'
+        status, headers, body = self.request(route)
+        self.assertEqual(status, 200)
+        self.assertEqual(headers['Content-Type'],
+                         'application/vnd.openxmlformats-officedocument.presentationml.presentation')
+        self.assertEqual(body, payload)
+        status, headers, body = self.request(route, method='HEAD')
+        self.assertEqual(status, 200)
+        self.assertEqual(int(headers['Content-Length']), len(payload))
+        self.assertEqual(body, b'')
+        self.assertEqual(self.request('/data/2026-10-13.2/documents/DOC003.pptm')[0], 404)
+        self.assertEqual(self.request('/modeles/documents/DOC003.pptx')[0], 404)
+
     def test_missing_build_has_diagnostic_without_old_interface_fallback(self):
         (self.dist / "index.html").unlink()
         status, _, body = self.request("/")

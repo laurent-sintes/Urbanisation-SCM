@@ -24503,3 +24503,36 @@ Je valide, commit & release
 **portée**
 
 Confirmation du lot complet U1027 appliqué : Commerce, Sourcing and Procurement, Logistics et leurs règles de profondeur, glossaire et frontières MAP/FLOW/Finance. Autorise le commit local et la publication Atlas, avec une nouvelle édition méthodologique alignée sur les Business Areas de contexte. Les accords exacts déjà capturés U1027 restent conservés ; les lacunes de marché et l’absence de réalisation installée ne sont pas levées. Aucun push demandé.
+
+
+## U1029
+
+Date : 2026-10-13. Source : Laurent, reprise de HS-008 après l’analyse AllocationRun.
+
+Verbatim :
+
+je veux qu'on reprenne le hotspot.
+
+Je veux que ce pdf soit téléchargeable ainsi que le ppt.
+
+Ce hotspot montre 2 choses essentielles :
+
+- Gap analysis entre marques histos et boardriders
+- Complexité du sujet.
+
+Je pense que le hotspot doit être remanié voire réécrit.
+
+Qu'en penses-tu avant mise à jour ?
+
+Portée : demander une proposition avant mise à jour de HS-008, centrée sur l’écart de gestion entre Marques Historiques et Boardriders et sur la complexité du sujet. Demander les téléchargements de l’analyse PDF récente et du support SAP original en PPTX. La proposition conserve un seul hotspot, ses preuves, ses scores et ses quatre options ouvertes ; elle distingue le coût de construction du cœur et du produit complet des références d’implantation.
+
+## U1030
+
+Date : 2026-10-13. Source : Laurent, validation de la réécriture HS-008.
+
+Verbatim :
+
+Parfait. Je veux un style clair et percutent.
+Je valide.
+
+Portée : valider la proposition complète construite après U1029 : titre « Carnet Wholesale : écarts de gestion et complexité de convergence », phrase centrale, comparaison des pratiques, complexité métier et de réalisation, amélioration des ressources futures qualifiée, décisions à instruire et deux téléchargements distincts. Autorise la réécriture et la prise en charge documentaire du PPTX. Le scénario budgétaire de construction inclut le cœur métier et l’outil complet, avec des briques réutilisables éventuelles ; aucun choix de convergence, de solveur, budget ferme, preuve installée actuelle, changement de score, release, commit ou push n’est adopté par extension. Les raffinements éditoriaux d’exécution restent limités à ce cadrage.

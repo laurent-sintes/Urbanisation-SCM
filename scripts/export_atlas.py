@@ -22,7 +22,7 @@ from scripts.git_history import batch_reader
 from app.modeling_guide import _load_associated_guide, guide_validation_batch
 from scripts.atlas_metamodel import describe_metamodel
 from scripts.atlas_documentation import separate_documentation
-from scripts.document_catalog import asset_bytes
+from scripts.document_catalog import asset_bytes, document_extension
 from scripts.structured_io import dumps as dump_yaml, read as read_document
 from scripts import parsed_cache
 
@@ -207,7 +207,7 @@ def _staged_export(root, destinations, stage, *, incremental, require_cached):
             entry[name + '_sha256'] = hashes[name + '.json']
         entry['model_yaml_sha256'] = hashes['model.yaml']
         for document in document_index['documents']:
-            stage_payload(f"{version}/documents/{document['id']}.pdf", asset_bytes(root, document))
+            stage_payload(f"{version}/documents/{document['id']}.{document_extension(document)}", asset_bytes(root, document))
         serialization_seconds += perf_counter() - step
     if index_path.read_bytes() != before:
         raise ValueError('Publication index changed during static export; retry.')

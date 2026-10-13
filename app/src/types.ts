@@ -315,7 +315,11 @@ export interface AtlasDocument {
   summary: string;
   context: string;
   category: 'analysis' | 'source' | 'decision' | 'guide';
-  asset: { path: string; sha256: string; media_type: 'application/pdf' };
+  asset: {
+    path: string;
+    sha256: string;
+    media_type: 'application/pdf' | 'application/vnd.openxmlformats-officedocument.presentationml.presentation';
+  };
   source_refs: string[];
   review: Review;
 }

@@ -1,7 +1,7 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
 import type { MouseEvent } from 'react';
 import { useEffect, useRef } from 'react';
-import { documentsForHotspot, documentUrl } from '../documentCatalog';
+import { documentDownloadName, documentFormat, documentsForHotspot, documentUrl } from '../documentCatalog';
 import { RESOLUTION_STAGES, resolutionFor } from '../hotspotResolution';
 import { mapRouteForNode } from '../mapNavigation';
 import type { RouteState } from '../navigation';
@@ -565,8 +565,8 @@ export function HotspotDetail({
                     {document.title}
                   </button>
                   {' · '}
-                  <a href={documentUrl(model, document)} download={`flow-atlas-${document.id}.pdf`}>
-                    Télécharger le PDF
+                  <a href={documentUrl(model, document)} download={documentDownloadName(document)}>
+                    Télécharger le {documentFormat(document)}
                   </a>
                 </li>
               ))}

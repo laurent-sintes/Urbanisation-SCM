@@ -84,7 +84,12 @@ class HotspotCatalogTests(unittest.TestCase):
         self.assertTrue(reviewed.issubset(hotspots))
         self.assertEqual({hotspots[identifier]['origin']['id'] for identifier in ('HS-006', 'HS-014', 'HS-015')},
                          {'C06a', 'C06b', 'C06c'})
-        self.assertEqual(hotspots['HS-008']['document_ids'], ['DOC001'])
+        document_ids = hotspots['HS-008']['document_ids']
+        documents = {d['id']: d for d in self.model['document_catalog']['documents']}
+        self.assertEqual(len(document_ids), 2)
+        self.assertEqual({documents[i]['asset']['media_type'] for i in document_ids}, {
+            'application/pdf', 'application/vnd.openxmlformats-officedocument.presentationml.presentation'})
+        self.assertIn('DOC001', documents)  # The older analysis remains preserved.
         self.assertTrue(all(hotspots[identifier]['status'] == 'validated' for identifier in reviewed))
 
     def test_intra_system_scopes_and_mixed_comparison(self):

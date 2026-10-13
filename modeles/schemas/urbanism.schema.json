@@ -1015,16 +1015,33 @@
                 "properties": {
                   "path": {
                     "type": "string",
-                    "pattern": "^modeles/documents/[0-9a-f]{64}\\.pdf$"
+                    "pattern": "^modeles/documents/[0-9a-f]{64}\\.(pdf|pptx)$"
                   },
                   "sha256": {
                     "type": "string",
                     "pattern": "^[0-9a-f]{64}$"
                   },
                   "media_type": {
-                    "const": "application/pdf"
+                    "enum": [
+                      "application/pdf",
+                      "application/vnd.openxmlformats-officedocument.presentationml.presentation"
+                    ]
                   }
                 },
+                "anyOf": [
+                  {
+                    "properties": {
+                      "media_type": {"const": "application/pdf"},
+                      "path": {"pattern": "\\.pdf$"}
+                    }
+                  },
+                  {
+                    "properties": {
+                      "media_type": {"const": "application/vnd.openxmlformats-officedocument.presentationml.presentation"},
+                      "path": {"pattern": "\\.pptx$"}
+                    }
+                  }
+                ],
                 "required": [
                   "path",
                   "sha256",

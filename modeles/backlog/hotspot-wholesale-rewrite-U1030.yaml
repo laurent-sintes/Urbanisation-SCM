@@ -1,0 +1,55 @@
+id: hotspot-wholesale-rewrite-U1030
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1029
+- U1030
+agreement:
+  verbatim: |-
+    Parfait. Je veux un style clair et percutent.
+    Je valide.
+  scope: Réécriture HS-008 selon les deux axes présentés et mise à disposition PDF/PPTX ; aucun choix de convergence, budget
+    ferme ou publication.
+  catalog_capture: 'Accord borné aux champs réécrits du hotspot et aux associations documentaires ; empreinte finale ci-dessous.
+    record_intents ne prend en charge que nodes/relations : aucune capture sur des capacités non modifiées.'
+glossary_alignment:
+  checked_terms:
+  - TER017
+  - TER193
+  - TER204
+  - TER205
+  result: Définitions, frontières et liens cohérents ; aucun terme métier modifié.
+preserved:
+- Identité HS-008
+- Trois ancrages métier
+- Quatre options sans sélection
+- Scores L/XL et criticité XL
+- Ancienne synthèse DOC001
+- Sources et publications historiques
+document_delivery:
+- id: DOC002
+  asset:
+    path: modeles/documents/dcdf5f700af5d44d80b077c50f30f1f3927213d83eca6242e8d8865cc6d95ed8.pdf
+    sha256: dcdf5f700af5d44d80b077c50f30f1f3927213d83eca6242e8d8865cc6d95ed8
+    media_type: application/pdf
+- id: DOC003
+  asset:
+    path: modeles/documents/59ffaeff55d5f6fcf922fa1e018176eba25efaeb40ae9820fcdad681e302c97b.pptx
+    sha256: 59ffaeff55d5f6fcf922fa1e018176eba25efaeb40ae9820fcdad681e302c97b
+    media_type: application/vnd.openxmlformats-officedocument.presentationml.presentation
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1029
+  - U1030
+  summary: 'HS-008 réécrit : écarts de gestion, complexité de convergence et de construction, PDF récent et PPTX source.'
+  required_catalog:
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 72cb502efa1b40252f15600e442e749149da3a1f87afd54ed1f4fe629105ea77
+  supersedes_requirements:
+  - annex: availability-scope-story-U1018.yaml
+    collection: hotspots
+    id: HS-008
+    fields:
+    - content_sha256
