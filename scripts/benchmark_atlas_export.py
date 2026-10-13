@@ -65,7 +65,7 @@ def main():
     print(json.dumps({'report': str(folder / 'report.json')}))
     # Only known regenerable exports, after a successful run and comparison.
     if args.output.resolve() == (ROOT / '.runtime/atlas-benchmarks').resolve():
-        print(json.dumps({'retention': clean(ROOT, min_age_days=7, apply=True)}))
+        print(json.dumps({'retention': clean(ROOT, min_age_days=1, max_benchmark_runs=3, apply=True)}))
 
 
 if __name__ == '__main__':

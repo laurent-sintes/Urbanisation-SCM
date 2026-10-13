@@ -72,10 +72,12 @@ def fingerprint(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def plan(root, min_age_days=7, now=None, *, build_copies=False):
+def plan(root, min_age_days=7, now=None, *, build_copies=False, max_benchmark_runs=None):
     root = Path(root).resolve()
     if not math.isfinite(min_age_days) or min_age_days < 0:
         raise ValueError('Age must be a finite non-negative number')
+    if max_benchmark_runs is not None and (not isinstance(max_benchmark_runs, int) or max_benchmark_runs < 1):
+        raise ValueError('Keep at least one benchmark run')
     cutoff = (time.time() if now is None else now) - min_age_days * 86400
     result = []
     for relative in (*ALLOWED, *(BUILD_COPIES if build_copies else ())):
@@ -88,6 +90,12 @@ def plan(root, min_age_days=7, now=None, *, build_copies=False):
             checked(root, unit)
             if not unit.is_dir():
                 raise ValueError('Unexpected benchmark entry: ' + str(unit))
+        keep = set()
+        if relative.endswith('atlas-benchmarks') and max_benchmark_runs is not None:
+            keep = set(sorted(units, key=lambda path: path.stat().st_mtime, reverse=True)[:max_benchmark_runs])
+        for unit in units:
+            if unit in keep:
+                continue
             build = relative in BUILD_COPIES
             if build and not ((unit / 'index.html').is_file() and (unit / 'data/index.json').is_file()):
                 raise ValueError('Incomplete build copy; preserve directory: ' + str(unit))
@@ -130,9 +138,9 @@ def apply_plan(root, selected):
     return removed
 
 
-def clean(root=ROOT, min_age_days=7, apply=False, *, build_copies=False):
+def clean(root=ROOT, min_age_days=7, apply=False, *, build_copies=False, max_benchmark_runs=None):
     with atlas_lock(root):
-        selected = plan(root, min_age_days, build_copies=build_copies)
+        selected = plan(root, min_age_days, build_copies=build_copies, max_benchmark_runs=max_benchmark_runs)
         total = sum(f['bytes'] for entry in selected for f in entry['files'].values())
         removed = apply_plan(root, selected) if apply else 0
         return {'mode': 'applied' if apply else 'dry_run', 'candidate_bytes': total,
@@ -145,5 +153,7 @@ if __name__ == '__main__':
     parser.add_argument('--min-age-days', type=float, default=7)
     parser.add_argument('--apply', action='store_true')
     parser.add_argument('--build-copies', action='store_true', help='Include the five explicitly named obsolete build copies')
+    parser.add_argument('--max-benchmark-runs', type=int, help='Always retain this many newest benchmark runs')
     args = parser.parse_args()
-    print(json.dumps(clean(min_age_days=args.min_age_days, apply=args.apply, build_copies=args.build_copies), indent=2))
+    print(json.dumps(clean(min_age_days=args.min_age_days, apply=args.apply, build_copies=args.build_copies,
+                           max_benchmark_runs=args.max_benchmark_runs), indent=2))

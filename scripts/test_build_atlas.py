@@ -1,9 +1,11 @@
 """Build failures leave a usable reader; open tabs retain lazy assets."""
 from pathlib import Path
+import os
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
-from scripts.build_atlas import promote_build
+from scripts.build_atlas import promote_build, prune_old_assets
 from scripts.export_atlas import atomic_write
 
 
@@ -37,3 +39,20 @@ class BuildActivationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             with self.assertRaisesRegex(ValueError, 'Incomplete'):
                 promote_build(Path(temporary), Path(temporary) / 'live')
+
+    def test_old_hashed_assets_expire_but_current_and_unhashed_assets_remain(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            stage, live = root / 'stage/assets', root / 'live/assets'
+            stage.mkdir(parents=True)
+            live.mkdir(parents=True)
+            for name in ('current-Ab123456.js', 'old-Ab123456.js', 'custom.css'):
+                (live / name).write_text(name)
+            (stage / 'current-Ab123456.js').write_text('current')
+            old = time.time() - 20 * 86400
+            for path in live.iterdir():
+                os.utime(path, (old, old))
+            self.assertEqual(prune_old_assets(stage.parent, live.parent), 1)
+            self.assertTrue((live / 'current-Ab123456.js').exists())
+            self.assertTrue((live / 'custom.css').exists())
+            self.assertFalse((live / 'old-Ab123456.js').exists())

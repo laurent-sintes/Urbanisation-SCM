@@ -3,11 +3,12 @@ from pathlib import Path
 import argparse
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
 import tempfile
-from time import perf_counter
+from time import perf_counter, time
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -33,6 +34,31 @@ def promote_build(stage, destination):
             atomic_write(destination / relative, path.read_bytes())
     for name in ('data/index.json', 'delivery.json', 'index.html'):
         atomic_write(destination / name, (stage / name).read_bytes())
+
+
+def prune_old_assets(stage, destination, *, grace_days=14, now=None):
+    """Retire les anciens chunks Vite après une période pour les onglets ouverts."""
+    stage_assets = Path(stage) / 'assets'
+    live_assets = Path(destination) / 'assets'
+    if not live_assets.exists():
+        return 0
+    if live_assets.is_symlink() or live_assets.is_junction():
+        raise ValueError('Asset directory is redirected')
+    active = {path.name for path in stage_assets.iterdir() if path.is_file()} if stage_assets.exists() else set()
+    cutoff = (time() if now is None else now) - grace_days * 86400
+    removed = 0
+    for path in live_assets.iterdir():
+        if path.is_symlink() or path.is_junction():
+            raise ValueError('Asset directory contains a redirected entry')
+        if not path.is_file() or path.name in active:
+            continue
+        if not re.fullmatch(r'.+-[A-Za-z0-9_-]{8}\.(?:js|css|map)', path.name):
+            continue
+        if path.stat().st_mtime > cutoff:
+            continue
+        path.unlink()
+        removed += 1
+    return removed
 
 
 def main():
@@ -71,6 +97,7 @@ def main():
             shutil.copytree(ROOT / 'app/public', stage, dirs_exist_ok=True, copy_function=stage_copy)
             write_manifest(ROOT, stage)
             promote_build(stage, ROOT / 'app/dist')
+            print(json.dumps({'old_assets_removed': prune_old_assets(stage, ROOT / 'app/dist')}), flush=True)
     print(json.dumps({'build_seconds': round(perf_counter() - started, 4)}), flush=True)
 
 

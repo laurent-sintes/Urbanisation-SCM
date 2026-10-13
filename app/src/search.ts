@@ -27,6 +27,50 @@ const normalize = (text: string) =>
 const words = (text: string) => normalize(text).match(/[a-z0-9]+(?:[._-][a-z0-9]+)*/g) ?? [];
 const stopWords = new Set(['de', 'du', 'des', 'la', 'le', 'les', 'un', 'une', 'd', 'l', 'the', 'of']);
 const caches = new WeakMap<PublishedModel, SearchResult[]>();
+interface IndexedEntry {
+  entry: SearchResult;
+  title: string;
+  id: string;
+  titleWords: string[];
+  bodyWords: string[];
+  code: string;
+  codeWords: string[];
+  primaryText: string;
+  primary: string;
+  primaryWords: string[];
+  bodyPhrase: string;
+}
+const indexedModels = new WeakMap<PublishedModel, IndexedEntry[]>();
+const indexedGuides = new WeakMap<ModelingGuide, Map<string, IndexedEntry[]>>();
+function compile(entry: SearchResult): IndexedEntry {
+  const title = normalize(entry.name);
+  const id = normalize(entry.id);
+  const titleWords = words(entry.name);
+  const bodyWords = words(entry.excerpt);
+  const code = normalize(entry.node?.displayCode ?? '');
+  const primaryText = entry.node?.definition || entry.term?.definition || '';
+  const primaryWords = words(primaryText).filter((word) => !stopWords.has(word));
+  return {
+    entry,
+    title,
+    id,
+    titleWords,
+    bodyWords,
+    code,
+    codeWords: words(code),
+    primaryText,
+    primary: primaryWords.join(' '),
+    primaryWords,
+    bodyPhrase: bodyWords.filter((word) => !stopWords.has(word)).join(' '),
+  };
+}
+function modelIndex(model: PublishedModel): IndexedEntry[] {
+  const saved = indexedModels.get(model);
+  if (saved) return saved;
+  const entries = index(model).map(compile);
+  indexedModels.set(model, entries);
+  return entries;
+}
 function index(model: PublishedModel): SearchResult[] {
   const saved = caches.get(model);
   if (saved) return saved;
@@ -153,67 +197,86 @@ export function searchPublication(
       document,
     })),
   ];
-  const methodEntries = [...documentEntries(metaGuide, 'metamodel'), ...documentEntries(guide, 'principles')];
+  const guideIndex = (source: ModelingGuide | undefined, document: 'metamodel' | 'principles'): IndexedEntry[] => {
+    if (!source) return [];
+    let byDocument = indexedGuides.get(source);
+    if (!byDocument) {
+      byDocument = new Map();
+      indexedGuides.set(source, byDocument);
+    }
+    const saved = byDocument.get(document);
+    if (saved) return saved;
+    const entries = documentEntries(source, document).map(compile);
+    byDocument.set(document, entries);
+    return entries;
+  };
   return [
-    ...index(model).filter((e) => !metaGuide?.glossary?.aliases?.[e.id] && !guide?.glossary?.aliases?.[e.id]),
-    ...methodEntries,
+    ...modelIndex(model).filter(
+      ({ entry }) => !metaGuide?.glossary?.aliases?.[entry.id] && !guide?.glossary?.aliases?.[entry.id],
+    ),
+    ...guideIndex(metaGuide, 'metamodel'),
+    ...guideIndex(guide, 'principles'),
   ]
-    .flatMap((entry) => {
-      const title = normalize(entry.name);
-      const id = normalize(entry.id);
-      const titleWords = words(entry.name),
-        bodyWords = words(entry.excerpt);
-      const has = (values: string[], word: string) =>
-        values.some((value) => value === word || (word.length >= 3 && value.startsWith(word)));
-      const code = normalize(entry.node?.displayCode ?? '');
-      const codePrefix = needle.length >= 3 && Boolean(code) && code.startsWith(needle);
-      const primaryText = entry.node?.definition || entry.term?.definition || '';
-      const primary = words(primaryText)
-        .filter((word) => !stopWords.has(word))
-        .join(' ');
-      const exact = id === needle || code === needle || title === needle;
-      if (
-        !exact &&
-        !codePrefix &&
-        !queryWords.every(
-          (word) => has(titleWords, word) || has(bodyWords, word) || id === word || has(words(code), word),
+    .flatMap(
+      ({
+        entry,
+        title,
+        id,
+        titleWords,
+        bodyWords,
+        code,
+        codeWords,
+        primaryText,
+        primary,
+        primaryWords,
+        bodyPhrase,
+      }) => {
+        const has = (values: string[], word: string) =>
+          values.some((value) => value === word || (word.length >= 3 && value.startsWith(word)));
+        const codePrefix = needle.length >= 3 && Boolean(code) && code.startsWith(needle);
+        const exact = id === needle || code === needle || title === needle;
+        if (
+          !exact &&
+          !codePrefix &&
+          !queryWords.every(
+            (word) => has(titleWords, word) || has(bodyWords, word) || id === word || has(codeWords, word),
+          )
         )
-      )
-        return [];
-      const phrase = queryWords.join(' ');
-      const bodyPhrase = bodyWords.filter((word) => !stopWords.has(word)).join(' ');
-      const score = exact
-        ? 10000
-        : codePrefix
-          ? 9000
-          : title.startsWith(needle)
-            ? 8000
-            : queryWords.every((word) => has(titleWords, word))
-              ? 6000
-              : primary.startsWith(phrase)
-                ? 5500
-                : primary.includes(phrase)
-                  ? 5200
-                  : queryWords.every((word) => has(words(primary), word))
-                    ? 5000
-                    : bodyPhrase.startsWith(phrase)
-                      ? 4500
-                      : bodyPhrase.includes(phrase)
-                        ? 2000
-                        : queryWords.reduce((sum, word) => sum + (has(titleWords, word) ? 500 : 10), 0);
-      return [
-        {
-          ...entry,
-          score,
-          excerpt: excerpt(
-            (id === needle || codePrefix || queryWords.some((word) => normalize(primaryText).includes(word))) &&
-              primaryText
-              ? primaryText
-              : entry.excerpt,
-            queryWords,
-          ),
-        },
-      ];
-    })
+          return [];
+        const phrase = queryWords.join(' ');
+        const score = exact
+          ? 10000
+          : codePrefix
+            ? 9000
+            : title.startsWith(needle)
+              ? 8000
+              : queryWords.every((word) => has(titleWords, word))
+                ? 6000
+                : primary.startsWith(phrase)
+                  ? 5500
+                  : primary.includes(phrase)
+                    ? 5200
+                    : queryWords.every((word) => has(primaryWords, word))
+                      ? 5000
+                      : bodyPhrase.startsWith(phrase)
+                        ? 4500
+                        : bodyPhrase.includes(phrase)
+                          ? 2000
+                          : queryWords.reduce((sum, word) => sum + (has(titleWords, word) ? 500 : 10), 0);
+        return [
+          {
+            ...entry,
+            score,
+            excerpt: excerpt(
+              (id === needle || codePrefix || queryWords.some((word) => normalize(primaryText).includes(word))) &&
+                primaryText
+                ? primaryText
+                : entry.excerpt,
+              queryWords,
+            ),
+          },
+        ];
+      },
+    )
     .sort((a, b) => b.score - a.score);
 }

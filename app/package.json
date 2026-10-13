@@ -11,6 +11,7 @@
     "build:full": "python ../scripts/build_atlas.py --full-export",
     "test": "node --test --test-isolation=none test-*.mjs",
     "check:code": "biome check --diagnostic-level=warn --error-on-warnings .",
+    "benchmark:search": "node benchmark-search.mjs",
     "format:code": "biome check --write .",
     "verify": "pnpm run check:code && python ../scripts/verify_atlas.py",
     "verify:map-placement": "node verify-map-placement.mjs",

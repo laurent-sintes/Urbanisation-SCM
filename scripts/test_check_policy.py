@@ -5,7 +5,9 @@ import unittest
 
 from scripts.structured_io import read
 from scripts.plan_checks import plan
-from scripts.verify_atlas import GROUPS, SMOKE
+from scripts.verify_atlas import GROUPS, SMOKE, RELEASE
+from scripts.preflight_push import commands
+from scripts.contract_checks import BACKLOG_MODULES
 from scripts.decision_review import publication_tool_state
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -43,6 +45,10 @@ class CheckPolicyTests(unittest.TestCase):
         self.assertEqual(sum(script.startswith('verify-map-hotspot-matrix.mjs') for group in GROUPS.values() for script in group), 3)
         self.assertEqual({script for group in SMOKE.values() for script in group},
                          {'verify-browser.mjs', 'verify-display-codes.mjs', 'verify-published-content.mjs'})
+        self.assertTrue({script for group in SMOKE.values() for script in group}.issubset(
+            {script for group in RELEASE.values() for script in group}))
+        self.assertIn('verify-map-placement.mjs', RELEASE['placement'])
+        self.assertIn('verify-hotspots.mjs', RELEASE['hotspot'])
 
     def test_publication_code_tracks_helpers_and_not_unrelated_tests(self):
         state = publication_tool_state()
@@ -61,6 +67,25 @@ class CheckPolicyTests(unittest.TestCase):
         self.assertTrue(plan(['app/src/components/MapPanel.tsx'])['matrix'])
         self.assertFalse(plan(['app/src/components/SearchPanel.tsx'])['matrix'])
         self.assertFalse(plan(['app/src/components/glossary.css'])['matrix'])
+        self.assertEqual(plan(['modeles/backlog/model.yaml'])['contract_profile'], 'backlog')
+        self.assertEqual(plan(['.github/workflows/atlas-pages.yml'])['contract_profile'], 'policy')
+        self.assertTrue(plan(['.github/workflows/atlas-pages.yml'])['contracts'])
+        self.assertEqual(plan(['scripts/export_atlas.py', 'modeles/backlog/model.yaml'])['contract_profile'], 'full')
+        self.assertTrue(plan(['modeles/release/index.json'])['release_browser'])
+        self.assertIn('test_models', BACKLOG_MODULES)
+        self.assertEqual(plan(['scripts/test_models.py'])['contract_profile'], 'tests')
+        self.assertEqual(plan(['scripts/test_models.py'])['contract_modules'], ['scripts:test_models'])
+        self.assertEqual(plan(['scripts/test_models.py', 'modeles/backlog/model.yaml'])['contract_profile'], 'full')
+        self.assertEqual(plan(['app/test_data.py'])['contract_modules'], ['app:test_data'])
+
+    def test_local_browser_mode_matches_ci(self):
+        for paths, suffix in (
+            (['app/src/search.ts'], ['--smoke']),
+            (['modeles/release/index.json'], ['--release']),
+            (['app/src/components/MapPanel.tsx'], []),
+        ):
+            browser = dict(commands(plan(paths), ROOT))['browser']
+            self.assertEqual(browser[-1:] if suffix else browser[2:], suffix)
 
 
 if __name__ == '__main__':

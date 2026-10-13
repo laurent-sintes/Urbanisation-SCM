@@ -23,14 +23,19 @@ SMOKE = {
     'structure': ['verify-display-codes.mjs'],
     'content': ['verify-published-content.mjs'],
 }
+RELEASE = {
+    **SMOKE,
+    'placement': ['verify-map-placement.mjs'],
+    'hotspot': ['verify-hotspots.mjs'],
+}
 
 
-def verify(root=ROOT, *, workers=3, groups=None, smoke=False):
+def verify(root=ROOT, *, workers=3, groups=None, smoke=False, release=False):
     root = Path(root).resolve()
     node = shutil.which('node')
     if not node:
         raise ValueError('Node is required for browser verification')
-    selected = SMOKE if smoke else {key: GROUPS[key] for key in (groups or GROUPS)}
+    selected = RELEASE if release else SMOKE if smoke else {key: GROUPS[key] for key in (groups or GROUPS)}
     output = root / 'app/.runtime/qa-parallel'
     output.mkdir(parents=True, exist_ok=True)
     def run_group(name, scripts):
@@ -72,7 +77,8 @@ if __name__ == '__main__':
     parser.add_argument('--workers', type=int, choices=range(1, 6), default=3)
     parser.add_argument('--group', action='append', choices=GROUPS)
     parser.add_argument('--smoke', action='store_true', help='Short browser and publication check')
+    parser.add_argument('--release', action='store_true', help='Smoke plus representative placement and hotspots')
     args = parser.parse_args()
-    if args.smoke and args.group:
-        parser.error('--smoke cannot be combined with --group')
-    raise SystemExit(verify(workers=args.workers, groups=args.group, smoke=args.smoke)['status'] != 'passed')
+    if sum((args.smoke, args.release, bool(args.group))) > 1:
+        parser.error('--smoke, --release and --group are mutually exclusive')
+    raise SystemExit(verify(workers=args.workers, groups=args.group, smoke=args.smoke, release=args.release)['status'] != 'passed')

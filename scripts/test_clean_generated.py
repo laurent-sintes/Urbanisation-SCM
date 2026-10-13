@@ -1,6 +1,8 @@
 """Cleanup must preserve proofs and reject changed or redirected candidates."""
 from pathlib import Path
 import tempfile
+import os
+import time
 import unittest
 
 from scripts.clean_generated import clean, plan, apply_plan
@@ -97,4 +99,18 @@ class CleanupTests(unittest.TestCase):
         (version / 'documents/DOC001.pdf').write_bytes(b'%PDF-generated')
         clean(self.root, min_age_days=0, apply=True)
         self.assertFalse(self.folder.exists())
+        self.assertTrue(self.proof.exists())
+
+    def test_retention_keeps_newest_runs_and_only_expires_older_ones(self):
+        older = self.folder.parent / 'older'
+        older.mkdir()
+        (older / 'model.json').write_text('{}')
+        now = time.time()
+        old = now - 3 * 86400
+        for path in (older, older / 'model.json'):
+            os.utime(path, (old, old))
+        result = clean(self.root, min_age_days=1, max_benchmark_runs=1, apply=True)
+        self.assertIn('.runtime/atlas-benchmarks/older', result['directories'])
+        self.assertTrue(self.folder.exists())
+        self.assertFalse(older.exists())
         self.assertTrue(self.proof.exists())

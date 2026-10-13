@@ -7,6 +7,7 @@ from pathlib import Path
 import platform
 import subprocess
 import sys
+from time import perf_counter
 
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
@@ -50,6 +51,7 @@ def run(root=ROOT, *, directory='scripts', full=False, modules=None):
                PYTHONPATH=os.pathsep.join((str(root / 'app'), str(root))))
     rows = []
     for name in names:
+        started = perf_counter()
         scope = sha256(json.dumps({'inputs': module_inputs(inputs, name), 'runtime': runtime}, sort_keys=True).encode()).hexdigest()
         receipt = output / (directory + '-' + name + '.json')
         # Preserve discovery's import path: some existing tests import sibling modules.
@@ -67,11 +69,13 @@ def run(root=ROOT, *, directory='scripts', full=False, modules=None):
                 result = subprocess.run(command, cwd=root, env=env, stdout=log, stderr=subprocess.STDOUT)
             if result.returncode:
                 print(log_path.read_text(encoding='utf-8', errors='replace')[-12000:], flush=True)
-                rows.append({'module': name, 'status': 'failed', 'log': str(log_path)})
+                rows.append({'module': name, 'status': 'failed', 'log': str(log_path),
+                             'seconds': round(perf_counter() - started, 3)})
                 continue
             # Each module is an independent process; its successful result is reusable.
             receipt.write_text(json.dumps(key), encoding='utf-8')
-        rows.append({'module': name, 'status': 'passed', 'reused': reused})
+        rows.append({'module': name, 'status': 'passed', 'reused': reused,
+                     'seconds': round(perf_counter() - started, 3)})
         print(json.dumps(rows[-1]), flush=True)
     if fingerprint(root, include_generated=False) != inputs:
         # None of this run's results can be reused under the changed input stamp.

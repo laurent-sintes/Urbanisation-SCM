@@ -105,14 +105,15 @@ def commands(checks, root):
     if checks['frontend']:
         rows.append(('style', [pnpm, '--dir', 'app', 'check:code']))
     if checks['contracts']:
-        rows += [('scripts', [sys.executable, 'scripts/run_python_tests.py', '--directory', 'scripts']),
-                 ('app-python', [sys.executable, 'scripts/run_python_tests.py', '--directory', 'app'])]
+        rows.append(('contracts', [sys.executable, 'scripts/contract_checks.py', '--profile', checks['contract_profile'],
+                                   '--modules', ','.join(checks['contract_modules'])]))
     if checks['launcher'] and os.name == 'nt' and not checks['contracts']:
         rows.append(('launcher', [sys.executable, '-m', 'unittest', 'discover', '-s', 'app', '-p', 'test_launcher.py']))
     if checks['frontend']:
         rows += [('frontend', [pnpm, '--dir', 'app', 'test']), ('build', [pnpm, '--dir', 'app', 'build'])]
     if checks['browser']:
-        rows.append(('browser', [sys.executable, 'scripts/verify_atlas.py']))
+        mode = [] if checks['matrix'] else ['--release'] if checks['release_browser'] else ['--smoke']
+        rows.append(('browser', [sys.executable, 'scripts/verify_atlas.py', *mode]))
     return rows
 
 
@@ -135,7 +136,7 @@ def run(root=ROOT, *, base=None, working=False, offline=False, execute=False, fu
     rows = commands(ctx['plan'], root)
     if full:
         for name, command in rows:
-            if name in ('scripts', 'app-python'):
+            if name == 'contracts':
                 command.append('--full')
     if not execute:
         return {**ctx, 'status': 'planned', 'checks': [name for name, _ in rows]}

@@ -24,6 +24,9 @@ jobs:
       browser: ${{ steps.plan.outputs.browser }}
       matrix: ${{ steps.plan.outputs.matrix }}
       launcher: ${{ steps.plan.outputs.launcher }}
+      release_browser: ${{ steps.plan.outputs.release_browser }}
+      contract_profile: ${{ steps.plan.outputs.contract_profile }}
+      contract_modules: ${{ steps.plan.outputs.contract_modules }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -66,8 +69,10 @@ jobs:
         with:
           python-version: '3.14'
       - run: python -m pip install -r requirements.txt
-      - run: python scripts/run_python_tests.py --directory scripts --full
-      - run: python scripts/run_python_tests.py --directory app --full
+      - env:
+          CONTRACT_PROFILE: ${{ needs.plan.outputs.contract_profile }}
+          CONTRACT_MODULES: ${{ needs.plan.outputs.contract_modules }}
+        run: python scripts/contract_checks.py --profile "$CONTRACT_PROFILE" --modules "$CONTRACT_MODULES" --full
   build:
     needs: plan
     if: needs.plan.outputs.frontend == 'true'
@@ -109,7 +114,9 @@ jobs:
       - run: pnpm --dir app exec playwright install --with-deps chromium
         if: needs.plan.outputs.browser == 'true'
       - run: python scripts/verify_atlas.py --workers 3 --smoke
-        if: needs.plan.outputs.browser == 'true' && needs.plan.outputs.matrix != 'true'
+        if: needs.plan.outputs.browser == 'true' && needs.plan.outputs.matrix != 'true' && needs.plan.outputs.release_browser != 'true'
+      - run: python scripts/verify_atlas.py --workers 3 --release
+        if: needs.plan.outputs.browser == 'true' && needs.plan.outputs.matrix != 'true' && needs.plan.outputs.release_browser == 'true'
       - run: python scripts/verify_atlas.py --workers 3
         if: needs.plan.outputs.matrix == 'true'
       - uses: actions/upload-artifact@v4
