@@ -24,6 +24,10 @@ class CheckPolicyTests(unittest.TestCase):
         for flag in ('NEED_BUILD', 'NEED_CONTRACTS', 'NEED_LAUNCHER'):
             self.assertIn(flag, script)
         deploy = workflow['jobs']['deploy']
+        # A skipped optional launcher must not suppress a validated main deployment.
+        self.assertIn('always()', deploy['if'])
+        self.assertIn("needs.checks.result == 'success'", deploy['if'])
+        self.assertIn("needs.build.result == 'success'", deploy['if'])
         self.assertIn("github.event_name != 'pull_request'", deploy['if'])
         self.assertFalse(deploy['concurrency']['cancel-in-progress'])
         self.assertIn('git ls-remote origin refs/heads/main', deploy['steps'][1]['run'])

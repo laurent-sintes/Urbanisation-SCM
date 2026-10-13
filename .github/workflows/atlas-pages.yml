@@ -152,7 +152,7 @@ jobs:
           if [ "$NEED_CONTRACTS" = "true" ]; then test "$CONTRACTS" = "success"; fi
   deploy:
     needs: [checks, build]
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && needs.build.result == 'success'
+    if: always() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && needs.build.result == 'success' && needs.checks.result == 'success'
     concurrency:
       group: atlas-pages-deployment
       cancel-in-progress: false
