@@ -1,6 +1,6 @@
-# Urbanisation 2026-10-13.11
+# Urbanisation 2026-10-13.12
 
-77 capacités. Sources : U1056.
+77 capacités. Sources : U1066.
 
 Publication et accord métier restent distincts. Comparaison détaillée disponible dans Git.
 
@@ -10,7 +10,7 @@ Publication et accord métier restent distincts. Comparaison détaillée disponi
 
 ## Points chauds
 
-28 points chauds localisés. La publication ne vaut ni arbitrage ni résolution.
+29 points chauds localisés. La publication ne vaut ni arbitrage ni résolution.
 
 ## Documents
 
