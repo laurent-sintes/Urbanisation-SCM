@@ -428,8 +428,10 @@ try {
   const detail = page.locator('.map-toolbar .map-detail-picker .detail-trigger');
   await detail.click();
   await page.getByRole('group', { name: 'Niveau de détail de la carte' }).waitFor();
+  await page.waitForFunction(() => document.activeElement?.matches('.detail-popover .detail-range'));
   assert.equal(await page.evaluate(() => document.activeElement?.getAttribute('type')), 'range');
   await page.keyboard.press('Escape');
+  await page.waitForFunction(() => document.activeElement?.matches('.map-toolbar .map-detail-picker .detail-trigger'));
   assert.equal(await detail.evaluate((el) => document.activeElement === el), true);
   await detail.click();
   await page

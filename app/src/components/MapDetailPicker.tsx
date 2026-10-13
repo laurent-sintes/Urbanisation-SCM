@@ -1,6 +1,6 @@
 import { FloatingFocusManager, FloatingPortal, useClick, useDismiss, useInteractions } from '@floating-ui/react';
 import { ChevronDown, SlidersHorizontal } from 'lucide-react';
-import { useEffect, useId, useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 import { useHotspotFloating } from './HotspotDisplay';
 
 export function MapDetailPicker({
@@ -18,12 +18,6 @@ export function MapDetailPicker({
   const max = labels.length - 1;
   const { refs, floatingStyles, context, host } = useHotspotFloating(open, setOpen);
   const { getReferenceProps, getFloatingProps } = useInteractions([useClick(context), useDismiss(context)]);
-  useEffect(() => {
-    if (!open) return;
-    if (range.current?.disabled)
-      range.current?.closest('.detail-popover')?.querySelector<HTMLButtonElement>('.detail-options button')?.focus();
-    else range.current?.focus();
-  }, [open]);
   return (
     <div className="map-detail-picker">
       <button
@@ -42,7 +36,7 @@ export function MapDetailPicker({
       </button>
       {open && (
         <FloatingPortal root={host}>
-          <FloatingFocusManager context={context} modal={false}>
+          <FloatingFocusManager context={context} modal={false} initialFocus={max === 0 ? 0 : range}>
             <div
               {...getFloatingProps()}
               ref={refs.setFloating}
