@@ -6,6 +6,22 @@ from scripts.backlog_delivery import check_delivery
 
 
 class DeliveryTests(unittest.TestCase):
+    def test_application_delivery_checks_product_and_si_selection_separately(self):
+        from scripts.element_versions import content_hash
+        product = {'id': 'product-oms', 'documentation': {'channels': ['online_b2c']}}
+        selection = {'id': 'si-oms', 'component_states': [{'used': 'unknown'}]}
+        self.model['application_catalog'] = {'products': [product], 'selections': [selection]}
+        declaration = {'state': 'applied', 'required_catalog': [
+            {'collection': collection, 'id': item['id'], 'content_sha256': content_hash(item)}
+            for collection, item in [('application_products', product), ('application_selections', selection)]]}
+        (self.folder / 'products.yaml').write_text(dumps({'publication_delivery': declaration}), encoding='utf-8')
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+        selection['component_states'][0]['used'] = 'confirmed'
+        self.assertTrue(any('catalog mismatch: si-oms' in error for error in check_delivery(self.root, self.model)[1]))
+        selection['component_states'][0]['used'] = 'unknown'
+        product['documentation']['channels'] = []
+        self.assertTrue(any('catalog mismatch: product-oms' in error for error in check_delivery(self.root, self.model)[1]))
+
     def test_hotspot_supersession_preserves_old_proof_and_checks_replacement(self):
         from scripts.element_versions import content_hash
         original = {'id': 'HS-008', 'title': 'Assignment'}

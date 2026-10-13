@@ -196,6 +196,72 @@
   object-fit: contain;
   background: #fff;
 }
+.application-logo {
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  flex-shrink: 0;
+}
+.application-logo small {
+  font-size: 10px;
+  color: #60766a;
+}
+.application-documentation {
+  display: grid;
+  gap: 12px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.application-documentation h3,
+.application-documentation h4,
+.application-documentation p {
+  margin: 0;
+}
+.application-documentation h3 {
+  font-size: 14px;
+}
+.application-boundary {
+  padding: 10px 12px;
+  border-left: 3px solid #a9cbb5;
+  color: #4b625c;
+}
+.application-history {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.application-history li {
+  display: grid;
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 12px;
+}
+.application-history time {
+  color: #315e48;
+  font-weight: 650;
+}
+.application-release-tracking {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+  border: 1px solid #dbe7dd;
+  border-radius: 8px;
+}
+.application-research-details {
+  color: #4b625c;
+}
+.application-research-details summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: #315e48;
+}
+.application-research-details[open] > p {
+  margin-top: 10px;
+}
+.application-research-details li {
+  margin: 6px 0;
+}
 .application-identity h2 {
   margin: 0;
   font-size: 21px;

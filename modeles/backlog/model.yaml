@@ -25,20 +25,22 @@ application_catalog:
   - U1053
   - U1054
   - U1055
+  - U1075
   products:
   - id: product-elastic-suite
     name: Elastic Suite
     publisher: Elastic Suite / Emerald
     kind: vendor_product
     inventory_status: partial
-    scope: 'Vente wholesale B2B : catalogues et collections présentés aux acheteurs, construction de propositions et saisie
-      de commandes.'
+    scope: Présenter les collections aux revendeurs, préparer leurs achats et prendre leurs commandes [B2B](glossary:TER195)
+      ; suivre commandes, reliquats, factures et expéditions.
     website_url: https://www.elasticsuite.com/
     branding:
       logo_path: assets/elastic-suite-logo.png
       accent_color: '#EC6A56'
-      source_url: https://staging-elasticsuite.kinsta.cloud/wp-content/uploads/2025/06/Elastic-Logo_x1.png
-      checked_on: '2026-10-13'
+      source_url: https://www.elasticsuite.com/
+      checked_on: '2026-10-14'
+      role: product
     note: Fonctions de l’offre documentées par l’éditeur ; éditions, licences et activation propres à chaque SI restent inconnues.
     source_refs:
     - U03
@@ -46,6 +48,7 @@ application_catalog:
     - U1038
     - U1041
     - U1044
+    - U1075
     components:
     - id: elastic-suite-core
       name: Elastic Suite
@@ -100,6 +103,22 @@ application_catalog:
       source_url: https://www.elasticsuite.com/platform/
       source_refs:
       - U1051
+    - id: elastic-sales-campaigns
+      parent_id: elastic-suite-core
+      name: Sales Campaigns
+      kind: feature
+      note: Campagnes adressées aux acheteurs revendeurs, avec produits commandables et suivi commercial.
+      source_url: https://www.elasticsuite.com/platform/
+      source_refs:
+      - U1075
+    - id: elastic-personalization
+      parent_id: elastic-suite-core
+      name: Product Personalization
+      kind: feature
+      note: Options de texte, logo et instructions de personnalisation dans la commande [B2B](glossary:TER195).
+      source_url: https://www.elasticsuite.com/personalization/
+      source_refs:
+      - U1075
     offering_mappings:
     - id: offer-elastic-order-entry
       component_id: elastic-order-entry
@@ -135,7 +154,7 @@ application_catalog:
       node_id: ba-wholesale-sales
       role: supports
       evidence_state: documented
-      note: Présente visuellement les produits dans le parcours de vente B2B.
+      note: Présente visuellement les produits dans le parcours de vente [B2B](glossary:TER195).
       source_url: https://www.elasticsuite.com/
       source_refs:
       - U1044
@@ -144,7 +163,8 @@ application_catalog:
       node_id: D04.i
       role: contributes
       evidence_state: documented
-      note: Saisie et soumission B2B d'une commande ; le cycle complet de la commande et son autorité restent à établir.
+      note: Saisie et soumission [B2B](glossary:TER195) d'une commande ; le cycle complet de la commande et son autorité restent
+        à établir.
       source_url: https://www.elasticsuite.com/platform/
       source_refs:
       - U1051
@@ -167,6 +187,64 @@ application_catalog:
       source_url: https://www.elasticsuite.com/platform/
       source_refs:
       - U1053
+    - id: offer-elastic-sales-campaigns
+      component_id: elastic-sales-campaigns
+      node_id: ba-wholesale-sales
+      role: contributes
+      evidence_state: documented
+      note: Campagnes commerciales [B2B](glossary:TER195) liées aux collections et achats ; aucun marketing [B2C](glossary:TER194)
+        n’est déduit.
+      source_url: https://www.elasticsuite.com/platform/
+      source_refs:
+      - U1075
+    - id: offer-elastic-personalization
+      component_id: elastic-personalization
+      node_id: ba-wholesale-sales
+      role: contributes
+      evidence_state: documented
+      note: La demande de personnalisation accompagne la vente ; sa réalisation industrielle reste extérieure à ce parcours.
+      source_url: https://www.elasticsuite.com/personalization/
+      source_refs:
+      - U1075
+    documentation:
+      reviewed_on: '2026-10-14'
+      deployment_model: Service cloud par abonnement, accessible aux équipes commerciales et aux acheteurs revendeurs.
+      channels:
+      - wholesale_b2b
+      integration_summary: Intégrations avec les [ERP](glossary:TER316) et processeurs de paiement ; les données de produits,
+        prix, stock et commandes dépendent du raccordement choisi.
+      scope_boundary: La vente [B2B](glossary:TER195) en ligne relève ici de [Wholesale Commerce](glossary:TER193). La présentation
+        du catalogue et le suivi des commandes ne prouvent ni leur autorité maître ni une optimisation du carnet.
+      history:
+      - date: '2002'
+        kind: publisher_founded
+        title: Création de PlumRiver, éditeur d’origine ; ce n’est pas la date de lancement d’Elastic.
+        source_url: https://www.emeraldx.com/emerald-acquires-plumriver-llc-to-expand-digital-commerce-capabilities/
+      - date: '2021-01-06'
+        kind: acquisition
+        title: Acquisition de PlumRiver / Elastic Suite par Emerald.
+        source_url: https://www.emeraldx.com/emerald-acquires-plumriver-llc-to-expand-digital-commerce-capabilities/
+      release_tracking:
+        status: not_public
+        label: Service cloud ; numéro de release publique non établi
+        note: Les pages produit et support décrivent les fonctions, sans numéro global de version vérifiable.
+        source_url: https://www.elasticsuite.com/platform/
+        checked_on: '2026-10-14'
+      sources:
+      - title: Plateforme Elastic
+        url: https://www.elasticsuite.com/platform/
+        focus: Catalogues, collections, Whiteboard, assortiments, suivi de commande et campagnes.
+      - title: Intégrations Elastic
+        url: https://www.elasticsuite.com/integrations/
+        focus: Raccordement [ERP](glossary:TER316) et paiements.
+      - title: Personnalisation des commandes
+        url: https://www.elasticsuite.com/personalization/
+        focus: Personnalisation de produits dans le parcours de commande.
+      - title: Rachat de PlumRiver par Emerald
+        url: https://www.emeraldx.com/emerald-acquires-plumriver-llc-to-expand-digital-commerce-capabilities/
+        focus: Identité de l’éditeur, modèle [SaaS](glossary:TER317) et dates.
+      gaps:
+      - Date du premier lancement d’Elastic et calendrier public des releases non établis.
   - id: product-flow-core
     name: Flow Core System
     publisher: Beaumanoir / FLOW
@@ -186,16 +264,24 @@ application_catalog:
       source_refs:
       - U1033
       - U1040
+    branding:
+      logo_path: assets/flow-original.png
+      accent_color: '#173B3E'
+      source_url: https://github.com/laurent-sintes/Urbanisation-SCM/blob/main/app/public/assets/flow-original.png
+      checked_on: '2026-10-14'
+      role: product
   - id: product-socloz
     name: SoCloz
-    publisher: Socloz
+    publisher: Socloz / groupe SAVOYE
     kind: vendor_product
     inventory_status: partial
-    scope: Suite omnicanale composée d’un OMS, d’un point de vente mobile et d’un outil de préparation des commandes en magasin.
+    scope: 'Relier ventes web et magasin aux stocks disponibles : réservation, retrait ou expédition depuis magasin ; encaissement
+      mobile, préparation et retours.'
     note: Composition de l’offre éditeur ; modules acquis, activés et utilisés dans le SI historique non qualifiés.
     source_refs:
     - U1042
     - U1044
+    - U1075
     components:
     - id: socloz-core
       name: SoCloz
@@ -226,6 +312,22 @@ application_catalog:
       source_url: https://www.socloz.com/plateforme/
       source_refs:
       - U1044
+    - id: socloz-clienteling
+      parent_id: socloz-mpos
+      name: Clienteling
+      kind: feature
+      note: Identification, historique client, fidélité et conseil vendeur.
+      source_url: https://www.socloz.com/plateforme/mpos/clienteling/
+      source_refs:
+      - U1075
+    - id: socloz-store-returns
+      parent_id: socloz-store-wms
+      name: Store Returns
+      kind: feature
+      note: Accepter un retour de commande web ou magasin, vérifier son éligibilité et produire le justificatif.
+      source_url: https://www.socloz.com/plateforme/store-wms/
+      source_refs:
+      - U1075
     website_url: https://www.socloz.com/plateforme/
     offering_mappings:
     - id: offer-socloz-availability
@@ -233,8 +335,8 @@ application_catalog:
       node_id: D01.c
       role: contributes
       evidence_state: documented
-      note: L’OMS agrège les disponibilités des magasins et entrepôts avec marges de sécurité ; les sources de stock et la
-        portée de la visibilité Supply restent à qualifier.
+      note: L’[OMS](glossary:TER328) agrège les disponibilités des magasins et entrepôts avec marges de sécurité ; les sources
+        de stock et la portée de la visibilité Supply restent à qualifier.
       source_url: https://www.socloz.com/plateforme/oms/
       source_refs:
       - U1044
@@ -248,6 +350,18 @@ application_catalog:
       source_url: https://www.socloz.com/plateforme/oms/
       source_refs:
       - U1044
+    - id: offer-socloz-digital-commerce
+      component_id: socloz-oms
+      node_id: subdomain-sales-b2c-ecommerce
+      role: contributes
+      evidence_state: documented
+      note: L’[OMS](glossary:TER328) contribue aux ventes en ligne par la disponibilité, la réservation et les parcours click
+        & collect ou ship from store ; il ne constitue pas à lui seul le site de vente. L’usage exact chez les Marques Historiques
+        reste à établir.
+      source_url: https://www.socloz.com/plateforme/oms/
+      source_refs:
+      - U1044
+      - U1074
     - id: offer-socloz-reservation
       component_id: socloz-oms
       node_id: D02.c
@@ -276,23 +390,119 @@ application_catalog:
       source_url: https://www.socloz.com/plateforme/
       source_refs:
       - U1044
+    - id: offer-socloz-clienteling
+      component_id: socloz-clienteling
+      node_id: ba-retail-customer-relationship-management
+      role: contributes
+      evidence_state: documented
+      note: L’interface vendeur exploite la connaissance client et la fidélité ; l’autorité sur les profils et règles centrales
+        dépend des raccordements.
+      source_url: https://www.socloz.com/plateforme/mpos/clienteling/
+      source_refs:
+      - U1075
+    - id: offer-socloz-store-returns
+      component_id: socloz-store-returns
+      node_id: D04.l
+      role: contributes
+      evidence_state: documented
+      note: Le retour web ou magasin contribue au parcours de Return Order ; traitement financier et destination du bien dépendent
+        des règles et intégrations.
+      source_url: https://www.socloz.com/plateforme/store-wms/
+      source_refs:
+      - U1075
+    - id: offer-socloz-store-returns-operations
+      component_id: socloz-store-returns
+      node_id: subdomain-store-backoffice-operations
+      role: contributes
+      evidence_state: documented
+      note: Les vendeurs reçoivent et traitent les articles retournés en magasin.
+      source_url: https://www.socloz.com/plateforme/store-wms/
+      source_refs:
+      - U1075
+    - id: offer-socloz-sales-order
+      component_id: socloz-oms
+      node_id: D04.i
+      role: contributes
+      evidence_state: documented
+      note: Suivi de commandes omnicanales ; l’autorité et le partage du cycle de Sales Order avec la plateforme eCommerce
+        restent à qualifier.
+      source_url: https://www.socloz.com/plateforme/oms/
+      source_refs:
+      - U1075
+    documentation:
+      reviewed_on: '2026-10-14'
+      deployment_model: 'Suite [SaaS](glossary:TER317) modulaire : [OMS](glossary:TER328), [mPOS](glossary:TER249) et Store
+        [WMS](glossary:TER320) ; interfaces vendeur web et mobiles.'
+      channels:
+      - store
+      - online_b2c
+      integration_summary: Raccordement aux sites eCommerce, caisses, stocks et transporteurs ; le site de vente reste une
+        application distincte.
+      scope_boundary: L’[OMS](glossary:TER328) contribue au parcours en ligne ; le Store [WMS](glossary:TER320) réalise la
+        préparation et les retours en magasin. Le produit ne démontre pas à lui seul toutes les fonctions d’un site eCommerce.
+      history:
+      - date: '2012'
+        kind: publisher_founded
+        title: Création de Socloz selon la page de l’éditeur.
+        source_url: https://www.socloz.com/qui-sommes-nous/
+      - date: '2020-02-27'
+        kind: acquisition
+        title: Annonce du rachat de SoCloz par SAVOYE.
+        source_url: https://www.savoye.com/en/news-list/page/11/
+      release_tracking:
+        status: not_public
+        label: Suite SaaS ; journal public de versions non trouvé
+        note: L’offre est documentée par module ; une date de création de l’entreprise ne date pas le lancement de l’[OMS](glossary:TER328).
+        source_url: https://www.socloz.com/plateforme/
+        checked_on: '2026-10-14'
+      sources:
+      - title: Suite Socloz
+        url: https://www.socloz.com/plateforme/
+        focus: Composition en trois logiciels.
+      - title: OMS Socloz
+        url: https://www.socloz.com/plateforme/oms/
+        focus: Stocks, commandes web, réservation, retrait et expédition.
+      - title: Store WMS
+        url: https://www.socloz.com/plateforme/store-wms/
+        focus: Préparation et retours de commandes web en magasin.
+      - title: Clienteling
+        url: https://www.socloz.com/plateforme/mpos/clienteling/
+        focus: Connaissance client et fidélité dans l’interface vendeur.
+      - title: Histoire de Socloz
+        url: https://www.socloz.com/qui-sommes-nous/
+        focus: Année de création.
+      - title: Annonce du rachat
+        url: https://www.savoye.com/en/company/acquisition-socloz-leading-editor-saas-omnichannel-software-platforms-bricks-and-mortar/
+        focus: Appartenance à SAVOYE et modèle [SaaS](glossary:TER317).
+      - title: Date de l’annonce SAVOYE
+        url: https://www.savoye.com/en/news-list/page/11/
+        focus: 27 février 2020.
+      gaps:
+      - Lancement de chaque module et dernière release non publiés dans les sources examinées.
+    branding:
+      logo_path: assets/socloz-logo.png
+      accent_color: '#333333'
+      source_url: https://www.socloz.com/plateforme/
+      checked_on: '2026-10-14'
+      role: product
   - id: product-united-retail
     name: United Retail
     publisher: Cegid (ex-Cylande)
     kind: vendor_product
     inventory_status: partial
-    scope: 'Plateforme Retail modulaire : vente en magasin, paramétrage central des magasins, ventes assistées, CRM et échanges
-      avec Storeland ou autres systèmes selon la configuration.'
+    scope: Paramétrer et relier les magasins, leurs caisses, clients, ventes assistées et stocks ; assurer les échanges avec
+      Storeland et les parcours omnicanaux selon configuration.
     note: Cegid documente UR autonome ou couplé à Storeland, avec des paramètres et modules de liaison. Laurent décrit son
-      usage GBM comme middleware et backoffice magasin, et rapporte une ambition de couverture ERP Retail avec quelques fonctions
-      B2B limitées. La complétude d'une version livrée, l'arrêt allégué du développement et les modules actifs par marque
-      restent à établir.
+      usage GBM comme middleware et backoffice magasin, et rapporte une ambition de couverture [ERP](glossary:TER316) Retail
+      avec quelques fonctions [B2B](glossary:TER195) limitées. La complétude d'une version livrée, l'arrêt allégué du développement
+      et les modules actifs par marque restent à établir.
     source_refs:
     - U1042
     - U1044
     - U1049
     - U1050
     - U1052
+    - U1075
     components:
     - id: united-retail-core
       name: United Retail
@@ -319,7 +529,8 @@ application_catalog:
       parent_id: united-retail-core
       name: CRM
       kind: module
-      note: Module CRM identifié dans la documentation de paramétrage UR ; périmètre commercial et usage Beaumanoir à qualifier.
+      note: Module [CRM](glossary:TER321) identifié dans la documentation de paramétrage UR ; périmètre commercial et usage
+        Beaumanoir à qualifier.
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Definir-les-parametres-generaux/555
       source_refs:
       - U1044
@@ -439,18 +650,99 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Reassort-et-reapprovisionnement-des-magasins-synthese/521
       source_refs:
       - U1051
+    - id: offer-ur-digital-commerce
+      component_id: united-retail-core
+      node_id: subdomain-sales-b2c-ecommerce
+      role: contributes
+      evidence_state: candidate
+      note: Contribution aux canaux numériques annoncée au niveau du portefeuille United Retail ; le module web précis et
+        la couverture de l’offre UR restent à vérifier.
+      source_url: https://www.cegid.com/global/blog/acquisition-cylande-group-cegid-gives-rise-world-leader/
+      source_refs:
+      - U1075
+    - id: offer-ur-assisted-sales-order
+      component_id: ur-assisted-sales
+      node_id: D04.i
+      role: contributes
+      evidence_state: documented
+      note: UR suit des commandes et réservations créées en magasin dans Winstore ; correspondance partielle au cycle Sales
+        Order cible.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Fonctionnalites-du-module-ventes-assistees/563?contentId=CDMicsductTiI_JWTB6E7g
+      source_refs:
+      - U1075
+    - id: offer-ur-assisted-reservation
+      component_id: ur-assisted-sales
+      node_id: D02.c
+      role: contributes
+      evidence_state: candidate
+      note: L’allocation UR désigne ici une réservation pour une vente assistée ; les règles ne sont pas assimilées à toutes
+        les affectations du Core.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Lexique-des-ventes-assistees/565?contentId=zibPNZvP3fuLA0D7NzI_Hw
+      source_refs:
+      - U1075
+    documentation:
+      reviewed_on: '2026-10-14'
+      deployment_model: Installation sur site documentée ; architecture et hébergement propres à chaque instance à qualifier.
+      channels:
+      - store
+      - online_b2c
+      integration_summary: Échanges entre UR, Winstore et Storeland ; le paramétrage décrit des flux de clients, ventes, commandes,
+        réceptions et transferts.
+      scope_boundary: UR est un produit du portefeuille United Retail. La portée web de ce portefeuille ne prouve ni une vitrine
+        intégrée ni les modules [OMS](glossary:TER328) activés dans GBM.
+      history:
+      - date: '2017-11-23'
+        kind: acquisition
+        title: Cegid annonce l’acquisition de Cylande et de son portefeuille United Retail.
+        source_url: https://www.cegid.com/global/blog/acquisition-cylande-group-cegid-gives-rise-world-leader/
+      - date: 2022-04
+        kind: documentation
+        title: Prérequis techniques UR, édition d’avril 2022.
+        source_url: https://www.cegid.com/fr/cgv/?slugFileName=pr-requis-techniques_cegid-retail-ur_on-premise-licence
+      release_tracking:
+        status: documented_version
+        label: Documentation fonctionnelle UR version 24
+        note: Numéro de documentation, sans preuve de dernière version livrée ni d’arrêt de support.
+        source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Definir-les-parametres-generaux/555?contentId=o7QP899t8eFMaThYUDigqg
+        checked_on: '2026-10-14'
+      sources:
+      - title: Acquisition de Cylande
+        url: https://www.cegid.com/global/blog/acquisition-cylande-group-cegid-gives-rise-world-leader/
+        focus: Éditeur et portefeuille omnicanal.
+      - title: Prérequis UR
+        url: https://www.cegid.com/fr/cgv/?slugFileName=pr-requis-techniques_cegid-retail-ur_on-premise-licence
+        focus: Installation sur site et date du document.
+      - title: Ventes assistées
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Fonctionnalites-du-module-ventes-assistees/563?contentId=CDMicsductTiI_JWTB6E7g
+        focus: Commandes, réservations, livraison et reprise.
+      - title: Paramètres généraux UR
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Definir-les-parametres-generaux/555?contentId=o7QP899t8eFMaThYUDigqg
+        focus: Interfaces Winstore et Storeland, commandes, réceptions et transferts.
+      - title: Réassort magasins
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Reassort-et-reapprovisionnement-des-magasins-synthese/521
+        focus: Besoins magasin et réapprovisionnement.
+      gaps:
+      - Premier lancement et release actuellement commercialisée non établis.
+      - Module précis réalisant le canal web et statut actuel de maintenance à confirmer auprès de Cegid.
+    branding:
+      logo_path: assets/cegid-logo.svg
+      accent_color: '#0046FE'
+      source_url: https://www.cegid.com/global/blog/acquisition-cylande-group-cegid-gives-rise-world-leader/
+      checked_on: '2026-10-14'
+      role: publisher
   - id: product-storeland
     name: Storeland
     publisher: Cegid (ex-Cylande)
     kind: vendor_product
     inventory_status: partial
-    scope: 'Gestion commerciale centrale du réseau de magasins : produits, achats, pilotage magasin, stock, dépôt, CRM et
-      vente Négoce selon modules et paramétrage.'
+    scope: Gérer le réseau de magasins, les articles, achats, collections, prix, stocks et dépôts ; traiter aussi des ventes
+      Négoce selon les modules et règles choisis.
     note: Les prérequis Cegid de janvier 2023 confirment une base Oracle et des postes clients ; ERetail expose des services
-      SOAP vers Storeland. Laurent décrit Storeland comme un élément du backoffice magasin GBM et rapporte une ambition de
-      couverture ERP Retail avec quelques fonctions B2B limitées. Versions, modules et adaptations par marque restent à vérifier.
-      La documentation Cegid décrit aussi un module Négoce distinct, avec clients professionnels, catalogues, commandes, modes
-      de traitement et facturation ; son périmètre activé chez GBM reste inconnu.
+      [SOAP](glossary:TER327) vers Storeland. Laurent décrit Storeland comme un élément du backoffice magasin GBM et rapporte
+      une ambition de couverture [ERP](glossary:TER316) Retail avec quelques fonctions [B2B](glossary:TER195) limitées. Versions,
+      modules et adaptations par marque restent à vérifier. La documentation Cegid décrit aussi un module Négoce distinct,
+      avec clients professionnels, catalogues, commandes, modes de traitement et facturation ; son périmètre activé chez GBM
+      reste inconnu.
     source_refs:
     - U1042
     - U1044
@@ -458,6 +750,7 @@ application_catalog:
     - U1050
     - U1052
     - U1056
+    - U1075
     components:
     - id: storeland-core
       name: Storeland
@@ -492,7 +785,7 @@ application_catalog:
       parent_id: storeland-core
       name: ERetail Interface
       kind: module
-      note: Services SOAP d'accès à Storeland selon la fiche technique Cegid ; activation GBM à vérifier.
+      note: Services [SOAP](glossary:TER327) d'accès à Storeland selon la fiche technique Cegid ; activation GBM à vérifier.
       source_url: https://www.cegid.com/fr/cgv/?slugFileName=pr-requis-techniques_cegid-storeland_on-premise-licence
       source_refs:
       - U1050
@@ -508,7 +801,7 @@ application_catalog:
       parent_id: storeland-core
       name: CRM
       kind: module
-      note: Module CRM et fidélité paramétrable ; ne prouve pas sa licence ni son activation.
+      note: Module [CRM](glossary:TER321) et fidélité paramétrable ; ne prouve pas sa licence ni son activation.
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Parametrage-du-module-CRM/556
       source_refs:
       - U1044
@@ -530,6 +823,22 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Modes-de-traitement/488
       source_refs:
       - U1056
+    - id: storeland-collection-planning
+      parent_id: storeland-core
+      name: Collection & Assortment Planning
+      kind: feature
+      note: Plan de collection, assortiments magasin et budgets d’achat.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1075
+    - id: storeland-pricing
+      parent_id: storeland-core
+      name: Retail Pricing & Promotions
+      kind: feature
+      note: Prix de vente par pays, grilles tarifaires et opérations commerciales.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1075
     website_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
     offering_mappings:
     - id: offer-storeland-products
@@ -602,8 +911,8 @@ application_catalog:
       node_id: subdomain-retail-commerce
       role: contributes
       evidence_state: candidate
-      note: Interface SOAP donnant accès à Storeland ; les services et responsabilités métier servis doivent être inventoriés
-        avant une affectation plus précise.
+      note: Interface [SOAP](glossary:TER327) donnant accès à Storeland ; les services et responsabilités métier servis doivent
+        être inventoriés avant une affectation plus précise.
       source_url: https://www.cegid.com/fr/cgv/?slugFileName=pr-requis-techniques_cegid-storeland_on-premise-licence
       source_refs:
       - U1053
@@ -706,18 +1015,104 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Facturation-negoce/478
       source_refs:
       - U1056
+    - id: offer-storeland-collection-planning
+      component_id: storeland-collection-planning
+      node_id: domain-product-portfolio-collection
+      role: contributes
+      evidence_state: documented
+      note: Plans de collection et assortiments documentés ; périmètre partiel, sans équivalence avec tout le domaine cible.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1075
+    - id: offer-storeland-retail-pricing
+      component_id: storeland-pricing
+      node_id: ba-pricing-management
+      role: contributes
+      evidence_state: documented
+      note: Paramétrage et génération des prix de vente ; gouvernance d’entreprise non déduite.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1075
+    - id: offer-storeland-retail-promotions
+      component_id: storeland-pricing
+      node_id: ba-promotion-management
+      role: contributes
+      evidence_state: documented
+      note: Définition et analyse d’opérations commerciales dans Storeland, selon paramétrage.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1075
+    - id: offer-storeland-store-operations
+      component_id: storeland-store-management
+      node_id: subdomain-store-backoffice-operations
+      role: contributes
+      evidence_state: documented
+      note: Réceptions, transferts, inventaires et contrôle des journées de caisse sont décrits dans la documentation centrale.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+      source_refs:
+      - U1075
+    documentation:
+      reviewed_on: '2026-10-14'
+      deployment_model: Installation sur site documentée, avec base Oracle et postes clients ; hébergement GBM à vérifier.
+      channels:
+      - store
+      - wholesale_b2b
+      integration_summary: ERetail expose des services [SOAP](glossary:TER327) ; Winstore échange les ventes et données magasin
+        avec la centrale. Les versions des interfaces doivent correspondre à celle de Storeland.
+      scope_boundary: Le Négoce documente des clients professionnels, commandes, préparation et facturation. Ces fonctions
+        ne prouvent pas un pilotage wholesale complet ou leur activation par marque.
+      history:
+      - date: '2017'
+        kind: edition
+        title: Storeland 5.0.3 disponible au quatrième trimestre 2017 dans la politique Cegid historique.
+        source_url: https://onboarding.cegid.com/wp-content/uploads/sites/5/2020/08/Cegid-Retail-Product-Lifecycle-Policy-2019-FR.pdf
+      - date: 2023-01
+        kind: documentation
+        title: 'Prérequis Storeland de janvier 2023 : versions 5.0.4 et 5.0.5.'
+        source_url: https://www.cegid.com/fr/cgv/?slugFileName=pr-requis-techniques_cegid-storeland_on-premise-licence
+      release_tracking:
+        status: documented_version
+        label: Storeland 5.0.4 / 5.0.5 dans les prérequis de janvier 2023
+        note: Repère documentaire ; dernière release et contrat de maintenance actuels non vérifiés.
+        source_url: https://www.cegid.com/fr/cgv/?slugFileName=pr-requis-techniques_cegid-storeland_on-premise-licence
+        checked_on: '2026-10-14'
+      sources:
+      - title: Documentation Storeland
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
+        focus: Produits, collections, prix, achats, réseau et dépôts.
+      - title: Prérequis Storeland
+        url: https://www.cegid.com/fr/cgv/?slugFileName=pr-requis-techniques_cegid-storeland_on-premise-licence
+        focus: Architecture Oracle, ERetail et versions.
+      - title: Cycle de vie Cegid historique
+        url: https://onboarding.cegid.com/wp-content/uploads/sites/5/2020/08/Cegid-Retail-Product-Lifecycle-Policy-2019-FR.pdf
+        focus: Dates historiques de versions, sans transposition au support actuel.
+      - title: Modes Négoce
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Modes-de-traitement/488
+        focus: Règles du parcours de commande professionnelle.
+      - title: Interfaces Winstore
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Integration-des-donnees-des-magasins/582?contentId=JQ67zKdU4qaG3uoG3ml0EA
+        focus: Remontées de ventes et réceptions magasin.
+      gaps:
+      - Date du premier lancement, dernière version et échéance de support actuelles non établies.
+    branding:
+      logo_path: assets/cegid-logo.svg
+      accent_color: '#0046FE'
+      source_url: https://www.cegid.com/global/blog/acquisition-cylande-group-cegid-gives-rise-world-leader/
+      checked_on: '2026-10-14'
+      role: publisher
   - id: product-sap-ecc
     name: SAP ECC
     publisher: SAP
     kind: vendor_product
     inventory_status: partial
-    scope: ERP SAP ECC avec extension sectorielle Apparel and Footwear Solution (AFS) ; les composants installés et leur paramétrage
-      Boardriders restent à vérifier.
-    note: SAP documente AFS comme extension du socle ERP et Allocation Run comme composant distinct ; cela ne démontre pas
-      son activation chez Boardriders.
+    scope: '[ERP](glossary:TER316) couvrant ventes, achats, stocks, comptabilité et coûts ; [AFS](glossary:TER325) ajoute
+      les particularités habillement et chaussure, dont tailles, saisons et affectation du stock.'
+    note: SAP documente [AFS](glossary:TER325) comme extension du socle [ERP](glossary:TER316) et Allocation Run comme composant
+      distinct ; cela ne démontre pas son activation chez Boardriders.
     source_refs:
     - U1042
     - U1044
+    - U1075
     components:
     - id: sap-ecc-core
       name: SAP ECC
@@ -728,7 +1123,8 @@ application_catalog:
       parent_id: sap-ecc-core
       name: Sales and Distribution (SD)
       kind: module
-      note: Gère les commandes client et leur suivi dans SAP ERP ; paramétrage et responsabilités Boardriders à vérifier.
+      note: Gère les commandes client et leur suivi dans SAP [ERP](glossary:TER316) ; paramétrage et responsabilités Boardriders
+        à vérifier.
       source_url: https://help.sap.com/docs/SAP_ERP/15f6005df5a343d096f63b554e47e14a/4a64b65334e6b54ce10000000a174cb4.html
       source_refs:
       - U1051
@@ -736,7 +1132,7 @@ application_catalog:
       parent_id: sap-ecc-core
       name: Materials Management (MM)
       kind: module
-      note: Gère notamment les commandes d'achat fournisseur dans SAP ERP ; activation Boardriders à vérifier.
+      note: Gère notamment les commandes d'achat fournisseur dans SAP [ERP](glossary:TER316) ; activation Boardriders à vérifier.
       source_url: https://help.sap.com/docs/SAP_ERP_SPV/6cfdc7caaef746cd9c7543e32e7e87c0/8307b753128eb44ce10000000a174cb4.html
       source_refs:
       - U1051
@@ -759,6 +1155,30 @@ application_catalog:
       - U1042
       - U1044
       source_url: https://help.sap.com/saphelp_ve-planner80/helpdata/en/36/f8050ee8b030fbe10000009b38f982/content.htm
+    - id: sap-ecc-mm-im
+      parent_id: sap-ecc-mm
+      name: Inventory Management (MM-IM)
+      kind: module
+      note: Stocks en quantité et valeur, mouvements et inventaires ; distinct du moteur d’affectation [AFS](glossary:TER325).
+      source_url: https://help.sap.com/docs/SAP_ERP/96bf9ad642cf4b26a29595e3d573fb8c?locale=en-US&state=PRODUCTION&version=6.18.latest
+      source_refs:
+      - U1075
+    - id: sap-ecc-fi
+      parent_id: sap-ecc-core
+      name: Financial Accounting (FI)
+      kind: module
+      note: Comptabilité financière et rapprochement des opérations.
+      source_url: https://help.sap.com/docs/SAP_ERP_SPV/cc6ef3a3f7414dff94a7e24e677d5637/94c6440a9b80427d9292651d32634b0d.html?locale=en-US&state=PRODUCTION&version=6.17.30
+      source_refs:
+      - U1075
+    - id: sap-ecc-co
+      parent_id: sap-ecc-core
+      name: Controlling (CO)
+      kind: module
+      note: Suivi des coûts, centres de coûts et contrôle de gestion.
+      source_url: https://help.sap.com/docs/SAP_ERP/b42281c1645049a4b07c0ab25ec8b899?locale=en-US
+      source_refs:
+      - U1075
     website_url: https://help.sap.com/docs/SAP_ERP/98c2704cf26a4120ae7168868b2e7da5/c1d1c353b677b44ce10000000a174cb4.html
     offering_mappings:
     - id: offer-sap-afs-arun
@@ -776,8 +1196,8 @@ application_catalog:
       node_id: ba-wholesale-sales
       role: contributes
       evidence_state: candidate
-      note: L'extension AFS adapte notamment les ventes de mode ; ce lien ne résume ni tous ses modules ni son activation
-        Boardriders.
+      note: L'extension [AFS](glossary:TER325) adapte notamment les ventes de mode ; ce lien ne résume ni tous ses modules
+        ni son activation Boardriders.
       source_url: https://help.sap.com/doc/727905e99a3e49c685d5d6236d8e85e0/6.3/en-US/SAP_Apparel_and_Footwear_63_-_MasterguideE.PDF
       source_refs:
       - U1053
@@ -786,8 +1206,8 @@ application_catalog:
       node_id: D04.i
       role: contributes
       evidence_state: documented
-      note: SAP SD traite les commandes client dans l'offre ERP ; ni son activation ni le partage de la commande avec NewStore
-        chez Boardriders ne sont établis.
+      note: SAP SD traite les commandes client dans l'offre [ERP](glossary:TER316) ; ni son activation ni le partage de la
+        commande avec NewStore chez Boardriders ne sont établis.
       source_url: https://help.sap.com/docs/SAP_ERP/15f6005df5a343d096f63b554e47e14a/4a64b65334e6b54ce10000000a174cb4.html
       source_refs:
       - U1051
@@ -800,26 +1220,117 @@ application_catalog:
       source_url: https://help.sap.com/docs/SAP_ERP_SPV/6cfdc7caaef746cd9c7543e32e7e87c0/8307b753128eb44ce10000000a174cb4.html
       source_refs:
       - U1051
+    - id: offer-sap-ecc-inventory
+      component_id: sap-ecc-mm-im
+      node_id: D01
+      role: contributes
+      evidence_state: documented
+      note: MM-IM tient stocks et mouvements ; contribution à Inventory Management, sans transfert implicite d’autorité au
+        Core FLOW.
+      source_url: https://help.sap.com/docs/SAP_ERP/96bf9ad642cf4b26a29595e3d573fb8c?locale=en-US&state=PRODUCTION&version=6.18.latest
+      source_refs:
+      - U1075
+    - id: offer-sap-ecc-financial-accounting
+      component_id: sap-ecc-fi
+      node_id: subdomain-financial-accounting
+      role: contributes
+      evidence_state: documented
+      note: Traitement comptable et rapprochements documentés ; activation et configuration Boardriders non déduites.
+      source_url: https://help.sap.com/docs/SAP_ERP_SPV/cc6ef3a3f7414dff94a7e24e677d5637/94c6440a9b80427d9292651d32634b0d.html?locale=en-US&state=PRODUCTION&version=6.17.30
+      source_refs:
+      - U1075
+    - id: offer-sap-ecc-controlling
+      component_id: sap-ecc-co
+      node_id: subdomain-cost-profitability
+      role: contributes
+      evidence_state: documented
+      note: Analyse des centres de coûts ; recouvrement partiel du contexte Cost & Profitability Management.
+      source_url: https://help.sap.com/docs/SAP_ERP/b42281c1645049a4b07c0ab25ec8b899?locale=en-US
+      source_refs:
+      - U1075
+    - id: offer-sap-ecc-wholesale
+      component_id: sap-ecc-sd
+      node_id: ba-wholesale-sales
+      role: contributes
+      evidence_state: documented
+      note: Vente [B2B](glossary:TER195) et commandes SD dans le contexte [ERP](glossary:TER316) / [AFS](glossary:TER325)
+        ; usages détaillés Boardriders non déduits.
+      source_url: https://help.sap.com/doc/727905e99a3e49c685d5d6236d8e85e0/6.3/en-US/SAP_Apparel_and_Footwear_63_-_MasterguideE.PDF
+      source_refs:
+      - U1075
+    documentation:
+      reviewed_on: '2026-10-14'
+      deployment_model: '[ERP](glossary:TER316) installé et administré par le client ou un hébergeur ; composantes et niveau
+        d’[Enhancement Package](glossary:TER326) à identifier.'
+      channels:
+      - wholesale_b2b
+      integration_summary: SD et MM portent les documents commerciaux et mouvements ; FI et CO leurs conséquences financières.
+        Les interfaces NewStore et les règles d’[AFS](glossary:TER325) propres à Boardriders restent à relever.
+      scope_boundary: ECC, [AFS](glossary:TER325) et S/4HANA sont distincts. Pour [ERP](glossary:TER316) 6.0 [EHP6](glossary:TER326)–8,
+        SAP annonce une maintenance standard jusqu’à fin 2027 et une extension optionnelle jusqu’à fin 2030 ; la version Boardriders
+        n’est pas établie.
+      history:
+      - date: '2016'
+        kind: edition
+        title: Documentation SAP [Enhancement Package](glossary:TER326) 8 pour [ERP](glossary:TER316) 6.0, édition 2016.
+        source_url: https://help.sap.com/doc/d68fd38612ea450aa32051208c9eed60/6.18.06/en-US/Master_Guide_for_SAP_Enhancement_Package_8_for_SAP_ERP_60E.PDF
+      release_tracking:
+        status: documented_version
+        label: SAP ERP 6.0 EHP8 ; AFS 6.3 documentés
+        note: Les [Support Packages](glossary:TER330) et droits de maintenance se vérifient dans le portail SAP ; aucune version
+          Boardriders n’est déduite.
+        source_url: https://help.sap.com/doc/d68fd38612ea450aa32051208c9eed60/6.18.06/en-US/Master_Guide_for_SAP_Enhancement_Package_8_for_SAP_ERP_60E.PDF
+        checked_on: '2026-10-14'
+      sources:
+      - title: Guide SAP ERP EHP8
+        url: https://help.sap.com/doc/d68fd38612ea450aa32051208c9eed60/6.18.06/en-US/Master_Guide_for_SAP_Enhancement_Package_8_for_SAP_ERP_60E.PDF
+        focus: Composition et version du socle [ERP](glossary:TER316).
+      - title: Guide AFS 6.3
+        url: https://help.sap.com/doc/727905e99a3e49c685d5d6236d8e85e0/6.3/en-US/SAP_Apparel_and_Footwear_63_-_MasterguideE.PDF
+        focus: Extension sectorielle, prérequis et architecture.
+      - title: Inventory Management MM-IM
+        url: https://help.sap.com/docs/SAP_ERP/96bf9ad642cf4b26a29595e3d573fb8c?locale=en-US&state=PRODUCTION&version=6.18.latest
+        focus: Stocks, mouvements et inventaires ; contenu indexé du portail dynamique.
+      - title: Comptabilité FI
+        url: https://help.sap.com/docs/SAP_ERP_SPV/cc6ef3a3f7414dff94a7e24e677d5637/94c6440a9b80427d9292651d32634b0d.html?locale=en-US&state=PRODUCTION&version=6.17.30
+        focus: Traitement des relevés et rapprochements bancaires.
+      - title: Cost Center Accounting
+        url: https://help.sap.com/docs/SAP_ERP/b42281c1645049a4b07c0ab25ec8b899?locale=en-US
+        focus: Contrôle et affectation des coûts ; contenu indexé du portail dynamique.
+      - title: Maintenance SAP ERP
+        url: https://news.sap.com/germany/2024/03/cloud-reise-sap/
+        focus: Échéances selon niveau [EHP](glossary:TER326) et options de transition.
+      gaps:
+      - Premier lancement exact non établi dans les documents examinés.
+      - Support exact d’[AFS](glossary:TER325) et derniers correctifs à vérifier dans SAP PAM avec les licences concernées.
+    branding:
+      logo_path: assets/sap-logo.svg
+      accent_color: '#0070F2'
+      source_url: https://help.sap.com/docs
+      checked_on: '2026-10-14'
+      role: publisher
   - id: product-newstore
     name: NewStore
     publisher: NewStore
     kind: vendor_product
     inventory_status: partial
-    scope: Plateforme de vente en magasin et de commerce omnicanal ; l'offre éditeur présente le POS comme cœur, avec des
-      modules d'inventaire, de clienteling, de gestion des commandes, de fulfillment magasin et de paiement.
+    scope: Vendre et encaisser en magasin, gérer stocks et commandes omnicanales, préparer depuis les magasins et vendre en
+      ligne dans une application mobile de marque.
     website_url: https://www.newstore.com/
-    note: L’offre comprend POS, inventaire, OMS, routage et fulfillment magasin. Chez Boardriders, Laurent décrit un usage
-      d’API et de gestion de commande jusqu’à engagement, sans routage de fulfillment NewStore ; licences et configuration
-      restent à confirmer.
+    note: L’offre comprend [POS](glossary:TER249), inventaire, [OMS](glossary:TER328), routage et fulfillment magasin. Chez
+      Boardriders, Laurent décrit un usage d’[API](glossary:TER318) et de gestion de commande jusqu’à engagement, sans routage
+      de fulfillment NewStore ; licences et configuration restent à confirmer.
     source_refs:
     - U1042
     - U1043
     - U1044
+    - U1075
     components:
     - id: newstore-core
       name: NewStore
       kind: product
-      note: Racine de la plateforme ; l'offre actuelle présente le POS comme cœur sans démontrer son usage chez Boardriders.
+      note: Racine de la plateforme ; l'offre actuelle présente le [POS](glossary:TER249) comme cœur sans démontrer son usage
+        chez Boardriders.
       source_url: https://www.newstore.com/integrations-and-apis/
       source_refs:
       - U1043
@@ -876,13 +1387,29 @@ application_catalog:
       source_url: https://www.newstore.com/integrations-and-apis/
       source_refs:
       - U1043
+    - id: newstore-shopping-app
+      parent_id: newstore-core
+      name: Shopping App
+      kind: module
+      note: 'Application native de marque : découverte des produits, panier, achat, historique et fidélité.'
+      source_url: https://docs.newstore.com/docs/get-to-know-your-shopping-app
+      source_refs:
+      - U1075
+    - id: newstore-studio
+      parent_id: newstore-core
+      name: Studio CMS
+      kind: module
+      note: Préparation et publication des contenus et campagnes dans les applications d’achat.
+      source_url: https://www.newstore.com/newstore-mobile-cms/
+      source_refs:
+      - U1075
     offering_mappings:
     - id: offer-newstore-pos
       component_id: newstore-pos
       node_id: subdomain-sales-b2c-store
       role: supports
       evidence_state: documented
-      note: Le POS couvre le parcours de vente en magasin ; son usage Boardriders n’est pas établi.
+      note: Le [POS](glossary:TER249) couvre le parcours de vente en magasin ; son usage Boardriders n’est pas établi.
       source_url: https://docs.newstore.com/docs/getting-started-with-the-newstore-platform
       source_refs:
       - U1044
@@ -901,11 +1428,22 @@ application_catalog:
       node_id: D04.i
       role: contributes
       evidence_state: documented
-      note: L’OMS suit la commande de sa création à son engagement et à son exécution dans l'offre ; seul le parcours jusqu'à
-        engagement est déclaré pour Boardriders.
+      note: L’[OMS](glossary:TER328) suit la commande de sa création à son engagement et à son exécution dans l'offre ; seul
+        le parcours jusqu'à engagement est déclaré pour Boardriders.
       source_url: https://docs.newstore.com/docs/set-up-your-oms
       source_refs:
       - U1044
+    - id: offer-newstore-digital-commerce
+      component_id: newstore-order-management
+      node_id: subdomain-sales-b2c-ecommerce
+      role: contributes
+      evidence_state: documented
+      note: L’[OMS](glossary:TER328) reçoit et suit les commandes du canal en ligne et contribue à leur parcours commercial
+        ; une vitrine eCommerce distincte peut assurer la découverte de l’offre et la prise de commande.
+      source_url: https://www.newstore.com/order-management/
+      source_refs:
+      - U1044
+      - U1074
     - id: offer-newstore-routing
       component_id: newstore-order-routing
       node_id: D06.e
@@ -956,29 +1494,123 @@ application_catalog:
       source_url: https://docs.newstore.com/docs/set-up-payments
       source_refs:
       - U1053
-    - id: offer-newstore-payments-settlement
-      component_id: newstore-payments
-      node_id: subdomain-commercial-settlement-management
+    - id: offer-newstore-shopping-app
+      component_id: newstore-shopping-app
+      node_id: subdomain-sales-b2c-ecommerce
+      role: supports
+      evidence_state: documented
+      note: L’application assure un parcours d’achat mobile, avec catalogue, panier et [checkout](glossary:TER324) selon la
+        plateforme eCommerce raccordée.
+      source_url: https://docs.newstore.com/docs/get-to-know-your-shopping-app
+      source_refs:
+      - U1075
+    - id: offer-newstore-shopping-app-loyalty
+      component_id: newstore-shopping-app
+      node_id: ba-retail-customer-relationship-management
       role: contributes
-      evidence_state: candidate
-      note: L'offre décrit rapprochement et versements ; la responsabilité financière cible et l'usage Boardriders restent
-        à vérifier.
+      evidence_state: documented
+      note: L’application expose profil, statut, points et avantages issus du programme de fidélité raccordé.
+      source_url: https://docs.newstore.com/docs/get-to-know-your-shopping-app
+      source_refs:
+      - U1075
+    - id: offer-newstore-studio
+      component_id: newstore-studio
+      node_id: subdomain-sales-b2c-ecommerce
+      role: contributes
+      evidence_state: documented
+      note: Les équipes publient des contenus et présentations achetables dans le canal mobile.
+      source_url: https://www.newstore.com/newstore-mobile-cms/
+      source_refs:
+      - U1075
+    - id: offer-newstore-payment-collection
+      component_id: newstore-payments
+      node_id: service-order-payment-collection
+      role: contributes
+      evidence_state: documented
+      note: Encaissement et remboursement des achats via les moyens de paiement configurés ; aucune gestion de ristournes
+        ou de commissions n’est attribuée ici.
       source_url: https://docs.newstore.com/docs/set-up-payments
       source_refs:
-      - U1053
+      - U1075
+    documentation:
+      reviewed_on: '2026-10-14'
+      deployment_model: Plateforme cloud modulaire ; application vendeur mobile, console de gestion et Shopping App native
+        iOS / Android.
+      channels:
+      - store
+      - online_b2c
+      integration_summary: '[API](glossary:TER318) et événements raccordent sites eCommerce, [ERP](glossary:TER316), paiement
+        et stocks ; Shopping App et Studio portent le parcours mobile et ses contenus.'
+      scope_boundary: L’offre comprend [POS](glossary:TER249), [OMS](glossary:TER328) et application d’achat. L’usage [OMS](glossary:TER328)
+        décrit par Laurent chez Boardriders reste limité à l’engagement, avec orchestration aval SAP ; le routage et le [POS](glossary:TER249)
+        ne sont pas déduits de l’offre.
+      history:
+      - date: '2015'
+        kind: publisher_founded
+        title: Création de NewStore.
+        source_url: https://www.newstore.com/about
+      - date: '2018'
+        kind: first_customer
+        title: 'Premier client de la plateforme mis en service : UNTUCKit, selon l’éditeur.'
+        source_url: https://www.newstore.com/about
+      - date: '2022'
+        kind: product_launch
+        title: Ajout de l’offre Shopping App après acquisition de Highstreet Mobile.
+        source_url: https://www.newstore.com/about
+      release_tracking:
+        status: continuous_service
+        label: Notes de mises à jour par plateforme et application
+        note: NewStore publie plusieurs journaux, pas un numéro unique pour toute la plateforme. La roadmap détaillée demande
+          une authentification.
+        source_url: https://docs.newstore.com/docs/platform-updates
+        checked_on: '2026-10-14'
+      sources:
+      - title: Présentation technique NewStore
+        url: https://docs.newstore.com/docs/introduction-to-newstore
+        focus: Modules [POS](glossary:TER249), [OMS](glossary:TER328), Shopping App et limites d’accès à la roadmap.
+      - title: Shopping App
+        url: https://docs.newstore.com/docs/get-to-know-your-shopping-app
+        focus: Découverte, panier, achat et fidélité mobile.
+      - title: Studio CMS
+        url: https://www.newstore.com/newstore-mobile-cms/
+        focus: Publication des contenus de l’application d’achat.
+      - title: Paiements NewStore
+        url: https://docs.newstore.com/docs/set-up-payments
+        focus: Encaissement, fournisseurs de paiement et configuration [POS](glossary:TER249).
+      - title: Historique NewStore
+        url: https://www.newstore.com/about
+        focus: Création, premier client et Shopping App.
+      - title: Mises à jour plateforme
+        url: https://docs.newstore.com/docs/platform-updates
+        focus: Journal public de changements.
+      - title: Quiksilver et Roxy
+        url: https://www.newstore.com/resource/040125/
+        focus: Déploiements d’applications rapportés par l’éditeur, limités aux marques et pays cités.
+      gaps:
+      - Date exacte du premier lancement commercial de la plateforme non établie.
+      - La communication publique sur les applications Boardriders ne qualifie pas les [POS](glossary:TER249) ou le routage
+        [OMS](glossary:TER328) installés.
+    branding:
+      logo_path: assets/newstore-logo.png
+      accent_color: '#03318C'
+      source_url: https://docs.newstore.com/
+      checked_on: '2026-10-14'
+      role: product
   - id: product-sfcc
     name: Salesforce Commerce Cloud
     publisher: Salesforce
     kind: vendor_product
     inventory_status: partial
-    scope: Plateforme Salesforce Commerce Cloud pour la vitrine, le catalogue exposé, le panier et le passage de commande
-      en ligne ; les fonctions varient selon l’édition et les intégrations.
+    scope: 'Conduire la vente [B2C](glossary:TER194) en ligne : catalogue de site, recherche, promotions, panier, passage
+      de commande et suivi commercial ; interfaces [API](glossary:TER318) pour les expériences web ou mobiles.'
     website_url: https://www.salesforce.com/commerce/
-    note: La sélection Boardriders est déclarée par Laurent. La documentation B2C Commerce distingue la prise de commande
-      du traitement aval confié à un OMS tiers ; l'édition, les extensions et les responsabilités installées restent à vérifier.
+    note: La sélection Boardriders est déclarée par Laurent. La documentation [B2C](glossary:TER194) Commerce distingue la
+      prise de commande du traitement aval confié à un [OMS](glossary:TER328) tiers ; l'édition, les extensions et les responsabilités
+      installées restent à vérifier.
     source_refs:
     - U1043
     - U1044
+    - U1075
     components:
     - id: sfcc-core
       name: Salesforce Commerce Cloud
@@ -989,7 +1621,8 @@ application_catalog:
       parent_id: sfcc-core
       name: B2C Storefront & Checkout
       kind: module
-      note: Vitrine et passage de commande B2C ; la gestion aval peut être confiée à un OMS externe.
+      note: Vitrine et passage de commande [B2C](glossary:TER194) ; la gestion aval peut être confiée à un [OMS](glossary:TER328)
+        externe.
       source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/order-mgmt.html
       source_refs:
       - U1044
@@ -1005,21 +1638,46 @@ application_catalog:
       parent_id: sfcc-core
       name: Storefront Inventory Availability
       kind: feature
-      note: Expose une disponibilité au site B2C, issue de l'inventaire Commerce Cloud ou d'une source externe ; ne tient
-        pas nécessairement le stock maître.
+      note: Expose une disponibilité au site [B2C](glossary:TER194), issue de l'inventaire Commerce Cloud ou d'une source
+        externe ; ne tient pas nécessairement le stock maître.
       source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/b2c-inventory-for-developers.html
       source_refs:
       - U1051
+    - id: sfcc-catalog
+      parent_id: sfcc-core
+      name: Site Catalog
+      kind: feature
+      note: Organisation des produits et catégories du catalogue de vente d’un site.
+      source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/references/b2c-script-api/dw.catalog.Catalog.html
+      source_refs:
+      - U1075
+    - id: sfcc-product-search
+      parent_id: sfcc-core
+      name: Product Search
+      kind: feature
+      note: Recherche des produits et affinage des résultats dans le parcours de vente.
+      source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/references/b2c-script-api/dw.catalog.ProductSearchModel.html
+      source_refs:
+      - U1075
+    - id: sfcc-shopper-api
+      parent_id: sfcc-core
+      name: Shopper APIs
+      kind: feature
+      note: '[API](glossary:TER318) des catégories, produits, paniers et commandes pour les vitrines web ou mobiles.'
+      source_url: https://developer.salesforce.com/docs/commerce/commerce-api/guide/auth-z-scope-catalog.html
+      source_refs:
+      - U1075
     offering_mappings:
     - id: offer-sfcc-storefront
       component_id: sfcc-storefront
       node_id: subdomain-sales-b2c-ecommerce
       role: supports
       evidence_state: documented
-      note: La vitrine B2C permet l’achat en ligne ; la gestion aval de commande dépend des intégrations.
-      source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/order-mgmt.html
+      note: La vitrine [B2C](glossary:TER194) permet l’achat en ligne ; la gestion aval de commande dépend des intégrations.
+      source_url: https://developer.salesforce.com/docs/commerce/commerce-api/guide/auth-z-scope-catalog.html
       source_refs:
       - U1044
+      - U1075
     - id: offer-sfcc-promotions
       component_id: sfcc-promotions
       node_id: ba-promotion-management
@@ -1040,13 +1698,91 @@ application_catalog:
       source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/b2c-inventory-for-developers.html
       source_refs:
       - U1051
+    - id: offer-sfcc-site-catalog
+      component_id: sfcc-catalog
+      node_id: ba-catalog-management
+      role: contributes
+      evidence_state: documented
+      note: Gère le catalogue commercial de site ; catalogue produit maître et source d’entreprise restent à qualifier.
+      source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/references/b2c-script-api/dw.catalog.Catalog.html
+      source_refs:
+      - U1075
+    - id: offer-sfcc-product-search
+      component_id: sfcc-product-search
+      node_id: subdomain-sales-b2c-ecommerce
+      role: contributes
+      evidence_state: documented
+      note: Recherche et filtres rendent l’offre accessible à l’acheteur en ligne.
+      source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/references/b2c-script-api/dw.catalog.ProductSearchModel.html
+      source_refs:
+      - U1075
+    - id: offer-sfcc-shopper-api
+      component_id: sfcc-shopper-api
+      node_id: subdomain-sales-b2c-ecommerce
+      role: contributes
+      evidence_state: documented
+      note: Expose les opérations du parcours d’achat aux vitrines composables ; l’[OMS](glossary:TER328) aval reste une intégration
+        distincte.
+      source_url: https://developer.salesforce.com/docs/commerce/commerce-api/guide/auth-z-scope-catalog.html
+      source_refs:
+      - U1075
+    documentation:
+      reviewed_on: '2026-10-14'
+      deployment_model: Service cloud [B2C](glossary:TER194) Commerce ; vitrine SFRA ou expérience composable selon l’édition
+        et l’architecture.
+      channels:
+      - online_b2c
+      integration_summary: '[API Shopper](glossary:TER318) et Admin, intégrations [OMS](glossary:TER328) et alimentation de
+        stock. Salesforce Order Management est un produit raccordable distinct, avec licence et activation à vérifier.'
+      scope_boundary: La fiche conserve l’identité historique Salesforce Commerce Cloud / [B2C](glossary:TER194) Commerce.
+        La marque actuelle Agentforce Commerce couvre un portefeuille plus large, dont [B2B](glossary:TER195) et Order Management,
+        qui n’est pas assimilé à l’instance SFCC Boardriders.
+      history:
+      - date: '2016-09-27'
+        kind: product_launch
+        title: Mise à disposition de Salesforce Commerce Cloud sous cette marque après Demandware.
+        source_url: https://www.salesforce.com/news/press-releases/2016/09/27/salesforce-delivers-salesforce-commerce-cloud-the-fastest-path-to-unified-commerce/?bc=OTH
+      release_tracking:
+        status: continuous_service
+        label: Journaux B2C Commerce, SCAPI et vitrines composables
+        note: Calendriers distincts par composant ; aucun numéro global ni version de l’instance Boardriders n’est déduit.
+        source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/b2c-new-and-changed-in-upcoming-release.html
+        checked_on: '2026-10-14'
+      sources:
+      - title: Lancement Commerce Cloud
+        url: https://www.salesforce.com/news/press-releases/2016/09/27/salesforce-delivers-salesforce-commerce-cloud-the-fastest-path-to-unified-commerce/?bc=OTH
+        focus: Date de lancement sous la marque Salesforce.
+      - title: Commerce Cloud et Agentforce
+        url: https://www.salesforce.com/commerce/agentforce-commerce-explained/?bc=OTH
+        focus: Évolution du portefeuille et distinction d’identité.
+      - title: Catalogue B2C
+        url: https://developer.salesforce.com/docs/commerce/b2c-commerce/references/b2c-script-api/dw.catalog.Catalog.html
+        focus: Catalogue par site et catégories.
+      - title: API B2C Commerce
+        url: https://developer.salesforce.com/docs/commerce/commerce-api/guide/auth-z-scope-catalog.html
+        focus: Opérations catalogue, panier et commandes.
+      - title: Recherche produit
+        url: https://developer.salesforce.com/docs/commerce/b2c-commerce/references/b2c-script-api/dw.catalog.ProductSearchModel.html
+        focus: Recherche et affinage des résultats.
+      - title: Notes de versions
+        url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/b2c-new-and-changed-in-upcoming-release.html
+        focus: Journaux par composant.
+      gaps:
+      - Édition, version d’instance et options réellement utilisées chez Boardriders non établies.
+    launched_on: '2016-09-27'
+    branding:
+      logo_path: assets/salesforce-logo.svg
+      accent_color: '#00A1E0'
+      source_url: https://www.salesforce.com/commerce/
+      checked_on: '2026-10-14'
+      role: publisher
   - id: product-cegid-y2
     name: Cegid Retail Y2
     publisher: Cegid
     kind: vendor_product
     inventory_status: partial
-    scope: Plateforme Retail de vente et d'opérations magasin, de gestion centrale du réseau et du stock ; module Omnicanal
-      optionnel pour les commandes web, le retrait et l'expédition depuis les boutiques.
+    scope: Vendre et encaisser en magasin, gérer réseau, stocks, réassort, clients, fidélité et promotions ; traiter des commandes
+      web omnicanales et des ventes Négoce selon modules.
     website_url: https://www.cegid.com/fr/produits/cegid-retail/
     note: Laurent déclare Y2 comme socle Retail Boardriders. La documentation Cegid confirme un module Omnicanal acquis et
       activé séparément et des parcours de commande web incluant les stocks boutiques. Son activation et sa place exacte aux
@@ -1056,6 +1792,7 @@ application_catalog:
     - U1048
     - U1049
     - U1050
+    - U1075
     components:
     - id: cegid-y2-core
       name: Cegid Retail Y2
@@ -1103,6 +1840,38 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Les-methodes-d-affectation/205
       source_refs:
       - U1051
+    - id: cegid-y2-loyalty
+      parent_id: cegid-y2-core
+      name: Customer Loyalty
+      kind: module
+      note: Programmes, cartes, points, avantages et règles de fidélité.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Gestion-de-la-fidelite-client/451?contentId=3l5VsEFU~ACm2FN13PW_hw
+      source_refs:
+      - U1075
+    - id: cegid-y2-sales-conditions
+      parent_id: cegid-y2-core
+      name: Sales Conditions
+      kind: option
+      note: Module optionnel de promotions calculées sur le ticket ; limites d’utilisation précisées par Cegid.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-24/Sommaire/120
+      source_refs:
+      - U1075
+    - id: cegid-y2-trade-sales
+      parent_id: cegid-y2-core
+      name: Trade Sales
+      kind: module
+      note: 'Cycle de ventes Négoce : devis, commandes, préparation et livraisons.'
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-24/Presentation-du-cycle-des-ventes-negoce/567?contentId=fUNBhVsc55GC9gm_p6HZuA
+      source_refs:
+      - U1075
+    - id: cegid-y2-purchasing
+      parent_id: cegid-y2-core
+      name: Purchasing
+      kind: module
+      note: Commandes d’achat et documents du cycle fournisseur.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-26/Achats/622
+      source_refs:
+      - U1075
     offering_mappings:
     - id: offer-cegid-y2-pos
       component_id: cegid-y2-pos
@@ -1169,16 +1938,134 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Les-methodes-d-affectation/205
       source_refs:
       - U1051
+    - id: offer-cegid-y2-loyalty
+      component_id: cegid-y2-loyalty
+      node_id: ba-retail-customer-relationship-management
+      role: contributes
+      evidence_state: documented
+      note: Configure programmes et règles de fidélité ; usage Boardriders à établir.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Gestion-de-la-fidelite-client/451?contentId=3l5VsEFU~ACm2FN13PW_hw
+      source_refs:
+      - U1075
+    - id: offer-cegid-y2-sales-conditions
+      component_id: cegid-y2-sales-conditions
+      node_id: ba-promotion-management
+      role: contributes
+      evidence_state: documented
+      note: Règles promotionnelles au passage en caisse ; ne couvre pas toutes les règles de soldes ou de prix.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-24/Sommaire/120
+      source_refs:
+      - U1075
+    - id: offer-cegid-y2-trade-sales
+      component_id: cegid-y2-trade-sales
+      node_id: ba-wholesale-sales
+      role: contributes
+      evidence_state: documented
+      note: Les ventes professionnelles sont documentées ; le pilotage optimisé d’un carnet wholesale et leur activation Boardriders
+        ne sont pas établis.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-24/Presentation-du-cycle-des-ventes-negoce/567?contentId=fUNBhVsc55GC9gm_p6HZuA
+      source_refs:
+      - U1075
+    - id: offer-cegid-y2-trade-order
+      component_id: cegid-y2-trade-sales
+      node_id: D04.i
+      role: contributes
+      evidence_state: documented
+      note: Création et suivi de documents de commande Négoce ; correspondance partielle au cycle Sales Order cible.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-24/Presentation-du-cycle-des-ventes-negoce/567?contentId=fUNBhVsc55GC9gm_p6HZuA
+      source_refs:
+      - U1075
+    - id: offer-cegid-y2-purchasing
+      component_id: cegid-y2-purchasing
+      node_id: ba-purchasing-execution-coordination
+      role: contributes
+      evidence_state: documented
+      note: Le backoffice décrit le cycle d’achat fournisseur ; frontières avec les autres [ERP](glossary:TER316) et usage
+        Boardriders inconnus.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-26/Achats/622
+      source_refs:
+      - U1075
+    - id: offer-cegid-y2-network
+      component_id: cegid-y2-backoffice
+      node_id: subdomain-retail-network-management
+      role: contributes
+      evidence_state: documented
+      note: Paramétrage et exploitation d’un réseau international de magasins, selon l’édition et les données centrales.
+      source_url: https://www.cegid.com/global/blog/cegid-launches-worldwide-cloud-dedicated-retail-industry-partnership-microsoft/
+      source_refs:
+      - U1075
+    documentation:
+      reviewed_on: '2026-10-14'
+      deployment_model: Offres cloud / [SaaS](glossary:TER317) et installation sur site selon édition et contrat ; possibilités
+        de fonctionnement magasin hors connexion.
+      channels:
+      - store
+      - online_b2c
+      - wholesale_b2b
+      integration_summary: Backoffice central, caisses et applications mobiles ; interfaces de commandes web, stocks et comptabilité
+        selon configuration.
+      scope_boundary: Les modules Omnicanal, fidélité, conditions commerciales et Négoce ont leurs règles propres. Leur présence
+        dans l’offre ne prouve ni activation Boardriders ni remplacement de SFCC, NewStore ou du Core FLOW.
+      history:
+      - date: '2015'
+        kind: edition
+        title: 'Édition Y2 2015 : disponibilité au quatrième trimestre 2015 dans la politique historique.'
+        source_url: https://onboarding.cegid.com/wp-content/uploads/sites/5/2020/08/Cegid-Retail-Product-Lifecycle-Policy-2019-FR.pdf
+      - date: '2017-01-16'
+        kind: edition
+        title: Annonce du cloud Retail mondial sur Microsoft Azure ; ouverture européenne annoncée pour mars 2017.
+        source_url: https://www.cegid.com/global/blog/cegid-launches-worldwide-cloud-dedicated-retail-industry-partnership-microsoft/
+      release_tracking:
+        status: documented_version
+        label: Documentation Y2 version 26 ; fonctions détaillées vérifiées en 24 et 25
+        note: Une édition de documentation ne garantit pas le dernier correctif [RTM](glossary:TER329) disponible ; le mode
+          [SaaS](glossary:TER317) et le contrat fixent le rythme de mise à jour.
+        source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-26/Achats/622
+        checked_on: '2026-10-14'
+      sources:
+      - title: Cloud Retail Y2
+        url: https://www.cegid.com/global/blog/cegid-launches-worldwide-cloud-dedicated-retail-industry-partnership-microsoft/
+        focus: Modes d’exploitation et annonce datée.
+      - title: Politique de versions historique
+        url: https://onboarding.cegid.com/wp-content/uploads/sites/5/2020/08/Cegid-Retail-Product-Lifecycle-Policy-2019-FR.pdf
+        focus: Repères datés de Y2 2015.
+      - title: Documentation Y2 26
+        url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-26/Achats/622
+        focus: Achats, structure et édition publique.
+      - title: Omnicanal Y2
+        url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Gestion-de-l-omnicanal-en-Back-Office/569
+        focus: Commandes web et réalisation magasin.
+      - title: Fidélité client
+        url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Gestion-de-la-fidelite-client/451?contentId=3l5VsEFU~ACm2FN13PW_hw
+        focus: Règles, cartes et avantages.
+      - title: Conditions commerciales
+        url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-24/Sommaire/120
+        focus: Module optionnel de promotions et restrictions.
+      - title: Cycle Négoce
+        url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-24/Presentation-du-cycle-des-ventes-negoce/567?contentId=fUNBhVsc55GC9gm_p6HZuA
+        focus: Devis, commandes, préparation et livraisons professionnelles.
+      gaps:
+      - Premier lancement de la ligne Y2 et dernier correctif disponible non établis.
+      - Activation des modules et répartition par pays / marque Boardriders à documenter.
+    branding:
+      logo_path: assets/cegid-logo.svg
+      accent_color: '#0046FE'
+      source_url: https://www.cegid.com/global/blog/acquisition-cylande-group-cegid-gives-rise-world-leader/
+      checked_on: '2026-10-14'
+      role: publisher
   - id: product-centric-plm
     name: Centric PLM
     publisher: Centric Software
     kind: vendor_product
     inventory_status: partial
-    scope: 'Gestion du cycle de développement produit : conception, spécifications, échantillons et collaboration fournisseur.'
+    scope: 'Développer les collections et produits : matières, spécifications, nomenclatures, échantillons, coûts, sourcing,
+      qualité et collaboration fournisseur.'
     website_url: https://www.centricsoftware.com/en-gb/what-is-centric-plm
-    note: PLM Centric cité dans le dossier Boardriders de FLOW-Program ; produit exact, modules et déploiement à confirmer.
+    note: '[PLM](glossary:TER319) Centric cité dans le dossier Boardriders de FLOW-Program ; produit exact, modules et déploiement
+      à confirmer.'
     source_refs:
     - U1045
+    - U1075
     components:
     - id: centric-plm-core
       name: Centric PLM
@@ -1202,6 +2089,30 @@ application_catalog:
       source_url: https://www.centricsoftware.com/webinar-replays/webinar-plm4users-part-ii-vendor-management-tips-and-tricks
       source_refs:
       - U1051
+    - id: centric-plm-materials
+      parent_id: centric-plm-core
+      name: Materials & Components
+      kind: module
+      note: Bibliothèques de matières et composants utilisées dans les définitions produit.
+      source_url: https://www.centricsoftware.com/fr/logiciel-plm
+      source_refs:
+      - U1075
+    - id: centric-plm-samples
+      parent_id: centric-plm-core
+      name: Samples & Quality
+      kind: module
+      note: Demandes et revue d’échantillons, contrôles qualité et validation du produit.
+      source_url: https://www.centricsoftware.com/plm-multicategory-retailers
+      source_refs:
+      - U1075
+    - id: centric-plm-product-record
+      parent_id: centric-plm-core
+      name: Product Definition & Documentation
+      kind: module
+      note: Dossiers techniques, nomenclatures et documents de la définition produit.
+      source_url: https://www.centricsoftware.com/fr/logiciel-plm
+      source_refs:
+      - U1075
     offering_mappings:
     - id: offer-centric-plm-development
       component_id: centric-plm-core
@@ -1217,7 +2128,8 @@ application_catalog:
       node_id: subdomain-product-design-specification
       role: supports
       evidence_state: documented
-      note: Spécifications et développement de produits dans l'offre PLM ; couverture installée Boardriders inconnue.
+      note: Spécifications et développement de produits dans l'offre [PLM](glossary:TER319) ; couverture installée Boardriders
+        inconnue.
       source_url: https://www.centricsoftware.com/plm-multicategory-retailers
       source_refs:
       - U1051
@@ -1227,7 +2139,7 @@ application_catalog:
       role: contributes
       evidence_state: candidate
       note: Collaboration et évaluation des fournisseurs ; la responsabilité de sourcing stratégique dépasse le suivi produit
-        du PLM.
+        du [PLM](glossary:TER319).
       source_url: https://www.centricsoftware.com/webinar-replays/webinar-plm4users-part-ii-vendor-management-tips-and-tricks
       source_refs:
       - U1051
@@ -1251,17 +2163,105 @@ application_catalog:
       source_url: https://www.centricsoftware.com/webinar-replays/webinar-plm4users-part-ii-vendor-management-tips-and-tricks
       source_refs:
       - U1054
+    - id: offer-centric-plm-materials
+      component_id: centric-plm-materials
+      node_id: subdomain-material-component-development
+      role: contributes
+      evidence_state: documented
+      note: Développement et réutilisation des matières et composants ; absence de preuve d’un référentiel maître installé
+        Boardriders.
+      source_url: https://www.centricsoftware.com/fr/logiciel-plm
+      source_refs:
+      - U1075
+    - id: offer-centric-plm-samples
+      component_id: centric-plm-samples
+      node_id: subdomain-sampling-product-validation
+      role: contributes
+      evidence_state: documented
+      note: Suit échantillons, prototypes et contrôles avant mise sur le marché.
+      source_url: https://www.centricsoftware.com/plm-multicategory-retailers
+      source_refs:
+      - U1075
+    - id: offer-centric-plm-product-definition
+      component_id: centric-plm-product-record
+      node_id: subdomain-product-definition-variants
+      role: contributes
+      evidence_state: documented
+      note: Contribue à la définition structurée et aux variantes du produit ; autorité d’entreprise à établir.
+      source_url: https://www.centricsoftware.com/fr/logiciel-plm
+      source_refs:
+      - U1075
+    - id: offer-centric-plm-product-documentation
+      component_id: centric-plm-product-record
+      node_id: subdomain-product-documentation-classification
+      role: contributes
+      evidence_state: documented
+      note: Relie les documents techniques au produit ; classification globale de l’entreprise non présumée.
+      source_url: https://www.centricsoftware.com/fr/logiciel-plm
+      source_refs:
+      - U1075
+    documentation:
+      reviewed_on: '2026-10-14'
+      deployment_model: Plateforme [PLM](glossary:TER319) accessible par navigateur, avec fonctions et applications mobiles
+        ; modalités d’hébergement et licences à confirmer par contrat.
+      channels: []
+      integration_summary: Portail fournisseur, échanges de dossiers et réponses aux demandes de sourcing ; intégrations aux
+        outils de conception et systèmes aval selon modules.
+      scope_boundary: Centric [PLM](glossary:TER319) gère le développement et la définition du produit. Centric Planning,
+        Pricing & Inventory, PXM et Visual Boards sont des offres distinctes ; elles ne sont pas déduites de [PLM](glossary:TER319).
+      history:
+      - date: '2006'
+        kind: product_launch
+        title: Lancement du [PLM](glossary:TER319) mode selon la chronologie officielle Centric.
+        source_url: https://www.centricsoftware.com/fr/about-us
+      - date: '2025-07-23'
+        kind: edition
+        title: Annonce Centric [PLM](glossary:TER319) 8.0 dans le communiqué daté du 23 juillet 2025.
+        source_url: https://www.centricsoftware.com/press-releases/centric-software-sets-retail-innovation-benchmark-with-updates-to-centric-plm
+      release_tracking:
+        status: documented_version
+        label: Centric PLM 8.0 annoncé en juillet 2025
+        note: Version identifiée dans un communiqué ; dernière build actuellement disponible et version Boardriders non vérifiées.
+        source_url: https://www.centricsoftware.com/press-releases/centric-software-sets-retail-innovation-benchmark-with-updates-to-centric-plm
+        checked_on: '2026-10-14'
+      sources:
+      - title: Centric PLM
+        url: https://www.centricsoftware.com/fr/logiciel-plm
+        focus: Développement, matières, qualité et collaboration.
+      - title: Chronologie Centric
+        url: https://www.centricsoftware.com/fr/about-us
+        focus: Lancement en 2006 et distinction entre les offres.
+      - title: Centric PLM 8.0
+        url: https://www.centricsoftware.com/press-releases/centric-software-sets-retail-innovation-benchmark-with-updates-to-centric-plm
+        focus: Annonce de version et changements.
+      - title: PLM multicatégorie
+        url: https://www.centricsoftware.com/plm-multicategory-retailers
+        focus: Dossiers, échantillons, sourcing et calcul des coûts.
+      - title: Vendor Management
+        url: https://www.centricsoftware.com/webinar-replays/webinar-plm4users-part-ii-vendor-management-tips-and-tricks
+        focus: Demandes fournisseur, scorecards, qualité et conformité.
+      gaps:
+      - Mode d’hébergement, modules et version réellement utilisés chez Boardriders à confirmer.
+      - Dernière build éditeur non accessible dans les sources publiques examinées.
+    branding:
+      logo_path: assets/centric-software-logo.svg
+      accent_color: '#E73D2B'
+      source_url: https://www.centricsoftware.com/fr/about-us
+      checked_on: '2026-10-14'
+      role: publisher
   - id: product-sap-bpc
     name: SAP Business Planning and Consolidation
     publisher: SAP
     kind: vendor_product
     inventory_status: partial
-    scope: Planification et consolidation de données de gestion selon l’édition SAP BPC.
+    scope: Préparer budgets et prévisions financières, consolider les comptes, convertir les devises et traiter les éliminations
+      selon édition et configuration.
     website_url: https://help.sap.com/docs/SAP_BUSINESS_PLANNING_AND_CONSOLIDATION%2C_VERSION_FOR_THE_MICROSOFT_PLATFORM
     note: SAP BPC cité dans la zone Planning du dossier Boardriders ; édition, usage et frontière avec le planning Supply
       non établis.
     source_refs:
     - U1045
+    - U1075
     components:
     - id: sap-bpc-core
       name: SAP Business Planning and Consolidation
@@ -1304,18 +2304,62 @@ application_catalog:
       source_url: https://help.sap.com/doc/57a6237cee974e158cb5ccb84c8b1c4e/11.0.7/en-US/2e0f2dfea5c84d3992d63fb51e47ea8e.html
       source_refs:
       - U1051
+    documentation:
+      reviewed_on: '2026-10-14'
+      deployment_model: 'Produit installé : familles Microsoft, NetWeaver ou BW/4HANA ; configurations standard et embedded
+        selon l’édition.'
+      channels: []
+      integration_summary: Clients web et Office, données financières et raccordement possible à SAP Analytics Cloud ; ce
+        dernier constitue un produit distinct.
+      scope_boundary: Le planning financier et opérationnel décrit par BPC ne prouve pas un moteur d’APS ou d’optimisation
+        du carnet Supply. Le dossier Boardriders ne permet pas de choisir une édition BPC.
+      history:
+      - date: '2007'
+        kind: acquisition
+        title: SAP intègre OutlookSoft / BPC à son portefeuille, selon son billet de stratégie produit.
+        source_url: https://community.sap.com/t5/technology-blog-posts-by-sap/move-your-sap-bpc-applications-to-sap-analytics-cloud/ba-p/13541954
+      release_tracking:
+        status: restricted
+        label: BPC 2021 pour BW/4HANA ; SP05 mentionné dans le guide
+        note: La documentation décrit une famille, mais les derniers [Support Packages](glossary:TER330) et leur disponibilité
+          demandent le portail de téléchargement SAP.
+        source_url: https://help.sap.com/docs/SAP_BPC_VERSION_BW4HANA/c2c861bca6d3467ca49e758bcc6abdfb/094b4ad5f5a54a52a1b874abaeddd345.html
+        checked_on: '2026-10-14'
+      sources:
+      - title: Vue d’ensemble BPC
+        url: https://help.sap.com/doc/57a6237cee974e158cb5ccb84c8b1c4e/2021.00/en-us/83a7198c6e0b4041a48b78c8eb051c88.html
+        focus: Planning financier et opérationnel, éditions et intégrations.
+      - title: Packages BPC 2021
+        url: https://help.sap.com/docs/SAP_BPC_VERSION_BW4HANA/c2c861bca6d3467ca49e758bcc6abdfb/094b4ad5f5a54a52a1b874abaeddd345.html
+        focus: '[Support Package](glossary:TER330) 05, BW/4HANA 2021 et 2023, accès aux téléchargements.'
+      - title: Règles de consolidation
+        url: https://help.sap.com/docs/SAP_BPC_VERSION_BW4HANA/d1711b4a86b447c38415629229003c02/d654d474b2fd4d3b8642d4d7ecbc1220.html
+        focus: Calculs, conversion, éliminations et reports.
+      - title: Historique et stratégie BPC
+        url: https://community.sap.com/t5/technology-blog-posts-by-sap/move-your-sap-bpc-applications-to-sap-analytics-cloud/ba-p/13541954
+        focus: Acquisition OutlookSoft en 2007 ; texte indexé consulté du billet SAP.
+      gaps:
+      - Premier lancement exact et dernière build par édition non établis.
+      - Édition et usages Boardriders restent non évalués ; aucune couverture de planning Supply ajoutée.
+    branding:
+      logo_path: assets/sap-logo.svg
+      accent_color: '#0070F2'
+      source_url: https://help.sap.com/docs
+      checked_on: '2026-10-14'
+      role: publisher
   - id: product-winstore
     name: Winstore
     publisher: Cegid (ex-Cylande)
     kind: vendor_product
     inventory_status: partial
-    scope: Solution de caisse magasin avec terminal de gestion back-office et échanges possibles avec le système central ;
-      éditions et interfaces à qualifier.
+    scope: Encaisser les ventes et retours en magasin ; saisir des commandes assistées, exploiter la fidélité et échanger
+      stocks, réceptions et ventes avec la centrale UR / Storeland.
     website_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Winstore/Implementation/Toutes-versions/Caisse/12
     note: La documentation Cegid distingue la caisse et le poste de gestion magasin. L'usage exact par marque et les fonctions
       activées dans GBM restent inconnus.
     source_refs:
     - U1045
+    - U1075
     components:
     - id: winstore-core
       name: Winstore
@@ -1338,6 +2382,22 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Winstore/Implementation/Toutes-versions/Caisse/12
       source_refs:
       - U1051
+    - id: winstore-assisted-sales
+      parent_id: winstore-core
+      name: Assisted Sales
+      kind: feature
+      note: Saisie de commandes et réservations vendeur remontées à UR pour leur suivi central.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Fonctionnalites-du-module-ventes-assistees/563?contentId=CDMicsductTiI_JWTB6E7g
+      source_refs:
+      - U1075
+    - id: winstore-returns
+      parent_id: winstore-core
+      name: Store Returns
+      kind: feature
+      note: Retour au ticket, motifs et mouvement de stock associés, selon configuration.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Definir-le-parametrage-Winstore/561?contentId=HHjiVoMcyzTGJwYx98apeg
+      source_refs:
+      - U1075
     offering_mappings:
     - id: offer-winstore-pos
       component_id: winstore-pos
@@ -1353,10 +2413,78 @@ application_catalog:
       node_id: subdomain-store-backoffice-operations
       role: contributes
       evidence_state: candidate
-      note: Terminal de gestion magasin identifié, sans preuve suffisante des opérations métier précises couvertes.
-      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Winstore/Implementation/Toutes-versions/Caisse/12
+      note: Les échanges documentent ventes et réceptions magasin vers Storeland ; la répartition des opérations locales et
+        centrales dépend de la version.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Integration-des-donnees-des-magasins/582?contentId=JQ67zKdU4qaG3uoG3ml0EA
       source_refs:
       - U1051
+      - U1075
+    - id: offer-winstore-assisted-sales
+      component_id: winstore-assisted-sales
+      node_id: subdomain-sales-b2c-store
+      role: contributes
+      evidence_state: documented
+      note: Le vendeur crée la commande en magasin ; UR en assure ensuite des traitements centraux.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Fonctionnalites-du-module-ventes-assistees/563?contentId=CDMicsductTiI_JWTB6E7g
+      source_refs:
+      - U1075
+    - id: offer-winstore-returns
+      component_id: winstore-returns
+      node_id: subdomain-sales-b2c-store
+      role: contributes
+      evidence_state: documented
+      note: Reprise des articles dans la caisse ; règles financières et stocks centrales restent distinctes.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Definir-le-parametrage-Winstore/561?contentId=HHjiVoMcyzTGJwYx98apeg
+      source_refs:
+      - U1075
+    documentation:
+      reviewed_on: '2026-10-14'
+      deployment_model: Caisse et poste de gestion magasin installés ; architecture réseau et compatibilité à vérifier selon
+        la version.
+      channels:
+      - store
+      integration_summary: Échanges avec United Retail et Storeland ; le paramétrage distingue caisse, gestion magasin et
+        traitements centraux.
+      scope_boundary: Les données du client et les règles centrales peuvent venir d’UR ou Storeland. Les documents croisés
+        ne prouvent pas que Winstore calcule seul la fidélité ou porte un [OMS](glossary:TER328) web complet.
+      history:
+      - date: '2019'
+        kind: edition
+        title: 'Winstore 3.6.0 : disponibilité au deuxième trimestre 2019 dans la politique historique Cegid.'
+        source_url: https://onboarding.cegid.com/wp-content/uploads/sites/5/2020/08/Cegid-Retail-Product-Lifecycle-Policy-2019-FR.pdf
+      release_tracking:
+        status: not_public
+        label: Repère historique Winstore 3.6.0 ; version actuelle à confirmer
+        note: Le document historique annonce aussi 3.7.0 pour 2020 ; une date prévue n’est pas présentée comme une livraison
+          effective.
+        source_url: https://onboarding.cegid.com/wp-content/uploads/sites/5/2020/08/Cegid-Retail-Product-Lifecycle-Policy-2019-FR.pdf
+        checked_on: '2026-10-14'
+      sources:
+      - title: Architecture caisse Winstore
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Winstore/Implementation/Toutes-versions/Caisse/12
+        focus: Caisse et terminal de gestion magasin ; référence technique historique.
+      - title: Politique de versions Cegid
+        url: https://onboarding.cegid.com/wp-content/uploads/sites/5/2020/08/Cegid-Retail-Product-Lifecycle-Policy-2019-FR.pdf
+        focus: Versions historiques et distinction prévu / disponible.
+      - title: Ventes assistées UR / Winstore
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Fonctionnalites-du-module-ventes-assistees/563?contentId=CDMicsductTiI_JWTB6E7g
+        focus: Prise de commande magasin puis gestion centrale.
+      - title: Paramétrage Winstore
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Definir-le-parametrage-Winstore/561?contentId=HHjiVoMcyzTGJwYx98apeg
+        focus: Retours, mouvements associés et configuration.
+      - title: Interfaces vers Storeland
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Integration-des-donnees-des-magasins/582?contentId=JQ67zKdU4qaG3uoG3ml0EA
+        focus: Remontées de ventes et réceptions.
+      gaps:
+      - Premier lancement, version actuelle et maintenance à confirmer auprès de Cegid.
+      - Les fonctions centrales et locales doivent être réparties par version ; la documentation technique seule ne permet
+        pas une couverture exhaustive.
+    branding:
+      logo_path: assets/cegid-logo.svg
+      accent_color: '#0046FE'
+      source_url: https://www.cegid.com/global/blog/acquisition-cylande-group-cegid-gives-rise-world-leader/
+      checked_on: '2026-10-14'
+      role: publisher
   selections:
   - id: selection-elastic-historique
     context_id: beaumanoir-historique
@@ -1398,7 +2526,7 @@ application_catalog:
       node_id: subdomain-sales-wholesale
       role: supports
       evidence_state: declared
-      note: Prise de commande B2B déclarée ; ne prouve pas la tenue complète de la commande.
+      note: Prise de commande [B2B](glossary:TER195) déclarée ; ne prouve pas la tenue complète de la commande.
       source_refs:
       - U03
     - id: appmap-elastic-historique-sales-order
@@ -1450,7 +2578,7 @@ application_catalog:
       node_id: subdomain-sales-wholesale
       role: supports
       evidence_state: historical_document
-      note: Le schéma Boardriders montre B2B Order Entry ; actualité et périmètre à confirmer.
+      note: Le schéma Boardriders montre [B2B](glossary:TER195) Order Entry ; actualité et périmètre à confirmer.
       source_refs:
       - U309
       - U1038
@@ -1488,14 +2616,24 @@ application_catalog:
     product_id: product-socloz
     panorama_ref: APP-SOC
     presence: declared
-    note: Laurent attribue l'adoption de SoCloz aux limites de l'OMS omnicanal UR dans la configuration GBM, notamment pour
-      le ship from store et l'extension de gamme. Modules, règles de sélection du stock magasin ou entrepôt et usages par
-      marque restent à établir.
+    note: Laurent attribue l'adoption de SoCloz aux limites de l'[OMS](glossary:TER328) omnicanal UR dans la configuration
+      GBM, notamment pour le ship from store et l'extension de gamme. Modules, règles de sélection du stock magasin ou entrepôt
+      et usages par marque restent à établir.
     source_refs:
     - U1042
     - U1049
     component_states: []
-    mappings: []
+    mappings:
+    - id: appmap-socloz-historique-digital-commerce
+      component_id: socloz-core
+      node_id: subdomain-sales-b2c-ecommerce
+      role: contributes
+      evidence_state: candidate
+      note: Laurent relie l’achat de SoCloz à une offre web simple enrichie par les stocks et parcours omnicanaux. La contribution
+        installée exacte, les modules actifs et la répartition par marque restent à vérifier.
+      source_refs:
+      - U1049
+      - U1074
   - id: selection-united-retail-beaumanoir-historique
     context_id: beaumanoir-historique
     perspective: as_is
@@ -1507,6 +2645,7 @@ application_catalog:
     source_refs:
     - U1042
     - U1049
+    - U1075
     component_states:
     - component_id: united-retail-core
       acquired: unknown
@@ -1529,6 +2668,17 @@ application_catalog:
       note: Contribution déclarée au backoffice magasin par couplage avec Storeland ; la tenue de chaque donnée reste à attribuer.
       source_refs:
       - U1049
+    - id: appmap-ur-historique-digital-commerce
+      component_id: united-retail-core
+      node_id: subdomain-sales-b2c-ecommerce
+      role: contributes
+      evidence_state: declared
+      note: Laurent situe UR dans la vue de stock et le traitement eCommerce des Marques Historiques ; le site et la frontière
+        avec SoCloz restent à documenter par marque.
+      source_refs:
+      - U03
+      - U1049
+      - U1075
   - id: selection-storeland-beaumanoir-historique
     context_id: beaumanoir-historique
     perspective: as_is
@@ -1592,12 +2742,15 @@ application_catalog:
     product_id: product-newstore
     panorama_ref: APP-NEW
     presence: declared
-    note: 'Usage déclaré : plateforme d’API à brancher à SFCC et connectée à SAP ECC ; NewStore gère la commande de vente
-      jusqu’à l’engagement, puis SAP orchestre le fulfillment. Le routage NewStore n’est pas utilisé selon Laurent ; POS,
-      licences et configuration précise non établis.'
+    note: 'Usage déclaré : plateforme d’[API](glossary:TER318) à brancher à SFCC et connectée à SAP ECC ; NewStore gère la
+      commande de vente jusqu’à l’engagement, puis SAP orchestre le fulfillment. Le routage NewStore n’est pas utilisé selon
+      Laurent ; [POS](glossary:TER249), licences et configuration précise non établis. NewStore rapporte séparément les Shopping
+      Apps Roxy (2021) et Quiksilver (février 2025, sept pays européens) ; ce périmètre mobile ne généralise pas le [POS](glossary:TER249)
+      ou le routage.'
     source_refs:
     - U1042
     - U1043
+    - U1075
     component_states:
     - component_id: newstore-core
       acquired: unknown
@@ -1611,6 +2764,12 @@ application_catalog:
       used: 'no'
       source_refs:
       - U1043
+    - component_id: newstore-shopping-app
+      acquired: unknown
+      activated: documented
+      used: documented
+      source_refs:
+      - U1075
     mappings:
     - id: appmap-newstore-boardriders-sales-order
       component_id: newstore-core
@@ -1621,6 +2780,27 @@ application_catalog:
         de la commande et le calcul de la promesse restent à confirmer.
       source_refs:
       - U1043
+    - id: appmap-newstore-boardriders-digital-commerce
+      component_id: newstore-core
+      node_id: subdomain-sales-b2c-ecommerce
+      role: contributes
+      evidence_state: declared
+      note: NewStore reçoit les commandes du parcours SFCC et les gère jusqu’à l’engagement selon Laurent ; SFCC porte la
+        vitrine eCommerce. Le détail des interfaces et des étapes commerciales reste à vérifier.
+      source_refs:
+      - U1043
+      - U1074
+    - id: appmap-newstore-boardriders-shopping-app
+      component_id: newstore-shopping-app
+      node_id: subdomain-sales-b2c-ecommerce
+      role: supports
+      evidence_state: documented
+      note: NewStore rapporte le lancement Quiksilver à la mi-février 2025 dans sept pays européens et celui de Roxy en 2021.
+        Cette preuve publique porte sur ces applications de marque, pas sur tout le [POS](glossary:TER249) ou le routage [OMS](glossary:TER328)
+        Boardriders.
+      source_url: https://www.newstore.com/resource/040125/
+      source_refs:
+      - U1075
   - id: selection-sfcc-boardriders
     context_id: boardriders
     perspective: as_is
@@ -1685,7 +2865,7 @@ application_catalog:
     perspective: as_is
     product_id: product-centric-plm
     presence: unknown
-    note: PLM Centric cité dans le dossier FLOW-Program ; identité du déploiement à vérifier.
+    note: '[PLM](glossary:TER319) Centric cité dans le dossier FLOW-Program ; identité du déploiement à vérifier.'
     source_refs:
     - U1045
     component_states: []

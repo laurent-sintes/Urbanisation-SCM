@@ -69,9 +69,17 @@ function safePadding(reserveClusterSpace = false) {
   const footer = reserveClusterSpace
     ? document.querySelector('.hotspot-cluster-pagination')?.getBoundingClientRect()
     : undefined;
+  const sidebar = document.querySelector<HTMLElement>('.sidebar');
+  const sidebarRight =
+    !document.fullscreenElement &&
+    sidebar &&
+    getComputedStyle(sidebar).visibility === 'visible' &&
+    getComputedStyle(sidebar).position !== 'fixed'
+      ? sidebar.getBoundingClientRect().right
+      : 0;
   return {
     top: Math.max(top, heading ? heading.bottom + 8 : toolbar ? toolbar.bottom + 8 : 0),
-    left: 12,
+    left: Math.max(12, sidebarRight + 12),
     right: 12,
     bottom: footer ? window.innerHeight - footer.top + 8 : 12,
   };
@@ -90,6 +98,8 @@ export function useHotspotFloating(open: boolean, onOpenChange: (open: boolean) 
       size(() => ({
         padding: safePadding(maxHeightRatio !== undefined),
         apply({ availableHeight, elements }) {
+          const padding = safePadding(maxHeightRatio !== undefined);
+          elements.floating.style.maxWidth = `${Math.max(0, window.innerWidth - padding.left - padding.right)}px`;
           elements.floating.style.maxHeight = `${Math.max(0, Math.min(availableHeight, maxHeightRatio ? window.innerHeight * maxHeightRatio : availableHeight))}px`;
         },
       })),

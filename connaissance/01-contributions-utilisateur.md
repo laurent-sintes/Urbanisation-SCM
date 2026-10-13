@@ -25159,3 +25159,28 @@ Verbatim :
 > Maintenant, je veux que les 7 autres hotspots visibles soient aussi bien traités que celui ci en terme de règle éditoriale.
 
 Portée : appliquer aux sept hotspots visibles hors HS-008 la même discipline de lecture : signal court, questions explicites, Options rattachées à la question à laquelle elles répondent, synthèse d'analyse utile et réserves conservées dans leur contexte. Ne crée ni accord sur les Options ni observation supplémentaire des SI installés. Les sources, qualifications et publications historiques restent conservées.
+
+## U1074
+
+Date : 2026-10-14. Source : Laurent, lecture de la cartographie métier des applications.
+
+Verbatim :
+
+> Je suis étonné de constater que NewStore et Socloz sont des OMS qui ne font pas de eCommerce, apparemment, si je lis le mapping sur la carto métier.
+
+Portée : signaler une lecture trompeuse des correspondances applicatives avec Digital Commerce. La question porte sur la contribution des OMS aux parcours de vente en ligne, sans affirmer qu'ils fournissent une vitrine eCommerce complète ni qualifier à elle seule leurs modules et usages installés.
+
+## U1075
+
+Date : 2026-10-14. Source : Laurent, audit des fiches produit logiciel.
+
+Verbatim :
+
+> Ce n'est pas normal que NewStore et SoCloz soient passés à côté de cette erreur.
+> De plus il manque des logos dans les fiches, des dates etc.
+> Je veux un audit très profond, une recherche internet ardue pour bien remplir les fiches produit logiciel.
+> Applique ensuite les préconisations de l'audit.
+> Commit + release
+> Push
+
+Portée : auditer les produits logiciels du catalogue, rechercher et documenter leur identité, leur périmètre, leurs composants, leurs correspondances métier, leurs logos et leurs repères de dates auprès de sources primaires ; appliquer les corrections établies, publier puis envoyer le lot sur GitHub. Les fonctions proposées par l'éditeur restent distinctes des usages, versions et dates de mise en service propres aux SI, qui ne sont pas déduits de la recherche publique. L'autorisation d'appliquer les préconisations ne crée pas d'accord sur une architecture ou un choix de produit.

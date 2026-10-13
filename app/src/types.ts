@@ -240,7 +240,24 @@ export interface ApplicationProduct {
   website_url?: string;
   launched_on?: string;
   latest_release?: { version: string; released_on?: string; source_url: string; checked_on: string };
-  branding?: { logo_path: string; accent_color: string; source_url: string; checked_on: string };
+  branding?: {
+    logo_path: string;
+    accent_color: string;
+    source_url: string;
+    checked_on: string;
+    role?: 'product' | 'publisher';
+  };
+  documentation?: {
+    reviewed_on: string;
+    deployment_model: string;
+    channels: ('store' | 'online_b2c' | 'wholesale_b2b')[];
+    integration_summary: string;
+    scope_boundary: string;
+    history: { date: string; kind: string; title: string; source_url: string }[];
+    release_tracking: { status: string; label: string; note: string; source_url: string; checked_on: string };
+    sources: { title: string; url: string; focus: string }[];
+    gaps: string[];
+  };
   note?: string;
   source_refs: string[];
   components: ApplicationComponent[];

@@ -174,6 +174,31 @@ try {
     }
     cases.push({ product: product.name, context: 'market', coverage: expected });
   }
+  for (const width of [1100, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('https://atlas.test/#/?mapDepth=1');
+    await page.locator('.overview-system').first().waitFor();
+    for (const [triggerSelector, panelSelector] of [
+      ['.map-application-picker > button', '.application-picker-popover'],
+      ['.map-hotspot-picker > button', '.hotspot-filter-popover'],
+      ['.map-detail-picker > button', '.detail-popover'],
+    ]) {
+      await page.locator(triggerSelector).click();
+      await page.locator(panelSelector).waitFor();
+      await page.waitForFunction((selector) => {
+        const panel = document.querySelector(selector)?.getBoundingClientRect();
+        const sidebar = document.querySelector('.sidebar')?.getBoundingClientRect();
+        return panel && sidebar && panel.left >= sidebar.right && panel.right <= innerWidth;
+      }, panelSelector);
+      const accessible = await page.locator(panelSelector).evaluate((element) => {
+        const bounds = element.getBoundingClientRect();
+        return element.contains(document.elementFromPoint(bounds.left + 15, bounds.top + 15));
+      });
+      assert.ok(accessible, `${width}px: ${panelSelector} remains accessible beside the sidebar`);
+      await page.keyboard.press('Escape');
+      await page.locator(panelSelector).waitFor({ state: 'hidden' });
+    }
+  }
   assert.deepEqual(errors, []);
   console.log(JSON.stringify({ status: 'passed', cases }));
 } finally {

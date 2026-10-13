@@ -2,6 +2,7 @@
 
 from pathlib import Path
 from datetime import date
+import re
 
 
 CONTEXT_PERSPECTIVES = {
@@ -11,6 +12,11 @@ CONTEXT_PERSPECTIVES = {
     'flow-platform': 'target',
 }
 BUSINESS_KINDS = {'universe', 'business_system', 'domain', 'area', 'business_area', 'capability', 'behavior'}
+CHANNEL_NODES = {
+    'store': {'subdomain-sales-b2c-store'},
+    'online_b2c': {'subdomain-sales-b2c-ecommerce'},
+    'wholesale_b2b': {'subdomain-sales-wholesale', 'ba-wholesale-sales', 'ba-wholesale-account-management'},
+}
 
 
 def _date_errors(value, label):
@@ -19,6 +25,32 @@ def _date_errors(value, label):
     except (TypeError, ValueError):
         return [f'application_catalog/{label}: invalid date']
     return []
+
+
+def _documentation_errors(product):
+    documentation = product.get('documentation')
+    if not documentation:
+        return []  # Historical publications keep their original contract.
+    label = product['id'] + '/documentation'
+    errors = _date_errors(documentation['reviewed_on'], label + '/reviewed_on')
+    errors.extend(_date_errors(documentation['release_tracking']['checked_on'], label + '/release_tracking/checked_on'))
+    if product['kind'] == 'vendor_product' and not product.get('branding'):
+        errors.append(f'application_catalog/{label}: reviewed vendor product needs a logo')
+    sources = {source['url'] for source in documentation['sources']}
+    for milestone in documentation['history']:
+        value = milestone['date']
+        normalized = value + ('-01-01' if len(value) == 4 else '-01' if len(value) == 7 else '')
+        if not re.fullmatch(r'\d{4}(-\d{2}(-\d{2})?)?', value) or _date_errors(normalized, label):
+            errors.append(f'application_catalog/{label}: invalid milestone date')
+        if milestone['source_url'] not in sources:
+            errors.append(f'application_catalog/{label}: milestone needs a consulted source')
+    if documentation['release_tracking']['source_url'] not in sources:
+        errors.append(f'application_catalog/{label}: release tracking needs a consulted source')
+    linked = {mapping['node_id'] for mapping in product.get('offering_mappings', [])}
+    for channel in documentation['channels']:
+        if not linked.intersection(CHANNEL_NODES.get(channel, set())):
+            errors.append(f'application_catalog/{label}: documented channel has no business mapping: {channel}')
+    return errors
 
 
 def validate_catalog(model, *, require_function_mapping=False):
@@ -34,6 +66,7 @@ def validate_catalog(model, *, require_function_mapping=False):
             errors.append(f'application_catalog: duplicate product {product_id}')
             continue
         products[product_id] = product
+        errors.extend(_documentation_errors(product))
         if 'launched_on' in product:
             errors.extend(_date_errors(product['launched_on'], product_id + '/launched_on'))
         latest_release = product.get('latest_release')
@@ -79,7 +112,7 @@ def validate_catalog(model, *, require_function_mapping=False):
     for product in catalog['products']:
         if product['kind'] == 'internal_product' and product.get('offering_mappings'):
             errors.append(f'application_catalog/{product["id"]}: internal product cannot claim a vendor offering')
-        if require_function_mapping and product['kind'] == 'vendor_product':
+        if (require_function_mapping or product.get('documentation')) and product['kind'] == 'vendor_product':
             mapped_components = {item['component_id'] for item in product.get('offering_mappings', [])}
             for component in product['components']:
                 if component['kind'] != 'product' and component['id'] not in mapped_components:

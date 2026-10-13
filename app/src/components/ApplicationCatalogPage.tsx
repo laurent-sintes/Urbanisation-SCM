@@ -11,6 +11,7 @@ import type {
   PublishedModel,
 } from '../types';
 import './applications.css';
+import { ModelText } from './ModelLinks';
 
 const usageLabel: Record<string, string> = {
   unknown: 'Usage non évalué',
@@ -49,7 +50,15 @@ function ProductIdentity({
       style={{ '--product-accent': product.branding?.accent_color || '#236159' } as CSSProperties}
     >
       {product.branding ? (
-        <img src={staticUrl(product.branding.logo_path)} alt={`Logo ${product.name}`} width="120" height="40" />
+        <div className="application-logo">
+          <img
+            src={staticUrl(product.branding.logo_path)}
+            alt={`Logo ${product.branding.role === 'publisher' ? 'éditeur de ' : ''}${product.name}`}
+            width="120"
+            height="40"
+          />
+          {product.branding.role === 'publisher' && <small>Logo de l’éditeur</small>}
+        </div>
       ) : (
         <span className="application-identity-mark" aria-hidden="true">
           {product.kind === 'internal_product' ? 'Interne' : 'Logo à documenter'}
@@ -66,44 +75,137 @@ function ProductIdentity({
 }
 
 function ProductFacts({ product }: { product: ApplicationProduct }) {
+  const documentation = product.documentation;
+  const channels = {
+    store: 'Vente en magasin',
+    online_b2c: 'Vente aux particuliers en ligne',
+    wholesale_b2b: 'Vente aux revendeurs',
+  };
   return (
-    <dl className="application-facts">
-      <div>
-        <dt>Éditeur</dt>
-        <dd>{product.publisher}</dd>
-      </div>
-      <div>
-        <dt>Périmètre produit</dt>
-        <dd>{product.scope}</dd>
-      </div>
-      <div>
-        <dt>Date de lancement</dt>
-        <dd>{product.launched_on || 'Non documentée'}</dd>
-      </div>
-      <div>
-        <dt>Dernière release éditeur</dt>
-        <dd>
-          {product.latest_release ? (
-            <a href={product.latest_release.source_url} target="_blank" rel="noopener noreferrer">
-              {product.latest_release.version}
-              {product.latest_release.released_on ? ` · ${product.latest_release.released_on}` : ''}
-            </a>
-          ) : (
-            'Non vérifiée'
-          )}
-        </dd>
-      </div>
-      {product.website_url && (
+    <>
+      <dl className="application-facts">
         <div>
-          <dt>Site éditeur</dt>
+          <dt>Éditeur</dt>
+          <dd>{product.publisher}</dd>
+        </div>
+        <div>
+          <dt>Périmètre produit</dt>
           <dd>
-            <a href={product.website_url} target="_blank" rel="noopener noreferrer">
-              Consulter
-            </a>
+            <ModelText text={product.scope} />
           </dd>
         </div>
+        {documentation ? (
+          <>
+            <div>
+              <dt>Mode d’exploitation</dt>
+              <dd>
+                <ModelText text={documentation.deployment_model} />
+              </dd>
+            </div>
+            {documentation.channels.length > 0 && (
+              <div>
+                <dt>Canaux documentés</dt>
+                <dd>{documentation.channels.map((channel) => channels[channel]).join(' · ')}</dd>
+              </div>
+            )}
+            <div>
+              <dt>Vérifié le</dt>
+              <dd>{documentation.reviewed_on}</dd>
+            </div>
+          </>
+        ) : (
+          product.kind === 'vendor_product' && (
+            <div>
+              <dt>Date de lancement</dt>
+              <dd>{product.launched_on || 'Non documentée'}</dd>
+            </div>
+          )
+        )}
+        {!documentation && product.kind === 'vendor_product' && (
+          <div>
+            <dt>Dernière release éditeur</dt>
+            <dd>
+              {product.latest_release ? (
+                <a href={product.latest_release.source_url} target="_blank" rel="noopener noreferrer">
+                  {product.latest_release.version}
+                  {product.latest_release.released_on ? ` · ${product.latest_release.released_on}` : ''}
+                </a>
+              ) : (
+                'Non vérifiée'
+              )}
+            </dd>
+          </div>
+        )}
+        {product.website_url && (
+          <div>
+            <dt>Site éditeur</dt>
+            <dd>
+              <a href={product.website_url} target="_blank" rel="noopener noreferrer">
+                Consulter
+              </a>
+            </dd>
+          </div>
+        )}
+      </dl>
+      {documentation && (
+        <section className="application-documentation" aria-label="Documentation du produit">
+          <div className="application-boundary">
+            <ModelText text={documentation.scope_boundary} />
+          </div>
+          <h3>Repères de dates</h3>
+          <ul className="application-history">
+            {documentation.history.map((milestone) => (
+              <li key={`${milestone.date}:${milestone.kind}`}>
+                <time dateTime={milestone.date}>{milestone.date}</time>
+                <span>
+                  <ModelText text={milestone.title} />{' '}
+                  <a href={milestone.source_url} target="_blank" rel="noopener noreferrer">
+                    Source
+                  </a>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <div className="application-release-tracking">
+            <strong>Versions et mises à jour</strong>
+            <a href={documentation.release_tracking.source_url} target="_blank" rel="noopener noreferrer">
+              {documentation.release_tracking.label}
+            </a>
+            <p>
+              <ModelText text={documentation.release_tracking.note} />
+            </p>
+          </div>
+          <details className="application-research-details">
+            <summary>Intégrations, sources et points à confirmer</summary>
+            <p>
+              <ModelText text={documentation.integration_summary} />
+            </p>
+            <ul>
+              {documentation.sources.map((source) => (
+                <li key={source.url}>
+                  <a href={source.url} target="_blank" rel="noopener noreferrer">
+                    {source.title}
+                  </a>{' '}
+                  — <ModelText text={source.focus} />
+                </li>
+              ))}
+            </ul>
+            {documentation.gaps.length > 0 && (
+              <>
+                <h4>Points à confirmer</h4>
+                <ul>
+                  {documentation.gaps.map((gap) => (
+                    <li key={gap}>
+                      <ModelText text={gap} />
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+          </details>
+        </section>
       )}
-    </dl>
+    </>
   );
 }
 
@@ -271,7 +373,11 @@ function ComponentDetail({
       {component.kind !== 'product' && (
         <p className="application-kind">{component.kind === 'feature' ? 'Fonction documentée' : component.kind}</p>
       )}
-      {component.note && <p>{component.note}</p>}
+      {component.note && (
+        <p>
+          <ModelText text={component.note} />
+        </p>
+      )}
       {component.source_url && (
         <a href={component.source_url} target="_blank" rel="noopener noreferrer">
           Documentation éditeur
@@ -298,7 +404,9 @@ function ComponentDetail({
                   <small>{product.components.find((item) => item.id === mapping.component_id)?.name}</small>
                 )}
                 <strong>{model.nodeById.get(mapping.node_id)?.name || mapping.node_id}</strong>
-                <span>{mapping.note}</span>
+                <span>
+                  <ModelText text={mapping.note} />
+                </span>
                 <div className="application-mapping-actions">
                   <button type="button" onClick={() => onShowBusinessNode(mapping.node_id)}>
                     Voir dans la cartographie métier
@@ -326,7 +434,7 @@ function ComponentDetail({
             )}
             <strong>{model.nodeById.get(mapping.node_id)?.name || mapping.node_id}</strong>
             <span>
-              {evidenceLabel[mapping.evidence_state]} · {mapping.note}
+              {evidenceLabel[mapping.evidence_state]} · <ModelText text={mapping.note} />
             </span>
             <button type="button" onClick={() => onShowOnMap(context.id, mapping.component_id)}>
               Voir sur la carte
@@ -503,7 +611,11 @@ export function ApplicationCatalogPage({
                           : 'Présence déclarée'}
                 </p>
                 <SelectionFacts selection={selection} />
-                {selection.note && <p>{selection.note}</p>}
+                {selection.note && (
+                  <p>
+                    <ModelText text={selection.note} />
+                  </p>
+                )}
                 <details className="application-product-details">
                   <summary>Fiche du produit</summary>
                   <ProductFacts product={product} />
@@ -519,7 +631,11 @@ export function ApplicationCatalogPage({
                       ? 'complet'
                       : 'à établir'}
                 </p>
-                {product.note && <p>{product.note}</p>}
+                {product.note && !product.documentation && (
+                  <p>
+                    <ModelText text={product.note} />
+                  </p>
+                )}
                 <ProductFacts product={product} />
               </>
             )}

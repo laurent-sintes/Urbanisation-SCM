@@ -898,11 +898,9 @@ select {
   transform: rotate(180deg);
 }
 .detail-popover {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  z-index: 10;
+  z-index: 3000;
   width: min(340px, calc(100vw - 32px));
+  overflow: auto;
   padding: 16px;
   border: 1px solid #d9e4db;
   border-radius: 15px;

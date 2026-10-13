@@ -52,6 +52,10 @@ def check_delivery(root, candidate, *, stats=None):
             collection = expected['collection']
             if collection == 'hotspots':
                 items = candidate.get('hotspot_catalog', {}).get('hotspots', [])
+            elif collection == 'application_products':
+                items = candidate.get('application_catalog', {}).get('products', [])
+            elif collection == 'application_selections':
+                items = candidate.get('application_catalog', {}).get('selections', [])
             else:
                 items = candidate.get('scenario_catalog', {}).get(collection, [])
             item = next((v for v in items if v['id'] == expected['id']), None)
@@ -163,7 +167,7 @@ def replacement_scopes(documents):
 
 
 def requirement_covers(declaration, collection, identifier, field, replacement=False):
-    if collection in ('hotspots', 'scenarios', 'paths'):
+    if collection in ('hotspots', 'scenarios', 'paths', 'application_products', 'application_selections'):
         return field in ('exists', 'content_sha256') and any(
             item.get('collection') == collection and item.get('id') == identifier
             and (field == 'exists' or field in item)

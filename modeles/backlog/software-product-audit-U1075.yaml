@@ -1,0 +1,253 @@
+id: software-product-audit-U1075
+as_of: '2026-10-14'
+status: applied
+source_refs:
+- U1074
+- U1075
+scope: 'Douze fiches : onze produits éditeurs et Flow Core System interne cible. Audit du catalogue applicatif, de ses sources
+  et de son affichage ; aucun ajout de nœud métier ni étude d’un SI non évalué.'
+method:
+- Lecture des fiches, des composants et de chaque correspondance métier ; confrontation des responsabilités aux définitions
+  canoniques.
+- 'Recherche primaire : pages produit, documentation fonctionnelle, guides techniques, communiqués datés, chronologies et
+  logos servis par les sites éditeurs.'
+- Distinction lancement produit, création de l’entreprise, acquisition, édition documentaire et mise en service d’un SI. Conservation
+  de la précision des dates et qualification des lacunes.
+- Application au YAML canonique et à la fiche Atlas ; contrôles des canaux, composants, sources, dates, logos et intégrité
+  de publication.
+baseline:
+  products: 12
+  vendor_products: 11
+  vendor_products_with_logo: 1
+  vendor_products_with_launch_date: 0
+  vendor_products_with_latest_release: 0
+  components: 60
+  offering_mappings: 73
+findings:
+- id: AUD-APP-01
+  finding: NewStore et SoCloz ne montraient pas leur contribution au commerce B2C en ligne.
+  action: Correspondances OMS vers Digital Commerce ; Shopping App et Studio CMS NewStore ajoutés avec liens propres.
+  status: applied
+- id: AUD-APP-02
+  finding: Les paiements NewStore étaient rapprochés de Commercial Settlement Management, qui porte ristournes et commissions.
+  action: Retrait de la correspondance erronée ; lien vers Payment pour l’encaissement des achats.
+  retired_mapping_ids:
+  - offer-newstore-payments-settlement
+  status: applied
+- id: AUD-APP-03
+  finding: L’offre Y2 omettait fidélité, promotions, Négoce et achats ; SAP ECC omettait stocks, FI et CO ; Centric omettait
+    matières, échantillons et dossiers.
+  action: Ajout des composants et correspondances documentés, sans activation implicite dans les SI.
+  status: applied
+- id: AUD-APP-04
+  finding: Elastic omettait campagnes et personnalisation ; SoCloz clienteling et retour ; Storeland collection, prix et opérations
+    magasin ; Winstore commandes assistées et retours.
+  action: Compléments sourcés aux arbres et périmètres.
+  status: applied
+- id: AUD-APP-05
+  finding: Un seul logo éditeur / produit était enregistré.
+  action: Logos officiels locaux pour tous les produits du marché ; distinction logo de produit / logo de l’éditeur pour SAP,
+    Salesforce, Centric et produits Cegid.
+  status: applied
+- id: AUD-APP-06
+  finding: Le champ de lancement exigeait une date au jour et la fiche ne distinguait pas les versions connues d’une dernière
+    release.
+  action: Historique sourcé à précision année, mois ou jour ; suivi de version documentée avec date de vérification et lacunes.
+    Aucun jour artificiel ou dernière build inventée.
+  status: applied
+- id: AUD-APP-07
+  finding: La source du storefront SFCC décrivait en fait son raccordement à Salesforce Order Management.
+  action: Référence corrigée vers les API B2C de catalogue, panier et commande ; offres Salesforce distinctes explicitées.
+  status: applied
+- id: AUD-APP-08
+  finding: Les tests validaient des listes de composants et liens existantes sans vérifier la cohérence entre les canaux documentés
+    et les correspondances métier.
+  action: Contrôles de canaux, composants non mappés, logo, dates et sources ; empreintes de livraison sur produits et sélections.
+  status: applied
+- id: AUD-APP-09
+  finding: Une preuve publique décrit des Shopping Apps Roxy et Quiksilver sous Boardriders.
+  action: Sélection qualifiée uniquement pour ces applications et leur périmètre publié ; absence de déduction sur les POS
+    et le routage OMS.
+  status: applied
+source_policy:
+  authority: Sources primaires de l’éditeur concerné ; les appuis Microsoft Dynamics / SAP S/4HANA existants des fiches métier
+    sont conservés. Il ne s’agit pas de leur réécriture ni d’une comparaison de marché des responsabilités métier.
+  access_limits: Certains portails SAP et Cegid ne rendent que du texte indexé ou demandent une authentification. Ces limites
+    sont exposées dans la documentation des produits ; une page de référence ou un numéro documentaire n’est pas présenté
+    comme la dernière version disponible.
+  preserved_si_unknowns: Pas de version d’instance ou date globale de déploiement déduite d’une acquisition, d’une documentation
+    ou d’un cas client limité à une marque.
+glossary_alignment: Définitions Digital Commerce, Wholesale Commerce, Payment et Commercial Settlement Management contrôlées,
+  frontières conservées. Quinze entrées explicatives ajoutées pour les sigles et termes des fiches produit ; OMS logiciel
+  est distingué du sens fonctionnel FLOW de TER034.
+publication_delivery:
+  state: applied
+  summary: Fiches produit enrichies, correspondances corrigées et sources qualifiées sous U1075.
+  source_refs:
+  - U1075
+  required_catalog:
+  - collection: application_products
+    id: product-elastic-suite
+    content_sha256: 97f9415c6a3b566ee23f82a38bde64f5c9955b9dccc0b01258d3b4c204aedce1
+  - collection: application_products
+    id: product-flow-core
+    content_sha256: 9dd7ecc6e0ae30814093531ef3800c230fbca166552d725c5e657c65ebc9d0d6
+  - collection: application_products
+    id: product-socloz
+    content_sha256: bdaaad6d72142c6912231722cd2a4003f1ce00276b85f223fd4b41d841776aa3
+  - collection: application_products
+    id: product-united-retail
+    content_sha256: d8012bc4a9f2c8357cf8dc844c7929732338b127fcd396e2e356dacec294f1bc
+  - collection: application_products
+    id: product-storeland
+    content_sha256: 58742ed14809e3efae49f2d6472bc21b1a82fd555ce1cc9a2b1452f14c038550
+  - collection: application_products
+    id: product-sap-ecc
+    content_sha256: eddc28f3fcd57dfca9e0f6c7f9edd65d806f897030269777890f31d6a5d633f9
+  - collection: application_products
+    id: product-newstore
+    content_sha256: cfeca03f6edbce1c59cb479f40bd163c04f254260a9396fe3e6137b3b972045a
+  - collection: application_products
+    id: product-sfcc
+    content_sha256: 81134021ca4a49f2dd635cdf9aa4f01b2f8bd42a8aeba99e6bf4efb1b29110d6
+  - collection: application_products
+    id: product-cegid-y2
+    content_sha256: ce14cddaee1f2fd353c34e2604ec1fcc02d3f08c8ec19e34eb4808bbd7fcbf8f
+  - collection: application_products
+    id: product-centric-plm
+    content_sha256: 519059f35de13f7fd2b38f41307838d592faa9166a375a16d55c90580dd1040b
+  - collection: application_products
+    id: product-sap-bpc
+    content_sha256: 8849650175b3360cb2d81da0250eb5c5a1ac7e5db0123600e0d489c56d38c0e4
+  - collection: application_products
+    id: product-winstore
+    content_sha256: 3673a93139d3e5909d7f0c6dbc7b16d7fd3b4575dc172d928dad9df77b3c4ffa
+  - collection: application_selections
+    id: selection-elastic-historique
+    content_sha256: 0b0a7c89fb8842c56de1f9084344eea03091baa96751dece254ad82f7d92e7f7
+  - collection: application_selections
+    id: selection-elastic-boardriders
+    content_sha256: 4c6ff22444a5c78eaa024fa0bfd571cac9c55aed71dc66cf9864cd4d3bd69b7b
+  - collection: application_selections
+    id: selection-flow-core-target
+    content_sha256: 517208f08d6a4007ffc2748877162e24be4a61acb29e40d88853ceaaa938577c
+  - collection: application_selections
+    id: selection-socloz-beaumanoir-historique
+    content_sha256: 43e81ed87787e225ab25fa74c4d9946b8271f8f33a2e2193eb15b417e3fc4a62
+  - collection: application_selections
+    id: selection-united-retail-beaumanoir-historique
+    content_sha256: a836da49f0d5ab450df21fdc3a3c6fec18692acedeb8d64ff0588b693456d6ca
+  - collection: application_selections
+    id: selection-storeland-beaumanoir-historique
+    content_sha256: 9cf7ed5cfeb8c8e825b363b912151ee4ec2af8f2f115b60a0d6e5e58ecdf4ae6
+  - collection: application_selections
+    id: selection-sap-ecc-boardriders
+    content_sha256: d613927285b2df0b4a83fd34b053c2684447c2df550dd280c09a2a590d08005a
+  - collection: application_selections
+    id: selection-newstore-boardriders
+    content_sha256: 1e48ba90fdf30e9411df86a69ed87ab7a21fdd096a61974fa6a4a8fe76de6f48
+  - collection: application_selections
+    id: selection-sfcc-boardriders
+    content_sha256: 9d706148d0fe1061c9c6d385a9c405100489c2319e89a1d85ea45d415914738e
+  - collection: application_selections
+    id: selection-cegid-y2-boardriders
+    content_sha256: 46d977c98fc076a4af4080afa729819a61c527e130f8deccae0448a95c46a005
+  - collection: application_selections
+    id: selection-centric-plm-boardriders
+    content_sha256: de0651683440b1794288be0478071fe752cf180d4793f7d6a23fd64a2c4f2e99
+  - collection: application_selections
+    id: selection-sap-bpc-boardriders
+    content_sha256: 01c16f979de63ac578da0782ee7dad78631a2a5d73e0422d89ebaeb16a4fc680
+  - collection: application_selections
+    id: selection-winstore-beaumanoir-historique
+    content_sha256: 237da2680a68cac366f71a3bd9ac7ec8064deeb7ca6e44ab08b78c2f8f63b860
+  - collection: application_selections
+    id: selection-sfcc-beaumanoir-historique
+    content_sha256: 1d6392bb9339740ec6967ecf285ec8dec564bdff3d7d8f6f084abdcd95eeaee7
+  required_glossary:
+  - id: TER316
+    field_sha256:
+      name: 488d16c6c8112a558d8f354bd78f379fe2553700c7858b5f5ed0f463b94832a9
+      definition: 2feae79884667239a4df0c8780be14783040ab00ae4692fdea4f19ddda928759
+      short_description: 2feae79884667239a4df0c8780be14783040ab00ae4692fdea4f19ddda928759
+  - id: TER317
+    field_sha256:
+      name: bb8fbb68cea2258ca72f00a5c2d3333b8ba0e570d46c3d658af2ab0153958cc3
+      definition: 3e84eeee5578218bd5d787085be63551e7acabb7fe491ec27fc0a3cee157fb4f
+      short_description: 3e84eeee5578218bd5d787085be63551e7acabb7fe491ec27fc0a3cee157fb4f
+  - id: TER318
+    field_sha256:
+      name: e3af609e5881b83e0dd75a520c2468b37e986feaa6c216a7c704151da2097dcb
+      definition: fde19fcc17984798f4dc83513ad6cfbd883a0af69acad439c49325db1e70eccb
+      short_description: fde19fcc17984798f4dc83513ad6cfbd883a0af69acad439c49325db1e70eccb
+  - id: TER319
+    field_sha256:
+      name: 4be7cf6bfa3932047c71201d4c1e4853c5fce967c0a46f4235e4583b2fcd3188
+      definition: 450593352c5bee0e82f9141af48df62bf396adcc1cb5f3cd73703ddcf6e6ff32
+      short_description: 450593352c5bee0e82f9141af48df62bf396adcc1cb5f3cd73703ddcf6e6ff32
+  - id: TER320
+    field_sha256:
+      name: 556ae76a6716aec037ab48eeac35ba39c463ed52d4ac62412c5a8e1b60531c34
+      definition: 11cb9424fbd8dab21cf74af86b015db5552d077b6e93ae3f2e4b826916c93013
+      short_description: 11cb9424fbd8dab21cf74af86b015db5552d077b6e93ae3f2e4b826916c93013
+  - id: TER321
+    field_sha256:
+      name: a573e8cd2778f58f9304bbfff9f9285b8f51ab53493fa654491e9d5cd41e02c5
+      definition: 1c91603139db45de6073c20c09b0819f3db88e3a42b12944cbcaa2dd48fbbfce
+      short_description: 1c91603139db45de6073c20c09b0819f3db88e3a42b12944cbcaa2dd48fbbfce
+  - id: TER322
+    field_sha256:
+      name: 25141e7f12ab17bf1f9503868d94cb70f26cd146fb261d30d9648a4583ee118e
+      definition: 37e36ca9b67f45cd38bce4b440913ac8be83bc4249bccc0473db45159b8312fb
+      short_description: 37e36ca9b67f45cd38bce4b440913ac8be83bc4249bccc0473db45159b8312fb
+  - id: TER323
+    field_sha256:
+      name: 309f4329d927342775b6e644451ce62dc9818b9c9af53cc235785fa93193b633
+      definition: 11220031fd90c437afb2fc47a44852bd6ab26fb0516c6810f429156cf86fb33d
+      short_description: 11220031fd90c437afb2fc47a44852bd6ab26fb0516c6810f429156cf86fb33d
+  - id: TER324
+    field_sha256:
+      name: 8c3659bc3af8a86e0943f8ea4bebd13bd7a33dd9948522bb87f18885146a90ad
+      definition: 1aea2e3fb32b3e2afbc3b6775519e83689ec647d2fd6eb17fa6f31a28cd3829d
+      short_description: 1aea2e3fb32b3e2afbc3b6775519e83689ec647d2fd6eb17fa6f31a28cd3829d
+  - id: TER325
+    field_sha256:
+      name: 62df9287a55304348fed05ce09b3974a068092289a07f24b4811e7ccfe56f3af
+      definition: 44dfd27635d55990dda397f73a29dec25c869b45d91cd93ab25c93f1b2593fe2
+      short_description: 44dfd27635d55990dda397f73a29dec25c869b45d91cd93ab25c93f1b2593fe2
+  - id: TER326
+    field_sha256:
+      name: f1e447409aa567d9758d90c570f311b76a4ce6f59401f59fa77a0ac596f4f75b
+      definition: e2d87ca40d9f8766255c5a3452aeb25fb24b8c50a4c877b4919abdda8b891ac3
+      short_description: e2d87ca40d9f8766255c5a3452aeb25fb24b8c50a4c877b4919abdda8b891ac3
+  - id: TER327
+    field_sha256:
+      name: 83eda62045a484a07f8b8457529dc1a992e0731d7a41602b99bb1d613f5caeab
+      definition: 76c5cf8c67206c87ca6ef2a147581218db68a124e344eafac02546c8b1a08b54
+      short_description: 76c5cf8c67206c87ca6ef2a147581218db68a124e344eafac02546c8b1a08b54
+  - id: TER328
+    field_sha256:
+      name: 1da6718c8481908566fb7a9b1b586883c587491f089cedb0a1f3c1a374c60261
+      definition: 69f4e889fdc185a606cd6256df2470bf3d0671abe18ff68ccc5fdebb304852f1
+      short_description: 69f4e889fdc185a606cd6256df2470bf3d0671abe18ff68ccc5fdebb304852f1
+  - id: TER329
+    field_sha256:
+      name: d546b035371cc77b01f8b6cc3a030b7080d4828b394d6c30c12fdef7ba8f38d4
+      definition: c81b4176361e5a4662654680ade8f32793f95a6a773651a49f3919a7bf2a5ceb
+      short_description: c81b4176361e5a4662654680ade8f32793f95a6a773651a49f3919a7bf2a5ceb
+  - id: TER330
+    field_sha256:
+      name: 955e3dbd859b2757e3e03acee605eb99fb87edd142eaa34bdda428f98ca21abc
+      definition: 8f56ed6c414a2b7464ef42bd35d5ea0c28ca243d1283e953654eb9ec8486dfa8
+      short_description: 8f56ed6c414a2b7464ef42bd35d5ea0c28ca243d1283e953654eb9ec8486dfa8
+research:
+  vendor_products_reviewed: 11
+  unique_primary_references: 57
+  source_location: application_catalog.products[].documentation.sources ; fonctions détaillées également sourcées dans components
+    et offering_mappings.
+result:
+  vendor_products_with_logo: 11
+  vendor_products_with_documentation: 11
+  components: 83
+  offering_mappings: 108
+  glossary_terms_added: 15

@@ -67,6 +67,9 @@ class ApplicationCatalogTests(unittest.TestCase):
                                         if item['component_id'] != 'elastic-custom-collections']
         self.assertTrue(any('elastic-custom-collections: vendor component needs a business mapping' in error
                             for error in validate_catalog(model, require_function_mapping=True)))
+        self.assertTrue(any('elastic-custom-collections: vendor component needs a business mapping' in error
+                            for error in validate_catalog(model)))
+        del elastic['documentation']
         self.assertFalse(any('elastic-custom-collections: vendor component needs a business mapping' in error
                              for error in validate_catalog(model)))
 
@@ -77,10 +80,22 @@ class ApplicationCatalogTests(unittest.TestCase):
         self.assertIn('newstore-pos', {item['id'] for item in product['components']})
         self.assertIn('newstore-order-management', {item['id'] for item in product['components']})
         self.assertEqual({item['component_id']: item['used'] for item in selection['component_states']},
-                         {'newstore-core': 'declared', 'newstore-order-routing': 'no'})
+                         {'newstore-core': 'declared', 'newstore-order-routing': 'no', 'newstore-shopping-app': 'documented'})
         self.assertEqual([(item['node_id'], item['evidence_state']) for item in selection['mappings']],
-                         [('D04.i', 'declared')])
+                         [('D04.i', 'declared'), ('subdomain-sales-b2c-ecommerce', 'declared'),
+                          ('subdomain-sales-b2c-ecommerce', 'documented')])
         self.assertFalse(any(item['node_id'] == 'D06' for item in selection['mappings']))
+        self.assertTrue(any(item['component_id'] == 'newstore-order-management'
+                            and item['node_id'] == 'subdomain-sales-b2c-ecommerce'
+                            for item in product['offering_mappings']))
+        socloz = next(item for item in catalog['products'] if item['id'] == 'product-socloz')
+        self.assertTrue(any(item['component_id'] == 'socloz-oms'
+                            and item['node_id'] == 'subdomain-sales-b2c-ecommerce'
+                            for item in socloz['offering_mappings']))
+        socloz_selection = next(item for item in catalog['selections']
+                                if item['id'] == 'selection-socloz-beaumanoir-historique')
+        self.assertEqual([(item['node_id'], item['evidence_state']) for item in socloz_selection['mappings']],
+                         [('subdomain-sales-b2c-ecommerce', 'candidate')])
         sfcc = next(item for item in catalog['selections'] if item['id'] == 'selection-sfcc-boardriders')
         self.assertEqual([(item['node_id'], item['evidence_state']) for item in sfcc['mappings']],
                          [('subdomain-sales-b2c-ecommerce', 'declared')])
@@ -88,10 +103,10 @@ class ApplicationCatalogTests(unittest.TestCase):
     def test_boardriders_sap_tree_keeps_fulfillment_mapping_at_core_level(self):
         catalog = self.model['application_catalog']
         sap = next(item for item in catalog['products'] if item['id'] == 'product-sap-ecc')
-        self.assertEqual([(item['name'], item.get('parent_id')) for item in sap['components']], [
-            ('SAP ECC', None), ('Sales and Distribution (SD)', 'sap-ecc-core'),
-            ('Materials Management (MM)', 'sap-ecc-core'), ('AFS', 'sap-ecc-core'), ('AllocationRun', 'sap-afs'),
-        ])
+        parents = {item['id']: item.get('parent_id') for item in sap['components']}
+        self.assertEqual(parents['sap-allocation-run'], 'sap-afs')
+        self.assertEqual(parents['sap-afs'], 'sap-ecc-core')
+        self.assertEqual(parents['sap-ecc-mm-im'], 'sap-ecc-mm')
         selection = next(item for item in catalog['selections'] if item['product_id'] == sap['id'])
         self.assertEqual(selection['context_id'], 'boardriders')
         self.assertEqual(selection['component_states'], [])
@@ -105,6 +120,27 @@ class ApplicationCatalogTests(unittest.TestCase):
         self.assertNotIn('launched_on', elastic)
         self.assertNotIn('latest_release', elastic)
         self.assertTrue(all('deployed_version' not in item for item in catalog['selections']))
+
+    def test_reviewed_products_keep_channels_sources_and_logos_consistent(self):
+        self.assertEqual(validate_catalog(self.model), [])
+        model = deepcopy(self.model)
+        product = next(p for p in model['application_catalog']['products'] if p['id'] == 'product-newstore')
+        product['offering_mappings'] = [m for m in product['offering_mappings']
+                                       if m['node_id'] != 'subdomain-sales-b2c-ecommerce']
+        self.assertTrue(any('documented channel has no business mapping: online_b2c' in e
+                            for e in validate_catalog(model)))
+        del product['branding']
+        self.assertTrue(any('reviewed vendor product needs a logo' in e for e in validate_catalog(model)))
+        product['documentation']['history'][0]['date'] = '2025-02-30'
+        self.assertTrue(any('invalid milestone date' in e for e in validate_catalog(model)))
+        product['documentation']['history'][0]['source_url'] = 'https://unsupported.example/'
+        self.assertTrue(any('milestone needs a consulted source' in e for e in validate_catalog(model)))
+
+    def test_payment_mapping_does_not_confuse_customer_collection_and_rebates(self):
+        product = next(p for p in self.model['application_catalog']['products'] if p['id'] == 'product-newstore')
+        payment_nodes = {m['node_id'] for m in product['offering_mappings'] if m['component_id'] == 'newstore-payments'}
+        self.assertIn('service-order-payment-collection', payment_nodes)
+        self.assertNotIn('subdomain-commercial-settlement-management', payment_nodes)
 
 
 if __name__ == '__main__':

@@ -124,16 +124,18 @@ try {
   await detail.getByAltText('Logo Elastic Suite').waitFor();
   assert.ok(await detail.getByAltText('Logo Elastic Suite').isVisible());
   await detail.getByText('Fiche du produit').click();
-  assert.ok(await detail.getByText('Non vérifiée').isVisible());
+  assert.ok(await detail.getByRole('heading', { name: 'Repères de dates' }).isVisible());
   await detail.getByText('Fiche du produit').focus();
   await desktop.keyboard.press('Enter');
-  assert.equal(await detail.locator('details').getAttribute('open'), null);
+  assert.equal(await detail.locator('.application-product-details').getAttribute('open'), null);
   await detail
     .getByRole('navigation', { name: 'Modules de Elastic Suite' })
     .getByRole('button', { name: /B2B Order Entry/ })
     .click();
   await detail.getByRole('heading', { name: 'B2B Order Entry' }).waitFor();
-  assert.ok(await detail.getByText('Wholesale Commerce', { exact: false }).isVisible());
+  assert.ok(
+    await detail.locator('.application-component-detail').getByText('Wholesale Commerce', { exact: true }).isVisible(),
+  );
   assert.ok(await detail.getByRole('heading', { name: 'Couverture métier dans ce SI' }).isVisible());
   assert.ok((await detail.locator('.application-mapping').count()) > 0);
 
@@ -159,7 +161,26 @@ try {
   await products.getByRole('button', { name: 'SoCloz' }).waitFor();
   await products.getByRole('button', { name: 'SoCloz' }).click();
   await detail.getByRole('heading', { name: 'SoCloz' }).waitFor();
-  assert.ok(await detail.getByText('Logo à documenter').isVisible());
+  assert.ok(await detail.getByAltText('Logo SoCloz').isVisible());
+  for (const product of applicationCatalog.products.filter((item) => item.kind === 'vendor_product')) {
+    await products.getByRole('button', { name: product.name, exact: true }).click();
+    await detail.locator('.application-identity h2').filter({ hasText: product.name }).waitFor();
+    const logo = detail.locator('.application-identity img');
+    await logo.waitFor();
+    await desktop.waitForFunction(() => {
+      const image = document.querySelector('.application-identity img');
+      return image?.complete && image.naturalWidth > 0;
+    });
+    assert.equal(await detail.locator('.application-history time').count(), product.documentation.history.length);
+    assert.equal(
+      await detail.locator('.application-release-tracking > a').getAttribute('href'),
+      product.documentation.release_tracking.source_url,
+    );
+    assert.ok(await detail.getByText(product.documentation.reviewed_on, { exact: true }).isVisible());
+    assert.equal(await detail.getByText('Logo à documenter').count(), 0);
+  }
+  await products.getByRole('button', { name: 'SoCloz' }).click();
+  await detail.locator('.application-identity h2').filter({ hasText: 'SoCloz' }).waitFor();
   await desktop.screenshot({ path: resolve(output, 'desktop-produits.png'), fullPage: true });
 
   await desktop.getByRole('button', { name: 'SI à faire converger' }).click();
