@@ -182,9 +182,10 @@ try {
     await page.getByRole('combobox', { name: 'Capacité ou référentiel', exact: true }).inputValue(),
     'D05.e',
   );
-  await page.locator('.scenario-cards a').last().scrollIntoViewIfNeeded();
+  const singlePathScenario = page.locator('.scenario-cards a[href*="scenario=consignment-launch-replenishment"]');
+  await singlePathScenario.scrollIntoViewIfNeeded();
   const scroll = await page.locator('.workspace-content').evaluate((el) => el.scrollTop);
-  await page.locator('.scenario-cards > li > a').last().click();
+  await singlePathScenario.click();
   await page.locator('.mobilization-steps').waitFor();
   assert.equal(await page.getByRole('combobox', { name: 'Parcours de mobilisation', exact: true }).count(), 0);
   await page.getByRole('link', { name: 'Catalogue des scénarios', exact: true }).click();

@@ -177,6 +177,7 @@ export interface GlossaryTerm extends JsonRecord {
   last_modified?: string;
 }
 export interface RawPublication extends JsonRecord {
+  application_catalog?: ApplicationCatalog;
   workshop?: { active: true; session_id: string; base_version: string; revision: number };
   document_catalog?: { schema_version: 1; source_refs: string[]; documents: AtlasDocument[] };
   hotspot_catalog?: {
@@ -218,6 +219,67 @@ export interface RawPublication extends JsonRecord {
   limitations?: string[];
   last_modified?: string;
   published_at?: string;
+}
+
+export interface ApplicationComponent {
+  id: string;
+  parent_id?: string;
+  name: string;
+  kind: 'product' | 'module' | 'option' | 'extension' | 'feature';
+  note?: string;
+  source_url?: string;
+  source_refs: string[];
+}
+export interface ApplicationProduct {
+  id: string;
+  name: string;
+  publisher: string;
+  kind: 'vendor_product' | 'internal_product';
+  inventory_status: 'partial' | 'complete' | 'undetermined';
+  scope: string;
+  website_url?: string;
+  launched_on?: string;
+  latest_release?: { version: string; released_on?: string; source_url: string; checked_on: string };
+  branding?: { logo_path: string; accent_color: string; source_url: string; checked_on: string };
+  note?: string;
+  source_refs: string[];
+  components: ApplicationComponent[];
+}
+export interface ApplicationComponentState {
+  component_id: string;
+  acquired: string;
+  activated: string;
+  used: string;
+  source_refs: string[];
+}
+export interface ApplicationMapping {
+  id: string;
+  component_id: string;
+  node_id: string;
+  role: 'supports' | 'contributes' | 'consumes_information' | 'planned_support';
+  evidence_state: 'candidate' | 'declared' | 'historical_document' | 'documented' | 'confirmed' | 'planned';
+  note: string;
+  source_refs: string[];
+}
+export interface ApplicationSelection {
+  id: string;
+  context_id: string;
+  perspective: 'as_is' | 'target';
+  product_id: string;
+  panorama_ref?: string;
+  deployed_version?: string;
+  deployed_on?: string;
+  presence: string;
+  note?: string;
+  source_refs: string[];
+  component_states: ApplicationComponentState[];
+  mappings: ApplicationMapping[];
+}
+export interface ApplicationCatalog {
+  schema_version: 1;
+  source_refs: string[];
+  products: ApplicationProduct[];
+  selections: ApplicationSelection[];
 }
 export interface HotspotResolution {
   stage: 'unassessed' | 'to_explore' | 'identified' | 'qualifying' | 'ready_for_arbitration' | 'credible';

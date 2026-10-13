@@ -1,5 +1,15 @@
 # FLOW Atlas — SPA statique
 
+## Applications
+
+Lorsqu’une publication contient `application_catalog`, deux entrées distinctes apparaissent : **Produits logiciels du marché** pour le référentiel des offres et **SI à faire converger** pour les sélections propres à chaque SI, cible Beaumanoir comprise. Flow Core System, produit interne, figure dans la cible et non dans le catalogue de marché. La composition SAP ECC → AFS → AllocationRun est déclarée dans Boardriders ; les licences et activations restent à qualifier. Acquisition, activation et usage sont des états distincts. La carte Enterprise Architecture propose un sélecteur d’application et de composant ; elle éclaire les nœuds métier associés et leurs ancêtres visibles, sans déduire une couverture des descendants. Les correspondances sont accompagnées de leur degré de preuve. Une publication historique sans catalogue conserve son interface habituelle. L’export statique lit uniquement le snapshot publié : une modification du backlog ne rend pas le catalogue visible avant une nouvelle publication.
+
+Sur ordinateur, le catalogue s’explore dans deux panneaux : liste des produits à gauche, regroupée par SI dans la vue correspondante ; fiche du produit à droite, avec sa composition et le détail du module choisi côte à côte. Sur mobile, la liste et la fiche se succèdent avec un retour explicite à la liste ; les modules restent dans la fiche. Un lien direct conserve le produit ou composant choisi.
+
+La fiche produit indique l’éditeur, le périmètre, le logo et l’accent de marque lorsqu’ils sont sourcés, la date de lancement du produit et la dernière release éditeur si elles sont vérifiées. La sélection par SI porte séparément la version déployée et sa date de mise en service. Les valeurs manquantes sont affichées comme non documentées. Les logos sont des fichiers statiques locaux : aucun appel à un site éditeur n’est requis pendant la consultation. Sur la carte, le trait plein marque une correspondance directe et le trait pointillé un parent affiché pour le repérage ; l’accent produit ne change pas les couleurs de statut des points chauds.
+
+Recette UX de ce catalogue avant sa première publication : `pnpm --dir app verify:applications` après le build. Le script injecte temporairement le catalogue du backlog dans le lecteur statique compilé, vérifie les parcours bureau et mobile, le clavier, les liens vers la carte et le comportement sans catalogue ; il n’écrit aucune publication. Les captures restent dans `app/.runtime/qa-applications/`.
+
 ## Documents de la publication
 
 Le menu **Documents** liste les PDF déclarés dans `document_catalog` de la publication sélectionnée. Une fiche de point chaud peut référencer ces documents par `document_ids` et proposer un téléchargement direct. Les anciennes publications sans catalogue documentaire affichent une liste vide. Une sélection historique conserve ses propres titres, liens et fichiers.

@@ -334,6 +334,8 @@ def model_diff(previous, candidate):
         result['hotspot_catalog'] = changes(previous.get('hotspot_catalog'), candidate.get('hotspot_catalog'))
     if 'document_catalog' in previous or 'document_catalog' in candidate:
         result['document_catalog'] = changes(previous.get('document_catalog'), candidate.get('document_catalog'))
+    if 'application_catalog' in previous or 'application_catalog' in candidate:
+        result['application_catalog'] = changes(previous.get('application_catalog'), candidate.get('application_catalog'))
     if 'display_policy' in previous or 'display_policy' in candidate:
         result['display_policy'] = changes(previous.get('display_policy'), candidate.get('display_policy'))
         result['display_index'] = changes(previous.get('display_index'), candidate.get('display_index'))

@@ -166,9 +166,16 @@ export function Sidebar({
         <button
           type="button"
           aria-current={
-            !['scenarios', 'hotspots', 'documents', 'glossary', 'principles', 'metamodel', 'help'].includes(
-              route.view || '',
-            )
+            ![
+              'scenarios',
+              'hotspots',
+              'documents',
+              'applications',
+              'glossary',
+              'principles',
+              'metamodel',
+              'help',
+            ].includes(route.view || '')
               ? 'page'
               : undefined
           }
@@ -177,6 +184,50 @@ export function Sidebar({
           <Compass size={17} />
           Cartographie
         </button>
+        {!!model.raw.application_catalog && (
+          <>
+            <button
+              type="button"
+              aria-current={route.view === 'applications' && route.appView === 'products' ? 'page' : undefined}
+              onClick={() => {
+                onSearch({
+                  view: 'applications',
+                  appView: 'products',
+                  appSelection: '',
+                  appComponent: '',
+                  node: '',
+                  scope: '',
+                  query: '',
+                  section: '',
+                });
+                onClose();
+              }}
+            >
+              <Compass size={17} />
+              Produits logiciels du marché
+            </button>
+            <button
+              type="button"
+              aria-current={route.view === 'applications' && route.appView !== 'products' ? 'page' : undefined}
+              onClick={() => {
+                onSearch({
+                  view: 'applications',
+                  appView: 'systems',
+                  appSelection: '',
+                  appComponent: '',
+                  node: '',
+                  scope: '',
+                  query: '',
+                  section: '',
+                });
+                onClose();
+              }}
+            >
+              <Compass size={17} />
+              SI à faire converger
+            </button>
+          </>
+        )}
         {!!model.raw.scenario_catalog && (
           <button
             type="button"

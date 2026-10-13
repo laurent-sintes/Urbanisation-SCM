@@ -46,6 +46,22 @@ test('a hotspot group keeps only its published selection in the catalog route', 
   assert.ok(!routeHash({ ...route, view: 'map' }).includes('group='));
 });
 
+test('an application selection keeps its component on the enterprise map', () => {
+  const route = readRoute('#/map?scope=%40root&app=selection-elastic-boardriders&component=elastic-order-entry');
+  assert.equal(route.appSelection, 'selection-elastic-boardriders');
+  assert.equal(route.appComponent, 'elastic-order-entry');
+  assert.deepEqual(readRoute(routeHash(route)), route);
+});
+
+test('application product and SI entries keep distinct routes', () => {
+  const products = readRoute('#/applications?catalog=products');
+  assert.equal(products.appView, 'products');
+  assert.deepEqual(readRoute(routeHash(products)), products);
+  const systems = readRoute('#/applications');
+  assert.equal(systems.appView, undefined);
+  assert.ok(!routeHash(systems).includes('catalog='));
+});
+
 test('unknown query keys do not restrict a search invisibly', () => {
   const route = readRoute('#/map?version=2026-09-19.6&node=D04&q=order&type=capability');
   assert.deepEqual(route, readRoute('#/map?version=2026-09-19.6&node=D04&q=order'));

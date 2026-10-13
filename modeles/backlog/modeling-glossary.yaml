@@ -2018,6 +2018,26 @@ terms:
     note: Convention de mise en œuvre de la demande U979 ; rédaction explicative proposée.
   context: 'U979 : relation shares-data ; contenu dans fields.data_exchange, sens donné par source_id et target_id. La vue
     Enterprise Architecture projette les extrémités vers leurs systèmes métier en conservant les relations sources.'
+- id: MOD048
+  name: Application Mapping
+  label_fr: Positionnement applicatif
+  short_description: Lien qualifié entre un composant logiciel choisi dans un SI et une responsabilité métier.
+  definition: Un positionnement applicatif relie un produit, module, option ou extension à un élément de la carte métier
+    dans un contexte SI donné. Il précise son rôle, ses preuves et ses limites. Le catalogue éditeur décrit les fonctions
+    possibles ; la sélection par SI distingue acquisition, activation et usage. Le lien ne transforme pas une fonction
+    logicielle en capacité métier et ne déduit pas l'usage d'une fonction de sa seule disponibilité.
+  role: Lire les réalisations As Is et les composants cibles sur la même carte de responsabilités métier.
+  source_refs:
+  - U1033
+  - U1034
+  - U1036
+  - U1037
+  - U1038
+  - U1039
+  - U1042
+  review:
+    state: proposed
+    note: Deux accès distincts, produits de marché et SI à faire converger ; aucune activation ou couverture installée validée par cette définition.
 methodology_agreements:
 - id: AGREEMENT-U787
   source_refs:
@@ -2249,4 +2269,5 @@ presentation:
     - MOD016
     - MOD018
     - MOD041
+    - MOD048
 date_semantics: 'as_of : date du dernier lot éditorial appliqué au brouillon ; les publications figées conservent leur date.'

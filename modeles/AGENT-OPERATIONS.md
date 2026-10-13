@@ -38,6 +38,8 @@ Les recherches marché, les contributions utiles et les arbitrages courants rest
 
 Réutiliser ces solutions dans leur portée autorisée. Enregistrer ici toute nouvelle solution confirmée ; ne pas narrer les incidents résolus à Laurent. Une restriction restante ou un refus d’autorisation demeure un blocage à expliquer.
 
+- **Recette navigateur Playwright — navigateur introuvable dans le profil temporaire du bac à sable Windows.** Pour `node app/verify-applications.mjs`, après avoir vérifié `python --version`, fixer dans le même processus PowerShell `$env:PLAYWRIGHT_BROWSERS_PATH = 'C:\Users\laure\AppData\Local\ms-playwright'` et `$env:TEMP = $env:TMP = (Join-Path (Get-Location) '.runtime/test-temp')` après création de ce répertoire. Le navigateur Chromium déjà installé démarre et la recette passe ; solution confirmée le 2026-10-13. Portée : recettes Playwright locales de ce poste, sans modifier les variables système.
+
 - **Vérification HTTP d’Atlas après release — Windows, `WinError 10013`.** Si la release est activée et l’export statique réussi, relancer uniquement la vérification HTTP avec `exec_command` et `sandbox_permissions: require_escalated`. Solution confirmée le 2026-10-13 pour la version `2026-10-13.1`. Ne pas refaire la release, l’export ou le build, modifier le pare-feu, ni redémarrer le serveur pour ce seul diagnostic. Dans PowerShell, sélectionner l’interpréteur installé et vérifier `python --version`, puis appeler le vérificateur ci-dessous avec la version réellement activée. Son succès confirme aussi l’identité du serveur et la version servie.
 
   ```powershell

@@ -15,6 +15,7 @@ import {
   X,
 } from 'lucide-react';
 import { type CSSProperties, lazy, Suspense, useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { ApplicationCatalogPage } from './components/ApplicationCatalogPage';
 import { BusinessSheet } from './components/BusinessSheet';
 import { DocumentCatalogPage } from './components/DocumentCatalogPage';
 import { GlossaryPage } from './components/GlossaryPage';
@@ -215,6 +216,7 @@ export function App() {
   // Keep the map context stable on selection, including between double-clicks.
   const referenceView =
     view === 'scenarios' ||
+    view === 'applications' ||
     view === 'hotspots' ||
     view === 'documents' ||
     view === 'glossary' ||
@@ -512,6 +514,21 @@ export function App() {
     if (model) changeRoute(mapRouteForNode(model, selected?.id || ''));
     else changeRoute({ view: 'map', node: '', scope: '@root', mapDepth: 1, mapFocus: '', relation: '', section: '' });
   }, [changeRoute, model, selected]);
+  const showApplicationOnMap = useCallback(
+    (appSelection: string, appComponent = '') =>
+      changeRoute({
+        view: 'map',
+        node: '',
+        scope: '@root',
+        mapDepth: 2,
+        mapFocus: '',
+        appSelection,
+        appComponent,
+        section: '',
+        relation: '',
+      }),
+    [changeRoute],
+  );
   const links = selected && model ? relatedTo(model, selected.id) : [];
   const copyLink = async () => {
     try {
@@ -559,15 +576,19 @@ export function App() {
               ? 'Aide'
               : view === 'hotspots'
                 ? 'Points chauds'
-                : view === 'documents'
-                  ? 'Documents'
-                  : view === 'scenarios'
-                    ? 'Scénarios métier'
-                    : view === 'metamodel'
-                      ? 'Métamodèle FLOW'
-                      : view === 'principles'
-                        ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
-                        : glossaryTitle}
+                : view === 'applications'
+                  ? route.appView === 'products'
+                    ? 'Produits logiciels du marché'
+                    : 'Systèmes d’information à faire converger'
+                  : view === 'documents'
+                    ? 'Documents'
+                    : view === 'scenarios'
+                      ? 'Scénarios métier'
+                      : view === 'metamodel'
+                        ? 'Métamodèle FLOW'
+                        : view === 'principles'
+                          ? `${methodTitle}${methodCrumb ? ` / ${methodCrumb}` : ''}`
+                          : glossaryTitle}
           </span>
         </span>
       )}
@@ -815,9 +836,11 @@ export function App() {
                                   ? 'LA DÉMARCHE DE TRANSFORMATION'
                                   : view === 'glossary'
                                     ? 'LE VOCABULAIRE PUBLIÉ'
-                                    : view === 'documents'
-                                      ? 'LES DOCUMENTS PUBLIÉS'
-                                      : 'LE MODÈLE PUBLIÉ'}
+                                    : view === 'applications'
+                                      ? 'LES APPLICATIONS PUBLIÉES'
+                                      : view === 'documents'
+                                        ? 'LES DOCUMENTS PUBLIÉS'
+                                        : 'LE MODÈLE PUBLIÉ'}
                           </span>
                         )}
                         {headingNode && (
@@ -833,17 +856,21 @@ export function App() {
                             : 'Par où commencer ?'
                           : view === 'hotspots'
                             ? 'Points chauds'
-                            : view === 'documents'
-                              ? 'Documents'
-                              : view === 'scenarios'
-                                ? 'Scénarios métier'
-                                : view === 'metamodel'
-                                  ? 'Métamodèle FLOW'
-                                  : view === 'principles'
-                                    ? methodTitle
-                                    : view === 'glossary'
-                                      ? glossaryTitle
-                                      : headingNode?.name || 'Cartographie'}
+                            : view === 'applications'
+                              ? route.appView === 'products'
+                                ? 'Produits logiciels du marché'
+                                : 'Systèmes d’information à faire converger'
+                              : view === 'documents'
+                                ? 'Documents'
+                                : view === 'scenarios'
+                                  ? 'Scénarios métier'
+                                  : view === 'metamodel'
+                                    ? 'Métamodèle FLOW'
+                                    : view === 'principles'
+                                      ? methodTitle
+                                      : view === 'glossary'
+                                        ? glossaryTitle
+                                        : headingNode?.name || 'Cartographie'}
                       </h1>
                       {view !== 'sheet' && (
                         <p>
@@ -855,20 +882,24 @@ export function App() {
                                   : 'Un parcours rapide pour explorer le modèle publié.'
                                 : view === 'hotspots'
                                   ? 'Un point chaud est un sujet qui demande une clarification ou un arbitrage. Il peut révéler un écart, une responsabilité à préciser ou une décision de convergence à prendre.'
-                                  : view === 'documents'
-                                    ? 'Consulter et télécharger les documents associés à cette publication.'
-                                    : view === 'scenarios'
-                                      ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.'
-                                      : view === 'metamodel'
-                                        ? metaGuide?.subtitle || 'Comprendre les objets et règles du modèle.'
-                                        : view === 'principles'
-                                          ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.'
-                                          : view === 'glossary'
-                                            ? 'Les notions et leurs définitions dans la publication consultée.'
-                                            : headingNode?.purpose ||
-                                              (headingNode
-                                                ? 'Explore cet élément et ses relations dans le modèle publié.'
-                                                : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')
+                                  : view === 'applications'
+                                    ? route.appView === 'products'
+                                      ? 'Explorer les offres logicielles connues et leurs composants documentés.'
+                                      : 'Parcourir les produits retenus dans chaque SI et leur positionnement métier connu.'
+                                    : view === 'documents'
+                                      ? 'Consulter et télécharger les documents associés à cette publication.'
+                                      : view === 'scenarios'
+                                        ? 'Explorer les situations métier, leurs flux de valeur et les capacités mobilisées.'
+                                        : view === 'metamodel'
+                                          ? metaGuide?.subtitle || 'Comprendre les objets et règles du modèle.'
+                                          : view === 'principles'
+                                            ? activeGuide?.subtitle || 'Comprendre la démarche et ses repères.'
+                                            : view === 'glossary'
+                                              ? 'Les notions et leurs définitions dans la publication consultée.'
+                                              : headingNode?.purpose ||
+                                                (headingNode
+                                                  ? 'Explore cet élément et ses relations dans le modèle publié.'
+                                                  : 'Parcours le modèle, explore les capacités et découvre les liens qui les relient.')
                             }
                           />
                         </p>
@@ -1014,6 +1045,14 @@ export function App() {
                       }
                       onSaveWorkshopChanges={workshop.saveHotspotChanges}
                     />
+                  ) : view === 'applications' ? (
+                    <ApplicationCatalogPage
+                      model={model}
+                      mode={route.appView || 'systems'}
+                      route={route}
+                      onChange={changeRoute}
+                      onShowOnMap={showApplicationOnMap}
+                    />
                   ) : view === 'documents' ? (
                     <DocumentCatalogPage model={displayModel || model} route={route} onChange={changeRoute} />
                   ) : view === 'scenarios' ? (
@@ -1092,6 +1131,11 @@ export function App() {
                       }
                       onAnnouncement={setAnnouncement}
                       onOpen={openOverviewNode}
+                      applicationSelectionId={route.appSelection}
+                      applicationComponentId={route.appComponent}
+                      onApplicationChange={(appSelection, appComponent) =>
+                        changeRoute({ appSelection, appComponent }, true)
+                      }
                       onOpenHotspot={(hotspot, groupIds) =>
                         changeRoute({
                           view: 'hotspots',

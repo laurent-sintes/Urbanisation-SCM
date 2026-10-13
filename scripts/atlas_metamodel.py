@@ -228,6 +228,10 @@ CATALOG_TERMS = (
     ('information_catalog.items', 'Information', None),
     ('information_catalog.links', 'Information Link', 'Relation orientée et qualifiée entre deux informations métier distinctes.'),
     ('document_catalog.documents', 'Publication Document', 'Document téléchargeable figé avec une publication et éventuellement lié à un point chaud.'),
+    ('application_catalog.products', 'Application Product', 'Produit logiciel de référence, indépendant de ses sélections et usages dans chaque SI.'),
+    ('application_catalog.products.components', 'Application Component', 'Produit, module, option, extension ou fonction dans l’arbre de référence du produit.'),
+    ('application_catalog.selections', 'Application Selection', 'Présence d’un produit dans un SI ou dans la cible, avec états d’acquisition, d’activation et d’usage distincts.'),
+    ('application_catalog.selections.mappings', 'Application Mapping', 'Lien qualifié et sourcé entre un composant logiciel choisi dans un SI et un élément métier.'),
     ('glossary.terms', 'Business Glossary Term', 'Terme du vocabulaire métier de cette publication, avec définition et statut de revue.'),
     ('principles', 'Model Principle', 'Règle ou choix de modélisation applicable à cette publication, identifié et sourcé.'),
 )
@@ -239,6 +243,9 @@ def _catalog_types(model, terms):
     scenarios = model.get('scenario_catalog') or {}
     streams = scenarios.get('value_streams', [])
     paths = scenarios.get('paths', [])
+    applications = model.get('application_catalog') or {}
+    products = applications.get('products', [])
+    selections = applications.get('selections', [])
     counts = {
         'hotspot_catalog.hotspots': len(hotspots),
         'hotspot_catalog.hotspots.gap_analysis': len(gaps),
@@ -254,6 +261,10 @@ def _catalog_types(model, terms):
         'information_catalog.items': len((model.get('information_catalog') or {}).get('items', [])),
         'information_catalog.links': len((model.get('information_catalog') or {}).get('links', [])),
         'document_catalog.documents': len((model.get('document_catalog') or {}).get('documents', [])),
+        'application_catalog.products': len(products),
+        'application_catalog.products.components': sum(len(product.get('components', [])) for product in products),
+        'application_catalog.selections': len(selections),
+        'application_catalog.selections.mappings': sum(len(selection.get('mappings', [])) for selection in selections),
         'glossary.terms': len((model.get('glossary') or {}).get('terms', [])),
         'principles': len(model.get('principles', [])),
     }

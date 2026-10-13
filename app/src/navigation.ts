@@ -10,7 +10,8 @@ export type View =
   | 'help'
   | 'scenarios'
   | 'hotspots'
-  | 'documents';
+  | 'documents'
+  | 'applications';
 export interface GraphRoute {
   graphLevel?: 'capability' | 'business_area' | 'area' | 'domain' | 'business_system' | 'universe';
   graphDepth?: 0 | 1 | 2 | 3;
@@ -45,6 +46,9 @@ export interface RouteState extends GraphRoute {
   hotspotFilters?: string;
   hotspotGroup?: string;
   document?: string;
+  appSelection?: string;
+  appComponent?: string;
+  appView?: 'products' | 'systems';
   helpTopic?: 'start' | 'workshop';
   stream?: string;
   path?: string;
@@ -98,6 +102,7 @@ export function readRoute(hash: string): RouteState {
       'scenarios',
       'hotspots',
       'documents',
+      'applications',
     ].includes(view || '')
       ? (view as View)
       : undefined,
@@ -125,6 +130,9 @@ export function readRoute(hash: string): RouteState {
     ...(p.has('hf') && (p.get('hf') || '').length <= 1200 ? { hotspotFilters: p.get('hf') || '' } : {}),
     ...(view === 'hotspots' && p.has('group') ? { hotspotGroup: p.get('group') || '' } : {}),
     ...(view === 'documents' && p.has('document') ? { document: p.get('document') || '' } : {}),
+    ...(p.has('app') ? { appSelection: p.get('app') || '' } : {}),
+    ...(p.has('component') ? { appComponent: p.get('component') || '' } : {}),
+    ...(view === 'applications' && p.get('catalog') === 'products' ? { appView: 'products' as const } : {}),
     ...(view === 'help' && p.get('topic') === 'workshop' ? { helpTopic: 'workshop' as const } : {}),
     version: p.get('version') || '',
     query: p.get('q') || '',
@@ -153,6 +161,9 @@ export function routePath(route: RouteState, model?: PublishedModel | null): str
     hotspot: route.view === 'hotspots' ? route.hotspot : undefined,
     group: route.view === 'hotspots' ? route.hotspotGroup : undefined,
     document: route.view === 'documents' ? route.document : undefined,
+    app: route.view === 'map' || route.view === 'applications' ? route.appSelection : undefined,
+    component: route.view === 'map' || route.view === 'applications' ? route.appComponent : undefined,
+    catalog: route.view === 'applications' && route.appView === 'products' ? 'products' : undefined,
     topic: route.view === 'help' && route.helpTopic === 'workshop' ? 'workshop' : undefined,
     version: route.version,
     node: route.node,

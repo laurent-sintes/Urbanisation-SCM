@@ -24653,3 +24653,78 @@ Verbatim :
 > Ton avis ?
 
 Portée : proposer Elastic comme pilote pour éprouver le référentiel éditeur commun, les sélections propres aux SI historiques et Boardriders et leur positionnement sur la carte métier. Laurent déclare sa présence dans les deux SI ; les instances, options acquises ou activées et usages détaillés restent à qualifier. Cette demande sollicite un avis avant une réalisation ou une modification canonique.
+
+## U1039
+
+Date : 2026-10-13. Source : Laurent, lancement du pilote applicatif.
+
+Verbatim :
+
+> Go pour la premiere version
+
+Portée : autoriser une première version du référentiel produit commun, des sélections par SI, des correspondances qualifiées et de leur lecture dans Atlas, avec Elastic comme pilote. Les inconnues d'acquisition, d'activation, d'instance et d'usage restent explicites ; cette autorisation ne valide aucune couverture installée non prouvée et ne demande ni release, ni commit, ni push.
+
+## U1040
+
+Date : 2026-10-13. Source : Laurent, positionnement cible de Flow Core System.
+
+Verbatim :
+
+> On peut ajouter Flow Core System. C'est facile, le périmètre est naturel : l'orchestration de la supply chain
+
+Portée : ajouter Flow Core System au pilote comme produit cible positionné sur le Domain Supply Chain Orchestration. Ce lien de périmètre ne déduit pas la couverture détaillée des capacités et comportements, les composants logiciels ni une réalisation installée.
+
+## U1041
+
+Date : 2026-10-13. Source : Laurent, identité visuelle et fiche du produit applicatif.
+
+Verbatim :
+
+> Tu as récupéré logo et code couleur du produit éditeur ? Sur la fiche produit, on peut avoir l'éditeur, la data de création, périmètre, derniere release etc ?
+
+Portée : compléter la première version avec l'identité visuelle du produit éditeur et une fiche produit portant l'éditeur, le périmètre, la date de lancement et la dernière release lorsque ces données sont établies. Distinguer la release de l'offre éditeur de la version réellement déployée dans chaque SI. Une donnée absente reste à documenter ; elle ne doit pas être déduite de la date de création de l'éditeur, d'un billet de support isolé ou d'une image non attribuée au bon produit.
+
+## U1042
+
+Date : 2026-10-13. Source : Laurent, correction de la navigation applicative après audit UX/UI.
+
+Verbatim :
+
+> Le point d'entrée Application n'est pas très clair.
+>
+> Je m'attendais à un truc du genre :
+>
+> - un point d'entrée : Produits logiciels du marché
+>   - Elastic
+> - un point d'entrée : Les Systèmes d'information à faire converger
+>   - SI Beaumanoir Marques Historiques
+>     - Elastic
+>     - SoCloz
+>     - United Retail
+>     - Storeland
+>   - SI Boardriders
+>     - Elastic
+>     - SAP ECC
+>       - AFS
+>         - AllocationRun
+>     - NewStore
+>   - SI Beaumanoir cible
+>     - Flow Core system
+
+Portée : séparer dans Atlas l'entrée du référentiel des produits de marché de celle des sélections par SI. Ajouter les produits cités comme repères d'inventaire dans les SI indiqués, avec SAP ECC → AFS → AllocationRun comme arbre déclaré pour Boardriders. Les modules, licences, activations, versions, identités visuelles, couvertures métier et liens cartographiques non établis restent à qualifier. Flow Core System reste un produit interne de la cible, hors de l'inventaire des produits logiciels du marché.
+
+## U1043
+
+Date : 2026-10-13. Source : Laurent, précision sur NewStore et SFCC dans le SI Boardriders.
+
+Verbatim :
+
+> Maintenant je voudrais ajouter NewStore.
+>
+> C'est un cas interessant de test car NewStore va du Point Of Sale (tout en haut) jusqu'en bas avec des fonction DOM d'orchestration qui traversent même l'orchestration de la supply chain sur les couches basses.
+>
+> Par contre, chez Boardriders, on l'utilise comme une plateforme d'api à brancher à SFCC (tiens !? on l'a oublié) pour le eCommerce et en bas il se connecte à SAP ECC et n'orchestre rien du tout : il poste une commande et SAP orchestre le fulfillment. Par contre, le processus de la commande de vente jusqu'à engagement est bien géré dans NewStore : c'est une partie de la supply chain orchestration.
+>
+> Qu'en penses-tu ?
+
+Portée : distinguer l'offre NewStore, qui couvre potentiellement le point de vente et la gestion distribuée des commandes, de son usage déclaré chez Boardriders. Laurent situe NewStore entre SFCC pour le eCommerce et SAP ECC pour la suite, lui attribue le processus de commande de vente jusqu'à l'engagement et attribue l'orchestration du fulfillment à SAP. Ajouter SFCC comme produit présent dans le SI Boardriders. Les modules achetés ou activés, la configuration exacte des API, le calcul de disponibilité et les responsabilités détaillées d'engagement restent à vérifier. La description ne démontre aucun usage Boardriders du POS ou du routage NewStore.

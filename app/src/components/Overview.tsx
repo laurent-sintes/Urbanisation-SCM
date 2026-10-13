@@ -1,6 +1,7 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { type CSSProperties, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { MIN_READABLE_ZOOM, overviewLayout, prominentChildIndex } from '../adaptiveLayout';
+import { applicationMapIds, contextName, productFor, selectionMappings } from '../applicationCatalog';
 import { dataSharingCardInsets, dataSharingHeadroom, systemDataSharing } from '../dataSharing';
 import { filterMapHotspots, type HotspotMapFilters, hotspotRelatedElementIds } from '../hotspotMap';
 import { HOTSPOT_DIAMETERS, type HotspotPlacementGroup, layoutHotspots } from '../hotspotPlacement';
@@ -31,6 +32,9 @@ export function Overview({
   onAnnouncement,
   onOpen,
   onOpenHotspot,
+  applicationSelectionId,
+  applicationComponentId,
+  onApplicationChange,
 }: {
   model: PublishedModel;
   detail: number;
@@ -40,6 +44,9 @@ export function Overview({
   onAnnouncement: (message: string) => void;
   onOpen: (id: string) => void;
   onOpenHotspot: (id: string, groupIds?: string[]) => void;
+  applicationSelectionId?: string;
+  applicationComponentId?: string;
+  onApplicationChange: (selectionId: string, componentId: string) => void;
 }) {
   const universe = rootsOf(model).find((node) => node.kind === 'universe');
   const systems = useMemo(
@@ -73,25 +80,61 @@ export function Overview({
     return () => document.removeEventListener('fullscreenchange', update);
   }, []);
   const hotspots = model.raw.hotspot_catalog?.hotspots || [];
+  const applicationCatalog = model.raw.application_catalog;
+  const applicationSelection = applicationCatalog?.selections.find((item) => item.id === applicationSelectionId);
+  const applicationProduct =
+    applicationSelection && applicationCatalog ? productFor(applicationCatalog, applicationSelection) : undefined;
+  const applicationMappings = useMemo(
+    () => selectionMappings(applicationCatalog, applicationSelectionId, applicationComponentId),
+    [applicationCatalog, applicationSelectionId, applicationComponentId],
+  );
+  const applicationIds = applicationMapIds(model, applicationMappings);
+  const applicationExactIds = new Set(applicationMappings.map((mapping) => mapping.node_id));
   const visibleHotspots = useMemo(() => filterMapHotspots(hotspots, hotspotFilters), [hotspots, hotspotFilters]);
   const rootHotspots = universe ? visibleHotspots.filter((item) => item.location.node_ids.includes(universe.id)) : [];
-  const visibleIds = new Set(
-    systems.flatMap((system) => [
-      system.id,
-      ...(detail > 0
-        ? childrenOf(model, system.id)
-            .filter((node) => node.kind === 'domain')
-            .flatMap((domain) => [
-              domain.id,
-              ...(detail > 1
-                ? childrenOf(model, domain.id)
-                    .filter((node) => node.kind === 'area')
-                    .map((node) => node.id)
-                : []),
-            ])
-        : []),
-    ]),
+  const visibleIds = useMemo(
+    () =>
+      new Set(
+        systems.flatMap((system) => [
+          system.id,
+          ...(detail > 0
+            ? childrenOf(model, system.id)
+                .filter((node) => node.kind === 'domain')
+                .flatMap((domain) => [
+                  domain.id,
+                  ...(detail > 1
+                    ? childrenOf(model, domain.id)
+                        .filter((node) => node.kind === 'area')
+                        .map((node) => node.id)
+                    : []),
+                ])
+            : []),
+        ]),
+      ),
+    [systems, detail, model],
   );
+  useEffect(() => {
+    if (!applicationSelectionId || !applicationMappings.length) return;
+    const visibleTarget = applicationMappings
+      .map((mapping) => [...lineageOf(model, mapping.node_id)].reverse().find((node) => visibleIds.has(node.id))?.id)
+      .find((id) => id);
+    if (!visibleTarget) return;
+    const frame = requestAnimationFrame(() => {
+      const container = scroll.current;
+      const target = [...(container?.querySelectorAll<HTMLElement>('[data-map-item-id]') || [])].find(
+        (element) => element.dataset.mapItemId === visibleTarget,
+      );
+      if (!container || !target) return;
+      const bounds = container.getBoundingClientRect();
+      const item = target.getBoundingClientRect();
+      container.scrollTo({
+        top: container.scrollTop + item.top - bounds.top - (container.clientHeight - item.height) / 2,
+        left: container.scrollLeft + item.left - bounds.left - (container.clientWidth - item.width) / 2,
+        behavior: 'instant',
+      });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [applicationSelectionId, applicationMappings, model, visibleIds]);
   const activeHotspots = visibleHotspots.filter((item) => hoveredHotspotIds.includes(item.id));
   const relatedIds = new Set(
     hotspotRelatedElementIds(
@@ -281,6 +324,7 @@ export function Overview({
     <section
       ref={section}
       className="universe-overview"
+      style={{ '--application-accent': applicationProduct?.branding?.accent_color || '#54a872' } as CSSProperties}
       aria-label={`${universe?.name || 'Univers'} des systèmes métier`}
     >
       <div className="universe-toolbar">
@@ -295,6 +339,38 @@ export function Overview({
               visibleHotspots={visibleHotspots}
               onOpenHotspot={onOpenHotspot}
             />
+          )}
+          {!!applicationCatalog?.selections.length && (
+            <div className="application-map-controls" role="group" aria-label="Positionnement des applications">
+              <label htmlFor="application-map-selection">Applications</label>
+              <select
+                id="application-map-selection"
+                value={applicationSelection?.id || ''}
+                onChange={(event) => onApplicationChange(event.target.value, '')}
+              >
+                <option value="">Masquées</option>
+                {applicationCatalog.selections.map((selection) => (
+                  <option key={selection.id} value={selection.id}>
+                    {contextName[selection.context_id] || selection.context_id} ·{' '}
+                    {productFor(applicationCatalog, selection)?.name || selection.product_id}
+                  </option>
+                ))}
+              </select>
+              {applicationProduct && (
+                <select
+                  aria-label="Composant applicatif"
+                  value={applicationComponentId || ''}
+                  onChange={(event) => onApplicationChange(applicationSelection?.id || '', event.target.value)}
+                >
+                  <option value="">Tout le produit</option>
+                  {applicationProduct.components.map((component) => (
+                    <option key={component.id} value={component.id}>
+                      {component.name}
+                    </option>
+                  ))}
+                </select>
+              )}
+            </div>
           )}
           <MapZoomPicker choice={zoomChoice} onChange={setZoomChoice} pageFallback={pageFallback} />
           <button
@@ -314,6 +390,23 @@ export function Overview({
           </button>
         </div>
       </div>
+      {applicationSelection && (
+        <p className="application-map-note" role="status">
+          {applicationMappings.length === 0 ? (
+            <>Aucun lien métier enregistré pour {applicationComponentId ? 'ce composant' : 'ce produit'}.</>
+          ) : (
+            <>
+              {applicationMappings.length} correspondance{applicationMappings.length > 1 ? 's' : ''} qualifiée
+              {applicationMappings.length > 1 ? 's' : ''} ·{' '}
+              {applicationSelection.perspective === 'target'
+                ? 'périmètre cible'
+                : 'déclarations et documents à confirmer'}
+              . Trait plein : correspondance directe. Trait pointillé : parent de repérage, sans couverture déduite de
+              ses descendants.
+            </>
+          )}
+        </p>
+      )}
       <div
         ref={scroll}
         className="overview-map-scroll"
@@ -429,7 +522,7 @@ export function Overview({
                         '--exchange-bottom-inset': `${exchangeInsets.get(system.id)?.bottom || 0}px`,
                       } as CSSProperties
                     }
-                    className={`overview-system${systemHotspots.length ? ' has-map-hotspots' : ''}${relatedIds.has(system.id) ? ' hotspot-related' : ''}`}
+                    className={`overview-system${systemHotspots.length ? ' has-map-hotspots' : ''}${relatedIds.has(system.id) ? ' hotspot-related' : ''}${applicationExactIds.has(system.id) ? ' application-related' : applicationIds.has(system.id) ? ' application-context' : ''}`}
                   >
                     {groups.map((group) => (
                       <HotspotMapMarker
@@ -451,7 +544,10 @@ export function Overview({
                       <MapNodeButton
                         node={system}
                         itemId={system.id}
-                        className={relatedIds.has(system.id) ? 'hotspot-related-item' : undefined}
+                        className={
+                          `${relatedIds.has(system.id) ? 'hotspot-related-item ' : ''}${applicationExactIds.has(system.id) ? 'application-related-item' : applicationIds.has(system.id) ? 'application-context-item' : ''}`.trim() ||
+                          undefined
+                        }
                         onClick={() => onOpen(system.id)}
                       >
                         {system.name}
@@ -502,7 +598,7 @@ export function Overview({
                                   <MapNodeButton
                                     node={domain}
                                     itemId={domain.id}
-                                    className={`overview-domain-link${relatedIds.has(domain.id) ? ' hotspot-related-item' : ''}`}
+                                    className={`overview-domain-link${relatedIds.has(domain.id) ? ' hotspot-related-item' : ''}${applicationExactIds.has(domain.id) ? ' application-related-item' : applicationIds.has(domain.id) ? ' application-context-item' : ''}`}
                                     onClick={() => onOpen(domain.id)}
                                   >
                                     {domain.name}
@@ -519,7 +615,7 @@ export function Overview({
                                           <MapNodeButton
                                             node={area}
                                             itemId={area.id}
-                                            className={`overview-subdomain-link${relatedIds.has(area.id) ? ' hotspot-related-item' : ''}`}
+                                            className={`overview-subdomain-link${relatedIds.has(area.id) ? ' hotspot-related-item' : ''}${applicationExactIds.has(area.id) ? ' application-related-item' : applicationIds.has(area.id) ? ' application-context-item' : ''}`}
                                             onClick={() => onOpen(area.id)}
                                           >
                                             {area.name}

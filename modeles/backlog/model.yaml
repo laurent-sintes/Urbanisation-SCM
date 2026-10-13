@@ -4,6 +4,493 @@ version: 2026-09-13.3
 as_of: '2026-10-13'
 space: backlog
 display_policy: typed-tree-v1
+application_catalog:
+  schema_version: 1
+  source_refs:
+  - U1033
+  - U1034
+  - U1036
+  - U1037
+  - U1038
+  - U1039
+  - U1040
+  - U1041
+  - U1042
+  - U1043
+  products:
+  - id: product-elastic-suite
+    name: Elastic Suite
+    publisher: Elastic Suite / Emerald
+    kind: vendor_product
+    inventory_status: partial
+    scope: Plateforme de vente B2B de gros combinant catalogues numériques, présentation de l'offre, prise de commande et
+      outils pour les équipes commerciales.
+    website_url: https://www.elasticsuite.com/
+    branding:
+      logo_path: assets/elastic-suite-logo.png
+      accent_color: '#EC6A56'
+      source_url: https://staging-elasticsuite.kinsta.cloud/wp-content/uploads/2025/06/Elastic-Logo_x1.png
+      checked_on: '2026-10-13'
+    note: Fonctions documentées pour le pilote ; liste des modules commerciaux, éditions et options contractuelles à vérifier.
+    source_refs:
+    - U03
+    - U982
+    - U1038
+    - U1041
+    components:
+    - id: elastic-suite-core
+      name: Elastic Suite
+      kind: product
+      source_refs:
+      - U03
+      - U1038
+    - id: elastic-order-entry
+      parent_id: elastic-suite-core
+      name: B2B Order Entry
+      kind: feature
+      source_refs:
+      - U03
+      - U309
+    - id: elastic-catalog-presentation
+      parent_id: elastic-suite-core
+      name: Catalog & Assortment Presentation
+      kind: feature
+      source_refs:
+      - U982
+    - id: elastic-whiteboard
+      parent_id: elastic-order-entry
+      name: Whiteboard
+      kind: feature
+      note: Fonction facultative dans la construction d'une commande selon la documentation éditeur ; statut commercial à
+        vérifier.
+      source_url: https://support.elasticsuite.com/what-is-a-whiteboard
+      source_refs:
+      - U982
+  - id: product-flow-core
+    name: Flow Core System
+    publisher: Beaumanoir / FLOW
+    kind: internal_product
+    inventory_status: undetermined
+    scope: Orchestration de la supply chain dans la cible Beaumanoir.
+    note: Produit cible couvrant le périmètre Supply Chain Orchestration ; composants et couverture détaillée à définir.
+    source_refs:
+    - U1033
+    - U1039
+    - U1040
+    - U1041
+    components:
+    - id: flow-core-root
+      name: Flow Core System
+      kind: product
+      source_refs:
+      - U1033
+      - U1040
+  - id: product-socloz
+    name: SoCloz
+    publisher: Éditeur à documenter
+    kind: vendor_product
+    inventory_status: undetermined
+    scope: Plateforme citée dans le SI historique ; offre et modules à documenter.
+    note: Repère d’inventaire déclaré ; fiche éditeur et composition commerciale à instruire.
+    source_refs:
+    - U1042
+    components:
+    - id: socloz-core
+      name: SoCloz
+      kind: product
+      source_refs:
+      - U1042
+  - id: product-united-retail
+    name: United Retail
+    publisher: Éditeur à documenter
+    kind: vendor_product
+    inventory_status: undetermined
+    scope: Produit cité dans le SI historique ; offre et modules à documenter.
+    note: Repère d’inventaire déclaré ; fiche éditeur et composition commerciale à instruire.
+    source_refs:
+    - U1042
+    components:
+    - id: united-retail-core
+      name: United Retail
+      kind: product
+      source_refs:
+      - U1042
+  - id: product-storeland
+    name: Storeland
+    publisher: Éditeur à documenter
+    kind: vendor_product
+    inventory_status: undetermined
+    scope: Produit cité dans le SI historique ; offre et modules à documenter.
+    note: Repère d’inventaire déclaré ; fiche éditeur et composition commerciale à instruire.
+    source_refs:
+    - U1042
+    components:
+    - id: storeland-core
+      name: Storeland
+      kind: product
+      source_refs:
+      - U1042
+  - id: product-sap-ecc
+    name: SAP ECC
+    publisher: SAP
+    kind: vendor_product
+    inventory_status: undetermined
+    scope: Progiciel SAP ECC ; modules et options de l’offre à inventorier.
+    note: Repère d’inventaire déclaré ; fiche éditeur et composition commerciale à instruire.
+    source_refs:
+    - U1042
+    components:
+    - id: sap-ecc-core
+      name: SAP ECC
+      kind: product
+      source_refs:
+      - U1042
+    - id: sap-afs
+      parent_id: sap-ecc-core
+      name: AFS
+      kind: module
+      note: Rattachement à SAP ECC déclaré pour Boardriders ; contenu de l’offre et licence à vérifier.
+      source_refs:
+      - U1042
+    - id: sap-allocation-run
+      parent_id: sap-afs
+      name: AllocationRun
+      kind: feature
+      note: Traitement Boardriders mentionné par Laurent ; configuration et personnalisations à qualifier.
+      source_refs:
+      - U1042
+  - id: product-newstore
+    name: NewStore
+    publisher: NewStore
+    kind: vendor_product
+    inventory_status: partial
+    scope: Plateforme de vente en magasin et de commerce omnicanal ; l'offre éditeur présente le POS comme cœur, avec des
+      modules d'inventaire, de clienteling, de gestion des commandes, de fulfillment magasin et de paiement.
+    website_url: https://www.newstore.com/
+    note: Composition de l'offre constatée sur le site éditeur le 2026-10-13. Le périmètre vendu et activé chez Boardriders
+      n'est pas établi ; les modules de l'offre ne prouvent pas leur usage dans ce SI.
+    source_refs:
+    - U1042
+    - U1043
+    components:
+    - id: newstore-core
+      name: NewStore
+      kind: product
+      note: Racine de la plateforme ; l'offre actuelle présente le POS comme cœur sans démontrer son usage chez Boardriders.
+      source_url: https://www.newstore.com/integrations-and-apis/
+      source_refs:
+      - U1043
+    - id: newstore-pos
+      parent_id: newstore-core
+      name: Point of Sale
+      kind: feature
+      note: Fonction cœur de l'offre actuelle ; usage Boardriders inconnu.
+      source_url: https://www.newstore.com/integrations-and-apis/
+      source_refs:
+      - U1043
+    - id: newstore-inventory
+      parent_id: newstore-core
+      name: Inventory
+      kind: module
+      source_url: https://www.newstore.com/integrations-and-apis/
+      source_refs:
+      - U1043
+    - id: newstore-clienteling
+      parent_id: newstore-core
+      name: Clienteling
+      kind: module
+      source_url: https://www.newstore.com/integrations-and-apis/
+      source_refs:
+      - U1043
+    - id: newstore-order-management
+      parent_id: newstore-core
+      name: Order Management
+      kind: module
+      note: L'offre permet le routage de commandes ; l'activation de ce module chez Boardriders reste inconnue.
+      source_url: https://www.newstore.com/integrations-and-apis/
+      source_refs:
+      - U1043
+    - id: newstore-order-routing
+      parent_id: newstore-order-management
+      name: Order Routing
+      kind: feature
+      note: Routage vers un site de fulfillment selon les règles configurées ; fonction non utilisée chez Boardriders selon
+        Laurent, SAP portant cette orchestration.
+      source_url: https://docs.newstore.com/v1/docs/about-order-routing
+      source_refs:
+      - U1043
+    - id: newstore-store-fulfillment
+      parent_id: newstore-core
+      name: Store Fulfillment
+      kind: module
+      source_url: https://www.newstore.com/integrations-and-apis/
+      source_refs:
+      - U1043
+    - id: newstore-payments
+      parent_id: newstore-core
+      name: Payments
+      kind: module
+      source_url: https://www.newstore.com/integrations-and-apis/
+      source_refs:
+      - U1043
+  - id: product-sfcc
+    name: Salesforce Commerce Cloud
+    publisher: Salesforce
+    kind: vendor_product
+    inventory_status: undetermined
+    scope: Plateforme eCommerce citée pour le SI Boardriders ; édition, composants et rôle détaillé à qualifier.
+    website_url: https://www.salesforce.com/commerce/
+    note: SFCC est cité comme extrémité eCommerce de l'intégration avec NewStore ; la version et les modules utilisés ne sont
+      pas documentés par cet apport.
+    source_refs:
+    - U1043
+    components:
+    - id: sfcc-core
+      name: Salesforce Commerce Cloud
+      kind: product
+      source_refs:
+      - U1043
+  selections:
+  - id: selection-elastic-historique
+    context_id: beaumanoir-historique
+    perspective: as_is
+    product_id: product-elastic-suite
+    panorama_ref: APP-ELA
+    presence: declared
+    source_refs:
+    - U03
+    - U1038
+    component_states:
+    - component_id: elastic-suite-core
+      acquired: unknown
+      activated: unknown
+      used: declared
+      source_refs:
+      - U03
+    - component_id: elastic-order-entry
+      acquired: unknown
+      activated: unknown
+      used: declared
+      source_refs:
+      - U03
+    - component_id: elastic-catalog-presentation
+      acquired: unknown
+      activated: unknown
+      used: unknown
+      source_refs:
+      - U982
+    - component_id: elastic-whiteboard
+      acquired: unknown
+      activated: unknown
+      used: unknown
+      source_refs:
+      - U982
+    mappings:
+    - id: appmap-elastic-historique-order-entry
+      component_id: elastic-order-entry
+      node_id: subdomain-sales-wholesale
+      role: supports
+      evidence_state: declared
+      note: Prise de commande B2B déclarée ; ne prouve pas la tenue complète de la commande.
+      source_refs:
+      - U03
+    - id: appmap-elastic-historique-sales-order
+      component_id: elastic-order-entry
+      node_id: D04.i
+      role: contributes
+      evidence_state: candidate
+      note: Contribution possible par la saisie ; autorité transactionnelle et cycle de vie non établis.
+      source_refs:
+      - U03
+      - U1039
+  - id: selection-elastic-boardriders
+    context_id: boardriders
+    perspective: as_is
+    product_id: product-elastic-suite
+    presence: declared
+    note: Présence confirmée par Laurent ; le schéma documentaire est ancien et l'instance reste à identifier.
+    source_refs:
+    - U309
+    - U1038
+    component_states:
+    - component_id: elastic-suite-core
+      acquired: unknown
+      activated: unknown
+      used: declared
+      source_refs:
+      - U1038
+    - component_id: elastic-order-entry
+      acquired: unknown
+      activated: unknown
+      used: historical_document
+      source_refs:
+      - U309
+    - component_id: elastic-catalog-presentation
+      acquired: unknown
+      activated: unknown
+      used: unknown
+      source_refs:
+      - U309
+    - component_id: elastic-whiteboard
+      acquired: unknown
+      activated: unknown
+      used: unknown
+      source_refs:
+      - U309
+    mappings:
+    - id: appmap-elastic-boardriders-order-entry
+      component_id: elastic-order-entry
+      node_id: subdomain-sales-wholesale
+      role: supports
+      evidence_state: historical_document
+      note: Le schéma Boardriders montre B2B Order Entry ; actualité et périmètre à confirmer.
+      source_refs:
+      - U309
+      - U1038
+    - id: appmap-elastic-boardriders-sales-order
+      component_id: elastic-order-entry
+      node_id: D04.i
+      role: contributes
+      evidence_state: candidate
+      note: Saisie dans Elastic et création de commande vers SAP ; tenue de l'engagement non attribuée.
+      source_refs:
+      - U309
+  - id: selection-flow-core-target
+    context_id: flow-platform
+    perspective: target
+    product_id: product-flow-core
+    presence: planned
+    note: Produit cible positionné sur Supply Chain Orchestration, sans couverture détaillée présumée.
+    source_refs:
+    - U1033
+    - U1039
+    - U1040
+    component_states: []
+    mappings:
+    - id: appmap-flow-core-supply-orchestration
+      component_id: flow-core-root
+      node_id: supply-chain-orchestration
+      role: planned_support
+      evidence_state: planned
+      note: Périmètre cible donné par Laurent ; ne préjuge pas des capacités effectivement développées.
+      source_refs:
+      - U1040
+  - id: selection-socloz-beaumanoir-historique
+    context_id: beaumanoir-historique
+    perspective: as_is
+    product_id: product-socloz
+    panorama_ref: APP-SOC
+    presence: declared
+    note: Présence citée par Laurent ; version, modules et usages détaillés à qualifier.
+    source_refs:
+    - U1042
+    component_states: []
+    mappings: []
+  - id: selection-united-retail-beaumanoir-historique
+    context_id: beaumanoir-historique
+    perspective: as_is
+    product_id: product-united-retail
+    panorama_ref: APP-UR
+    presence: declared
+    note: Présence citée par Laurent ; version, modules et usages détaillés à qualifier.
+    source_refs:
+    - U1042
+    component_states: []
+    mappings: []
+  - id: selection-storeland-beaumanoir-historique
+    context_id: beaumanoir-historique
+    perspective: as_is
+    product_id: product-storeland
+    panorama_ref: APP-STR
+    presence: declared
+    note: Présence citée par Laurent ; version, modules et usages détaillés à qualifier.
+    source_refs:
+    - U1042
+    component_states: []
+    mappings: []
+  - id: selection-sap-ecc-boardriders
+    context_id: boardriders
+    perspective: as_is
+    product_id: product-sap-ecc
+    panorama_ref: APP-ECC
+    presence: declared
+    note: SAP ECC reçoit les commandes de NewStore et orchestre leur fulfillment selon Laurent ; le module responsable,
+      la configuration et la version restent à qualifier.
+    source_refs:
+    - U1042
+    - U1043
+    component_states: []
+    mappings:
+    - id: appmap-sap-ecc-boardriders-fulfillment
+      component_id: sap-ecc-core
+      node_id: D06
+      role: contributes
+      evidence_state: declared
+      note: Orchestration du fulfillment attribuée à SAP ECC par Laurent ; mécanismes détaillés et composant SAP responsables
+        non documentés.
+      source_refs:
+      - U1043
+  - id: selection-newstore-boardriders
+    context_id: boardriders
+    perspective: as_is
+    product_id: product-newstore
+    panorama_ref: APP-NEW
+    presence: declared
+    note: 'Usage déclaré : plateforme d’API à brancher à SFCC et connectée à SAP ECC ; NewStore gère la commande de vente jusqu’à
+      l’engagement, puis SAP orchestre le fulfillment. Le routage NewStore n’est pas utilisé selon Laurent ; POS, licences
+      et configuration précise non établis.'
+    source_refs:
+    - U1042
+    - U1043
+    component_states:
+    - component_id: newstore-core
+      acquired: unknown
+      activated: unknown
+      used: declared
+      source_refs:
+      - U1043
+    - component_id: newstore-order-routing
+      acquired: unknown
+      activated: unknown
+      used: 'no'
+      source_refs:
+      - U1043
+    mappings:
+    - id: appmap-newstore-boardriders-sales-order
+      component_id: newstore-core
+      node_id: D04.i
+      role: contributes
+      evidence_state: declared
+      note: Laurent attribue à NewStore la gestion de la commande de vente jusqu'à l'engagement ; la portée exacte de tenue
+        de la commande et le calcul de la promesse restent à confirmer.
+      source_refs:
+      - U1043
+  - id: selection-sfcc-boardriders
+    context_id: boardriders
+    perspective: as_is
+    product_id: product-sfcc
+    presence: declared
+    note: Plateforme eCommerce citée par Laurent comme devant être branchée à NewStore ; édition, version, fonctions et échanges exacts à
+      documenter.
+    source_refs:
+    - U1043
+    component_states:
+    - component_id: sfcc-core
+      acquired: unknown
+      activated: unknown
+      used: declared
+      source_refs:
+      - U1043
+    mappings:
+    - id: appmap-sfcc-boardriders-digital-commerce
+      component_id: sfcc-core
+      node_id: subdomain-sales-b2c-ecommerce
+      role: supports
+      evidence_state: declared
+      note: Usage eCommerce déclaré par Laurent ; la prise de commande, le paiement et la frontière avec NewStore restent à
+        documenter.
+      source_refs:
+      - U1043
 nodes:
 - id: beaumanoir-target-universe
   revision: 3
@@ -62783,17 +63270,24 @@ principles:
   - U455
   - U482
 - id: PRINCIPLE-ATLAS-BUSINESS-SCOPE
-  statement: 'Atlas explicite le métier : domaines, purposes, capacités, comportements, responsabilités, interactions, objets,
-    structures conceptuelles d’information, documents, faits et règles. Les références comparatives au marché sont visibles
-    : points communs, différences, positionnement FLOW, appuis méthodologiques ou produits et sources primaires externes.
-    Elles ne constituent ni un catalogue d’applications, ni un schéma technique, ni un choix ou une preuve de réalisation
-    installée. Une absence de comparaison signifie non documenté, jamais innovation ou conformité présumée. Réserves internes,
-    statuts de revue et liens vers le backlog restent internes.'
+  statement: 'Atlas explicite le métier : domaines, sous-domaines, Business Areas, capacités, comportements, responsabilités,
+    interactions, objets, informations, documents, faits et règles. Les comparaisons au marché indiquent leurs points communs,
+    différences, positionnement et sources ; elles ne prouvent aucune réalisation installée. Depuis U1033–U1039, une vue
+    applicative distincte présente le catalogue des produits et les sélections par SI, puis projette leurs correspondances
+    qualifiées sur la carte métier sans ajouter les produits à sa hiérarchie. Offre éditeur, acquisition, activation et usage
+    restent séparés ; une valeur inconnue ne vaut ni absence ni preuve de couverture. Les schémas techniques détaillés,
+    réserves internes, statuts de revue et liens vers le backlog restent internes.'
   source_refs:
   - U456
   - U459
   - C107
   - U482
+  - U1033
+  - U1034
+  - U1036
+  - U1037
+  - U1038
+  - U1039
 - id: PRINCIPLE-MANAGEMENT-FACT-DOCUMENT
   statement: Tout fait de gestion est associé à un document métier identifié. Ce document peut être un enregistrement structuré,
     sans fichier PDF. Objet métier, document et fait restent distincts ; cette convention ne fixe ni nombre exact de documents,

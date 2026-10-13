@@ -1,0 +1,314 @@
+.application-page {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  max-width: 1220px;
+}
+.application-page p {
+  color: #4b625c;
+}
+.application-intro {
+  margin: 0;
+}
+.application-explorer {
+  display: grid;
+  grid-template-columns: minmax(230px, 290px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+.application-rail {
+  position: sticky;
+  top: 16px;
+  max-height: max(320px, calc(100vh - 330px));
+  overflow: auto;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #f7faf8;
+}
+.application-rail h2 {
+  margin: 0 0 12px;
+  font-size: 16px;
+}
+.application-rail h3 {
+  margin: 18px 0 8px;
+  padding-top: 15px;
+  border-top: 1px solid #d4e3d9;
+  font-size: 13px;
+  line-height: 1.35;
+}
+.application-rail .application-nav-group:first-of-type h3 {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+.application-rail ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.application-rail li {
+  margin: 4px 0;
+}
+.application-page .application-rail button {
+  display: block;
+  width: 100%;
+  border: 1px solid #dbe7dd;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #fff;
+  text-align: left;
+  font-weight: 600;
+}
+.application-page .application-rail button[aria-current="true"] {
+  background: #dcece3;
+  border-color: #a9cbb5;
+  color: #214f3d;
+  font-weight: 700;
+}
+.application-detail {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  scroll-margin-top: 64px;
+}
+.application-detail > p,
+.application-component-detail > p {
+  margin: 0;
+}
+.application-detail-context {
+  color: #526960;
+  font-size: 12px;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+.application-back {
+  display: none;
+}
+.application-component-detail {
+  display: grid;
+  gap: 8px;
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
+.application-composition.application-has-modules {
+  display: grid;
+  grid-template-columns: minmax(175px, 235px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+.application-composition.application-has-modules .application-component-detail {
+  border-top: 0;
+  border-left: 1px solid var(--line);
+  padding: 0 0 0 18px;
+}
+.application-components {
+  min-width: 0;
+}
+.application-components h3 {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+.application-component-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.application-component-list .application-component-list {
+  margin-left: 9px;
+  padding-left: 11px;
+  border-left: 1px solid #c9ddd1;
+}
+.application-component-list li {
+  margin: 3px 0;
+}
+.application-page .application-components button {
+  width: 100%;
+  border: 0;
+  padding: 7px 9px;
+  background: transparent;
+  text-align: left;
+  font-weight: 500;
+}
+.application-page .application-components button[aria-current="true"] {
+  background: #dcece3;
+  color: #214f3d;
+  font-weight: 700;
+}
+.application-component-detail h4,
+.application-component-detail h5 {
+  margin: 0;
+}
+.application-component-detail h4 {
+  font-size: 17px;
+}
+.application-component-detail h5 {
+  font-size: 13px;
+}
+.application-product-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 16px;
+}
+.application-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border-left: 5px solid var(--product-accent);
+  padding-left: 12px;
+}
+.application-identity img {
+  width: 120px;
+  height: 40px;
+  object-fit: contain;
+  background: #fff;
+}
+.application-identity h2 {
+  margin: 0;
+  font-size: 21px;
+}
+.application-identity-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 108px;
+  height: 40px;
+  border-radius: 5px;
+  background: #e9f3ec;
+  color: #315e48;
+  font-size: 12px;
+}
+.application-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(205px, 1fr));
+  gap: 12px 18px;
+  margin: 0;
+  padding: 12px;
+  border-radius: 8px;
+  background: #f7faf8;
+}
+.application-facts dt {
+  font-size: 11px;
+  color: #526960;
+}
+.application-facts dd {
+  margin: 3px 0 0;
+  overflow-wrap: anywhere;
+}
+.application-selection-facts {
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+.application-product-details summary {
+  width: fit-content;
+  color: #315e48;
+  cursor: pointer;
+  font-weight: 600;
+}
+.application-product-details .application-facts {
+  margin-top: 10px;
+}
+.application-kind {
+  font-size: 11px;
+  color: #627970;
+}
+.application-mapping {
+  font-size: 12px;
+}
+.application-mapping span {
+  font-weight: 650;
+}
+.application-page button,
+.application-map-controls button {
+  border: 1px solid #b8d2c1;
+  border-radius: 7px;
+  background: white;
+  padding: 7px 10px;
+  color: #315e48;
+  cursor: pointer;
+}
+.application-page button:hover,
+.application-map-controls button:hover {
+  background: #e9f3ec;
+}
+.application-map-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.application-map-controls select {
+  max-width: 205px;
+  min-width: 0;
+}
+.application-map-note {
+  margin: 0 0 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  background: #edf5ee;
+  color: #315e48;
+}
+.application-related,
+.application-related-item {
+  outline: 3px solid color-mix(in srgb, var(--application-accent, #54a872) 85%, black) !important;
+  outline-offset: 2px;
+}
+.application-related-item {
+  border-radius: 5px;
+}
+.application-context-item {
+  outline: 2px dashed color-mix(in srgb, var(--application-accent, #54a872) 60%, white);
+  outline-offset: 3px;
+  border-radius: 5px;
+}
+@media (max-width: 850px) {
+  .application-explorer {
+    display: block;
+  }
+  .application-rail {
+    position: static;
+    max-height: none;
+  }
+  .application-detail {
+    display: none;
+  }
+  .application-composition.application-has-modules {
+    grid-template-columns: 1fr;
+  }
+  .application-composition.application-has-modules .application-component-detail {
+    border-top: 1px solid var(--line);
+    border-left: 0;
+    padding: 14px 0 0;
+  }
+  .application-has-selection .application-rail {
+    display: none;
+  }
+  .application-has-selection .application-detail {
+    display: grid;
+  }
+  .application-back {
+    display: block;
+    justify-self: start;
+  }
+  .application-product-heading {
+    flex-direction: column;
+  }
+  .application-page {
+    padding: 16px;
+  }
+  .application-map-controls {
+    flex: 1 1 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+  .application-map-controls select {
+    width: 100%;
+    max-width: 100%;
+    min-height: 36px;
+  }
+}

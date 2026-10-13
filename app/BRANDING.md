@@ -23,6 +23,10 @@ Repères consultés le 19 septembre 2026 : [Carbon — UI shell header](https://
 
 Extraction reproductible, sources OOXML et empreintes : [dossier U207](../prototypes/atlas-identite-flow/README.md), [provenance des médias](../prototypes/atlas-identite-flow/assets-provenance.json).
 
+## Identité des produits applicatifs
+
+Le logo Elastic Suite de `public/assets/elastic-suite-logo.png` provient de l’image liée par la [page officielle Elastic Suite](https://www.elasticsuite.com/) consultée le 13 octobre 2026. Son fichier source est `https://staging-elasticsuite.kinsta.cloud/wp-content/uploads/2025/06/Elastic-Logo_x1.png` (SHA-256 `c39811f29562ab937fc4b9760baaa4fd8b2ca ae3b971753757433ed68cfd2797`). La teinte dominante relevée dans ce fichier est `#EC6A56`. Elle sert seulement au produit Elastic Suite et à son empreinte applicative ; le logo multicolore d’Elasticsearch désigne un autre produit. Flow Core System conserve une marque textuelle neutre tant que son identité propre n’est pas définie.
+
 ## Palette
 
 | Couleur | Code source | Application |

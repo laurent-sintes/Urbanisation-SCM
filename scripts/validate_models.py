@@ -171,6 +171,11 @@ def validate_urbanism(model, sources, schema=None):
     except ImportError:
         from document_catalog import validate_catalog as validate_documents
     errors.extend(validate_documents(model))
+    try:
+        from .application_catalog import validate_catalog as validate_applications
+    except ImportError:
+        from application_catalog import validate_catalog as validate_applications
+    errors.extend(validate_applications(model))
     relations = _index(model["relations"], "relations", errors)
     try:
         from .model_index import ModelIndex
@@ -497,6 +502,8 @@ def validate_release(release, decisions_document, snapshot, sources, schema=None
         errors.append('release: hotspot catalogue differs from frozen input')
     if release.get('document_catalog') != snapshot.get('document_catalog'):
         errors.append('release: document catalogue differs from frozen input')
+    if release.get('application_catalog') != snapshot.get('application_catalog'):
+        errors.append('release: application catalogue differs from frozen input')
     if release.get('information_catalog') != snapshot.get('information_catalog'):
         errors.append('release: information catalogue differs from frozen input')
     if errors:

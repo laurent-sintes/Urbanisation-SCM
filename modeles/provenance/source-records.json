@@ -8307,6 +8307,46 @@
       "captured_text": "## U1038\n\nDate : 2026-10-13. Source : Laurent, proposition de pilote applicatif Elastic.\n\nVerbatim :\n\n> Pour tester, je voulais prendre comme exemple de base l'outil B2B Elastic parce qu'il est pas trop compliqué et présent dans les 2 SI.\n>\n> Ton avis ?\n\nPortée : proposer Elastic comme pilote pour éprouver le référentiel éditeur commun, les sélections propres aux SI historiques et Boardriders et leur positionnement sur la carte métier. Laurent déclare sa présence dans les deux SI ; les instances, options acquises ou activées et usages détaillés restent à qualifier. Cette demande sollicite un avis avant une réalisation ou une modification canonique."
     },
     {
+      "id": "U1039",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1039",
+      "line": 24657,
+      "content_sha256": "1ec5c95a2653692e30c15280b1a873a3c9a4e84d19f2c1854bd4e0f9a36b8fa7",
+      "captured_text": "## U1039\n\nDate : 2026-10-13. Source : Laurent, lancement du pilote applicatif.\n\nVerbatim :\n\n> Go pour la premiere version\n\nPortée : autoriser une première version du référentiel produit commun, des sélections par SI, des correspondances qualifiées et de leur lecture dans Atlas, avec Elastic comme pilote. Les inconnues d'acquisition, d'activation, d'instance et d'usage restent explicites ; cette autorisation ne valide aucune couverture installée non prouvée et ne demande ni release, ni commit, ni push."
+    },
+    {
+      "id": "U1040",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1040",
+      "line": 24667,
+      "content_sha256": "7fa9032d3fd8a1a779db22c881e59514c5e4da1eab09b363aad8cecfa156b54b",
+      "captured_text": "## U1040\n\nDate : 2026-10-13. Source : Laurent, positionnement cible de Flow Core System.\n\nVerbatim :\n\n> On peut ajouter Flow Core System. C'est facile, le périmètre est naturel : l'orchestration de la supply chain\n\nPortée : ajouter Flow Core System au pilote comme produit cible positionné sur le Domain Supply Chain Orchestration. Ce lien de périmètre ne déduit pas la couverture détaillée des capacités et comportements, les composants logiciels ni une réalisation installée."
+    },
+    {
+      "id": "U1041",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1041",
+      "line": 24677,
+      "content_sha256": "f5f664ad0229b61da50ceb6da810a88bc24b77ac11026862d58362a4cf2117b8",
+      "captured_text": "## U1041\n\nDate : 2026-10-13. Source : Laurent, identité visuelle et fiche du produit applicatif.\n\nVerbatim :\n\n> Tu as récupéré logo et code couleur du produit éditeur ? Sur la fiche produit, on peut avoir l'éditeur, la data de création, périmètre, derniere release etc ?\n\nPortée : compléter la première version avec l'identité visuelle du produit éditeur et une fiche produit portant l'éditeur, le périmètre, la date de lancement et la dernière release lorsque ces données sont établies. Distinguer la release de l'offre éditeur de la version réellement déployée dans chaque SI. Une donnée absente reste à documenter ; elle ne doit pas être déduite de la date de création de l'éditeur, d'un billet de support isolé ou d'une image non attribuée au bon produit."
+    },
+    {
+      "id": "U1042",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1042",
+      "line": 24687,
+      "content_sha256": "b291ce78f2f4c48000117394832000580616b1481776043de6493732fb3800a4",
+      "captured_text": "## U1042\n\nDate : 2026-10-13. Source : Laurent, correction de la navigation applicative après audit UX/UI.\n\nVerbatim :\n\n> Le point d'entrée Application n'est pas très clair.\n>\n> Je m'attendais à un truc du genre :\n>\n> - un point d'entrée : Produits logiciels du marché\n>   - Elastic\n> - un point d'entrée : Les Systèmes d'information à faire converger\n>   - SI Beaumanoir Marques Historiques\n>     - Elastic\n>     - SoCloz\n>     - United Retail\n>     - Storeland\n>   - SI Boardriders\n>     - Elastic\n>     - SAP ECC\n>       - AFS\n>         - AllocationRun\n>     - NewStore\n>   - SI Beaumanoir cible\n>     - Flow Core system\n\nPortée : séparer dans Atlas l'entrée du référentiel des produits de marché de celle des sélections par SI. Ajouter les produits cités comme repères d'inventaire dans les SI indiqués, avec SAP ECC → AFS → AllocationRun comme arbre déclaré pour Boardriders. Les modules, licences, activations, versions, identités visuelles, couvertures métier et liens cartographiques non établis restent à qualifier. Flow Core System reste un produit interne de la cible, hors de l'inventaire des produits logiciels du marché."
+    },
+    {
+      "id": "U1043",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1043",
+      "line": 24716,
+      "content_sha256": "d4b851cfc50143a7f8c173036aabc91aac35e97027342d8a539c9d9f1f288e54",
+      "captured_text": "## U1043\n\nDate : 2026-10-13. Source : Laurent, précision sur NewStore et SFCC dans le SI Boardriders.\n\nVerbatim :\n\n> Maintenant je voudrais ajouter NewStore.\n>\n> C'est un cas interessant de test car NewStore va du Point Of Sale (tout en haut) jusqu'en bas avec des fonction DOM d'orchestration qui traversent même l'orchestration de la supply chain sur les couches basses.\n>\n> Par contre, chez Boardriders, on l'utilise comme une plateforme d'api à brancher à SFCC (tiens !? on l'a oublié) pour le eCommerce et en bas il se connecte à SAP ECC et n'orchestre rien du tout : il poste une commande et SAP orchestre le fulfillment. Par contre, le processus de la commande de vente jusqu'à engagement est bien géré dans NewStore : c'est une partie de la supply chain orchestration.\n>\n> Qu'en penses-tu ?\n\nPortée : distinguer l'offre NewStore, qui couvre potentiellement le point de vente et la gestion distribuée des commandes, de son usage déclaré chez Boardriders. Laurent situe NewStore entre SFCC pour le eCommerce et SAP ECC pour la suite, lui attribue le processus de commande de vente jusqu'à l'engagement et attribue l'orchestration du fulfillment à SAP. Ajouter SFCC comme produit présent dans le SI Boardriders. Les modules achetés ou activés, la configuration exacte des API, le calcul de disponibilité et les responsabilités détaillées d'engagement restent à vérifier. La description ne démontre aucun usage Boardriders du POS ou du routage NewStore."
+    },
+    {
       "id": "F001",
       "path": "connaissance/02-assertions.md",
       "anchor": "f001",
