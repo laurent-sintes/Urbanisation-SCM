@@ -1,0 +1,52 @@
+id: storeland-wholesale-U1056
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1056
+- U958
+- U967
+assessment:
+  finding: La documentation Cegid décrit le module Négoce de Storeland, absent de la fiche produit. Il couvre clients professionnels, catalogues et prix, commandes, modes de traitement configurables, préparation et facturation.
+  model_fit: Wholesale Account Management et Wholesale Sales représentent le cœur commercial. Les commandes et les options de traitement recoupent des responsabilités Supply, Achats, Logistics et Finance distinctes ; aucune capacité Négoce autonome n'est nécessaire.
+  limits: L'offre documentée ne prouve pas la licence, l'activation, le paramétrage ou les usages réels du module par marque GBM. Le dossier FLOW-Program indique une couverture différenciée, à corroborer avant tout choix de convergence.
+  source_urls:
+  - https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Clients-negoce/471
+  - https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Catalogue/472
+  - https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Definition-des-prix-de-vente-negoce/479
+  - https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/visualisation-du-portefeuille-des-cdes/client/474
+  - https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Modes-de-traitement/488
+  - https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Preparation-de-commande-negoce/476
+  - https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Facturation-negoce/478
+glossary_alignment:
+  checked: Wholesale Commerce, Wholesale Account Management et Wholesale Sales sont déjà présents et cohérents avec le périmètre commercial documenté. Les frontières avec Sales Order, Pricing, Achats, Logistics et Billing restent explicites dans le modèle.
+  result: Aucun terme ni nœud métier nouveau ; aucune modification du glossaire métier nécessaire.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1056
+  summary: Module Négoce ajouté à Storeland, correspondances d'offre qualifiées, activation GBM inconnue et HS-020 ancré sur les Business Areas Wholesale.
+  required_catalog:
+  - collection: hotspots
+    id: HS-020
+    content_sha256: 1082bf5d8f1d0d869078c290e2aa6cab0c7f329cb176b74daea98d4283079ff9
+  supersedes_requirements:
+  - annex: hotspot-audit-application-U973.yaml
+    collection: hotspots
+    id: HS-020
+    fields:
+    - content_sha256
+  - annex: hotspot-framing-impact-U959.yaml
+    collection: hotspots
+    id: HS-020
+    fields:
+    - content_sha256
+  - annex: hotspot-source-candidates-U958.yaml
+    collection: hotspots
+    id: HS-020
+    fields:
+    - content_sha256
+  - annex: hotspot-validation-U967.yaml
+    collection: hotspots
+    id: HS-020
+    fields:
+    - content_sha256

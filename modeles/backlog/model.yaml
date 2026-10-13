@@ -431,15 +431,20 @@ application_catalog:
     publisher: Cegid (ex-Cylande)
     kind: vendor_product
     inventory_status: partial
-    scope: 'Gestion commerciale centrale d’un réseau de magasins : produits, achats, pilotage magasin, stock, dépôt et CRM
-      selon paramétrage.'
-    note: Les prérequis Cegid de janvier 2023 confirment une base Oracle et des postes clients ; ERetail expose des services SOAP vers Storeland. Laurent décrit Storeland comme un élément du backoffice magasin GBM et rapporte une ambition de couverture ERP Retail avec quelques fonctions B2B limitées. Versions, modules et adaptations par marque restent à vérifier.
+    scope: 'Gestion commerciale centrale du réseau de magasins : produits, achats, pilotage magasin, stock, dépôt, CRM et
+      vente Négoce selon modules et paramétrage.'
+    note: Les prérequis Cegid de janvier 2023 confirment une base Oracle et des postes clients ; ERetail expose des services
+      SOAP vers Storeland. Laurent décrit Storeland comme un élément du backoffice magasin GBM et rapporte une ambition de
+      couverture ERP Retail avec quelques fonctions B2B limitées. Versions, modules et adaptations par marque restent à vérifier.
+      La documentation Cegid décrit aussi un module Négoce distinct, avec clients professionnels, catalogues, commandes, modes
+      de traitement et facturation ; son périmètre activé chez GBM reste inconnu.
     source_refs:
     - U1042
     - U1044
     - U1049
     - U1050
     - U1052
+    - U1056
     components:
     - id: storeland-core
       name: Storeland
@@ -502,6 +507,16 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Calcul-de-stock-optimal/39
       source_refs:
       - U1051
+    - id: storeland-wholesale
+      parent_id: storeland-core
+      name: Négoce
+      kind: module
+      note: 'Vente aux clients professionnels : comptes et magasins destinataires, catalogues, commandes, confirmation, réservation
+        ou préparation selon mode de traitement, factures et avoirs. Fonctions et paramètres de l’offre ; activation par marque
+        à vérifier.'
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Modes-de-traitement/488
+      source_refs:
+      - U1056
     website_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
     offering_mappings:
     - id: offer-storeland-products
@@ -554,7 +569,8 @@ application_catalog:
       node_id: D05.a
       role: contributes
       evidence_state: candidate
-      note: Le calcul de stock optimal magasin recoupe les cibles de stock physiques ; la portée et l'autorité du calcul dans chaque SI restent à vérifier.
+      note: Le calcul de stock optimal magasin recoupe les cibles de stock physiques ; la portée et l'autorité du calcul dans
+        chaque SI restent à vérifier.
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Calcul-de-stock-optimal/39
       source_refs:
       - U1051
@@ -563,7 +579,8 @@ application_catalog:
       node_id: D05.e
       role: contributes
       evidence_state: candidate
-      note: Les quantités de réassort calculées pour les magasins peuvent contribuer aux propositions d'apport ; articulation avec UR et FLOW inconnue.
+      note: Les quantités de réassort calculées pour les magasins peuvent contribuer aux propositions d'apport ; articulation
+        avec UR et FLOW inconnue.
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Ajustement-de-stock-optimal-par-produit/35
       source_refs:
       - U1051
@@ -572,7 +589,8 @@ application_catalog:
       node_id: subdomain-retail-commerce
       role: contributes
       evidence_state: candidate
-      note: Interface SOAP donnant accès à Storeland ; les services et responsabilités métier servis doivent être inventoriés avant une affectation plus précise.
+      note: Interface SOAP donnant accès à Storeland ; les services et responsabilités métier servis doivent être inventoriés
+        avant une affectation plus précise.
       source_url: https://www.cegid.com/fr/cgv/?slugFileName=pr-requis-techniques_cegid-storeland_on-premise-licence
       source_refs:
       - U1053
@@ -581,7 +599,8 @@ application_catalog:
       node_id: subdomain-sales-b2c-store
       role: contributes
       evidence_state: candidate
-      note: Fidélité et connaissance client soutiennent la relation en magasin ; campagnes et fidélité centrale débordent cette Business Area.
+      note: Fidélité et connaissance client soutiennent la relation en magasin ; campagnes et fidélité centrale débordent
+        cette Business Area.
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Parametrage-du-module-CRM/556
       source_refs:
       - U1053
@@ -594,6 +613,83 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Parametrage-du-module-CRM/556
       source_refs:
       - U1054
+    - id: offer-storeland-wholesale-accounts
+      component_id: storeland-wholesale
+      node_id: ba-wholesale-account-management
+      role: supports
+      evidence_state: documented
+      note: Fiches clients Négoce, magasins destinataires, interlocuteurs, droits et paramètres commerciaux ; les accords
+        négociés restent à caractériser.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Clients-negoce/471
+      source_refs:
+      - U1056
+    - id: offer-storeland-wholesale-sales
+      component_id: storeland-wholesale
+      node_id: ba-wholesale-sales
+      role: supports
+      evidence_state: documented
+      note: Catalogues par client et saison, saisie, import et suivi commercial des commandes Négoce ; la sélection client
+        est distincte du catalogue maître.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Catalogue/472
+      source_refs:
+      - U1056
+    - id: offer-storeland-wholesale-pricing
+      component_id: storeland-wholesale
+      node_id: ba-pricing-management
+      role: contributes
+      evidence_state: candidate
+      note: Storeland permet de définir des prix de vente Négoce par saison, modèle et tarif ; autorité cible sur ces prix à qualifier.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Definition-des-prix-de-vente-negoce/479
+      source_refs:
+      - U1056
+    - id: offer-storeland-wholesale-orders
+      component_id: storeland-wholesale
+      node_id: D04.i
+      role: contributes
+      evidence_state: documented
+      note: Validation et confirmation des commandes client, avec états et quantités restant à confirmer ; correspondance
+        partielle à Sales Order cible.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/visualisation-du-portefeuille-des-cdes/client/474
+      source_refs:
+      - U1056
+    - id: offer-storeland-wholesale-purchasing
+      component_id: storeland-wholesale
+      node_id: ba-purchasing-execution-coordination
+      role: contributes
+      evidence_state: candidate
+      note: Un mode de traitement peut générer une commande fournisseur liée ; dépend du paramétrage et ne démontre ni usage
+        GBM ni autorité sur les achats.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Modes-de-traitement/488
+      source_refs:
+      - U1056
+    - id: offer-storeland-wholesale-reservation
+      component_id: storeland-wholesale
+      node_id: D02.c
+      role: contributes
+      evidence_state: candidate
+      note: Réservation de commandes client selon le mode de traitement, à la confirmation ou à la réception ; règles et autorité Supply à qualifier.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Modes-de-traitement/488
+      source_refs:
+      - U1056
+    - id: offer-storeland-wholesale-preparation
+      component_id: storeland-wholesale
+      node_id: subdomain-warehouse-operations-control
+      role: contributes
+      evidence_state: candidate
+      note: Préparation et suivi logistique des commandes Négoce documentés ; répartition avec le dépôt et les outils logistiques GBM inconnue.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Preparation-de-commande-negoce/476
+      source_refs:
+      - U1056
+    - id: offer-storeland-wholesale-billing
+      component_id: storeland-wholesale
+      node_id: service-order-billing
+      role: contributes
+      evidence_state: candidate
+      note: Factures et avoirs Négoce documentés ; le partage cible entre service de facturation Supply et Finance doit être
+        qualifié.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Facturation-negoce/478
+      source_refs:
+      - U1056
   - id: product-sap-ecc
     name: SAP ECC
     publisher: SAP
@@ -1403,10 +1499,12 @@ application_catalog:
     panorama_ref: APP-STR
     presence: declared
     note: Laurent attribue à Storeland une part du stock et du backoffice magasin GBM. La version, les modules et la répartition
-      exacte avec UR et Winstore varient potentiellement par marque et restent à inventorier.
+      exacte avec UR et Winstore varient potentiellement par marque et restent à inventorier. L’activation du module Négoce
+      et sa répartition par marque sont à confirmer ; la documentation éditeur ne prouve pas l’usage installé.
     source_refs:
     - U1042
     - U1049
+    - U1056
     component_states:
     - component_id: storeland-core
       acquired: unknown
@@ -1414,6 +1512,12 @@ application_catalog:
       used: declared
       source_refs:
       - U1049
+    - component_id: storeland-wholesale
+      acquired: unknown
+      activated: unknown
+      used: unknown
+      source_refs:
+      - U1056
     mappings:
     - id: appmap-storeland-gbm-store-backoffice
       component_id: storeland-core
@@ -74632,7 +74736,8 @@ hotspot_catalog:
     kind: scope
     location:
       node_ids:
-      - system-business-operations
+      - ba-wholesale-account-management
+      - ba-wholesale-sales
     problem: Identifier les fonctions réellement utilisées dans Négoce Storeland et leur répartition cible entre vente, engagement,
       achat et exécution.
     examples:
@@ -74674,6 +74779,7 @@ hotspot_catalog:
     - A77
     - U967
     - U973
+    - U1056
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -74687,12 +74793,14 @@ hotspot_catalog:
         couvertes par Négoce. Inventaire à compléter ; aucun remplacement décidé. Aucun dysfonctionnement, observation installée,
         ancrage détaillé, classement d’impact, estimation ou solution n’est confirmé automatiquement ; les autres champs conservent
         leur qualification. U973 : compléments de l’audit appliqués ; estimations préparatoires et options restent à éprouver.
-        Les mandats, la réalisation installée et la crédibilité ne sont pas déduits de cette application.'
+        Les mandats, la réalisation installée et la crédibilité ne sont pas déduits de cette application. U1056 : ancrage
+        de lecture proposé sur les deux Business Areas Wholesale ; la documentation Cegid confirme le périmètre de l’offre
+        Négoce, pas les fonctions activées chez GBM.'
     market_view:
-      finding: 'Appui partiel à reconfirmer : Les deux éditeurs documentent des imports de commandes ; ils ne couvrent pas
-        à eux seuls l’ensemble vente, achat et exécution du Négoce.'
-      flow_assessment: Périmètre plus large que HS-017 et distinct de l’affectation aux commandes HS-008 ; ancrage Business
-        Operations provisoire, pas adoption du module comme capacité.
+      finding: Microsoft et SAP documentent la captation de commandes ; Cegid décrit en plus les modes de traitement Négoce
+        de Storeland. Ces offres ne prouvent pas les fonctions effectivement utilisées par GBM.
+      flow_assessment: Ancrage de lecture sur Wholesale Account Management et Wholesale Sales ; engagements, achats et facturation
+        sont des responsabilités adjacentes à répartir après inventaire des usages GBM.
       limits: 'Comparaison partielle : aucune preuve de réalisation Beaumanoir, d’équivalence complète ou de pertinence d’un
         produit retenu. Le passage SAP lié n’a pas pu être revalidé : page sans texte lisible lors de l’audit. La comparaison
         avec cet éditeur reste une lacune documentaire explicite.'
@@ -74705,6 +74813,11 @@ hotspot_catalog:
         title: Import Sales Orders
         url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/a376cd9ea00d476b96f18dea1247e6a5/fbf21ca2d6c1482c8473b7d76c0ed39d.html?locale=en-US&q=Import+Sales+Orders+App
         relevance: Création et contrôle d’imports ; ne prouve pas la couverture des usages Négoce locaux.
+      - publisher: Cegid
+        title: Modes de traitement Négoce — Storeland
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Modes-de-traitement/488
+        relevance: 'Modes de traitement configurables : commande fournisseur, réservation et préparation ; n’établit pas leur
+          activation chez GBM.'
     resolution:
       stage: unassessed
       summary: Quelles responsabilités réellement exercées par Négoce Storeland faut-il reconduire ou laisser dans l’existant

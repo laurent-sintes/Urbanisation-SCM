@@ -281,17 +281,20 @@ export function Overview({
           (id) => id === system.id || lineageOf(model, id).some((node) => node.id === system.id),
         ),
       );
+      const targetsById = new Map(
+        [...article.querySelectorAll<HTMLElement>('[data-map-item-id]')].flatMap((element) => {
+          const id = element.dataset.mapItemId;
+          return id ? [[id, element] as const] : [];
+        }),
+      );
+      const targetIds = new Set(targetsById.keys());
       const anchors = markers.map((hotspot) => {
         const targets = hotspot.location.node_ids
           .filter((id) => id === system.id || lineageOf(model, id).some((node) => node.id === system.id))
           .map((id) => {
-            const lineage = [id, ...lineageOf(model, id).map((node) => node.id)];
-            for (const ancestor of lineage) {
-              const target = [...article.querySelectorAll<HTMLElement>('[data-map-item-id]')].find(
-                (element) => element.dataset.mapItemId === ancestor,
-              );
-              if (target) return { rect: target.getBoundingClientRect(), id: ancestor };
-            }
+            const visibleId = visibleAncestorId(model, id, targetIds);
+            const target = visibleId ? targetsById.get(visibleId) : undefined;
+            if (target) return { rect: target.getBoundingClientRect(), id: visibleId };
             const rect = article.querySelector('h3')?.getBoundingClientRect();
             return rect ? { rect, id: system.id } : undefined;
           })

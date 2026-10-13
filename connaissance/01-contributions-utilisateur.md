@@ -24887,3 +24887,19 @@ Verbatim :
 > Rédige le hotspot
 
 Portée : compléter les responsabilités métier manquantes révélées par l'analyse des fonctions éditeur et réviser HS-032. Les ajouts restent au niveau de contexte autorisé pour Commerce ; les fonctions de produit ne deviennent pas automatiquement des capacités. Garder distincts offre, usage installé, cible et option de réalisation.
+
+## U1056
+
+Date : 2026-10-13. Source : Laurent, retour sur la vue Enterprise Architecture et le module Négoce.
+
+Verbatim :
+
+> Ca à l'air de marcher.
+>
+> Avant on avait des halos plus grand, c'était plus joli.
+>
+> Le hotspot négoce n'est pas localisé ou plutot localisé sur le sytème Business Opération.
+>
+> Regarde dans Storeland ce que fait le module négoce (j'espère qu'il est répertorié dans la fiche produit) et mappe le sur une capacité ou un business area. Si ça n'existe pas, on en discute.
+
+Portée : rétablir la taille des halos sur la carte, vérifier la documentation éditeur du module Négoce Storeland, ajouter ses fonctions au référentiel de l'offre et situer HS-020 sur la responsabilité métier correspondante. Distinguer l'offre Cegid de la licence, de l'activation et des usages propres aux marques GBM ; ne pas déduire une nouvelle capacité du nom du module.
