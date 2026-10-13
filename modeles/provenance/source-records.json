@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "captured_at": "2026-10-12",
+  "captured_at": "2026-10-13",
   "records": [
     {
       "id": "U01",
@@ -7985,6 +7985,198 @@
       "line": 23771,
       "content_sha256": "4de3b5527e6feb3b9e1cc893527b9231b5ebe33b0bcb53d27dcbe719314ee964",
       "captured_text": "## U998\n\n**id**\n\nU998\n\n**titre**\n\nValidation des libellés courts de synthèse des échanges\n\n**date**\n\n2026-10-12\n\n**texte**\n\nJe valide !\n\n**portée**\n\nAccord sur les deux synthèses proposées : Business Operations → Enterprise Management & Control, « Faits et conditions de gestion » ; sens inverse, « Crédit et règlements commerciaux ». Synthèses explicitement modélisées ; contenus détaillés conservés au survol et dans le panneau de détail. Aucun changement de direction, de responsabilité, de contenu détaillé, de glossaire métier ou de réalisation installée ; aucune release demandée."
+    },
+    {
+      "id": "U999",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u999",
+      "line": 23793,
+      "content_sha256": "f7df1447ff77952f5071a5b0917869b0197b3dbda2a31c502c61f593ec46f44d",
+      "captured_text": "## U999\n\n**id**\n\nU999\n\n**titre**\n\nAudit de la gestion globale du carnet de commandes et de sa distinction avec Order Promising\n\n**date**\n\n2026-10-13\n\n**texte**\n\nJe souhaite avoir un audit sur le modèle Master Plan Management & Demand / Supply Matching\nTout d'abord, les deux area sont séparées alors qu'elles sont très liées, c'est pas terrible.\nEnsuite, l'idée de séparer Order Promising (vision unitaire d'une commande) et la vision complète du carnet de commande me plait bien, il faut le garder.\nMais ce qui ne ressort pas, je trouve, c'est la gestion du carnet de commandes comme un énorme kanban. Oracle parle de Backlog. La gestion de cette backlog est appelée Master Plan par Microsoft.\nL'idées est que cette gestion globale du carnet est surtout pour le wholesale mais je prèfère considérer ce mode de gestion comme une stratégie applicable à ce qu'on veut.\n---\nLe problème que ça gère :\n- Les commandes ou précommandes sont enregistrées en début de saison => elles ne couvrent qu'une partie des commandes de l'année\n- Les commandes arrivent au fil de l'eau avec des dates d'échéance futures plus ou moins lointaines\n- la planification de la fabrication implique un plan (supply plan) qu'on peut difficilement faire varier (mais c'est possible) et consiste en des arrivées planifiées de cargos étalées tout au long de la saison\n- Le problème est qu'on ne peut pas tout régler par la planification (Demand Plan vs Supply Plan) car il y a :\n\t- des aléas de livraison\n\t- des commandes en cours d'année\n---\nla solution : gérer son carnet de commandes (de vente) comme un Kanban\n- quand les commandes ou précommandes (c'est la même chose du point de vue de la supply chain) arrivent, en principe on applique l'ATP (on tente d'attribuer des ressources stock disponibles). Cette attribution n'est pas ferme, elle peut bouger dans le temps.\n- Au bout d'un certain temps, lorsque la date d'échéance approche, on afermit la demande (on réalise un pegging fort des ressources) car on prépare la livraison et on peut annoncer au client qu'on ne sera pas en retard.\n- lorsque le nombre de demandes (ou plutot les exigences en qualité et volumes) sont trop importantes par rapport au stock disponible, ou qu'on veut optimiser les flux, on a plusieurs choix :\n\t- négocier une date de livraison en retard\n\t- négocier une livraison partielle\n\t- négocier une augmentation de la production\n\t- négocier une allocation de stock dédiée à un canal à notre canal\n\t- négocier avec un autre client une date d'échéance plus tardive, voire d'annuler la commande, pour attribuer sa disponibilité à un client plus importantes\n\t- refuser la commande du client\n- La négociation peut être une négociation réelle avec le client mais lorsque le nombre de commandes du carnet est trop important, alors cette négociation est automatique car guidée par le contrat qu'on a avec le client. Par exemple on peut avoir des contrats qui disent : \"si la commande n'est pas annulée au bout de 1 mois, alors elle est ferme et engagée\".\n- Dans cette gestion de backlog on a donc plusieurs activités :\n\t- la planification : c'est toute l'activité de négociation présentée ci-dessus => c'est le master plan qui s'appuie sur des règles de gestion de carnet (une stratégie configurable) et prend en compte les contrats client. Ca s'appuie aussi sur CTP et également PTP dans une idée d'optimisation (par exemple, en ce moment le prix du pétrole est haut, si je peux ralentir les livraisons, c'est mieux).\n\t- l'affectation de ressource automatique au moment où une commande arrive : c'est l'ATP\n\t- la release => les commandes qui passent en livraison à date\n---\nMon constat : Supply Matching, AllocationRun, BackOrder Processing etc. sont des termes très abstraits alors que ce que je viens de décrire est plutot concret.\n\nJ'aimerais un audit sur les capacités de ce sous domaine en comparaison avec le marché (sens très large) pour voir comment on peut clarifier tout ça.\n\n**portée**\n\nDemande d’audit ciblé d’Availability et, en particulier, des Business Areas Master Plan Management, Demand / Supply Matching et de leurs capacités, avec comparaison marché. Préserver la distinction entre promesse sur une commande et pilotage du carnet entier ; examiner le rapprochement des deux Business Areas, la stratégie configurable de carnet, l’affectation révisable puis protégée, les arbitrages et l’autorisation de livraison. Le scénario décrit un besoin et des hypothèses à confronter au modèle et aux sources ; il ne prouve aucune réalisation installée. Les équivalences ATP/affectation, fermeté/pegging et Microsoft Master Plan/gestion du carnet sont des assertions à examiner, sans correction du verbatim. Aucun accord sur un nouveau nom, découpage ou comportement, aucune modification canonique ni publication demandée."
+    },
+    {
+      "id": "U1000",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1000",
+      "line": 23847,
+      "content_sha256": "33989c384922442daa16275886ad74f6ca1d4a40c16e984a78a6209719fcd5f0",
+      "captured_text": "## U1000\n\n**id**\n\nU1000\n\n**titre**\n\nPiste de renommage d’Availability à examiner dans l’audit du carnet\n\n**date**\n\n2026-10-13\n\n**texte**\n\nPeut être qu'Availability devrait s'appeler \"Gestion du carnet de commandes de vente\"\n\n**portée**\n\nPiste de nom proposée pendant l’audit U999, sans accord de renommage ni réduction automatique du périmètre. Cette piste est abandonnée en U1002 au vu de la responsabilité d’approvisionnement précisée en U1001."
+    },
+    {
+      "id": "U1001",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1001",
+      "line": 23869,
+      "content_sha256": "e4dfe561da7ad1bc07e366afa3a0e59c3ad373e3cc9b16709fb108a700bbcfff",
+      "captured_text": "## U1001\n\n**id**\n\nU1001\n\n**titre**\n\nPropositions d’approvisionnement du Master Plan fondées sur la CTP\n\n**date**\n\n2026-10-13\n\n**texte**\n\nOui, c'est bien mon intention de faire porter au MAster Plan, via la CTP, des propositions d'approvisionnement.\n\n**portée**\n\nPrécision du besoin d’audit U999 : le Master Plan doit proposer des approvisionnements en mobilisant la CTP. Ne pas limiter sa responsabilité à répartir une supply déjà prévue. Cette précision ne valide pas un découpage détaillé, une rédaction ultérieure, une réalisation installée ou une publication. Examiner les frontières actuelles avec Replenishment, Demand & Supply Planning, Purchase Order et les engagements fournisseurs ; une proposition ne vaut pas achat ou production engagé."
+    },
+    {
+      "id": "U1002",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1002",
+      "line": 23891,
+      "content_sha256": "a930dc626b2f2eafa25c90d14a96d819a9772ccf0fb44f19cf4d0cda181c4df2",
+      "captured_text": "## U1002\n\n**id**\n\nU1002\n\n**titre**\n\nAbandon du renommage d’Availability en gestion du carnet de ventes\n\n**date**\n\n2026-10-13\n\n**texte**\n\nDonc mon idée de renommage d'Availability est mauvais\n\n**portée**\n\nAbandon de la piste U1000 dans le cadrage de l’audit U999/U1001 : « Gestion du carnet de commandes de vente » ne couvre pas le périmètre élargi, notamment les propositions d’approvisionnement. Availability reste le nom canonique ; aucun nom de remplacement n’est adopté. L’audit des Business Areas et capacités reste demandé."
+    },
+    {
+      "id": "U1003",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1003",
+      "line": 23913,
+      "content_sha256": "579ae0211275034bf1ab96c4bdc12c780a397c21dfd1e3ab7a50f3205bbbb8d2",
+      "captured_text": "## U1003\n\n**id**\n\nU1003\n\n**titre**\n\nMaintien de MAP et frontière du Master Plan avec le carnet d’achat\n\n**date**\n\n2026-10-13\n\n**texte**\n\nOui, L'outil MAP gère les planification d'achat et Beaumanoir ne souhaite pas le remplacer. C'est pour ça que le Master Plan ne peut pas gérer aussi la backlog des commandes d'achat. Mais il peut avoir la responsabilité de faire des propositions.\n\n**portée**\n\nContrainte explicite de l’audit U999 : MAP conserve la planification d’achat et n’est pas à remplacer. Le Master Plan FLOW ne prend pas en charge le carnet des commandes d’achat, mais peut proposer des approvisionnements selon U1001. La lecture des achats et arrivées attendus pour couvrir les demandes ne transfère pas la responsabilité du carnet d’achat. Les contrats d’échange, l’acceptation des propositions et les parcours techniques restent à préciser ; aucun déploiement supplémentaire, architecture d’interface ou accord sur les recommandations détaillées de l’audit n’est déduit de cette contribution."
+    },
+    {
+      "id": "U1004",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1004",
+      "line": 23935,
+      "content_sha256": "24b2b3a8e133dcd8b8407bae6311385c1504a5385eeadd45929ab802afec5411",
+      "captured_text": "## U1004\n\n**id**\n\nU1004\n\n**titre**\n\nCarte de capacités permettant de raconter la gestion du carnet\n\n**date**\n\n2026-10-13\n\n**texte**\n\nCe que je veux, c'est pouvoir présenter la carte des capacités et raconter l'histoire que je t'ai racontée\n\n**portée**\n\nFinalité de l’audit U999 : une carte de capacités lisible qui permet de raconter le scénario de gestion du carnet décrit par Laurent, avec les responsabilités et coopérations nécessaires. Le récit ne transforme pas ses étapes en parents hiérarchiques ni en capacités automatiques ; aucun développement de vue Atlas demandé par cette seule précision."
+    },
+    {
+      "id": "U1005",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1005",
+      "line": 23957,
+      "content_sha256": "e1908ac864287ffd444383c1166000108fababea6c6d19e1c11019fd7418193f",
+      "captured_text": "## U1005\n\n**id**\n\nU1005\n\n**titre**\n\nMaintien de la maille Capacité dans l’audit du carnet\n\n**date**\n\n2026-10-13\n\n**texte**\n\nMais attention, il faut qu'on soit à une maille Capacité\n\n**portée**\n\nContrainte de modélisation de la proposition U999 : rester à la maille des savoir-faire durables, pas des opérations, écrans, colonnes d’un tableau ou étapes d’un processus. Distinguer capacités mobilisées et moments du récit ; justifier toute nouvelle capacité par sa responsabilité et son résultat propres."
+    },
+    {
+      "id": "U1006",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1006",
+      "line": 23979,
+      "content_sha256": "11344be9519dcbf6c79bd29ec6277d65abe344fdbff3d380c58ef4760b5b6c50",
+      "captured_text": "## U1006\n\n**id**\n\nU1006\n\n**titre**\n\nStratégie de gestion des flux et rattachement possible aux politiques\n\n**date**\n\n2026-10-13\n\n**texte**\n\nJe pense que la \"stratégie de gestion des flux\" doit être quelque part. Peut être dans les policies.\n\n**portée**\n\nDemande de rendre explicite la stratégie configurable qui gouverne le pilotage du carnet dans l’audit U999. Examiner Supply Policy Management et les politiques existantes ; le rattachement aux politiques est une piste, sans accord sur un nom, une nouvelle capacité ni un regroupement particulier. Distinguer définition et maintien des règles applicables, décisions contextuelles et conduite des parcours."
+    },
+    {
+      "id": "U1007",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1007",
+      "line": 24001,
+      "content_sha256": "7df0edf51f8737e5f3bb46c8882e23fd2601f0861bae803e79518116da150fe3",
+      "captured_text": "## U1007\n\n**id**\n\nU1007\n\n**titre**\n\nRéexamen d’HS-008 comme écart de pilotage global du carnet Wholesale\n\n**date**\n\n2026-10-13\n\n**texte**\n\nLe hotspot \"**Affectation et redistribution Wholesale avant promesse ferme**\" est le hotspot qui traite de ce sujet global et qui montre un gap analysis entre Beaumanoir (très B2C / transactionnel) vs Boardriders (gestion de planification des flux de carnet de commande) => la localisation de ce hotspot et sa description et titre sont doc à revoir.\n\n**portée**\n\nÉtendre l’audit U999 au hotspot HS-008 : relire et proposer le réexamen de son titre, sa description, sa localisation et de leur cohérence avec l’analyse d’écart. Laurent rattache ce hotspot au pilotage global du carnet, pas seulement à Supply Assignment. Préserver les observations, réserves et sources historiques ; distinguer les pratiques Marques Historiques rapportées des capacités techniques non évaluées et ne pas étendre leur caractérisation à Sarenza. Aucun arbitrage de convergence, score de complexité, solution installée ni publication n’est adopté par extension."
+    },
+    {
+      "id": "U1008",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1008",
+      "line": 24023,
+      "content_sha256": "ac7f7dd4804afdfad5fb304cf1ff41a96419b92cc38d522c0cb85c61cdc7468e",
+      "captured_text": "## U1008\n\n**id**\n\nU1008\n\n**titre**\n\nVérification de la capacité d’engagement et de libération des commandes à livrer\n\n**date**\n\n2026-10-13\n\n**texte**\n\nIl ne manque pas une capacité d'engagement, de release des commandes à livrer ?\n\n**portée**\n\nCompléter l’audit U999 en examinant la responsabilité d’engagement et de libération des commandes du carnet. Distinguer les capacités existantes de tenue et de confirmation des commandes, la décision d’éligibilité collective à la livraison et la libération des ordres de prestation. Aucun accord de création, nom ou rattachement ne découle de cette question."
+    },
+    {
+      "id": "U1009",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1009",
+      "line": 24045,
+      "content_sha256": "d915bdb2939d7e0de2f17eb64cba9af73a7e85ca925675ef2e379071016549c6",
+      "captured_text": "## U1009\n\n**id**\n\nU1009\n\n**titre**\n\nValidation du lot de pilotage du carnet, stratégie et décision de libération\n\n**date**\n\n2026-10-13\n\n**texte**\n\nJe valide tout\n\n**portée**\n\nAccord sur le lot complet construit dans l’audit U999–U1008 et sa restitution : fusion de Master Plan Management et Demand / Supply Matching sous l’identité conservée ba-master-plan-management, conservation des sept capacités distinctes et clarification de leurs services ; Order Promising conservé avec ATP/CTP/PTP mobilisables par le plan collectif ; MAP conserve la planification et le carnet d’achat, FLOW pouvant proposer des apports ; ajout de Demand Fulfilment Policy Management sous la Business Area persistante ba-protection-policies, renommée Demand & Supply Policies, et de Delivery Release Decision sous Master Plan Management. Availability conserve son nom et son périmètre ; l’engagement reste dans les familles de commandes, la libération des prestations dans Service Order Release Decision. Le récit reste un scénario autonome mobilisant les capacités, pas leur hiérarchie. Réexamen d’HS-008 selon le titre, le problème, les deux ancrages et les deux analyses d’écart proposés, avec conservation des preuves, réserves, scores et options non sélectionnées. Alignement du glossaire dans le même lot. La piste U1000 est exclue car abandonnée U1002. Les nouvelles formulations détaillées ou illustrations rédigées après cet accord gardent une qualification éditoriale proposée ; aucun accord sur une réalisation installée, une option de convergence, une release, un commit ou un push."
+    },
+    {
+      "id": "U1010",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1010",
+      "line": 24067,
+      "content_sha256": "a46b13c935bde3ccb26283900bc6a0999fd71d2147c53265b6800f30aaa3423a",
+      "captured_text": "## U1010\n\n**id**\n\nU1010\n\n**titre**\n\nLivraison partielle, Optimizer SAP et localisation de l’optimisation des transferts\n\n**date**\n\n2026-10-13\n\n**texte**\n\nJe pense qu'il manque explicitement ce que SAP appelle l'optimizer : la possibilité de livraison partielle.\nD'autre part, on a une autre optimisation dans la BA : celle du transfert de stock. => cette capacité d'optimisation n'est pas ailleurs ?\n\n**portée**\n\nDemande de clarification après le lot validé U1009 : rendre explicite la possibilité de livraison partielle, examiner le sens du terme SAP Optimizer et vérifier un éventuel doublon ou une frontière de rattachement de l’optimisation des transferts de stock. Comparer les capacités Delivery Release Decision, Supply Assignment, Order Promising, Order Structuring, Stock Redistribution, Physical Stock Target Optimization et Transport Plan Decision. Ne pas étendre U1009 à une nouvelle définition, un nouveau nom ou déplacement formulé après cet accord ; préserver la distinction entre source historique SAP AFS, documentation S/4HANA et état installé Boardriders."
+    },
+    {
+      "id": "U1011",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1011",
+      "line": 24090,
+      "content_sha256": "a71f48d4b44271586c527f8dfd0a6cdc057c71b665d6c7508764d74ff53dd845",
+      "captured_text": "## U1011\n\n**id**\n\nU1011\n\n**titre**\n\nQuestion sur le regroupement des Business Areas d’Availability\n\n**date**\n\n2026-10-13\n\n**texte**\n\nDu coup, il y a trop de business area dans Availability manifestement, il faut regrouper c'est ça ou j'ai rien compris ?\n\n**portée**\n\nDemande d’expliquer et de simplifier le découpage en Business Areas d’Availability après U1009, en conservant la maille des capacités. Examiner les regroupements des optimisations de stock et la place de Plan Visibility, sans confondre mobilisation dans le Master Plan et parent hiérarchique. Aucun nombre maximal de Business Areas, déplacement précis ou nouveau nom n’est adopté par cette question ; les nouveaux regroupements proposés ne sont pas couverts automatiquement par U1009."
+    },
+    {
+      "id": "U1012",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1012",
+      "line": 24112,
+      "content_sha256": "6eb40cbc5547685320f47d89557b3e5c7d4de8c53084e62ce93defebd176b79d",
+      "captured_text": "## U1012\n\n**id**\n\nU1012\n\n**titre**\n\nPortée du Supply Plan et segmentation du Master Plan\n\n**date**\n\n2026-10-13\n\n**texte**\n\nJ'ai peur que les gens ne comprennent pas la portée de Supply Plan (les achats centralisés en général façon centrale d'achat) et le scope Master Plan qui est centré sur le carnet de commandes.\n\nLa question est : master plan est global ou segmenté par marques ou enseignes ?\n\n**portée**\n\nDemande de clarifier les responsabilités respectives de la planification d’approvisionnement et du pilotage du carnet, puis les périmètres de gestion du Master Plan. Le rapprochement entre Supply Plan et achats centralisés doit être confronté au contrat courant de TER098, qui distingue les mouvements hors achats des projections d’achat. La question ne prouve pas une segmentation installée par marque ou enseigne et n’adopte ni renommage ni modification de ce contrat. Préserver le mandat de MAP et la possibilité pour FLOW de proposer des apports via CTP."
+    },
+    {
+      "id": "U1013",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1013",
+      "line": 24136,
+      "content_sha256": "d98717e3baebc59e85bc76ac6cf5d9075a86f0c78186f3708e6f575114169a21",
+      "captured_text": "## U1013\n\n**id**\n\nU1013\n\n**titre**\n\nCorrection de l’exclusion des achats du Supply Plan\n\n**date**\n\n2026-10-13\n\n**texte**\n\nAh ? C'est une erreur\n\n**portée**\n\nCorrection explicite de la frontière « Supply Plan hors achats », signalée immédiatement avant cet apport. Le Supply Plan comprend les approvisionnements d’achat prévus ; la planification et le carnet d’achat restent sous la responsabilité de MAP, le Master Plan FLOW étant centré sur la satisfaction du carnet et pouvant proposer des apports. L’inclusion dans un plan ne confond pas proposition d’achat, commande affermie et réception réalisée, et n’autorise pas leur double comptage. Aucun accord implicite sur la segmentation par marque ou enseigne, une interface installée ou les regroupements proposés U1010–U1011."
+    },
+    {
+      "id": "U1014",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1014",
+      "line": 24158,
+      "content_sha256": "5234de536f2c7a420bb8da81f58c5348a504b06eea7d400ac9a790d21b0fd48b",
+      "captured_text": "## U1014\n\n**id**\n\nU1014\n\n**titre**\n\nValidation de l’ensemble du lot Availability et des frontières de planification\n\n**date**\n\n2026-10-13\n\n**texte**\n\nJe valide l'ensemble des modifs\n\n**portée**\n\nValidation du lot complet discuté jusqu’à U1013, incluant les corrections précédentes et les propositions encore en attente : livraison complète ou partielle explicitée dans Delivery Release Decision ; regroupement d’Availability en Master Plan Management, Order Promising et Stock Optimization, avec conservation des seize capacités et de leurs identités ; Supply Plan Visibility et Demand Plan Visibility rattachées à Master Plan Management, Stock Redistribution et les deux optimisations logiques réunies avec l’optimisation physique dans Stock Optimization ; retrait des deux Business Areas devenues redondantes. Supply Plan inclut les achats prévus, MAP conserve la planification et le carnet d’achat, FLOW peut proposer des apports via CTP. Une capacité commune de Master Planning s’applique à plusieurs périmètres de carnet, définis selon les ressources partageables et les responsabilités d’arbitrage, sans segmentation automatique par marque ou enseigne ni double comptage. Le lot U1009 et les corrections techniques déjà réalisées sont conservés. Les formulations nouvelles d’application restent qualifiées séparément ; aucun accord sur une réalisation installée, une option de convergence HS-008, une release, un commit ou un push."
+    },
+    {
+      "id": "U1015",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1015",
+      "line": 24180,
+      "content_sha256": "9d21f1dc793afc4efe4624c52dafae37cfdca9ee22a673fef341ce84afcc4227",
+      "captured_text": "## U1015\n\n**id**\n\nU1015\n\n**titre**\n\nRattachement du hotspot de pilotage du carnet au périmètre concerné\n\n**date**\n\n2026-10-13\n\n**texte**\n\nTu peux réassigner la localisation du hotspot au bon périmètre ?\n\n**portée**\n\nDemande de vérifier et appliquer la localisation d’HS-008 après le lot validé U1014. Master Plan Management porte le pilotage collectif du carnet et Supply Policy Management les stratégies et règles actives ; les deux ancrages déjà appliqués U1009 correspondent à cette frontière. Confirmer cette localisation dans l’état final sans rattacher le hotspot à la seule optimisation du stock ni modifier les preuves, scores ou choix de convergence. Aucune publication implicite."
+    },
+    {
+      "id": "U1016",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1016",
+      "line": 24202,
+      "content_sha256": "f7c005788767438cb63ba52e47ef72854b13227734008ee090559912efa248d4",
+      "captured_text": "## U1016\n\n**id**\n\nU1016\n\n**titre**\n\nJustification de la séparation entre Stock Optimization et Master Plan Management\n\n**date**\n\n2026-10-13\n\n**texte**\n\nIl y a une raison pour laquelle Stock Optimization est séparé de Master Plan ?\n\n**portée**\n\nDemande d’expliquer la frontière retenue dans le lot U1014 publié : décisions sur les cibles, droits d’usage, conditions de réservation et redistributions du stock, face au pilotage collectif de satisfaction du carnet. Examiner le bénéfice de leur regroupement en Business Area autonome et le cas moins net de Stock Redistribution, sans déduire de cette question une fusion, un déplacement ou une nouvelle publication. Les capacités sont mobilisables par Master Planning indépendamment de leur parent hiérarchique."
+    },
+    {
+      "id": "U1017",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1017",
+      "line": 24224,
+      "content_sha256": "630ceb9c8993affb95cd60ee6e2f1340bd10e26201bcfbad7d988abd3281dd27",
+      "captured_text": "## U1017\n\n**id**\n\nU1017\n\n**titre**\n\nVérification marché du périmètre de CTP\n\n**date**\n\n2026-10-13\n\n**texte**\n\nCe qui me gêne c'est la CTP. Elle n'est pas vraiment dans un scope demande je pense. tu peux vérifier le marché ?\n\n**portée**\n\nDemande de vérifier les usages et résultats de Capable-to-Promise dans le marché, face à son rattachement à Order Promising et à sa mobilisation par le Master Plan. Distinguer la demande examinée, la profondeur d’analyse des ressources et capacités d’approvisionnement, les propositions d’apports et la planification collective. Aucun déplacement, changement de nom ou nouvelle release n’est adopté par cette question."
+    },
+    {
+      "id": "U1018",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1018",
+      "line": 24246,
+      "content_sha256": "12bbf5b0aec959030a6fe1c627cf4b543b6c12db5d30547cddb805f011fe5a51",
+      "captured_text": "## U1018\n\n**id**\n\nU1018\n\n**titre**\n\nRécit par périmètres et isolement du Master Plan\n\n**date**\n\n2026-10-13\n\n**texte**\n\nEn fait, en termes de lisibilité on pourrait dire que :\n\n- il y a des capacités scope Carnet de commande\n- Il y a des capacités scope Stock\n- Il y a des capacités scope Commande\n- Il y a des capacité policy (stratégie générale)\n- Il y a un master plan qui gère les flux amont / aval en combinant tous les scopes.\n\nC'est bon comme histoire ? Si oui, ça donne du sens aux business area. Mais du coup il faut isoler le master plan.\n\nQu'ne penses-tu ?\n\n**portée**\n\nProposition soumise à examen : distinguer les responsabilités sur le carnet, le stock, une commande identifiée et les stratégies générales, puis isoler le pilotage du Master Plan qui mobilise ces capacités. Examiner un regroupement de présentation cohérent sans imposer des calculs indépendants, dupliquer les capacités ni placer les Business Areas sous une capacité de planning. Préserver les engagements dans Order Management, les règles actives dans Supply Policy Management, la planification d’achat MAP et la réalisation dans Fulfilment et Logistics. Aucun nouveau nom, rattachement détaillé ou publication adopté par cette question."
+    },
+    {
+      "id": "U1019",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1019",
+      "line": 24278,
+      "content_sha256": "b61b89174a7ebb9d23792628158c53091f1db38c9b9816e7599bfe8c6a5d8b57",
+      "captured_text": "## U1019\n\n**id**\n\nU1019\n\n**titre**\n\nValidation du découpage par responsabilités et du Master Plan distinct\n\n**date**\n\n2026-10-13\n\n**texte**\n\nJe valide ce découpage\n\n**portée**\n\nAccord sur la proposition complète U1018 : quatre Business Areas dans Availability — Master Plan Management, Order Backlog Management, Stock Optimization et Order Promising — avec stratégies actives maintenues dans Supply Policy Management / Demand & Supply Policies. Master Plan Management conserve Master Planning, Simulation & Analysis, Plan Application et les deux interprétations de plans ; Order Backlog Management reçoit Demand Prioritization, Supply Assignment et Delivery Release Decision ; Stock Optimization reçoit Replenishment avec les cibles, droits, conditions de réservation et redistributions déjà présents ; Order Promising conserve ATP/CTP/PTP. Les seize capacités conservent leurs identités et un seul parent. Le Master Plan pilote la cohérence des flux amont et aval en mobilisant ces décisions ; MAP conserve la planification et le carnet d’achat, les commandes leurs engagements, Fulfilment et Logistics la coordination et la réalisation des prestations. La maille du résultat CTP ne limite pas le périmètre de calcul. Les nouvelles formulations détaillées d’application restent qualifiées séparément. Aucune release, réalisation installée, option de convergence, opération Git ni extension automatique aux champs non discutés."
+    },
+    {
+      "id": "U1020",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1020",
+      "line": 24300,
+      "content_sha256": "3e7e0f1a8d1dfa3bfe6094f5d8db72f5c0a7490bc6ee1115cf018c471f2ff3cc",
+      "captured_text": "## U1020\n\n**id**\n\nU1020\n\n**titre**\n\nOrdre de lecture et audit de cohérence des responsabilités, du marché et des use cases\n\n**date**\n\n2026-10-13\n\n**texte**\n\nStock Optimization => en dernier après Order Backlog Management.\n\nFais moi un audit des capacité, business area , sous domaine et domaine en termes de nom, définition et référence marché pour voir si c'est cohérent et complet.\n\nVérifie les use cases et le mapping capacité\n\n**portée**\n\nInstruction d’ordre de lecture : Stock Optimization doit être dernière dans Availability, après Order Backlog Management. Demande d’audit des noms, définitions, frontières et appuis marché aux niveaux capacité, Business Area, sous-domaine et domaine, avec vérification des scénarios et de leurs contributions de capacités. L’audit couvre le cœur Supply Chain Orchestration et ses raccordements aux domaines de contexte, sans rouvrir l’audit clos des comportements U431. L’ordre est explicitement demandé ; les recommandations métier nouvelles de l’audit ne constituent pas des accords, une réalisation installée ou une publication."
+    },
+    {
+      "id": "U1021",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1021",
+      "line": 24326,
+      "content_sha256": "1ac17c73ed250925f3b64a373f820687688328be61a40c0b0a0133f0e2c9df54",
+      "captured_text": "## U1021\n\n**id**\n\nU1021\n\n**titre**\n\nPrise en compte de l’audit de cohérence U1020\n\n**date**\n\n2026-10-13\n\n**texte**\n\nPrends en compte l'audit\n\n**portée**\n\nInstruction d’appliquer le lot de remédiation de l’audit U1020 : mappings de livraison, apports et transferts ; rôles contextualisés du parcours saisonnier et variantes conditionnelles ; définitions plus précises ; réexamen des appuis marché et maintien des lacunes non étayées ; titres et préconditions des parcours ; variantes critiques illustrant MAP, fermeté contractuelle, ressources partagées et assortiment du partiel. Conserver les responsabilités et identités des capacités, l’ordre U1020, la séparation entre planification MAP et pilotage FLOW, ainsi que les preuves et accords historiques. Les formulations détaillées nouvelles et les correspondances restent qualifiées séparément ; aucune équivalence marché, réalisation installée, nouvelle capacité, release ou opération Git automatiquement adoptée."
+    },
+    {
+      "id": "U1022",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1022",
+      "line": 24348,
+      "content_sha256": "e0d47e86304bd4ef583e93d9dcdf7f2dfa0d02ff8429258ea5f12e1d772f2554",
+      "captured_text": "## U1022\n\n**id**\n\nU1022\n\n**titre**\n\nValidation des corrections de l’audit, commit et release\n\n**date**\n\n2026-10-13\n\n**texte**\n\nJe valide. Commit & Release\n\n**portée**\n\nValidation du lot complet de remédiation U1021 présenté à l’issue de l’audit U1020 : définitions et glossaire alignés, contributions et rôles des parcours, conditions et titres, quatre variantes illustratives, ordre de lecture et qualification des appuis et lacunes marché. Cette validation conserve les limites documentées : 23 lacunes d’appui sur 14 fiches, correspondances partielles et absence de preuve de réalisation installée. Autorise le commit local des travaux de la session puis la publication dans Atlas ; aucun push demandé."
     },
     {
       "id": "F001",

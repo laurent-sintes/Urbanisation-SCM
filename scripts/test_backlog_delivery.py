@@ -6,6 +6,35 @@ from scripts.backlog_delivery import check_delivery
 
 
 class DeliveryTests(unittest.TestCase):
+    def test_hotspot_supersession_preserves_old_proof_and_checks_replacement(self):
+        from scripts.element_versions import content_hash
+        original = {'id': 'HS-008', 'title': 'Assignment'}
+        current = {'id': 'HS-008', 'title': 'Backlog management'}
+        unrelated = {'id': 'HS-009', 'title': 'Keep this proof'}
+        self.model['hotspot_catalog'] = {'hotspots': [current, unrelated]}
+        old_path = self.folder / 'old.yaml'
+        old_path.write_text(dumps({'publication_delivery': {'state': 'applied', 'required_catalog': [
+            {'collection': 'hotspots', 'id': h['id'], 'content_sha256': content_hash(h)}
+            for h in [original, unrelated]]}}), encoding='utf-8')
+        old_bytes = old_path.read_bytes()
+        replacement = {'state': 'applied', 'source_refs': ['U1009'], 'required_catalog': [
+            {'collection': 'hotspots', 'id': current['id'], 'content_sha256': content_hash(current)}],
+            'supersedes_requirements': [{'annex': 'old.yaml', 'collection': 'hotspots',
+                                        'id': 'HS-008', 'fields': ['content_sha256']}]}
+        new_path = self.folder / 'new.yaml'
+        new_path.write_text(dumps({'publication_delivery': replacement}), encoding='utf-8')
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+        self.assertEqual(old_path.read_bytes(), old_bytes)
+        current['title'] = 'Unapproved change'
+        self.assertTrue(any('catalog mismatch: HS-008' in e for e in check_delivery(self.root, self.model)[1]))
+        current['title'] = 'Backlog management'
+        unrelated['title'] = 'Unrelated change'
+        self.assertTrue(any('catalog mismatch: HS-009' in e for e in check_delivery(self.root, self.model)[1]))
+        unrelated['title'] = 'Keep this proof'
+        replacement['required_catalog'] = []
+        new_path.write_text(dumps({'publication_delivery': replacement}), encoding='utf-8')
+        self.assertTrue(any('invalid supersession' in e for e in check_delivery(self.root, self.model)[1]))
+
     def test_glossary_delivery_preserves_definitions_and_aliases(self):
         from scripts.record_decision import canonical_sha256
         item = {'id': 'OLD', 'definition': 'A preserved definition.', 'alias_of': 'CURRENT'}
@@ -18,6 +47,34 @@ class DeliveryTests(unittest.TestCase):
         self.assertTrue(any('glossary field mismatch' in e for e in check_delivery(self.root, self.model)[1]))
         self.model['glossary']['terms'] = []
         self.assertTrue(any('glossary term missing' in e for e in check_delivery(self.root, self.model)[1]))
+
+    def test_path_correction_preserves_old_proof_and_checks_replacement(self):
+        from scripts.element_versions import content_hash
+        old = {'id': 'path', 'description': 'Supply excluding purchases'}
+        current = dict(old, description='Supply including planned purchases')
+        other = {'id': 'other', 'description': 'Keep this path'}
+        self.model['scenario_catalog'] = {'paths': [current, other]}
+        old_path = self.folder / 'old.yaml'
+        old_path.write_text(dumps({'publication_delivery': {'state': 'applied', 'required_catalog': [
+            {'collection': 'paths', 'id': item['id'], 'content_sha256': content_hash(item)}
+            for item in [old, other]]}}), encoding='utf-8')
+        old_bytes = old_path.read_bytes()
+        replacement = {'state': 'applied', 'source_refs': ['U1013'], 'required_catalog': [
+            {'collection': 'paths', 'id': 'path', 'content_sha256': content_hash(current)}],
+            'supersedes_requirements': [{'annex': 'old.yaml', 'collection': 'paths',
+                                        'id': 'path', 'fields': ['content_sha256']}]}
+        new_path = self.folder / 'new.yaml'
+        new_path.write_text(dumps({'publication_delivery': replacement}), encoding='utf-8')
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+        self.assertEqual(old_path.read_bytes(), old_bytes)
+        current['description'] = 'Different scope'
+        self.assertTrue(any('catalog mismatch: path' in e for e in check_delivery(self.root, self.model)[1]))
+        current['description'] = 'Supply including planned purchases'
+        other['description'] = 'Changed unrelated path'
+        self.assertTrue(any('catalog mismatch: other' in e for e in check_delivery(self.root, self.model)[1]))
+        replacement['required_catalog'] = []
+        new_path.write_text(dumps({'publication_delivery': replacement}), encoding='utf-8')
+        self.assertTrue(any('invalid supersession' in e for e in check_delivery(self.root, self.model)[1]))
 
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()

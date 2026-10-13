@@ -147,9 +147,15 @@ class AtlasHandler(BaseHTTPRequestHandler):
         except OSError:
             self._error(500, "Écriture du staging impossible.")
 
-    do_PUT = do_POST
-    do_PATCH = do_POST
-    do_DELETE = do_POST
+    def _reject_write_method(self):
+        if not self._local_request():
+            self._error(403, "Accès réservé à l’application locale.")
+            return
+        self._error(405, "Seul POST est autorisé pour modifier l’atelier.")
+
+    do_PUT = _reject_write_method
+    do_PATCH = _reject_write_method
+    do_DELETE = _reject_write_method
 
     def _dispatch(self, head: bool = False):
         if not self._local_request():

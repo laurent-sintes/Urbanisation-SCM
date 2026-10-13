@@ -1,0 +1,1353 @@
+id: ORDER-BACKLOG-AUDIT-U999
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U999
+- U1000
+- U1001
+- U1002
+- U1003
+- U1004
+- U1005
+- U1006
+- U1007
+- U1008
+- U1009
+authority: Backlog courant et glossaire métier ; aucune lecture du backlog pour compléter une publication Atlas.
+audited_inputs:
+- path: modeles/backlog/model.yaml
+  sha256: b622374a39ad1f1335717fa681276193f0a3a58e11a1431a24eaa16e0d6c64d6
+- path: modeles/backlog/glossary.yaml
+  sha256: cfe48f20fa9f8d21e9cb0d99526903a8270bec1643a615977173e0090fe8f6f4
+scope:
+  subdomain: D03
+  core_business_areas:
+  - ba-master-plan-management
+  - ba-supply-matching
+  capabilities_reviewed: 15
+  boundaries:
+  - Order Promising conservé
+  - MAP conserve planification et carnet d’achat
+  - FLOW peut proposer des apports
+  - Stratégie configurable ; pas exclusivement Wholesale
+  - Maille capacité, récit distinct de la hiérarchie
+  - HS-008 et ses preuves sont réexaminés sans nouveau score
+withdrawn_option:
+  source_ref: U1002
+  proposal: Renommer Availability en gestion du carnet de commandes de vente
+  reason: 'Nom trop étroit : besoins prévisionnels, cibles de stock, droits d’usage et propositions d’apport font aussi partie
+    du périmètre.'
+sources:
+- key: ms-master
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Supply Chain Management
+  title: Master planning home page
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+  locator: Core ; three planning processes
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Besoins nets et propositions de production, achat ou transfert ; périmètre plus large que le carnet
+    de vente.
+- key: ms-plans
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Supply Chain Management
+  title: Master plans overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
+  locator: Using master plans ; time fences ; positive and negative days
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Plans opérationnels et simulations ; choix entre réception tardive et nouvel apport.
+- key: ms-atp
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Supply Chain Management
+  title: Order promising
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+  locator: ATP calculations ; CTP calculations
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Dates et quantités promettables ; le contrôle ATP ne constitue pas à lui seul une affectation protégée.
+- key: ms-ctp
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Supply Chain Management
+  title: Calculate sales order delivery dates using CTP
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp
+  locator: How CTP compares to ATP ; Batch CTP
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Faisabilité matières et capacités ; différences entre calcul unitaire et calcul dans un plan dynamique.
+- key: ms-marking
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Supply Chain Management
+  title: Inventory marking
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/marking
+  locator: Marking versus pegging
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Pegging révisable ; marking plus permanent et respecté au recalcul. Aucun engagement client déduit.
+- key: ms-priority
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Supply Chain Management
+  title: Priority-based planning
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/priority-based-planning
+  locator: Planning priority ; coverage ; priority models
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Priorités et règles de couverture ; cette planification de réassort ne démontre pas tout le réarbitrage
+    du carnet client.
+- key: ms-actions
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Supply Chain Management
+  title: Action messages
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/action-messages
+  locator: Select action messages
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Propositions d’avancement, report, réduction et augmentation ; proposition distincte de sa mise en œuvre.
+- key: ms-allocations
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Supply Chain Management
+  title: Inventory Visibility inventory allocation
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+  locator: Business background ; allocation versus soft reservation
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Droits par groupes ou canaux distincts des réservations liées aux commandes.
+- key: ms-reservation
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Supply Chain Management
+  title: Reserve inventory quantities
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/reserve-inventory-quantities
+  locator: Inventory reservation policies
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Réservations à différents moments, sur stock présent ou commandé ; pas de preuve d’un optimiseur complet
+    de règles.
+- key: ms-targets
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Supply Chain Management
+  title: Use the safety stock journal to update minimum coverage for items
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/safety-stock-journal
+  locator: Calculate minimum coverage ; Calculate a proposal
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Propositions de minimums et effets sur la valeur de stock, puis activation distincte.
+- key: ms-forecast
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Supply Chain Management
+  title: Inventory forecasts
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
+  locator: Inventory forecasting ; forecast models
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Prévisions de demande et supply ; taxonomie produit distincte du Supply Plan FLOW hors achats.
+- key: ms-dom
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Commerce
+  title: Distributed order management
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom
+  locator: Constraints and cost objectives
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Choix de sources sous contraintes et objectifs de coût ; pas d’équivalence intégrale avec PTP.
+- key: sap-arun
+  vendor: SAP
+  product_or_edition: SAP S/4HANA for Fashion and Vertical Business
+  title: Explaining Supply Assignment
+  url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+  locator: Supply Assignment Scenarios ; ARun Statuses ; Preview and Simulation ; Release Checking
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Affectation, simulation, réexamen et contrôle de libération ; ARun peut protéger un lien là où FLOW
+    distingue décision et réservation.
+- key: sap-bop
+  vendor: SAP
+  product_or_edition: SAP S/4HANA Cloud Public Edition
+  title: Exploring Backorder Processing
+  url: https://learning.sap.com/courses/optimizing-advanced-logistics-and-analytics-in-sap-s-4hana-cloud-public-edition/exploring-backorder-processing_fed6ddd5-39be-41ab-a977-e41a1c3715fe
+  locator: Reprioritization ; confirmation strategies ; segments
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Réexamen des confirmations de ventes et transferts selon des stratégies configurées.
+- key: sap-atp
+  vendor: SAP
+  product_or_edition: SAP S/4HANA
+  title: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-advanced-available-to-promise-aatp-in-sap-s-4hana
+  locator: aATP ; Product Allocation ; Release for Delivery
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Contrôle de disponibilité et protections ; couverture produit qui ne dicte pas les parents du modèle
+    FLOW.
+- key: sap-sbc
+  vendor: SAP
+  product_or_edition: SAP S/4HANA 2025 FPS01 / PP/DS
+  title: Supply Creation-Based Confirmation (SBC) in PP/DS
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/4c56297de7c33a0de10000000a42189c.html
+  locator: Use ; Integration ; Features
+  consulted_on: '2026-10-13'
+  consultation: indexed_content
+  finding_and_limits: 'Disponibilité insuffisante : création de propositions d’apport via PP/DS, avec contrôle de matières
+    et capacités. Contenu consulté dans le résultat indexé ; lecture directe HTML du portail limitée.'
+- key: sap-mrp
+  vendor: SAP
+  product_or_edition: SAP S/4HANA Sourcing & Procurement
+  title: Running Materials Requirements Planning
+  url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-sourcing-procurement/running-materials-requirements-planning
+  locator: MRP overview ; MRP procedures ; procurement proposals
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Besoins nets, propositions d’approvisionnement et modes de calcul ; pas de décision de négociation commerciale.
+- key: sap-retail
+  vendor: SAP
+  product_or_edition: SAP S/4HANA Retail
+  title: Performing Requirements Planning
+  url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/performing-requirements-planning_bbf9e421-fee4-4c82-bb13-5cf8ad7d7121
+  locator: Seasonal merchandise ; planned independent requirements
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Besoins saisonniers prévus, commandes et stocks pris en compte pour générer des propositions.
+- key: sap-program
+  vendor: SAP
+  product_or_edition: SAP S/4HANA Cloud Public Edition Manufacturing
+  title: Outlining Program Planning
+  url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a
+  locator: Make-to-stock ; dynamic consumption
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Consommation des besoins prévisionnels par les ventes ; appui à l’absence de double comptage.
+- key: sap-costs
+  vendor: SAP
+  product_or_edition: SAP S/4HANA Cloud Public Edition Transportation Management
+  title: Configuring Charge Management and Explaining the Charge Calculation Process
+  url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-transportation-management/configuring-charge-management-and-explaining-the-charge-calculation-process_d2c3b050-5874-4439-a88e-8dcfa231311c
+  locator: Charge calculation ; validity and calculation date
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: 'Calcul des coûts contractuels de transport : entrée d’arbitrage économique, pas preuve d’une capacité
+    native PTP.'
+- key: oracle-backlog
+  vendor: Oracle
+  product_or_edition: Fusion Cloud SCM 26B
+  title: Using Backlog Management
+  url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26b/faubm/using-backlog-management.pdf
+  locator: Chapter 1 ; printed pages 1–2 ; Chapter 3 page 29 ; Chapter 4
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Réarbitrage du carnet après promesse initiale, simulation, priorités, engagements et application des
+    résultats. Release Planning Results ne signifie pas départ en livraison.
+- key: oracle-process
+  vendor: Oracle
+  product_or_edition: Fusion Cloud SCM 26B
+  title: Overview of Backlog Management Processes
+  url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26b/faubm/overview-of-backlog-management-processes.html
+  locator: Planning ; Reviewing ; Simulating ; Releasing
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Parcours collectif entier ou filtré ; les résultats restent simulés avant application aux commandes.
+- key: oracle-costs
+  vendor: Oracle
+  product_or_edition: Fusion Cloud SCM 26C Global Order Promising
+  title: Create Alternative Fulfillment Scenarios to Reduce Cost
+  url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26c/fascp/create-alternative-fulfillment-scenarios-to-reduce-cost.html
+  locator: On-time delivery ; Cost ; Promise According to Arrival Date
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Alternatives évaluées par délai puis coût, avec fabrication, achats et transport ; pas de report illimité
+    au seul motif économique.
+- key: kanban
+  vendor: Kanban Guides
+  product_or_edition: The Kanban Guide May 2025
+  title: The Kanban Guide
+  url: https://kanbanguides.org/the-kanban-guide
+  locator: Definition of Workflow ; Actively Managing Items
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Politiques explicites, maîtrise de l’encours et vieillissement. Analogie de pilotage, pas capacité ERP
+    ni équivalence avec le carnet de ventes.
+- key: ms-release
+  vendor: Microsoft
+  product_or_edition: Dynamics 365 Supply Chain Management
+  title: Release to warehouse
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/release-to-warehouse-process
+  locator: Manual and automatic release ; Quantity to release ; partial release ; credit check
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Sélection et libération de commandes ou lignes ; réglages de quantité, partiel et contrôles. Le processus
+    produit inclut aussi création des objets logistiques et exécution, au-delà de la décision FLOW proposée.
+- key: sap-release
+  vendor: SAP
+  product_or_edition: SAP S/4HANA Sales
+  title: Using Advanced Available-To-Promise (aATP) in SAP S/4HANA
+  url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/using-advanced-available-to-promise-aatp-in-sap-s-4hana_ef38afd2-4730-433f-854a-613b8e4afec5
+  locator: 'Advanced ATP Scenario: Release for Delivery'
+  consulted_on: '2026-10-13'
+  consultation: primary_document_content
+  finding_and_limits: Traitement des confirmations avant libération en livraison, sous disponibilité et impacts économiques
+    ; fonction produit plus large que la seule décision proposée.
+capability_audit:
+- id: D05.f
+  current_name: Master Planning
+  concrete_service: Piloter la couverture du carnet et la cohérence des décisions dans le temps.
+  market_refs:
+  - ms-master
+  - ms-plans
+  - sap-arun
+  - oracle-backlog
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver la capacité Planning ; rendre ses livrables métier visibles avant les modalités Scope/Run/Stop. Expliciter
+    la mobilisation collective de CTP et PTP.
+- id: BHV006
+  current_name: Simulation & Analysis
+  concrete_service: Comparer plusieurs réponses possibles avant engagement.
+  market_refs:
+  - ms-plans
+  - sap-arun
+  - oracle-process
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver comme capacité, selon les accords existants ; exposer service, coût, risques et demandes gagnantes ou
+    pénalisées.
+- id: D02.e
+  current_name: Plan Application
+  concrete_service: Faire appliquer les choix autorisés et vérifier leurs effets.
+  market_refs:
+  - ms-actions
+  - sap-arun
+  - oracle-process
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver ; distinguer application du plan, changement d’engagement et autorisation de livraison.
+- id: D03.m
+  current_name: Demand Prioritization
+  concrete_service: Décider quelles demandes servir en priorité.
+  market_refs:
+  - ms-priority
+  - sap-bop
+  - oracle-backlog
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver ; la stratégie fixe les critères, cette capacité produit le classement contextualisé.
+- id: D05.e
+  current_name: Replenishment
+  concrete_service: Proposer les apports manquants et les ajustements de ceux attendus.
+  market_refs:
+  - ms-master
+  - ms-actions
+  - sap-mrp
+  - sap-sbc
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver ; ajouter la responsabilité explicite de proposition FLOW sous faisabilité CTP, sans reprise du carnet
+    d’achat MAP.
+- id: D05.c
+  current_name: Stock Redistribution
+  concrete_service: Décider de redistribuer du stock physique entre sites.
+  market_refs:
+  - ms-master
+  - sap-mrp
+  - oracle-costs
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: 'Conserver ; ne pas confondre transfert physique et réaffectation des mêmes pièces entre clients. Appuis partiels
+    : la consolidation de reliquats multi-sites reste moins précisément étayée dans cette consultation.'
+- id: D03.o
+  current_name: Supply Assignment
+  concrete_service: Choisir les ressources qui couvrent chaque demande et réviser ces choix.
+  market_refs:
+  - ms-marking
+  - sap-arun
+  - oracle-backlog
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: 'Conserver ; montrer affectation initiale et réaffectation du carnet. Les effets de protection doivent être explicites
+    : une décision FLOW n’a pas tous les effets d’un ARun SAP.'
+- id: D03.i
+  current_name: Available-to-Promise (ATP)
+  concrete_service: Évaluer les quantités et dates promettables avec les ressources présentes ou attendues.
+  market_refs:
+  - ms-atp
+  - sap-atp
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver dans Order Promising ; peut alimenter le plan collectif. Ne pas appeler ATP toute affectation automatique.
+- id: D03.j
+  current_name: Capable-to-Promise (CTP)
+  concrete_service: Évaluer si un nouvel apport est réalisable et à quelle date.
+  market_refs:
+  - ms-ctp
+  - sap-sbc
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver dans Order Promising et rendre sa mobilisation par Master Planning explicite ; pas de duplication de
+    capacité CTP.
+- id: D03.k
+  current_name: Profitable-to-Promise (PTP)
+  concrete_service: Choisir une possibilité de promesse selon ses effets économiques et les engagements.
+  market_refs:
+  - ms-dom
+  - sap-costs
+  - oracle-costs
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver ; documenter le chiffrage du plan collectif dans Simulation & Analysis. Les appuis Microsoft/SAP sont
+    partiels ; ils ne prouvent ni un module nommé PTP ni une optimisation générale des dates selon le pétrole.
+- id: D05.a
+  current_name: Physical Stock Target Optimization
+  concrete_service: Recommander les niveaux et seuils de stock à viser.
+  market_refs:
+  - ms-targets
+  - sap-mrp
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver comme contribution à Availability ; cette responsabilité justifie de ne pas réduire le sous-domaine
+    au carnet de ventes.
+- id: D05.d
+  current_name: Logical Stock Protection Optimization
+  concrete_service: Recommander les droits de stock par canal ou groupe.
+  market_refs:
+  - ms-allocations
+  - sap-atp
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver ; une révision d’enveloppe est différente d’une réaffectation entre commandes et doit être activée par
+    les politiques responsables.
+- id: D05.h
+  current_name: Reservation Rule Optimization
+  concrete_service: Recommander quand et dans quelles conditions protéger une ressource pour une demande.
+  market_refs:
+  - ms-reservation
+  - sap-arun
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver ; distinguer recommandation de règle, gouvernance de règle et réservation effective. Sources pertinentes
+    sur les mécanismes, mais pas de preuve d’un optimiseur complet de règles de réservation.
+- id: plans-visibility
+  current_name: Supply Plan Visibility
+  concrete_service: Interpréter les ressources futures prévues et leurs limites.
+  market_refs:
+  - ms-forecast
+  - sap-retail
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver ; expliciter le Supply Plan FLOW hors achats. Les achats attendus et propositions d’achat restent d’autres
+    objets de couverture.
+- id: demand-plan-visibility
+  current_name: Demand Plan Visibility
+  concrete_service: Interpréter les besoins prévisionnels qui complètent les demandes connues.
+  market_refs:
+  - ms-forecast
+  - sap-program
+  relationship: Recouvrement fonctionnel partiel ; aucune équivalence de catalogue de capacités.
+  proposal: Conserver ; ne pas additionner les précommandes et la prévision déjà consommée par ces demandes.
+findings:
+- key: split
+  model_refs:
+  - ba-master-plan-management
+  - ba-supply-matching
+  assessment: Le plan et les décisions de couverture sont séparés en deux Business Areas, alors que leurs fiches coopèrent
+    au même plan commun.
+  recommendation: Réunir ces Business Areas en conservant les sept capacités et leurs identités ; proposer Master Plan Management
+    comme nom du regroupement. Le bénéfice est une responsabilité collective lisible, sans fusion des décisions ni séquence
+    imposée.
+- key: story
+  model_refs:
+  - D05.f
+  - D03.o
+  assessment: La couverture est largement présente ; le pilotage continu du carnet ne ressort pas dans la carte. Les sept
+    comportements du Planning nomment surtout son pilotage de travail, pas les situations métier.
+  recommendation: Introduire le service concret et un scénario autonome montrant la mobilisation des capacités ; ne pas transformer
+    colonnes Kanban, réception, affermissement ou release en nouvelles capacités. Ne pas supprimer les comportements adoptés
+    par simple préférence éditoriale.
+- key: procurement-boundary
+  model_refs:
+  - D05.f
+  - D05.e
+  - D03.j
+  - D04.j
+  term_refs:
+  - TER033
+  - TER098
+  - TER100
+  assessment: CTP et Replenishment permettent déjà d’examiner des apports. Certaines clauses de Purchase Order réservent cependant
+    le calcul amont des propositions à Demand & Supply Planning. La responsabilité de proposition FLOW voulue U1001/U1003
+    doit être rendue compatible avec ces clauses.
+  recommendation: FLOW formule un besoin d’apport et une proposition conditionnelle ; MAP conserve la planification et le
+    carnet d’achat. Définir retour accepté/refusé/révisé, provenance et substitution de couverture, sans inventer un flux
+    installé ni confondre lecture des achats et gestion de leur carnet.
+- key: assignment-firmness
+  model_refs:
+  - D03.i
+  - D03.o
+  - D02.c
+  - D04
+  term_refs:
+  - TER044
+  - TER204
+  - TER197
+  assessment: ATP, lien de couverture, protection de ressource et engagement de commande sont distincts. Le scénario peut
+    les coordonner, mais une fermeté de demande ne fige pas automatiquement sa supply.
+  recommendation: Expliciter pour chaque stratégie les effets associés et les révisions autorisées. La ressource attendue
+    protégée peut toujours subir un aléa physique ; ne pas déduire une garantie absolue du seul pegging.
+- key: strategy
+  model_refs:
+  - subdomain-policies
+  - ba-protection-policies
+  - D19.b
+  - D02.b
+  assessment: Les règles actives existent comme références de protection ; une capacité explicite de maintien de la stratégie
+    globale du carnet manque dans ce périmètre de la carte.
+  recommendation: Proposer une capacité de type policy, Demand Fulfilment Policy Management, sous la Business Area persistante
+    ba-protection-policies, avec extension de son nom et périmètre en Demand & Supply Policies. Elle compose et maintient
+    les règles applicables ; les références existantes restent distinctes. Nom FLOW proposé, pas taxonomie commune aux éditeurs.
+  market_refs:
+  - ms-plans
+  - ms-priority
+  - ms-reservation
+  - sap-bop
+  - sap-arun
+  - oracle-process
+  limits: Rattachement, nom et périmètre nouveaux non adoptés ; pas de nouvel identifiant canonique attribué dans cet audit.
+- key: hotspot
+  model_refs:
+  - D03.o
+  - ba-master-plan-management
+  - subdomain-policies
+  assessment: HS-008 est localisé uniquement sur Supply Assignment et décrit un écart avant promesse ferme ; ce cadrage est
+    plus étroit que le sujet global confirmé U1007.
+  recommendation: Recentrer titre, problème et analyse d’écart sur le pilotage du carnet et sa stratégie, sans altérer les
+    preuves ou choisir une option de convergence.
+- key: delivery-release
+  model_refs:
+  - D04.i
+  - D02.e
+  - service-order-release-decision
+  assessment: La tenue de l’engagement et l’autorisation des transitions sont couvertes dans les familles de commandes. La
+    décision collective de sélectionner les commandes à livrer ne possède pas de capacité explicite dans Master Plan Management.
+    Service Order Release Decision traite les prestations à libérer, en aval de l’autorisation du parcours de commande.
+  recommendation: Ajouter à la proposition une capacité Delivery Release Decision dans Master Plan Management. Séparer la
+    décision de sélection, son application par les responsables des commandes et la libération des prestations. Ne pas créer
+    une seconde tenue des engagements.
+  market_refs:
+  - ms-release
+  - sap-release
+  - sap-arun
+proposed_map:
+  availability:
+    id: D03
+    name: Availability
+    rename: false
+  master_plan_management:
+    retained_identity: ba-master-plan-management
+    name: Master Plan Management
+    merge_candidate: ba-supply-matching
+    capabilities:
+    - D05.f
+    - BHV006
+    - D02.e
+    - D03.m
+    - D05.e
+    - D05.c
+    - D03.o
+    definition: 'Piloter la couverture du carnet de demandes et des besoins prévisionnels complémentaires : décider des priorités
+      et affectations, proposer les apports et transferts utiles, comparer les alternatives et appliquer les choix autorisés.'
+    additional_proposed_capabilities:
+    - Delivery Release Decision
+  order_promising:
+    identity: ba-order-promising
+    capabilities:
+    - D03.i
+    - D03.j
+    - D03.k
+    boundary: Réponse proposée à une demande identifiée ; ATP/CTP/PTP mobilisables par le plan collectif, sans duplication.
+  policy_capability:
+    name: Demand Fulfilment Policy Management
+    kind: capability
+    nature: policy
+    parent_business_area_id: ba-protection-policies
+    parent_subdomain_id: subdomain-policies
+    parent_name_proposal: Demand & Supply Policies
+    definition: 'Définir, maintenir et rendre applicables les stratégies de satisfaction des demandes : admission, priorités,
+      droits de ressource, stabilité des affectations, préparation à la livraison et recours aux nouveaux apports.'
+    outputs: Règles versionnées, portée, horizon, critères, conditions, autorités et dérogations ; consommation des conditions
+      contractuelles reçues, sans négocier les contrats ni réécrire leurs engagements.
+    exclusions: Ne classe pas elle-même le carnet, ne calcule pas le plan, ne réserve pas le stock et ne conduit pas le processus.
+    decomposition: Aucun comportement proposé à ce stade ; les paramètres d’une stratégie ne deviennent pas des capacités.
+  unchanged_contributions:
+  - D05.a
+  - D05.d
+  - D05.h
+  - plans-visibility
+  - demand-plan-visibility
+  delivery_release_capability:
+    name: Delivery Release Decision
+    kind: capability
+    nature: decision
+    parent_business_area_id: ba-master-plan-management
+    parent_subdomain_id: D03
+    definition: Déterminer quelles commandes, lignes et quantités du carnet peuvent être autorisées à entrer en livraison,
+      à quel moment, et lesquelles doivent rester en attente.
+    inputs:
+    - Échéances et engagements applicables
+    - Couverture réellement admissible et disponibilité pour la préparation
+    - Exigences de complétude et livraison partielle
+    - Règles de gestion du carnet et résultats des contrôles requis
+    - Dépendances entre commandes, lignes et quantités
+    outputs: Périmètre retenu pour libération, date ou condition, périmètre maintenu en attente et motifs. La décision est
+      réexaminable avant application selon les règles ; pas de disponibilité future certaine présumée.
+    boundaries: Les familles de commandes appliquent l’autorisation sous leurs règles de transition et conservent l’engagement.
+      Plan Application transmet et suit le changement retenu sans seconde autorité. Service Order Release Decision détermine
+      ensuite le moment et le regroupement des prestations ; Fulfilment Coordination fait appliquer cette décision aval. L’éligibilité
+      à livrer ne confirme ni ne réécrit implicitement un engagement client.
+    justification: 'Résultat métier distinct de l’affectation et du calcul du plan : choisir ce qui peut effectivement entrer
+      en livraison sur le carnet. Décision répétée, unitaire ou collective, utile indépendamment de tout bouton de release
+      ou moteur batch.'
+    market_refs:
+    - ms-release
+    - sap-release
+    relationship: Recouvrement fonctionnel partiel ; nom et parent FLOW proposés, sans équivalence de taxonomie.
+    example: 'Trois commandes sont couvertes : une est trop éloignée de son échéance, une exige une livraison complète dont
+      une ligne reste indisponible, la troisième remplit les conditions. Retenir la troisième et expliciter l’attente des
+      deux autres.'
+    decomposition: Aucun comportement proposé à ce stade ; pas de nouveau cycle de commande.
+    status: applied_to_backlog
+  commitment_position:
+    existing_owner: D04.i
+    definition: La famille Sales Order tient la confirmation, la fermeté et les révisions autorisées de ses engagements. Le
+      plan propose les changements et la stratégie fixe les conditions. Une décision de libération ne confirme pas la commande
+      à leur place.
+    decision: Pas de capacité concurrente de gestion des engagements proposée dans Availability ; rendre cette coopération
+      visible dans le récit.
+story:
+- moment: Une commande ou précommande arrive.
+  capabilities:
+  - D04.i
+  - D03.i
+  - D03.o
+  - D02.e
+  meaning: La demande garde son identité ; ATP évalue la possibilité et Supply Assignment choisit le lien de couverture. L’affectation
+    initiale peut rester révisable selon la stratégie.
+- moment: Le carnet évolue ou une arrivée est retardée.
+  capabilities:
+  - D05.f
+  - D03.m
+  - D03.o
+  - BHV006
+  meaning: Réexaminer ensemble les commandes concernées ; proposer maintien, report, partiel, réaffectation ou refus, avec
+    effets sur les autres demandes et droits contractuels.
+- moment: Les ressources ne suffisent pas.
+  capabilities:
+  - D05.e
+  - D03.j
+  - D05.c
+  - D05.d
+  meaning: Comparer nouvel apport réalisable, redistribution physique ou changement de droits de canal. MAP garde le pilotage
+    des achats et répond aux propositions selon le parcours à préciser.
+- moment: Un compromis économique est possible.
+  capabilities:
+  - D03.k
+  - BHV006
+  - D05.f
+  meaning: Comparer les coûts applicables, stockage, transport, service et risque ; un report n’est permis que dans les marges
+    autorisées. Le pétrole cité est une hypothèse de scénario, pas un fait de marché vérifié ici.
+- moment: L’engagement se stabilise et les ressources sont protégées.
+  capabilities:
+  - D04.i
+  - D05.h
+  - D02.c
+  - D02.e
+  meaning: Faire appliquer les effets prévus par la stratégie et le contrat ; fermeté, protection contre réoptimisation, réservation
+    et promesse restent distinctes.
+- moment: Les commandes éligibles passent en livraison.
+  capabilities:
+  - D04.i
+  - D02.e
+  - service-order-release-decision
+  - D06.d
+  meaning: Delivery Release Decision sélectionne les commandes et quantités éligibles ; la famille de commande applique l’autorisation.
+    La décision aval de libérer les prestations appartient à Service Order Release Decision et sa mise en œuvre à Fulfilment
+    Coordination. Aucun statut global ni seconde gestion des engagements.
+  proposed_capabilities:
+  - Delivery Release Decision
+kanban_position: Analogie utile de carnet piloté par politiques et vieillissement. Un vrai système Kanban exige aussi une
+  définition du flux et un contrôle de l’encours ; ce n’est pas démontré par la seule présence de colonnes. Le parcours mobilise
+  les capacités sans devenir leur parent.
+hotspot_proposal:
+  id: HS-008
+  source_refs:
+  - U953
+  - U954
+  - U973
+  - U999
+  - U1001
+  - U1003
+  - U1007
+  title: Pilotage du carnet Wholesale et stratégies de couverture
+  location:
+    node_ids:
+    - ba-master-plan-management
+    - subdomain-policies
+  location_rationale: Ancrage collectif sur Master Plan Management, avec la stratégie dans Supply Policy Management. Les capacités
+    de promesse, stock et commandes sont des contributions à expliquer, pas toutes des ancres nécessaires.
+  problem: Les pratiques rapportées pour les Marques Historiques privilégient une décision immédiate sur le stock présent
+    ; Boardriders conserve les demandes non couvertes et réarbitre le carnet dans le temps. Quel socle de capacités et quelles
+    stratégies configurables permettent de couvrir ces besoins, les réceptions futures, les priorités, les engagements et
+    la préparation à la livraison, tout en conservant MAP pour la planification et le carnet d’achat ?
+  gap_updates:
+  - id: hs-008-wholesale-rules
+    subject_node_id: ba-master-plan-management
+    title_proposal: Stratégie transactionnelle et pilotage planifié du carnet
+    assessment: Écart de règles et de pratiques ; il ne prouve pas une absence de capacité technique dans un SI.
+  - id: hs-008-future-supply
+    subject_node_id: ba-master-plan-management
+    title_proposal: Prise en compte des ressources futures dans le pilotage du carnet
+    assessment: Conserver la couverture partielle rapportée et la limite de l’étude SAP de juillet 2025 ; disponibilité technique
+      actuelle à vérifier.
+  proposal_not_observation: Les propositions d’approvisionnement FLOW et la stratégie cible sont un besoin U999–U1007 ; ne
+    pas les présenter comme déjà réalisées chez Boardriders.
+  preserve:
+  - Identité HS-008
+  - Observations et source_refs historiques
+  - Quatre options de convergence et leurs identités, sans sélection
+  - Scores et réserves existants, sans requalification implicite
+  - Sarenza non évalué
+  - Aucune généralisation des parts 10 %/60 % sans période et dénominateur
+  related_fields_to_reexamine:
+  - market_view.flow_assessment
+  - complexity.rationale
+  - framing_impact.rationale
+  - resolution_options.principle and conditions
+  - gap_analysis.open_questions
+glossary_review:
+  checked:
+  - TER033
+  - TER044
+  - TER045
+  - TER068
+  - TER098
+  - TER100
+  - TER112
+  - TER133
+  - TER150
+  - TER197
+  - TER204
+  - TER205
+  result: 'Alignement appliqué U1009 : TER133, TER159, alias historique TER134, frontière propositions/MAP et nouvelles notions.
+    Compléments rédactionnels proposés ; publications historiques conservées.'
+  aligned_items:
+  - TER133 et usages de Demand / Supply Matching à aligner avec la fusion
+  - 'TER100 et TER033 : distinguer proposition FLOW et calcul/commande MAP'
+  - 'TER045 : expliciter mobilisation collective sans nouvelle CTP'
+  - TER098 conserve le sens FLOW hors achats ; expliquer cette différence avec le supply plan au sens large du scénario
+  - Liens et qualifications HS-008 à aligner dans le même lot
+  - Définir Delivery Release Decision et son résultat sans confondre affermissement, confirmation de promesse, autorisation
+    de commande et libération des prestations.
+  - Demand Fulfilment Strategy défini en TER268 ; aucun ajout d’une notion Kanban méthodologique ni assimilation à un statut
+    global.
+limits:
+- 'Marché consulté : Microsoft Dynamics, SAP S/4HANA, Oracle et méthode Kanban ; pas d’étude exhaustive de tous les éditeurs.'
+- 'Documents évolutifs ou sans édition : date et sections conservées ; pas de consensus ni réalisation installée déduits.'
+- Portail SAP Help partiellement inaccessible en lecture directe ; SAP Learning fournit des passages complets pour les sujets
+  cœur, SBC reste documenté par contenu indexé.
+- Les études historiques et accords existants ne sont ni réécrits ni étendus ; audit des comportements clos non rouvert.
+- Lot appliqué au backlog U1009 ; aucune publication, aucune réalisation installée nouvelle ni option de convergence choisie.
+agreement:
+  verbatim: Je valide tout
+  author: Laurent
+  decided_at: '2026-10-13'
+  source_ref: U1009
+  scope: Lot complet construit U999–U1008 ; piste U1000 abandonnée exclue ; compléments rédactionnels postérieurs proposés.
+publication_delivery:
+  state: applied
+  summary: 'U1009 : plan collectif, stratégie configurable, décision de livraison, frontière MAP et HS-008.'
+  source_refs:
+  - U999
+  - U1001
+  - U1003
+  - U1004
+  - U1005
+  - U1006
+  - U1007
+  - U1008
+  - U1009
+  required_nodes:
+  - id: D05.e
+    kind: capability
+    field_sha256:
+      definition: e1c7ea35141bf35054b3e08c27a58e8936fd05b45426c35b2c883ca2119f339d
+      market_comparisons: bf720cf288cdcacadf21ed995c78940afb6c81cb7acd22068cae9a9d69727611
+      reading_order: ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d
+      scope: 2eb92ae040ae1833f41a0ca86d92e44019af1e0ea4c71109d1ea4dab7a65d240
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: D03
+    kind: area
+    field_sha256:
+      market_comparisons: c10edea6992cdb1e62fb19e4963ef2b6ec31381ac685afe8e3425af2a3719ec3
+      scope: 434418bd354cfb6f81253138197c0a53d0233c8a630ab51b473fc84fc2a3ca63
+  - id: ba-physical-stock-configuration-optimization
+    kind: business_area
+    field_sha256:
+      market_comparisons: 42a9c05aba531562f7b4e3fbf84cecd55258ffa2ad39a789bc5ffbc0f3358ef2
+      scope: ddeadcc82df80b314ed3912ab8816da6b250cf69b10720390ca0c1ea34e879bf
+  - id: ba-policy-optimization
+    kind: business_area
+    field_sha256:
+      market_comparisons: fb49052f93d0a1dc91d0ac21918cb52c1ddb763983e80685ba17d7b97705957b
+      scope: aeba3a58a67a99d9dd87d3dc9ef98dede29754c87eef375d92a7f3204aa2357b
+  - id: ba-master-plan-management
+    kind: business_area
+    field_sha256:
+      definition: cea2441816897f667b2f80cdba82fc36c44ee1b2c3d86c4f81cd93a6f2e81f7d
+      finality: 14c5f6ed8cff0b957115061a37b0321000a0342b5072c82d35477a5a492e0cfc
+      market_comparisons: 6247f02bd07ff76c2d874e443dce0c6169fa1c9962d630197c451e9021104c38
+      scope: 3ea3cb20b3d8695e13ca88395d6a8e1c36de4e7337df7f644bcd8968c98f85b6
+  - id: D03.m
+    kind: capability
+    field_sha256:
+      definition: 4645d301a1fd8a9a789638f6ef40825d1b52441e69fa187bb380281dc541a8da
+      market_comparisons: 3fd496aa85e212342eef07c6322003d330b2b2442ab70e9d7af204228bf9d3b6
+      reading_order: 4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: D05.c
+    kind: capability
+    field_sha256:
+      definition: d381e8c2ae64eeb9b6b3fa5b70f4c19d5c46930e693284e446c0aa2d419198be
+      market_comparisons: d7a80e2a33432148be327e06842c378d8429d04b29f4a9816f6fa024fe14c490
+      reading_order: e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: D03.o
+    kind: capability
+    field_sha256:
+      definition: 416adfe160808fbfa3ea79efcab6a41eed6b80831c98f478c3a70932a5c92e56
+      market_comparisons: 62ccf7b035f13e04d7df0e8396c5bc47828ad04cee45abcfe291588025381292
+      reading_order: 7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: D05.f
+    kind: capability
+    field_sha256:
+      definition: 80a3ebf99ead66ab20d9a9561767111f5f7a51914afe3d98f8bb65179a2db978
+      market_comparisons: ef0bf843abb433131ae8724b6c46dcc6bc32d782b42d56ba11353a10d6939a95
+      scope: b759521f4bde534ab4a02cf9139d95af00d5182add9dcc6c8a036d966b318adc
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: BHV006
+    kind: capability
+    field_sha256:
+      definition: c4078b1210207d02cb00ed7b03cd49c35191b40965a761a58107a94faae916a8
+      market_comparisons: bf89db6fff7696d07b1463483776653956b6fe067000c9f17bb86b71c20bef07
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: D02.e
+    kind: capability
+    field_sha256:
+      definition: 5107255849e9e2544d1f776b3926d7f183c3f94b618a502f5aa9130fa99b7fcf
+      market_comparisons: c5d3077e3ac219ef3afdb4b2b06182bc64a5c9ec9b87d50d8e503aab207ec6da
+      scope: e38a4c1b6022fd5680ea1881e1d3e85944edff23c663a314a82e6b02e50ccab1
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: D03.j
+    kind: capability
+    field_sha256:
+      market_comparisons: 84f85af1e5a0fd667e447b9c0b3fb1b8718724baeb5de201c3cdae69d6a9e152
+      scope: aee76dd7a9ddef26741af2cd264ffd3afceace03d7364c4414dacbdf592a938b
+  - id: D03.i
+    kind: capability
+    field_sha256:
+      market_comparisons: 60c20b6c6956c2cddbd6e3732589fc07889a5278964f99491c8cc68cb1abf1cd
+      scope: 89875056834cdd2a8160ef5384ccc84b79fa11c5965b2f55ee79526b1f2db445
+  - id: D03.k
+    kind: capability
+    field_sha256:
+      market_comparisons: 328cfd57b5d0452a0c323414eb83e4ebc7a63ba5828ca6d6a07dd522b6b3c757
+      scope: ec60a8d1e8176e7bb0c6495d1a3c4432aa7e9334219bf31cce12a43ad8a79434
+  - id: D04.i
+    kind: capability
+    field_sha256:
+      scope: 87e611d5044e4b0bddf9f41ea3cba6f9b4d3941b37485e3aebe2f211684a1014
+  - id: D04.j
+    kind: capability
+    field_sha256:
+      scope: 090596fe3eb407a904f35ad17a76bea8cdc84aa25aa89abb43538dadb1c95ef5
+  - id: ba-protection-policies
+    kind: business_area
+    field_sha256:
+      definition: 2d01667149163b4de9317c166220fae23205e001c035a9e57b7fdb3f787a1ac7
+      market_comparisons: e576195e1ffdbe80987e7c7eef91f1469406bdae4d8a773c78332fa4f1a24139
+      name: 0f4fdda46890b852735fcd3d2c2d9661a891be82a8e289f35b8fb9d2fbb65bde
+      scope: 8e4f07a1145e5e1fbd7a967d11f5624e9abc539c12aa3f041f29832a996e5ede
+  - id: subdomain-policies
+    kind: area
+    field_sha256:
+      market_comparisons: 4833cb933d9d4adb540e835210c5f52141a8a42bbceb3d0a056a5b4f986530c7
+      scope: 511305bc321ed0b04379e822ca1b2c249280aeac5c2e0baa5ac1c7805e0703df
+  - id: demand-fulfilment-policy-management
+    kind: capability
+    field_sha256:
+      definition: 74b588963cb216e21e1771cb2c9c8664035c9e81d289c43618a8feb6d5c743a3
+      finality: 0414f3288f5af8a066be0f062af7f5be8f8e1b6a5e48cdcc41084808fa7e94af
+      market_comparisons: 849bbe98d39ed4fbe87d6cfdb5fae33b35c76fe8a657519078cf75e8d9bed3bb
+      name: 756018b4d91f4922b612224493d222dc0d1669a247175de5a3705afb76a76ec3
+      nature: 17ad92e63c962393c0329c658937d16eccaea13036412a3d1d0a5b6b8f29d738
+      scope: 05e68ef9c5d7f154df24e5b6262874715d35083719a76b5d855a33459bb47151
+    parent: ba-protection-policies
+    parent_type: contains
+  - id: delivery-release-decision
+    kind: capability
+    field_sha256:
+      definition: f0870c8e5eb2b93ab8b832d5b75789d5ff2c93f78eac4842e2f64ae57ad1ef0c
+      finality: 74e8d6bedeabf0d3c50bddaa35388672f594cfd174162d2ab080a1db1d231635
+      market_comparisons: 28bb0db11f871c01cd2caf05daed8da23978f89dbfcc6c49eea5c6de914c99ba
+      name: 04ddd93120571966bf079bca9da1e23414362548ab46b53c86b6134f52d95d29
+      nature: 0807ce842aee519403b764131eee1dc3a4848c949a635ffabbf343abab61198e
+      reading_order: 2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3
+      scope: 73d7dee0fda733db94fe71b5c819e2bb7ca50321adc505f4b4fb04b7931bc4a0
+    parent: ba-master-plan-management
+    parent_type: contains
+  absent_nodes:
+  - ba-supply-matching
+  absent_relations:
+  - REL-U848-PARENT-ba-supply-matching
+  required_relations:
+  - id: REL-U848-PARENT-D03.m
+    type: contains
+    source_id: ba-master-plan-management
+    target_id: D03.m
+  - id: REL-U848-PARENT-D05.e
+    type: contains
+    source_id: ba-master-plan-management
+    target_id: D05.e
+  - id: REL-U848-PARENT-D05.c
+    type: contains
+    source_id: ba-master-plan-management
+    target_id: D05.c
+  - id: REL-U848-PARENT-D03.o
+    type: contains
+    source_id: ba-master-plan-management
+    target_id: D03.o
+  - id: REL-U1009-PARENT-demand-fulfilment-policy-management
+    type: contains
+    source_id: ba-protection-policies
+    target_id: demand-fulfilment-policy-management
+  - id: REL-U1009-PARENT-delivery-release-decision
+    type: contains
+    source_id: ba-master-plan-management
+    target_id: delivery-release-decision
+  required_glossary:
+  - id: TER074
+    field_sha256:
+      context: d9f5dfc6cdceebbe7b0afdd325017e5c7787007aaf69eeb3246f4ad0347d5d1f
+  - id: TER112
+    field_sha256:
+      context: 757d37ba004a96dc1c60aeb1eea3357bd341a7d920524634fd54ded77d2a2094
+      market_comparisons: c10edea6992cdb1e62fb19e4963ef2b6ec31381ac685afe8e3425af2a3719ec3
+  - id: TER124
+    field_sha256:
+      context: 7c8d49f1c3b516d76fba49d4889b53703088a97194a37b344b4c2323229faeaa
+  - id: TER134
+    field_sha256:
+      alias_of: 98119e187ca9a4c45f2c884ec6dfffb9c6cc46408a9d00291cfbf2fce50bc445
+      context: ae156c088ba94b97ec1bae8c635020daf0033aeb3161b3e9c3445261c75da4d5
+      notes: 6d17d88b1db5fdc850812a99397b769f5c7d01a1fbab421e2d133f3b033fb0a0
+  - id: TER202
+    field_sha256:
+      market_comparisons: 42a9c05aba531562f7b4e3fbf84cecd55258ffa2ad39a789bc5ffbc0f3358ef2
+  - id: TER135
+    field_sha256:
+      context: 43bc3da5415f3f9cb1286a644202b4b513aad86cc6fd5c71726c14598212a2f8
+      market_comparisons: fb49052f93d0a1dc91d0ac21918cb52c1ddb763983e80685ba17d7b97705957b
+  - id: TER159
+    field_sha256:
+      context: 8e4f07a1145e5e1fbd7a967d11f5624e9abc539c12aa3f041f29832a996e5ede
+      definition: 2d01667149163b4de9317c166220fae23205e001c035a9e57b7fdb3f787a1ac7
+      market_comparisons: e576195e1ffdbe80987e7c7eef91f1469406bdae4d8a773c78332fa4f1a24139
+      name: 0f4fdda46890b852735fcd3d2c2d9661a891be82a8e289f35b8fb9d2fbb65bde
+      short_description: 2d01667149163b4de9317c166220fae23205e001c035a9e57b7fdb3f787a1ac7
+  - id: TER266
+    field_sha256:
+      context: 05e68ef9c5d7f154df24e5b6262874715d35083719a76b5d855a33459bb47151
+      definition: 74b588963cb216e21e1771cb2c9c8664035c9e81d289c43618a8feb6d5c743a3
+      market_comparisons: 849bbe98d39ed4fbe87d6cfdb5fae33b35c76fe8a657519078cf75e8d9bed3bb
+      name: 756018b4d91f4922b612224493d222dc0d1669a247175de5a3705afb76a76ec3
+      short_description: 74b588963cb216e21e1771cb2c9c8664035c9e81d289c43618a8feb6d5c743a3
+  - id: TER267
+    field_sha256:
+      context: 73d7dee0fda733db94fe71b5c819e2bb7ca50321adc505f4b4fb04b7931bc4a0
+      definition: f0870c8e5eb2b93ab8b832d5b75789d5ff2c93f78eac4842e2f64ae57ad1ef0c
+      market_comparisons: 28bb0db11f871c01cd2caf05daed8da23978f89dbfcc6c49eea5c6de914c99ba
+      name: 04ddd93120571966bf079bca9da1e23414362548ab46b53c86b6134f52d95d29
+      short_description: f0870c8e5eb2b93ab8b832d5b75789d5ff2c93f78eac4842e2f64ae57ad1ef0c
+  - id: TER268
+    field_sha256:
+      context: 406dad35da5173f696cdce9fca86663fb5dbce9747da4f5dcbea1e11e955c95e
+      definition: 98a42dd5a44da33f501e91fdc39c52a2fe3a99ccf3d3f3c4ea811ebfd2b1e7e7
+      market_comparisons: d78a0ca9e843fbb25eb0a147a05d1cc80b3ca17888326595a92d296b35c736d7
+      name: af8914b830c2e6d230ae0c23d84ef6273e57a38e8d76f89cf6beff096e48f49b
+      short_description: 77d19b5e5c02b62b7983b8a97a6b38d66ecdb835156fb12c587c920c3053d1c4
+  - id: TER133
+    field_sha256:
+      context: 3ea3cb20b3d8695e13ca88395d6a8e1c36de4e7337df7f644bcd8968c98f85b6
+      definition: cea2441816897f667b2f80cdba82fc36c44ee1b2c3d86c4f81cd93a6f2e81f7d
+      market_comparisons: 6247f02bd07ff76c2d874e443dce0c6169fa1c9962d630197c451e9021104c38
+      short_description: cea2441816897f667b2f80cdba82fc36c44ee1b2c3d86c4f81cd93a6f2e81f7d
+  - id: TER100
+    field_sha256:
+      context: cde51f93bdcd5ead7da6ada5143a9459a12110142b346dcf5e98059abda0722b
+      definition: b3239d8027e462a27b60aa599ea1e8904712bb5f6c2f232345421dbc51e72005
+      short_description: 46d6ea69023f31f78e8a55deda1c9560b3fa95cbf20156e9ddaf8bb7ab06fe22
+  - id: TER033
+    field_sha256:
+      context: 31de43367b150a30a4f9a025a0c473c638ce2c41aada80b9c3ab7a58b5eef652
+  - id: TER044
+    field_sha256:
+      context: 496b15ae2dfdcdfd3ac5e3091add44bf7e19a5c537ebff8403ba9c960e382f26
+  - id: TER045
+    field_sha256:
+      context: f260687ab1462b66f061bb32bd9dc69074d1e1016dfa2ef91c6354e8dcb006c0
+  - id: TER068
+    field_sha256:
+      context: 82d43875f8302cabaaf6fc78e3b7ce77a529023ca53715aa547b83013f11b50b
+  - id: TER205
+    field_sha256:
+      context: 1fc13e56287ae063fdccd186f6369676aee224702d246726a105f630714a386e
+  required_catalog:
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 617edf857a06de8789bb0a9567d471de8ccfe6c57953fd9963be7dd75636510e
+  - collection: scenarios
+    id: seasonal-order-backlog
+    content_sha256: 4421d28db1cf87c5f933f38bdeaab3afce91f869cdca956fc8f0b32467475d56
+  - collection: paths
+    id: seasonal-order-backlog-path
+    content_sha256: adc6407b3379ff66bebbf4345d61aa3379ede0c321a14849e5a41e5cb33c9c96
+  - collection: hotspots
+    id: HS-025
+    content_sha256: 9dc68b23b1b28c8ce4c3d1b49fda7a9e8b209dfbc753506669d0d18af4dddcae
+  supersedes_requirements:
+  - annex: availability-stabilization-U877.yaml
+    collection: nodes
+    id: D04.j
+    fields:
+    - scope
+  - annex: availability-stabilization-U877.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - definition
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - definition
+    - finality
+    - scope
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: ba-supply-matching
+    fields:
+    - exists
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: ba-policy-optimization
+    fields:
+    - scope
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: D03.m
+    fields:
+    - parent
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - parent
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: D05.c
+    fields:
+    - parent
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: D03.o
+    fields:
+    - parent
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: subdomain-policies
+    fields:
+    - scope
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: D04.i
+    fields:
+    - scope
+  - annex: credit-check-decision-U892.yaml
+    collection: nodes
+    id: D04.i
+    fields:
+    - scope
+  - annex: hotspot-audit-application-U973.yaml
+    collection: hotspots
+    id: HS-008
+    fields:
+    - content_sha256
+  - annex: hotspot-first-lot-U948.yaml
+    collection: hotspots
+    id: HS-008
+    fields:
+    - content_sha256
+  - annex: hotspot-framing-impact-U959.yaml
+    collection: hotspots
+    id: HS-008
+    fields:
+    - content_sha256
+  - annex: hotspot-gap-analysis-U951.yaml
+    collection: hotspots
+    id: HS-008
+    fields:
+    - content_sha256
+  - annex: hotspot-gap-research-U955.yaml
+    collection: hotspots
+    id: HS-008
+    fields:
+    - content_sha256
+  - annex: hotspot-progress-U950.yaml
+    collection: hotspots
+    id: HS-008
+    fields:
+    - content_sha256
+  - annex: hotspot-resolution-U949.yaml
+    collection: hotspots
+    id: HS-008
+    fields:
+    - content_sha256
+  - annex: matching-refactoring-U747.yaml
+    collection: nodes
+    id: D03.m
+    fields:
+    - parent
+  - annex: matching-refactoring-U747.yaml
+    collection: nodes
+    id: D03.o
+    fields:
+    - parent
+  - annex: matching-refactoring-U747.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - parent
+  - annex: matching-refactoring-U747.yaml
+    collection: nodes
+    id: D05.c
+    fields:
+    - parent
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - scope
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: D03.i
+    fields:
+    - scope
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: D03.j
+    fields:
+    - scope
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: D03.k
+    fields:
+    - scope
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: D04.i
+    fields:
+    - scope
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: D02.e
+    fields:
+    - definition
+    - scope
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: subdomain-policies
+    fields:
+    - scope
+    - market_comparisons
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: nodes
+    id: D03.i
+    fields:
+    - scope
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - scope
+    - market_comparisons
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: ba-supply-matching
+    fields:
+    - exists
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - definition
+    - scope
+    - market_comparisons
+    - parent
+  - annex: required-business-areas-U880.yaml
+    collection: nodes
+    id: ba-protection-policies
+    fields:
+    - name
+    - definition
+    - scope
+  - annex: stock-configuration-boundaries-U910.yaml
+    collection: nodes
+    id: ba-supply-matching
+    fields:
+    - exists
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - finality
+    - scope
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-supply-matching
+    fields:
+    - exists
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-policy-optimization
+    fields:
+    - scope
+    - market_comparisons
+  - annex: vocabulary-boundary-audit-U770.yaml
+    collection: nodes
+    id: D02.e
+    fields:
+    - scope
+  - annex: vocabulary-boundary-audit-U770.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - scope
+  - annex: vocabulary-boundary-audit-U770.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - scope
+  - annex: hotspot-audit-application-U973.yaml
+    collection: hotspots
+    id: HS-025
+    fields:
+    - content_sha256
+  - annex: hotspot-framing-impact-U959.yaml
+    collection: hotspots
+    id: HS-025
+    fields:
+    - content_sha256
+  - annex: hotspot-source-candidates-U958.yaml
+    collection: hotspots
+    id: HS-025
+    fields:
+    - content_sha256
+  - annex: hotspot-validation-U968.yaml
+    collection: hotspots
+    id: HS-025
+    fields:
+    - content_sha256
+application:
+  retained_business_area: ba-master-plan-management
+  retired_nodes:
+  - ba-supply-matching
+  retired_relations:
+  - REL-U848-PARENT-ba-supply-matching
+  new_capabilities:
+  - demand-fulfilment-policy-management
+  - delivery-release-decision
+  new_terms:
+  - TER266
+  - TER267
+  - TER268
+  scenario_id: seasonal-order-backlog
+  path_id: seasonal-order-backlog-path
+  qualification: Accords exacts de nœuds et relations capturés séparément ; termes, scénario et hotspot qualifiés dans cette
+    annexe par champs et empreintes, sans étendre les accords aux détails postérieurs.
+  reading_code_expectations:
+    BHV006: CAP-015
+    BHV082: CAP-044
+    subdomain-plans: BA-016
+    D06.d: CAP-057
+    order-workflow-orchestration: CAP-039
+    subdomain-process-management: SUB-031
+  related_hotspot_alignment: HS-025 conserve sa preuve et son sujet ; son ancrage suit la fusion de Business Areas vers ba-master-plan-management.
+  guide_alignment:
+    path: modeles/backlog/atlas-transformation-methodology.yaml
+    changes: Alignement ciblé du nom Demand & Supply Policies et du libellé Supply Policy Management dans l’exemple concerné
+      ; aucune publication historique modifiée.
+field_agreements:
+- collection: terms
+  id: TER266
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 756018b4d91f4922b612224493d222dc0d1669a247175de5a3705afb76a76ec3
+    definition: 74b588963cb216e21e1771cb2c9c8664035c9e81d289c43618a8feb6d5c743a3
+  source_refs:
+  - U1009
+  note: Seuls les noms et définitions explicitement proposés avant accord, ou l’alias technique de fusion, sont qualifiés
+    ; contexte et exemples postérieurs restent proposés.
+- collection: terms
+  id: TER267
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 04ddd93120571966bf079bca9da1e23414362548ab46b53c86b6134f52d95d29
+    definition: f0870c8e5eb2b93ab8b832d5b75789d5ff2c93f78eac4842e2f64ae57ad1ef0c
+  source_refs:
+  - U1009
+  note: Seuls les noms et définitions explicitement proposés avant accord, ou l’alias technique de fusion, sont qualifiés
+    ; contexte et exemples postérieurs restent proposés.
+- collection: terms
+  id: TER134
+  approved_fields:
+  - alias_of
+  value_sha256:
+    alias_of: 98119e187ca9a4c45f2c884ec6dfffb9c6cc46408a9d00291cfbf2fce50bc445
+  source_refs:
+  - U1009
+  note: Seuls les noms et définitions explicitement proposés avant accord, ou l’alias technique de fusion, sont qualifiés
+    ; contexte et exemples postérieurs restent proposés.
+- collection: terms
+  id: TER133
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: be50eb89ede50933fbe20e756d322ffc1735bbefe6d70e0eb5c4f3141649dc78
+    definition: cea2441816897f667b2f80cdba82fc36c44ee1b2c3d86c4f81cd93a6f2e81f7d
+  source_refs:
+  - U1009
+  note: Seuls les noms et définitions explicitement proposés avant accord, ou l’alias technique de fusion, sont qualifiés
+    ; contexte et exemples postérieurs restent proposés.
+- collection: hotspots
+  id: HS-008
+  approved_fields:
+  - title
+  - problem
+  - location
+  value_sha256:
+    title: a726b2ecb2ed13908c94a8e8b46c1742e8f2c27edfbaa17ee191996b3e63e3a8
+    problem: 55186f68f531d28742ae3413ae44a9c830be02d768d61a43720ca2e25ab3178d
+    location: 6a70c1eeafb1b22aa70e0d8726ff8399483298fe174476512878cfa8ad9d8f62
+  source_refs:
+  - U1009
+  note: Réexamen proposé dans le lot U999–U1008 ; options non choisies et observations historiques non requalifiées.

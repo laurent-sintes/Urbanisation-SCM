@@ -163,6 +163,11 @@ def replacement_scopes(documents):
 
 
 def requirement_covers(declaration, collection, identifier, field, replacement=False):
+    if collection in ('hotspots', 'scenarios', 'paths'):
+        return field in ('exists', 'content_sha256') and any(
+            item.get('collection') == collection and item.get('id') == identifier
+            and (field == 'exists' or field in item)
+            for item in declaration.get('required_catalog', []))
     key = {'nodes': 'required_nodes', 'relations': 'required_relations', 'terms': 'required_glossary'}.get(collection)
     if key is None:
         return False
@@ -186,6 +191,9 @@ def active_requirements(label, declaration, overrides):
     if not isinstance(declaration, dict):
         return declaration
     result = deepcopy(declaration)
+    result['required_catalog'] = [item for item in result.get('required_catalog', [])
+        if not any((label, item['collection'], item['id'], field) in overrides
+                   for field in ('exists', 'content_sha256'))]
     for collection, key in [('nodes', 'required_nodes'), ('relations', 'required_relations'), ('terms', 'required_glossary')]:
         items = []
         for item in result.get(key, []):

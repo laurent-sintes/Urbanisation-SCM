@@ -1,0 +1,764 @@
+id: ORDER-BACKLOG-REFINEMENTS-U1010
+date: '2026-10-13'
+source_refs:
+- U1010
+- U1011
+- U1012
+- U1013
+- U1014
+- U1015
+status: applied_to_backlog
+publication_delivery:
+  state: applied
+  summary: 'U1014 : trois Business Areas, livraison partielle, périmètres de carnet et Supply Plan incluant les achats ; HS-008
+    confirmé U1015.'
+  source_refs:
+  - U1010
+  - U1011
+  - U1012
+  - U1013
+  - U1014
+  - U1015
+  required_nodes:
+  - id: domain-plan
+    field_sha256:
+      scope: a1b1a62317a5839c406060df1c8233fe2f99c2de3dae05569f6912a05dfafa0c
+      market_comparisons: abd0e4e22ccfd024758664cf8784bfeede339a51f36bea6afeed894a572c2297
+    parent: system-business-operations
+    parent_type: presents
+  - id: supply-chain-orchestration
+    field_sha256:
+      market_comparisons: 29c71970f582f272531de0dbf61564d2b9a32ca8e2562d1380e585336c23d8d2
+      scope: 4b1c309e261c3a43c52175fa4a33f0f50ca3b2ced37583292806d8b40ca203f2
+      market_inspiration: 6ac4017b2e1789b09bfb3798c2d192692f85b1ece6679ec55185423e40494126
+    parent: system-business-operations
+    parent_type: presents
+  - id: business-references
+    field_sha256:
+      market_comparisons: 3cdf24dcb681bcb88d92fe0ecfec4270b8549f22104c3f6f4788c0d48adfebcf
+      market_inspiration: 0457a5272f890994a08364f641a3f1fec7d7609c0b3bd8d8c35205b4b0b6bdda
+      scope: e8383d24170f1a6a9d66009f45911009f69bb0646e1289b76fa7cd20d523a4ff
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: D03.i
+    field_sha256:
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+    parent: ba-order-promising
+    parent_type: contains
+  - id: D03.j
+    field_sha256:
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+    parent: ba-order-promising
+    parent_type: contains
+  - id: D03.k
+    field_sha256:
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+    parent: ba-order-promising
+    parent_type: contains
+  - id: D04.i
+    field_sha256:
+      scope: 5640cb7cfa089ca19c94cc16fcbbcd0e98e63065c1c5bbd827059175e6c95080
+      market_inspiration: 3791461468f2898d104f461420c7a6e7763601ff66b13e0c462bf0145b9c97d5
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+  - id: D05.a
+    field_sha256:
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+    parent: ba-physical-stock-configuration-optimization
+    parent_type: contains
+  - id: D05.d
+    field_sha256:
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+    parent: ba-physical-stock-configuration-optimization
+    parent_type: contains
+  - id: D05.c
+    field_sha256:
+      reading_order: 4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a
+    parent: ba-physical-stock-configuration-optimization
+    parent_type: contains
+  - id: D05.f
+    field_sha256:
+      scope: 1423dc867dee053b4c78e83e7a9e0949c0769424c3e5fa473ec069a26b5f1bae
+      market_inspiration: fbebfe1939892a86d07e05f45b039dc0776e9a19441017fcf761f3a721a5d075
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: D03
+    field_sha256:
+      scope: 1f7ed3ce66b2b6d7065d59a27209502b4b0de9cb2c892dc9af876f46ec100353
+      market_comparisons: c03a89868ca67c0de4362b1a71e7452d343c7ad303384eac9e7d5b4bee618ee7
+      market_inspiration: 7e6c4d41e1f80f054fae2772ff55dcab5c8b74511cd2e54cfc0f93512fdef6ea
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: D05.h
+    field_sha256:
+      scope: 323f3c4b0e078cbb7935d25619f282df6e5fd985fe624e217028c6919c7fd28d
+      market_comparisons: 925a41f5228e069d6f0b861f3a28382d3a2c903e6175f8c27cddf7bb78d29b16
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+    parent: ba-physical-stock-configuration-optimization
+    parent_type: contains
+  - id: D03.o
+    field_sha256:
+      reading_order: e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: plans-visibility
+    field_sha256:
+      reading_order: 2c624232cdd221771294dfbb310aca000a0df6ac8b66b696d90ef06fdefb64a3
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: demand-plan-visibility
+    field_sha256:
+      reading_order: 19581e27de7ced00ff1ce50b2047e7a567c76b1cbaebabe5ef03f7c3017bb5b7
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: ba-master-plan-management
+    field_sha256:
+      scope: 6c414c01048b7ec8c33a1a60c3c58f1aba62e0312181e657320a91553b1f7193
+      market_comparisons: c9555de7cf062c65d7218952be312bb6241a09549400b847ce00d3b6489e03a7
+    parent: D03
+    parent_type: contains
+  - id: ba-physical-stock-configuration-optimization
+    field_sha256:
+      name: d290cd65ec6ff78f15e6a5a0a4fae0b47ea01c7f92d018868b2bd47dfb84cf7d
+      definition: 6d10ed80aa4b927e289e564b009b4ebf69a1ad01f7c26ea1713d866fcbc03f11
+      scope: 06fe4d71f6eeca98e5f11548c26f0395f3bb12d69e5be26ee84c62b64e213387
+      market_comparisons: f568d3d2e0433e006af03344da8b8488c812b8a92c0e0ddbb1aeab7239e237a5
+    parent: D03
+    parent_type: contains
+  - id: ba-protection-policies
+    field_sha256:
+      scope: cc5d35fb70264b829f5bc1715042f8f1c5b3e9d4f995e51fab6ba7fdaf1615d0
+    parent: subdomain-policies
+    parent_type: contains
+  - id: delivery-release-decision
+    field_sha256:
+      definition: a0b53b36c35fa46c744fcb97f517c5244b9e2895c87f8d8dc62a3c8bd8a29066
+      scope: 7214bf47c72dd933039d63d1a1eca039c5862e65148a094cd584f412acf91e80
+      reading_order: 7902699be42c8a8e46fbbb4501726517e86b22c56a189f7625a6da49081b2451
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: BHV006
+    parent: ba-master-plan-management
+  - id: D02.e
+    parent: ba-master-plan-management
+  - id: D03.m
+    parent: ba-master-plan-management
+  - id: D05.e
+    parent: ba-master-plan-management
+  required_glossary:
+  - id: TER040
+    field_sha256:
+      context: f7938154cbdc67369ee83b7e05099e2f977e11eeaf85c4c6c3f3b5be7a7cb4de
+  - id: TER041
+    field_sha256:
+      context: 53499e6abd993526a2143c0719f97095329b70ad54e9c46a2185cad84ee4b453
+  - id: TER069
+    field_sha256:
+      context: 28a9a0e663c9c4ea125d7cec1ad8c44edc10cfd59fa21c8d8d24b404d00a9d29
+      market_inspiration: 9aa31ab1855166b8efc4f979f0f1628f4f2f3b8d4c1095724d1883a4c45ac3ba
+  - id: TER078
+    field_sha256:
+      context: 2ded36a2f18b198dbd82171b49b7744847cc4d95003d7be48700b12407d94eaa
+      market_inspiration: 472da87bc3ca2553a86e364d727890b6914756a49847b0f365968e03f125b34a
+  - id: TER100
+    field_sha256:
+      context: bb8af2943621bbeae7085c19f74556bf97260675a2d2227a363e523e0a8d4c5b
+  - id: TER111
+    field_sha256:
+      context: a1b1a62317a5839c406060df1c8233fe2f99c2de3dae05569f6912a05dfafa0c
+      market_comparisons: abd0e4e22ccfd024758664cf8784bfeede339a51f36bea6afeed894a572c2297
+  - id: TER112
+    field_sha256:
+      context: f2240c088d3f8b465e98c47e147a16224d65a31b14b9c70ff5cae3840372761b
+      market_comparisons: c03a89868ca67c0de4362b1a71e7452d343c7ad303384eac9e7d5b4bee618ee7
+      market_inspiration: 7e6c4d41e1f80f054fae2772ff55dcab5c8b74511cd2e54cfc0f93512fdef6ea
+  - id: TER123
+    field_sha256:
+      context: e8383d24170f1a6a9d66009f45911009f69bb0646e1289b76fa7cd20d523a4ff
+      market_comparisons: 3cdf24dcb681bcb88d92fe0ecfec4270b8549f22104c3f6f4788c0d48adfebcf
+      market_inspiration: 0457a5272f890994a08364f641a3f1fec7d7609c0b3bd8d8c35205b4b0b6bdda
+  - id: TER133
+    field_sha256:
+      context: 6c414c01048b7ec8c33a1a60c3c58f1aba62e0312181e657320a91553b1f7193
+      market_comparisons: c9555de7cf062c65d7218952be312bb6241a09549400b847ce00d3b6489e03a7
+  - id: TER134
+    field_sha256:
+      market_comparisons: c47c52f6c187294490a88fb317d04c1a58ae0b15a08e4966280e01ecbbd3cb44
+  - id: TER202
+    field_sha256:
+      name: d290cd65ec6ff78f15e6a5a0a4fae0b47ea01c7f92d018868b2bd47dfb84cf7d
+      short_description: 6d10ed80aa4b927e289e564b009b4ebf69a1ad01f7c26ea1713d866fcbc03f11
+      definition: 6d10ed80aa4b927e289e564b009b4ebf69a1ad01f7c26ea1713d866fcbc03f11
+      context: 06fe4d71f6eeca98e5f11548c26f0395f3bb12d69e5be26ee84c62b64e213387
+      market_comparisons: f568d3d2e0433e006af03344da8b8488c812b8a92c0e0ddbb1aeab7239e237a5
+  - id: TER135
+    field_sha256:
+      context: fc6a96bd00c7d547ccb5418cf51f774b53ac65db131e0be3ec7c8b1fed2f5a9a
+      notes: a7ab44e6e327bff8a5e08abf4bc88ca9edd3dc39f2608a10ad12cd8d2ae307c1
+      market_comparisons: 43dd4e1424b51a01ef7d6e834f79e805d54af1cf503d2ca4dfbdc0d9a7758a54
+  - id: TER151
+    field_sha256:
+      context: 62be2f607f8e7412cbb8a72c0da297710fa3ec0855be62312b94094cb550786a
+  - id: TER159
+    field_sha256:
+      context: cc5d35fb70264b829f5bc1715042f8f1c5b3e9d4f995e51fab6ba7fdaf1615d0
+  - id: TER267
+    field_sha256:
+      short_description: a0b53b36c35fa46c744fcb97f517c5244b9e2895c87f8d8dc62a3c8bd8a29066
+      definition: a0b53b36c35fa46c744fcb97f517c5244b9e2895c87f8d8dc62a3c8bd8a29066
+      context: 7214bf47c72dd933039d63d1a1eca039c5862e65148a094cd584f412acf91e80
+  required_relations:
+  - id: REL-U673-CONTAINS-plans-visibility
+    type: contains
+    source_id: ba-master-plan-management
+    target_id: plans-visibility
+  - id: REL-U673-PLANS-PROMISING
+    type: provides-knowledge
+    source_id: ba-master-plan-management
+    target_id: D01
+  - id: REL-U673-PLANS-MATCHING
+    type: provides-knowledge
+    source_id: ba-master-plan-management
+    target_id: D03
+  - id: REL-U714-CONTAINS-DEMAND-PLAN
+    type: contains
+    source_id: ba-master-plan-management
+    target_id: demand-plan-visibility
+  - id: REL-U794-PLAN-INGESTION
+    type: provides-knowledge
+    source_id: domain-plan
+    target_id: ba-master-plan-management
+  - id: REL-U848-PARENT-D05.d
+    type: contains
+    source_id: ba-physical-stock-configuration-optimization
+    target_id: D05.d
+  - id: REL-U848-PARENT-D05.c
+    type: contains
+    source_id: ba-physical-stock-configuration-optimization
+    target_id: D05.c
+  - id: REL-U848-PARENT-D05.h
+    type: contains
+    source_id: ba-physical-stock-configuration-optimization
+    target_id: D05.h
+  absent_nodes:
+  - ba-policy-optimization
+  - subdomain-plans
+  absent_relations:
+  - REL-U848-PARENT-ba-policy-optimization
+  - REL-U865-PARENT-PLAN-VISIBILITY
+  required_catalog:
+  - collection: hotspots
+    id: HS-008
+    content_sha256: e6044b1350c39af707ab59e981f31754c25fb7013a6e3f2450f1d5476c73afaa
+  - collection: paths
+    id: seasonal-order-backlog-path
+    content_sha256: 62f0b4fa0403270e0819e94bfa9dead4298e7baef7a8e19faa3bea08755a164b
+  supersedes_requirements:
+  - annex: availability-stabilization-U877.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - scope
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: ba-policy-optimization
+    fields:
+    - exists
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: D05.d
+    fields:
+    - parent
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: D05.h
+    fields:
+    - parent
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: plans-visibility
+    fields:
+    - parent
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: demand-plan-visibility
+    fields:
+    - parent
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: D04.i
+    fields:
+    - market_inspiration
+  - annex: credit-check-decision-U892.yaml
+    collection: nodes
+    id: D04.i
+    fields:
+    - market_inspiration
+  - annex: glossary-audit-U902.yaml
+    collection: terms
+    id: TER069
+    fields:
+    - context
+  - annex: glossary-audit-U902.yaml
+    collection: terms
+    id: TER078
+    fields:
+    - context
+  - annex: matching-refactoring-U747.yaml
+    collection: nodes
+    id: D05.d
+    fields:
+    - parent
+  - annex: matching-refactoring-U747.yaml
+    collection: nodes
+    id: D05.h
+    fields:
+    - parent
+  - annex: model-readability-U710.yaml
+    collection: nodes
+    id: subdomain-plans
+    fields:
+    - exists
+  - annex: model-readability-U710.yaml
+    collection: nodes
+    id: plans-visibility
+    fields:
+    - parent
+  - annex: model-readability-U710.yaml
+    collection: nodes
+    id: demand-plan-visibility
+    fields:
+    - parent
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - market_comparisons
+    - scope
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: ba-physical-stock-configuration-optimization
+    fields:
+    - market_comparisons
+    - scope
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: ba-policy-optimization
+    fields:
+    - exists
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D05.c
+    fields:
+    - reading_order
+    - parent
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D03.o
+    fields:
+    - reading_order
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - scope
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D04.i
+    fields:
+    - scope
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: ba-protection-policies
+    fields:
+    - scope
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: delivery-release-decision
+    fields:
+    - definition
+    - reading_order
+    - scope
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER112
+    fields:
+    - context
+    - market_comparisons
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER202
+    fields:
+    - market_comparisons
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER135
+    fields:
+    - context
+    - market_comparisons
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER159
+    fields:
+    - context
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER267
+    fields:
+    - context
+    - definition
+    - short_description
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER133
+    fields:
+    - context
+    - market_comparisons
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER100
+    fields:
+    - context
+  - annex: order-backlog-audit-U999.yaml
+    collection: relations
+    id: REL-U848-PARENT-D05.c
+    fields:
+    - source_id
+  - annex: order-backlog-audit-U999.yaml
+    collection: hotspots
+    id: HS-008
+    fields:
+    - content_sha256
+  - annex: order-backlog-audit-U999.yaml
+    collection: paths
+    id: seasonal-order-backlog-path
+    fields:
+    - content_sha256
+  - annex: plan-visibility-U714.yaml
+    collection: nodes
+    id: subdomain-plans
+    fields:
+    - exists
+  - annex: plan-visibility-U714.yaml
+    collection: nodes
+    id: plans-visibility
+    fields:
+    - parent
+  - annex: plan-visibility-U714.yaml
+    collection: nodes
+    id: demand-plan-visibility
+    fields:
+    - parent
+  - annex: preorder-plan-inventory-U865.yaml
+    collection: nodes
+    id: subdomain-plans
+    fields:
+    - exists
+  - annex: preorder-plan-inventory-U865.yaml
+    collection: nodes
+    id: plans-visibility
+    fields:
+    - parent
+  - annex: preorder-plan-inventory-U865.yaml
+    collection: nodes
+    id: demand-plan-visibility
+    fields:
+    - parent
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - market_comparisons
+    - market_inspiration
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - market_inspiration
+  - annex: stock-configuration-boundaries-U910.yaml
+    collection: nodes
+    id: ba-policy-optimization
+    fields:
+    - exists
+  - annex: stock-configuration-boundaries-U910.yaml
+    collection: nodes
+    id: D05.d
+    fields:
+    - parent
+  - annex: stock-configuration-boundaries-U910.yaml
+    collection: nodes
+    id: D05.h
+    fields:
+    - parent
+  - annex: stock-configuration-coherence-U911.yaml
+    collection: nodes
+    id: ba-physical-stock-configuration-optimization
+    fields:
+    - name
+  - annex: stock-configuration-coherence-U911.yaml
+    collection: nodes
+    id: ba-policy-optimization
+    fields:
+    - exists
+  - annex: stock-configuration-coherence-U911.yaml
+    collection: nodes
+    id: D05.d
+    fields:
+    - parent
+  - annex: stock-configuration-coherence-U911.yaml
+    collection: nodes
+    id: D05.h
+    fields:
+    - parent
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - scope
+    - market_comparisons
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - market_comparisons
+    - scope
+    - market_inspiration
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: nodes
+    id: subdomain-plans
+    fields:
+    - exists
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - context
+    - market_comparisons
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: terms
+    id: TER151
+    fields:
+    - context
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-policy-optimization
+    fields:
+    - exists
+  - annex: visibility-scope-U858.yaml
+    collection: nodes
+    id: business-references
+    fields:
+    - scope
+partial_delivery:
+  finding: Le partiel est déjà mentionné dans les règles de promesse, PTP et Delivery Release Decision. Il ne ressort pas
+    explicitement dans la définition de la capacité comme choix d’une composition de livraison admissible.
+  recommendation: Préciser Delivery Release Decision plutôt que créer une capacité générique Optimizer ou une capacité par
+    variante de livraison.
+  candidate_definition: Choisir les commandes, lignes et quantités à autoriser en livraison complète ou partielle, leur moment
+    de libération et le reste à maintenir en attente, selon les engagements, ressources et règles applicables.
+  output: 'Composition retenue : périmètre servi, quantités, date ou condition de libération, reliquat, conditions de réexamen
+    et motifs du choix. Une possibilité de promettre un reliquat reste distincte de sa confirmation.'
+  example: 'Illustration fictive : pour 100 pièces demandées, comparer 60 maintenant puis 40 à une date proposée, ou attendre
+    100 ensemble. Une quantité suffisante ne garantit pas un assortiment acceptable : tailles, couleurs, lignes indispensables
+    et complétude contractuelle restent des contraintes.'
+  boundaries:
+    demand-fulfilment-policy-management: 'Définir les stratégies applicables : partiel autorisé, complétude, seuils, dépendances
+      et marges de réexamen ; consommer les conditions contractuelles reçues.'
+    D03.o: Choisir et réviser les liens ressources-demandes ; la décision de livraison peut demander un autre scénario d’affectation
+      sans réaffecter elle-même les ressources.
+    BHV006: Comparer les alternatives collectives et leurs effets économiques et de service.
+    ba-order-promising: Produire ou réexaminer la proposition de quantité/date par demande ; les contraintes communes de ligne
+      et de complétude restent applicables.
+    D04.i: Tenir les engagements et appliquer l’autorisation ; maintenir le reste à satisfaire.
+    D04.n: Appliquer une restructuration autorisée si nécessaire. Une livraison partielle n’impose pas une seconde commande.
+    service-order-release-decision: Choisir le moment et le regroupement des prestations en aval de l’autorisation de la commande.
+  sap_optimizer_limit: Le terme désigne un dispositif produit dans le support Boardriders et la documentation SAP AFS historique.
+    Ne pas établir une équivalence exclusive Optimizer = livraison partielle, ni inférer une version actuelle de S/4HANA ou
+    un déploiement installé.
+stock_transfer:
+  finding: Une seule capacité Stock Redistribution, D05.c, rattachée à ba-master-plan-management depuis U1009. Inventory Rebalancing
+    et Stock Consolidation sont ses comportements, pas des capacités concurrentes.
+  distinct_responsibilities:
+  - id: D05.a
+    name: Physical Stock Target Optimization
+    parent: ba-physical-stock-configuration-optimization
+    result: Niveaux cibles et seuils de stock à viser ; aucun transfert décidé par cette seule cible.
+  - id: D05.c
+    name: Stock Redistribution
+    parent: ba-master-plan-management
+    result: Quantités, origines, destinations et dates de transferts du stock physique existant ; décision de ne rien déplacer
+      possible.
+  - id: transport-plan-decision
+    name: Transport Plan Decision
+    parent: ba-service-planning
+    result: Chargements, trajets, arrêts et échéances des transports confiés ; réalisation différente du choix métier de redistribution.
+  recommendation: Stock Redistribution est regroupée dans Stock Optimization et reste mobilisée par Master Planning, sans
+    second parent.
+glossary_impact_if_adopted: 'Alignement appliqué U1014 : TER267, TER202, TER133 et les notions historiques conservées ; périmètre
+  du carnet explicité dans TER100.'
+sources:
+- vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Delivery alternatives
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-alternatives
+  consulted_on: '2026-10-13'
+  locator: Include partial quantity ; Impact of selected alternative
+  finding: Propositions partielles et impact sur le calendrier de livraison ; le document porte la promesse unitaire, pas
+    tout le choix collectif FLOW.
+- vendor: SAP
+  product: SAP S/4HANA for Fashion and Vertical Business
+  title: Explaining Supply Assignment
+  url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+  consulted_on: '2026-10-13'
+  locator: Supply Assignment scenario ; ARun statuses ; Release Checking in ITA
+  finding: Contrôle du taux de satisfaction et des règles de libération à plusieurs mailles ; appui fonctionnel au choix de
+    partiel, pas nomenclature de capacités.
+- vendor: SAP
+  product: SAP AFS 6.3, source historique distincte de S/4HANA
+  title: Release Notes SAP AFS 6.3
+  url: https://help.sap.com/doc/61b2333f318e4590855dbcbf09e9fc10/6.3/en-US/Release_Notes_SAP_AFS_63E.PDF
+  consulted_on: '2026-10-13'
+  locator: 1.8.1 ; page imprimée 20
+  finding: ARun Optimizer est associé notamment à création de livraison, réallocation et release check. Source historique,
+    pas preuve d’une fonction exclusivement partielle ni de réalisation actuelle Boardriders.
+- path: audits/2026-10-10-hotspots-sources/consolidation.md
+  locator: C08 ; présentation Boardriders juillet 2025, slides 61–62 et 68–70
+  finding: Le support historique décrit des réaffectations et un usage de l’Optimizer à améliorer ; ne pas conclure à l’état
+    actuel des travaux.
+business_area_regrouping:
+  source_ref: U1011
+  status: applied
+  current_count: 5
+  proposed_count: 3
+  rationale: Le nombre de Business Areas n’est pas une règle de conformité. Le découpage courant sépare des dimensions du
+    même stock et isole les connaissances d’entrée du plan ; trois responsabilités facilitent la présentation du récit.
+  areas:
+  - retained_id: ba-master-plan-management
+    name: Master Plan Management
+    result: Piloter la couverture et la livraison du carnet, avec interprétation des plans reçus.
+    capability_ids:
+    - D05.f
+    - BHV006
+    - D02.e
+    - D03.m
+    - D05.e
+    - D03.o
+    - delivery-release-decision
+    - plans-visibility
+    - demand-plan-visibility
+    market_refs:
+    - ms-master
+    - ms-plans
+    - sap-arun
+    - sap-retail
+  - retained_id: ba-order-promising
+    name: Order Promising
+    result: Déterminer les possibilités de promesse pour une demande identifiée.
+    capability_ids:
+    - D03.i
+    - D03.j
+    - D03.k
+    market_refs:
+    - ms-atp
+    - ms-ctp
+    - sap-atp
+    - sap-sbc
+  - retained_id: ba-physical-stock-configuration-optimization
+    name: Stock Optimization
+    result: Déterminer les cibles, les droits et conditions d’usage et les redistributions utiles du stock.
+    capability_ids:
+    - D05.a
+    - D05.d
+    - D05.h
+    - D05.c
+    market_refs:
+    - ms-targets
+    - ms-allocations
+    - ms-reservation
+    - sap-mrp
+    - sap-arun
+  retirement_candidates:
+  - ba-policy-optimization
+  - subdomain-plans
+  preserved: Les seize capacités conservent leurs identités, résultats propres et un seul parent. Les stratégies actives restent
+    dans Supply Policy Management ; interpréter les plans ne devient ni leur ingestion ni leur production.
+  stock_redistribution_boundary: Son rattachement au Master Plan était cohérent dans U1009. Le regroupement demandé en U1011
+    justifie de la présenter avec les autres optimisations du stock ; le plan reste consommateur de sa décision.
+  market_reference_source: Références datées et consultées de order-backlog-audit-U999.yaml ; correspondances fonctionnelles
+    partielles, pas taxonomie native de trois Business Areas commune aux éditeurs.
+  glossary_alignment_if_adopted: Réexaminer les termes des deux optimisations physique/logique et de Plan Visibility, les
+    synthèses Availability/Master Plan, les liens aux nœuds retirés et les accords de rattachement ; conserver les définitions
+    des capacités distinctes.
+agreement:
+  source_ref: U1014
+  verbatim: Je valide l'ensemble des modifs
+  scope: Lot complet construit jusqu’à U1013 ; localisation HS-008 confirmée U1015.
+reading_code_expectations:
+  BHV006: CAP-015
+  subdomain-process-management: SUB-031
+  order-workflow-orchestration: CAP-039
+  BHV082: CAP-044
+  D06.d: CAP-057
+field_agreements:
+- collection: terms
+  id: TER098
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 19c9924a608483cf8e7a9cb37209692aa6994de205662d3e0343a034c06d9c8e
+    definition: cf8343f21a3ae6ce6df2157e96385f9668b6c7c555ce80c4845788057d5d7c85
+  source_ref: U1014
+  scope: Valeurs discutées avant validation ; compléments rédactionnels nouveaux non étendus.
+- collection: terms
+  id: TER202
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: d290cd65ec6ff78f15e6a5a0a4fae0b47ea01c7f92d018868b2bd47dfb84cf7d
+    definition: 6d10ed80aa4b927e289e564b009b4ebf69a1ad01f7c26ea1713d866fcbc03f11
+  source_ref: U1014
+  scope: Valeurs discutées avant validation ; compléments rédactionnels nouveaux non étendus.
+- collection: terms
+  id: TER267
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 04ddd93120571966bf079bca9da1e23414362548ab46b53c86b6134f52d95d29
+    definition: a0b53b36c35fa46c744fcb97f517c5244b9e2895c87f8d8dc62a3c8bd8a29066
+  source_ref: U1014
+  scope: Valeurs discutées avant validation ; compléments rédactionnels nouveaux non étendus.
+hotspot_agreement:
+  id: HS-008
+  source_refs:
+  - U1014
+  - U1015
+  approved_fields:
+  - title
+  - location
+  value_sha256:
+    title: a726b2ecb2ed13908c94a8e8b46c1742e8f2c27edfbaa17ee191996b3e63e3a8
+    location: 6a70c1eeafb1b22aa70e0d8726ff8399483298fe174476512878cfa8ad9d8f62
+  scope: Localisation globale du pilotage du carnet et stratégies actives ; aucun choix de convergence.

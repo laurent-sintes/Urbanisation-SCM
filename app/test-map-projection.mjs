@@ -13,7 +13,7 @@ const edge = (id, source_id, target_id) => ({
 
 test('each map scope opens at its own default detail', () => {
   assert.equal(defaultMapDepth('universe'), 1, 'Universe opens with domains visible');
-  assert.equal(defaultMapDepth('business_system'), 0, 'System opens at Domain level');
+  assert.equal(defaultMapDepth('business_system'), 2, 'System opens at Business Area level');
   assert.equal(defaultMapDepth('domain'), 1, 'Domain opens with subdomains visible');
 });
 

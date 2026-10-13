@@ -1,0 +1,152 @@
+id: CTP-MARKET-SCOPE-U1017
+date: '2026-10-13'
+source_refs:
+- U1017
+status: research_documented
+canonical_change: false
+references:
+- id: MKT-U1017-MS
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Calculate sales order delivery dates using CTP
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp
+  version: Documentation évolutive, version produit non figée pour cette étude
+  consulted_on: '2026-10-13'
+  locator: How CTP compares to ATP ; Near real-time CTP functionality ; comparison of Batch CTP and CTP
+  access: Texte primaire intégral consulté
+  finding: 'Résultat par ligne de vente : date réalisable à partir des matières, capacités et délais. Le calcul peut mobiliser
+    la fabrication des composants et un plan dynamique ; exécution immédiate ou en lot.'
+- id: MKT-U1017-SAP-LEARNING
+  vendor: SAP
+  product: SAP S/4HANA embedded PP/DS
+  title: Explaining Supply Chain Planning
+  url: https://learning.sap.com/courses/planning-with-advanced-planning-methods-in-eppds/explaining-supply-chain-planning
+  version: Cours évolutif, édition non indiquée
+  consulted_on: '2026-10-13'
+  locator: Supply creation based confirmation ; distinction between PP/DS and network-centric planning
+  access: Texte primaire intégral consulté
+  finding: Capable to Promise confirme les commandes selon les contraintes de production et d’ordonnancement lorsque le produit
+    fini manque. La planification de production optimisée est décrite comme une autre fonction.
+- id: MKT-U1017-SAP-SBC
+  vendor: SAP
+  product: SAP S/4HANA PP/DS and aATP
+  title: Supply Creation-Based Confirmation (SBC) in PP/DS
+  url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/4c56297de7c33a0de10000000a42189c.html
+  version: 2025 FPS01 (Feb 2026), indiquée dans le passage indexé
+  consulted_on: '2026-10-13'
+  locator: Use
+  access: Passage primaire indexé consulté ; ouverture directe sans texte exploitable. Appui complété par SAP Learning intégral,
+    sans prétendre avoir lu le reste de la page.
+  finding: Pour confirmer une commande de vente, aATP déclenche PP/DS qui peut créer des ordres planifiés, demandes d’achat
+    ou demandes de transfert pour les quantités manquantes. Les dates des propositions alimentent la confirmation.
+- id: MKT-U1017-ORACLE
+  vendor: Oracle
+  product: Oracle Fusion Cloud Global Order Promising
+  title: Global Order Promising Solution Brief
+  url: https://www.oracle.com/a/ocom/docs/applications/scm/global-order-promising-solution-brief.pdf
+  version: Version 1.0 ; copyright 2025
+  consulted_on: '2026-10-13'
+  locator: Page 2, Capable to Promise (CTP) Sourcing and Scheduling
+  access: PDF primaire consulté
+  finding: CTP planifie des achats, fabrications et transferts pour satisfaire une commande, avec recherche multi-niveaux
+    et ressources alternatives. Elle peut consommer des apports planifiés par Oracle ou un outil externe.
+external_elements:
+- id: ELM-U1017-MS-CTP
+  reference_id: MKT-U1017-MS
+  native_label: Capable-to-promise (CTP)
+  native_identifier: null
+  nature: Fonction produit documentée
+  reformulation: Déterminer une date réalisable pour une ligne de vente, en mobilisant les ressources et la planification
+    nécessaires.
+- id: ELM-U1017-SAP-SBC
+  reference_ids:
+  - MKT-U1017-SAP-LEARNING
+  - MKT-U1017-SAP-SBC
+  native_label: Supply Creation-Based Confirmation
+  native_identifier: SBC
+  nature: Processus produit intégrant aATP et PP/DS
+  reformulation: Construire les apports manquants et utiliser leurs dates de disponibilité pour confirmer une demande.
+- id: ELM-U1017-ORACLE-CTP
+  reference_id: MKT-U1017-ORACLE
+  native_label: Capable to Promise (CTP) Sourcing and Scheduling
+  native_identifier: null
+  nature: Fonction produit documentée
+  reformulation: Trouver une réponse à une commande en planifiant l’obtention des apports nécessaires.
+comparisons:
+- id: CMP-U1017-MICROSOFT
+  external_element_id: ELM-U1017-MS-CTP
+  target_id: D03.j
+  baseline: backlog courant après U1014 ; publication 2026-10-13.1
+  relationship: Recouvrement partiel
+  common: Une possibilité de réponse à une demande identifiée est déterminée en examinant matières, sources, capacités et
+    délais.
+  difference: FLOW sépare la décision de possibilité, le choix collectif d’apports, la planification d’achat MAP et les engagements
+    ; la fonction produit peut enchaîner plusieurs de ces responsabilités.
+  recommendation: Conserver le rattachement à Order Promising si le résultat est une possibilité de réponse à la demande.
+    Expliciter la construction d’apports et la mobilisation par Master Planning ; ne pas limiter le calcul aux seules données
+    de la commande.
+  benefit: Rendre lisible la portée Supply du calcul tout en conservant un résultat métier distinct du plan collectif.
+  tradeoff: Le parent montre la finalité, pas toutes les ressources examinées ni tous les consommateurs ; la coopération avec
+    Master Planning doit être visible.
+  limits: Aucune taxonomie de Business Areas commune, interface MAP ni réalisation installée déduite.
+  status: proposed
+  author: Codex
+  date: '2026-10-13'
+- id: CMP-U1017-SAP
+  external_element_id: ELM-U1017-SAP-SBC
+  target_id: D03.j
+  baseline: backlog courant après U1014 ; publication 2026-10-13.1
+  relationship: Recouvrement partiel
+  common: Une possibilité de réponse à une demande identifiée est déterminée en examinant matières, sources, capacités et
+    délais.
+  difference: FLOW sépare la décision de possibilité, le choix collectif d’apports, la planification d’achat MAP et les engagements
+    ; la fonction produit peut enchaîner plusieurs de ces responsabilités.
+  recommendation: Conserver le rattachement à Order Promising si le résultat est une possibilité de réponse à la demande.
+    Expliciter la construction d’apports et la mobilisation par Master Planning ; ne pas limiter le calcul aux seules données
+    de la commande.
+  benefit: Rendre lisible la portée Supply du calcul tout en conservant un résultat métier distinct du plan collectif.
+  tradeoff: Le parent montre la finalité, pas toutes les ressources examinées ni tous les consommateurs ; la coopération avec
+    Master Planning doit être visible.
+  limits: Aucune taxonomie de Business Areas commune, interface MAP ni réalisation installée déduite.
+  status: proposed
+  author: Codex
+  date: '2026-10-13'
+- id: CMP-U1017-ORACLE
+  external_element_id: ELM-U1017-ORACLE-CTP
+  target_id: D03.j
+  baseline: backlog courant après U1014 ; publication 2026-10-13.1
+  relationship: Recouvrement partiel
+  common: Une possibilité de réponse à une demande identifiée est déterminée en examinant matières, sources, capacités et
+    délais.
+  difference: FLOW sépare la décision de possibilité, le choix collectif d’apports, la planification d’achat MAP et les engagements
+    ; la fonction produit peut enchaîner plusieurs de ces responsabilités.
+  recommendation: Conserver le rattachement à Order Promising si le résultat est une possibilité de réponse à la demande.
+    Expliciter la construction d’apports et la mobilisation par Master Planning ; ne pas limiter le calcul aux seules données
+    de la commande.
+  benefit: Rendre lisible la portée Supply du calcul tout en conservant un résultat métier distinct du plan collectif.
+  tradeoff: Le parent montre la finalité, pas toutes les ressources examinées ni tous les consommateurs ; la coopération avec
+    Master Planning doit être visible.
+  limits: Aucune taxonomie de Business Areas commune, interface MAP ni réalisation installée déduite.
+  status: proposed
+  author: Codex
+  date: '2026-10-13'
+finding: La finalité de CTP est une réponse à une demande ; son périmètre de calcul inclut l’offre à constituer. La maille
+  de la réponse ne borne ni la profondeur du calcul ni son mode d’exécution.
+flow_assessment:
+  D03.j: La définition actuelle est compatible avec cette finalité et son scope prévoit déjà la mobilisation par Master Planning.
+  TER045: Définition identique à D03.j contrôlée ; aucun désalignement nouveau.
+  clarification_candidates:
+  - Rendre visibles dates/quantités possibles, apports nécessaires, contraintes et conditions du résultat CTP.
+  - Distinguer créer une proposition ou un élément de planification d’engager effectivement un achat. Le mandat MAP reste
+    conservé.
+  - 'Le critère FLOW d’apport futur admissible versus apport à constituer ne doit pas être présenté comme une frontière ATP/CTP
+    identique chez tous les éditeurs : Oracle peut consommer des apports planifiés dans CTP.'
+  boundary: Une étude générale des capacités de production ou une optimisation globale d’approvisionnement n’est pas appelée
+    CTP par simple proximité de calcul. Le Master Plan choisit la réponse collective ; la CTP vérifie une possibilité.
+illustration: 'Illustration fictive : une demande de 100 pièces ne trouve que 60 pièces disponibles. CTP détermine si 40 pièces
+  supplémentaires peuvent être obtenues, quand et sous quelles conditions. Le Master Plan arbitre ensuite cet apport face
+  à un report, un partiel ou une priorité différente ; MAP garde la planification d’achat.'
+limits:
+- Les textes SAP APO historiques ne sont pas utilisés comme preuve S/4HANA.
+- La création d’apports décrite par un produit ne transfère pas la planification d’achat à FLOW.
+- Aucun déplacement de capacité ni nouvelle publication adopté U1017.

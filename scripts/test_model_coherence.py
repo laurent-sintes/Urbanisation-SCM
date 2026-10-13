@@ -23,8 +23,8 @@ class ModelCoherenceTests(unittest.TestCase):
 
     def test_domain_summary_includes_each_of_its_subdomains(self):
         summary = plain(self.nodes['supply-chain-orchestration']['fields']['scope'])
-        children = [r['target_id'] for r in self.model['relations']
-                    if r['source_id'] == 'supply-chain-orchestration' and r['type'] == 'contains']
+        children = build_display_index(self.model)['children']['supply-chain-orchestration']
+        self.assertTrue(children, 'The domain summary check must exercise its current subdomains')
         for ident in children:
             with self.subTest(ident=ident):
                 self.assertIn(self.nodes[ident]['fields']['name'], summary)
@@ -79,12 +79,20 @@ class ModelCoherenceTests(unittest.TestCase):
 
     def test_identity_and_reading_order_follow_current_business_changes(self):
         audit=read(ROOT/'modeles/backlog/model-coherence-audit-U886.yaml')
+        current=read(ROOT/'modeles/backlog/order-backlog-audit-U999.yaml')['application']['reading_code_expectations']
+        refinements=read(ROOT/'modeles/backlog/order-backlog-refinements-U1010.yaml')
+        current.update(refinements['reading_code_expectations'])
+        current.update(read(ROOT/'modeles/backlog/availability-scope-story-U1018.yaml')['reading_code_expectations'])
         index=build_display_index(self.model)
         for example in audit['reading_codes']['examples']:
+            if example['id'] in refinements['publication_delivery']['absent_nodes']:
+                self.assertNotIn(example['id'], index['codes'])
+                continue
             expected = next(example[key] for key in (
                 'candidate_after_U996', 'candidate_after_U987', 'candidate_after_U978', 'candidate_after_U975', 'candidate_after_U911', 'candidate_after_U910',
                 'candidate_after_U898', 'candidate_after_U894', 'candidate_after_U891', 'candidate'
             ) if key in example)
+            expected = current.get(example['id'], expected)
             self.assertEqual(index['codes'][example['id']], expected)
         for ident in ['master-data-ingestion-commerce','master-data-ingestion-design']:
             self.assertIn(ident,self.nodes)

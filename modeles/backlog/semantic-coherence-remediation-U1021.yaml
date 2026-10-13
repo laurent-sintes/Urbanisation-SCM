@@ -1,0 +1,1142 @@
+id: semantic-coherence-remediation-U1021
+status: applied_to_backlog
+source_refs:
+- U1020
+- U1021
+audit: semantic-coherence-audit-U1020.yaml
+authorization:
+  source_ref: U1021
+  verbatim: Prends en compte l'audit
+  scope: Remédiations de l’audit U1020 ; pas de nouvelle capacité, publication ou réalisation installée.
+editorial_qualification: Rédactions et correspondances détaillées proposées ; l’autorisation d’appliquer ne vaut pas approbation
+  littérale implicite de chaque nouveau champ.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1020
+  - U1021
+  summary: Corrections U1020 appliquées après U1021 ; frontières et scénarios clarifiés, appuis partiels et lacunes conservés
+    explicitement.
+  required_nodes:
+  - id: BHV006
+    field_sha256:
+      definition: 3f3265760ed0d06b8144513ac33f83968928c5f1d8641eb077b95e474b85e271
+      market_comparisons: 431c72f1802feb06e544657816cda56e0b2c502e544bc50508ab968947895569
+    kind: capability
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: D05.h
+    field_sha256:
+      market_gaps: df005b8c5cc0fc6cdf28726aff505de036c2401dc1f5220bcc680c5799f693b9
+    kind: capability
+    parent: ba-physical-stock-configuration-optimization
+    parent_type: contains
+  - id: D04.t
+    field_sha256:
+      market_gaps: fc29c26bc7b43eeb673907773ac389cb32593592fee170b35e18c2944ab85470
+    kind: capability
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+  - id: subdomain-policies
+    field_sha256:
+      definition: 8081251ed804875cf0169f77fa8f191bf099b2e648488af9956f33d21af94b0a
+      market_comparisons: e72e4ef0da2609f23a31e5a392b8f1a43af1cd99fd44003fa9a3b9914d6f2690
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: service-order-labeling
+    field_sha256:
+      market_gaps: 8b1f34193d0ce3cd71ce952288ba69b39cc07600e522079570e799e1c978a84f
+    kind: capability
+    parent: ba-goods-processing-order-management
+    parent_type: contains
+  - id: service-order-garment-finishing
+    field_sha256:
+      market_gaps: c244ac72ab6e5429b4fdfb3e2a2e9baefcc5f6bc3fe3b059120798be632907e7
+    kind: capability
+    parent: ba-goods-processing-order-management
+    parent_type: contains
+  - id: service-order-cleaning
+    field_sha256:
+      market_gaps: 397581b4d1fc1a170aa2fd5f46da0edae9e0fae88f09435f91710747d488d83b
+    kind: capability
+    parent: ba-goods-processing-order-management
+    parent_type: contains
+  - id: service-order-repair-alteration
+    field_sha256:
+      market_gaps: 81d4bdc742f4f923c1344f09435196b3494a4a7c218ea448fbd0e7dc50c674dd
+    kind: capability
+    parent: ba-goods-processing-order-management
+    parent_type: contains
+  - id: service-order-personalization
+    field_sha256:
+      market_gaps: 57a0a57eec252905fd6091865bd4fe1d548c6aa6be70654a4615bb9746144023
+    kind: capability
+    parent: ba-goods-processing-order-management
+    parent_type: contains
+  - id: service-order-transport-booking
+    field_sha256:
+      market_gaps: 25dfb19b1ed70f026b8e4168c0fe64d45002dffccd09290b25f891af331002c7
+    kind: capability
+    parent: ba-transport-order-management
+    parent_type: contains
+  - id: ba-order-promising
+    field_sha256:
+      market_comparisons: 9441508b51d833c646f1bfc6b3343d7fd6c250efa7a4a5f840cd93e297d6655c
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: D03
+    parent_type: contains
+  - id: ba-execution-assurance
+    field_sha256:
+      market_comparisons: 007bc314f2095240101df1c8980b651a52298dcb34ea782502b359d03b398c2c
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: D06
+    parent_type: contains
+  - id: ba-inbound-information-integration
+    field_sha256:
+      market_comparisons: 6ac9690cee3e460567ae2d3fad7a4940798fcadeb5c0e39457f2958fa89ff862
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-integration
+    parent_type: contains
+  - id: ba-outbound-information-provision
+    field_sha256:
+      market_comparisons: 8ebf02c9069620d985e0b71c2b97b79956e982c0f35d93d37b79e1a1efd98a6c
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-integration
+    parent_type: contains
+  - id: ba-service-references
+    field_sha256:
+      market_gaps: 63f5ae87ec06b6e881cf6c8006dee4407280ba4070d68cd28507f073378a2b10
+    kind: business_area
+    parent: business-references
+    parent_type: contains
+  - id: ba-service-provider-controls
+    field_sha256:
+      definition: ee3dd5dd9c3af1ae5f7c1f8c5de4fef170518f7252d2761a7c5c3260cbd966e0
+    kind: business_area
+    parent: subdomain-policies
+    parent_type: contains
+  - id: operational-analysis-reporting
+    field_sha256:
+      definition: e79606fe33e44c556869852dee488c36680a6a171c9513d49b0b95fc3ac95b9d
+      market_comparisons: dadb42b20f55fd447484e0d3936a663c5b3fdb58e53e66ce3975658fc7faf957
+    kind: capability
+    parent: ba-process-intelligence
+    parent_type: contains
+  - id: subdomain-sales-b2c-ecommerce
+    field_sha256:
+      definition: 0fa2b5058fb41325ff3f74e1543c575c6acc97d3348f378903b8cb13ba3e9fe0
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: subdomain-sales-b2c-store
+    field_sha256:
+      definition: 0ccf6f8ba933208a45d1c720e03f5d6e17eafdd11ae5f16a007e14b30f9dcadb
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: subdomain-sales-wholesale
+    field_sha256:
+      definition: f50f57ebb9bbfc530b6b9f60b34a9f08d406903ba86da89157e8410fc5ed65ad
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: subdomain-sampling-product-validation
+    field_sha256:
+      market_gaps: d86fd8b258f6f14003ce548a26c99d5cf8de6aab1d2771188ae865e5265f51a0
+    kind: area
+    parent: domain-product-development
+    parent_type: presents
+  - id: subdomain-strategy-objectives
+    field_sha256:
+      market_gaps: 640fabcb391a10bba8543776903f92531fcbeb3849fbb80ab61b458e5c910f8c
+    kind: area
+    parent: domain-enterprise-planning-performance
+    parent_type: presents
+  - id: subdomain-audit-assurance
+    field_sha256:
+      market_gaps: 20c0f044c6422cd7a31dd8c1b63940bcf653cc5704979579db319c5f41feff83
+    kind: area
+    parent: domain-governance-risk-compliance
+    parent_type: presents
+  - id: subdomain-value-added-returns
+    field_sha256:
+      market_gaps: aa23e4571da6664261f565eeb3f9a87bd6f132634ee865affc0ccadaf8d3e1c3
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+  - id: subdomain-transport-exception
+    field_sha256:
+      market_gaps: e67600c14fa7c001fd71225d5669f49d3b598abcbe8073de1ce573aad00c5785
+    kind: area
+    parent: domain-transportation
+    parent_type: presents
+  - id: subdomain-assortment-catalog-management
+    field_sha256:
+      definition: 2e797054e9d5412d4bec110d1d6dbaa64d1b456b05b7ee428deeb2ade20a45b2
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: subdomain-retail-network-management
+    field_sha256:
+      definition: 565b0c5e782775b5907c9c2bba9a43aae96d93ae1f979da885c3fb5e31a6f136
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: subdomain-store-backoffice-operations
+    field_sha256:
+      definition: c65581707f2f6dfb66e4d2e8ea6d2a0a41e4a7aad985443630e80a2df3637e2e
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: D03.k
+    field_sha256:
+      market_comparisons: fa7ae7262bc2349ce45bece08e1b32c401a07a94701a1a83aafdec4636652305
+  required_glossary:
+  - id: TER124
+    field_sha256:
+      market_comparisons: 9441508b51d833c646f1bfc6b3343d7fd6c250efa7a4a5f840cd93e297d6655c
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER130
+    field_sha256:
+      definition: 8081251ed804875cf0169f77fa8f191bf099b2e648488af9956f33d21af94b0a
+      short_description: 8081251ed804875cf0169f77fa8f191bf099b2e648488af9956f33d21af94b0a
+      context: 511305bc321ed0b04379e822ca1b2c249280aeac5c2e0baa5ac1c7805e0703df
+      market_comparisons: e72e4ef0da2609f23a31e5a392b8f1a43af1cd99fd44003fa9a3b9914d6f2690
+  - id: TER138
+    field_sha256:
+      market_comparisons: 007bc314f2095240101df1c8980b651a52298dcb34ea782502b359d03b398c2c
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER140
+    field_sha256:
+      market_comparisons: 6ac9690cee3e460567ae2d3fad7a4940798fcadeb5c0e39457f2958fa89ff862
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER141
+    field_sha256:
+      market_comparisons: 8ebf02c9069620d985e0b71c2b97b79956e982c0f35d93d37b79e1a1efd98a6c
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER149
+    field_sha256:
+      market_gaps: 63f5ae87ec06b6e881cf6c8006dee4407280ba4070d68cd28507f073378a2b10
+  - id: TER160
+    field_sha256:
+      definition: ee3dd5dd9c3af1ae5f7c1f8c5de4fef170518f7252d2761a7c5c3260cbd966e0
+      short_description: ee3dd5dd9c3af1ae5f7c1f8c5de4fef170518f7252d2761a7c5c3260cbd966e0
+  - id: TER174
+    field_sha256:
+      definition: e79606fe33e44c556869852dee488c36680a6a171c9513d49b0b95fc3ac95b9d
+      short_description: e79606fe33e44c556869852dee488c36680a6a171c9513d49b0b95fc3ac95b9d
+      market_comparisons: dadb42b20f55fd447484e0d3936a663c5b3fdb58e53e66ce3975658fc7faf957
+  - id: TER191
+    field_sha256:
+      short_description: 0fa2b5058fb41325ff3f74e1543c575c6acc97d3348f378903b8cb13ba3e9fe0
+      definition: 0fa2b5058fb41325ff3f74e1543c575c6acc97d3348f378903b8cb13ba3e9fe0
+  - id: TER192
+    field_sha256:
+      short_description: 0ccf6f8ba933208a45d1c720e03f5d6e17eafdd11ae5f16a007e14b30f9dcadb
+      definition: 0ccf6f8ba933208a45d1c720e03f5d6e17eafdd11ae5f16a007e14b30f9dcadb
+  - id: TER193
+    field_sha256:
+      short_description: f50f57ebb9bbfc530b6b9f60b34a9f08d406903ba86da89157e8410fc5ed65ad
+      definition: f50f57ebb9bbfc530b6b9f60b34a9f08d406903ba86da89157e8410fc5ed65ad
+  - id: TER213
+    field_sha256:
+      market_gaps: d86fd8b258f6f14003ce548a26c99d5cf8de6aab1d2771188ae865e5265f51a0
+  - id: TER222
+    field_sha256:
+      market_gaps: 640fabcb391a10bba8543776903f92531fcbeb3849fbb80ab61b458e5c910f8c
+  - id: TER228
+    field_sha256:
+      market_gaps: 20c0f044c6422cd7a31dd8c1b63940bcf653cc5704979579db319c5f41feff83
+  - id: TER236
+    field_sha256:
+      market_gaps: aa23e4571da6664261f565eeb3f9a87bd6f132634ee865affc0ccadaf8d3e1c3
+  - id: TER240
+    field_sha256:
+      market_gaps: e67600c14fa7c001fd71225d5669f49d3b598abcbe8073de1ce573aad00c5785
+  - id: TER245
+    field_sha256:
+      short_description: 2e797054e9d5412d4bec110d1d6dbaa64d1b456b05b7ee428deeb2ade20a45b2
+      definition: 2e797054e9d5412d4bec110d1d6dbaa64d1b456b05b7ee428deeb2ade20a45b2
+  - id: TER247
+    field_sha256:
+      short_description: 565b0c5e782775b5907c9c2bba9a43aae96d93ae1f979da885c3fb5e31a6f136
+      definition: 565b0c5e782775b5907c9c2bba9a43aae96d93ae1f979da885c3fb5e31a6f136
+  - id: TER248
+    field_sha256:
+      short_description: c65581707f2f6dfb66e4d2e8ea6d2a0a41e4a7aad985443630e80a2df3637e2e
+      definition: c65581707f2f6dfb66e4d2e8ea6d2a0a41e4a7aad985443630e80a2df3637e2e
+  - id: TER068
+    field_sha256:
+      market_comparisons: fa7ae7262bc2349ce45bece08e1b32c401a07a94701a1a83aafdec4636652305
+  required_catalog:
+  - collection: paths
+    id: b2b-partial-stock-path
+    content_sha256: 60fd89ff707126a378de1c5e6111dbe7004841f585a34cd09ed7ebff7fb9b7fe
+  - collection: paths
+    id: return-fashion-recovery-path
+    content_sha256: 52fbfb6e188cf557c1683e822343c424a8f5ebd2a46d37cafbc33d210f458e7b
+  - collection: paths
+    id: consignment-sale-pickup-path
+    content_sha256: 138626ee62d104ad3850b95d0647eae53e7842da1b7eaa73548ff630aad9de12
+  - collection: paths
+    id: fashion-launch-path
+    content_sha256: 54377fdcb62c6769ae1d8bbcba8d4029a71a44a50ca750f911a864aa0d5e5beb
+  - collection: paths
+    id: export-remote-services-path
+    content_sha256: f7ea032d02d45dc1c05f5a524135adf4c7a1167a115b5b9ef1582ffeda81db9b
+  - collection: paths
+    id: stocktaking-variance-path
+    content_sha256: 16ab309a10685f86722c85de22d3cf427faf097c90bc5a5d3bddb6080a7aa1a3
+  - collection: paths
+    id: last-item-concurrency-path
+    content_sha256: 09227677766090ee15bed8e0c2ff1378778cfe35b933c64cb2748e57e1283d51
+  - collection: paths
+    id: substitution-price-service-path
+    content_sha256: 2880a8db8e2b5f378b82f1b0cac76cbc4899725f43f81ec9a5932cb0cc5acd98
+  - collection: paths
+    id: additional-purchase-partial-path
+    content_sha256: 1c1e504b464a26fdd26481c895163d128852bf9ceb6f9644815132e3fb0c21bc
+  - collection: paths
+    id: pickup-or-direct-shipment-path
+    content_sha256: 3bdac7f6aeb0a17acd773d8ea26445d7586f46c71f182fb2f2e6d299c9c3f2cd
+  - collection: paths
+    id: transport-missed-connection-path
+    content_sha256: d903503a69560c95422a9288b6be7626e46c6a14c9dad30913cec3a98b4d31cb
+  - collection: paths
+    id: remote-payment-ambiguous-path
+    content_sha256: f867bc83e7cd9027ca6d67b227391f544c61944892bbaaccc200687a27bd536a
+  - collection: paths
+    id: reference-plan-correction-path
+    content_sha256: 6bcbcdf6117cebeb41e155f673316ad26288824e7e3845ed4f980852e0fc2bf5
+  - collection: paths
+    id: redistribute-protected-stock-path
+    content_sha256: 7bbf983e097af4cc8fbbf47ac294a78252f1968c2ba844e7205a1dd5f2c9343a
+  - collection: paths
+    id: supplier-return-outcomes-path
+    content_sha256: d6dc832109d1cbbee90df5ebf967f1862795238ac47952ddc3ce312637d81025
+  - collection: paths
+    id: gift-kits-crossdock-path
+    content_sha256: 11609c9ed426bbc997a42de631b3f10b0c031f49e7725e5d01533b4ec77b1257
+  - collection: paths
+    id: ownership-transit-deadline-path
+    content_sha256: f67926ffa14c267fe307223efd76f758cd73ba85199c79dfda9cf7cce87d7779
+  - collection: paths
+    id: order-structuring-engaged-path
+    content_sha256: 56b1d5c5a96870370230431d4c1a87025a16db84d6b1157e420427acb6aa7b2b
+  - collection: paths
+    id: b2b-release-deadline-path
+    content_sha256: bad91d4d9573d6aedaf577f75ee34a9391cac72589fd0a2f7436f3f62a952bdb
+  - collection: paths
+    id: trace-accessory-kits-path
+    content_sha256: 5f67552180600c27fa45de9618318fc7fdc9208ffdbad52ba6140f4c816171f0
+  - collection: paths
+    id: damaged-stock-disposition-path
+    content_sha256: c53c196a84b50290f350f78f9ec8315ff74b44ee872d823fd533a7eb04804400
+  - collection: paths
+    id: transport-loads-six-stores-path
+    content_sha256: a338504e4bd1d8c690f57e56dafaf89521168162837829dcececd070caec7fd8
+  - collection: paths
+    id: transfer-replenishment-order-driven-path
+    content_sha256: 85cf03e4ff60235f11488c31aa5847890aff2472e6386db79da50fecd90dac95
+  - collection: paths
+    id: consignment-launch-replenishment-path
+    content_sha256: e1b5bc772807c8334dbf2ec6fee121bc986cdc06e7541ac49ade087daeb24561
+  - collection: paths
+    id: partial-receiving-path
+    content_sha256: 5410e4ed24298c8389adbd7d8c23442bdb429f004e9d59de3d7a8dfa3973361a
+  - collection: paths
+    id: b2b-partial-stock-split-path
+    content_sha256: 07ee3a85fcd93eade59f6e7946ccbe13bf425a0ca2f93a40bec712dde002292f
+  - collection: paths
+    id: preorder-future-availability-path
+    content_sha256: 6eb6a841410ef6a6d133e70d9a5adbae5d3d816ba8aa60c53179b683c4a45087
+  - collection: paths
+    id: complete-order-multiline-path
+    content_sha256: 8733b786b4a98215b2fa5d01c14496fa152295e544530fe93eb63c738760c53c
+  - collection: paths
+    id: seasonal-order-backlog-path
+    content_sha256: 618c74cb8fb56dbcc6b481dc34d6389f77c62b7a9a9d28abfe3c0e06f53d8519
+  - collection: paths
+    id: seasonal-map-refusal-path
+    content_sha256: 7aa9c417173f8ce5384518bc920315f16fb6a71ef15baa24c554ab93af77b9e1
+  - collection: paths
+    id: seasonal-contract-firming-path
+    content_sha256: f4fbddc500f708cb5fedfff5706e903219a535f8947654ab7ed56dfddf8469d8
+  - collection: paths
+    id: seasonal-shared-resource-path
+    content_sha256: 86967635ea63bd19e38cae694dd7e1e8cc7d398a968a27297370bd19f4946003
+  - collection: paths
+    id: seasonal-partial-assortment-path
+    content_sha256: a2f935f0e1fa3ed75c6721d112343791be4c9d27d49a451aebd82bedf088f385
+  - collection: scenarios
+    id: return-fashion-recovery
+    content_sha256: 54116d9efe9c897a995a88619630fd3e56c7c6ed6fd580769722603468e58206
+  - collection: scenarios
+    id: consignment-sale-pickup
+    content_sha256: 2d53f1e2565f3f0a3e40d9c2cbb68c2a7de3d51949b35adcc796ee20d1f8d893
+  - collection: scenarios
+    id: fashion-launch
+    content_sha256: e2bd221975118918ea26eed9ac05e1d8669a7a2201a5f6253da5fa9a0baf85cf
+  - collection: scenarios
+    id: export-remote-services
+    content_sha256: 621e5bc34277c960fce8d023b47465949894eb8f91ca9c32fbd414d9b7425c61
+  - collection: scenarios
+    id: stocktaking-variance
+    content_sha256: 1edee08e112680db0eab4f37012a972aab9e20da2871f8df484b73eaf3b13157
+  - collection: scenarios
+    id: last-item-concurrency
+    content_sha256: 9bb0693f3725cce9d93e5c2cf1476af219ef023de1b59415d04c4123894e0a1f
+  - collection: scenarios
+    id: substitution-price-service
+    content_sha256: 3c835ca1224e2a0c5c14a8f45ff8ea0154ed7af3daa6b8c0a2390e156bd02e49
+  - collection: scenarios
+    id: additional-purchase-partial
+    content_sha256: fdb3bdd06e4325467864bdc3ec842cc82ff6644cff8681584dec4be0d283afd9
+  - collection: scenarios
+    id: pickup-or-direct-shipment
+    content_sha256: fea181eb10b19ee93926f69b12c272b55fbfa0f6015b6ee605cb266210729364
+  - collection: scenarios
+    id: transport-missed-connection
+    content_sha256: 4c4cb5343c5991d3148dc784aca8d2a0950ad37f2ddfa0cf3022afd19c279351
+  - collection: scenarios
+    id: remote-payment-ambiguous
+    content_sha256: 3b62138fc618b215ab718f8d3c5118ed56ccb9c4e61d4791e2e1223a1dc905ab
+  - collection: scenarios
+    id: reference-plan-correction
+    content_sha256: 996aa0c92df2eedac4ac0dbe45ab4a8278856d22d0fdb31050a2e9effb395887
+  - collection: scenarios
+    id: redistribute-protected-stock
+    content_sha256: b548c24d96baca35d5636e38bc30f7c8eb6d5ed03a35cae798b2959d8410c16a
+  - collection: scenarios
+    id: supplier-return-outcomes
+    content_sha256: d9c15677530f4e1bd4baaf9de6ae84f03f1440ee1dcba6a09fd51522fcd4923c
+  - collection: scenarios
+    id: gift-kits-crossdock
+    content_sha256: e69b45aee32f8a3c8de3c8ae6ab4a12b15e45d840f1155ee03dd86dcefa3d23b
+  - collection: scenarios
+    id: ownership-transit-deadline
+    content_sha256: 774fe3b8268d6282955726bd1be85b8bccc44e8b85139b77d041204cd18d7106
+  - collection: scenarios
+    id: order-structuring-engaged
+    content_sha256: 5074762dfcd977e73c1b2c241c5bdc16874d97558337e482d5484eeae0b69248
+  - collection: scenarios
+    id: b2b-release-deadline
+    content_sha256: 6c46931ab8b9070f4df1ed231e29d3f13af9131aa59fa2ef8cdfc505b1f63c79
+  - collection: scenarios
+    id: trace-accessory-kits
+    content_sha256: fa5785b5abdd4e6c023cabe01debc25bf174cc81fcbfc839a8fed35a08e14083
+  - collection: scenarios
+    id: damaged-stock-disposition
+    content_sha256: 1fbb8bdf365c953ad90cbdc22bed4899ead518386d403ac2ab74ae9dd4268476
+  - collection: scenarios
+    id: transport-loads-six-stores
+    content_sha256: 65ab591c0928ac1fe10a0f02ef5cf5ba3790fb63b229bab34a3135876cfa208f
+  - collection: scenarios
+    id: transfer-replenishment-order-driven
+    content_sha256: 5b9f5184e2eee1970cbabf22d3760479a4979f0a63b0b7078f8faf9ff426c615
+  - collection: scenarios
+    id: consignment-launch-replenishment
+    content_sha256: 17ae161e6645f3fe2a3d7f97cbed325da22955c7b2679fabab913b33e90f06d0
+  - collection: scenarios
+    id: partial-receiving
+    content_sha256: 27ee8335515a8ce0d18f3b1870ba89efecb38ce51a77dba6f9aad0edd65f00f8
+  supersedes_requirements:
+  - annex: availability-scope-story-U1018.yaml
+    collection: paths
+    id: seasonal-order-backlog-path
+    fields:
+    - content_sha256
+  - annex: availability-stabilization-U877.yaml
+    collection: paths
+    id: last-item-concurrency-path
+    fields:
+    - content_sha256
+  - annex: availability-stabilization-U877.yaml
+    collection: paths
+    id: substitution-price-service-path
+    fields:
+    - content_sha256
+  - annex: availability-stabilization-U877.yaml
+    collection: paths
+    id: complete-order-multiline-path
+    fields:
+    - content_sha256
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-ecommerce
+    fields:
+    - definition
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-store
+    fields:
+    - definition
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: subdomain-sales-wholesale
+    fields:
+    - definition
+  - annex: model-coherence-audit-U886.yaml
+    collection: scenarios
+    id: fashion-launch
+    fields:
+    - content_sha256
+  - annex: model-coherence-audit-U886.yaml
+    collection: scenarios
+    id: reference-plan-correction
+    fields:
+    - content_sha256
+  - annex: model-coherence-audit-U886.yaml
+    collection: paths
+    id: b2b-partial-stock-path
+    fields:
+    - content_sha256
+  - annex: model-coherence-audit-U886.yaml
+    collection: paths
+    id: reference-plan-correction-path
+    fields:
+    - content_sha256
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: ba-execution-assurance
+    fields:
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: operational-analysis-reporting
+    fields:
+    - definition
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: subdomain-policies
+    fields:
+    - definition
+  - annex: operational-work-audit-U881.yaml
+    collection: scenarios
+    id: export-remote-services
+    fields:
+    - content_sha256
+  - annex: operational-work-audit-U881.yaml
+    collection: scenarios
+    id: remote-payment-ambiguous
+    fields:
+    - content_sha256
+  - annex: operational-work-audit-U881.yaml
+    collection: paths
+    id: export-remote-services-path
+    fields:
+    - content_sha256
+  - annex: operational-work-audit-U881.yaml
+    collection: paths
+    id: remote-payment-ambiguous-path
+    fields:
+    - content_sha256
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: BHV006
+    fields:
+    - definition
+    - market_comparisons
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: subdomain-policies
+    fields:
+    - market_comparisons
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: paths
+    id: b2b-partial-stock-path
+    fields:
+    - content_sha256
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: paths
+    id: b2b-partial-stock-split-path
+    fields:
+    - content_sha256
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: paths
+    id: b2b-release-deadline-path
+    fields:
+    - content_sha256
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: paths
+    id: remote-payment-ambiguous-path
+    fields:
+    - content_sha256
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: paths
+    id: transport-loads-six-stores-path
+    fields:
+    - content_sha256
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: paths
+    id: transport-missed-connection-path
+    fields:
+    - content_sha256
+  - annex: reactive-workflow-U843.yaml
+    collection: paths
+    id: transport-missed-connection-path
+    fields:
+    - content_sha256
+  - annex: required-business-areas-U880.yaml
+    collection: nodes
+    id: ba-service-provider-controls
+    fields:
+    - definition
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: return-fashion-recovery
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: consignment-sale-pickup
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: stocktaking-variance
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: last-item-concurrency
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: substitution-price-service
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: additional-purchase-partial
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: pickup-or-direct-shipment
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: transport-missed-connection
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: redistribute-protected-stock
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: supplier-return-outcomes
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: gift-kits-crossdock
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: ownership-transit-deadline
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: order-structuring-engaged
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: b2b-release-deadline
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: trace-accessory-kits
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: damaged-stock-disposition
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: transport-loads-six-stores
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: transfer-replenishment-order-driven
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: consignment-launch-replenishment
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: scenarios
+    id: partial-receiving
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: return-fashion-recovery-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: consignment-sale-pickup-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: stocktaking-variance-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: last-item-concurrency-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: substitution-price-service-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: additional-purchase-partial-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: pickup-or-direct-shipment-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: transport-missed-connection-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: redistribute-protected-stock-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: supplier-return-outcomes-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: gift-kits-crossdock-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: ownership-transit-deadline-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: order-structuring-engaged-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: b2b-release-deadline-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: trace-accessory-kits-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: damaged-stock-disposition-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: transfer-replenishment-order-driven-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: consignment-launch-replenishment-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: partial-receiving-path
+    fields:
+    - content_sha256
+  - annex: scenario-migration-U793.yaml
+    collection: paths
+    id: b2b-partial-stock-split-path
+    fields:
+    - content_sha256
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: paths
+    id: fashion-launch-path
+    fields:
+    - content_sha256
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: paths
+    id: preorder-future-availability-path
+    fields:
+    - content_sha256
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-order-promising
+    fields:
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-execution-assurance
+    fields:
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-inbound-information-integration
+    fields:
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-outbound-information-provision
+    fields:
+    - market_comparisons
+  - annex: visibility-scope-U858.yaml
+    collection: paths
+    id: consignment-sale-pickup-path
+    fields:
+    - content_sha256
+  - annex: visibility-scope-U858.yaml
+    collection: paths
+    id: substitution-price-service-path
+    fields:
+    - content_sha256
+  - annex: visibility-scope-U858.yaml
+    collection: paths
+    id: ownership-transit-deadline-path
+    fields:
+    - content_sha256
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D03.k
+    fields:
+    - market_comparisons
+findings:
+- id: AUD1020-01
+  disposition: implemented
+  result: Décision de livraison et effets Sales Order ajoutés aux deux variantes B2B ; libération aval des prestations distincte.
+- id: AUD1020-02
+  disposition: implemented
+  result: Replenishment explicite et réponse de MAP avant achat autorisé ; dépendances conditionnelles conservées.
+- id: AUD1020-03
+  disposition: implemented
+  result: Stock Redistribution conditionnel sur déplacement physique ajouté aux deux cas de transfert.
+- id: AUD1020-04
+  disposition: implemented
+  result: 28 rôles du carnet contextualisés ; stratégie active consommée et optimisation de réservation seulement conditionnelle.
+- id: AUD1020-05
+  disposition: implemented
+  result: Réservation conditionnelle multiligne, achats au jalon de gestion et autorisation préalable du cas de libération
+    de prestations explicites.
+- id: AUD1020-06
+  disposition: implemented
+  result: Appui Microsoft Order promising primaire direct ajouté ; limite du choix économique PTP explicite.
+- id: AUD1020-07
+  disposition: qualified_limits_retained
+  result: Source SAP de calcul des charges qualifiée comme entrée de coût ; aucune équivalence complète avec PTP.
+- id: AUD1020-08
+  disposition: implemented
+  result: Quatre définitions clarifiées sans déplacement de périmètre ; contextes et reprises lexicales alignés.
+- id: AUD1020-09
+  disposition: implemented
+  result: Six définitions de contexte Commerce formulées comme services durables ; aucune capacité adjacente créée.
+- id: AUD1020-10
+  disposition: qualified_limits_retained
+  result: Quatre lacunes de famille remplacées par appuis primaires partiels ; 23 lacunes sur 14 fiches conservées avec raisons
+    précises.
+- id: AUD1020-11
+  disposition: implemented
+  result: 24 titres génériques remplacés et hypothèses propres aux 24 scénarios et parcours documentées.
+- id: AUD1020-12
+  disposition: implemented
+  result: Quatre variantes critiques ajoutées au scénario saisonnier existant ; restent illustratives et proposées.
+- id: AUD1020-13
+  disposition: implemented
+  result: Ordre des BA contrôlé par display_codes et tests U1020 ; Stock Optimization dernière.
+- id: AUD1020-14
+  disposition: implemented
+  result: Contrôle de synthèse des domaines non vide conservé et rejoué.
+market_reexamination:
+  new_primary_partial_supports:
+  - id: ba-order-promising
+    family: microsoft_dynamics
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+    limit: FLOW distingue possibilité de promesse, confirmation dans la commande et comparaison économique ; cet article ne
+      couvre pas tout le choix économique PTP.
+  - id: ba-execution-assurance
+    family: microsoft_dynamics
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-external-erp
+    limit: Appui à l’assurance des résultats et des positions ; la source mêle réalisation en entrepôt et échanges, sans couvrir
+      toute assurance des prestations ou contrôles FLOW.
+  - id: ba-inbound-information-integration
+    family: sap_s4hana
+    url: https://learning.sap.com/courses/commerce-and-s-4hana-integration-foundations/examining-the-functions-of-sap-s-4hana-cloud-apis-for-the-integration_dd7cfbbd-6ff4-450a-9d2d-4cb803aee269
+    limit: Appui partiel à la réception intersystèmes ; la source ne définit ni toute validation sémantique FLOW ni l’ensemble
+      des plans et référentiels à ingérer.
+  - id: ba-outbound-information-provision
+    family: microsoft_dynamics
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/data-entities
+    limit: Exemple partiel de fourniture d’informations de référence ; la source ne couvre pas tout le provisionnement des
+      plans ou faits comptables et ne prescrit pas la BA FLOW.
+  remaining_gaps:
+  - id: D05.h
+    family: sap_s4hana
+    result: retained_explicit_gap
+    reason: 'Les paramètres et statuts d’affectation sont documentés ; l’optimisation autonome des règles de réservation selon
+      leurs conséquences ne l’est pas. Appui requis encore à établir pour cette famille produit. Réexamen U1021 : Le paramétrage
+      de réservation ne prouve pas une optimisation de ses jalons et régimes selon risque et coût ; lacune S/4HANA conservée.'
+    investigated_urls:
+    - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+  - id: D04.t
+    family: microsoft_dynamics
+    result: retained_explicit_gap
+    reason: 'La consignation fournisseur documentée n’établit pas le cycle de reprise de biens consignés chez un client. Appui
+      requis encore à établir pour cette famille produit. Réexamen U1021 : La consignation fournisseur entrante documentée
+      par Microsoft ne prouve pas le cycle de reprise du stock consigné chez le client.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/consignment
+  - id: service-order-labeling
+    family: microsoft_dynamics
+    result: retained_explicit_gap
+    reason: 'Le cycle générique d’ordre de service ne documente pas les exigences et résultats d’un étiquetage textile. Appui
+      requis encore à établir pour cette famille produit. Réexamen U1021 : La génération d’étiquettes Microsoft ne prouve
+      pas le cycle d’une prestation textile avec exigences, engagement et résultats.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders
+  - id: service-order-garment-finishing
+    family: microsoft_dynamics
+    result: retained_explicit_gap
+    reason: 'Les prestations génériques et instructions d’étiquetage ou d’emballage ne documentent pas le cycle spécifique
+      de finition des vêtements. Appui requis encore à établir pour cette famille produit. Réexamen U1021 : Les prestations
+      génériques et opérations d’entrepôt ne prouvent pas le cycle complet d’une finition textile.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders
+  - id: service-order-garment-finishing
+    family: sap_s4hana
+    result: retained_explicit_gap
+    reason: 'Les prestations génériques et instructions d’étiquetage ou d’emballage ne documentent pas le cycle spécifique
+      de finition des vêtements. Appui requis encore à établir pour cette famille produit. Réexamen U1021 : Les prestations
+      génériques et opérations d’entrepôt ne prouvent pas le cycle complet d’une finition textile.'
+    investigated_urls:
+    - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-vas_f2561ed9-da50-493e-8d2f-b68d3c46ee05
+  - id: service-order-cleaning
+    family: microsoft_dynamics
+    result: retained_explicit_gap
+    reason: 'Les prestations génériques et instructions d’étiquetage ou d’emballage ne documentent pas le nettoyage textile,
+      ses exigences et son résultat attendu. Appui requis encore à établir pour cette famille produit. Réexamen U1021 : Une
+      opération générique de service ne suffit pas à établir le cycle de nettoyage textile à cette maille.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders
+  - id: service-order-cleaning
+    family: sap_s4hana
+    result: retained_explicit_gap
+    reason: 'Les prestations génériques et instructions d’étiquetage ou d’emballage ne documentent pas le nettoyage textile,
+      ses exigences et son résultat attendu. Appui requis encore à établir pour cette famille produit. Réexamen U1021 : Une
+      opération générique de service ne suffit pas à établir le cycle de nettoyage textile à cette maille.'
+    investigated_urls:
+    - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-vas_f2561ed9-da50-493e-8d2f-b68d3c46ee05
+  - id: service-order-repair-alteration
+    family: sap_s4hana
+    result: retained_explicit_gap
+    reason: 'Le traitement des retours et la réparation sont abordés ; le passage examiné ne suffit pas à établir précisément
+      Repair & Alteration Order et ses limites dans FLOW. Appui requis encore à établir pour cette famille produit. Réexamen
+      U1021 : Les sources S/4HANA consultées ne prouvent pas le cycle complet de réparation et retouche textile.'
+    investigated_urls:
+    - https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/managing-customer-returns_f224d287-07ad-41fe-9897-2eb2ee4b33dc
+  - id: service-order-personalization
+    family: microsoft_dynamics
+    result: retained_explicit_gap
+    reason: 'Les prestations génériques et instructions d’étiquetage ou d’emballage ne suffisent pas à établir un cycle de
+      personnalisation des biens. Appui requis encore à établir pour cette famille produit. Réexamen U1021 : Les prestations
+      génériques d’entrepôt ne prouvent pas le cycle de personnalisation textile à cette maille.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-orders
+  - id: service-order-personalization
+    family: sap_s4hana
+    result: retained_explicit_gap
+    reason: 'Les prestations génériques et instructions d’étiquetage ou d’emballage ne suffisent pas à établir un cycle de
+      personnalisation des biens. Appui requis encore à établir pour cette famille produit. Réexamen U1021 : Les prestations
+      génériques d’entrepôt ne prouvent pas le cycle de personnalisation textile à cette maille.'
+    investigated_urls:
+    - https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-vas_f2561ed9-da50-493e-8d2f-b68d3c46ee05
+  - id: service-order-transport-booking
+    family: microsoft_dynamics
+    result: retained_explicit_gap
+    reason: 'La construction d’un chargement à partir des ordres ne démontre pas une réservation de capacité autonome avant
+      les instructions de transport. Appui requis encore à établir pour cette famille produit. Réexamen U1021 : La planification
+      de chargements ne prouve pas une demande autonome de réservation de capacité de transport préalable.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+  - id: ba-service-references
+    family: microsoft_dynamics
+    result: retained_explicit_gap
+    reason: 'Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Les passages
+      tarifaires ne couvrent pas l’ensemble des références de cette Area. Réexamen U1021 : Des listes de prix isolées ne prouvent
+      pas le périmètre regroupant réseau de réalisation, catalogue de services et barème.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/sales/create-price-lists-price-list-items-define-pricing-products
+  - id: ba-service-references
+    family: sap_s4hana
+    result: retained_explicit_gap
+    reason: 'Le regroupement FLOW et sa responsabilité complète ne sont pas établis par les contenus consultés. Les passages
+      tarifaires ne couvrent pas l’ensemble des références de cette Area. Réexamen U1021 : Des listes de prix isolées ne prouvent
+      pas le périmètre regroupant réseau de réalisation, catalogue de services et barème.'
+    investigated_urls:
+    - https://learning.sap.com/courses/performing-basic-customizing-for-service-in-sap-s-4hana-and-sap-s-4hana-cloud-private-edition/configuring-pricing-for-service-transactions_c9d5bd5a-5032-410b-8632-579a947eedcc
+  - id: subdomain-sampling-product-validation
+    family: sap_s4hana
+    result: retained_explicit_gap
+    reason: 'Les passages consultés portent les définitions et leur disponibilité à l’usage ; ils ne démontrent pas les essais
+      et validations d’échantillons à cette maille métier. Réexamen U1021 : Définition produit et inspection de fabrication
+      ne suffisent pas à établir la validation des échantillons avant lancement.'
+    investigated_urls:
+    - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - id: subdomain-sampling-product-validation
+    family: microsoft_dynamics
+    result: retained_explicit_gap
+    reason: 'Les passages consultés portent les définitions et leur disponibilité à l’usage ; ils ne démontrent pas les essais
+      et validations d’échantillons à cette maille métier. Réexamen U1021 : Définition produit et inspection de fabrication
+      ne suffisent pas à établir la validation des échantillons avant lancement.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/product-engineering-overview
+  - id: subdomain-strategy-objectives
+    family: sap_s4hana
+    result: retained_explicit_gap
+    reason: 'Les appuis portent les objectifs et scénarios financiers ; toute la définition de la stratégie entreprise n’est
+      pas documentée à cette maille. Réexamen U1021 : La planification financière ne couvre pas à elle seule la stratégie
+      et les objectifs d’entreprise.'
+    investigated_urls:
+    - https://learning.sap.com/courses/performing-manual-planning-with-sap-analytics-cloud/using-sap-content-network-business-packages-optional_e1f63cdb-d5b4-4a7e-a0a2-ebf67bc5bbb2
+  - id: subdomain-strategy-objectives
+    family: microsoft_dynamics
+    result: retained_explicit_gap
+    reason: 'Les appuis portent les objectifs et scénarios financiers ; toute la définition de la stratégie entreprise n’est
+      pas documentée à cette maille. Réexamen U1021 : La planification financière ne couvre pas à elle seule la stratégie
+      et les objectifs d’entreprise.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/finance/business-performance-planning/business-performance-planning-overview
+  - id: subdomain-audit-assurance
+    family: sap_s4hana
+    result: retained_explicit_gap
+    reason: 'Les appuis décrivent contrôles, tests et conflits ; un mandat complet d’audit et d’assurance indépendant n’est
+      pas démontré. Réexamen U1021 : Contrôles opérationnels et tests de conformité ne prouvent pas le mandat d’audit indépendant.'
+    investigated_urls:
+    - https://help.sap.com/doc/d83af7d22baa49829e464111338e9c12/12.0.23/en-US/loio60d658f576b6452eb0f943c04b354018_en.pdf
+  - id: subdomain-audit-assurance
+    family: microsoft_dynamics
+    result: retained_explicit_gap
+    reason: 'Les appuis décrivent contrôles, tests et conflits ; un mandat complet d’audit et d’assurance indépendant n’est
+      pas démontré. Réexamen U1021 : Contrôles opérationnels et tests de conformité ne prouvent pas le mandat d’audit indépendant.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/sysadmin/set-up-segregation-duties
+  - id: subdomain-value-added-returns
+    family: sap_s4hana
+    result: retained_explicit_gap
+    reason: 'La documentation générale d’entrepôt ne suffit pas à étayer à cette maille les traitements supplémentaires et
+      les retours réunis ici. Réexamen U1021 : Une description générale de l’entrepôt ne couvre pas à elle seule le périmètre
+      combinant prestations et retours.'
+    investigated_urls:
+    - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - id: subdomain-value-added-returns
+    family: microsoft_dynamics
+    result: retained_explicit_gap
+    reason: 'La documentation générale d’entrepôt ne suffit pas à étayer à cette maille les traitements supplémentaires et
+      les retours réunis ici. Réexamen U1021 : Une description générale de l’entrepôt ne couvre pas à elle seule le périmètre
+      combinant prestations et retours.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+  - id: subdomain-transport-exception
+    family: sap_s4hana
+    result: retained_explicit_gap
+    reason: 'Les vues générales de transport ne démontrent pas le mandat et les décisions de résolution des exceptions à cette
+      maille. Réexamen U1021 : La visibilité du transport ne prouve pas le mandat complet de résolution de ses exceptions.'
+    investigated_urls:
+    - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - id: subdomain-transport-exception
+    family: microsoft_dynamics
+    result: retained_explicit_gap
+    reason: 'Les vues générales de transport ne démontrent pas le mandat et les décisions de résolution des exceptions à cette
+      maille. Réexamen U1021 : La visibilité du transport ne prouve pas le mandat complet de résolution de ses exceptions.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+  limit: Les appuis de produits ne prouvent ni équivalence complète ni taxonomie commune. Les lacunes spécialisées de l’audit
+    restent explicites ; aucune capacité n’est inventée pour les combler.
+  remaining_family_gap_count: 23
+  remaining_fiche_count: 14
+  prior_evidence_reused: Appuis effectivement consultés et limites détaillées dans semantic-coherence-audit-U1020.yaml ; réexamen
+    ciblé sans étendre à l’audit clos des comportements.
+glossary_alignment:
+  updated_terms:
+  - TER124
+  - TER130
+  - TER138
+  - TER140
+  - TER141
+  - TER149
+  - TER160
+  - TER174
+  - TER191
+  - TER192
+  - TER193
+  - TER213
+  - TER222
+  - TER228
+  - TER236
+  - TER240
+  - TER245
+  - TER247
+  - TER248
+  - TER068
+  simulation: Aucune entrée lexicale autonome Simulation & Analysis dans le glossaire ; notion portée par la fiche et liée
+    par son identité persistante, sans nouvelle capacité.
+  scope: Définitions, contextes et correspondances concernés alignés dans le même lot.
+verification:
+  status: passed
+  date: '2026-10-13'
+  targeted_tests:
+    count: 70
+    result: passed
+    modules:
+    - scripts.test_display_codes
+    - scripts.test_business_areas
+    - scripts.test_model_coherence
+    - scripts.test_glossary
+    - scripts.test_scenario_catalog
+    - scripts.test_backlog_delivery
+    - scripts.test_market_vendor_policy
+    - scripts.test_market_reference_policy
+    - scripts.test_methodology_alignment
+  backlog_render: 0 error
+  full_model_validation: 0 error
+  inventory:
+    capabilities: 77
+    scenarios: 40
+    paths: 47
+  publication: 2026-10-13.2 inchangée ; correction dans le backlog, sans publication implicite.

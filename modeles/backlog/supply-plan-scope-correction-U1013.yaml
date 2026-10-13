@@ -1,0 +1,185 @@
+id: SUPPLY-PLAN-SCOPE-CORRECTION-U1013
+date: '2026-10-13'
+source_refs:
+- U1012
+- U1013
+status: applied_to_backlog
+adopted_scope: U1013 corrige l’exclusion des achats du Supply Plan. Les formulations détaillées d’alignement restent des propositions
+  éditoriales ; aucun accord sur une interface installée.
+boundaries:
+- MAP conserve la planification et le carnet d’achat.
+- FLOW pilote la satisfaction du carnet et peut proposer des apports via CTP.
+- Le plan, la proposition identifiée, la commande affermie et la réception restent distincts ; ne pas compter plusieurs fois
+  le même apport.
+market_comparison:
+  Microsoft:
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
+    consulted_on: '2026-10-13'
+    common: Le planning propose notamment des achats et distingue leur affermissement.
+    difference: Master Planning Microsoft couvre aussi la génération de plans d’approvisionnement ; le Master Plan FLOW reste
+      centré sur le carnet.
+  SAP:
+    url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-sourcing-procurement/running-materials-requirements-planning
+    consulted_on: '2026-10-13'
+    common: MRP produit des propositions d’achat ou de production, avec dates et quantités.
+    difference: Les éléments natifs SAP ne sont pas assimilés aux objets MAP ; MRP ne définit pas tout le pilotage collectif
+      FLOW.
+master_plan_perimeter:
+  status: adopted_and_applied
+  source_ref: U1012
+  recommendation: Une capacité commune de pilotage, applicable à plusieurs périmètres de carnet ; choisir les frontières selon
+    les ressources partageables et les responsabilités d’arbitrage, pas automatiquement selon la marque ou l’enseigne.
+  shared_resources: Des périmètres concurrents pour les mêmes ressources exigent un arbitrage commun ou des droits explicitement
+    alloués ; aucun double comptage.
+  market_limits: Microsoft permet plusieurs plans ; SAP BOP segmente les demandes et stratégies ; Oracle peut traiter le carnet
+    entier ou des organisations sélectionnées. Ces fonctions ne prouvent pas une segmentation installée Beaumanoir.
+  agreement_source_ref: U1014
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1012
+  - U1013
+  summary: Corriger l’exclusion des achats du Supply Plan ; préserver MAP, les statuts et la distinction avec le Master Plan
+    FLOW.
+  required_nodes:
+  - id: domain-plan
+    field_sha256:
+      scope: 333b986f0cc7505a68a0ea33597a78b65dfd62966f3beb5d4b7922fda093c83e
+      market_comparisons: 6cbb9aa2bf2bd55a10dfc285e9c20c8e37621f5ce30759b0a1c62b1c6b9a6c38
+  - id: supply-chain-orchestration
+    field_sha256:
+      market_comparisons: f1c244074dba33d09972ab08682fc4ab18031fe36d91e1affcd310420da995d7
+      scope: cafa37034d1a371528da9aac41be51f3112cd9a991cc8c861ee5b68a1c566b2e
+      market_inspiration: c0e5c8883806d7b6bc96f9ec5ec4dcdec6f07c44883daa85e53f49967204bc04
+  - id: subdomain-plans
+    field_sha256:
+      scope: 86546b93217b7d8f52fd58f90c12c1cf8097913ab0f661f803af1fa7b3e88858
+      market_comparisons: f0abf0e2537fe8778d37d734d3e2f69c6eebf1398827aa142060acb3b499f38f
+      market_inspiration: a08967317ba83486e212eab090c51a57d967e46a8ce8a4b136f29bb153a13512
+  - id: plans-ingestion
+    field_sha256:
+      scope: 8de3954c82411b5df6faa8de1262ff676cd92e324d1b1006e4faf63f16a9b91e
+      market_comparisons: 573ad85f057be0b22f305d0a682df58960a447dfb35b06f1b1000c84173f2d28
+      market_inspiration: 0b85535ca81dafb14d0aa5e0ce29181cada30da2f4c2cc035b1873758504a678
+  - id: plans-visibility
+    field_sha256:
+      definition: 2beb34cae8f765b5334005baa5f971dd9fc4950dd29ddaff37914b06db834c43
+      scope: 21124d952a23c200decc89a1377ff6b8bba4fc2fd7ed731ac07acb733225c747
+      market_comparisons: 2f6d8add969ec73b78b6a6b815e37fafafe3b60768f83ef69ed343eed6065c49
+      market_inspiration: 6082d79c3278bf5b280b43c618c994df08fea2c65562908fa83cbc85c2e7d9fb
+  - id: demand-plan-visibility
+    field_sha256:
+      market_comparisons: 8bc79c362857f11d489ecc469945d3a1818ae06db8f1d19fc8895c41822e4324
+  - id: subdomain-supply-planning
+    field_sha256:
+      scope: 5f87984126bedd1f8a757e57ed139665610090a12e6ec4246a7a58f6a78b5b1b
+      market_comparisons: e7131d911003e1026649315ca143600bd29c5ccaf74b08e140185c4c602ff665
+  required_relations: []
+  required_glossary:
+  - id: TER033
+    field_sha256:
+      context: 41553c4beada5a62cd04acbc152bc6b38ab4709af99d981776d8582ecc98dc58
+  - id: TER098
+    field_sha256:
+      definition: cf8343f21a3ae6ce6df2157e96385f9668b6c7c555ce80c4845788057d5d7c85
+      short_description: cf8343f21a3ae6ce6df2157e96385f9668b6c7c555ce80c4845788057d5d7c85
+      context: e3bf7c0a61f5e058b376c54d1daa218bef2f71a656b3e9e4202e9a60125d2470
+      market_comparisons: d8c5b737d1d2f6d6707fb158ef1508a4c18ae9364020205edb29c4c9b3b6ff10
+  - id: TER099
+    field_sha256:
+      market_comparisons: ba77e90475a2d0a548b360c7994a45b3b0c3fdf76f10edc007154871262cd82c
+  - id: TER111
+    field_sha256:
+      context: 333b986f0cc7505a68a0ea33597a78b65dfd62966f3beb5d4b7922fda093c83e
+      market_comparisons: 6cbb9aa2bf2bd55a10dfc285e9c20c8e37621f5ce30759b0a1c62b1c6b9a6c38
+  - id: TER151
+    field_sha256:
+      context: 53532d8e84cfb5b8d3fde96b585e40a395b3916410244e27f9f03cb8931498c5
+      market_comparisons: f0abf0e2537fe8778d37d734d3e2f69c6eebf1398827aa142060acb3b499f38f
+  - id: TER219
+    field_sha256:
+      context: 5f87984126bedd1f8a757e57ed139665610090a12e6ec4246a7a58f6a78b5b1b
+      market_comparisons: e7131d911003e1026649315ca143600bd29c5ccaf74b08e140185c4c602ff665
+  supersedes_requirements:
+  - annex: availability-stabilization-U877.yaml
+    collection: nodes
+    id: plans-ingestion
+    fields:
+    - scope
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER098
+    fields:
+    - context
+    - definition
+    - short_description
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER151
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER219
+    fields:
+    - context
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: glossary-audit-U902.yaml
+    collection: terms
+    id: TER098
+    fields:
+    - context
+    - definition
+    - short_description
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - scope
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER033
+    fields:
+    - context
+  - annex: visibility-scope-U858.yaml
+    collection: nodes
+    id: plans-visibility
+    fields:
+    - definition
+    - scope
+  - annex: model-coherence-audit-U886.yaml
+    collection: paths
+    id: fashion-launch-path
+    fields:
+    - content_sha256
+  - annex: model-coherence-audit-U886.yaml
+    collection: paths
+    id: preorder-future-availability-path
+    fields:
+    - content_sha256
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: paths
+    id: preorder-future-availability-path
+    fields:
+    - content_sha256
+  required_catalog:
+  - collection: paths
+    id: fashion-launch-path
+    content_sha256: 4278d17381468722a22d30f918473dfc23741312e27bcdc5194af57cf51b240f
+  - collection: paths
+    id: preorder-future-availability-path
+    content_sha256: 63ed0fa3bba43def210e01cfd71ef3fac0a844de5d326bd780682f9e76fda06c
+agreement:
+  source_ref: U1014
+  scope: Correction incluant les achats et recommandation de périmètres du carnet validées dans le lot complet.

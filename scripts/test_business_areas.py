@@ -7,16 +7,26 @@ from scripts.validate_models import validate_urbanism
 from scripts.display_codes import build_display_index
 
 class BusinessAreaTests(unittest.TestCase):
-    def test_physical_targets_and_logical_usage_have_distinct_responsibility_parents(self):
+    def test_stock_decisions_share_an_area_and_preserve_distinct_capabilities(self):
         root = Path(__file__).resolve().parents[1]
         model = read(root/'modeles/backlog/model.yaml')
         index = build_display_index(model)
         physical = 'ba-physical-stock-configuration-optimization'
-        logical = 'ba-policy-optimization'
-        self.assertEqual(index['children'][physical], ['D05.a'])
-        self.assertEqual(set(index['children'][logical]), {'D05.d', 'D05.h'})
-        self.assertIn('D05.c', index['children']['ba-supply-matching'])
-        self.assertNotIn('D05.c', index['children'][physical])
+        self.assertEqual(set(index['children'][physical]), {'D05.a', 'D05.d', 'D05.h', 'D05.c', 'D05.e'})
+        self.assertNotIn('ba-policy-optimization', index['children'])
+        self.assertNotIn('ba-supply-matching', index['children'])
+        self.assertNotIn('D05.c', index['children']['ba-master-plan-management'])
+        self.assertEqual(set(index['children']['ba-order-backlog-management']),
+                         {'D03.m', 'D03.o', 'delivery-release-decision'})
+        self.assertEqual(set(index['children']['ba-master-plan-management']),
+                         {'D05.f', 'BHV006', 'D02.e', 'plans-visibility', 'demand-plan-visibility'})
+        self.assertIn('demand-fulfilment-policy-management', index['children']['ba-protection-policies'])
+        self.assertIn('plans-visibility', index['children']['ba-master-plan-management'])
+        self.assertIn('demand-plan-visibility', index['children']['ba-master-plan-management'])
+        self.assertEqual(set(index['children']['D03']), {
+            'ba-master-plan-management', 'ba-order-backlog-management', 'ba-order-promising', physical})
+        self.assertEqual(index['children']['D03'], [
+            'ba-master-plan-management', 'ba-order-promising', 'ba-order-backlog-management', physical])
 
     def model(self):
         fields = dict(name='Area', definition='Responsibility', finality='Result', scope='Boundary')
@@ -121,7 +131,8 @@ class BusinessAreaTests(unittest.TestCase):
         self.assertIn('accounting-interpretation', adjacent_scope['publication_delivery']['absent_nodes'])
         later_retirements.update(adjacent_scope['publication_delivery']['absent_nodes'])
         control_references = {'D02.b', 'D19.a', 'D19.b', 'BHV017', 'BHV018', 'BHV019', 'BHV020'}
-        self.assertEqual((((initial_caps - retired) | process_additions | decision_additions)-later_retirements)
+        backlog_additions = {'delivery-release-decision', 'demand-fulfilment-policy-management'}
+        self.assertEqual((((initial_caps - retired) | process_additions | decision_additions | backlog_additions)-later_retirements)
                          - (control_references & initial_caps), caps)
         self.assertTrue(retired.isdisjoint(nodes))
         from scripts.glossary import references as inline_references
@@ -170,14 +181,16 @@ class BusinessAreaTests(unittest.TestCase):
         self.assertLessEqual(retired_adjacent_areas, set(adjacent_scope['publication_delivery']['absent_nodes']))
         self.assertTrue(retired_adjacent_areas.isdisjoint(nodes))
         self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),
-                         26+len(operational_areas)-len(retired_adjacent_areas))  # U911 then U981.
+                     26+len(operational_areas)-len(retired_adjacent_areas)-2)  # U1019 isolates backlog decisions from Master Plan.
         for ident in caps:
             parents = [r for r in m['relations'] if r['target_id']==ident and r['type'] in ('contains','presents')]
             self.assertEqual(len(parents), 1, ident)
             self.assertEqual(parents[0]['type'], 'contains', ident)
             self.assertEqual(nodes[parents[0]['source_id']]['kind'], 'business_area', ident)
-        self.assertEqual(nodes['subdomain-plans']['kind'],'business_area')
-        self.assertTrue(any(r['type']=='contains' and r['source_id']=='D03' and r['target_id']=='subdomain-plans' for r in m['relations']))
+        self.assertNotIn('subdomain-plans', nodes)
+        for ident in ('plans-visibility', 'demand-plan-visibility'):
+            self.assertTrue(any(r['type']=='contains' and r['source_id']=='ba-master-plan-management'
+                                and r['target_id']==ident for r in m['relations']))
         self.assertFalse(any(r['type']=='documents-reference' for r in m['relations']))
         from scripts.json_contract import validate
         published = deepcopy(m)

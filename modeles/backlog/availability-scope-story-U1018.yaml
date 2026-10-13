@@ -1,0 +1,797 @@
+id: AVAILABILITY-SCOPE-STORY-U1018
+date: '2026-10-13'
+source_refs:
+- U1018
+- U1019
+status: applied_to_backlog
+publication_delivery:
+  state: applied
+  summary: 'U1019 : quatre Business Areas dans Availability ; pilotage du Master Plan distinct des décisions sur carnet, stock
+    et commande ; stratégies conservées dans Supply Policy Management.'
+  source_refs:
+  - U1018
+  - U1019
+  required_nodes:
+  - id: D03.m
+    field_sha256:
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+    kind: capability
+    parent: ba-order-backlog-management
+    parent_type: contains
+  - id: D05.e
+    field_sha256:
+      scope: 0d398da637681680bfc0bb105373f644312591d15ebede48fdf3672060337240
+      reading_order: 4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a
+    kind: capability
+    parent: ba-physical-stock-configuration-optimization
+    parent_type: contains
+  - id: D05.c
+    field_sha256:
+      reading_order: ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d
+    kind: capability
+    parent: ba-physical-stock-configuration-optimization
+    parent_type: contains
+  - id: D05.f
+    field_sha256:
+      scope: b1afb27dadc2897e65b25677b2be772816c9e492a3bcb35313d9503b3c052f2c
+    kind: capability
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: D03
+    field_sha256:
+      scope: c4a3eb870c05264e8c4dc720ce2ac96bfab39637688a15b140cfac4611bf9c2a
+      market_comparisons: f040c6f74a8af04804d88cd51dead78c90fd3210a1e8d7b00bece2e055269205
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: D03.o
+    field_sha256:
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+    kind: capability
+    parent: ba-order-backlog-management
+    parent_type: contains
+  - id: plans-visibility
+    field_sha256:
+      reading_order: 4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a
+    kind: capability
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: demand-plan-visibility
+    field_sha256:
+      reading_order: ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d
+    kind: capability
+    parent: ba-master-plan-management
+    parent_type: contains
+  - id: ba-master-plan-management
+    field_sha256:
+      definition: 2ef3c360c04f2299fb63b0fa859b6c88a4941d7e3ae255ba593ae7d9e88c45d6
+      finality: c024438b7896af8f1ac9fd86069360955e65d94bb48d19f21d7564fe567b7a97
+      scope: 92669b239d7bb3db929e674ce3300c97c52de3bd30792154929f1dfbc4af199b
+      market_comparisons: cd4386c2bf9fb784248f1877861b706c34811df6052cdc098c2ed0602f1fdf97
+    kind: business_area
+    parent: D03
+    parent_type: contains
+  - id: ba-physical-stock-configuration-optimization
+    field_sha256:
+      definition: 9856be20d04a53b5a99c649f798f684bcb02859c17efec9c53fc468b3cc202bf
+      scope: 4ef1f1995654a9b97102797654deff0ed0d71bd0bdd394cd2d167eacd26f520b
+      market_comparisons: c27e22d79605900e07c6781ac6091371fb2a639d300cd8e5d53c47ae1d98b5ae
+    kind: business_area
+    parent: D03
+    parent_type: contains
+  - id: delivery-release-decision
+    field_sha256:
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+    kind: capability
+    parent: ba-order-backlog-management
+    parent_type: contains
+  - id: ba-order-backlog-management
+    field_sha256:
+      name: ec19a95008d372d53396ced0fb1b5ade8cfbef14abb450dc22212db9ceb1b6fe
+      definition: 1f69383685a7e32df05e427825ab1a34cabfbec2da3603457b1730644e9dd3c2
+      finality: 14828f3afdc229b4097922396b7280f4f90f968341996a6745cff8dcb5445be7
+      scope: 1e468f909f9df04f71b807d476cfbfd67c03d7dfd1bf8f76b1c4d31cd0c2643f
+      market_comparisons: ab9c8191896e07fab62bf27d7071fcb4617a7b2e179da7694ce365ca0f9a506a
+    kind: business_area
+    parent: D03
+    parent_type: contains
+  - id: BHV006
+    parent: ba-master-plan-management
+  - id: D02.e
+    parent: ba-master-plan-management
+  - id: D05.a
+    parent: ba-physical-stock-configuration-optimization
+  - id: D05.d
+    parent: ba-physical-stock-configuration-optimization
+  - id: D05.h
+    parent: ba-physical-stock-configuration-optimization
+  - id: D03.i
+    parent: ba-order-promising
+  - id: D03.j
+    parent: ba-order-promising
+  - id: D03.k
+    parent: ba-order-promising
+  required_glossary:
+  - id: TER074
+    field_sha256:
+      context: 876f78bb46a65dc8fdebd43a4a797623d8fa43c740496e57acdaba20bc9261ff
+  - id: TER100
+    field_sha256:
+      context: c6b3b4e809e300033fb0648353612eef2aeee75e299e8dd2c88a23f00d66b4e6
+  - id: TER112
+    field_sha256:
+      context: c4a3eb870c05264e8c4dc720ce2ac96bfab39637688a15b140cfac4611bf9c2a
+      market_comparisons: f040c6f74a8af04804d88cd51dead78c90fd3210a1e8d7b00bece2e055269205
+  - id: TER133
+    field_sha256:
+      definition: 2ef3c360c04f2299fb63b0fa859b6c88a4941d7e3ae255ba593ae7d9e88c45d6
+      short_description: 2ef3c360c04f2299fb63b0fa859b6c88a4941d7e3ae255ba593ae7d9e88c45d6
+      context: 92669b239d7bb3db929e674ce3300c97c52de3bd30792154929f1dfbc4af199b
+      market_comparisons: cd4386c2bf9fb784248f1877861b706c34811df6052cdc098c2ed0602f1fdf97
+  - id: TER202
+    field_sha256:
+      short_description: 9856be20d04a53b5a99c649f798f684bcb02859c17efec9c53fc468b3cc202bf
+      definition: 9856be20d04a53b5a99c649f798f684bcb02859c17efec9c53fc468b3cc202bf
+      context: 4ef1f1995654a9b97102797654deff0ed0d71bd0bdd394cd2d167eacd26f520b
+      market_comparisons: c27e22d79605900e07c6781ac6091371fb2a639d300cd8e5d53c47ae1d98b5ae
+  - id: TER205
+    field_sha256:
+      context: 366e1559e7249279445af012f31e87b71238214b784d7ff40b6d06ecb69448c0
+  - id: TER269
+    field_sha256:
+      id: a7a48ed3ba4d2f3f76c4e3b4a4eb772533969f3176982a908c9bac69aed88a59
+      name: ec19a95008d372d53396ced0fb1b5ade8cfbef14abb450dc22212db9ceb1b6fe
+      short_description: 1f69383685a7e32df05e427825ab1a34cabfbec2da3603457b1730644e9dd3c2
+      definition: 1f69383685a7e32df05e427825ab1a34cabfbec2da3603457b1730644e9dd3c2
+      context: 1e468f909f9df04f71b807d476cfbfd67c03d7dfd1bf8f76b1c4d31cd0c2643f
+      market_comparisons: ab9c8191896e07fab62bf27d7071fcb4617a7b2e179da7694ce365ca0f9a506a
+  required_relations:
+  - id: REL-U848-PARENT-D03.m
+    type: contains
+    source_id: ba-order-backlog-management
+    target_id: D03.m
+  - id: REL-U848-PARENT-D05.e
+    type: contains
+    source_id: ba-physical-stock-configuration-optimization
+    target_id: D05.e
+  - id: REL-U848-PARENT-D03.o
+    type: contains
+    source_id: ba-order-backlog-management
+    target_id: D03.o
+  - id: REL-U1009-PARENT-delivery-release-decision
+    type: contains
+    source_id: ba-order-backlog-management
+    target_id: delivery-release-decision
+  - id: REL-U1019-PARENT-ba-order-backlog-management
+    type: contains
+    source_id: D03
+    target_id: ba-order-backlog-management
+  required_catalog:
+  - collection: hotspots
+    id: HS-008
+    content_sha256: e6b0d079e7c8c5ae295e401724a6a8c69f28b86bc69c408881ec3a4613ce5721
+  - collection: paths
+    id: seasonal-order-backlog-path
+    content_sha256: e203ee7046a886789e30f51df523d7221f13c2ef6e67f6e176fd0da53cb34aaa
+  supersedes_requirements:
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - reading_order
+    - scope
+    - parent
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - definition
+    - finality
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D03.m
+    fields:
+    - reading_order
+    - parent
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D03.o
+    fields:
+    - parent
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: delivery-release-decision
+    fields:
+    - parent
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER074
+    fields:
+    - context
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER133
+    fields:
+    - definition
+    - short_description
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER205
+    fields:
+    - context
+  - annex: order-backlog-audit-U999.yaml
+    collection: relations
+    id: REL-U848-PARENT-D03.m
+    fields:
+    - source_id
+  - annex: order-backlog-audit-U999.yaml
+    collection: relations
+    id: REL-U848-PARENT-D05.e
+    fields:
+    - source_id
+  - annex: order-backlog-audit-U999.yaml
+    collection: relations
+    id: REL-U848-PARENT-D03.o
+    fields:
+    - source_id
+  - annex: order-backlog-audit-U999.yaml
+    collection: relations
+    id: REL-U1009-PARENT-delivery-release-decision
+    fields:
+    - source_id
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: D05.c
+    fields:
+    - reading_order
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - scope
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - scope
+    - market_comparisons
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: D03.o
+    fields:
+    - reading_order
+    - parent
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: plans-visibility
+    fields:
+    - reading_order
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: demand-plan-visibility
+    fields:
+    - reading_order
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - scope
+    - market_comparisons
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: ba-physical-stock-configuration-optimization
+    fields:
+    - definition
+    - scope
+    - market_comparisons
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: delivery-release-decision
+    fields:
+    - reading_order
+    - parent
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: D03.m
+    fields:
+    - parent
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - parent
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: terms
+    id: TER100
+    fields:
+    - context
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: terms
+    id: TER112
+    fields:
+    - context
+    - market_comparisons
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: terms
+    id: TER133
+    fields:
+    - context
+    - market_comparisons
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: terms
+    id: TER202
+    fields:
+    - short_description
+    - definition
+    - context
+    - market_comparisons
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: hotspots
+    id: HS-008
+    fields:
+    - content_sha256
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: paths
+    id: seasonal-order-backlog-path
+    fields:
+    - content_sha256
+baseline: Publication 2026-10-13.1 et backlog courant ; U1014 reste applicable tant que cette proposition n’est pas adoptée.
+rationale: Le récit distingue le résultat propre de chaque capacité et le pilotage qui combine leurs résultats. Les périmètres
+  de responsabilité ne limitent ni les données examinées ni les consommateurs.
+proposed_areas_in_availability:
+- name: Master Plan Management
+  retained_id: ba-master-plan-management
+  responsibility: Construire, suivre et réviser le plan commun de satisfaction en mobilisant les décisions des autres périmètres
+    ; comparer les alternatives et faire appliquer les choix autorisés.
+  capability_ids:
+  - D05.f
+  - BHV006
+  - D02.e
+  - plans-visibility
+  - demand-plan-visibility
+  boundary: Les plans externes sont interprétés ici ; leur construction reste externe et leur ingestion reste dans Integration.
+    Les décisions spécialisées ne deviennent pas des sous-capacités de Master Planning.
+  capabilities:
+  - id: D05.f
+    name: Master Planning
+  - id: BHV006
+    name: Simulation & Analysis
+  - id: D02.e
+    name: Plan Application
+  - id: plans-visibility
+    name: Supply Plan Visibility
+  - id: demand-plan-visibility
+    name: Demand Plan Visibility
+  market_evidence:
+  - vendor: Microsoft
+    title: Master plans overview
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D05.f
+  - vendor: SAP
+    title: Inventory optimisation
+    url: https://www.sap.com/uk/products/scm/integrated-business-planning/features/inventory-optimization.html
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D05.f
+  - vendor: Microsoft
+    title: Safety stock fulfillment for items
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/safety-stock-replenishment
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D05.f
+  - vendor: SAP
+    title: Time-Series-Based Supply Planning Optimizer
+    url: https://help.sap.com/docs/SAP_INTEGRATED_BUSINESS_PLANNING/c1fb60cb1e9c49d99ada277ae57e9e6c/deb28978d5ba4c64bad78edcab913228.html
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D05.f
+  - vendor: SAP
+    title: Supply Assignment Run Workflow using Apps
+    url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f132c385e0234fe68ae9ff35b2da178c/863bbfb47d384f6aafff5347fb7e3dba.html
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D05.f
+  - vendor: Microsoft
+    title: Master planning with demand forecasts
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/demand-forecast
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D05.f
+  - vendor: Microsoft
+    title: Dynamic positive days for last-minute orders
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/dynamic-positive-days
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D05.f
+  - vendor: SAP
+    title: Using the Planning Run in SAP S/4HANA
+    url: https://learning.sap.com/courses/exploring-business-processes-in-sap-s-4hana-production-planning/using-the-planning-run-in-sap-s-4hana_df4a8fa8-cfc9-44cf-adb0-a1e5d4129180
+    consulted_on: '2026-09-25'
+    existing_evidence_node: D05.f
+  - vendor: Microsoft
+    title: Master planning home page
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+    consulted_on: '2026-10-13'
+    existing_evidence_node: D05.f
+  - vendor: SAP
+    title: Explaining Supply Assignment
+    url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+    consulted_on: '2026-10-13'
+    existing_evidence_node: D05.f
+  - vendor: Microsoft
+    title: Action messages
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/action-messages
+    consulted_on: '2026-09-19'
+    existing_evidence_node: BHV006
+  - vendor: Microsoft
+    title: Firm planned orders
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/planned-order-firming
+    consulted_on: '2026-09-23'
+    existing_evidence_node: D02.e
+  - vendor: Microsoft
+    title: Keep supply for confirmed demand
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/keep-supply-for-confirmed-demand
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D02.e
+  - vendor: SAP
+    title: Supply Assignment (ARun)
+    url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f132c385e0234fe68ae9ff35b2da178c/d335e3418f4348ffbae9f11888a62cc7.html
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D02.e
+  - vendor: SAP
+    title: Backorder Processing
+    url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f132c385e0234fe68ae9ff35b2da178c/6b8eb017a1d1431abde00056a249f72b.html
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D02.e
+  - vendor: SAP
+    title: Dynamic Pegging
+    url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/862ac95360267614e10000000a174cb4.html
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D02.e
+  - vendor: Microsoft
+    title: Design details - Balancing supply and demand
+    url: https://learn.microsoft.com/en-us/dynamics365/business-central/design-details-balancing-demand-and-supply
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D02.e
+  - vendor: SAP
+    title: Supply Protection during Supply Assignment Run
+    url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f132c385e0234fe68ae9ff35b2da178c/0d49c4e5eb7e41c5b0f41e769728ddef.html?locale=en-US&state=PRODUCTION&version=2025.001
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D02.e
+  - vendor: Microsoft
+    title: Maintain planned orders
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/maintain-planned-orders
+    consulted_on: '2026-09-23'
+    existing_evidence_node: D02.e
+  - vendor: Microsoft
+    title: View, manage, and approve planned orders
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/approved-planned-order
+    consulted_on: '2026-09-23'
+    existing_evidence_node: D02.e
+  - vendor: SAP
+    title: Describing Deployment Planning and Reasoning behind Execution
+    url: https://learning.sap.com/courses/mastering-sap-ibp-for-response-and-supply-order-based-planning/describing-deployment-planning-and-reasoning-behind-execution_ed054de6-f7e2-4928-89be-2dab21e6a043
+    consulted_on: '2026-09-23'
+    existing_evidence_node: D02.e
+  - vendor: Microsoft
+    title: Work line details
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/work-line-details
+    consulted_on: '2026-09-23'
+    existing_evidence_node: D02.e
+  market_position: Correspondances fonctionnelles partielles réutilisées des fiches et audits consultés ; ce regroupement
+    en Business Areas reste une proposition FLOW, sans équivalence de taxonomie.
+- name: Order Backlog Management
+  proposed_id: ba-order-backlog-management
+  responsibility: Arbitrer les demandes entre elles, leur couverture et leur passage en livraison sur le périmètre du carnet.
+  capability_ids:
+  - D03.m
+  - D03.o
+  - delivery-release-decision
+  boundary: La priorité, les liens ressources-demandes et la livraison complète ou partielle restent trois résultats distincts.
+    Les engagements et transitions restent dans les familles de commandes.
+  capabilities:
+  - id: D03.m
+    name: Demand Prioritization
+  - id: D03.o
+    name: Supply Assignment
+  - id: delivery-release-decision
+    name: Delivery Release Decision
+  market_evidence:
+  - vendor: SAP
+    title: Exploring Backorder Processing
+    url: https://learning.sap.com/courses/optimizing-advanced-logistics-and-analytics-in-sap-s-4hana-cloud-public-edition/exploring-backorder-processing_fed6ddd5-39be-41ab-a977-e41a1c3715fe
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D03.m
+  - vendor: Microsoft
+    title: Priority-based planning - Supply Chain Management | Dynamics 365 | Microsoft Learn
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/priority-based-planning
+    consulted_on: '2026-09-25'
+    existing_evidence_node: D03.m
+  - vendor: Microsoft
+    title: Intelligent Fulfillment Optimization architecture
+    url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/ifo-arch
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D03.o
+  - vendor: Microsoft
+    title: Distributed order management (DOM)
+    url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D03.o
+  - vendor: Microsoft
+    title: Master planning with demand forecasts
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/demand-forecast
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D03.o
+  - vendor: Microsoft
+    title: Inventory marking
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/marking
+    consulted_on: '2026-09-24'
+    existing_evidence_node: D03.o
+  - vendor: Microsoft
+    title: Make-to-order supply automation
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/make-to-order-supply-automation
+    consulted_on: '2026-09-24'
+    existing_evidence_node: D03.o
+  - vendor: Microsoft
+    title: Keep supply for confirmed demand in Planning Optimization
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/keep-supply-for-confirmed-demand
+    consulted_on: '2026-09-24'
+    existing_evidence_node: D03.o
+  - vendor: SAP
+    title: Explaining Supply Assignment
+    url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+    consulted_on: '2026-09-25'
+    existing_evidence_node: D03.o
+  - vendor: Microsoft
+    title: Release to warehouse
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/release-to-warehouse-process
+    consulted_on: '2026-10-13'
+    existing_evidence_node: delivery-release-decision
+  - vendor: SAP
+    title: Using Advanced Available-To-Promise (aATP) in SAP S/4HANA
+    url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/using-advanced-available-to-promise-aatp-in-sap-s-4hana_ef38afd2-4730-433f-854a-613b8e4afec5
+    consulted_on: '2026-10-13'
+    existing_evidence_node: delivery-release-decision
+  market_position: Correspondances fonctionnelles partielles réutilisées des fiches et audits consultés ; ce regroupement
+    en Business Areas reste une proposition FLOW, sans équivalence de taxonomie.
+- name: Stock Optimization
+  retained_id: ba-physical-stock-configuration-optimization
+  responsibility: Déterminer les cibles, droits et conditions d’usage du stock, les apports manquants et les redistributions
+    utiles.
+  capability_ids:
+  - D05.a
+  - D05.d
+  - D05.h
+  - D05.e
+  - D05.c
+  boundary: Replenishment couvre les apports par besoins, par cible et les ajustements. Le stock peut être optimisé avant
+    une commande identifiée ; aucun achat autorisé ou transfert réalisé n’est implicite.
+  capabilities:
+  - id: D05.a
+    name: Physical Stock Target Optimization
+  - id: D05.d
+    name: Logical Stock Protection Optimization
+  - id: D05.h
+    name: Reservation Rule Optimization
+  - id: D05.e
+    name: Replenishment
+  - id: D05.c
+    name: Stock Redistribution
+  market_evidence:
+  - vendor: Microsoft
+    title: Use the safety stock journal to update minimum coverage for items
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/safety-stock-journal
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D05.a
+  - vendor: SAP
+    title: Running Replenishment Planning
+    url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/running-replenishment-planning_e456b0ed-3094-4056-9ba8-aa56cf6833ed
+    consulted_on: '2026-10-06'
+    existing_evidence_node: D05.a
+  - vendor: SAP
+    title: Performing Requirements Planning
+    url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/performing-requirements-planning_bbf9e421-fee4-4c82-bb13-5cf8ad7d7121
+    consulted_on: '2026-10-07'
+    existing_evidence_node: D05.a
+  - vendor: Microsoft
+    title: Replenishment methods and quantity modification
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/replenishment-methods-quantity-modification
+    consulted_on: '2026-10-07'
+    existing_evidence_node: D05.a
+  - vendor: Microsoft
+    title: Priority-based planning
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/priority-based-planning
+    consulted_on: '2026-10-07'
+    existing_evidence_node: D05.a
+  - vendor: Microsoft
+    title: Inventory Visibility inventory allocation
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D05.d
+  - vendor: SAP
+    title: Explaining aATP Product Allocation (PAL)
+    url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-aatp-product-allocation-pal-_dd30c229-d63f-4aba-a950-a174280c4a58
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D05.d
+  - vendor: Microsoft
+    title: Reserve inventory quantities
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/reserve-inventory-quantities
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D05.h
+  - vendor: SAP
+    title: Explaining Replenishment
+    url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-replenishment_e87c10d4-3590-45a7-ad87-b04ed6e34bd7
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D05.e
+  - vendor: SAP
+    title: Explaining Retail Allocation Management
+    url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-retail-allocation-management_b6824f5b-1ad5-401c-b3f9-f32fecd254ca
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D05.e
+  - vendor: SAP
+    title: Running Materials Requirements Planning
+    url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-sourcing-procurement/running-materials-requirements-planning
+    consulted_on: '2026-09-25'
+    existing_evidence_node: D05.e
+  - vendor: Microsoft
+    title: Master planning home page
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+    consulted_on: '2026-10-13'
+    existing_evidence_node: D05.e
+  - vendor: Microsoft
+    title: Action messages
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/action-messages
+    consulted_on: '2026-10-13'
+    existing_evidence_node: D05.e
+  - vendor: SAP
+    title: Supply Creation-Based Confirmation (SBC) in PP/DS
+    url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/4c56297de7c33a0de10000000a42189c.html
+    consulted_on: '2026-10-13'
+    existing_evidence_node: D05.e
+  market_position: Correspondances fonctionnelles partielles réutilisées des fiches et audits consultés ; ce regroupement
+    en Business Areas reste une proposition FLOW, sans équivalence de taxonomie.
+- name: Order Promising
+  retained_id: ba-order-promising
+  responsibility: Déterminer les possibilités de réponse à une demande identifiée.
+  capability_ids:
+  - D03.i
+  - D03.j
+  - D03.k
+  boundary: La finalité est une réponse à une demande ; le calcul ATP/CTP/PTP peut mobiliser tout le réseau et un plan collectif.
+    Le mot scope n’impose pas un calcul isolé.
+  capabilities:
+  - id: D03.i
+    name: Available-to-Promise (ATP)
+  - id: D03.j
+    name: Capable-to-Promise (CTP)
+  - id: D03.k
+    name: Profitable-to-Promise (PTP)
+  market_evidence:
+  - vendor: Microsoft
+    title: Order promising
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+    consulted_on: '2026-10-06'
+    existing_evidence_node: D03.i
+  - vendor: SAP
+    title: Running an Available-to-Promise (ATP) Check in SAP S/4HANA Sales
+    url: https://learning.sap.com/courses/performing-the-availability-check/running-an-available-to-promise-atp-check-in-sap-s-4hana-sales_a2b4c5e3-1618-418d-a4f6-efe5ff43f7f1
+    consulted_on: '2026-09-25'
+    existing_evidence_node: D03.i
+  - vendor: SAP
+    title: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+    url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-advanced-available-to-promise-aatp-in-sap-s-4hana
+    consulted_on: '2026-10-06'
+    existing_evidence_node: D03.i
+  - vendor: Microsoft
+    title: Calculate sales order delivery dates using CTP
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/calculate-delivery-dates-using-ctp
+    consulted_on: '2026-10-06'
+    existing_evidence_node: D03.j
+  - vendor: SAP
+    title: Supply Creation-Based Confirmation (SBC) in PP/DS
+    url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f899ce30af9044299d573ea30b533f1c/4c56297de7c33a0de10000000a42189c.html
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D03.j
+  - vendor: SAP
+    title: Using Advanced Available-To-Promise (aATP) in SAP S/4HANA
+    url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/using-advanced-available-to-promise-aatp-in-sap-s-4hana_ef38afd2-4730-433f-854a-613b8e4afec5
+    consulted_on: '2026-10-06'
+    existing_evidence_node: D03.j
+  - vendor: SAP
+    title: Exploring Backorder Processing
+    url: https://learning.sap.com/courses/optimizing-advanced-logistics-and-analytics-in-sap-s-4hana-cloud-public-edition/exploring-backorder-processing_fed6ddd5-39be-41ab-a977-e41a1c3715fe
+    consulted_on: '2026-09-19'
+    existing_evidence_node: D03.j
+  - vendor: SAP
+    title: Scenarios and Supported Features of PPAC and PAC with Supply Creation
+    url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/f132c385e0234fe68ae9ff35b2da178c/95cbb18b60da470cac8d340f0c6f5251.html
+    consulted_on: '2026-09-21'
+    existing_evidence_node: D03.j
+  - vendor: Microsoft
+    title: Distributed order management (DOM)
+    url: https://learn.microsoft.com/en-us/dynamics365/commerce/dom
+    consulted_on: '2026-10-06'
+    existing_evidence_node: D03.k
+  - vendor: SAP
+    title: Configuring Charge Management and Explaining the Charge Calculation Process
+    url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-transportation-management/configuring-charge-management-and-explaining-the-charge-calculation-process_d2c3b050-5874-4439-a88e-8dcfa231311c
+    consulted_on: '2026-10-06'
+    existing_evidence_node: D03.k
+  - vendor: Microsoft
+    title: Landed cost module overview - Supply Chain Management | Dynamics 365 | Microsoft Learn
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/landed-cost/landed-cost-overview
+    consulted_on: '2026-09-25'
+    existing_evidence_node: D03.k
+  market_position: Correspondances fonctionnelles partielles réutilisées des fiches et audits consultés ; ce regroupement
+    en Business Areas reste une proposition FLOW, sans équivalence de taxonomie.
+policy_scope:
+  existing_subdomain: subdomain-policies
+  existing_business_area: ba-protection-policies
+  name: Demand & Supply Policies
+  responsibility: Définir et tenir les stratégies et règles applicables, notamment via Demand Fulfilment Policy Management.
+  boundary: La stratégie peut avoir des variantes par périmètre et consomme les conditions contractuelles reçues ; les seuils
+    recommandés par les optimisations ne deviennent pas actifs automatiquement. Aucun déplacement vers Availability proposé.
+changes_if_adopted:
+- Créer la Business Area Order Backlog Management avec une nouvelle identité, sans réutiliser ba-supply-matching.
+- Rattacher Demand Prioritization, Supply Assignment et Delivery Release Decision à cette Business Area.
+- Rattacher Replenishment à Stock Optimization ; conserver la séparation de ses comportements existants.
+- Master Plan Management conserve ses trois capacités de pilotage et les deux capacités d’interprétation de plans.
+- Conserver les seize identités de capacités et un parent explicite chacune.
+upstream_downstream_boundary: Le Master Plan pilote la cohérence des décisions de flux amont/aval pour satisfaire le carnet.
+  MAP garde le plan d’approvisionnement et le carnet d’achat ; Fulfilment et Logistics gardent la coordination et la réalisation
+  des prestations. Le Master Plan ne devient pas un moteur de processus ni propriétaire des engagements.
+glossary_review_if_adopted:
+- Aligner TER133 et TER202, les contextes des capacités déplacées et la nouvelle notion Order Backlog Management.
+- Conserver la finalité CTP de TER045 ; rendre visible son calcul Supply et sa mobilisation par Master Planning.
+- Réexaminer les synthèses Availability et les scénarios, sans catalogue Markdown concurrent.
+hotspot_follow_up: 'HS-008 : décisions du carnet dans Order Backlog Management, pilotage dans Master Plan Management et stratégies
+  dans Supply Policy Management. Preuves, scores et absence de choix de convergence conservés.'
+comparison:
+  Microsoft: Les master plans mobilisent politiques, ressources et calculs CTP. Leur périmètre inclut la génération d’approvisionnements,
+    plus large que le pilotage FLOW qui conserve MAP.
+  SAP: BOP arbitre les confirmations et quantités entre demandes ; la planification et la CTP mobilisent d’autres calculs.
+    Ces fonctions appuient la distinction, pas le découpage proposé en Business Areas.
+  Oracle: Backlog Management distingue planification collective, simulation et publication des résultats ; la publication
+    ne se confond pas avec la release en livraison FLOW.
+limits:
+- Lot U1018 appliqué U1019 ; aucune publication implicite.
+- Les seize capacités sont conservées et mobilisables entre périmètres ; pas de calculs indépendants imposés.
+- Les nouvelles rédactions de mise en œuvre restent proposées ; aucune réalisation installée nouvelle.
+agreement:
+  source_ref: U1019
+  verbatim: Je valide ce découpage
+  scope: Proposition complète U1018 ; descriptions détaillées nouvelles proposées, aucun accord installé ou release.
+glossary_review_result: TER269 créé ; TER133, TER202 et les synthèses et contextes concernés alignés ; CTP reste orienté résultat
+  demande et mobilisable par le plan collectif.
+reading_code_expectations:
+  BHV006: CAP-015
+  subdomain-process-management: SUB-031
+  order-workflow-orchestration: CAP-039
+  BHV082: CAP-044
+  D06.d: CAP-057
+field_agreements:
+- collection: terms
+  id: TER133
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: be50eb89ede50933fbe20e756d322ffc1735bbefe6d70e0eb5c4f3141649dc78
+    definition: 2ef3c360c04f2299fb63b0fa859b6c88a4941d7e3ae255ba593ae7d9e88c45d6
+  source_ref: U1019
+  scope: Noms et responsabilités présentés U1018 ; nouvelle rédaction des contextes exclue.
+- collection: terms
+  id: TER202
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: d290cd65ec6ff78f15e6a5a0a4fae0b47ea01c7f92d018868b2bd47dfb84cf7d
+    definition: 9856be20d04a53b5a99c649f798f684bcb02859c17efec9c53fc468b3cc202bf
+  source_ref: U1019
+  scope: Noms et responsabilités présentés U1018 ; nouvelle rédaction des contextes exclue.
+- collection: terms
+  id: TER269
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: ec19a95008d372d53396ced0fb1b5ade8cfbef14abb450dc22212db9ceb1b6fe
+    definition: 1f69383685a7e32df05e427825ab1a34cabfbec2da3603457b1730644e9dd3c2
+  source_ref: U1019
+  scope: Noms et responsabilités présentés U1018 ; nouvelle rédaction des contextes exclue.

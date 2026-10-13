@@ -27,6 +27,14 @@ def build_display_index(model):
     for identifier, items in children.items():
         kind = nodes[identifier]['kind']
         if kind == 'area':
+            explicit = [nodes[child].get('fields', {}).get('reading_order') for child in items]
+            if items and all(nodes[child]['kind'] == 'business_area' for child in items) and any(
+                    order is not None for order in explicit):
+                if any(order is None for order in explicit):
+                    raise ValueError(f'Display tree: incomplete reading order under {identifier}')
+                children[identifier] = sorted(items, key=lambda child: (
+                    nodes[child]['fields']['reading_order'], type_rank(child)))
+                continue
             groups = {}
             orders = {}
             for child in items:

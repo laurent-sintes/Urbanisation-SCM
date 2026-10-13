@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { staticUrl } from './publication.ts';
+import { type FetchLike, fetchJson, staticUrl } from './publication.ts';
 import type { Hotspot, PublishedModel, RawPublication } from './types.ts';
 
 export interface WorkshopOperation {
@@ -41,6 +41,28 @@ export interface WorkshopTableChange {
 
 export const workshopUrl = () => staticUrl('__atlas__/workshop/staging.json');
 
+export async function readWorkshopStage(
+  signal?: AbortSignal,
+  fetcher: FetchLike = fetch,
+  timeoutMs = 15000,
+): Promise<WorkshopStage | null> {
+  const value = await fetchJson(
+    workshopUrl(),
+    signal,
+    async (url, init) => {
+      const response = await fetcher(url, init);
+      return response.status === 404 ? Response.json({ active: false }) : response;
+    },
+    timeoutMs,
+  );
+  if (!value || typeof value !== 'object') throw new Error('Staging d’atelier invalide.');
+  const stage = value as WorkshopStage;
+  if (!stage.active) return null;
+  if (!Array.isArray(stage.operations) || typeof stage.base_version !== 'string')
+    throw new Error('Staging d’atelier invalide.');
+  return stage;
+}
+
 export function overlayWorkshop(raw: RawPublication, stage: WorkshopStage): RawPublication {
   if (stage.base_version !== raw.version) return raw;
   const items = new Map((raw.hotspot_catalog?.hotspots || []).map((item) => [item.id, item]));
@@ -72,29 +94,17 @@ export function useWorkshop(model?: PublishedModel | null, modelSha?: string) {
     if (!['127.0.0.1', 'localhost'].includes(window.location.hostname)) return;
     let stopped = false;
     let pending = false;
+    const controller = new AbortController();
     const poll = async () => {
-      if (pending) return;
+      if (stopped || pending) return;
       pending = true;
       try {
-        const response = await fetch(workshopUrl(), { cache: 'no-store' });
-        if (response.status === 404) {
-          if (!stopped) {
-            setStage(null);
-            setError('');
-          }
-          return;
-        }
-        if (!response.ok) throw new Error(`Staging indisponible (HTTP ${response.status}).`);
-        const value = await response.json();
-        if (value.active && (!Array.isArray(value.operations) || typeof value.base_version !== 'string'))
-          throw new Error('Staging d’atelier invalide.');
+        const value = await readWorkshopStage(controller.signal);
         if (!stopped) {
           setStage((previous) =>
-            value.active && previous?.session_id === value.session_id && (previous?.revision ?? -1) >= value.revision
+            value && previous?.session_id === value.session_id && (previous?.revision ?? -1) >= value.revision
               ? previous
-              : value.active
-                ? value
-                : null,
+              : value,
           );
           setError('');
         }
@@ -111,6 +121,7 @@ export function useWorkshop(model?: PublishedModel | null, modelSha?: string) {
     const timer = window.setInterval(() => void poll(), 2000);
     return () => {
       stopped = true;
+      controller.abort();
       window.clearInterval(timer);
     };
   }, []);

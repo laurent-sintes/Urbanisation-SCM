@@ -91,4 +91,34 @@ class ScenarioCatalogTests(unittest.TestCase):
         self.assertNotIn(condition,split['conditions'])
         self.assertIn('Le client accepte deux livraisons annoncées et leurs dates.',split['conditions'])
 
+    def test_sales_delivery_authorization_precedes_service_release(self):
+        paths={p['id']:p for p in self.model['scenario_catalog']['paths']}
+        for ident in ('b2b-partial-stock-path','b2b-partial-stock-split-path'):
+            release=next(s for s in paths[ident]['steps'] if s['id']=='step-4')
+            contributors={c['node_id'] for c in release['contributions']}
+            self.assertTrue({'delivery-release-decision','D04.i','service-order-release-decision'} <= contributors)
+        # Deux livraisons ne créent pas automatiquement deux commandes de vente.
+        split_contributors={c['node_id'] for s in paths['b2b-partial-stock-split-path']['steps'] for c in s['contributions']}
+        self.assertNotIn('D04.n',split_contributors)
+
+    def test_supply_proposal_is_not_supplier_commitment(self):
+        path=next(p for p in self.model['scenario_catalog']['paths'] if p['id']=='additional-purchase-partial-path')
+        proposal={c['node_id'] for c in path['steps'][0]['contributions']}
+        self.assertTrue({'D05.e','D03.j','D05.f'} <= proposal)
+        self.assertNotIn('D04.j',proposal)
+        response=next(s for s in path['steps'] if s['id']=='map-response')
+        self.assertIn('D04.j',{c['node_id'] for c in response['contributions']})
+        self.assertTrue(any(d['from']=='map-response' and d['to']=='step-2' for d in path['dependencies']))
+        refusal=next(p for p in self.model['scenario_catalog']['paths'] if p['id']=='seasonal-map-refusal-path')
+        self.assertNotIn('D04.j',{c['node_id'] for s in refusal['steps'] for c in s['contributions']})
+
+    def test_stock_move_and_contract_firming_keep_distinct_responsibilities(self):
+        paths={p['id']:p for p in self.model['scenario_catalog']['paths']}
+        for ident in ('fashion-launch-path','transfer-replenishment-order-driven-path'):
+            transfer=next(s for s in paths[ident]['steps'] if s['id']=='step-2')
+            self.assertTrue({'D05.c','D03.o','D04.k'} <= {c['node_id'] for c in transfer['contributions']})
+        firming={c['node_id'] for s in paths['seasonal-contract-firming-path']['steps'] for c in s['contributions']}
+        self.assertIn('D04.i',firming)
+        self.assertNotIn('D05.h',firming)
+
 if __name__=='__main__': unittest.main()

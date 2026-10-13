@@ -178,6 +178,13 @@ class HTTPTests(unittest.TestCase):
                            'changes': [{'id': 'AT-HS-001', 'fields': {'title': 'Sujet précisé'}}]}).encode()
         headers = {'Origin': f'http://127.0.0.1:{self.port}', 'X-Atlas-Workshop': '1',
                    'Content-Type': 'application/json'}
+        staging_path = self.root / '.runtime/atlas-atelier/staging.json'
+        staging_before = staging_path.read_bytes()
+        for method in ('PUT', 'PATCH', 'DELETE'):
+            with self.subTest(method=method):
+                self.assertEqual(self.request(route, method, headers=headers, body=body)[0], 405)
+                self.assertEqual(staging_path.read_bytes(), staging_before)
+                self.assertEqual(self.request('/data/2026-10-10.1/model.json')[2], raw)
         self.assertEqual(self.request(route, 'POST', headers={'Origin': 'https://evil.example'}, body=body)[0], 403)
         self.assertEqual(self.request(route, 'POST', headers={'Content-Type': 'application/json'}, body=body)[0], 403)
         status, _, payload = self.request(route, 'POST', headers=headers, body=body)

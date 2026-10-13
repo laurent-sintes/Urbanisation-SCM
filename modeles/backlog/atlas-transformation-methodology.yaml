@@ -1998,7 +1998,7 @@ chapters:
       Définir ce périmètre par le service rendu, le bénéficiaire et une frontière utile. Une Business Area peut porter une
       seule capacité. Les types, filtres et codes de lecture ne changent ni les identités ni les parents.
     example: '[Order Promising](model:ba-order-promising) regroupe [ATP](model:D03.i), [CTP](model:D03.j) et [PTP](model:D03.k)
-      dans [Availability](model:D03). Dans [Control Plane](model:subdomain-policies), [Protection Policies](model:ba-protection-policies)
+      dans [Availability](model:D03). Dans [Supply Policy Management](model:subdomain-policies), [Demand & Supply Policies](model:ba-protection-policies)
       présente des référentiels de protection et [Service Provider Controls](model:ba-service-provider-controls) présente
       [Service Provider Policy](model:D19.a). Les référentiels restent des objets documentaires ; le bandeau de la carte rend
       chaque Business Area visible et ouvre sa fiche.'
@@ -2127,7 +2127,7 @@ model_examples:
   name: Process Orchestration
   parent_id: ba-reactive-workflow-management
 - node_id: ba-protection-policies
-  name: Protection Policies
+  name: Demand & Supply Policies
   parent_id: subdomain-policies
 - node_id: ba-service-provider-controls
   name: Service Provider Controls

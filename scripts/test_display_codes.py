@@ -17,6 +17,28 @@ def fixture():
 
 
 class DisplayCodeTests(unittest.TestCase):
+    def test_subdomain_business_area_order_is_explicit_and_preserves_older_order(self):
+        model = fixture()
+        for ident in ('first-ba', 'last-ba'):
+            model['nodes'].append(dict(id=ident, kind='business_area', fields=dict(name=ident),
+                                       revision=1, source_refs=[], review=dict(state='proposed', note='fixture')))
+            model['relations'].append(dict(id=ident, type='contains', source_id='area', target_id=ident,
+                                            revision=1, source_refs=[], review=dict(state='proposed', note='fixture')))
+        for edge in model['relations']:
+            if edge['source_id']=='area' and edge['target_id'] in ('action', 'decision'):
+                edge['source_id']='first-ba' if edge['target_id']=='action' else 'last-ba'
+        frozen = compile_snapshot(model, {'decisions': []}, 'older', [])
+        self.assertEqual(frozen['display_index']['children']['area'], ['first-ba', 'last-ba'])
+        areas = {n['id']:n for n in model['nodes'] if n['kind']=='business_area'}
+        areas['first-ba']['fields']['reading_order']=2
+        areas['last-ba']['fields']['reading_order']=1
+        self.assertEqual(build_display_index(model)['children']['area'], ['last-ba', 'first-ba'])
+        self.assertEqual(validate_display_index(frozen), [])
+        self.assertEqual(frozen['display_index']['codes']['first-ba'], 'BA-001')
+        del areas['last-ba']['fields']['reading_order']
+        with self.assertRaisesRegex(ValueError, 'incomplete reading order'):
+            build_display_index(model)
+
     def test_universe_receives_its_own_stable_code(self):
         model = fixture()
         model['nodes'].insert(0, dict(id='universe', kind='universe', fields=dict(name='Univers'), revision=1,

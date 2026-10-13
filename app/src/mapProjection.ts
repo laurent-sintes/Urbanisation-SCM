@@ -7,8 +7,8 @@ export interface StructuralMap {
 }
 
 /** Detail shown when opening a scope without an explicit detail in its URL. */
-export function defaultMapDepth(kind?: AtlasNode['kind']): 0 | 1 {
-  return kind === 'business_system' ? 0 : 1;
+export function defaultMapDepth(kind?: AtlasNode['kind']): 1 | 2 {
+  return kind === 'business_system' ? 2 : 1;
 }
 
 export function mapDepthLimit(model: PublishedModel, scopeId?: string): number {
