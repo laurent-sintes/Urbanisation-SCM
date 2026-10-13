@@ -8,7 +8,7 @@ import subprocess
 
 def plan(paths):
     paths = sorted(set(paths))
-    result = {'contracts': False, 'frontend': False, 'launcher': False, 'browser': False}
+    result = {'contracts': False, 'frontend': False, 'launcher': False, 'browser': False, 'matrix': False}
     reasons = []
     for path in paths:
         flags = set()
@@ -26,8 +26,17 @@ def plan(paths):
                 flags.add('contracts')
             if 'launcher' in path:
                 flags.add('launcher')
-        elif path in ('requirements.txt', 'Lancer-FLOW-Atlas.ps1') or path.startswith('.github/'):
-            flags = set(result)
+            if path.startswith('app/src/') and (
+                any(term in path.lower() for term in ('map', 'hotspot', 'reactflow', 'overview', 'adaptivelayout'))
+                or path in {'app/src/styles.css', 'app/src/reader.css'}
+            ):
+                flags.add('matrix')
+        elif path == 'Lancer-FLOW-Atlas.ps1':
+            flags = {'launcher'}
+        elif path == 'requirements.txt':
+            flags = {'contracts', 'frontend', 'browser'}
+        elif path.startswith('.github/'):
+            flags = {'frontend', 'browser'}
         elif path.startswith(('connaissance/', 'marche/')):
             flags = {'contracts', 'frontend', 'browser'}
         elif path in ('AGENTS.md', 'CONVENTIONS-MODELE.md') or path.startswith('skills/') or path.endswith('.md'):
@@ -59,6 +68,6 @@ if __name__ == '__main__':
     result = plan(changed_paths(Path.cwd(), args.base, args.head, working=args.working))
     if args.github_output:
         with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as stream:
-            for key in ('contracts', 'frontend', 'launcher', 'browser'):
+            for key in ('contracts', 'frontend', 'launcher', 'browser', 'matrix'):
                 stream.write(f'{key}={str(result[key]).lower()}\n')
     print(json.dumps(result, indent=2))

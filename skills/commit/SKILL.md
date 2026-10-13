@@ -19,7 +19,7 @@ Exclure les fichiers locaux désignés par `.gitignore` : état/logs/captures du
 
 ## Vérifier et enregistrer
 
-Pour une intégration destinée à GitHub, préparer les contrôles du lot avec `python scripts/preflight_push.py --working --offline --run`. Cette commande ne committe pas et ne remplace pas la revue du diff. Les résultats valables restent réutilisables après le commit ; une capture n'est jamais une validation métier. Sur un dépôt où main est protégée, travailler sur une branche de travail pour l'intégration autorisée.
+Pour une intégration destinée à GitHub, sélectionner les contrôles nécessaires d'après les fichiers modifiés et les exécuter une fois. `python scripts/preflight_push.py --working --offline` peut aider à diagnostiquer le contexte Git ; son mode `--run` complet n'est pas systématique. Cette commande ne committe pas et ne remplace pas la revue du diff. Les résultats valables restent réutilisables après le commit ; une capture n'est jamais une validation métier. Le parcours courant publie directement sur `main` après validation locale.
 
 Le commit clôt le travail vérifié. Réutiliser les validations, tests et rendus réussis dans la tâche lorsque leurs entrées, leur code et leur contexte sont inchangés. S’appuyer sur les résultats disponibles, sans créer un nouveau rapport ou checkpoint pour le seul commit. Rejouer uniquement après un changement pertinent, un échec ou un doute restant ; la date d’un rapport seule ne prouve pas sa validité.
 

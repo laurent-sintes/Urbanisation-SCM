@@ -5,17 +5,17 @@ import unittest
 
 from scripts.structured_io import read
 from scripts.plan_checks import plan
-from scripts.verify_atlas import GROUPS
+from scripts.verify_atlas import GROUPS, SMOKE
 from scripts.decision_review import publication_tool_state
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 class CheckPolicyTests(unittest.TestCase):
-    def test_required_status_runs_on_every_pr_and_never_deploys_pr(self):
+    def test_main_push_runs_checks_before_deploy(self):
         workflow = read(ROOT / '.github/workflows/atlas-pages.yml')
-        self.assertIn('pull_request', workflow['on'])
-        self.assertNotIn('paths', workflow['on']['pull_request'])
+        self.assertNotIn('pull_request', workflow['on'])
+        self.assertEqual(workflow['on']['push']['branches'], ['main'])
         gate = workflow['jobs']['checks']
         self.assertEqual(gate['name'], 'Atlas checks')
         self.assertEqual(gate['if'], 'always()')
@@ -28,7 +28,7 @@ class CheckPolicyTests(unittest.TestCase):
         self.assertIn('always()', deploy['if'])
         self.assertIn("needs.checks.result == 'success'", deploy['if'])
         self.assertIn("needs.build.result == 'success'", deploy['if'])
-        self.assertIn("github.event_name != 'pull_request'", deploy['if'])
+        self.assertIn("github.ref == 'refs/heads/main'", deploy['if'])
         self.assertFalse(deploy['concurrency']['cancel-in-progress'])
         self.assertIn('git ls-remote origin refs/heads/main', deploy['steps'][1]['run'])
 
@@ -41,6 +41,8 @@ class CheckPolicyTests(unittest.TestCase):
         actual = {script.split()[0] for group in GROUPS.values() for script in group}
         self.assertEqual(actual, expected)
         self.assertEqual(sum(script.startswith('verify-map-hotspot-matrix.mjs') for group in GROUPS.values() for script in group), 3)
+        self.assertEqual({script for group in SMOKE.values() for script in group},
+                         {'verify-browser.mjs', 'verify-display-codes.mjs', 'verify-published-content.mjs'})
 
     def test_publication_code_tracks_helpers_and_not_unrelated_tests(self):
         state = publication_tool_state()
@@ -54,7 +56,11 @@ class CheckPolicyTests(unittest.TestCase):
         self.assertTrue(plan(['modeles/backlog/glossary.yaml'])['contracts'])
         self.assertFalse(plan(['modeles/backlog/glossary.yaml'])['browser'])
         self.assertTrue(plan(['modeles/release/index.json'])['browser'])
-        self.assertTrue(plan(['.github/workflows/atlas-pages.yml'])['launcher'])
+        self.assertFalse(plan(['.github/workflows/atlas-pages.yml'])['launcher'])
+        self.assertFalse(plan(['.github/workflows/atlas-pages.yml'])['matrix'])
+        self.assertTrue(plan(['app/src/components/MapPanel.tsx'])['matrix'])
+        self.assertFalse(plan(['app/src/components/SearchPanel.tsx'])['matrix'])
+        self.assertFalse(plan(['app/src/components/glossary.css'])['matrix'])
 
 
 if __name__ == '__main__':

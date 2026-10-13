@@ -18,15 +18,19 @@ GROUPS = {
     'matrix-1': ['verify-map-hotspot-matrix.mjs --shard=1/3'],
     'matrix-2': ['verify-map-hotspot-matrix.mjs --shard=2/3'],
 }
+SMOKE = {
+    'navigation': ['verify-browser.mjs'],
+    'structure': ['verify-display-codes.mjs'],
+    'content': ['verify-published-content.mjs'],
+}
 
 
-def verify(root=ROOT, *, workers=3, groups=None):
+def verify(root=ROOT, *, workers=3, groups=None, smoke=False):
     root = Path(root).resolve()
     node = shutil.which('node')
     if not node:
         raise ValueError('Node is required for browser verification')
-    selected = {key: GROUPS[key] for key in (groups or [*('matrix-' + str(i) for i in range(3)),
-                                                      *[key for key in GROUPS if not key.startswith('matrix-')]])}
+    selected = SMOKE if smoke else {key: GROUPS[key] for key in (groups or GROUPS)}
     output = root / 'app/.runtime/qa-parallel'
     output.mkdir(parents=True, exist_ok=True)
     def run_group(name, scripts):
@@ -67,5 +71,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--workers', type=int, choices=range(1, 6), default=3)
     parser.add_argument('--group', action='append', choices=GROUPS)
+    parser.add_argument('--smoke', action='store_true', help='Short browser and publication check')
     args = parser.parse_args()
-    raise SystemExit(verify(workers=args.workers, groups=args.group)['status'] != 'passed')
+    if args.smoke and args.group:
+        parser.error('--smoke cannot be combined with --group')
+    raise SystemExit(verify(workers=args.workers, groups=args.group, smoke=args.smoke)['status'] != 'passed')

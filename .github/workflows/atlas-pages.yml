@@ -1,8 +1,6 @@
 name: FLOW Atlas — GitHub Pages
 
 on:
-  pull_request:
-    branches: [main]
   push:
     branches: [main]
     paths:
@@ -24,6 +22,7 @@ jobs:
       contracts: ${{ steps.plan.outputs.contracts }}
       frontend: ${{ steps.plan.outputs.frontend }}
       browser: ${{ steps.plan.outputs.browser }}
+      matrix: ${{ steps.plan.outputs.matrix }}
       launcher: ${{ steps.plan.outputs.launcher }}
     steps:
       - uses: actions/checkout@v6
@@ -34,12 +33,9 @@ jobs:
           python-version: '3.14'
       - id: plan
         env:
-          PR_BASE: ${{ github.event.pull_request.base.sha }}
           PUSH_BASE: ${{ github.event.before }}
         run: |
-          if [ "$GITHUB_EVENT_NAME" = "pull_request" ]; then
-            BASE="$PR_BASE"
-          elif [ "$GITHUB_EVENT_NAME" = "push" ] && [ "$PUSH_BASE" != "0000000000000000000000000000000000000000" ]; then
+          if [ "$GITHUB_EVENT_NAME" = "push" ] && [ "$PUSH_BASE" != "0000000000000000000000000000000000000000" ]; then
             BASE="$PUSH_BASE"
           else
             BASE="$(git rev-list --max-parents=0 HEAD | head -1)"
@@ -112,19 +108,21 @@ jobs:
       - run: pnpm --dir app build
       - run: pnpm --dir app exec playwright install --with-deps chromium
         if: needs.plan.outputs.browser == 'true'
+      - run: python scripts/verify_atlas.py --workers 3 --smoke
+        if: needs.plan.outputs.browser == 'true' && needs.plan.outputs.matrix != 'true'
       - run: python scripts/verify_atlas.py --workers 3
-        if: needs.plan.outputs.browser == 'true'
+        if: needs.plan.outputs.matrix == 'true'
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
           name: atlas-failed-recipes
           path: app/.runtime/qa-*/**
       - uses: actions/upload-pages-artifact@v4
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         with:
           path: app/dist
       - uses: actions/upload-artifact@v4
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main'
         with:
           name: atlas-delivery-manifest
           path: app/dist/delivery.json
@@ -152,7 +150,7 @@ jobs:
           if [ "$NEED_CONTRACTS" = "true" ]; then test "$CONTRACTS" = "success"; fi
   deploy:
     needs: [checks, build]
-    if: always() && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && needs.build.result == 'success' && needs.checks.result == 'success'
+    if: always() && github.ref == 'refs/heads/main' && needs.build.result == 'success' && needs.checks.result == 'success'
     concurrency:
       group: atlas-pages-deployment
       cancel-in-progress: false
