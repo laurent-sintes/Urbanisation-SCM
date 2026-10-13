@@ -24,9 +24,8 @@ class CreditCheckTests(unittest.TestCase):
 
     def test_commerce_contexts_belong_to_commerce_and_do_not_decompose_the_core(self):
         self.assertEqual(self.nodes['domain-sales']['fields']['name'], 'Commerce')
-        expected={'subdomain-sales-b2c-ecommerce','subdomain-sales-b2c-store','subdomain-sales-wholesale',
-                  'subdomain-assortment-catalog-management','subdomain-retail-network-management',
-                  'subdomain-store-backoffice-operations','subdomain-pricing-promotions-management',
+        expected={'subdomain-retail-commerce','subdomain-sales-wholesale',
+                  'subdomain-assortment-catalog-management','subdomain-pricing-promotions-management',
                   'subdomain-rebates-incentives-management'}
         actual={r['target_id'] for r in self.model['relations'] if r['source_id']=='domain-sales' and r['type']=='presents'}
         self.assertEqual(expected,actual)

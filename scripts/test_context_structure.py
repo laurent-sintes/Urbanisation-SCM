@@ -27,8 +27,9 @@ class ContextStructureTests(unittest.TestCase):
         self.assertEqual(len(self.index['children']['domain-sales']),5)
         self.assertEqual(self.index['children']['subdomain-retail-commerce'],[
             'subdomain-retail-network-management','subdomain-sales-b2c-ecommerce',
-            'subdomain-sales-b2c-store','subdomain-store-backoffice-operations'])
-        self.assertEqual(len(self.descendants('domain-sales','business_area')),12)
+            'subdomain-sales-b2c-store','subdomain-store-backoffice-operations',
+            'ba-retail-customer-relationship-management'])
+        self.assertEqual(len(self.descendants('domain-sales','business_area')),13)
         for ident in self.index['children']['subdomain-retail-commerce']:
             self.assertEqual(self.nodes[ident]['kind'],'business_area')
         self.assertIn('Wholesale Commerce',self.nodes['subdomain-sales-b2c-ecommerce']['fields']['scope'])
@@ -59,7 +60,7 @@ class ContextStructureTests(unittest.TestCase):
 
     def test_context_areas_are_terminal_and_supply_inventory_is_preserved(self):
         areas=context_business_area_ids(self.model)
-        self.assertEqual(len(areas),43)
+        self.assertEqual(len(areas),44)
         self.assertTrue(all(not self.index['children'][ident] for ident in areas))
         published=read(ROOT/'modeles/release/2026-10-13.3/model.yaml')
         for kind in ('capability','behavior'):

@@ -50,8 +50,11 @@ class PresentationBusinessTests(unittest.TestCase):
                 self.assertIn(('glossary', 'TER045'), references(description))
         # U903 links Firming to its definition without changing the ATP rule.
         plain = lambda text: re.sub(r'\[([^\]]+)\]\((?:model|glossary):[^)]+\)', r'\1', text)
-        self.assertEqual(plain(descriptions[0]), plain(descriptions[2]))
         self.assertEqual(plain(descriptions[1]), plain(descriptions[3]))
+        # U1009/U1019 preserve the shared ATP rule and add distinct context prose
+        # for transactional checks and their use by collective Master Planning.
+        self.assertTrue(plain(descriptions[0]).startswith(plain(descriptions[1])))
+        self.assertTrue(plain(descriptions[2]).startswith(plain(descriptions[3])))
         self.assertIn(('glossary', 'TER197'), references(descriptions[0]))
 
     def test_current_reference_explanations_have_no_stale_manual_count(self):

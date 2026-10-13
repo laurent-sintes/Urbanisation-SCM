@@ -28,10 +28,11 @@ class SupplyIdentityTests(unittest.TestCase):
              'subdomain-integration', 'subdomain-process-management'],
         )
         nodes = {n['id']: n for n in model['nodes']}
-        self.assertEqual(nodes['subdomain-plans']['kind'], 'business_area')
+        self.assertNotIn('subdomain-plans', nodes)
+        self.assertEqual(nodes['ba-master-plan-management']['kind'], 'business_area')
         self.assertEqual(
             [(r['source_id'], r['type']) for r in model['relations']
-             if r['target_id'] == 'subdomain-plans' and r['type'] in ('contains', 'presents')],
+             if r['target_id'] == 'ba-master-plan-management' and r['type'] in ('contains', 'presents')],
             [('D03', 'contains')],
         )
         self.assertEqual(nodes['D03']['fields']['name'], 'Availability')
