@@ -26,6 +26,7 @@ type Card = Node<
     highlighted: boolean;
     muted: boolean;
     hotspotRelatedIds?: string[];
+    applicationRelatedIds?: string[];
   },
   'business'
 >;
@@ -77,7 +78,7 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
         node={child}
         itemId={child.id}
         selected={data.selectedId === child.id}
-        className={`card-child-link ${child.kind === 'reference' ? 'reference-link' : child.kind === 'behavior' ? 'behavior-link' : 'capacity-link'}${data.hotspotRelatedIds?.includes(child.id) ? ' hotspot-related-item' : ''}`}
+        className={`card-child-link ${child.kind === 'reference' ? 'reference-link' : child.kind === 'behavior' ? 'behavior-link' : 'capacity-link'}${data.hotspotRelatedIds?.includes(child.id) ? ' hotspot-related-item' : ''}${data.applicationRelatedIds?.includes(child.id) ? ' application-related-item' : ''}`}
         onClick={() => data.onRead(child.id)}
       >
         <NodeIcon node={child} size={16} />
@@ -92,7 +93,7 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
                 node={behavior}
                 itemId={behavior.id}
                 selected={data.selectedId === behavior.id}
-                className={`card-child-link behavior-link${data.hotspotRelatedIds?.includes(behavior.id) ? ' hotspot-related-item' : ''}`}
+                className={`card-child-link behavior-link${data.hotspotRelatedIds?.includes(behavior.id) ? ' hotspot-related-item' : ''}${data.applicationRelatedIds?.includes(behavior.id) ? ' application-related-item' : ''}`}
                 onClick={() => data.onRead(behavior.id)}
               >
                 <NodeIcon node={behavior} size={14} />
@@ -110,7 +111,7 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
       child.kind === 'business_area' && list.businessAreaChildren ? (
         <li key={child.id} className="business-area-list-group">
           <div
-            className={`category-list-banner${data.hotspotRelatedIds?.includes(child.id) ? ' hotspot-related-item' : ''}`}
+            className={`category-list-banner${data.hotspotRelatedIds?.includes(child.id) ? ' hotspot-related-item' : ''}${data.applicationRelatedIds?.includes(child.id) ? ' application-related-item' : ''}`}
             data-business-area-summary={child.id}
           >
             <MapNodeButton

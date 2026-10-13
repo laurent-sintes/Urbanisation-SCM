@@ -48,14 +48,27 @@ class ApplicationCatalogTests(unittest.TestCase):
         catalog = self.model['application_catalog']
         newstore = next(item for item in catalog['products'] if item['id'] == 'product-newstore')
         selection = next(item for item in catalog['selections'] if item['id'] == 'selection-newstore-boardriders')
-        self.assertTrue(any(item['component_id'] == 'newstore-order-routing' and item['node_id'] == 'D06'
+        self.assertTrue(any(item['component_id'] == 'newstore-order-routing' and item['node_id'] == 'D06.e'
                             for item in newstore['offering_mappings']))
         self.assertFalse(any(item['node_id'] == 'D06' for item in selection['mappings']))
         model = deepcopy(self.model)
         mapping = next(item for item in model['application_catalog']['products']
                        if item['id'] == 'product-newstore')['offering_mappings'][0]
         del mapping['source_url']
-        self.assertTrue(any('vendor offering needs documented source' in error for error in validate_catalog(model)))
+        self.assertTrue(any('vendor offering needs a primary source' in error for error in validate_catalog(model)))
+        self.assertTrue(any(item['evidence_state'] == 'candidate' and item.get('source_url')
+                            for product in catalog['products'] for item in product.get('offering_mappings', [])))
+
+    def test_every_vendor_function_has_a_business_mapping(self):
+        model = deepcopy(self.model)
+        elastic = next(item for item in model['application_catalog']['products']
+                       if item['id'] == 'product-elastic-suite')
+        elastic['offering_mappings'] = [item for item in elastic['offering_mappings']
+                                        if item['component_id'] != 'elastic-custom-collections']
+        self.assertTrue(any('elastic-custom-collections: vendor component needs a business mapping' in error
+                            for error in validate_catalog(model, require_function_mapping=True)))
+        self.assertFalse(any('elastic-custom-collections: vendor component needs a business mapping' in error
+                             for error in validate_catalog(model)))
 
     def test_newstore_boardriders_distinguishes_offering_and_use(self):
         catalog = self.model['application_catalog']
@@ -76,7 +89,8 @@ class ApplicationCatalogTests(unittest.TestCase):
         catalog = self.model['application_catalog']
         sap = next(item for item in catalog['products'] if item['id'] == 'product-sap-ecc')
         self.assertEqual([(item['name'], item.get('parent_id')) for item in sap['components']], [
-            ('SAP ECC', None), ('AFS', 'sap-ecc-core'), ('AllocationRun', 'sap-afs'),
+            ('SAP ECC', None), ('Sales and Distribution (SD)', 'sap-ecc-core'),
+            ('Materials Management (MM)', 'sap-ecc-core'), ('AFS', 'sap-ecc-core'), ('AllocationRun', 'sap-afs'),
         ])
         selection = next(item for item in catalog['selections'] if item['product_id'] == sap['id'])
         self.assertEqual(selection['context_id'], 'boardriders')

@@ -71,11 +71,12 @@ class HotspotCatalogTests(unittest.TestCase):
         from scripts.structured_io import read
         candidates = read(ROOT / 'modeles/backlog/hotspot-source-candidates-U958.yaml')
         hotspots = {item['id']: item for item in self.model['hotspot_catalog']['hotspots']}
-        self.assertEqual(len(hotspots), 27)
-        self.assertTrue(all(item['status'] == 'validated' for item in hotspots.values()))
+        self.assertEqual(len(hotspots), 28)
+        self.assertTrue(all(item['status'] == 'validated' for identifier, item in hotspots.items() if identifier != 'HS-032'))
+        self.assertEqual(hotspots['HS-032']['status'], 'discovered')
         self.assertTrue(all(row['hotspot_id'] in hotspots for row in candidates['integration_map']))
         self.assertEqual(hotspots['HS-018']['framing_impact']['category'], 'to_assess')
-        self.assertEqual({item['id'] for item in hotspots.values() if item['framing_impact']['category'] == 'usage'}, {'HS-017', 'HS-030'})
+        self.assertEqual({item['id'] for item in hotspots.values() if item.get('framing_impact', {}).get('category') == 'usage'}, {'HS-017', 'HS-030'})
         self.assertTrue(all(item['resolution']['stage'] != 'credible' for item in hotspots.values()))
 
     def test_first_reviewed_lot_has_three_product_subjects_and_c08_document(self):

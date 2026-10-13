@@ -10,6 +10,7 @@ import {
 import { FileText } from 'lucide-react';
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { prominentChildIndex } from './adaptiveLayout';
+import { projectedApplicationMapIds } from './applicationCatalog';
 import { startsCapabilityTypeSection } from './capabilityTypes';
 import { categoryCaption, categoryOf, startsCategorySection } from './categories';
 import { HotspotMapMarker } from './components/HotspotDisplay';
@@ -35,9 +36,10 @@ import {
   requiredNode,
   rootsOf,
   scopeStatistics,
+  visibleAncestorId,
 } from './model';
 import { kindLabel } from './presentation';
-import type { AtlasNode, Hotspot, PublishedModel } from './types';
+import type { ApplicationMapping, AtlasNode, Hotspot, PublishedModel } from './types';
 import '@xyflow/react/dist/style.css';
 
 export interface ReactFlowPaneProps {
@@ -52,6 +54,8 @@ export interface ReactFlowPaneProps {
   onPageFallbackChange: (fallback: boolean) => void;
   perspective: string;
   hotspots?: Hotspot[];
+  selectedHotspotId?: string;
+  applicationMappings?: ApplicationMapping[];
   onOpenHotspot?: (id: string, groupIds?: string[]) => void;
 }
 interface HotspotMarker {
@@ -497,8 +501,7 @@ function Canvas(props: ReactFlowPaneProps) {
       }),
     [layout, selectedId, model, scopeId, props.onRead, perspective, onHeight],
   );
-  const hotspotMarkers = useMemo(() => {
-    if (!props.hotspots?.length) return [];
+  const visibleElements = useMemo(() => {
     const visible = new Map(layout.nodes.filter((node) => node.type === 'business').map((node) => [node.id, node]));
     for (const node of layout.nodes.filter((candidate) => candidate.type === 'business')) {
       const list = childLists.get(node.id);
@@ -517,16 +520,20 @@ function Canvas(props: ReactFlowPaneProps) {
     }
     const group = layout.nodes.find((node) => node.type === 'container');
     if (group?.id.startsWith('group:')) visible.set(group.id.slice(6), group);
+    return visible;
+  }, [layout.nodes, childLists, detail]);
+  const applicationIds = projectedApplicationMapIds(
+    model,
+    props.applicationMappings || [],
+    new Set(visibleElements.keys()),
+  );
+  const hotspotMarkers = useMemo(() => {
+    if (!props.hotspots?.length) return [];
+    const visibleIds = new Set(visibleElements.keys());
     const projected = (id: string): { node: Node; elementId: string } | undefined => {
-      let current = id;
-      const seen = new Set<string>();
-      while (current && !seen.has(current)) {
-        seen.add(current);
-        const found = visible.get(current);
-        if (found) return { node: found, elementId: current };
-        current = parentRelationOf(model, current)?.sourceId || '';
-      }
-      return undefined;
+      const elementId = visibleAncestorId(model, id, visibleIds);
+      const node = elementId ? visibleElements.get(elementId) : undefined;
+      return node && elementId ? { node, elementId } : undefined;
     };
     const markers = props.hotspots.flatMap((hotspot): HotspotMarker[] => {
       const anchors = hotspot.location.node_ids
@@ -590,7 +597,7 @@ function Canvas(props: ReactFlowPaneProps) {
       ];
     });
     return markers;
-  }, [layout.nodes, model, childLists, detail, props.hotspots]);
+  }, [model, visibleElements, props.hotspots]);
   const [textObstacles, setTextObstacles] = useState<{ x: number; y: number; width: number; height: number }[]>([]);
   const [measuredMarkerPositions, setMeasuredMarkerPositions] = useState<Record<string, { x: number; y: number }>>({});
   const [textMeasurementVersion, setTextMeasurementVersion] = useState(0);
@@ -726,23 +733,32 @@ function Canvas(props: ReactFlowPaneProps) {
     if (!clusterExpanded) lastMarkerLayout.current = markerLayout;
   }, [markerLayout, clusterExpanded]);
   const displayedMarkerLayout = clusterExpanded && lastMarkerLayout.current ? lastMarkerLayout.current : markerLayout;
+  const activeHotspotIds = new Set([
+    ...(props.selectedHotspotId ? [props.selectedHotspotId] : []),
+    ...hoveredHotspotIds,
+  ]);
   const hoveredElementIds = new Set(
     hotspotRelatedElementIds(
       model,
-      (props.hotspots || []).filter((item) => hoveredHotspotIds.includes(item.id)),
+      (props.hotspots || []).filter((item) => activeHotspotIds.has(item.id)),
       hotspotMarkers
-        .filter((marker) => hoveredHotspotIds.includes(marker.id))
+        .filter((marker) => activeHotspotIds.has(marker.id))
         .flatMap((marker) => marker.projectedElementIds),
     ),
   );
-  const displayedNodes = hoveredElementIds.size
-    ? nodes.map((node) => ({
-        ...node,
-        data: { ...node.data, hotspotRelatedIds: [...hoveredElementIds] },
-        className:
-          `${node.className || ''}${hoveredElementIds.has(node.id.replace(/^group:/, '')) || hoveredElementIds.has((node.data.area as { id?: string } | undefined)?.id || '') ? ' hotspot-related' : ''}`.trim(),
-      }))
-    : nodes;
+  const displayedNodes =
+    hoveredElementIds.size || applicationIds.size
+      ? nodes.map((node) => ({
+          ...node,
+          data: {
+            ...node.data,
+            hotspotRelatedIds: [...hoveredElementIds],
+            applicationRelatedIds: [...applicationIds],
+          },
+          className:
+            `${node.className || ''}${hoveredElementIds.has(node.id.replace(/^group:/, '')) || hoveredElementIds.has((node.data.area as { id?: string } | undefined)?.id || '') ? ' hotspot-related' : ''}${applicationIds.has(node.id.replace(/^group:/, '')) ? ' application-related' : ''}`.trim(),
+        }))
+      : nodes;
   const select = useCallback(
     (_event: unknown, node: Node) => {
       if (node.type === 'business') props.onSelect(node.id);

@@ -1342,6 +1342,21 @@ button.hotspot-qualification:hover {
   cursor: pointer;
   text-align: left;
 }
+.hotspot-picker-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px;
+}
+.hotspot-picker-row > button[aria-pressed="true"] {
+  border-color: #b94229;
+  background: #fff1e6;
+}
+.hotspot-filter-list .hotspot-picker-open {
+  display: flex;
+  align-items: center;
+  padding-inline: 9px;
+  font-size: 11px;
+}
 .hotspot-filter-list-label {
   display: grid;
   gap: 3px;

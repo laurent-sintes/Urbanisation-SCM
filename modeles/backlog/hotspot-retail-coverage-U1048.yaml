@@ -1,0 +1,65 @@
+id: hotspot-retail-coverage-U1048
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1048
+- U03
+- U04
+- U06
+- U1043
+- U1044
+- U1045
+- U1049
+- U1050
+- U1051
+- U1052
+- U1053
+- U1054
+- U1055
+assessment:
+  finding: Le remplacement conjoint de Storeland et UR peut laisser cinq responsabilités Retail Commerce GBM à réaffecter.
+    Les fonctions documentées incluent relation client et fidélité, calcul du stock cible et réassort, en plus de la vente,
+    du réseau et des parcours numériques. UR contribue au backoffice par son couplage à Storeland.
+  qualification: 'L’assertion « la partie retail n’existera plus » n’est pas établie : Winstore, SoCloz et d’autres fonctions
+    de caisse ou eCommerce peuvent rester. Laurent déclare Y2 comme socle Retail Boardriders, mais les modules et usages
+    installés ne sont pas corroborés. Le module Omnicanal Y2 est documenté comme option acquise et activée séparément ; son
+    usage Boardriders est inconnu. Aucun écart de coût ou de taille de refonte entre SI n’est chiffré.'
+  decision: Créer HS-032 comme point de périmètre à instruire ; comparer construction d’un produit Retail et extension de
+    Y2, sans retenir de solution.
+  business_areas:
+  - subdomain-sales-b2c-store
+  - subdomain-store-backoffice-operations
+  - subdomain-retail-network-management
+  - subdomain-sales-b2c-ecommerce
+  - ba-retail-customer-relationship-management
+  source_urls:
+  - https://www.cegid.com/fr/cas-client/le-groupe-beaumanoir-choisit-plateforme-commerce-connecte-cegid-retail-equiper-la-halle/
+  - https://www.cegid.com/fr/cas-client/arena-optimise-la-gestion-de-ses-boutiques-et-lexperience-client-grace-a-cegid-retail-y2/
+  - https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Definir-les-parametres-generaux/555
+  - https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Fiche-Etablissement/244
+  - https://www.cegid.com/fr/cgv/?slugFileName=pr-requis-techniques_cegid-storeland_on-premise-licence
+  - https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce-capabilities
+  - https://learning.sap.com/courses/exploring-sap-s-4hana-cloud-public-edition-retail/executing-omnichannel-order-fulfillment-for-retail-5fz-_db648c00-65bf-4489-b638-23d3a38a27d7
+  - https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Parametrage-du-module-CRM/556
+  - https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Creer-une-action-marketing/60
+  - https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Calcul-de-stock-optimal/39
+  - https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Reassort-et-reapprovisionnement-des-magasins-synthese/521
+  - https://learn.microsoft.com/en-us/dynamics365/commerce/set-up-customer-loyalty-program
+  - https://help.sap.com/doc/febdbaab352f47ca86d4eaeae438c094/2.0/en-US/GettingStartedGuide_Customer_Management.pdf
+glossary_alignment:
+  checked: Retail Commerce et la nouvelle Business Area Retail Customer Relationship Management alignés dans le modèle et
+    le glossaire métier ; frontières avec Store Sales, Digital Commerce, Pricing et FLOW explicitées.
+  result: TER270 ajusté et TER315 créé ; aucun ajout de capacité ou comportement adjacent.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1048
+  - U1049
+  - U1050
+  - U1055
+  summary: HS-032 révisé avec deux options non arbitrées, cinq écarts de couverture par Business Area, frontières Supply,
+    limites de preuve et sources primaires.
+  required_catalog:
+  - collection: hotspots
+    id: HS-032
+    content_sha256: bc7c517793088a9afcd8d581e3d1ad2c76286b148a22ed2ec51882affc9b6711

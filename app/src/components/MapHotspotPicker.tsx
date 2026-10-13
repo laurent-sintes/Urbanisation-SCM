@@ -21,12 +21,16 @@ export function MapHotspotPicker({
   scopedHotspots,
   visibleHotspots,
   onOpenHotspot,
+  selectedHotspotId,
+  onSelectHotspot,
 }: {
   filters: HotspotMapFilters;
   onChange: (changes: Partial<HotspotMapFilters>) => void;
   scopedHotspots: Hotspot[];
   visibleHotspots: Hotspot[];
   onOpenHotspot: (id: string) => void;
+  selectedHotspotId?: string;
+  onSelectHotspot?: (id: string) => void;
 }) {
   const [open, setOpen] = useState(false);
   const id = useId();
@@ -90,21 +94,41 @@ export function MapHotspotPicker({
                   >
                     {matchingHotspots.length ? (
                       matchingHotspots.map((hotspot) => (
-                        <button type="button" key={hotspot.id} onClick={() => onOpenHotspot(hotspot.id)}>
-                          <span className={`hotspot-filter-severity severity-${hotspot.severity}`} aria-hidden="true">
-                            <Flame size={17} />
-                          </span>
-                          <span className="hotspot-filter-list-label">
-                            <strong>{hotspot.title}</strong>
-                            <span className="hotspot-picker-summary">
-                              <ModelText text={hotspot.problem} />
+                        <div className="hotspot-picker-row" key={hotspot.id}>
+                          <button
+                            type="button"
+                            aria-pressed={onSelectHotspot ? selectedHotspotId === hotspot.id : undefined}
+                            onClick={() => {
+                              if (onSelectHotspot) {
+                                onSelectHotspot(hotspot.id);
+                                setOpen(false);
+                              } else onOpenHotspot(hotspot.id);
+                            }}
+                          >
+                            <span className={`hotspot-filter-severity severity-${hotspot.severity}`} aria-hidden="true">
+                              <Flame size={17} />
                             </span>
-                            <small>
-                              {framingLabel(hotspot)} · Criticité{' '}
-                              {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}
-                            </small>
-                          </span>
-                        </button>
+                            <span className="hotspot-filter-list-label">
+                              <strong>{hotspot.title}</strong>
+                              <span className="hotspot-picker-summary">
+                                <ModelText text={hotspot.problem} />
+                              </span>
+                              <small>
+                                {framingLabel(hotspot)} · Criticité{' '}
+                                {hotspot.severity === 'unassessed' ? 'non évaluée' : hotspot.severity}
+                              </small>
+                            </span>
+                          </button>
+                          {onSelectHotspot && (
+                            <button
+                              type="button"
+                              className="hotspot-picker-open"
+                              onClick={() => onOpenHotspot(hotspot.id)}
+                            >
+                              Ouvrir la fiche
+                            </button>
+                          )}
+                        </div>
                       ))
                     ) : (
                       <p>Aucun point chaud avec ces filtres.</p>

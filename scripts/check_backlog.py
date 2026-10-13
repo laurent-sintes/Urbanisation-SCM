@@ -25,7 +25,7 @@ def check(root=ROOT, *, intents=None, render=False):
     schema = read(root / 'modeles/schemas/urbanism.schema.json')
     timings['load'] = perf_counter() - started
     step = perf_counter()
-    errors = validate_sources(source_document) + validate_urbanism(model, sources, schema)
+    errors = validate_sources(source_document) + validate_urbanism(model, sources, schema, require_function_mapping=True)
     timings['validate_backlog'] = perf_counter() - step
     step = perf_counter()
     stats = {}

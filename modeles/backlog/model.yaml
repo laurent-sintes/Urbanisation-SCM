@@ -20,6 +20,11 @@ application_catalog:
   - U1044
   - U1045
   - U1046
+  - U1051
+  - U1052
+  - U1053
+  - U1054
+  - U1055
   products:
   - id: product-elastic-suite
     name: Elastic Suite
@@ -86,10 +91,18 @@ application_catalog:
       source_url: https://www.elasticsuite.com/
       source_refs:
       - U1044
+    - id: elastic-order-management
+      parent_id: elastic-suite-core
+      name: Order Management & History
+      kind: feature
+      note: Consulte commandes, reliquats, factures et expéditions et permet les commandes à livraisons multiples ; ne prouve pas la conduite du fulfillment.
+      source_url: https://www.elasticsuite.com/platform/
+      source_refs:
+      - U1051
     offering_mappings:
     - id: offer-elastic-order-entry
       component_id: elastic-order-entry
-      node_id: subdomain-sales-wholesale
+      node_id: ba-wholesale-sales
       role: supports
       evidence_state: documented
       note: La construction et la soumission de commandes contribuent au parcours wholesale ; l’autorité sur la commande reste
@@ -99,7 +112,7 @@ application_catalog:
       - U1044
     - id: offer-elastic-catalog
       component_id: elastic-catalog-presentation
-      node_id: subdomain-sales-wholesale
+      node_id: ba-wholesale-sales
       role: supports
       evidence_state: documented
       note: Présente aux acheteurs une offre numérique et des sélections commerciales ; ne prouve pas la gouvernance du catalogue
@@ -109,7 +122,7 @@ application_catalog:
       - U1044
     - id: offer-elastic-assortment
       component_id: elastic-assortment-builder
-      node_id: subdomain-sales-wholesale
+      node_id: ba-wholesale-sales
       role: supports
       evidence_state: documented
       note: Aide à composer une proposition d’achat pour un revendeur.
@@ -118,13 +131,40 @@ application_catalog:
       - U1044
     - id: offer-elastic-whiteboard
       component_id: elastic-whiteboard
-      node_id: subdomain-sales-wholesale
+      node_id: ba-wholesale-sales
       role: supports
       evidence_state: documented
       note: Présente visuellement les produits dans le parcours de vente B2B.
       source_url: https://www.elasticsuite.com/
       source_refs:
       - U1044
+    - id: offer-elastic-sales-order
+      component_id: elastic-order-entry
+      node_id: D04.i
+      role: contributes
+      evidence_state: documented
+      note: Saisie et soumission B2B d'une commande ; le cycle complet de la commande et son autorité restent à établir.
+      source_url: https://www.elasticsuite.com/platform/
+      source_refs:
+      - U1051
+    - id: offer-elastic-order-history
+      component_id: elastic-order-management
+      node_id: ba-wholesale-sales
+      role: contributes
+      evidence_state: documented
+      note: Consultation des commandes et de leurs documents par les acheteurs wholesale.
+      source_url: https://www.elasticsuite.com/platform/
+      source_refs:
+      - U1051
+    - id: offer-elastic-custom-collections
+      component_id: elastic-custom-collections
+      node_id: ba-wholesale-sales
+      role: contributes
+      evidence_state: documented
+      note: Présente des sélections ciblées et des prix client aux acheteurs wholesale ; ne définit pas le catalogue ni les prix maîtres.
+      source_url: https://www.elasticsuite.com/platform/
+      source_refs:
+      - U1053
   - id: product-flow-core
     name: Flow Core System
     publisher: Beaumanoir / FLOW
@@ -188,23 +228,31 @@ application_catalog:
     offering_mappings:
     - id: offer-socloz-availability
       component_id: socloz-oms
-      node_id: D03
-      role: supports
+      node_id: D01.c
+      role: contributes
       evidence_state: documented
-      note: L’OMS expose une disponibilité omnicanale et des règles de réservation ; les sources de stock restent externes
-        ou à qualifier.
+      note: L’OMS agrège les disponibilités des magasins et entrepôts avec marges de sécurité ; les sources de stock et la portée de la visibilité Supply restent à qualifier.
       source_url: https://www.socloz.com/plateforme/oms/
       source_refs:
       - U1044
     - id: offer-socloz-orchestration
       component_id: socloz-oms
-      node_id: D06
-      role: supports
+      node_id: D06.e
+      role: contributes
       evidence_state: documented
-      note: Le moteur de règles choisit un lieu de préparation ; la portée installée dans Beaumanoir n’est pas déduite.
+      note: Le moteur de règles choisit un lieu de préparation selon stock, éligibilité et capacité magasin ; la décision complète de service Supply et l'usage Beaumanoir ne sont pas déduits.
       source_url: https://www.socloz.com/plateforme/oms/
       source_refs:
       - U1044
+    - id: offer-socloz-reservation
+      component_id: socloz-oms
+      node_id: D02.c
+      role: contributes
+      evidence_state: candidate
+      note: Réservation de stock omnicanal décrite par l'éditeur ; sa correspondance avec la réservation Supply cible demande une vérification des règles et de l'autorité.
+      source_url: https://www.socloz.com/plateforme/oms/
+      source_refs:
+      - U1051
     - id: offer-socloz-mpos
       component_id: socloz-mpos
       node_id: subdomain-sales-b2c-store
@@ -228,13 +276,15 @@ application_catalog:
     publisher: Cegid (ex-Cylande)
     kind: vendor_product
     inventory_status: partial
-    scope: 'Plateforme Cegid Retail UR de commerce unifié : opérations de vente en magasin, ventes assistées, CRM et parcours
-      omnicanaux selon les composants retenus.'
-    note: Cegid cite explicitement United Retail avec Storeland et Winstore chez Beaumanoir. L’identité de l’UR transverse
-      décrite dans les dossiers FLOW, ses adaptations et ses modules actifs restent à corroborer.
+    scope: 'Plateforme Retail modulaire : vente en magasin, paramétrage central des magasins, ventes assistées, CRM et échanges
+      avec Storeland ou autres systèmes selon la configuration.'
+    note: Cegid documente UR autonome ou couplé à Storeland, avec des paramètres et modules de liaison. Laurent décrit son usage GBM comme middleware et backoffice magasin, et rapporte une ambition de couverture ERP Retail avec quelques fonctions B2B limitées. La complétude d'une version livrée, l'arrêt allégué du développement et les modules actifs par marque restent à établir.
     source_refs:
     - U1042
     - U1044
+    - U1049
+    - U1050
+    - U1052
     components:
     - id: united-retail-core
       name: United Retail
@@ -265,6 +315,32 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Definir-les-parametres-generaux/555
       source_refs:
       - U1044
+    - id: ur-store-settings
+      parent_id: united-retail-core
+      name: UR Store Settings
+      kind: module
+      note: Paramétrage central des modules de vente, décliné par magasin et caisse ; activation GBM à vérifier.
+      source_url: https://cegid.fluidtopics.net/r/fr-FR/UR/UR/Functional_Doc/Edition-2021/Fonctionnalites-du-portail-UR-Store-Settings/551
+      source_refs:
+      - U1050
+    - id: ur-storeland-integration
+      parent_id: united-retail-core
+      name: Storeland Integration
+      kind: module
+      note: Couplage documenté par Cegid, notamment via paramètres Storeland et STLD Bridge ; architecture et fonctions GBM
+        à confirmer par une preuve d'instance.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Definir-les-parametres-generaux/555
+      source_refs:
+      - U1049
+      - U1050
+    - id: ur-replenishment
+      parent_id: united-retail-core
+      name: Store Replenishment
+      kind: feature
+      note: Calcule les besoins des magasins selon ventes, prévisions ou seuils de stock ; priorise les magasins et génère commandes ou transferts selon le paramétrage.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Reassort-et-reapprovisionnement-des-magasins-synthese/521
+      source_refs:
+      - U1051
     website_url: https://www.cegid.com/fr/cas-client/le-groupe-beaumanoir-choisit-plateforme-commerce-connecte-cegid-retail-equiper-la-halle/
     offering_mappings:
     - id: offer-ur-pos
@@ -286,6 +362,70 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Fonctionnalites-du-module-ventes-assistees/563
       source_refs:
       - U1044
+    - id: offer-ur-store-settings
+      component_id: ur-store-settings
+      node_id: subdomain-store-backoffice-operations
+      role: contributes
+      evidence_state: documented
+      note: Paramétrage central des fonctions de vente et des caisses ; ne démontre pas la tenue du stock magasin.
+      source_url: https://cegid.fluidtopics.net/r/fr-FR/UR/UR/Functional_Doc/Edition-2021/Fonctionnalites-du-portail-UR-Store-Settings/551
+      source_refs:
+      - U1050
+    - id: offer-ur-storeland-integration
+      component_id: ur-storeland-integration
+      node_id: subdomain-store-backoffice-operations
+      role: contributes
+      evidence_state: documented
+      note: Liaison technique avec Storeland pour des fonctions Retail ; la répartition précise des responsabilités dépend
+        de la configuration.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Definir-les-parametres-generaux/555
+      source_refs:
+      - U1050
+    - id: offer-ur-crm
+      component_id: ur-crm
+      node_id: subdomain-sales-b2c-store
+      role: contributes
+      evidence_state: candidate
+      note: Fiches clients et fidélité soutiennent la relation commerciale en magasin ; campagnes et fidélité centrale débordent cette Business Area et demandent un emplacement métier explicite.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Creer-un-client/213
+      source_refs:
+      - U1053
+    - id: offer-ur-crm-retail
+      component_id: ur-crm
+      node_id: ba-retail-customer-relationship-management
+      role: contributes
+      evidence_state: candidate
+      note: Fidélité, connaissance client et actions commerciales relèvent de la relation client Retail ; activation GBM à vérifier.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Creer-une-action-marketing/60
+      source_refs:
+      - U1054
+    - id: offer-ur-replenishment-store
+      component_id: ur-replenishment
+      node_id: subdomain-store-backoffice-operations
+      role: supports
+      evidence_state: documented
+      note: Réassort et calcul des besoins des magasins, selon les règles et stocks paramétrés.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Reassort-et-reapprovisionnement-des-magasins-synthese/521
+      source_refs:
+      - U1051
+    - id: offer-ur-replenishment-supply
+      component_id: ur-replenishment
+      node_id: D05.e
+      role: contributes
+      evidence_state: candidate
+      note: Le calcul des besoins et les transferts de réassort recoupent une partie du réapprovisionnement Supply ; frontière avec les décisions transverses de FLOW à vérifier.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Reassort-et-reapprovisionnement-des-magasins-synthese/521
+      source_refs:
+      - U1051
+    - id: offer-ur-stock-target
+      component_id: ur-replenishment
+      node_id: D05.a
+      role: contributes
+      evidence_state: candidate
+      note: Les seuils de stock optimal, minimum et maximum recoupent les cibles physiques magasin ; optimisation multi-nœuds et autorité cible non démontrées.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Reassort-et-reapprovisionnement-des-magasins-synthese/521
+      source_refs:
+      - U1051
   - id: product-storeland
     name: Storeland
     publisher: Cegid (ex-Cylande)
@@ -293,11 +433,13 @@ application_catalog:
     inventory_status: partial
     scope: 'Gestion commerciale centrale d’un réseau de magasins : produits, achats, pilotage magasin, stock, dépôt et CRM
       selon paramétrage.'
-    note: La documentation Cegid décrit des fonctions et des paramètres ; les instances par marque, leurs modules et leurs
-      personnalisations restent à vérifier.
+    note: Les prérequis Cegid de janvier 2023 confirment une base Oracle et des postes clients ; ERetail expose des services SOAP vers Storeland. Laurent décrit Storeland comme un élément du backoffice magasin GBM et rapporte une ambition de couverture ERP Retail avec quelques fonctions B2B limitées. Versions, modules et adaptations par marque restent à vérifier.
     source_refs:
     - U1042
     - U1044
+    - U1049
+    - U1050
+    - U1052
     components:
     - id: storeland-core
       name: Storeland
@@ -328,6 +470,14 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
       source_refs:
       - U1044
+    - id: storeland-eretail
+      parent_id: storeland-core
+      name: ERetail Interface
+      kind: module
+      note: Services SOAP d'accès à Storeland selon la fiche technique Cegid ; activation GBM à vérifier.
+      source_url: https://www.cegid.com/fr/cgv/?slugFileName=pr-requis-techniques_cegid-storeland_on-premise-licence
+      source_refs:
+      - U1050
     - id: storeland-warehouse
       parent_id: storeland-core
       name: Warehouse Operations
@@ -344,6 +494,14 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Parametrage-du-module-CRM/556
       source_refs:
       - U1044
+    - id: storeland-replenishment
+      parent_id: storeland-core
+      name: Optimal Stock & Store Replenishment
+      kind: feature
+      note: Calcule un stock optimal puis les besoins de réassort à partir des ventes, stocks, transits et réservations.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Calcul-de-stock-optimal/39
+      source_refs:
+      - U1051
     website_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
     offering_mappings:
     - id: offer-storeland-products
@@ -357,7 +515,7 @@ application_catalog:
       - U1044
     - id: offer-storeland-purchasing
       component_id: storeland-purchasing
-      node_id: subdomain-operational-procurement
+      node_id: ba-purchasing-execution-coordination
       role: supports
       evidence_state: documented
       note: L’offre décrit des achats fournisseur, sans préciser le partage de responsabilités avec les autres systèmes.
@@ -382,6 +540,60 @@ application_catalog:
       source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/A-propos-de-Storeland/1
       source_refs:
       - U1044
+    - id: offer-storeland-replenishment-store
+      component_id: storeland-replenishment
+      node_id: subdomain-store-backoffice-operations
+      role: supports
+      evidence_state: documented
+      note: Définit le stock optimal et calcule les quantités à réapprovisionner en magasin.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Calcul-de-stock-optimal/39
+      source_refs:
+      - U1051
+    - id: offer-storeland-replenishment-supply
+      component_id: storeland-replenishment
+      node_id: D05.a
+      role: contributes
+      evidence_state: candidate
+      note: Le calcul de stock optimal magasin recoupe les cibles de stock physiques ; la portée et l'autorité du calcul dans chaque SI restent à vérifier.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Calcul-de-stock-optimal/39
+      source_refs:
+      - U1051
+    - id: offer-storeland-replenishment-proposal
+      component_id: storeland-replenishment
+      node_id: D05.e
+      role: contributes
+      evidence_state: candidate
+      note: Les quantités de réassort calculées pour les magasins peuvent contribuer aux propositions d'apport ; articulation avec UR et FLOW inconnue.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Ajustement-de-stock-optimal-par-produit/35
+      source_refs:
+      - U1051
+    - id: offer-storeland-eretail
+      component_id: storeland-eretail
+      node_id: subdomain-retail-commerce
+      role: contributes
+      evidence_state: candidate
+      note: Interface SOAP donnant accès à Storeland ; les services et responsabilités métier servis doivent être inventoriés avant une affectation plus précise.
+      source_url: https://www.cegid.com/fr/cgv/?slugFileName=pr-requis-techniques_cegid-storeland_on-premise-licence
+      source_refs:
+      - U1053
+    - id: offer-storeland-crm
+      component_id: storeland-crm
+      node_id: subdomain-sales-b2c-store
+      role: contributes
+      evidence_state: candidate
+      note: Fidélité et connaissance client soutiennent la relation en magasin ; campagnes et fidélité centrale débordent cette Business Area.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Parametrage-du-module-CRM/556
+      source_refs:
+      - U1053
+    - id: offer-storeland-crm-retail
+      component_id: storeland-crm
+      node_id: ba-retail-customer-relationship-management
+      role: contributes
+      evidence_state: candidate
+      note: Programme de fidélité, coupons et campagnes centrales relèvent de la relation client Retail ; usage GBM à vérifier.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Parametrage-du-module-CRM/556
+      source_refs:
+      - U1054
   - id: product-sap-ecc
     name: SAP ECC
     publisher: SAP
@@ -400,6 +612,22 @@ application_catalog:
       kind: product
       source_refs:
       - U1042
+    - id: sap-ecc-sd
+      parent_id: sap-ecc-core
+      name: Sales and Distribution (SD)
+      kind: module
+      note: Gère les commandes client et leur suivi dans SAP ERP ; paramétrage et responsabilités Boardriders à vérifier.
+      source_url: https://help.sap.com/docs/SAP_ERP/15f6005df5a343d096f63b554e47e14a/4a64b65334e6b54ce10000000a174cb4.html
+      source_refs:
+      - U1051
+    - id: sap-ecc-mm
+      parent_id: sap-ecc-core
+      name: Materials Management (MM)
+      kind: module
+      note: Gère notamment les commandes d'achat fournisseur dans SAP ERP ; activation Boardriders à vérifier.
+      source_url: https://help.sap.com/docs/SAP_ERP_SPV/6cfdc7caaef746cd9c7543e32e7e87c0/8307b753128eb44ce10000000a174cb4.html
+      source_refs:
+      - U1051
     - id: sap-afs
       parent_id: sap-ecc-core
       name: AFS
@@ -431,6 +659,33 @@ application_catalog:
       source_url: https://help.sap.com/saphelp_ve-planner80/helpdata/en/36/f8050ee8b030fbe10000009b38f982/content.htm
       source_refs:
       - U1044
+    - id: offer-sap-afs-wholesale
+      component_id: sap-afs
+      node_id: ba-wholesale-sales
+      role: contributes
+      evidence_state: candidate
+      note: L'extension AFS adapte notamment les ventes de mode ; ce lien ne résume ni tous ses modules ni son activation Boardriders.
+      source_url: https://help.sap.com/doc/727905e99a3e49c685d5d6236d8e85e0/6.3/en-US/SAP_Apparel_and_Footwear_63_-_MasterguideE.PDF
+      source_refs:
+      - U1053
+    - id: offer-sap-ecc-sales-order
+      component_id: sap-ecc-sd
+      node_id: D04.i
+      role: contributes
+      evidence_state: documented
+      note: SAP SD traite les commandes client dans l'offre ERP ; ni son activation ni le partage de la commande avec NewStore chez Boardriders ne sont établis.
+      source_url: https://help.sap.com/docs/SAP_ERP/15f6005df5a343d096f63b554e47e14a/4a64b65334e6b54ce10000000a174cb4.html
+      source_refs:
+      - U1051
+    - id: offer-sap-ecc-purchase-order
+      component_id: sap-ecc-mm
+      node_id: D04.j
+      role: contributes
+      evidence_state: documented
+      note: SAP MM crée et suit des commandes d'achat ; la correspondance à l'objet commande Supply cible reste partielle.
+      source_url: https://help.sap.com/docs/SAP_ERP_SPV/6cfdc7caaef746cd9c7543e32e7e87c0/8307b753128eb44ce10000000a174cb4.html
+      source_refs:
+      - U1051
   - id: product-newstore
     name: NewStore
     publisher: NewStore
@@ -520,7 +775,7 @@ application_catalog:
     - id: offer-newstore-inventory
       component_id: newstore-inventory
       node_id: D01.c
-      role: supports
+      role: contributes
       evidence_state: documented
       note: L’offre donne une visibilité de stock entre magasins et entrepôts ; elle ne détermine pas la source de vérité
         dans Boardriders.
@@ -529,20 +784,19 @@ application_catalog:
       - U1044
     - id: offer-newstore-oms
       component_id: newstore-order-management
-      node_id: D04
-      role: supports
+      node_id: D04.i
+      role: contributes
       evidence_state: documented
-      note: L’OMS éditeur suit les commandes de leur création à leur exécution ; cette étendue n’est pas imputée à l’installation
-        Boardriders.
+      note: L’OMS suit la commande de sa création à son engagement et à son exécution dans l'offre ; seul le parcours jusqu'à engagement est déclaré pour Boardriders.
       source_url: https://docs.newstore.com/docs/set-up-your-oms
       source_refs:
       - U1044
     - id: offer-newstore-routing
       component_id: newstore-order-routing
-      node_id: D06
-      role: supports
+      node_id: D06.e
+      role: contributes
       evidence_state: documented
-      note: L’option route les commandes vers des lieux de fulfillment ; Laurent indique qu’elle n’est pas utilisée chez Boardriders.
+      note: Le routage sélectionne un lieu de fulfillment selon stock et capacité ; Laurent indique qu'il n'est pas utilisé chez Boardriders, où SAP orchestre l'aval.
       source_url: https://docs.newstore.com/v1/docs/about-order-routing
       source_refs:
       - U1044
@@ -555,6 +809,41 @@ application_catalog:
       source_url: https://docs.newstore.com/docs/about-order-fulfillment-1
       source_refs:
       - U1044
+    - id: offer-newstore-clienteling
+      component_id: newstore-clienteling
+      node_id: subdomain-sales-b2c-store
+      role: contributes
+      evidence_state: documented
+      note: Les vendeurs utilisent profils et historique client pour personnaliser la relation en magasin ; l'autorité du référentiel client peut rester externe.
+      source_url: https://docs.newstore.com/docs/engage-your-customers
+      source_refs:
+      - U1053
+    - id: offer-newstore-clienteling-relationship
+      component_id: newstore-clienteling
+      node_id: ba-retail-customer-relationship-management
+      role: contributes
+      evidence_state: candidate
+      note: Profils, historique et communication client contribuent à la relation suivie ; activation Boardriders et autorité des profils non établies.
+      source_url: https://docs.newstore.com/docs/engage-your-customers
+      source_refs: [U1053, U1055]
+    - id: offer-newstore-payments-store
+      component_id: newstore-payments
+      node_id: subdomain-sales-b2c-store
+      role: contributes
+      evidence_state: documented
+      note: Acceptation du paiement au passage en caisse ; rapprochement et règlement financier sont distincts de la vente magasin.
+      source_url: https://docs.newstore.com/docs/set-up-payments
+      source_refs:
+      - U1053
+    - id: offer-newstore-payments-settlement
+      component_id: newstore-payments
+      node_id: subdomain-commercial-settlement-management
+      role: contributes
+      evidence_state: candidate
+      note: L'offre décrit rapprochement et versements ; la responsabilité financière cible et l'usage Boardriders restent à vérifier.
+      source_url: https://docs.newstore.com/docs/set-up-payments
+      source_refs:
+      - U1053
   - id: product-sfcc
     name: Salesforce Commerce Cloud
     publisher: Salesforce
@@ -563,8 +852,7 @@ application_catalog:
     scope: Plateforme Salesforce Commerce Cloud pour la vitrine, le catalogue exposé, le panier et le passage de commande
       en ligne ; les fonctions varient selon l’édition et les intégrations.
     website_url: https://www.salesforce.com/commerce/
-    note: La sélection Boardriders est déclarée par Laurent. Les liens d’offre ci-dessous concernent la documentation B2C
-      Commerce ; l’édition, les extensions et les responsabilités installées restent à vérifier.
+    note: La sélection Boardriders est déclarée par Laurent. La documentation B2C Commerce distingue la prise de commande du traitement aval confié à un OMS tiers ; l'édition, les extensions et les responsabilités installées restent à vérifier.
     source_refs:
     - U1043
     - U1044
@@ -590,6 +878,14 @@ application_catalog:
       source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/promotion-details.html
       source_refs:
       - U1044
+    - id: sfcc-inventory-availability
+      parent_id: sfcc-core
+      name: Storefront Inventory Availability
+      kind: feature
+      note: Expose une disponibilité au site B2C, issue de l'inventaire Commerce Cloud ou d'une source externe ; ne tient pas nécessairement le stock maître.
+      source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/b2c-inventory-for-developers.html
+      source_refs:
+      - U1051
     offering_mappings:
     - id: offer-sfcc-storefront
       component_id: sfcc-storefront
@@ -602,7 +898,7 @@ application_catalog:
       - U1044
     - id: offer-sfcc-promotions
       component_id: sfcc-promotions
-      node_id: subdomain-pricing-promotions-management
+      node_id: ba-promotion-management
       role: supports
       evidence_state: documented
       note: Le moteur de promotions couvre des remises en ligne ; ne prouve pas la maîtrise des politiques commerciales dans
@@ -610,17 +906,31 @@ application_catalog:
       source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/promotion-details.html
       source_refs:
       - U1044
+    - id: offer-sfcc-availability
+      component_id: sfcc-inventory-availability
+      node_id: subdomain-sales-b2c-ecommerce
+      role: contributes
+      evidence_state: documented
+      note: Présente la disponibilité à l'acheteur en ligne ; sa provenance et sa gouvernance dépendent du modèle d'intégration choisi.
+      source_url: https://developer.salesforce.com/docs/commerce/b2c-commerce/guide/b2c-inventory-for-developers.html
+      source_refs:
+      - U1051
   - id: product-cegid-y2
     name: Cegid Retail Y2
     publisher: Cegid
     kind: vendor_product
     inventory_status: partial
-    scope: Plateforme retail de vente et d’opérations en magasin, avec back-office central pour les stocks et le catalogue
-      selon l’offre retenue.
+    scope: Plateforme Retail de vente et d'opérations magasin, de gestion centrale du réseau et du stock ; module Omnicanal
+      optionnel pour les commandes web, le retrait et l'expédition depuis les boutiques.
     website_url: https://www.cegid.com/fr/produits/cegid-retail/
-    note: Cité dans le schéma Boardriders de FLOW-Program ; pays, magasins, édition et modules réellement déployés à confirmer.
+    note: Laurent déclare Y2 comme socle Retail Boardriders. La documentation Cegid confirme un module Omnicanal acquis et
+      activé séparément et des parcours de commande web incluant les stocks boutiques. Son activation et sa place exacte
+      aux côtés de SFCC et NewStore chez Boardriders restent inconnues ; aucune comparaison de maturité n'est démontrée.
     source_refs:
     - U1045
+    - U1048
+    - U1049
+    - U1050
     components:
     - id: cegid-y2-core
       name: Cegid Retail Y2
@@ -643,6 +953,31 @@ application_catalog:
       source_url: https://www.cegid.com/fr/cas-client/arena-optimise-la-gestion-de-ses-boutiques-et-lexperience-client-grace-a-cegid-retail-y2/
       source_refs:
       - U1045
+    - id: cegid-y2-omnichannel
+      parent_id: cegid-y2-core
+      name: Omnichannel
+      kind: module
+      note: Module à acquérir et activer ; paramètre par boutique le retrait, la réservation sur stock magasin et l'expédition
+        au client. Son achat et son usage Boardriders ne sont pas établis.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Fiche-Etablissement/244
+      source_refs:
+      - U1050
+    - id: cegid-y2-inventory
+      parent_id: cegid-y2-core
+      name: Store Inventory & Stocktaking
+      kind: feature
+      note: Consulte les stocks du réseau et rapproche les comptages physiques du stock théorique en magasin.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Sommaire/93
+      source_refs:
+      - U1051
+    - id: cegid-y2-replenishment
+      parent_id: cegid-y2-core
+      name: Store Allocation & Replenishment
+      kind: feature
+      note: Répartit des quantités entre établissements et calcule des propositions de réassort selon les méthodes paramétrées.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Les-methodes-d-affectation/205
+      source_refs:
+      - U1051
     offering_mappings:
     - id: offer-cegid-y2-pos
       component_id: cegid-y2-pos
@@ -662,6 +997,52 @@ application_catalog:
       source_url: https://www.cegid.com/fr/cas-client/arena-optimise-la-gestion-de-ses-boutiques-et-lexperience-client-grace-a-cegid-retail-y2/
       source_refs:
       - U1045
+    - id: offer-cegid-y2-omnichannel-digital
+      component_id: cegid-y2-omnichannel
+      node_id: subdomain-sales-b2c-ecommerce
+      role: contributes
+      evidence_state: documented
+      note: Commandes web avec retrait ou expédition depuis boutique selon paramétrage ; le site eCommerce et l'orchestration
+        de bout en bout ne sont pas déduits de ce module.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Fiche-Etablissement/244
+      source_refs:
+      - U1050
+    - id: offer-cegid-y2-omnichannel-store
+      component_id: cegid-y2-omnichannel
+      node_id: subdomain-store-backoffice-operations
+      role: contributes
+      evidence_state: documented
+      note: Traitement en boutique des commandes omnicanales et expéditions au client selon options activées.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Gestion-de-l-omnicanal-en-Back-Office/569
+      source_refs:
+      - U1050
+    - id: offer-cegid-y2-inventory-store
+      component_id: cegid-y2-inventory
+      node_id: subdomain-store-backoffice-operations
+      role: supports
+      evidence_state: documented
+      note: Suivi du stock et inventaire physique des magasins ; l'autorité des stocks Boardriders reste à vérifier.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Sommaire/93
+      source_refs:
+      - U1051
+    - id: offer-cegid-y2-replenishment-store
+      component_id: cegid-y2-replenishment
+      node_id: subdomain-store-backoffice-operations
+      role: supports
+      evidence_state: documented
+      note: Calcule la répartition et le réassort entre établissements selon les règles Y2.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Les-methodes-d-affectation/205
+      source_refs:
+      - U1051
+    - id: offer-cegid-y2-replenishment-supply
+      component_id: cegid-y2-replenishment
+      node_id: D05.e
+      role: contributes
+      evidence_state: candidate
+      note: Les propositions de réassort recoupent une partie du réapprovisionnement cible ; le partage avec la planification et FLOW reste à instruire.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Les-methodes-d-affectation/205
+      source_refs:
+      - U1051
   - id: product-centric-plm
     name: Centric PLM
     publisher: Centric Software
@@ -678,6 +1059,22 @@ application_catalog:
       kind: product
       source_refs:
       - U1045
+    - id: centric-plm-product-development
+      parent_id: centric-plm-core
+      name: Product Development
+      kind: feature
+      note: Centralise les spécifications et le suivi du développement de collections et de produits.
+      source_url: https://www.centricsoftware.com/plm-multicategory-retailers
+      source_refs:
+      - U1051
+    - id: centric-plm-supplier-collaboration
+      parent_id: centric-plm-core
+      name: Supplier Collaboration
+      kind: feature
+      note: Echange les informations produit et suit les interactions fournisseurs ; les fonctions d'appel d'offres varient selon la configuration.
+      source_url: https://www.centricsoftware.com/webinar-replays/webinar-plm4users-part-ii-vendor-management-tips-and-tricks
+      source_refs:
+      - U1051
     offering_mappings:
     - id: offer-centric-plm-development
       component_id: centric-plm-core
@@ -688,13 +1085,49 @@ application_catalog:
       source_url: https://www.centricsoftware.com/en-gb/what-is-centric-plm
       source_refs:
       - U1045
+    - id: offer-centric-plm-specification
+      component_id: centric-plm-product-development
+      node_id: subdomain-product-design-specification
+      role: supports
+      evidence_state: documented
+      note: Spécifications et développement de produits dans l'offre PLM ; couverture installée Boardriders inconnue.
+      source_url: https://www.centricsoftware.com/plm-multicategory-retailers
+      source_refs:
+      - U1051
+    - id: offer-centric-plm-supplier
+      component_id: centric-plm-supplier-collaboration
+      node_id: subdomain-strategic-sourcing
+      role: contributes
+      evidence_state: candidate
+      note: Collaboration et évaluation des fournisseurs ; la responsabilité de sourcing stratégique dépasse le suivi produit du PLM.
+      source_url: https://www.centricsoftware.com/webinar-replays/webinar-plm4users-part-ii-vendor-management-tips-and-tricks
+      source_refs:
+      - U1051
+    - id: offer-centric-plm-sourcing-event
+      component_id: centric-plm-supplier-collaboration
+      node_id: ba-sourcing-event-management
+      role: contributes
+      evidence_state: candidate
+      note: L'édition Centric 8 permet d'envoyer des briefs à plusieurs fournisseurs ; l'édition et l'usage Boardriders restent inconnus.
+      source_url: https://www.centricsoftware.com/webinar-replays/webinar-plm4users-part-ii-vendor-management-tips-and-tricks
+      source_refs:
+      - U1053
+    - id: offer-centric-plm-supplier-performance
+      component_id: centric-plm-supplier-collaboration
+      node_id: ba-supplier-performance-management
+      role: contributes
+      evidence_state: candidate
+      note: Les tableaux d'évaluation fournisseur de Centric 8 recoupent le suivi de performance ; édition et usage Boardriders inconnus.
+      source_url: https://www.centricsoftware.com/webinar-replays/webinar-plm4users-part-ii-vendor-management-tips-and-tricks
+      source_refs:
+      - U1054
   - id: product-sap-bpc
     name: SAP Business Planning and Consolidation
     publisher: SAP
     kind: vendor_product
-    inventory_status: undetermined
+    inventory_status: partial
     scope: Planification et consolidation de données de gestion selon l’édition SAP BPC.
-    website_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/48f4b4785b8e45938ac44a67be8032d9/4215dc52f2d2a91ae10000000a44538d.html
+    website_url: https://help.sap.com/docs/SAP_BUSINESS_PLANNING_AND_CONSOLIDATION%2C_VERSION_FOR_THE_MICROSOFT_PLATFORM
     note: SAP BPC cité dans la zone Planning du dossier Boardriders ; édition, usage et frontière avec le planning Supply
       non établis.
     source_refs:
@@ -705,15 +1138,49 @@ application_catalog:
       kind: product
       source_refs:
       - U1045
+    - id: sap-bpc-planning
+      parent_id: sap-bpc-core
+      name: Planning
+      kind: feature
+      note: Saisie et consolidation de plans financiers selon l'édition BPC ; ne prouve pas une planification de la demande ou du stock.
+      source_url: https://help.sap.com/docs/SAP_BUSINESS_PLANNING_AND_CONSOLIDATION%2C_VERSION_FOR_THE_MICROSOFT_PLATFORM
+      source_refs:
+      - U1051
+    - id: sap-bpc-consolidation
+      parent_id: sap-bpc-core
+      name: Financial Consolidation
+      kind: feature
+      note: Consolide les données financières et applique contrôles et écritures selon l'édition ; édition Boardriders inconnue.
+      source_url: https://help.sap.com/doc/57a6237cee974e158cb5ccb84c8b1c4e/11.0.7/en-US/2e0f2dfea5c84d3992d63fb51e47ea8e.html
+      source_refs:
+      - U1051
+    offering_mappings:
+    - id: offer-sap-bpc-budgeting
+      component_id: sap-bpc-planning
+      node_id: subdomain-budgeting-forecasting
+      role: contributes
+      evidence_state: documented
+      note: Planification budgétaire et financière dans l'offre BPC ; aucun usage Supply ni édition Boardriders ne sont déduits.
+      source_url: https://help.sap.com/docs/SAP_BUSINESS_PLANNING_AND_CONSOLIDATION%2C_VERSION_FOR_THE_MICROSOFT_PLATFORM
+      source_refs:
+      - U1051
+    - id: offer-sap-bpc-consolidation
+      component_id: sap-bpc-consolidation
+      node_id: domain-finance
+      role: contributes
+      evidence_state: candidate
+      note: La consolidation financière relève du contexte Finance ; la cartographie ne détaille pas ici ce sous-périmètre.
+      source_url: https://help.sap.com/doc/57a6237cee974e158cb5ccb84c8b1c4e/11.0.7/en-US/2e0f2dfea5c84d3992d63fb51e47ea8e.html
+      source_refs:
+      - U1051
   - id: product-winstore
     name: Winstore
     publisher: Cegid (ex-Cylande)
     kind: vendor_product
-    inventory_status: undetermined
-    scope: Progiciel retail en magasin cité par Cegid avec Storeland et United Retail chez Beaumanoir ; fonctions et éditions
-      à documenter.
-    website_url: https://www.cegid.com/fr/cas-client/le-groupe-beaumanoir-choisit-plateforme-commerce-connecte-cegid-retail-equiper-la-halle/
-    note: La source Cegid confirme le nom dans l’écosystème Beaumanoir, mais les instances et l’usage par marque restent inconnus.
+    inventory_status: partial
+    scope: Solution de caisse magasin avec terminal de gestion back-office et échanges possibles avec le système central ; éditions et interfaces à qualifier.
+    website_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Winstore/Implementation/Toutes-versions/Caisse/12
+    note: La documentation Cegid distingue la caisse et le poste de gestion magasin. L'usage exact par marque et les fonctions activées dans GBM restent inconnus.
     source_refs:
     - U1045
     components:
@@ -722,6 +1189,41 @@ application_catalog:
       kind: product
       source_refs:
       - U1045
+    - id: winstore-pos
+      parent_id: winstore-core
+      name: Store Checkout
+      kind: feature
+      note: Encaissement sur poste de caisse Winstore.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Winstore/Implementation/Toutes-versions/Caisse/12
+      source_refs:
+      - U1051
+    - id: winstore-backoffice
+      parent_id: winstore-core
+      name: Store Back Office
+      kind: feature
+      note: Poste de gestion magasin distinct de la caisse ; fonctions précises à préciser par documentation fonctionnelle.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Winstore/Implementation/Toutes-versions/Caisse/12
+      source_refs:
+      - U1051
+    offering_mappings:
+    - id: offer-winstore-pos
+      component_id: winstore-pos
+      node_id: subdomain-sales-b2c-store
+      role: contributes
+      evidence_state: documented
+      note: Caisse magasin ; la documentation technique ne décrit pas tous les parcours de vente.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Winstore/Implementation/Toutes-versions/Caisse/12
+      source_refs:
+      - U1051
+    - id: offer-winstore-backoffice
+      component_id: winstore-backoffice
+      node_id: subdomain-store-backoffice-operations
+      role: contributes
+      evidence_state: candidate
+      note: Terminal de gestion magasin identifié, sans preuve suffisante des opérations métier précises couvertes.
+      source_url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Winstore/Implementation/Toutes-versions/Caisse/12
+      source_refs:
+      - U1051
   selections:
   - id: selection-elastic-historique
     context_id: beaumanoir-historique
@@ -853,9 +1355,12 @@ application_catalog:
     product_id: product-socloz
     panorama_ref: APP-SOC
     presence: declared
-    note: Présence citée par Laurent ; version, modules et usages détaillés à qualifier.
+    note: Laurent attribue l'adoption de SoCloz aux limites de l'OMS omnicanal UR dans la configuration GBM, notamment pour
+      le ship from store et l'extension de gamme. Modules, règles de sélection du stock magasin ou entrepôt et usages par
+      marque restent à établir.
     source_refs:
     - U1042
+    - U1049
     component_states: []
     mappings: []
   - id: selection-united-retail-beaumanoir-historique
@@ -864,22 +1369,60 @@ application_catalog:
     product_id: product-united-retail
     panorama_ref: APP-UR
     presence: declared
-    note: Présence citée par Laurent ; version, modules et usages détaillés à qualifier.
+    note: Laurent décrit UR comme middleware couplé à Storeland et contributeur du backoffice magasin GBM, en plus des parcours
+      omnicanaux. Les composants précis, personnalisations et activations par marque restent à établir.
     source_refs:
     - U1042
-    component_states: []
-    mappings: []
+    - U1049
+    component_states:
+    - component_id: united-retail-core
+      acquired: unknown
+      activated: unknown
+      used: declared
+      source_refs:
+      - U1049
+    - component_id: ur-storeland-integration
+      acquired: unknown
+      activated: unknown
+      used: declared
+      source_refs:
+      - U1049
+    mappings:
+    - id: appmap-ur-gbm-store-backoffice
+      component_id: ur-storeland-integration
+      node_id: subdomain-store-backoffice-operations
+      role: contributes
+      evidence_state: declared
+      note: Contribution déclarée au backoffice magasin par couplage avec Storeland ; la tenue de chaque donnée reste à attribuer.
+      source_refs:
+      - U1049
   - id: selection-storeland-beaumanoir-historique
     context_id: beaumanoir-historique
     perspective: as_is
     product_id: product-storeland
     panorama_ref: APP-STR
     presence: declared
-    note: Présence citée par Laurent ; version, modules et usages détaillés à qualifier.
+    note: Laurent attribue à Storeland une part du stock et du backoffice magasin GBM. La version, les modules et la répartition
+      exacte avec UR et Winstore varient potentiellement par marque et restent à inventorier.
     source_refs:
     - U1042
-    component_states: []
-    mappings: []
+    - U1049
+    component_states:
+    - component_id: storeland-core
+      acquired: unknown
+      activated: unknown
+      used: declared
+      source_refs:
+      - U1049
+    mappings:
+    - id: appmap-storeland-gbm-store-backoffice
+      component_id: storeland-core
+      node_id: subdomain-store-backoffice-operations
+      role: supports
+      evidence_state: declared
+      note: Stock et backoffice magasin déclarés ; fonctions exactes et interfaces par marque à qualifier.
+      source_refs:
+      - U1049
   - id: selection-sap-ecc-boardriders
     context_id: boardriders
     perspective: as_is
@@ -967,12 +1510,35 @@ application_catalog:
     context_id: boardriders
     perspective: as_is
     product_id: product-cegid-y2
-    presence: unknown
-    note: Nom cité dans le panorama synthétique FLOW-Program ; installation, périmètre et version à corroborer.
+    presence: declared
+    note: Laurent attribue à Y2 le socle Retail magasin Boardriders. Les pays, marques, fonctions, versions et modules réellement
+      activés restent à corroborer ; le module Omnicanal n'est pas présumé utilisé aux côtés de SFCC et NewStore.
     source_refs:
     - U1045
-    component_states: []
-    mappings: []
+    - U1048
+    - U1049
+    component_states:
+    - component_id: cegid-y2-core
+      acquired: unknown
+      activated: unknown
+      used: declared
+      source_refs:
+      - U1048
+    - component_id: cegid-y2-omnichannel
+      acquired: unknown
+      activated: unknown
+      used: unknown
+      source_refs:
+      - U1050
+    mappings:
+    - id: appmap-cegid-y2-boardriders-retail
+      component_id: cegid-y2-core
+      node_id: subdomain-retail-commerce
+      role: supports
+      evidence_state: declared
+      note: Socle Retail Boardriders selon Laurent ; aucune couverture détaillée des sous-domaines ou modules n'en est déduite.
+      source_refs:
+      - U1048
   - id: selection-centric-plm-boardriders
     context_id: boardriders
     perspective: as_is
@@ -48071,6 +48637,61 @@ nodes:
     state: partial
     note: U987 valide noms, niveaux, rattachements et responsabilités discutés U982–U986. Textes détaillés, exemples et correspondances
       proposés; aucune réalisation installée ni contrat de flux adopté.
+- id: ba-retail-customer-relationship-management
+  revision: 1
+  kind: business_area
+  fields:
+    name: Retail Customer Relationship Management
+    definition: Connaître les clients particuliers et conduire leur fidélisation et les communications commerciales personnalisées entre canaux.
+    finality: Entretenir une relation suivie avec les clients particuliers au-delà de chaque vente.
+    scope: |-
+      Gérer les profils utiles à la relation commerciale, les programmes de fidélité, leurs avantages et les campagnes adressées aux clients, en magasin comme en ligne.
+
+      [Store Sales](model:subdomain-sales-b2c-store) conduit la vente et l'échange en magasin ; [Digital Commerce](model:subdomain-sales-b2c-ecommerce) conduit la vente en ligne. Cette responsabilité ne fixe ni les prix, ni les promotions, ni l'autorité du référentiel client à l'échelle de l'entreprise. Exemple : identifier un client, reconnaître son statut de fidélité et lui adresser une offre autorisée, sans décider ici du prix de la commande.
+
+      Ce périmètre de contexte s'arrête à la [Business Area](method:MOD039), sans décomposition en [capacités](method:MOD015) ou [comportements](method:MOD006).
+    reading_order: 5
+    market_comparisons:
+    - vendor: Microsoft
+      product: Dynamics 365 Commerce
+      element_name: Loyalty programs
+      element_type: Fonctions de produit documentées
+      relationship: Recouvrement partiel
+      similarities: Programme de fidélité, adhésion et avantages utilisables entre canaux.
+      differences: La documentation du produit ne définit pas seule la responsabilité métier de la relation client ni l'autorité des profils.
+      flow_position: La Business Area regroupe connaissance client, fidélité et communications personnalisées ; vente et prix restent distincts.
+      source_title: Set up customer loyalty programs
+      source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/set-up-customer-loyalty-program
+      source_version: Documentation en ligne ; édition non précisée
+      consulted_on: '2026-10-13'
+      source_locator: Loyalty programs and loyalty schemes
+      evidence_limits: Appui sur la fidélité multicanale ; ne prouve ni les campagnes complètes ni une réalisation Beaumanoir.
+      status: proposed
+      source_refs: [U1054, U1055]
+    - vendor: SAP
+      product: SAP S/4HANA for Customer Management
+      element_name: Customer management
+      element_type: Fonctions de produit documentées
+      relationship: Recouvrement partiel
+      similarities: Comptes, contacts et historique d'interactions utiles à la connaissance client.
+      differences: L'appui consulté ne démontre pas un programme de fidélité Retail ni la conduite de campagnes multicanales.
+      flow_position: La Business Area regroupe connaissance client, fidélité et communications personnalisées ; vente et prix restent distincts.
+      source_title: Getting Started Guide for SAP S/4HANA for Customer Management
+      source_url: https://help.sap.com/doc/febdbaab352f47ca86d4eaeae438c094/2.0/en-US/GettingStartedGuide_Customer_Management.pdf
+      source_version: SAP S/4HANA for Customer Management 2.0
+      consulted_on: '2026-10-13'
+      source_locator: Customer management overview
+      evidence_limits: Appui partiel sur la connaissance client ; fidélité et campagnes restent sans équivalent démontré dans cette source.
+      status: proposed
+      source_refs: [U1054, U1055]
+    market_gaps: []
+  source_refs: [U1054, U1055]
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u1055
+  review:
+    state: proposed
+    note: Responsabilité de contexte ajoutée après l'audit CRM/SRM ; usages et autorité des données clients à qualifier par SI.
 - id: subdomain-retail-network-management
   revision: 1
   kind: business_area
@@ -49540,18 +50161,16 @@ nodes:
     note: U1019 valide le nom, la responsabilité et les rattachements proposés U1018. Rédaction détaillée et correspondances
       restent qualifiées séparément ; aucune réalisation installée.
 - id: subdomain-retail-commerce
-  revision: 1
+  revision: 2
   kind: area
   fields:
     name: Retail Commerce
-    definition: Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations locales
-      nécessaires à ces parcours.
-    finality: Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations locales
-      nécessaires à ces parcours.
+    definition: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
+    finality: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
     scope: |-
-      Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
+      Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
 
-      Responsabilités distinguées : [Retail Network Management](model:subdomain-retail-network-management), [Digital Commerce](model:subdomain-sales-b2c-ecommerce), [Store Sales](model:subdomain-sales-b2c-store), [Store Operations](model:subdomain-store-backoffice-operations).
+      Responsabilités distinguées : [Retail Network Management](model:subdomain-retail-network-management), [Digital Commerce](model:subdomain-sales-b2c-ecommerce), [Store Sales](model:subdomain-sales-b2c-store), [Store Operations](model:subdomain-store-backoffice-operations), [Retail Customer Relationship Management](model:ba-retail-customer-relationship-management).
     reading_order: 1
     market_comparisons:
     - vendor: Microsoft
@@ -49569,9 +50188,9 @@ nodes:
       evidence_limits: Retail désigne ici le canal physique ; ne pas importer ce sens restreint dans le regroupement FLOW
         proposé. Appui fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
       flow_position: |-
-        Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
+        Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
 
-        Responsabilités distinguées : [Retail Network Management](model:subdomain-retail-network-management), [Digital Commerce](model:subdomain-sales-b2c-ecommerce), [Store Sales](model:subdomain-sales-b2c-store), [Store Operations](model:subdomain-store-backoffice-operations).
+        Responsabilités distinguées : [Retail Network Management](model:subdomain-retail-network-management), [Digital Commerce](model:subdomain-sales-b2c-ecommerce), [Store Sales](model:subdomain-sales-b2c-store), [Store Operations](model:subdomain-store-backoffice-operations), [Retail Customer Relationship Management](model:ba-retail-customer-relationship-management).
       status: proposed
       source_refs:
       - U1023
@@ -49583,8 +50202,7 @@ nodes:
       scope_summary: Canaux magasin, centre d’appel et en ligne ; paramètres communs d’offre, prix et organisation.
       approach_summary: Appui à la responsabilité Retail Commerce ; frontières FLOW maintenues.
       term_choice: Retail Commerce nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-      definition_choice: Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations
-        locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
+      definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
     - vendor: Microsoft
       product: Dynamics 365 Commerce
       source_title: Store Commerce app
@@ -49601,9 +50219,9 @@ nodes:
       evidence_limits: Périmètre produit plus large que le sous-domaine actuel Store Commerce ; ne prescrit pas un découpage
         de capacités. Appui fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
       flow_position: |-
-        Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
+        Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
 
-        Responsabilités distinguées : [Retail Network Management](model:subdomain-retail-network-management), [Digital Commerce](model:subdomain-sales-b2c-ecommerce), [Store Sales](model:subdomain-sales-b2c-store), [Store Operations](model:subdomain-store-backoffice-operations).
+        Responsabilités distinguées : [Retail Network Management](model:subdomain-retail-network-management), [Digital Commerce](model:subdomain-sales-b2c-ecommerce), [Store Sales](model:subdomain-sales-b2c-store), [Store Operations](model:subdomain-store-backoffice-operations), [Retail Customer Relationship Management](model:ba-retail-customer-relationship-management).
       status: proposed
       source_refs:
       - U1023
@@ -49615,8 +50233,7 @@ nodes:
       scope_summary: Vente, caisse, relation client, préparation et stock réunis dans une application magasin.
       approach_summary: Appui à la responsabilité Retail Commerce ; frontières FLOW maintenues.
       term_choice: Retail Commerce nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-      definition_choice: Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations
-        locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
+      definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
     - vendor: SAP
       product: SAP S/4HANA for fashion and vertical business
       source_title: Getting a Business Process Overview
@@ -49632,9 +50249,9 @@ nodes:
       evidence_limits: Périmètre produit incluant achats, fabrication et logistique ; plus large que Commerce FLOW. Appui
         fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
       flow_position: |-
-        Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
+        Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
 
-        Responsabilités distinguées : [Retail Network Management](model:subdomain-retail-network-management), [Digital Commerce](model:subdomain-sales-b2c-ecommerce), [Store Sales](model:subdomain-sales-b2c-store), [Store Operations](model:subdomain-store-backoffice-operations).
+        Responsabilités distinguées : [Retail Network Management](model:subdomain-retail-network-management), [Digital Commerce](model:subdomain-sales-b2c-ecommerce), [Store Sales](model:subdomain-sales-b2c-store), [Store Operations](model:subdomain-store-backoffice-operations), [Retail Customer Relationship Management](model:ba-retail-customer-relationship-management).
       status: proposed
       source_refs:
       - U1023
@@ -49646,8 +50263,7 @@ nodes:
       scope_summary: Retail, wholesale et fabrication coopèrent sur des données et flux communs.
       approach_summary: Appui à la responsabilité Retail Commerce ; frontières FLOW maintenues.
       term_choice: Retail Commerce nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-      definition_choice: Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations
-        locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
+      definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
     - vendor: SAP
       product: SAP S/4HANA Retail
       source_title: Managing Retail Store Operations
@@ -49663,9 +50279,9 @@ nodes:
       evidence_limits: Appui aux opérations locales ; ne prouve pas toute gouvernance du réseau ou tout commerce numérique.
         Appui fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
       flow_position: |-
-        Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
+        Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
 
-        Responsabilités distinguées : [Retail Network Management](model:subdomain-retail-network-management), [Digital Commerce](model:subdomain-sales-b2c-ecommerce), [Store Sales](model:subdomain-sales-b2c-store), [Store Operations](model:subdomain-store-backoffice-operations).
+        Responsabilités distinguées : [Retail Network Management](model:subdomain-retail-network-management), [Digital Commerce](model:subdomain-sales-b2c-ecommerce), [Store Sales](model:subdomain-sales-b2c-store), [Store Operations](model:subdomain-store-backoffice-operations), [Retail Customer Relationship Management](model:ba-retail-customer-relationship-management).
       status: proposed
       source_refs:
       - U1023
@@ -49677,8 +50293,7 @@ nodes:
       scope_summary: Réception, comptage, mouvements internes et préparation/remise des commandes en magasin.
       approach_summary: Appui à la responsabilité Retail Commerce ; frontières FLOW maintenues.
       term_choice: Retail Commerce nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-      definition_choice: Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations
-        locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
+      definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
     - vendor: SAP
       product: SAP S/4HANA Retail
       source_title: Selling to Customers - Sales Order
@@ -49694,9 +50309,9 @@ nodes:
       evidence_limits: Appui partiel au parcours consommateur ; ne couvre pas toute découverte de l’offre ou caisse. Appui
         fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
       flow_position: |-
-        Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
+        Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
 
-        Responsabilités distinguées : [Retail Network Management](model:subdomain-retail-network-management), [Digital Commerce](model:subdomain-sales-b2c-ecommerce), [Store Sales](model:subdomain-sales-b2c-store), [Store Operations](model:subdomain-store-backoffice-operations).
+        Responsabilités distinguées : [Retail Network Management](model:subdomain-retail-network-management), [Digital Commerce](model:subdomain-sales-b2c-ecommerce), [Store Sales](model:subdomain-sales-b2c-store), [Store Operations](model:subdomain-store-backoffice-operations), [Retail Customer Relationship Management](model:ba-retail-customer-relationship-management).
       status: proposed
       source_refs:
       - U1023
@@ -49708,8 +50323,7 @@ nodes:
       scope_summary: Prise de commande et parcours commande en ligne avec retrait en magasin.
       approach_summary: Appui à la responsabilité Retail Commerce ; frontières FLOW maintenues.
       term_choice: Retail Commerce nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-      definition_choice: Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations
-        locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
+      definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
     market_gaps: []
   source_refs:
   - U1023
@@ -49717,10 +50331,10 @@ nodes:
   - U1025
   - U1026
   - U1027
+  - U1055
   review:
     state: partial
-    note: Nom, niveau, responsabilité et parent adoptés U1027 ; compléments de rédaction proposés, comparaisons partielles
-      et lacunes explicites, aucune réalisation installée.
+    note: Nom, niveau, responsabilité et parent adoptés U1027 ; la relation client Retail est ajoutée comme responsabilité de contexte U1055. Aucune réalisation installée.
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1027
@@ -62731,6 +63345,15 @@ relations:
     state: partial
     note: U987 valide noms, niveaux, rattachements et responsabilités discutés U982–U986. Textes détaillés, exemples et correspondances
       proposés; aucune réalisation installée ni contrat de flux adopté.
+- id: REL-U1055-PARENT-ba-retail-customer-relationship-management
+  revision: 1
+  type: contains
+  source_id: subdomain-retail-commerce
+  target_id: ba-retail-customer-relationship-management
+  source_refs: [U1054, U1055]
+  review:
+    state: proposed
+    note: Rattachement de la relation client Retail au sous-domaine Commerce ; responsabilité de contexte sans capacité ajoutée.
 - id: REL-U987-subdomain-store-backoffice-operations
   revision: 2
   type: contains
@@ -71402,6 +72025,9 @@ hotspot_catalog:
   - U1031
   - U1032
   - U1035
+  - U1047
+  - U1048
+  - U1055
   hotspots:
   - id: HS-001
     title: Migration ECC MM / PP / SD chez Boardriders
@@ -71457,6 +72083,7 @@ hotspot_catalog:
     - U948
     - U950
     - U973
+    - U1047
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -71511,7 +72138,7 @@ hotspot_catalog:
       - U972
       scopes:
       - transition
-    visible: true
+    visible: false
   - id: HS-002
     title: Construction du plan de fulfilment et partage des décisions avec les logisticiens
     kind: integration
@@ -72017,6 +72644,7 @@ hotspot_catalog:
     - A76
     - U957
     - U973
+    - U1047
     origin:
       repository: FLOW-Program
       path: src/docs/as-is/hotspots/stock-temps-reel.md
@@ -72118,7 +72746,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-012
     title: Stock Hub — rapprochement des états et faits de stock
     kind: scope
@@ -72174,6 +72802,7 @@ hotspot_catalog:
     - U948
     - U950
     - U973
+    - U1047
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -72272,7 +72901,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-013
     title: Répondre au client lorsque la promesse reste incertaine
     kind: scope
@@ -72329,6 +72958,7 @@ hotspot_catalog:
     - A76
     - U957
     - U973
+    - U1047
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -72427,7 +73057,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-006
     title: Construction et disponibilité des EAN / GTIN
     kind: scope
@@ -72486,6 +73116,7 @@ hotspot_catalog:
     - A76
     - U957
     - U973
+    - U1047
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -72587,7 +73218,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-014
     title: États complets PLM et extraction des changements
     kind: integration
@@ -72644,6 +73275,7 @@ hotspot_catalog:
     - U948
     - U950
     - U973
+    - U1047
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -72699,7 +73331,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-015
     title: Maille produit nécessaire aux opérations Supply
     kind: scope
@@ -72758,6 +73390,7 @@ hotspot_catalog:
     - A76
     - U957
     - U973
+    - U1047
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -72857,7 +73490,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-007
     title: Documents des échanges entre entités juridiques
     kind: scope
@@ -72917,6 +73550,7 @@ hotspot_catalog:
     - U948
     - U950
     - U973
+    - U1047
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -72968,7 +73602,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-008
     title: 'Carnet [Wholesale](glossary:TER193) : écarts de gestion et complexité de convergence'
     kind: scope
@@ -73586,6 +74220,7 @@ hotspot_catalog:
     - U957
     - U963
     - U973
+    - U1047
     origin:
       repository: Recherche ciblée FLOW
       path: modeles/backlog/hotspot-gap-research-U955.yaml
@@ -73687,7 +74322,7 @@ hotspot_catalog:
       - U963
       scopes:
       - usage
-    visible: true
+    visible: false
   - id: HS-018
     title: Captation interactive et commandes de grands comptes chez Boardriders
     kind: scope
@@ -73736,6 +74371,7 @@ hotspot_catalog:
     - U957
     - U963
     - U973
+    - U1047
     origin:
       repository: Recherche ciblée FLOW
       path: modeles/backlog/hotspot-gap-research-U955.yaml
@@ -73838,7 +74474,7 @@ hotspot_catalog:
       - U961
       - U963
       scopes: []
-    visible: true
+    visible: false
   - id: HS-019
     title: Protection du stock par canal et transferts entre réserves
     kind: scope
@@ -73891,6 +74527,7 @@ hotspot_catalog:
     - U957
     - U967
     - U973
+    - U1047
     origin:
       repository: Recherche ciblée FLOW
       path: modeles/backlog/hotspot-gap-research-U955.yaml
@@ -73989,7 +74626,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-020
     title: Couverture et convergence des responsabilités du Négoce
     kind: scope
@@ -74299,6 +74936,7 @@ hotspot_catalog:
     - A77
     - U968
     - U973
+    - U1047
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -74359,7 +74997,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-023
     title: Provenance des décisions prises dans FLOW
     kind: scope
@@ -74412,6 +75050,7 @@ hotspot_catalog:
     - A77
     - U968
     - U973
+    - U1047
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -74482,7 +75121,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-024
     title: Continuité des dossiers CBS et de service après-vente
     kind: scope
@@ -74640,6 +75279,7 @@ hotspot_catalog:
     - U968
     - U973
     - U1009
+    - U1047
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -74693,7 +75333,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-026
     title: Versions, remise et corrections des documents opérationnels
     kind: scope
@@ -74743,6 +75383,7 @@ hotspot_catalog:
     - A77
     - U968
     - U973
+    - U1047
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -74796,7 +75437,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-027
     title: Actions du Commerce et engagements pris dans FLOW
     kind: integration
@@ -74848,6 +75489,7 @@ hotspot_catalog:
     - A77
     - U968
     - U973
+    - U1047
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -74901,7 +75543,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-028
     title: Versions et interprétation des plans amont reçus par FLOW
     kind: scope
@@ -74951,6 +75593,7 @@ hotspot_catalog:
     - A77
     - U968
     - U973
+    - U1047
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -75007,7 +75650,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-029
     title: Commande d’achat FLOW et suivi d’approvisionnement CBS
     kind: scope
@@ -75058,6 +75701,7 @@ hotspot_catalog:
     - A77
     - U968
     - U973
+    - U1047
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -75112,7 +75756,7 @@ hotspot_catalog:
       - U973
       scopes:
       - model
-    visible: true
+    visible: false
   - id: HS-030
     title: Extractions, manipulations Excel et réimports
     kind: scope
@@ -75161,6 +75805,7 @@ hotspot_catalog:
     - A77
     - U963
     - U973
+    - U1047
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -75218,7 +75863,7 @@ hotspot_catalog:
       - U963
       scopes:
       - usage
-    visible: true
+    visible: false
   - id: HS-031
     title: Prérequis de coopération ou de reprise des services existants
     kind: scope
@@ -75267,6 +75912,7 @@ hotspot_catalog:
     - A77
     - U968
     - U973
+    - U1047
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -75323,6 +75969,386 @@ hotspot_catalog:
       - U973
       scopes:
       - model
+    visible: false
+  - id: HS-032
+    title: Responsabilités Retail à couvrir après Storeland et United Retail
+    kind: scope
+    location:
+      node_ids:
+      - subdomain-retail-commerce
+    problem: >-
+      Le retrait de Storeland et United Retail chez les Marques Historiques impose d'identifier qui assurera la vente
+      et la caisse, le stock et le réassort magasin, le réseau, la relation client et la fidélité, ainsi que les parcours numériques
+      de [Retail Commerce](model:subdomain-retail-commerce). Les documentations éditeur montrent que Storeland et UR proposent
+      ces fonctions, mais ne prouvent pas leur activation ni leur partage actuel par marque. UR est aussi couplé à Storeland
+      pour le backoffice ; SoCloz complète les parcours omnicanaux GBM selon Laurent. Winstore et les autres outils conservés
+      restent à inventorier. La refonte potentielle dépasse [Supply Chain Orchestration](model:supply-chain-orchestration) :
+      FLOW peut contribuer aux décisions et aux flux Supply sans reprendre la caisse, la fidélité ni l'exploitation du magasin.
+      Laurent attribue le socle Retail Boardriders à Cegid Y2 ; ses modules et usages installés doivent être corroborés avant
+      de comparer la taille des deux refontes.
+    examples:
+    - 'Parcours à vérifier : une marque GBM reçoit des articles, tient le stock magasin, décide son réassort, reconnaît un client
+      fidèle, encaisse une vente et prépare une commande web après retrait de Storeland et UR.'
+    - Comparer le même parcours dans une marque Boardriders après confirmation du déploiement et des modules de Cegid Y2.
+    resolution_options:
+    - id: hs-032-build-retail
+      title: Développer un produit de gestion Retail
+      principle: Construire le produit nécessaire aux responsabilités Retail GBM qui ne sont pas reprises par les outils conservés
+        ni par le Core FLOW.
+      conditions:
+      - Inventorier les usages Storeland, UR, Winstore et SoCloz par marque et isoler la frontière avec FLOW.
+      - Chiffrer fonctions magasin, caisse éventuelle, réseau, relation client, stock et réassort, interfaces, migration et exploitation.
+      tradeoffs:
+      - Maîtrise du périmètre cible, mais coût et risque de construction d’un produit Retail étendu.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-032-extend-y2
+      title: Intégrer les marques GBM dans Cegid Y2
+      principle: Étendre une plateforme Cegid Y2 commune aux marques GBM pour les responsabilités Retail retenues.
+      conditions:
+      - Corroborer le déploiement déclaré de Y2 chez Boardriders, ses modules actifs et leur capacité multi-marques et multi-pays.
+      - Tester les écarts de parcours GBM, notamment fidélité, stock cible et réassort, puis les personnalisations, licences, données, interfaces et la frontière avec FLOW.
+      tradeoffs:
+      - Potentiel de mutualisation, mais adaptation, migration et dépendance à l’éditeur à mesurer.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    complexity:
+      political: unassessed
+      implementation: unassessed
+      rationale: Le périmètre fonctionnel installé et les deux scénarios de réalisation ne sont pas encore assez qualifiés pour
+        noter la complexité.
+      political_rationale: Le choix déplacerait les responsabilités entre marques, équipe Retail, éditeur et programme FLOW.
+      implementation_rationale: Les instances, personnalisations, volumes, interfaces, pays et licences ne sont pas inventoriés.
+    severity: unassessed
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Choix de périmètre et de solution entre marques et programme ; instance de décision à confirmer.
+    status: discovered
+    source_refs:
+    - U03
+    - U04
+    - U06
+    - U1043
+    - U1044
+    - U1045
+    - U1048
+    - U1049
+    - U1050
+    - U1051
+    - U1052
+    - U1053
+    - U1054
+    - U1055
+    origin:
+      repository: Urbanisation-SCM
+      path: connaissance/01-contributions-utilisateur.md
+      id: U1048
+      source_id: U1048
+      evidence_limit: Hypothèse de Laurent et précisions ultérieures ; les modules actifs, usages par marque et fonctions à reprendre
+        ne sont pas établis par le seul mapping de l'offre.
+    review:
+      state: proposed
+      note: L'écart à instruire inclut backoffice, réassort et relation client GBM. La disparition de tout Retail GBM, le détail
+        de Y2 chez Boardriders et une différence quantifiée de taille de refonte ne sont pas validés. Deux options proposées
+        par Laurent, aucune retenue.
+    gap_analysis:
+    - id: hs-032-store-sales
+      title: Vente et caisse en magasin
+      subject_node_id: subdomain-sales-b2c-store
+      natures:
+      - system_support_gap
+      - realization_difference
+      observations_by_context:
+      - context_id: beaumanoir-historique
+        business_need: Vendre, encaisser et prendre des commandes en magasin.
+        system_coverage: not_assessed
+        handling: Winstore figure avec Storeland et United Retail dans le cas client Cegid ; la répartition actuelle des caisses
+          par marque reste à vérifier.
+        business_rules: []
+        source_refs:
+        - U03
+        - U1045
+        evidence_state: documented
+        evidence_kind: source_document
+        limits: La présence d’une offre dans un cas client ne prouve ni son activation actuelle ni son périmètre par marque.
+      - context_id: boardriders
+        business_need: Vendre et encaisser dans les magasins Boardriders.
+        system_coverage: not_assessed
+        handling: Laurent attribue à Y2 le socle Retail Boardriders ; les fonctions de caisse effectivement installées restent
+          à confirmer.
+        business_rules: []
+        source_refs:
+        - U1045
+        - U1048
+        evidence_state: documented
+        evidence_kind: user_report
+        limits: Déclaration de Laurent ; pays, marques, licences, modules et usages détaillés Boardriders non corroborés.
+      comparison: Les deux SI ont un besoin de vente en magasin ; Y2 est déclaré chez Boardriders, mais la couverture installée
+        par fonction et son contraste avec GBM restent à établir.
+      convergence_question: Quel produit assurera la vente et la caisse GBM après retrait des fonctions Storeland/UR, et quels
+        outils de caisse sont conservés ?
+      business_effects:
+      - Une refonte de la caisse ne doit pas être déduite du seul retrait de Storeland et UR.
+      open_questions:
+      - Inventorier les logiciels de caisse et les parcours de vente par marque.
+      resolution_option_ids:
+      - hs-032-build-retail
+      - hs-032-extend-y2
+      source_refs:
+      - U03
+      - U06
+      - U1045
+      - U1048
+    - id: hs-032-store-operations
+      title: Backoffice et stock magasin
+      subject_node_id: subdomain-store-backoffice-operations
+      natures:
+      - system_support_gap
+      - realization_difference
+      observations_by_context:
+      - context_id: beaumanoir-historique
+        business_need: Tenir le stock magasin, recevoir, inventorier, calculer le stock cible et déclencher le réassort local.
+        system_coverage: not_assessed
+        handling: Laurent décrit Storeland comme tenant le stock magasin et contribuant au réassort ; sa documentation décrit
+          le calcul de stock optimal. UR lui est couplé et documente le réassort des magasins. Les fonctions effectivement
+          actives chez GBM restent à vérifier.
+        business_rules: []
+        source_refs:
+        - U03
+        - U06
+        - U1049
+        evidence_state: documented
+        evidence_kind: user_report
+        limits: Instances, adaptations, interfaces et partage exact avec Winstore non audités.
+      - context_id: boardriders
+        business_need: Tenir les opérations de stock et de backoffice magasin.
+        system_coverage: not_assessed
+        handling: Laurent attribue le Retail Boardriders à Y2 ; l'offre comprend un backoffice central, mais ses fonctions
+          effectivement utilisées chez Boardriders restent à inventorier.
+        business_rules: []
+        source_refs:
+        - U1045
+        - U1048
+        evidence_state: documented
+        evidence_kind: user_report
+        limits: Usage Retail déclaré par Laurent ; pays, marques, licences, modules et opérations détaillées non corroborés.
+      comparison: Le retrait conjoint de Storeland et UR laisse une responsabilité GBM déclarée à réaffecter ; Y2 est déclaré
+        chez Boardriders, sans preuve de couverture équivalente par fonction.
+      convergence_question: Qui assurera les opérations, le stock cible et le réassort magasin GBM dans la cible, et quelles décisions relèveront de FLOW ?
+      business_effects:
+      - Sans remplacement explicite, réceptions, inventaires, mouvements, calcul du stock cible et réassort magasin risquent de perdre leur support.
+      open_questions:
+      - Qualifier les gestes, données maîtresses, seuils, règles de calcul, interfaces et volumes par marque ; préciser la frontière avec Supply Policy Management et les décisions de réapprovisionnement FLOW.
+      resolution_option_ids:
+      - hs-032-build-retail
+      - hs-032-extend-y2
+      source_refs:
+      - U03
+      - U06
+      - U1045
+      - U1048
+    - id: hs-032-retail-network
+      title: Pilotage du réseau de magasins
+      subject_node_id: subdomain-retail-network-management
+      natures:
+      - system_support_gap
+      - realization_difference
+      observations_by_context:
+      - context_id: beaumanoir-historique
+        business_need: Tenir les magasins, rattachements et règles communes du réseau.
+        system_coverage: not_assessed
+        handling: L’offre Storeland documente le pilotage magasin ; les fonctions effectivement utilisées par GBM restent à
+          inventorier.
+        business_rules: []
+        source_refs:
+        - U1044
+        - U1048
+        evidence_state: hypothesis
+        evidence_kind: analysis
+        limits: Une fonction éditoriale ne démontre pas son utilisation dans les instances GBM.
+      - context_id: boardriders
+        business_need: Tenir les magasins, rattachements et règles communes du réseau.
+        system_coverage: not_assessed
+        handling: Laurent attribue le socle Retail Boardriders à Y2 ; son périmètre de pilotage du réseau n'est pas établi.
+        business_rules: []
+        source_refs:
+        - U1045
+        evidence_state: to_investigate
+        evidence_kind: analysis
+        limits: Présence déclarée par Laurent ; fonctions réseau, pays, marques, licences et modules non corroborés.
+      comparison: Le pilotage du réseau est un périmètre Commerce distinct de la caisse et du stock ; aucune équivalence installée
+        n’est établie.
+      convergence_question: Quels référentiels et règles de réseau doivent converger, et où seront-ils tenus ?
+      business_effects:
+      - Une reprise limitée aux écrans de magasin peut omettre les règles centrales du réseau.
+      open_questions:
+      - Identifier le maître des magasins et les règles communes actuelles dans chaque SI.
+      resolution_option_ids:
+      - hs-032-build-retail
+      - hs-032-extend-y2
+      source_refs:
+      - U03
+      - U06
+      - U1045
+      - U1048
+    - id: hs-032-digital-commerce
+      title: Vente en ligne et parcours omnicanaux
+      subject_node_id: subdomain-sales-b2c-ecommerce
+      natures:
+      - system_support_gap
+      - realization_difference
+      observations_by_context:
+      - context_id: beaumanoir-historique
+        business_need: Vendre en ligne et relier les commandes aux stocks magasin et entrepôt.
+        system_coverage: not_assessed
+        handling: Laurent décrit UR pour la vue de stock et la contribution eCommerce ; SoCloz a été retenu pour les parcours
+          depuis les stocks magasin ou entrepôt que la configuration UR GBM ne couvrait pas suffisamment.
+        business_rules: []
+        source_refs:
+        - U03
+        - U04
+        - U1049
+        evidence_state: documented
+        evidence_kind: user_report
+        limits: Fonctions exactes, adaptations, répartition par marque et frontière avec le site eCommerce non auditées.
+      - context_id: boardriders
+        business_need: Vendre en ligne et transmettre les commandes à la chaîne de traitement.
+        system_coverage: not_assessed
+        handling: Laurent situe SFCC en amont de NewStore pour le eCommerce ; il n’attribue pas cette fonction à Y2.
+        business_rules: []
+        source_refs:
+        - U1043
+        evidence_state: documented
+        evidence_kind: user_report
+        limits: Interfaces, licences et partage détaillé de la commande à vérifier.
+      comparison: 'UR et SoCloz se répartissent des parcours GBM ; SFCC, NewStore et Y2 se répartissent ceux de Boardriders.
+        Leurs frontières installées doivent être relevées avant tout choix de remplacement.'
+      convergence_question: Quelles fonctions omnicanales d’UR doivent rester hors du futur Core et dans quel produit ?
+      business_effects:
+      - Un produit Retail complet peut chevaucher le Core sur commandes, disponibilité et orchestration.
+      open_questions:
+      - Tracer un parcours web et un parcours magasin pour chaque marque, avec systèmes et autorités.
+      resolution_option_ids:
+      - hs-032-build-retail
+      - hs-032-extend-y2
+      source_refs:
+      - U03
+      - U06
+      - U1045
+      - U1048
+    - id: hs-032-customer-relationship
+      title: Relation client et fidélité Retail
+      subject_node_id: ba-retail-customer-relationship-management
+      natures:
+      - system_support_gap
+      - realization_difference
+      observations_by_context:
+      - context_id: beaumanoir-historique
+        business_need: Connaître les clients particuliers, reconnaître leurs avantages de fidélité et conduire les communications ciblées.
+        system_coverage: not_assessed
+        handling: Les documentations Storeland et UR décrivent profils, fidélité et actions marketing ; la répartition et les usages actuels GBM ne sont pas connus.
+        business_rules: []
+        source_refs: [U1053, U1054, U1055]
+        evidence_state: documented
+        evidence_kind: source_document
+        limits: Documentation de l'offre, sans preuve d'activation, de données clientes maîtresses ni d'usage par marque.
+      - context_id: boardriders
+        business_need: Connaître les clients particuliers, reconnaître leurs avantages de fidélité et conduire les communications ciblées.
+        system_coverage: not_assessed
+        handling: Y2 est déclaré comme socle Retail ; NewStore propose une fonction de relation client. La répartition réelle avec Y2 et SFCC n'est pas établie.
+        business_rules: []
+        source_refs: [U1043, U1045, U1053, U1055]
+        evidence_state: to_investigate
+        evidence_kind: analysis
+        limits: Aucun module ni parcours de fidélité Boardriders n'est confirmé.
+      comparison: La relation client Retail traverse magasin et web ; les offres documentées ne prouvent aucune équivalence installée entre GBM et Boardriders.
+      convergence_question: Qui portera les profils utiles à la relation commerciale, la fidélité et les campagnes GBM après le retrait de Storeland et UR ?
+      business_effects:
+      - Une solution limitée à la caisse et au stock laisserait ces fonctions sans responsable cible explicite.
+      open_questions:
+      - Inventorier programmes, règles, données clients, consentements et campagnes réellement utilisés par marque, puis leur autorité dans chaque SI.
+      resolution_option_ids:
+      - hs-032-build-retail
+      - hs-032-extend-y2
+      source_refs: [U1053, U1054, U1055]
+    market_view:
+      finding: Cegid documente Storeland, Winstore et UR chez Beaumanoir, le couplage UR–Storeland, la fidélité et les campagnes
+        Storeland/UR, le calcul du stock optimal Storeland et le réassort UR. Y2 propose des fonctions Retail et un module
+        Omnicanal acquis et activé séparément ; rien ne démontre son usage Boardriders ni son équivalence installée avec
+        SoCloz ou NewStore. Microsoft et SAP apportent des comparaisons fonctionnelles partielles, sans désigner la cible.
+      flow_assessment: Le choix de réalisation doit couvrir les cinq responsabilités de Retail Commerce sans transférer
+        implicitement à FLOW la caisse, le réseau, la relation client ou les opérations magasin. Stock cible, réassort et
+        commandes exigent une frontière explicite entre Commerce et les décisions Supply du Core.
+      limits: Sources éditeur sur les offres et un cas client Beaumanoir ; elles ne prouvent pas la configuration actuelle par
+        marque, les modules Y2 chez Boardriders, les licences, les coûts ou la faisabilité de migration. Deux autres offres
+        documentent un découpage possible, pas un consensus sur l’architecture cible.
+      sources:
+      - publisher: Cegid
+        title: Beaumanoir choisit Cegid Retail pour La Halle
+        url: https://www.cegid.com/fr/cas-client/le-groupe-beaumanoir-choisit-plateforme-commerce-connecte-cegid-retail-equiper-la-halle/
+        relevance: Cite Storeland, Winstore et United Retail dans l’écosystème Beaumanoir ; source historique, sans inventaire
+          d’usage courant par marque.
+      - publisher: Cegid
+        title: Arena optimise la gestion de ses boutiques grâce à Cegid Retail Y2
+        url: https://www.cegid.com/fr/cas-client/arena-optimise-la-gestion-de-ses-boutiques-et-lexperience-client-grace-a-cegid-retail-y2/
+        relevance: Documente front-office magasin et backoffice central dans une réalisation Y2 chez Arena ; aucun déploiement
+          Boardriders démontré.
+      - publisher: Cegid
+        title: Cegid Retail UR — paramètres généraux
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Definir-les-parametres-generaux/555
+        relevance: Documente modules UR et paramètres de couplage Storeland ; ne prouve pas les fonctions activées chez GBM.
+      - publisher: Cegid
+        title: Storeland — paramétrage du module CRM
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Parametrage-du-module-CRM/556
+        relevance: Documente fidélité, coupons et campagnes Storeland ; activation GBM non prouvée.
+      - publisher: Cegid
+        title: United Retail — créer une action marketing
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Creer-une-action-marketing/60
+        relevance: Documente la gestion d'actions marketing dans UR ; usage GBM non établi.
+      - publisher: Cegid
+        title: Storeland — calcul de stock optimal
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/Storeland/Functional_Doc/Toutes-versions/Calcul-de-stock-optimal/39
+        relevance: Documente le calcul de stock cible ; règles et activation par marque inconnues.
+      - publisher: Cegid
+        title: United Retail — réassort des magasins
+        url: https://retail-docs.cegid.cloud/r/fr-FR/UR/UR/Functional_Doc/Version-24/Reassort-et-reapprovisionnement-des-magasins-synthese/521
+        relevance: Documente le réapprovisionnement des magasins ; configuration GBM non prouvée.
+      - publisher: Cegid
+        title: Cegid Retail Y2 — fiche établissement, module Omnicanal
+        url: https://retail-docs.cegid.cloud/r/fr-FR/Y2/Core/Functional_Doc/Version-25/Fiche-Etablissement/244
+        relevance: Documente un module acquis et activé séparément, puis les options de retrait et d'expédition boutique ;
+          aucune activation Boardriders n'est établie.
+      - publisher: Microsoft Dynamics 365 Commerce
+        title: Store Commerce app capabilities
+        url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce-capabilities
+        relevance: Distingue POS, fonctions de siège, stocks et commandes ; appui de comparaison fonctionnelle, non solution
+          retenue.
+      - publisher: Microsoft Dynamics 365 Commerce
+        title: Set up customer loyalty programs
+        url: https://learn.microsoft.com/en-us/dynamics365/commerce/set-up-customer-loyalty-program
+        relevance: Documente une fidélité entre canaux ; appui au découpage de la relation client, non preuve locale.
+      - publisher: SAP S/4HANA Retail
+        title: Executing Omnichannel Order Fulfillment for Retail
+        url: https://learning.sap.com/courses/exploring-sap-s-4hana-cloud-public-edition-retail/executing-omnichannel-order-fulfillment-for-retail-5fz-_db648c00-65bf-4489-b638-23d3a38a27d7
+        relevance: Distingue vente POS, opérations magasin et traitement de commandes ; autre appui de structure, non preuve
+          locale.
+      - publisher: SAP
+        title: Getting Started Guide for SAP S/4HANA for Customer Management
+        url: https://help.sap.com/doc/febdbaab352f47ca86d4eaeae438c094/2.0/en-US/GettingStartedGuide_Customer_Management.pdf
+        relevance: Appui partiel à la connaissance client et aux interactions ; ne démontre pas fidélité ni campagnes Retail.
+    resolution:
+      stage: to_explore
+      summary: La couverture cible Retail GBM doit être établie avant d’opposer une construction spécifique à une extension
+        de Y2. Aucune option n’est qualifiée comme crédible à ce stade.
+      credible_option_ids: []
+      credibility_note: ''
+      blocked_reason: ''
+      next_step: 'Établir une matrice par marque et par Business Area : fonctions réellement utilisées, modules et adaptations,
+        profils et fidélité, stock cible et réassort, autorité des données, flux, volumes, contrats et calendrier de retrait ;
+        corroborer les fonctions actives de Y2 chez Boardriders puis comparer les deux options.'
+      assessment_source: U1048–U1055 — hypothèse et précisions utilisateur confrontées au panorama As Is, au catalogue
+        applicatif et aux documentations éditeur.
+      assessed_on: '2026-10-13'
     visible: true
   criticality_policy:
     id: matrix-v1

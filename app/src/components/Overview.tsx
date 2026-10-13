@@ -1,12 +1,12 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { type CSSProperties, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { MIN_READABLE_ZOOM, overviewLayout, prominentChildIndex } from '../adaptiveLayout';
-import { applicationMapIds, productFor, selectionMappings } from '../applicationCatalog';
+import { applicationMapIds, productFor, projectedApplicationMapIds, selectionMappings } from '../applicationCatalog';
 import { dataSharingCardInsets, dataSharingHeadroom, systemDataSharing } from '../dataSharing';
 import { filterMapHotspots, type HotspotMapFilters, hotspotRelatedElementIds } from '../hotspotMap';
 import { HOTSPOT_DIAMETERS, type HotspotPlacementGroup, layoutHotspots } from '../hotspotPlacement';
 import { operationsMapSlots, systemMapSlots } from '../mapPlacement';
-import { childrenOf, descendantsOf, lineageOf, rootsOf } from '../model';
+import { childrenOf, descendantsOf, lineageOf, rootsOf, visibleAncestorId } from '../model';
 import type { PublishedModel } from '../types';
 import { HotspotLegend, HotspotMapMarker } from './HotspotDisplay';
 import { MapApplicationPicker } from './MapApplicationPicker';
@@ -90,7 +90,6 @@ export function Overview({
     [applicationCatalog, applicationSelectionId, applicationComponentId],
   );
   const applicationIds = applicationMapIds(model, applicationMappings);
-  const applicationExactIds = new Set(applicationMappings.map((mapping) => mapping.node_id));
   const visibleHotspots = useMemo(() => filterMapHotspots(hotspots, hotspotFilters), [hotspots, hotspotFilters]);
   const rootHotspots = universe ? visibleHotspots.filter((item) => item.location.node_ids.includes(universe.id)) : [];
   const visibleIds = useMemo(
@@ -114,10 +113,11 @@ export function Overview({
       ),
     [systems, detail, model],
   );
+  const applicationExactIds = projectedApplicationMapIds(model, applicationMappings, visibleIds);
   useEffect(() => {
     if (!applicationSelectionId || !applicationMappings.length) return;
     const visibleTarget = applicationMappings
-      .map((mapping) => [...lineageOf(model, mapping.node_id)].reverse().find((node) => visibleIds.has(node.id))?.id)
+      .map((mapping) => visibleAncestorId(model, mapping.node_id, visibleIds))
       .find((id) => id);
     if (!visibleTarget) return;
     const frame = requestAnimationFrame(() => {
@@ -142,9 +142,7 @@ export function Overview({
       model,
       activeHotspots,
       activeHotspots.flatMap((hotspot) =>
-        hotspot.location.node_ids.flatMap(
-          (id) => [...lineageOf(model, id)].reverse().find((node) => visibleIds.has(node.id))?.id || [],
-        ),
+        hotspot.location.node_ids.flatMap((id) => visibleAncestorId(model, id, visibleIds) || []),
       ),
     ),
   );

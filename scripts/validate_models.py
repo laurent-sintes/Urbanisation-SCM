@@ -116,7 +116,7 @@ def validate_sources(source_document):
     return errors
 
 
-def validate_urbanism(model, sources, schema=None):
+def validate_urbanism(model, sources, schema=None, *, require_function_mapping=False):
     try:
         from .display_codes import validate_display_index
     except ImportError:
@@ -175,7 +175,7 @@ def validate_urbanism(model, sources, schema=None):
         from .application_catalog import validate_catalog as validate_applications
     except ImportError:
         from application_catalog import validate_catalog as validate_applications
-    errors.extend(validate_applications(model))
+    errors.extend(validate_applications(model, require_function_mapping=require_function_mapping))
     relations = _index(model["relations"], "relations", errors)
     try:
         from .model_index import ModelIndex
@@ -752,7 +752,7 @@ def validate_project(root=ROOT):
         glossary_path = working_path(root / "modeles/backlog", "glossary")
         if glossary_path.exists():
             backlog["glossary"] = _load(glossary_path)
-        errors.extend(f"backlog: {e}" for e in validate_urbanism(backlog, sources, urbanism_schema))
+        errors.extend(f"backlog: {e}" for e in validate_urbanism(backlog, sources, urbanism_schema, require_function_mapping=True))
         guide_path = root / 'modeles/backlog/atlas-transformation-methodology.yaml'
         if guide_path.exists() and _load(guide_path).get('model_examples'):
             try:

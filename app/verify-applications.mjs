@@ -147,7 +147,7 @@ try {
   assert.ok((await detail.getByRole('link', { name: 'Source éditeur' }).count()) > 0);
   assert.ok((await detail.locator('.application-mapping').count()) > 0);
   await detail.getByRole('button', { name: 'Voir dans la cartographie métier' }).first().click();
-  await desktop.waitForFunction(() => location.hash.includes('mapFocus=subdomain-sales-wholesale'));
+  await desktop.waitForFunction(() => location.hash.includes('mapFocus=ba-wholesale-sales'));
   assert.ok((await desktop.evaluate(() => location.hash)).includes('scope=domain-sales'));
   assert.ok(!(await desktop.evaluate(() => location.hash)).includes('app='));
   await desktop.getByRole('button', { name: 'Produits logiciels du marché' }).click();
@@ -208,6 +208,53 @@ try {
   await desktop.getByRole('button', { name: 'Applications Flow Core System' }).waitFor();
   await desktop.locator('.application-related-item').filter({ hasText: 'Supply Chain Orchestration' }).waitFor();
   assert.equal(await desktop.locator('.application-related-item').count(), 1);
+
+  await desktop.goto(
+    `${base}#/map?version=${version}&node=supply-chain-orchestration&scope=supply-chain-orchestration&mapDepth=2&app=selection-newstore-boardriders`,
+  );
+  await desktop.getByRole('button', { name: 'Applications NewStore' }).waitFor();
+  const projectedArea = desktop.locator('[data-business-area-summary="ba-order-lifecycle-management"]');
+  await projectedArea.waitFor();
+  assert.ok(await projectedArea.evaluate((element) => element.classList.contains('application-related-item')));
+  assert.equal(await desktop.locator('[data-map-item-id="D04.i"]').count(), 0);
+  assert.equal(await projectedArea.evaluate((element) => getComputedStyle(element).outlineStyle), 'solid');
+  await desktop.locator('.map-hotspot-picker .detail-trigger').click();
+  const hotspotFilters = desktop.getByRole('dialog', { name: 'Filtres des points chauds' });
+  await hotspotFilters.getByRole('checkbox', { name: 'Afficher les points chauds' }).check();
+  await hotspotFilters.getByRole('button', { name: 'Fermer les filtres' }).click();
+  const hotspotArea = desktop.locator('[data-business-area-summary="ba-service-planning"]');
+  await hotspotArea.waitFor();
+  const hotspotTitle = published.hotspot_catalog.hotspots.find((item) => item.id === 'HS-016').title;
+  await desktop.locator('.map-hotspot-picker .detail-trigger').click();
+  await hotspotFilters
+    .locator('.hotspot-picker-row')
+    .filter({ hasText: hotspotTitle })
+    .locator('button')
+    .first()
+    .click();
+  await desktop.waitForFunction(() =>
+    document
+      .querySelector('[data-business-area-summary="ba-service-planning"]')
+      ?.classList.contains('hotspot-related-item'),
+  );
+  assert.equal(await desktop.locator('[data-map-item-id="D06.e"]').count(), 0);
+  await desktop.mouse.move(0, 0);
+  assert.ok(await hotspotArea.evaluate((element) => element.classList.contains('hotspot-related-item')));
+  await desktop.locator('.map-hotspot-picker .detail-trigger').click();
+  await hotspotFilters
+    .locator('.hotspot-picker-row')
+    .filter({ hasText: hotspotTitle })
+    .locator('button')
+    .first()
+    .click();
+  await desktop.waitForFunction(
+    () =>
+      !document
+        .querySelector('[data-business-area-summary="ba-service-planning"]')
+        ?.classList.contains('hotspot-related-item'),
+  );
+  await desktop.locator('.hotspot-map-marker[data-id*="HS-016"]').first().hover();
+  assert.ok(await hotspotArea.evaluate((element) => element.classList.contains('hotspot-related-item')));
 
   const mobile = await openFixture({ width: 390, height: 844 }, true);
   await mobile.getByRole('button', { name: 'Ouvrir le panneau' }).click();

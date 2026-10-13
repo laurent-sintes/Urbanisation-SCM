@@ -1,6 +1,6 @@
-# Urbanisation 2026-10-13.9
+# Urbanisation 2026-10-13.10
 
-77 capacités. Sources : U1044, U1045, U1046.
+77 capacités. Sources : U1047, U1048, U1049, U1050, U1051, U1052, U1053, U1054, U1055.
 
 Publication et accord métier restent distincts. Comparaison détaillée disponible dans Git.
 
@@ -10,7 +10,7 @@ Publication et accord métier restent distincts. Comparaison détaillée disponi
 
 ## Points chauds
 
-27 points chauds localisés. La publication ne vaut ni arbitrage ni résolution.
+28 points chauds localisés. La publication ne vaut ni arbitrage ni résolution.
 
 ## Documents
 

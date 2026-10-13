@@ -24760,3 +24760,130 @@ Verbatim :
 > Je valide. Commit & release
 
 Portée : validation du lot présenté : enrichissement des fiches de produits de marché, correspondances documentées avec la cartographie métier, revue des écarts avec FLOW-Program et ajouts qualifiés au catalogue. Les réserves indiquées sur la présence par SI, les modules activés et les usages réellement installés sont maintenues. Autorise un commit local et une release Atlas ; aucun push demandé.
+
+## U1047
+
+Date : 2026-10-13. Source : Laurent, tri de la visibilité des hotspots.
+
+Verbatim :
+
+> Je voudrais faire le tri dans les hotspots.
+>
+> je voudrais tous les rendre invisibles sauf :
+>
+> - Le hotspot qui décrit le pb d'intégration des faits de gestion avec la finance et la présence de SAP SD
+> - Le hotspot qui décrit la complexité et le gap analysis sur Allocation Run
+> - Les hotspots qui décrivent la complexité d'interaction entre FLOw et la logistique
+> - **"Continuité des dossiers CBS et de service après-vente**  "
+> - "Couverture et convergence des responsabilités du Négoce"
+
+Portée : seuls HS-021 (FLOW, SAP SD et Finance), HS-008 (carnet Wholesale et AllocationRun), HS-002 (plan de fulfilment et responsabilités des logisticiens), HS-016 (choix des moyens de livraison), HS-024 (CBS et service après-vente) et HS-020 (Négoce) restent visibles. Les autres hotspots restent conservés et consultables en fin de liste, mais n'apparaissent plus sur la carte ni dans les filtres. HS-011 était déjà masqué et consolidé dans HS-002. La visibilité ne change ni le fond des fiches, ni leur statut, ni leur résolution.
+
+## U1048
+
+Date : 2026-10-13. Source : Laurent, hypothèse de périmètre Retail liée au remplacement de Storeland et United Retail.
+
+Verbatim :
+
+> Je pense qu'il y a un autre Hotspot orienté "périmètre" à créer.
+>
+> Je m'explique : le remplacement de Storeland et UR (GBM) implique un périmètre de refonte sur le domaine Commerce beaucoup plus important que dans le cas de BRD. En effet, le retail est assuré par Cegid Y2 pour BRD. Pour GBM, la partie retail n'existera plus.
+>
+> 2 options :
+>
+> - Développer un produit de gestion Retail.
+> - Intégrer les marques GBM dans Cegid Y2
+>
+> Je voudrais, maintenant que le mapping des fonctionnalités/capacité est faite, que tu vérifie si cette assertion est juste et si un HotSpot mérite d'être posé.
+
+Portée : hypothèse à vérifier sur les responsabilités Commerce et leur réalisation par SI. Les deux voies proposées sont à comparer, sans solution retenue. Le déploiement et les modules de Cegid Y2 chez Boardriders, les fonctions Storeland et UR réellement remplacées, ainsi que les autres outils Retail GBM doivent être qualifiés avant de conclure à une disparition du Retail dans le SI historique ou à une différence chiffrée de périmètre de refonte.
+
+## U1049
+
+Date : 2026-10-13. Source : Laurent, correction sur United Retail, Storeland, Cegid Y2 et SoCloz.
+
+Verbatim :
+
+> UR ne gère pas que l'omnicanalité. Il est aussi un middleware connecté à Storeland ce qui fait qu'il fait aussi backoffice magasin.
+>
+> L'histoire d'UR chez Cylande semble claire :
+>
+> - Storeland est client serveur / Oracle
+> - Ils développent UR pour créer un middleware logiciel et préparer la migration de storeland vers le web et l'omnicanalité.
+> - Ils s'arrêtent au milieu faute de temps / budget
+> - Rachat par Cegid qui a dans les carton Y2
+> - Ils récupèrent le portefeuille client de Cylande et arrêtent le dev UR au milieu du guet.
+> - UR devait devenir une sorte de Y2 mais n'est pas complet.
+>
+> Cegid Y2 est d'abord un produit Retail / Magasin avec des fonctions Web / Omnicanal pas très avancées, ce qui explique NewStore dans l'écosystème BRD.
+>
+> Pourquoi SoCloz ? Parce que UR n'est pas très paramétrable en termes d'OMS omnicanal. Pour le ship from store ou l'extension de gamme, c'est impossible. Donc achat de Socloz pour avoir une offre web simple enrichie omnicanal (stock magasin / entrepot).
+
+Portée : déclaration de Laurent sur l'architecture et les usages GBM ainsi que son interprétation historique des produits Cylande/Cegid. Les documents éditeur confirment le couplage UR–Storeland, des fonctions de backoffice dans l'offre UR et le socle Oracle de Storeland. Ils ne prouvent ni l'arrêt général du développement UR ni l'impossibilité générale du ship from store dans l'offre : ces points sont à distinguer des limites vécues dans la configuration GBM.
+
+## U1050
+
+Date : 2026-10-13. Source : Laurent, demande de vérification documentaire et d'enrichissement des fiches.
+
+Verbatim :
+
+> Regarde si tu trouves une fiche technique de UR pour valider et compléter mes dires.
+>
+> Vérifie Cegid Y2 également
+>
+> Et complete les fiches
+
+Portée : confronter UR et Y2 aux fiches techniques et fonctionnelles Cegid, puis compléter les fiches produits et leurs sélections par SI. Une fonction de l'offre ne prouve ni son achat ni son activation chez Beaumanoir ou Boardriders.
+
+## U1051
+
+Date : 2026-10-13. Source : Laurent, demande de réexamen approfondi du référentiel des produits du marché.
+
+Verbatim :
+
+> Je pense que tu n'as pas assez cherché dans les fiches techniques et fonctionnelles des éditeurs.
+>
+> Je veux que tu reprennes tous les produits du marché et que tu refasses une recherche profonde pour bien enrichir le modèle produit et surtout bien revoir la couverture en termes de capacité métier.
+
+Portée : réexaminer l'ensemble des produits éditeurs du catalogue applicatif, rechercher des preuves fonctionnelles et techniques précises, enrichir les composants pertinents et réviser leurs correspondances avec la cartographie métier à la maille justifiée. Distinguer l'offre documentée des modules acquis, activés et utilisés dans chaque SI ; aucune extension automatique des accords métier ni de preuve de déploiement.
+
+## U1052
+
+Date : 2026-10-13. Source : Laurent, précision sur l'intention produit de Cylande/Cegid.
+
+Verbatim :
+
+> Oui, Cegid et Storeland/UR avaient vocation à être des ERP Retail complet avec qq fonction B2B pas très avancées.
+
+Portée : témoignage sur l'ambition de couverture Retail de Storeland et UR et sur des fonctions B2B jugées limitées. L'expression « Cegid » reste à préciser quant au produit visé. Cette intention historique ne démontre ni la complétude d'une version livrée, ni l'activation de toutes ses fonctions dans GBM.
+
+## U1053
+
+Date : 2026-10-13. Source : Laurent, critère de complétude du rapprochement applicatif.
+
+Verbatim :
+
+> Il faudrait pour chaque fonction, au moins un élément cible du modèle métier
+
+Portée : chaque fonction ou module du référentiel éditeur doit avoir au moins une correspondance explicite avec un élément du modèle métier cible, au niveau justifié par la documentation. Les racines produit sont des regroupements et ne représentent pas une fonction. Un lien candidat signale une correspondance à vérifier ; il ne démontre ni une fonction installée, ni une nouvelle capacité métier à créer.
+
+## U1054
+
+Date : 2026-10-13. Source : Laurent, distinction entre catégories de produits et responsabilités métier.
+
+Verbatim :
+
+> CRM et SRM : ce sont des types de produit du marché. Néanmoins, des capacités métier se cachent derrière ça. On ne les as pas oubliées ?
+
+Portée : vérifier que la cartographie représente les responsabilités de relation client et de relation fournisseur indépendamment des catégories de logiciels CRM et SRM ; distinguer ce qui est déjà couvert, les liens applicatifs insuffisamment précis et les éventuelles lacunes du modèle métier. Ne pas créer automatiquement une capacité simplement parce qu'un module éditeur porte ce nom.
+
+## U1055
+
+Date : 2026-10-13. Source : Laurent, demande d'alignement du modèle métier et de rédaction du point chaud Retail.
+
+Verbatim :
+
+> Mets à jour le modèle métier aligné avec les fonctionnalités que tu as trouvées.
+> Rédige le hotspot
+
+Portée : compléter les responsabilités métier manquantes révélées par l'analyse des fonctions éditeur et réviser HS-032. Les ajouts restent au niveau de contexte autorisé pour Commerce ; les fonctions de produit ne deviennent pas automatiquement des capacités. Garder distincts offre, usage installé, cible et option de réalisation.

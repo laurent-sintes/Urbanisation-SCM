@@ -1,4 +1,4 @@
-import { lineageOf } from './model';
+import { lineageOf, visibleAncestorId } from './model.ts';
 import type {
   ApplicationCatalog,
   ApplicationComponent,
@@ -57,5 +57,20 @@ export function applicationMapIds(model: PublishedModel, mappings: ApplicationMa
     mappings.flatMap((mapping) =>
       model.nodeById.has(mapping.node_id) ? lineageOf(model, mapping.node_id).map((node) => node.id) : [],
     ),
+  );
+}
+
+/** Highlight the nearest displayed ancestor of each mapping, including a BA when its capability is hidden. */
+export function projectedApplicationMapIds(
+  model: PublishedModel,
+  mappings: ApplicationMapping[],
+  visibleIds: ReadonlySet<string>,
+): Set<string> {
+  return new Set(
+    mappings.flatMap((mapping) => {
+      if (!model.nodeById.has(mapping.node_id)) return [];
+      const visible = visibleAncestorId(model, mapping.node_id, visibleIds);
+      return visible ? [visible] : [];
+    }),
   );
 }

@@ -421,6 +421,15 @@ export function lineageOf(model: PublishedModel, id: string): AtlasNode[] {
   return result;
 }
 
+/** The closest ancestor that is actually drawn at the current map detail. */
+export function visibleAncestorId(
+  model: PublishedModel,
+  id: string,
+  visibleIds: ReadonlySet<string>,
+): string | undefined {
+  return [...lineageOf(model, id)].reverse().find((node) => visibleIds.has(node.id))?.id;
+}
+
 export function descendantsOf(model: PublishedModel, id: string): AtlasNode[] {
   const result: AtlasNode[] = [];
   const queue = childrenOf(model, id);

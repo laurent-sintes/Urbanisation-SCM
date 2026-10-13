@@ -21,7 +21,7 @@ def _date_errors(value, label):
     return []
 
 
-def validate_catalog(model):
+def validate_catalog(model, *, require_function_mapping=False):
     catalog = model.get('application_catalog')
     if catalog is None:
         return []  # Historical releases predate this optional catalogue.
@@ -79,6 +79,11 @@ def validate_catalog(model):
     for product in catalog['products']:
         if product['kind'] == 'internal_product' and product.get('offering_mappings'):
             errors.append(f'application_catalog/{product["id"]}: internal product cannot claim a vendor offering')
+        if require_function_mapping and product['kind'] == 'vendor_product':
+            mapped_components = {item['component_id'] for item in product.get('offering_mappings', [])}
+            for component in product['components']:
+                if component['kind'] != 'product' and component['id'] not in mapped_components:
+                    errors.append(f'application_catalog/{component["id"]}: vendor component needs a business mapping')
         for mapping in product.get('offering_mappings', []):
             mapping_id = mapping['id']
             if mapping_id in mappings:
@@ -89,8 +94,8 @@ def validate_catalog(model):
             node = nodes.get(mapping['node_id'])
             if not node or node.get('kind') not in BUSINESS_KINDS:
                 errors.append(f'application_catalog/{mapping_id}: unknown business node {mapping["node_id"]}')
-            if mapping['evidence_state'] != 'documented' or not mapping.get('source_url'):
-                errors.append(f'application_catalog/{mapping_id}: vendor offering needs documented source')
+            if mapping['evidence_state'] not in {'documented', 'candidate'} or not mapping.get('source_url'):
+                errors.append(f'application_catalog/{mapping_id}: vendor offering needs a primary source and a documented or candidate state')
             if mapping['role'] == 'planned_support':
                 errors.append(f'application_catalog/{mapping_id}: vendor offering cannot be planned support')
     for selection in catalog['selections']:

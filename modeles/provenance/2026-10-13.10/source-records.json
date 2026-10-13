@@ -20297,6 +20297,78 @@
       "line": 24754,
       "content_sha256": "64b59dd1c6184c1b8e2ab73b6188411da95da057dbab17e4b60c65ff830bee21",
       "captured_text": "## U1046\n\nDate : 2026-10-13. Source : Laurent, validation du lot applicatif U1044–U1045 et demande de publication.\n\nVerbatim :\n\n> Je valide. Commit & release\n\nPortée : validation du lot présenté : enrichissement des fiches de produits de marché, correspondances documentées avec la cartographie métier, revue des écarts avec FLOW-Program et ajouts qualifiés au catalogue. Les réserves indiquées sur la présence par SI, les modules activés et les usages réellement installés sont maintenues. Autorise un commit local et une release Atlas ; aucun push demandé."
+    },
+    {
+      "id": "U1047",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1047",
+      "line": 24764,
+      "content_sha256": "ec3c39f5477a916f4a75d5a072caebcfa37e2e905fa1abfca156f61aa3451752",
+      "captured_text": "## U1047\n\nDate : 2026-10-13. Source : Laurent, tri de la visibilité des hotspots.\n\nVerbatim :\n\n> Je voudrais faire le tri dans les hotspots.\n>\n> je voudrais tous les rendre invisibles sauf :\n>\n> - Le hotspot qui décrit le pb d'intégration des faits de gestion avec la finance et la présence de SAP SD\n> - Le hotspot qui décrit la complexité et le gap analysis sur Allocation Run\n> - Les hotspots qui décrivent la complexité d'interaction entre FLOw et la logistique\n> - **\"Continuité des dossiers CBS et de service après-vente**  \"\n> - \"Couverture et convergence des responsabilités du Négoce\"\n\nPortée : seuls HS-021 (FLOW, SAP SD et Finance), HS-008 (carnet Wholesale et AllocationRun), HS-002 (plan de fulfilment et responsabilités des logisticiens), HS-016 (choix des moyens de livraison), HS-024 (CBS et service après-vente) et HS-020 (Négoce) restent visibles. Les autres hotspots restent conservés et consultables en fin de liste, mais n'apparaissent plus sur la carte ni dans les filtres. HS-011 était déjà masqué et consolidé dans HS-002. La visibilité ne change ni le fond des fiches, ni leur statut, ni leur résolution."
+    },
+    {
+      "id": "U1048",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1048",
+      "line": 24782,
+      "content_sha256": "fd50907a4941ba8232b2924438c759edc49b87892c0420140b81bf26f022b8ee",
+      "captured_text": "## U1048\n\nDate : 2026-10-13. Source : Laurent, hypothèse de périmètre Retail liée au remplacement de Storeland et United Retail.\n\nVerbatim :\n\n> Je pense qu'il y a un autre Hotspot orienté \"périmètre\" à créer.\n>\n> Je m'explique : le remplacement de Storeland et UR (GBM) implique un périmètre de refonte sur le domaine Commerce beaucoup plus important que dans le cas de BRD. En effet, le retail est assuré par Cegid Y2 pour BRD. Pour GBM, la partie retail n'existera plus.\n>\n> 2 options :\n>\n> - Développer un produit de gestion Retail.\n> - Intégrer les marques GBM dans Cegid Y2\n>\n> Je voudrais, maintenant que le mapping des fonctionnalités/capacité est faite, que tu vérifie si cette assertion est juste et si un HotSpot mérite d'être posé.\n\nPortée : hypothèse à vérifier sur les responsabilités Commerce et leur réalisation par SI. Les deux voies proposées sont à comparer, sans solution retenue. Le déploiement et les modules de Cegid Y2 chez Boardriders, les fonctions Storeland et UR réellement remplacées, ainsi que les autres outils Retail GBM doivent être qualifiés avant de conclure à une disparition du Retail dans le SI historique ou à une différence chiffrée de périmètre de refonte."
+    },
+    {
+      "id": "U1049",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1049",
+      "line": 24801,
+      "content_sha256": "1fbd761e9a6341b7e0c62a9062cd319fc2c3a5e820a5363e135876a3df6d5d7c",
+      "captured_text": "## U1049\n\nDate : 2026-10-13. Source : Laurent, correction sur United Retail, Storeland, Cegid Y2 et SoCloz.\n\nVerbatim :\n\n> UR ne gère pas que l'omnicanalité. Il est aussi un middleware connecté à Storeland ce qui fait qu'il fait aussi backoffice magasin.\n>\n> L'histoire d'UR chez Cylande semble claire :\n>\n> - Storeland est client serveur / Oracle\n> - Ils développent UR pour créer un middleware logiciel et préparer la migration de storeland vers le web et l'omnicanalité.\n> - Ils s'arrêtent au milieu faute de temps / budget\n> - Rachat par Cegid qui a dans les carton Y2\n> - Ils récupèrent le portefeuille client de Cylande et arrêtent le dev UR au milieu du guet.\n> - UR devait devenir une sorte de Y2 mais n'est pas complet.\n>\n> Cegid Y2 est d'abord un produit Retail / Magasin avec des fonctions Web / Omnicanal pas très avancées, ce qui explique NewStore dans l'écosystème BRD.\n>\n> Pourquoi SoCloz ? Parce que UR n'est pas très paramétrable en termes d'OMS omnicanal. Pour le ship from store ou l'extension de gamme, c'est impossible. Donc achat de Socloz pour avoir une offre web simple enrichie omnicanal (stock magasin / entrepot).\n\nPortée : déclaration de Laurent sur l'architecture et les usages GBM ainsi que son interprétation historique des produits Cylande/Cegid. Les documents éditeur confirment le couplage UR–Storeland, des fonctions de backoffice dans l'offre UR et le socle Oracle de Storeland. Ils ne prouvent ni l'arrêt général du développement UR ni l'impossibilité générale du ship from store dans l'offre : ces points sont à distinguer des limites vécues dans la configuration GBM."
+    },
+    {
+      "id": "U1050",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1050",
+      "line": 24824,
+      "content_sha256": "0ae4abdc2a79775810b85291ed486ce03f50e8bd21fa4acc74411aa6fab9f6a7",
+      "captured_text": "## U1050\n\nDate : 2026-10-13. Source : Laurent, demande de vérification documentaire et d'enrichissement des fiches.\n\nVerbatim :\n\n> Regarde si tu trouves une fiche technique de UR pour valider et compléter mes dires.\n>\n> Vérifie Cegid Y2 également\n>\n> Et complete les fiches\n\nPortée : confronter UR et Y2 aux fiches techniques et fonctionnelles Cegid, puis compléter les fiches produits et leurs sélections par SI. Une fonction de l'offre ne prouve ni son achat ni son activation chez Beaumanoir ou Boardriders."
+    },
+    {
+      "id": "U1051",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1051",
+      "line": 24838,
+      "content_sha256": "1e72d9ad8a92ce6d4224c829c53ef5f432bdc5958b7f4e51dddd78c2a18d840d",
+      "captured_text": "## U1051\n\nDate : 2026-10-13. Source : Laurent, demande de réexamen approfondi du référentiel des produits du marché.\n\nVerbatim :\n\n> Je pense que tu n'as pas assez cherché dans les fiches techniques et fonctionnelles des éditeurs.\n>\n> Je veux que tu reprennes tous les produits du marché et que tu refasses une recherche profonde pour bien enrichir le modèle produit et surtout bien revoir la couverture en termes de capacité métier.\n\nPortée : réexaminer l'ensemble des produits éditeurs du catalogue applicatif, rechercher des preuves fonctionnelles et techniques précises, enrichir les composants pertinents et réviser leurs correspondances avec la cartographie métier à la maille justifiée. Distinguer l'offre documentée des modules acquis, activés et utilisés dans chaque SI ; aucune extension automatique des accords métier ni de preuve de déploiement."
+    },
+    {
+      "id": "U1052",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1052",
+      "line": 24850,
+      "content_sha256": "31f181de624e5000603e7ce49ca2f4b1c6be4a3cd2887ed412faa6dfafa4a9aa",
+      "captured_text": "## U1052\n\nDate : 2026-10-13. Source : Laurent, précision sur l'intention produit de Cylande/Cegid.\n\nVerbatim :\n\n> Oui, Cegid et Storeland/UR avaient vocation à être des ERP Retail complet avec qq fonction B2B pas très avancées.\n\nPortée : témoignage sur l'ambition de couverture Retail de Storeland et UR et sur des fonctions B2B jugées limitées. L'expression « Cegid » reste à préciser quant au produit visé. Cette intention historique ne démontre ni la complétude d'une version livrée, ni l'activation de toutes ses fonctions dans GBM."
+    },
+    {
+      "id": "U1053",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1053",
+      "line": 24860,
+      "content_sha256": "51ba243c7c245583e12f4334188432517ef4a74f2e51c867a0e02cb0ea1654cb",
+      "captured_text": "## U1053\n\nDate : 2026-10-13. Source : Laurent, critère de complétude du rapprochement applicatif.\n\nVerbatim :\n\n> Il faudrait pour chaque fonction, au moins un élément cible du modèle métier\n\nPortée : chaque fonction ou module du référentiel éditeur doit avoir au moins une correspondance explicite avec un élément du modèle métier cible, au niveau justifié par la documentation. Les racines produit sont des regroupements et ne représentent pas une fonction. Un lien candidat signale une correspondance à vérifier ; il ne démontre ni une fonction installée, ni une nouvelle capacité métier à créer."
+    },
+    {
+      "id": "U1054",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1054",
+      "line": 24870,
+      "content_sha256": "0a56a267147fbc908401dc28339301c12cd1d3e76cec9570e954595100389873",
+      "captured_text": "## U1054\n\nDate : 2026-10-13. Source : Laurent, distinction entre catégories de produits et responsabilités métier.\n\nVerbatim :\n\n> CRM et SRM : ce sont des types de produit du marché. Néanmoins, des capacités métier se cachent derrière ça. On ne les as pas oubliées ?\n\nPortée : vérifier que la cartographie représente les responsabilités de relation client et de relation fournisseur indépendamment des catégories de logiciels CRM et SRM ; distinguer ce qui est déjà couvert, les liens applicatifs insuffisamment précis et les éventuelles lacunes du modèle métier. Ne pas créer automatiquement une capacité simplement parce qu'un module éditeur porte ce nom."
+    },
+    {
+      "id": "U1055",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1055",
+      "line": 24880,
+      "content_sha256": "e66832577fb586a710647f12dc6fb6c8bf508948ebd3534005a394aa0fbd2bbb",
+      "captured_text": "## U1055\n\nDate : 2026-10-13. Source : Laurent, demande d'alignement du modèle métier et de rédaction du point chaud Retail.\n\nVerbatim :\n\n> Mets à jour le modèle métier aligné avec les fonctionnalités que tu as trouvées.\n> Rédige le hotspot\n\nPortée : compléter les responsabilités métier manquantes révélées par l'analyse des fonctions éditeur et réviser HS-032. Les ajouts restent au niveau de contexte autorisé pour Commerce ; les fonctions de produit ne deviennent pas automatiquement des capacités. Garder distincts offre, usage installé, cible et option de réalisation."
     }
   ]
 }

@@ -1,0 +1,86 @@
+id: retail-customer-relationship-U1055
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1054
+- U1055
+assessment:
+  finding: La relation client Retail centrale manquait dans la cartographie ; la relation fournisseur était déjà représentée.
+  scope: Ajout d'une Business Area de contexte sous Retail Commerce et alignement du glossaire. Aucune capacité ni réalisation
+    installée n'est créée.
+  market_limit: Microsoft documente la fidélité entre canaux ; SAP S/4HANA for Customer Management documente la connaissance
+    client, sans établir la fidélité Retail ni les campagnes.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1054
+  - U1055
+  summary: Relation client Retail ajoutée au modèle et au glossaire ; les exigences historiques sur les champs révisés sont
+    remplacées explicitement.
+  required_nodes:
+  - id: subdomain-retail-commerce
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+    field_sha256:
+      definition: 86cf2d7b3a0eee081f1f1136db73f94a676cec6c7c5842aa74d957f735443e24
+      finality: 86cf2d7b3a0eee081f1f1136db73f94a676cec6c7c5842aa74d957f735443e24
+      scope: eb93db7009c51b7c929ac28567887394485b0cd16eefb58465a044a30ee906a0
+      market_comparisons: 9f519914cbd2dd711a045290b07fff91c7d14a5f19a9455bf1c329623aa3fb28
+  - id: ba-retail-customer-relationship-management
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+    field_sha256:
+      name: b8e4e7e716fd40f8adc2ba4ef35675bf5c1922b3477803050571d002510afab6
+      definition: db3fb5a4885758e1fe2754f9d404f544ddf579a1a43cb9774432ac8547e180d2
+      finality: b05b7dd0e7cab33710d61e8bc09a53b3244ed4b2d1eca20c30a58ea05b155dda
+      scope: a1af17b60f8909079367d9527a542a7463a66b11dbc9dbe26f160259357895cb
+      reading_order: ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d
+      market_comparisons: 980d08dcb85bbbe7bd158ad28670e41c06b0e414a8c83a55459e38b2dfad1dab
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  required_glossary:
+  - id: TER270
+    field_sha256:
+      definition: 86cf2d7b3a0eee081f1f1136db73f94a676cec6c7c5842aa74d957f735443e24
+      short_description: 86cf2d7b3a0eee081f1f1136db73f94a676cec6c7c5842aa74d957f735443e24
+      context: eb93db7009c51b7c929ac28567887394485b0cd16eefb58465a044a30ee906a0
+      market_comparisons: 9f519914cbd2dd711a045290b07fff91c7d14a5f19a9455bf1c329623aa3fb28
+  - id: TER315
+    field_sha256:
+      name: b8e4e7e716fd40f8adc2ba4ef35675bf5c1922b3477803050571d002510afab6
+      definition: db3fb5a4885758e1fe2754f9d404f544ddf579a1a43cb9774432ac8547e180d2
+      short_description: 629ebfac910470ec24eee948fc935f5b1fd2d033dc27311150aa923de5278d44
+      context: 0d020375433da24262f1e4b40cbd1ef7ef964a112d22048b79e27542fc34849c
+      market_comparisons: 980d08dcb85bbbe7bd158ad28670e41c06b0e414a8c83a55459e38b2dfad1dab
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  required_relations:
+  - id: REL-U1055-PARENT-ba-retail-customer-relationship-management
+    type: contains
+    source_id: subdomain-retail-commerce
+    target_id: ba-retail-customer-relationship-management
+  supersedes_requirements:
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: subdomain-retail-commerce
+    fields:
+    - definition
+    - finality
+    - scope
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-retail-commerce
+    fields:
+    - definition
+    - finality
+    - scope
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER270
+    fields:
+    - definition
+    - short_description
+    - context
+    - market_comparisons

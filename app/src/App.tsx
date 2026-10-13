@@ -1182,6 +1182,11 @@ export function App() {
                           scope: '',
                         })
                       }
+                      applicationSelectionId={route.appSelection}
+                      applicationComponentId={route.appComponent}
+                      onApplicationChange={(appSelection, appComponent) =>
+                        changeRoute({ appSelection, appComponent }, true)
+                      }
                     />
                   )}
                 </div>

@@ -1,11 +1,14 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { type CSSProperties, lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { productFor, selectionMappings } from '../applicationCatalog';
 import { filterMapHotspots, type HotspotMapFilters, hotspotsInScope } from '../hotspotMap';
 import type { AtlasNode, PublishedModel } from '../types';
 import { HotspotLegend } from './HotspotDisplay';
+import { MapApplicationPicker } from './MapApplicationPicker';
 import { MapDetailPicker } from './MapDetailPicker';
 import { MapHotspotPicker } from './MapHotspotPicker';
 import { MapZoomPicker, useMapZoomChoice } from './MapZoomPicker';
+import './applications.css';
 
 const ReactFlowPane = lazy(() => import('../ReactFlowPane').then((module) => ({ default: module.ReactFlowPane })));
 
@@ -25,6 +28,9 @@ export interface MapPanelProps {
   onSelect: (id: string) => void;
   onAnnouncement: (message: string) => void;
   onOpenHotspot: (id: string, groupIds?: string[]) => void;
+  applicationSelectionId?: string;
+  applicationComponentId?: string;
+  onApplicationChange: (selectionId: string, componentId: string) => void;
 }
 
 export function MapPanel({
@@ -43,12 +49,20 @@ export function MapPanel({
   onSelect,
   onAnnouncement,
   onOpenHotspot,
+  applicationSelectionId,
+  applicationComponentId,
+  onApplicationChange,
 }: MapPanelProps) {
   const panel = useRef<HTMLElement>(null);
   const [expanded, setExpanded] = useState(false);
   const [pageFallback, setPageFallback] = useState(false);
+  const [selectedHotspotId, setSelectedHotspotId] = useState('');
   const scopedHotspots = hotspotsInScope(model, scopeId);
   const visibleHotspots = filterMapHotspots(scopedHotspots, hotspotFilters);
+  const catalog = model.raw.application_catalog;
+  const applicationMappings = selectionMappings(catalog, applicationSelectionId, applicationComponentId);
+  const applicationSelection = catalog?.selections.find((item) => item.id === applicationSelectionId);
+  const applicationProduct = applicationSelection && catalog ? productFor(catalog, applicationSelection) : undefined;
   const [zoomChoice, setZoomChoice] = useMapZoomChoice();
   useEffect(() => {
     const update = () => setExpanded(document.fullscreenElement === panel.current);
@@ -67,7 +81,12 @@ export function MapPanel({
   };
 
   return (
-    <section className="map-panel" ref={panel} aria-label="Carte du modèle">
+    <section
+      className="map-panel"
+      ref={panel}
+      aria-label="Carte du modèle"
+      style={{ '--application-accent': applicationProduct?.branding?.accent_color || '#54a872' } as CSSProperties}
+    >
       <div className="map-toolbar">
         <div>
           <strong>{scope?.name || rootName}</strong>
@@ -88,6 +107,19 @@ export function MapPanel({
               scopedHotspots={scopedHotspots}
               visibleHotspots={visibleHotspots}
               onOpenHotspot={onOpenHotspot}
+              selectedHotspotId={selectedHotspotId}
+              onSelectHotspot={(id) => {
+                onHotspotFiltersChange({ enabled: true });
+                setSelectedHotspotId((current) => (current === id ? '' : id));
+              }}
+            />
+          )}
+          {!!catalog?.selections.length && (
+            <MapApplicationPicker
+              catalog={catalog}
+              selectionId={applicationSelectionId}
+              componentId={applicationComponentId}
+              onChange={onApplicationChange}
             />
           )}
           <MapZoomPicker choice={zoomChoice} onChange={setZoomChoice} pageFallback={pageFallback} />
@@ -117,6 +149,8 @@ export function MapPanel({
             onPageFallbackChange={setPageFallback}
             perspective=""
             hotspots={visibleHotspots}
+            selectedHotspotId={selectedHotspotId}
+            applicationMappings={applicationMappings}
             onOpenHotspot={onOpenHotspot}
           />
         </Suspense>
