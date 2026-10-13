@@ -99,7 +99,7 @@ def fingerprint(root, *, include_generated=True, generated_folders=None):
 
 def commands(checks, root):
     pnpm = shutil.which('pnpm')
-    if checks['frontend'] and not pnpm:
+    if (checks['frontend'] or checks.get('frontend_tests')) and not pnpm:
         raise ValueError('pnpm unavailable')
     rows = []
     if checks['frontend']:
@@ -111,6 +111,8 @@ def commands(checks, root):
         rows.append(('launcher', [sys.executable, '-m', 'unittest', 'discover', '-s', 'app', '-p', 'test_launcher.py']))
     if checks['frontend']:
         rows += [('frontend', [pnpm, '--dir', 'app', 'test']), ('build', [pnpm, '--dir', 'app', 'build'])]
+    elif checks.get('frontend_tests'):
+        rows.append(('frontend', [pnpm, '--dir', 'app', 'test']))
     if checks['browser']:
         mode = [] if checks['matrix'] else ['--release'] if checks['release_browser'] else ['--smoke']
         rows.append(('browser', [sys.executable, 'scripts/verify_atlas.py', *mode]))
@@ -144,8 +146,8 @@ def run(root=ROOT, *, base=None, working=False, offline=False, execute=False, fu
     runtime.mkdir(parents=True, exist_ok=True)
     environment = {'python': sys.version, 'platform': platform.platform(),
                    'optimize': sys.flags.optimize,
-                   'node': subprocess.check_output(['node', '--version'], text=True).strip() if ctx['plan']['frontend'] else '',
-                   'pnpm': subprocess.check_output([shutil.which('pnpm'), '--version'], text=True).strip() if ctx['plan']['frontend'] else '',
+                   'node': subprocess.check_output(['node', '--version'], text=True).strip() if ctx['plan']['frontend'] or ctx['plan'].get('frontend_tests') else '',
+                   'pnpm': subprocess.check_output([shutil.which('pnpm'), '--version'], text=True).strip() if ctx['plan']['frontend'] or ctx['plan'].get('frontend_tests') else '',
                    'atlas_environment': {k: v for k, v in os.environ.items() if k.startswith('ATLAS_')}}
     env = dict(os.environ)
     temp = root / '.runtime/test-temp'

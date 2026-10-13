@@ -8,20 +8,23 @@ import subprocess
 
 def plan(paths):
     paths = sorted(set(paths))
-    result = {'contracts': False, 'frontend': False, 'launcher': False, 'browser': False,
+    result = {'contracts': False, 'frontend': False, 'frontend_tests': False, 'launcher': False, 'browser': False,
               'matrix': False, 'release_browser': False, 'contract_profile': 'none', 'contract_modules': []}
     reasons = []
     modules = set()
     for path in paths:
         flags = set()
-        if path.startswith('modeles/backlog/'):
+        if path == 'modeles/provenance/source-records.json':
+            flags = {'contracts'}
+            profile = 'sources'
+        elif path.startswith('modeles/backlog/'):
             # Atlas renders only activated snapshots. Backlog edits are checked by
             # Python contracts; their future publication will trigger the UI gate.
             flags = {'contracts'}
             profile = 'backlog'
         elif path.startswith('modeles/'):
             flags = {'contracts', 'frontend', 'browser'}
-            profile = 'full'
+            profile = 'release' if path.startswith(('modeles/release/', 'modeles/modeling-guides/')) or path == 'modeles/git-history.json' else 'full'
             if path.startswith('modeles/release/'):
                 flags.add('release_browser')
         elif path.startswith('scripts/') and path.endswith('.py'):
@@ -30,12 +33,14 @@ def plan(paths):
                 flags, profile = {'contracts'}, 'tests'
                 modules.add('scripts:' + name)
             elif name.startswith('benchmark_'):
-                flags, profile = set(), 'none'
+                flags, profile = {'contracts'}, 'syntax'
             else:
                 flags, profile = {'contracts', 'frontend', 'browser'}, 'full'
         elif path.startswith('app/') and not path.endswith('.md'):
             flags = {'frontend', 'browser'}
             profile = 'full' if path.endswith('.py') else 'none'
+            if Path(path).name.startswith('test-') and path.endswith('.mjs'):
+                flags = {'frontend_tests'}
             if path.endswith('.py'):
                 flags.add('contracts')
                 if Path(path).stem.startswith('test_'):
@@ -58,8 +63,8 @@ def plan(paths):
             flags = {'contracts', 'frontend'}
             profile = 'policy'
         elif path.startswith(('connaissance/', 'marche/')):
-            flags = {'contracts', 'frontend', 'browser'}
-            profile = 'full'
+            flags = {'contracts'}
+            profile = 'sources'
         elif path in ('AGENTS.md', 'CONVENTIONS-MODELE.md') or path.startswith('skills/') or path.endswith('.md'):
             flags = set()
             profile = 'none'
@@ -69,9 +74,13 @@ def plan(paths):
         for flag in flags:
             result[flag] = True
         current = result['contract_profile']
-        if current not in ('none', profile) and profile != 'none' and {current, profile} != {'policy', 'full'}:
+        ranks = {'none': 0, 'syntax': 1, 'policy': 2, 'tests': 3, 'sources': 3, 'backlog': 4, 'release': 5, 'full': 6}
+        compatible_model_profiles = {'sources', 'backlog', 'release'}
+        if current in compatible_model_profiles and profile in compatible_model_profiles:
+            result['contract_profile'] = max((current, profile), key=ranks.__getitem__)
+        elif current not in ('none', profile) and profile != 'none' and {current, profile} != {'policy', 'full'}:
             result['contract_profile'] = 'full'
-        elif {'none': 0, 'policy': 1, 'tests': 2, 'backlog': 2, 'full': 3}[profile] > {'none': 0, 'policy': 1, 'tests': 2, 'backlog': 2, 'full': 3}[current]:
+        elif ranks[profile] > ranks[current]:
             result['contract_profile'] = profile
         reasons.append({'path': path, 'checks': sorted(flags)})
     result['contract_modules'] = sorted(modules) if result['contract_profile'] == 'tests' else []
@@ -97,7 +106,7 @@ if __name__ == '__main__':
     result = plan(changed_paths(Path.cwd(), args.base, args.head, working=args.working))
     if args.github_output:
         with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as stream:
-            for key in ('contracts', 'frontend', 'launcher', 'browser', 'matrix', 'release_browser'):
+            for key in ('contracts', 'frontend', 'frontend_tests', 'launcher', 'browser', 'matrix', 'release_browser'):
                 stream.write(f'{key}={str(result[key]).lower()}\n')
             stream.write(f"contract_profile={result['contract_profile']}\n")
             stream.write(f"contract_modules={','.join(result['contract_modules'])}\n")

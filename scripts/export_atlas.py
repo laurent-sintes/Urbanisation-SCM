@@ -120,7 +120,7 @@ def _staged_export(root, destinations, stage, *, incremental, require_cached):
     receipts = {}
     legacy_hashes = None
     reused = 0
-    def stage_payload(relative, payload, existing=None):
+    def stage_payload(relative, payload, existing=None, digest=None):
         path = stage / relative
         if not path.resolve().is_relative_to(stage.resolve()):
             raise ValueError('Export path escapes staging')
@@ -132,7 +132,7 @@ def _staged_export(root, destinations, stage, *, incremental, require_cached):
                 path.write_bytes(payload)
         else:
             path.write_bytes(payload)
-        files[relative] = (path, hashlib.sha256(payload).hexdigest(), len(payload))
+        files[relative] = (path, digest or hashlib.sha256(payload).hexdigest(), len(payload))
 
     def staged_bytes(entry):
         path, fingerprint, _ = entry
@@ -198,13 +198,14 @@ def _staged_export(root, destinations, stage, *, incremental, require_cached):
         if not isinstance(document_index, dict) or set(document_index) != {'documents'} or not isinstance(document_index['documents'], list):
             document_index = {'documents': (raw if raw is not None else json.loads(payloads['model.json'])).get('document_catalog', {}).get('documents', [])}
             parsed_cache.put(document_key, document_index, directory=document_directory)
-        receipts[receipt] = encoded({name: hashlib.sha256(payload).hexdigest()
-                                    for name, payload in payloads.items()})
+        hashes = {name: hashlib.sha256(payload).hexdigest() for name, payload in payloads.items()}
+        receipts[receipt] = encoded(hashes)
         for name, payload in payloads.items():
-            stage_payload(f'{version}/{name}', payload, payload_source / name if payload_source else None)
+            stage_payload(f'{version}/{name}', payload, payload_source / name if payload_source else None,
+                          digest=hashes[name])
         for name in ('model', 'guide'):
-            entry[name + '_sha256'] = hashlib.sha256(payloads[name + '.json']).hexdigest()
-        entry['model_yaml_sha256'] = hashlib.sha256(payloads['model.yaml']).hexdigest()
+            entry[name + '_sha256'] = hashes[name + '.json']
+        entry['model_yaml_sha256'] = hashes['model.yaml']
         for document in document_index['documents']:
             stage_payload(f"{version}/documents/{document['id']}.pdf", asset_bytes(root, document))
         serialization_seconds += perf_counter() - step

@@ -43,6 +43,10 @@ def follow(commit, *, timeout=1800, deploy=False):
     if remote != commit:
         return {'status': 'superseded', 'commit': commit, 'remote_commit': remote}
     jobs = json.loads(gh('run', 'view', str(run['databaseId']), '--json', 'jobs'))['jobs']
+    build = next((job for job in jobs if job['name'] == 'build'), None)
+    if build and build['conclusion'] == 'skipped':
+        return {'status': 'validated_only', 'commit': commit, 'run': run['databaseId'],
+                'url': URL, 'reason': 'No Atlas build or deployment required for these changes'}
     if not any(job['name'] == 'deploy' and job['conclusion'] == 'success' for job in jobs):
         return {'status': 'deployment_not_started', 'commit': commit, 'run': run['databaseId']}
     folder = ROOT / '.runtime/delivery' / str(run['databaseId']) / uuid.uuid4().hex
@@ -65,4 +69,4 @@ if __name__ == '__main__':
     commit = args.commit or subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip()
     result = follow(commit, timeout=args.timeout, deploy=args.deploy)
     print(json.dumps(result))
-    raise SystemExit(result['status'] not in ('checks_passed', 'verified'))
+    raise SystemExit(result['status'] not in ('checks_passed', 'validated_only', 'verified'))

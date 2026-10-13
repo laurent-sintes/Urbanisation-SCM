@@ -19,12 +19,13 @@ class CheckPolicyTests(unittest.TestCase):
         workflow = read(ROOT / '.github/workflows/atlas-pages.yml')
         self.assertNotIn('pull_request', workflow['on'])
         self.assertEqual(workflow['on']['push']['branches'], ['main'])
+        self.assertNotIn('paths', workflow['on']['push'])
         gate = workflow['jobs']['checks']
         self.assertEqual(gate['name'], 'Atlas checks')
         self.assertEqual(gate['if'], 'always()')
-        self.assertEqual(set(gate['needs']), {'plan', 'build', 'contracts', 'launcher'})
+        self.assertEqual(set(gate['needs']), {'plan', 'build', 'contracts', 'launcher', 'frontend_tests'})
         script = gate['steps'][0]['run']
-        for flag in ('NEED_BUILD', 'NEED_CONTRACTS', 'NEED_LAUNCHER'):
+        for flag in ('NEED_BUILD', 'NEED_CONTRACTS', 'NEED_LAUNCHER', 'NEED_FRONTEND_TESTS'):
             self.assertIn(flag, script)
         deploy = workflow['jobs']['deploy']
         # A skipped optional launcher must not suppress a validated main deployment.
@@ -78,6 +79,20 @@ class CheckPolicyTests(unittest.TestCase):
         self.assertEqual(plan(['scripts/test_models.py'])['contract_modules'], ['scripts:test_models'])
         self.assertEqual(plan(['scripts/test_models.py', 'modeles/backlog/model.yaml'])['contract_profile'], 'full')
         self.assertEqual(plan(['app/test_data.py'])['contract_modules'], ['app:test_data'])
+        self.assertEqual(plan(['modeles/release/index.json'])['contract_profile'], 'release')
+        self.assertEqual(plan(['modeles/release/index.json', 'modeles/backlog/model.yaml'])['contract_profile'], 'release')
+        self.assertEqual(plan(['modeles/release/index.json', 'connaissance/01-contributions-utilisateur.md'])['contract_profile'], 'release')
+        self.assertEqual(plan(['connaissance/01-contributions-utilisateur.md'])['contract_profile'], 'sources')
+        self.assertFalse(plan(['connaissance/01-contributions-utilisateur.md'])['frontend'])
+        self.assertEqual(plan(['modeles/provenance/source-records.json'])['contract_profile'], 'sources')
+        self.assertFalse(plan(['connaissance/01-contributions-utilisateur.md',
+                               'modeles/provenance/source-records.json'])['frontend'])
+        self.assertEqual(plan(['scripts/benchmark_atlas_export.py'])['contract_profile'], 'syntax')
+        tests_only = plan(['app/test-search.mjs'])
+        self.assertTrue(tests_only['frontend_tests'])
+        self.assertFalse(tests_only['frontend'])
+        self.assertFalse(tests_only['browser'])
+        self.assertFalse(tests_only['contracts'])
 
     def test_local_browser_mode_matches_ci(self):
         for paths, suffix in (

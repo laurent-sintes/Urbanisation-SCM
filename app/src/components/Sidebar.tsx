@@ -18,7 +18,7 @@ import type { RouteState } from '../navigation';
 import { kindLabel } from '../presentation';
 import { publicationUrl, publicationYamlUrl, staticUrl } from '../publication';
 import { catalogOf } from '../scenarioCatalog';
-import { searchPublication } from '../search';
+import { type SearchResult, searchPublication } from '../search';
 import type { PublishedModel } from '../types';
 import { downloadWorkingModel, workshopUrl } from '../workshop';
 import { MethodNavigation } from './MethodNavigation';
@@ -57,6 +57,48 @@ export function Sidebar({
   const panel = useRef<HTMLElement>(null);
   const [resultType, setResultType] = useState('all');
   const searching = Boolean(route.query.trim());
+  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
+  const [searchPending, setSearchPending] = useState(false);
+  const searchWorker = useRef<Worker | null>(null);
+  const searchRequest = useRef(0);
+  const currentQuery = useRef(route.query);
+  useEffect(() => {
+    if (typeof Worker === 'undefined') return;
+    const worker = new Worker(new URL('../searchWorker.ts', import.meta.url), { type: 'module' });
+    searchWorker.current = worker;
+    worker.postMessage({ type: 'init', model, guide, metaGuide: model.raw.metamodel?.documentation });
+    worker.onmessage = (event: MessageEvent<{ id: number; results: SearchResult[] }>) => {
+      if (event.data.id !== searchRequest.current) return;
+      setSearchResults(event.data.results);
+      setSearchPending(false);
+    };
+    worker.onerror = () => {
+      if (searchWorker.current !== worker) return;
+      searchWorker.current = null;
+      worker.terminate();
+      setSearchResults(searchPublication(model, currentQuery.current, guide, model.raw.metamodel?.documentation));
+      setSearchPending(false);
+    };
+    return () => {
+      searchWorker.current = null;
+      worker.terminate();
+    };
+  }, [model, guide]);
+  useEffect(() => {
+    const query = route.query.trim();
+    currentQuery.current = route.query;
+    const id = ++searchRequest.current;
+    if (!query) {
+      setSearchResults([]);
+      setSearchPending(false);
+    } else if (searchWorker.current) {
+      setSearchPending(true);
+      searchWorker.current.postMessage({ type: 'query', id, query });
+    } else {
+      setSearchResults(searchPublication(model, query, guide, model.raw.metamodel?.documentation));
+      setSearchPending(false);
+    }
+  }, [model, guide, route.query]);
   useEffect(() => {
     if (!open || !mobile) return;
     const previous = document.activeElement as HTMLElement | null;
@@ -92,7 +134,7 @@ export function Sidebar({
   const matches = useMemo(
     () =>
       searching
-        ? searchPublication(model, route.query, guide, model.raw.metamodel?.documentation).filter(
+        ? searchResults.filter(
             (result) =>
               resultType === 'all' ||
               (['glossary', 'scenario', 'value_stream', 'method', 'guide'].includes(resultType)
@@ -100,7 +142,7 @@ export function Sidebar({
                 : result.node?.kind === resultType),
           )
         : [],
-    [model, route.query, guide, resultType, searching],
+    [searchResults, resultType, searching],
   );
   const revision = model.revision ? `v${String(model.revision).padStart(3, '0')}` : model.version;
   const publicationLabel = `Version du modèle complet : ${revision} · ${model.version}. ${route.version ? 'Publication fixe' : 'Publication courante, actualisée automatiquement'}.`;
@@ -309,7 +351,7 @@ export function Sidebar({
             </select>
           </label>
           <p role="status">
-            {matches.length} résultat{matches.length > 1 ? 's' : ''}
+            {searchPending ? 'Recherche en cours…' : `${matches.length} résultat${matches.length > 1 ? 's' : ''}`}
           </p>
           {matches.map((result) => (
             <button
@@ -381,7 +423,7 @@ export function Sidebar({
               </span>
             </button>
           ))}
-          {!matches.length && <p>Aucun élément ne correspond dans cette publication.</p>}
+          {!searchPending && !matches.length && <p>Aucun élément ne correspond dans cette publication.</p>}
         </div>
       ) : ['scenarios', 'glossary', 'principles', 'metamodel', 'help'].includes(route.view || '') ? (
         <nav

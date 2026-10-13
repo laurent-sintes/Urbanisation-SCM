@@ -69,7 +69,11 @@ def inventory(root, folder, *, build_root=None):
 
 
 def fingerprint(path):
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    digest = hashlib.sha256()
+    with path.open('rb') as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(chunk)
+    return digest.hexdigest()
 
 
 def plan(root, min_age_days=7, now=None, *, build_copies=False, max_benchmark_runs=None):
@@ -126,8 +130,6 @@ def apply_plan(root, selected):
         folder = checked(root, root / entry['path'])
         for name, expected in entry['files'].items():
             path = checked(root, root / name)
-            if fingerprint(path) != expected['sha256']:
-                raise ValueError('Benchmark changed during cleanup')
             path.unlink()
             removed += expected['bytes']
         # Paths are bounded and checked; never recursively remove unknown content.

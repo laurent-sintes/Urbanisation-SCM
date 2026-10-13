@@ -9,6 +9,7 @@ from hashlib import sha256
 import json
 from pathlib import Path
 import sys
+import tempfile
 from time import perf_counter
 import uuid
 
@@ -39,26 +40,29 @@ def main():
         raise ValueError('Comparison directory has no exported files')
     results = []
     for number in range(1, args.runs + 1):
-        destination = folder / f'run-{number}'
-        profiler = cProfile.Profile() if args.profile else None
-        started = perf_counter()
-        if profiler:
-            profiler.enable()
-        try:
-            result = export_atlas(ROOT, [destination])
-        finally:
+        with tempfile.TemporaryDirectory(prefix=f'run-{number}-', dir=folder) as temporary:
+            destination = Path(temporary)
+            if not destination.resolve().is_relative_to(folder.resolve()):
+                raise ValueError('Benchmark temporary output escapes workspace')
+            profiler = cProfile.Profile() if args.profile else None
+            started = perf_counter()
             if profiler:
-                profiler.disable()
-                profiler.dump_stats(folder / f'run-{number}.prof')
-        result['wall_seconds'] = round(perf_counter() - started, 4)
-        actual = fingerprints(destination)
-        if baseline is not None:
-            differences = sorted(k for k in actual.keys() | baseline.keys() if actual.get(k) != baseline.get(k))
-            if differences:
-                raise ValueError('Export differs from baseline: ' + ', '.join(differences))
-            result['identical_files'] = len(actual)
-        results.append(result)
-        print(json.dumps(result, ensure_ascii=False), flush=True)
+                profiler.enable()
+            try:
+                result = export_atlas(ROOT, [destination])
+            finally:
+                if profiler:
+                    profiler.disable()
+                    profiler.dump_stats(folder / f'run-{number}.prof')
+            result['wall_seconds'] = round(perf_counter() - started, 4)
+            actual = fingerprints(destination)
+            if baseline is not None:
+                differences = sorted(k for k in actual.keys() | baseline.keys() if actual.get(k) != baseline.get(k))
+                if differences:
+                    raise ValueError('Export differs from baseline: ' + ', '.join(differences))
+                result['identical_files'] = len(actual)
+            results.append(result)
+            print(json.dumps(result, ensure_ascii=False), flush=True)
     report = {'schema_version': 1, 'python': sys.version, 'profiled': args.profile,
               'comparison': str(args.compare) if args.compare else None, 'runs': results}
     (folder / 'report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')

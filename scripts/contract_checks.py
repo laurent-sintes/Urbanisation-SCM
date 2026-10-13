@@ -14,6 +14,8 @@ BACKLOG_MODULES = (
     'test_backlog_delivery', 'test_business_areas', 'test_decision_registry',
     'test_glossary', 'test_model_coherence', 'test_models', 'test_scenario_catalog',
 )
+RELEASE_MODULES = tuple(sorted(set(BACKLOG_MODULES) | {
+    'test_atlas_delivery', 'test_export_atlas', 'test_publish_release', 'test_release_run'}))
 
 
 def check(profile, *, full=False, modules=()):
@@ -33,8 +35,19 @@ def check(profile, *, full=False, modules=()):
     if profile == 'policy':
         return run(directory='scripts', full=full, modules=('test_check_policy', 'test_preflight_push'))['status']
     if profile == 'backlog':
+        subprocess.run([sys.executable, 'scripts/refresh_sources.py', '--check'], check=True)
         subprocess.run([sys.executable, 'scripts/validate_models.py'], check=True)
         return run(directory='scripts', full=full, modules=BACKLOG_MODULES)['status']
+    if profile == 'release':
+        subprocess.run([sys.executable, 'scripts/refresh_sources.py', '--check'], check=True)
+        subprocess.run([sys.executable, 'scripts/validate_models.py'], check=True)
+        return run(directory='scripts', full=full, modules=RELEASE_MODULES)['status']
+    if profile == 'sources':
+        subprocess.run([sys.executable, 'scripts/refresh_sources.py', '--check'], check=True)
+        return 'passed'
+    if profile == 'syntax':
+        subprocess.run([sys.executable, '-m', 'compileall', '-q', 'scripts'], check=True)
+        return 'passed'
     if profile == 'full':
         if run(directory='scripts', full=full)['status'] != 'passed':
             return 'failed'
@@ -46,7 +59,7 @@ def check(profile, *, full=False, modules=()):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--profile', choices=('policy', 'tests', 'backlog', 'full'), required=True)
+    parser.add_argument('--profile', choices=('policy', 'tests', 'backlog', 'release', 'sources', 'syntax', 'full'), required=True)
     parser.add_argument('--modules', default='', help='Comma-separated directory:test_name entries for test-only changes')
     parser.add_argument('--full', action='store_true')
     args = parser.parse_args()

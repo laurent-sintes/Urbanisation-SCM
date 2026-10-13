@@ -3,13 +3,6 @@ name: FLOW Atlas — GitHub Pages
 on:
   push:
     branches: [main]
-    paths:
-      - 'app/**'
-      - 'scripts/**'
-      - 'modeles/**'
-      - 'Lancer-FLOW-Atlas.ps1'
-      - 'requirements.txt'
-      - '.github/workflows/atlas-pages.yml'
   workflow_dispatch:
 
 permissions:
@@ -21,6 +14,7 @@ jobs:
     outputs:
       contracts: ${{ steps.plan.outputs.contracts }}
       frontend: ${{ steps.plan.outputs.frontend }}
+      frontend_tests: ${{ steps.plan.outputs.frontend_tests }}
       browser: ${{ steps.plan.outputs.browser }}
       matrix: ${{ steps.plan.outputs.matrix }}
       launcher: ${{ steps.plan.outputs.launcher }}
@@ -73,6 +67,20 @@ jobs:
           CONTRACT_PROFILE: ${{ needs.plan.outputs.contract_profile }}
           CONTRACT_MODULES: ${{ needs.plan.outputs.contract_modules }}
         run: python scripts/contract_checks.py --profile "$CONTRACT_PROFILE" --modules "$CONTRACT_MODULES" --full
+  frontend_tests:
+    needs: plan
+    if: needs.plan.outputs.frontend_tests == 'true' && needs.plan.outputs.frontend != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '26'
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 11.19.0
+      - run: pnpm --dir app install --frozen-lockfile
+      - run: pnpm --dir app test
   build:
     needs: plan
     if: needs.plan.outputs.frontend == 'true'
@@ -135,7 +143,7 @@ jobs:
           path: app/dist/delivery.json
   checks:
     name: Atlas checks
-    needs: [plan, build, launcher, contracts]
+    needs: [plan, build, launcher, contracts, frontend_tests]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -144,17 +152,20 @@ jobs:
           BUILD: ${{ needs.build.result }}
           LAUNCHER: ${{ needs.launcher.result }}
           CONTRACTS: ${{ needs.contracts.result }}
+          FRONTEND_TESTS: ${{ needs.frontend_tests.result }}
           NEED_BUILD: ${{ needs.plan.outputs.frontend }}
           NEED_LAUNCHER: ${{ needs.plan.outputs.launcher }}
           NEED_CONTRACTS: ${{ needs.plan.outputs.contracts }}
+          NEED_FRONTEND_TESTS: ${{ needs.plan.outputs.frontend_tests }}
         run: |
           test "$PLAN" = "success"
-          for RESULT in "$BUILD" "$LAUNCHER" "$CONTRACTS"; do
+          for RESULT in "$BUILD" "$LAUNCHER" "$CONTRACTS" "$FRONTEND_TESTS"; do
             test "$RESULT" = "success" || test "$RESULT" = "skipped"
           done
           if [ "$NEED_BUILD" = "true" ]; then test "$BUILD" = "success"; fi
           if [ "$NEED_LAUNCHER" = "true" ]; then test "$LAUNCHER" = "success"; fi
           if [ "$NEED_CONTRACTS" = "true" ]; then test "$CONTRACTS" = "success"; fi
+          if [ "$NEED_FRONTEND_TESTS" = "true" ] && [ "$NEED_BUILD" != "true" ]; then test "$FRONTEND_TESTS" = "success"; fi
   deploy:
     needs: [checks, build]
     if: always() && github.ref == 'refs/heads/main' && needs.build.result == 'success' && needs.checks.result == 'success'
