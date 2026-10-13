@@ -25051,3 +25051,34 @@ Verbatim :
 > Je valide
 
 Portée : appliquer le lot cohérent de corrections de la revue des huit hotspots visibles. Qualifier HS-011 comme interaction distincte de HS-002, clarifier les titres et l'ouverture des fiches, compléter les ancrages CBS et Retail, préciser le périmètre étudié pour Négoce et rendre explicite la couverture partielle du service client Sarenza. Conserver les statuts de reconnaissance jugés adaptés et les incertitudes de cadrage. Les prestataires et parcours réellement utilisés restent à documenter ; cet accord n'apporte ni exemple observé supplémentaire, ni solution choisie, ni couverture installée, ni nouvelle Business Area. Il n'autorise pas implicitement une release, un commit ou un push.
+
+## U1067
+
+Date : 2026-10-13. Source : Laurent, correction éditoriale et qualification des hotspots visibles.
+
+Verbatim :
+
+> Dans les statuts des hotspots visibles, je n'en veux aucun à non renseigné.
+>
+> Hotspot "Carnet Wholesale : commandes refusées ou conservées en attente" :
+>
+> - titre de merde : "Gestion de carnet de commande wholesale" ce sera très bien
+> - Dans la description, on a : "selon Laurent". Je veux bien du story telling mais pas une retranscription d'une conversation de comptoir. Je veux une description professionnelle.
+>
+> Refais un tour sur les hotspots.
+
+Portée : reprendre la rédaction des huit hotspots visibles, remplacer le titre de HS-008 et qualifier leur avancement sans valeur « Non renseigné ». La réécriture conserve les sources, les réserves sur les usages installés, les couvertures cartographiques et les options ouvertes. Cette demande ne choisit aucune solution et ne demande ni release, ni commit, ni push.
+
+
+## U1068
+
+Date : 2026-10-13. Source : Laurent, simplification de la vue globale cartographie.
+
+Verbatim :
+
+> Dans la vue globale carto,
+>
+> - "Faits et conditions de gestion" est en dehors de la flèche. Je pense que "Faits de gestion", ça suffit.
+> - Le bloc "6 partage de données" alourdit la vue, sans intéret.
+
+Portée : adopter le libellé de synthèse « Faits de gestion », maintenir le texte sur la flèche sans recouvrir le hotspot et supprimer le panneau récapitulatif des partages dans la vue globale. Les relations détaillées, contenus et responsabilités restent conservés. Aucune release, commit ou push demandé.

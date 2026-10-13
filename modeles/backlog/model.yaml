@@ -63394,7 +63394,7 @@ relations:
         - TER120
         - TER114
       purpose: Fournir les faits nécessaires à la comptabilité.
-    summary_label: Faits et conditions de gestion
+    summary_label: Faits de gestion
   qualification:
     meaning: Faits de gestion et justificatifs utiles à leur interprétation comptable, avec origine, dates et corrections.
     conditions:
@@ -63410,6 +63410,7 @@ relations:
   - ELM860
   - U997
   - U998
+  - U1068
   review:
     state: proposed
     note: Synthèse cible proposée à partir des responsabilités documentées ; aucun flux installé ni contrat exhaustif déduit.
@@ -72326,8 +72327,9 @@ hotspot_catalog:
       si ce choix réserve des ressources, quand chacun s’engage et comment l’exécution est confirmée.'
     resolution_options:
     - id: hs-002-joint-plan
-      title: Plans proposés par C-LOG et choisis par BMN
-      principle: BMN détient la promesse et sélectionne un plan valide fourni par C-LOG ; C-LOG tient et exécute le plan.
+      title: Plans proposés par C-LOG et choisis par FLOW
+      principle: Beaumanoir détient la promesse et sélectionne un plan valide fourni par C-LOG ; C-LOG tient et exécute le
+        plan.
       effect: Unifie la frontière de décision envisagée.
       conditions:
       - Définir ce que garantit le plan, pour combien de temps et quand l’engagement devient ferme.
@@ -72336,8 +72338,8 @@ hotspot_catalog:
       implementation_complexity: unassessed
       evidence_state: hypothesis
     - id: hs-002-brand-plan
-      title: Plan tenu par BMN
-      principle: BMN construit et libère le plan, C-LOG pilote localement les ordres reçus.
+      title: Plan tenu par Beaumanoir
+      principle: Beaumanoir construit et libère le plan, C-LOG pilote localement les ordres reçus.
       effect: Conserve le fonctionnement actuel Boardriders.
       conditions:
       - Vérifier la compatibilité avec les marques historiques et l’optimisation C-LOG.
@@ -72348,8 +72350,9 @@ hotspot_catalog:
     complexity:
       arbitration: XL
       implementation: L
-      rationale: Laurent qualifie la difficulté politique XL et la difficulté d'implémentation L (U923) ; la gravité XL découle
-        de la matrice-v1. Cette estimation ne documente pas encore les contrats, les autorités ni la réalisation installée.
+      rationale: La complexité d’arbitrage est estimée à XL et la complexité d’implémentation à L (U923) ; la criticité XL
+        découle de la matrice-v1. Ces estimations précèdent la séparation des deux relations logistiques et restent à reconfirmer
+        pour le seul périmètre FLOW–C-LOG. Elles ne documentent ni les contrats, ni les autorités, ni la réalisation installée.
       arbitration_rationale: Le partage de décision entre marques et logisticiens touche la promesse client et leur latitude
         de choix.
       implementation_rationale: Il faut distinguer proposition, réservation des ressources, acceptation et exécution ; leurs
@@ -72375,6 +72378,7 @@ hotspot_catalog:
     - U1064
     - U1065
     - U1066
+    - U1067
     origin:
       repository: FLOW-Program
       path: src/docs/as-is/hotspots/c-log-decision-fulfillment.md
@@ -72421,9 +72425,9 @@ hotspot_catalog:
         relevance: Sépare données de référence, ordres, progression et variations de stock.
     resolution:
       stage: qualifying
-      summary: 'Une solution est en discussion : BMN conserve la promesse client et choisit un plan proposé par C-LOG ; C-LOG
-        porte l’optimisation et l’exécution. Les garanties du plan, sa durée de validité et le moment de l’engagement ferme
-        restent à qualifier.'
+      summary: Dans le schéma étudié, Beaumanoir conserve la promesse client et FLOW choisit un plan proposé par C-LOG ; C-LOG
+        optimise le plan et en pilote l’exécution. Les garanties du plan, sa durée de validité et le moment de l’engagement
+        ferme restent à qualifier.
       credible_option_ids: []
       credibility_note: ''
       blocked_reason: ''
@@ -72441,8 +72445,8 @@ hotspot_catalog:
       - context_id: beaumanoir-historique
         business_need: Déterminer les services et exécutants à mobiliser pour les prestations nécessaires.
         system_coverage: not_assessed
-        handling: Pour les demandes confiées à C-LOG, Laurent décrit un choix de l’entrepôt et du transporteur par l’OMS C-LOG,
-          selon les opérations requises et les exécutants admissibles.
+        handling: Pour les demandes confiées à C-LOG, les sources décrivent un choix de l’entrepôt et du transporteur par
+          l’OMS C-LOG, selon les opérations requises et les exécutants admissibles.
         business_rules:
         - C-LOG choisit l’entrepôt capable de réaliser les opérations demandées et le transporteur.
         source_refs:
@@ -72451,13 +72455,13 @@ hotspot_catalog:
         - U07
         evidence_state: documented
         evidence_kind: user_report
-        limits: 'Pratique rapportée dans le récit historique. Ne concerne pas tous les parcours : le livraison depuis un magasin
+        limits: 'Pratique rapportée dans le récit historique. Ne concerne pas tous les parcours : la livraison depuis un magasin
           a son fonctionnement propre. Aucun audit actuel du partage des décisions.'
       - context_id: boardriders
         business_need: Déterminer les services et exécutants à mobiliser pour les prestations nécessaires.
         system_coverage: not_assessed
-        handling: Laurent décrit Boardriders comme détenteur du réseau de [Fulfilment](glossary:TER085) et constructeur du
-          plan ; les prestataires exécutent les ordres reçus et C-LOG pilote localement sans initiative sur le plan.
+        handling: Les sources décrivent Boardriders comme détenteur du réseau de [Fulfilment](glossary:TER085) et constructeur
+          du plan ; les prestataires exécutent les ordres reçus et C-LOG pilote localement sans initiative sur le plan.
         business_rules:
         - Boardriders construit le plan, passe les ordres et choisit leur moment de libération.
         - C-LOG exécute et pilote localement, sans initiative sur le plan dans le fonctionnement décrit.
@@ -72465,8 +72469,8 @@ hotspot_catalog:
         - U925
         evidence_state: documented
         evidence_kind: user_report
-        limits: Déclaration de Laurent du 10 octobre 2026 ; le rôle global ne prouve pas le porteur de chaque décision détaillée
-          ni les exceptions.
+        limits: Description du fonctionnement datée du 10 octobre 2026 ; le rôle global ne prouve pas le porteur de chaque
+          décision détaillée ni les exceptions.
       comparison: Pour les prestations confiées à C-LOG, le choix des moyens est décrit côté logisticien dans le récit Marques
         Historiques et côté Boardriders dans U925. Cette différence de responsabilité ne signifie pas absence de capacité
         métier dans l’une des entités.
@@ -72512,11 +72516,11 @@ hotspot_catalog:
       node_ids:
       - D06
       - domain-logistics-execution
-    problem: Selon Laurent, Boardriders construit le plan de [fulfilment](glossary:TER085), choisit ses autres logisticiens
-      et libère leurs ordres. FLOW doit reprendre ce pilotage lorsque le prestataire exécute les ordres sans proposer lui-même
-      un plan complet. Il faut définir les instructions envoyées, les confirmations attendues et les décisions que FLOW conserve
-      en cas de retard ou d’exécution partielle. Les prestataires et leurs contrats restent à inventorier. Ce mandat est distinct
-      de la proposition de plans par C-LOG étudiée dans HS-002.
+    problem: Boardriders construit le plan de [fulfilment](glossary:TER085), choisit ses autres logisticiens et libère leurs
+      ordres. FLOW doit reprendre ce pilotage lorsque le prestataire exécute les ordres sans proposer lui-même un plan complet.
+      Il faut définir les instructions envoyées, les confirmations attendues et les décisions que FLOW conserve en cas de
+      retard ou d’exécution partielle. Les prestataires et leurs contrats restent à inventorier. Ce mandat est distinct de
+      la proposition de plans par C-LOG étudiée dans HS-002.
     examples:
     - 'Scénario d’étude à confirmer avec un prestataire Boardriders : FLOW construit un plan, libère un ordre de préparation
       puis de transport et attend les confirmations. Le prestataire signale un retard ou une quantité préparée inférieure
@@ -72579,6 +72583,7 @@ hotspot_catalog:
     - U1064
     - U1065
     - U1066
+    - U1067
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -72637,8 +72642,8 @@ hotspot_catalog:
       - context_id: beaumanoir-historique
         business_need: Déterminer les services et exécutants à mobiliser pour les prestations nécessaires.
         system_coverage: not_assessed
-        handling: Laurent indique que les Marques Historiques travaillent uniquement avec C-LOG pour le périmètre des prestataires
-          logistiques comparé.
+        handling: Les sources indiquent que les Marques Historiques travaillent uniquement avec C-LOG pour le périmètre des
+          prestataires logistiques comparé.
         business_rules:
         - C-LOG est le partenaire logistique décrit dans ce périmètre.
         source_refs:
@@ -72650,7 +72655,7 @@ hotspot_catalog:
       - context_id: boardriders
         business_need: Déterminer les services et exécutants à mobiliser pour les prestations nécessaires.
         system_coverage: not_assessed
-        handling: Laurent indique que Boardriders travaille avec C-LOG et d’autres prestataires logistiques ; Boardriders
+        handling: Les sources indiquent que Boardriders travaille avec C-LOG et d’autres prestataires logistiques ; Boardriders
           construit et libère leurs ordres.
         business_rules:
         - Plusieurs prestataires peuvent être mobilisés selon le plan tenu par Boardriders.
@@ -73725,21 +73730,22 @@ hotspot_catalog:
       - model
     visible: false
   - id: HS-008
-    title: 'Carnet [Wholesale](glossary:TER193) : commandes refusées ou conservées en attente'
+    title: Gestion de carnet de commande wholesale
     kind: scope
     location:
       node_ids:
       - ba-order-backlog-management
       - ba-master-plan-management
       - subdomain-policies
-    problem: 'En cas de stock insuffisant à la saisie, les Marques Historiques refusent la commande selon Laurent ; Boardriders
-      conserve la demande non couverte dans le [carnet](glossary:TER205) et la travaille dans le temps. FLOW doit décider
-      quelles règles partager et quelles différences préserver : demandes admises, priorités, ressources futures et engagements
-      protégés. Il faut ensuite mesurer la complexité du cœur métier et de l’outil complet nécessaires au mode de gestion
-      retenu.'
+    problem: 'La gestion du [carnet de commandes](glossary:TER205) [Wholesale](glossary:TER193) diffère entre les deux SI.
+      En cas de stock insuffisant à la saisie, les Marques Historiques refusent la commande ; Boardriders conserve les demandes
+      non couvertes et réexamine leur affectation dans le temps. La convergence doit préciser les règles communes et les variantes
+      à préserver : admission des demandes, priorités, mobilisation des ressources futures et protection des engagements.
+      Elle doit aussi évaluer le cœur métier et les fonctions de l’outil complet nécessaires au mode de gestion retenu. Les
+      pratiques détaillées et les règles actives restent à corroborer sur des cas opérationnels.'
     examples:
-    - 'Pénurie à la saisie : selon Laurent, les Marques Historiques refusent la commande ; Boardriders conserve la demande
-      non couverte dans le [carnet](glossary:TER205).'
+    - 'Pénurie à la saisie : les Marques Historiques refusent la commande ; Boardriders conserve la demande non couverte dans
+      le [carnet](glossary:TER205).'
     - 'Un grand client devient prioritaire en cours de saison : Boardriders peut revoir des [affectations](glossary:TER017)
       encore révisables. Les engagements protégés doivent rester respectés.'
     - 'Un arrivage est retardé : le [pegging](glossary:TER204), lien entre demande et ressource, doit être réexaminé avant
@@ -73769,7 +73775,7 @@ hotspot_catalog:
       - Conserver MAP pour la planification et le carnet d’achat ; préciser le traitement des propositions FLOW.
       tradeoffs:
       - Risque de perdre le maintien des demandes non couvertes et la différenciation commerciale par priorités évolutives.
-      - Les premiers retours Boardriders rapportés par Laurent écartent le mode Marques Historiques comme réponse suffisante.
+      - Les premiers retours Boardriders consignés dans les sources écartent le mode Marques Historiques comme réponse suffisante.
       implementation_complexity: unassessed
       evidence_state: hypothesis
     - id: hs-008-variants
@@ -73851,6 +73857,7 @@ hotspot_catalog:
     - U1030
     - U1065
     - U1066
+    - U1067
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -73932,8 +73939,8 @@ hotspot_catalog:
       - context_id: beaumanoir-historique
         business_need: Servir les commandes professionnelles sur le stock disponible aujourd’hui.
         system_coverage: not_assessed
-        handling: 'Pratique rapportée par Laurent : contrôle du stock à la saisie, acceptation ou refus immédiat ; part [Wholesale
-          Commerce](glossary:TER193) annoncée de 10 %.'
+        handling: 'Pratique décrite dans les sources : contrôle du stock à la saisie, acceptation ou refus immédiat ; part
+          [Wholesale Commerce](glossary:TER193) annoncée de 10 %.'
         business_rules:
         - Premier arrivé, premier servi.
         - Ne servir que le stock disponible aujourd’hui.
@@ -73942,14 +73949,15 @@ hotspot_catalog:
         - U953
         evidence_state: documented
         evidence_kind: user_report
-        limits: Déclaration de Laurent, sans audit technique du SI. Période et dénominateur des 10 % à préciser ; cas de couverture
-          partielle à documenter.
+        limits: Fonctionnement décrit dans les sources, sans audit technique du SI. Période et dénominateur des 10 % à préciser
+          ; cas de couverture partielle à documenter.
       - context_id: boardriders
         business_need: Servir les commandes professionnelles en arbitrant les ressources entre demandes encore révisables.
         system_coverage: not_assessed
-        handling: 'Pratique rapportée par Laurent : tentative initiale sur stock disponible, conservation des demandes non
-          couvertes et réexamen périodique des affectations par [AllocationRun](glossary:TER017) ; part [Wholesale Commerce](glossary:TER193)
-          annoncée de 60 %. [AllocationRun](glossary:TER017) est largement adapté aux besoins Boardriders selon Laurent.'
+        handling: 'Pratique décrite dans les sources : tentative initiale sur stock disponible, conservation des demandes
+          non couvertes et réexamen périodique des affectations par [AllocationRun](glossary:TER017) ; part [Wholesale Commerce](glossary:TER193)
+          annoncée de 60 %. [AllocationRun](glossary:TER017) est largement adapté aux besoins Boardriders ; les adaptations
+          actives restent à vérifier.'
         business_rules:
         - Maintenir la demande non couverte dans le carnet de commandes.
         - Réaffecter uniquement dans le périmètre des demandes sans engagement définitif et des ressources dont les liens
@@ -73961,8 +73969,8 @@ hotspot_catalog:
         - U953
         evidence_state: documented
         evidence_kind: user_report
-        limits: Déclaration de Laurent. Les statuts techniques SAP R/F ne suffisent pas à déterminer l’engagement client ;
-          règles actives et point d’affermissement à vérifier. Période et dénominateur des 60 % à préciser.
+        limits: Fonctionnement décrit dans les sources. Les statuts techniques SAP R/F ne suffisent pas à déterminer l’engagement
+          client ; règles actives et point d’affermissement à vérifier. Période et dénominateur des 60 % à préciser.
       comparison: 'Même besoin de servir les commandes de revendeurs, deux modes de gestion : décision immédiate sur stock
         présent ou maintien des demandes non couvertes et réarbitrage du carnet. Ce sont des pratiques rapportées ; elles
         ne prouvent pas l’absence d’une capacité technique dans un SI.'
@@ -74772,7 +74780,7 @@ hotspot_catalog:
       - D04.i
       - D04.j
       - ba-execution-coordination
-    problem: La refonte de Négoce Storeland doit préserver les fonctions effectivement utilisées par les Marques Historiques.
+    problem: Le remplacement de Négoce Storeland doit préserver les fonctions effectivement utilisées par les Marques Historiques.
       Il faut suivre un parcours réel pour distinguer la [relation avec les revendeurs](model:ba-wholesale-account-management),
       la [vente](model:ba-wholesale-sales), les [commandes de vente](model:D04.i) et [d’achat](model:D04.j), puis la [coordination
       de leur exécution](model:ba-execution-coordination). Ces responsabilités devront être réparties entre les produits cibles
@@ -74825,6 +74833,7 @@ hotspot_catalog:
     - U1056
     - U1065
     - U1066
+    - U1067
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -74868,7 +74877,7 @@ hotspot_catalog:
         relevance: 'Modes de traitement configurables : commande fournisseur, réservation et préparation ; n’établit pas leur
           activation chez GBM.'
     resolution:
-      stage: unassessed
+      stage: to_explore
       summary: Établir les fonctions utilisées dans Négoce Storeland et désigner pour chacune le produit cible ou l’outil
         conservé. Aucun parcours réel complet ni option de reprise n’est encore qualifié.
       credible_option_ids: []
@@ -74877,7 +74886,9 @@ hotspot_catalog:
       next_step: Documenter avec une marque un parcours Négoce réel, de la relation revendeur à la livraison, avec une variante
         nécessitant un achat. Relever les outils, propriétaires, commandes ouvertes et interfaces, puis compléter la comparaison
         SAP avant de décider la répartition cible.
-      assessment_source: U958 — intégration des candidats, aucune progression de résolution évaluée.
+      assessment_source: 'U1067 — revue de l’avancement : sujet défini et exploration des solutions à conduire ; aucune option
+        qualifiée.'
+      assessed_on: '2026-10-13'
     framing_impact:
       category: structuring
       targets:
@@ -74976,6 +74987,7 @@ hotspot_catalog:
     - U1032
     - U1065
     - U1066
+    - U1067
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -75023,7 +75035,7 @@ hotspot_catalog:
         url: https://help.sap.com/docs/SAP_S4HANA_CLOUD/a376cd9ea00d476b96f18dea1247e6a5/7269b753128eb44ce10000000a174cb4.html
         relevance: Documents Sales et transmission comptable ; appui au rôle de facturation possible de SD, sans preuve locale.
     resolution:
-      stage: unassessed
+      stage: to_explore
       summary: Répartir facturation, document fiscal et comptabilisation, puis choisir le circuit des faits et corrections.
         Le passage direct, SAP SD et une trajectoire hybride restent des hypothèses ; aucune option n’est retenue.
       credible_option_ids: []
@@ -75032,7 +75044,9 @@ hotspot_catalog:
       next_step: Cartographier trois cas B2C, B2B et correction/avoir avec Finance et le programme SAP ; comparer pour chacun
         autorité, facture, fait, écriture, identifiants, rejet, correction, coût et dépendance à SD. Éprouver un passage direct
         et un passage SD sur un même cas documenté.
-      assessment_source: U1031 — restructuration demandée ; options non évaluées.
+      assessment_source: 'U1067 — revue de l’avancement : sujet défini et exploration des solutions à conduire ; aucune option
+        qualifiée.'
+      assessed_on: '2026-10-13'
     framing_impact:
       category: structuring
       targets:
@@ -75297,8 +75311,8 @@ hotspot_catalog:
       node_ids:
       - D04.j
       - subdomain-process-management
-    problem: 'Selon Laurent, CBS suit toute la demande d’achat : cycle de vie, tâches, avancement et documents échangés avec
-      le fournisseur. FLOW propose des services communs de [gestion des commandes](model:D04), de [conduite des processus](model:subdomain-process-management)
+    problem: 'CBS suit toute la demande d’achat : cycle de vie, tâches, avancement et documents échangés avec le fournisseur.
+      FLOW propose des services communs de [gestion des commandes](model:D04), de [conduite des processus](model:subdomain-process-management)
       et de [visibilité des demandes et tâches](model:BHV082). Il faut décider ce que CBS conserve, ce qu’il expose à FLOW
       et ce qui serait repris par ces services, avec une seule autorité sur le [Purchase Order](model:D04.j). La séparation
       technique des services CBS et le périmètre d’une éventuelle réécriture restent à qualifier.'
@@ -75348,6 +75362,7 @@ hotspot_catalog:
     - U1058
     - U1065
     - U1066
+    - U1067
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -75385,14 +75400,16 @@ hotspot_catalog:
         url: https://learning.sap.com/courses/purchasing-in-sap-s-4hana/setting-up-flexible-workflows-in-purchasing
         relevance: Appui partiel aux approbations ; ne garantit pas la migration d’un parcours engagé.
     resolution:
-      stage: unassessed
+      stage: to_explore
       summary: Comment répartir le cycle d’achat CBS et les services communs de FLOW ? Aucune option n’est qualifiée.
       credible_option_ids: []
       credibility_note: ''
       blocked_reason: ''
       next_step: Tracer une demande d’achat CBS de sa création à sa clôture ; identifier états, tâches, pièces, interfaces
         et services réellement séparables.
-      assessment_source: U1058 — réexamen demandé par Laurent ; options à instruire.
+      assessment_source: 'U1067 — revue de l’avancement : sujet défini et exploration des solutions à conduire ; aucune option
+        qualifiée.'
+      assessed_on: '2026-10-13'
     framing_impact:
       category: structuring
       targets:
@@ -75414,10 +75431,10 @@ hotspot_catalog:
       node_ids:
       - D04.i
       - D04.l
-    problem: 'Selon Laurent, le service client Sarenza traite les demandes avant et après la vente dans une application autonome,
-      avec ses propres tâches et fonctions de suivi. Il faut étudier quels parcours pourraient utiliser les services communs
-      de FLOW et lesquels restent propres à la relation client. La réalisation Sarenza et la possibilité de séparer ses services
-      n’ont pas été évaluées. Couverture cartographique partielle : les ancres [Sales Order](model:D04.i) et [Return Order](model:D04.l)
+    problem: 'Le service client Sarenza traite les demandes avant et après la vente dans une application autonome, avec ses
+      propres tâches et fonctions de suivi. Il faut étudier quels parcours pourraient utiliser les services communs de FLOW
+      et lesquels restent propres à la relation client. La réalisation Sarenza et la possibilité de séparer ses services n’ont
+      pas été évaluées. Couverture cartographique partielle : les ancres [Sales Order](model:D04.i) et [Return Order](model:D04.l)
       situent les interactions avec la commande et le retour ; elles ne représentent pas les demandes avant-vente sans commande.
       Leur ancrage métier reste à préciser après inventaire, sans présumer d’une reprise de tout le service client par FLOW.'
     examples:
@@ -75465,6 +75482,7 @@ hotspot_catalog:
     - U1058
     - U1065
     - U1066
+    - U1067
     origin:
       repository: Contribution de Laurent
       path: connaissance/01-contributions-utilisateur.md
@@ -75479,7 +75497,7 @@ hotspot_catalog:
         explicite de la couverture cartographique partielle. L’avant-vente sans commande reste à ancrer après inventaire ;
         aucune réalisation Sarenza n’est validée.
     resolution:
-      stage: unassessed
+      stage: to_explore
       summary: Quels parcours du service client Sarenza pourraient réutiliser les services communs de FLOW ? Aucune option
         n’est qualifiée.
       credible_option_ids: []
@@ -75487,7 +75505,9 @@ hotspot_catalog:
       blocked_reason: ''
       next_step: Observer séparément une demande avant-vente sans commande et une demande après-vente. Identifier leurs propriétaires,
         tâches, informations et liens Supply, puis préciser l’ancrage métier manquant et les services FLOW réellement applicables.
-      assessment_source: U1058 — périmètre confirmé par Laurent, fonctionnement et options non évalués.
+      assessment_source: 'U1067 — revue de l’avancement : sujet défini et exploration des solutions à conduire ; aucune option
+        qualifiée.'
+      assessed_on: '2026-10-13'
     framing_impact:
       category: to_assess
       targets: []
@@ -76256,8 +76276,8 @@ hotspot_catalog:
       les opérations magasin, le réseau, la relation client et la vente numérique. FLOW contribue aux décisions et aux flux
       Supply ; le produit Retail doit aussi couvrir la caisse, la fidélité et l’exploitation du magasin. Les deux voies proposées
       sont de construire un produit Retail ou d’intégrer les marques GBM dans Cegid Y2. Pour les comparer, il faut inventorier
-      les fonctions utilisées dans Storeland et UR, les compléments SoCloz et les outils conservés, dont Winstore. Selon Laurent,
-      Boardriders dispose du socle Y2 ; ses modules et usages doivent être corroborés avant de mesurer l’écart de refonte.
+      les fonctions utilisées dans Storeland et UR, les compléments SoCloz et les outils conservés, dont Winstore. Le socle
+      Retail Boardriders repose sur Y2 ; ses modules et usages doivent être corroborés avant de mesurer l’écart de refonte.
     examples:
     - 'Parcours à vérifier après retrait de Storeland et UR : une marque GBM reçoit des articles, tient le stock magasin,
       décide le réassort, reconnaît un client fidèle, encaisse une vente et prépare une commande web. Identifier le produit
@@ -76291,7 +76311,7 @@ hotspot_catalog:
     complexity:
       arbitration: L
       implementation: M
-      rationale: Laurent évalue la complexité d'arbitrage à L et la complexité d'implémentation à M (U1057). Les deux options
+      rationale: La complexité d’arbitrage est estimée à L et la complexité d’implémentation à M (U1057). Les deux options
         de réalisation restent à qualifier.
       arbitration_rationale: Le choix déplacerait les responsabilités entre marques, équipe Retail, éditeur et programme FLOW.
       implementation_rationale: Les instances, personnalisations, volumes, interfaces, pays et licences ne sont pas inventoriés.
@@ -76318,6 +76338,7 @@ hotspot_catalog:
     - U1057
     - U1065
     - U1066
+    - U1067
     origin:
       repository: Urbanisation-SCM
       path: connaissance/01-contributions-utilisateur.md
@@ -76354,15 +76375,15 @@ hotspot_catalog:
       - context_id: boardriders
         business_need: Vendre et encaisser dans les magasins Boardriders.
         system_coverage: not_assessed
-        handling: Laurent attribue à Y2 le socle Retail Boardriders ; les fonctions de caisse effectivement installées restent
-          à confirmer.
+        handling: Y2 constitue le socle Retail décrit pour Boardriders ; les fonctions de caisse effectivement installées
+          restent à confirmer.
         business_rules: []
         source_refs:
         - U1045
         - U1048
         evidence_state: documented
         evidence_kind: user_report
-        limits: Déclaration de Laurent ; pays, marques, licences, modules et usages détaillés Boardriders non corroborés.
+        limits: Usage décrit dans les sources ; pays, marques, licences, modules et usages détaillés Boardriders non corroborés.
       comparison: Les deux SI ont un besoin de vente en magasin ; Y2 est déclaré chez Boardriders, mais la couverture installée
         par fonction et son contraste avec GBM restent à établir.
       convergence_question: Quel produit assurera la vente et la caisse GBM après retrait des fonctions Storeland/UR, et quels
@@ -76389,8 +76410,8 @@ hotspot_catalog:
       - context_id: beaumanoir-historique
         business_need: Tenir le stock magasin, recevoir, inventorier, calculer le stock cible et déclencher le réassort local.
         system_coverage: not_assessed
-        handling: Laurent décrit Storeland comme tenant le stock magasin et contribuant au réassort ; sa documentation décrit
-          le calcul de stock optimal. UR lui est couplé et documente le réassort des magasins. Les fonctions effectivement
+        handling: Les sources décrivent Storeland comme tenant le stock magasin et contribuant au réassort ; sa documentation
+          décrit le calcul de stock optimal. UR lui est couplé et documente le réassort des magasins. Les fonctions effectivement
           actives chez GBM restent à vérifier.
         business_rules: []
         source_refs:
@@ -76403,15 +76424,15 @@ hotspot_catalog:
       - context_id: boardriders
         business_need: Tenir les opérations de stock et de backoffice magasin.
         system_coverage: not_assessed
-        handling: Laurent attribue le Retail Boardriders à Y2 ; l'offre comprend un backoffice central, mais ses fonctions
-          effectivement utilisées chez Boardriders restent à inventorier.
+        handling: Le socle Retail décrit pour Boardriders repose sur Y2 ; l'offre comprend un backoffice central, mais ses
+          fonctions effectivement utilisées chez Boardriders restent à inventorier.
         business_rules: []
         source_refs:
         - U1045
         - U1048
         evidence_state: documented
         evidence_kind: user_report
-        limits: Usage Retail déclaré par Laurent ; pays, marques, licences, modules et opérations détaillées non corroborés.
+        limits: Usage Retail décrit dans les sources ; pays, marques, licences, modules et opérations détaillées non corroborés.
       comparison: Le retrait conjoint de Storeland et UR laisse une responsabilité GBM déclarée à réaffecter ; Y2 est déclaré
         chez Boardriders, sans preuve de couverture équivalente par fonction.
       convergence_question: Qui assurera les opérations, le stock cible et le réassort magasin GBM dans la cible, et quelles
@@ -76452,13 +76473,13 @@ hotspot_catalog:
       - context_id: boardriders
         business_need: Tenir les magasins, rattachements et règles communes du réseau.
         system_coverage: not_assessed
-        handling: Laurent attribue le socle Retail Boardriders à Y2 ; son périmètre de pilotage du réseau n'est pas établi.
+        handling: Le socle Retail décrit pour Boardriders repose sur Y2 ; son périmètre de pilotage du réseau n'est pas établi.
         business_rules: []
         source_refs:
         - U1045
         evidence_state: to_investigate
         evidence_kind: analysis
-        limits: Présence déclarée par Laurent ; fonctions réseau, pays, marques, licences et modules non corroborés.
+        limits: Présence décrite dans les sources ; fonctions réseau, pays, marques, licences et modules non corroborés.
       comparison: Le pilotage du réseau est un périmètre Commerce distinct de la caisse et du stock ; aucune équivalence installée
         n’est établie.
       convergence_question: Quels référentiels et règles de réseau doivent converger, et où seront-ils tenus ?
@@ -76484,8 +76505,8 @@ hotspot_catalog:
       - context_id: beaumanoir-historique
         business_need: Vendre en ligne et relier les commandes aux stocks magasin et entrepôt.
         system_coverage: not_assessed
-        handling: Laurent décrit UR pour la vue de stock et la contribution eCommerce ; SoCloz a été retenu pour les parcours
-          depuis les stocks magasin ou entrepôt que la configuration UR GBM ne couvrait pas suffisamment.
+        handling: Les sources décrivent UR pour la vue de stock et la contribution eCommerce ; SoCloz a été retenu pour les
+          parcours depuis les stocks magasin ou entrepôt que la configuration UR GBM ne couvrait pas suffisamment.
         business_rules: []
         source_refs:
         - U03
@@ -76497,7 +76518,7 @@ hotspot_catalog:
       - context_id: boardriders
         business_need: Vendre en ligne et transmettre les commandes à la chaîne de traitement.
         system_coverage: not_assessed
-        handling: Laurent situe SFCC en amont de NewStore pour le eCommerce ; il n’attribue pas cette fonction à Y2.
+        handling: Les sources situent SFCC en amont de NewStore pour le eCommerce ; cette fonction n’est pas attribuée à Y2.
         business_rules: []
         source_refs:
         - U1043

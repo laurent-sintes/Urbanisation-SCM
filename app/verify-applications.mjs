@@ -11,6 +11,9 @@ const output = resolve(root, 'app/.runtime/qa-applications');
 const index = JSON.parse(await readFile(resolve(dist, 'data/index.json'), 'utf8'));
 const version = index.current_version;
 const published = JSON.parse(await readFile(resolve(dist, `data/${version}/model.json`), 'utf8'));
+// This isolated fixture exercises capability-to-BA projection with HS-016.
+// Its production visibility remains unchanged; hidden hotspots stay outside the picker.
+published.hotspot_catalog.hotspots.find((item) => item.id === 'HS-016').visible = true;
 const applicationCatalog = JSON.parse(
   execFileSync(
     process.env.ATLAS_PYTHON || 'python',

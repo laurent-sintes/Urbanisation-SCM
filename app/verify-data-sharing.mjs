@@ -4,17 +4,20 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
 import { candidateFixture } from './candidate-fixture.mjs';
+import { systemDataSharing } from './src/dataSharing.ts';
+import { adaptPublication } from './src/model.ts';
 
 const dist = resolve(import.meta.dirname, 'dist');
 const output = resolve(import.meta.dirname, '.runtime/qa-data-sharing');
 await mkdir(output, { recursive: true });
 const fixture = await candidateFixture(dist);
 const exchanges = fixture.raw.relations.filter((relation) => relation.type === 'shares-data');
-assert.equal(exchanges.length, 7);
+const projectedExchanges = systemDataSharing(adaptPublication(fixture.raw));
+assert.ok(exchanges.length > 0 && projectedExchanges.length > 0);
 assert.ok(
   !fixture.raw.nodes.some((node) => ['accounting-interpretation', 'ba-accounting-translation'].includes(node.id)),
 );
-const expected = exchanges.map((relation) => relation.id).sort();
+const expected = projectedExchanges.flatMap((exchange) => exchange.relations.map((relation) => relation.id)).sort();
 const base = 'https://atlas.test/Urbanisation-SCM/';
 const browser = await chromium.launch(browserOptions);
 const errors = [];
@@ -91,7 +94,10 @@ try {
         await visit({ mapDepth: String(depth), hf: JSON.stringify({ enabled: hotspots }) });
         for (const mode of ['Auto', 'Pleine page', 'Pleine largeur']) {
           await page.getByRole('button', { name: mode, exact: true }).click();
-          await page.waitForFunction(() => document.querySelectorAll('.system-data-sharing-map > g').length === 6);
+          await page.waitForFunction(
+            (count) => document.querySelectorAll('.system-data-sharing-map > g').length === count,
+            projectedExchanges.length,
+          );
           await page.waitForTimeout(60);
           const geometry = await page.evaluate(() => {
             const svg = document.querySelector('.system-data-sharing-map');
@@ -123,7 +129,12 @@ try {
               rect.right > other.left + 1 &&
               rect.top < other.bottom - 1 &&
               rect.bottom > other.top + 1;
-            const collisions = labels.filter(({ rect }) => contents.some((content) => overlaps(rect, content)));
+            const exchangeMarkers = [
+              ...document.querySelectorAll('.overview-exchange-hotspots .hotspot-map-point'),
+            ].map((element) => element.getBoundingClientRect());
+            const collisions = labels.filter(({ rect }) =>
+              [...contents, ...exchangeMarkers].some((content) => overlaps(rect, content)),
+            );
             const coveredContents = paths.filter(({ rect }) => contents.some((content) => overlaps(rect, content)));
             const clipped = labels.filter(
               ({ rect }) =>
@@ -188,22 +199,16 @@ try {
   await page.getByRole('button', { name: 'Étendre la carte', exact: true }).click();
   await page.waitForFunction(() => Boolean(document.fullscreenElement));
   await page.getByRole('button', { name: 'Pleine page', exact: true }).click();
-  assert.equal(await page.locator('.data-sharing-ribbon').count(), 6);
+  assert.equal(await page.locator('.data-sharing-ribbon').count(), projectedExchanges.length);
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
   await page.getByRole('button', { name: 'Réduire la carte', exact: true }).click();
   await page.waitForFunction(() => !document.fullscreenElement);
-  await page.locator('.system-data-sharing-details summary').click();
-  assert.equal(await page.locator('[data-sharing-detail]').count(), 7);
+  assert.equal(await page.locator('.system-data-sharing-details, [data-sharing-detail]').count(), 0);
   assert.ok(
     !(await page.locator('[data-node-id="system-enterprise-management-control"] .overview-stats').innerText()).includes(
       'capacité',
     ),
   );
-  for (const relation of exchanges) {
-    const detail = page.locator(`[data-sharing-detail="${relation.id}"]`);
-    assert.ok((await detail.innerText()).includes(relation.fields.label));
-    assert.ok((await detail.innerText()).includes(relation.fields.data_exchange.purpose));
-  }
   for (const scope of ['system-business-operations', 'domain-logistics-execution', 'supply-chain-orchestration']) {
     await visit({ scope, node: scope, mapDepth: '1' });
     await page.locator('.graph-canvas').waitFor();

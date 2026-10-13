@@ -1,0 +1,30 @@
+id: data-sharing-map-cleanup-U1068
+source_refs:
+- U1068
+status: applied
+agreement_scope: Libellé de synthèse raccourci et panneau récapitulatif supprimé de la vue globale ; contenu des relations
+  inchangé.
+glossary_alignment:
+  checked_terms:
+  - TER120
+  - TER114
+  changed: false
+  reason: Faits de gestion reprend le libellé détaillé existant, sans modification de sens ou de responsabilité.
+market_comparison: Correction de présentation seule ; aucun périmètre métier ou comparaison éditeur modifié.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1068
+  summary: 'Synthèse de la flèche vers Finance : Faits de gestion.'
+  required_relations:
+  - id: REL-U979-management-facts
+    source_id: system-business-operations
+    target_id: system-enterprise-management-control
+    field_sha256:
+      summary_label: b442f97c183688cdfa8f853a4cc3113a7985c31a47139d90b2bf0ed90ae513b4
+  supersedes_requirements:
+  - annex: data-sharing-summary-U998.yaml
+    collection: relations
+    id: REL-U979-management-facts
+    fields:
+    - summary_label

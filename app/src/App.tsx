@@ -1144,7 +1144,7 @@ export function App() {
                       applicationSelectionId={route.appSelection}
                       applicationComponentId={route.appComponent}
                       onApplicationChange={(appSelection, appComponent) =>
-                        changeRoute({ appSelection, appComponent }, true)
+                        changeRoute({ view: 'map', appSelection, appComponent }, true)
                       }
                       onOpenHotspot={(hotspot, groupIds) =>
                         changeRoute({
@@ -1188,7 +1188,7 @@ export function App() {
                       applicationSelectionId={route.appSelection}
                       applicationComponentId={route.appComponent}
                       onApplicationChange={(appSelection, appComponent) =>
-                        changeRoute({ appSelection, appComponent }, true)
+                        changeRoute({ view: 'map', appSelection, appComponent }, true)
                       }
                     />
                   )}

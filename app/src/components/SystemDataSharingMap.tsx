@@ -1,7 +1,6 @@
 import { useId, useLayoutEffect, useRef, useState } from 'react';
 import type { SystemDataSharing } from '../dataSharing';
 import type { PublishedModel } from '../types';
-import { ModelText } from './ModelLinks';
 
 type Box = { x: number; y: number; width: number; height: number };
 export type ExchangeMarkerAnchor = { exchangeId: string; x: number; y: number };
@@ -121,13 +120,13 @@ export function SystemDataSharingMap({
           lanes[lane].push(extent);
           const y = Math.max(source.y, target.y) + 8 + lane * 76;
           const length = Math.abs(endX - startX);
-          const lines = linesFor(exchange.label, 30);
+          const lines = linesFor(exchange.label, marked ? Math.max(8, Math.floor(((length - 42) / 2 - 52) / 7)) : 30);
           arrows.push({
             exchange,
             path: ribbon(length, 44, 68, 42),
             transform: `translate(${startX} ${y}) rotate(${right ? 0 : 180})`,
-            x: startX + (right ? 1 : -1) * (length - 42) * 0.5,
-            y: y + (marked ? 52 : 5) - ((lines.length - 1) * 16) / 2,
+            x: startX + (right ? 1 : -1) * (length - 42) * (marked ? 0.25 : 0.5),
+            y: y + 5 - ((lines.length - 1) * 16) / 2,
             lines,
             returning: !right,
             vertical: false,
@@ -201,44 +200,5 @@ export function SystemDataSharingMap({
         </g>
       ))}
     </svg>
-  );
-}
-
-export function SystemDataSharingDetails({
-  model,
-  exchanges,
-}: {
-  model: PublishedModel;
-  exchanges: readonly SystemDataSharing[];
-}) {
-  if (!exchanges.length) return null;
-  return (
-    <details className="system-data-sharing-details">
-      <summary>{exchanges.length} partages de données · voir les contenus et leurs frontières</summary>
-      <ul>
-        {exchanges.flatMap((exchange) =>
-          exchange.relations.map((relation) => (
-            <li key={relation.id} data-sharing-detail={relation.id}>
-              <strong>
-                {model.nodeById.get(relation.sourceId)?.name} → {model.nodeById.get(relation.targetId)?.name} :{' '}
-                {relation.label}
-              </strong>
-              {relation.dataExchange?.contents.map((content) => (
-                <p key={content.name}>
-                  <ModelText text={content.description} />
-                </p>
-              ))}
-              <p>{relation.dataExchange?.purpose}</p>
-              {relation.qualification.conditions?.map((condition) => (
-                <p key={condition}>
-                  <ModelText text={condition} />
-                </p>
-              ))}
-              <p>{relation.qualification.scope}</p>
-            </li>
-          )),
-        )}
-      </ul>
-    </details>
   );
 }

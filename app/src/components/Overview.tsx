@@ -15,7 +15,7 @@ import { MapHotspotPicker } from './MapHotspotPicker';
 import { MapZoomPicker, useMapZoomChoice } from './MapZoomPicker';
 import { MapNodeButton, MetaTypeLabel, ModelText } from './ModelLinks';
 import { OverviewColumns } from './OverviewColumns';
-import { type ExchangeMarkerAnchor, SystemDataSharingDetails, SystemDataSharingMap } from './SystemDataSharingMap';
+import { type ExchangeMarkerAnchor, SystemDataSharingMap } from './SystemDataSharingMap';
 import './hotspots.css';
 
 const plainDefinition = (text: string) => text.replace(/^\[[^\]]+\]\([^)]*\)\s*:\s*/, '');
@@ -86,7 +86,7 @@ export function Overview({
   }, []);
   const hotspots = model.raw.hotspot_catalog?.hotspots || [];
   const applicationCatalog = model.raw.application_catalog;
-  const applicationSelection = applicationCatalog?.selections.find((item) => item.id === applicationSelectionId);
+
   const applicationMappings = useMemo(
     () => selectionMappings(applicationCatalog, applicationSelectionId, applicationComponentId),
     [applicationCatalog, applicationSelectionId, applicationComponentId],
@@ -389,23 +389,6 @@ export function Overview({
           </button>
         </div>
       </div>
-      {applicationSelection && (
-        <p className="application-map-note" role="status">
-          {applicationMappings.length === 0 ? (
-            <>Aucun lien métier enregistré pour {applicationComponentId ? 'ce composant' : 'ce produit'}.</>
-          ) : (
-            <>
-              {applicationMappings.length} correspondance{applicationMappings.length > 1 ? 's' : ''} qualifiée
-              {applicationMappings.length > 1 ? 's' : ''} ·{' '}
-              {applicationSelection.perspective === 'target'
-                ? 'périmètre cible'
-                : 'déclarations et documents à confirmer'}
-              . Trait plein : correspondance directe. Trait pointillé : parent de repérage, sans couverture déduite de
-              ses descendants.
-            </>
-          )}
-        </p>
-      )}
       <div
         ref={scroll}
         className="overview-map-scroll"
@@ -413,7 +396,6 @@ export function Overview({
         aria-label="Carte des systèmes métier"
         tabIndex={0}
       >
-        <SystemDataSharingDetails model={model} exchanges={dataSharing} />
         {hotspotFilters.enabled && (
           <HotspotLegend
             count={visibleHotspots.length}
