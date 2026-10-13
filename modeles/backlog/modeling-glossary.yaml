@@ -539,6 +539,11 @@ terms:
   - U889
   - U975
   - U981
+  - U1025
+  - U1023
+  - U1024
+  - U1026
+  - U1027
   review:
     state: partial
     adopted_scope: 'U482 : nom Domain et position au-dessus des Areas.'
@@ -548,8 +553,10 @@ terms:
     leur vocabulaire.
   - U780 ajoute Business System au-dessus de Domain ; la profondeur de description varie selon le périmètre. Les publications
     historiques gardent leurs niveaux.
-  - U981 réserve la décomposition en [Business Areas](method:MOD039), [capacités](method:MOD015) et [comportements](method:MOD006)
-    à Supply Chain Orchestration ; les autres domaines de contexte sont décrits jusqu’aux [sous-domaines](method:MOD013).
+  - 'U1025 fait évoluer U981 : [Supply Chain Orchestration](model:supply-chain-orchestration) reste détaillé jusqu’aux [capacités](method:MOD015)
+    et [comportements](method:MOD006). [Commerce](model:domain-sales), [Sourcing and Procurement](model:domain-sourcing-procurement)
+    et les domaines de [Logistics](model:domain-logistics-execution) peuvent aller jusqu’aux [Business Areas](method:MOD039)
+    terminales de contexte ; les autres domaines gardent leur profondeur déclarée.'
   short_description: Grand périmètre de responsabilités métier au sein d’un système métier.
 - id: MOD013
   name: Subdomain
@@ -1714,7 +1721,8 @@ terms:
   name: Business Area
   label_fr: Périmètre de responsabilité métier
   definition: Partie cohérente de la responsabilité d’un sous-domaine, définie par sa finalité, ses résultats et ses frontières.
-    Elle porte des capacités ou un périmètre de références documentaires.
+    Elle porte des capacités ou des références documentaires ; dans un domaine explicitement limité à ce niveau, elle peut
+    rester un périmètre de contexte sans descendants.
   short_description: Périmètre de responsabilité obligatoire entre un sous-domaine et ses capacités ; peut aussi porter des
     références.
   role: Préciser une finalité et des frontières métier avant de détailler les savoir-faire.
@@ -1725,6 +1733,9 @@ terms:
   - 'Chaque capacité a un parent métier unique : une Business Area de son sous-domaine.'
   - Une Area de références porte leur cohérence et leur fourniture locale. Elle les présente sans les transformer en capacités
     ; chaque référence conserve un parent de présentation unique.
+  - U1025 autorise des Business Areas terminales dans les domaines de contexte dont la profondeur le prévoit explicitement,
+    Commerce, Sourcing and Procurement et les domaines Logistics depuis U1027. Aucune capacité artificielle n’est créée pour
+    remplir ce niveau ; les capacités existantes restent toutes rattachées à leur Business Area.
   source_refs:
   - U845
   - U846
@@ -1732,6 +1743,11 @@ terms:
   - U848
   - U863
   - U880
+  - U1025
+  - U1023
+  - U1024
+  - U1026
+  - U1027
   review:
     state: proposed
     note: Plan validé U848 ; accords de champs et rattachements capturés séparément.

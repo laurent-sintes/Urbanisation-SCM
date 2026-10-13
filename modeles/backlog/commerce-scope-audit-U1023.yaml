@@ -1,0 +1,411 @@
+id: commerce-scope-audit-U1023
+status: completed_proposal_not_applied
+source_refs:
+- U1023
+scope:
+  domain_id: domain-sales
+  subdomain_count: 8
+  depth: Domain et Subdomain ; aucune Business Area ni capacité adjacente ajoutée
+evidence:
+  model: modeles/backlog/model.yaml
+  glossary: modeles/backlog/glossary.yaml
+  consulted_on: '2026-10-13'
+  current_publication_unchanged: 2026-10-13.3
+findings:
+- id: COM1023-01
+  type: model_observation
+  severity: high
+  finding: Huit sous-domaines au même niveau mélangent modalités de vente, clientèles et fonctions commerciales transversales.
+  targets:
+  - subdomain-sales-b2c-ecommerce
+  - subdomain-sales-b2c-store
+  - subdomain-sales-wholesale
+  - subdomain-assortment-catalog-management
+  - subdomain-retail-network-management
+  - subdomain-store-backoffice-operations
+  - subdomain-pricing-promotions-management
+  - subdomain-rebates-incentives-management
+  effect: Une liste de noms ne donne pas le récit du domaine.
+- id: COM1023-02
+  type: model_observation
+  severity: high
+  finding: Le périmètre retail est distribué entre vente numérique, vente magasin, réseau et opérations magasin.
+  effect: Le lecteur doit reconstruire lui-même le commerce au consommateur et ses opérations.
+- id: COM1023-03
+  type: interpretation
+  severity: medium
+  finding: Digital Commerce est limité au B2C dans FLOW, alors que numérique peut aussi être une modalité de vente wholesale.
+  evidence:
+  - ms-b2b
+  - ms-channels
+  recommendation: Distinguer clientèle et modalité ; ne pas déplacer un portail revendeur vers retail parce qu’il est numérique.
+- id: COM1023-04
+  type: interpretation
+  severity: medium
+  finding: Store Commerce a une portée étroite de vente et caisse dans FLOW ; Microsoft emploie le même nom pour un produit
+    couvrant aussi stock et réalisation en magasin. Store Backoffice Operations évoque une organisation alors que sa définition
+    porte des opérations métier.
+  evidence:
+  - ms-store
+  - sap-store
+  recommendation: Au maintien de la granularité actuelle, examiner Store Sales et Store Operations ; sinon préserver leurs
+    responsabilités dans un regroupement Retail Commerce. Noms proposés, non appliqués.
+- id: COM1023-05
+  type: recommendation
+  severity: medium
+  finding: Offre, prix et avantages différés ont des consommateurs retail et wholesale.
+  evidence:
+  - ms-assortment
+  - sap-assortment
+  - ms-pricing
+  - sap-pricing
+  - ms-rebates
+  - sap-rebates
+  recommendation: Conserver leurs responsabilités communes hors du seul regroupement retail ; dispositif et règlement restent
+    distincts.
+- id: COM1023-06
+  type: boundary_to_clarify
+  severity: medium
+  finding: Stock et préparation locale sont décrits dans les opérations magasin ; Warehousing décrit aussi réception, comptage
+    et préparation, sans préciser la frontière magasin/entrepôt.
+  recommendation: Qualifier le mandat local et les faits reconnus sans supposer un transfert à Logistics. FLOW conserve sa
+    référence de stock et sa coordination ; Store Visibility ne couvre pas toutes les ventes.
+- id: COM1023-07
+  type: coverage_not_demonstrated
+  severity: medium
+  finding: Relation client, fidélité et après-vente commercial ne disposent pas d’un mandat autonome explicite dans les huit
+    sous-domaines. La vente mentionne la relation client mais la profondeur attendue reste inconnue.
+  recommendation: Qualifier couverture et autorité avant tout ajout ; aucun nouveau sous-domaine CRM, fidélité ou marketplace
+    présumé.
+assessments:
+- id: domain-sales
+  name: Commerce
+  kind: domain
+  baseline_sha256: 25be2e5db5ea11b33e656a4db61674fade2647214123c5efaae925c24eb3d07c
+  glossary_id: TER108
+  glossary_definition_aligned: true
+  market_support_ids:
+  - ms-channels
+  - sap-fashion
+  market_relationship: partial_overlap
+  scope_result: Responsabilité lisible dans la fiche ; défaut principal de cohérence entre axes et regroupements, pas preuve
+    de réalisation installée.
+- id: subdomain-sales-b2c-ecommerce
+  name: Digital Commerce
+  kind: area
+  baseline_sha256: 52ab42a306fc4c64652dba87f6ecd828a47f33d74da785e79674cc42cef221a6
+  glossary_id: TER191
+  glossary_definition_aligned: true
+  market_support_ids:
+  - ms-channels
+  - sap-sales
+  market_relationship: partial_overlap
+  scope_result: Responsabilité lisible dans la fiche ; défaut principal de cohérence entre axes et regroupements, pas preuve
+    de réalisation installée.
+- id: subdomain-sales-b2c-store
+  name: Store Commerce
+  kind: area
+  baseline_sha256: 4ce0ba3328280b698b15bbd16236039941ac2d5ec68ffe246e5216d09613e748
+  glossary_id: TER192
+  glossary_definition_aligned: true
+  market_support_ids:
+  - ms-store
+  - sap-sales
+  market_relationship: partial_overlap
+  scope_result: Responsabilité lisible dans la fiche ; défaut principal de cohérence entre axes et regroupements, pas preuve
+    de réalisation installée.
+- id: subdomain-sales-wholesale
+  name: Wholesale Commerce
+  kind: area
+  baseline_sha256: f030926d134d2a47fbd3708b09ff0ed946ed12f0771da9fb641159ccb90495b6
+  glossary_id: TER193
+  glossary_definition_aligned: true
+  market_support_ids:
+  - ms-b2b
+  - sap-wholesale
+  market_relationship: partial_overlap
+  scope_result: Responsabilité lisible dans la fiche ; défaut principal de cohérence entre axes et regroupements, pas preuve
+    de réalisation installée.
+- id: subdomain-assortment-catalog-management
+  name: Assortment & Catalog Management
+  kind: area
+  baseline_sha256: 31ca71923291135539462058f70486d7c13e1f861a7b1fe13d332f00544fb809
+  glossary_id: TER245
+  glossary_definition_aligned: true
+  market_support_ids:
+  - ms-assortment
+  - sap-assortment
+  market_relationship: partial_overlap
+  scope_result: Responsabilité lisible dans la fiche ; défaut principal de cohérence entre axes et regroupements, pas preuve
+    de réalisation installée.
+- id: subdomain-retail-network-management
+  name: Retail Network Management
+  kind: area
+  baseline_sha256: 9e896e4522b232a9162e35eb9c75e81a939425d2aab0ecc6eb90dd3d4b0cda54
+  glossary_id: TER247
+  glossary_definition_aligned: true
+  market_support_ids:
+  - ms-channels
+  - sap-network
+  market_relationship: partial_overlap
+  scope_result: Responsabilité lisible dans la fiche ; défaut principal de cohérence entre axes et regroupements, pas preuve
+    de réalisation installée.
+- id: subdomain-store-backoffice-operations
+  name: Store Backoffice Operations
+  kind: area
+  baseline_sha256: 21afccd330432f547a29e96cf5fd4b2ff631a1ce84e364630e59481780f2bfdc
+  glossary_id: TER248
+  glossary_definition_aligned: true
+  market_support_ids:
+  - ms-store
+  - sap-store
+  market_relationship: partial_overlap
+  scope_result: Responsabilité lisible dans la fiche ; défaut principal de cohérence entre axes et regroupements, pas preuve
+    de réalisation installée.
+- id: subdomain-pricing-promotions-management
+  name: Pricing & Promotions Management
+  kind: area
+  baseline_sha256: 82d90e797bcff3e43ce5b6765127aff6797c63010cb866de59be9937b5d0dfb5
+  glossary_id: TER254
+  glossary_definition_aligned: true
+  market_support_ids:
+  - ms-pricing
+  - sap-pricing
+  market_relationship: partial_overlap
+  scope_result: Responsabilité lisible dans la fiche ; défaut principal de cohérence entre axes et regroupements, pas preuve
+    de réalisation installée.
+- id: subdomain-rebates-incentives-management
+  name: Rebates & Incentives Management
+  kind: area
+  baseline_sha256: dfef6bbc0abc8c59ecf06b333b4466652a4a02921a2f76ba5b86d2e8f8dec12d
+  glossary_id: TER255
+  glossary_definition_aligned: true
+  market_support_ids:
+  - ms-rebates
+  - sap-rebates
+  market_relationship: partial_overlap
+  scope_result: Responsabilité lisible dans la fiche ; défaut principal de cohérence entre axes et regroupements, pas preuve
+    de réalisation installée.
+market_sources:
+- id: ms-channels
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: Channels overview
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/channels-overview
+  locator: Types of channels ; Channel setup basics
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Canaux magasin, centre d’appel et en ligne ; paramètres communs d’offre, prix et organisation.
+  limits: Retail désigne ici le canal physique ; ne pas importer ce sens restreint dans le regroupement FLOW proposé.
+- id: ms-store
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: Store Commerce app
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce
+  locator: Introduction ; liste des opérations Commerce
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Vente, caisse, relation client, préparation et stock réunis dans une application magasin.
+  limits: Périmètre produit plus large que le sous-domaine actuel Store Commerce ; ne prescrit pas un découpage de capacités.
+- id: ms-assortment
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: Assortment management
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/assortments
+  locator: Introduction ; Organization hierarchies
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Assortiments associent produits, groupes de canaux et périodes de vente.
+  limits: Admissibilité commerciale, pas preuve de disponibilité physique ou couverture complète des catalogues.
+- id: ms-b2b
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: B2B indirect workflows
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/b2b/b2b-indirect
+  locator: Overview ; features and benefits
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Relations entre fabricants, distributeurs et acheteurs professionnels, avec commandes via représentants.
+  limits: Exemple de vente indirecte numérique ; ne couvre pas seul tout le wholesale saisonnier.
+- id: ms-pricing
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Sales trade agreement prices
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/unified-pricing-management/upm-sales-trade-agreement-prices
+  locator: Sales trade agreement prices
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Prix commerciaux contextualisés selon les accords.
+  limits: Appui aux prix, pas équivalence complète de la politique promotionnelle ou des responsabilités FLOW.
+- id: ms-rebates
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Rebate management module overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/rebate-management/rebate-management-overview
+  locator: Overview ; Basis calculation
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Accords clients ou fournisseurs et traitement des ristournes différées.
+  limits: Le produit réunit définition, calcul et traitement ; FLOW conserve la séparation avec le règlement sous Finance.
+- id: sap-fashion
+  vendor: SAP
+  product: SAP S/4HANA for fashion and vertical business
+  title: Getting a Business Process Overview
+  url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/getting-a-business-process-overview_dc53cbb3-5b68-4bb1-a163-7b4437784888
+  locator: Specifics of the Vertical Fashion Businesses ; Overall Business Process Overview
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Retail, wholesale et fabrication coopèrent sur des données et flux communs.
+  limits: Périmètre produit incluant achats, fabrication et logistique ; plus large que Commerce FLOW.
+- id: sap-store
+  vendor: SAP
+  product: SAP S/4HANA Retail
+  title: Managing Retail Store Operations
+  url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/managing-retail-store-operations_f77c8f4d-b247-4ef0-879b-3c4f469a6323
+  locator: SAP Fiori Apps for Retail Store Operations
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Réception, comptage, mouvements internes et préparation/remise des commandes en magasin.
+  limits: Appui aux opérations locales ; ne prouve pas toute gouvernance du réseau ou tout commerce numérique.
+- id: sap-sales
+  vendor: SAP
+  product: SAP S/4HANA Retail
+  title: Selling to Customers - Sales Order
+  url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/selling-to-customers-sales-order_fb704049-b43b-49c4-b17b-daf3fc42793f
+  locator: Selling to Customers ; Click and Collect Process
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Prise de commande et parcours commande en ligne avec retrait en magasin.
+  limits: Appui partiel au parcours consommateur ; ne couvre pas toute découverte de l’offre ou caisse.
+- id: sap-network
+  vendor: SAP
+  product: SAP S/4HANA Retail
+  title: Exploring the Business Partner, Retail Sites, and Article Groupings
+  url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/exploring-the-business-partner-retail-sites-and-article-groupings_ccbc5aa0-3702-4244-951d-9dcb8de51064
+  locator: Customer, Supplier, and Site Master in SAP Retail
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Magasins et centres de distribution sont des sites avec rattachements et fonctions différenciés.
+  limits: Données et organisation de sites ; appui plus étroit que toute exploitation d’un réseau.
+- id: sap-assortment
+  vendor: SAP
+  product: SAP S/4HANA Retail
+  title: Introducing Assortment Management
+  url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/introducing-assortment-management_c4100b3e-db2f-49ed-8724-faf679d1be8d
+  locator: Assortment Management and Layout Workbench
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Articles proposés aux sites et clients, périodes et groupes ; information distribuée aux systèmes magasin.
+  limits: SAP inclut aussi implantation en rayon ; aucun transfert de ce mandat vers FLOW par simple analogie.
+- id: sap-wholesale
+  vendor: SAP
+  product: SAP S/4HANA for fashion and vertical business
+  title: Explaining Sales Order Handling
+  url: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-sales-order-handling_b87d52ef-bf38-4a67-b6f5-7324019d8c24
+  locator: Sales Order Handling
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Commandes commerciales fashion et spécificités de vente aux revendeurs.
+  limits: Le produit traite aussi confirmations et livraison ; FLOW les répartit entre Commerce et Supply Chain Orchestration.
+- id: sap-pricing
+  vendor: SAP
+  product: SAP S/4HANA Sales
+  title: Introducing the Condition Technique
+  url: https://learning.sap.com/courses/configuring-pricing-in-sap-s-4hana-sales/introducing-the-condition-technique_dce0f313-dee6-470e-8851-3f1773cb5d45
+  locator: Pricing Procedure ; Search for a Valid Condition Record
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Conditions de prix applicables au contexte client et document de vente.
+  limits: Technique produit de calcul et sélection ; ne définit pas le sous-domaine complet FLOW.
+- id: sap-rebates
+  vendor: SAP
+  product: SAP S/4HANA Settlement Management
+  title: Outline the Structure of a Condition Contract
+  url: https://learning.sap.com/courses/exploring-sap-s-4hana-settlement-management/outline-the-structure-of-a-condition-contract_bf334045-48bb-4aae-98f7-83966c20eada
+  locator: Condition contract data ; Business Volume Selection Criteria ; Settlement Calendar
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Contrat de conditions, assiette et calendrier de règlement.
+  limits: Appui partiel à la définition ; le produit inclut le règlement que FLOW place sous Finance.
+access_limits:
+- url: https://learn.microsoft.com/en-us/dynamics365/commerce/b2b/set-up-b2b-site
+  result: Erreur de lecture pendant cette consultation ; non retenue comme nouvel appui. Source B2B indirect workflows consultée
+    à la place.
+recommended_option:
+  domain_retained: Commerce
+  subdomains:
+  - name: Retail Commerce
+    kind: area
+    definition: Conduire la vente aux particuliers en magasin et en ligne, exploiter le réseau et assurer les opérations locales
+      nécessaires à ces parcours.
+    combines_current_ids:
+    - subdomain-sales-b2c-ecommerce
+    - subdomain-sales-b2c-store
+    - subdomain-retail-network-management
+    - subdomain-store-backoffice-operations
+    market_support_ids:
+    - ms-channels
+    - ms-store
+    - sap-fashion
+    - sap-store
+    - sap-sales
+    limits: Regroupement FLOW proposé, pas taxonomie commune aux éditeurs ; retail inclut ici les ventes aux particuliers
+      en ligne. Les périmètres de réseau, vente et opérations restent explicités dans la fiche, sans sous-sous-domaines ni
+      capacités adjacentes.
+    tradeoff: Lecture regroupée à la maille contexte, mais moins de nœuds distincts pour les responsabilités retail ; si ces
+      frontières doivent être visibles dans la carte, garder les sous-domaines ou réexaminer la maille Domain.
+  - name: Wholesale Commerce
+    kind: area
+    retains_current_id: subdomain-sales-wholesale
+    definition: Conduire la relation commerciale et la vente aux revendeurs, avec leurs conditions négociées et la préparation
+      de leurs commandes.
+    market_support_ids:
+    - ms-b2b
+    - sap-wholesale
+  - name: Assortment & Catalog Management
+    kind: area
+    retains_current_id: subdomain-assortment-catalog-management
+    definition: Définir et publier l’offre proposée par magasin, canal ou partenaire, avec sa présentation commerciale et
+      sa période de validité.
+    market_support_ids:
+    - ms-assortment
+    - sap-assortment
+  - name: Pricing & Promotions Management
+    kind: area
+    retains_current_id: subdomain-pricing-promotions-management
+    definition: Définir les prix et promotions de vente, déterminer les prix applicables et publier les résultats autorisés.
+    market_support_ids:
+    - ms-pricing
+    - sap-pricing
+  - name: Rebates & Incentives Management
+    kind: area
+    retains_current_id: subdomain-rebates-incentives-management
+    definition: Définir les dispositifs de ristournes, primes commerciales et commissions de vente, leurs bénéficiaires et
+      leurs conditions.
+    market_support_ids:
+    - ms-rebates
+    - sap-rebates
+  count: 5
+  state: proposed
+  identity_rule: Arbitrer les identités conservées et retirées après accord ; ne pas réutiliser un identifiant retiré.
+  reason: Un regroupement retail, une responsabilité wholesale et trois responsabilités commerciales communes. La vente en
+    ligne reste une modalité de chaque clientèle, sans fusion avec le canal revendeur.
+alternative:
+  name: Conserver les huit sous-domaines avec ordre et vocabulaire cohérents
+  benefit: Préserve la visibilité des quatre responsabilités retail.
+  limit: Rapproche les nœuds mais ne crée pas un périmètre retail unique. Aucun niveau intermédiaire fictif ne peut être introduit
+    entre Domain et Subdomain.
+scenario_checks:
+  paths_examined:
+  - pickup-or-direct-shipment-path
+  - fashion-launch-path
+  - transfer-replenishment-order-driven-path
+  result: Ces parcours mobilisent les capacités Supply ; les contextes Commerce ne peuvent pas être inférés par un rattachement
+    des capacités. Le retrait magasin, l’ouverture de magasins et le transfert conservent leurs frontières actuelles.
+  examples_to_test_next:
+  - Commande web retirée en magasin
+  - Vente encaissée et emportée
+  - Réception partielle en magasin
+  - Commande saisonnière d’un revendeur par portail
+  - Conditions commerciales communes et règlement différé
+canonical_changes: Aucune modification du modèle, du glossaire ou de leurs rattachements. Audit et proposition à discuter.

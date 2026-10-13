@@ -1,0 +1,239 @@
+id: commerce-decomposition-approval-U1026
+status: applied_after_full_validation
+source_refs:
+- U1025
+- U1026
+agreement:
+  source_ref: U1026
+  verbatim: Je valide ce découpage. Avant prise en compte, je voudrais la même étude pour Sourcing And Procurement et Le système
+    Logistics pour lequel il manque même peut être des domaines.
+  approved_scope: 'Cinq sous-domaines Commerce et douze Business Areas : noms, responsabilités et rattachements proposés U1025,
+    avec frontières Supply/Finance et réserves de comparaison conservées.'
+  condition: Différer l’application du découpage jusqu’à l’étude analogue de Sourcing and Procurement et Logistics. Aucune
+    prise en compte canonique ni release.
+proposal_file: commerce-areas-proposal-U1025.yaml
+proposal_sha256: 711e72eb22fe81b224dfbc93271ace41f699f723eb548070ff901e5f15f6a738
+approved_hierarchy:
+- subdomain: Retail Commerce
+  business_area_names:
+  - Retail Network Management
+  - Digital Commerce
+  - Store Sales
+  - Store Operations
+- subdomain: Wholesale Commerce
+  business_area_names:
+  - Wholesale Account Management
+  - Wholesale Sales
+- subdomain: Assortment & Catalog Management
+  business_area_names:
+  - Assortment Management
+  - Catalog Management
+- subdomain: Pricing & Promotions Management
+  business_area_names:
+  - Pricing Management
+  - Promotion Management
+- subdomain: Rebates & Incentives Management
+  business_area_names:
+  - Rebate Management
+  - Sales Incentive Management
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1026
+  - U1027
+  summary: Accord Commerce U1026 appliqué au lot complet U1027.
+  required_nodes:
+  - id: subdomain-sales-b2c-ecommerce
+    field_sha256:
+      definition: a665669149bf5c9d98c1454b7d2c1585cd76f40ae59cf5770901c054eb8d85ba
+      finality: a665669149bf5c9d98c1454b7d2c1585cd76f40ae59cf5770901c054eb8d85ba
+      scope: 4fe91f5b95ac2751f470354475c9e8a7af30d99ce841d28de725b45d2b0ebf9f
+      market_comparisons: d3457ebcc726dc90c776948f57a209f1128538b98a4fb2930e097493b1742be5
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+  - id: subdomain-sales-b2c-store
+    field_sha256:
+      name: cf394dc2694cebd586249e68939dff76dcd693a594b29c7f21b1c90aeaa2245c
+      definition: 046c6a81148d7f47155e95bc6d7a9dc143b9e7b87ad2150f36c760a08802f78b
+      finality: 046c6a81148d7f47155e95bc6d7a9dc143b9e7b87ad2150f36c760a08802f78b
+      scope: fadac38fe0bc5f0f79fa6a22b90b9d8f87e85c85cc212f4c5b71d7eea819b384
+      market_comparisons: c1c832b6c2410f7ed42785566682080aebad80ecc7e9ec78350d4eb3289f2625
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+  - id: subdomain-sales-wholesale
+    field_sha256:
+      finality: f50f57ebb9bbfc530b6b9f60b34a9f08d406903ba86da89157e8410fc5ed65ad
+      scope: a1023633f3effa9d7f9a824faea74fcee7b7ea39648deb222cb2533cac9cd207
+      market_comparisons: d436addc1f2cbe8531988048e5104d128cd4c335417d8181a50d968ccdf9eef4
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: subdomain-assortment-catalog-management
+    field_sha256:
+      finality: 2e797054e9d5412d4bec110d1d6dbaa64d1b456b05b7ee428deeb2ade20a45b2
+      scope: e13c20509c031af486a8ebadcd2a6a45b6881d5de599b59dcdad49d63d4b8ab5
+      market_comparisons: 7198e9b4f87f974e304d59a04088c492a0014cec485c4cec8b0748c7d4558862
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: subdomain-retail-network-management
+    field_sha256:
+      finality: 565b0c5e782775b5907c9c2bba9a43aae96d93ae1f979da885c3fb5e31a6f136
+      scope: e98160de9916c388d80aa4f8073c69906d49ae4c617dafa3448f5adf707f44b3
+      market_comparisons: b9ca143cea6b433b68a515ed6353bcf034b06ae43b01c38880f9db59c87cef60
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+  - id: subdomain-store-backoffice-operations
+    field_sha256:
+      name: 497d474f6cea681760ce6971f5073cca7f76b3dc3f4684b50217a3863a4ba94d
+      definition: 4de608f465d152643a7191cadcbd08209b4334896e3f5aa65764db05d25af9d3
+      finality: 4de608f465d152643a7191cadcbd08209b4334896e3f5aa65764db05d25af9d3
+      scope: 5ce62e0bd1ee73afd03a85362a34d3ae0c14efefbe064ec21c0c95ae00143d2b
+      market_comparisons: e51ccac8d7aaedd1dd6683cb7a36d88b3e97ecf0be22d20f6b45416a0ad62085
+      reading_order: 4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+  - id: subdomain-pricing-promotions-management
+    field_sha256:
+      scope: 0a632a39497e84ce05be4d216b0be673b06fde92f3c0f7bac9d4f7b06f6a4acd
+      market_comparisons: 8f325a02c4ca9e3ee2c2fd32f21a8a027d09dfc52b79e807217cc15033dd3ec0
+      reading_order: 4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: subdomain-rebates-incentives-management
+    field_sha256:
+      scope: 3f1834a3b12b193e798d6d9d7e0c83b0d9bbf90484473f44ff991c9150f10fc0
+      market_comparisons: 19621af68869fb30fe7786a0f5ebb7520c14c9a1a47ff69ec76abbd1621b9a7e
+      reading_order: ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: subdomain-retail-commerce
+    field_sha256:
+      name: 51b55be61480919cb3305a62cf5b19a6ec18fc6292b731d226c20ba58ea8e532
+      definition: 262523c11b1879ef3daf0a04fa675058ca6ccca26f2554a9164d8a94a53cf78c
+      finality: 262523c11b1879ef3daf0a04fa675058ca6ccca26f2554a9164d8a94a53cf78c
+      scope: 9e06991de108f2bd362bc60cb0769885a19b3c9390f55fe7f5bbf3ec24640a25
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: baf34bc179fea75a92eb57b2bdb56984b8d855abfd7d10f39a533c2084f68ec9
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: ba-wholesale-account-management
+    field_sha256:
+      name: 14558e4806b35dfc49e1bfdbc8c0c28bc9ba0f8dbdf211b43995abcbd56f1ee3
+      definition: dc3e86fa4088eb445cf5c1d97ad3ede4841ceeeb0048fa425fcd8c9472926a7c
+      finality: dc3e86fa4088eb445cf5c1d97ad3ede4841ceeeb0048fa425fcd8c9472926a7c
+      scope: 76c68078ec75ce4dea2f738fd812245cb9f1f7b88a781d84ccce6cb3048fe01d
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 927040250ce38bfd6a3331d99c63ac087f2d13a6ff8e5880056c14a54839cd85
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-sales-wholesale
+    parent_type: contains
+  - id: ba-wholesale-sales
+    field_sha256:
+      name: 3213a723f99d49376b7cb8f625530038841bc8ab6bfb418860dec2164538b031
+      definition: af8d2b1a5263b10cba48382c919f46f1531f0bff3ae12e76afce2743026b5612
+      finality: af8d2b1a5263b10cba48382c919f46f1531f0bff3ae12e76afce2743026b5612
+      scope: 46694228712dd1b4e5462e4217f6bcfb7326d7b6ee4b364519d0d6c4186272ae
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 99f31b3ce5613cc12bb587f7a7a7596af0a7411a90011661c3c18f60c32faf88
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-sales-wholesale
+    parent_type: contains
+  - id: ba-assortment-management
+    field_sha256:
+      name: 94e2ccdea21ef225b7735a38c2fae57d5abd0c1b8a219a3f826502558fa56e7f
+      definition: b2c0046e1b1b75ee0c67bd2ab40f41bb77414c0e5878889bbda50c1393305383
+      finality: b2c0046e1b1b75ee0c67bd2ab40f41bb77414c0e5878889bbda50c1393305383
+      scope: 3ff858b2fb2d2577cd0537d10d7d2027162220d3623b9abc5c3491ba6861f09c
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: faed85eb7601cf01b891687824aea403deec4b153892c14cbd6da8d4085ce794
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-assortment-catalog-management
+    parent_type: contains
+  - id: ba-catalog-management
+    field_sha256:
+      name: c530f021769c58e752dd0e4204b99a1f908d781d6020af3e59f31ac54b4fd18a
+      definition: 301a2ebbc454af737a5b7f708d07ea436554af807e9471722996c5cadff303a9
+      finality: 301a2ebbc454af737a5b7f708d07ea436554af807e9471722996c5cadff303a9
+      scope: a850d70adb9ce28f870a42d2b5d600510b7f277f7f78a31ed99d947aba78c58c
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 3676b0db5d51f23ae49fe44bb681138a9b46cf095735aa75227079db9b9a2144
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-assortment-catalog-management
+    parent_type: contains
+  - id: ba-pricing-management
+    field_sha256:
+      name: 848e4562db42a29eff9066251b70bc1f199f99f9a5aee18ca58a003113866b13
+      definition: d61a9faad5204e3c8433001c74218af31e6fd0a2ec6bfc49ce28a95c9c83fcab
+      finality: d61a9faad5204e3c8433001c74218af31e6fd0a2ec6bfc49ce28a95c9c83fcab
+      scope: 6c39223247db28b7bddc8db2aa788fea8533a77d92ea59ed4cd1f24274381ece
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 72c84eeca0a7e506be9e52116344557ab6d08e1083802e57e1b4e2adc003c656
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-pricing-promotions-management
+    parent_type: contains
+  - id: ba-promotion-management
+    field_sha256:
+      name: ea79fd6ecd9f5406b33ea8577d33aa55cbb6422bdbb2c9161f6b6688858f96f0
+      definition: 445b9ccccc2aa186347dc952df3af4ab4eccd760a69b2b1e79727b3d5c513413
+      finality: 445b9ccccc2aa186347dc952df3af4ab4eccd760a69b2b1e79727b3d5c513413
+      scope: b2af6cf300329e592c010963951898b64000160732a6c715ea6b8bb74c3e0921
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 73a905b43ff0ca90d7255b695daee9fc45042b33bbe8c6907809789400212aeb
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-pricing-promotions-management
+    parent_type: contains
+  - id: ba-rebate-management
+    field_sha256:
+      name: 1c0cf12ef17f95c85a49db98cb5821a1db0e0cef628b26569a078776dc8aba6c
+      definition: 125f5d8a43afbda1ef4719e18ddec0c4a51e97adc56ec829ed90c56ddeb3cc6b
+      finality: 125f5d8a43afbda1ef4719e18ddec0c4a51e97adc56ec829ed90c56ddeb3cc6b
+      scope: dce3384b5f8a1cb5295c166bca9868f3f2f27e985765700dd84ef87f5d1d10b5
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: b3adab1eecc4ff39b4a67874e6ca41112d05753d1060e38bf18afe6bedbadbec
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-rebates-incentives-management
+    parent_type: contains
+  - id: ba-sales-incentive-management
+    field_sha256:
+      name: 0136efb8e0d983b3291ae30c864ad86340c9d31cc5ac289175d7d233dd429d0e
+      definition: a4c48954feeee4b452f7971dad9dfa34199c2d4bf88df89d5d0b7a494785a1a7
+      finality: a4c48954feeee4b452f7971dad9dfa34199c2d4bf88df89d5d0b7a494785a1a7
+      scope: df1eb13f926e6669068efae9b4e21fbb1cff824600fa75d46aa51f5a42a769b8
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 911d7693b9d34066c3e87031aa5596bdfe87f033709b3007be31f8a6d7ad8f3f
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-rebates-incentives-management
+    parent_type: contains
+application:
+  source_ref: U1027
+  annex: context-structure-application-U1027.yaml

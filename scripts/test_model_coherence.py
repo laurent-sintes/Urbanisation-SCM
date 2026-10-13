@@ -83,6 +83,7 @@ class ModelCoherenceTests(unittest.TestCase):
         refinements=read(ROOT/'modeles/backlog/order-backlog-refinements-U1010.yaml')
         current.update(refinements['reading_code_expectations'])
         current.update(read(ROOT/'modeles/backlog/availability-scope-story-U1018.yaml')['reading_code_expectations'])
+        current.update(read(ROOT/'modeles/backlog/context-structure-application-U1027.yaml')['reading_code_expectations'])
         index=build_display_index(self.model)
         for example in audit['reading_codes']['examples']:
             if example['id'] in refinements['publication_delivery']['absent_nodes']:

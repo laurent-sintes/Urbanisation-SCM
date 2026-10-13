@@ -184,6 +184,11 @@ def validate_urbanism(model, sources, schema=None):
     if any(n.get('kind') == 'business_area' for n in nodes.values()) and not business_areas:
         errors.append('business-area: explicit principle required')
     if business_areas:
+        try:
+            from .model_depth import context_business_area_ids
+        except ImportError:
+            from model_depth import context_business_area_ids
+        context_areas = context_business_area_ids(model)
         for identifier, node in nodes.items():
             kind = node.get('kind')
             if 'category' in node.get('fields', {}):
@@ -200,7 +205,7 @@ def validate_urbanism(model, sources, schema=None):
                     if not isinstance(node.get('fields', {}).get(field), str) or not node['fields'][field].strip():
                         errors.append(f'business-area/{identifier}: {field} must be nonempty')
                 children = graph_index.children[identifier]
-                if not children or any((r['type'], nodes.get(r['target_id'], {}).get('kind')) not in {('contains', 'capability'), ('presents', 'reference')} for r in children):
+                if (not children and identifier not in context_areas) or any((r['type'], nodes.get(r['target_id'], {}).get('kind')) not in {('contains', 'capability'), ('presents', 'reference')} for r in children):
                     errors.append(f'business-area/{identifier}: requires contained capabilities or presented references')
             if kind == 'reference':
                 parents = graph_index.parents[identifier]
@@ -247,8 +252,9 @@ def validate_urbanism(model, sources, schema=None):
         if level is not None and role != "urbanism_level":
             errors.append(f"nodes/{identifier}: level_ref is not a presentation grouping")
         if 'modeling_depth' in fields:
-            if node.get('kind') not in ('business_system', 'domain') or fields['modeling_depth'] not in ('context', 'domains', 'behaviors'):
-                errors.append(f'nodes/{identifier}: modeling_depth requires a business system/domain and context/domains/behaviors')
+            if (node.get('kind') not in ('business_system', 'domain') or fields['modeling_depth'] not in ('context', 'domains', 'business_areas', 'behaviors')
+                    or fields['modeling_depth'] == 'business_areas' and node.get('kind') != 'domain'):
+                errors.append(f'nodes/{identifier}: modeling_depth requires a business system/domain and context/domains/behaviors; business_areas requires a domain')
     # U757 opts current models into exhaustive presentation categories; frozen models remain unchanged.
     if any(p.get('id') == 'PRINCIPLE-CAPABILITY-CATEGORY' for p in model.get('principles', [])):
         for identifier, node in nodes.items():

@@ -58,9 +58,12 @@ class BusinessSystemTests(unittest.TestCase):
 
     def test_detailed_subdomains_have_explicit_roles(self):
         nodes = {node['id']: node for node in self.model['nodes']}
+        from scripts.model_depth import context_business_area_ids
+        context_areas = context_business_area_ids(self.model)
         detailed_areas = {edge['source_id'] for edge in self.model['relations']
                           if edge['type'] == 'contains' and nodes[edge['source_id']]['kind'] == 'area'
-                          and nodes[edge['target_id']]['kind'] in ('business_area', 'capability')}
+                          and nodes[edge['target_id']]['kind'] in ('business_area', 'capability')
+                          and edge['target_id'] not in context_areas}
         self.assertTrue(detailed_areas)
         self.assertEqual([area_id for area_id in sorted(detailed_areas)
                           if not nodes[area_id]['fields'].get('dominant_role')], [])
@@ -109,7 +112,10 @@ class BusinessSystemTests(unittest.TestCase):
         nodes = {n['id']: n for n in self.model['nodes']}
         self.assertNotIn('accounting-interpretation', nodes)
         self.assertNotIn('ba-accounting-translation', nodes)
-        self.assertEqual(len([n for n in nodes.values() if n['kind'] == 'capability']), 75)
+        from scripts.model_depth import responsibility_domains
+        ancestry = responsibility_domains(self.model)
+        self.assertTrue(all(ancestry[n['id']] == {'supply-chain-orchestration'}
+                            for n in nodes.values() if n['kind'] == 'capability'))
         self.assertIn('glossary:TER119', nodes['subdomain-financial-accounting']['fields']['scope'])
         exchange = next(r for r in self.model['relations'] if r['id'] == 'REL-U981-accounting-facts')
         self.assertEqual((exchange['type'], exchange['source_id'], exchange['target_id']),
@@ -128,12 +134,12 @@ class BusinessSystemTests(unittest.TestCase):
         nodes = {n['id']: n for n in self.model['nodes']}
         expected = {
             'domain-sales': ('Commerce', 'system-business-operations'),
-            'subdomain-sales-b2c-store': ('Store Commerce', 'domain-sales'),
-            'subdomain-sales-b2c-ecommerce': ('Digital Commerce', 'domain-sales'),
+            'subdomain-sales-b2c-store': ('Store Sales', 'subdomain-retail-commerce'),
+            'subdomain-sales-b2c-ecommerce': ('Digital Commerce', 'subdomain-retail-commerce'),
             'subdomain-sales-wholesale': ('Wholesale Commerce', 'domain-sales'),
             'subdomain-assortment-catalog-management': ('Assortment & Catalog Management', 'domain-sales'),
-            'subdomain-retail-network-management': ('Retail Network Management', 'domain-sales'),
-            'subdomain-store-backoffice-operations': ('Store Backoffice Operations', 'domain-sales'),
+            'subdomain-retail-network-management': ('Retail Network Management', 'subdomain-retail-commerce'),
+            'subdomain-store-backoffice-operations': ('Store Operations', 'subdomain-retail-commerce'),
             'subdomain-pricing-promotions-management': ('Pricing & Promotions Management', 'domain-sales'),
             'subdomain-rebates-incentives-management': ('Rebates & Incentives Management', 'domain-sales'),
             'subdomain-commercial-settlement-management': ('Commercial Settlement Management', 'domain-finance'),
@@ -144,7 +150,7 @@ class BusinessSystemTests(unittest.TestCase):
             with self.subTest(node_id=node_id):
                 self.assertEqual(nodes[node_id]['fields']['name'], name)
                 parents = [r['source_id'] for r in self.model['relations']
-                           if r['type'] == 'presents' and r['target_id'] == node_id]
+                           if r['type'] in ('presents','contains') and r['target_id'] == node_id]
                 self.assertEqual(parents, [parent])
                 self.assertEqual(terms[name]['context'], nodes[node_id]['fields']['scope'])
         backoffice = nodes['subdomain-store-backoffice-operations']['fields']['scope']
@@ -171,7 +177,10 @@ class BusinessSystemTests(unittest.TestCase):
         self.assertEqual(nodes['D03']['fields']['name'], 'Availability')
         self.assertIn('glossary:TER263', nodes['D04']['fields']['scope'])
         self.assertIn('aucun paiement fournisseur', nodes['ba-financial-service-order-management']['fields']['scope'])
-        self.assertEqual(len([n for n in nodes.values() if n['kind'] == 'capability']), 75)
+        from scripts.model_depth import responsibility_domains
+        ancestry = responsibility_domains(self.model)
+        self.assertTrue(all(ancestry[n['id']] == {'supply-chain-orchestration'}
+                            for n in nodes.values() if n['kind'] == 'capability'))
 
     def test_frozen_publication_keeps_its_finance_capability(self):
         published = read(ROOT / 'modeles/release/2026-10-12.6/model.yaml')

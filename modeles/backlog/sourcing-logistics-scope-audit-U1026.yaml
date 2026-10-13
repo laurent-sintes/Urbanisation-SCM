@@ -1,0 +1,1303 @@
+id: sourcing-logistics-scope-audit-U1026
+status: completed_proposals_not_applied
+source_refs:
+- U1026
+scope: 'Domain Sourcing and Procurement et système Logistics : niveaux Domain, Subdomain et Business Area ; capacités et comportements
+  adjacents non ajoutés.'
+baseline_assessments:
+- id: domain-sourcing-procurement
+  name: Sourcing and Procurement
+  kind: domain
+  baseline_sha256: 5e424202daaa0668f1e109bb63345648e0e6b4da39378226048dba99754091b3
+  baseline_market_sources:
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+  - https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/describing-operational-procurement_cad9fff9-72c7-4830-befd-f1397dba0c51
+  baseline_market_gaps: []
+- id: domain-logistics-execution
+  name: Logistics
+  kind: business_system
+  baseline_sha256: 40f0448aaa03f9c735b61d5c79bf1c8a67a2528809a07aa86d412416ea9c2b41
+  baseline_market_sources:
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+  baseline_market_gaps: []
+- id: subdomain-supplier-management
+  name: Supplier Management
+  kind: area
+  baseline_sha256: 9a34dd2f13bdcbf862f6923eb9a82455cc5af1613a68d76011742252da9f4356
+  baseline_market_sources:
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/vendor-onboarding
+  baseline_market_gaps: []
+- id: subdomain-strategic-sourcing
+  name: Strategic Sourcing
+  kind: area
+  baseline_sha256: b443ee7d790b7a250d799030f6a211ce53f6005bf473be79e338a73b60b109d3
+  baseline_market_sources:
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/request-quotations
+  baseline_market_gaps: []
+- id: subdomain-purchase-contract-management
+  name: Purchase Contract Management
+  kind: area
+  baseline_sha256: 443c826a95d2a452dcb7c31db08c005e16724397b556816af4c765be8084505e
+  baseline_market_sources:
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-agreements
+  baseline_market_gaps: []
+- id: subdomain-operational-procurement
+  name: Operational Procurement
+  kind: area
+  baseline_sha256: 5eed51d9dd2673029b5de5cbf4625cfb8ca627e0f007673b47be345143122f6b
+  baseline_market_sources:
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+  baseline_market_gaps: []
+- id: domain-warehousing
+  name: Warehousing
+  kind: domain
+  baseline_sha256: c115062626e604c08c73564441d3a32f1b976d83832d7dc977ab0af5ae20a650
+  baseline_market_sources:
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+  baseline_market_gaps: []
+- id: domain-transportation
+  name: Transportation
+  kind: domain
+  baseline_sha256: 3ae8c523b9d93c9819ccd59444daf35d8c4a05c10c868030b922341795b01bb7
+  baseline_market_sources:
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+  baseline_market_gaps: []
+- id: subdomain-inbound-operations
+  name: Inbound Operations
+  kind: area
+  baseline_sha256: a888efa8c51afebb01ac191aa6dcfa35b0337e113c1ad8704a6457c0db06b1bf
+  baseline_market_sources:
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+  baseline_market_gaps: []
+- id: subdomain-storage-inventory-control
+  name: Storage & Inventory Control
+  kind: area
+  baseline_sha256: 2bb1c2584a8748d73124133f21bb141d8170b64c627ec89f4f5fc789a9239760
+  baseline_market_sources:
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+  baseline_market_gaps: []
+- id: subdomain-outbound-operations
+  name: Outbound Operations
+  kind: area
+  baseline_sha256: 35fb05e29fb32f77b1bdbb09fe617dda5f390d94a4ddf9d05227f648b40472c9
+  baseline_market_sources:
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+  baseline_market_gaps: []
+- id: subdomain-value-added-returns
+  name: Value-Added & Returns Operations
+  kind: area
+  baseline_sha256: 57be7249aa177937d669f51240e66d6899b22a445c325b03e979f75fe83ec6a7
+  baseline_market_sources: []
+  baseline_market_gaps:
+  - family: sap_s4hana
+    reason: 'La documentation générale d’entrepôt ne suffit pas à étayer à cette maille les traitements supplémentaires et
+      les retours réunis ici. Réexamen U1021 : Une description générale de l’entrepôt ne couvre pas à elle seule le périmètre
+      combinant prestations et retours.'
+    investigated_urls:
+    - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+    source_refs:
+    - U974
+    - CMP312
+    - ELM860
+    - U1020
+    - U1021
+  - family: microsoft_dynamics
+    reason: 'La documentation générale d’entrepôt ne suffit pas à étayer à cette maille les traitements supplémentaires et
+      les retours réunis ici. Réexamen U1021 : Une description générale de l’entrepôt ne couvre pas à elle seule le périmètre
+      combinant prestations et retours.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+    source_refs:
+    - U974
+    - CMP312
+    - ELM876
+    - U1020
+    - U1021
+- id: subdomain-transport-planning-dispatch
+  name: Transport Planning & Dispatch
+  kind: area
+  baseline_sha256: 7f8e381f6cd3b4be4989b70e9666e3324b08d757da7e22108e982b523006531d
+  baseline_market_sources:
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+  baseline_market_gaps: []
+- id: subdomain-transport-execution-tracking
+  name: Transport Execution & Tracking
+  kind: area
+  baseline_sha256: 9cfabbf2ff01add987e0b3ca64498ebae1912e1c38600f55e446c623441f090a
+  baseline_market_sources:
+  - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  - https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+  baseline_market_gaps: []
+- id: subdomain-transport-exception
+  name: Transport Exception Management
+  kind: area
+  baseline_sha256: dd666de16764c88c1de9a323e0fdc5506557ea7b53f126516e3d952cfb50f8c7
+  baseline_market_sources: []
+  baseline_market_gaps:
+  - family: sap_s4hana
+    reason: 'Les vues générales de transport ne démontrent pas le mandat et les décisions de résolution des exceptions à cette
+      maille. Réexamen U1021 : La visibilité du transport ne prouve pas le mandat complet de résolution de ses exceptions.'
+    investigated_urls:
+    - https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+    source_refs:
+    - U974
+    - CMP312
+    - ELM860
+    - U1020
+    - U1021
+  - family: microsoft_dynamics
+    reason: 'Les vues générales de transport ne démontrent pas le mandat et les décisions de résolution des exceptions à cette
+      maille. Réexamen U1021 : La visibilité du transport ne prouve pas le mandat complet de résolution de ses exceptions.'
+    investigated_urls:
+    - https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+    source_refs:
+    - U974
+    - CMP312
+    - ELM877
+    - U1020
+    - U1021
+findings:
+- id: SP1026-01
+  type: observation
+  finding: Les quatre sous-domaines d’achat distinguent déjà fournisseur durable, choix pour un besoin, accord et achat opérationnel
+    ; regroupement conservable.
+- id: SP1026-02
+  type: scope_gap
+  finding: Strategic Sourcing décrit surtout les consultations ; la stratégie de sourcing n’est pas explicite.
+  recommendation: La rendre visible en Business Area avec lacunes de comparaison signalées ; sinon préférer Sourcing Management
+    au périmètre inchangé.
+- id: SP1026-03
+  type: boundary
+  finding: Le plan et le carnet d’achat restent sous MAP ; les propositions de Master Plan FLOW ne deviennent pas un plan
+    d’achat concurrent.
+- id: LG1026-01
+  type: scope_gap
+  finding: Les formalités douanières sont incluses dans Logistics mais sans domaine propre.
+  recommendation: Customs Management proposé pour porter dossier et procédure ; son périmètre opérationnel reste distinct
+    de la conformité d’entreprise.
+- id: LG1026-02
+  type: mixed_scope
+  finding: Value-Added & Returns Operations associe deux responsabilités différentes.
+  recommendation: 'Deux sous-domaines : Value-Added Operations et Returns Operations ; pas deux domaines supplémentaires par
+    défaut.'
+- id: LG1026-03
+  type: visibility_gap
+  finding: Le pilotage local des moyens et du travail est mentionné mais peu identifiable dans Warehousing.
+  recommendation: Warehouse Operations Control avec ressources et travail local.
+- id: LG1026-04
+  type: boundary
+  finding: Transport Plan Decision FLOW et planification locale peuvent se recouvrir si leur mandat n’est pas qualifié.
+  recommendation: Conserver la frontière de mandat déjà décrite et éviter deux calculs imposés pour une même décision.
+- id: LG1026-05
+  type: not_a_domain_by_default
+  finding: Cross-docking et reverse logistics mobilisent plusieurs responsabilités ; un parcours transversal ne devient pas
+    automatiquement un domaine.
+- id: LG1026-06
+  type: conditional_future_domain
+  finding: Les prestations textiles pourraient justifier un domaine Value-Added Logistics Services si leur responsabilité
+    autonome dépasse les opérations d’entrepôt.
+  recommendation: Ne pas créer ce quatrième domaine sans qualification de ce mandat ; les documents EWM consultés les placent
+    dans les processus d’entrepôt.
+- id: LG1026-07
+  type: market_attribution_error
+  finding: La comparaison Microsoft du système Logistics reprend des numéros de sections de la Feature Scope Description SAP
+    dans ses points communs. Le document Microsoft cité ne porte pas ces sections.
+  recommendation: 'Corriger cette attribution lors de l’application du lot : décrire séparément l’autonomie de réalisation
+    Microsoft et le périmètre fonctionnel SAP ; conserver les preuves anciennes.'
+proposed_sourcing:
+  name: Sourcing and Procurement
+  kind: domain
+  definition: Choisir et qualifier les sources d’achat, tenir les accords et conduire les achats opérationnels de biens et
+    prestations.
+  status: proposed
+  market_support_ids:
+  - MS-PROC
+  - SAP-PROC
+  market_relationship: partial_overlap
+  term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+  retains_current_id: domain-sourcing-procurement
+  proposed_modeling_depth: business_areas
+  subdomains:
+  - name: Supplier Management
+    kind: area
+    definition: Qualifier les fournisseurs et conduire leur suivi durable.
+    status: proposed
+    market_support_ids:
+    - MS-SUP
+    - SAP-SUP
+    market_relationship: partial_overlap
+    term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+    business_areas:
+    - name: Supplier Qualification
+      kind: business_area
+      definition: Déterminer l’admissibilité des fournisseurs pour les catégories et périmètres d’achat.
+      status: proposed
+      market_support_ids:
+      - MS-SUP
+      - SAP-SUP
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      boundary: Qualification durable, pas sélection d’une offre particulière.
+    - name: Supplier Performance Management
+      kind: business_area
+      definition: Évaluer la performance fournisseur et suivre les suites d’amélioration.
+      status: proposed
+      market_support_ids:
+      - MS-PROC
+      - SAP-EVAL
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      boundary: Consommer les faits d’achat et qualité ; ne pas conduire toutes les relances de commande.
+    retains_current_id: subdomain-supplier-management
+  - name: Strategic Sourcing
+    kind: area
+    definition: Définir les orientations de sourcing puis consulter et sélectionner les sources pour les besoins.
+    status: proposed
+    market_support_ids:
+    - MS-RFQ
+    - SAP-RFQ
+    market_relationship: partial_overlap
+    term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+    business_areas:
+    - name: Sourcing Strategy Management
+      kind: business_area
+      definition: Définir les orientations par catégorie d’achat selon dépenses, objectifs et risques.
+      status: proposed
+      market_support_ids:
+      - MS-PROC
+      - SAP-PROC
+      - SAP-CATEGORY
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      boundary: Stratégie d’achat, pas planning de commandes ou carnet MAP.
+      market_gaps:
+      - family: microsoft_dynamics
+        reason: Les politiques et analyses de dépenses sont documentées ; le mandat complet de stratégie par catégorie n’est
+          pas établi à cette maille.
+        investigated_urls:
+        - https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+      - family: sap_s4hana
+        reason: Le tableau stratégique consulté appartient à Ariba Category Management, pas à S/4HANA ; aucun équivalent complet
+          établi.
+        investigated_urls:
+        - https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/understanding-the-capabilities-of-the-procure-to-pay-solution_d9d06458-9eec-4938-9678-d7c6659e2f1e
+        - https://learning.sap.com/courses/managing-a-category-profile/introducing-the-category-management-dashboard
+    - name: Sourcing Event Management
+      kind: business_area
+      definition: Préparer et conduire les consultations de fournisseurs.
+      status: proposed
+      market_support_ids:
+      - MS-RFQ
+      - SAP-RFQ
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      boundary: Recueillir des offres comparables avant attribution.
+    - name: Source Selection
+      kind: business_area
+      definition: Évaluer les offres, négocier leurs conditions proposées et choisir la source pour le besoin.
+      status: proposed
+      market_support_ids:
+      - MS-RFQ
+      - SAP-RFQ
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      boundary: Formalisation des accords sous Purchase Contract Management ; pas achat implicitement engagé.
+    retains_current_id: subdomain-strategic-sourcing
+    scope_change_proposed: Rendre la stratégie explicite ; sinon le nom Sourcing Management serait plus fidèle au périmètre
+      actuel limité aux consultations.
+  - name: Purchase Contract Management
+    kind: area
+    definition: Formaliser et maintenir les accords et dispositifs commerciaux d’achat.
+    status: proposed
+    market_support_ids:
+    - MS-AGR
+    - SAP-AGR
+    market_relationship: partial_overlap
+    term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+    business_areas:
+    - name: Purchase Agreement Management
+      kind: business_area
+      definition: Tenir les conditions d’achat, durées, engagements et consommation des accords.
+      status: proposed
+      market_support_ids:
+      - MS-AGR
+      - SAP-AGR
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      boundary: Accord cadre et prix d’achat distincts du cycle d’une commande.
+    - name: Supplier Rebate & Incentive Management
+      kind: business_area
+      definition: Définir les ristournes et primes commerciales convenues avec les fournisseurs.
+      status: proposed
+      market_support_ids:
+      - MS-REBATE
+      - SAP-REBATE
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      boundary: Calcul des droits et règlement sous Commercial Settlement Management, pas chez Logistics.
+    retains_current_id: subdomain-purchase-contract-management
+  - name: Operational Procurement
+    kind: area
+    definition: Qualifier les demandes d’achat et conduire les achats autorisés avec leurs suites fournisseur.
+    status: proposed
+    market_support_ids:
+    - MS-PROC
+    - SAP-COLLAB
+    market_relationship: partial_overlap
+    term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+    business_areas:
+    - name: Purchase Requisition Management
+      kind: business_area
+      definition: Recueillir les besoins d’achat et réunir leurs validations.
+      status: proposed
+      market_support_ids:
+      - MS-PROC
+      - SAP-REQ
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      boundary: Les plans et propositions de FLOW ne valent pas demande approuvée.
+    - name: Purchasing Execution Coordination
+      kind: business_area
+      definition: Conduire les actions d’achat autorisées et les échanges nécessaires à leur exécution.
+      status: proposed
+      market_support_ids:
+      - MS-PROC
+      - SAP-COLLAB
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      boundary: Purchase Order conserve identité, engagements et transitions dans FLOW ; aucun cycle concurrent.
+    - name: Supplier Delivery Follow-up
+      kind: business_area
+      definition: Traiter confirmations, échéances, relances et écarts fournisseur.
+      status: proposed
+      market_support_ids:
+      - MS-PROC
+      - SAP-COLLAB
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      boundary: La réalisation du transport et de la réception reste sous Logistics ; MAP garde le carnet d’achat.
+    retains_current_id: subdomain-operational-procurement
+proposed_logistics:
+  name: Logistics
+  kind: business_system
+  definition: Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées.
+  status: proposed
+  market_support_ids:
+  - MS-WH
+  - MS-TM
+  - SAP-WH
+  - SAP-TM
+  - SAP-CUSTOMS
+  market_relationship: partial_overlap
+  term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+  retains_current_id: domain-logistics-execution
+  domains:
+  - name: Warehousing
+    kind: domain
+    definition: Organiser et réaliser l’entreposage, le traitement physique des biens et le travail local.
+    status: proposed
+    market_support_ids:
+    - MS-WH
+    - SAP-WH
+    market_relationship: partial_overlap
+    term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+    retains_current_id: domain-warehousing
+    proposed_modeling_depth: business_areas
+    subdomains:
+    - name: Inbound Operations
+      kind: area
+      definition: Recevoir les biens et organiser leur entrée en entrepôt.
+      status: proposed
+      market_support_ids:
+      - MS-WH
+      - SAP-IN
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      business_areas:
+      - name: Receiving Operations
+        kind: business_area
+        definition: Réceptionner et contrôler les biens entrants, puis produire les faits reconnus.
+        status: proposed
+        market_support_ids:
+        - MS-WH
+        - SAP-IN
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Aucune confirmation fournisseur ou écriture comptable créée par la seule réception.
+      - name: Putaway Operations
+        kind: business_area
+        definition: Organiser et réaliser le rangement des biens réceptionnés.
+        status: proposed
+        market_support_ids:
+        - MS-WH
+        - SAP-IN
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Rangement physique, pas affectation commerciale de ressources.
+      retains_current_id: subdomain-inbound-operations
+    - name: Storage & Inventory Control
+      kind: area
+      definition: Organiser le stockage, les mouvements internes et le contrôle physique du stock.
+      status: proposed
+      market_support_ids:
+      - MS-WH
+      - SAP-WH
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      business_areas:
+      - name: Storage Operations
+        kind: business_area
+        definition: Gérer les emplacements et mouvements internes du stock.
+        status: proposed
+        market_support_ids:
+        - MS-WH
+        - SAP-WH
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Ne décide ni redistribution entre sites ni droits des canaux.
+      - name: Physical Inventory Control
+        kind: business_area
+        definition: Compter et qualifier quantités, états et écarts physiques.
+        status: proposed
+        market_support_ids:
+        - MS-QUALITY
+        - SAP-RET
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Faits et corrections selon autorisations ; FLOW conserve sa référence de stock locale.
+      retains_current_id: subdomain-storage-inventory-control
+    - name: Outbound Operations
+      kind: area
+      definition: Préparer et expédier les biens selon les exigences de livraison autorisées.
+      status: proposed
+      market_support_ids:
+      - MS-WH
+      - SAP-OUT
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      business_areas:
+      - name: Picking Operations
+        kind: business_area
+        definition: Prélever les biens autorisés à préparer.
+        status: proposed
+        market_support_ids:
+        - MS-WH
+        - SAP-OUT
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Ne décide pas une nouvelle quantité à promettre ou à livrer au client.
+      - name: Packing & Shipping Operations
+        kind: business_area
+        definition: Emballer, charger et expédier les biens préparés.
+        status: proposed
+        market_support_ids:
+        - MS-WH
+        - SAP-OUT
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Emballage d’expédition courant ; composition de kits et traitements spécifiques identifiés séparément.
+      retains_current_id: subdomain-outbound-operations
+    - name: Value-Added Operations
+      kind: area
+      definition: Réaliser les préparations et traitements complémentaires confiés sur les biens.
+      status: proposed
+      market_support_ids:
+      - MS-KIT
+      - SAP-VAS
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      business_areas:
+      - name: Product Preparation Operations
+        kind: business_area
+        definition: Réaliser les préparations spécifiques, dont réétiquetage et remise en état selon mandat.
+        status: proposed
+        market_support_ids:
+        - MS-LABEL
+        - SAP-VAS
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Pas redéfinition du produit ou création de prestation Supply concurrente.
+        market_gaps:
+        - family: microsoft_dynamics
+          reason: L’impression d’étiquettes ne prouve pas tout le traitement physique textile ; la préparation spécialisée
+            reste partiellement non comparée.
+          investigated_urls:
+          - https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/custom-label-layouts-and-printing
+      - name: Kitting Operations
+        kind: business_area
+        definition: Assembler ou désassembler les ensembles commerciaux selon une composition autorisée.
+        status: proposed
+        market_support_ids:
+        - MS-KIT
+        - SAP-VAS
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Les nomenclatures et engagements viennent de leurs responsables ; pas domaine de fabrication ajouté.
+      split_from_current_id: subdomain-value-added-returns
+    - name: Returns Operations
+      kind: area
+      definition: Recevoir, inspecter et réaliser les suites physiques autorisées des retours.
+      status: proposed
+      market_support_ids:
+      - MS-RET
+      - SAP-RET
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      business_areas:
+      - name: Returns Receiving & Inspection
+        kind: business_area
+        definition: Identifier et contrôler les biens retournés et produire les constats.
+        status: proposed
+        market_support_ids:
+        - MS-RET
+        - SAP-RET
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Autorisation de retour, avoir et remboursement restent distincts.
+      - name: Returns Disposition Execution
+        kind: business_area
+        definition: Remettre en stock, retraiter, réexpédier ou détruire selon la disposition autorisée.
+        status: proposed
+        market_support_ids:
+        - MS-RET
+        - SAP-RET
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Exécution de la suite autorisée, pas décision commerciale ou remboursement.
+      split_from_current_id: subdomain-value-added-returns
+    - name: Warehouse Operations Control
+      kind: area
+      definition: Organiser les ressources et piloter le travail local de l’entrepôt.
+      status: proposed
+      market_support_ids:
+      - MS-WH
+      - SAP-WH
+      - SAP-LABOR
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      business_areas:
+      - name: Warehouse Resource Management
+        kind: business_area
+        definition: Organiser la disponibilité locale des personnes, équipements et zones.
+        status: proposed
+        market_support_ids:
+        - MS-WH
+        - SAP-LABOR
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Aucune responsabilité RH/paie ou allocation commerciale globale.
+      - name: Warehouse Work Management
+        kind: business_area
+        definition: Organiser les vagues, priorités de travail et réactions aux écarts locaux.
+        status: proposed
+        market_support_ids:
+        - MS-WH
+        - SAP-WH
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Mandat logistique local ; Process Management FLOW conserve les parcours entre acteurs.
+      scope_extension_proposed: Pilotage déjà mentionné dans Warehousing, rendu explicite sans domaine autonome supplémentaire.
+  - name: Transportation
+    kind: domain
+    definition: Organiser les moyens de transport, réaliser les déplacements et traiter leurs écarts locaux.
+    status: proposed
+    market_support_ids:
+    - MS-TM
+    - SAP-TM
+    market_relationship: partial_overlap
+    term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+    retains_current_id: domain-transportation
+    proposed_modeling_depth: business_areas
+    subdomains:
+    - name: Transport Planning & Dispatch
+      kind: area
+      definition: Organiser les moyens, chargements, trajets et départs selon le mandat reçu.
+      status: proposed
+      market_support_ids:
+      - MS-TM
+      - SAP-TM
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      business_areas:
+      - name: Transport Planning
+        kind: business_area
+        definition: Construire le plan local de chargement et déplacement.
+        status: proposed
+        market_support_ids:
+        - MS-TM
+        - SAP-TM
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Frontière de mandat avec Transport Plan Decision FLOW ; aucun double calcul imposé.
+      - name: Carrier & Capacity Assignment
+        kind: business_area
+        definition: Retenir transporteur et capacité pour les déplacements dans les conditions autorisées.
+        status: proposed
+        market_support_ids:
+        - MS-TM
+        - SAP-TM
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Choix opérationnel distinct de qualification fournisseur et contrat d’achat.
+      - name: Transport Dispatch
+        kind: business_area
+        definition: Organiser et déclencher les départs des moyens et chargements.
+        status: proposed
+        market_support_ids:
+        - MS-TM
+        - SAP-TM
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Autorisation de livraison de vente déjà donnée ; prestataire ne recompose pas la promesse.
+      retains_current_id: subdomain-transport-planning-dispatch
+    - name: Transport Execution & Tracking
+      kind: area
+      definition: Réaliser les déplacements et produire leur avancement et résultats.
+      status: proposed
+      market_support_ids:
+      - MS-TM
+      - SAP-TRACK
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      business_areas:
+      - name: Transport Execution
+        kind: business_area
+        definition: Réaliser le déplacement et la remise physique confiés.
+        status: proposed
+        market_support_ids:
+        - MS-TM
+        - SAP-TM
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Pas de nouveau cycle d’engagement de commande de vente.
+      - name: Transport Event Reporting
+        kind: business_area
+        definition: Qualifier et transmettre départs, étapes, arrivées et preuves de réalisation.
+        status: proposed
+        market_support_ids:
+        - MS-TRACK
+        - SAP-TRACK
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Fait, estimation et engagement distincts ; Operations Visibility FLOW consolide les faits.
+      retains_current_id: subdomain-transport-execution-tracking
+    - name: Transport Exception Management
+      kind: area
+      definition: Qualifier les incidents et coordonner les reprises dans le mandat logistique.
+      status: proposed
+      market_support_ids:
+      - MS-ADAPT
+      - SAP-TM
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      business_areas:
+      - name: Transport Incident Assessment
+        kind: business_area
+        definition: Évaluer l’incident, ses impacts et les marges de réaction locale.
+        status: proposed
+        market_support_ids:
+        - MS-ADAPT
+        - SAP-TRACK
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: L’absence de preuve d’arrivée ne prouve pas une perte de marchandise.
+        market_gaps:
+        - family: microsoft_dynamics
+          reason: Les sources Microsoft consultées ne prouvent pas ce mandat complet en cours de transport.
+          investigated_urls:
+          - https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/confirm-and-transfer
+          - https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+      - name: Transport Recovery Coordination
+        kind: business_area
+        definition: Organiser la reprise locale et escalader les changements dépassant le mandat.
+        status: proposed
+        market_support_ids:
+        - MS-ADAPT
+        - SAP-TM
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Promesses, affectations et autres prestations réexaminées par leurs responsables FLOW.
+        market_gaps:
+        - family: microsoft_dynamics
+          reason: Les sources Microsoft consultées ne prouvent pas ce mandat complet en cours de transport.
+          investigated_urls:
+          - https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/confirm-and-transfer
+          - https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+      retains_current_id: subdomain-transport-exception
+      market_gaps:
+      - family: microsoft_dynamics
+        reason: Adapter un chargement incomplet ne prouve pas la résolution des incidents en cours de transport ; appui plus
+          large à établir.
+        investigated_urls:
+        - https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/confirm-and-transfer
+        - https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+  - name: Customs Management
+    kind: domain
+    definition: Préparer les dossiers douaniers et conduire les procédures applicables aux mouvements internationaux jusqu’à
+      leurs résultats.
+    status: proposed
+    market_support_ids:
+    - MS-TRACK
+    - SAP-CUSTOMS
+    market_relationship: partial_overlap
+    term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+    proposed_modeling_depth: business_areas
+    new_domain_proposed: true
+    boundary: Mandat opérationnel douanier, pas définition du droit ni toute conformité commerciale d’entreprise. Customs
+      Clearance Order FLOW confie et suit la prestation ; les autorités rendent les décisions applicables.
+    subdomains:
+    - name: Customs Documentation
+      kind: area
+      definition: Préparer et tenir les informations et documents nécessaires à la procédure douanière.
+      status: proposed
+      market_support_ids:
+      - MS-TRACK
+      - SAP-CUSTOMS
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      business_areas:
+      - name: Customs Dossier Management
+        kind: business_area
+        definition: Constituer, contrôler et transmettre le dossier selon les données et classifications autorisées.
+        status: proposed
+        market_support_ids:
+        - MS-TRACK
+        - SAP-CUSTOMS
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Autorités de classification et données sources à qualifier ; pas maître produit implicite.
+        market_gaps:
+        - family: microsoft_dynamics
+          reason: Le suivi de voyage consulté ne démontre pas la préparation complète des déclarations douanières.
+          investigated_urls:
+          - https://learn.microsoft.com/en-us/dynamics365/supply-chain/landed-cost/landed-cost-vs-tms
+    - name: Customs Clearance
+      kind: area
+      definition: Conduire et suivre les échanges opérationnels nécessaires au dédouanement.
+      status: proposed
+      market_support_ids:
+      - MS-TRACK
+      - SAP-CUSTOMS
+      market_relationship: partial_overlap
+      term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette maille.
+      business_areas:
+      - name: Customs Procedure Management
+        kind: business_area
+        definition: Coordonner les intervenants, contrôles, attentes et résultats de la procédure.
+        status: proposed
+        market_support_ids:
+        - MS-TRACK
+        - SAP-CUSTOMS
+        market_relationship: partial_overlap
+        term_choice: Libellé de responsabilité FLOW proposé ; les sources n’imposent pas une nomenclature commune à cette
+          maille.
+        boundary: Suivre l’autorisation de circulation et informer FLOW ; pas décider à la place de l’autorité.
+    market_limits: Dynamics documente surtout le suivi de passage douanier dans les sources consultées ; SAP S/4HANA documente
+      une délégation à GTS. Appuis partiels, sans prétendre une réalisation française complète ni un déploiement Beaumanoir.
+  market_limits: Regroupement architectural FLOW ; les documents étayent les responsabilités logistiques, sans démontrer un
+    système métier natif identique.
+market_sources:
+- id: MS-PROC
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Procurement and sourcing overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+  locator: Identifying a need ; Prices and discounts ; Vendor performance
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Besoins, consultations, accords, achats et suivi fournisseurs, jusqu’aux opérations comptables et paiements
+    dans le produit.
+  limits: Périmètre produit plus large ; FLOW garde planification, commandes, physique et comptabilité sous responsabilités
+    distinctes.
+- id: MS-SUP
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Onboard vendors
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/vendor-onboarding
+  locator: Process steps ; registration ; approval
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Admission des fournisseurs, catégories et informations soumises à validation.
+  limits: Ne prouve pas la maîtrise du référentiel fournisseur Beaumanoir ni toute qualification sectorielle.
+- id: MS-RFQ
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Requests for quotation overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/request-quotations
+  locator: RFQ process ; bids ; selection
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Consultation des fournisseurs et évaluation des offres.
+  limits: Une consultation n’est pas une stratégie complète de catégories d’achat.
+- id: MS-AGR
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Purchase agreements
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/purchase-agreements
+  locator: Overview ; commitments ; validity
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Accords d’achat sur durée, volumes et conditions.
+  limits: Accord distinct de l’achat individuel ; ne couvre pas tous les contrats juridiques.
+- id: SAP-PROC
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Identifying the Capabilities of the Procure to Pay Solution
+  url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/understanding-the-capabilities-of-the-procure-to-pay-solution_d9d06458-9eec-4938-9678-d7c6659e2f1e
+  locator: Overview of procurement functions
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Responsabilités d’achat, sources, fournisseurs et traitement opérationnel.
+  limits: Catalogue de fonctions produit plus large que le domaine FLOW ; aucune taxonomie identique.
+- id: SAP-SUP
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Executing Supplier Management
+  url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/executing-supplier-management_d8d0367a-5b7f-4d76-93e6-1bf3e0f874da
+  locator: Supplier Evaluation in SAP S/4HANA
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Évaluation continue par faits d’achat et questionnaires, scorecards et mesures d’amélioration.
+  limits: Qualification durable distincte de la sélection pour une consultation.
+- id: SAP-EVAL
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Explain Supplier Evaluation
+  url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-sourcing-and-procurement/outlining-supplier-evaluation_d7f0d2f8-dc2b-4b19-a377-2bc5d2c70620
+  locator: Supplier evaluation process
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Évaluation par catégories et suivi de la performance fournisseur.
+  limits: Aucune preuve de déploiement ou de maîtrise des données Beaumanoir.
+- id: SAP-RFQ
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Working with Requests for Quotation
+  url: https://learning.sap.com/courses/sourcing-in-sap-s4hana/working-with-requests-for-quotation
+  locator: Work with RFQs ; Manage RFQs
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Création et envoi des consultations, réception et évaluation des offres, choix fournisseur.
+  limits: Ariba peut compléter S/4HANA ; ne pas attribuer toute stratégie de catégories à S/4HANA.
+- id: SAP-AGR
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Working with Sourcing and Contract Management
+  url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/working-with-sourcing-and-contract-management_ba89fc8e-61ad-4afd-9888-70719769699d
+  locator: Purchase Contract Management
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Statut, validité, consommation et renouvellement des accords.
+  limits: Gestion stratégique documentaire avancée éventuellement externe à S/4HANA.
+- id: SAP-REQ
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Executing Self-Service Requisitioning and Requirements Processing
+  url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/executing-self-service-requisitioning-and-requirements-processing_f01a999e-602a-44cf-b379-34ccd2a3ef87
+  locator: Self-service requisitioning ; requirements processing
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Demandes d’achat et traitement des besoins.
+  limits: Plan d’approvisionnement distinct de la demande opérationnelle.
+- id: SAP-COLLAB
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Describing Operational Procurement
+  url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/describing-operational-procurement_cad9fff9-72c7-4830-befd-f1397dba0c51
+  locator: Purchase Order Collaboration
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Échanges de commandes, changements, confirmations et avis d’expédition via intégration.
+  limits: Le réseau fournisseur est un produit distinct ; aucun cycle concurrent de Purchase Order FLOW.
+- id: MS-WH
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Warehouse management overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+  locator: Warehouse management processes ; labor and workload
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Entrées, sorties, stock et pilotage du travail de l’entrepôt.
+  limits: Appui aux responsabilités locales ; ni référence de stock d’entreprise ni assurance de tous les services textiles.
+- id: MS-QUALITY
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Quality management for warehouse processes
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/quality-management-for-warehouses-processes
+  locator: Quality orders ; sampling ; warehouse work
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Contrôles qualité intégrés aux opérations d’entrepôt.
+  limits: Ne couvre pas la conception produit ou le mandat de conformité d’entreprise.
+- id: MS-RET
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Sales returns
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-returns
+  locator: Physical return ; Arrival at warehouse for inspection
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Réception, inspection et traitement physique d’un retour.
+  limits: Le produit couvre aussi autorisations client et crédits ; les responsabilités financières ne sont pas transférées
+    à Logistics.
+- id: MS-KIT
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Report BOMs as finished
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/production-control/report-boms-as-finished
+  locator: Introduction ; simple assembly and kitting
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Assemblage simple et constitution de kits à partir d’une composition.
+  limits: Fonction de production comme appui partiel ; aucun domaine manufacturing ajouté ni couverture complète des prestations
+    textiles.
+- id: MS-LABEL
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Custom label layouts and printing
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/custom-label-layouts-and-printing
+  locator: Label layouts and printing
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Production d’étiquettes pour produits et opérations d’entrepôt.
+  limits: Imprimer une étiquette ne prouve pas toute la préparation ou finition textile.
+- id: SAP-WH
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Managing the Warehouse
+  url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/managing-the-warehouse
+  locator: Warehouse Management Monitor ; Measurement Services
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Situation du stock, travail, ressources et alertes du dépôt.
+  limits: Source S/4HANA EWM ; ne constitue pas une architecture métier complète.
+- id: SAP-IN
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Processing Goods Receipt
+  url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/processing-goods-receipt
+  locator: Goods receipt process
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Réception, contrôles et rangement des biens.
+  limits: Engagement d’achat et interprétation comptable restent distincts.
+- id: SAP-OUT
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Processing Goods for Shipping
+  url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/processing-goods-for-shipping
+  locator: Goods issue process
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Préparation et expédition en entrepôt.
+  limits: La promesse client n’est pas décidée par l’exécutant logistique.
+- id: SAP-VAS
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Applying Value-Added Services
+  url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/applying-value-added-services
+  locator: Purposes of a VAS Order ; Kits and Kitting
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Traitements complémentaires, emballage spécifique et assemblage de kits en entrepôt.
+  limits: Les fonctions génériques ne prouvent pas toutes les prestations textiles spécialisées.
+- id: SAP-RET
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Using Quality Management in SAP EWM
+  url: https://learning.sap.com/courses/quality-management-in-sap-s-4hana-ewm/using-quality-management-in-sap-ewm
+  locator: Inspection of returns ; follow-up actions
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Inspection physique des retours et actions logistiques de suite.
+  limits: Inspection et exécution locales distinctes des suites commerciales décidées ailleurs.
+- id: SAP-LABOR
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Applying Labor Management
+  url: https://learning.sap.com/courses/processes-in-sap-s-4hana-ewm-br/applying-labor-management
+  locator: Labor Management
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Organisation du travail et mesure de la charge locale en entrepôt.
+  limits: Pilotage opérationnel ; ni mandat RH/paie ni supervision des processus Supply.
+- id: MS-TM
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Transportation management overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+  locator: Planning ; inbound and outbound transportation
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Organisation des transports, ressources et options de chargement.
+  limits: Fonctions produit intégrées ; plans et engagements FLOW restent distincts du pilotage de réalisation.
+- id: MS-TRACK
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Landed cost vs. Transportation management
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/landed-cost/landed-cost-vs-tms
+  locator: Tracking ; voyage statuses ; customs inspection
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Suivi des voyages, dates et passage en contrôle douanier.
+  limits: Suivre une étape douanière n’établit ni déclaration complète ni adaptation de tout incident de transport.
+- id: MS-ADAPT
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Confirm and transfer
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/confirm-and-transfer
+  locator: Load split during shipment confirmation
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Adaptation locale d’un chargement incomplet lors de l’expédition.
+  limits: Exemple plus étroit que la résolution de tous les incidents de transport ; l’autorisation commerciale ne devient
+    pas une annulation automatique FLOW.
+- id: SAP-TM
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Learning about the SAP Transportation Management Solution
+  url: https://learning.sap.com/courses/cloud-onboarding-for-sap-transportation-management-for-s-4hana-cloud-private-edition-extra-stack/learning-about-the-sap-transportation-management-solution
+  locator: Planning ; tendering ; execution ; analytics
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Planification, choix de transporteurs, réalisation et suivi des écarts.
+  limits: SAP TM inclut aussi achats de fret et règlement ; FLOW conserve Sourcing et Finance distincts.
+- id: SAP-TRACK
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Monitoring the Execution of the Freight Documents
+  url: https://learning.sap.com/courses/business-processes-in-sap-s-4hana-transportation-management/monitoring-the-execution-of-the-freight-documents_dc3c1a53-b3d0-4cfa-aa57-5cc76ee06c74
+  locator: Freight Order Execution ; Event Management
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Événements attendus et constatés, alertes et réexamen des écarts.
+  limits: Event Management et le réseau de suivi peuvent être distincts ou licenciés séparément ; aucune installation déduite.
+- id: SAP-CUSTOMS
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Describing the Integration into SAP Global Trade Services
+  url: https://learning.sap.com/courses/introducing-the-sap-s-4hana-for-international-trade/describing-the-integration-into-sap-global-trade-services_a4529c6b-0cb6-4361-944a-a5c0b540745b
+  locator: Master Data Transfer ; Document Transfer
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: S/4HANA fournit données et documents à GTS pour les opérations internationales et les échanges douaniers.
+  limits: Preuve de délégation depuis S/4HANA, pas d’exécution douanière native complète dans S/4HANA.
+- id: SAP-CATEGORY
+  vendor: SAP
+  product: SAP Ariba Category Management
+  title: Introducing the Category Management Dashboard
+  url: https://learning.sap.com/courses/managing-a-category-profile/introducing-the-category-management-dashboard
+  locator: Develop Strategy and Plan ; Monitor Strategy Execution
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Stratégies par catégorie, objectifs, dépenses et suivi des initiatives.
+  limits: Complément consulté ; ne satisfait pas le socle SAP S/4HANA et ne prouve pas la réalisation Beaumanoir.
+- id: MS-REBATE
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Rebate management module overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/rebate-management/rebate-management-overview
+  locator: Overview ; Basis calculation
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Accords clients ou fournisseurs et traitement des ristournes différées.
+  limits: Le produit réunit définition, calcul et traitement ; FLOW conserve la séparation avec le règlement sous Finance.
+  reused_from: commerce-scope-audit-U1023.yaml
+- id: SAP-REBATE
+  vendor: SAP
+  product: SAP S/4HANA Settlement Management
+  title: Outline the Structure of a Condition Contract
+  url: https://learning.sap.com/courses/exploring-sap-s-4hana-settlement-management/outline-the-structure-of-a-condition-contract_bf334045-48bb-4aae-98f7-83966c20eada
+  locator: Condition contract data ; Business Volume Selection Criteria ; Settlement Calendar
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Contrat de conditions, assiette et calendrier de règlement.
+  limits: Appui partiel à la définition ; le produit inclut le règlement que FLOW place sous Finance.
+  reused_from: commerce-scope-audit-U1023.yaml
+access_limits:
+- url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/set-up-vendor-evaluation-criteria
+  result: Lecture indisponible ; Vendor performance du document MS-PROC consulté et retenu à la place.
+- url: https://learning.sap.com/courses/sap-s-4hana-sourcing-procurement-innovations/working-with-sourcing-and-contract-management_c449edc0-9cd4-49f6-a8d0-005180d23db5
+  result: Ancien identifiant indisponible ; lien officiel obtenu par le sommaire SAP-COLLAB, document SAP-AGR consulté.
+- url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/plan-loads-shipping-optimization
+  result: Lecture indisponible ; aucune preuve retenue.
+scenario_checks:
+- path_id: additional-purchase-partial-path
+  contributor_ids:
+  - D03.j
+  - D05.f
+  - D03.o
+  - D05.e
+  - D02.e
+  - D04.j
+  - D03.i
+  - D04.i
+  - D01.f
+  scope_test: Les contributions publiées restent Supply ; la proposition identifie les producteurs et exécutants de contexte
+    sans déplacer leurs capacités ni créer un parent de processus.
+  installation_evidence: false
+- path_id: partial-receiving-path
+  contributor_ids:
+  - D04.j
+  - service-order-receiving
+  - D06.d
+  - D07.d
+  - D07.c
+  - service-order-inspection
+  - D01.f
+  - D01.g
+  - D01.c
+  scope_test: Les contributions publiées restent Supply ; la proposition identifie les producteurs et exécutants de contexte
+    sans déplacer leurs capacités ni créer un parent de processus.
+  installation_evidence: false
+- path_id: supplier-return-outcomes-path
+  contributor_ids:
+  - D04.l
+  - D05.i
+  - D04.m
+  - D06.d
+  - D01.g
+  scope_test: Les contributions publiées restent Supply ; la proposition identifie les producteurs et exécutants de contexte
+    sans déplacer leurs capacités ni créer un parent de processus.
+  installation_evidence: false
+- path_id: export-remote-services-path
+  contributor_ids:
+  - D07.a
+  - service-order-transport-booking
+  - service-order-customs-clearance
+  - service-order-billing
+  - service-order-payment-collection
+  - D06.d
+  - human-task-management
+  - work-assignment
+  - work-deadline-management
+  - BHV082
+  - D07.d
+  - D07.c
+  - operations-visibility
+  - service-order-release-decision
+  - service-order-transport
+  scope_test: Les contributions publiées restent Supply ; la proposition identifie les producteurs et exécutants de contexte
+    sans déplacer leurs capacités ni créer un parent de processus.
+  installation_evidence: false
+- path_id: ownership-transit-deadline-path
+  contributor_ids:
+  - D01.h
+  - service-order-customs-clearance
+  - inventory-ownership-ledger
+  - D01.g
+  - D01.c
+  scope_test: Les contributions publiées restent Supply ; la proposition identifie les producteurs et exécutants de contexte
+    sans déplacer leurs capacités ni créer un parent de processus.
+  installation_evidence: false
+- path_id: gift-kits-crossdock-path
+  contributor_ids:
+  - service-order-cross-docking
+  - service-order-picking
+  - service-order-cleaning
+  - D06.d
+  - service-order-personalization
+  - service-order-kitting
+  - service-order-packing
+  - D07.c
+  - D01.g
+  - D01.c
+  scope_test: Les contributions publiées restent Supply ; la proposition identifie les producteurs et exécutants de contexte
+    sans déplacer leurs capacités ni créer un parent de processus.
+  installation_evidence: false
+- path_id: return-fashion-recovery-path
+  contributor_ids:
+  - D04.l
+  - service-order-inspection
+  - D07.d
+  - D05.i
+  - service-order-repair-alteration
+  - D06.d
+  - D01.f
+  - D01.g
+  - D01.c
+  scope_test: Les contributions publiées restent Supply ; la proposition identifie les producteurs et exécutants de contexte
+    sans déplacer leurs capacités ni créer un parent de processus.
+  installation_evidence: false
+- path_id: transport-missed-connection-path
+  contributor_ids:
+  - D07.d
+  - D07.c
+  - service-order-transport-booking
+  - service-order-transport
+  - order-workflow-sentry
+  - D06.b
+  - D06.e
+  - D03.k
+  - D06.f
+  - transport-plan-decision
+  - D06.d
+  - D03.o
+  - D03.i
+  - order-workflow-planning
+  - order-workflow-orchestration
+  - D04.i
+  scope_test: Les contributions publiées restent Supply ; la proposition identifie les producteurs et exécutants de contexte
+    sans déplacer leurs capacités ni créer un parent de processus.
+  installation_evidence: false
+cross_scope_boundaries:
+- Commerce définit les dispositifs de vente ; Procurement les accords d’achat ; Finance calcule et règle les droits autorisés.
+- MAP conserve achats planifiés et carnet d’achat ; FLOW peut proposer via CTP et consomme les décisions autorisées.
+- FLOW porte les engagements et la coordination entre acteurs ; Logistics organise et réalise ses moyens locaux.
+- La qualité produit et les exigences d’entreprise restent distinctes des inspections et opérations physiques.
+- Commerce Store Operations réalise les opérations du magasin ; frontière avec Warehousing à qualifier sans déplacer automatiquement
+  le magasin dans Logistics.
+depth_follow_up: Une application du lot nécessitera la profondeur business_areas pour Sourcing and Procurement et les domaines
+  Logistics proposés. Cette extension est proposée, pas déduite de la règle Commerce U1025.
+commerce_agreement: commerce-decomposition-approval-U1026.yaml — accord conservé, application différée.
+canonical_changes: Aucune modification du modèle, du glossaire, des relations ou de la publication pendant cette étude.
+statistics:
+  baseline_elements_examined: 15
+  proposed_procurement_subdomains: 4
+  proposed_procurement_business_areas: 10
+  proposed_logistics_domains: 3
+  proposed_logistics_subdomains: 11
+  proposed_logistics_business_areas: 21
+limits:
+- Audit de cohérence et propositions de responsabilité ; pas inventaire de fonctions produit ni preuve d’installation.
+- Microsoft Dynamics et SAP S/4HANA effectivement consultés ; les lacunes de stratégie, préparation textile, douane et récupération
+  de transport restent explicites à la maille concernée.
+- Les nouveaux noms et périmètres de cette étude ne sont pas validés par la seule validation antérieure de Commerce.
+verification:
+  state: passed
+  proposed_elements_checked: 51
+  market_traceability: Chaque proposition possède des appuis Dynamics et S/4HANA, ou ses lacunes explicites ; les limites
+    sémantiques des appuis restent présentes.
+  backlog_integrity: 0 error ; accord Commerce explicitement pending
+  source_index: U1026 indexée ; publications inchangées.

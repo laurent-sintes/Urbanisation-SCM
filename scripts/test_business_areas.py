@@ -180,7 +180,9 @@ class BusinessAreaTests(unittest.TestCase):
         retired_adjacent_areas = {'ba-accounting-translation'}
         self.assertLessEqual(retired_adjacent_areas, set(adjacent_scope['publication_delivery']['absent_nodes']))
         self.assertTrue(retired_adjacent_areas.isdisjoint(nodes))
-        self.assertEqual(sum(n['kind']=='business_area' for n in nodes.values()),
+        from scripts.model_depth import context_business_area_ids
+        context_areas = context_business_area_ids(m)
+        self.assertEqual(sum(n['kind']=='business_area' and n['id'] not in context_areas for n in nodes.values()),
                      26+len(operational_areas)-len(retired_adjacent_areas)-2)  # U1019 isolates backlog decisions from Master Plan.
         for ident in caps:
             parents = [r for r in m['relations'] if r['target_id']==ident and r['type'] in ('contains','presents')]

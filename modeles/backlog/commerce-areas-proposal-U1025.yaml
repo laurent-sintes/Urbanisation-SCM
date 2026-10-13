@@ -1,0 +1,210 @@
+id: commerce-areas-proposal-U1025
+status: proposed_not_applied
+source_refs:
+- U1023
+- U1024
+- U1025
+depth_rule: commerce-detail-depth-U1025.yaml — applied
+proposal_scope: Business Areas des cinq sous-domaines Commerce proposés, sans décomposition en capacités ni réalisation installée.
+groups:
+- subdomain: Retail Commerce
+  business_areas:
+  - name: Retail Network Management
+    current_id: subdomain-retail-network-management
+    definition: Tenir la structure, les rattachements et les règles communes d’exploitation du réseau de magasins.
+    name_status: retained_proposed
+    kind: business_area
+    status: proposed
+    market_relationship: partial_overlap
+    sources:
+    - ms-channels
+    - sap-network
+  - name: Digital Commerce
+    current_id: subdomain-sales-b2c-ecommerce
+    definition: Conduire la vente aux particuliers en ligne, de la découverte de l’offre au suivi commercial de la commande.
+    name_status: retained_proposed
+    kind: business_area
+    status: proposed
+    market_relationship: partial_overlap
+    sources:
+    - ms-channels
+    - sap-sales
+  - name: Store Sales
+    current_id: subdomain-sales-b2c-store
+    definition: Conduire la vente, la caisse et les parcours commerciaux client en magasin.
+    name_status: rename_proposed
+    kind: business_area
+    status: proposed
+    market_relationship: partial_overlap
+    sources:
+    - ms-store
+    - sap-sales
+  - name: Store Operations
+    current_id: subdomain-store-backoffice-operations
+    definition: Gérer les opérations locales de stock, réception, inventaire, préparation et remise de commandes en magasin.
+    name_status: rename_proposed
+    kind: business_area
+    status: proposed
+    market_relationship: partial_overlap
+    sources:
+    - ms-store
+    - sap-store
+- subdomain: Wholesale Commerce
+  business_areas:
+  - name: Wholesale Account Management
+    definition: Conduire la relation avec les revendeurs et tenir leurs accords commerciaux et conditions négociées.
+    sources:
+    - ms-sales-agreements
+    - sap-network
+    - sap-wholesale
+    boundary: Consommer les conditions autorisées par Pricing et les résultats Finance ; ne pas reprendre la promesse ni les
+      engagements de chaque commande.
+    kind: business_area
+    status: proposed
+    market_relationship: partial_overlap
+  - name: Wholesale Sales
+    definition: Préparer les sélections des revendeurs, recueillir leurs demandes de vente et assurer leur suivi commercial.
+    sources:
+    - ms-b2b
+    - sap-wholesale
+    boundary: Le portail et le représentant sont des modalités ; Sales Order conserve identité, transitions et engagements
+      de la commande.
+    kind: business_area
+    status: proposed
+    market_relationship: partial_overlap
+- subdomain: Assortment & Catalog Management
+  business_areas:
+  - name: Assortment Management
+    definition: Déterminer quels produits peuvent être proposés par magasin, canal ou client et sur quelle période.
+    sources:
+    - ms-assortment
+    - sap-assortment
+    boundary: Offre admissible ; aucune affectation de ressources ou disponibilité physique présumée.
+    kind: business_area
+    status: proposed
+    market_relationship: partial_overlap
+  - name: Catalog Management
+    definition: Organiser, présenter et publier les produits de l’offre autorisée pour leurs destinataires commerciaux.
+    sources:
+    - ms-catalogs
+    - sap-assortment
+    boundary: Présentation et diffusion de l’offre ; ne pas redéfinir les produits, les prix ou l’admissibilité. La liste
+      d’assortiment SAP est un appui plus étroit que tout catalogue commercial.
+    kind: business_area
+    status: proposed
+    market_relationship: partial_overlap
+- subdomain: Pricing & Promotions Management
+  business_areas:
+  - name: Pricing Management
+    definition: Définir les règles tarifaires et déterminer les prix applicables selon le client, le produit, le canal et
+      la date.
+    sources:
+    - ms-pricing
+    - sap-pricing
+    boundary: Consommer les mécanismes promotionnels autorisés pour produire le prix contextualisé ; Order Management tient
+      le prix engagé.
+    kind: business_area
+    status: proposed
+    market_relationship: partial_overlap
+  - name: Promotion Management
+    definition: Définir les opérations promotionnelles, leurs produits, bénéficiaires, périodes et règles de cumul ou d’exclusion.
+    sources:
+    - ms-promotions
+    - sap-promotions
+    boundary: Les règles promotionnelles sont combinées par Pricing ; la planification des ressources de la promotion reste
+      extérieure.
+    kind: business_area
+    status: proposed
+    market_relationship: partial_overlap
+- subdomain: Rebates & Incentives Management
+  business_areas:
+  - name: Rebate Management
+    definition: 'Définir les dispositifs de ristournes différées : bénéficiaires, périodes, seuils et volumes ou montants
+      éligibles.'
+    sources:
+    - ms-rebates
+    - sap-rebates
+    boundary: Définition du dispositif ; calcul des droits et règlement dans Commercial Settlement Management sous Finance.
+    kind: business_area
+    status: proposed
+    market_relationship: partial_overlap
+  - name: Sales Incentive Management
+    definition: Définir les primes commerciales et commissions de vente, leurs bénéficiaires et leurs conditions.
+    sources:
+    - ms-commission-rules
+    - sap-commission
+    boundary: Dispositifs commerciaux ; le calcul et le règlement restent sous Finance, les primes de personnel sous RH/paie.
+      Les exemples éditeurs ne couvrent pas tout le périmètre des primes en biens.
+    kind: business_area
+    status: proposed
+    market_relationship: partial_overlap
+market_sources_reused: commerce-scope-audit-U1023.yaml — sources primaires consultées dans la session et encore pertinentes.
+market_sources:
+- id: ms-sales-agreements
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Sales agreements overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-agreements
+  locator: Overview ; Pricing terms ; Applying sales agreements
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Accords clients sur durée, quantités et conditions.
+  limits: Appui aux accords ; ne couvre pas toute relation revendeur et ne transfère pas la détermination des prix.
+- id: ms-catalogs
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: Create Commerce catalogs for B2B sites
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/catalogs-b2b-sites
+  locator: Overview ; configuration ; validation ; approval ; publishing
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Produits, navigation, attributs, destinataires et publication de catalogues.
+  limits: Exemple B2B ; pas une preuve de couverture complète de tous les catalogues ou supports.
+- id: ms-promotions
+  vendor: Microsoft
+  product: Dynamics 365 Commerce
+  title: Price adjustments and discounts
+  url: https://learn.microsoft.com/en-us/dynamics365/commerce/price-adjustments-discounts
+  locator: Overview ; discount types
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Remises, mécanismes et conditions applicables.
+  limits: Appui partiel ; prix et promotion réunis dans le produit, frontière FLOW proposée distincte.
+- id: sap-promotions
+  vendor: SAP
+  product: SAP S/4HANA Cloud Public Edition Retail
+  title: Planning a Retail Promotions (637)
+  url: https://learning.sap.com/courses/exploring-sap-s-4hana-cloud-public-edition-retail/planning-a-retail-promotions-637
+  locator: Retail Promotion planning and maintenance
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Produits, magasins, groupes et préparation d’une promotion.
+  limits: Source inclut des quantités de distribution ; ces décisions Supply ne passent pas à Commerce par analogie.
+- id: ms-commission-rules
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Set up sales commission rules
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/tasks/set-up-sales-commission-rules
+  locator: Commission groups ; commission calculation rules
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Critères clients et produits pour définir un taux de commission.
+  limits: Exemple Microsoft de commission à un employé ; ne prouve pas le mandat RH/paie dans Commerce ni tous les bénéficiaires
+    externes ou primes en biens.
+- id: sap-commission
+  vendor: SAP
+  product: SAP S/4HANA Settlement Management
+  title: Defining Common Calculation Types
+  url: https://learning.sap.com/courses/exploring-sap-s-4hana-settlement-management/defining-common-calculation-types_a7354291-1828-476b-bae1-4e89691abc2e
+  locator: Commission calculation types
+  consulted_on: '2026-10-13'
+  source_version: Documentation en ligne ; édition non précisée
+  consulted_content: Commissions et volumes d’affaires éligibles dans les contrats de conditions.
+  limits: Appui aux règles de commissions ; le produit inclut calcul et règlement, que FLOW maintient sous Finance.
+limits:
+- Douze Business Areas proposées ; aucun minimum artificiel de deux par sous-domaine.
+- Un regroupement peut porter une seule Business Area si sa frontière est utile.
+- Les sources étayent les responsabilités ; aucune nomenclature commune Microsoft/SAP ou équivalence complète.
+- Les données client et autorités de conditions restent à qualifier sur preuves ; aucune application installée ou maître d’entreprise
+  ajouté.
+canonical_changes: Profondeur autorisée appliquée séparément ; noms et décompositions proposés ici non appliqués.

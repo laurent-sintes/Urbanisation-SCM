@@ -1,0 +1,2675 @@
+id: context-structure-application-U1027
+status: applied_to_backlog
+source_refs:
+- U1023
+- U1024
+- U1025
+- U1026
+- U1027
+agreement:
+  source_ref: U1027
+  verbatim: Je valide l’ensemble
+  scope: Lot complet U1023–U1026, y compris extension de profondeur, sans quatrième domaine Logistics ni capacités périphériques.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1023
+  - U1024
+  - U1025
+  - U1026
+  - U1027
+  summary: 'U1027 : Commerce cinq sous-domaines et douze BA ; Procurement quatre sous-domaines et dix BA ; Logistics trois
+    domaines, onze sous-domaines et vingt et une BA ; aucun ajout de capacité.'
+  required_nodes:
+  - id: domain-sales
+    field_sha256:
+      scope: daace2457613678bdeb3aad3acc50027f7fbef6111d988618bad75d5a28adc09
+      market_comparisons: 09af2c42a3a07072b5381d5b96284e7e95ee99a77392755faef27fba809decfb
+    kind: domain
+    parent: system-business-operations
+    parent_type: presents
+  - id: domain-sourcing-procurement
+    field_sha256:
+      definition: 30810683a7c7c43a41c01ad8b1b36cf4235fba6eee751f783a8ecab6ce93d871
+      finality: 30810683a7c7c43a41c01ad8b1b36cf4235fba6eee751f783a8ecab6ce93d871
+      scope: 31d2548625e8e8bfcc4b80acf2822da9de2b565df5db9d1ff64e735481b71cb8
+      modeling_depth: cdbe257d7a3eadb2ce733473d8b8bd7b8f91f4136284eda9c29106dcfaa4fdae
+      market_comparisons: 4a217d51b2103bee8ba6619f7d3952dfecf342b30f7091a6d44c2bcf46324100
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: domain
+    parent: system-business-operations
+    parent_type: presents
+  - id: domain-logistics-execution
+    field_sha256:
+      definition: 424c7a7f6676961b1d3e831a209fdd3ab29d39d03ed48f4b6f2468e42d224cb9
+      finality: 424c7a7f6676961b1d3e831a209fdd3ab29d39d03ed48f4b6f2468e42d224cb9
+      scope: 0bd8959ced0eb7ab1a8b4ac76deebf646a6ad9c107da2c2c39b683a2005b36d9
+      market_comparisons: 76823d6978a4fc075f3fe1c682321c6cf269e5a471173c43f38edf256bd0f90e
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_system
+    parent: beaumanoir-target-universe
+    parent_type: contains
+  - id: subdomain-sales-b2c-ecommerce
+    field_sha256:
+      definition: a665669149bf5c9d98c1454b7d2c1585cd76f40ae59cf5770901c054eb8d85ba
+      finality: a665669149bf5c9d98c1454b7d2c1585cd76f40ae59cf5770901c054eb8d85ba
+      scope: 4fe91f5b95ac2751f470354475c9e8a7af30d99ce841d28de725b45d2b0ebf9f
+      market_comparisons: d3457ebcc726dc90c776948f57a209f1128538b98a4fb2930e097493b1742be5
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+  - id: subdomain-sales-b2c-store
+    field_sha256:
+      name: cf394dc2694cebd586249e68939dff76dcd693a594b29c7f21b1c90aeaa2245c
+      definition: 046c6a81148d7f47155e95bc6d7a9dc143b9e7b87ad2150f36c760a08802f78b
+      finality: 046c6a81148d7f47155e95bc6d7a9dc143b9e7b87ad2150f36c760a08802f78b
+      scope: fadac38fe0bc5f0f79fa6a22b90b9d8f87e85c85cc212f4c5b71d7eea819b384
+      market_comparisons: c1c832b6c2410f7ed42785566682080aebad80ecc7e9ec78350d4eb3289f2625
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+  - id: subdomain-sales-wholesale
+    field_sha256:
+      finality: f50f57ebb9bbfc530b6b9f60b34a9f08d406903ba86da89157e8410fc5ed65ad
+      scope: a1023633f3effa9d7f9a824faea74fcee7b7ea39648deb222cb2533cac9cd207
+      market_comparisons: d436addc1f2cbe8531988048e5104d128cd4c335417d8181a50d968ccdf9eef4
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: domain-warehousing
+    field_sha256:
+      definition: 52ef69b73778897e83e416719f903b4d2db950f25f42942637664d24ca759c6e
+      finality: 52ef69b73778897e83e416719f903b4d2db950f25f42942637664d24ca759c6e
+      scope: a3a878ff21988f661a38e08c6d2df3993bc70f017f6bb0ce33b9e890083ed7df
+      market_comparisons: 2657c3149744de8bfafe4bf41a417f22ae6ee6d9ca0c226a5c0dbb976593efb5
+      modeling_depth: cdbe257d7a3eadb2ce733473d8b8bd7b8f91f4136284eda9c29106dcfaa4fdae
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: domain
+    parent: domain-logistics-execution
+    parent_type: presents
+  - id: subdomain-inbound-operations
+    field_sha256:
+      definition: 09aa4471d1a4e2155e33f30b362126fcb33d00ecf934674bab95c159db52d2ef
+      finality: 09aa4471d1a4e2155e33f30b362126fcb33d00ecf934674bab95c159db52d2ef
+      scope: 7a5214f2b128d72d6348f5c0d6fa3a6b35012e2b2ea9b19da4f6cb29aeb38b30
+      market_comparisons: cb2f429402f0b6c71cadda1d9c0c6d211ec7bafbb8462fb69a9abee557fbbbc7
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+  - id: subdomain-storage-inventory-control
+    field_sha256:
+      definition: 3dfe967ca8490c87bd6058bdda8855675a196fb4906393af30b3af4ae08521ec
+      finality: 3dfe967ca8490c87bd6058bdda8855675a196fb4906393af30b3af4ae08521ec
+      scope: 2a4af5cff0112631b5b041631912a31806382c7d91216faeb2b5d1e6553e0fdb
+      market_comparisons: a0177e7e3a25bc2f7a2f89bbc5d4f7b454b3961d4f4d8b6bc1c02b9cdf5468bc
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+  - id: subdomain-outbound-operations
+    field_sha256:
+      definition: aca308660d27711ce45d16242f9c064f14db7653be8497780f62a6e51b1248c2
+      finality: aca308660d27711ce45d16242f9c064f14db7653be8497780f62a6e51b1248c2
+      scope: 7a3d5d04d7cc3631be1ff2e31ed9a590f3ac20e900da10efe40bacb6b01d72ce
+      market_comparisons: 5c2ec7fbf0e86e95dc66918491a1d08f4f572fe4fa00114a850227bdebd04922
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+  - id: subdomain-value-added-returns
+    field_sha256:
+      name: e172bc3f856db7073d66676c9420b216a69a5adb731c76379838f2454d1a983d
+      definition: 2732157086c26fc3b5809869fac722eef24b9a9d7caed30f6ddb6fbb824803f2
+      finality: 2732157086c26fc3b5809869fac722eef24b9a9d7caed30f6ddb6fbb824803f2
+      scope: acad06c6e5f0f797ebd9af424ba48a4bfdacdd06acdbf93bf1621a0a997499d0
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+      reading_order: 4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a
+      market_comparisons: 27654a324ee6278ee95ca8c081684e70b2eeec9c9f4c17f93c8206e98385f83b
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+  - id: domain-transportation
+    field_sha256:
+      definition: 4ffb2df22e25c00b1d74bac35f29ae4f591e413d7668d4c428cc2c27d9f73f5a
+      finality: 4ffb2df22e25c00b1d74bac35f29ae4f591e413d7668d4c428cc2c27d9f73f5a
+      scope: 15c072ed125cfeb40554dcf7ce00a678c3b0d63a9b4eb1f396165b54cd2ce6ee
+      market_comparisons: 876522b649b42f3d43999a747ca98303186a3d3680594434f08dedb4087cc069
+      modeling_depth: cdbe257d7a3eadb2ce733473d8b8bd7b8f91f4136284eda9c29106dcfaa4fdae
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: domain
+    parent: domain-logistics-execution
+    parent_type: presents
+  - id: subdomain-transport-planning-dispatch
+    field_sha256:
+      definition: 7a4185ad159df0a291b45c1fc45eaed0958864512d90d860821044e74c3f96bd
+      finality: 7a4185ad159df0a291b45c1fc45eaed0958864512d90d860821044e74c3f96bd
+      scope: 5dce563ce55ec14491da06eec4e6a6755c6023bc8a289d81fc2f11afb4a482cc
+      market_comparisons: a97fa02234dbe96ef72ceccfc1fbfa6c399d0929f22262ee960d5a2038000c0f
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-transportation
+    parent_type: presents
+  - id: subdomain-transport-execution-tracking
+    field_sha256:
+      definition: 9cb5d974b6c3972096cbdcb06d71b3bcb4b463bc1b1d1920ba8e57b1da1a2fb3
+      finality: 9cb5d974b6c3972096cbdcb06d71b3bcb4b463bc1b1d1920ba8e57b1da1a2fb3
+      scope: 6cb5c431c9c5c26462e596ea503b233d0208cd74ac69bfa966f86e7d49d6c208
+      market_comparisons: 113543bb577a2eb3b46ecd046bb7e1f62bf16d069b2824589c98d7cac4920cc2
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-transportation
+    parent_type: presents
+  - id: subdomain-transport-exception
+    field_sha256:
+      definition: 66760570f12a4b3c108a9725a742c446568b2cb05e224d7b0bde72d06c9e5c23
+      finality: 66760570f12a4b3c108a9725a742c446568b2cb05e224d7b0bde72d06c9e5c23
+      scope: 48b5b6d715fcbf87d2fc1d1824831d8653e5f4e0fac802e09ee3e575e0933cc7
+      market_gaps: b583012147e4132077dda66c15fc2bad3e76d940baff98c5dd2024c2b9203cb5
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+      market_comparisons: a09c574dd1a1aacf5ba87f49064208c80b9638b02f6079801508d405d0604bed
+    kind: area
+    parent: domain-transportation
+    parent_type: presents
+  - id: subdomain-supplier-management
+    field_sha256:
+      definition: 53be2c8121913ed82154b5da7c9b27f196946fef723893820e3bd17137d18303
+      finality: 53be2c8121913ed82154b5da7c9b27f196946fef723893820e3bd17137d18303
+      scope: b29bcc610a8b97e4ba32e7471a45df63e91f4d71a931c0f60a2911d67e7922d1
+      market_comparisons: 93b473f46e09c8b7885e80af7416dceabd957a67ea952744a0e5dbbc74bd2207
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+  - id: subdomain-strategic-sourcing
+    field_sha256:
+      definition: a1c22fea92bfbed5ca6f5c12b0d2dc32d094452ad2fb04c0ea25107c0d7d89d4
+      finality: a1c22fea92bfbed5ca6f5c12b0d2dc32d094452ad2fb04c0ea25107c0d7d89d4
+      scope: b13d668287580c2da3f3b9209de83a2d8bf391679aaaae4f2ee2eb96299bdb5b
+      market_comparisons: d9a88cee11c4a54d476b700ba17ce75a97c0325483958bb8a207f83afd2ea67f
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+  - id: subdomain-purchase-contract-management
+    field_sha256:
+      definition: 6d0ae74e6706d9bba22b5639dae2326a8c599c97b4628610a15418e1965d53f2
+      finality: 6d0ae74e6706d9bba22b5639dae2326a8c599c97b4628610a15418e1965d53f2
+      scope: 6c9bc6de2bb59f333495463a2818a3c3e8401bca78affce92b8490c39705255e
+      market_comparisons: 83558a1a96a5bba287b4120e2f8029097d734b9b9bd75eeabc45aec94fd997db
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+  - id: subdomain-operational-procurement
+    field_sha256:
+      definition: eb2088219626b45e5d305e953fcf51169fbab0591691f5c9ce86d66ce9d86bcb
+      finality: eb2088219626b45e5d305e953fcf51169fbab0591691f5c9ce86d66ce9d86bcb
+      scope: ec4fac619054f79af8df94797c67830c965cfa50ea2a87088fa4a55e14a86d4c
+      market_comparisons: b8baeedbdfe6c9eccfc317af1e8d55ebe20f8a6e98d581dd168e3f3659d491d9
+      reading_order: 4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sourcing-procurement
+    parent_type: presents
+  - id: subdomain-assortment-catalog-management
+    field_sha256:
+      finality: 2e797054e9d5412d4bec110d1d6dbaa64d1b456b05b7ee428deeb2ade20a45b2
+      scope: e13c20509c031af486a8ebadcd2a6a45b6881d5de599b59dcdad49d63d4b8ab5
+      market_comparisons: 7198e9b4f87f974e304d59a04088c492a0014cec485c4cec8b0748c7d4558862
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: subdomain-retail-network-management
+    field_sha256:
+      finality: 565b0c5e782775b5907c9c2bba9a43aae96d93ae1f979da885c3fb5e31a6f136
+      scope: e98160de9916c388d80aa4f8073c69906d49ae4c617dafa3448f5adf707f44b3
+      market_comparisons: b9ca143cea6b433b68a515ed6353bcf034b06ae43b01c38880f9db59c87cef60
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+  - id: subdomain-store-backoffice-operations
+    field_sha256:
+      name: 497d474f6cea681760ce6971f5073cca7f76b3dc3f4684b50217a3863a4ba94d
+      definition: 4de608f465d152643a7191cadcbd08209b4334896e3f5aa65764db05d25af9d3
+      finality: 4de608f465d152643a7191cadcbd08209b4334896e3f5aa65764db05d25af9d3
+      scope: 5ce62e0bd1ee73afd03a85362a34d3ae0c14efefbe064ec21c0c95ae00143d2b
+      market_comparisons: e51ccac8d7aaedd1dd6683cb7a36d88b3e97ecf0be22d20f6b45416a0ad62085
+      reading_order: 4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-retail-commerce
+    parent_type: contains
+  - id: subdomain-pricing-promotions-management
+    field_sha256:
+      scope: 0a632a39497e84ce05be4d216b0be673b06fde92f3c0f7bac9d4f7b06f6a4acd
+      market_comparisons: 8f325a02c4ca9e3ee2c2fd32f21a8a027d09dfc52b79e807217cc15033dd3ec0
+      reading_order: 4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: subdomain-rebates-incentives-management
+    field_sha256:
+      scope: 3f1834a3b12b193e798d6d9d7e0c83b0d9bbf90484473f44ff991c9150f10fc0
+      market_comparisons: 19621af68869fb30fe7786a0f5ebb7520c14c9a1a47ff69ec76abbd1621b9a7e
+      reading_order: ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: subdomain-retail-commerce
+    field_sha256:
+      name: 51b55be61480919cb3305a62cf5b19a6ec18fc6292b731d226c20ba58ea8e532
+      definition: 262523c11b1879ef3daf0a04fa675058ca6ccca26f2554a9164d8a94a53cf78c
+      finality: 262523c11b1879ef3daf0a04fa675058ca6ccca26f2554a9164d8a94a53cf78c
+      scope: 9e06991de108f2bd362bc60cb0769885a19b3c9390f55fe7f5bbf3ec24640a25
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: baf34bc179fea75a92eb57b2bdb56984b8d855abfd7d10f39a533c2084f68ec9
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-sales
+    parent_type: presents
+  - id: ba-wholesale-account-management
+    field_sha256:
+      name: 14558e4806b35dfc49e1bfdbc8c0c28bc9ba0f8dbdf211b43995abcbd56f1ee3
+      definition: dc3e86fa4088eb445cf5c1d97ad3ede4841ceeeb0048fa425fcd8c9472926a7c
+      finality: dc3e86fa4088eb445cf5c1d97ad3ede4841ceeeb0048fa425fcd8c9472926a7c
+      scope: 76c68078ec75ce4dea2f738fd812245cb9f1f7b88a781d84ccce6cb3048fe01d
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 927040250ce38bfd6a3331d99c63ac087f2d13a6ff8e5880056c14a54839cd85
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-sales-wholesale
+    parent_type: contains
+  - id: ba-wholesale-sales
+    field_sha256:
+      name: 3213a723f99d49376b7cb8f625530038841bc8ab6bfb418860dec2164538b031
+      definition: af8d2b1a5263b10cba48382c919f46f1531f0bff3ae12e76afce2743026b5612
+      finality: af8d2b1a5263b10cba48382c919f46f1531f0bff3ae12e76afce2743026b5612
+      scope: 46694228712dd1b4e5462e4217f6bcfb7326d7b6ee4b364519d0d6c4186272ae
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 99f31b3ce5613cc12bb587f7a7a7596af0a7411a90011661c3c18f60c32faf88
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-sales-wholesale
+    parent_type: contains
+  - id: ba-assortment-management
+    field_sha256:
+      name: 94e2ccdea21ef225b7735a38c2fae57d5abd0c1b8a219a3f826502558fa56e7f
+      definition: b2c0046e1b1b75ee0c67bd2ab40f41bb77414c0e5878889bbda50c1393305383
+      finality: b2c0046e1b1b75ee0c67bd2ab40f41bb77414c0e5878889bbda50c1393305383
+      scope: 3ff858b2fb2d2577cd0537d10d7d2027162220d3623b9abc5c3491ba6861f09c
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: faed85eb7601cf01b891687824aea403deec4b153892c14cbd6da8d4085ce794
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-assortment-catalog-management
+    parent_type: contains
+  - id: ba-catalog-management
+    field_sha256:
+      name: c530f021769c58e752dd0e4204b99a1f908d781d6020af3e59f31ac54b4fd18a
+      definition: 301a2ebbc454af737a5b7f708d07ea436554af807e9471722996c5cadff303a9
+      finality: 301a2ebbc454af737a5b7f708d07ea436554af807e9471722996c5cadff303a9
+      scope: a850d70adb9ce28f870a42d2b5d600510b7f277f7f78a31ed99d947aba78c58c
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 3676b0db5d51f23ae49fe44bb681138a9b46cf095735aa75227079db9b9a2144
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-assortment-catalog-management
+    parent_type: contains
+  - id: ba-pricing-management
+    field_sha256:
+      name: 848e4562db42a29eff9066251b70bc1f199f99f9a5aee18ca58a003113866b13
+      definition: d61a9faad5204e3c8433001c74218af31e6fd0a2ec6bfc49ce28a95c9c83fcab
+      finality: d61a9faad5204e3c8433001c74218af31e6fd0a2ec6bfc49ce28a95c9c83fcab
+      scope: 6c39223247db28b7bddc8db2aa788fea8533a77d92ea59ed4cd1f24274381ece
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 72c84eeca0a7e506be9e52116344557ab6d08e1083802e57e1b4e2adc003c656
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-pricing-promotions-management
+    parent_type: contains
+  - id: ba-promotion-management
+    field_sha256:
+      name: ea79fd6ecd9f5406b33ea8577d33aa55cbb6422bdbb2c9161f6b6688858f96f0
+      definition: 445b9ccccc2aa186347dc952df3af4ab4eccd760a69b2b1e79727b3d5c513413
+      finality: 445b9ccccc2aa186347dc952df3af4ab4eccd760a69b2b1e79727b3d5c513413
+      scope: b2af6cf300329e592c010963951898b64000160732a6c715ea6b8bb74c3e0921
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 73a905b43ff0ca90d7255b695daee9fc45042b33bbe8c6907809789400212aeb
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-pricing-promotions-management
+    parent_type: contains
+  - id: ba-rebate-management
+    field_sha256:
+      name: 1c0cf12ef17f95c85a49db98cb5821a1db0e0cef628b26569a078776dc8aba6c
+      definition: 125f5d8a43afbda1ef4719e18ddec0c4a51e97adc56ec829ed90c56ddeb3cc6b
+      finality: 125f5d8a43afbda1ef4719e18ddec0c4a51e97adc56ec829ed90c56ddeb3cc6b
+      scope: dce3384b5f8a1cb5295c166bca9868f3f2f27e985765700dd84ef87f5d1d10b5
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: b3adab1eecc4ff39b4a67874e6ca41112d05753d1060e38bf18afe6bedbadbec
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-rebates-incentives-management
+    parent_type: contains
+  - id: ba-sales-incentive-management
+    field_sha256:
+      name: 0136efb8e0d983b3291ae30c864ad86340c9d31cc5ac289175d7d233dd429d0e
+      definition: a4c48954feeee4b452f7971dad9dfa34199c2d4bf88df89d5d0b7a494785a1a7
+      finality: a4c48954feeee4b452f7971dad9dfa34199c2d4bf88df89d5d0b7a494785a1a7
+      scope: df1eb13f926e6669068efae9b4e21fbb1cff824600fa75d46aa51f5a42a769b8
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 911d7693b9d34066c3e87031aa5596bdfe87f033709b3007be31f8a6d7ad8f3f
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-rebates-incentives-management
+    parent_type: contains
+  - id: ba-supplier-qualification
+    field_sha256:
+      name: ea6fc92b58fb730e174b56b24db5c6161eb459c2e637a97f62e51fc236cddb1a
+      definition: d66cae2d6c381e4b7978bd3673470081faa8b5c041d590b51540b19cbd4f84a4
+      finality: d66cae2d6c381e4b7978bd3673470081faa8b5c041d590b51540b19cbd4f84a4
+      scope: 227e986d13fcca03ceea1546ce137c09eb3b89cd675dc6170ec84c5912c80ee0
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 5d49be65f75044b6d41c3e08ec1d172d9d91c7c3f41345abdd95a24e64822c02
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-supplier-management
+    parent_type: contains
+  - id: ba-supplier-performance-management
+    field_sha256:
+      name: 76ba0484b33c737dc6285f52cdad0488a3e5c024f7143509d5fd4c6383775d46
+      definition: 1e8f9a5d1977ea9a05ca7547710c6abc2d28fc3bbc0c34780eae54a02899c72c
+      finality: 1e8f9a5d1977ea9a05ca7547710c6abc2d28fc3bbc0c34780eae54a02899c72c
+      scope: 943e7f55b830d80f4342f2adf3780470b30ead61ecf663ef9894fdfd8cff9c73
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: ca9cc03c99d6a2da621b6ad968a153c0b0927114a0191cdc3a8f6243467e2f1c
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-supplier-management
+    parent_type: contains
+  - id: ba-sourcing-strategy-management
+    field_sha256:
+      name: f10dca17e90dc4df34e935febb6c59b52e7d4aab859faf226db5207cefd9875e
+      definition: 3c67d814a782d25e23ba0c2960585607e9cd403056116c8c5d82509ac173c61e
+      finality: 3c67d814a782d25e23ba0c2960585607e9cd403056116c8c5d82509ac173c61e
+      scope: 6e00ead16888577f23353d27758e738bfb5828c3797e745abe235c39ae3db26d
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: a1cb8a6533153b15fd71ba95279d0308317d544204ec2dc24b41405b48db92f7
+      market_gaps: 471ad0cf3bc7f9f12c686ccff4c4297959dd208b128c4bc3b9d44dd37447e29a
+    kind: business_area
+    parent: subdomain-strategic-sourcing
+    parent_type: contains
+  - id: ba-sourcing-event-management
+    field_sha256:
+      name: 982d6a7944c01dafc89d15489f4019044926d2e7c471cb97d019d17a2459ab56
+      definition: f56ab669f1d4e7e7d96b109e27d65d83334cf73d0d5ec7731eef235d71608e83
+      finality: f56ab669f1d4e7e7d96b109e27d65d83334cf73d0d5ec7731eef235d71608e83
+      scope: 08d8d475619c22bb892447bf036f40e1db55094ade06bd92e10d28ec2d64e80d
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: ecf4ab4f2ea23cf13fc925c2e1820741b3e05db59a5a3a3c7c5e2c89befe0650
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-strategic-sourcing
+    parent_type: contains
+  - id: ba-source-selection
+    field_sha256:
+      name: e8ad8466d7632e0c8f3c737298c6ccb9726f7372b16fd2b3a30976b284ae5db9
+      definition: 1b4b7e01a0bf4a2d38e1b10e7336cc9ed5e42c593cc5a617170c78a055b5798b
+      finality: 1b4b7e01a0bf4a2d38e1b10e7336cc9ed5e42c593cc5a617170c78a055b5798b
+      scope: 1d6206d83a10f0353271de8fa00154bf727786ae8e46646b7c67666411b4a787
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+      market_comparisons: ba4cef2e0e8f4006ec48104cf2fd8558ecbafd6ef09cd86c33e9018e5904cf94
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-strategic-sourcing
+    parent_type: contains
+  - id: ba-purchase-agreement-management
+    field_sha256:
+      name: c8812dc00c3efa6303f969cdfda3a18f017fb5b76d8a24759b8c70a38e55f1e2
+      definition: 63f0b02f2dfd4854712e761315956ef946b54871208aa1585e0b4bf468bd4800
+      finality: 63f0b02f2dfd4854712e761315956ef946b54871208aa1585e0b4bf468bd4800
+      scope: 25e9f592939cb98ee3af53af2784af0bab312f0f265d5a1fe1fa5e65fbf350ad
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: d1572c9681d9fc099013140da60106c078ee6fbfb7452aa44b40a6113b1766a1
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-purchase-contract-management
+    parent_type: contains
+  - id: ba-supplier-rebate-incentive-management
+    field_sha256:
+      name: e24e11df8c6d8c46308c6311e851b85994947fcd54f2ca067a581b44803b3cfc
+      definition: b6aae34ad6ebc5afa574df1fe345f09c73684d00ae55fbd5e1ca885412672dc1
+      finality: b6aae34ad6ebc5afa574df1fe345f09c73684d00ae55fbd5e1ca885412672dc1
+      scope: a1185e364d6241480fe86622f3f9962a09e4d38f7b922d4a857d407fa4369555
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: f86f25fffbd43e54d6adc1cb33d81ba28494757d2aa50c6f681c3b1f5089c76d
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-purchase-contract-management
+    parent_type: contains
+  - id: ba-purchase-requisition-management
+    field_sha256:
+      name: 5f95d6e42c6728b430116c6390d7f775974d8b9283d4bcfb3c242b90d9258d47
+      definition: 42e1230b0534ed50a7384bf488132734ac4c67e92ebdb0f3cdf3d5f307c5125a
+      finality: 42e1230b0534ed50a7384bf488132734ac4c67e92ebdb0f3cdf3d5f307c5125a
+      scope: d115ff38efc56bc11481b9e6bb5309349ce510e6f5e6e97d41874f4b3e27ea8c
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 021bfef694c102510cce11fb8a18fb85962a7e4c3789c401c0574cc7ffb701ee
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-operational-procurement
+    parent_type: contains
+  - id: ba-purchasing-execution-coordination
+    field_sha256:
+      name: 33c42e5928af341f8c847d7ca7f375e75118672bf333f8d05a4958a4268ce02d
+      definition: 52638fc07862d5f398449a85e888728f76da1a93c74c0d89155a09126a5ebbd8
+      finality: 52638fc07862d5f398449a85e888728f76da1a93c74c0d89155a09126a5ebbd8
+      scope: 723ee898763ca11f4d2c082e2c85e038bbe53171232dc53204c0c886c6979929
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 763dfb5bb04f294afacefe4aeeabaa106acc43a086b512844ebeccc721c7171b
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-operational-procurement
+    parent_type: contains
+  - id: ba-supplier-delivery-follow-up
+    field_sha256:
+      name: 45b25fe8bc699a3a6dab4e6a4f435618a3675a7b9c67343ba29079927e61a522
+      definition: e5a9a612a70f28f9d58c32c1fa4d81c3fd2764badf97f35c4edbf0c62cf60a4a
+      finality: e5a9a612a70f28f9d58c32c1fa4d81c3fd2764badf97f35c4edbf0c62cf60a4a
+      scope: 0306404cecfa0a0106b9c1887d4b1481d6fc169fc29e48cd0f8bd99b51516d0c
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+      market_comparisons: 3bfc0dcda6160a8b81052d3fb28d49c232e9fe7b02860c3482f91d44b66e6ed4
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-operational-procurement
+    parent_type: contains
+  - id: ba-receiving-operations
+    field_sha256:
+      name: dd647e67b78ab891aed6f2f5ad030ccf8bb3a958b59e3d56682eae91efc92cd4
+      definition: d7d10c50b03d353419bf241850362ef12eaf892b416ea0e01b2f045b6d26dd4d
+      finality: d7d10c50b03d353419bf241850362ef12eaf892b416ea0e01b2f045b6d26dd4d
+      scope: 35aa00d381fbbbd10e03221938a369a04d13e9b9d1deaae5d3ad2c000eb08ebb
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 8fd1f5a38a515dcba3ab67c87fe32c405a0e27a10f7ddd37ee33051c57d8f85c
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-inbound-operations
+    parent_type: contains
+  - id: ba-putaway-operations
+    field_sha256:
+      name: f496519fce60d347b95aca62af6d8115a903d0b9b2a910635c21aeafdce0467b
+      definition: df530f84b3e4a9db8a686494536be2450eb016ac04247f0d1481e5abb85075aa
+      finality: df530f84b3e4a9db8a686494536be2450eb016ac04247f0d1481e5abb85075aa
+      scope: 2cf07d580f687e7d9b56c029da2b7daec7433e23535634769d587436f098ac04
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 52f5aee44a6a19742a7ff8aeadc42124f87b34bb14a8adb285105ef1b4fb3c4c
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-inbound-operations
+    parent_type: contains
+  - id: ba-storage-operations
+    field_sha256:
+      name: 06bf3eeaf5b3033cb9b2ca58cecb0eff467656f09161873600405429fa001a6e
+      definition: b438933831155dbf32a75526cf18933fc390b335e0339efae8311af5d4bb64a4
+      finality: b438933831155dbf32a75526cf18933fc390b335e0339efae8311af5d4bb64a4
+      scope: acb6b8f32e05d5362cfabb52127cbe29980065dea8b339f0135ec9276377b5be
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: dce7e03c1438ba72980637c5a5a8566e2247b8677d1c52d0cd0bc292f14fd502
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-storage-inventory-control
+    parent_type: contains
+  - id: ba-physical-inventory-control
+    field_sha256:
+      name: ac37ad8f17ffc993caa45efde8dcf1ced59a9922780f2d9122a1f6f4d3110280
+      definition: c5bd7df91f59e4f4532c63aa4a80baa4b2a6538e3201f6798e486a5474ec1909
+      finality: c5bd7df91f59e4f4532c63aa4a80baa4b2a6538e3201f6798e486a5474ec1909
+      scope: 3db9b494d2ef49a9bbdec348622be621d0e9c923b17c7515257cd968630abf99
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 166d3646620f853200c4fa3c230a5d2164f53646b00aa1b2848d37124a5a26ac
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-storage-inventory-control
+    parent_type: contains
+  - id: ba-picking-operations
+    field_sha256:
+      name: 70b0a3bb34f1505b70027bcf3b4cc7d53973a9355994998813e76ec0d4ecd0e9
+      definition: 36a8d09884eed675a7372a5f878b97dbabaa0593495e82badabd47c5b38fdc63
+      finality: 36a8d09884eed675a7372a5f878b97dbabaa0593495e82badabd47c5b38fdc63
+      scope: feb4d8dff06c316783bceaa460bc95ef6d3bbbaa3eb796eee05d7062b14957f2
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 0e5e078a723fc6cdc5d3dc29ed0f333e94ede2fd01a67a033048a9c4a08f4a9d
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-outbound-operations
+    parent_type: contains
+  - id: ba-packing-shipping-operations
+    field_sha256:
+      name: 8f2113164d29668e1e221daf0cfe1f07a9ce73447e33ada502b83450689a0fb1
+      definition: 7507778a1e89355ab40dffd3852a0fe28d5ff56bbc844fcc73a615268d8aae7e
+      finality: 7507778a1e89355ab40dffd3852a0fe28d5ff56bbc844fcc73a615268d8aae7e
+      scope: 737e7f7083d60adfc51ecb689f485c60d6ac533c38689a2d281bc3411c8ba765
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 4aa13e427729d23364f59f5e981774a6f2fbc0a2aeb06d5eb94755f186f203cb
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-outbound-operations
+    parent_type: contains
+  - id: ba-product-preparation-operations
+    field_sha256:
+      name: b9fb4052402931ca5bf725ef960ff010c2c82ecc27031aef19c4c7a043a8c0d0
+      definition: 81e53cb7b47a2bbcb4b262817e2fbf09f304429c7ba49b6227007fe246431f09
+      finality: 81e53cb7b47a2bbcb4b262817e2fbf09f304429c7ba49b6227007fe246431f09
+      scope: 7847c067e903cca25b9274dc644451f37528510564a8d4603652b06aab824213
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 42031f53f124ef0c4057b5883864b44f0c087cd43569c2f0079338ff32a474a0
+      market_gaps: ce0ba0fd0074041d1410585f214ba46499d70ea1cec2df8257065135cbd2212b
+    kind: business_area
+    parent: subdomain-value-added-returns
+    parent_type: contains
+  - id: ba-kitting-operations
+    field_sha256:
+      name: ff8b3d974a03c9660a5e7ff82a9dd8657284484154122f8f60bf376feabefed1
+      definition: 9236da49c4dcc1497826dc29580e1296d2e13e6159506d7d272b949030a6e071
+      finality: 9236da49c4dcc1497826dc29580e1296d2e13e6159506d7d272b949030a6e071
+      scope: d1a9c519f60fde012add8d2b73bdabe92bc1a8698ff3a7a71dfce5bd2ae5978e
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 88f20dd633c63c83f7798386f7fa4fc6e1bc9328d59d00a9966fee6b03024ab2
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-value-added-returns
+    parent_type: contains
+  - id: subdomain-returns-operations
+    field_sha256:
+      name: 6cf2cf9a6829dbb115f105b2e6a15dbefe98f343fdfc0fc48ab3e615e12773c9
+      definition: 931ab24b1a4ab540b75e827194a36a83232a8be71707af6f757fd656156767da
+      finality: 931ab24b1a4ab540b75e827194a36a83232a8be71707af6f757fd656156767da
+      scope: 53da7515cfa0079c69a916a330daf9bc554421318956a11abdcb7b681da12850
+      reading_order: ef2d127de37b942baad06145e54b0c619a1f22327b2ebbcfbec78f5564afe39d
+      market_comparisons: 5ea8ab88f8a3fcda90b8b3482436c60d5ff45f98f0f7fab535d4056fa7c14165
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+  - id: ba-returns-receiving-inspection
+    field_sha256:
+      name: 79aa513a160e97a6b69c3769a023ddd9a80072b3ec4f99ee9c9f32e003b31cd1
+      definition: 11d66c99aafe2142302e59b50fe366e9ef92c30c2285e265f21045a384e75d24
+      finality: 11d66c99aafe2142302e59b50fe366e9ef92c30c2285e265f21045a384e75d24
+      scope: 473b834386ed882a9390b5f6ed251b1ee80a4f94031ea9a3116d82286f9144e2
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 8f1c614f57b2be520100bf12adc846f8e4b908aee7a22d66fcc5c071b522eef8
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-returns-operations
+    parent_type: contains
+  - id: ba-returns-disposition-execution
+    field_sha256:
+      name: 2dedf5cc6deedb3725b91e1bf015a45c6b52aa69f7421207be357db3b19f72f2
+      definition: d7eb6ee1f5c41741a17f81d7f8baba6b7e04f147a8c8ae1bc656e291e27f7015
+      finality: d7eb6ee1f5c41741a17f81d7f8baba6b7e04f147a8c8ae1bc656e291e27f7015
+      scope: 6177fb9e6669cb2ad53dd200c86d79d3af5a10eae6eb8e9a3fc45bd84767b7a2
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: e57b1da9034589df243d98daaf22c0c4bc83f8b7edbf0fabdfa41984f1f6372f
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-returns-operations
+    parent_type: contains
+  - id: subdomain-warehouse-operations-control
+    field_sha256:
+      name: 9e9d461e9b497821098b36c213193fc5a5840ffafba3f89c08b92fa566c92165
+      definition: f24f1cd9e41f3fc24bb096a98640c17e390baa613690d60d8b9f9e2048b90bdf
+      finality: f24f1cd9e41f3fc24bb096a98640c17e390baa613690d60d8b9f9e2048b90bdf
+      scope: 686d6245ded94d80a4319a2a867387c83e72e26a0401a24e35caba27f5f24a5b
+      reading_order: e7f6c011776e8db7cd330b54174fd76f7d0216b612387a5ffcfb81e6f0919683
+      market_comparisons: 2fe5fbb46e4f1e1230f0bdb1bb04637ebc8ee0b2fe2158e8c0e836dd2bea4fd0
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-warehousing
+    parent_type: presents
+  - id: ba-warehouse-resource-management
+    field_sha256:
+      name: dbf0c21c079a3f2dc98afac66c8beba4e4612ad02a751df2ad05232e3a0ade8f
+      definition: 8a0230d15d765ccfd1ca50c9322b9ea5fc2927eb3427e7ab032b94ca8359dafa
+      finality: 8a0230d15d765ccfd1ca50c9322b9ea5fc2927eb3427e7ab032b94ca8359dafa
+      scope: eb0384d37ce109635e6f25a39add02d7c8227a630e8103a49bfc577e9d9d93ee
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: a39fd9db397c73cc191d67e344696feedb951da1a9d58ecdccbceb2ee59a3701
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-warehouse-operations-control
+    parent_type: contains
+  - id: ba-warehouse-work-management
+    field_sha256:
+      name: e134e45855866b0341720327302923cfe13cfb9dca3535671f4f4b01de918af1
+      definition: 5d94ff97ac320a0b3221d0122c52628d6ff29389bd4162cfab2d983ee4f17801
+      finality: 5d94ff97ac320a0b3221d0122c52628d6ff29389bd4162cfab2d983ee4f17801
+      scope: fa1ac23e83f10e943b9f6b6fafa5691b35df8bb55676691598cb0186a9718db2
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: cfea8fc1f24e502e609ffc2e7751c6b32c7cc6d3e26cf900671d4598187f8e13
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-warehouse-operations-control
+    parent_type: contains
+  - id: ba-transport-planning
+    field_sha256:
+      name: be8befd35ea5cf1d41d89af74c51aead1b7703446e02af05ed2044f331432aff
+      definition: f3aa1951209daae96d6330def6e48c825f55c50b58ec47daca7c5c4258a41b2f
+      finality: f3aa1951209daae96d6330def6e48c825f55c50b58ec47daca7c5c4258a41b2f
+      scope: 7833525f5ad7194d51c56a6fa876555ef1008a6946178f4c404c26266e91879d
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 78fb7ae6193c91c142523453b376dcc430195e02dcdc68ca66f254176dcb16e4
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-transport-planning-dispatch
+    parent_type: contains
+  - id: ba-carrier-capacity-assignment
+    field_sha256:
+      name: f53ea0d25cf3eec7c12a037c522625d74261d1815c01667ba2df66c3954b7c6d
+      definition: fa69826d0df2d9ea883b5482dbce926a5b2ba683378f1428a737eeadb4e65a3f
+      finality: fa69826d0df2d9ea883b5482dbce926a5b2ba683378f1428a737eeadb4e65a3f
+      scope: e1a082302986c30e20da41cc260a08e26aa09692cff7030bab016b906cc0dd3d
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: b63c69572e086e40536e3f60970d506bfd23ab58058c99171ae51e92f1d42426
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-transport-planning-dispatch
+    parent_type: contains
+  - id: ba-transport-dispatch
+    field_sha256:
+      name: 3024926399caf431db7a5b05d8da0505c9315e1b555ec59d10fad3360dfb29ae
+      definition: 761eb58ce666e1d4534eb41151426f75f643b6551debf6983575874d543cc330
+      finality: 761eb58ce666e1d4534eb41151426f75f643b6551debf6983575874d543cc330
+      scope: cf6839392e9b281bf0037a8f74879ff333b63c9ee39e8ace63d9d430f16948bb
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+      market_comparisons: 49425851490a27538cb72dace8a20ea4f6d2ac5b2636a96dc90577757cfcc904
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-transport-planning-dispatch
+    parent_type: contains
+  - id: ba-transport-execution
+    field_sha256:
+      name: 283cbb0bae87de2d26f5123100f1bce69b0149615a08f8f73ffa1b65e17de83b
+      definition: 365ea930218f604cbc4a69cc749ea7406e3b943b212263ca62ea66913b51b310
+      finality: 365ea930218f604cbc4a69cc749ea7406e3b943b212263ca62ea66913b51b310
+      scope: adccffe4f89647a0653c3bcd073d66c75dfdf4ac955e945ffaec9868ab01c5fe
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 20bed4f01f8351685412fdc888095bab09bc621bfbea434e3c7567bc102eed3a
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-transport-execution-tracking
+    parent_type: contains
+  - id: ba-transport-event-reporting
+    field_sha256:
+      name: 9b1dee7c51904babdf78d0fe63754b5b6a4acbef0fb9e3eb92540128344ec9bc
+      definition: aa158573c00cb18fdf92adc3d383cf9c7c4a48eefd27e87901ca525558668db1
+      finality: aa158573c00cb18fdf92adc3d383cf9c7c4a48eefd27e87901ca525558668db1
+      scope: 0b6f23313ad2ba980c6fd649c257e0e303b3382ae2d0a93a04cb1e2f8bad0465
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: a6eb8c1800b4b1709d3b61970b32e3fda47477a017e60d788840624c94b18d5f
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-transport-execution-tracking
+    parent_type: contains
+  - id: ba-transport-incident-assessment
+    field_sha256:
+      name: e702b8d9ae29c3cab5dc91ec179081234d86cb17d213919fcd59fe8b3318d4bd
+      definition: a804c04bd4473c0c3eeec3732bbbd80b8ea5bd9b1b24767bdfa297684a1d5e6b
+      finality: a804c04bd4473c0c3eeec3732bbbd80b8ea5bd9b1b24767bdfa297684a1d5e6b
+      scope: e0eb638080d263e45e3b4bf5773cffe2ab5bf9a7de9af60deb2dd3f27662bcd3
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 1b037d7baec6cb406efb7a86f8ba760868864176e776b378a93c9dd8fd39806a
+      market_gaps: c299e653e3fcf6eb6ac71f14a3d51b6190f195fc5a6059d77e5c95881cd64459
+    kind: business_area
+    parent: subdomain-transport-exception
+    parent_type: contains
+  - id: ba-transport-recovery-coordination
+    field_sha256:
+      name: bbeb26603a6cf8c2c8e7cb6ec54f55d3bd6ae5004d6725d3186cf5555e47cd2e
+      definition: 3fc5a46652777568bcb8ac50088c5644275abbea59e80e5d915bfcb31b8343d3
+      finality: 3fc5a46652777568bcb8ac50088c5644275abbea59e80e5d915bfcb31b8343d3
+      scope: e740ecd2027efebdc4b83a353d2ec613f1a1282733f88424e7c1529ffd675a67
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 6ed37232a5e649d52f86ddfbda7f0b9c36b1a2bf48dd0dcdae67f8c2c5759ebe
+      market_gaps: c299e653e3fcf6eb6ac71f14a3d51b6190f195fc5a6059d77e5c95881cd64459
+    kind: business_area
+    parent: subdomain-transport-exception
+    parent_type: contains
+  - id: domain-customs-management
+    field_sha256:
+      name: 4205da8eaff370711b80122a28896323c6241a841891a93709d91d4c9216be44
+      definition: 17408333623138f615e813437a33f45c2762360356ea1c9c1b030fc55b4c2e78
+      finality: 17408333623138f615e813437a33f45c2762360356ea1c9c1b030fc55b4c2e78
+      modeling_depth: cdbe257d7a3eadb2ce733473d8b8bd7b8f91f4136284eda9c29106dcfaa4fdae
+      scope: 707ca6b91e292cfff9de857b4f199387e23c3be8e09b099c8d69e026b5808720
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+      market_comparisons: 5f4f4f3f24258e860fe996e70af50cc23f9a51d191f9e43909dd02fffc891e19
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: domain
+    parent: domain-logistics-execution
+    parent_type: presents
+  - id: subdomain-customs-documentation
+    field_sha256:
+      name: 23ee15772a2995f82f693d3aa2ca101910705110dda98a540b1d7bbf705475e4
+      definition: f626b20500f19a4101eed81f3ca3ad3cc5a1fe71e67ba1d779418b07d1867fb1
+      finality: f626b20500f19a4101eed81f3ca3ad3cc5a1fe71e67ba1d779418b07d1867fb1
+      scope: 34fe3f2217224c244a5fbe5e8f35d340cd7cb7b84a84102c4db06f87ec70e456
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: a4920329bd80e741f4f50776226cd4df55bb08b35d4579d7bdb6e2df66a574ba
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-customs-management
+    parent_type: presents
+  - id: ba-customs-dossier-management
+    field_sha256:
+      name: 9d546c3634dae14657829a175c0aa2419404460ea309cc2945184b2ebe3097db
+      definition: 94b429a67f9cdb952c0be1d3410f054cebadda529866e7f09171e7ddf73250fd
+      finality: 94b429a67f9cdb952c0be1d3410f054cebadda529866e7f09171e7ddf73250fd
+      scope: 975267a5e1a682dbd2a270ef7ef8762ccff39cca04bc3c80cb5886c26791fcbe
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: f14ee34a0cd5950a98850a609dbad4e8093b75569292b9cce2403f5aa84073d5
+      market_gaps: 44f92114c172439003e888e80736ae531d4a1e9badba4769dd73ed52a23a6725
+    kind: business_area
+    parent: subdomain-customs-documentation
+    parent_type: contains
+  - id: subdomain-customs-clearance
+    field_sha256:
+      name: 10adc812a340b49ca035f1c5dc8ddb85f0c6c16a1445561dfb23607dfe5e2903
+      definition: 5b23a50b33447c5643d97784dea89a897adbccd089e337328bb67ce8c89ad8f6
+      finality: 5b23a50b33447c5643d97784dea89a897adbccd089e337328bb67ce8c89ad8f6
+      scope: 5360909bad754241a27e7214e882c55cc71d0511ffb40829e65be8506329ef29
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+      market_comparisons: 695376afd97bbd9d6da9107cc4b09fb5b278a2e3a3a181e919ab439074d50615
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: area
+    parent: domain-customs-management
+    parent_type: presents
+  - id: ba-customs-procedure-management
+    field_sha256:
+      name: b6592aa4f884f8a96e53921cb480b5de66311c6f272bcbdbf541c3856138f766
+      definition: 30deb82432482c0c74582c09f2db386425e775190fdc3204f9e07046b17baa11
+      finality: 30deb82432482c0c74582c09f2db386425e775190fdc3204f9e07046b17baa11
+      scope: 0518ba834eb792782949c63d3f1b6d0f86e98e38aff5b83a3089773fa63cb823
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      market_comparisons: 7a5994b9eb73548ba493657ba9abc38caebe14038f324ad8229877e0c8930e4e
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+    kind: business_area
+    parent: subdomain-customs-clearance
+    parent_type: contains
+  required_glossary:
+  - id: TER108
+    field_sha256:
+      context: daace2457613678bdeb3aad3acc50027f7fbef6111d988618bad75d5a28adc09
+      market_comparisons: 09af2c42a3a07072b5381d5b96284e7e95ee99a77392755faef27fba809decfb
+  - id: TER109
+    field_sha256:
+      short_description: 30810683a7c7c43a41c01ad8b1b36cf4235fba6eee751f783a8ecab6ce93d871
+      definition: 30810683a7c7c43a41c01ad8b1b36cf4235fba6eee751f783a8ecab6ce93d871
+      context: 31d2548625e8e8bfcc4b80acf2822da9de2b565df5db9d1ff64e735481b71cb8
+      market_comparisons: 4a217d51b2103bee8ba6619f7d3952dfecf342b30f7091a6d44c2bcf46324100
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER110
+    field_sha256:
+      short_description: 424c7a7f6676961b1d3e831a209fdd3ab29d39d03ed48f4b6f2468e42d224cb9
+      definition: 424c7a7f6676961b1d3e831a209fdd3ab29d39d03ed48f4b6f2468e42d224cb9
+      context: 0bd8959ced0eb7ab1a8b4ac76deebf646a6ad9c107da2c2c39b683a2005b36d9
+      market_comparisons: 76823d6978a4fc075f3fe1c682321c6cf269e5a471173c43f38edf256bd0f90e
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER191
+    field_sha256:
+      short_description: a665669149bf5c9d98c1454b7d2c1585cd76f40ae59cf5770901c054eb8d85ba
+      definition: a665669149bf5c9d98c1454b7d2c1585cd76f40ae59cf5770901c054eb8d85ba
+      context: 4fe91f5b95ac2751f470354475c9e8a7af30d99ce841d28de725b45d2b0ebf9f
+      market_comparisons: d3457ebcc726dc90c776948f57a209f1128538b98a4fb2930e097493b1742be5
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER192
+    field_sha256:
+      name: cf394dc2694cebd586249e68939dff76dcd693a594b29c7f21b1c90aeaa2245c
+      short_description: 046c6a81148d7f47155e95bc6d7a9dc143b9e7b87ad2150f36c760a08802f78b
+      definition: 046c6a81148d7f47155e95bc6d7a9dc143b9e7b87ad2150f36c760a08802f78b
+      context: fadac38fe0bc5f0f79fa6a22b90b9d8f87e85c85cc212f4c5b71d7eea819b384
+      market_comparisons: c1c832b6c2410f7ed42785566682080aebad80ecc7e9ec78350d4eb3289f2625
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER193
+    field_sha256:
+      context: a1023633f3effa9d7f9a824faea74fcee7b7ea39648deb222cb2533cac9cd207
+      market_comparisons: d436addc1f2cbe8531988048e5104d128cd4c335417d8181a50d968ccdf9eef4
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER194
+    field_sha256:
+      context: c5c130cc57e70e95b571e67eb99564e8805c4682d5c410d780ca0bae1844314f
+  - id: TER232
+    field_sha256:
+      short_description: 52ef69b73778897e83e416719f903b4d2db950f25f42942637664d24ca759c6e
+      definition: 52ef69b73778897e83e416719f903b4d2db950f25f42942637664d24ca759c6e
+      context: a3a878ff21988f661a38e08c6d2df3993bc70f017f6bb0ce33b9e890083ed7df
+      market_comparisons: 2657c3149744de8bfafe4bf41a417f22ae6ee6d9ca0c226a5c0dbb976593efb5
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER233
+    field_sha256:
+      short_description: 09aa4471d1a4e2155e33f30b362126fcb33d00ecf934674bab95c159db52d2ef
+      definition: 09aa4471d1a4e2155e33f30b362126fcb33d00ecf934674bab95c159db52d2ef
+      context: 7a5214f2b128d72d6348f5c0d6fa3a6b35012e2b2ea9b19da4f6cb29aeb38b30
+      market_comparisons: cb2f429402f0b6c71cadda1d9c0c6d211ec7bafbb8462fb69a9abee557fbbbc7
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER234
+    field_sha256:
+      short_description: 3dfe967ca8490c87bd6058bdda8855675a196fb4906393af30b3af4ae08521ec
+      definition: 3dfe967ca8490c87bd6058bdda8855675a196fb4906393af30b3af4ae08521ec
+      context: 2a4af5cff0112631b5b041631912a31806382c7d91216faeb2b5d1e6553e0fdb
+      market_comparisons: a0177e7e3a25bc2f7a2f89bbc5d4f7b454b3961d4f4d8b6bc1c02b9cdf5468bc
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER235
+    field_sha256:
+      short_description: aca308660d27711ce45d16242f9c064f14db7653be8497780f62a6e51b1248c2
+      definition: aca308660d27711ce45d16242f9c064f14db7653be8497780f62a6e51b1248c2
+      context: 7a3d5d04d7cc3631be1ff2e31ed9a590f3ac20e900da10efe40bacb6b01d72ce
+      market_comparisons: 5c2ec7fbf0e86e95dc66918491a1d08f4f572fe4fa00114a850227bdebd04922
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER236
+    field_sha256:
+      name: e172bc3f856db7073d66676c9420b216a69a5adb731c76379838f2454d1a983d
+      short_description: 2732157086c26fc3b5809869fac722eef24b9a9d7caed30f6ddb6fbb824803f2
+      definition: 2732157086c26fc3b5809869fac722eef24b9a9d7caed30f6ddb6fbb824803f2
+      context: acad06c6e5f0f797ebd9af424ba48a4bfdacdd06acdbf93bf1621a0a997499d0
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+      market_comparisons: 27654a324ee6278ee95ca8c081684e70b2eeec9c9f4c17f93c8206e98385f83b
+  - id: TER237
+    field_sha256:
+      short_description: 4ffb2df22e25c00b1d74bac35f29ae4f591e413d7668d4c428cc2c27d9f73f5a
+      definition: 4ffb2df22e25c00b1d74bac35f29ae4f591e413d7668d4c428cc2c27d9f73f5a
+      context: 15c072ed125cfeb40554dcf7ce00a678c3b0d63a9b4eb1f396165b54cd2ce6ee
+      market_comparisons: 876522b649b42f3d43999a747ca98303186a3d3680594434f08dedb4087cc069
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER238
+    field_sha256:
+      short_description: 7a4185ad159df0a291b45c1fc45eaed0958864512d90d860821044e74c3f96bd
+      definition: 7a4185ad159df0a291b45c1fc45eaed0958864512d90d860821044e74c3f96bd
+      context: 5dce563ce55ec14491da06eec4e6a6755c6023bc8a289d81fc2f11afb4a482cc
+      market_comparisons: a97fa02234dbe96ef72ceccfc1fbfa6c399d0929f22262ee960d5a2038000c0f
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER239
+    field_sha256:
+      short_description: 9cb5d974b6c3972096cbdcb06d71b3bcb4b463bc1b1d1920ba8e57b1da1a2fb3
+      definition: 9cb5d974b6c3972096cbdcb06d71b3bcb4b463bc1b1d1920ba8e57b1da1a2fb3
+      context: 6cb5c431c9c5c26462e596ea503b233d0208cd74ac69bfa966f86e7d49d6c208
+      market_comparisons: 113543bb577a2eb3b46ecd046bb7e1f62bf16d069b2824589c98d7cac4920cc2
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER240
+    field_sha256:
+      short_description: 66760570f12a4b3c108a9725a742c446568b2cb05e224d7b0bde72d06c9e5c23
+      definition: 66760570f12a4b3c108a9725a742c446568b2cb05e224d7b0bde72d06c9e5c23
+      context: 48b5b6d715fcbf87d2fc1d1824831d8653e5f4e0fac802e09ee3e575e0933cc7
+      market_gaps: b583012147e4132077dda66c15fc2bad3e76d940baff98c5dd2024c2b9203cb5
+      market_comparisons: a09c574dd1a1aacf5ba87f49064208c80b9638b02f6079801508d405d0604bed
+  - id: TER241
+    field_sha256:
+      short_description: 53be2c8121913ed82154b5da7c9b27f196946fef723893820e3bd17137d18303
+      definition: 53be2c8121913ed82154b5da7c9b27f196946fef723893820e3bd17137d18303
+      context: b29bcc610a8b97e4ba32e7471a45df63e91f4d71a931c0f60a2911d67e7922d1
+      market_comparisons: 93b473f46e09c8b7885e80af7416dceabd957a67ea952744a0e5dbbc74bd2207
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER242
+    field_sha256:
+      short_description: a1c22fea92bfbed5ca6f5c12b0d2dc32d094452ad2fb04c0ea25107c0d7d89d4
+      definition: a1c22fea92bfbed5ca6f5c12b0d2dc32d094452ad2fb04c0ea25107c0d7d89d4
+      context: b13d668287580c2da3f3b9209de83a2d8bf391679aaaae4f2ee2eb96299bdb5b
+      market_comparisons: d9a88cee11c4a54d476b700ba17ce75a97c0325483958bb8a207f83afd2ea67f
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER243
+    field_sha256:
+      short_description: 6d0ae74e6706d9bba22b5639dae2326a8c599c97b4628610a15418e1965d53f2
+      definition: 6d0ae74e6706d9bba22b5639dae2326a8c599c97b4628610a15418e1965d53f2
+      context: 6c9bc6de2bb59f333495463a2818a3c3e8401bca78affce92b8490c39705255e
+      market_comparisons: 83558a1a96a5bba287b4120e2f8029097d734b9b9bd75eeabc45aec94fd997db
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER244
+    field_sha256:
+      short_description: eb2088219626b45e5d305e953fcf51169fbab0591691f5c9ce86d66ce9d86bcb
+      definition: eb2088219626b45e5d305e953fcf51169fbab0591691f5c9ce86d66ce9d86bcb
+      context: ec4fac619054f79af8df94797c67830c965cfa50ea2a87088fa4a55e14a86d4c
+      market_comparisons: b8baeedbdfe6c9eccfc317af1e8d55ebe20f8a6e98d581dd168e3f3659d491d9
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER245
+    field_sha256:
+      context: e13c20509c031af486a8ebadcd2a6a45b6881d5de599b59dcdad49d63d4b8ab5
+      market_comparisons: 7198e9b4f87f974e304d59a04088c492a0014cec485c4cec8b0748c7d4558862
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER246
+    field_sha256:
+      context: 3aff89fc1dc23656de6ca1c3d380fe8bcb6360145a1c788989db20f88d1721a3
+  - id: TER247
+    field_sha256:
+      context: e98160de9916c388d80aa4f8073c69906d49ae4c617dafa3448f5adf707f44b3
+      market_comparisons: b9ca143cea6b433b68a515ed6353bcf034b06ae43b01c38880f9db59c87cef60
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER248
+    field_sha256:
+      name: 497d474f6cea681760ce6971f5073cca7f76b3dc3f4684b50217a3863a4ba94d
+      short_description: 4de608f465d152643a7191cadcbd08209b4334896e3f5aa65764db05d25af9d3
+      definition: 4de608f465d152643a7191cadcbd08209b4334896e3f5aa65764db05d25af9d3
+      context: 5ce62e0bd1ee73afd03a85362a34d3ae0c14efefbe064ec21c0c95ae00143d2b
+      market_comparisons: e51ccac8d7aaedd1dd6683cb7a36d88b3e97ecf0be22d20f6b45416a0ad62085
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER254
+    field_sha256:
+      context: 0a632a39497e84ce05be4d216b0be673b06fde92f3c0f7bac9d4f7b06f6a4acd
+      market_comparisons: 8f325a02c4ca9e3ee2c2fd32f21a8a027d09dfc52b79e807217cc15033dd3ec0
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER255
+    field_sha256:
+      context: 3f1834a3b12b193e798d6d9d7e0c83b0d9bbf90484473f44ff991c9150f10fc0
+      market_comparisons: 19621af68869fb30fe7786a0f5ebb7520c14c9a1a47ff69ec76abbd1621b9a7e
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER270
+    field_sha256:
+      id: 213ea01a0cc138b65232854438fc7173fc9a15c8955b1e60ba1d2af59c8590f9
+      name: 51b55be61480919cb3305a62cf5b19a6ec18fc6292b731d226c20ba58ea8e532
+      definition: 262523c11b1879ef3daf0a04fa675058ca6ccca26f2554a9164d8a94a53cf78c
+      short_description: 262523c11b1879ef3daf0a04fa675058ca6ccca26f2554a9164d8a94a53cf78c
+      context: 9e06991de108f2bd362bc60cb0769885a19b3c9390f55fe7f5bbf3ec24640a25
+      market_comparisons: baf34bc179fea75a92eb57b2bdb56984b8d855abfd7d10f39a533c2084f68ec9
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER271
+    field_sha256:
+      id: e6c321cda371aaa666ee3cf24dfed96372dcfd639931d77d0062f11a2feb3b9e
+      name: 14558e4806b35dfc49e1bfdbc8c0c28bc9ba0f8dbdf211b43995abcbd56f1ee3
+      definition: dc3e86fa4088eb445cf5c1d97ad3ede4841ceeeb0048fa425fcd8c9472926a7c
+      short_description: dc3e86fa4088eb445cf5c1d97ad3ede4841ceeeb0048fa425fcd8c9472926a7c
+      context: 76c68078ec75ce4dea2f738fd812245cb9f1f7b88a781d84ccce6cb3048fe01d
+      market_comparisons: 927040250ce38bfd6a3331d99c63ac087f2d13a6ff8e5880056c14a54839cd85
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER272
+    field_sha256:
+      id: 7564a2e436661e51e9bd984861c82f12bc57db3ee07d3f0e87863f08f8e33d60
+      name: 3213a723f99d49376b7cb8f625530038841bc8ab6bfb418860dec2164538b031
+      definition: af8d2b1a5263b10cba48382c919f46f1531f0bff3ae12e76afce2743026b5612
+      short_description: af8d2b1a5263b10cba48382c919f46f1531f0bff3ae12e76afce2743026b5612
+      context: 46694228712dd1b4e5462e4217f6bcfb7326d7b6ee4b364519d0d6c4186272ae
+      market_comparisons: 99f31b3ce5613cc12bb587f7a7a7596af0a7411a90011661c3c18f60c32faf88
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER273
+    field_sha256:
+      id: ce5ffc00ca34ce4958a31e7f6568cb3565ff2a4aec337759c0bd0fabcc8cd2a9
+      name: 94e2ccdea21ef225b7735a38c2fae57d5abd0c1b8a219a3f826502558fa56e7f
+      definition: b2c0046e1b1b75ee0c67bd2ab40f41bb77414c0e5878889bbda50c1393305383
+      short_description: b2c0046e1b1b75ee0c67bd2ab40f41bb77414c0e5878889bbda50c1393305383
+      context: 3ff858b2fb2d2577cd0537d10d7d2027162220d3623b9abc5c3491ba6861f09c
+      market_comparisons: faed85eb7601cf01b891687824aea403deec4b153892c14cbd6da8d4085ce794
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER274
+    field_sha256:
+      id: a1818e62f1767ad258fd1ea2b153d83af41233a069e4098c41819bff83fbad3a
+      name: c530f021769c58e752dd0e4204b99a1f908d781d6020af3e59f31ac54b4fd18a
+      definition: 301a2ebbc454af737a5b7f708d07ea436554af807e9471722996c5cadff303a9
+      short_description: 301a2ebbc454af737a5b7f708d07ea436554af807e9471722996c5cadff303a9
+      context: a850d70adb9ce28f870a42d2b5d600510b7f277f7f78a31ed99d947aba78c58c
+      market_comparisons: 3676b0db5d51f23ae49fe44bb681138a9b46cf095735aa75227079db9b9a2144
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER275
+    field_sha256:
+      id: e6f7042ac1ee963eae0fad0cdb423162c010b274c8e0b202b5eefbd4d7a81b24
+      name: 848e4562db42a29eff9066251b70bc1f199f99f9a5aee18ca58a003113866b13
+      definition: d61a9faad5204e3c8433001c74218af31e6fd0a2ec6bfc49ce28a95c9c83fcab
+      short_description: d61a9faad5204e3c8433001c74218af31e6fd0a2ec6bfc49ce28a95c9c83fcab
+      context: 6c39223247db28b7bddc8db2aa788fea8533a77d92ea59ed4cd1f24274381ece
+      market_comparisons: 72c84eeca0a7e506be9e52116344557ab6d08e1083802e57e1b4e2adc003c656
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER276
+    field_sha256:
+      id: 8b7ede2976624dc8a98e3c49c3f5e2c408a7c1ae29e252c63ba8eca5041f351a
+      name: ea79fd6ecd9f5406b33ea8577d33aa55cbb6422bdbb2c9161f6b6688858f96f0
+      definition: 445b9ccccc2aa186347dc952df3af4ab4eccd760a69b2b1e79727b3d5c513413
+      short_description: 445b9ccccc2aa186347dc952df3af4ab4eccd760a69b2b1e79727b3d5c513413
+      context: b2af6cf300329e592c010963951898b64000160732a6c715ea6b8bb74c3e0921
+      market_comparisons: 73a905b43ff0ca90d7255b695daee9fc45042b33bbe8c6907809789400212aeb
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER277
+    field_sha256:
+      id: c00819cd69aef166cdb190267c401dab63fd0185f046bd788dbbf70d0d39b813
+      name: 1c0cf12ef17f95c85a49db98cb5821a1db0e0cef628b26569a078776dc8aba6c
+      definition: 125f5d8a43afbda1ef4719e18ddec0c4a51e97adc56ec829ed90c56ddeb3cc6b
+      short_description: 125f5d8a43afbda1ef4719e18ddec0c4a51e97adc56ec829ed90c56ddeb3cc6b
+      context: dce3384b5f8a1cb5295c166bca9868f3f2f27e985765700dd84ef87f5d1d10b5
+      market_comparisons: b3adab1eecc4ff39b4a67874e6ca41112d05753d1060e38bf18afe6bedbadbec
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER278
+    field_sha256:
+      id: 49d540ac3e3cca90223b89f92e4797701b8bda6e08521d96c324c3ba839379d7
+      name: 0136efb8e0d983b3291ae30c864ad86340c9d31cc5ac289175d7d233dd429d0e
+      definition: a4c48954feeee4b452f7971dad9dfa34199c2d4bf88df89d5d0b7a494785a1a7
+      short_description: a4c48954feeee4b452f7971dad9dfa34199c2d4bf88df89d5d0b7a494785a1a7
+      context: df1eb13f926e6669068efae9b4e21fbb1cff824600fa75d46aa51f5a42a769b8
+      market_comparisons: 911d7693b9d34066c3e87031aa5596bdfe87f033709b3007be31f8a6d7ad8f3f
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER279
+    field_sha256:
+      id: eaa14e148e9156e178705c200515b74cc987e80558efe5dfc703e2e5c6e087d2
+      name: ea6fc92b58fb730e174b56b24db5c6161eb459c2e637a97f62e51fc236cddb1a
+      definition: d66cae2d6c381e4b7978bd3673470081faa8b5c041d590b51540b19cbd4f84a4
+      short_description: d66cae2d6c381e4b7978bd3673470081faa8b5c041d590b51540b19cbd4f84a4
+      context: 227e986d13fcca03ceea1546ce137c09eb3b89cd675dc6170ec84c5912c80ee0
+      market_comparisons: 5d49be65f75044b6d41c3e08ec1d172d9d91c7c3f41345abdd95a24e64822c02
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER280
+    field_sha256:
+      id: 7d3b0014384309d08541b8010904697d825b3663a34634ad0b3b965b2de61b56
+      name: 76ba0484b33c737dc6285f52cdad0488a3e5c024f7143509d5fd4c6383775d46
+      definition: 1e8f9a5d1977ea9a05ca7547710c6abc2d28fc3bbc0c34780eae54a02899c72c
+      short_description: 1e8f9a5d1977ea9a05ca7547710c6abc2d28fc3bbc0c34780eae54a02899c72c
+      context: 943e7f55b830d80f4342f2adf3780470b30ead61ecf663ef9894fdfd8cff9c73
+      market_comparisons: ca9cc03c99d6a2da621b6ad968a153c0b0927114a0191cdc3a8f6243467e2f1c
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER281
+    field_sha256:
+      id: 56aaf8dab23f7fd5d00b1d4e8778f17e66cc41b4010aaac50edbcc4a1424e599
+      name: f10dca17e90dc4df34e935febb6c59b52e7d4aab859faf226db5207cefd9875e
+      definition: 3c67d814a782d25e23ba0c2960585607e9cd403056116c8c5d82509ac173c61e
+      short_description: 3c67d814a782d25e23ba0c2960585607e9cd403056116c8c5d82509ac173c61e
+      context: 6e00ead16888577f23353d27758e738bfb5828c3797e745abe235c39ae3db26d
+      market_comparisons: a1cb8a6533153b15fd71ba95279d0308317d544204ec2dc24b41405b48db92f7
+      market_gaps: 471ad0cf3bc7f9f12c686ccff4c4297959dd208b128c4bc3b9d44dd37447e29a
+  - id: TER282
+    field_sha256:
+      id: 84e1d15331efcb48ee732171a00224874de8bfaf84b060ad5bdee68c7add02fe
+      name: 982d6a7944c01dafc89d15489f4019044926d2e7c471cb97d019d17a2459ab56
+      definition: f56ab669f1d4e7e7d96b109e27d65d83334cf73d0d5ec7731eef235d71608e83
+      short_description: f56ab669f1d4e7e7d96b109e27d65d83334cf73d0d5ec7731eef235d71608e83
+      context: 08d8d475619c22bb892447bf036f40e1db55094ade06bd92e10d28ec2d64e80d
+      market_comparisons: ecf4ab4f2ea23cf13fc925c2e1820741b3e05db59a5a3a3c7c5e2c89befe0650
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER283
+    field_sha256:
+      id: 8329ba928c16daaef70bd3564332a041b7314cf295834b7d7948375856e8a248
+      name: e8ad8466d7632e0c8f3c737298c6ccb9726f7372b16fd2b3a30976b284ae5db9
+      definition: 1b4b7e01a0bf4a2d38e1b10e7336cc9ed5e42c593cc5a617170c78a055b5798b
+      short_description: 1b4b7e01a0bf4a2d38e1b10e7336cc9ed5e42c593cc5a617170c78a055b5798b
+      context: 1d6206d83a10f0353271de8fa00154bf727786ae8e46646b7c67666411b4a787
+      market_comparisons: ba4cef2e0e8f4006ec48104cf2fd8558ecbafd6ef09cd86c33e9018e5904cf94
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER284
+    field_sha256:
+      id: 7a6a8a057aa05eb65c10a0d1327ff0ca3db7e6ceeb65efd3658bb650de4d3538
+      name: c8812dc00c3efa6303f969cdfda3a18f017fb5b76d8a24759b8c70a38e55f1e2
+      definition: 63f0b02f2dfd4854712e761315956ef946b54871208aa1585e0b4bf468bd4800
+      short_description: 63f0b02f2dfd4854712e761315956ef946b54871208aa1585e0b4bf468bd4800
+      context: 25e9f592939cb98ee3af53af2784af0bab312f0f265d5a1fe1fa5e65fbf350ad
+      market_comparisons: d1572c9681d9fc099013140da60106c078ee6fbfb7452aa44b40a6113b1766a1
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER285
+    field_sha256:
+      id: d9226e7dcf0baf573ed385d4ecbadb2e070a971e8a914fb64b5dbf4dce1af7c4
+      name: e24e11df8c6d8c46308c6311e851b85994947fcd54f2ca067a581b44803b3cfc
+      definition: b6aae34ad6ebc5afa574df1fe345f09c73684d00ae55fbd5e1ca885412672dc1
+      short_description: b6aae34ad6ebc5afa574df1fe345f09c73684d00ae55fbd5e1ca885412672dc1
+      context: a1185e364d6241480fe86622f3f9962a09e4d38f7b922d4a857d407fa4369555
+      market_comparisons: f86f25fffbd43e54d6adc1cb33d81ba28494757d2aa50c6f681c3b1f5089c76d
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER286
+    field_sha256:
+      id: f0a0e89670ec85963286c8b384735a697fc0ebedb707e9105b4868c1ea3bea60
+      name: 5f95d6e42c6728b430116c6390d7f775974d8b9283d4bcfb3c242b90d9258d47
+      definition: 42e1230b0534ed50a7384bf488132734ac4c67e92ebdb0f3cdf3d5f307c5125a
+      short_description: 42e1230b0534ed50a7384bf488132734ac4c67e92ebdb0f3cdf3d5f307c5125a
+      context: d115ff38efc56bc11481b9e6bb5309349ce510e6f5e6e97d41874f4b3e27ea8c
+      market_comparisons: 021bfef694c102510cce11fb8a18fb85962a7e4c3789c401c0574cc7ffb701ee
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER287
+    field_sha256:
+      id: 2ab2e9f26a6cf9e90fe9f77d192b8c3333022b5e35ce557576aa6106638d49e5
+      name: 33c42e5928af341f8c847d7ca7f375e75118672bf333f8d05a4958a4268ce02d
+      definition: 52638fc07862d5f398449a85e888728f76da1a93c74c0d89155a09126a5ebbd8
+      short_description: 52638fc07862d5f398449a85e888728f76da1a93c74c0d89155a09126a5ebbd8
+      context: 723ee898763ca11f4d2c082e2c85e038bbe53171232dc53204c0c886c6979929
+      market_comparisons: 763dfb5bb04f294afacefe4aeeabaa106acc43a086b512844ebeccc721c7171b
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER288
+    field_sha256:
+      id: 8e643e724af2f5fceeab9bf0a13aea1f44dda866af6a1bb5f400cf3f9d5f7cb4
+      name: 45b25fe8bc699a3a6dab4e6a4f435618a3675a7b9c67343ba29079927e61a522
+      definition: e5a9a612a70f28f9d58c32c1fa4d81c3fd2764badf97f35c4edbf0c62cf60a4a
+      short_description: e5a9a612a70f28f9d58c32c1fa4d81c3fd2764badf97f35c4edbf0c62cf60a4a
+      context: 0306404cecfa0a0106b9c1887d4b1481d6fc169fc29e48cd0f8bd99b51516d0c
+      market_comparisons: 3bfc0dcda6160a8b81052d3fb28d49c232e9fe7b02860c3482f91d44b66e6ed4
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER289
+    field_sha256:
+      id: 24ca0b51b5b6db45f107f01014bee4a9ee01922982b3554e42f720834a361b7d
+      name: dd647e67b78ab891aed6f2f5ad030ccf8bb3a958b59e3d56682eae91efc92cd4
+      definition: d7d10c50b03d353419bf241850362ef12eaf892b416ea0e01b2f045b6d26dd4d
+      short_description: d7d10c50b03d353419bf241850362ef12eaf892b416ea0e01b2f045b6d26dd4d
+      context: 35aa00d381fbbbd10e03221938a369a04d13e9b9d1deaae5d3ad2c000eb08ebb
+      market_comparisons: 8fd1f5a38a515dcba3ab67c87fe32c405a0e27a10f7ddd37ee33051c57d8f85c
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER290
+    field_sha256:
+      id: 096488bfad0c453f654635136cc32405cf262d39bacdece04213e28fd0ae57f2
+      name: f496519fce60d347b95aca62af6d8115a903d0b9b2a910635c21aeafdce0467b
+      definition: df530f84b3e4a9db8a686494536be2450eb016ac04247f0d1481e5abb85075aa
+      short_description: df530f84b3e4a9db8a686494536be2450eb016ac04247f0d1481e5abb85075aa
+      context: 2cf07d580f687e7d9b56c029da2b7daec7433e23535634769d587436f098ac04
+      market_comparisons: 52f5aee44a6a19742a7ff8aeadc42124f87b34bb14a8adb285105ef1b4fb3c4c
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER291
+    field_sha256:
+      id: a6b1c0b258f0e77304db7571c7c3da17ebc805a60a26346d25cd588f1e98918a
+      name: 06bf3eeaf5b3033cb9b2ca58cecb0eff467656f09161873600405429fa001a6e
+      definition: b438933831155dbf32a75526cf18933fc390b335e0339efae8311af5d4bb64a4
+      short_description: b438933831155dbf32a75526cf18933fc390b335e0339efae8311af5d4bb64a4
+      context: acb6b8f32e05d5362cfabb52127cbe29980065dea8b339f0135ec9276377b5be
+      market_comparisons: dce7e03c1438ba72980637c5a5a8566e2247b8677d1c52d0cd0bc292f14fd502
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER292
+    field_sha256:
+      id: c5919b41606930a5258586309c5e4bc0aef09d35fd66115438759ac5ec127ae5
+      name: ac37ad8f17ffc993caa45efde8dcf1ced59a9922780f2d9122a1f6f4d3110280
+      definition: c5bd7df91f59e4f4532c63aa4a80baa4b2a6538e3201f6798e486a5474ec1909
+      short_description: c5bd7df91f59e4f4532c63aa4a80baa4b2a6538e3201f6798e486a5474ec1909
+      context: 3db9b494d2ef49a9bbdec348622be621d0e9c923b17c7515257cd968630abf99
+      market_comparisons: 166d3646620f853200c4fa3c230a5d2164f53646b00aa1b2848d37124a5a26ac
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER293
+    field_sha256:
+      id: ac2be4850f57c5dc6e2b0cae62732d0990a24f16cba519a807b3157127fd9dc6
+      name: 70b0a3bb34f1505b70027bcf3b4cc7d53973a9355994998813e76ec0d4ecd0e9
+      definition: 36a8d09884eed675a7372a5f878b97dbabaa0593495e82badabd47c5b38fdc63
+      short_description: 36a8d09884eed675a7372a5f878b97dbabaa0593495e82badabd47c5b38fdc63
+      context: feb4d8dff06c316783bceaa460bc95ef6d3bbbaa3eb796eee05d7062b14957f2
+      market_comparisons: 0e5e078a723fc6cdc5d3dc29ed0f333e94ede2fd01a67a033048a9c4a08f4a9d
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER294
+    field_sha256:
+      id: 3afc3ebe4626e2722af23bc8f7f27794949517c702abf8a7c9286d8f2697b774
+      name: 8f2113164d29668e1e221daf0cfe1f07a9ce73447e33ada502b83450689a0fb1
+      definition: 7507778a1e89355ab40dffd3852a0fe28d5ff56bbc844fcc73a615268d8aae7e
+      short_description: 7507778a1e89355ab40dffd3852a0fe28d5ff56bbc844fcc73a615268d8aae7e
+      context: 737e7f7083d60adfc51ecb689f485c60d6ac533c38689a2d281bc3411c8ba765
+      market_comparisons: 4aa13e427729d23364f59f5e981774a6f2fbc0a2aeb06d5eb94755f186f203cb
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER295
+    field_sha256:
+      id: 5a7144b3153d790a39013dca5a04841c3be6d18c14084a736bb38785f64af1ce
+      name: b9fb4052402931ca5bf725ef960ff010c2c82ecc27031aef19c4c7a043a8c0d0
+      definition: 81e53cb7b47a2bbcb4b262817e2fbf09f304429c7ba49b6227007fe246431f09
+      short_description: 81e53cb7b47a2bbcb4b262817e2fbf09f304429c7ba49b6227007fe246431f09
+      context: 7847c067e903cca25b9274dc644451f37528510564a8d4603652b06aab824213
+      market_comparisons: 42031f53f124ef0c4057b5883864b44f0c087cd43569c2f0079338ff32a474a0
+      market_gaps: ce0ba0fd0074041d1410585f214ba46499d70ea1cec2df8257065135cbd2212b
+  - id: TER296
+    field_sha256:
+      id: 05a06487317d4db73f397cfc2943b36264e818b0614b81a80321b7e983316ac0
+      name: ff8b3d974a03c9660a5e7ff82a9dd8657284484154122f8f60bf376feabefed1
+      definition: 9236da49c4dcc1497826dc29580e1296d2e13e6159506d7d272b949030a6e071
+      short_description: 9236da49c4dcc1497826dc29580e1296d2e13e6159506d7d272b949030a6e071
+      context: d1a9c519f60fde012add8d2b73bdabe92bc1a8698ff3a7a71dfce5bd2ae5978e
+      market_comparisons: 88f20dd633c63c83f7798386f7fa4fc6e1bc9328d59d00a9966fee6b03024ab2
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER297
+    field_sha256:
+      id: c7679fffa1d172e37a24b4e3b2508a9260bd730ebeca660cb15b9d381846c767
+      name: 6cf2cf9a6829dbb115f105b2e6a15dbefe98f343fdfc0fc48ab3e615e12773c9
+      definition: 931ab24b1a4ab540b75e827194a36a83232a8be71707af6f757fd656156767da
+      short_description: 931ab24b1a4ab540b75e827194a36a83232a8be71707af6f757fd656156767da
+      context: 53da7515cfa0079c69a916a330daf9bc554421318956a11abdcb7b681da12850
+      market_comparisons: 5ea8ab88f8a3fcda90b8b3482436c60d5ff45f98f0f7fab535d4056fa7c14165
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER298
+    field_sha256:
+      id: ec29d829666c940d4c24ad538e40256d18cc7acbbda9646a8a2a44cef92bf8a8
+      name: 79aa513a160e97a6b69c3769a023ddd9a80072b3ec4f99ee9c9f32e003b31cd1
+      definition: 11d66c99aafe2142302e59b50fe366e9ef92c30c2285e265f21045a384e75d24
+      short_description: 11d66c99aafe2142302e59b50fe366e9ef92c30c2285e265f21045a384e75d24
+      context: 473b834386ed882a9390b5f6ed251b1ee80a4f94031ea9a3116d82286f9144e2
+      market_comparisons: 8f1c614f57b2be520100bf12adc846f8e4b908aee7a22d66fcc5c071b522eef8
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER299
+    field_sha256:
+      id: b9f8f00b6c65e98edf111477fcc3ea79a77141e266cec58bdcb1965c33db5387
+      name: 2dedf5cc6deedb3725b91e1bf015a45c6b52aa69f7421207be357db3b19f72f2
+      definition: d7eb6ee1f5c41741a17f81d7f8baba6b7e04f147a8c8ae1bc656e291e27f7015
+      short_description: d7eb6ee1f5c41741a17f81d7f8baba6b7e04f147a8c8ae1bc656e291e27f7015
+      context: 6177fb9e6669cb2ad53dd200c86d79d3af5a10eae6eb8e9a3fc45bd84767b7a2
+      market_comparisons: e57b1da9034589df243d98daaf22c0c4bc83f8b7edbf0fabdfa41984f1f6372f
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER300
+    field_sha256:
+      id: c6fdc8d4b15d3f295ece4475d1ee2f18a1466d36ad08e6305ee9fcef82c7c167
+      name: 9e9d461e9b497821098b36c213193fc5a5840ffafba3f89c08b92fa566c92165
+      definition: f24f1cd9e41f3fc24bb096a98640c17e390baa613690d60d8b9f9e2048b90bdf
+      short_description: f24f1cd9e41f3fc24bb096a98640c17e390baa613690d60d8b9f9e2048b90bdf
+      context: 686d6245ded94d80a4319a2a867387c83e72e26a0401a24e35caba27f5f24a5b
+      market_comparisons: 2fe5fbb46e4f1e1230f0bdb1bb04637ebc8ee0b2fe2158e8c0e836dd2bea4fd0
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER301
+    field_sha256:
+      id: 360479b55c1ebf2303e6daf06ac7b4da542457c972ef84ef5cd1488355509759
+      name: dbf0c21c079a3f2dc98afac66c8beba4e4612ad02a751df2ad05232e3a0ade8f
+      definition: 8a0230d15d765ccfd1ca50c9322b9ea5fc2927eb3427e7ab032b94ca8359dafa
+      short_description: 8a0230d15d765ccfd1ca50c9322b9ea5fc2927eb3427e7ab032b94ca8359dafa
+      context: eb0384d37ce109635e6f25a39add02d7c8227a630e8103a49bfc577e9d9d93ee
+      market_comparisons: a39fd9db397c73cc191d67e344696feedb951da1a9d58ecdccbceb2ee59a3701
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER302
+    field_sha256:
+      id: 039c75e0221984a6cd03194277c859424bb26e442078eca2269f43797eea9e07
+      name: e134e45855866b0341720327302923cfe13cfb9dca3535671f4f4b01de918af1
+      definition: 5d94ff97ac320a0b3221d0122c52628d6ff29389bd4162cfab2d983ee4f17801
+      short_description: 5d94ff97ac320a0b3221d0122c52628d6ff29389bd4162cfab2d983ee4f17801
+      context: fa1ac23e83f10e943b9f6b6fafa5691b35df8bb55676691598cb0186a9718db2
+      market_comparisons: cfea8fc1f24e502e609ffc2e7751c6b32c7cc6d3e26cf900671d4598187f8e13
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER303
+    field_sha256:
+      id: dd3add31c415e8a2c8b6c478fd690b6284ee86508a9fda7c731b7e70a5fb3f70
+      name: be8befd35ea5cf1d41d89af74c51aead1b7703446e02af05ed2044f331432aff
+      definition: f3aa1951209daae96d6330def6e48c825f55c50b58ec47daca7c5c4258a41b2f
+      short_description: f3aa1951209daae96d6330def6e48c825f55c50b58ec47daca7c5c4258a41b2f
+      context: 7833525f5ad7194d51c56a6fa876555ef1008a6946178f4c404c26266e91879d
+      market_comparisons: 78fb7ae6193c91c142523453b376dcc430195e02dcdc68ca66f254176dcb16e4
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER304
+    field_sha256:
+      id: 1e9d334b095ab4df984beadbe9f2371a263e13d4fe0f7edf1df2261d4fbf7139
+      name: f53ea0d25cf3eec7c12a037c522625d74261d1815c01667ba2df66c3954b7c6d
+      definition: fa69826d0df2d9ea883b5482dbce926a5b2ba683378f1428a737eeadb4e65a3f
+      short_description: fa69826d0df2d9ea883b5482dbce926a5b2ba683378f1428a737eeadb4e65a3f
+      context: e1a082302986c30e20da41cc260a08e26aa09692cff7030bab016b906cc0dd3d
+      market_comparisons: b63c69572e086e40536e3f60970d506bfd23ab58058c99171ae51e92f1d42426
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER305
+    field_sha256:
+      id: ff04294b097dea90b8cd839c0d8aa1284c4138204a2c16814c86634d65943149
+      name: 3024926399caf431db7a5b05d8da0505c9315e1b555ec59d10fad3360dfb29ae
+      definition: 761eb58ce666e1d4534eb41151426f75f643b6551debf6983575874d543cc330
+      short_description: 761eb58ce666e1d4534eb41151426f75f643b6551debf6983575874d543cc330
+      context: cf6839392e9b281bf0037a8f74879ff333b63c9ee39e8ace63d9d430f16948bb
+      market_comparisons: 49425851490a27538cb72dace8a20ea4f6d2ac5b2636a96dc90577757cfcc904
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER306
+    field_sha256:
+      id: 0c17a46a8229e6057289abd9715afdf16a27048bc26e348fdc640cd6246b80ff
+      name: 283cbb0bae87de2d26f5123100f1bce69b0149615a08f8f73ffa1b65e17de83b
+      definition: 365ea930218f604cbc4a69cc749ea7406e3b943b212263ca62ea66913b51b310
+      short_description: 365ea930218f604cbc4a69cc749ea7406e3b943b212263ca62ea66913b51b310
+      context: adccffe4f89647a0653c3bcd073d66c75dfdf4ac955e945ffaec9868ab01c5fe
+      market_comparisons: 20bed4f01f8351685412fdc888095bab09bc621bfbea434e3c7567bc102eed3a
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER307
+    field_sha256:
+      id: 9f025deca5b8cdb7af048185f1ac03b913fbeb43ce09e25478bb97c59b49c3f3
+      name: 9b1dee7c51904babdf78d0fe63754b5b6a4acbef0fb9e3eb92540128344ec9bc
+      definition: aa158573c00cb18fdf92adc3d383cf9c7c4a48eefd27e87901ca525558668db1
+      short_description: aa158573c00cb18fdf92adc3d383cf9c7c4a48eefd27e87901ca525558668db1
+      context: 0b6f23313ad2ba980c6fd649c257e0e303b3382ae2d0a93a04cb1e2f8bad0465
+      market_comparisons: a6eb8c1800b4b1709d3b61970b32e3fda47477a017e60d788840624c94b18d5f
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER308
+    field_sha256:
+      id: 10fa2145d3ecb9e1fb089823c7c16cbc39b4ba17115e6c85fa75aec1217ba32f
+      name: e702b8d9ae29c3cab5dc91ec179081234d86cb17d213919fcd59fe8b3318d4bd
+      definition: a804c04bd4473c0c3eeec3732bbbd80b8ea5bd9b1b24767bdfa297684a1d5e6b
+      short_description: a804c04bd4473c0c3eeec3732bbbd80b8ea5bd9b1b24767bdfa297684a1d5e6b
+      context: e0eb638080d263e45e3b4bf5773cffe2ab5bf9a7de9af60deb2dd3f27662bcd3
+      market_comparisons: 1b037d7baec6cb406efb7a86f8ba760868864176e776b378a93c9dd8fd39806a
+      market_gaps: c299e653e3fcf6eb6ac71f14a3d51b6190f195fc5a6059d77e5c95881cd64459
+  - id: TER309
+    field_sha256:
+      id: cdeb1302fd338d3752f33c3777e15bb819b1f9961c8a494e9546ea2bec672555
+      name: bbeb26603a6cf8c2c8e7cb6ec54f55d3bd6ae5004d6725d3186cf5555e47cd2e
+      definition: 3fc5a46652777568bcb8ac50088c5644275abbea59e80e5d915bfcb31b8343d3
+      short_description: 3fc5a46652777568bcb8ac50088c5644275abbea59e80e5d915bfcb31b8343d3
+      context: e740ecd2027efebdc4b83a353d2ec613f1a1282733f88424e7c1529ffd675a67
+      market_comparisons: 6ed37232a5e649d52f86ddfbda7f0b9c36b1a2bf48dd0dcdae67f8c2c5759ebe
+      market_gaps: c299e653e3fcf6eb6ac71f14a3d51b6190f195fc5a6059d77e5c95881cd64459
+  - id: TER310
+    field_sha256:
+      id: 339ce5bd591e6ae1d95aa39deb855567af498177e54f1be727307a4f6c1720c4
+      name: 4205da8eaff370711b80122a28896323c6241a841891a93709d91d4c9216be44
+      definition: 17408333623138f615e813437a33f45c2762360356ea1c9c1b030fc55b4c2e78
+      short_description: 17408333623138f615e813437a33f45c2762360356ea1c9c1b030fc55b4c2e78
+      context: 707ca6b91e292cfff9de857b4f199387e23c3be8e09b099c8d69e026b5808720
+      market_comparisons: 5f4f4f3f24258e860fe996e70af50cc23f9a51d191f9e43909dd02fffc891e19
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER311
+    field_sha256:
+      id: 7667b47365a758a9c4f09989e88b6bfa2df5fd8e50d9632d2b9a557a24f0f144
+      name: 23ee15772a2995f82f693d3aa2ca101910705110dda98a540b1d7bbf705475e4
+      definition: f626b20500f19a4101eed81f3ca3ad3cc5a1fe71e67ba1d779418b07d1867fb1
+      short_description: f626b20500f19a4101eed81f3ca3ad3cc5a1fe71e67ba1d779418b07d1867fb1
+      context: 34fe3f2217224c244a5fbe5e8f35d340cd7cb7b84a84102c4db06f87ec70e456
+      market_comparisons: a4920329bd80e741f4f50776226cd4df55bb08b35d4579d7bdb6e2df66a574ba
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER312
+    field_sha256:
+      id: fc2cf5f5740f0560394840a18116bed2cda67525898ecd6b6b9f6fd8c3867967
+      name: 9d546c3634dae14657829a175c0aa2419404460ea309cc2945184b2ebe3097db
+      definition: 94b429a67f9cdb952c0be1d3410f054cebadda529866e7f09171e7ddf73250fd
+      short_description: 94b429a67f9cdb952c0be1d3410f054cebadda529866e7f09171e7ddf73250fd
+      context: 975267a5e1a682dbd2a270ef7ef8762ccff39cca04bc3c80cb5886c26791fcbe
+      market_comparisons: f14ee34a0cd5950a98850a609dbad4e8093b75569292b9cce2403f5aa84073d5
+      market_gaps: 44f92114c172439003e888e80736ae531d4a1e9badba4769dd73ed52a23a6725
+  - id: TER313
+    field_sha256:
+      id: 2e08f1c0e3f6b94768f207ebbcda25504e0e3b0c1e61be0a4872440428ee3ba0
+      name: 10adc812a340b49ca035f1c5dc8ddb85f0c6c16a1445561dfb23607dfe5e2903
+      definition: 5b23a50b33447c5643d97784dea89a897adbccd089e337328bb67ce8c89ad8f6
+      short_description: 5b23a50b33447c5643d97784dea89a897adbccd089e337328bb67ce8c89ad8f6
+      context: 5360909bad754241a27e7214e882c55cc71d0511ffb40829e65be8506329ef29
+      market_comparisons: 695376afd97bbd9d6da9107cc4b09fb5b278a2e3a3a181e919ab439074d50615
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  - id: TER314
+    field_sha256:
+      id: d9f19370a318dec7073650774d540bbb7d579cae0aa627eb4dc3e05277c4f8f2
+      name: b6592aa4f884f8a96e53921cb480b5de66311c6f272bcbdbf541c3856138f766
+      definition: 30deb82432482c0c74582c09f2db386425e775190fdc3204f9e07046b17baa11
+      short_description: 30deb82432482c0c74582c09f2db386425e775190fdc3204f9e07046b17baa11
+      context: 0518ba834eb792782949c63d3f1b6d0f86e98e38aff5b83a3089773fa63cb823
+      market_comparisons: 7a5994b9eb73548ba493657ba9abc38caebe14038f324ad8229877e0c8930e4e
+      market_gaps: 4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945
+  required_relations:
+  - id: REL-U898-PARENT-subdomain-sales-b2c-ecommerce
+    type: contains
+    source_id: subdomain-retail-commerce
+    target_id: subdomain-sales-b2c-ecommerce
+  - id: REL-U898-PARENT-subdomain-sales-b2c-store
+    type: contains
+    source_id: subdomain-retail-commerce
+    target_id: subdomain-sales-b2c-store
+  - id: REL-U987-subdomain-retail-network-management
+    type: contains
+    source_id: subdomain-retail-commerce
+    target_id: subdomain-retail-network-management
+  - id: REL-U987-subdomain-store-backoffice-operations
+    type: contains
+    source_id: subdomain-retail-commerce
+    target_id: subdomain-store-backoffice-operations
+  - id: REL-U1027-PARENT-subdomain-retail-commerce
+    type: presents
+    source_id: domain-sales
+    target_id: subdomain-retail-commerce
+  - id: REL-U1027-PARENT-ba-wholesale-account-management
+    type: contains
+    source_id: subdomain-sales-wholesale
+    target_id: ba-wholesale-account-management
+  - id: REL-U1027-PARENT-ba-wholesale-sales
+    type: contains
+    source_id: subdomain-sales-wholesale
+    target_id: ba-wholesale-sales
+  - id: REL-U1027-PARENT-ba-assortment-management
+    type: contains
+    source_id: subdomain-assortment-catalog-management
+    target_id: ba-assortment-management
+  - id: REL-U1027-PARENT-ba-catalog-management
+    type: contains
+    source_id: subdomain-assortment-catalog-management
+    target_id: ba-catalog-management
+  - id: REL-U1027-PARENT-ba-pricing-management
+    type: contains
+    source_id: subdomain-pricing-promotions-management
+    target_id: ba-pricing-management
+  - id: REL-U1027-PARENT-ba-promotion-management
+    type: contains
+    source_id: subdomain-pricing-promotions-management
+    target_id: ba-promotion-management
+  - id: REL-U1027-PARENT-ba-rebate-management
+    type: contains
+    source_id: subdomain-rebates-incentives-management
+    target_id: ba-rebate-management
+  - id: REL-U1027-PARENT-ba-sales-incentive-management
+    type: contains
+    source_id: subdomain-rebates-incentives-management
+    target_id: ba-sales-incentive-management
+  - id: REL-U1027-PARENT-ba-supplier-qualification
+    type: contains
+    source_id: subdomain-supplier-management
+    target_id: ba-supplier-qualification
+  - id: REL-U1027-PARENT-ba-supplier-performance-management
+    type: contains
+    source_id: subdomain-supplier-management
+    target_id: ba-supplier-performance-management
+  - id: REL-U1027-PARENT-ba-sourcing-strategy-management
+    type: contains
+    source_id: subdomain-strategic-sourcing
+    target_id: ba-sourcing-strategy-management
+  - id: REL-U1027-PARENT-ba-sourcing-event-management
+    type: contains
+    source_id: subdomain-strategic-sourcing
+    target_id: ba-sourcing-event-management
+  - id: REL-U1027-PARENT-ba-source-selection
+    type: contains
+    source_id: subdomain-strategic-sourcing
+    target_id: ba-source-selection
+  - id: REL-U1027-PARENT-ba-purchase-agreement-management
+    type: contains
+    source_id: subdomain-purchase-contract-management
+    target_id: ba-purchase-agreement-management
+  - id: REL-U1027-PARENT-ba-supplier-rebate-incentive-management
+    type: contains
+    source_id: subdomain-purchase-contract-management
+    target_id: ba-supplier-rebate-incentive-management
+  - id: REL-U1027-PARENT-ba-purchase-requisition-management
+    type: contains
+    source_id: subdomain-operational-procurement
+    target_id: ba-purchase-requisition-management
+  - id: REL-U1027-PARENT-ba-purchasing-execution-coordination
+    type: contains
+    source_id: subdomain-operational-procurement
+    target_id: ba-purchasing-execution-coordination
+  - id: REL-U1027-PARENT-ba-supplier-delivery-follow-up
+    type: contains
+    source_id: subdomain-operational-procurement
+    target_id: ba-supplier-delivery-follow-up
+  - id: REL-U1027-PARENT-ba-receiving-operations
+    type: contains
+    source_id: subdomain-inbound-operations
+    target_id: ba-receiving-operations
+  - id: REL-U1027-PARENT-ba-putaway-operations
+    type: contains
+    source_id: subdomain-inbound-operations
+    target_id: ba-putaway-operations
+  - id: REL-U1027-PARENT-ba-storage-operations
+    type: contains
+    source_id: subdomain-storage-inventory-control
+    target_id: ba-storage-operations
+  - id: REL-U1027-PARENT-ba-physical-inventory-control
+    type: contains
+    source_id: subdomain-storage-inventory-control
+    target_id: ba-physical-inventory-control
+  - id: REL-U1027-PARENT-ba-picking-operations
+    type: contains
+    source_id: subdomain-outbound-operations
+    target_id: ba-picking-operations
+  - id: REL-U1027-PARENT-ba-packing-shipping-operations
+    type: contains
+    source_id: subdomain-outbound-operations
+    target_id: ba-packing-shipping-operations
+  - id: REL-U1027-PARENT-ba-product-preparation-operations
+    type: contains
+    source_id: subdomain-value-added-returns
+    target_id: ba-product-preparation-operations
+  - id: REL-U1027-PARENT-ba-kitting-operations
+    type: contains
+    source_id: subdomain-value-added-returns
+    target_id: ba-kitting-operations
+  - id: REL-U1027-PARENT-subdomain-returns-operations
+    type: presents
+    source_id: domain-warehousing
+    target_id: subdomain-returns-operations
+  - id: REL-U1027-PARENT-ba-returns-receiving-inspection
+    type: contains
+    source_id: subdomain-returns-operations
+    target_id: ba-returns-receiving-inspection
+  - id: REL-U1027-PARENT-ba-returns-disposition-execution
+    type: contains
+    source_id: subdomain-returns-operations
+    target_id: ba-returns-disposition-execution
+  - id: REL-U1027-PARENT-subdomain-warehouse-operations-control
+    type: presents
+    source_id: domain-warehousing
+    target_id: subdomain-warehouse-operations-control
+  - id: REL-U1027-PARENT-ba-warehouse-resource-management
+    type: contains
+    source_id: subdomain-warehouse-operations-control
+    target_id: ba-warehouse-resource-management
+  - id: REL-U1027-PARENT-ba-warehouse-work-management
+    type: contains
+    source_id: subdomain-warehouse-operations-control
+    target_id: ba-warehouse-work-management
+  - id: REL-U1027-PARENT-ba-transport-planning
+    type: contains
+    source_id: subdomain-transport-planning-dispatch
+    target_id: ba-transport-planning
+  - id: REL-U1027-PARENT-ba-carrier-capacity-assignment
+    type: contains
+    source_id: subdomain-transport-planning-dispatch
+    target_id: ba-carrier-capacity-assignment
+  - id: REL-U1027-PARENT-ba-transport-dispatch
+    type: contains
+    source_id: subdomain-transport-planning-dispatch
+    target_id: ba-transport-dispatch
+  - id: REL-U1027-PARENT-ba-transport-execution
+    type: contains
+    source_id: subdomain-transport-execution-tracking
+    target_id: ba-transport-execution
+  - id: REL-U1027-PARENT-ba-transport-event-reporting
+    type: contains
+    source_id: subdomain-transport-execution-tracking
+    target_id: ba-transport-event-reporting
+  - id: REL-U1027-PARENT-ba-transport-incident-assessment
+    type: contains
+    source_id: subdomain-transport-exception
+    target_id: ba-transport-incident-assessment
+  - id: REL-U1027-PARENT-ba-transport-recovery-coordination
+    type: contains
+    source_id: subdomain-transport-exception
+    target_id: ba-transport-recovery-coordination
+  - id: REL-U1027-PARENT-domain-customs-management
+    type: presents
+    source_id: domain-logistics-execution
+    target_id: domain-customs-management
+  - id: REL-U1027-PARENT-subdomain-customs-documentation
+    type: presents
+    source_id: domain-customs-management
+    target_id: subdomain-customs-documentation
+  - id: REL-U1027-PARENT-ba-customs-dossier-management
+    type: contains
+    source_id: subdomain-customs-documentation
+    target_id: ba-customs-dossier-management
+  - id: REL-U1027-PARENT-subdomain-customs-clearance
+    type: presents
+    source_id: domain-customs-management
+    target_id: subdomain-customs-clearance
+  - id: REL-U1027-PARENT-ba-customs-procedure-management
+    type: contains
+    source_id: subdomain-customs-clearance
+    target_id: ba-customs-procedure-management
+  supersedes_requirements:
+  - annex: business-systems-U780.yaml
+    collection: nodes
+    id: domain-sourcing-procurement
+    fields:
+    - modeling_depth
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: subdomain-retail-network-management
+    fields:
+    - scope
+    - kind
+    - parent
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - name
+    - scope
+    - kind
+    - parent
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: subdomain-pricing-promotions-management
+    fields:
+    - scope
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: subdomain-rebates-incentives-management
+    fields:
+    - scope
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: subdomain-purchase-contract-management
+    fields:
+    - scope
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: subdomain-transport-planning-dispatch
+    fields:
+    - scope
+  - annex: commerce-detail-depth-U1025.yaml
+    collection: nodes
+    id: domain-sales
+    fields:
+    - scope
+  - annex: commerce-detail-depth-U1025.yaml
+    collection: terms
+    id: TER108
+    fields:
+    - context
+  - annex: commerce-retail-structure-U987.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-store
+    fields:
+    - name
+    - finality
+    - scope
+    - kind
+    - parent
+  - annex: commerce-retail-structure-U987.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-ecommerce
+    fields:
+    - finality
+    - scope
+    - kind
+    - parent
+  - annex: commerce-retail-structure-U987.yaml
+    collection: nodes
+    id: subdomain-sales-wholesale
+    fields:
+    - finality
+    - scope
+  - annex: commerce-retail-structure-U987.yaml
+    collection: nodes
+    id: subdomain-assortment-catalog-management
+    fields:
+    - finality
+    - scope
+  - annex: commerce-retail-structure-U987.yaml
+    collection: nodes
+    id: subdomain-retail-network-management
+    fields:
+    - finality
+    - scope
+    - kind
+    - parent
+  - annex: commerce-retail-structure-U987.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - name
+    - finality
+    - scope
+    - kind
+    - parent
+  - annex: commerce-retail-structure-U987.yaml
+    collection: relations
+    id: REL-U987-subdomain-retail-network-management
+    fields:
+    - type
+    - source_id
+  - annex: commerce-retail-structure-U987.yaml
+    collection: relations
+    id: REL-U987-subdomain-store-backoffice-operations
+    fields:
+    - type
+    - source_id
+  - annex: context-business-systems-U975.yaml
+    collection: nodes
+    id: subdomain-value-added-returns
+    fields:
+    - name
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER110
+    fields:
+    - short_description
+    - definition
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER232
+    fields:
+    - short_description
+    - definition
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER233
+    fields:
+    - short_description
+    - definition
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER234
+    fields:
+    - short_description
+    - definition
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER235
+    fields:
+    - short_description
+    - definition
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER236
+    fields:
+    - name
+    - short_description
+    - definition
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER237
+    fields:
+    - short_description
+    - definition
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER238
+    fields:
+    - short_description
+    - definition
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER239
+    fields:
+    - short_description
+    - definition
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER240
+    fields:
+    - short_description
+    - definition
+    - context
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: domain-sales
+    fields:
+    - market_comparisons
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: domain-sourcing-procurement
+    fields:
+    - definition
+    - finality
+    - scope
+    - market_comparisons
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-ecommerce
+    fields:
+    - finality
+    - scope
+    - market_comparisons
+    - kind
+    - parent
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-store
+    fields:
+    - name
+    - finality
+    - scope
+    - market_comparisons
+    - kind
+    - parent
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: subdomain-sales-wholesale
+    fields:
+    - finality
+    - scope
+    - market_comparisons
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-ecommerce
+    fields:
+    - definition
+    - kind
+    - parent
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-store
+    fields:
+    - definition
+    - kind
+    - parent
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: subdomain-value-added-returns
+    fields:
+    - market_gaps
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: subdomain-transport-exception
+    fields:
+    - market_gaps
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: subdomain-retail-network-management
+    fields:
+    - kind
+    - parent
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - definition
+    - kind
+    - parent
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: terms
+    id: TER191
+    fields:
+    - short_description
+    - definition
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: terms
+    id: TER192
+    fields:
+    - short_description
+    - definition
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: terms
+    id: TER236
+    fields:
+    - market_gaps
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: terms
+    id: TER240
+    fields:
+    - market_gaps
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: terms
+    id: TER248
+    fields:
+    - short_description
+    - definition
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-ecommerce
+    fields:
+    - definition
+    - kind
+    - parent
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-store
+    fields:
+    - definition
+    - kind
+    - parent
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: subdomain-value-added-returns
+    fields:
+    - market_gaps
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: subdomain-transport-exception
+    fields:
+    - market_gaps
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: subdomain-retail-network-management
+    fields:
+    - kind
+    - parent
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - definition
+    - kind
+    - parent
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: terms
+    id: TER191
+    fields:
+    - short_description
+    - definition
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: terms
+    id: TER192
+    fields:
+    - short_description
+    - definition
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: terms
+    id: TER236
+    fields:
+    - market_gaps
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: terms
+    id: TER240
+    fields:
+    - market_gaps
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: terms
+    id: TER248
+    fields:
+    - short_description
+    - definition
+identity_preservation:
+  converted_to_business_area:
+  - subdomain-retail-network-management
+  - subdomain-sales-b2c-ecommerce
+  - subdomain-sales-b2c-store
+  - subdomain-store-backoffice-operations
+  renamed_current_names:
+    Store Commerce: Store Sales
+    Store Backoffice Operations: Store Operations
+    Value-Added & Returns Operations: Value-Added Operations
+  new_node_ids:
+  - subdomain-retail-commerce
+  - ba-wholesale-account-management
+  - ba-wholesale-sales
+  - ba-assortment-management
+  - ba-catalog-management
+  - ba-pricing-management
+  - ba-promotion-management
+  - ba-rebate-management
+  - ba-sales-incentive-management
+  - ba-supplier-qualification
+  - ba-supplier-performance-management
+  - ba-sourcing-strategy-management
+  - ba-sourcing-event-management
+  - ba-source-selection
+  - ba-purchase-agreement-management
+  - ba-supplier-rebate-incentive-management
+  - ba-purchase-requisition-management
+  - ba-purchasing-execution-coordination
+  - ba-supplier-delivery-follow-up
+  - ba-receiving-operations
+  - ba-putaway-operations
+  - ba-storage-operations
+  - ba-physical-inventory-control
+  - ba-picking-operations
+  - ba-packing-shipping-operations
+  - ba-product-preparation-operations
+  - ba-kitting-operations
+  - subdomain-returns-operations
+  - ba-returns-receiving-inspection
+  - ba-returns-disposition-execution
+  - subdomain-warehouse-operations-control
+  - ba-warehouse-resource-management
+  - ba-warehouse-work-management
+  - ba-transport-planning
+  - ba-carrier-capacity-assignment
+  - ba-transport-dispatch
+  - ba-transport-execution
+  - ba-transport-event-reporting
+  - ba-transport-incident-assessment
+  - ba-transport-recovery-coordination
+  - domain-customs-management
+  - subdomain-customs-documentation
+  - ba-customs-dossier-management
+  - subdomain-customs-clearance
+  - ba-customs-procedure-management
+  retired_node_ids: []
+  note: Identités retail conservées ; l’ancienne identité commune des prestations et retours porte désormais Value-Added Operations,
+    Returns Operations est distinct.
+field_agreements:
+- collection: terms
+  id: TER108
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: ac8fac72bb234738586e3deb31dbd2a165ca0fff8bb46aafb4ce2a3af36726d8
+    definition: 89fc24a4c299f4d2196eea504b19a14016d3f93a9e9154abd516ef74382268ca
+  source_ref: U1027
+- collection: terms
+  id: TER109
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: c97b837e030ddd9e94180e1c286f60622e036ad4638f4f7ed58e886f74d2163b
+    definition: 30810683a7c7c43a41c01ad8b1b36cf4235fba6eee751f783a8ecab6ce93d871
+  source_ref: U1027
+- collection: terms
+  id: TER110
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 8588f7a50477b84544715b91382cd2941451d5051c3cc33c3784b760cf5ef3d5
+    definition: 424c7a7f6676961b1d3e831a209fdd3ab29d39d03ed48f4b6f2468e42d224cb9
+  source_ref: U1027
+- collection: terms
+  id: TER191
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: b86d3ab63d3be117ae4fed22ea421a2e97ed45b2bd6c7686ab6fd58143631cb4
+    definition: a665669149bf5c9d98c1454b7d2c1585cd76f40ae59cf5770901c054eb8d85ba
+  source_ref: U1027
+- collection: terms
+  id: TER192
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: cf394dc2694cebd586249e68939dff76dcd693a594b29c7f21b1c90aeaa2245c
+    definition: 046c6a81148d7f47155e95bc6d7a9dc143b9e7b87ad2150f36c760a08802f78b
+  source_ref: U1027
+- collection: terms
+  id: TER193
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 9ae0b841702a8a8e89d464f893302601d2589bc3d039451274582b3fbc0296c9
+    definition: f50f57ebb9bbfc530b6b9f60b34a9f08d406903ba86da89157e8410fc5ed65ad
+  source_ref: U1027
+- collection: terms
+  id: TER194
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 1350eef00dbfc552c659cc816b109ad192afc12ac0848b90a0560cf8e656b0ef
+    definition: 81478b075c1bdd8b1b71434290d907ec0340a02703fa689fd9260a996d8dd15c
+  source_ref: U1027
+- collection: terms
+  id: TER232
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 46d24cc01e21bf339636e65fa741d279ff7431008e326afce8bb1553498f52d4
+    definition: 52ef69b73778897e83e416719f903b4d2db950f25f42942637664d24ca759c6e
+  source_ref: U1027
+- collection: terms
+  id: TER233
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 36b14801f55ffa9ce9e0104ba3fbffd6cd952ca3568626c6f9ce718516283d1e
+    definition: 09aa4471d1a4e2155e33f30b362126fcb33d00ecf934674bab95c159db52d2ef
+  source_ref: U1027
+- collection: terms
+  id: TER234
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 2d1918c24f77789e1bbfa44252840e6b96e5af0f6b90a6d91dff493e4f3b31b1
+    definition: 3dfe967ca8490c87bd6058bdda8855675a196fb4906393af30b3af4ae08521ec
+  source_ref: U1027
+- collection: terms
+  id: TER235
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 7fa3c08e9142000845f98b9e0c60bf66a8874c3e2fa5aac6f8bd105c79af9a35
+    definition: aca308660d27711ce45d16242f9c064f14db7653be8497780f62a6e51b1248c2
+  source_ref: U1027
+- collection: terms
+  id: TER236
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: e172bc3f856db7073d66676c9420b216a69a5adb731c76379838f2454d1a983d
+    definition: 2732157086c26fc3b5809869fac722eef24b9a9d7caed30f6ddb6fbb824803f2
+  source_ref: U1027
+- collection: terms
+  id: TER237
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 37dd65ca6c00f83ff825ca9884d504d139c7cbd0833eb741a078ef3f00b5a1e3
+    definition: 4ffb2df22e25c00b1d74bac35f29ae4f591e413d7668d4c428cc2c27d9f73f5a
+  source_ref: U1027
+- collection: terms
+  id: TER238
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: c894339fb093c3e672e023fd05e8d4889d12963762cfa5eb9ca159194836bed9
+    definition: 7a4185ad159df0a291b45c1fc45eaed0958864512d90d860821044e74c3f96bd
+  source_ref: U1027
+- collection: terms
+  id: TER239
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: ae14ea5c874412948c6d7920e2cfaf8772a3b6ae95421ecde9ea2fdec1b0ca68
+    definition: 9cb5d974b6c3972096cbdcb06d71b3bcb4b463bc1b1d1920ba8e57b1da1a2fb3
+  source_ref: U1027
+- collection: terms
+  id: TER240
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 6dc5afe9a92efb146c9b9a03c9ddff6dbe4f7c98f8e06e0fcf5ec3dcd7dea127
+    definition: 66760570f12a4b3c108a9725a742c446568b2cb05e224d7b0bde72d06c9e5c23
+  source_ref: U1027
+- collection: terms
+  id: TER241
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: e71b53d0208b9ada85158ebf2f13e49d9d7386cb988a15caaecf20f41a25ebb7
+    definition: 53be2c8121913ed82154b5da7c9b27f196946fef723893820e3bd17137d18303
+  source_ref: U1027
+- collection: terms
+  id: TER242
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 86f658758fe13bdd3b63fc9c2ed0bf46759f224b9ad8007dbf8c61e91909e0ba
+    definition: a1c22fea92bfbed5ca6f5c12b0d2dc32d094452ad2fb04c0ea25107c0d7d89d4
+  source_ref: U1027
+- collection: terms
+  id: TER243
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: ec5389bea6a7b871aacf23759c40214a045e1e60f42475b1b7bd2f1088ed4947
+    definition: 6d0ae74e6706d9bba22b5639dae2326a8c599c97b4628610a15418e1965d53f2
+  source_ref: U1027
+- collection: terms
+  id: TER244
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 5c193801e125eaddfd220d1b330d0bd226c809a856c410b2dbe324dc1d86701d
+    definition: eb2088219626b45e5d305e953fcf51169fbab0591691f5c9ce86d66ce9d86bcb
+  source_ref: U1027
+- collection: terms
+  id: TER245
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 70f091a0506a6a14db7bda9b962f7bf5bac6c4c3dc8219a487d9107743e36f45
+    definition: 2e797054e9d5412d4bec110d1d6dbaa64d1b456b05b7ee428deeb2ade20a45b2
+  source_ref: U1027
+- collection: terms
+  id: TER246
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 0f972889842e08efd85154f26a0e221629b67d8ca8716fbc5fbea24ff0441945
+    definition: f90ea7ad68a964f3dd0a0747955a120d9dc82b50e5d6d1d702efeca49ef539c6
+  source_ref: U1027
+- collection: terms
+  id: TER247
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 76d0c8e0d78fca22a21a87b0a37f7c9d01b84ec0cd3a0a4d35d52b0d4a88df16
+    definition: 565b0c5e782775b5907c9c2bba9a43aae96d93ae1f979da885c3fb5e31a6f136
+  source_ref: U1027
+- collection: terms
+  id: TER248
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 497d474f6cea681760ce6971f5073cca7f76b3dc3f4684b50217a3863a4ba94d
+    definition: 4de608f465d152643a7191cadcbd08209b4334896e3f5aa65764db05d25af9d3
+  source_ref: U1027
+- collection: terms
+  id: TER254
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: b938575e7863013a7fe01ee047a3e21e396680c0db3c9f71d5b31f05e28204c7
+    definition: 880b0577eaf9df3f6021b70e833b484d043b07030b47408a8213dc5cdaa71b2b
+  source_ref: U1027
+- collection: terms
+  id: TER255
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: aa5acd39ea0fe892140d17c2d826144792305606c5dbb7e87bda2573f80a362c
+    definition: b2835cd399000c4b9da7196e55b62884b30abd177f17473933ffbf8080c0c435
+  source_ref: U1027
+- collection: terms
+  id: TER270
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 51b55be61480919cb3305a62cf5b19a6ec18fc6292b731d226c20ba58ea8e532
+    definition: 262523c11b1879ef3daf0a04fa675058ca6ccca26f2554a9164d8a94a53cf78c
+  source_ref: U1027
+- collection: terms
+  id: TER271
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 14558e4806b35dfc49e1bfdbc8c0c28bc9ba0f8dbdf211b43995abcbd56f1ee3
+    definition: dc3e86fa4088eb445cf5c1d97ad3ede4841ceeeb0048fa425fcd8c9472926a7c
+  source_ref: U1027
+- collection: terms
+  id: TER272
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 3213a723f99d49376b7cb8f625530038841bc8ab6bfb418860dec2164538b031
+    definition: af8d2b1a5263b10cba48382c919f46f1531f0bff3ae12e76afce2743026b5612
+  source_ref: U1027
+- collection: terms
+  id: TER273
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 94e2ccdea21ef225b7735a38c2fae57d5abd0c1b8a219a3f826502558fa56e7f
+    definition: b2c0046e1b1b75ee0c67bd2ab40f41bb77414c0e5878889bbda50c1393305383
+  source_ref: U1027
+- collection: terms
+  id: TER274
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: c530f021769c58e752dd0e4204b99a1f908d781d6020af3e59f31ac54b4fd18a
+    definition: 301a2ebbc454af737a5b7f708d07ea436554af807e9471722996c5cadff303a9
+  source_ref: U1027
+- collection: terms
+  id: TER275
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 848e4562db42a29eff9066251b70bc1f199f99f9a5aee18ca58a003113866b13
+    definition: d61a9faad5204e3c8433001c74218af31e6fd0a2ec6bfc49ce28a95c9c83fcab
+  source_ref: U1027
+- collection: terms
+  id: TER276
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: ea79fd6ecd9f5406b33ea8577d33aa55cbb6422bdbb2c9161f6b6688858f96f0
+    definition: 445b9ccccc2aa186347dc952df3af4ab4eccd760a69b2b1e79727b3d5c513413
+  source_ref: U1027
+- collection: terms
+  id: TER277
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 1c0cf12ef17f95c85a49db98cb5821a1db0e0cef628b26569a078776dc8aba6c
+    definition: 125f5d8a43afbda1ef4719e18ddec0c4a51e97adc56ec829ed90c56ddeb3cc6b
+  source_ref: U1027
+- collection: terms
+  id: TER278
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 0136efb8e0d983b3291ae30c864ad86340c9d31cc5ac289175d7d233dd429d0e
+    definition: a4c48954feeee4b452f7971dad9dfa34199c2d4bf88df89d5d0b7a494785a1a7
+  source_ref: U1027
+- collection: terms
+  id: TER279
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: ea6fc92b58fb730e174b56b24db5c6161eb459c2e637a97f62e51fc236cddb1a
+    definition: d66cae2d6c381e4b7978bd3673470081faa8b5c041d590b51540b19cbd4f84a4
+  source_ref: U1027
+- collection: terms
+  id: TER280
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 76ba0484b33c737dc6285f52cdad0488a3e5c024f7143509d5fd4c6383775d46
+    definition: 1e8f9a5d1977ea9a05ca7547710c6abc2d28fc3bbc0c34780eae54a02899c72c
+  source_ref: U1027
+- collection: terms
+  id: TER281
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: f10dca17e90dc4df34e935febb6c59b52e7d4aab859faf226db5207cefd9875e
+    definition: 3c67d814a782d25e23ba0c2960585607e9cd403056116c8c5d82509ac173c61e
+  source_ref: U1027
+- collection: terms
+  id: TER282
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 982d6a7944c01dafc89d15489f4019044926d2e7c471cb97d019d17a2459ab56
+    definition: f56ab669f1d4e7e7d96b109e27d65d83334cf73d0d5ec7731eef235d71608e83
+  source_ref: U1027
+- collection: terms
+  id: TER283
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: e8ad8466d7632e0c8f3c737298c6ccb9726f7372b16fd2b3a30976b284ae5db9
+    definition: 1b4b7e01a0bf4a2d38e1b10e7336cc9ed5e42c593cc5a617170c78a055b5798b
+  source_ref: U1027
+- collection: terms
+  id: TER284
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: c8812dc00c3efa6303f969cdfda3a18f017fb5b76d8a24759b8c70a38e55f1e2
+    definition: 63f0b02f2dfd4854712e761315956ef946b54871208aa1585e0b4bf468bd4800
+  source_ref: U1027
+- collection: terms
+  id: TER285
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: e24e11df8c6d8c46308c6311e851b85994947fcd54f2ca067a581b44803b3cfc
+    definition: b6aae34ad6ebc5afa574df1fe345f09c73684d00ae55fbd5e1ca885412672dc1
+  source_ref: U1027
+- collection: terms
+  id: TER286
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 5f95d6e42c6728b430116c6390d7f775974d8b9283d4bcfb3c242b90d9258d47
+    definition: 42e1230b0534ed50a7384bf488132734ac4c67e92ebdb0f3cdf3d5f307c5125a
+  source_ref: U1027
+- collection: terms
+  id: TER287
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 33c42e5928af341f8c847d7ca7f375e75118672bf333f8d05a4958a4268ce02d
+    definition: 52638fc07862d5f398449a85e888728f76da1a93c74c0d89155a09126a5ebbd8
+  source_ref: U1027
+- collection: terms
+  id: TER288
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 45b25fe8bc699a3a6dab4e6a4f435618a3675a7b9c67343ba29079927e61a522
+    definition: e5a9a612a70f28f9d58c32c1fa4d81c3fd2764badf97f35c4edbf0c62cf60a4a
+  source_ref: U1027
+- collection: terms
+  id: TER289
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: dd647e67b78ab891aed6f2f5ad030ccf8bb3a958b59e3d56682eae91efc92cd4
+    definition: d7d10c50b03d353419bf241850362ef12eaf892b416ea0e01b2f045b6d26dd4d
+  source_ref: U1027
+- collection: terms
+  id: TER290
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: f496519fce60d347b95aca62af6d8115a903d0b9b2a910635c21aeafdce0467b
+    definition: df530f84b3e4a9db8a686494536be2450eb016ac04247f0d1481e5abb85075aa
+  source_ref: U1027
+- collection: terms
+  id: TER291
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 06bf3eeaf5b3033cb9b2ca58cecb0eff467656f09161873600405429fa001a6e
+    definition: b438933831155dbf32a75526cf18933fc390b335e0339efae8311af5d4bb64a4
+  source_ref: U1027
+- collection: terms
+  id: TER292
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: ac37ad8f17ffc993caa45efde8dcf1ced59a9922780f2d9122a1f6f4d3110280
+    definition: c5bd7df91f59e4f4532c63aa4a80baa4b2a6538e3201f6798e486a5474ec1909
+  source_ref: U1027
+- collection: terms
+  id: TER293
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 70b0a3bb34f1505b70027bcf3b4cc7d53973a9355994998813e76ec0d4ecd0e9
+    definition: 36a8d09884eed675a7372a5f878b97dbabaa0593495e82badabd47c5b38fdc63
+  source_ref: U1027
+- collection: terms
+  id: TER294
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 8f2113164d29668e1e221daf0cfe1f07a9ce73447e33ada502b83450689a0fb1
+    definition: 7507778a1e89355ab40dffd3852a0fe28d5ff56bbc844fcc73a615268d8aae7e
+  source_ref: U1027
+- collection: terms
+  id: TER295
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: b9fb4052402931ca5bf725ef960ff010c2c82ecc27031aef19c4c7a043a8c0d0
+    definition: 81e53cb7b47a2bbcb4b262817e2fbf09f304429c7ba49b6227007fe246431f09
+  source_ref: U1027
+- collection: terms
+  id: TER296
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: ff8b3d974a03c9660a5e7ff82a9dd8657284484154122f8f60bf376feabefed1
+    definition: 9236da49c4dcc1497826dc29580e1296d2e13e6159506d7d272b949030a6e071
+  source_ref: U1027
+- collection: terms
+  id: TER297
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 6cf2cf9a6829dbb115f105b2e6a15dbefe98f343fdfc0fc48ab3e615e12773c9
+    definition: 931ab24b1a4ab540b75e827194a36a83232a8be71707af6f757fd656156767da
+  source_ref: U1027
+- collection: terms
+  id: TER298
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 79aa513a160e97a6b69c3769a023ddd9a80072b3ec4f99ee9c9f32e003b31cd1
+    definition: 11d66c99aafe2142302e59b50fe366e9ef92c30c2285e265f21045a384e75d24
+  source_ref: U1027
+- collection: terms
+  id: TER299
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 2dedf5cc6deedb3725b91e1bf015a45c6b52aa69f7421207be357db3b19f72f2
+    definition: d7eb6ee1f5c41741a17f81d7f8baba6b7e04f147a8c8ae1bc656e291e27f7015
+  source_ref: U1027
+- collection: terms
+  id: TER300
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 9e9d461e9b497821098b36c213193fc5a5840ffafba3f89c08b92fa566c92165
+    definition: f24f1cd9e41f3fc24bb096a98640c17e390baa613690d60d8b9f9e2048b90bdf
+  source_ref: U1027
+- collection: terms
+  id: TER301
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: dbf0c21c079a3f2dc98afac66c8beba4e4612ad02a751df2ad05232e3a0ade8f
+    definition: 8a0230d15d765ccfd1ca50c9322b9ea5fc2927eb3427e7ab032b94ca8359dafa
+  source_ref: U1027
+- collection: terms
+  id: TER302
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: e134e45855866b0341720327302923cfe13cfb9dca3535671f4f4b01de918af1
+    definition: 5d94ff97ac320a0b3221d0122c52628d6ff29389bd4162cfab2d983ee4f17801
+  source_ref: U1027
+- collection: terms
+  id: TER303
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: be8befd35ea5cf1d41d89af74c51aead1b7703446e02af05ed2044f331432aff
+    definition: f3aa1951209daae96d6330def6e48c825f55c50b58ec47daca7c5c4258a41b2f
+  source_ref: U1027
+- collection: terms
+  id: TER304
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: f53ea0d25cf3eec7c12a037c522625d74261d1815c01667ba2df66c3954b7c6d
+    definition: fa69826d0df2d9ea883b5482dbce926a5b2ba683378f1428a737eeadb4e65a3f
+  source_ref: U1027
+- collection: terms
+  id: TER305
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 3024926399caf431db7a5b05d8da0505c9315e1b555ec59d10fad3360dfb29ae
+    definition: 761eb58ce666e1d4534eb41151426f75f643b6551debf6983575874d543cc330
+  source_ref: U1027
+- collection: terms
+  id: TER306
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 283cbb0bae87de2d26f5123100f1bce69b0149615a08f8f73ffa1b65e17de83b
+    definition: 365ea930218f604cbc4a69cc749ea7406e3b943b212263ca62ea66913b51b310
+  source_ref: U1027
+- collection: terms
+  id: TER307
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 9b1dee7c51904babdf78d0fe63754b5b6a4acbef0fb9e3eb92540128344ec9bc
+    definition: aa158573c00cb18fdf92adc3d383cf9c7c4a48eefd27e87901ca525558668db1
+  source_ref: U1027
+- collection: terms
+  id: TER308
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: e702b8d9ae29c3cab5dc91ec179081234d86cb17d213919fcd59fe8b3318d4bd
+    definition: a804c04bd4473c0c3eeec3732bbbd80b8ea5bd9b1b24767bdfa297684a1d5e6b
+  source_ref: U1027
+- collection: terms
+  id: TER309
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: bbeb26603a6cf8c2c8e7cb6ec54f55d3bd6ae5004d6725d3186cf5555e47cd2e
+    definition: 3fc5a46652777568bcb8ac50088c5644275abbea59e80e5d915bfcb31b8343d3
+  source_ref: U1027
+- collection: terms
+  id: TER310
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 4205da8eaff370711b80122a28896323c6241a841891a93709d91d4c9216be44
+    definition: 17408333623138f615e813437a33f45c2762360356ea1c9c1b030fc55b4c2e78
+  source_ref: U1027
+- collection: terms
+  id: TER311
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 23ee15772a2995f82f693d3aa2ca101910705110dda98a540b1d7bbf705475e4
+    definition: f626b20500f19a4101eed81f3ca3ad3cc5a1fe71e67ba1d779418b07d1867fb1
+  source_ref: U1027
+- collection: terms
+  id: TER312
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 9d546c3634dae14657829a175c0aa2419404460ea309cc2945184b2ebe3097db
+    definition: 94b429a67f9cdb952c0be1d3410f054cebadda529866e7f09171e7ddf73250fd
+  source_ref: U1027
+- collection: terms
+  id: TER313
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: 10adc812a340b49ca035f1c5dc8ddb85f0c6c16a1445561dfb23607dfe5e2903
+    definition: 5b23a50b33447c5643d97784dea89a897adbccd089e337328bb67ce8c89ad8f6
+  source_ref: U1027
+- collection: terms
+  id: TER314
+  approved_fields:
+  - name
+  - definition
+  value_sha256:
+    name: b6592aa4f884f8a96e53921cb480b5de66311c6f272bcbdbf541c3856138f766
+    definition: 30deb82432482c0c74582c09f2db386425e775190fdc3204f9e07046b17baa11
+  source_ref: U1027
+reading_code_expectations:
+  BHV006: CAP-015
+  BHV082: CAP-044
+  D06.d: CAP-057
+  order-workflow-orchestration: CAP-039
+  subdomain-process-management: SUB-028
+statistics:
+  canonical_nodes: 316
+  capabilities: 77
+  business_areas: 71
+limits:
+- Aucune réalisation installée ni interface nouvelle présumée.
+- Les lacunes marché retenues U1026 sont exposées dans les fiches ; aucun consensus ni équivalence complète.
+- Les scénarios et leurs contributions sont conservés ; pas d’extension de l’audit clos des comportements.
+- Nouvelles rédactions détaillées et exemples proposés, sans extension automatique de l’accord.
+verification:
+  status: passed
+  targeted_tests: 82
+  modules:
+  - scripts.test_context_structure
+  - scripts.test_model_depth
+  - scripts.test_business_systems
+  - scripts.test_business_areas
+  - scripts.test_model_coherence
+  - scripts.test_glossary
+  - scripts.test_display_codes
+  - scripts.test_market_reference_policy
+  - scripts.test_market_vendor_policy
+  - scripts.test_backlog_delivery
+  - scripts.test_methodology_alignment
+  full_model_validation: 0 error
+  backlog_render: 0 error
+  pending_lots: []
+  publication: 2026-10-13.3 inchangée

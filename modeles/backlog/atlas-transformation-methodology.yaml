@@ -1,6 +1,6 @@
-id: flow-methodology-2026-10-12.4
-version: 2026-10-12.4
-as_of: '2026-10-12'
+id: flow-methodology-2026-10-13.1
+version: 2026-10-13.1
+as_of: '2026-10-13'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
 editorial_status: implementation_wording
@@ -71,6 +71,9 @@ source_refs:
 - U971
 - U972
 - U973
+- U1025
+- U1027
+- U1028
 lessons:
 - id: business-first
   label: Le métier d’abord
@@ -781,6 +784,28 @@ sources:
   date: '2026-10-12'
   excerpt: Prends en compte les préconisations de l’audit
   scope: Application des compléments et distinction Modèle, Transition et Usage.
+- id: U1025
+  title: Profondeur de description Commerce
+  kind: internal_contribution
+  access: Source interne non consultable dans Atlas.
+  date: '2026-10-13'
+  excerpt: Oui, faisons évoluer notre règle de profondeurs.
+  scope: Commerce jusqu’aux Business Areas de contexte ; les capacités et comportements restent réservés à Supply Chain Orchestration.
+- id: U1027
+  title: Découpages périphériques validés
+  kind: internal_contribution
+  access: Source interne non consultable dans Atlas.
+  date: '2026-10-13'
+  excerpt: Je valide l’ensemble
+  scope: Commerce, Sourcing and Procurement et Logistics jusqu’aux Business Areas, sans capacités adjacentes ; périmètre douanier
+    explicite.
+- id: U1028
+  title: Validation finale et publication
+  kind: internal_contribution
+  access: Source interne non consultable dans Atlas.
+  date: '2026-10-13'
+  excerpt: Je valide, commit & release
+  scope: Publication du lot U1027 et de la méthodologie alignée ; sans nouvelle réalisation installée ni équivalence de marché.
 glossary:
   terms:
   - id: MOD001
@@ -1909,7 +1934,9 @@ chapters:
     detail: Une capacité possède un parent unique, obligatoirement une Business Area. Une Business Area peut porter une seule
       capacité lorsque son sens le justifie. Une Business Area peut aussi présenter des références et porter la cohérence
       de leurs vues locales. Ces objets restent documentaires et ne deviennent pas des capacités ni leurs parents. Les scénarios
-      mobilisent plusieurs périmètres sans former une autre hiérarchie.
+      mobilisent plusieurs périmètres sans former une autre hiérarchie. Dans Commerce, Sourcing and Procurement et les domaines
+      Logistics, la description peut s’arrêter aux Business Areas sans détailler leurs capacités ; les autres domaines de
+      contexte gardent leur profondeur déclarée.
   - title: Les comportements
     text: Les [comportements](method:MOD006) décrivent des manières métier significatives d’exercer une [capacité](method:MOD015).
       Une [capacité](method:MOD015) possède zéro ou au moins deux [comportements](method:MOD006) différenciants, avec une

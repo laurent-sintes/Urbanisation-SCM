@@ -1,0 +1,37 @@
+id: commerce-business-areas-proposal-U1024
+status: proposed_not_applied
+source_refs:
+- U1023
+- U1024
+supersedes_proposal: commerce-scope-audit-U1023.yaml — compromis de disparition des quatre nœuds retail dans une seule fiche
+hierarchy: Domain Commerce → Subdomain Retail Commerce → Business Areas
+proposed_business_areas:
+- name: Retail Network Management
+  current_id: subdomain-retail-network-management
+  definition: Tenir la structure, les rattachements et les règles communes d’exploitation du réseau de magasins.
+  name_status: retained_proposed
+- name: Digital Commerce
+  current_id: subdomain-sales-b2c-ecommerce
+  definition: Conduire la vente aux particuliers en ligne, de la découverte de l’offre au suivi commercial de la commande.
+  name_status: retained_proposed
+- name: Store Sales
+  current_id: subdomain-sales-b2c-store
+  definition: Conduire la vente, la caisse et les parcours commerciaux client en magasin.
+  name_status: rename_proposed
+- name: Store Operations
+  current_id: subdomain-store-backoffice-operations
+  definition: Gérer les opérations locales de stock, réception, inventaire, préparation et remise de commandes en magasin.
+  name_status: rename_proposed
+market_evidence_reused: 'commerce-scope-audit-U1023.yaml : ms-channels, ms-store, sap-store, sap-sales, sap-network. Les sources
+  étayent les responsabilités ; elles ne prescrivent pas cette taxonomie FLOW.'
+boundaries:
+- Un portail de revendeur reste dans Wholesale Commerce, quelle que soit sa technologie.
+- Offre, prix et dispositifs commerciaux demeurent des sous-domaines communs.
+- Supply Chain Orchestration conserve promesse, affectation, engagements et coordination ; pas de duplication des capacités
+  Supply.
+methodological_follow_up: 'La demande récente de Laurent autorise la proposition d’un niveau Business Area dans Commerce malgré
+  la limite précédente U981. Une application doit aligner les conventions et contrôles : les Business Areas de contexte ne
+  sont pas encore décomposées en capacités, alors que la règle courante exige une capacité par Business Area. Ne pas inventer
+  de capacité pour satisfaire ce contrôle. Définir explicitement cette exception de profondeur pour les périmètres de contexte
+  avant application.'
+canonical_changes: Aucun changement de niveau, nom ou parent appliqué au modèle courant.

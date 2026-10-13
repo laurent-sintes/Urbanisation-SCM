@@ -1,0 +1,65 @@
+id: commerce-detail-depth-U1025
+status: applied_to_backlog
+source_refs:
+- U1024
+- U1025
+agreement:
+  source_ref: U1025
+  scope: Profondeur Commerce jusqu’aux Business Areas de contexte ; pas d’approbation des nouveaux noms et décompositions
+    proposés ensuite.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1025
+  required_nodes:
+  - id: domain-sales
+    fields:
+      modeling_depth: business_areas
+    field_sha256:
+      scope: eb38d4c82584136dc497dc9efc48525dbbdd9e5480998140038aaf63b6357472
+  required_glossary:
+  - id: TER108
+    field_sha256:
+      context: eb38d4c82584136dc497dc9efc48525dbbdd9e5480998140038aaf63b6357472
+  supersedes_requirements:
+  - annex: business-systems-U780.yaml
+    collection: nodes
+    id: domain-sales
+    fields:
+    - modeling_depth
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: domain-sales
+    fields:
+    - scope
+  - annex: commerce-retail-structure-U987.yaml
+    collection: nodes
+    id: domain-sales
+    fields:
+    - scope
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: domain-sales
+    fields:
+    - scope
+canonical_changes:
+- 'Commerce : modeling_depth business_areas'
+- Principe, glossaire méthodologique, guide, conventions, schéma et contrôles alignés.
+- Glossaire métier TER108 contrôlé et contexte de profondeur aligné.
+limits:
+- Aucune Business Area Commerce nouvelle créée à ce stade.
+- Les capacités et comportements restent dans Supply Chain Orchestration.
+- Les autres domaines restent à leur profondeur actuelle ; une évolution doit être explicitement déclarée.
+- Publications historiques inchangées.
+verification:
+  tests: 40
+  result: passed
+  modules:
+  - scripts.test_model_depth
+  - scripts.test_business_systems
+  - scripts.test_business_areas
+  - scripts.test_glossary
+  - scripts.test_methodology_alignment
+  full_model_validation: 0 error
+  historical_contract: Préservé ; exception de Business Area terminale active uniquement pour un domaine de contexte explicitement
+    déclaré.

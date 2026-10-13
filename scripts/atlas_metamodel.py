@@ -143,9 +143,16 @@ def _constraints(model):
     add('PRINCIPLE-BUSINESS-AREA', 'business-area-parent', 'business_area',
         'Chaque Business Area a exactement un parent Subdomain (kind area) par contains.',
         {'parent': {'min': 1, 'max': 1}})
+    context_domains = [n['id'] for n in model.get('nodes', []) if n.get('kind') == 'domain'
+                       and n.get('fields', {}).get('modeling_depth') == 'business_areas'
+                       and 'PRINCIPLE-ORCHESTRATION-DETAIL' in principles]
+    area_cardinality = {'children': {'min': 1, 'max': None}}
+    area_statement = 'Chaque Business Area contient au moins une capacité ou présente au moins une référence.'
+    if context_domains:
+        area_cardinality['context_domain_exception'] = {'domain_ids': context_domains, 'children_min': 0}
+        area_statement += ' Dans un domaine de contexte explicitement limité aux Business Areas, elle peut rester terminale sans capacité artificielle.'
     add('PRINCIPLE-BUSINESS-AREA', 'business-area-children', 'business_area',
-        'Chaque Business Area contient au moins une capacité ou présente au moins une référence.',
-        {'children': {'min': 1, 'max': None}})
+        area_statement, area_cardinality)
     add('PRINCIPLE-BUSINESS-AREA', 'reference-presentation-parent', 'reference',
         'Toute référence présentée par une Business Area a un seul parent de présentation.',
         {'presentation_parent_when_business_area': {'min': 1, 'max': 1}})
@@ -153,7 +160,8 @@ def _constraints(model):
         'Chaque capacité a exactement une Business Area par contains ; aucun rattachement direct au sous-domaine.',
         {'parent': {'min': 1, 'max': 1}})
     add('PRINCIPLE-ORCHESTRATION-DETAIL', 'orchestration-detail-scope', 'business_area/capability/behavior',
-        'Seul Supply Chain Orchestration est détaillé en Business Areas, capacités et comportements ; les autres systèmes et domaines restent décrits jusqu’aux sous-domaines utiles.')
+        ('Supply Chain Orchestration est détaillé jusqu’aux capacités et comportements. Les domaines explicitement marqués business_areas peuvent décrire des Business Areas terminales de contexte ; les autres restent limités aux sous-domaines.'
+         if context_domains else 'Seul Supply Chain Orchestration est détaillé en Business Areas, capacités et comportements ; les autres systèmes et domaines restent décrits jusqu’aux sous-domaines utiles.'))
     add('PRINCIPLE-DIFFERENTIATING-BEHAVIORS', 'capability-behaviors', 'capability',
         'Une capacité possède zéro ou au moins deux comportements différenciants.',
         {'behavior_children': {'allowed': [0, '2..*']}})

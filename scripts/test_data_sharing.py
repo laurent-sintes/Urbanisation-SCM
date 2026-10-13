@@ -117,7 +117,10 @@ class DataSharingTests(unittest.TestCase):
     def test_current_business_lot_preserves_capabilities_and_hierarchy(self):
         backlog = read(ROOT / 'modeles/backlog/model.yaml')
         baseline = {n['id'] for n in self.base['nodes'] if n['kind'] in ['capability', 'behavior']}
-        self.assertEqual({n['id'] for n in backlog['nodes'] if n['kind'] in ['capability', 'behavior']}, baseline - {'accounting-interpretation'})
+        # U1009 added these capabilities after the historical fixture.
+        later_capabilities = {'delivery-release-decision', 'demand-fulfilment-policy-management'}
+        self.assertEqual({n['id'] for n in backlog['nodes'] if n['kind'] in ['capability', 'behavior']},
+                         (baseline - {'accounting-interpretation'}) | later_capabilities)
         self.assertEqual(len([r for r in backlog['relations'] if r['type'] == 'shares-data']), 11)
         self.assertEqual(len([r for r in backlog['relations'] if r['source_id'] == 'domain-sourcing-procurement' and r['type'] == 'presents']), 4)
 

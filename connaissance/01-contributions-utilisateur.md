@@ -24366,3 +24366,140 @@ Je valide. Commit & Release
 **portée**
 
 Validation du lot complet de remédiation U1021 présenté à l’issue de l’audit U1020 : définitions et glossaire alignés, contributions et rôles des parcours, conditions et titres, quatre variantes illustratives, ordre de lecture et qualification des appuis et lacunes marché. Cette validation conserve les limites documentées : 23 lacunes d’appui sur 14 fiches, correspondances partielles et absence de preuve de réalisation installée. Autorise le commit local des travaux de la session puis la publication dans Atlas ; aucun push demandé.
+
+## U1023
+
+**id**
+
+U1023
+
+**titre**
+
+Audit du domaine Commerce et cohérence des sous-domaines retail
+
+**date**
+
+2026-10-13
+
+**texte**
+
+J’aimerais revoir le domaine Commerce.
+
+Tout ça me semble un peut en vrac. Les sous domaines liés au retail sont éparpillés.
+On peut s’y interesser et ausculter le domaine ?
+
+**portée**
+
+Demande d’examen du domaine Commerce : responsabilités, frontières, lisibilité du regroupement retail et comparaison marché. Aucun nouveau découpage validé à ce stade ; conserver le contexte à la maille domaine et sous-domaine sans ajout de capacités adjacentes.
+
+## U1024
+
+**id**
+
+U1024
+
+**titre**
+
+Conserver la précision du retail au niveau Business Area
+
+**date**
+
+2026-10-13
+
+**texte**
+
+Beaucoup plus clair mais on a perdu de la précision. Il manque alors un niveau Business Area
+
+**portée**
+
+Correction de la proposition Commerce U1023 : le regroupement Retail Commerce améliore la lecture mais doit conserver les responsabilités détaillées au niveau Business Area. Demande explicite de dépasser la profondeur actuelle de contexte pour Commerce ; aucune adoption implicite des nouveaux noms, capacités, réalisations installées ou publication.
+
+## U1025
+
+**id**
+
+U1025
+
+**titre**
+
+Évolution de la profondeur Commerce et Business Areas des autres sous-domaines
+
+**date**
+
+2026-10-13
+
+**texte**
+
+Oui, faisons évoluer notre règle de profondeurs.
+
+Pas de business area pour les autres sous domaines ?
+
+**portée**
+
+Validation de l’évolution de profondeur proposée U1024 : Commerce peut être décrit jusqu’aux Business Areas, sans création de capacités ou comportements adjacents. Les autres domaines de contexte conservent leur limite actuelle tant qu’un changement de périmètre n’est pas demandé. Demande de préciser aussi les Business Areas utiles des autres sous-domaines Commerce ; leurs nouveaux noms et décompositions restent des propositions à discuter. Aucun commit, push ou publication demandé.
+
+## U1026
+
+**id**
+
+U1026
+
+**titre**
+
+Validation du découpage Commerce et étude préalable de Sourcing and Procurement et Logistics
+
+**date**
+
+2026-10-13
+
+**texte**
+
+Je valide ce découpage. Avant prise en compte, je voudrais la même étude pour Sourcing And Procurement et Le système Logistics pour lequel il manque même peut être des domaines.
+
+**portée**
+
+Validation de la proposition Commerce U1025 : cinq sous-domaines et douze Business Areas, avec leurs frontières et réserves documentées. Laurent demande explicitement de différer son application canonique jusqu’à une étude analogue de Sourcing and Procurement et de tout le système Logistics, en examinant aussi les domaines éventuellement manquants. L’étude doit proposer les niveaux utiles sans présumer de réalisation installée, ajouter des capacités adjacentes ou publier.
+
+## U1027
+
+**id**
+
+U1027
+
+**titre**
+
+Validation complète des découpages Commerce, Sourcing and Procurement et Logistics
+
+**date**
+
+2026-10-13
+
+**texte**
+
+Je valide l’ensemble
+
+**portée**
+
+Validation du lot complet discuté U1023 à U1026 : Commerce avec cinq sous-domaines et douze Business Areas, Sourcing and Procurement avec quatre sous-domaines et dix Business Areas, Logistics avec trois domaines dont Customs Management, onze sous-domaines et vingt et une Business Areas. Autorise leur application au backlog, avec évolution de profondeur, frontières MAP/FLOW/Finance, responsabilités de réalisation et lacunes marché conservées. La suspension d’application Commerce U1026 est levée. Le quatrième domaine éventuel de prestations spécialisées n’est pas adopté. Aucun ajout de capacités ou comportements périphériques, preuve d’installation, commit ou release implicitement demandé.
+
+## U1028
+
+**id**
+
+U1028
+
+**titre**
+
+Validation finale, commit et release des découpages périphériques
+
+**date**
+
+2026-10-13
+
+**texte**
+
+Je valide, commit & release
+
+**portée**
+
+Confirmation du lot complet U1027 appliqué : Commerce, Sourcing and Procurement, Logistics et leurs règles de profondeur, glossaire et frontières MAP/FLOW/Finance. Autorise le commit local et la publication Atlas, avec une nouvelle édition méthodologique alignée sur les Business Areas de contexte. Les accords exacts déjà capturés U1027 restent conservés ; les lacunes de marché et l’absence de réalisation installée ne sont pas levées. Aucun push demandé.
