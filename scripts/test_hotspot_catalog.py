@@ -80,7 +80,7 @@ class HotspotCatalogTests(unittest.TestCase):
         items = {item['id']: item for item in self.model['hotspot_catalog']['hotspots']}
         self.assertEqual(set(items['HS-024']['location']['node_ids']), {'D04.j', 'subdomain-process-management'})
         self.assertEqual(items['HS-033']['location']['node_ids'], ['D04.i', 'D04.l'])
-        self.assertIn('Couverture cartographique partielle', items['HS-033']['problem'])
+        self.assertIn('Les ancres de la carte ne couvrent que', items['HS-033']['problem'])
         self.assertIn('avant-vente sans commande', items['HS-033']['problem'])
         for identifier in ('HS-024', 'HS-033'):
             self.assertEqual((items[identifier]['complexity']['arbitration'],
@@ -221,7 +221,13 @@ class HotspotCatalogTests(unittest.TestCase):
         visible = {item['id']: item for item in model['hotspot_catalog']['hotspots'] if item.get('visible', True)}
         self.assertEqual(set(visible), {'HS-002', 'HS-011', 'HS-008', 'HS-020', 'HS-021', 'HS-024', 'HS-033', 'HS-032'})
         self.assertEqual({key: len(visible[key]['problems']) for key in ('HS-008', 'HS-021', 'HS-032')},
-                         {'HS-008': 3, 'HS-021': 2, 'HS-032': 6})
+                         {'HS-008': 3, 'HS-021': 3, 'HS-032': 2})
+        for item in visible.values():
+            self.assertTrue(item['problems'], item['id'])
+            self.assertTrue(all(problem['question'].endswith('?') and len(problem['option_ids']) <= 2
+                                for problem in item['problems']), item['id'])
+            self.assertEqual(sorted(option_id for problem in item['problems'] for option_id in problem['option_ids']),
+                             sorted(option['id'] for option in item['resolution_options']), item['id'])
         self.assertEqual(visible['HS-011']['gap_analysis'][0]['resolution_option_ids'],
                          [option['id'] for option in visible['HS-011']['resolution_options']])
         hotspot = visible['HS-008']
@@ -230,7 +236,10 @@ class HotspotCatalogTests(unittest.TestCase):
         self.assertEqual([problem['option_ids'] for problem in hotspot['problems'][1:]], [[], []])
         self.assertEqual(hotspot['problems'][1]['document_ids'], ['DOC002'])
         self.assertEqual(visible['HS-021']['problems'][0]['option_ids'], [])
-        self.assertTrue(all(not problem['option_ids'] for problem in visible['HS-032']['problems'][1:]))
+        self.assertEqual(visible['HS-021']['problems'][1]['option_ids'], ['hs-021-audit-1', 'hs-021-audit-2'])
+        self.assertEqual(visible['HS-021']['problems'][2]['option_ids'], ['hs-021-sd', 'hs-021-hybrid'])
+        self.assertEqual(visible['HS-032']['problems'][0]['option_ids'], [])
+        self.assertEqual(len(visible['HS-032']['problems'][0]['analysis_ids']), 5)
         hotspot['problems'][1]['option_ids'] = [hotspot['problems'][0]['option_ids'][0]]
         self.assertTrue(any('belongs to multiple problems' in error for error in validate_catalog(model)))
         hotspot['problems'][1]['option_ids'] = []

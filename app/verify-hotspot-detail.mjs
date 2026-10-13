@@ -173,8 +173,8 @@ try {
   assert.equal(await detail.locator('.hotspot-documents a[download] svg').count(), wholesale.document_ids.length);
   const criticality = detail.getByRole('group', { name: `Criticité · ${wholesale.severity}` });
   const questionIndex = detail.locator('.hotspot-question-index-item');
-  assert.equal(await questionIndex.count(), 2, 'both Wholesale questions are visible before the Options');
-  assert.ok((await questionIndex.first().innerText()).includes('4 Options documentées'));
+  assert.equal(await questionIndex.count(), 3, 'the three Wholesale questions are visible before the Options');
+  assert.ok((await questionIndex.first().innerText()).includes('2 Options documentées'));
   assert.ok((await questionIndex.last().innerText()).includes('Aucune Option documentée'));
   await page.locator('.workspace-content').evaluate((element) => {
     element.scrollTop = 0;
@@ -189,48 +189,37 @@ try {
   assert.equal(await detail.getByText('Limites des preuves :').count(), 0);
   assert.equal(await detail.getByText('Sources et réserves détaillées').count(), 0);
   await criticality.screenshot({ path: resolve(output, 'wholesale-criticality.png') });
-  const structuredWholesale = structuredClone(wholesale);
-  structuredWholesale.resolution_options = wholesale.resolution_options.slice(2);
-  structuredWholesale.problems = [
-    {
-      id: 'rules',
-      title: 'Besoin de pilotage selon les marques',
-      question: 'Quelles marques ont besoin du pilotage du carnet ?',
-      analysis_ids: [wholesale.gap_analysis[0].id],
-      option_ids: structuredWholesale.resolution_options.map((option) => option.id),
-    },
-    {
-      id: 'tool',
-      title: 'Construction de l’outil',
-      question: 'Comment construire l’outil ?',
-      analysis_summary: 'Le PDF distingue le moteur de l’outil complet.',
-      document_ids: [wholesale.document_ids[0]],
-      analysis_ids: [],
-      option_ids: [],
-    },
-    {
-      id: 'evolution',
-      title: 'Adaptation des stratégies',
-      question: 'Comment faire évoluer les stratégies ?',
-      analysis_summary: 'Les règles configurables restent à éprouver.',
-      analysis_ids: [wholesale.gap_analysis[1].id],
-      option_ids: [],
-    },
-  ];
-  servedModel = { ...model, hotspot_catalog: { ...model.hotspot_catalog, hotspots: [structuredWholesale] } };
-  await page.goto(`${base}?qa=${++fixtureRead}#/hotspots?version=${index.current_version}&hotspot=${wholesale.id}`);
-  await detail.locator('.hotspot-problem').first().waitFor();
+  assert.ok((await detail.locator('.hotspot-story-lead').innerText()).includes('couvertes ou non'));
   assert.equal(await detail.locator('.hotspot-question-index-item').count(), 3);
   assert.equal(await detail.locator('.hotspot-problem').count(), 3);
   assert.equal(await detail.locator('.hotspot-problem').first().locator('.hotspot-story-option').count(), 2);
   assert.ok((await detail.locator('.hotspot-problem').nth(1).innerText()).includes('Le PDF distingue'));
-  assert.equal(await detail.locator('.hotspot-problem-document').count(), 1);
+  assert.equal(await detail.locator('.hotspot-problem-document').count(), 2);
   assert.equal(await detail.locator('.hotspot-problem').last().locator('.hotspot-story-option').count(), 0);
   assert.ok(!(await detail.locator('.hotspot-problem').last().innerText()).includes('Options à définir'));
   await detail
     .locator('.hotspot-problem')
     .nth(1)
     .screenshot({ path: resolve(output, 'wholesale-tool-problem.png') });
+  const visible = model.hotspot_catalog.hotspots.filter((item) => item.visible);
+  assert.equal(visible.length, 8);
+  for (const hotspot of visible.filter((item) => item.id !== 'HS-008')) {
+    await page.goto(`${base}#/hotspots?version=${index.current_version}&hotspot=${hotspot.id}`);
+    await detail.locator('.hotspot-problem').first().waitFor();
+    assert.equal(await detail.locator('.hotspot-question-index-item').count(), hotspot.problems.length, hotspot.id);
+    assert.equal(await detail.locator('.hotspot-problem').count(), hotspot.problems.length, hotspot.id);
+    for (const [position, problem] of hotspot.problems.entries()) {
+      const card = detail.locator('.hotspot-problem').nth(position);
+      assert.ok((await card.innerText()).includes(text(problem.question)), `${hotspot.id}: question is visible`);
+      assert.equal(await card.locator('.hotspot-story-option').count(), problem.option_ids.length, hotspot.id);
+    }
+  }
+  const retail = visible.find((item) => item.id === 'HS-032');
+  await page.goto(`${base}#/hotspots?version=${index.current_version}&hotspot=${retail.id}`);
+  await page.screenshot({ path: resolve(output, 'retail-overview.png') });
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.screenshot({ path: resolve(output, 'retail-mobile.png') });
+  await page.setViewportSize({ width: 1440, height: 950 });
   servedModel = model;
   await open();
   await detail.locator('.hotspot-dossier summary').click();
@@ -319,6 +308,7 @@ try {
   legacy.status = 'validated';
   legacy.examples = [];
   legacy.resolution_options = [];
+  delete legacy.problems;
   legacy.market_view = undefined;
   servedModel = { ...model, hotspot_catalog: { ...model.hotspot_catalog, hotspots: [legacy] } };
   await open();

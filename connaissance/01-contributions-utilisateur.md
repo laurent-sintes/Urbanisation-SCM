@@ -25148,3 +25148,14 @@ Verbatim :
 > Marque historique : pas d'outil de gestion de carnet de commande, juste des règles simples à l'engagement : premier arrivé premier servi + on ne sert que ce qu'on a en stock
 
 Portée : corriger le contraste présenté dans HS-008 et le sens du carnet dans le glossaire. Boardriders pilote toutes les commandes de vente du carnet, couvertes ou non, pour optimiser promesse et coûts ; les Marques Historiques appliquent les deux règles d'engagement citées sans outil de gestion du carnet. Il s'agit des pratiques rapportées par Laurent, sans audit technique supplémentaire ni sélection d'Option.
+
+
+## U1073
+
+Date : 2026-10-13. Source : Laurent, règle éditoriale des hotspots visibles.
+
+Verbatim :
+
+> Maintenant, je veux que les 7 autres hotspots visibles soient aussi bien traités que celui ci en terme de règle éditoriale.
+
+Portée : appliquer aux sept hotspots visibles hors HS-008 la même discipline de lecture : signal court, questions explicites, Options rattachées à la question à laquelle elles répondent, synthèse d'analyse utile et réserves conservées dans leur contexte. Ne crée ni accord sur les Options ni observation supplémentaire des SI installés. Les sources, qualifications et publications historiques restent conservées.

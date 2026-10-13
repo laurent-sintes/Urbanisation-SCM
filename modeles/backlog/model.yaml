@@ -72198,6 +72198,7 @@ hotspot_catalog:
   - U1048
   - U1055
   - U1072
+  - U1073
   hotspots:
   - id: HS-001
     title: Migration ECC MM / PP / SD chez Boardriders
@@ -72316,11 +72317,9 @@ hotspot_catalog:
       node_ids:
       - ba-service-planning
       - domain-logistics-execution
-    problem: Dans la cible envisagée, C-LOG propose un plan de [fulfilment](glossary:TER085) et FLOW le choisit. Il faut définir
-      ce que C-LOG garantit, pendant combien de temps et à quel moment le choix devient un engagement ferme. La [planification
-      des prestations](model:ba-service-planning) de FLOW doit ainsi pouvoir dialoguer avec [Logistics](model:domain-logistics-execution),
-      sans confondre proposition, choix et demande d’exécution. La réservation éventuelle des ressources et les contre-propositions
-      restent à qualifier. Le pilotage des autres logisticiens Boardriders est traité séparément dans HS-011.
+    problem: Dans la cible étudiée, C-LOG pourrait proposer à FLOW un plan de [fulfilment](glossary:TER085) à choisir avant
+      son exécution. La répartition du choix et de la tenue du plan reste à arrêter. Les garanties, la durée de validité et
+      le moment de l’engagement ferme doivent être précisés avec C-LOG.
     examples:
     - 'Fonctionnement rapporté : Boardriders construit le plan et libère les ordres ; C-LOG exécute et pilote localement les
       prestations reçues.'
@@ -72380,6 +72379,7 @@ hotspot_catalog:
     - U1065
     - U1066
     - U1067
+    - U1073
     origin:
       repository: FLOW-Program
       path: src/docs/as-is/hotspots/c-log-decision-fulfillment.md
@@ -72510,6 +72510,17 @@ hotspot_catalog:
       - model
     visible: true
     document_ids: []
+    problems:
+    - id: hs-002-plan-mandate
+      title: Construction et choix du plan
+      question: Qui construit le plan de fulfilment, qui le choisit et qui en garantit l’exécution ?
+      analysis_summary: La proposition, le choix et la demande d’exécution sont des étapes distinctes ; leurs garanties restent
+        à qualifier.
+      analysis_ids:
+      - hs-002-decision-location
+      option_ids:
+      - hs-002-joint-plan
+      - hs-002-brand-plan
   - id: HS-011
     title: Pilotage des autres logisticiens de Boardriders par FLOW
     kind: integration
@@ -72517,11 +72528,9 @@ hotspot_catalog:
       node_ids:
       - D06
       - domain-logistics-execution
-    problem: Boardriders construit le plan de [fulfilment](glossary:TER085), choisit ses autres logisticiens et libère leurs
-      ordres. FLOW doit reprendre ce pilotage lorsque le prestataire exécute les ordres sans proposer lui-même un plan complet.
-      Il faut définir les instructions envoyées, les confirmations attendues et les décisions que FLOW conserve en cas de
-      retard ou d’exécution partielle. Les prestataires et leurs contrats restent à inventorier. Ce mandat est distinct de
-      la proposition de plans par C-LOG étudiée dans HS-002.
+    problem: Boardriders pilote lui-même le plan et les ordres confiés à ses autres logisticiens lorsque ceux-ci ne proposent
+      pas de plan complet. FLOW devra reprendre ce pilotage pour les prestataires concernés. Leurs contrats, confirmations
+      et traitements des aléas restent à inventorier.
     examples:
     - 'Scénario d’étude à confirmer avec un prestataire Boardriders : FLOW construit un plan, libère un ordre de préparation
       puis de transport et attend les confirmations. Le prestataire signale un retard ou une quantité préparée inférieure
@@ -72547,16 +72556,6 @@ hotspot_catalog:
       - Identifier les règles de choix et les états comparables.
       tradeoffs:
       - Multiplie les adaptations et rapprochements.
-      implementation_complexity: unassessed
-      evidence_state: hypothesis
-    - id: hs-002-mandate-3
-      title: Mandat adapté selon le prestataire
-      principle: 'Mandat mixte : proposition par les partenaires capables de la garantir, construction par FLOW pour les prestataires
-        exécutants.'
-      conditions:
-      - Éprouver le mandat, les engagements et les confirmations avec chaque partenaire.
-      tradeoffs:
-      - Le niveau de maîtrise et le coût d’intégration dépendent du mandat retenu.
       implementation_complexity: unassessed
       evidence_state: hypothesis
     complexity:
@@ -72586,6 +72585,7 @@ hotspot_catalog:
     - U1066
     - U1067
     - U1070
+    - U1073
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -72669,8 +72669,8 @@ hotspot_catalog:
           cette contribution.
       comparison: Même responsabilité de sélection des services et exécutants, sur des périmètres partenaires différents.
         Le fait de n’utiliser que C-LOG ne prouve pas que le SI historique soit incapable de gérer plusieurs prestataires.
-      convergence_question: Comment conserver dans Core System FLOW le fonctionnement multi-prestataires Boardriders, avec
-        un contrat commun et des variantes, ou avec des contrats propres aux prestataires ?
+      convergence_question: Comment FLOW doit-il transmettre les ordres et recevoir les confirmations des autres logisticiens
+        ?
       business_effects:
       - Une cible conçue uniquement pour C-LOG risque de ne pas reconduire les autres partenaires Boardriders. Cette conséquence
         est une analyse du besoin déclaré.
@@ -72680,9 +72680,9 @@ hotspot_catalog:
       resolution_option_ids:
       - hs-011-common-contract
       - hs-011-provider-contracts
-      - hs-002-mandate-3
       source_refs:
       - U925
+      - U1073
     framing_impact:
       category: structuring
       targets:
@@ -72698,6 +72698,17 @@ hotspot_catalog:
       scopes:
       - model
     visible: true
+    problems:
+    - id: hs-011-provider-contract
+      title: Échanges avec les autres logisticiens
+      question: Comment FLOW doit-il transmettre les ordres et recevoir les confirmations des autres logisticiens ?
+      analysis_summary: Le mandat peut varier selon qu’un prestataire propose un plan ou exécute seulement les ordres. Cette
+        variante traverse les deux Options et ne constitue pas un troisième contrat concurrent.
+      analysis_ids:
+      - hs-011-provider-landscape
+      option_ids:
+      - hs-011-common-contract
+      - hs-011-provider-contracts
   - id: HS-003
     title: Fraîcheur et justesse de la vue de stock centralisée
     kind: scope
@@ -74797,12 +74808,9 @@ hotspot_catalog:
       - D04.i
       - D04.j
       - ba-execution-coordination
-    problem: Le remplacement de Négoce Storeland doit préserver les fonctions effectivement utilisées par les Marques Historiques.
-      Il faut suivre un parcours réel pour distinguer la [relation avec les revendeurs](model:ba-wholesale-account-management),
-      la [vente](model:ba-wholesale-sales), les [commandes de vente](model:D04.i) et [d’achat](model:D04.j), puis la [coordination
-      de leur exécution](model:ba-execution-coordination). Ces responsabilités devront être réparties entre les produits cibles
-      et les outils conservés, sans attribuer tout le Négoce à FLOW. La carte représente le périmètre à instruire ; l’usage
-      de chaque fonction dans Négoce reste à vérifier par marque.
+    problem: Négoce Storeland couvre plusieurs étapes de la vente aux revendeurs chez les Marques Historiques. Les fonctions
+      réellement utilisées et leur futur responsable doivent être établis par marque avant le retrait de l’outil. Leur reprise
+      ne revient pas automatiquement à FLOW.
     examples:
     - 'Scénario d’étude, non observé : un revendeur passe commande, les conditions commerciales sont appliquées, puis la livraison
       est préparée. Relever quels outils et équipes interviennent et où sont tenus les engagements.'
@@ -74851,6 +74859,7 @@ hotspot_catalog:
     - U1065
     - U1066
     - U1067
+    - U1073
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -74921,6 +74930,15 @@ hotspot_catalog:
       scopes:
       - model
     visible: true
+    problems:
+    - id: hs-020-replacement
+      title: Reprise des fonctions Négoce
+      question: Quelles fonctions de Négoce faut-il reprendre, et dans quels produits ?
+      analysis_summary: Un parcours réel doit distinguer relation revendeur, vente, commandes, achats et coordination de l’exécution.
+      analysis_ids: []
+      option_ids:
+      - hs-020-audit-1
+      - hs-020-audit-2
   - id: HS-021
     title: 'FLOW–Finance : transmettre les faits et décider du rôle de SAP SD'
     kind: integration
@@ -74928,12 +74946,9 @@ hotspot_catalog:
       node_ids:
       - accounting-data-provision
       - subdomain-financial-accounting
-    problem: 'FLOW doit transmettre à Finance les [faits de gestion](glossary:TER120) nécessaires à la comptabilisation, avec
-      leurs corrections et leurs résultats de traitement. Il faut d’abord répartir les responsabilités : commande et [facturation](glossary:TER153)
-      côté FLOW, interprétation et écriture comptable côté [Financial Accounting](model:subdomain-financial-accounting), puis
-      préciser le rôle éventuel de SAP SD. Conserver SD uniquement pour son raccordement à la comptabilité pourrait créer
-      des responsabilités en double ou perdre du détail opérationnel. Le rôle prévu de SD dans le projet SAP S/4HANA doit
-      être confirmé avant de comparer un passage direct, un passage par SD ou une combinaison des deux.'
+    problem: FLOW doit transmettre à Finance les [faits de gestion](glossary:TER120) issus de ses ventes et de sa [facturation](glossary:TER153).
+      Leur interprétation comptable et le rôle éventuel de SAP SD restent à définir avec Finance. Une facture, un fait et
+      une écriture doivent rester reliés, y compris après correction.
     examples:
     - 'Scénario à éprouver : une vente à un revendeur devient facturable. Distinguer qui tient le résultat de [Billing](model:service-order-billing),
       qui émet le document fiscal et qui crée l’écriture comptable.'
@@ -74981,17 +74996,26 @@ hotspot_catalog:
       evidence_state: hypothesis
     problems:
     - id: hs-021-responsibilities
-      title: Frontière entre FLOW et Finance
-      question: Qui tient la facture, qui interprète les faits de gestion et qui crée l’écriture comptable ?
+      title: Responsabilités FLOW et Finance
+      question: Qui tient la facture, qui interprète les faits et qui crée l’écriture comptable ?
+      analysis_summary: FLOW porte les faits commerciaux ; Finance reste responsable de leur interprétation et de la comptabilisation.
+        Le partage précis doit être vérifié sur des cas B2C, B2B et d’avoir.
       analysis_ids: []
       option_ids: []
     - id: hs-021-exchange
-      title: Mode d’échange avec Finance
-      question: Comment transmettre les faits et leurs corrections à Finance, et quel rôle éventuel confier à SAP SD ?
+      title: Échange des faits et corrections
+      question: Comment Finance reçoit-elle les faits FLOW et renvoie-t-elle leur acceptation ou leur rejet ?
       analysis_ids: []
       option_ids:
       - hs-021-audit-1
       - hs-021-audit-2
+    - id: hs-021-sd-role
+      title: Rôle éventuel de SAP SD
+      question: Pour quels flux les fonctions de SAP SD seraient-elles nécessaires ?
+      analysis_summary: Le rôle de SD dans le projet SAP S/4HANA reste à confirmer ; il ne doit pas créer un second cycle
+        de commande.
+      analysis_ids: []
+      option_ids:
       - hs-021-sd
       - hs-021-hybrid
     complexity:
@@ -75021,6 +75045,7 @@ hotspot_catalog:
     - U1066
     - U1067
     - U1070
+    - U1073
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -75069,8 +75094,8 @@ hotspot_catalog:
         relevance: Documents Sales et transmission comptable ; appui au rôle de facturation possible de SD, sans preuve locale.
     resolution:
       stage: to_explore
-      summary: Répartir facturation, document fiscal et comptabilisation, puis choisir le circuit des faits et corrections.
-        Le passage direct, SAP SD et une trajectoire hybride restent des hypothèses ; aucune option n’est retenue.
+      summary: La frontière FLOW–Finance et le circuit des faits restent à éprouver. Le passage direct, le recours à SAP SD
+        et une combinaison par type de fait sont des hypothèses ; aucune Option n’est retenue.
       credible_option_ids: []
       credibility_note: ''
       blocked_reason: ''
@@ -75344,11 +75369,9 @@ hotspot_catalog:
       node_ids:
       - D04.j
       - subdomain-process-management
-    problem: 'CBS suit toute la demande d’achat : cycle de vie, tâches, avancement et documents échangés avec le fournisseur.
-      FLOW propose des services communs de [gestion des commandes](model:D04), de [conduite des processus](model:subdomain-process-management)
-      et de [visibilité des demandes et tâches](model:BHV082). Il faut décider ce que CBS conserve, ce qu’il expose à FLOW
-      et ce qui serait repris par ces services, avec une seule autorité sur le [Purchase Order](model:D04.j). La séparation
-      technique des services CBS et le périmètre d’une éventuelle réécriture restent à qualifier.'
+    problem: CBS suit le cycle des demandes d’achat, les tâches et les documents échangés avec les fournisseurs. La reprise
+      envisagée sur Flow Core System doit préciser ce que CBS conserve et ce que FLOW piloterait, avec une seule autorité
+      sur le [Purchase Order](model:D04.j).
     examples:
     - 'Parcours à tracer dans CBS : un fournisseur reporte une date et transmet une pièce. Identifier qui met à jour la commande
       d’achat, déclenche les tâches et montre l’avancement ; éprouver ensuite ce même parcours avec des services CBS pilotés
@@ -75397,6 +75420,7 @@ hotspot_catalog:
     - U1066
     - U1067
     - U1069
+    - U1073
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -75459,6 +75483,15 @@ hotspot_catalog:
       - model
       - transition
     visible: true
+    problems:
+    - id: hs-024-cbs-boundary
+      title: Frontière entre CBS et FLOW
+      question: Quelles fonctions du cycle d’achat restent dans CBS et lesquelles seraient pilotées par FLOW ?
+      analysis_summary: Les services CBS séparables, les interfaces et le coût d’une éventuelle réécriture restent à qualifier.
+      analysis_ids: []
+      option_ids:
+      - hs-024-cbs-coexistence
+      - hs-024-cbs-services
   - id: HS-033
     title: Réintégration Service Client Sarenza sur Flow Core System
     kind: scope
@@ -75466,12 +75499,9 @@ hotspot_catalog:
       node_ids:
       - D04.i
       - D04.l
-    problem: 'Le service client Sarenza traite les demandes avant et après la vente dans une application autonome, avec ses
-      propres tâches et fonctions de suivi. Il faut étudier quels parcours pourraient utiliser les services communs de FLOW
-      et lesquels restent propres à la relation client. La réalisation Sarenza et la possibilité de séparer ses services n’ont
-      pas été évaluées. Couverture cartographique partielle : les ancres [Sales Order](model:D04.i) et [Return Order](model:D04.l)
-      situent les interactions avec la commande et le retour ; elles ne représentent pas les demandes avant-vente sans commande.
-      Leur ancrage métier reste à préciser après inventaire, sans présumer d’une reprise de tout le service client par FLOW.'
+    problem: Le service client Sarenza traite les demandes avant et après la vente dans une application autonome. Les parcours
+      et services qui pourraient coopérer avec FLOW restent à inventorier. Les ancres de la carte ne couvrent que les interactions
+      avec [Sales Order](model:D04.i) et [Return Order](model:D04.l), pas l’avant-vente sans commande.
     examples:
     - 'Scénario avant-vente à vérifier : un client pose une question avant de commander. Identifier la demande, les tâches
       et la réponse attendue ; ne pas créer une commande de vente pour représenter ce dossier.'
@@ -75519,6 +75549,7 @@ hotspot_catalog:
     - U1066
     - U1067
     - U1069
+    - U1073
     origin:
       repository: Contribution de Laurent
       path: connaissance/01-contributions-utilisateur.md
@@ -75556,6 +75587,16 @@ hotspot_catalog:
       - U1058
       scopes: []
     visible: true
+    problems:
+    - id: hs-033-sarenza-boundary
+      title: Frontière du service client Sarenza
+      question: Quels parcours du service client Sarenza pourraient utiliser les services communs de FLOW ?
+      analysis_summary: La réalisation Sarenza, la séparation possible de ses services et l’ancrage des demandes avant-vente
+        n’ont pas été évalués.
+      analysis_ids: []
+      option_ids:
+      - hs-033-sarenza-coexistence
+      - hs-033-sarenza-services
   - id: HS-025
     title: Performance et stabilité du calcul de couverture du carnet
     kind: scope
@@ -76309,12 +76350,9 @@ hotspot_catalog:
       - subdomain-retail-network-management
       - subdomain-sales-b2c-ecommerce
       - ba-retail-customer-relationship-management
-    problem: Le retrait prévu de Storeland et United Retail chez les Marques Historiques impose de maintenir la vente en magasin,
-      les opérations magasin, le réseau, la relation client et la vente numérique. FLOW contribue aux décisions et aux flux
-      Supply ; le produit Retail doit aussi couvrir la caisse, la fidélité et l’exploitation du magasin. Les deux voies proposées
-      sont de construire un produit Retail ou d’intégrer les marques GBM dans Cegid Y2. Pour les comparer, il faut inventorier
-      les fonctions utilisées dans Storeland et UR, les compléments SoCloz et les outils conservés, dont Winstore. Le socle
-      Retail Boardriders repose sur Y2 ; ses modules et usages doivent être corroborés avant de mesurer l’écart de refonte.
+    problem: Le retrait prévu de Storeland et United Retail oblige les Marques Historiques à préserver la vente et les opérations
+      magasin, le réseau, le numérique et la relation client. Les usages réels par marque et les modules actifs de Cegid Y2
+      chez Boardriders restent à vérifier avant le choix d’un produit Retail cible.
     examples:
     - 'Parcours à vérifier après retrait de Storeland et UR : une marque GBM reçoit des articles, tient le stock magasin,
       décide le réassort, reconnaît un client fidèle, encaisse une vente et prépare une commande web. Identifier le produit
@@ -76346,44 +76384,26 @@ hotspot_catalog:
       implementation_complexity: unassessed
       evidence_state: hypothesis
     problems:
+    - id: hs-032-coverage
+      title: Fonctions Retail à préserver
+      question: Quelles fonctions Retail sont utilisées par chaque marque et devront rester couvertes ?
+      analysis_summary: L’inventaire doit couvrir Storeland, United Retail, SoCloz et les outils conservés, dont Winstore.
+        Les cinq périmètres détaillés ci-dessous servent à vérifier cette couverture.
+      analysis_ids:
+      - hs-032-store-sales
+      - hs-032-store-operations
+      - hs-032-retail-network
+      - hs-032-digital-commerce
+      - hs-032-customer-relationship
+      option_ids: []
     - id: hs-032-product-choice
       title: Produit Retail cible
-      question: Faut-il construire un produit Retail pour GBM ou étendre Cegid Y2, après vérification des fonctions à reprendre
-        ?
+      question: Faut-il construire un produit Retail pour GBM ou étendre Cegid Y2 ?
+      analysis_summary: Comparer les deux Options sur les fonctions constatées, les adaptations, les interfaces et les coûts.
       analysis_ids: []
       option_ids:
       - hs-032-build-retail
       - hs-032-extend-y2
-    - id: hs-032-store-sales-problem
-      title: Vente et caisse en magasin
-      question: Quel produit assurera la vente et la caisse GBM, et quels outils actuels resteront utilisés ?
-      analysis_ids:
-      - hs-032-store-sales
-      option_ids: []
-    - id: hs-032-store-operations-problem
-      title: Opérations et stock magasin
-      question: Qui assurera les opérations, le stock cible et le réassort magasin, et que décidera FLOW ?
-      analysis_ids:
-      - hs-032-store-operations
-      option_ids: []
-    - id: hs-032-retail-network-problem
-      title: Réseau de magasins
-      question: Quels référentiels et règles de réseau doivent converger, et où seront-ils tenus ?
-      analysis_ids:
-      - hs-032-retail-network
-      option_ids: []
-    - id: hs-032-digital-commerce-problem
-      title: Vente en ligne et parcours omnicanaux
-      question: Quelles fonctions omnicanales d’UR doivent rester hors du Core FLOW, et dans quel produit ?
-      analysis_ids:
-      - hs-032-digital-commerce
-      option_ids: []
-    - id: hs-032-customer-relationship-problem
-      title: Relation client et fidélité Retail
-      question: Qui portera les profils, la fidélité et les campagnes GBM après le retrait de Storeland et UR ?
-      analysis_ids:
-      - hs-032-customer-relationship
-      option_ids: []
     complexity:
       arbitration: XL
       implementation: L
@@ -76417,6 +76437,7 @@ hotspot_catalog:
     - U1067
     - U1069
     - U1070
+    - U1073
     origin:
       repository: Urbanisation-SCM
       path: connaissance/01-contributions-utilisateur.md
