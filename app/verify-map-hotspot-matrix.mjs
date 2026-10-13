@@ -131,7 +131,7 @@ try {
       undefined,
       { polling: 'raf' },
     );
-    const geometry = await page.evaluate(() => {
+    const geometry = await page.evaluate((expectedIds) => {
       const markers = [...document.querySelectorAll('.hotspot-map-marker[data-hotspot-ids]')].map((e) => {
         const r = e.getBoundingClientRect();
         return {
@@ -200,7 +200,7 @@ try {
         const accountingRibbon = overview.querySelector(
           '[data-sharing-ids*="REL-U981-accounting-facts"] .data-sharing-ribbon',
         );
-        if (accountingRibbon && accounting.length === 1) {
+        if (accountingRibbon && expectedIds.includes('HS-021') && accounting.length === 1) {
           const marker = accounting[0].getBoundingClientRect();
           const ribbon = accountingRibbon.getBoundingClientRect();
           const x = marker.left + marker.width / 2;
@@ -222,7 +222,10 @@ try {
             marker.top - 4 < label.bottom
           )
             failures.push('accounting-hotspot-covers-exchange-label');
-        } else if (accountingRibbon) failures.push('accounting-hotspot-missing-or-duplicated');
+        } else if (accountingRibbon && expectedIds.includes('HS-021'))
+          failures.push('accounting-hotspot-missing-or-duplicated');
+        else if (!expectedIds.includes('HS-021') && accounting.length)
+          failures.push('filtered-accounting-hotspot-visible');
         const ids = [
           'system-design-development',
           'system-business-operations',
@@ -291,7 +294,7 @@ try {
         ].sort(),
         mode: document.querySelector('.graph-canvas')?.className || 'overview',
       };
-    });
+    }, expected);
     assert.deepEqual(geometry.represented, expected, 'All filtered subjects remain represented after framing');
     assert.deepEqual(geometry.failures, [], `${JSON.stringify(currentCase)}: ${JSON.stringify(geometry.failures)}`);
     const nativeScroll = page.locator('.overview-map-scroll, .map-scroll-viewport').first();

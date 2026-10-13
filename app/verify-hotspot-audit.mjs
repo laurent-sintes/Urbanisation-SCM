@@ -169,7 +169,7 @@ try {
   await page.getByRole('button', { name: `Criticité et complexités de ${wholesale.title}`, exact: true }).click();
   const dialog = page.getByRole('dialog', { name: /^Complexités/ });
   await dialog
-    .getByRole('textbox', { name: 'Justification politique', exact: true })
+    .getByRole('textbox', { name: 'Justification d’arbitrage', exact: true })
     .fill('Compromis documenté pour le test.');
   await dialog
     .getByRole('textbox', { name: 'Justification d’implémentation', exact: true })
@@ -184,9 +184,9 @@ try {
   await page.getByRole('button', { name: 'Enregistrer les modifications', exact: true }).click();
   await page.waitForFunction(() => document.querySelector('.hotspot-save-message')?.textContent.includes('enregistré'));
   assert.equal(posts.length, 1);
-  assert.equal(posts[0].changes[0].fields.complexity.political_rationale, 'Compromis documenté pour le test.');
+  assert.equal(posts[0].changes[0].fields.complexity.arbitration_rationale, 'Compromis documenté pour le test.');
   assert.equal(posts[0].changes[0].fields.complexity.implementation_rationale, 'Dépendances documentées pour le test.');
-  assert.equal(posts[0].changes[0].fields.complexity.political, wholesale.complexity.political);
+  assert.equal(posts[0].changes[0].fields.complexity.arbitration, wholesale.complexity.arbitration);
   assert.equal(posts[0].changes[0].fields.complexity.implementation, wholesale.complexity.implementation);
   await page.addInitScript(() => {
     const read = Storage.prototype.getItem;

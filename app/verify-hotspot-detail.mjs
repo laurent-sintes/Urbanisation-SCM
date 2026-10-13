@@ -166,7 +166,7 @@ try {
   const criticality = detail.getByRole('group', { name: `Criticité · ${wholesale.severity}` });
   await criticality.waitFor();
   assert.ok((await criticality.innerText()).includes('résulte du croisement'));
-  assert.ok((await criticality.innerText()).includes(`Complexité politique · ${wholesale.complexity.political}`));
+  assert.ok((await criticality.innerText()).includes(`Complexité d’arbitrage · ${wholesale.complexity.arbitration}`));
   assert.ok(
     (await criticality.innerText()).includes(`Complexité d’implémentation · ${wholesale.complexity.implementation}`),
   );

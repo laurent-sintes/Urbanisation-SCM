@@ -154,7 +154,7 @@ try {
   assert.equal(await hotspotFilters.locator('.hotspot-filter-list').count(), 1);
   await hotspotFilters.getByRole('button', { name: /Affiner par complexité/ }).click();
   await hotspotFilters
-    .getByRole('group', { name: 'Complexité politique' })
+    .getByRole('group', { name: 'Complexité d’arbitrage' })
     .getByRole('button', { name: 'XL', exact: true })
     .click();
   await hotspotFilters
@@ -173,7 +173,7 @@ try {
   const scopedFilters = page.getByRole('dialog', { name: 'Filtres des points chauds' });
   assert.equal(
     await scopedFilters
-      .getByRole('group', { name: 'Complexité politique' })
+      .getByRole('group', { name: 'Complexité d’arbitrage' })
       .getByRole('button', { name: 'XL', exact: true })
       .getAttribute('aria-pressed'),
     'true',
@@ -188,7 +188,7 @@ try {
   await scopedFilters.getByRole('combobox', { name: 'Criticité' }).selectOption('exact:XL');
   assert.equal(
     await scopedFilters
-      .getByRole('group', { name: 'Complexité politique' })
+      .getByRole('group', { name: 'Complexité d’arbitrage' })
       .getByRole('button', { name: 'Toutes' })
       .getAttribute('aria-pressed'),
     'true',

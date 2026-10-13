@@ -255,6 +255,7 @@ try {
       await page.mouse.move(0, 0);
       assert.equal(await tooltip.isVisible(), true, 'click pins the tooltip');
       await page.keyboard.press('Escape');
+      await tooltip.waitFor({ state: 'detached' });
       assert.equal(await page.locator('.hotspot-map-tooltip').count(), 0);
       await page.mouse.move(0, 0);
       await trigger.focus();

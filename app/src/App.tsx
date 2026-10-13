@@ -45,7 +45,7 @@ import { mapRouteForNode } from './mapNavigation';
 import { defaultMapDepth, mapDepthLimit } from './mapProjection';
 import { activeMethod, methodEntries } from './methodNavigation';
 import { childrenOf, lineageOf, parentRelationOf, relatedTo, scopeStatistics } from './model';
-import { preference, type RouteState, routeHash, savePreference, type View } from './navigation';
+import { preference, type RouteState, readRoute, routeHash, savePreference, type View } from './navigation';
 import { staticUrl } from './publication';
 import { revealSection } from './readerNavigation';
 import type { MarketComparison, MarketGap, MarketInspiration } from './types';
@@ -143,6 +143,9 @@ export function App() {
   const hotspotFiltersRef = useRef(hotspotFilters);
   hotspotFiltersRef.current = hotspotFilters;
   useEffect(() => {
+    // A prior navigation can commit after a newer checkbox change; keep the
+    // optimistic filters until React catches up with the actual URL.
+    if (route.hotspotFilters !== readRoute(window.location.hash).hotspotFilters) return;
     const next = readHotspotFilters(route.hotspotFilters);
     hotspotFiltersRef.current = next;
     setHotspotFilters(next);
