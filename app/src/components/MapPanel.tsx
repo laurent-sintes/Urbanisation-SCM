@@ -79,11 +79,7 @@ export function MapPanel({
   };
 
   return (
-    <section
-      className="map-panel"
-      ref={panel}
-      aria-label="Carte du modèle"
-    >
+    <section className="map-panel" ref={panel} aria-label="Carte du modèle">
       <div className="map-toolbar">
         <div>
           <strong>{scope?.name || rootName}</strong>
