@@ -25132,3 +25132,19 @@ Verbatim :
 > Les options présentes répondent au premier problème. 4 options pour le premier problème c'est trop il en faut 2 maxi.
 
 Portée : corriger HS-008 autour de trois problèmes distincts et ramener à deux au maximum les Options du premier. Le PDF lié à la fiche est une source d'analyse pour la construction de l'outil ; la question d'adaptation continue est distincte de la construction initiale. Cette correction ne sélectionne aucune Option, ne valide aucun budget ni réalisation installée et ne demande pas de publication ou d'opération Git.
+
+
+## U1072
+
+Date : 2026-10-13. Source : Laurent, correction du constat d'ouverture de HS-008.
+
+Verbatim :
+
+> C'est presque parfait.
+>
+> Sauf la premiere phrase : "Boardriders pilote les demandes non couvertes dans son carnet de commandes Wholesale, tandis que les Marques Historiques refusent actuellement une commande si le stock manque à la saisie."
+>
+> Boardriders pilote les commandes de vente dans son carnet de commandes (couvertes ou pas) en vu d'optimiser la promesse et les coûts.
+> Marque historique : pas d'outil de gestion de carnet de commande, juste des règles simples à l'engagement : premier arrivé premier servi + on ne sert que ce qu'on a en stock
+
+Portée : corriger le contraste présenté dans HS-008 et le sens du carnet dans le glossaire. Boardriders pilote toutes les commandes de vente du carnet, couvertes ou non, pour optimiser promesse et coûts ; les Marques Historiques appliquent les deux règles d'engagement citées sans outil de gestion du carnet. Il s'agit des pratiques rapportées par Laurent, sans audit technique supplémentaire ni sélection d'Option.

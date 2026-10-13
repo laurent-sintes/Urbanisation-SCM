@@ -1,0 +1,47 @@
+id: hotspot-wholesale-carnet-U1072
+date: '2026-10-13'
+status: applied_to_backlog
+source_refs:
+- U1072
+- U953
+scope: Corriger le contraste d’ouverture de HS-008 et expliciter le carnet couvert ou non.
+assessment:
+  boardriders: Pilotage des commandes de vente couvertes et non couvertes pour optimiser promesse et coûts.
+  historical_brands: Pas d’outil de gestion du carnet ; premier arrivé, premier servi et stock présent à l’engagement.
+  boundary: Pratiques rapportées, sans audit technique supplémentaire ni choix d’Option.
+glossary_alignment: TER205 précise que le carnet comprend les commandes couvertes et non couvertes ; TER193 et TER014 relus,
+  sans changement de sens.
+market_comparison: Correction factuelle des pratiques Beaumanoir ; les appuis Microsoft Dynamics et SAP S/4HANA de HS-008
+  restent des repères partiels sur les règles de carnet et ne prouvent aucun usage installé.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1072
+  summary: HS-008 et TER205 présentent le carnet complet et le mode d’engagement des Marques Historiques.
+  required_catalog:
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 6186c0c15bf4b3bd760ef7d006e79c4c66c96e5e5953e8595691c18a9a9d0269
+  required_glossary:
+  - id: TER205
+    field_sha256:
+      short_description: 1ceed7788dba8b318d2a52f9fba3908acbb022469beda38c38ac3f8a531b89b1
+      definition: f277b84dd9aa49a7b8817ec95ed36c4032ecc51fa2169cc984db29461635a8d3
+      context: 8da98140c52b3ebbb48edf517d89ec42ff668e2d8c1555d2457875f0e40496fe
+  supersedes_requirements:
+  - annex: hotspot-wholesale-problems-U1071.yaml
+    collection: hotspots
+    id: HS-008
+    fields:
+    - content_sha256
+  - annex: hotspot-gap-analysis-U951.yaml
+    collection: terms
+    id: TER205
+    fields:
+    - short_description
+    - definition
+  - annex: availability-scope-story-U1018.yaml
+    collection: terms
+    id: TER205
+    fields:
+    - context

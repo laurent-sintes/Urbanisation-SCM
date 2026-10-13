@@ -38,6 +38,7 @@ source_refs:
 - U903
 - U904
 - U975
+- U1072
 terms:
 - id: TER001
   name: Capacité métier
@@ -30672,11 +30673,12 @@ terms:
     - U944
 - id: TER205
   name: Order Backlog
-  short_description: Carnet des commandes restant à satisfaire, y compris les demandes non couvertes.
-  definition: Ensemble des commandes restant à satisfaire sur un périmètre défini. Le carnet permet de suivre les quantités
-    non couvertes et de réexaminer leur couverture selon les règles de gestion applicables.
+  short_description: Carnet des commandes de vente restant à satisfaire, couvertes ou non.
+  definition: Ensemble des commandes de vente restant à satisfaire sur un périmètre défini, qu’une ressource soit déjà affectée
+    à leur couverture ou non. Le carnet permet de suivre ces commandes et de réexaminer leur couverture selon les règles de
+    gestion applicables.
   context: |-
-    Dans HS-008, Boardriders conserve les demandes non couvertes et retravaille régulièrement les [affectations](glossary:TER017) avant [promesse](glossary:TER014) ferme, selon la pratique rapportée par Laurent. « Uncovered » désigne ici la partie de demande sans ressource retenue pour la couvrir ; cela ne signifie pas automatiquement commande rejetée.
+    Dans HS-008, Boardriders pilote les commandes de vente couvertes ou non pour optimiser la [promesse](glossary:TER014) et les coûts. Il réexamine régulièrement les [affectations](glossary:TER017) encore révisables, selon la pratique rapportée par Laurent. « Uncovered » désigne ici la partie de demande sans ressource retenue pour la couvrir ; cela ne signifie pas automatiquement commande rejetée.
 
     [Master Plan Management](model:ba-master-plan-management) pilote le carnet selon la [stratégie applicable](glossary:TER268). La décision de livraison est explicite dans [Delivery Release Decision](model:delivery-release-decision). Ce périmètre ne reprend pas le carnet des commandes d’achat MAP.
 
@@ -30697,6 +30699,7 @@ terms:
   - U1009
   - U1018
   - U1019
+  - U1072
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u953
@@ -35758,9 +35761,12 @@ terms:
   - U1055
   review:
     state: partial
-    note: Nom et responsabilité adoptés U1027 ; relation client Retail ajoutée dans le contexte U1055, sans usage installé présumé.
-  definition: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
-  short_description: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
+    note: Nom et responsabilité adoptés U1027 ; relation client Retail ajoutée dans le contexte U1055, sans usage installé
+      présumé.
+  definition: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau
+    et assurer les opérations locales nécessaires à ces parcours.
+  short_description: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le
+    réseau et assurer les opérations locales nécessaires à ces parcours.
   context: |-
     Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours.
 
@@ -35795,7 +35801,9 @@ terms:
     scope_summary: Canaux magasin, centre d’appel et en ligne ; paramètres communs d’offre, prix et organisation.
     approach_summary: Appui à la responsabilité Retail Commerce ; frontières FLOW maintenues.
     term_choice: Retail Commerce nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-    definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
+    definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter
+      le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel,
+      avec leurs limites explicites.
   - vendor: Microsoft
     product: Dynamics 365 Commerce
     source_title: Store Commerce app
@@ -35826,7 +35834,9 @@ terms:
     scope_summary: Vente, caisse, relation client, préparation et stock réunis dans une application magasin.
     approach_summary: Appui à la responsabilité Retail Commerce ; frontières FLOW maintenues.
     term_choice: Retail Commerce nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-    definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
+    definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter
+      le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel,
+      avec leurs limites explicites.
   - vendor: SAP
     product: SAP S/4HANA for fashion and vertical business
     source_title: Getting a Business Process Overview
@@ -35856,7 +35866,9 @@ terms:
     scope_summary: Retail, wholesale et fabrication coopèrent sur des données et flux communs.
     approach_summary: Appui à la responsabilité Retail Commerce ; frontières FLOW maintenues.
     term_choice: Retail Commerce nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-    definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
+    definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter
+      le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel,
+      avec leurs limites explicites.
   - vendor: SAP
     product: SAP S/4HANA Retail
     source_title: Managing Retail Store Operations
@@ -35886,7 +35898,9 @@ terms:
     scope_summary: Réception, comptage, mouvements internes et préparation/remise des commandes en magasin.
     approach_summary: Appui à la responsabilité Retail Commerce ; frontières FLOW maintenues.
     term_choice: Retail Commerce nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-    definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
+    definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter
+      le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel,
+      avec leurs limites explicites.
   - vendor: SAP
     product: SAP S/4HANA Retail
     source_title: Selling to Customers - Sales Order
@@ -35916,7 +35930,9 @@ terms:
     scope_summary: Prise de commande et parcours commande en ligne avec retrait en magasin.
     approach_summary: Appui à la responsabilité Retail Commerce ; frontières FLOW maintenues.
     term_choice: Retail Commerce nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-    definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel, avec leurs limites explicites.
+    definition_choice: Conduire la vente aux particuliers en magasin et en ligne, entretenir la relation client, exploiter
+      le réseau et assurer les opérations locales nécessaires à ces parcours. Les éléments consultés apportent un appui partiel,
+      avec leurs limites explicites.
   market_gaps: []
 - id: TER271
   name: Wholesale Account Management
@@ -39743,7 +39759,8 @@ terms:
   market_gaps: []
 - id: TER315
   name: Retail Customer Relationship Management
-  definition: Connaître les clients particuliers et conduire leur fidélisation et les communications commerciales personnalisées entre canaux.
+  definition: Connaître les clients particuliers et conduire leur fidélisation et les communications commerciales personnalisées
+    entre canaux.
   short_description: Suivre la relation avec les clients particuliers, leur fidélité et les communications qui leur sont adressées.
   context: |-
     Gérer les profils utiles à la relation commerciale, les programmes de fidélité, leurs avantages et les campagnes adressées aux clients, en magasin comme en ligne.
@@ -39758,8 +39775,10 @@ terms:
     element_type: Fonctions de produit documentées
     relationship: Recouvrement partiel
     similarities: Programme de fidélité, adhésion et avantages utilisables entre canaux.
-    differences: La documentation du produit ne définit pas seule la responsabilité métier de la relation client ni l'autorité des profils.
-    flow_position: La Business Area regroupe connaissance client, fidélité et communications personnalisées ; vente et prix restent distincts.
+    differences: La documentation du produit ne définit pas seule la responsabilité métier de la relation client ni l'autorité
+      des profils.
+    flow_position: La Business Area regroupe connaissance client, fidélité et communications personnalisées ; vente et prix
+      restent distincts.
     source_title: Set up customer loyalty programs
     source_url: https://learn.microsoft.com/en-us/dynamics365/commerce/set-up-customer-loyalty-program
     source_version: Documentation en ligne ; édition non précisée
@@ -39767,7 +39786,9 @@ terms:
     source_locator: Loyalty programs and loyalty schemes
     evidence_limits: Appui sur la fidélité multicanale ; ne prouve ni les campagnes complètes ni une réalisation Beaumanoir.
     status: proposed
-    source_refs: [U1054, U1055]
+    source_refs:
+    - U1054
+    - U1055
   - vendor: SAP
     product: SAP S/4HANA for Customer Management
     element_name: Customer management
@@ -39775,17 +39796,23 @@ terms:
     relationship: Recouvrement partiel
     similarities: Comptes, contacts et historique d'interactions utiles à la connaissance client.
     differences: L'appui consulté ne démontre pas un programme de fidélité Retail ni la conduite de campagnes multicanales.
-    flow_position: La Business Area regroupe connaissance client, fidélité et communications personnalisées ; vente et prix restent distincts.
+    flow_position: La Business Area regroupe connaissance client, fidélité et communications personnalisées ; vente et prix
+      restent distincts.
     source_title: Getting Started Guide for SAP S/4HANA for Customer Management
     source_url: https://help.sap.com/doc/febdbaab352f47ca86d4eaeae438c094/2.0/en-US/GettingStartedGuide_Customer_Management.pdf
     source_version: SAP S/4HANA for Customer Management 2.0
     consulted_on: '2026-10-13'
     source_locator: Customer management overview
-    evidence_limits: Appui partiel sur la connaissance client ; fidélité et campagnes restent sans équivalent démontré dans cette source.
+    evidence_limits: Appui partiel sur la connaissance client ; fidélité et campagnes restent sans équivalent démontré dans
+      cette source.
     status: proposed
-    source_refs: [U1054, U1055]
+    source_refs:
+    - U1054
+    - U1055
   market_gaps: []
-  source_refs: [U1054, U1055]
+  source_refs:
+  - U1054
+  - U1055
   review:
     state: proposed
     note: Terme aligné sur la nouvelle responsabilité de contexte Retail ; usage installé non présumé.

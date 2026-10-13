@@ -72197,6 +72197,7 @@ hotspot_catalog:
   - U1047
   - U1048
   - U1055
+  - U1072
   hotspots:
   - id: HS-001
     title: Migration ECC MM / PP / SD chez Boardriders
@@ -73739,11 +73740,12 @@ hotspot_catalog:
       - ba-order-backlog-management
       - ba-master-plan-management
       - subdomain-policies
-    problem: 'Boardriders pilote les demandes non couvertes dans son [carnet de commandes](glossary:TER205) [Wholesale](glossary:TER193),
-      tandis que les Marques Historiques refusent actuellement une commande si le stock manque à la saisie. Ce contraste
-      conduit à trois questions : quelles marques ont besoin du pilotage du carnet, comment construire l’outil nécessaire
-      et comment faire évoluer ses stratégies sans intégrations coûteuses répétées ? Les pratiques détaillées restent à
-      corroborer sur des cas opérationnels.'
+    problem: 'Boardriders pilote toutes les commandes de vente de son [carnet de commandes](glossary:TER205) [Wholesale](glossary:TER193),
+      couvertes ou non, pour optimiser la [promesse](glossary:TER014) et les coûts. Les Marques Historiques n’ont pas d’outil
+      de gestion du carnet : à l’engagement, elles servent les commandes dans l’ordre d’arrivée et uniquement sur le stock
+      disponible. Ce contraste conduit à trois questions : quelles marques ont besoin du pilotage du carnet, comment construire
+      l’outil nécessaire et comment faire évoluer ses stratégies sans intégrations coûteuses répétées ? Les pratiques détaillées
+      restent à corroborer sur des cas opérationnels.'
     examples:
     - 'Pénurie à la saisie : les Marques Historiques refusent la commande ; Boardriders conserve la demande non couverte dans
       le [carnet](glossary:TER205).'
@@ -73754,8 +73756,8 @@ hotspot_catalog:
     resolution_options:
     - id: hs-008-variants
       title: Étendre le pilotage du carnet aux marques qui en ont besoin
-      principle: Proposer un socle commun de pilotage aux marques Beaumanoir dont les cas [B2B](glossary:TER195) le justifient, avec des stratégies
-        distinctes pour l’admission, les priorités et les affectations.
+      principle: Proposer un socle commun de pilotage aux marques Beaumanoir dont les cas [B2B](glossary:TER195) le justifient,
+        avec des stratégies distinctes pour l’admission, les priorités et les affectations.
       effect: Les marques concernées utilisent le carnet sans devoir adopter la politique commerciale de Boardriders.
       conditions:
       - Vérifier marque par marque la fréquence des pénuries, les commandes à maintenir et les réarbitrages utiles.
@@ -73781,35 +73783,43 @@ hotspot_catalog:
     problems:
     - id: hs-008-rules-problem
       title: Besoin de pilotage du carnet selon les marques
-      question: Les marques Beaumanoir qui vendent en [B2B](glossary:TER195) ont-elles besoin d’un pilotage du carnet comparable à Boardriders ?
-      analysis_ids: [hs-008-wholesale-rules]
-      option_ids: [hs-008-variants, hs-008-separate]
+      question: Les marques Beaumanoir qui vendent en [B2B](glossary:TER195) ont-elles besoin d’un pilotage du carnet comparable
+        à Boardriders ?
+      analysis_ids:
+      - hs-008-wholesale-rules
+      option_ids:
+      - hs-008-variants
+      - hs-008-separate
     - id: hs-008-tool-problem
       title: Construction de l’outil de gestion du carnet
       question: Comment construire l’outil de gestion du carnet de commandes ?
       analysis_summary: 'Le PDF distingue le moteur de décision de l’outil complet : données, stratégies, simulation, écrans,
         interventions et échanges. Des briques de calcul peuvent aider ; les règles métier et leur application restent à construire.'
-      document_ids: [DOC002]
+      document_ids:
+      - DOC002
       analysis_ids: []
       option_ids: []
     - id: hs-008-evolution-problem
       title: Adaptation continue de la stratégie
-      question: Comment faire évoluer la stratégie et l’optimisation sans nouveau cahier des charges ni intégration coûteuse à chaque changement ?
-      analysis_summary: 'Piste à éprouver : rendre les priorités et critères configurables, tester les changements sur des scénarios
-        avant application et réserver le développement aux règles qui ne peuvent être paramétrées. Le gain de coût et l’autonomie
-        métier ne sont pas démontrés.'
-      document_ids: [DOC002]
-      analysis_ids: [hs-008-future-supply]
+      question: Comment faire évoluer la stratégie et l’optimisation sans nouveau cahier des charges ni intégration coûteuse
+        à chaque changement ?
+      analysis_summary: 'Piste à éprouver : rendre les priorités et critères configurables, tester les changements sur des
+        scénarios avant application et réserver le développement aux règles qui ne peuvent être paramétrées. Le gain de coût
+        et l’autonomie métier ne sont pas démontrés.'
+      document_ids:
+      - DOC002
+      analysis_ids:
+      - hs-008-future-supply
       option_ids: []
     complexity:
       arbitration: L
       implementation: XL
-      rationale: 'Trois questions se cumulent : définir quelles marques ont besoin du carnet, construire l’outil et rendre ses
-        stratégies évolutives sans intégrations répétées. Il faut choisir les règles et les réaliser sans perdre les cas essentiels.
-        Les arrivages par vagues, les grosses commandes, les priorités évolutives et les liens protégés rendent les arbitrages
-        interdépendants. Dans le scénario de construction, réutiliser du code ouvert ne dispense pas de développer le cœur
-        métier, les simulations, les écrans et l’intégration. Scores L/XL conservés ; les enveloppes du PDF restent provisoires
-        et dépendent du périmètre retenu.'
+      rationale: 'Trois questions se cumulent : définir quelles marques ont besoin du carnet, construire l’outil et rendre
+        ses stratégies évolutives sans intégrations répétées. Il faut choisir les règles et les réaliser sans perdre les cas
+        essentiels. Les arrivages par vagues, les grosses commandes, les priorités évolutives et les liens protégés rendent
+        les arbitrages interdépendants. Dans le scénario de construction, réutiliser du code ouvert ne dispense pas de développer
+        le cœur métier, les simulations, les écrans et l’intégration. Scores L/XL conservés ; les enveloppes du PDF restent
+        provisoires et dépendent du périmètre retenu.'
       arbitration_rationale: Partager les priorités suppose un accord sur les clients à servir et sur les différences de gestion
         à conserver entre marques.
       implementation_rationale: Combiner priorités saisonnières, ressources présentes ou attendues et engagements protégés
@@ -73858,6 +73868,7 @@ hotspot_catalog:
     - U1067
     - U1070
     - U1071
+    - U1072
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -73874,9 +73885,9 @@ hotspot_catalog:
         Aucune option de convergence sélectionnée. U1019 distingue les décisions du carnet de leur pilotage ; les ancrages
         suivent ces responsabilités et les stratégies actives. U1030 valide la réécriture autour des écarts de gestion et
         de la complexité, avec PDF et PPTX distincts. Scores et options conservés ; ni convergence choisie ni budget ferme.
-        U1066 valide un titre concret et une ouverture centrée sur les commandes refusées ou conservées. U1071 distingue
-        trois problèmes et limite à deux les options du besoin de pilotage selon les marques ; la construction et l’évolution
-        de l’outil restent à instruire, sans solution retenue.'
+        U1066 valide un titre concret et une ouverture centrée sur les commandes refusées ou conservées. U1071 distingue trois
+        problèmes et limite à deux les options du besoin de pilotage selon les marques ; la construction et l’évolution de
+        l’outil restent à instruire, sans solution retenue.'
     market_view:
       finding: Microsoft documente la réservation au fil des commandes ou selon des priorités, sur stock présent ou commandé.
         SAP S/4HANA documente affectation, désaffectation et réaffectation avec tri des demandes et réceptions futures. Oracle
@@ -73942,7 +73953,8 @@ hotspot_catalog:
       - context_id: beaumanoir-historique
         business_need: Servir les commandes professionnelles sur le stock disponible aujourd’hui.
         system_coverage: not_assessed
-        handling: 'Pratique décrite dans les sources : contrôle du stock à la saisie, acceptation ou refus immédiat ; part
+        handling: 'Pratique décrite dans les sources : pas d’outil de gestion du carnet de commandes ; à l’engagement, premier
+          arrivé, premier servi et service limité au stock disponible. Une commande sans stock est refusée à la saisie ; part
           [Wholesale Commerce](glossary:TER193) annoncée de 10 %.'
         business_rules:
         - Premier arrivé, premier servi.
@@ -73950,18 +73962,21 @@ hotspot_catalog:
         - Refuser pour pénurie à la saisie plutôt que maintenir cette demande dans un carnet à réaffecter.
         source_refs:
         - U953
+        - U1072
         evidence_state: documented
         evidence_kind: user_report
-        limits: Fonctionnement décrit dans les sources, sans audit technique du SI. Période et dénominateur des 10 % à préciser
-          ; cas de couverture partielle à documenter.
+        limits: Fonctionnement rapporté, sans audit technique du SI. L’absence d’outil de gestion du carnet ne prouve pas
+          l’absence de toute fonction de commande. Période et dénominateur des 10 % à préciser ; cas de couverture partielle
+          à documenter.
       - context_id: boardriders
-        business_need: Servir les commandes professionnelles en arbitrant les ressources entre demandes encore révisables.
+        business_need: Piloter les commandes de vente du carnet, couvertes ou non, afin d’optimiser la promesse et les coûts.
         system_coverage: not_assessed
-        handling: 'Pratique décrite dans les sources : tentative initiale sur stock disponible, conservation des demandes
-          non couvertes et réexamen périodique des affectations par [AllocationRun](glossary:TER017) ; part [Wholesale Commerce](glossary:TER193)
-          annoncée de 60 %. [AllocationRun](glossary:TER017) est largement adapté aux besoins Boardriders ; les adaptations
-          actives restent à vérifier.'
+        handling: 'Pratique décrite dans les sources : pilotage de toutes les commandes de vente du carnet, couvertes ou non,
+          avec tentative initiale sur stock disponible et réexamen périodique des [affectations](glossary:TER017) par [AllocationRun](glossary:TER017)
+          ; part [Wholesale Commerce](glossary:TER193) annoncée de 60 %. [AllocationRun](glossary:TER017) est largement adapté
+          aux besoins Boardriders ; les adaptations actives restent à vérifier.'
         business_rules:
+        - Piloter les commandes couvertes et non couvertes du carnet pour optimiser promesse et coûts.
         - Maintenir la demande non couverte dans le carnet de commandes.
         - Réaffecter uniquement dans le périmètre des demandes sans engagement définitif et des ressources dont les liens
           peuvent être révisés.
@@ -73970,18 +73985,20 @@ hotspot_catalog:
         source_refs:
         - U942
         - U953
+        - U1072
         evidence_state: documented
         evidence_kind: user_report
         limits: Fonctionnement décrit dans les sources. Les statuts techniques SAP R/F ne suffisent pas à déterminer l’engagement
           client ; règles actives et point d’affermissement à vérifier. Période et dénominateur des 60 % à préciser.
-      comparison: 'Même besoin de servir les commandes de revendeurs, deux modes de gestion : décision immédiate sur stock
-        présent ou maintien des demandes non couvertes et réarbitrage du carnet. Ce sont des pratiques rapportées ; elles
-        ne prouvent pas l’absence d’une capacité technique dans un SI.'
-      convergence_question: Quelles marques Beaumanoir ont besoin du pilotage du [carnet de commandes](glossary:TER205),
-        et avec quelles variantes de règles ?
+      comparison: 'Même besoin de servir les commandes de revendeurs, deux modes de gestion rapportés : Boardriders pilote
+        l’ensemble de son carnet pour optimiser promesse et coûts ; les Marques Historiques appliquent à l’engagement le premier
+        arrivé, premier servi et la limite du stock présent, sans outil de gestion du carnet. Ces pratiques ne prouvent pas
+        l’absence de toute fonction technique de commande.'
+      convergence_question: Quelles marques Beaumanoir ont besoin du pilotage du [carnet de commandes](glossary:TER205), et
+        avec quelles variantes de règles ?
       business_effects:
-      - Un traitement limité au refus immédiat peut perdre la gestion des demandes non couvertes et des priorités évolutives nécessaires
-        à Boardriders.
+      - Un traitement limité au refus immédiat peut perdre la gestion des demandes non couvertes et des priorités évolutives
+        nécessaires à Boardriders.
       - Reprendre toutes les règles Boardriders peut imposer une complexité sans bénéfice aux Marques Historiques. La couverture
         des mêmes cas doit guider l’arbitrage.
       open_questions:
@@ -74008,6 +74025,7 @@ hotspot_catalog:
       - U1029
       - U1030
       - U1071
+      - U1072
       title: 'Écart métier : décider à la saisie ou travailler le carnet'
     - id: hs-008-future-supply
       subject_node_id: ba-order-backlog-management
@@ -74971,7 +74989,11 @@ hotspot_catalog:
       title: Mode d’échange avec Finance
       question: Comment transmettre les faits et leurs corrections à Finance, et quel rôle éventuel confier à SAP SD ?
       analysis_ids: []
-      option_ids: [hs-021-audit-1, hs-021-audit-2, hs-021-sd, hs-021-hybrid]
+      option_ids:
+      - hs-021-audit-1
+      - hs-021-audit-2
+      - hs-021-sd
+      - hs-021-hybrid
     complexity:
       arbitration: L
       implementation: L
@@ -76326,33 +76348,41 @@ hotspot_catalog:
     problems:
     - id: hs-032-product-choice
       title: Produit Retail cible
-      question: Faut-il construire un produit Retail pour GBM ou étendre Cegid Y2, après vérification des fonctions à reprendre ?
+      question: Faut-il construire un produit Retail pour GBM ou étendre Cegid Y2, après vérification des fonctions à reprendre
+        ?
       analysis_ids: []
-      option_ids: [hs-032-build-retail, hs-032-extend-y2]
+      option_ids:
+      - hs-032-build-retail
+      - hs-032-extend-y2
     - id: hs-032-store-sales-problem
       title: Vente et caisse en magasin
       question: Quel produit assurera la vente et la caisse GBM, et quels outils actuels resteront utilisés ?
-      analysis_ids: [hs-032-store-sales]
+      analysis_ids:
+      - hs-032-store-sales
       option_ids: []
     - id: hs-032-store-operations-problem
       title: Opérations et stock magasin
       question: Qui assurera les opérations, le stock cible et le réassort magasin, et que décidera FLOW ?
-      analysis_ids: [hs-032-store-operations]
+      analysis_ids:
+      - hs-032-store-operations
       option_ids: []
     - id: hs-032-retail-network-problem
       title: Réseau de magasins
       question: Quels référentiels et règles de réseau doivent converger, et où seront-ils tenus ?
-      analysis_ids: [hs-032-retail-network]
+      analysis_ids:
+      - hs-032-retail-network
       option_ids: []
     - id: hs-032-digital-commerce-problem
       title: Vente en ligne et parcours omnicanaux
       question: Quelles fonctions omnicanales d’UR doivent rester hors du Core FLOW, et dans quel produit ?
-      analysis_ids: [hs-032-digital-commerce]
+      analysis_ids:
+      - hs-032-digital-commerce
       option_ids: []
     - id: hs-032-customer-relationship-problem
       title: Relation client et fidélité Retail
       question: Qui portera les profils, la fidélité et les campagnes GBM après le retrait de Storeland et UR ?
-      analysis_ids: [hs-032-customer-relationship]
+      analysis_ids:
+      - hs-032-customer-relationship
       option_ids: []
     complexity:
       arbitration: XL
