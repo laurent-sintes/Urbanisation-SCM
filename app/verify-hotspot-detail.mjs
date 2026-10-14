@@ -202,7 +202,7 @@ try {
     .nth(1)
     .screenshot({ path: resolve(output, 'wholesale-tool-problem.png') });
   const visible = model.hotspot_catalog.hotspots.filter((item) => item.visible);
-  assert.equal(visible.length, 8);
+  assert.equal(visible.length, 9);
   for (const hotspot of visible.filter((item) => item.id !== 'HS-008')) {
     await page.goto(`${base}#/hotspots?version=${index.current_version}&hotspot=${hotspot.id}`);
     await detail.locator('.hotspot-problem').first().waitFor();

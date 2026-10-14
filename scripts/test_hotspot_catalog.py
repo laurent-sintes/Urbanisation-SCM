@@ -64,14 +64,17 @@ class HotspotCatalogTests(unittest.TestCase):
         self.assertEqual(severity_for('L', 'L'), 'XL')
         self.assertEqual(severity_for('unassessed', 'XL'), 'unassessed')
 
-    def test_retail_assessment_and_legacy_axis(self):
+    def test_visible_xl_assessments_and_legacy_axis(self):
         item = next(h for h in self.model['hotspot_catalog']['hotspots'] if h['id'] == 'HS-032')
         self.assertEqual((item['complexity']['arbitration'], item['complexity']['implementation'], item['severity']),
                          ('XL', 'XL', 'XL'))
+        references = next(h for h in self.model['hotspot_catalog']['hotspots'] if h['id'] == 'HS-034')
+        self.assertEqual((references['complexity']['arbitration'], references['complexity']['implementation'],
+                          references['severity']), ('M', 'XL', 'XL'))
         self.assertEqual(
             {hotspot['id'] for hotspot in self.model['hotspot_catalog']['hotspots']
              if hotspot.get('visible', True) and hotspot['severity'] == 'XL'},
-            {'HS-032'})
+            {'HS-032', 'HS-034'})
         legacy = copy.deepcopy(self.model)
         for hotspot in legacy['hotspot_catalog']['hotspots']:
             complexity = hotspot['complexity']
@@ -117,12 +120,13 @@ class HotspotCatalogTests(unittest.TestCase):
         from scripts.structured_io import read
         candidates = read(ROOT / 'modeles/backlog/hotspot-source-candidates-U958.yaml')
         hotspots = {item['id']: item for item in self.model['hotspot_catalog']['hotspots']}
-        self.assertEqual(len(hotspots), 29)
+        self.assertEqual(len(hotspots), 30)
         self.assertTrue(all(item['status'] == 'validated' for identifier, item in hotspots.items()
-                            if identifier not in {'HS-024', 'HS-032', 'HS-033'}))
+                            if identifier not in {'HS-024', 'HS-032', 'HS-033', 'HS-034'}))
         self.assertEqual(hotspots['HS-024']['status'], 'shared')
         self.assertEqual(hotspots['HS-033']['status'], 'shared')
         self.assertEqual(hotspots['HS-032']['status'], 'discovered')
+        self.assertEqual(hotspots['HS-034']['status'], 'discovered')
         self.assertTrue(all(row['hotspot_id'] in hotspots for row in candidates['integration_map']))
         self.assertEqual(hotspots['HS-018']['framing_impact']['category'], 'to_assess')
         self.assertEqual({item['id'] for item in hotspots.values() if item.get('framing_impact', {}).get('category') == 'usage'}, {'HS-017', 'HS-030'})
@@ -227,7 +231,7 @@ class HotspotCatalogTests(unittest.TestCase):
     def test_problem_questions_and_option_ownership(self):
         model = copy.deepcopy(self.model)
         visible = {item['id']: item for item in model['hotspot_catalog']['hotspots'] if item.get('visible', True)}
-        self.assertEqual(set(visible), {'HS-002', 'HS-011', 'HS-008', 'HS-020', 'HS-021', 'HS-024', 'HS-033', 'HS-032'})
+        self.assertEqual(set(visible), {'HS-002', 'HS-011', 'HS-008', 'HS-020', 'HS-021', 'HS-024', 'HS-033', 'HS-032', 'HS-034'})
         self.assertEqual({key: len(visible[key]['problems']) for key in ('HS-008', 'HS-021', 'HS-032')},
                          {'HS-008': 3, 'HS-021': 3, 'HS-032': 3})
         for item in visible.values():

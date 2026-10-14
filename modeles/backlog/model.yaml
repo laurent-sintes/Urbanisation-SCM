@@ -78015,6 +78015,176 @@ hotspot_catalog:
         applicatif et aux documentations éditeur.
       assessed_on: '2026-10-14'
     visible: true
+  - id: HS-034
+    title: Autorité et intégration des référentiels Supply issus de plusieurs sources
+    kind: scope
+    location:
+      node_ids:
+      - business-references
+      - system-design-development
+      - system-enterprise-management-control
+    problem: 'Les [Operational References](glossary:TER123) doivent combiner des informations sur les entités,
+      marques et partenaires du groupe, les produits et leurs lignes, et des données propres à Supply. Certaines données
+      du groupe alimentent aussi [Design & Development](glossary:TER105). Laurent signale des problèmes
+      déjà constatés dans les SI existants lors de l’intégration de plusieurs sources et du désalignement des données.
+      L’autorité sur chaque donnée, les règles de rapprochement et la gestion des écarts restent à établir ; une source de
+      vérité locale Supply ne remplace pas les autorités d’entreprise.'
+    examples:
+    - 'Cas à documenter : une marque ou une filiale change dans la source du groupe alors que sa représentation dans
+      Design & Development et dans Supply n’est pas alignée. Relever un cas réel, ses dates, ses identifiants et ses effets.'
+    - 'Cas à documenter : une ligne de produits ou un produit reçu depuis Design & Development doit être relié à une entité
+      ou un partenaire déjà connu de Supply. Vérifier la source de chaque attribut et le traitement d’une correspondance
+      manquante ou contradictoire.'
+    resolution_options:
+    - id: hs-034-authority-by-data
+      title: Désigner l’autorité par donnée et par usage
+      principle: 'Établir une matrice des objets et attributs : [Enterprise Management & Control](glossary:TER107)
+        serait candidat pour les données juridiques du groupe, [Design & Development](glossary:TER105)
+        pour les données de conception produit, et [Supply Chain Orchestration](model:supply-chain-orchestration)
+        pour les données opérationnelles dont elle a la maîtrise. Préciser les données partagées et les exceptions avant
+        d’attribuer une autorité.'
+      conditions:
+      - Séparer personne morale, personne physique, marque, enseigne, filiale et partenaire ; leur source peut différer.
+      - Distinguer données de référence Supply et mesures de performance Supply, qui ne constituent pas nécessairement
+        des données maîtres.
+      tradeoffs:
+      - Clarifie les corrections à faire à la source, mais exige une gouvernance par objet et parfois par attribut.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-034-supply-mdm
+      title: Consolider les données maîtres dans Supply
+      principle: 'Étudier un dispositif de gestion des données maîtres intégré à [Supply Chain Orchestration](model:supply-chain-orchestration)
+        pour rapprocher les apports, contrôler identités, versions et validité, signaler les écarts et publier la référence
+        locale utilisable. Les corrections des maîtres d’entreprise restent sous l’autorité de leurs sources.'
+      conditions:
+      - Vérifier les fonctions déjà couvertes par [Reference Ingestion](glossary:TER050) et [Operational References](glossary:TER123)
+        avant de choisir une plateforme ou un composant supplémentaire.
+      - Tester des cas réels de désalignement, les règles de rapprochement, la reprise des erreurs et les responsabilités
+        de correction en amont.
+      tradeoffs:
+      - Concentre le contrôle de la vue Supply, mais ajoute des règles et une exploitation à dimensionner ; ne résout
+        pas seule la qualité des sources.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-034-source-contracts
+      title: Intégrer par contrats de source et contrôles Supply
+      principle: 'Spécifier identité, versions, validité et corrections dans chaque échange source ; [Reference Ingestion](glossary:TER050)
+        contrôle les apports et [Operational References](glossary:TER123) tient la vue locale utilisable, sans
+        imposer de dispositif de consolidation distinct.'
+      conditions:
+      - Prouver que les contrats et contrôles couvrent les croisements entre sources et les écarts déjà observés.
+      tradeoffs:
+      - Réutilise les responsabilités du modèle actuel, mais répartit le rapprochement et sa maintenance entre plusieurs
+        contrats.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    problems:
+    - id: hs-034-authority
+      title: Source de vérité de chaque donnée
+      question: Qui crée, corrige et valide chaque donnée juridique, produit ou opérationnelle utilisée par Supply, notamment
+        lorsqu’une donnée du groupe traverse aussi Design & Development ?
+      analysis_summary: La répartition proposée par Laurent est une hypothèse de départ. La source de vérité locale de
+        Supply porte sa vue applicable, sans transférer la maîtrise des données d’entreprise. La granularité objet ou attribut
+        et le statut des mesures de performance restent à qualifier.
+      analysis_ids: []
+      option_ids:
+      - hs-034-authority-by-data
+    - id: hs-034-integration
+      title: Alignement des apports de plusieurs sources
+      question: Comment rapprocher les contributions, détecter les écarts et rendre une référence Supply applicable sans
+        masquer les contradictions entre sources ?
+      analysis_summary: 'Laurent rapporte des problèmes de désalignement déjà constatés dans les SI existants ; les cas,
+        causes et effets précis doivent être recueillis. Une consolidation intégrée à Supply est une option, à comparer
+        à des contrats de source et contrôles Supply.'
+      analysis_ids: []
+      option_ids:
+      - hs-034-supply-mdm
+      - hs-034-source-contracts
+    complexity:
+      arbitration: M
+      implementation: XL
+      rationale: 'Arbitrage M et implémentation XL proposés par Laurent. La difficulté XL décrit les intégrations de plusieurs
+        sources et les désalignements qu’il rapporte comme déjà constatés dans les SI existants ; elle ne dépend pas du choix
+        d’une solution de gestion des données maîtres. La matrice M/XL donne XL.'
+      arbitration_rationale: Plusieurs responsables de données doivent préciser les sources et les règles compatibles ;
+        les conflits d’autorité exacts restent à relever.
+      implementation_rationale: Les identités, versions et corrections traversent plusieurs sources et les SI actuels présentent,
+        selon Laurent, des désalignements déjà constatés. Leur cause, leur fréquence et leur coût restent à documenter.
+    severity: XL
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Les responsables des données du groupe, des produits et de Supply doivent confirmer les autorités
+      par objet ou attribut et le mode de résolution des écarts ; instance à préciser.
+    status: discovered
+    source_refs:
+    - U1078
+    origin:
+      repository: Contribution de Laurent
+      path: connaissance/01-contributions-utilisateur.md
+      id: U1078
+      source_id: U1078
+      evidence_limit: Les désalignements sont rapportés par Laurent sans cas détaillé ni diagnostic technique dans cette
+        contribution ; l’attribution des autorités et le dispositif intégré sont des propositions à instruire.
+    review:
+      state: proposed
+      note: Point chaud créé à la demande de Laurent. La criticité mesure la complexité selon la matrice courante ; aucun
+        arbitrage de solution ni accord sur les autorités détaillées n’est enregistré.
+    market_view:
+      finding: Microsoft distingue les données de conception détenues par une société d’ingénierie et les données logistiques
+        entretenues localement par les sociétés opérationnelles ; son intégration de données distingue source, zone de préparation
+        et cible. SAP Master Data Governance sur S/4HANA documente produits et partenaires, consolidation et choix de gouvernance
+        avec ou sans pilotage central. Ces approches confirment la nécessité de préciser autorités et contrôles, sans imposer
+        l’emplacement du dispositif Supply.
+      flow_assessment: 'Le modèle FLOW sépare déjà la réception des apports par [Reference Ingestion](glossary:TER050)
+        et la référence locale utilisable portée par [Operational References](glossary:TER123). Le hotspot porte
+        sur les autorités externes précises, les écarts entre sources et le choix éventuel d’une consolidation intégrée ;
+        il ne duplique pas HS-014, limité aux états complets et changements du produit.'
+      limits: Les documentations éditeur montrent des mécanismes possibles, pas les sources de vérité, les problèmes installés
+        ni la solution adaptée à Beaumanoir. Deux éditeurs ne prouvent pas un consensus. Les cas de désalignement rapportés
+        doivent être corroborés pour dimensionner l’implémentation.
+      sources:
+      - publisher: Microsoft Dynamics 365 Supply Chain Management
+        title: Engineering companies and data ownership rules
+        url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/engineering-org-data-ownership-rules
+        relevance: Sépare autorité sur les données de conception produit et données logistiques locales dans les sociétés
+          opérationnelles ; ne désigne pas les autorités du groupe Beaumanoir.
+      - publisher: Microsoft Dynamics 365 Finance & Operations
+        title: Data management and integration by using data entities overview
+        url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/data-entities/data-management-integration-data-entity
+        relevance: Décrit source, zone intermédiaire, transformations et validations lors de l’intégration ; ne prescrit
+          pas une plateforme Supply autonome.
+      - publisher: SAP Master Data Governance on SAP S/4HANA
+        title: Introducing Common Features of Consolidation and Mass Processing
+        url: https://learning.sap.com/courses/sap-master-data-governance-on-sap-s-4hana/introducing-common-features-of-consolidation-and-mass-processing
+        relevance: Couvre produits et partenaires, consolidation et choix de gouvernance avec ou sans gouvernance centrale ;
+          ne détermine pas la frontière FLOW.
+    resolution:
+      stage: to_explore
+      summary: Définir les autorités des données et le traitement des écarts multi-sources ; aucune option n’est retenue.
+      credible_option_ids: []
+      credibility_note: ''
+      blocked_reason: ''
+      next_step: Recueillir des cas réels de désalignement, puis dresser une matrice objet ou attribut, source d’autorité,
+        consommateurs, versions, contrôles, propriétaire de correction et effet métier. Tester les deux modes d’intégration
+        sur ces cas avant de dimensionner une solution.
+      assessment_source: U1078 — apport de Laurent et comparaison de documentations Microsoft Dynamics et SAP S/4HANA ;
+        cas installés et solutions à qualifier.
+      assessed_on: '2026-10-14'
+    framing_impact:
+      category: structuring
+      targets:
+      - business_model
+      - core_system
+      rationale: Les autorités des données et les contrôles de consolidation déterminent les responsabilités aux frontières
+        du Core et ses contrats d’intégration.
+      follow_up: framing
+      evidence_state: hypothesis
+      source_refs:
+      - U1078
+      scopes:
+      - model
+      - transition
+    visible: true
   criticality_policy:
     id: matrix-v1
     levels:

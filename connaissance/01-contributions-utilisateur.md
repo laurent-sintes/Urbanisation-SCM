@@ -25250,3 +25250,36 @@ Pour atteindre ce résultat avec la matrice existante, Codex a présenté deux v
 > Réestimer les autres hotspots
 
 Portée : conserver la matrice et réestimer les huit hotspots visibles pour que HS-032 soit le seul de criticité XL. HS-032 passe à XL/XL ; les sept autres gardent un arbitrage inférieur à XL et une criticité inférieure à XL. CBS reste M/M car l'autorité sur Purchase Order entre CBS et FLOW n'est pas un accord local S sur les éléments connus. Le S de Sarenza est conditionnel ; tout transfert de responsabilité du service client impose un réexamen. Les notes relatives du carnet Wholesale, Négoces et Finance n'effacent pas leur difficulté de réalisation et doivent être réexaminées si des contraintes majeures apparaissent. Aucune Option de résolution n'est retenue et aucune publication ou opération Git n'est demandée.
+
+
+## U1078
+
+Date : 2026-10-14. Source : Laurent, nouveau point chaud sur les référentiels Supply et leur intégration.
+
+Verbatim :
+
+> Je souhaite ajouter un hotspot.
+> Sujet : Dans les référentiels de la supply chain orchestration, une partie de la structure provient de la structure juridique du groupe : enseigne / marque / filiales / partenaires / personne morale et physique etc. Une autre partie dépend du design et du développement : les produits, les lignes produit etc. Une autre partie est portée (données maitre) par la supply chain. Pourtant les référentiels supply doivent agréger ces données et il peut arriver des problèmes d'intégration car les sources juridiques alimentent aussi design et développement.
+>
+> Problème 1 : est-on au clair sur la source de vérité des données ?
+> Proposition : juridique = système Enterprise Management & Control, Produit = Design & Development, performance supply = Supply chain Orchestration
+>
+> Problème 2 : comment intégrer dans la supply chain ces données multi sources sans erreur ?
+> Proposition : principe de solution MDM intégrée au domaine Supply chain Orchestration
+>
+> arbitrage : M
+> Implémentation : XL
+>
+> Avant création du Hotspot, qu'en penses-tu ? Où le localiser ?
+
+Précision de Laurent sur la complexité :
+
+> Etrange d'avoir une criticité aussi haute alors que l'arbitrage est M ?
+
+> Pas d'accord, XL décrit les pbs d'intégration multisource et de désalignement des données qui sont déjà constatés dans les SI existants
+
+Demande de mise en œuvre :
+
+> ok, pret à produire le hotspot ?
+
+Portée : créer un point chaud dans le backlog sur l'autorité des données et l'intégration des référentiels de Supply Chain Orchestration, avec arbitrage M et implémentation XL. Laurent rapporte des problèmes déjà constatés dans les SI existants, sans fournir ici d'exemples ou de diagnostic technique précis. Les répartitions d'autorité et la gestion des données maîtres intégrée à Supply sont des propositions à instruire, non des décisions acquises. La matrice courante donne une criticité XL ; cette nouvelle contribution conduit à réexaminer l'objectif antérieur de HS-032 seul point chaud visible XL. Aucune publication ni opération Git n'est demandée.

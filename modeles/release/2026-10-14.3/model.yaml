@@ -1,6 +1,6 @@
 schema_version: 1.0.0
 model_id: flow-urbanism
-version: 2026-10-14.2
+version: 2026-10-14.3
 as_of: '2026-10-14'
 space: release
 display_policy: typed-tree-v1
@@ -15817,6 +15817,173 @@ hotspot_catalog:
       assessment_source: U1048–U1055 et U1076 — hypothèses utilisateur confrontées au panorama As Is, au catalogue applicatif
         et aux documentations éditeur.
       assessed_on: '2026-10-14'
+    visible: true
+  - id: HS-034
+    title: Autorité et intégration des référentiels Supply issus de plusieurs sources
+    kind: scope
+    location:
+      node_ids:
+      - business-references
+      - system-design-development
+      - system-enterprise-management-control
+    problem: Les [Operational References](glossary:TER123) doivent combiner des informations sur les entités, marques et partenaires
+      du groupe, les produits et leurs lignes, et des données propres à Supply. Certaines données du groupe alimentent aussi
+      [Design & Development](glossary:TER105). Laurent signale des problèmes déjà constatés dans les SI existants lors de
+      l’intégration de plusieurs sources et du désalignement des données. L’autorité sur chaque donnée, les règles de rapprochement
+      et la gestion des écarts restent à établir ; une source de vérité locale Supply ne remplace pas les autorités d’entreprise.
+    examples:
+    - 'Cas à documenter : une marque ou une filiale change dans la source du groupe alors que sa représentation dans Design
+      & Development et dans Supply n’est pas alignée. Relever un cas réel, ses dates, ses identifiants et ses effets.'
+    - 'Cas à documenter : une ligne de produits ou un produit reçu depuis Design & Development doit être relié à une entité
+      ou un partenaire déjà connu de Supply. Vérifier la source de chaque attribut et le traitement d’une correspondance manquante
+      ou contradictoire.'
+    resolution_options:
+    - id: hs-034-authority-by-data
+      title: Désigner l’autorité par donnée et par usage
+      principle: 'Établir une matrice des objets et attributs : [Enterprise Management & Control](glossary:TER107) serait
+        candidat pour les données juridiques du groupe, [Design & Development](glossary:TER105) pour les données de conception
+        produit, et [Supply Chain Orchestration](model:supply-chain-orchestration) pour les données opérationnelles dont elle
+        a la maîtrise. Préciser les données partagées et les exceptions avant d’attribuer une autorité.'
+      conditions:
+      - Séparer personne morale, personne physique, marque, enseigne, filiale et partenaire ; leur source peut différer.
+      - Distinguer données de référence Supply et mesures de performance Supply, qui ne constituent pas nécessairement des
+        données maîtres.
+      tradeoffs:
+      - Clarifie les corrections à faire à la source, mais exige une gouvernance par objet et parfois par attribut.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-034-supply-mdm
+      title: Consolider les données maîtres dans Supply
+      principle: Étudier un dispositif de gestion des données maîtres intégré à [Supply Chain Orchestration](model:supply-chain-orchestration)
+        pour rapprocher les apports, contrôler identités, versions et validité, signaler les écarts et publier la référence
+        locale utilisable. Les corrections des maîtres d’entreprise restent sous l’autorité de leurs sources.
+      conditions:
+      - Vérifier les fonctions déjà couvertes par [Reference Ingestion](glossary:TER050) et [Operational References](glossary:TER123)
+        avant de choisir une plateforme ou un composant supplémentaire.
+      - Tester des cas réels de désalignement, les règles de rapprochement, la reprise des erreurs et les responsabilités
+        de correction en amont.
+      tradeoffs:
+      - Concentre le contrôle de la vue Supply, mais ajoute des règles et une exploitation à dimensionner ; ne résout pas
+        seule la qualité des sources.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-034-source-contracts
+      title: Intégrer par contrats de source et contrôles Supply
+      principle: Spécifier identité, versions, validité et corrections dans chaque échange source ; [Reference Ingestion](glossary:TER050)
+        contrôle les apports et [Operational References](glossary:TER123) tient la vue locale utilisable, sans imposer de
+        dispositif de consolidation distinct.
+      conditions:
+      - Prouver que les contrats et contrôles couvrent les croisements entre sources et les écarts déjà observés.
+      tradeoffs:
+      - Réutilise les responsabilités du modèle actuel, mais répartit le rapprochement et sa maintenance entre plusieurs contrats.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    problems:
+    - id: hs-034-authority
+      title: Source de vérité de chaque donnée
+      question: Qui crée, corrige et valide chaque donnée juridique, produit ou opérationnelle utilisée par Supply, notamment
+        lorsqu’une donnée du groupe traverse aussi Design & Development ?
+      analysis_summary: La répartition proposée par Laurent est une hypothèse de départ. La source de vérité locale de Supply
+        porte sa vue applicable, sans transférer la maîtrise des données d’entreprise. La granularité objet ou attribut et
+        le statut des mesures de performance restent à qualifier.
+      analysis_ids: []
+      option_ids:
+      - hs-034-authority-by-data
+    - id: hs-034-integration
+      title: Alignement des apports de plusieurs sources
+      question: Comment rapprocher les contributions, détecter les écarts et rendre une référence Supply applicable sans masquer
+        les contradictions entre sources ?
+      analysis_summary: Laurent rapporte des problèmes de désalignement déjà constatés dans les SI existants ; les cas, causes
+        et effets précis doivent être recueillis. Une consolidation intégrée à Supply est une option, à comparer à des contrats
+        de source et contrôles Supply.
+      analysis_ids: []
+      option_ids:
+      - hs-034-supply-mdm
+      - hs-034-source-contracts
+    complexity:
+      arbitration: M
+      implementation: XL
+      rationale: Arbitrage M et implémentation XL proposés par Laurent. La difficulté XL décrit les intégrations de plusieurs
+        sources et les désalignements qu’il rapporte comme déjà constatés dans les SI existants ; elle ne dépend pas du choix
+        d’une solution de gestion des données maîtres. La matrice M/XL donne XL.
+      arbitration_rationale: Plusieurs responsables de données doivent préciser les sources et les règles compatibles ; les
+        conflits d’autorité exacts restent à relever.
+      implementation_rationale: Les identités, versions et corrections traversent plusieurs sources et les SI actuels présentent,
+        selon Laurent, des désalignements déjà constatés. Leur cause, leur fréquence et leur coût restent à documenter.
+    severity: XL
+    severity_policy: matrix-v1
+    arbitration_level: to_confirm
+    arbitration_note: Les responsables des données du groupe, des produits et de Supply doivent confirmer les autorités par
+      objet ou attribut et le mode de résolution des écarts ; instance à préciser.
+    status: discovered
+    source_refs:
+    - U1078
+    origin:
+      repository: Contribution de Laurent
+      path: connaissance/01-contributions-utilisateur.md
+      id: U1078
+      source_id: U1078
+      evidence_limit: Les désalignements sont rapportés par Laurent sans cas détaillé ni diagnostic technique dans cette contribution
+        ; l’attribution des autorités et le dispositif intégré sont des propositions à instruire.
+    review:
+      state: proposed
+      note: Point chaud créé à la demande de Laurent. La criticité mesure la complexité selon la matrice courante ; aucun
+        arbitrage de solution ni accord sur les autorités détaillées n’est enregistré.
+    market_view:
+      finding: Microsoft distingue les données de conception détenues par une société d’ingénierie et les données logistiques
+        entretenues localement par les sociétés opérationnelles ; son intégration de données distingue source, zone de préparation
+        et cible. SAP Master Data Governance sur S/4HANA documente produits et partenaires, consolidation et choix de gouvernance
+        avec ou sans pilotage central. Ces approches confirment la nécessité de préciser autorités et contrôles, sans imposer
+        l’emplacement du dispositif Supply.
+      flow_assessment: Le modèle FLOW sépare déjà la réception des apports par [Reference Ingestion](glossary:TER050) et la
+        référence locale utilisable portée par [Operational References](glossary:TER123). Le hotspot porte sur les autorités
+        externes précises, les écarts entre sources et le choix éventuel d’une consolidation intégrée ; il ne duplique pas
+        HS-014, limité aux états complets et changements du produit.
+      limits: Les documentations éditeur montrent des mécanismes possibles, pas les sources de vérité, les problèmes installés
+        ni la solution adaptée à Beaumanoir. Deux éditeurs ne prouvent pas un consensus. Les cas de désalignement rapportés
+        doivent être corroborés pour dimensionner l’implémentation.
+      sources:
+      - publisher: Microsoft Dynamics 365 Supply Chain Management
+        title: Engineering companies and data ownership rules
+        url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/engineering-org-data-ownership-rules
+        relevance: Sépare autorité sur les données de conception produit et données logistiques locales dans les sociétés
+          opérationnelles ; ne désigne pas les autorités du groupe Beaumanoir.
+      - publisher: Microsoft Dynamics 365 Finance & Operations
+        title: Data management and integration by using data entities overview
+        url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/data-entities/data-management-integration-data-entity
+        relevance: Décrit source, zone intermédiaire, transformations et validations lors de l’intégration ; ne prescrit pas
+          une plateforme Supply autonome.
+      - publisher: SAP Master Data Governance on SAP S/4HANA
+        title: Introducing Common Features of Consolidation and Mass Processing
+        url: https://learning.sap.com/courses/sap-master-data-governance-on-sap-s-4hana/introducing-common-features-of-consolidation-and-mass-processing
+        relevance: Couvre produits et partenaires, consolidation et choix de gouvernance avec ou sans gouvernance centrale
+          ; ne détermine pas la frontière FLOW.
+    resolution:
+      stage: to_explore
+      summary: Définir les autorités des données et le traitement des écarts multi-sources ; aucune option n’est retenue.
+      credible_option_ids: []
+      credibility_note: ''
+      blocked_reason: ''
+      next_step: Recueillir des cas réels de désalignement, puis dresser une matrice objet ou attribut, source d’autorité,
+        consommateurs, versions, contrôles, propriétaire de correction et effet métier. Tester les deux modes d’intégration
+        sur ces cas avant de dimensionner une solution.
+      assessment_source: U1078 — apport de Laurent et comparaison de documentations Microsoft Dynamics et SAP S/4HANA ; cas
+        installés et solutions à qualifier.
+      assessed_on: '2026-10-14'
+    framing_impact:
+      category: structuring
+      targets:
+      - business_model
+      - core_system
+      rationale: Les autorités des données et les contrôles de consolidation déterminent les responsabilités aux frontières
+        du Core et ses contrats d’intégration.
+      follow_up: framing
+      evidence_state: hypothesis
+      source_refs:
+      - U1078
+      scopes:
+      - model
+      - transition
     visible: true
   criticality_policy:
     id: matrix-v1
@@ -57445,7 +57612,7 @@ last_modified: '2026-10-13T22:29:04.426390Z'
 release_kind: published_snapshot
 publication:
   source_refs:
-  - U1077
+  - U1078
   note: Publication complète demandée par Laurent ; publier ne vaut pas valider.
 nodes:
 - id: beaumanoir-target-universe
@@ -57655,14 +57822,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1f1e0839292490d6f4827ba8.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1a32000c0d28b85ecbcd8c8a.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Niveau, composition et frontières du lot U975 ; accords
       historiques inchangés préservés. Proposé : Textes de mise en œuvre et exemples nouveaux ; comparaisons non certifiées
       globalement. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 2557d71ba1f58c754cfe1eb7bad668b743986e5f294e6063d541228e595cf1ab
   adoption_ids:
-  - ADOPT-REASSESS-1a32000c0d28b85ecbcd8c8a
+  - ADOPT-REASSESS-f1848a2307d56fe99e2ebbd8
   approved_fields:
   - name
   proposed_fields:
@@ -94810,13 +94977,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3cf6ddf263e9d223d9d9ace5.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-48ab8e18dc9c2e9853a062e9.
       Note antérieure, qui ne qualifie pas cette révision : « U996 adopte le lot complet de responsabilités, noms et rattachements
       CMP317/CMP318. Rédaction détaillée, exemples et correspondances restent proposés ; aucune réalisation installée. »'
   last_modified: '2026-10-12T17:34:18.071924Z'
   content_sha256: eb78531be9e38d251ddd2cc7cb96306efc1c18cf1ab2646d5e962ff1a8805f3f
   adoption_ids:
-  - ADOPT-REASSESS-48ab8e18dc9c2e9853a062e9
+  - ADOPT-REASSESS-80558343ab5860fba3b9d38a
   approved_fields:
   - modeling_depth
   proposed_fields:
@@ -100173,13 +100340,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8122ec416c5c9041fa468062.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1845f836d821015cf012afa8.
       Note antérieure, qui ne qualifie pas cette révision : « Application U862/U863 ; pas de réalisation logicielle déduite.
       »'
   last_modified: '2026-10-13T09:50:50.476959Z'
   content_sha256: 97689858a52c29e21ae080a9e86f93ae564e01a9252e8213af953341648af7c1
   adoption_ids:
-  - ADOPT-REASSESS-1845f836d821015cf012afa8
+  - ADOPT-REASSESS-f224b2a4468887cc02c5f530
   approved_fields:
   - market_gaps
   proposed_fields:
@@ -103644,14 +103811,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-864dd8476850d1f95b871a77.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e37b14ea9434bcaa01e788e6.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: ecdb4cd71f5758b1eba4e5a1ab37dd1bfe67e1df1bf8f038890ca9d2ce3ecea4
   adoption_ids:
-  - ADOPT-REASSESS-e37b14ea9434bcaa01e788e6
+  - ADOPT-REASSESS-6233f5debd3effc1367cb59e
   approved_fields:
   - name
   - scope
@@ -103745,14 +103912,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-40f76e3bfd4df7b7ec2b0134.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e6c4ea1ab34fc80b6278f243.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 9fc8da9ba37e1d24766799065f7ae2c824c3aafec766c1b927ff0650d7e0fd26
   adoption_ids:
-  - ADOPT-REASSESS-e6c4ea1ab34fc80b6278f243
+  - ADOPT-REASSESS-02c8dca606bd24789c2437b5
   approved_fields:
   - name
   proposed_fields:
@@ -103845,14 +104012,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c0e8897a835b9ffca8ffdffe.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-190224ddca8d9ffda1180339.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T17:01:49.417511Z'
   content_sha256: ade450b4a19bdb6319c16c871da43b61f721e26a8a1696c1e1ba3eb1afb7626a
   adoption_ids:
-  - ADOPT-REASSESS-190224ddca8d9ffda1180339
+  - ADOPT-REASSESS-984f3b2aacb0f25d120ca075
   approved_fields:
   - name
   proposed_fields:
@@ -103942,14 +104109,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6b90011d7de8722ad481272b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d21c13baa76453063f60f9e6.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 84872a49b2a31ba0bf31b042872c71ddb55e0446eb5a8a1eec53fc640c84a230
   adoption_ids:
-  - ADOPT-REASSESS-d21c13baa76453063f60f9e6
+  - ADOPT-REASSESS-55f8ff55a9f5ad33deba009c
   approved_fields:
   - name
   proposed_fields:
@@ -104042,14 +104209,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5b25d38ebabf0a26ee870080.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e24ed2521e9c87ead5d94a25.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 681a34a75400bb8b25beb93727c5d096ed424d37c1863f081ac6366f5ffd8e59
   adoption_ids:
-  - ADOPT-REASSESS-e24ed2521e9c87ead5d94a25
+  - ADOPT-REASSESS-95c3b295839a99bbc756f2ea
   approved_fields:
   - name
   - scope
@@ -104142,14 +104309,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8e58cd8b6ca02d92335c9f87.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2a66846745aa35e92ddb4560.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 6358c5f7751a23604a9d9f40416c82f6382aca1376a3b73af44f7df202b53f0f
   adoption_ids:
-  - ADOPT-REASSESS-2a66846745aa35e92ddb4560
+  - ADOPT-REASSESS-25953116203632c151895a14
   approved_fields:
   - name
   proposed_fields:
@@ -104243,14 +104410,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-72769e7249fc1f0753dbbe82.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-befdeb04a955307c8c33c606.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: ae689e899cf49ad7fecb3c870cb27d7b2f6ba9cb3c8b5753463c675aa7f3c0ab
   adoption_ids:
-  - ADOPT-REASSESS-befdeb04a955307c8c33c606
+  - ADOPT-REASSESS-858a4bc73b307090a2119984
   approved_fields:
   - name
   proposed_fields:
@@ -104311,15 +104478,15 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0cb21fc1f001a61f54895301,
-      ADOPT-REASSESS-4d000e2c040799d24217346b. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5c72775a7175aa057b62fef7,
+      ADOPT-REASSESS-c23056d0988f596400e69401. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T09:50:50.476959Z'
   content_sha256: a665e8ba389b8c2cccf26586f772959b532844743dd2505ad85a27fab93a7bbf
   adoption_ids:
-  - ADOPT-REASSESS-5c72775a7175aa057b62fef7
-  - ADOPT-REASSESS-c23056d0988f596400e69401
+  - ADOPT-REASSESS-50e8faae1b62a5b91dea2a14
+  - ADOPT-REASSESS-3a57e1da1386b4911f645169
   approved_fields:
   - market_gaps
   - name
@@ -104439,14 +104606,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8a193a3d45c7a341e0e78917.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-55f95c02d7ac8fdcf5d17f64.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: a70c8205103c1ce37f17a0812b6d5fbb7c41f020d02096892a523b8ffbac1e14
   adoption_ids:
-  - ADOPT-REASSESS-55f95c02d7ac8fdcf5d17f64
+  - ADOPT-REASSESS-b08d1686b5c78b0dd71a4818
   approved_fields:
   - name
   - scope
@@ -104539,14 +104706,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-19402039c84012b0772099c1.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-aa4897ce26712645210eb0f8.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 9cbdda80ecacd48567025cfd721d827e0d379f8e5e8ce0876fb765f0bd459daf
   adoption_ids:
-  - ADOPT-REASSESS-aa4897ce26712645210eb0f8
+  - ADOPT-REASSESS-934134e2da5982aeff106879
   approved_fields:
   - name
   proposed_fields:
@@ -104638,14 +104805,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e9f526a61b1f2a8dcef4c94b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4ba24cbee732ce6295cd4cae.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T17:01:49.417511Z'
   content_sha256: 70fcd387042e7b7a6d9228654d5dc1ab17cb3f79bd2324ee243674794cc6cf88
   adoption_ids:
-  - ADOPT-REASSESS-4ba24cbee732ce6295cd4cae
+  - ADOPT-REASSESS-0cb411b0ef2c28f1fe5c3ff1
   approved_fields:
   - name
   proposed_fields:
@@ -104764,14 +104931,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-da0f7db1b0054a81d2d55af4.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c18c58338fd2641f609c02cb.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 41f4e086ca1a139908c361f46489d864f981bf361bc83ee9ddb0ec85908cebe7
   adoption_ids:
-  - ADOPT-REASSESS-c18c58338fd2641f609c02cb
+  - ADOPT-REASSESS-ddde3399fbcf041a96b4a5c9
   approved_fields:
   - name
   proposed_fields:
@@ -105163,14 +105330,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-57bd5c16801df065a145c54e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2be0f8610e4f3dc7e7d5ac68.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: b4ceca17eb1fb84ad5456a7beed8122905783a9cbb7700dc142aee20b326ac14
   adoption_ids:
-  - ADOPT-REASSESS-2be0f8610e4f3dc7e7d5ac68
+  - ADOPT-REASSESS-165f48547fc25dea509ae4a2
   approved_fields:
   - name
   - scope
@@ -105232,15 +105399,15 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6b43f7935d811e702ae38bbd,
-      ADOPT-REASSESS-e461e4f1f98247eb369099e3. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e9741149aa1c5cc3b0bd9f4e,
+      ADOPT-REASSESS-4f6cfa44c6c4c302ae6c77df. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T09:50:50.476959Z'
   content_sha256: 93fbcbae35238c5903d89bdf117825deda8a6879f70532eceab4ce9859f3e06f
   adoption_ids:
-  - ADOPT-REASSESS-e9741149aa1c5cc3b0bd9f4e
-  - ADOPT-REASSESS-4f6cfa44c6c4c302ae6c77df
+  - ADOPT-REASSESS-e4d71c32562492cddafca568
+  - ADOPT-REASSESS-021c3353e6e1e638b4c21430
   approved_fields:
   - market_gaps
   - name
@@ -105331,14 +105498,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c93ad6cb5dcea8aa1753c1b8.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cd1e7b06d835d3b46e474be2.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 78f049fa438a368e1e02efaf6b8b7a6cff67f091280805bd2366a3ee774b3d24
   adoption_ids:
-  - ADOPT-REASSESS-cd1e7b06d835d3b46e474be2
+  - ADOPT-REASSESS-229e217afbc29c8747939206
   approved_fields:
   - name
   proposed_fields:
@@ -105429,14 +105596,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6c39372c32c43b4ef7781deb.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c214ff5deee1ba18f83f2c15.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 369ecf8e9b30533f47492c5a2cc4afaba7f2bc4f8c3ae360663cd40cab2e0981
   adoption_ids:
-  - ADOPT-REASSESS-c214ff5deee1ba18f83f2c15
+  - ADOPT-REASSESS-dc647d69eb84603415b5cd92
   approved_fields:
   - name
   proposed_fields:
@@ -105557,13 +105724,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-90ef18ec8ceaa60ce3c22808.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fa60bfe396d16e7a7b356c04.
       Note antérieure, qui ne qualifie pas cette révision : « U996 adopte le lot complet de responsabilités, noms et rattachements
       CMP317/CMP318. Rédaction détaillée, exemples et correspondances restent proposés ; aucune réalisation installée. »'
   last_modified: '2026-10-12T17:34:18.071924Z'
   content_sha256: 18b4a22205750a88d4ac0ca6c784150ad166503182656ca411adf08182878efb
   adoption_ids:
-  - ADOPT-REASSESS-fa60bfe396d16e7a7b356c04
+  - ADOPT-REASSESS-2ef0ea767e455eb60ac07a8a
   approved_fields:
   - name
   proposed_fields:
@@ -105684,13 +105851,13 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9efc9fee7e469b07d47faf5d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-04cc6ba09df5e0099390ddb8.
       Note antérieure, qui ne qualifie pas cette révision : « U996 adopte le lot complet de responsabilités, noms et rattachements
       CMP317/CMP318. Rédaction détaillée, exemples et correspondances restent proposés ; aucune réalisation installée. »'
   last_modified: '2026-10-12T17:34:18.071924Z'
   content_sha256: c9337db5ca02c4ec3b0ae22e6763e58eefa4d2533c3dccfc202dc36d73c0163d
   adoption_ids:
-  - ADOPT-REASSESS-04cc6ba09df5e0099390ddb8
+  - ADOPT-REASSESS-f8184e9935b9b0d1eeecc960
   approved_fields:
   - name
   proposed_fields:
@@ -105807,14 +105974,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-21194f7a08a1444680adf21e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-498a869d1a487c7902fa87a7.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 69094f0fca9fed3e264dc019614945b2f8ebb40f574d4e5a65a47b4b85046950
   adoption_ids:
-  - ADOPT-REASSESS-498a869d1a487c7902fa87a7
+  - ADOPT-REASSESS-32e52b6323416a85058580cf
   approved_fields:
   - name
   proposed_fields:
@@ -105874,15 +106041,15 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-640816ff7f51bb8549c51c44,
-      ADOPT-REASSESS-5ac4a94d618b2805924f6f43. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f0f1333d66296c10828c1c46,
+      ADOPT-REASSESS-cc7d1a9ad8b0e48ea9fac698. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T09:50:50.476959Z'
   content_sha256: 460e6eee0218db81934ab3fe9ded7f005ca357d3021c2c7c3cdbff73fcdee037
   adoption_ids:
-  - ADOPT-REASSESS-f0f1333d66296c10828c1c46
-  - ADOPT-REASSESS-cc7d1a9ad8b0e48ea9fac698
+  - ADOPT-REASSESS-7c2a5b1c20a94ddc504cdfb8
+  - ADOPT-REASSESS-7c2519442ca0137320edc908
   approved_fields:
   - market_gaps
   - name
@@ -105974,14 +106141,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e9a64aedb1d833038740aa4c.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6576e5fc6944150bad8595d6.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: cc6296ba9c36e6d59561eee2f3904f2f1c45fa048eacd889db606e491a022024
   adoption_ids:
-  - ADOPT-REASSESS-6576e5fc6944150bad8595d6
+  - ADOPT-REASSESS-2e5837aea2c5073798269253
   approved_fields:
   - name
   proposed_fields:
@@ -106071,14 +106238,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d7f59db64037364887c40516.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3ed67b287ca52fc7ce3fe033.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T17:01:49.417511Z'
   content_sha256: 65618d34449e756b8ca4f23f3367d2117a99bdd1f82e716adec69d89c692df63
   adoption_ids:
-  - ADOPT-REASSESS-3ed67b287ca52fc7ce3fe033
+  - ADOPT-REASSESS-d0add1d965bf61a5b1e0dc94
   approved_fields:
   - name
   proposed_fields:
@@ -106170,14 +106337,14 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3ad6515689f9b97b80e0bad6.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5b0d63162e4c8ef531022d19.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 79c31d64e219448500482406dd8826f137617ab62661d987a74abe523c3085d7
   adoption_ids:
-  - ADOPT-REASSESS-5b0d63162e4c8ef531022d19
+  - ADOPT-REASSESS-0b838494157f7a18b5e4128b
   approved_fields:
   - name
   proposed_fields:
@@ -108632,7 +108799,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f956bffaf33d08b7b8c3f243.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0c8cc99d153e0fd6fc7cc6a4.
       Note antérieure, qui ne qualifie pas cette révision : « U996 adopte le lot complet de responsabilités, noms et rattachements
       CMP317/CMP318. Rédaction détaillée, exemples et correspondances restent proposés ; aucune réalisation installée. »'
   source_locator:
@@ -108641,7 +108808,7 @@ nodes:
   last_modified: '2026-10-12T17:34:18.071924Z'
   content_sha256: 35a5389f6285a3b5087295bb9902883745f58aac02bd49a431bb2b84379f20f0
   adoption_ids:
-  - ADOPT-REASSESS-0c8cc99d153e0fd6fc7cc6a4
+  - ADOPT-REASSESS-67a679b1ddf008885f1fe4f1
   approved_fields:
   - finality
   - name
@@ -114662,14 +114829,14 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1a72a1a17c69f8c83d55a6a1,
-      ADOPT-REASSESS-6a3e93132a6e7ccdb236567e. Note antérieure, qui ne qualifie pas cette révision : « Rattachement à la racine
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fd532477f718302a0c27f91e,
+      ADOPT-REASSESS-b3e436b4b93d0d1aa283f09e. Note antérieure, qui ne qualifie pas cette révision : « Rattachement à la racine
       cible demandé U912 ; aucune validation étendue aux descriptions des systèmes. »'
   last_modified: '2026-10-09T06:22:49.710148Z'
   content_sha256: e070a107c5cfbddfc49dd9224049e2d5402efa46f866d75a3c1e8c935ef0fccd
   adoption_ids:
-  - ADOPT-REASSESS-fd532477f718302a0c27f91e
-  - ADOPT-REASSESS-b3e436b4b93d0d1aa283f09e
+  - ADOPT-REASSESS-a5ebdb0cad945453d0192220
+  - ADOPT-REASSESS-ed2dd681688a24be63d946fd
 - id: REL-U912-UNIVERSE-system-business-operations
   revision: 1
   type: contains
@@ -114698,14 +114865,14 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1a53026d5dba1c5e69f4c18b,
-      ADOPT-REASSESS-8599dc6499a784f8dff07fa5. Note antérieure, qui ne qualifie pas cette révision : « Rattachement à la racine
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-75acc284292c101887da8b16,
+      ADOPT-REASSESS-100c425f1bb4787d6fe5ad4d. Note antérieure, qui ne qualifie pas cette révision : « Rattachement à la racine
       cible demandé U912 ; aucune validation étendue aux descriptions des systèmes. »'
   last_modified: '2026-10-09T06:22:49.710148Z'
   content_sha256: ccd7a71e4ce65127e32d9cf63e211d43c66cb614476ad7daf926675b7b8202bc
   adoption_ids:
-  - ADOPT-REASSESS-75acc284292c101887da8b16
-  - ADOPT-REASSESS-100c425f1bb4787d6fe5ad4d
+  - ADOPT-REASSESS-3668f9c6825c80e0f759500e
+  - ADOPT-REASSESS-e09384d3f84daf229eacb635
 - id: REL-UNIVERSE-SUPPLY-business-references
   revision: 4
   type: presents
@@ -121448,13 +121615,13 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9b035345f3c1b84be5c94072.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-dc2ee557d507bd2bf93eb7bb.
       Note antérieure, qui ne qualifie pas cette révision : « Lien de structure ou de coopération appliqué ; accord capturé
       seulement sur les rattachements discutés. »'
   last_modified: '2026-09-28T09:55:24.071459Z'
   content_sha256: 0193ebbdd0f882e10179cf234fcc40eb1601c4b9273cb48a31a08033ab81678e
   adoption_ids:
-  - ADOPT-REASSESS-dc2ee557d507bd2bf93eb7bb
+  - ADOPT-REASSESS-9746829aa29c63f62a4d12e5
 - id: REL-U826-subdomain-financial-accounting
   revision: 1
   type: presents
@@ -121465,13 +121632,13 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cc020ea5a2cc7e21f0342bf9.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3badb5805bd731fc51207cd8.
       Note antérieure, qui ne qualifie pas cette révision : « Lien de structure ou de coopération appliqué ; accord capturé
       seulement sur les rattachements discutés. »'
   last_modified: '2026-09-28T09:55:24.071459Z'
   content_sha256: 99dac3e2c1b598ecbec0f8075aee3875aa6b1c5a87e3b6fc8af842cbd2031a56
   adoption_ids:
-  - ADOPT-REASSESS-3badb5805bd731fc51207cd8
+  - ADOPT-REASSESS-3c11f60a6ebb438c51c5cf34
 - id: REL-U826-planning-data-provision-TO-domain-plan
   revision: 1
   type: provides-knowledge
@@ -124641,13 +124808,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5214b09943328eea9ada8578.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7cd710332f1a996a9897ee55.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: ae08383a15a8435cf62cf8f70618fd3478b24eb0f04e6b8fc893fbee60e03a3f
   adoption_ids:
-  - ADOPT-REASSESS-7cd710332f1a996a9897ee55
+  - ADOPT-REASSESS-e58fd165ad966bd60e5bc502
 - id: REL-U975-subdomain-product-strategy-requirements
   revision: 1
   type: presents
@@ -124658,13 +124825,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5de629635bf6f937d7643775.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8661172609a4d4439560598f.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 74066c452fa5057a4b728d60b4a84865e09ff98c220b6a8e88296ae27d115ef3
   adoption_ids:
-  - ADOPT-REASSESS-8661172609a4d4439560598f
+  - ADOPT-REASSESS-a7eeeaf2cf9d1cab2a4e3152
 - id: REL-U975-subdomain-collection-planning
   revision: 1
   type: presents
@@ -124675,13 +124842,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6428634caaf1ed6532952701.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1585ac27a07021a24776489b.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 66c62e0cd3b1cc6b472a98b9bd99b4a352e2cfdd866a78c4e29901778838b01c
   adoption_ids:
-  - ADOPT-REASSESS-1585ac27a07021a24776489b
+  - ADOPT-REASSESS-b2e6869c19894d808be9d801
 - id: REL-U975-subdomain-development-planning
   revision: 1
   type: presents
@@ -124692,13 +124859,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ebcb7264b6d0c8ed452ee008.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-92ddd713b21688b13345cb6b.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: b6fccff33bad9bc69d0fb182b7057216abad429192de4af500ec3ae729e95667
   adoption_ids:
-  - ADOPT-REASSESS-92ddd713b21688b13345cb6b
+  - ADOPT-REASSESS-2b38658945d816033ba1a720
 - id: REL-U975-domain-product-development
   revision: 1
   type: presents
@@ -124709,13 +124876,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-781545b959002d755447219d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-59eb43d8aab3af83af60176c.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: e05dd6e4ca6f46991d3ac9fade9976666365b433656344ca700197619e5b4c49
   adoption_ids:
-  - ADOPT-REASSESS-59eb43d8aab3af83af60176c
+  - ADOPT-REASSESS-f861015f21c80c79d9fbbb1f
 - id: REL-U975-subdomain-product-design-specification
   revision: 1
   type: presents
@@ -124726,13 +124893,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b0d7ac2d6748c4621b7fb296.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d4f7cc5c5c4cf1c31eda328c.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 98d200e4d635a8804fc6b93de8014a344d0503065c2a9ad3f3d3acbf01ad5cc8
   adoption_ids:
-  - ADOPT-REASSESS-d4f7cc5c5c4cf1c31eda328c
+  - ADOPT-REASSESS-4e3619dffd5d6e1a7714a901
 - id: REL-U975-subdomain-material-component-development
   revision: 1
   type: presents
@@ -124743,13 +124910,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-364ff83285382d34840206db.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-dcf049a2d04a8287c97906f1.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: cf80fa921c86c485454a9cfea3582881046247b98a66f64392d14bb16130ee6b
   adoption_ids:
-  - ADOPT-REASSESS-dcf049a2d04a8287c97906f1
+  - ADOPT-REASSESS-4453081ea978cf582600cfb3
 - id: REL-U975-subdomain-sampling-product-validation
   revision: 1
   type: presents
@@ -124760,13 +124927,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3ae14a35a0d2275f13d7652d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b2b9fa0801ef951ead0ca628.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 562a4280a795cfdacf94146481b3c92011c3cbade10938959146abd7e017c688
   adoption_ids:
-  - ADOPT-REASSESS-b2b9fa0801ef951ead0ca628
+  - ADOPT-REASSESS-6e85ff9a7f85bdbb113300df
 - id: REL-U975-domain-product-definition-lifecycle
   revision: 1
   type: presents
@@ -124777,13 +124944,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8ca84818708a12f728ab71ed.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-653de1355f5b503d2a17bdbd.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: e6c23170e5e2bef30dafe3940f2752c6a126a6844fd0fcfc7fc9d2aa27c80466
   adoption_ids:
-  - ADOPT-REASSESS-653de1355f5b503d2a17bdbd
+  - ADOPT-REASSESS-08843b79a48d6a953fe0e7d8
 - id: REL-U975-subdomain-product-definition-variants
   revision: 1
   type: presents
@@ -124794,13 +124961,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b2830d91c8eecfb9696ce153.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3861681d9558e2b007cbeb41.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: fd62f3b3fad50566c946ba8dd9bf458a9ce72ee70aac055e20584c07c34f54ca
   adoption_ids:
-  - ADOPT-REASSESS-3861681d9558e2b007cbeb41
+  - ADOPT-REASSESS-9c94d847e6ff833b65a911e6
 - id: REL-U975-subdomain-product-documentation-classification
   revision: 1
   type: presents
@@ -124811,13 +124978,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-176328785b04e1ed7fe97f47.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8eaed5c25fd90d73838bcc3e.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: a8fc814a731e4159d366e0c4b9b5d97658550f5fc826da68f8a233bef506f614
   adoption_ids:
-  - ADOPT-REASSESS-8eaed5c25fd90d73838bcc3e
+  - ADOPT-REASSESS-1b8a7b7fa81bbfc358127c66
 - id: REL-U975-subdomain-product-change-release
   revision: 1
   type: presents
@@ -124828,13 +124995,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8f6d2491ced5dda742d4a6d3.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-97258625d4266e7a137d163b.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 4cd48f57c6bd57ea7e25e9cc896bd84e49b9bfc7395d4b506f045ff5d3acc3e4
   adoption_ids:
-  - ADOPT-REASSESS-97258625d4266e7a137d163b
+  - ADOPT-REASSESS-0f37e939eb03e71e49dc558c
 - id: REL-U975-subdomain-demand-planning
   revision: 1
   type: presents
@@ -124896,13 +125063,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-299c97acafc234c13714b015.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d1fec64717ede3afcf931490.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: b93d711e355eb2c166d5b9c6ba93c8b4a68d7e759113ad44335025050f2d76fb
   adoption_ids:
-  - ADOPT-REASSESS-d1fec64717ede3afcf931490
+  - ADOPT-REASSESS-2fc8ebe3e39c83821980b77c
 - id: REL-U975-subdomain-strategy-objectives
   revision: 1
   type: presents
@@ -124913,13 +125080,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b3ee40c94b7fb8e6fc558185.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3781e1e5ab53316a7b9633ea.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 97122679fd24e88776f7e56f5236df2a96425fb5b954f33c44858019671cfe6c
   adoption_ids:
-  - ADOPT-REASSESS-3781e1e5ab53316a7b9633ea
+  - ADOPT-REASSESS-2d47db3776c733571ba15f54
 - id: REL-U975-subdomain-budgeting-forecasting
   revision: 1
   type: presents
@@ -124930,13 +125097,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ab50f097554f263d3d3891c1.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-14f94d24af5e7f2d7939fa44.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: f045ca2d11fffcd5ebfb185dc0cee498e4c1617e3ac6ea4a4d0efd37f16bac64
   adoption_ids:
-  - ADOPT-REASSESS-14f94d24af5e7f2d7939fa44
+  - ADOPT-REASSESS-47d60c171087294c44b717c6
 - id: REL-U975-subdomain-performance-analysis
   revision: 1
   type: presents
@@ -124947,13 +125114,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-feb1ef41e072c529d43f555f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a4e09d1a5645947042f1ca7f.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 4af8e18a59ab099f2a278f9b6641fdeb7ba1544f25461d597cad8d31b57c2f39
   adoption_ids:
-  - ADOPT-REASSESS-a4e09d1a5645947042f1ca7f
+  - ADOPT-REASSESS-f3520bbbfd27bbf72736c495
 - id: REL-U975-domain-governance-risk-compliance
   revision: 1
   type: presents
@@ -124964,13 +125131,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-dfe406091747e66b5adbe970.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cef0c3e6f5bd88e098433244.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 79cc4d4aa9b62032b89a88fffddb056f324add31d3f96f193927adc3d3be26ff
   adoption_ids:
-  - ADOPT-REASSESS-cef0c3e6f5bd88e098433244
+  - ADOPT-REASSESS-5971fa8567d1ddb5940a93f6
 - id: REL-U975-subdomain-policy-compliance
   revision: 1
   type: presents
@@ -124981,13 +125148,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-487586d175c4b2f22d6f0d52.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-04f20adbd9ba359df14f6964.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: f67524d881e011f0c85e50e649f71f291a827d007d2d467a7a8ce7a60f2ceecb
   adoption_ids:
-  - ADOPT-REASSESS-04f20adbd9ba359df14f6964
+  - ADOPT-REASSESS-053aeac89cd528d63c5fd17e
 - id: REL-U975-subdomain-risk-internal-control
   revision: 1
   type: presents
@@ -124998,13 +125165,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4b0f778ddd370c649942eeae.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-532994376a32492af5745051.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 2df2c6e889cb8e639a3a437205c2cca5cbe61271fed5cbb6641e594a79d23702
   adoption_ids:
-  - ADOPT-REASSESS-532994376a32492af5745051
+  - ADOPT-REASSESS-91ca6c8988e4b3c74f89d708
 - id: REL-U975-subdomain-audit-assurance
   revision: 1
   type: presents
@@ -125015,13 +125182,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a93c1ddf4d0155e88882ea9e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-30251508417f3ae1469381f6.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: c4f2382857e132d0e9d1b82974f41e87dbd49130fbbc328c0a0f2d3c5e3a10a4
   adoption_ids:
-  - ADOPT-REASSESS-30251508417f3ae1469381f6
+  - ADOPT-REASSESS-742a1dd76d2f853770dd08fc
 - id: REL-U975-subdomain-cost-profitability
   revision: 1
   type: presents
@@ -125032,13 +125199,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8eb0e8479ebb81721291d974.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-024408fdd5765f8799a9f0d5.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 78fb065880628213879bc33d3e8dc363ab2568c97613b4123c35d7606eb92d74
   adoption_ids:
-  - ADOPT-REASSESS-024408fdd5765f8799a9f0d5
+  - ADOPT-REASSESS-fa9078d1b1f685c594b4d929
 - id: REL-U975-subdomain-credit-collections
   revision: 1
   type: presents
@@ -125049,13 +125216,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-beb899612597da3b125b3fb2.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-171fd8fe5e3bb0d388ee7352.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: f3a99564f92ad2d0547ec773c5cac183acba0516d617826752719db12bef18a1
   adoption_ids:
-  - ADOPT-REASSESS-171fd8fe5e3bb0d388ee7352
+  - ADOPT-REASSESS-0e5eb2eca72f64ed39b2a259
 - id: REL-U975-subdomain-treasury-cash
   revision: 1
   type: presents
@@ -125066,13 +125233,13 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-140673c48b21d051c09efbcd.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a3187a85838952c66d745716.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
   content_sha256: 5a73ac2827df027ce578e1a85261c038e6feb08e77e854eb2aeb887847e9e676
   adoption_ids:
-  - ADOPT-REASSESS-a3187a85838952c66d745716
+  - ADOPT-REASSESS-ffee6c77fa9b319409f1b3b8
 - id: REL-U975-domain-warehousing
   revision: 1
   type: presents
@@ -125343,12 +125510,12 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-10f02b0a248d8bcdda33b337.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ef4b56e3a7717e010654e712.
       Note antérieure, qui ne qualifie pas cette révision : « U979 demande ce sens et le contenu produit. »'
   last_modified: '2026-10-12T17:01:49.417511Z'
   content_sha256: d65d15ff4f943c117f57e33c0fb5bca4042d7a2883e446640a30cc5935482c6b
   adoption_ids:
-  - ADOPT-REASSESS-ef4b56e3a7717e010654e712
+  - ADOPT-REASSESS-f9c25bc500cc05bd000a2644
 - id: REL-U979-product-feedback
   revision: 1
   type: shares-data
@@ -125485,13 +125652,13 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3a23f491454addb4d9e40971.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c099b78bb5893151b644d9f1.
       Note antérieure, qui ne qualifie pas cette révision : « Synthèse cible proposée à partir des responsabilités documentées
       ; aucun flux installé ni contrat exhaustif déduit. »'
   last_modified: '2026-10-13T20:10:38.026966Z'
   content_sha256: 3d5d2209c50184d8d8a53b04b8810d89ea4351eab2c409d9b95f02a711984b6c
   adoption_ids:
-  - ADOPT-REASSESS-c099b78bb5893151b644d9f1
+  - ADOPT-REASSESS-43e05700f357f86e28996db4
 - id: REL-U979-credit-profiles
   revision: 2
   type: shares-data
@@ -125528,13 +125695,13 @@ relations:
   review:
     state: proposed
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-827d3316e5de774a6f7bdce2.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2103b16a662c6377b1229930.
       Note antérieure, qui ne qualifie pas cette révision : « Synthèse cible proposée à partir des responsabilités documentées
       ; aucun flux installé ni contrat exhaustif déduit. »'
   last_modified: '2026-10-12T18:06:04.409778Z'
   content_sha256: 83d60d2a3f5b6da6e323575175afc1c86e32a86dbf6954ab68ec794df842b028
   adoption_ids:
-  - ADOPT-REASSESS-2103b16a662c6377b1229930
+  - ADOPT-REASSESS-de043b81c1b5a89ca9140447
 - id: REL-U981-accounting-facts
   revision: 1
   type: shares-data
@@ -125568,13 +125735,13 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0800bb0b7372004524ce52a6.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1e9507fe11f81ac8b3ddf4be.
       Note antérieure, qui ne qualifie pas cette révision : « U981 conserve la responsabilité externe et le raccordement ;
       formulation détaillée du contrat proposée, sans adoption globale des contenus. »'
   last_modified: '2026-10-12T17:01:49.417511Z'
   content_sha256: a62e5e0e526714d0c26f4cc87b441eb55e87d2fbcca560d11ca5b7675a17ff04
   adoption_ids:
-  - ADOPT-REASSESS-1e9507fe11f81ac8b3ddf4be
+  - ADOPT-REASSESS-e893fb7b51e80f2d03e2862d
 - id: REL-U987-subdomain-assortment-catalog-management
   revision: 1
   type: presents
@@ -125702,14 +125869,14 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5b451d98f648e1459b39829e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-db59de149e759f7e236d2bd3.
       Note antérieure, qui ne qualifie pas cette révision : « U996 adopte le lot complet de responsabilités, noms et rattachements
       CMP317/CMP318. Rédaction détaillée, exemples et correspondances restent proposés ; aucune réalisation installée. »'
   revision: 1
   last_modified: '2026-10-12T17:34:18.071924Z'
   content_sha256: a371b143a5b806f6fc853fa8b2bab368d61cd4798e6502de8bbc5cdbe93ae0de
   adoption_ids:
-  - ADOPT-REASSESS-db59de149e759f7e236d2bd3
+  - ADOPT-REASSESS-3da604b639a4fda658571c5f
 - id: REL-U996-contextual-prices
   type: shares-data
   source_id: subdomain-pricing-promotions-management
@@ -125781,14 +125948,14 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-88a5bee8ad29b56edfdb256f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-185860be08d0b76c90f5fd9d.
       Note antérieure, qui ne qualifie pas cette révision : « Sens de responsabilité adopté U996 ; contenus détaillés proposés,
       réalisation inconnue. »'
   revision: 1
   last_modified: '2026-10-12T17:34:18.071924Z'
   content_sha256: 4d1c9ea5358d34f31582721dfeb333600e4866eb8f41bfc68e7ff753d50062ae
   adoption_ids:
-  - ADOPT-REASSESS-185860be08d0b76c90f5fd9d
+  - ADOPT-REASSESS-bc28a8db213bee294df34a7a
 - id: REL-U996-eligible-supply-facts
   type: shares-data
   source_id: accounting-data-provision
@@ -125818,14 +125985,14 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e60ab0fe90a6248f8760a513.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4143e2a6c55d1284c87afb2e.
       Note antérieure, qui ne qualifie pas cette révision : « Sens de responsabilité adopté U996 ; contenus détaillés proposés,
       réalisation inconnue. »'
   revision: 1
   last_modified: '2026-10-12T17:34:18.071924Z'
   content_sha256: 0334261b382c07edcf736c5112d52b8eda12b8c5ab5fc2fadeb58228e21cbe4b
   adoption_ids:
-  - ADOPT-REASSESS-4143e2a6c55d1284c87afb2e
+  - ADOPT-REASSESS-beac8f0cd56ed6ddce579fbf
 - id: REL-U996-commercial-settlement-results
   type: shares-data
   source_id: subdomain-commercial-settlement-management
@@ -125856,14 +126023,14 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c6c841e2dbd74928a5039875.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d207db13de45e9d97e4b0f8f.
       Note antérieure, qui ne qualifie pas cette révision : « Sens de responsabilité adopté U996 ; contenus détaillés proposés,
       réalisation inconnue. »'
   revision: 1
   last_modified: '2026-10-12T17:34:18.071924Z'
   content_sha256: 316f9be31c8a04254f0bf640b08bedbd97cc24259abb5f8389a1fac8e2cd3324
   adoption_ids:
-  - ADOPT-REASSESS-d207db13de45e9d97e4b0f8f
+  - ADOPT-REASSESS-3f9859baaddf743319c81548
 - id: REL-U1009-PARENT-demand-fulfilment-policy-management
   revision: 1
   type: contains
