@@ -311,8 +311,15 @@ export function HotspotCatalogPage({
         typeof left === 'number' && typeof right === 'number'
           ? left - right
           : String(left).localeCompare(String(right), 'fr');
+      const leastAdvancedFirst =
+        sort.key === 'severity'
+          ? Object.keys(RESOLUTION_STAGES).indexOf(resolutionFor(a).stage) -
+              Object.keys(RESOLUTION_STAGES).indexOf(resolutionFor(b).stage) ||
+            STATUS_RANK.indexOf(a.status) - STATUS_RANK.indexOf(b.status)
+          : 0;
       return (
         (sort.direction === 'ascending' ? primary : -primary) ||
+        leastAdvancedFirst ||
         a.title.localeCompare(b.title, 'fr') ||
         a.id.localeCompare(b.id)
       );

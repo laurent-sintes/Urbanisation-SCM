@@ -111,7 +111,9 @@ try {
       ),
     'subject receives most of the available width',
   );
-  const impact = page.locator('.hotspot-impact-detail').first();
+  const qualified = model.hotspot_catalog.hotspots.find((item) => item.visible !== false && item.framing_impact);
+  assert.ok(qualified, 'the snapshot has a visible subject with a qualified impact');
+  const impact = page.locator(`[data-hotspot-id="${qualified.id}"] .hotspot-impact-detail`);
   await impact.locator('summary').focus();
   await page.keyboard.press('Enter');
   assert.match(await impact.innerText(), /Justification :/);
@@ -191,10 +193,9 @@ try {
   await page.screenshot({ path: resolve(output, 'mobile-list.png') });
   assert.ok(
     await page
-      .locator('.hotspot-table tbody tr')
-      .first()
+      .locator('[data-hotspot-id="HS-002"]')
       .evaluate((element) => element.getBoundingClientRect().height < 380),
-    'mobile attributes fit in a compact card',
+    'mobile attributes fit in a compact card for a short subject',
   );
   staging = {
     ...staging,

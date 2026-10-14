@@ -1,0 +1,71 @@
+id: hotspot-complexities-U1077
+date: '2026-10-14'
+status: applied_to_backlog
+source_refs: [U1077]
+scope: Réestimer les complexités de sept hotspots visibles après la reprise du périmètre omnicanal de HS-032, afin que celui-ci soit le seul visible de criticité XL.
+assessment:
+  hs_032: XL/XL pour l'option de Core omnicanal, avec arbitrage de gouvernance transverse et réalisation à éprouver.
+  hs_002: M/L car l'orientation de principe FLOW–C-LOG est décrite ; garanties, validité et engagement restent ouverts.
+  hs_008: M/L pour la construction circonscrite du carnet Wholesale ; règles et faisabilité restent à éprouver.
+  hs_020: M/L pour la répartition Négoces sans compromis intermarques démontré.
+  hs_021: M/L pour la frontière FLOW–Finance–SAP à coordonner par type de flux.
+  hs_024: M/M car l'autorité sur Purchase Order entre CBS et FLOW demande encore un accord entre périmètres.
+  hs_033: S/M seulement si Sarenza garde la responsabilité de ses parcours et consomme des services communs FLOW.
+  boundary: Estimations de cadrage ; aucune Option retenue, faisabilité installée ou urgence inférée.
+glossary_alignment: MOD044, axes de complexité et matrice-v1 relus ; les valeurs changent sans modifier leurs définitions. Les noms et frontières métier restent ceux du backlog.
+market_comparison: Les appuis Microsoft, SAP, Oracle, Manhattan, Shopify et commercetools déjà consultés pour HS-032 étayent la possibilité d'un socle omnicanal, sans en chiffrer l'effort FLOW. Aucun nouveau fait marché ne motive les autres estimations.
+publication_delivery:
+  state: applied
+  source_refs: [U1077]
+  summary: HS-032 est le seul visible de criticité XL ; HS-002, HS-008, HS-020, HS-021, HS-024 et HS-033 sont réestimés sans changer la matrice.
+  required_catalog:
+  - collection: hotspots
+    id: HS-002
+    content_sha256: e9a80c6744e690ce9bbb9b1156aa46ba40d80936924faf3b6e2526ff61a6ee3a
+  - collection: hotspots
+    id: HS-008
+    content_sha256: 651009f216b75b61110c39e624beec12e556bbc612e53db4fb38cedfb30102e8
+  - collection: hotspots
+    id: HS-020
+    content_sha256: 8ce7760230999e1a1bcc5f022ae0be38681cdd3e34595a80f373fab9184d164e
+  - collection: hotspots
+    id: HS-021
+    content_sha256: 704c545bc28811dc8c920a30f10a8ab03debf7928a988d7e5c7acd3e6ccb7487
+  - collection: hotspots
+    id: HS-024
+    content_sha256: a7c282447dea5a53d35c3dd414bcba587d6f4606ff3b8e82cf37d587fcb57d39
+  - collection: hotspots
+    id: HS-033
+    content_sha256: 3ab3a3cafcc4f62c3683f5f222851f7e9aabee0cf6ad99f9476aa5612780acd4
+  - collection: hotspots
+    id: HS-032
+    content_sha256: a74d6fd1dad7a20ae1fb9703592ba88130bf220616642fdb7095a3d08867efc2
+  supersedes_requirements:
+  - annex: visible-hotspots-editorial-U1073.yaml
+    collection: hotspots
+    id: HS-002
+    fields: [content_sha256]
+  - annex: hotspot-wholesale-carnet-U1072.yaml
+    collection: hotspots
+    id: HS-008
+    fields: [content_sha256]
+  - annex: visible-hotspots-editorial-U1073.yaml
+    collection: hotspots
+    id: HS-020
+    fields: [content_sha256]
+  - annex: visible-hotspots-editorial-U1073.yaml
+    collection: hotspots
+    id: HS-021
+    fields: [content_sha256]
+  - annex: visible-hotspots-editorial-U1073.yaml
+    collection: hotspots
+    id: HS-024
+    fields: [content_sha256]
+  - annex: visible-hotspots-editorial-U1073.yaml
+    collection: hotspots
+    id: HS-033
+    fields: [content_sha256]
+  - annex: hotspot-core-omnichannel-U1076.yaml
+    collection: hotspots
+    id: HS-032
+    fields: [content_sha256]

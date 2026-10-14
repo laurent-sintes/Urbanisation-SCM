@@ -73528,16 +73528,12 @@ hotspot_catalog:
       implementation_complexity: unassessed
       evidence_state: hypothesis
     complexity:
-      arbitration: XL
+      arbitration: M
       implementation: L
-      rationale: La complexité d’arbitrage est estimée à XL et la complexité d’implémentation à L (U923) ; la criticité XL
-        découle de la matrice-v1. Ces estimations précèdent la séparation des deux relations logistiques et restent à reconfirmer
-        pour le seul périmètre FLOW–C-LOG. Elles ne documentent ni les contrats, ni les autorités, ni la réalisation installée.
-      arbitration_rationale: Le partage de décision entre marques et logisticiens touche la promesse client et leur latitude
-        de choix.
-      implementation_rationale: Il faut distinguer proposition, réservation des ressources, acceptation et exécution ; leurs
-        garanties ne sont pas documentées.
-    severity: XL
+      rationale: Arbitrage M et implémentation L réestimés U1077. L’orientation FLOW choisit un plan proposé par C-LOG est déjà décrite ; les garanties et le moment de l’engagement restent à négocier. Aucun compromis entre marques sur le principe n’est établi.
+      arbitration_rationale: L’orientation de principe du partage FLOW–C-LOG est formulée ; plusieurs interlocuteurs doivent encore convenir des garanties, de la validité du plan et de l’engagement ferme.
+      implementation_rationale: Proposition, réservation des ressources, acceptation et exécution mobilisent plusieurs composants et contrats interdépendants ; leurs garanties restent à établir.
+    severity: L
     severity_policy: matrix-v1
     arbitration_level: to_confirm
     arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Le partage de décision entre marques et logisticiens
@@ -73560,6 +73556,7 @@ hotspot_catalog:
     - U1066
     - U1067
     - U1073
+    - U1077
     origin:
       repository: FLOW-Program
       path: src/docs/as-is/hotspots/c-log-decision-fulfillment.md
@@ -73575,7 +73572,7 @@ hotspot_catalog:
         et Supply Chain Orchestration ; la séquence des échanges reste inconnue. U1064 rétablit HS-011 pour les autres logisticiens
         Boardriders ; la note XL/L de HS-002 reste à reconfirmer sur ce périmètre. Les mandats, la réalisation installée et
         la crédibilité ne sont pas déduits de cette application. U1066 valide la clarification du récit et l’ancrage Service
-        Planning–Logistics pour la proposition et le choix du plan ; garanties, séquence d’échanges et score restent à qualifier.'
+        Planning–Logistics pour la proposition et le choix du plan ; garanties, séquence d’échanges et score restent à qualifier. U1077 ramène l’arbitrage de XL à M compte tenu de l’orientation déjà décrite ; les garanties et le mandat C-LOG restent ouverts.'
     market_view:
       finding: Les éditeurs séparent ordres, exécution logistique et échanges avec un entrepôt externe.
       flow_assessment: Situer la proposition et le choix du plan entre [Service Planning](model:ba-service-planning) et [Logistics](model:domain-logistics-execution).
@@ -75003,20 +75000,12 @@ hotspot_catalog:
       - hs-008-future-supply
       option_ids: []
     complexity:
-      arbitration: L
-      implementation: XL
-      rationale: 'Trois questions se cumulent : définir quelles marques ont besoin du carnet, construire l’outil et rendre
-        ses stratégies évolutives sans intégrations répétées. Il faut choisir les règles et les réaliser sans perdre les cas
-        essentiels. Les arrivages par vagues, les grosses commandes, les priorités évolutives et les liens protégés rendent
-        les arbitrages interdépendants. Dans le scénario de construction, réutiliser du code ouvert ne dispense pas de développer
-        le cœur métier, les simulations, les écrans et l’intégration. Scores L/XL conservés ; les enveloppes du PDF restent
-        provisoires et dépendent du périmètre retenu.'
-      arbitration_rationale: Partager les priorités suppose un accord sur les clients à servir et sur les différences de gestion
-        à conserver entre marques.
-      implementation_rationale: Combiner priorités saisonnières, ressources présentes ou attendues et engagements protégés
-        ; maintenir le résultat cohérent lorsque les données changent. Construire et valider le cœur métier, l’outil de carnet,
-        ses stratégies configurables et ses échanges avec les systèmes existants.
-    severity: XL
+      arbitration: M
+      implementation: L
+      rationale: Arbitrage M et implémentation L réestimés U1077. Le besoin du carnet avancé se qualifie par activité ; sa construction reste un chantier important de règles et de composants interdépendants, mais circonscrit au pilotage du carnet Wholesale. Les contraintes de faisabilité restent à tester.
+      arbitration_rationale: Les marques concernées doivent coordonner le besoin et les variantes de pilotage ; aucune règle incompatible imposant un compromis transverse entre marques n’est établie à ce stade.
+      implementation_rationale: Construire le cœur métier, l’outil de carnet, les stratégies configurables et leurs échanges demeure complexe ; le périmètre est plus circonscrit que la convergence omnicanale du Core, et les inconnues de faisabilité restent à vérifier.
+    severity: L
     severity_policy: matrix-v1
     arbitration_level: to_confirm
     arbitration_note: 'Instance proposée pour ce mandat, à confirmer : Les poids [Wholesale Commerce](glossary:TER193) et
@@ -75060,6 +75049,7 @@ hotspot_catalog:
     - U1070
     - U1071
     - U1072
+    - U1077
     origin:
       repository: Dossier consolidé FLOW
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -75078,7 +75068,7 @@ hotspot_catalog:
         de la complexité, avec PDF et PPTX distincts. Scores et options conservés ; ni convergence choisie ni budget ferme.
         U1066 valide un titre concret et une ouverture centrée sur les commandes refusées ou conservées. U1071 distingue trois
         problèmes et limite à deux les options du besoin de pilotage selon les marques ; la construction et l’évolution de
-        l’outil restent à instruire, sans solution retenue.'
+        l’outil restent à instruire, sans solution retenue. U1077 réestime M/L pour le carnet Wholesale ; la difficulté de construction demeure importante et toute contrainte de faisabilité majeure réouvrirait le niveau d’implémentation.'
     market_view:
       finding: Microsoft documente la réservation au fil des commandes ou selon des priorités, sur stock présent ou commandé.
         SAP S/4HANA documente affectation, désaffectation et réaffectation avec tri des demandes et réceptions futures. Oracle
@@ -76018,13 +76008,12 @@ hotspot_catalog:
       implementation_complexity: unassessed
       evidence_state: hypothesis
     complexity:
-      arbitration: L
+      arbitration: M
       implementation: L
-      rationale: Estimations de préparation conservées dans la consolidation ; non confirmées pour ce candidat. Estimation
-        préparatoire de faible confiance, proposée lors de l’audit ; à vérifier sur les cas, volumes et options.
-      arbitration_rationale: La convergence peut déplacer les responsabilités d’achat et de vente entre équipes et marques.
-      implementation_rationale: Les fonctions, objets ouverts et interfaces à reprendre ne sont pas encore inventoriés.
-    severity: XL
+      rationale: Arbitrage M et implémentation L réestimés U1077. La répartition des fonctions Négoces exige une coordination entre produits et équipes ; les fonctions, objets ouverts et interfaces à reprendre restent à inventorier.
+      arbitration_rationale: La répartition des fonctions Négoces demande plusieurs interlocuteurs, mais aucun compromis démontré entre politiques incompatibles de marques ne justifie actuellement L.
+      implementation_rationale: Plusieurs fonctions, objets ouverts et interfaces peuvent être interdépendants ; leur périmètre réel reste à établir avant chiffrage.
+    severity: L
     severity_policy: matrix-v1
     arbitration_level: to_confirm
     arbitration_note: 'Instance proposée pour ce mandat, à confirmer : La convergence peut déplacer les responsabilités d’achat
@@ -76040,6 +76029,7 @@ hotspot_catalog:
     - U1066
     - U1067
     - U1073
+    - U1077
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -76057,7 +76047,7 @@ hotspot_catalog:
         de lecture proposé sur les deux Business Areas Wholesale ; la documentation Cegid confirme le périmètre de l’offre
         Négoce, pas les fonctions activées chez GBM. U1066 valide le périmètre d’analyse et sa localisation sur les responsabilités
         commerciales, de commande et d’exécution ; ces ancres ne prouvent pas leur usage dans Négoce. Les exemples restent
-        des scénarios d’étude.'
+        des scénarios d’étude. U1077 ramène l’arbitrage à M sur les preuves actuelles ; si des règles divergentes entre marques apparaissent, réexaminer ce niveau.'
     market_view:
       finding: Microsoft documente l’import de commandes de vente ; Cegid décrit les modes de traitement Négoce de Storeland.
         La page SAP référencée n’a pas pu être revalidée. Ces appuis partiels ne prouvent ni les fonctions utilisées par GBM
@@ -76199,15 +76189,12 @@ hotspot_catalog:
       - hs-021-sd
       - hs-021-hybrid
     complexity:
-      arbitration: L
+      arbitration: M
       implementation: L
-      rationale: Estimations de préparation conservées dans la consolidation ; non confirmées pour ce candidat. Estimation
-        préparatoire de faible confiance, proposée lors de l’audit ; à vérifier sur les cas, volumes et options.
-      arbitration_rationale: FLOW, Finance et le programme SAP doivent qualifier la facturation, l'interprétation des faits,
-        la comptabilisation et le rôle éventuel de SD.
-      implementation_rationale: Les deux circuits possibles, les identités, versions et retours doivent éviter la perte du
-        détail, les doublons et les corrections sans lien avec l’original.
-    severity: XL
+      rationale: Arbitrage M et implémentation L réestimés U1077. FLOW, Finance et le programme SAP doivent se coordonner sur la facture, les faits transmis et le rôle éventuel de SD ; plusieurs flux et corrections restent à réaliser sans doublons.
+      arbitration_rationale: La frontière FLOW–Finance–SAP requiert plusieurs interlocuteurs et décisions par type de flux ; aucun compromis entre modèles de fonctionnement des marques n’est établi.
+      implementation_rationale: Les identités, versions, retours, rejets et corrections lient plusieurs composants et règles ; les circuits doivent préserver le détail et éviter les doublons.
+    severity: L
     severity_policy: matrix-v1
     arbitration_level: to_confirm
     arbitration_note: 'Instance proposée pour ce mandat, à confirmer : responsables FLOW, Finance, facturation B2B et programme
@@ -76226,6 +76213,7 @@ hotspot_catalog:
     - U1067
     - U1070
     - U1073
+    - U1077
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -76242,6 +76230,7 @@ hotspot_catalog:
         hors du périmètre migré de HS-001. Les estimations préparatoires U973 restent à éprouver. U1066 valide le titre et
         le récit clarifiés ; l’ancrage sur l’échange Faits de gestion est conservé. Aucun rôle réel de SD ni circuit cible
         n’est confirmé.
+        U1077 ramène l’arbitrage à M sur les preuves actuelles ; une divergence de gouvernance entre périmètres imposerait un réexamen.
     market_view:
       finding: Microsoft documente l’import de journaux depuis des systèmes externes. SAP documente à la fois des écritures
         reçues par interface et des documents de facturation Sales transmis à la comptabilité. Ce sont des mécanismes distincts
@@ -76578,13 +76567,11 @@ hotspot_catalog:
       implementation_complexity: unassessed
       evidence_state: hypothesis
     complexity:
-      arbitration: L
+      arbitration: M
       implementation: M
-      rationale: Complexité d’arbitrage estimée à L et complexité d’implémentation à M (U1069). Les responsabilités, interfaces
-        et le périmètre de réalisation restent à qualifier.
-      arbitration_rationale: Répartir l’autorité sur la commande d’achat, les tâches et la visibilité entre CBS et FLOW.
-      implementation_rationale: Tester les interfaces, les services CBS séparables et les adaptations avant de chiffrer la
-        réécriture.
+      rationale: Arbitrage M et implémentation M réestimés U1077. La coordination CBS–FLOW reste nécessaire pour désigner une seule autorité sur Purchase Order ; le périmètre des services et interfaces à reprendre n’est pas établi.
+      arbitration_rationale: CBS et FLOW doivent s’accorder sur le cycle d’achat et une autorité unique sur Purchase Order ; cette décision dépasse un accord local S sans constituer à ce stade un compromis entre plusieurs marques.
+      implementation_rationale: Plusieurs services et interfaces CBS–FLOW sont à inventorier et à adapter ; leur séparation technique et le coût restent à vérifier.
     severity: L
     severity_policy: matrix-v1
     arbitration_level: to_confirm
@@ -76601,6 +76588,7 @@ hotspot_catalog:
     - U1067
     - U1069
     - U1073
+    - U1077
     origin:
       repository: Dossiers sources FLOW consolidés
       path: audits/2026-10-10-hotspots-sources/consolidation.md
@@ -76614,6 +76602,7 @@ hotspot_catalog:
         ; interfaces, responsabilités et périmètre de réécriture à qualifier. U1066 valide l’ajout de Process Management à
         l’ancre Purchase Order ; fonctions séparables, interfaces et coût restent inconnus. U1069 précise le titre et/ou les
         deux estimations de complexité ; aucune solution détaillée ni réalisation installée déduite.
+        U1077 retient M pour l’arbitrage CBS–FLOW ; l’autorité sur Purchase Order reste à fixer et S serait prématuré.
     market_view:
       finding: Les sources Microsoft sur le suivi de dossiers et SAP sur les approbations d’achat montrent des mécanismes
         distincts. Elles n’établissent ni la séparation technique des services CBS ni une architecture de plateforme commune
@@ -76709,13 +76698,12 @@ hotspot_catalog:
       implementation_complexity: unassessed
       evidence_state: to_investigate
     complexity:
-      arbitration: L
+      arbitration: S
       implementation: M
-      rationale: Complexité d’arbitrage estimée à L et complexité d’implémentation à M (U1069). Les responsabilités, interfaces
-        et le périmètre de réalisation restent à qualifier.
-      arbitration_rationale: Préciser la frontière entre service client, commandes et services Supply communs.
-      implementation_rationale: Les services Sarenza, leur séparation technique et leurs interfaces avec FLOW restent inconnus.
-    severity: L
+      rationale: Arbitrage S et implémentation M estimés U1077 sous l’hypothèse que Sarenza conserve la responsabilité des parcours de service client et ne fait que consommer des services communs FLOW. Si cette responsabilité change, réévaluer l’arbitrage.
+      arbitration_rationale: Accord local limité sur les services FLOW à réutiliser, à condition que le service client Sarenza reste responsable de ses parcours ; un transfert de responsabilité imposerait une nouvelle estimation.
+      implementation_rationale: Les services Sarenza, leur séparation technique et leurs interfaces avec FLOW restent à inventorier ; plusieurs adaptations sont attendues.
+    severity: M
     severity_policy: matrix-v1
     arbitration_level: to_confirm
     arbitration_note: Responsabilités du service client et de FLOW à préciser avant toute décision ; instance à confirmer.
@@ -76730,6 +76718,7 @@ hotspot_catalog:
     - U1067
     - U1069
     - U1073
+    - U1077
     origin:
       repository: Contribution de Laurent
       path: connaissance/01-contributions-utilisateur.md
@@ -76744,6 +76733,7 @@ hotspot_catalog:
         explicite de la couverture cartographique partielle. L’avant-vente sans commande reste à ancrer après inventaire ;
         aucune réalisation Sarenza n’est validée. U1069 précise le titre et/ou les deux estimations de complexité ; aucune
         solution détaillée ni réalisation installée déduite.
+        U1077 retient S sous l’hypothèse du maintien de la responsabilité service client chez Sarenza ; sinon l’arbitrage doit être réestimé.
     resolution:
       stage: to_explore
       summary: Quels parcours du service client Sarenza pourraient réutiliser les services communs de FLOW ? Aucune option
@@ -77521,7 +77511,7 @@ hotspot_catalog:
       - model
     visible: false
   - id: HS-032
-    title: Responsabilités Retail à couvrir après Storeland et United Retail
+    title: Périmètre omnicanal de FLOW Core et reprise des activités Retail
     kind: scope
     location:
       node_ids:
@@ -77530,16 +77520,51 @@ hotspot_catalog:
       - subdomain-retail-network-management
       - subdomain-sales-b2c-ecommerce
       - ba-retail-customer-relationship-management
-    problem: Le retrait prévu de Storeland et United Retail oblige les Marques Historiques à préserver la vente et les opérations
-      magasin, le réseau, le numérique et la relation client. Les usages réels par marque et les modules actifs de Cegid Y2
-      chez Boardriders restent à vérifier avant le choix d’un produit Retail cible.
+      - subdomain-sales-wholesale
+      - supply-chain-orchestration
+    problem: La liste des produits annoncés à remplacer (Storeland, SAP ECC/AFS, NewStore et SoCloz) ne fixe pas la frontière
+      fonctionnelle de FLOW. L’hypothèse initiale sépare un socle ERP commun et des systèmes Retail, eCommerce et Wholesale
+      portant chacun leurs stocks et politiques. Une autre cible confierait à FLOW Core les décisions, commandes, disponibilités
+      et politiques communes aux canaux, avec leurs différences dans les règles et les interfaces. Le retrait de Storeland et
+      United Retail rend ce choix concret pour les activités Retail ; la place de Cegid Y2 et des autres produits reste à instruire.
     examples:
     - 'Parcours à vérifier après retrait de Storeland et UR : une marque GBM reçoit des articles, tient le stock magasin,
       décide le réassort, reconnaît un client fidèle, encaisse une vente et prépare une commande web. Identifier le produit
       cible responsable de chaque étape.'
     - Comparer le même parcours chez Boardriders après confirmation des modules Y2 et des autres produits utilisés ; distinguer
       la couverture de l’offre éditeur de la couverture effectivement installée.
+    - Pour une vente magasin, une commande web servie par le magasin et une commande Wholesale, désigner qui tient la commande,
+      la disponibilité, la politique de promesse, le stock, le réassort et les exceptions ; distinguer canal de vente, lieu
+      de stockage et lieu d’exécution.
     resolution_options:
+    - id: hs-032-core-omnichannel
+      title: Étendre FLOW Core aux responsabilités communes de tous les canaux
+      principle: FLOW Core tient les commandes, la disponibilité, les droits d’usage du stock, les promesses, les affectations
+        et les politiques transverses pour Retail, eCommerce et Wholesale. Les parcours propres aux canaux utilisent des règles
+        configurées et des interfaces adaptées ; toute responsabilité locale autonome doit être justifiée.
+      conditions:
+      - Vérifier, sur les trois canaux, la couverture des parcours et des décisions par les capacités actuelles du Core ;
+        identifier explicitement les extensions Commerce nécessaires.
+      - Tester la séparation canal de vente, lieu de stock et lieu d’exécution, ainsi que la cohérence des stocks, des commandes
+        et des politiques en situation normale et déconnectée.
+      - Délimiter les fonctions propres au POS, aux paiements, à la fiscalité, à la relation client et au Wholesale qui exigent
+        un composant spécialisé, sans créer une autorité concurrente sur les décisions communes.
+      tradeoffs:
+      - Une autorité commune peut réduire les doublons et faciliter la convergence, mais élargit fortement le mandat et le
+        coût de construction de FLOW Core ; les contraintes locales et la résilience doivent être prouvées.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
+    - id: hs-032-channel-systems
+      title: Conserver des systèmes autonomes par canal
+      principle: FLOW Core reste un socle ERP et Supply commun ; Retail, eCommerce et Wholesale conservent leurs systèmes
+        propres pour leurs stocks, commandes ou politiques selon la frontière à préciser.
+      conditions:
+      - Désigner, pour chaque donnée et décision, le système d’autorité et les règles de synchronisation entre canaux et Core.
+      - Mesurer les doublons de stock, de commande et de politique, les divergences possibles et le coût des interfaces.
+      tradeoffs:
+      - Préserve des produits et pratiques spécialisés, mais maintient plusieurs autorités et des arbitrages intersystèmes.
+      implementation_complexity: unassessed
+      evidence_state: hypothesis
     - id: hs-032-build-retail
       title: Développer un produit de gestion Retail
       principle: Construire le produit nécessaire aux responsabilités Retail GBM qui ne sont pas reprises par les outils conservés
@@ -77576,21 +77601,33 @@ hotspot_catalog:
       - hs-032-digital-commerce
       - hs-032-customer-relationship
       option_ids: []
+    - id: hs-032-core-scope
+      title: Frontière entre FLOW Core et les canaux
+      question: FLOW Core doit-il porter les responsabilités communes Retail, eCommerce et Wholesale ou laisser chaque système
+        de canal gérer son stock, ses commandes et ses politiques ?
+      analysis_summary: L’orchestration FLOW couvre déjà une partie des commandes, promesses, affectations et politiques
+        communes. Le marché montre plusieurs modèles omnicanaux ; il ne prouve ni la couverture complète de FLOW ni les
+        fonctions installées chez Beaumanoir. Comparer autorités, doublons, résilience, extensions et coûts.
+      analysis_ids: []
+      option_ids:
+      - hs-032-core-omnichannel
+      - hs-032-channel-systems
     - id: hs-032-product-choice
-      title: Produit Retail cible
-      question: Faut-il construire un produit Retail pour GBM ou étendre Cegid Y2 ?
-      analysis_summary: Comparer les deux Options sur les fonctions constatées, les adaptations, les interfaces et les coûts.
+      title: Réalisation Retail si elle reste dans un système de canal
+      question: Si les responsabilités Retail ne rejoignent pas FLOW Core, faut-il construire un produit Retail pour GBM
+        ou étendre Cegid Y2 ?
+      analysis_summary: Comparer ces deux réalisations après l’arbitrage de frontière, sur les fonctions constatées, les
+        adaptations, les interfaces et les coûts.
       analysis_ids: []
       option_ids:
       - hs-032-build-retail
       - hs-032-extend-y2
     complexity:
       arbitration: XL
-      implementation: L
-      rationale: Complexité d’arbitrage estimée à XL et complexité d’implémentation à L (U1069). Les responsabilités, interfaces
-        et le périmètre de réalisation restent à qualifier.
-      arbitration_rationale: Le choix déplacerait les responsabilités entre marques, équipe Retail, éditeur et programme FLOW.
-      implementation_rationale: Les instances, personnalisations, volumes, interfaces, pays et licences ne sont pas inventoriés.
+      implementation: XL
+      rationale: Arbitrage XL et implémentation XL estimés U1077 pour l’option FLOW Core omnicanal. Le choix détermine le modèle de fonctionnement Retail, eCommerce et Wholesale ; la réalisation doit éprouver les extensions Commerce, les règles transverses, les données, les interfaces et la résilience des canaux.
+      arbitration_rationale: Choix transverse de gouvernance et de périmètre du Core, déterminant les responsabilités des trois canaux, des marques, des éditeurs et du programme FLOW.
+      implementation_rationale: L’option omnicanale exigerait des extensions importantes de FLOW Core au-delà de Supply Chain Orchestration, avec décisions et données interdépendantes, POS, fonctionnement déconnecté, processus Wholesale et intégrations à éprouver. L’effort dépendra de l’option retenue.
     severity: XL
     severity_policy: matrix-v1
     arbitration_level: to_confirm
@@ -77618,6 +77655,8 @@ hotspot_catalog:
     - U1069
     - U1070
     - U1073
+    - U1076
+    - U1077
     origin:
       repository: Urbanisation-SCM
       path: connaissance/01-contributions-utilisateur.md
@@ -77630,8 +77669,12 @@ hotspot_catalog:
       note: L'écart à instruire inclut backoffice, réassort et relation client GBM. La disparition de tout Retail GBM, le
         détail de Y2 chez Boardriders et une différence quantifiée de taille de refonte ne sont pas validés. Deux options
         proposées par Laurent, aucune retenue. U1066 valide la lecture simplifiée et les cinq ancres Business Areas déjà décrites
-        par l’analyse d’écart. Usages GBM, modules Y2 et choix de réalisation restent à qualifier. U1069 précise le titre
+        par l’analyse d’écart. Les deux options Retail historiques ne sont pas arbitrées. U1076 propose d’étendre
+        le Core aux responsabilités omnicanales communes et de comparer
+        cette cible à des systèmes de canal autonomes ; aucun choix retenu ni couverture logicielle acquise. Usages GBM,
+        modules Y2 et choix de réalisation restent à qualifier. U1069 précise le titre
         et/ou les deux estimations de complexité ; aucune solution détaillée ni réalisation installée déduite.
+        U1077 porte l’implémentation à XL pour l’option Core omnicanale proposée ; cela ne valide ni sa faisabilité ni son choix.
     gap_analysis:
     - id: hs-032-store-sales
       title: Vente et caisse en magasin
@@ -77866,13 +77909,16 @@ hotspot_catalog:
       finding: Cegid documente Storeland, Winstore et UR chez Beaumanoir, le couplage UR–Storeland, la fidélité et les campagnes
         Storeland/UR, le calcul du stock optimal Storeland et le réassort UR. Y2 propose des fonctions Retail et un module
         Omnicanal acquis et activé séparément ; rien ne démontre son usage Boardriders ni son équivalence installée avec SoCloz
-        ou NewStore. Microsoft et SAP apportent des comparaisons fonctionnelles partielles, sans désigner la cible.
-      flow_assessment: Le choix de réalisation doit couvrir les cinq responsabilités de Retail Commerce sans transférer implicitement
-        à FLOW la caisse, le réseau, la relation client ou les opérations magasin. Stock cible, réassort et commandes exigent
-        une frontière explicite entre Commerce et les décisions Supply du Core.
-      limits: Sources éditeur sur les offres et un cas client Beaumanoir ; elles ne prouvent pas la configuration actuelle
-        par marque, les modules Y2 chez Boardriders, les licences, les coûts ou la faisabilité de migration. Deux autres offres
-        documentent un découpage possible, pas un consensus sur l’architecture cible.
+        ou NewStore. Microsoft, SAP, Oracle, Manhattan, Shopify et commercetools documentent plusieurs architectures
+        omnicanales, dont certaines mutualisent les décisions entre canaux ; aucune ne désigne la cible FLOW.
+      flow_assessment: L’option omnicanale étendrait le mandat actuel de FLOW Core au-delà de Supply Chain Orchestration.
+        Elle peut réutiliser commandes, promesses, affectations et politiques communes, mais doit démontrer la couverture
+        de Commerce, du Retail et du Wholesale. Caisse, paiements, relation client et opérations magasin exigent une
+        frontière explicite ; leur interface spécialisée ne suffit pas à prouver leur prise en charge par le Core.
+      limits: Les documentations Microsoft, SAP, Oracle, Manhattan et Shopify attestent des architectures omnicanales
+        différentes ; elles ne prouvent ni un consensus sur un produit unique, ni la capacité actuelle de FLOW à les réaliser.
+        Les sources éditeur et le cas client Beaumanoir ne prouvent pas la configuration par marque, les modules Y2 chez
+        Boardriders, les licences, les coûts ou la faisabilité de migration.
       sources:
       - publisher: Cegid
         title: Beaumanoir choisit Cegid Retail pour La Halle
@@ -77910,6 +77956,15 @@ hotspot_catalog:
         relevance: Documente un module acquis et activé séparément, puis les options de retrait et d'expédition boutique ;
           aucune activation Boardriders n'est établie.
       - publisher: Microsoft Dynamics 365 Commerce
+        title: Architecture overview
+        url: https://learn.microsoft.com/en-us/dynamics365/commerce/commerce-architecture
+        relevance: Moteur de commerce commun aux canaux magasin et web, avec applications de canal ; appui à la
+          faisabilité conceptuelle, sans preuve de couverture FLOW.
+      - publisher: Microsoft Dynamics 365 Commerce
+        title: Channels overview
+        url: https://learn.microsoft.com/en-us/dynamics365/commerce/channels-overview
+        relevance: Distingue magasin, canal web et centre d’appels ; ne les confond pas avec les lieux de stock.
+      - publisher: Microsoft Dynamics 365 Commerce
         title: Store Commerce app capabilities
         url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce-capabilities
         relevance: Distingue POS, fonctions de siège, stocks et commandes ; appui de comparaison fonctionnelle, non solution
@@ -77923,23 +77978,42 @@ hotspot_catalog:
         url: https://learning.sap.com/courses/exploring-sap-s-4hana-cloud-public-edition-retail/executing-omnichannel-order-fulfillment-for-retail-5fz-_db648c00-65bf-4489-b638-23d3a38a27d7
         relevance: Distingue vente POS, opérations magasin et traitement de commandes ; autre appui de structure, non preuve
           locale.
+      - publisher: Oracle Retail
+        title: Order Orchestration Routing Engine Overview
+        url: https://docs.oracle.com/en/industries/retail/retail-oms-suite-cloud/26.1.101.0/roboh/Locate_overview.htm
+        relevance: Route des commandes issues du magasin, du web ou du centre d’appels vers des lieux d’exécution
+          magasin ou entrepôt ; les composants Oracle restent spécialisés.
+      - publisher: Manhattan Associates
+        title: Manhattan Active Omni
+        url: https://www.manh.com/cceabm
+        relevance: Offre intégrée réunissant POS, commandes, stock et exécution magasin ; assertion éditeur, sans
+          preuve de coût ou d’adéquation au cas FLOW.
+      - publisher: Shopify
+        title: Locations
+        url: https://help.shopify.com/en/manual/inventory-and-locations/locations
+        relevance: Un lieu peut vendre, stocker ou exécuter ; les ventes en ligne sont routées vers des lieux de stock.
+      - publisher: commercetools
+        title: Modeling entities
+        url: https://docs.commercetools.com/learning-model-your-business-structure/model-your-business/modeling-entities
+        relevance: Distingue canaux de stock, contextes de prix et unités commerciales B2B dans un modèle partagé.
       - publisher: SAP
         title: Getting Started Guide for SAP S/4HANA for Customer Management
         url: https://help.sap.com/doc/febdbaab352f47ca86d4eaeae438c094/2.0/en-US/GettingStartedGuide_Customer_Management.pdf
         relevance: Appui partiel à la connaissance client et aux interactions ; ne démontre pas fidélité ni campagnes Retail.
     resolution:
       stage: to_explore
-      summary: La couverture cible Retail GBM doit être établie avant d’opposer une construction spécifique à une extension
-        de Y2. Aucune option n’est qualifiée comme crédible à ce stade.
+      summary: Déterminer d’abord si FLOW Core porte les responsabilités omnicanales communes ou si les systèmes de canal
+        restent autonomes. La couverture Retail GBM et la place de Y2 en découlent. Aucune option n’est retenue.
       credible_option_ids: []
       credibility_note: ''
       blocked_reason: ''
-      next_step: 'Établir une matrice par marque et par Business Area : fonctions réellement utilisées, modules et adaptations,
-        profils et fidélité, stock cible et réassort, autorité des données, flux, volumes, contrats et calendrier de retrait
-        ; corroborer les fonctions actives de Y2 chez Boardriders puis comparer les deux options.'
-      assessment_source: U1048–U1055 — hypothèse et précisions utilisateur confrontées au panorama As Is, au catalogue applicatif
-        et aux documentations éditeur.
-      assessed_on: '2026-10-13'
+      next_step: 'Établir une matrice Retail, eCommerce et Wholesale des parcours, données, décisions, autorités, règles et
+        interfaces ; tester la couverture et les extensions du Core, dont vente magasin, stock, réassort, retour, résilience
+        et relation client. Corroborer les usages par marque et les modules Y2, puis comparer les deux architectures et,
+        si nécessaire, les deux réalisations Retail.'
+      assessment_source: U1048–U1055 et U1076 — hypothèses utilisateur confrontées au panorama As Is, au catalogue
+        applicatif et aux documentations éditeur.
+      assessed_on: '2026-10-14'
     visible: true
   criticality_policy:
     id: matrix-v1

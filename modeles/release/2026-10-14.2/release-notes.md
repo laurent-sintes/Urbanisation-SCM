@@ -1,6 +1,6 @@
-# Urbanisation 2026-10-14.1
+# Urbanisation 2026-10-14.2
 
-77 capacités. Sources : U1075.
+77 capacités. Sources : U1077.
 
 Publication et accord métier restent distincts. Comparaison détaillée disponible dans Git.
 

@@ -1718,6 +1718,7 @@ button.hotspot-qualification:hover {
     transparent 72%
   );
   opacity: 0.72;
+  animation: hotspot-breathe var(--pulse-duration) ease-in-out infinite;
   transition: opacity 160ms;
   pointer-events: none;
 }
@@ -1833,7 +1834,14 @@ button.hotspot-qualification:hover {
 .hotspot-map-point:has(.hotspot-map-marker:hover, .hotspot-map-marker:focus-visible) .hotspot-map-halo,
 .hotspot-map-point.is-expanded .hotspot-map-halo {
   opacity: 0.9;
-  animation: hotspot-breathe var(--pulse-duration) ease-in-out infinite;
+  animation-duration: calc(var(--pulse-duration) / 2);
+  background: radial-gradient(
+    circle,
+    rgb(var(--hotspot-rgb) / 0.4) 0,
+    rgb(var(--hotspot-rgb) / 0.3) 23%,
+    rgb(var(--hotspot-rgb) / 0.18) 48%,
+    transparent 72%
+  );
 }
 .hotspot-cluster-backdrop {
   z-index: 3000;

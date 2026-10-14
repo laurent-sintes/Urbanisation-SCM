@@ -25184,3 +25184,69 @@ Verbatim :
 > Push
 
 Portée : auditer les produits logiciels du catalogue, rechercher et documenter leur identité, leur périmètre, leurs composants, leurs correspondances métier, leurs logos et leurs repères de dates auprès de sources primaires ; appliquer les corrections établies, publier puis envoyer le lot sur GitHub. Les fonctions proposées par l'éditeur restent distinctes des usages, versions et dates de mise en service propres aux SI, qui ne sont pas déduits de la recherche publique. L'autorisation d'appliquer les préconisations ne crée pas d'accord sur une architecture ou un choix de produit.
+
+
+## U1076
+
+Date : 2026-10-14. Source : Laurent, reprise de HS-032 et proposition de périmètre FLOW Core omnicanal.
+
+Verbatim (messages successifs de cette discussion) :
+
+> Je veux reprendre le hotspot sur "la reprise des activités retails dans FLOW oui ou non".
+>
+> Le problème de fond est que dans la définition du périmètre par les produits logiciels, il y a une ambiguité. Je m'explique. Beaumanoir a dit : "on remplace Storeland, SAP ECC et NewStore et Socloz". C'est étrange. Si on suit la logique "vétustée et maintenance logicielle", le périmètre est "Storeland et SAP ECC/AFS". Si on suit une logique périmètre fonctionnelle le périmètre est "Storeland, SAP ECC/AFS, NewStore, SoCloz et CegidY2" = le pilotage de l'ensemble des canaux. Hors, d'après les discussions, Cegid Y2 semble exclus.
+>
+> D'où ce hotspot avec le périmètre de FLOW.
+>
+> Problème 1 : Si on remplace le pilotage réseau de magasin et backoffice magasin par du Make, pourquoi garder Cegid Y2 ?
+> Problème 2 : Comment FLOW Core System saurait gérer un réseau de magasin s'il est pensé comme un coeur ERP ? Il lui manque des fonctionnalités, non ? Réponse au problème 2 : Abstraction et généricité => Un POS physique (pointofsale) a une double fonction dans le réseau : un lieu de stockage avec des flux amont / aval et un point de vente. FLOW sait gérer les deux. Un OMS c'est un seul point de vente pour plusieurs lieux de stockage, ce n'est qu'un cas particulier. Les plateformes modernes, via un modèle abstrait, gérer un backoffice omnicanal facilement. Les frontend peuvent être différents mais un back omnicanal est envisageable. Dans ce cas, le périmètre de convergence est, à terme, bcp plus important.
+>
+> Je voudrais ton avis sur cette réflexion.
+
+> Je voudrais que la thèse soit étayée par le marché et pas que par SAP. Microsoft Dynamics gère t il tout point de stockage et de vente également ? Que font les autres ?
+
+> L'hypothèse qu'avait en tete le client (Beaumanoir) était :&#x20;
+>
+> - un socle ERP commun
+> - Des systèmes différents selon le canal : Retail/magasin - OMS (eCommerce) - Wholesale => qui gèrent leur propre stock / politique etc.
+>
+> L'idée est de bousculer cette approche pour préconiser une option : tout est dans le socle (FLOW Core System), les spécificités des canaux sont dans le paramétrage et les frontends.
+
+> Quand on regarde le périmètre de l'orchestration, on y est presque ;)
+>
+> Tu saurais reprendre le hotspot ?
+
+> Intégrer au backlog
+
+Portée : proposer dans HS-032 l'option d'un FLOW Core omnicanal, où les responsabilités communes des canaux sont dans le socle et les différences dans le paramétrage et les interfaces. Comparer cette option à l'hypothèse de systèmes de canal autonomes, puis traiter le choix du produit Retail comme conséquence. Les formulations sur l'usage de Cegid Y2 et la couverture actuelle de FLOW sont des hypothèses à vérifier ; aucune option n'est arbitrée, aucun déploiement ni économie ne sont établis.
+
+
+## U1077
+
+Date : 2026-10-14. Source : Laurent, hiérarchisation des complexités des hotspots visibles.
+
+Verbatim :
+
+> JE pense que c'est le hotspot le plus important. Arbitrage XL et implémentation XL.
+>
+> Les 7 autres hotspot doivent nécessairement avoir un arbitrage L et moins.
+>
+> Les reprises CBS et Sarenza sont en arbitrage S à mon avis.
+>
+> Tu peux me donner un avis ?
+
+Après examen des critères et des questions ouvertes, Codex a proposé HS-032 XL/XL, HS-002 L/L, HS-024 CBS M/M et HS-033 S/M sous l'hypothèse que Sarenza conserve la responsabilité de ses parcours de service client. Cette proposition distinguait l'arbitrage de CBS, encore partagé avec FLOW autour de Purchase Order, du cas Sarenza potentiellement local.
+
+Verbatim de validation de cette proposition :
+
+> Go
+
+Précision ultérieure de Laurent :
+
+> Je veux que ce hotspot dont on vient de parler soit le seul à criticité XL.
+
+Pour atteindre ce résultat avec la matrice existante, Codex a présenté deux voies : réviser la matrice ou réestimer les autres hotspots. Réponse de Laurent :
+
+> Réestimer les autres hotspots
+
+Portée : conserver la matrice et réestimer les huit hotspots visibles pour que HS-032 soit le seul de criticité XL. HS-032 passe à XL/XL ; les sept autres gardent un arbitrage inférieur à XL et une criticité inférieure à XL. CBS reste M/M car l'autorité sur Purchase Order entre CBS et FLOW n'est pas un accord local S sur les éléments connus. Le S de Sarenza est conditionnel ; tout transfert de responsabilité du service client impose un réexamen. Les notes relatives du carnet Wholesale, Négoces et Finance n'effacent pas leur difficulté de réalisation et doivent être réexaminées si des contraintes majeures apparaissent. Aucune Option de résolution n'est retenue et aucune publication ou opération Git n'est demandée.

@@ -1,0 +1,31 @@
+id: hotspot-core-omnichannel-U1076
+date: '2026-10-14'
+status: applied_to_backlog
+source_refs: [U1076, U1048, U1073]
+scope: Reprendre HS-032 autour de l'arbitrage entre systèmes de canal autonomes et FLOW Core omnicanal, puis conditionner le choix Retail à cette frontière.
+assessment:
+  observation: Le Core courant porte Supply Chain Orchestration ; il couvre déjà commandes, promesses, affectations et politiques d'usage du stock, mais ne couvre pas par ce seul fait toute l'exploitation du commerce et des magasins.
+  proposal: FLOW Core omnicanal est une option de convergence proposée par Laurent ; les systèmes de canal autonomes représentent l'hypothèse initiale rapportée pour comparaison.
+  consequence: Le choix construire un produit Retail ou étendre Y2 ne se pose qu'après la décision sur les responsabilités communes du Core et les fonctions résiduelles de canal.
+  boundary: Aucune option retenue ; ni couverture installée, ni coûts, ni faisabilité de migration déduits du marché.
+market_comparison:
+  microsoft: Dynamics 365 Commerce documente un moteur commun aux canaux physiques et numériques, des entrepôts associés aux canaux, et une orchestration distribuée ; il ne démontre pas la couverture actuelle de FLOW.
+  sap: SAP S/4HANA Retail décrit stock, opérations magasin, vente POS et retrait de commandes en ligne ; il distingue les échanges avec les systèmes de caisse.
+  oracle: Oracle Order Orchestration distingue lieu d'origine, lieu de stock, lieu de retrait et routage entre magasins et entrepôts ; ses composants restent spécialisés.
+  manhattan: Manhattan Active Omni annonce une plateforme commune couvrant POS, commandes, stock et exécution magasin ; déclaration éditeur, sans preuve d'adéquation locale.
+  shopify: Shopify modélise des lieux pouvant vendre, stocker ou exécuter, avec un routage des commandes en ligne ; granularité et contexte différents de FLOW.
+  commercetools: Les canaux de stock, contextes de prix et unités B2B sont distingués dans un modèle partagé ; ne prouve pas que tous les processus de canal sont paramétrables.
+glossary_alignment: Termes Commerce, Retail, Wholesale, POS, OMS et Supply Chain Orchestration relus dans le modèle et le glossaire ; ce lot propose une frontière de réalisation sans renommer les notions métier.
+publication_delivery:
+  state: applied
+  source_refs: [U1076]
+  summary: HS-032 présente l'arbitrage omnicanal en amont et conserve deux options conditionnelles de réalisation Retail.
+  required_catalog:
+  - collection: hotspots
+    id: HS-032
+    content_sha256: caf6d5b59dfdaaff19a7e0be3f7f1657d25cb329efe692920e8ef9e44aa7c912
+  supersedes_requirements:
+  - annex: visible-hotspots-editorial-U1073.yaml
+    collection: hotspots
+    id: HS-032
+    fields: [content_sha256]
