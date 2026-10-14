@@ -196,6 +196,13 @@ try {
         }
       const overview = document.querySelector('.urbanisation-overview.layout-fixed');
       if (overview) {
+        const instances = [...overview.querySelectorAll('.hotspot-map-marker[data-hotspot-ids]')].flatMap((marker) =>
+          marker.dataset.hotspotIds.split('|'),
+        );
+        for (const id of expectedIds) {
+          const count = instances.filter((value) => value === id).length;
+          if (count !== 1) failures.push(`hotspot-instances:${id}:${count}`);
+        }
         const accounting = overview.querySelectorAll('.hotspot-map-marker[data-hotspot-ids="HS-021"]');
         const accountingRibbon = overview.querySelector(
           '[data-sharing-ids*="REL-U981-accounting-facts"] .data-sharing-ribbon',

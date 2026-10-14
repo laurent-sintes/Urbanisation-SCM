@@ -194,11 +194,13 @@ export function Overview({
   const dataSharing = useMemo(() => systemDataSharing(model), [model]);
   const exchangeHotspots = useMemo(
     () =>
-      visibleHotspots.flatMap((hotspot) => {
-        const exchange = hotspotDataSharing(hotspot, dataSharing);
-        return exchange ? [{ hotspot, exchangeId: exchange.id }] : [];
-      }),
-    [visibleHotspots, dataSharing],
+      visibleHotspots
+        .filter((hotspot) => !hotspot.location.node_ids.includes(universe?.id || ''))
+        .flatMap((hotspot) => {
+          const exchange = hotspotDataSharing(hotspot, dataSharing);
+          return exchange ? [{ hotspot, exchangeId: exchange.id }] : [];
+        }),
+    [visibleHotspots, dataSharing, universe],
   );
   const exchangeHotspotIds = useMemo(
     () => new Set(exchangeHotspots.map(({ hotspot }) => hotspot.id)),
@@ -209,8 +211,26 @@ export function Overview({
     [exchangeHotspots],
   );
   const cardHotspots = useMemo(
-    () => visibleHotspots.filter((hotspot) => !exchangeHotspotIds.has(hotspot.id)),
-    [visibleHotspots, exchangeHotspotIds],
+    () =>
+      visibleHotspots.filter(
+        (hotspot) => !exchangeHotspotIds.has(hotspot.id) && !hotspot.location.node_ids.includes(universe?.id || ''),
+      ),
+    [visibleHotspots, exchangeHotspotIds, universe],
+  );
+  const cardHotspotSystems = useMemo(
+    () =>
+      new Map(
+        cardHotspots.flatMap((hotspot) => {
+          const candidates = hotspot.location.node_ids.flatMap((id, index) => {
+            const lineage = lineageOf(model, id);
+            const system = systems.find((item) => lineage.some((node) => node.id === item.id));
+            return system ? [{ systemId: system.id, depth: lineage.length, index }] : [];
+          });
+          candidates.sort((left, right) => right.depth - left.depth || left.index - right.index);
+          return candidates[0] ? [[hotspot.id, candidates[0].systemId] as const] : [];
+        }),
+      ),
+    [cardHotspots, model, systems],
   );
   const exchangeInsets = useMemo(
     () =>
@@ -298,11 +318,7 @@ export function Overview({
           height: rect.height + 20 * scale,
         });
       }
-      const markers = cardHotspots.filter((hotspot) =>
-        hotspot.location.node_ids.some(
-          (id) => id === system.id || lineageOf(model, id).some((node) => node.id === system.id),
-        ),
-      );
+      const markers = cardHotspots.filter((hotspot) => cardHotspotSystems.get(hotspot.id) === system.id);
       const targetsById = new Map(
         [...article.querySelectorAll<HTMLElement>('[data-map-item-id]')].flatMap((element) => {
           const id = element.dataset.mapItemId;
@@ -343,7 +359,17 @@ export function Overview({
       next[system.id] = { groups: layoutHotspots(anchors, bounds) };
     }
     setMarkerPlacement((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));
-  }, [systems, cardHotspots, model, detail, availableWidth, measurementVersion, clusterExpanded, scale]);
+  }, [
+    systems,
+    cardHotspots,
+    cardHotspotSystems,
+    model,
+    detail,
+    availableWidth,
+    measurementVersion,
+    clusterExpanded,
+    scale,
+  ]);
   return (
     <section
       ref={section}
@@ -399,21 +425,7 @@ export function Overview({
         aria-label="Carte des systèmes métier"
         tabIndex={0}
       >
-        {hotspotFilters.enabled && (
-          <HotspotLegend
-            count={visibleHotspots.length}
-            projections={systems.reduce(
-              (total, system) =>
-                total +
-                cardHotspots.filter((hotspot) =>
-                  hotspot.location.node_ids.some(
-                    (id) => id === system.id || lineageOf(model, id).some((node) => node.id === system.id),
-                  ),
-                ).length,
-              rootHotspots.length + exchangeHotspots.length,
-            )}
-          />
-        )}
+        {hotspotFilters.enabled && <HotspotLegend count={visibleHotspots.length} />}
         {rootHotspots.length > 0 && (
           <div
             className="overview-global-hotspots"
@@ -495,10 +507,8 @@ export function Overview({
             <OverviewColumns slots={systemSlots}>
               {displayedSystems.map((system, index) => {
                 const systemSlot = systemSlots?.[index];
-                const systemHotspots = cardHotspots.filter((hotspot) =>
-                  hotspot.location.node_ids.some(
-                    (anchor) => anchor === system.id || lineageOf(model, anchor).some((node) => node.id === system.id),
-                  ),
+                const systemHotspots = cardHotspots.filter(
+                  (hotspot) => cardHotspotSystems.get(hotspot.id) === system.id,
                 );
                 const groups = markerPlacement[system.id]?.groups || [];
                 const domains = childrenOf(model, system.id).filter((node) => node.kind === 'domain');

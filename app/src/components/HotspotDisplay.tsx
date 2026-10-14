@@ -781,7 +781,7 @@ export function HotspotMapMarker({
   );
 }
 
-export function HotspotLegend({ count, projections }: { count: number; projections?: number }) {
+export function HotspotLegend({ count }: { count: number }) {
   return (
     <div className="hotspot-map-legend" role="group" aria-label="Légende des points chauds">
       <span>
@@ -797,9 +797,6 @@ export function HotspotLegend({ count, projections }: { count: number; projectio
       ))}
       <span>
         {count} fiche{count > 1 ? 's' : ''}
-        {projections !== undefined && projections !== count
-          ? ` · ${projections} repères (un point peut concerner plusieurs systèmes)`
-          : ''}
       </span>
     </div>
   );
