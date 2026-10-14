@@ -55,9 +55,9 @@ class HotspotCatalogTests(unittest.TestCase):
         self.assertEqual(set(other['location']['node_ids']), {'domain-logistics-execution', 'D06'})
         parents = {r['target_id']: r['source_id'] for r in self.model['relations'] if r['type'] == 'contains'}
         self.assertEqual(parents['ba-service-planning'], 'D06')
-        self.assertEqual(hotspot['complexity']['arbitration'], 'XL')
+        self.assertEqual(hotspot['complexity']['arbitration'], 'M')
         self.assertEqual(hotspot['complexity']['implementation'], 'L')
-        self.assertEqual(hotspot['severity'], severity_for('XL', 'L'))
+        self.assertEqual(hotspot['severity'], severity_for('M', 'L'))
 
     def test_matrix_preserves_unknown_complexity(self):
         self.assertEqual(severity_for('S', 'M'), 'M')
@@ -67,7 +67,11 @@ class HotspotCatalogTests(unittest.TestCase):
     def test_retail_assessment_and_legacy_axis(self):
         item = next(h for h in self.model['hotspot_catalog']['hotspots'] if h['id'] == 'HS-032')
         self.assertEqual((item['complexity']['arbitration'], item['complexity']['implementation'], item['severity']),
-                         ('XL', 'L', 'XL'))
+                         ('XL', 'XL', 'XL'))
+        self.assertEqual(
+            {hotspot['id'] for hotspot in self.model['hotspot_catalog']['hotspots']
+             if hotspot.get('visible', True) and hotspot['severity'] == 'XL'},
+            {'HS-032'})
         legacy = copy.deepcopy(self.model)
         for hotspot in legacy['hotspot_catalog']['hotspots']:
             complexity = hotspot['complexity']
@@ -82,17 +86,21 @@ class HotspotCatalogTests(unittest.TestCase):
         self.assertEqual(items['HS-033']['location']['node_ids'], ['D04.i', 'D04.l'])
         self.assertIn('Les ancres de la carte ne couvrent que', items['HS-033']['problem'])
         self.assertIn('avant-vente sans commande', items['HS-033']['problem'])
-        for identifier in ('HS-024', 'HS-033'):
-            self.assertEqual((items[identifier]['complexity']['arbitration'],
-                              items[identifier]['complexity']['implementation'], items[identifier]['severity']),
-                             ('L', 'M', 'L'))
+        self.assertEqual((items['HS-024']['complexity']['arbitration'],
+                          items['HS-024']['complexity']['implementation'], items['HS-024']['severity']),
+                         ('M', 'M', 'L'))
+        self.assertEqual((items['HS-033']['complexity']['arbitration'],
+                          items['HS-033']['complexity']['implementation'], items['HS-033']['severity']),
+                         ('S', 'M', 'M'))
         self.assertEqual(items['HS-024']['title'], 'Réintégration CBS sur Flow Core System')
         self.assertEqual(items['HS-033']['title'], 'Réintégration Service Client Sarenza sur Flow Core System')
 
     def test_retail_map_anchors_cover_each_documented_gap_without_assuming_installed_usage(self):
         hotspot = next(h for h in self.model['hotspot_catalog']['hotspots'] if h['id'] == 'HS-032')
         subjects = {gap['subject_node_id'] for gap in hotspot['gap_analysis']}
-        self.assertEqual(set(hotspot['location']['node_ids']), subjects)
+        anchors = set(hotspot['location']['node_ids'])
+        self.assertTrue(subjects.issubset(anchors))
+        self.assertEqual(anchors - subjects, {'subdomain-sales-wholesale', 'supply-chain-orchestration'})
         self.assertTrue(all(o['system_coverage'] == 'not_assessed'
                             for gap in hotspot['gap_analysis'] for o in gap['observations_by_context']))
 
@@ -221,7 +229,7 @@ class HotspotCatalogTests(unittest.TestCase):
         visible = {item['id']: item for item in model['hotspot_catalog']['hotspots'] if item.get('visible', True)}
         self.assertEqual(set(visible), {'HS-002', 'HS-011', 'HS-008', 'HS-020', 'HS-021', 'HS-024', 'HS-033', 'HS-032'})
         self.assertEqual({key: len(visible[key]['problems']) for key in ('HS-008', 'HS-021', 'HS-032')},
-                         {'HS-008': 3, 'HS-021': 3, 'HS-032': 2})
+                         {'HS-008': 3, 'HS-021': 3, 'HS-032': 3})
         for item in visible.values():
             self.assertTrue(item['problems'], item['id'])
             self.assertTrue(all(problem['question'].endswith('?') and len(problem['option_ids']) <= 2
