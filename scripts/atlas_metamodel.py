@@ -159,9 +159,16 @@ def _constraints(model):
     add('PRINCIPLE-REQUIRED-BUSINESS-AREA', 'capability-parent', 'capability',
         'Chaque capacité a exactement une Business Area par contains ; aucun rattachement direct au sous-domaine.',
         {'parent': {'min': 1, 'max': 1}})
+    capability_domains = [n['id'] for n in model.get('nodes', []) if n.get('kind') == 'domain'
+                          and n.get('fields', {}).get('modeling_depth') == 'capabilities']
+    depth_statement = 'Supply Chain Orchestration est détaillé jusqu’aux comportements.'
+    if capability_domains:
+        depth_statement += ' Les domaines ' + ', '.join(capability_domains) + ' sont détaillés jusqu’aux capacités.'
+    if context_domains:
+        depth_statement += ' Les domaines explicitement marqués business_areas peuvent décrire des Business Areas terminales de contexte.'
+    depth_statement += ' Les autres restent limités à leur profondeur déclarée.'
     add('PRINCIPLE-ORCHESTRATION-DETAIL', 'orchestration-detail-scope', 'business_area/capability/behavior',
-        ('Supply Chain Orchestration est détaillé jusqu’aux capacités et comportements. Les domaines explicitement marqués business_areas peuvent décrire des Business Areas terminales de contexte ; les autres restent limités aux sous-domaines.'
-         if context_domains else 'Seul Supply Chain Orchestration est détaillé en Business Areas, capacités et comportements ; les autres systèmes et domaines restent décrits jusqu’aux sous-domaines utiles.'))
+        depth_statement)
     add('PRINCIPLE-DIFFERENTIATING-BEHAVIORS', 'capability-behaviors', 'capability',
         'Une capacité possède zéro ou au moins deux comportements différenciants.',
         {'behavior_children': {'allowed': [0, '2..*']}})

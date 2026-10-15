@@ -257,9 +257,9 @@ def validate_urbanism(model, sources, schema=None, *, require_function_mapping=F
         if level is not None and role != "urbanism_level":
             errors.append(f"nodes/{identifier}: level_ref is not a presentation grouping")
         if 'modeling_depth' in fields:
-            if (node.get('kind') not in ('business_system', 'domain') or fields['modeling_depth'] not in ('context', 'domains', 'business_areas', 'behaviors')
-                    or fields['modeling_depth'] == 'business_areas' and node.get('kind') != 'domain'):
-                errors.append(f'nodes/{identifier}: modeling_depth requires a business system/domain and context/domains/behaviors; business_areas requires a domain')
+            if (node.get('kind') not in ('business_system', 'domain') or fields['modeling_depth'] not in ('context', 'domains', 'business_areas', 'capabilities', 'behaviors')
+                    or fields['modeling_depth'] in ('business_areas', 'capabilities') and node.get('kind') != 'domain'):
+                errors.append(f'nodes/{identifier}: modeling_depth requires a business system/domain and context/domains/behaviors; business_areas/capabilities require a domain')
     # U757 opts current models into exhaustive presentation categories; frozen models remain unchanged.
     if any(p.get('id') == 'PRINCIPLE-CAPABILITY-CATEGORY' for p in model.get('principles', [])):
         for identifier, node in nodes.items():

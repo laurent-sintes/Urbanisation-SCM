@@ -25283,3 +25283,45 @@ Demande de mise en œuvre :
 > ok, pret à produire le hotspot ?
 
 Portée : créer un point chaud dans le backlog sur l'autorité des données et l'intégration des référentiels de Supply Chain Orchestration, avec arbitrage M et implémentation XL. Laurent rapporte des problèmes déjà constatés dans les SI existants, sans fournir ici d'exemples ou de diagnostic technique précis. Les répartitions d'autorité et la gestion des données maîtres intégrée à Supply sont des propositions à instruire, non des décisions acquises. La matrice courante donne une criticité XL ; cette nouvelle contribution conduit à réexaminer l'objectif antérieur de HS-032 seul point chaud visible XL. Aucune publication ni opération Git n'est demandée.
+
+
+## U1079
+
+Date : 2026-10-15. Source : Laurent, profondeur de modélisation de Business Operations.
+
+Verbatim :
+
+> Je souhaite avoir le niveau capacité pour toutes les BA du systeme Business Operation
+
+Précision de périmètre, en réponse à la question sur Demand & Supply Planning :
+
+> Inclure aussi Demand & Supply Planning
+
+Portée : développer jusqu'aux capacités les Business Areas existantes de Business Operations et créer les Business Areas nécessaires dans Demand & Supply Planning avant leurs capacités, en conservant les frontières métier établies et sans déduire de réalisation installée. Cette demande remplace, dans Business Operations, les anciennes limites aux Business Areas terminales de contexte et aux seuls sous-domaines de Demand & Supply Planning. Elle ne modifie pas la profondeur du système Logistics.
+
+
+## U1080
+
+Date : 2026-10-15. Source : Laurent, discussion sur la place de la planification et du carnet de commandes dans FLOW.
+
+Verbatim (messages successifs de cette discussion) :
+
+> Demand & Supply Planning : on pense qu'il y a une planification stratégique côté Développement et une planification opérationnelle. Qu'en penses-tu ? La planification opérationnelle c'est le master plan ? Si oui, Demand & Supply Planning est stratégique et doit être déplacé, non ?
+
+> Dans Microsoft Dynamics 365, MAster Plan gère tout ?
+
+> Le plan prévisionnel, il est où ?
+
+> Le master plan il est dans quel domaine chez microsoft ? Supply Chain ?
+
+> Dans Flow, Master Planning me semble un peu noyé.
+
+> Je pense que les problématiques de planification et des gestion de carnet de commande doit etre mise en exergue.
+> Le domaine Demand & Supply Planning est trop mis en exergue.
+> J'aime l'approche master plan microsoft car c'est vrai que centraliser la planification et l'optimisation est sans doute plus efficace que de disperser les responsabilités.
+
+Validation de la proposition construite pendant la discussion :
+
+> Je valide
+
+Portée : accord sur la mise en exergue de Planning & Optimization et Order Backlog comme sous-domaines de Supply Chain Orchestration, le repositionnement des responsabilités de Demand & Supply Planning dans Planning & Optimization et la centralisation cible de la planification et de l'optimisation dans FLOW Core. La composition des collections reste dans Design & Development ; les engagements de commande restent dans Order Management. L'accord porte sur cette structure et ces frontières, sans démontrer un gain d'efficacité, imposer un moteur unique ni attester une réalisation installée. Les rédactions détaillées et correspondances marché ajoutées lors de l'intégration demeurent proposées. Aucune release, opération Git ou déploiement n'est demandé.

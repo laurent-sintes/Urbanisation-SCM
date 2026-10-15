@@ -1,3 +1,560 @@
 schema_version: 1.0.0
-intents: []
+intents:
+- id: INT-U1080-N-planning-optimization
+  author: Laurent
+  decided_at: '2026-10-15'
+  recorded_at: '2026-10-15'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U1080
+  note: Planning & Optimization validé comme sous-domaine visible de Supply Chain Orchestration ; les textes détaillés restent
+    proposés.
+  target:
+    collection: nodes
+    id: domain-plan
+    approved_fields:
+    - name
+    values:
+      name: Planning & Optimization
+    value_sha256:
+      name: 9208f12d170e9a01f5e7b0a0b29ab006e0a5196774a1c9568ab5d3a4487ddab3
+    context:
+      format: semantic-sha256-v1
+      target: 28beadff7327b7fcbbc350b54de0a39afe3ba6d7fd8d7f25851dcced299fe834
+      principles: e54ec1e9f6108c55f0a84c8a53deff43dafb6a5b12b319ea9c82fe4315775f49
+      glossary: aeda27905285750a05d3669f280b7e6bdd92813322080f453391feb6ad336b8d
+      incident_relations:
+        REL-U1080-PARENT-ba-demand-forecast-management: 7aa0957ce481bf6850a9985666575ed786f4a163697f987f5f9b11e6ba481b63
+        REL-U1080-PARENT-ba-master-plan-management: ca1449dc00b876636fd2418b820535447a107634056b7741762604dc7eb6d0c9
+        REL-U1080-PARENT-ba-physical-stock-configuration-optimization: 7395b2ba00510015d7179ad039bf15423ffe5ade7ab749f05db7724e03a05ec7
+        REL-U1080-PARENT-ba-planning-reconciliation: 945b73932248fe30d5df8a01c4caf80c8a9ee4c453a288af7bb94e7fc407fe7b
+        REL-U1080-PARENT-ba-supply-resource-planning: 4d0493da78790ecb0c94a67adf9c0733b3abeef7e33dc7795863c021d020ccf4
+        REL-U1080-PRESENTS-planning-optimization: 64fe23e94211911de59bacf978466ef01eb6a6fe9ec2618be56218fdd9cdda6e
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U794-PLAN-INGESTION: 098d5d9b11b1f3c09e4087bee9b904521734456faeefa04b7c992aadb50b32b5
+        REL-U826-planning-data-provision-TO-domain-plan: a65379dfb985469471a76f22ccef89b74ef4b9a01d3beaee1361d4f93a49d8c3
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+      related_nodes:
+        ba-demand-forecast-management: a358e712ec2379a491e8fa803d36cbe61e08e42689f005f6108d252bc33cab5a
+        ba-master-plan-management: 84bffe9b3f8b60fe7273adea39a2eb055e7f7a615513824051ce681cb21b1dd7
+        ba-physical-stock-configuration-optimization: cf81872044069676a6fd338b4e441a05e83c5f4fd55dabc6aae1d041fe6b1db5
+        ba-planning-reconciliation: 325f2f4aed20608c37577c7a877d54b54ae2d1b3d5f071e4f83fd3e4e81d0aa4
+        ba-supply-resource-planning: 3654da82e9c25953621d8f807647fd16bee6e51ae397894b2eb507423abe2258
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        supply-chain-orchestration: 824acc9aba5e32420d0cf0282c0d8bebe6677849f83affad87e7e057dd498ac6
+        system-business-operations: 96ead25890a20adfdd239dbc3e6ed1879983d28496df71c5eb256cbfa9b2739e
+    context_sha256: 3343a9019e577ff7fd06e3d3a77e47ade2f3561ce7c07e3db59fadf97cb4112f
+- id: INT-U1080-N-order-backlog
+  author: Laurent
+  decided_at: '2026-10-15'
+  recorded_at: '2026-10-15'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U1080
+  note: Order Backlog validé comme sous-domaine visible de Supply Chain Orchestration ; les textes détaillés restent proposés.
+  target:
+    collection: nodes
+    id: subdomain-order-backlog
+    approved_fields:
+    - name
+    values:
+      name: Order Backlog
+    value_sha256:
+      name: cced2b1bb2123aac0d757f949ea7ed9e51776f4e51000d811116d79c39fc5f96
+    context:
+      format: semantic-sha256-v1
+      target: e48c8d5e9861227a5e82100bb3eda1b80ccaac51bc213549abae45abcb52f53d
+      principles: e54ec1e9f6108c55f0a84c8a53deff43dafb6a5b12b319ea9c82fe4315775f49
+      glossary: aeda27905285750a05d3669f280b7e6bdd92813322080f453391feb6ad336b8d
+      incident_relations:
+        REL-U1080-PARENT-ba-order-backlog-management: fabe6f4adbd17fedd872e360d7f79212717d31003fdc449379dbae9add8bef86
+        REL-U1080-PRESENTS-order-backlog: 7a2cecae5d9bac029dd2c2ab89eb795d637c9681d7f9a0b944cf8bfcf03af6b9
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+      related_nodes:
+        ba-order-backlog-management: 8f80ad5dae555c8aa20998825730733cf62226a98824571b45210ee6ed58e9fe
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        supply-chain-orchestration: 824acc9aba5e32420d0cf0282c0d8bebe6677849f83affad87e7e057dd498ac6
+        system-business-operations: 96ead25890a20adfdd239dbc3e6ed1879983d28496df71c5eb256cbfa9b2739e
+    context_sha256: ab4a704098951eeafd6c0bd13085d6d82d14268be57207cbb2167a487bd6a03c
+- id: INT-U1080-R-planning-optimization
+  author: Laurent
+  decided_at: '2026-10-15'
+  recorded_at: '2026-10-15'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U1080
+  note: Rattachement du sous-domaine Planning & Optimization validé.
+  target:
+    collection: relations
+    id: REL-U1080-PRESENTS-planning-optimization
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: supply-chain-orchestration
+      target_id: domain-plan
+      type: presents
+    value_sha256:
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
+      target_id: e894b6449033bf9bf18c064fd19edfbb5a66124d73c9a8a2794a966df4789649
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    context:
+      format: semantic-sha256-v1
+      target: 64fe23e94211911de59bacf978466ef01eb6a6fe9ec2618be56218fdd9cdda6e
+      principles: e54ec1e9f6108c55f0a84c8a53deff43dafb6a5b12b319ea9c82fe4315775f49
+      glossary: aeda27905285750a05d3669f280b7e6bdd92813322080f453391feb6ad336b8d
+      incident_relations:
+        REL-U1080-PARENT-ba-demand-forecast-management: 7aa0957ce481bf6850a9985666575ed786f4a163697f987f5f9b11e6ba481b63
+        REL-U1080-PARENT-ba-master-plan-management: ca1449dc00b876636fd2418b820535447a107634056b7741762604dc7eb6d0c9
+        REL-U1080-PARENT-ba-physical-stock-configuration-optimization: 7395b2ba00510015d7179ad039bf15423ffe5ade7ab749f05db7724e03a05ec7
+        REL-U1080-PARENT-ba-planning-reconciliation: 945b73932248fe30d5df8a01c4caf80c8a9ee4c453a288af7bb94e7fc407fe7b
+        REL-U1080-PARENT-ba-supply-resource-planning: 4d0493da78790ecb0c94a67adf9c0733b3abeef7e33dc7795863c021d020ccf4
+        REL-U1080-PRESENTS-order-backlog: 7a2cecae5d9bac029dd2c2ab89eb795d637c9681d7f9a0b944cf8bfcf03af6b9
+        REL-U1080-PRESENTS-planning-optimization: 64fe23e94211911de59bacf978466ef01eb6a6fe9ec2618be56218fdd9cdda6e
+        REL-U673-PRESENTS-subdomain-policies: 6ce7f1d4bd8a3e98259f288f9bb86384481240ca5013a7bfb616bc2da8149c3d
+        REL-U682-PRESENTS-SERVICE-ORDERS: a02703567b7e7b6514adc3aa63c20e7254665283cbd1147dde8a722709b862a9
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U794-PLAN-INGESTION: 098d5d9b11b1f3c09e4087bee9b904521734456faeefa04b7c992aadb50b32b5
+        REL-U826-planning-data-provision-TO-domain-plan: a65379dfb985469471a76f22ccef89b74ef4b9a01d3beaee1361d4f93a49d8c3
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U885-PARENT-subdomain-process-management: de91f336471b8a953f120b7fa0f53540e2f18488addb530f91573d033009c71d
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-UNIVERSE-SUPPLY-D01: a8638c76de32bb8d785edae075cc0695a8b5018ba35e97c757b3fb2948b04076
+        REL-UNIVERSE-SUPPLY-D03: d1bc4c0258dff4689610b4b5e8b3b618a2b1cdf7c32d6f10dca4979aef94b94e
+        REL-UNIVERSE-SUPPLY-D04: 14e88a5905c33eeafccfab665867f8fe3f6cd2d479c2958e11b64777bf011977
+        REL-UNIVERSE-SUPPLY-D06: a0fc02f7e8d45fc4a4d2a15014a0b11c0f0526b4760e95cf4f6c455d3ff0ea83
+        REL-UNIVERSE-SUPPLY-business-references: b230a48f8d30c1c227481793ce51ef4e2030ed6a2b8ff3492450a35a16a691bf
+      related_nodes:
+        D01: e432caf10ef8cb7b079a72afcf7d15579dacce4b656599a63266700e8b735c62
+        D03: 7ed57215713054713d4474ac0ee74c15c871477a0a52a29c89cff7a8de3c8a88
+        D04: 79f8670aa65cf090d37fa9160e29bb5f5e3a4462acfb17535ecc99d3f180b243
+        D06: b4077305f5819bb31d90a65de740015029cfe2ac1d98a4721434e594c12c0021
+        ba-demand-forecast-management: a358e712ec2379a491e8fa803d36cbe61e08e42689f005f6108d252bc33cab5a
+        ba-master-plan-management: 84bffe9b3f8b60fe7273adea39a2eb055e7f7a615513824051ce681cb21b1dd7
+        ba-physical-stock-configuration-optimization: cf81872044069676a6fd338b4e441a05e83c5f4fd55dabc6aae1d041fe6b1db5
+        ba-planning-reconciliation: 325f2f4aed20608c37577c7a877d54b54ae2d1b3d5f071e4f83fd3e4e81d0aa4
+        ba-supply-resource-planning: 3654da82e9c25953621d8f807647fd16bee6e51ae397894b2eb507423abe2258
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        business-references: 0535fa5cc3f5bc418f14878bd41a12ad1082e248f53d5b9763abef6c07407c79
+        domain-plan: 28beadff7327b7fcbbc350b54de0a39afe3ba6d7fd8d7f25851dcced299fe834
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        subdomain-order-backlog: e48c8d5e9861227a5e82100bb3eda1b80ccaac51bc213549abae45abcb52f53d
+        subdomain-policies: 579d3d1c839b7ae0d24dcc905b968e66bf1b9df091bdf3d8733fd3efad6b7053
+        subdomain-process-management: bb87d2bfd2ade8a34ee44bcddc052067d4b824c254a40bfed89fa6df12217726
+        subdomain-service-orders: e526dc60c594cab76ca2f1ad692b8f20cb22ef1f8e98406252e807418ed14010
+        supply-chain-orchestration: 824acc9aba5e32420d0cf0282c0d8bebe6677849f83affad87e7e057dd498ac6
+        system-business-operations: 96ead25890a20adfdd239dbc3e6ed1879983d28496df71c5eb256cbfa9b2739e
+    context_sha256: ce409e71b6ba24c0125189e592cdb16362c48994aaa9d5d739d80168882b7f4a
+- id: INT-U1080-R-order-backlog
+  author: Laurent
+  decided_at: '2026-10-15'
+  recorded_at: '2026-10-15'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U1080
+  note: Rattachement du sous-domaine Order Backlog validé.
+  target:
+    collection: relations
+    id: REL-U1080-PRESENTS-order-backlog
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: supply-chain-orchestration
+      target_id: subdomain-order-backlog
+      type: presents
+    value_sha256:
+      source_id: 702dd24cff814f0b14bf389a7833628e2cbca67938d1ba90e3a0e4da9017341a
+      target_id: 04ebf8f07ef5b4e5ead75d19fafb376c19b6ab458c0884405af15c93535ec1db
+      type: 1346f9a6e83122d4948929d5b8c0a9ae9f38e9bdaebf0d64d15a196a8d50591a
+    context:
+      format: semantic-sha256-v1
+      target: 7a2cecae5d9bac029dd2c2ab89eb795d637c9681d7f9a0b944cf8bfcf03af6b9
+      principles: e54ec1e9f6108c55f0a84c8a53deff43dafb6a5b12b319ea9c82fe4315775f49
+      glossary: aeda27905285750a05d3669f280b7e6bdd92813322080f453391feb6ad336b8d
+      incident_relations:
+        REL-U1080-PARENT-ba-order-backlog-management: fabe6f4adbd17fedd872e360d7f79212717d31003fdc449379dbae9add8bef86
+        REL-U1080-PRESENTS-order-backlog: 7a2cecae5d9bac029dd2c2ab89eb795d637c9681d7f9a0b944cf8bfcf03af6b9
+        REL-U1080-PRESENTS-planning-optimization: 64fe23e94211911de59bacf978466ef01eb6a6fe9ec2618be56218fdd9cdda6e
+        REL-U673-PRESENTS-subdomain-policies: 6ce7f1d4bd8a3e98259f288f9bb86384481240ca5013a7bfb616bc2da8149c3d
+        REL-U682-PRESENTS-SERVICE-ORDERS: a02703567b7e7b6514adc3aa63c20e7254665283cbd1147dde8a722709b862a9
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U885-PARENT-subdomain-process-management: de91f336471b8a953f120b7fa0f53540e2f18488addb530f91573d033009c71d
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-UNIVERSE-SUPPLY-D01: a8638c76de32bb8d785edae075cc0695a8b5018ba35e97c757b3fb2948b04076
+        REL-UNIVERSE-SUPPLY-D03: d1bc4c0258dff4689610b4b5e8b3b618a2b1cdf7c32d6f10dca4979aef94b94e
+        REL-UNIVERSE-SUPPLY-D04: 14e88a5905c33eeafccfab665867f8fe3f6cd2d479c2958e11b64777bf011977
+        REL-UNIVERSE-SUPPLY-D06: a0fc02f7e8d45fc4a4d2a15014a0b11c0f0526b4760e95cf4f6c455d3ff0ea83
+        REL-UNIVERSE-SUPPLY-business-references: b230a48f8d30c1c227481793ce51ef4e2030ed6a2b8ff3492450a35a16a691bf
+      related_nodes:
+        D01: e432caf10ef8cb7b079a72afcf7d15579dacce4b656599a63266700e8b735c62
+        D03: 7ed57215713054713d4474ac0ee74c15c871477a0a52a29c89cff7a8de3c8a88
+        D04: 79f8670aa65cf090d37fa9160e29bb5f5e3a4462acfb17535ecc99d3f180b243
+        D06: b4077305f5819bb31d90a65de740015029cfe2ac1d98a4721434e594c12c0021
+        ba-order-backlog-management: 8f80ad5dae555c8aa20998825730733cf62226a98824571b45210ee6ed58e9fe
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        business-references: 0535fa5cc3f5bc418f14878bd41a12ad1082e248f53d5b9763abef6c07407c79
+        domain-plan: 28beadff7327b7fcbbc350b54de0a39afe3ba6d7fd8d7f25851dcced299fe834
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        subdomain-order-backlog: e48c8d5e9861227a5e82100bb3eda1b80ccaac51bc213549abae45abcb52f53d
+        subdomain-policies: 579d3d1c839b7ae0d24dcc905b968e66bf1b9df091bdf3d8733fd3efad6b7053
+        subdomain-process-management: bb87d2bfd2ade8a34ee44bcddc052067d4b824c254a40bfed89fa6df12217726
+        subdomain-service-orders: e526dc60c594cab76ca2f1ad692b8f20cb22ef1f8e98406252e807418ed14010
+        supply-chain-orchestration: 824acc9aba5e32420d0cf0282c0d8bebe6677849f83affad87e7e057dd498ac6
+        system-business-operations: 96ead25890a20adfdd239dbc3e6ed1879983d28496df71c5eb256cbfa9b2739e
+    context_sha256: 81f03f8370a08a835c51ec2551b2638a9756ded41c88e731bf748b0aaf1a2955
+- id: INT-U1080-R-demand-forecast
+  author: Laurent
+  decided_at: '2026-10-15'
+  recorded_at: '2026-10-15'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U1080
+  note: Responsabilité de prévision dans Planning & Optimization validée.
+  target:
+    collection: relations
+    id: REL-U1080-PARENT-ba-demand-forecast-management
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: domain-plan
+      target_id: ba-demand-forecast-management
+      type: contains
+    value_sha256:
+      source_id: e894b6449033bf9bf18c064fd19edfbb5a66124d73c9a8a2794a966df4789649
+      target_id: 91aa5f2c6f71ca7a027893726d4a8995a43c71f4786e1e7670cbc819067de7a4
+      type: dde0e3dc0ad9a0daf42c9d0ab5a9a1c466093b12ccae1ca4c613754a34526930
+    context:
+      format: semantic-sha256-v1
+      target: 7aa0957ce481bf6850a9985666575ed786f4a163697f987f5f9b11e6ba481b63
+      principles: e54ec1e9f6108c55f0a84c8a53deff43dafb6a5b12b319ea9c82fe4315775f49
+      glossary: aeda27905285750a05d3669f280b7e6bdd92813322080f453391feb6ad336b8d
+      incident_relations:
+        REL-U1079-demand-forecast-development: e13760ff7992bdc48320c772b9553cabadb9a07fb0fe1fbaf4c362db36367813
+        REL-U1080-PARENT-ba-demand-forecast-management: 7aa0957ce481bf6850a9985666575ed786f4a163697f987f5f9b11e6ba481b63
+        REL-U1080-PARENT-ba-master-plan-management: ca1449dc00b876636fd2418b820535447a107634056b7741762604dc7eb6d0c9
+        REL-U1080-PARENT-ba-physical-stock-configuration-optimization: 7395b2ba00510015d7179ad039bf15423ffe5ade7ab749f05db7724e03a05ec7
+        REL-U1080-PARENT-ba-planning-reconciliation: 945b73932248fe30d5df8a01c4caf80c8a9ee4c453a288af7bb94e7fc407fe7b
+        REL-U1080-PARENT-ba-supply-resource-planning: 4d0493da78790ecb0c94a67adf9c0733b3abeef7e33dc7795863c021d020ccf4
+        REL-U1080-PRESENTS-planning-optimization: 64fe23e94211911de59bacf978466ef01eb6a6fe9ec2618be56218fdd9cdda6e
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U794-PLAN-INGESTION: 098d5d9b11b1f3c09e4087bee9b904521734456faeefa04b7c992aadb50b32b5
+        REL-U826-planning-data-provision-TO-domain-plan: a65379dfb985469471a76f22ccef89b74ef4b9a01d3beaee1361d4f93a49d8c3
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+      related_nodes:
+        ba-demand-forecast-management: a358e712ec2379a491e8fa803d36cbe61e08e42689f005f6108d252bc33cab5a
+        ba-master-plan-management: 84bffe9b3f8b60fe7273adea39a2eb055e7f7a615513824051ce681cb21b1dd7
+        ba-physical-stock-configuration-optimization: cf81872044069676a6fd338b4e441a05e83c5f4fd55dabc6aae1d041fe6b1db5
+        ba-planning-reconciliation: 325f2f4aed20608c37577c7a877d54b54ae2d1b3d5f071e4f83fd3e4e81d0aa4
+        ba-supply-resource-planning: 3654da82e9c25953621d8f807647fd16bee6e51ae397894b2eb507423abe2258
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        demand-forecast-development: 2cff88fa70ff32f3fe5d6dc09bd3e7e9b037b9be59b4f6c6716740e6a39a7463
+        domain-plan: 28beadff7327b7fcbbc350b54de0a39afe3ba6d7fd8d7f25851dcced299fe834
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        supply-chain-orchestration: 824acc9aba5e32420d0cf0282c0d8bebe6677849f83affad87e7e057dd498ac6
+        system-business-operations: 96ead25890a20adfdd239dbc3e6ed1879983d28496df71c5eb256cbfa9b2739e
+    context_sha256: 7ceb88dfb9972107ddf2fc347500384dd2c311fc48b609df1811e3a2836931e9
+- id: INT-U1080-R-supply-resource
+  author: Laurent
+  decided_at: '2026-10-15'
+  recorded_at: '2026-10-15'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U1080
+  note: Planification des ressources dans Planning & Optimization validée.
+  target:
+    collection: relations
+    id: REL-U1080-PARENT-ba-supply-resource-planning
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: domain-plan
+      target_id: ba-supply-resource-planning
+      type: contains
+    value_sha256:
+      source_id: e894b6449033bf9bf18c064fd19edfbb5a66124d73c9a8a2794a966df4789649
+      target_id: 7892162e6a8a65f5283355678354aa970b9108ce09700baad0a4c5d5d8e782e0
+      type: dde0e3dc0ad9a0daf42c9d0ab5a9a1c466093b12ccae1ca4c613754a34526930
+    context:
+      format: semantic-sha256-v1
+      target: 4d0493da78790ecb0c94a67adf9c0733b3abeef7e33dc7795863c021d020ccf4
+      principles: e54ec1e9f6108c55f0a84c8a53deff43dafb6a5b12b319ea9c82fe4315775f49
+      glossary: aeda27905285750a05d3669f280b7e6bdd92813322080f453391feb6ad336b8d
+      incident_relations:
+        REL-U1079-supply-plan-development: 6066dd7fb92e952b39075d3309fa0cbca5185999029b6fe8ca1fe5056dfad1ae
+        REL-U1080-PARENT-ba-demand-forecast-management: 7aa0957ce481bf6850a9985666575ed786f4a163697f987f5f9b11e6ba481b63
+        REL-U1080-PARENT-ba-master-plan-management: ca1449dc00b876636fd2418b820535447a107634056b7741762604dc7eb6d0c9
+        REL-U1080-PARENT-ba-physical-stock-configuration-optimization: 7395b2ba00510015d7179ad039bf15423ffe5ade7ab749f05db7724e03a05ec7
+        REL-U1080-PARENT-ba-planning-reconciliation: 945b73932248fe30d5df8a01c4caf80c8a9ee4c453a288af7bb94e7fc407fe7b
+        REL-U1080-PARENT-ba-supply-resource-planning: 4d0493da78790ecb0c94a67adf9c0733b3abeef7e33dc7795863c021d020ccf4
+        REL-U1080-PRESENTS-planning-optimization: 64fe23e94211911de59bacf978466ef01eb6a6fe9ec2618be56218fdd9cdda6e
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U794-PLAN-INGESTION: 098d5d9b11b1f3c09e4087bee9b904521734456faeefa04b7c992aadb50b32b5
+        REL-U826-planning-data-provision-TO-domain-plan: a65379dfb985469471a76f22ccef89b74ef4b9a01d3beaee1361d4f93a49d8c3
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+      related_nodes:
+        ba-demand-forecast-management: a358e712ec2379a491e8fa803d36cbe61e08e42689f005f6108d252bc33cab5a
+        ba-master-plan-management: 84bffe9b3f8b60fe7273adea39a2eb055e7f7a615513824051ce681cb21b1dd7
+        ba-physical-stock-configuration-optimization: cf81872044069676a6fd338b4e441a05e83c5f4fd55dabc6aae1d041fe6b1db5
+        ba-planning-reconciliation: 325f2f4aed20608c37577c7a877d54b54ae2d1b3d5f071e4f83fd3e4e81d0aa4
+        ba-supply-resource-planning: 3654da82e9c25953621d8f807647fd16bee6e51ae397894b2eb507423abe2258
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-plan: 28beadff7327b7fcbbc350b54de0a39afe3ba6d7fd8d7f25851dcced299fe834
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        supply-chain-orchestration: 824acc9aba5e32420d0cf0282c0d8bebe6677849f83affad87e7e057dd498ac6
+        supply-plan-development: 2d628ab283772edc5e2398ac86b9a99c6e74e5089ae460ea899da744575b893b
+        system-business-operations: 96ead25890a20adfdd239dbc3e6ed1879983d28496df71c5eb256cbfa9b2739e
+    context_sha256: b600409699ef898f77125a34e57c5a5918c48dadf065c28922579c20d13499df
+- id: INT-U1080-R-reconciliation
+  author: Laurent
+  decided_at: '2026-10-15'
+  recorded_at: '2026-10-15'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U1080
+  note: Réconciliation des plans dans Planning & Optimization validée.
+  target:
+    collection: relations
+    id: REL-U1080-PARENT-ba-planning-reconciliation
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: domain-plan
+      target_id: ba-planning-reconciliation
+      type: contains
+    value_sha256:
+      source_id: e894b6449033bf9bf18c064fd19edfbb5a66124d73c9a8a2794a966df4789649
+      target_id: 57dca6dccfcae4df89f489715713a4ff31491bbef36121c2ee7ca94d63e884b0
+      type: dde0e3dc0ad9a0daf42c9d0ab5a9a1c466093b12ccae1ca4c613754a34526930
+    context:
+      format: semantic-sha256-v1
+      target: 945b73932248fe30d5df8a01c4caf80c8a9ee4c453a288af7bb94e7fc407fe7b
+      principles: e54ec1e9f6108c55f0a84c8a53deff43dafb6a5b12b319ea9c82fe4315775f49
+      glossary: aeda27905285750a05d3669f280b7e6bdd92813322080f453391feb6ad336b8d
+      incident_relations:
+        REL-U1079-planning-scenario-reconciliation: 8206b06095e2249377baa06f553370f1e57d49ec9d323c01bd1735ec3018043c
+        REL-U1080-PARENT-ba-demand-forecast-management: 7aa0957ce481bf6850a9985666575ed786f4a163697f987f5f9b11e6ba481b63
+        REL-U1080-PARENT-ba-master-plan-management: ca1449dc00b876636fd2418b820535447a107634056b7741762604dc7eb6d0c9
+        REL-U1080-PARENT-ba-physical-stock-configuration-optimization: 7395b2ba00510015d7179ad039bf15423ffe5ade7ab749f05db7724e03a05ec7
+        REL-U1080-PARENT-ba-planning-reconciliation: 945b73932248fe30d5df8a01c4caf80c8a9ee4c453a288af7bb94e7fc407fe7b
+        REL-U1080-PARENT-ba-supply-resource-planning: 4d0493da78790ecb0c94a67adf9c0733b3abeef7e33dc7795863c021d020ccf4
+        REL-U1080-PRESENTS-planning-optimization: 64fe23e94211911de59bacf978466ef01eb6a6fe9ec2618be56218fdd9cdda6e
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U794-PLAN-INGESTION: 098d5d9b11b1f3c09e4087bee9b904521734456faeefa04b7c992aadb50b32b5
+        REL-U826-planning-data-provision-TO-domain-plan: a65379dfb985469471a76f22ccef89b74ef4b9a01d3beaee1361d4f93a49d8c3
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+      related_nodes:
+        ba-demand-forecast-management: a358e712ec2379a491e8fa803d36cbe61e08e42689f005f6108d252bc33cab5a
+        ba-master-plan-management: 84bffe9b3f8b60fe7273adea39a2eb055e7f7a615513824051ce681cb21b1dd7
+        ba-physical-stock-configuration-optimization: cf81872044069676a6fd338b4e441a05e83c5f4fd55dabc6aae1d041fe6b1db5
+        ba-planning-reconciliation: 325f2f4aed20608c37577c7a877d54b54ae2d1b3d5f071e4f83fd3e4e81d0aa4
+        ba-supply-resource-planning: 3654da82e9c25953621d8f807647fd16bee6e51ae397894b2eb507423abe2258
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-plan: 28beadff7327b7fcbbc350b54de0a39afe3ba6d7fd8d7f25851dcced299fe834
+        planning-scenario-reconciliation: 10f5e9dfc84a944bf95fca500bc099eef832d838968714527608cb0f28dea180
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        supply-chain-orchestration: 824acc9aba5e32420d0cf0282c0d8bebe6677849f83affad87e7e057dd498ac6
+        system-business-operations: 96ead25890a20adfdd239dbc3e6ed1879983d28496df71c5eb256cbfa9b2739e
+    context_sha256: 27e7d3a25181b63dc0ae71f0572d36cd9b0f3e2be16bb0d530b88841ca69b157
+- id: INT-U1080-R-master-plan
+  author: Laurent
+  decided_at: '2026-10-15'
+  recorded_at: '2026-10-15'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U1080
+  note: Master Plan Management dans Planning & Optimization validé.
+  target:
+    collection: relations
+    id: REL-U1080-PARENT-ba-master-plan-management
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: domain-plan
+      target_id: ba-master-plan-management
+      type: contains
+    value_sha256:
+      source_id: e894b6449033bf9bf18c064fd19edfbb5a66124d73c9a8a2794a966df4789649
+      target_id: 13e22b9e69d89837ca3b5ee0f8475efdbcd48983db67c104a1109112ef0b3dbc
+      type: dde0e3dc0ad9a0daf42c9d0ab5a9a1c466093b12ccae1ca4c613754a34526930
+    context:
+      format: semantic-sha256-v1
+      target: ca1449dc00b876636fd2418b820535447a107634056b7741762604dc7eb6d0c9
+      principles: e54ec1e9f6108c55f0a84c8a53deff43dafb6a5b12b319ea9c82fe4315775f49
+      glossary: aeda27905285750a05d3669f280b7e6bdd92813322080f453391feb6ad336b8d
+      incident_relations:
+        REL-U1080-PARENT-ba-demand-forecast-management: 7aa0957ce481bf6850a9985666575ed786f4a163697f987f5f9b11e6ba481b63
+        REL-U1080-PARENT-ba-master-plan-management: ca1449dc00b876636fd2418b820535447a107634056b7741762604dc7eb6d0c9
+        REL-U1080-PARENT-ba-physical-stock-configuration-optimization: 7395b2ba00510015d7179ad039bf15423ffe5ade7ab749f05db7724e03a05ec7
+        REL-U1080-PARENT-ba-planning-reconciliation: 945b73932248fe30d5df8a01c4caf80c8a9ee4c453a288af7bb94e7fc407fe7b
+        REL-U1080-PARENT-ba-supply-resource-planning: 4d0493da78790ecb0c94a67adf9c0733b3abeef7e33dc7795863c021d020ccf4
+        REL-U1080-PRESENTS-planning-optimization: 64fe23e94211911de59bacf978466ef01eb6a6fe9ec2618be56218fdd9cdda6e
+        REL-U673-CONTAINS-plans-visibility: c07e4405402e5e89484e34ecd7846f4d0ee334a2c89d07e5eca8faa6ab54a593
+        REL-U673-PLANS-MATCHING: edcf1f8c48a27ec2371456874e7122fd30fda90828da5eed136f5ccfb5097ef8
+        REL-U673-PLANS-PROMISING: 79b0d3efe5483ca6b1b14e8a0930aaca6e57d2bd9423ff3933b4d1eefd666a44
+        REL-U714-CONTAINS-DEMAND-PLAN: f351f30dc5c8590395579ea01fd00fb95732a9e65ca356bf02bcbce4dc1e4af9
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U794-PLAN-INGESTION: 098d5d9b11b1f3c09e4087bee9b904521734456faeefa04b7c992aadb50b32b5
+        REL-U826-planning-data-provision-TO-domain-plan: a65379dfb985469471a76f22ccef89b74ef4b9a01d3beaee1361d4f93a49d8c3
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U848-PARENT-BHV006: c3cf965e45f00639191295308d3b7e34263fcd24ff5ea655181c753729f65682
+        REL-U848-PARENT-D02.e: 3815fc576dca9aea528c71f983344821da5bf599b09b41b12238fc09e2368254
+        REL-U848-PARENT-D05.f: 19f456f01669136a7a70e4261cc71e8e3cb33eb2d13820538ba7bcd9111546da
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+        REL-UNIVERSE-SUPPLY-D01: a8638c76de32bb8d785edae075cc0695a8b5018ba35e97c757b3fb2948b04076
+        REL-UNIVERSE-SUPPLY-D03: d1bc4c0258dff4689610b4b5e8b3b618a2b1cdf7c32d6f10dca4979aef94b94e
+      related_nodes:
+        BHV006: efb50fa108eb5960d79846ab46f139791137586e521448a0f6b389cb098db6fd
+        D01: e432caf10ef8cb7b079a72afcf7d15579dacce4b656599a63266700e8b735c62
+        D02.e: 5775b6b01e4ca763619210c6c82b6e59956b326da462d790efdbf78bdd4cdd36
+        D03: 7ed57215713054713d4474ac0ee74c15c871477a0a52a29c89cff7a8de3c8a88
+        D05.f: 538d4a3a807f8dbfda1c597a4a9854fb9e70989bd19c7636811053c1f07fba63
+        ba-demand-forecast-management: a358e712ec2379a491e8fa803d36cbe61e08e42689f005f6108d252bc33cab5a
+        ba-master-plan-management: 84bffe9b3f8b60fe7273adea39a2eb055e7f7a615513824051ce681cb21b1dd7
+        ba-physical-stock-configuration-optimization: cf81872044069676a6fd338b4e441a05e83c5f4fd55dabc6aae1d041fe6b1db5
+        ba-planning-reconciliation: 325f2f4aed20608c37577c7a877d54b54ae2d1b3d5f071e4f83fd3e4e81d0aa4
+        ba-supply-resource-planning: 3654da82e9c25953621d8f807647fd16bee6e51ae397894b2eb507423abe2258
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        demand-plan-visibility: cad91f2bae8106cbcf75f50727ef2469c149209056109a61497f96f853c7a140
+        domain-plan: 28beadff7327b7fcbbc350b54de0a39afe3ba6d7fd8d7f25851dcced299fe834
+        plans-visibility: fba65b89e1d2acaf9d8389a3940678832ce6c60c567989eeffcd930b57dd6a20
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        supply-chain-orchestration: 824acc9aba5e32420d0cf0282c0d8bebe6677849f83affad87e7e057dd498ac6
+        system-business-operations: 96ead25890a20adfdd239dbc3e6ed1879983d28496df71c5eb256cbfa9b2739e
+    context_sha256: d27ed1ab61d18f5db55c0639558cdc631940600506c27d0497be0ac24f469e24
+- id: INT-U1080-R-stock-optimization
+  author: Laurent
+  decided_at: '2026-10-15'
+  recorded_at: '2026-10-15'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U1080
+  note: Optimisation du stock dans Planning & Optimization validée.
+  target:
+    collection: relations
+    id: REL-U1080-PARENT-ba-physical-stock-configuration-optimization
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: domain-plan
+      target_id: ba-physical-stock-configuration-optimization
+      type: contains
+    value_sha256:
+      source_id: e894b6449033bf9bf18c064fd19edfbb5a66124d73c9a8a2794a966df4789649
+      target_id: 93c5a2583362d2725894943918383f6628b25661ec521790ad3e597775e0bfb7
+      type: dde0e3dc0ad9a0daf42c9d0ab5a9a1c466093b12ccae1ca4c613754a34526930
+    context:
+      format: semantic-sha256-v1
+      target: 7395b2ba00510015d7179ad039bf15423ffe5ade7ab749f05db7724e03a05ec7
+      principles: e54ec1e9f6108c55f0a84c8a53deff43dafb6a5b12b319ea9c82fe4315775f49
+      glossary: aeda27905285750a05d3669f280b7e6bdd92813322080f453391feb6ad336b8d
+      incident_relations:
+        REL-U1080-PARENT-ba-demand-forecast-management: 7aa0957ce481bf6850a9985666575ed786f4a163697f987f5f9b11e6ba481b63
+        REL-U1080-PARENT-ba-master-plan-management: ca1449dc00b876636fd2418b820535447a107634056b7741762604dc7eb6d0c9
+        REL-U1080-PARENT-ba-physical-stock-configuration-optimization: 7395b2ba00510015d7179ad039bf15423ffe5ade7ab749f05db7724e03a05ec7
+        REL-U1080-PARENT-ba-planning-reconciliation: 945b73932248fe30d5df8a01c4caf80c8a9ee4c453a288af7bb94e7fc407fe7b
+        REL-U1080-PARENT-ba-supply-resource-planning: 4d0493da78790ecb0c94a67adf9c0733b3abeef7e33dc7795863c021d020ccf4
+        REL-U1080-PRESENTS-planning-optimization: 64fe23e94211911de59bacf978466ef01eb6a6fe9ec2618be56218fdd9cdda6e
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U794-PLAN-INGESTION: 098d5d9b11b1f3c09e4087bee9b904521734456faeefa04b7c992aadb50b32b5
+        REL-U826-planning-data-provision-TO-domain-plan: a65379dfb985469471a76f22ccef89b74ef4b9a01d3beaee1361d4f93a49d8c3
+        REL-U826-subdomain-integration: 06508d66fc0219ecf5f874d00f5103df10cb77f58e5cab6dffcba7f968fb6e54
+        REL-U848-PARENT-D05.a: 204dcbbe27f7e34877c1c46f7fc74992d8b9fb52b4a768253afb4b50e23d8ae5
+        REL-U848-PARENT-D05.c: f191a6ecf502b0b0e0dbdbb3c97264c99b4b3d52eabbefd257ece33566053dd1
+        REL-U848-PARENT-D05.d: a7b68fc11e9c5c694291cdcb1cf47e861bcfe5b7b8f1b97328bfac2074fb6215
+        REL-U848-PARENT-D05.e: bc11baa56172c6737d8bf7f372a91bcbd210344ed1abbf8b475d8b6fe537285f
+        REL-U848-PARENT-D05.h: fc883dfc334785f9f9a1d3182b2566dc9bd96615fc7cb15476b66be6538ca8fd
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+      related_nodes:
+        D05.a: 3c84073915e7017cadd7e200791fb424db5634f803a38ae3f4944d9a8d1c59a3
+        D05.c: bf73a6574084395afd6b340527507efc7772c576f3d1e39f1a9cfcecd60a833d
+        D05.d: 6c5153bb1c381005a006e78e913cbeac9bfbeec943e3cdd6f70397ffe7aef5f1
+        D05.e: 2eaa9b20749140b8f6551cb0a2f4e51290fa7f4701746d0edc6cfcaedf6b3fff
+        D05.h: e7ba0538304b050bbabe0046c932f331eaca115e63e4ed5d0048f23b6deab0a3
+        ba-demand-forecast-management: a358e712ec2379a491e8fa803d36cbe61e08e42689f005f6108d252bc33cab5a
+        ba-master-plan-management: 84bffe9b3f8b60fe7273adea39a2eb055e7f7a615513824051ce681cb21b1dd7
+        ba-physical-stock-configuration-optimization: cf81872044069676a6fd338b4e441a05e83c5f4fd55dabc6aae1d041fe6b1db5
+        ba-planning-reconciliation: 325f2f4aed20608c37577c7a877d54b54ae2d1b3d5f071e4f83fd3e4e81d0aa4
+        ba-supply-resource-planning: 3654da82e9c25953621d8f807647fd16bee6e51ae397894b2eb507423abe2258
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        domain-plan: 28beadff7327b7fcbbc350b54de0a39afe3ba6d7fd8d7f25851dcced299fe834
+        subdomain-integration: 76df844197887a9f3b13f6cbf6624c0e95cd8dc4a940fde806c9f59b0326fe0c
+        supply-chain-orchestration: 824acc9aba5e32420d0cf0282c0d8bebe6677849f83affad87e7e057dd498ac6
+        system-business-operations: 96ead25890a20adfdd239dbc3e6ed1879983d28496df71c5eb256cbfa9b2739e
+    context_sha256: 48778306d2bf092c2eedf0dfe466c98141be564f60936ae66db2e37cef228004
+- id: INT-U1080-R-backlog-management
+  author: Laurent
+  decided_at: '2026-10-15'
+  recorded_at: '2026-10-15'
+  interpretation: explicit
+  reviewer: Codex
+  source_refs:
+  - U1080
+  note: Gestion collective du carnet dans Order Backlog validée.
+  target:
+    collection: relations
+    id: REL-U1080-PARENT-ba-order-backlog-management
+    approved_fields:
+    - source_id
+    - target_id
+    - type
+    values:
+      source_id: subdomain-order-backlog
+      target_id: ba-order-backlog-management
+      type: contains
+    value_sha256:
+      source_id: 04ebf8f07ef5b4e5ead75d19fafb376c19b6ab458c0884405af15c93535ec1db
+      target_id: e3a96f58f0a9ede6af3228b59f5610e6e1381ffd76250a5d218e85cea277355d
+      type: dde0e3dc0ad9a0daf42c9d0ab5a9a1c466093b12ccae1ca4c613754a34526930
+    context:
+      format: semantic-sha256-v1
+      target: fabe6f4adbd17fedd872e360d7f79212717d31003fdc449379dbae9add8bef86
+      principles: e54ec1e9f6108c55f0a84c8a53deff43dafb6a5b12b319ea9c82fe4315775f49
+      glossary: aeda27905285750a05d3669f280b7e6bdd92813322080f453391feb6ad336b8d
+      incident_relations:
+        REL-U1009-PARENT-delivery-release-decision: eb3784fb1935bab70d74dfafbdf1e75e734d418c5f91780799da7d857487a59b
+        REL-U1080-PARENT-ba-order-backlog-management: fabe6f4adbd17fedd872e360d7f79212717d31003fdc449379dbae9add8bef86
+        REL-U1080-PRESENTS-order-backlog: 7a2cecae5d9bac029dd2c2ab89eb795d637c9681d7f9a0b944cf8bfcf03af6b9
+        REL-U780-OPERATIONS-supply-chain-orchestration: 4659f5524f7154e2cda4a2d99d28c2e55453b2a28c60e204fb5bbba7ad2a667c
+        REL-U848-PARENT-D03.m: 5f4a7fefeafb9c3efa4c483b833b625bbdd57aba6d60e41fa4d01006b7b7f21e
+        REL-U848-PARENT-D03.o: d94a27fb85eea6a8d1528acc6818f71b16c87c09b2bd817194ed04b494f3f349
+        REL-U912-UNIVERSE-system-business-operations: 472e78ee03c2734d8dd1d32b7a78f013b7bb9b9d9db113349206f6c8b691ffc3
+      related_nodes:
+        D03.m: 3c03f6f5febfea1ab01ed8dff315efebd52ac32a0f6a9304650683cb19dc67d5
+        D03.o: 1c1a98d7b9d6f2b407279d62e8fdba4e2707cded1455d4c5833236969842326f
+        ba-order-backlog-management: 8f80ad5dae555c8aa20998825730733cf62226a98824571b45210ee6ed58e9fe
+        beaumanoir-target-universe: 3f5076910d2263d8b84275333689de0ccf0e673976bb0e71fa6617786159ed99
+        delivery-release-decision: 61034b60042300011d8e63c04959f644c35106a2655ea8f9610fdca43c736512
+        subdomain-order-backlog: e48c8d5e9861227a5e82100bb3eda1b80ccaac51bc213549abae45abcb52f53d
+        supply-chain-orchestration: 824acc9aba5e32420d0cf0282c0d8bebe6677849f83affad87e7e057dd498ac6
+        system-business-operations: 96ead25890a20adfdd239dbc3e6ed1879983d28496df71c5eb256cbfa9b2739e
+    context_sha256: 472ea709f4853c08bae7ce44062637d1a140edd25a8474e947d0a4cb5d8f894a
 suspensions: []

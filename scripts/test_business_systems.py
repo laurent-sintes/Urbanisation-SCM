@@ -65,7 +65,15 @@ class BusinessSystemTests(unittest.TestCase):
                           and nodes[edge['target_id']]['kind'] in ('business_area', 'capability')
                           and edge['target_id'] not in context_areas}
         self.assertTrue(detailed_areas)
+        parents = {edge['target_id']: edge['source_id'] for edge in self.model['relations']
+                   if edge['type'] in ('contains', 'presents')}
+        def domain_of(area_id):
+            while area_id in parents:
+                area_id = parents[area_id]
+                if nodes[area_id]['kind'] == 'domain': return area_id
+            return None
         self.assertEqual([area_id for area_id in sorted(detailed_areas)
+                          if domain_of(area_id) == 'supply-chain-orchestration'
                           if not nodes[area_id]['fields'].get('dominant_role')], [])
 
     def test_subdomain_role_labels_are_english_and_consistent(self):
@@ -104,7 +112,7 @@ class BusinessSystemTests(unittest.TestCase):
         area = next(n for n in model['nodes'] if n['kind'] == 'business_area')
         edge = next(r for r in model['relations'] if r['target_id'] == area['id'] and r['type'] == 'contains')
         edge['source_id'] = 'subdomain-financial-accounting'
-        self.assertIn(f'model-depth/{area["id"]}: detailed responsibility must belong only to Supply Chain Orchestration', self.errors(model))
+        self.assertIn(f'model-depth/{area["id"]}: responsibility exceeds the declared domain depth', self.errors(model))
         next(n for n in model['nodes'] if n['id'] == 'domain-finance')['fields']['modeling_depth'] = 'behaviors'
         self.assertIn('model-depth/domain-finance: detailed modeling is reserved to Supply Chain Orchestration', self.errors(model))
 
@@ -114,7 +122,8 @@ class BusinessSystemTests(unittest.TestCase):
         self.assertNotIn('ba-accounting-translation', nodes)
         from scripts.model_depth import responsibility_domains
         ancestry = responsibility_domains(self.model)
-        self.assertTrue(all(ancestry[n['id']] == {'supply-chain-orchestration'}
+        allowed = {'supply-chain-orchestration', 'domain-sales', 'domain-sourcing-procurement', 'domain-plan'}
+        self.assertTrue(all(len(ancestry[n['id']]) == 1 and ancestry[n['id']] <= allowed
                             for n in nodes.values() if n['kind'] == 'capability'))
         self.assertIn('glossary:TER119', nodes['subdomain-financial-accounting']['fields']['scope'])
         exchange = next(r for r in self.model['relations'] if r['id'] == 'REL-U981-accounting-facts')
@@ -179,7 +188,8 @@ class BusinessSystemTests(unittest.TestCase):
         self.assertIn('aucun paiement fournisseur', nodes['ba-financial-service-order-management']['fields']['scope'])
         from scripts.model_depth import responsibility_domains
         ancestry = responsibility_domains(self.model)
-        self.assertTrue(all(ancestry[n['id']] == {'supply-chain-orchestration'}
+        allowed = {'supply-chain-orchestration', 'domain-sales', 'domain-sourcing-procurement', 'domain-plan'}
+        self.assertTrue(all(len(ancestry[n['id']]) == 1 and ancestry[n['id']] <= allowed
                             for n in nodes.values() if n['kind'] == 'capability'))
 
     def test_frozen_publication_keeps_its_finance_capability(self):

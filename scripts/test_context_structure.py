@@ -60,12 +60,15 @@ class ContextStructureTests(unittest.TestCase):
 
     def test_context_areas_are_terminal_and_supply_inventory_is_preserved(self):
         areas=context_business_area_ids(self.model)
-        self.assertEqual(len(areas),44)
+        self.assertEqual(len(areas),21)
         self.assertTrue(all(not self.index['children'][ident] for ident in areas))
         published=read(ROOT/'modeles/release/2026-10-13.3/model.yaml')
         for kind in ('capability','behavior'):
-            self.assertEqual({n['id'] for n in self.model['nodes'] if n['kind']==kind},
-                             {n['id'] for n in published['nodes'] if n['kind']==kind})
+            current={n['id'] for n in self.model['nodes'] if n['kind']==kind}
+            historical={n['id'] for n in published['nodes'] if n['kind']==kind}
+            self.assertLessEqual(historical,current)
+            if kind=='behavior':self.assertEqual(current,historical)
+            else:self.assertEqual(len(current-historical),32)
         contributions=lambda model:{p['id']:[c['node_id'] for s in p['steps'] for c in s['contributions']]
                                     for p in model['scenario_catalog']['paths']}
         self.assertEqual(contributions(self.model),contributions(published))

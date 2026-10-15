@@ -29,10 +29,12 @@ export function modelingDepthLabel(node: AtlasNode): string {
   if (node.kind === 'domain' && node.fields.modeling_depth === 'domains') return 'Vue de domaine';
   return (
     (
-      { context: 'Vue de contexte', domains: 'Vue des domaines', behaviors: 'Capacités et comportements' } as Record<
-        string,
-        string
-      >
+      {
+        context: 'Vue de contexte',
+        domains: 'Vue des domaines',
+        capabilities: 'Capacités',
+        behaviors: 'Capacités et comportements',
+      } as Record<string, string>
     )[String(node.fields.modeling_depth)] || ''
   );
 }

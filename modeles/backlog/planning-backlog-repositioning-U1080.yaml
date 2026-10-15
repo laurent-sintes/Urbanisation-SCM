@@ -1,0 +1,813 @@
+id: PLANNING-BACKLOG-REPOSITIONING-U1080
+status: applied_to_backlog
+source_refs:
+- U1080
+request:
+  verbatim: Je pense que les problématiques de planification et des gestion de carnet de commande doit etre mise en exergue.
+    Le domaine Demand & Supply Planning est trop mis en exergue. J'aime l'approche master plan microsoft car c'est vrai que
+    centraliser la planification et l'optimisation est sans doute plus efficace que de disperser les responsabilités.
+  validation: Je valide
+  scope: Planning & Optimization et Order Backlog visibles sous Supply Chain Orchestration ; responsabilités de Demand & Supply
+    Planning repositionnées ; préparation des collections et engagements conservés chez leurs responsables.
+market_audit:
+  microsoft: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+  sap_s4hana: https://learning.sap.com/courses/exploring-business-processes-in-sap-s-4hana-production-planning/evaluating-planning-results
+  sap_ibp: https://learning.sap.com/courses/discovering-sap-ibp-harmonized-planning-area/overview-of-order-based-supply-planning
+  limit: Les sources démontrent des rapprochements fonctionnels, pas un gain d’efficacité ou une réalisation installée chez
+    Beaumanoir.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1080
+  summary: Planification et optimisation ainsi que gestion du carnet mises en exergue dans Supply Chain Orchestration ; anciennes
+    sous-structures retirées sans réutilisation d’identité.
+  required_nodes:
+  - id: D03
+    field_sha256:
+      scope: 8e014ab46f2949e22be64be67d8b63965bcbf3db5b9cda31466f6b16039440b9
+      market_comparisons: 503651a7e1c1d471913cfbce8c1535b21e2c47d683d329a01b84a7a59bb78a5d
+      market_inspiration: bab778bd66aa8ab4f9057c728daab2ed895229f664b08f5893dc5d933b112d60
+      definition: 3254f23eab9e229e9fce5a0791e73dbd31623da55029f2d57191eacb491faa4a
+      name: 0e113b6a2a36e2e86e6fc50862a01a3cd6ee61e5b7f57e5e24b4c778ee322b81
+      finality: 2f18b7b01645ce8a403d732757b891744c1595e4495b01faf5d11d996c0049ac
+    fields:
+      definition: Établir ce qui peut être promis pour une demande identifiée, selon les ressources, le plan commun, les règles
+        et les engagements.
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: D03.j
+    field_sha256:
+      scope: 6c119b56b250de389bea682079fd7872a34231d24bc5235d47b9040426619722
+  - id: D04.i
+    field_sha256:
+      scope: 894d34a68a9d002c50e7bed52411f1f867275e5280ef41a753f7233147933849
+      market_inspiration: bbb5bf25928c652a6190414b06603816d6317c76a56c4ea86a3de4bda4d0d84e
+  - id: D04.j
+    field_sha256:
+      scope: d81e3a8ca4135d9443a5751e28d12de6f36a772c0f463d791cc6532ec8a81196
+  - id: D05.a
+    field_sha256:
+      scope: ae3c22bfe50ac1c6c77955b080690a54a4f6539c7c7e0072b38b60e39f884c21
+      market_comparisons: bd377708d097786c3eaae4caf000367a757185f5abdf46d56fd872e457bf9b77
+  - id: D05.e
+    field_sha256:
+      scope: 059655d0713087f57afb5f76a2dac526cdd94d9b552a164116a51bfd0572082f
+  - id: D05.f
+    field_sha256:
+      scope: f0ba0594ccfce6c2d9792835ed832b78e16a2edd0b6da4c4ac4be204629b2973
+      market_inspiration: a00c15c41cdf8a2926b9578aab0cf96c6a059984c34939e24cd473418e139a71
+  - id: D05.i
+    fields:
+      scope: |-
+        La [disposition](glossary:TER102) consiste à déterminer, pour les biens et quantités concernés, si un usage est autorisé, interdit ou soumis à condition et vers quel traitement logistique les orienter. Les issues comprennent : remise en stock utilisable, maintien bloqué, réparation, reconditionnement, renvoi fournisseur ou rebut autorisé. Les produits peuvent provenir d’un retour, d’une réception ou d’un incident constaté sur un stock déjà présent. Le motif du retour n’est pas à lui seul une décision sur le devenir du bien.
+
+        L’inspection fournit les faits ; les politiques fixent les critères ; la décision applique ces critères au cas concret et, si nécessaire, compare les devenirs admissibles. [Policy-based Disposition](model:BHV048) et [Value Recovery Optimization](model:BHV049) restent les deux stratégies combinables, sans séquence obligatoire. Blocage, libération, réparation ou rebut sont des résultats, pas autant de comportements. Une décision peut porter sur une partie du lot. Si les informations manquent, préciser les conditions à lever sans rendre implicitement le stock utilisable.
+
+        L’interdiction d’usage pour non-conformité se distingue de [Reservation](model:D02.c), qui protège une ressource pour un engagement. [Inventory Tracking](model:D01.f) intègre les résultats reconnus ; [Inventory Ledger](model:D01.g) conserve les états et justifications. [Inventory Visibility](model:D01.c) expose les positions selon ces états. Décider une libération ne prouve pas une opération physique, une écriture ou une disponibilité confirmée.
+
+        [Inspection Order](model:service-order-inspection) porte une inspection confiée ; [Scrapping Order](model:service-order-scrapping), les prestations de rebut ; les [Orders](glossary:TER012) de réparation ou de retour fournisseur portent leurs engagements propres. [Fulfilment Coordination](model:D06.d) coordonne les prestations et reçoit leurs résultats via [Operations Tracking](glossary:TER179). La décision peut être exécutée ailleurs ; la capacité ne prescrit ni organisation ni logiciel interne.
+
+        L’autorisation commerciale du retour, le remboursement, le remplacement client et l’avoir fournisseur restent distincts. Stock Redistribution conserve les déplacements entre sites ; [Planning & Optimization](glossary:TER111) examine l’impact sur les ressources partagées. Une décision locale ne doit pas masquer un effet sur les affectations ou promesses : solliciter les capacités responsables. Ce n’est pas une seconde planification générale des usages du stock.
+
+        Exemple fictif : cent vestes ont subi un dégât dans l’entrepôt. L’inspection justifie quatre-vingts remises à disposition et vingt maintenues bloquées. Pour ces vingt, la décision examine une remise en état ou un rebut selon les politiques et la valeur récupérable. Les prestations sont ensuite confiées et leurs résultats reconnus séparément.
+  - id: ba-demand-forecast-management
+    field_sha256:
+      scope: 6bf67032598dabd6c45b418925c37da916e8a7d1d37099c4334efdda1e062bbc
+      name: d2a148bc96272834ef49d3875b3e2f98bfaaee54c6c8bdcd605ef2c49380d2fd
+      definition: d796b740648f011374d95b72d1ff7e9889a76cc9f96b8d0c8f878efce9253c99
+      finality: 9a1dc6bfc23693034ec81f25882302987a35809a140ccbd2999f3088a01f97ca
+    parent: domain-plan
+    parent_type: contains
+    kind: business_area
+    fields:
+      reading_order: 2
+  - id: ba-master-plan-management
+    field_sha256:
+      definition: 83fe533b2df256022af6a7e8285e9827248ef3c16c93b50c3af402dbb90c13fd
+      finality: 3fcb46a5ca6bcf103f5d1b6ea01e85d01c3665086f851f00ba2515f6055d937f
+      scope: b78b6be2eb7e79d7b6a5764a0cebaa101ceb66fc83a69d9e36fdd5f2ff976d5e
+      market_comparisons: f206ed693188396d26a8b7d995f80df7de1eb5d8c5f564bdde30ef91e68853fb
+      name: be50eb89ede50933fbe20e756d322ffc1735bbefe6d70e0eb5c4f3141649dc78
+    parent: domain-plan
+    parent_type: contains
+    kind: business_area
+    fields:
+      reading_order: 1
+  - id: ba-order-backlog-management
+    parent: subdomain-order-backlog
+    parent_type: contains
+    kind: business_area
+    field_sha256:
+      name: ec19a95008d372d53396ced0fb1b5ade8cfbef14abb450dc22212db9ceb1b6fe
+      definition: 1f69383685a7e32df05e427825ab1a34cabfbec2da3603457b1730644e9dd3c2
+      finality: 14828f3afdc229b4097922396b7280f4f90f968341996a6745cff8dcb5445be7
+      scope: 1e468f909f9df04f71b807d476cfbfd67c03d7dfd1bf8f76b1c4d31cd0c2643f
+    fields:
+      reading_order: 3
+  - id: ba-physical-stock-configuration-optimization
+    parent: domain-plan
+    parent_type: contains
+    kind: business_area
+    field_sha256:
+      name: d290cd65ec6ff78f15e6a5a0a4fae0b47ea01c7f92d018868b2bd47dfb84cf7d
+      definition: 9856be20d04a53b5a99c649f798f684bcb02859c17efec9c53fc468b3cc202bf
+      finality: bbc56a9ca70d6c4ae522819be00476eb1eb07834afe43890c93c5f9a64091922
+      scope: 4ef1f1995654a9b97102797654deff0ed0d71bd0bdd394cd2d167eacd26f520b
+    fields:
+      reading_order: 4
+  - id: ba-planning-reconciliation
+    field_sha256:
+      scope: d16c0b6fd56a62ceb0c5438c28e03bbc552fe88cec34717e788944acf71375b4
+      name: ee890be66d054fe8b59686d1ce653061ea12406401c311bede4628d01f30300d
+      definition: 663afccb959ff96b0d46c87bdb594e486f00a200fd5506696619f7f284aba938
+      finality: f785387654d6985a287774bb32c86e6c432bac8b00a86ff4f929b0a69b6d8028
+    parent: domain-plan
+    parent_type: contains
+    kind: business_area
+    fields:
+      reading_order: 5
+  - id: ba-supply-resource-planning
+    field_sha256:
+      scope: 740c5021cfb5e59a9df39ee36ce6d49c64e76189d86ebf7d18d7e2e37c3fd6ca
+      name: 22cade37789bd08ddaace8bb83fdb1877377a0435ad7d43b62ce34cb1d9aa23a
+      definition: 8b9a7602242de8472e279aae181693c3550a46e35c21a24d545009501fa02c6b
+      finality: 1b072f5489020f75c355816bf69a7daaa4d94911989573b466267249c19f3677
+    parent: domain-plan
+    parent_type: contains
+    kind: business_area
+    fields:
+      reading_order: 3
+  - id: demand-forecast-development
+    field_sha256:
+      scope: 6bf67032598dabd6c45b418925c37da916e8a7d1d37099c4334efdda1e062bbc
+  - id: demand-plan-visibility
+    field_sha256:
+      market_comparisons: 71afbee108124722e5ddb872fb0e3e635cd49d9c5df7337cad33170f5b9980cf
+    fields:
+      scope: |-
+        Qualifier les produits, lieux, périodes, unités, version, provenance et incertitudes au regard de la demande examinée. Distinguer les données applicables, hors périmètre et insuffisamment précises. Une prévision agrégée ne devient pas une quantité détaillée sans règle explicite ; une donnée absente reste inconnue. Cette [Visibility](method:MOD040) produit une connaissance contextualisée, au-delà de l’affichage du plan reçu.
+
+        Le [Demand Plan](glossary:TER099) est construit dans [Planning & Optimization](model:domain-plan) ou alimenté par une contribution externe identifiée. [Plan Ingestion](model:plans-ingestion) reçoit seulement les contributions externes et leurs corrections. [Master Plan Management](model:ba-master-plan-management) rapproche les plans des commandes et du stock sans double comptage ; [Availability](model:D03) établit les possibilités de promesse. L’interprétation du plan ne crée aucun engagement ni mouvement réalisé.
+
+        Exemple fictif : Pour une demande de 30 robes en taille M d’une boutique, le plan annonce 200 robes toutes tailles pour la région sur la semaine. Le périmètre et la granularité sont explicités ; aucune part de ces 200 robes n’est attribuée à la boutique ou à la taille M sans règle documentée.
+
+        Les précommandes connues restent qualifiées par leur horizon et leur degré d’engagement. Leur seule présence ne justifie ni une seconde commande ni leur addition automatique à la prévision déjà représentative de ces besoins.
+  - id: domain-plan
+    fields:
+      modeling_depth: null
+      name: Planning & Optimization
+    field_sha256:
+      scope: 3c616ab704ae48dfe351973d11eb29f943af6aa6dad923a9155e0308f865004d
+      market_comparisons: 17c47501cbe594174508caa12b864b8650948bf3d702207e9200103c3b9165fd
+      name: 9208f12d170e9a01f5e7b0a0b29ab006e0a5196774a1c9568ab5d3a4487ddab3
+      definition: b9b665cebffd62c3c93dfa9ffbcdca7075ad234ff09a692889bdb0909a187ad2
+      finality: 0988bd9568bd92b53df1563c3a89c120b3894d0bcf40432a0c59ccc411f2e912
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+  - id: domain-sourcing-procurement
+    field_sha256:
+      scope: 05596a2eb3213fb83852861ed3073484413cc1e9eb8fae284107102e00358594
+  - id: planning-scenario-reconciliation
+    field_sha256:
+      scope: d16c0b6fd56a62ceb0c5438c28e03bbc552fe88cec34717e788944acf71375b4
+  - id: plans-ingestion
+    field_sha256:
+      scope: 38c07766dbe406353e64096ee5e7c4f88fcab2147a2e14709989c44eaff99ae6
+      market_comparisons: b75787df47ab2196e6f7c844dbb2b08992df7f5947214ddaa431562e6209c5b0
+      market_inspiration: 07f4657cfad891c03b8b9cd937ea21627e660199209de45e9bcacf2031761bb8
+      name: 6eb82d6c962a5d452ce819ea2769bb18f0f52e52830988c85e3691dbc368cde1
+      definition: 771bae1ce089757bee87370ba67f1d9b3825894d1063d045a8b97037c7fabf4d
+      finality: 4efcbc1a7e2520c5ba00eb99c3177e54c62e7bbb4df0d08921d81124ba54a37b
+    kind: capability
+    parent: ba-inbound-information-integration
+    parent_type: contains
+  - id: plans-visibility
+    field_sha256:
+      scope: 0f60bfc6cc28bcadf595527253d32cebc765a8986794b086c8079c277fc9e19e
+      market_comparisons: fd908cafb0bcba4e060bd226285c8cdab4c5236d36de178a07bda3a9faac8a6f
+      market_inspiration: 8f23eee22e1a879d2f58705763c2a644296c31100b5dde5718ddcf385d0e945d
+  - id: service-order-cross-docking
+    fields:
+      scope: |-
+        Tenir la commande, ses exigences, ses engagements et ses résultats selon le [contrat commun des commandes de traitement des biens](model:ba-goods-processing-order-management#scope). Le workflow pilote son suivi ; le prestataire réalise la prestation. La commande conserve ses règles de validité sans choisir elle-même son parcours.
+
+        Tenir les arrivées et sorties concernées, les quantités, fenêtres attendues, prises en charge et changements de prestation. [Order Backlog Management](glossary:TER269) arbitre les affectations partagées avec l’appui du plan commun ; [Fulfilment](glossary:TER085) coordonne le passage et les adaptations locales. Une arrivée tardive ou un départ manqué produit des faits et suites explicites, sans réaffectation implicite d’autres commandes. L’instruction peut être autonome ou liée aux ordres entrants et sortants ; le cross-docking évite le stockage conventionnel sans imposer le même parcours à toutes les unités.
+
+        Exemple fictif : Un lot attendu doit rejoindre un départ magasin ; le retard d’arrivée exige une suite de prestation et un arbitrage si la promesse est affectée.
+
+        La prestation est décrite dans le [Service Catalog](model:D14) ; le [Service Order](glossary:TER066) en porte les exigences et engagements individuels auprès du [Service Provider](glossary:TER088).
+  - id: service-order-release-decision
+    fields:
+      scope: |-
+        Déterminer les ordres et quantités éligibles à libérer ensemble, leur moment ou condition de libération et les éléments à maintenir en attente, avec leur justification. Mobiliser exigences de livraison, dates de préparation et d’expédition, complétude attendue, compatibilité des regroupements et capacités communiquées par les exécutants. Comparer les bénéfices du regroupement aux conséquences de l’attente ; aucune optimisation mathématique universelle n’est promise.
+
+        [Fulfilment Coordination](model:D06.d) matérialise l’attente et la libération décidées, puis suit la prise en charge. Les familles de [Service Orders](glossary:TER066) conservent leur identité, leurs exigences et engagements. Une transmission anticipée pour visibilité peut être distincte de l’autorisation de lancement ; aucun protocole ou fichier unique n’est imposé.
+
+        La décision intervient aussi en fonctionnement normal. [Fulfilment Adaptation Decision](model:D06.f) traite les aléas remettant le plan d’exécution en cause ; la libération peut ensuite être réévaluée. Les fenêtres, délais maximaux, seuils et exceptions sont des règles ; ne pas créer une capacité par paramètre.
+
+        Respecter la promesse portée par [Order Management](model:D04) et les affectations d’[Order Backlog Management](glossary:TER269). Si la rétention compromet ces engagements, transmettre les impacts à leurs responsables ; ne pas modifier silencieusement dates, quantités ou affectations. Les ordres attendus et capacités communiquées sont des informations datées, sans certitude d’arrivée inventée.
+
+        Libérer ensemble ne garantit pas préparer ensemble ni obtenir une seule palette. Les [Picking Order](model:service-order-picking) et [Packing Order](model:service-order-packing) portent les exigences de traitement commun ; les exécutants conservent vagues, parcours, tâches et palettisation détaillée.
+
+        Exemple fictif : une commande B2B de 300 pièces devient éligible en trois ensembles. Retenir les premiers pour une libération commune compatible avec la promesse, puis demander un packing commun. Le nombre réel de palettes dépend des biens, des exigences et des capacités physiques.
+
+        [Transport Plan Decision](model:transport-plan-decision) construit ou révise les chargements et parcours confiés, en préservant les engagements et les affectations. Cette décision ne se confond ni avec le choix de prestation ou prestataire, ni avec le moment de libération des ordres, ni avec les engagements portés par [Transport Order](model:service-order-transport).
+
+        Décider du moment et du regroupement des prestations dans l’autorisation reçue d’[Process Orchestration](glossary:TER129). Cette décision ne remplace pas l’autorisation de poursuivre le parcours de la commande. Si une confirmation client reste requise, l’éligibilité logistique ne permet pas à elle seule de la contourner.
+  - id: subdomain-assortment-catalog-management
+    field_sha256:
+      scope: 7765797d5105b4df9da61f8c8c59c403ad7441c3efb0d15d4eb94d6ef875fc56
+      market_comparisons: d9c7e58e3dc262e77ada19fe42456f34867b370ed2b309105ac1f2211ea08561
+  - id: subdomain-operational-procurement
+    field_sha256:
+      scope: e58f5435a148a6b2fa39c8017f19a9c435b111f09c63ab3d11787f0a8a62eb68
+      market_comparisons: cdc70058cd3ee8c27e1166d2791db2b5c56faf1f25520a9e548f8ac87c58f8c2
+  - id: subdomain-order-backlog
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    field_sha256:
+      name: cced2b1bb2123aac0d757f949ea7ed9e51776f4e51000d811116d79c39fc5f96
+      definition: e07dc3995c4fa46ae2c50008bd936b5c131247588ba25c9ebf8192d8eaccd06a
+      finality: baee1bd8c7b72856f936aab14da10436478895abb0c3f25af1f4179ba76512bf
+      scope: 866a49a801e08f1c0192b47ac866a998934a4b2598edd874715cbf5783c7ab88
+      market_comparisons: 8fd2f343eb8e203ff5ef4fc944d476075df94d9f0cffeb238e7d78b75e1be836
+  - id: supply-chain-orchestration
+    field_sha256:
+      market_comparisons: ffa15fa0d0789ab8d641846700f278e3e1051335397ceb9eb6d5c29b7f678ffb
+      scope: bb1cb06e0c3f6e8b62fb57a28c6f3976e247e0de0cbd4b36bd4ad8aa2cda3122
+      market_inspiration: deeeaae8902d93b2cf38ff0c08f673d5c4903e678e203e33b04ebabba918fdc3
+      name: 9925b1127336fae5e805d2ed6df17bfb9944ae49acb73799038f3f8e433cd6f7
+      definition: 0528af4396549cdbf01fdc5c869328d56ac2b5fa330bc215249e6c94195c56ba
+      finality: f6218a716be887eec94cd2ce4a49c155c739373da9e5936bf1811091da30c279
+    kind: domain
+    parent: system-business-operations
+    parent_type: presents
+  - id: supply-plan-development
+    field_sha256:
+      scope: 740c5021cfb5e59a9df39ee36ce6d49c64e76189d86ebf7d18d7e2e37c3fd6ca
+  - id: transport-plan-decision
+    field_sha256:
+      scope: e0198492022cf687d563defc54c6193267ba4f1c6cd91996ecf91c2dd091baae
+    fields:
+      scope: |-
+        Construire le [plan de transport](glossary:TER103) pour organiser les transports confiés en un ensemble réalisable : [Load Consolidation](model:transport-load-consolidation) constitue les chargements ; [Routing & Scheduling](model:transport-routing-scheduling) en détermine les trajets et échéances. Les deux stratégies peuvent s’articuler et être réexaminées sans séquence universelle imposée. Le plan rend explicites les capacités, compatibilités, créneaux et conditions restant à confirmer.
+
+        Préserver les promesses portées par les [Orders](glossary:TER012) et les affectations d’[Order Backlog Management](glossary:TER269). Si aucune solution locale ne les respecte, faire examiner l’adaptation par les capacités responsables ; ne pas réaffecter implicitement la supply ni reconfirmer une commande. Ce plan de transport n’est ni le [Matching Master Plan](glossary:TER100) ni un [Supply Plan](glossary:TER098) prévisionnel externe.
+
+        [Service Selection Decision](model:D06.e) choisit les prestations et prestataires admissibles en articulation avec le plan. [Transport Order](model:service-order-transport) porte les instructions et engagements de transport ; [Transport Booking Order](model:service-order-transport-booking) porte les réservations de transport confiées. [Service Order Release Decision](model:service-order-release-decision) décide quand libérer les ordres : une rétention d’ordres ne constitue pas à elle seule un plan de chargement ou de route.
+
+        L’exécutant réalise les opérations et ses tâches internes. La capacité ne prescrit ni placement physique en trois dimensions, ni conduite, ni optimisation des tournées internes du transporteur qui ne sont pas confiées à l’orchestration. Exemple fictif : répartir les palettes destinées à six magasins entre deux chargements, puis retenir les arrêts et horaires compatibles avec leurs réceptions.
+
+        Le mandat doit préciser les groupements, trajets, arrêts ou échéances effectivement confiés à l’orchestration. [Transport Planning & Dispatch](model:subdomain-transport-planning-dispatch) construit le plan local des moyens et opérations dans son propre mandat et communique possibilités, confirmations et écarts. Ne pas reconstruire deux fois le même plan : les contraintes de l’orchestration, le résultat local et les adaptations autorisées sont reliés. Aucun outil ou calculateur installé attribué par cette frontière.
+  absent_nodes:
+  - subdomain-demand-planning
+  - subdomain-plan-reconciliation-scenarios
+  - subdomain-supply-planning
+  required_glossary:
+  - id: TER033
+    field_sha256:
+      context: 1f48c03a7fade2405d4f62e75ef67ad76400e3b2c5702fa42dc6b987edb9d76b
+  - id: TER045
+    field_sha256:
+      context: 949132884561d442ec05d46060c6f58953eca85210a44f4952d5a728a32eaf07
+  - id: TER069
+    field_sha256:
+      context: ff106740fef8ccc2790a72d0ec1d5959e5fd449bc4123d85153a17d13fa3e0c8
+      market_inspiration: 2267f1f76bdb647820588ef7b978996534830618fb34aef52cc384618179bf93
+  - id: TER074
+    field_sha256:
+      context: fdd1fc069d4d50fd7eb41139f64b1616bbaa6c76a5a7db3198c97d21cd3f6e48
+  - id: TER078
+    field_sha256:
+      context: 1f4bce00e081fd4cb0655fcd4fdd524f1433bd4b7d751470001dfb7671aa0884
+      market_inspiration: aac010cefac8155f4bdcc3a7fc2201d4643f6481f430780b191508f3bfa608db
+  - id: TER098
+    field_sha256:
+      definition: 05796de70759319c16be22ec4449e64fcc32c653aad62987c07bd21d3a418605
+      short_description: 7d1181763432daf5547750de235fc3ce4f93b48469587d9b05eb17e21889a461
+      context: 7a371b48abc54a8b5e234ae5e3ee2c5f1d42e25021ec52e2e58b8f1cac340101
+      market_comparisons: 2992473a620bac1480a96dd6f77915fd7b1ca78ae4c1607a8395d9befee113c2
+  - id: TER099
+    field_sha256:
+      market_comparisons: 833b143b291d7adb9c32e05bdc5ea194a56a2d4a538d2a47be2f3db09a0e68e7
+  - id: TER100
+    field_sha256:
+      context: 7b7bc641e15cf129ffb5a5b315bf269f84dd4f2c1202f544606fca32eb200ced
+      definition: de57d73e12fb1eedadb91fb91461bba002fb38d0ce8476184d061b545445927a
+      short_description: a54eb4c9a51f7f05381c035f7def0cf18cab258a2bf94e0fbd24f227a2e1954b
+      name: 96db0ef082d467cea8c67979a26924540b1d1f0ff81ab1621d0d68e8489d0cd0
+  - id: TER106
+    field_sha256:
+      context: 15cd8ff571a5b6c0fbb691af764278e656288eca259745612dad04985df96b4f
+  - id: TER109
+    field_sha256:
+      context: 05596a2eb3213fb83852861ed3073484413cc1e9eb8fae284107102e00358594
+  - id: TER111
+    field_sha256:
+      context: 3c616ab704ae48dfe351973d11eb29f943af6aa6dad923a9155e0308f865004d
+      market_comparisons: 17c47501cbe594174508caa12b864b8650948bf3d702207e9200103c3b9165fd
+      name: 9208f12d170e9a01f5e7b0a0b29ab006e0a5196774a1c9568ab5d3a4487ddab3
+      short_description: 295df3536c961828726c74a1495bffab62363b8c6c430a8b39ab9b8b79b781b4
+      definition: c04f200be4a740093e14d6106a824045f3a90dadb02d3f8ce6ecf0800acd55f1
+  - id: TER112
+    field_sha256:
+      context: 8e014ab46f2949e22be64be67d8b63965bcbf3db5b9cda31466f6b16039440b9
+      market_comparisons: 503651a7e1c1d471913cfbce8c1535b21e2c47d683d329a01b84a7a59bb78a5d
+      market_inspiration: bab778bd66aa8ab4f9057c728daab2ed895229f664b08f5893dc5d933b112d60
+      name: 0e113b6a2a36e2e86e6fc50862a01a3cd6ee61e5b7f57e5e24b4c778ee322b81
+      definition: 3254f23eab9e229e9fce5a0791e73dbd31623da55029f2d57191eacb491faa4a
+      short_description: d7f8f3395d5f115ae65f2e64db812a43bc61d72846d8c8e9df610f9599cbf528
+  - id: TER133
+    field_sha256:
+      definition: 83fe533b2df256022af6a7e8285e9827248ef3c16c93b50c3af402dbb90c13fd
+      short_description: 1aa5f4171c612cfd8e2ce468f7c6e8670caaf014ede10766a36e57c1da210d13
+      context: b78b6be2eb7e79d7b6a5764a0cebaa101ceb66fc83a69d9e36fdd5f2ff976d5e
+      market_comparisons: f206ed693188396d26a8b7d995f80df7de1eb5d8c5f564bdde30ef91e68853fb
+      name: be50eb89ede50933fbe20e756d322ffc1735bbefe6d70e0eb5c4f3141649dc78
+  - id: TER151
+    field_sha256:
+      context: 0048e4c27f02dfde8523ab1ea0bee75d059d44a4ac28a6bef6a4d567254ac424
+      market_comparisons: 0be7c11b2242977bb98230758a25512972c4e1a1d5595873a0c38231d1469a18
+  - id: TER219
+    field_sha256:
+      context: 69afcaf04dceb685f8850d61142cb7386404bed586a0c6c2046ca59f63fab575
+      market_comparisons: a69dc252537f73e30f624f2c522f5fc50798702906eb53e7dfaee4979a77b436
+  - id: TER244
+    field_sha256:
+      context: e58f5435a148a6b2fa39c8017f19a9c435b111f09c63ab3d11787f0a8a62eb68
+      market_comparisons: cdc70058cd3ee8c27e1166d2791db2b5c56faf1f25520a9e548f8ac87c58f8c2
+  - id: TER245
+    field_sha256:
+      context: 7765797d5105b4df9da61f8c8c59c403ad7441c3efb0d15d4eb94d6ef875fc56
+      market_comparisons: d9c7e58e3dc262e77ada19fe42456f34867b370ed2b309105ac1f2211ea08561
+  - id: TER269
+    field_sha256:
+      name: ec19a95008d372d53396ced0fb1b5ade8cfbef14abb450dc22212db9ceb1b6fe
+      definition: 1f69383685a7e32df05e427825ab1a34cabfbec2da3603457b1730644e9dd3c2
+      short_description: 1f69383685a7e32df05e427825ab1a34cabfbec2da3603457b1730644e9dd3c2
+      context: 1e468f909f9df04f71b807d476cfbfd67c03d7dfd1bf8f76b1c4d31cd0c2643f
+  required_relations:
+  - id: REL-U1080-PARENT-ba-demand-forecast-management
+    type: contains
+    source_id: domain-plan
+    target_id: ba-demand-forecast-management
+  - id: REL-U1080-PARENT-ba-master-plan-management
+    type: contains
+    source_id: domain-plan
+    target_id: ba-master-plan-management
+  - id: REL-U1080-PARENT-ba-order-backlog-management
+    type: contains
+    source_id: subdomain-order-backlog
+    target_id: ba-order-backlog-management
+  - id: REL-U1080-PARENT-ba-physical-stock-configuration-optimization
+    type: contains
+    source_id: domain-plan
+    target_id: ba-physical-stock-configuration-optimization
+  - id: REL-U1080-PARENT-ba-planning-reconciliation
+    type: contains
+    source_id: domain-plan
+    target_id: ba-planning-reconciliation
+  - id: REL-U1080-PARENT-ba-supply-resource-planning
+    type: contains
+    source_id: domain-plan
+    target_id: ba-supply-resource-planning
+  - id: REL-U1080-PRESENTS-order-backlog
+    type: presents
+    source_id: supply-chain-orchestration
+    target_id: subdomain-order-backlog
+  - id: REL-U1080-PRESENTS-planning-optimization
+    type: presents
+    source_id: supply-chain-orchestration
+    target_id: domain-plan
+  absent_relations:
+  - REL-U1019-PARENT-ba-order-backlog-management
+  - REL-U1079-ba-demand-forecast-management
+  - REL-U1079-ba-planning-reconciliation
+  - REL-U1079-ba-supply-resource-planning
+  supersedes_requirements:
+  - annex: availability-U835.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - definition
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - market_comparisons
+    - scope
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - scope
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - scope
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - definition
+    - finality
+    - market_comparisons
+    - parent
+    - scope
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: ba-order-backlog-management
+    fields:
+    - parent
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: ba-physical-stock-configuration-optimization
+    fields:
+    - parent
+  - annex: availability-scope-story-U1018.yaml
+    collection: relations
+    id: REL-U1019-PARENT-ba-order-backlog-management
+    fields:
+    - exists
+  - annex: availability-scope-story-U1018.yaml
+    collection: terms
+    id: TER074
+    fields:
+    - context
+  - annex: availability-scope-story-U1018.yaml
+    collection: terms
+    id: TER100
+    fields:
+    - context
+  - annex: availability-scope-story-U1018.yaml
+    collection: terms
+    id: TER112
+    fields:
+    - context
+    - market_comparisons
+  - annex: availability-scope-story-U1018.yaml
+    collection: terms
+    id: TER133
+    fields:
+    - context
+    - definition
+    - market_comparisons
+    - short_description
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - parent
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - parent
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-planning-reconciliation
+    fields:
+    - parent
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-supply-resource-planning
+    fields:
+    - parent
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: demand-forecast-development
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - market_comparisons
+    - modeling_depth
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: domain-sourcing-procurement
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: planning-scenario-reconciliation
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: plans-ingestion
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: supply-plan-development
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: relations
+    id: REL-U1079-ba-demand-forecast-management
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: relations
+    id: REL-U1079-ba-planning-reconciliation
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: relations
+    id: REL-U1079-ba-supply-resource-planning
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER109
+    fields:
+    - context
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - context
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER151
+    fields:
+    - context
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: transport-plan-decision
+    fields:
+    - scope
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: subdomain-assortment-catalog-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: context-business-systems-U975.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - kind
+    - name
+    - parent
+  - annex: context-business-systems-U975.yaml
+    collection: nodes
+    id: subdomain-demand-planning
+    fields:
+    - exists
+  - annex: context-business-systems-U975.yaml
+    collection: nodes
+    id: subdomain-plan-reconciliation-scenarios
+    fields:
+    - exists
+  - annex: context-business-systems-U975.yaml
+    collection: nodes
+    id: subdomain-supply-planning
+    fields:
+    - exists
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER106
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - definition
+    - name
+    - short_description
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-assortment-catalog-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-operational-procurement
+    fields:
+    - market_comparisons
+    - scope
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER244
+    fields:
+    - context
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER245
+    fields:
+    - context
+    - market_comparisons
+  - annex: domain-names-U801.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - name
+    - parent
+  - annex: market-coverage-audit-U775.yaml
+    collection: nodes
+    id: transport-plan-decision
+    fields:
+    - scope
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - definition
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: service-order-cross-docking
+    fields:
+    - scope
+  - annex: model-review-U794.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - name
+    - parent
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: D05.i
+    fields:
+    - scope
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: service-order-release-decision
+    fields:
+    - scope
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D03.j
+    fields:
+    - scope
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D04.j
+    fields:
+    - scope
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER045
+    fields:
+    - context
+  - annex: order-backlog-audit-U999.yaml
+    collection: terms
+    id: TER100
+    fields:
+    - definition
+    - short_description
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - market_inspiration
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: D04.i
+    fields:
+    - market_inspiration
+    - scope
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - market_inspiration
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - parent
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: ba-physical-stock-configuration-optimization
+    fields:
+    - parent
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - parent
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: terms
+    id: TER069
+    fields:
+    - context
+    - market_inspiration
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: terms
+    id: TER078
+    fields:
+    - context
+    - market_inspiration
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: terms
+    id: TER112
+    fields:
+    - market_inspiration
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - definition
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D05.a
+    fields:
+    - market_comparisons
+    - scope
+  - annex: semantic-coherence-audit-U1020.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - parent
+  - annex: semantic-coherence-audit-U1020.yaml
+    collection: nodes
+    id: ba-order-backlog-management
+    fields:
+    - parent
+  - annex: semantic-coherence-audit-U1020.yaml
+    collection: nodes
+    id: ba-physical-stock-configuration-optimization
+    fields:
+    - parent
+  - annex: stock-configuration-coherence-U911.yaml
+    collection: nodes
+    id: ba-physical-stock-configuration-optimization
+    fields:
+    - parent
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: nodes
+    id: demand-plan-visibility
+    fields:
+    - market_comparisons
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: nodes
+    id: plans-visibility
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: nodes
+    id: subdomain-supply-planning
+    fields:
+    - exists
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: terms
+    id: TER033
+    fields:
+    - context
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: terms
+    id: TER098
+    fields:
+    - context
+    - definition
+    - market_comparisons
+    - short_description
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: terms
+    id: TER099
+    fields:
+    - market_comparisons
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: terms
+    id: TER151
+    fields:
+    - market_comparisons
+  - annex: supply-plan-scope-correction-U1013.yaml
+    collection: terms
+    id: TER219
+    fields:
+    - context
+    - market_comparisons
+  - annex: visibility-scope-U858.yaml
+    collection: nodes
+    id: demand-plan-visibility
+    fields:
+    - scope
+limits: Aucune release, opération Git ou réalisation installée déduite. La centralisation du calcul est une option de conception
+  validée pour le modèle cible ; ses gains restent à instruire.

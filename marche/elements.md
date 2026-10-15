@@ -6513,3 +6513,13 @@ MKT14 — Dynamics 365 Supply Chain Management. [Register sales commissions](htt
 ### ELM911
 
 MKT14 — Dynamics 365 Supply Chain Management. [Sales agreements overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-agreements). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Pricing policies ; validity ; sales order lines. Reformulation : Conditions de l’accord prioritaires et prix/remise éventuellement figés ; éligibilité liée à une période et à la date demandée d’expédition. Limites : La date de cet exemple ne devient pas une règle universelle de vente FLOW. U990–U994, CMP317 ; synthèse et lien uniquement.
+
+
+### ELM912
+
+U1079 — MKT13, SAP S/4HANA Production Planning. [Introducing Predictive MRP (pMRP)](https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/introducing-predictive-mrp-pmrp-). Consultation : 2026-10-15. Édition : cours évolutif ; version globale non indiquée. Passage : simulation de scénarios de planification et effets de variations de demande, d’approvisionnement ou de capacité. Reformulation : plusieurs scénarios permettent d’examiner des résultats prévisionnels avant décision. Limite : la simulation produit ne démontre pas toute la réconciliation métier entre plans de FLOW ni une réalisation Beaumanoir. CMP321 ; synthèse et lien uniquement.
+
+
+### ELM913
+
+U1079 — MKT13, SAP S/4HANA Purchasing. [Working with Contracts](https://learning.sap.com/courses/purchasing-in-sap-s-4hana/working-with-contracts). Consultation : 2026-10-15. Édition : cours évolutif ; version globale non indiquée. Passages : Overview of Outline Agreements ; Centrally Agreed Contracts ; Contract Monitoring. Reformulation : les contrats d’achat portent partenaires, conditions, validité et consommation, avec des vues de suivi. Limite : les accords commerciaux client et l’autorité locale de la vue Supply ne sont pas décrits à eux seuls. CMP322 ; synthèse et lien uniquement.

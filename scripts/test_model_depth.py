@@ -33,6 +33,20 @@ class ContextDepthTests(unittest.TestCase):
         m['relations'].append({'id':'behavior-parent','type':'contains','source_id':'cap','target_id':'behavior'})
         self.assertTrue(any('model-depth/behavior:' in e for e in validate_urbanism(m,{})))
 
+    def test_business_operations_capability_depth_keeps_behaviors_in_core(self):
+        m=self.model()
+        m['nodes'].append({'id':'system-business-operations','kind':'business_system',
+                           'fields':{'name':'Operations','definition':'Service','finality':'Result','scope':'Boundary'}})
+        m['relations'].append({'id':'system-commerce','type':'presents',
+                               'source_id':'system-business-operations','target_id':'commerce'})
+        next(n for n in m['nodes'] if n['id']=='commerce')['fields']['modeling_depth']='capabilities'
+        m['nodes'].append({'id':'cap','kind':'capability','fields':{}})
+        m['relations'].append({'id':'cap-parent','type':'contains','source_id':'ba','target_id':'cap'})
+        self.assertEqual(validate_urbanism(m,{}),[])
+        m['nodes'].append({'id':'behavior','kind':'behavior','fields':{}})
+        m['relations'].append({'id':'behavior-parent','type':'contains','source_id':'cap','target_id':'behavior'})
+        self.assertTrue(any('model-depth/behavior:' in e for e in validate_urbanism(m,{})))
+
     def test_depth_does_not_propagate_to_other_domains_or_core_empty_areas(self):
         for domain,depth in [('commerce','domains'),('supply-chain-orchestration','behaviors')]:
             m=self.model();m['relations'][0]['source_id']=domain
@@ -49,7 +63,7 @@ class ContextDepthTests(unittest.TestCase):
 
     def test_business_area_depth_is_domain_only_and_historical_opt_in_is_preserved(self):
         m=self.model();m['nodes'][1]['kind']='business_system'
-        self.assertTrue(any('business_areas requires a domain' in e for e in validate_urbanism(m,{})))
+        self.assertTrue(any('business_areas/capabilities require a domain' in e for e in validate_urbanism(m,{})))
         m=self.model();m['principles']=[p for p in m['principles'] if p['id']!='PRINCIPLE-ORCHESTRATION-DETAIL']
         self.assertTrue(any('business-area/ba: requires' in e for e in validate_urbanism(m,{})))
 

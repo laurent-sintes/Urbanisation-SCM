@@ -36,7 +36,10 @@ class ModelCoherenceTests(unittest.TestCase):
         for text in [self.terms['TER112']['context'], self.terms['TER113']['context'],
                      self.nodes['subdomain-integration']['fields']['scope']]:
             self.assertNotIn('catégories', text)
-            self.assertIn('Business Areas', plain(text))
+        self.assertIn('Planning & Optimization', plain(self.terms['TER112']['context']))
+        self.assertIn('Order Backlog', plain(self.terms['TER112']['context']))
+        self.assertIn('Business Areas', plain(self.terms['TER113']['context']))
+        self.assertIn('Business Areas', plain(self.nodes['subdomain-integration']['fields']['scope']))
         self.assertNotIn('Inventory Foundation', str(self.nodes['D01']['fields']))
         meta = read(ROOT/'modeles/backlog/modeling-glossary.yaml')
         nature = next(t for t in meta['terms'] if t['id']=='MOD007')
@@ -84,7 +87,10 @@ class ModelCoherenceTests(unittest.TestCase):
         current.update(refinements['reading_code_expectations'])
         current.update(read(ROOT/'modeles/backlog/availability-scope-story-U1018.yaml')['reading_code_expectations'])
         current.update(read(ROOT/'modeles/backlog/context-structure-application-U1027.yaml')['reading_code_expectations'])
-        index=build_display_index(self.model)
+        # Historical reading codes belong to the frozen U1027 publication;
+        # new U1079 capabilities change the unpublished backlog traversal.
+        published=read(ROOT/'modeles/release/2026-10-14.3/model.yaml')
+        index=build_display_index(published)
         for example in audit['reading_codes']['examples']:
             if example['id'] in refinements['publication_delivery']['absent_nodes']:
                 self.assertNotIn(example['id'], index['codes'])
@@ -95,6 +101,8 @@ class ModelCoherenceTests(unittest.TestCase):
             ) if key in example)
             expected = current.get(example['id'], expected)
             self.assertEqual(index['codes'][example['id']], expected)
+        current_index=build_display_index(self.model)
+        self.assertEqual(len(current_index['codes']),len(set(current_index['codes'].values())))
         for ident in ['master-data-ingestion-commerce','master-data-ingestion-design']:
             self.assertIn(ident,self.nodes)
 

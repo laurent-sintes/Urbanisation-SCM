@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "captured_at": "2026-10-14",
+  "captured_at": "2026-10-15",
   "records": [
     {
       "id": "U01",
@@ -8625,6 +8625,22 @@
       "line": 25255,
       "content_sha256": "fc18a1697b2803c4b4e35fa4ac5cd60b333e5ad6ae5d005dfb72daa4cddea4d0",
       "captured_text": "## U1078\n\nDate : 2026-10-14. Source : Laurent, nouveau point chaud sur les référentiels Supply et leur intégration.\n\nVerbatim :\n\n> Je souhaite ajouter un hotspot.\n> Sujet : Dans les référentiels de la supply chain orchestration, une partie de la structure provient de la structure juridique du groupe : enseigne / marque / filiales / partenaires / personne morale et physique etc. Une autre partie dépend du design et du développement : les produits, les lignes produit etc. Une autre partie est portée (données maitre) par la supply chain. Pourtant les référentiels supply doivent agréger ces données et il peut arriver des problèmes d'intégration car les sources juridiques alimentent aussi design et développement.\n>\n> Problème 1 : est-on au clair sur la source de vérité des données ?\n> Proposition : juridique = système Enterprise Management & Control, Produit = Design & Development, performance supply = Supply chain Orchestration\n>\n> Problème 2 : comment intégrer dans la supply chain ces données multi sources sans erreur ?\n> Proposition : principe de solution MDM intégrée au domaine Supply chain Orchestration\n>\n> arbitrage : M\n> Implémentation : XL\n>\n> Avant création du Hotspot, qu'en penses-tu ? Où le localiser ?\n\nPrécision de Laurent sur la complexité :\n\n> Etrange d'avoir une criticité aussi haute alors que l'arbitrage est M ?\n\n> Pas d'accord, XL décrit les pbs d'intégration multisource et de désalignement des données qui sont déjà constatés dans les SI existants\n\nDemande de mise en œuvre :\n\n> ok, pret à produire le hotspot ?\n\nPortée : créer un point chaud dans le backlog sur l'autorité des données et l'intégration des référentiels de Supply Chain Orchestration, avec arbitrage M et implémentation XL. Laurent rapporte des problèmes déjà constatés dans les SI existants, sans fournir ici d'exemples ou de diagnostic technique précis. Les répartitions d'autorité et la gestion des données maîtres intégrée à Supply sont des propositions à instruire, non des décisions acquises. La matrice courante donne une criticité XL ; cette nouvelle contribution conduit à réexaminer l'objectif antérieur de HS-032 seul point chaud visible XL. Aucune publication ni opération Git n'est demandée."
+    },
+    {
+      "id": "U1079",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1079",
+      "line": 25288,
+      "content_sha256": "be66952643c5285a8424fc726794b16853cf95197a8ee24f121ef94140db1e32",
+      "captured_text": "## U1079\n\nDate : 2026-10-15. Source : Laurent, profondeur de modélisation de Business Operations.\n\nVerbatim :\n\n> Je souhaite avoir le niveau capacité pour toutes les BA du systeme Business Operation\n\nPrécision de périmètre, en réponse à la question sur Demand & Supply Planning :\n\n> Inclure aussi Demand & Supply Planning\n\nPortée : développer jusqu'aux capacités les Business Areas existantes de Business Operations et créer les Business Areas nécessaires dans Demand & Supply Planning avant leurs capacités, en conservant les frontières métier établies et sans déduire de réalisation installée. Cette demande remplace, dans Business Operations, les anciennes limites aux Business Areas terminales de contexte et aux seuls sous-domaines de Demand & Supply Planning. Elle ne modifie pas la profondeur du système Logistics."
+    },
+    {
+      "id": "U1080",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1080",
+      "line": 25303,
+      "content_sha256": "a6b3d8ea239a8bdd74fa48dee14185a120a209b5f8a7baded60761ae823e05f1",
+      "captured_text": "## U1080\n\nDate : 2026-10-15. Source : Laurent, discussion sur la place de la planification et du carnet de commandes dans FLOW.\n\nVerbatim (messages successifs de cette discussion) :\n\n> Demand & Supply Planning : on pense qu'il y a une planification stratégique côté Développement et une planification opérationnelle. Qu'en penses-tu ? La planification opérationnelle c'est le master plan ? Si oui, Demand & Supply Planning est stratégique et doit être déplacé, non ?\n\n> Dans Microsoft Dynamics 365, MAster Plan gère tout ?\n\n> Le plan prévisionnel, il est où ?\n\n> Le master plan il est dans quel domaine chez microsoft ? Supply Chain ?\n\n> Dans Flow, Master Planning me semble un peu noyé.\n\n> Je pense que les problématiques de planification et des gestion de carnet de commande doit etre mise en exergue.\n> Le domaine Demand & Supply Planning est trop mis en exergue.\n> J'aime l'approche master plan microsoft car c'est vrai que centraliser la planification et l'optimisation est sans doute plus efficace que de disperser les responsabilités.\n\nValidation de la proposition construite pendant la discussion :\n\n> Je valide\n\nPortée : accord sur la mise en exergue de Planning & Optimization et Order Backlog comme sous-domaines de Supply Chain Orchestration, le repositionnement des responsabilités de Demand & Supply Planning dans Planning & Optimization et la centralisation cible de la planification et de l'optimisation dans FLOW Core. La composition des collections reste dans Design & Development ; les engagements de commande restent dans Order Management. L'accord porte sur cette structure et ces frontières, sans démontrer un gain d'efficacité, imposer un moteur unique ni attester une réalisation installée. Les rédactions détaillées et correspondances marché ajoutées lors de l'intégration demeurent proposées. Aucune release, opération Git ou déploiement n'est demandé."
     },
     {
       "id": "F001",
@@ -17507,6 +17523,38 @@
       "captured_text": "## CMP318\n\nU995 — 12 octobre 2026. Proposition de nom, sans modification canonique : Supply Policy Management remplace éventuellement Control Plane ; Availability est conservé avec une définition courte explicitant promesses, couverture et affectations.\n\nAppuis effectivement reconsultés : [Dynamics 365 Commerce — DOM rules](https://learn.microsoft.com/en-us/dynamics365/commerce/dom-rules), ELM394, validité et activation des règles, protections de stock, exclusions et limites de recours ; [SAP S/4HANA Fashion — Explaining Supply Assignment](https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4), ELM452, règles de tri, libération et affectation, et objectif de disponibilité des ressources pour les demandes. Les fonctions sont proches, mais aucun des deux documents ne prescrit un sous-domaine nommé Supply Policy Management ni notre partage entre tenue des règles, recommandation et application. Nom local proposé, sans consensus revendiqué.\n\nBénéfice de Supply Policy Management : nommer la tenue des politiques opérationnelles Supply et leurs versions actives, plutôt qu’un plan technique d’infrastructure. Limite : le mot Policy doit être expliqué comme règle opérationnelle ; ce périmètre ne décide pas des prix ni des politiques financières externes et ne reprend pas la construction des parcours. Availability conserve un nom court, les capacités détaillées explicitant sa portée. Sa définition proposée : déterminer comment couvrir les besoins et ce qui peut être promis, en tenant compte des ressources, des priorités et des engagements. Les stocks et faits restent dans Inventory Management ; la planification externe reste distincte. Une proposition de nom ne donne aucun accord sur les descriptions ni les comparaisons."
     },
     {
+      "id": "CMP319",
+      "path": "marche/comparaisons.md",
+      "anchor": "cmp319",
+      "line": 2983,
+      "content_sha256": "bfa15a4005fbd63416c999acda6be0438248e7dd749ab97ddbcc1d9205ddaade",
+      "captured_text": "## CMP319\n\nU1079 — **Category Sourcing Strategy**. [Dynamics 365 Procurement catalogs](https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-catalogs) (ELM090) et [SAP S/4HANA Purchasing Categories](https://learning.sap.com/courses/purchasing-in-sap-s-4hana/creating-business-partners) (ELM499) documentent les catégories et leurs associations, utiles à l’analyse des achats. [SAP Ariba Category Management](https://learning.sap.com/courses/managing-a-category-profile/introducing-the-category-management-dashboard) documente plus directement la stratégie, mais est un produit distinct de S/4HANA. La capacité FLOW inclut l’arbitrage des orientations par catégorie ; les deux appuis S/4HANA et Dynamics sont partiels. Bénéfice : nommer le savoir-faire durable sans l’assimiler à un catalogue ou à un produit. Limite : aucune stratégie Beaumanoir installée déduite. Proposition non validée."
+    },
+    {
+      "id": "CMP320",
+      "path": "marche/comparaisons.md",
+      "anchor": "cmp320",
+      "line": 2988,
+      "content_sha256": "e381806db224439b6870d4cfad4c2f0ff8e4b416d2ed235b3b573724718407fc",
+      "captured_text": "## CMP320\n\nU1079 — **Service Reference Stewardship**. [Dynamics 365 Product information overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information) (ELM863) montre la définition et la circulation de produits et services ; [SAP S/4HANA Service Order Management](https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-service-management/introducing-service-order-management-and-monitoring_c75846f1-6c1c-4ae4-b1a7-12f560575119) (ELM797) distingue produits de service, partenaires et conditions de prix. Ces appuis étayent des références utiles aux opérations, mais ne démontrent ni la vue complète du réseau FLOW ni l’autorité des sources d’entreprise. Bénéfice : porter la cohérence de la vue locale sans créer une capacité de simple consultation. Proposition non validée."
+    },
+    {
+      "id": "CMP321",
+      "path": "marche/comparaisons.md",
+      "anchor": "cmp321",
+      "line": 2993,
+      "content_sha256": "31af6848872aa9c94249437f576ee8807d64d9afdf5b02d84b514ab9c36e7ec5",
+      "captured_text": "## CMP321\n\nU1079 — **Planning Reconciliation** et **Planning Scenario Reconciliation**. [Dynamics 365 Master plans](https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans) (ELM303) permet plusieurs plans et simulations ; [SAP S/4HANA Predictive MRP](https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/introducing-predictive-mrp-pmrp-) (ELM912) présente des scénarios faisant varier demande, approvisionnement et capacité. La comparaison appuie l’évaluation de scénarios, pas une équivalence complète avec la réconciliation des plans entre métiers. La préparation des plans reste dans Demand & Supply Planning ; les promesses et engagements effectifs restent dans Supply Chain Orchestration. Proposition non validée."
+    },
+    {
+      "id": "CMP322",
+      "path": "marche/comparaisons.md",
+      "anchor": "cmp322",
+      "line": 2998,
+      "content_sha256": "1d58447a6cd1bcabb247b21280f83a47747c17b46196dc0f7f914f626e5a9d07",
+      "captured_text": "## CMP322\n\nU1079 — **Partner & Agreement Reference Stewardship**. [Dynamics 365 Global address book](https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/organization-administration/overview-global-address-book) (ELM400) et [SAP S/4HANA Business Partners](https://learning.sap.com/courses/purchasing-in-sap-s-4hana/creating-business-partners) (ELM499) documentent l’identité des parties et leurs rôles. [Dynamics 365 Sales agreements](https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-agreements) (ELM911) et [SAP S/4HANA Purchasing Contracts](https://learning.sap.com/courses/purchasing-in-sap-s-4hana/working-with-contracts) (ELM913) documentent des conditions, périodes et engagements contractuels. Ces fonctions produit couvrent des objets pertinents, mais ne prescrivent pas la vue locale Supply ni la répartition des sources de vérité de Beaumanoir. La capacité proposée contrôle leur cohérence d’usage sans devenir maître d’entreprise. Aucun déploiement déduit."
+    },
+    {
       "id": "CMP003",
       "path": "marche/comparaisons.md",
       "anchor": "",
@@ -24793,6 +24841,22 @@
       "line": 6513,
       "content_sha256": "21ac32948cb791ae2ec552626bc5b0e188af8a89a8821c13772305bf70c8c302",
       "captured_text": "### ELM911\n\nMKT14 — Dynamics 365 Supply Chain Management. [Sales agreements overview](https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/sales-agreements). Consultation : 2026-10-12. Édition : Documentation évolutive ; édition globale non établie. Passage : Pricing policies ; validity ; sales order lines. Reformulation : Conditions de l’accord prioritaires et prix/remise éventuellement figés ; éligibilité liée à une période et à la date demandée d’expédition. Limites : La date de cet exemple ne devient pas une règle universelle de vente FLOW. U990–U994, CMP317 ; synthèse et lien uniquement."
+    },
+    {
+      "id": "ELM912",
+      "path": "marche/elements.md",
+      "anchor": "elm912",
+      "line": 6518,
+      "content_sha256": "c93b7b9ec0e530d59887bbfbc9b1d4bbbc85486182aa3a6590c2c1668033d042",
+      "captured_text": "### ELM912\n\nU1079 — MKT13, SAP S/4HANA Production Planning. [Introducing Predictive MRP (pMRP)](https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/introducing-predictive-mrp-pmrp-). Consultation : 2026-10-15. Édition : cours évolutif ; version globale non indiquée. Passage : simulation de scénarios de planification et effets de variations de demande, d’approvisionnement ou de capacité. Reformulation : plusieurs scénarios permettent d’examiner des résultats prévisionnels avant décision. Limite : la simulation produit ne démontre pas toute la réconciliation métier entre plans de FLOW ni une réalisation Beaumanoir. CMP321 ; synthèse et lien uniquement."
+    },
+    {
+      "id": "ELM913",
+      "path": "marche/elements.md",
+      "anchor": "elm913",
+      "line": 6523,
+      "content_sha256": "a87793b87f0feadfdb0835650b1bbb984b98003f62595c786cf1fa08431ba256",
+      "captured_text": "### ELM913\n\nU1079 — MKT13, SAP S/4HANA Purchasing. [Working with Contracts](https://learning.sap.com/courses/purchasing-in-sap-s-4hana/working-with-contracts). Consultation : 2026-10-15. Édition : cours évolutif ; version globale non indiquée. Passages : Overview of Outline Agreements ; Centrally Agreed Contracts ; Contract Monitoring. Reformulation : les contrats d’achat portent partenaires, conditions, validité et consommation, avec des vues de suivi. Limite : les accords commerciaux client et l’autorité locale de la vue Supply ne sont pas décrits à eux seuls. CMP322 ; synthèse et lien uniquement."
     },
     {
       "id": "ELM003",
