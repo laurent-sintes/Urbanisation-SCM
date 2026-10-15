@@ -25325,3 +25325,14 @@ Validation de la proposition construite pendant la discussion :
 > Je valide
 
 Portée : accord sur la mise en exergue de Planning & Optimization et Order Backlog comme sous-domaines de Supply Chain Orchestration, le repositionnement des responsabilités de Demand & Supply Planning dans Planning & Optimization et la centralisation cible de la planification et de l'optimisation dans FLOW Core. La composition des collections reste dans Design & Development ; les engagements de commande restent dans Order Management. L'accord porte sur cette structure et ces frontières, sans démontrer un gain d'efficacité, imposer un moteur unique ni attester une réalisation installée. Les rédactions détaillées et correspondances marché ajoutées lors de l'intégration demeurent proposées. Aucune release, opération Git ou déploiement n'est demandé.
+
+
+## U1081
+
+Date : 2026-10-15. Source : Laurent, validation de la synthèse des sous-domaines impactés par U1079 et U1080.
+
+Verbatim :
+
+> Je valide. Commit & release
+
+Portée : accord sur la structure et le contenu explicitement présentés dans la synthèse précédente : les 14 sous-domaines touchés, les Business Areas et les capacités énumérées sous Planning & Optimization, Order Backlog, Availability, Commerce, Sourcing and Procurement, Operational References et Supply Policy Management. Les noms et rattachements montrés des nouvelles capacités et Business Areas de U1079 sont validés ; les textes détaillés des fiches et les correspondances marché qui n'étaient pas exposés restent proposés. La validation confirme le recentrage U1080 sans étendre ses accords aux champs non présentés. Autorise un commit local et une release Atlas du backlog courant ; aucun push n'est demandé et aucune réalisation installée n'est déduite.
