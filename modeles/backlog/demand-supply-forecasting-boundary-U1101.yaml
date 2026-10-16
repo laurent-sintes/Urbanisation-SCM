@@ -1,0 +1,210 @@
+id: DEMAND-SUPPLY-FORECASTING-BOUNDARY-U1101
+date: '2026-10-16'
+status: applied_to_backlog
+source_refs:
+- U1099
+- U1100
+- U1101
+decision: Distinguer la composition de collection et le design produit de la prévision demand/supply dans Design & Development.
+  Le Forecast Plan amont alimente le Master Plan opérationnel.
+market_comparison:
+  microsoft: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
+  sap: https://learning.sap.com/courses/outlining-sap-s-4hana-for-fashion-and-vertical-business-and-implementing-best-practices/planning-fashion-with-sap-ibp-with-characteristics-based-planning
+  finding: Microsoft documente des prévisions distinctes de demande et de supply utilisables par le Master Plan ; SAP documente
+    leur planification fashion par produit, attribut, canal et contrainte fournisseur.
+  limits: Ces fonctions produit ne fixent pas une responsabilité organisationnelle universelle ni une installation Beaumanoir.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1099
+  - U1101
+  summary: Demand & Supply Forecasting devient un sous-domaine distinct de Collection Planning dans Design & Development ;
+    Forecast Plan alimente le Master Plan sans calcul net amont.
+  required_nodes:
+  - id: domain-plan
+    kind: area
+    field_sha256:
+      scope: 9cb66a3e5152d2dabcae311c9d3f6432b70bc923a00677eb05f5362d5853f936
+  - id: supply-chain-orchestration
+    kind: domain
+    field_sha256:
+      market_inspiration: 6b84a4178ded2032013033feea31b001ac5e77c93750413fa6ff114fcab57c00
+  - id: domain-product-portfolio-collection
+    kind: domain
+    field_sha256:
+      definition: 6500495b59dfbe7b0e11bae771cfd281d5340d30cedcb5613469a7ed8a6dad12
+      finality: f97d216ece972013ed8794883b0497f03976540f10916e493000cfb4ebace57f
+      scope: 82e16ba852db48823d142f6558d7f30f6314c0cef64e5ba857be0afc336691ba
+      examples: c343cf795e572fb6612702f4b5295ca99e0fac3df27975d1b547cc08131557fb
+      market_comparisons: 3849465d3dbd146b9425e501cdc2574d7f29660d61b93089fb3e4d65e7a3ef8a
+  - id: subdomain-collection-planning
+    kind: area
+    field_sha256:
+      definition: e31b987eb534f59269d996a50340afe50b4c0fa7d13231fa06ffd7d13c14937a
+      finality: 5d830133b0917f98ff8b66f6a6b0e9696ddaea5372f05268f6a39a506ebe8d38
+      scope: 9de4c5ffc29d80159205aed8736915c034d90a17ea8cbedd12f5b426dafeb053
+      examples: 05c67a5b27f752eed515821a36a373f7fa17a57f5a1c5535a4ecba451eea3437
+      market_comparisons: 063efc4ff923653a7ec5734c4dee3012d6173060bf5af5774282779ccf2ed687
+  - id: ba-demand-forecast-management
+    kind: business_area
+    field_sha256:
+      scope: 1bec5023d9937f68e2b63afbbf32e69c36025ca4a7f1bf19391f051a9e268c25
+  - id: demand-forecast-development
+    kind: capability
+    field_sha256:
+      scope: c3ea7faee85e706e4ec5313cbf9cfbf7d7c6f16585b1e9546d1c88ad7b88f62c
+  - id: subdomain-demand-supply-forecasting
+    kind: area
+    field_sha256:
+      name: 49e34843967f7a95ce92e9f215c89bce4efa86ce2a1a8795a4866ed1cd19fdb9
+      definition: 67f1f3f01a3fb2e4f102d635cf46976644f505f2bb19d72d576ea8da59035b27
+      finality: 5006eb2ed3b344681915b3cd3a9a75c0095b202ff7c44c87a73ef3b00644bb34
+      scope: 88db20280d7f0a306cccd5052bd51d5c1fa783e426797eeca3dfc7b881dcd703
+      examples: bbc092a16e6f4ff685ee6d31f1874b75211cd3e604255b71eb25d3af7e456493
+      market_comparisons: 8c2bd791d80f659394d1efdaa28bc88068b22fe6cdbee60fd8f1257fe41d1dea
+    parent: domain-product-portfolio-collection
+    parent_type: presents
+  required_relations:
+  - id: REL-U1101-collection-to-demand-supply-forecast
+    type: shares-data
+    source_id: subdomain-collection-planning
+    target_id: subdomain-demand-supply-forecasting
+    field_sha256:
+      label: cb7853e84dc52f1ac6c06a432975bc5e8ea76ed43d457e9ec0215c380c298306
+      data_exchange: 79f6dbb4a4742736714c44dbb7dc62df0ce8a88cbca0f39fd88ff95491d39e52
+  - id: REL-U1101-forecast-to-demand-plan
+    type: shares-data
+    source_id: subdomain-demand-supply-forecasting
+    target_id: ba-demand-forecast-management
+    field_sha256:
+      label: f67f6b3d5605fde0e2065aaff034bfef0b1a3eb64dc2085e43cb7594f5c130b0
+      data_exchange: e053b97ab281dbfc4b8b15738571199bcf3a3a16f7a83186781332ac8763e412
+  - id: REL-U1101-PRESENTS-demand-supply-forecasting
+    type: presents
+    source_id: domain-product-portfolio-collection
+    target_id: subdomain-demand-supply-forecasting
+  required_glossary:
+  - id: TER206
+    field_sha256:
+      short_description: a80740a2f178b1713411ad6c15b8e0a40d09355e7431d569d07bba129976306a
+      definition: 41f8e0a16aa66e976c9eb76a47a6be3e24c0b6d58841a66e9aad052c13caa01a
+      context: 82e16ba852db48823d142f6558d7f30f6314c0cef64e5ba857be0afc336691ba
+      market_comparisons: 3849465d3dbd146b9425e501cdc2574d7f29660d61b93089fb3e4d65e7a3ef8a
+  - id: TER208
+    field_sha256:
+      short_description: 858e25c549be8b6ecc937ea35844f296126f0e461a2846fceb27b8373d993c20
+      definition: b45c7f856e8b9587aa4d81f2dd1f9208b8d7177cf23e4fb9755b1b2fb0fda232
+      context: 9de4c5ffc29d80159205aed8736915c034d90a17ea8cbedd12f5b426dafeb053
+      market_comparisons: a4ee3256ae8f40a31804491d815e4610345e3a4e2ab6d590a0beca5e20c4192f
+  - id: TER372
+    field_sha256:
+      definition: 844be007021afb00f7b3ce41be4eb44aa8cb2b773366c3545af38eb6715be169
+      short_description: 29b9196cf4f3fa757dcfd5903848f28a37669a5588edaf1f1fdf90b252fb83f1
+      context: ffe9943b2d6155cba5f657b34128cae0d88058dc4623c40c2288129e43a706eb
+  - id: TER373
+    field_sha256:
+      name: 49e34843967f7a95ce92e9f215c89bce4efa86ce2a1a8795a4866ed1cd19fdb9
+      definition: 18c8a290339f1dd1ee2070bdb5e94f62dd2a3fd29d05deda78e5866d16a7aa6c
+      short_description: 4129fb3e869a70391996dc3d4af77ae15fee4d9c200a1ee37f0eb24532c0b171
+      context: c0f0f15bfb291c2a10c7088c29fe6a7cadd090be61c53054544139d2ca5aaefc
+  - id: TER111
+    field_sha256:
+      context: 9cb66a3e5152d2dabcae311c9d3f6432b70bc923a00677eb05f5362d5853f936
+  - id: TER360
+    field_sha256:
+      context: 1bec5023d9937f68e2b63afbbf32e69c36025ca4a7f1bf19391f051a9e268c25
+  - id: TER361
+    field_sha256:
+      context: 9543ed8669f3bc41d854b9db9863b46aff58a844c0f49f4b6d7b18c4eefde5d4
+  absent_relations:
+  - REL-U1093-collection-assumptions-to-demand-plan
+  supersedes_requirements:
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: nodes
+    id: domain-product-portfolio-collection
+    fields:
+    - definition
+    - finality
+    - scope
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: terms
+    id: TER206
+    fields:
+    - context
+    - definition
+    - short_description
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: relations
+    id: REL-U1093-collection-assumptions-to-demand-plan
+    fields:
+    - exists
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - scope
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - market_inspiration
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: subdomain-collection-planning
+    fields:
+    - definition
+    - examples
+    - finality
+    - market_comparisons
+    - scope
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - scope
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: demand-forecast-development
+    fields:
+    - scope
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER208
+    fields:
+    - context
+    - definition
+    - market_comparisons
+    - short_description
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER372
+    fields:
+    - context
+    - definition
+    - short_description
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: relations
+    id: REL-U1093-collection-assumptions-to-demand-plan
+    fields:
+    - exists
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - context
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER360
+    fields:
+    - context
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER361
+    fields:
+    - context
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: nodes
+    id: domain-product-portfolio-collection
+    fields:
+    - examples
+    - market_comparisons

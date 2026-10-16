@@ -1,0 +1,182 @@
+id: COMMERCE-PROCUREMENT-DEPTH-AUDIT-U1088
+status: analysis_only
+source_refs:
+- U1079
+- U1081
+- U1088
+scope: Audit du niveau Business Area et capacité dans Sourcing and Procurement et Commerce, sur le backlog du 2026-10-15. Aucune modification des noms, parents ou capacités n'est appliquée par cet audit.
+method:
+  observations:
+  - Chaque Business Area et sa capacité ont été relues dans model.yaml avec leurs parents explicites, définitions, portées et comparaisons marché.
+  - Le comptage porte sur les relations contains du backlog courant ; une capacité a un seul parent Business Area.
+  - Une capacité unique est autorisée par U880. Le critère d'audit est la différence de résultat métier entre niveaux et la couverture des cas, pas un quota de capacités.
+  - U1081 valide les noms et rattachements montrés du lot U1079 ; les textes détaillés et comparaisons n'étaient pas validés.
+  measurements:
+    sourcing_and_procurement:
+      subdomains: 4
+      business_areas: 10
+      capabilities: 10
+      single_capability_business_areas: 10
+      same_opening_scope_at_ba_and_capability: 10
+      same_market_source_urls_at_ba_and_capability: 9
+    commerce:
+      subdomains: 5
+      business_areas: 13
+      capabilities: 13
+      single_capability_business_areas: 13
+      same_opening_scope_at_ba_and_capability: 13
+      same_market_source_urls_at_ba_and_capability: 13
+    combined:
+      business_areas: 23
+      capabilities: 23
+      single_capability_business_areas: 23
+      same_opening_scope_at_ba_and_capability: 23
+      same_market_source_urls_at_ba_and_capability: 22
+  interpretation: Le lot U1079 a principalement créé une capacité miroir pour chacune des Business Areas existantes. Cela satisfait la profondeur déclarée, mais n'apporte souvent pas une seconde maille de lecture métier. Le nombre seul ne démontre aucune capacité manquante.
+market_audit:
+  consulted_on: 2026-10-15
+  microsoft_procurement:
+    title: Procurement and sourcing overview — Dynamics 365 Supply Chain Management
+    url: https://learn.microsoft.com/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+    relevant_content: La source décrit, dans un même périmètre produit, demande d'achat, consultation, choix fournisseur, accord, commande et suivi fournisseur.
+  sap_s4hana_sourcing:
+    title: Working with Requests for Quotation — SAP S/4HANA
+    url: https://learning.sap.com/courses/sourcing-in-sap-s4hana/working-with-requests-for-quotation
+    relevant_content: La consultation, l'évaluation des offres et le choix de la source sont des étapes distinctes d'un même processus d'appel d'offres.
+  microsoft_commerce:
+    title: Store Commerce app capabilities — Dynamics 365 Commerce
+    url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce-capabilities
+    relevant_content: Le point de vente couvre transactions, relation client, commandes, stock et opérations locales, tandis que le backoffice configure produits, prix et processus.
+  sap_s4hana_retail:
+    title: Managing Retail Store Operations — SAP S/4HANA Retail
+    url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/managing-retail-store-operations_f77c8f4d-b247-4ef0-879b-3c4f469a6323
+    relevant_content: Les opérations magasin comprennent plusieurs pratiques de marchandise et de stock ; l'outil ne fixe pas à lui seul le découpage des capacités FLOW.
+  sap_s4hana_assortment:
+    title: Assortment — SAP S/4HANA Retail
+    url: https://learning.sap.com/courses/configuring-master-data-in-sap-s-4hana-cloud-private-edition-retail/assortment-1-1
+    relevant_content: L'assortiment détermine l'admissibilité article-site-période, distincte de la diffusion de l'offre et de la vente.
+  comparison_and_limit: Microsoft et SAP regroupent plusieurs actes dans un processus ou produit tout en distinguant des résultats métier. Ces sources appuient l'examen des frontières ; elles ne prescrivent ni un nombre de Business Areas FLOW, ni une fusion automatique, ni une réalisation Beaumanoir.
+findings:
+  sourcing_and_procurement:
+  - subdomain: subdomain-supplier-management
+    business_areas:
+    - ba-supplier-qualification
+    - ba-supplier-performance-management
+    capabilities:
+    - cap-supplier-eligibility-assessment
+    - cap-supplier-performance-evaluation
+    finding: L'admissibilité initiale ou révisée et l'évaluation de performance produisent deux résultats distincts, mais chaque Business Area répète exactement la première portée de sa capacité.
+    recommendation: Tester un regroupement des deux capacités sous une Business Area de gouvernance fournisseur si les mêmes règles et autorités couvrent les deux décisions ; conserver les deux capacités.
+    disposition: regroupement_de_ba_a_instruire
+  - subdomain: subdomain-strategic-sourcing
+    business_areas:
+    - ba-sourcing-strategy-management
+    - ba-sourcing-event-management
+    - ba-source-selection
+    capabilities:
+    - cap-category-sourcing-strategy
+    - cap-supplier-consultation-coordination
+    - cap-supplier-offer-selection
+    finding: La stratégie de catégorie est distincte du cas de consultation ; consultation et sélection sont deux résultats du même événement de sourcing. La source SAP S/4HANA décrit leur enchaînement, sans les assimiler.
+    recommendation: Garder la stratégie séparée ; éprouver une Business Area commune pour consultation et sélection, avec deux capacités distinctes.
+    disposition: regroupement_de_ba_prioritaire
+  - subdomain: subdomain-purchase-contract-management
+    business_areas:
+    - ba-purchase-agreement-management
+    - ba-supplier-rebate-incentive-management
+    capabilities:
+    - cap-purchase-agreement-lifecycle-management
+    - cap-supplier-rebate-scheme-management
+    finding: Accord d'achat et dispositif de ristourne fournisseur sont des objets contractuels proches, mais une ristourne peut relever de conditions transverses à plusieurs accords. Finance calcule le droit et le règlement ; ce domaine définit les conditions.
+    recommendation: Tester l'autorité et le cycle de vie communs avant de regrouper les Business Areas. Ne pas fusionner les deux capacités.
+    disposition: regroupement_de_ba_conditionnel
+  - subdomain: subdomain-operational-procurement
+    business_areas:
+    - ba-purchase-requisition-management
+    - ba-purchasing-execution-coordination
+    - ba-supplier-delivery-follow-up
+    capabilities:
+    - cap-purchase-requisition-handling
+    - cap-purchasing-case-coordination
+    - cap-supplier-commitment-follow-up
+    finding: La demande d'achat et sa validation ont un résultat propre. Supplier Commitment Follow-up suit les réponses fournisseur. Purchasing Case Coordination reste formulée comme coordination générale, sans résultat suffisamment distinct de Purchase Order et de Process Management dans Supply Chain Orchestration.
+    recommendation: Clarifier, sur un achat retardé, les décisions, échanges et résultats propres à Purchasing Case Coordination ; ensuite tester un regroupement avec Supplier Delivery Follow-up. Préserver Purchase Order comme porteur de l'engagement.
+    disposition: capacite_a_qualifier_en_priorite
+  commerce:
+  - subdomain: subdomain-sales-wholesale
+    business_areas:
+    - ba-wholesale-account-management
+    - ba-wholesale-sales
+    capabilities:
+    - cap-wholesale-account-stewardship
+    - cap-wholesale-sales-engagement
+    finding: Relation avec le revendeur et vente wholesale sont distinctes ; les deux Business Areas peuvent toutefois relever d'une responsabilité commerciale commune. Le texte de Wholesale Sales couvre à la fois préparation de l'offre, recueil de la demande et suivi.
+    recommendation: Tester un regroupement des Business Areas sur un parcours de saison B2B et vérifier si Wholesale Sales Engagement doit distinguer préparation commerciale et prise de commande.
+    disposition: regroupement_et_profondeur_a_instruire
+  - subdomain: subdomain-assortment-catalog-management
+    business_areas:
+    - ba-assortment-management
+    - ba-catalog-management
+    capabilities:
+    - cap-assortment-eligibility-management
+    - cap-commercial-catalog-publication
+    finding: Autoriser un produit pour un site, canal ou client et publier sa présentation commerciale sont deux résultats différents. SAP S/4HANA Retail étaye l'admissibilité article-site-période ; la composition produit de Design & Development reste une source amont.
+    recommendation: Conserver les deux capacités. Garder provisoirement les Business Areas séparées ; vérifier la prise en charge d'une modification d'assortiment jusqu'à sa publication.
+    disposition: separation_justifiee_a_tester
+  - subdomain: subdomain-pricing-promotions-management
+    business_areas:
+    - ba-pricing-management
+    - ba-promotion-management
+    capabilities:
+    - cap-sales-price-determination
+    - cap-promotion-rule-management
+    finding: Pricing Management annonce à la fois définition des règles et détermination du prix, alors que sa seule capacité est Sales Price Determination. Promotion Management définit les règles ; Pricing en combine les effets. Le prix engagé reste dans Order Management.
+    recommendation: Tester séparément gouvernance des règles tarifaires, calcul du prix applicable et activation des promotions avant d'ajouter une capacité ; conserver la frontière Commerce vers FLOW Core.
+    disposition: profondeur_possiblement_insuffisante
+  - subdomain: subdomain-rebates-incentives-management
+    business_areas:
+    - ba-rebate-management
+    - ba-sales-incentive-management
+    capabilities:
+    - cap-sales-rebate-scheme-management
+    - cap-sales-incentive-scheme-management
+    finding: Les deux capacités définissent des dispositifs différents par leurs bénéficiaires et conditions. Commercial Settlement Management en Finance calcule et régularise les droits ; l'absence de ce calcul sous Commerce est voulue.
+    recommendation: Conserver les capacités séparées ; ne regrouper les Business Areas que si une autorité commerciale commune est établie.
+    disposition: separation_justifiee
+  - subdomain: subdomain-retail-commerce
+    business_areas:
+    - subdomain-sales-b2c-ecommerce
+    - subdomain-sales-b2c-store
+    - subdomain-retail-network-management
+    - ba-retail-customer-relationship-management
+    - subdomain-store-backoffice-operations
+    capabilities:
+    - cap-digital-sales-journey-management
+    - cap-in-store-sales-journey-management
+    - cap-store-network-configuration-management
+    - cap-retail-customer-engagement-management
+    - cap-store-stock-operations-management
+    finding: Les cinq Business Areas correspondent à des responsabilités réellement différentes. En revanche, une seule capacité couvre tout le parcours digital, une autre vente/caisse/retour, une autre profil/fidélité/campagne et une autre réception/inventaire/préparation/remise. Les capacités sont trop larges pour vérifier ces résultats par cas d'usage. Certains textes de Business Area disent encore que la description s'arrête à ce niveau alors qu'une capacité a été créée en U1079.
+    recommendation: Conserver les cinq Business Areas ; approfondir prioritairement Store Operations, Store Sales, Digital Commerce et Retail Customer Relationship Management par parcours, avant de proposer des capacités supplémentaires. Contrôler que les opérations commerciales ne reprennent pas les engagements, promesses et affectations du Core.
+    disposition: approfondissement_prioritaire_des_capacites
+use_case_checks:
+- id: procurement-delay
+  title: Acheter une capsule puis gérer un retard fournisseur
+  path: Besoin d'achat → validation → consultation → choix fournisseur → accord → commande d'achat autorisée → confirmation et retard → révision du plan Supply.
+  test: Identifier le résultat de Purchasing Case Coordination distinct du cycle de Purchase Order et du suivi des engagements fournisseur ; confirmer l'autorité pour négocier un changement.
+- id: omnichannel-pickup-return
+  title: Lancer une offre puis vendre en ligne et remettre ou retourner en magasin
+  path: Assortiment autorisé → catalogue diffusé → prix et promotion applicables → vente en ligne → commande et affectation Core → préparation et remise magasin → éventuel retour en magasin.
+  test: Séparer décisions commerciales, transaction de vente, opérations locales et commande Core ; vérifier les résultats distincts cachés dans les capacités Store Sales, Digital Commerce et Store Operations.
+- id: wholesale-season
+  title: Préparer une saison avec un revendeur
+  path: Relation et accord commercial → sélection proposée → demande du revendeur → prix et ristourne applicables → Sales Order Core → suivi commercial et règlement du droit par Finance.
+  test: Vérifier si la préparation commerciale et le recueil de commande sont deux capacités distinctes et si une même Business Area peut porter relation et vente Wholesale.
+priorities:
+- first: Décomposer par cas d'usage les capacités trop larges de Retail Commerce et clarifier Purchasing Case Coordination.
+- second: Réexaminer les regroupements de Business Areas dans Strategic Sourcing et Supplier Management, puis Wholesale Commerce.
+- third: Tester les regroupements conditionnels des accords et du suivi d'achat ; conserver les séparations dont les résultats et autorités sont distincts.
+open_questions:
+- Quelle autorité prend les décisions de prix, de promotion, d'assortiment et de réseau dans les différents SI et pour quelle maille ?
+- Quels actes du magasin et du canal digital restent dans Commerce, et quels engagements et affectations restent dans FLOW Core ?
+- Dans un retard fournisseur, quel résultat propre produit Purchasing Case Coordination au-delà du Purchase Order et du suivi fournisseur ?

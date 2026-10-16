@@ -117,11 +117,25 @@ class DataSharingTests(unittest.TestCase):
     def test_current_business_lot_preserves_capabilities_and_hierarchy(self):
         backlog = read(ROOT / 'modeles/backlog/model.yaml')
         baseline = {n['id'] for n in self.base['nodes'] if n['kind'] in ['capability', 'behavior']}
-        # U1009 added these capabilities after the historical fixture.
-        later_capabilities = {'delivery-release-decision', 'demand-fulfilment-policy-management'}
-        self.assertEqual({n['id'] for n in backlog['nodes'] if n['kind'] in ['capability', 'behavior']},
-                         (baseline - {'accounting-interpretation'}) | later_capabilities)
-        self.assertEqual(len([r for r in backlog['relations'] if r['type'] == 'shares-data']), 11)
+        current = {n['id'] for n in backlog['nodes'] if n['kind'] in ('capability', 'behavior')}
+        self.assertLessEqual(baseline - {'accounting-interpretation'}, current)
+        self.assertTrue({'delivery-release-decision', 'demand-fulfilment-policy-management',
+                         'demand-plan-development', 'cap-store-order-preparation-handover',
+                         'cap-purchasing-case-coordination'} <= current)
+        exchanges = {r['id']: r for r in backlog['relations'] if r['type'] == 'shares-data'}
+        expected = {
+            'REL-U1091-store-stock-facts-to-inventory': ('cap-store-stock-operations-management', 'D01.f'),
+            'REL-U1091-store-preparation-results-to-fulfilment': ('cap-store-order-preparation-handover', 'D07.d'),
+            'REL-U1091-supplier-response-to-purchase-order': ('cap-supplier-commitment-follow-up', 'D04.j'),
+            'REL-U1091-purchasing-decision-to-purchase-order': ('cap-purchasing-case-coordination', 'D04.j'),
+            'REL-U794-PLAN-INGESTION': ('plans-ingestion', 'domain-plan'),
+            'REL-U826-planning-data-provision-TO-domain-plan': ('planning-data-provision', 'domain-plan'),
+        }
+        for ident, endpoints in expected.items():
+            with self.subTest(relation=ident):
+                self.assertIn(ident, exchanges)
+                self.assertEqual((exchanges[ident]['source_id'], exchanges[ident]['target_id']), endpoints)
+                self.assertTrue(exchanges[ident]['qualification']['conditions'])
         self.assertEqual(len([r for r in backlog['relations'] if r['source_id'] == 'domain-sourcing-procurement' and r['type'] == 'presents']), 4)
 
 

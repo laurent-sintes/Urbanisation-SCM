@@ -26,9 +26,12 @@ class BusinessAreaTests(unittest.TestCase):
         self.assertEqual(index['children']['D03'], ['ba-order-promising'])
         self.assertEqual(set(index['children']['domain-plan']), {
             'ba-demand-forecast-management', 'ba-supply-resource-planning',
-            'ba-planning-reconciliation', 'ba-master-plan-management', physical})
-        self.assertEqual(index['children']['subdomain-order-backlog'],
-                         ['ba-order-backlog-management'])
+            'ba-planning-reconciliation', 'ba-master-plan-management',
+            'ba-order-backlog-management', physical})
+        self.assertNotIn('subdomain-order-backlog', index['children'])
+        self.assertEqual(model['nodes'][next(i for i, node in enumerate(model['nodes'])
+                                               if node['id'] == 'domain-plan')]['fields']['name'],
+                         'Master Plan')
 
     def model(self):
         fields = dict(name='Area', definition='Responsibility', finality='Result', scope='Boundary')
@@ -138,8 +141,13 @@ class BusinessAreaTests(unittest.TestCase):
                            and r['id'].startswith('REL-U1079-')
                            and nodes[r['target_id']]['kind'] == 'capability'}
         self.assertEqual(len(u1079_additions), 32)
+        u1089_additions = {r['target_id'] for r in m['relations'] if r['type'] == 'contains'
+                           and r['id'].startswith('REL-U1089-')
+                           and nodes[r['target_id']]['kind'] == 'capability'}
+        self.assertEqual(len(u1089_additions), 5)
         self.assertEqual(((((initial_caps - retired) | process_additions | decision_additions | backlog_additions)
-                           - later_retirements) - (control_references & initial_caps)) | u1079_additions, caps)
+                           - later_retirements) - (control_references & initial_caps)) |
+                         u1079_additions | u1089_additions | {'demand-plan-development'}, caps)
         self.assertTrue(retired.isdisjoint(nodes))
         from scripts.glossary import references as inline_references
         self.assertNotIn(('model', 'price-book'), set(inline_references(m)))
@@ -189,7 +197,7 @@ class BusinessAreaTests(unittest.TestCase):
         from scripts.model_depth import context_business_area_ids
         context_areas = context_business_area_ids(m)
         self.assertEqual(sum(n['kind']=='business_area' and n['id'] not in context_areas for n in nodes.values()),
-                     26+len(operational_areas)-len(retired_adjacent_areas)-2+26)  # U1079: 23 existing adjacent BA and 3 planning BA.
+                     26+len(operational_areas)-len(retired_adjacent_areas)-2+26-1)  # U1089 groups consultation and selection.
         for ident in caps:
             parents = [r for r in m['relations'] if r['target_id']==ident and r['type'] in ('contains','presents')]
             self.assertEqual(len(parents), 1, ident)

@@ -41,7 +41,7 @@ class ApplicationCatalogTests(unittest.TestCase):
         types, counts = _catalog_types(self.model, {})
         paths = {item['path'] for item in types}
         self.assertIn('application_catalog.selections.mappings', paths)
-        self.assertEqual(counts['application_catalog.products'], 12)
+        self.assertEqual(counts['application_catalog.products'], 13)
         self.assertEqual(counts['application_catalog.selections'], 14)
 
     def test_offering_links_require_a_primary_source_and_never_imply_si_use(self):

@@ -1,0 +1,492 @@
+id: BUSINESS-OPERATIONS-GLOBAL-APPLICATION-U1091
+date: '2026-10-16'
+status: applied_to_backlog
+source_refs:
+- U1090
+- U1091
+baseline_audit: business-operations-global-audit-U1090.yaml
+decision: Conserver les trois domaines directs et les capacités existantes. Corriger les contrats internes obsolètes ; expliciter
+  des liens ciblés et éprouver les passages par les parcours existants. Aucun nouveau maître installé ni moteur unique déduit.
+forecast_consumption:
+  owner: demand-plan-development
+  rule: La capacité construit la prévision résiduelle pour le plan de demande selon une règle autorisée, un horizon, une population
+    et les commandes effectivement prises en compte.
+  boundaries: Master Planning pilote les calculs ; Availability utilise le plan pour une demande identifiée ; Order Backlog
+    décide les priorités et affectations ; Order Management tient les engagements.
+  market_comparison: Microsoft documente la réduction des prévisions dans Master planning ; SAP S/4HANA la lie aux stratégies
+    de besoins. FLOW place le résultat dans Demand Plan Development pour préserver sa chaîne de responsabilité U1086. Aucun
+    algorithme universel n’est retenu.
+  microsoft: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/reduction-keys
+  sap_s4hana: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/execute-supply-chain-planning
+case_tests:
+- path: forecast-to-shortage-arbitration-path
+  result: Le retard fournisseur est constaté par Sourcing, porté par Purchase Order, recalculé par Planning, arbitré dans
+    le carnet, puis communiqué par Commerce.
+- path: pickup-or-direct-shipment-path
+  result: Le canal reçoit la demande ; le magasin réalise et date la préparation ; le Core conserve la promesse et réévalue
+    les exceptions.
+- path: return-credit-refund-path
+  result: La variante magasin rend visible la caisse ; Return Order, remboursement et fait de stock conservent leurs responsabilités.
+- path: seasonal-order-backlog-path
+  result: La proposition Wholesale précède la commande ; les choix d’approvisionnement ne deviennent engagement qu’après autorisation.
+- path: fashion-launch-path
+  result: Commerce publie assortiment, catalogue et prix avant ingestion des références utiles par le Core.
+- path: planning-actuals-feedback-path
+  result: Une correction de stock fournit une entrée au calcul interne ; Plan Ingestion reste réservé aux contributions externes.
+data_authority_matrix:
+- data: Produit et variante
+  enterprise_authority: Design & Development pour la définition approuvée ; maître applicatif et chaîne de corrections à vérifier
+  core_authority: Merchandise References tient la référence locale Supply
+  open_contract: Identité, variante, version, date d’effet, retrait et correction.
+- data: Partenaire, personne et accord
+  enterprise_authority: À établir par type de partie ; Sourcing et Commerce gouvernent leurs décisions métier, sans maître
+    entreprise implicite
+  core_authority: Partner & Agreement References tient la vue locale
+  open_contract: Identifiants, rôles, droits, confidentialité, validité et corrections.
+- data: Magasin et lieu de stockage
+  enterprise_authority: Commerce gère le réseau commercial ; maître de lieu entreprise à confirmer
+  core_authority: Inventory Management tient les positions et faits reconnus par lieu
+  open_contract: Lieu, statut, canal, horaires, fermeture, source des mouvements et correction.
+- data: Prix de vente
+  enterprise_authority: Commerce détermine le résultat applicable et ses règles
+  core_authority: Order Management conserve le prix engagé ; Operational References reçoit le résultat utile
+  open_contract: Contexte, date métier, version, correction et priorité des conditions.
+- data: Stock physique et propriété
+  enterprise_authority: Les opérations magasin et Logistics émettent des faits ; aucune tenue d’entreprise unique n’est inférée
+  core_authority: Inventory Management porte la source de vérité locale Supply
+  open_contract: Fait, ordre, date, propriétaire, détenteur, doublon, écart et correction.
+- data: Plan de demande et plan d’approvisionnement
+  enterprise_authority: Planning & Optimization produit les plans Core ; contribution externe possible avec source identifiée
+  core_authority: Planning & Optimization tient les versions calculées ; Plan Ingestion qualifie les contributions externes
+  open_contract: Horizon, granularité, statut, règle de consommation, version et retrait.
+open_points:
+- Les systèmes maîtres, identifiants et contrats réels par donnée restent à établir avec Beaumanoir ; la matrice décrit les
+  responsabilités cible connues et les preuves manquantes.
+- Les règles chiffrées de consommation, périodes, populations et priorités ne sont pas définies ; le modèle attribue leur
+  application, pas leurs valeurs.
+- Les parcours sont fictifs et ne démontrent ni réalisation installée ni couverture de toutes les variantes. Les autres capacités
+  Commerce et Sourcing peuvent être reliées au fil des usages avérés.
+- Les textes source originaux des hotspots et les publications historiques sont conservés ; la lecture courante est corrigée
+  seulement où sa portée a changé.
+market_check:
+  microsoft_store: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce-capabilities
+  sap_store: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/managing-retail-store-operations_f77c8f4d-b247-4ef0-879b-3c4f469a6323
+  microsoft_procurement: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+  sap_sourcing: https://learning.sap.com/courses/sourcing-in-sap-s4hana/working-with-requests-for-quotation
+  limit: Appuis fonctionnels partiels, sans équivalence de hiérarchie ni preuve de déploiement Beaumanoir.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1090
+  - U1091
+  summary: Trois domaines directs ; boucle de planification interne corrigée ; passages de relais Commerce et Sourcing explicités
+    par relations et parcours ; consommation des prévisions attribuée à Demand Plan Development.
+  required_nodes:
+  - id: system-business-operations
+    field_sha256:
+      scope: 8f8309a79ad55467b04527cb7e4c0a56cc9dca6e23861734588148de7e77dec7
+      market_comparisons: 5f65c0a4f83b269d96243c99e342d0091235aa3ed7c2971abac473c5552bc5db
+  - id: domain-sales
+    field_sha256:
+      scope: dfc6be4aa578c456dc183a6fc744018d0cf958ed0546eed57d778c2dc5f58d5f
+  - id: subdomain-strategic-sourcing
+    field_sha256:
+      scope: 58554c12bd88dd2a7fa4769e03e023c9cc7049ec3cbbe3fa5b5a5145d7e25009
+      market_comparisons: 1f236a577cce687486916bb25ffd93caa0f5de4ed1a813a4e5496475da0eb639
+  - id: subdomain-integration
+    field_sha256:
+      definition: 9e93e6e6b0f461c65e3bd3c20d89e4aa9f14a465e0d2cef88dd8ff72836fe852
+      finality: 9e93e6e6b0f461c65e3bd3c20d89e4aa9f14a465e0d2cef88dd8ff72836fe852
+      scope: a09f946ba1472a60a35433339d3eb2c3968b203cc921adaa7115716cabc40cc5
+  - id: ba-outbound-information-provision
+    field_sha256:
+      definition: 10ca5fb5490580c47a3b22199e8285cc12d57508f43a9ebcf2f1c9883b755c2d
+      finality: 10ca5fb5490580c47a3b22199e8285cc12d57508f43a9ebcf2f1c9883b755c2d
+      scope: 84772d11b77be045617d8f7d9a85a404550352c1eb07c586babec73d61625a8b
+      market_comparisons: 0200edc549d7ea4542b1238105f85e3deefb81b4f5c195d7d694c2323616fd6e
+  - id: planning-data-provision
+    field_sha256:
+      scope: 81d3846acc877ee40f31e968e2b39313f959b52c4abfaf581bb705bcb61468da
+  - id: ba-supplier-delivery-follow-up
+    field_sha256:
+      scope: 905797d65bdf704ddb726cfdc744ce9233a00ead5490de615d96550e67b2787c
+      market_comparisons: acb7e01e777a58790b23713607ed35353816289ba40b6b3236b5fd0ba0ab8892
+  - id: cap-supplier-commitment-follow-up
+    field_sha256:
+      scope: 34b1e5a0cae9893e193b2d4c36d4d14d58cc083536c54226d929dbdb499dd56b
+  - id: demand-plan-development
+    field_sha256:
+      scope: 8f63ad92c3eb7d02bace9fca5d1b4b4a9cc2cc8aa857435a4fd531507fb3a082
+  - id: subdomain-store-backoffice-operations
+    field_sha256:
+      scope: 8902591b9d7fa7563c105f33a52b1b4af96980eac86eeeec3bbb8b47790afa64
+  - id: ba-demand-forecast-management
+    field_sha256:
+      scope: d85a890b1669e0b046f3c77186b2ff7e568150f16dfe781c5bebf6e42bd4043c
+  required_glossary:
+  - id: TER106
+    field_sha256:
+      context: 8f8309a79ad55467b04527cb7e4c0a56cc9dca6e23861734588148de7e77dec7
+      market_comparisons: 5f65c0a4f83b269d96243c99e342d0091235aa3ed7c2971abac473c5552bc5db
+  - id: TER108
+    field_sha256:
+      context: dfc6be4aa578c456dc183a6fc744018d0cf958ed0546eed57d778c2dc5f58d5f
+  - id: TER111
+    field_sha256:
+      notes: 37281e5117c786952f8ed4b4b113e9ccecba9a729465afea2ec0d93b902ffd6e
+  - id: TER113
+    field_sha256:
+      definition: 9e93e6e6b0f461c65e3bd3c20d89e4aa9f14a465e0d2cef88dd8ff72836fe852
+      context: a09f946ba1472a60a35433339d3eb2c3968b203cc921adaa7115716cabc40cc5
+  - id: TER115
+    field_sha256:
+      context: 81d3846acc877ee40f31e968e2b39313f959b52c4abfaf581bb705bcb61468da
+  - id: TER141
+    field_sha256:
+      definition: 10ca5fb5490580c47a3b22199e8285cc12d57508f43a9ebcf2f1c9883b755c2d
+      context: 84772d11b77be045617d8f7d9a85a404550352c1eb07c586babec73d61625a8b
+      market_comparisons: 0200edc549d7ea4542b1238105f85e3deefb81b4f5c195d7d694c2323616fd6e
+  - id: TER242
+    field_sha256:
+      context: 9bfec541aca87b1bd9ec7c80454059c1d12bf4a79cc0516b3e60353be4aa3deb
+      market_comparisons: f95739f09e5bd0412ef4a12218303f2353919c3b244cb8417d4a8f723277555c
+  - id: TER288
+    field_sha256:
+      context: 905797d65bdf704ddb726cfdc744ce9233a00ead5490de615d96550e67b2787c
+      market_comparisons: d53d6272ed2d4a9784954a52ae09c20f128e70f3bd91aa2a1b44affb58d6a1bb
+  - id: TER340
+    field_sha256:
+      context: 49a5663e8ae75a46b2d3e3df4999ecf9c425acf9c50ce4a77569d368c8243516
+  - id: TER366
+    field_sha256:
+      context: 986b7f815d1672136b51cac79b06b11b400b348ec99d8164b4ed619e41707790
+  - id: TER191
+    field_sha256:
+      context: 528fc3a3e065d8915db88e1a6482b6d2aecccb5ed93df7bd385b222c6dd70467
+      market_comparisons: 36ede0f35394780e4170a3f4deb931a63a456a4328015d5da1aa8a024a655711
+  - id: TER192
+    field_sha256:
+      context: fb2719a9f20185ad3f93ccc910ab6eb67e4fc47bdc1c7fe8341986620eaf9554
+      market_comparisons: fb706a45f90876fe93ae60c3924239c4f81bc05ca7731fa7e7acac938120d3ed
+  - id: TER248
+    field_sha256:
+      context: 8902591b9d7fa7563c105f33a52b1b4af96980eac86eeeec3bbb8b47790afa64
+      market_comparisons: 5efc97dd6bb49c9c75e8669508ccc7b2e16b4cc69fb894223f7b8147102771a0
+  - id: TER360
+    field_sha256:
+      context: d85a890b1669e0b046f3c77186b2ff7e568150f16dfe781c5bebf6e42bd4043c
+  required_relations:
+  - id: REL-U794-PLAN-INGESTION
+    type: shares-data
+    source_id: plans-ingestion
+    target_id: domain-plan
+    field_sha256:
+      label: 54e1a889ddd7c82a432303585ac48a472d5f9592b999df1c1a48462675ec05f5
+      data_exchange: 737875e21af619d9dd6fd92167b644b11425ad111dd21212269c257eac31a1e6
+  - id: REL-U826-planning-data-provision-TO-domain-plan
+    type: shares-data
+    source_id: planning-data-provision
+    target_id: domain-plan
+    field_sha256:
+      label: 44ca0cb2574976ea8c7a2e9f2d4821aba4c89b21ade192aee69d43b22336e850
+      data_exchange: 6bbefcb428bd99e3536ea28467418e093c457e4d1aef5b67b65d8846f51cd880
+  - id: REL-U1091-digital-demand-to-sales-order
+    type: shares-data
+    source_id: cap-digital-sales-journey-management
+    target_id: D04.i
+    field_sha256:
+      label: 441ae94061c0b450b20745ea3d6d13bb169da6e54af206c5ed64d4ceade79894
+      data_exchange: 93224211fdd7713e66bbe4a992e94d5c829b8082d2a552341a37445b8ff58def
+  - id: REL-U1091-wholesale-demand-to-sales-order
+    type: shares-data
+    source_id: cap-wholesale-sales-engagement
+    target_id: D04.i
+    field_sha256:
+      label: ada652003751084b8a38ab3d28f726ad2ae0978264d870fa3dd7718cb1d77207
+      data_exchange: 5254925a0085324b6579686791ac243a77540ff0d07e7bf7fcdbfe1d3e3251b2
+  - id: REL-U1091-store-stock-facts-to-inventory
+    type: shares-data
+    source_id: cap-store-stock-operations-management
+    target_id: D01.f
+    field_sha256:
+      label: 955bb4a38caef4bcd85030bfb6d6540c4e209d25d37e00610f73089d5b8ea60d
+      data_exchange: ccd4f8aa271d1a0314f9c8165053e86174efa980f18427343e310a1bba64e7cf
+  - id: REL-U1091-store-preparation-results-to-fulfilment
+    type: shares-data
+    source_id: cap-store-order-preparation-handover
+    target_id: D07.d
+    field_sha256:
+      label: 6e1a3da07fab04ad8637df42ed15a5e8126b3dc873daa6a818f6c71711ef005c
+      data_exchange: 44393f43ac2b4b775e45670e1d86b1b800006f2a9a14160a7a5cdf176c2b7bee
+  - id: REL-U1091-supplier-response-to-purchase-order
+    type: shares-data
+    source_id: cap-supplier-commitment-follow-up
+    target_id: D04.j
+    field_sha256:
+      label: d85cda0d9f6087d1c8fbfd5d563811db780e7265d6bcefe1648242853603f110
+      data_exchange: 9834606d34d950f13af95cc6e2ca413605e2cdaf8d91102d63e3a3268d3c8bc7
+  - id: REL-U1091-purchasing-decision-to-purchase-order
+    type: shares-data
+    source_id: cap-purchasing-case-coordination
+    target_id: D04.j
+    field_sha256:
+      label: 1a98c2d3cf193e501560314fbc5fd886fff741f7719515a76d8278fb5a112825
+      data_exchange: f33af39e9c5cb00bc67be9f1e7f9ac45fccb46ec18e21bd43db9cc0bdf7f2209
+  - id: REL-U1091-supplier-benefit-conditions-to-settlement
+    type: shares-data
+    source_id: cap-supplier-rebate-scheme-management
+    target_id: subdomain-commercial-settlement-management
+    field_sha256:
+      label: 9f4901f96be6f3bcc001078b03ad553cab7bb96843185d13fb319cf18d740042
+      data_exchange: 3f6bba2ab7dfb85792839fb12fc06db76caeda25ac6846f71a1eb08251aff5d8
+  required_catalog:
+  - collection: scenarios
+    id: planning-actuals-feedback
+    content_sha256: edd3064e2707443f956b4a8f7913deb0d9acb1aecfd78d428e74477390b2e49c
+  - collection: paths
+    id: planning-actuals-feedback-path
+    content_sha256: f0ae2ddb94c3a2d33530b9805745e3fd245c8156ccdd4a015f9f2c22c5e6bd13
+  - collection: paths
+    id: forecast-to-shortage-arbitration-path
+    content_sha256: 07d7be8ff958156f976878ac178a59ec2abbf4ff904894d7f9cc104136d47cf1
+  - collection: paths
+    id: pickup-or-direct-shipment-path
+    content_sha256: d15d667402553693473dcef88eec00e4e09a9acb1a74faf0b7ca6983e7a44a80
+  - collection: paths
+    id: return-credit-refund-path
+    content_sha256: e7f402fe9293749353a6f94cc9323084219ff9ba884dc9c09407430cc0477281
+  - collection: paths
+    id: seasonal-order-backlog-path
+    content_sha256: 6d43ee48401c11d58b23408c839e2c978ff27da0389597f2639761e93538f564
+  - collection: paths
+    id: fashion-launch-path
+    content_sha256: aa0eec003ec5050d8314b544040eefeccc18ada566c7667354332ae8aaa8bdef
+  - collection: hotspots
+    id: HS-028
+    content_sha256: de5b4cbb9307433969fa00959d7bb83e810507506e94dbf71ba6a37da0808a53
+  supersedes_requirements:
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: ba-outbound-information-provision
+    fields:
+    - definition
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: ba-outbound-information-provision
+    fields:
+    - finality
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: ba-outbound-information-provision
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: domain-sales
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-supplier-delivery-follow-up
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-supplier-delivery-follow-up
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER108
+    fields:
+    - context
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER288
+    fields:
+    - context
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER288
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER191
+    fields:
+    - context
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER191
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER192
+    fields:
+    - context
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER192
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER248
+    fields:
+    - context
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER248
+    fields:
+    - market_comparisons
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: subdomain-strategic-sourcing
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: subdomain-strategic-sourcing
+    fields:
+    - market_comparisons
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-supplier-commitment-follow-up
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: terms
+    id: TER242
+    fields:
+    - context
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: terms
+    id: TER242
+    fields:
+    - market_comparisons
+  - annex: credit-return-boundaries-U878.yaml
+    collection: paths
+    id: return-credit-refund-path
+    fields:
+    - content_sha256
+  - annex: hotspot-arbitration-complexity-U1057.yaml
+    collection: hotspots
+    id: HS-028
+    fields:
+    - content_sha256
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: subdomain-integration
+    fields:
+    - definition
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: subdomain-integration
+    fields:
+    - scope
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: relations
+    id: REL-U794-PLAN-INGESTION
+    fields:
+    - type
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: relations
+    id: REL-U794-PLAN-INGESTION
+    fields:
+    - source_id
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: relations
+    id: REL-U794-PLAN-INGESTION
+    fields:
+    - target_id
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: demand-plan-development
+    fields:
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER366
+    fields:
+    - context
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER360
+    fields:
+    - context
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: paths
+    id: forecast-to-shortage-arbitration-path
+    fields:
+    - content_sha256
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER106
+    fields:
+    - context
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: ba-outbound-information-provision
+    fields:
+    - market_comparisons
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: terms
+    id: TER141
+    fields:
+    - market_comparisons
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: paths
+    id: pickup-or-direct-shipment-path
+    fields:
+    - content_sha256
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: paths
+    id: seasonal-order-backlog-path
+    fields:
+    - content_sha256
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: paths
+    id: fashion-launch-path
+    fields:
+    - content_sha256
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: ba-outbound-information-provision
+    fields:
+    - market_comparisons
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: terms
+    id: TER141
+    fields:
+    - market_comparisons
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-outbound-information-provision
+    fields:
+    - finality
+  - annex: transversal-remediation-U853.yaml
+    collection: nodes
+    id: ba-outbound-information-provision
+    fields:
+    - scope
+  - annex: transversal-remediation-U853.yaml
+    collection: scenarios
+    id: planning-actuals-feedback
+    fields:
+    - content_sha256
+  - annex: transversal-remediation-U853.yaml
+    collection: paths
+    id: planning-actuals-feedback-path
+    fields:
+    - content_sha256

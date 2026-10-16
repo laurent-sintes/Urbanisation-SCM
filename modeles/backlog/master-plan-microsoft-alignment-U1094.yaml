@@ -1,0 +1,286 @@
+id: MASTER-PLAN-MICROSOFT-ALIGNMENT-U1094
+date: '2026-10-16'
+status: applied_to_backlog
+source_refs:
+- U1094
+decision: Aligner le Master Plan FLOW sur le calcul opérationnel des besoins nets documenté par Microsoft. Préparer séparément
+  la prévision et la projection des ressources dans Business Operations ; qualifier en amont les hypothèses de collection
+  de Design & Development.
+market_comparison:
+  microsoft: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+  microsoft_forecasts: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
+  sap_s4hana: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/understanding-mrp-in-sap-s-4hana
+  finding: Microsoft distingue forecast planning et master plan. SAP distingue demandes prévues ou commandées, stock et réceptions
+    fermes dans le calcul MRP des besoins nets. FLOW sépare ces responsabilités sans calquer la hiérarchie produit.
+  limits: Une prévision sélectionnée peut entrer dans un master plan ; l’alignement porte sur la fonction de calcul net, pas
+    sur une exclusion absolue de la prévision ni sur un déploiement prouvé.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1094
+  summary: Master Planning calcule les besoins nets opérationnels ; prévision et projection des ressources sont préparées
+    en amont dans Business Operations, à partir notamment des hypothèses stratégiques de collection.
+  required_nodes:
+  - id: BHV098
+    kind: behavior
+    field_sha256:
+      scope: ac83d6b429a7ea582f7433217e7c85e972f298a0f3695a0319530de891dd1799
+  - id: D05.f
+    kind: capability
+    field_sha256:
+      definition: 28410334073e4c61783e21ed6eb7cad09732ebd9ac351ddd24dfdd3ad1a24acb
+      finality: 2da6b01688ce9f81c2fb39aca8f3d758b4e817bef8360a8a50065859308947d2
+      market_comparisons: 0551a4893bcd6eadab7ac3a7d5872f1853e2047091e2a3341724efd92033f3c4
+      scope: 96d4d990f157873a91c82d6ce076d5ed090755887cf5b264623c36955cb8c477
+      market_inspiration: 38a1977336fb265e99d9d5bea30892a66a0366e62c17d022fc7aafddff585341
+  - id: ba-master-plan-management
+    kind: business_area
+    field_sha256:
+      definition: b62c26449afb767bb435d69d6fb69d035159c8337bccb2c2620f203c2a18d735
+      finality: 123dcf4d915b0662d786396352e6d29608ffca2659b4a5ce0ce9478b956c7a2d
+      market_comparisons: b64935ff64fb417d0c7bd9a4e176043e1775efd452f5d4671c21f9d63cd41ab7
+      scope: 928802671829eb403b3221ce29776dec165e3abdec3a1cdf3e89e2e6e89409e3
+  - id: ba-planning-reconciliation
+    kind: business_area
+    field_sha256:
+      scope: 189cadcd7db192b3ebb10aa6ccc6fb0f0a6fbfc5d4c249835ecd25b0c0c49c29
+  - id: ba-supply-resource-planning
+    kind: business_area
+    field_sha256:
+      definition: fe874a35992dca07455b7c8e46a3ee86cad56807881203a64b4f0b93903dcd34
+      examples: c290ddb0f039b168fe9419ce1da4d136a2c78c9569325ba05aa9f3debe3d2f9c
+      finality: e2ed626c0fa915115dee08e2a13bf12a5f8d7eb3dbb21e9dba5842cd71a2fb6d
+      market_comparisons: 573b6181d3e5ae3359f9072049e713cdc1ea82a10c67b377eb4fa6260c182abd
+      scope: 798bbb0cc5fe6f069a9fffc174e1c77e662ec8891b65c9ff0f448c7ae1471f37
+  - id: demand-forecast-development
+    kind: capability
+    field_sha256:
+      scope: 28c0cf786b63b5140d084b60f04c8f4d94dcbdf227051112ba9bd909fcb46946
+  - id: demand-plan-development
+    kind: capability
+    field_sha256:
+      scope: 3045199b0b13edbeca5306a63106c69790de3abb39919f789254fca5f93b1936
+  - id: domain-plan
+    kind: area
+    field_sha256:
+      definition: dda52ba12f08ae9a63b7bbbceefe8ce455c8addbda9b8b69864483dac6c319ab
+      examples: c471b7e45a5faa1d37feaca6d21f3a3847185af190a078277f81447d544a1ff7
+      finality: 4ff5858bd0cd41a295042d085eea2841d39048ba4616cb2870c19e22e848df3b
+      market_comparisons: bf193cd9403b84b34fb25685c8ec5170ec7c19179cb4cbf5d21e34514581dfa0
+      scope: 22eb0801571ae7cb9aa6abf0e39ba342bb6b7b1b178baab82ea1b7fae1e7b148
+  - id: planning-scenario-reconciliation
+    kind: capability
+    field_sha256:
+      scope: 3af8bb6de7068312b693f05341181dfa64ddea26cc5215d5aea53bc5c4136370
+  - id: subdomain-collection-planning
+    kind: area
+    field_sha256:
+      scope: fc1ecb8133aa3dc26659c6b0fbf7062531c17776892eb5409eb09dac7bcc1e48
+  - id: supply-plan-development
+    kind: capability
+    field_sha256:
+      definition: 2f5ef6e8527ef2fee33c9e7702983dd51c1de00557ff944b8f0bde7a54902247
+      examples: b0229cdaa6e0fbb470b731a4b16fe92e8d9ab1786d1c8066ddadaf54b04b5343
+      finality: 53f7ab2d23b2722445b2faee386aee8fdf6ad34e69d1057e70e8c1f23649b842
+      market_comparisons: 051437935e8f6e054c21947c419c3863dfecc518a49b1a0fcb5751c9c90e67ef
+      scope: 4687e64d62d50c48fdc5e48a1e407f9b7c65691a972cbd7086a6217789cb63ae
+  required_glossary:
+  - id: TER098
+    field_sha256:
+      context: f66211398dca10d89954019db96b73561953c96fea83f6797f7083c36155216c
+      definition: 7f2f3a68c0c1480a782d6dcf51f0592adeec41e558c46d5a49c923440200289e
+      short_description: c4d5a0147be62da6b146e5b7c8dd8634d0eabcfc55cdfe23d919f25a7287a4f9
+      market_comparisons: 2425548b7ee52831c2c0d9cf12152cd9e08ec744c61bb17f59d26ce1916e3cdf
+  - id: TER100
+    field_sha256:
+      context: 083c4db51c9c631cdf138c1056935ac85c232527cebeeee7764aaf7a305d067a
+      definition: befcf0f727a1d4c3376e9f398d4409899d289563d898f062d2f87218c813c87e
+      short_description: f931a713d0be1e259fea322fe519d8147d504ecf503e5678fdcfd3caf68a3050
+      market_comparisons: 68caa910acbf82f4e839e1f2b5c06661a2e2dbec7d0e35f49b92e135b994dcb1
+  - id: TER111
+    field_sha256:
+      context: 22eb0801571ae7cb9aa6abf0e39ba342bb6b7b1b178baab82ea1b7fae1e7b148
+      definition: 48f63a78e5040fc0028b56e85d25903592ef825f40b709567089f82eb10b16a5
+      short_description: 43011d4c98370eb4f74dd64ba7b2505d5457b7103b26986b573a3b2b6b5e7e05
+      market_comparisons: 3b96fedeb3407c90243437daa71cab180507a7cb1cb800386acb7d157370fe50
+      notes: c1e4b05e347986ca85ee88cbcaba836ec93eb793050f186f157ef766c9134d94
+  - id: TER208
+    field_sha256:
+      context: fc1ecb8133aa3dc26659c6b0fbf7062531c17776892eb5409eb09dac7bcc1e48
+      market_comparisons: 6bd6edc135cecaf608583756d3bdeedeb18bd1b8712782f2217ed4c87de3036a
+  - id: TER362
+    field_sha256:
+      context: ce5896deabe5f13e76cbbc23fa618567d8bce8f3a24eab64947b5ce4fbea726f
+      definition: 9312bbfb6d1ff63109118b90f0af083a1e69946cbc4a2e1fc3c9e5e857931384
+      short_description: 9ea9deecce0d2379c781217fd1cc33cdab486be00466b323e3d6ebd86a718d46
+  - id: TER363
+    field_sha256:
+      context: 9bc8f624a2779f8efa0c69511f5e1dd287f0c1150ad5c3b6a433197133bd625b
+      definition: 4aeae3452acd6301c37c84ba956abb0e426432185de45e5cff131b0a0bf30fad
+      short_description: 716a0104a463cc736092ad12083c4c7b8f9e9396c0e2b6c7a70508ca12eb2ebe
+  - id: TER364
+    field_sha256:
+      context: 2ff6a12a01bf3049ac6ef7eea946bf579730edfd258de1d2602d4e582a5b3bc1
+  required_catalog:
+  - collection: paths
+    id: forecast-to-shortage-arbitration-path
+    content_sha256: cc0a49488bea9c4f5887fc7dbb8a70c1f4ad9a09d289c75e6587dce205b764c5
+  supersedes_requirements:
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER362
+    fields:
+    - definition
+  - annex: business-operations-global-application-U1091.yaml
+    collection: nodes
+    id: demand-plan-development
+    fields:
+    - scope
+  - annex: business-operations-global-application-U1091.yaml
+    collection: paths
+    id: forecast-to-shortage-arbitration-path
+    fields:
+    - content_sha256
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: nodes
+    id: subdomain-collection-planning
+    fields:
+    - scope
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: terms
+    id: TER208
+    fields:
+    - context
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - definition
+    - market_comparisons
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: BHV098
+    fields:
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: ba-planning-reconciliation
+    fields:
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: ba-supply-resource-planning
+    fields:
+    - definition
+    - market_comparisons
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: demand-forecast-development
+    fields:
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: planning-scenario-reconciliation
+    fields:
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: supply-plan-development
+    fields:
+    - definition
+    - examples
+    - finality
+    - market_comparisons
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - context
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER363
+    fields:
+    - context
+    - definition
+    - short_description
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER364
+    fields:
+    - context
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - definition
+    - finality
+    - market_comparisons
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: ba-supply-resource-planning
+    fields:
+    - finality
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - definition
+    - finality
+    - market_comparisons
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER098
+    fields:
+    - context
+    - definition
+    - short_description
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER100
+    fields:
+    - context
+    - definition
+    - short_description
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - definition
+    - short_description
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - market_inspiration
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - notes
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER098
+    fields:
+    - market_comparisons
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - market_comparisons

@@ -1,0 +1,738 @@
+id: COMMERCE-PROCUREMENT-DEPTH-APPLICATION-U1089
+date: '2026-10-15'
+status: applied_to_backlog
+source_refs:
+- U1088
+- U1089
+baseline_audit: commerce-procurement-depth-audit-U1088.yaml
+scope: Application ciblée de l’audit aux frontières démontrées par les parcours. Noms et descriptions détaillés restent proposés
+  ; aucun état installé n’est déduit.
+case_tests:
+- id: procurement-delay
+  situation: Le fournisseur annonce un retard et une quantité réduite après confirmation.
+  results:
+  - Supplier Commitment Follow-up constate la réponse et l’écart.
+  - Purchasing Case Coordination instruit une issue commerciale et transmet une décision autorisée.
+  - Purchase Order tient le changement d’engagement ; Master Planning réévalue les conséquences.
+  decision: 'Conserver Purchasing Execution Coordination et Supplier Delivery Follow-up distincts : leurs résultats diffèrent.'
+- id: omnichannel-pickup-return
+  situation: Une commande web est retirée en magasin ; un article manque puis le client retourne un autre achat.
+  results:
+  - Digital Sales Journey Management recueille la demande.
+  - Sales Order tient la commande et les promesses.
+  - Store Order Preparation & Handover constate préparation et remise.
+  - Store Checkout Management traite la transaction et le retour au point de vente.
+  - Store Stock Operations Management tient les faits physiques.
+  decision: Séparer transaction de caisse, opérations de stock et préparation de commande sans dupliquer les engagements du
+    Core.
+- id: wholesale-season
+  situation: Une proposition de saison est préparée pour un revendeur, qui commande ensuite une sélection.
+  results:
+  - Wholesale Offer Preparation compose la proposition.
+  - Wholesale Sales Engagement recueille la demande.
+  - Sales Order tient la commande acceptée.
+  decision: Conserver Wholesale Account Management distinct, faute d’autorité commune démontrée avec la vente.
+- id: sourcing-event
+  situation: Une consultation recueille plusieurs offres puis une source est choisie.
+  results:
+  - Supplier Consultation Coordination obtient les offres comparables.
+  - Supplier Offer Selection choisit et motive la source dans le même événement.
+  decision: Regrouper les deux capacités sous Sourcing Event Management et retirer la Business Area Source Selection.
+retained_separations:
+- 'Supplier Qualification et Supplier Performance Management : résultats différents et autorité commune non établie.'
+- 'Purchase Agreement et Supplier Rebate & Incentive Management : cycles et portée contractuelle potentiellement distincts.'
+- 'Assortment et Catalog Management : autorisation de vente et publication de l’offre distinctes.'
+- 'Pricing et Promotion Management, Rebates et Sales Incentives : règles et bénéficiaires distincts.'
+- 'Les cinq Business Areas de Retail Commerce : responsabilités distinctes.'
+market_limits: Microsoft Dynamics et SAP S/4HANA étayent les fonctions, sans imposer le nombre de capacités FLOW ni prouver
+  un déploiement Beaumanoir. La fidélité est illustrée côté SAP par Customer Checkout intégré à S/4HANA, pas par une capacité
+  native générale de S/4HANA Retail.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1089
+  summary: Consultation et sélection sous une seule Business Area ; cinq capacités ajoutées ; périmètres et glossaire alignés.
+  required_nodes:
+  - id: ba-pricing-management
+    field_sha256:
+      scope: 7e3c01a4560cb277ffbe60026fb514500b1e56530346570013810dd669a8db71
+      market_comparisons: 29ccb2e46b8160a4cce91a60cdbd8d40e8b32e046c23fab05a18c3605714c15b
+      definition: 4bac792ed6060a65ee2495ba00ee6d383ca9fcc42d4dc14cfda31063239241af
+      finality: 4bac792ed6060a65ee2495ba00ee6d383ca9fcc42d4dc14cfda31063239241af
+  - id: ba-retail-customer-relationship-management
+    field_sha256:
+      scope: ce6ca14b122ecaf6ce1c438e5984dbcc7d96919f526a8a34c8ced1bb4372bc05
+      market_comparisons: 42e0901c8ad578f07d9225dbb9f8de1677cc2dbb944cdbca24e5a5ab4c0e8506
+      definition: 63b5089dd415ff0b9c039b94577880aedb01bbe0e15de95403f11e6d4df9f5f8
+      finality: 63b5089dd415ff0b9c039b94577880aedb01bbe0e15de95403f11e6d4df9f5f8
+  - id: ba-sourcing-event-management
+    field_sha256:
+      scope: e28147f3c3f26d854ce1b372ff814526b320729931a6b1708592e3d73f162a29
+      market_comparisons: efaa7f994b105837f14980e095601d223b8e22117b63087267a90bd019ebfcad
+      definition: 4571b2b3b67867adb6e7bf4d1c49a20f83114acc176f761f29099bc307741088
+      finality: 4571b2b3b67867adb6e7bf4d1c49a20f83114acc176f761f29099bc307741088
+  - id: ba-wholesale-sales
+    field_sha256:
+      scope: 770f02d5d8e0aa405e034d785bf26930412937505ec45b5c5bf77f52610ac9fe
+      market_comparisons: 5e9b968aa5b9d84c5a57bc6292c33d46314702b0da96987b560a2313734f1a06
+      definition: a04a281c4786c80201da48ddf29fc7b8beb15c065bde79056bf050f626e2ab7d
+      finality: a04a281c4786c80201da48ddf29fc7b8beb15c065bde79056bf050f626e2ab7d
+  - id: subdomain-sales-b2c-ecommerce
+    field_sha256:
+      scope: 528fc3a3e065d8915db88e1a6482b6d2aecccb5ed93df7bd385b222c6dd70467
+      market_comparisons: f623af875f85283b99903534e35bd2a3ade21cf247dac5fd992f68008002357a
+      definition: f99495442269228c2cfd689f66546dcafe9ae7a876f324dee063cd7fa4907388
+      finality: f99495442269228c2cfd689f66546dcafe9ae7a876f324dee063cd7fa4907388
+  - id: subdomain-sales-b2c-store
+    field_sha256:
+      scope: fb2719a9f20185ad3f93ccc910ab6eb67e4fc47bdc1c7fe8341986620eaf9554
+      market_comparisons: 0c51c71d4a8e4aa7766850bbc677d08249b9e6261a669222f5618c0d273d63cd
+      definition: 8095dabce058a844d442811323a3d5ba070e398cdbe50f05e6232543de44f06d
+      finality: 8095dabce058a844d442811323a3d5ba070e398cdbe50f05e6232543de44f06d
+  - id: subdomain-store-backoffice-operations
+    field_sha256:
+      scope: d72457a43aad19ba020363f8428243c5d5480a5783ebea98d2c5b46d78bc76f0
+      market_comparisons: 384e791e16591299ee32689d66a7671c3cfc35561ab7b5b43605457e4f3af541
+      definition: f82b297ac052a339048cc6ad44af83255f5337aec04720102279ae11c5a920e5
+      finality: f82b297ac052a339048cc6ad44af83255f5337aec04720102279ae11c5a920e5
+  - id: cap-supplier-eligibility-assessment
+    field_sha256:
+      scope: 5061a1b474f49f293907423b5b5bc01eb3325dc6029d7e4720e6dba4fd6e02df
+  - id: cap-supplier-performance-evaluation
+    field_sha256:
+      scope: f11b637342abecb1b093be13bfb0a3af405e67022d64b874286f441e88186026
+  - id: cap-category-sourcing-strategy
+    field_sha256:
+      scope: bff05770b2accbe755730a571bdd0de4edde068ecdeeb4ac69dee366fdeb2854
+  - id: cap-supplier-offer-selection
+    field_sha256: {}
+    parent: ba-sourcing-event-management
+    parent_type: contains
+  - id: cap-purchase-agreement-lifecycle-management
+    field_sha256:
+      scope: ba2dddf0a9709a0d9e9f821f4145e047ec496b405aa0820e53dff4e01b23ccca
+  - id: cap-supplier-rebate-scheme-management
+    field_sha256:
+      scope: 88ac257b4ede68016542a9268e6a1e5f4b5716a08585bde73f290766cf50a09c
+  - id: cap-purchase-requisition-handling
+    field_sha256:
+      scope: d705922fe4ea2a7ea200865fc25a30ad0001ac27f23ffe2b3d0ea1476a7bb805
+  - id: cap-purchasing-case-coordination
+    field_sha256:
+      definition: 15e99da0c27400e8425e542aa21ab8c240c972a7d7980cf052078e61ee946533
+      scope: 7506bcb0ce4de78247812b3edc43cbd952b847b648fffcb12efa7f0afde313f9
+  - id: cap-supplier-commitment-follow-up
+    field_sha256:
+      scope: a8406332398b7e86a81cd409934c1769746d67fd72ffb2e1dd93d26e3e2490aa
+  - id: cap-wholesale-account-stewardship
+    field_sha256:
+      scope: 99623bd8de22d4e88085d26cf147d262b3915237eafc39ebeb4f1aa8fc144dfa
+  - id: cap-wholesale-sales-engagement
+    field_sha256:
+      definition: 13f98094b42662303b6f709a304d26c9ea7841131c7c0b9746cc80e36ec2ebee
+      scope: 6599da103059acba8621bd1af8c5265d809009d8a6cd02a20620b8531d5fc59e
+  - id: cap-assortment-eligibility-management
+    field_sha256:
+      scope: de3aa4c7c65b2f877dddca3ca9ff3eabd9a68c448ad255463d4e7032a79010cd
+  - id: cap-commercial-catalog-publication
+    field_sha256:
+      scope: dd6d3289bee0aac81dfe171db88ddbccbc88f5a87edb4cb4a367f81a4ae3f929
+  - id: cap-sales-price-determination
+    field_sha256:
+      definition: bfa5e936ddc09adfae1c759d6b2c1837058099c17c5a13d8e4dab883bd27481b
+      scope: cf415a9b3b61b6a2747d63280e451cbb6e026790921e29c318020018ca0fbde6
+  - id: cap-promotion-rule-management
+    field_sha256:
+      scope: fb05437d70b4a0f099a3b164eb61179fe30b0675f531b0eebb935deeedde6e8d
+  - id: cap-sales-rebate-scheme-management
+    field_sha256:
+      scope: 4a6acaf91320f3a7f61fef42a140b7492ba35924e5b4395d6955b9112c34da15
+  - id: cap-sales-incentive-scheme-management
+    field_sha256:
+      scope: 32e65b60161b6a180e3f0729c787bf4cd1682b6a3e344b168883774945b3de7f
+  - id: cap-digital-sales-journey-management
+    field_sha256:
+      definition: 9178000a2161bac28a05256dcb04597e5e3de0c8bb86eab375cf4126573196b6
+      scope: 1f21a3d280dc6f051897ebb68551d64a4401cd6150b2fbe97b14b217fdff125e
+  - id: cap-in-store-sales-journey-management
+    field_sha256:
+      definition: 58d2fa359396774a858b7b7ce62ad75f965b2da8238fcabbf7a4663016852795
+      scope: 88c9d4ac1c14a5630e85b6ea7e85191029d15374294650ec391b6573eadf3c6e
+  - id: cap-store-network-configuration-management
+    field_sha256:
+      scope: 8db32053059c638646212e9e593b02fe9cd62745945574057c5cc4300acc076d
+  - id: cap-retail-customer-engagement-management
+    field_sha256:
+      definition: 0c86ec2cc3048b0ff6bd262898859e220d0fcaa2f4e3acc7f22ffc30ce7029aa
+      scope: 8360770dc57fff24dac4438790340ff1d6fc96e5d34cc4a538e3d42495f0e320
+  - id: cap-store-stock-operations-management
+    field_sha256:
+      definition: bf9b55d1025de5a1c83f2a2b82797440544f8f79289aa0e72f54c17fc8eb3359
+      scope: aa28fc8ddfa62b0c435e9533234d490656f3807cbdd311f866ac5ff99f824a5d
+  - id: subdomain-strategic-sourcing
+    field_sha256:
+      scope: 56cb939e423d0745f7f7a39613cc670ee672c9ade527be06b0984891e3b9f136
+      market_comparisons: 613cc7fb8f442f6bfff11c1a121940db0ca32490f731002c989bda1754c7ca2e
+  - id: cap-sales-pricing-rule-management
+    field_sha256:
+      name: a1073f5db08298ba6d80ceb0d95e92bb67d6e72bf189d71fbc11e1e13d01baea
+      definition: 7059621044bc0310e0ebeb35476f065b4176155dae8f587cfbb9163cb715a6a0
+      scope: 243e6de05d024c5901affdb86c14c5728313c88218baaa26c848b735bc5a2870
+      market_comparisons: 34672f8f2fd08744ae1b4f3b47cad59a269b472b498c75655a7e21dedec4e2db
+    kind: capability
+    parent: ba-pricing-management
+  - id: cap-store-checkout-management
+    field_sha256:
+      name: 8d29cb71c7e4ed882e855ab5548d3ec777ca6c57c73a1d8eff0932c5b6980954
+      definition: 2264c82898afee41b8fc8bb390115c65c5cb0edea7ef60f5858834620fd63b46
+      scope: ffb3467abe8c299abf2f632cec9690f545004be38c904f50cca86d1cf2a75077
+      market_comparisons: c391fcc34930a68646f2cfdec65480547df05aa20ee9938f259b190c663efbf4
+    kind: capability
+    parent: subdomain-sales-b2c-store
+  - id: cap-store-order-preparation-handover
+    field_sha256:
+      name: 504a976a83473072eab44adc29b501c22343c69a6882128cefd5383cfb298911
+      definition: 41cdd6028c136a2e258e80e4ff30bdc4e84b9562f6a8b9a1e2966f1361ff0180
+      scope: 8c3fcf2b298bb665f58d6f06e42cffb879dfa6076af7151a8b7d7fc649f34be5
+      market_comparisons: 890a5f505a796016399704d536ae41524dfb76abae43c2d0300492d8b1fcbbf9
+    kind: capability
+    parent: subdomain-store-backoffice-operations
+  - id: cap-retail-loyalty-program-management
+    field_sha256:
+      name: 089ece9c4a8254e56a60e7a6926fd860554824c8462ba9471144acfaef536fb3
+      definition: 30f1e45c0454b7f01eb2a7f0509b36433959c7c5f4485903f838f64a6d07ae4d
+      scope: 1e7abc25b4dcfadb1d38839167feb9e003f5439a457875c21c9e8334969f9c26
+      market_comparisons: bdbf142352d72198fa292aa574d04eda6b473893c54f9f3b794df06ce42ff938
+    kind: capability
+    parent: ba-retail-customer-relationship-management
+  - id: cap-wholesale-offer-preparation
+    field_sha256:
+      name: 054aa4a69fee3a13386651d2884b1f81c66e016daa6d6b38ec43bbb26c228f98
+      definition: 137db8f6e9ab6edfcc4ae4f0c1cad7e91d9c7fa6f1499a8da12343a77d570c64
+      scope: df6ff4d489856295b095b1db35449dbb392c35b88aa9c2ed4c6eb40843f3748b
+      market_comparisons: bdc0d9da5351bd14295fa771dc4881e18c525d4f595ea4a65f66fea01914fb71
+    kind: capability
+    parent: ba-wholesale-sales
+  required_relations:
+  - id: REL-U1079-ba-source-selection-cap
+    source_id: ba-sourcing-event-management
+  - id: REL-U1089-ba-pricing-management-cap-sales-pricing-rule-management
+    type: contains
+    source_id: ba-pricing-management
+    target_id: cap-sales-pricing-rule-management
+  - id: REL-U1089-subdomain-sales-b2c-store-cap-store-checkout-management
+    type: contains
+    source_id: subdomain-sales-b2c-store
+    target_id: cap-store-checkout-management
+  - id: REL-U1089-subdomain-store-backoffice-operations-cap-store-order-preparation-handover
+    type: contains
+    source_id: subdomain-store-backoffice-operations
+    target_id: cap-store-order-preparation-handover
+  - id: REL-U1089-ba-retail-customer-relationship-management-cap-retail-loyalty-program-management
+    type: contains
+    source_id: ba-retail-customer-relationship-management
+    target_id: cap-retail-loyalty-program-management
+  - id: REL-U1089-ba-wholesale-sales-cap-wholesale-offer-preparation
+    type: contains
+    source_id: ba-wholesale-sales
+    target_id: cap-wholesale-offer-preparation
+  required_glossary:
+  - id: TER283
+    field_sha256:
+      context: 8675302c5f3ec2d1b90f6c860e2b49c521da37da905d22662b28397ed83f3a1d
+      definition: d5b947212af91a7134257f7bcbb0c36e3aa65069e698ffefaeb5c1dfe5b6a863
+      short_description: d5b947212af91a7134257f7bcbb0c36e3aa65069e698ffefaeb5c1dfe5b6a863
+  - id: TER339
+    field_sha256:
+      definition: f176ea78a974f9f390b86e03d1b5c706d2e721230aecbb64f8b1e81baa71a3ac
+  - id: TER342
+    field_sha256:
+      definition: 91e4573a26695e77832a7dafeb620a82140ca029312d8116c021dda1d7274a0c
+  - id: TER345
+    field_sha256:
+      definition: 8d7027533030b29c4db125938d8fb6da45ff7f0a889c8fb60bf3c60e08ba8ac3
+  - id: TER349
+    field_sha256:
+      definition: 9dbb790910884ebbfa4c6a5d024419e3f0442be57e110b144a92e5178b9d180c
+  - id: TER350
+    field_sha256:
+      definition: 42711e78491f7a6cc129885854e04fc708946007cd083de6f65aab4c197949df
+  - id: TER352
+    field_sha256:
+      definition: c0a7ad5bdfbf8fc5137f08e67ead2f9e01f10e5ed64ba6436f1e19b07128be99
+  - id: TER353
+    field_sha256:
+      definition: 13d5cf213f665e0eac683fa51d4b2cacacf11a11d8f613a605485ae80c5d21d2
+  - id: TER242
+    field_sha256:
+      context: 9f730229d2180209c3c8d4ee37df13a968ec5bbca81012629441bf1f1581501c
+      market_comparisons: 5190a29f99d1d668420519dd9b0db666b541e5156e0637c41c1c507bfb9bb920
+  - id: TER282
+    field_sha256:
+      definition: 70092f429af116cb8b89290b7225125489acbacdad3b80225c357e8167fe4bb6
+      short_description: 70092f429af116cb8b89290b7225125489acbacdad3b80225c357e8167fe4bb6
+  - id: TER367
+    field_sha256:
+      name: a1073f5db08298ba6d80ceb0d95e92bb67d6e72bf189d71fbc11e1e13d01baea
+      definition: 3d8adcf97e60d0c5e908e459296c87cb0122b2c9ba5382ad13c5a982b008c479
+      short_description: 3d8adcf97e60d0c5e908e459296c87cb0122b2c9ba5382ad13c5a982b008c479
+  - id: TER368
+    field_sha256:
+      name: 8d29cb71c7e4ed882e855ab5548d3ec777ca6c57c73a1d8eff0932c5b6980954
+      definition: ce98aabaff20633591484e586011af4c744fda2723752c6bf7cf03aa6f386bb4
+      short_description: ce98aabaff20633591484e586011af4c744fda2723752c6bf7cf03aa6f386bb4
+  - id: TER369
+    field_sha256:
+      name: 504a976a83473072eab44adc29b501c22343c69a6882128cefd5383cfb298911
+      definition: df4043548280a862b3053887f29547e1e5d2cb0487d2b43fcd2e29e6005042e4
+      short_description: df4043548280a862b3053887f29547e1e5d2cb0487d2b43fcd2e29e6005042e4
+  - id: TER370
+    field_sha256:
+      name: 089ece9c4a8254e56a60e7a6926fd860554824c8462ba9471144acfaef536fb3
+      definition: 77644710b28b3e6cf167d138a4266684d1658af47b91d8733096877c36f0c18b
+      short_description: 77644710b28b3e6cf167d138a4266684d1658af47b91d8733096877c36f0c18b
+  - id: TER371
+    field_sha256:
+      name: 054aa4a69fee3a13386651d2884b1f81c66e016daa6d6b38ec43bbb26c228f98
+      definition: 2a355f2a05b1dccfaf6f9c569c2baf6a96fe16190a52923a4825512eec9495f2
+      short_description: 2a355f2a05b1dccfaf6f9c569c2baf6a96fe16190a52923a4825512eec9495f2
+  absent_nodes:
+  - ba-source-selection
+  absent_relations:
+  - REL-U1027-PARENT-ba-source-selection
+  supersedes_requirements:
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-pricing-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-pricing-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-retail-customer-relationship-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-retail-customer-relationship-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-source-selection
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-sourcing-event-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-sourcing-event-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-wholesale-sales
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-wholesale-sales
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-ecommerce
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-ecommerce
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-store
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-store
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-supplier-eligibility-assessment
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-supplier-performance-evaluation
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-category-sourcing-strategy
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-supplier-offer-selection
+    fields:
+    - parent
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-purchase-agreement-lifecycle-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-supplier-rebate-scheme-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-purchase-requisition-handling
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-purchasing-case-coordination
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-purchasing-case-coordination
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-supplier-commitment-follow-up
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-wholesale-account-stewardship
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-wholesale-sales-engagement
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-wholesale-sales-engagement
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-assortment-eligibility-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-commercial-catalog-publication
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-sales-price-determination
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-sales-price-determination
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-promotion-rule-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-sales-rebate-scheme-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-sales-incentive-scheme-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-digital-sales-journey-management
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-digital-sales-journey-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-in-store-sales-journey-management
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-in-store-sales-journey-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-store-network-configuration-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-retail-customer-engagement-management
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-retail-customer-engagement-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-store-stock-operations-management
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-store-stock-operations-management
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: relations
+    id: REL-U1079-ba-source-selection-cap
+    fields:
+    - source_id
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER283
+    fields:
+    - context
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER339
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER342
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER345
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER349
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER350
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER352
+    fields:
+    - definition
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER353
+    fields:
+    - definition
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-ecommerce
+    fields:
+    - definition
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-ecommerce
+    fields:
+    - finality
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-store
+    fields:
+    - definition
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-store
+    fields:
+    - finality
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - definition
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - finality
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: ba-wholesale-sales
+    fields:
+    - definition
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: ba-wholesale-sales
+    fields:
+    - finality
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: ba-pricing-management
+    fields:
+    - definition
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: ba-pricing-management
+    fields:
+    - finality
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-ecommerce
+    fields:
+    - definition
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-ecommerce
+    fields:
+    - finality
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-store
+    fields:
+    - definition
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-sales-b2c-store
+    fields:
+    - finality
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-strategic-sourcing
+    fields:
+    - scope
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-strategic-sourcing
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - definition
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - finality
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-wholesale-sales
+    fields:
+    - definition
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-wholesale-sales
+    fields:
+    - finality
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-pricing-management
+    fields:
+    - definition
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-pricing-management
+    fields:
+    - finality
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-sourcing-event-management
+    fields:
+    - definition
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-sourcing-event-management
+    fields:
+    - finality
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: ba-source-selection
+    fields:
+    - exists
+  - annex: context-structure-application-U1027.yaml
+    collection: relations
+    id: REL-U1027-PARENT-ba-source-selection
+    fields:
+    - exists
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER242
+    fields:
+    - context
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER242
+    fields:
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER282
+    fields:
+    - definition
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER282
+    fields:
+    - short_description
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER283
+    fields:
+    - definition
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER283
+    fields:
+    - short_description
+  - annex: retail-customer-relationship-U1055.yaml
+    collection: nodes
+    id: ba-retail-customer-relationship-management
+    fields:
+    - definition
+  - annex: retail-customer-relationship-U1055.yaml
+    collection: nodes
+    id: ba-retail-customer-relationship-management
+    fields:
+    - finality

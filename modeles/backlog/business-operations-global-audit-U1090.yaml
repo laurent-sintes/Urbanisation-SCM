@@ -1,0 +1,222 @@
+id: BUSINESS-OPERATIONS-GLOBAL-AUDIT-U1090
+status: analysis_only
+date: '2026-10-16'
+source_refs:
+- U1090
+scope: >-
+  Audit du système Business Operations dans le backlog courant après U1080 et U1089.
+  Contrôle de la structure, des responsabilités, des passages de relais et de leur preuve
+  par les scénarios. Aucune correction canonique ni validation métier n'est appliquée.
+method:
+  authority: modeles/backlog/model.yaml et modeles/backlog/glossary.yaml
+  examined:
+  - Relations contains et presents partant de system-business-operations.
+  - Définitions et portées des trois domaines courants, de leurs sous-domaines et des capacités aux frontières.
+  - Relations métier internes et avec Design & Development, Logistics et Enterprise Management & Control.
+  - Contributions explicites des capacités dans les parcours du scenario_catalog.
+  - Annexes U1087 et U1088 et accord de repositionnement U1080.
+  qualification_rule: >-
+    Une absence de relation ou de contribution dans le catalogue est une absence de preuve structurée,
+    pas la preuve que l'activité manque au métier ou dans les applications installées.
+  measurements:
+    direct_domains: 3
+    subdomains: 20
+    business_areas: 53
+    capabilities: 115
+    behaviors: 74
+    scenarios: 41
+    scenario_paths: 48
+    commerce_capabilities_with_explicit_path_contribution: 0/18
+    sourcing_capabilities_with_explicit_path_contribution: 0/10
+    orchestration_capabilities_with_explicit_path_contribution: 81/87
+    structured_interdomain_links_within_business_operations: 1
+    note: >-
+      Les comportements et les 48 parcours détaillés sont concentrés dans Supply Chain Orchestration
+      par choix de profondeur. Les nombres ne mesurent ni couverture fonctionnelle installée ni exhaustivité.
+verdict:
+  structure: >-
+    L'arbre courant est cohérent avec le recentrage U1080 : Sourcing and Procurement,
+    Commerce et Supply Chain Orchestration sont les trois domaines directs ; Planning & Optimization
+    et Order Backlog Management sont des sous-domaines de ce dernier. Le système ne contient plus
+    de domaine Demand & Supply Planning autonome.
+  boundaries: >-
+    Les responsabilités sont généralement distinguées dans les portées des fiches : le canal conduit
+    la relation et le parcours commercial ; le Core tient commandes, promesses, stock de référence,
+    plan et orchestration ; Logistics réalise les prestations ; Finance traite les résultats financiers.
+    Plusieurs passages de relais ne sont toutefois pas matérialisés par des liens métier qualifiés.
+  coverage: >-
+    Le catalogue contient les grandes responsabilités de vente, achat, planification et orchestration.
+    Il ne permet pas d'affirmer que tous les cas de bout en bout sont couverts : les capacités Commerce
+    et Sourcing ne contribuent explicitement à aucun parcours du catalogue, et certains contrats
+    ou règles restent ouverts.
+findings:
+- id: BO-U1090-01
+  priority: P1
+  category: contradiction_documentaire_demontree
+  title: Le système est encore décrit comme ayant quatre domaines
+  evidence:
+  - Les relations de l'arbre donnent trois domaines directs ; domain-plan est un sous-domaine de Supply Chain Orchestration depuis U1080.
+  - system-business-operations.fields.scope et TER106.context énumèrent encore Planning & Optimization comme quatrième membre au même niveau.
+  - PRINCIPLE-BUSINESS-SYSTEM et PRINCIPLE-ORCHESTRATION-DETAIL parlent encore de quatre domaines.
+  - Des comparaisons marché de la fiche système et de TER106 placent encore Planning & Optimization hors de Supply Chain Orchestration.
+  recommendation: >-
+    Aligner fiche système, TER106, principes et comparaisons sur les trois domaines directs.
+    Préserver les accords et références historiques, mais qualifier les nouvelles rédactions.
+  limit: Ce constat vise les textes actifs du backlog, sans réécrire les anciennes publications.
+- id: BO-U1090-02
+  priority: P1
+  category: frontiere_devenue_incoherente
+  title: La boucle de planification conserve un contrat d'ancien domaine externe
+  evidence:
+  - planning-data-provision.scope décrit encore un domaine destinataire qui élabore les plans et un retour par Plan Ingestion.
+  - REL-U826-planning-data-provision-TO-domain-plan relie désormais deux sous-domaines du même Core.
+  - REL-U794-PLAN-INGESTION conserve un libellé de fourniture des plans reçus malgré le calcul désormais interne.
+  - planning-actuals-feedback.validation_points attribue encore les prévisions à Demand & Supply Planning externe.
+  - L'entrée de comparaison C17 continue de placer la production des plans hors du Core.
+  recommendation: >-
+    Distinguer les faits internes utilisés par Planning & Optimization des contributions de plan
+    réellement externes reçues par Plan Ingestion. Redéfinir ou retirer les deux relations héritées
+    selon leur sens actuel ; mettre à jour le scénario et C17. Ne créer aucun flux externe sans source.
+  limit: Plan Ingestion reste utile pour les contributions externes identifiées ; le défaut porte sur la boucle et les liens hérités.
+- id: BO-U1090-03
+  priority: P1
+  category: couverture_non_prouvee
+  title: Les parcours ne démontrent pas les passages Commerce et Sourcing vers le Core
+  evidence:
+  - Aucun des 48 parcours ne cite une des 18 capacités Commerce ou des 10 capacités Sourcing comme contribution explicite.
+  - Les 48 parcours citent tous des capacités de Supply Chain Orchestration ; 81 de ses 87 capacités sont mobilisées au moins une fois.
+  - Le seul lien métier structuré entre les trois domaines directs est REL-U996-contextual-prices, de Commerce vers le Core.
+  recommendation: >-
+    Ajouter des contributions explicites aux parcours existants ou quelques parcours transversaux ciblés.
+    Tester au minimum une pénurie issue d'un retard fournisseur, un retrait magasin, une vente avec
+    retour, et une commande Wholesale saisonnière. Nommer à chaque étape information reçue,
+    décision, autorité, effet et preuve de prise en compte.
+  limit: Le catalogue de scénarios a été construit d'abord pour approfondir le Core ; zéro contribution ne signifie pas zéro fonction.
+- id: BO-U1090-04
+  priority: P2
+  category: frontiere_decrite_non_contractualisee
+  title: Les faits magasin et les décisions de stock manquent de contrat transversal explicite
+  evidence:
+  - cap-store-stock-operations-management constate réception, comptage et mouvements locaux ; D01.f intègre les faits et D01.g tient la référence de stock.
+  - cap-store-order-preparation-handover constate manquant, prélèvement et remise ; le Core conserve affectation, promesse et coordination.
+  - Aucun lien métier qualifié ne relie ces capacités Commerce aux capacités Inventory et Fulfilment du Core.
+  recommendation: >-
+    Sur un retrait magasin avec dernier article et écart de stock, préciser la demande de préparation,
+    les faits de prélèvement et de remise, leurs dates et corrections, la décision de réaffecter et
+    l'identité qui met à jour la promesse. Formaliser ensuite les seuls liens nécessaires.
+  limit: Les portées décrivent déjà la frontière de principe ; l'audit ne démontre pas un doublon de tenue de stock.
+- id: BO-U1090-05
+  priority: P2
+  category: frontiere_decrite_non_contractualisee
+  title: L'achat conduit par Sourcing et le Purchase Order du Core restent reliés surtout par la prose
+  evidence:
+  - cap-purchasing-case-coordination instruit l'écart fournisseur ; D04.j tient les changements autorisés du Purchase Order.
+  - cap-supplier-commitment-follow-up suit confirmations et délais, mais sa portée dit encore « MAP garde le carnet d'achat » dans une fiche cible.
+  - Aucun lien métier structuré ne relie Sourcing au Core ni ses conditions de ristourne à Commercial Settlement Management.
+  recommendation: >-
+    Éprouver un achat proposé par le plan, un fournisseur en retard, un accord applicable, une
+    commande révisée et le calcul éventuel d'une ristourne. Préciser qui autorise quoi, quel fait
+    modifie le Purchase Order, quelles conditions sont transmises à Finance et à quelle date.
+    Clarifier la mention MAP comme constat As Is ou la retirer de la portée cible.
+  limit: Le modèle distingue déjà proposition de plan, achat engagé et réception physique ; aucun nouveau cycle n'est requis par principe.
+- id: BO-U1090-06
+  priority: P2
+  category: regle_ouverte
+  title: La consommation des prévisions n'a pas de responsable détaillé explicite
+  evidence:
+  - L'annexe planning-backlog-calculation-story-U1087.yaml note explicitement ce manque dans Availability.
+  - Le parcours forecast-to-shortage-arbitration-path illustre la prévision résiduelle et l'arbitrage, sans attribuer cette règle à une capacité dédiée.
+  recommendation: >-
+    Définir l'autorité, l'horizon et les règles de consommation des prévisions par les commandes,
+    puis décider si la responsabilité appartient à une capacité existante ou mérite une capacité
+    distincte. Vérifier les conséquences sur Demand Plan, Master Planning, Availability et Order Backlog.
+  limit: Le défaut est une responsabilité détaillée non attribuée, pas l'absence du concept de prévision résiduelle.
+- id: BO-U1090-07
+  priority: P2
+  category: autorite_non_prouvee
+  title: Les sources de vérité d'entreprise restent ouvertes pour plusieurs données maîtres
+  evidence:
+  - Operational References porte la référence locale du Core, conformément à U479.
+  - Supplier Management précise que la maîtrise du référentiel fournisseur d'entreprise reste à documenter.
+  - Les liens aux systèmes Design & Development, Logistics et Enterprise Management & Control sont surtout au niveau système et ne déterminent pas tous les maîtres, versions et corrections.
+  recommendation: >-
+    Construire une matrice par donnée critique, avec maître d'entreprise, responsable de la vue
+    locale Core, source du changement, contrôle de version, correction et destinataires. Commencer
+    par produit et variante, partenaire et accord, magasin et lieu, prix, stock et statut de plan.
+  limit: Aucun maître installé Beaumanoir ne peut être conclu des seules définitions de la cible.
+- id: BO-U1090-08
+  priority: P3
+  category: sedimentation_editoriale
+  title: Quelques fiches conservent des formulations redondantes ou héritées
+  evidence:
+  - domain-sales.fields.scope répète la préparation de l'offre et la conduite de la vente dans deux paragraphes proches.
+  - subdomain-strategic-sourcing.fields.scope contient une phrase isolée « Rendre la stratégie explicite . ».
+  - TER111.notes présente encore Planning & Optimization comme un domaine distinct et le master plan comme interne au Matching ancien.
+  recommendation: >-
+    Revoir ces seuls champs avec leur glossaire et leurs comparaisons après les corrections de frontière,
+    sans réécriture générale des fiches.
+  limit: Ces défauts éditoriaux ne prouvent pas à eux seuls un défaut de capacité métier.
+representative_cases_to_test:
+- id: shortage_supplier_to_customer
+  story: >-
+    Une prévision et des commandes Wholesale dépassent le stock ; un fournisseur retarde un achat.
+    Le plan révise les apports, le carnet arbitre les priorités, Availability réévalue les promesses,
+    le parcours achat traite l'écart, Purchase Order tient l'engagement et la vente annonce la réponse.
+  expected_boundaries:
+  - Sourcing traite la relation fournisseur et transmet le changement autorisé.
+  - Planning propose ; Order Backlog affecte ; Availability évalue ; Order Management confirme ou révise l'engagement.
+  - Logistics fournit les faits physiques, sans décider de la priorité commerciale.
+  audit_result: Couverture Core illustrative présente ; contributions Sourcing et Commerce non documentées dans le parcours.
+- id: click_collect_last_item
+  story: >-
+    Un client commande en ligne le dernier article pour retrait. Le magasin constate un écart
+    pendant la préparation ; le Core doit réexaminer disponibilité, affectation et promesse.
+  audit_result: Capacités nécessaires décrites de part et d'autre, contrat de correction et contributions de canal non documentés.
+- id: store_return_exchange_refund
+  story: >-
+    Une vente magasin est retournée avec échange partiel. La caisse traite la transaction,
+    le Core tient les ordres et le stock reconnu, et Finance reçoit les faits de règlement.
+  audit_result: Responsabilités thématiques présentes ; récit transversal et preuves des transitions à instruire.
+- id: product_offer_launch
+  story: >-
+    Design & Development publie une variante ; Commerce décide assortiment, catalogue et prix ;
+    le Core reçoit les références et planifie un lancement avec stock limité.
+  audit_result: Systèmes et capacités présents ; maîtres par donnée et passage de relais détaillé non prouvés.
+market_check:
+  consulted_on: '2026-10-16'
+  sources:
+  - vendor: Microsoft Dynamics
+    title: Master planning home page
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+    observed: Distingue plan net sur commandes courantes, plan de prévisions et plan intercompany ; produit des ordres planifiés.
+  - vendor: Microsoft Dynamics
+    title: Store Commerce app capabilities
+    url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce-capabilities
+    observed: Regroupe caisse, stock, préparation de commandes, relation client et configuration omnicanale.
+  - vendor: Microsoft Dynamics
+    title: Procurement and sourcing overview
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+    observed: Décrit l'enchaînement des besoins, du sourcing, des accords et de l'achat.
+  - vendor: SAP S/4HANA
+    title: Execute Supply Chain Planning
+    url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/execute-supply-chain-planning
+    observed: Articule prévisions, commandes et besoins calculés ; la consommation dépend de stratégies de planification.
+  - vendor: SAP S/4HANA Retail
+    title: Managing Retail Store Operations
+    url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/managing-retail-store-operations_f77c8f4d-b247-4ef0-879b-3c4f469a6323
+    observed: Documente réception, ajustement, inventaire, préparation et remise des commandes en magasin.
+  - vendor: SAP S/4HANA
+    title: Working with Requests for Quotation
+    url: https://learning.sap.com/courses/sourcing-in-sap-s4hana/working-with-requests-for-quotation
+    observed: Documente consultation, offres, attribution et création d'un contrat ou d'une commande.
+  comparison: >-
+    Les deux éditeurs attestent des familles fonctionnelles et de leur coopération. Microsoft
+    montre un socle de commerce omnicanal avec opérations magasin ; SAP distingue également
+    vente, magasin, planification et sourcing. Ces périmètres produits n'imposent ni un domaine
+    logiciel unique, ni la hiérarchie FLOW. Ils appuient le test des passages de relais et la
+    responsabilité de consommation des prévisions, sans prouver une implémentation Beaumanoir.
+next_step_order:
+- Corriger les contradictions de niveau et la boucle de planification, avec alignement modèle et glossaire.
+- Tester les quatre parcours transversaux sur les décisions, faits, autorités et corrections ; formaliser les liens nécessaires.
+- Qualifier les maîtres par donnée, puis les lacunes de capacité réellement révélées par les parcours.
+- Relire les seules fiches sédimentées et leurs comparaisons marché avant une éventuelle publication.

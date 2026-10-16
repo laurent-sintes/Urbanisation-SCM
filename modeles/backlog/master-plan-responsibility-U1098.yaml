@@ -1,0 +1,937 @@
+id: MASTER-PLAN-RESPONSIBILITY-U1098
+date: '2026-10-16'
+status: applied_to_backlog
+source_refs:
+- U1097
+- U1098
+decision: Prévision de collection et de produit dans Design & Development ; Master Plan comme sous-domaine opérationnel réunissant
+  calcul net et arbitrage des ressources par commande. Le carnet reste une Business Area du Master Plan ; Order Management
+  conserve les engagements.
+market_comparison:
+  microsoft: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+  microsoft_priority: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/planning-optimization/priority-based-planning
+  sap_mrp: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/understanding-mrp-in-sap-s-4hana
+  sap_assignment: https://learning.sap.com/courses/exploring-fashion-functions-and-business-processes-in-sap-s-4hana-for-fashion-and-vertical-business/explaining-supply-assignment_af05618d-4954-4f22-9857-3dd12e3940c4
+  finding: Microsoft distingue forecast planning et net master planning ; SAP distingue MRP et Supply Assignment. FLOW les
+    utilise comme repères fonctionnels mais regroupe calcul net et décision d’affectation par responsabilité métier.
+  limits: Aucun éditeur ne démontre à lui seul la hiérarchie FLOW ni un déploiement installé chez Beaumanoir.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1098
+  summary: Master Plan est un sous-domaine de Supply Chain Orchestration ; la prévision de produit relève de Collection Planning
+    ; Order Backlog Management devient sa Business Area.
+  required_nodes:
+  - id: system-business-operations
+    kind: business_system
+    field_sha256:
+      scope: d27a4dce3feb33c2b32f72b91dd5cd350ef5485e7c6064281af2bad34f27a5ff
+      market_comparisons: 13c744e8434c26f6e7713d99759c2d1c81ecc21833337523405faa87b8a51023
+  - id: domain-plan
+    kind: area
+    field_sha256:
+      name: 23b0714e6e53cd3883387baf64c7b92331c29c29e800631bdd745b97c49118e3
+      definition: 2b3155b7b43168eba13762e03147834789143ffd562c44282a7cf9a8c8f362d6
+      finality: 6ea4452734a144dd6ba14b83dba9937089197bd753489744f39c2a79710f0c43
+      scope: 2170091cae2fd4aa8a4deacd994055629f37d1ba08ac81010347b1f6771d5646
+      examples: d7911bca5f2ac089146d40f0f68f1583a8253da68859092727338b2d52b42bbf
+      market_comparisons: c94e8861d411739eaab856c28a83a3953c53793475cb52456195fb36618631ce
+  - id: supply-chain-orchestration
+    kind: domain
+    field_sha256:
+      market_comparisons: b5bbb0b7904742bd9590022dcb9b3b635bb3f7344f31f966615a5757a39d3aba
+      scope: 02c51869df9f51d44fd69d85e93e5cf890e00c9502c87cde151f202a718e5d03
+      market_inspiration: d2352e3156f2b3cffb8e995b7f45467380ac4e898d5129307305bdd979ea2f0d
+  - id: D03.j
+    kind: capability
+    field_sha256:
+      scope: 34b3c3b06a7ef12e1ba735565592005529e297eed31f40b2a656913cae246621
+      market_inspiration: 61b255fd3ab3ef3a35227bd805de0e251d4efe780352778914f76a3a87a9b69b
+  - id: D04.j
+    kind: capability
+    field_sha256:
+      market_comparisons: 38f54fae8d02fa206b14ea55430382eccd4cac8cb3c1404b4cbb6e3c9cdd9bf5
+      market_inspiration: 68f6403ecaeaa34da9f4ce418b81b0ad5ab4b2c442e91f7f35f5be45c1674f11
+  - id: D05.a
+    kind: capability
+    field_sha256:
+      scope: 2642b81798396280048a8df58b96a87e4973149577ac650db2b12e62a3a30ec2
+      market_comparisons: 7d6bbc04f2a6bb636bb92878b9efd59fddd2132d371c202fc2fa0712ef218a38
+  - id: D05.e
+    kind: capability
+    field_sha256:
+      scope: 836a81dc84908b512758c3af45a5461c9d8df205072d69ac181bc962ee0c710c
+  - id: D05.f
+    kind: capability
+    field_sha256:
+      scope: b88ac154c2f8c2d12aab5445cc27ca5a22bf1439d58480725b6f2e30b855bb69
+  - id: D03
+    kind: area
+    field_sha256:
+      scope: 5a493d2647b0372f30daad308170ecf29d99b8afceb13f96591060e32c87e234
+      market_comparisons: c3bf5105b672a29f220654ba48e0757e69c1b6b47a31db8cb86e14ae9a905b5a
+      market_inspiration: 9243d44ae68ad6cd402eb0bf279123d11ef54dc679532720dde3f69a6c50eb55
+  - id: D05.i
+    kind: capability
+    field_sha256:
+      scope: 30f766ef53884fdb4ba4298882bd182724818d59b08ae8c1614366806aca8335
+      market_inspiration: fa79f2d70cdd04d255cc20e6738187590ae1dc7ee614f772a65a0414428167ba
+  - id: plans-ingestion
+    kind: capability
+    field_sha256:
+      scope: dcf03171ba8fd8e5f4c940d1a272e0a87cd867db46d14623deb59a2c37484ee9
+      market_comparisons: e79a3437f492bc1b230e1c9471e026b022fcad323faafd903bddfbcd4a761334
+      market_inspiration: cff8324a499dabd77c988b31d01409eff0d6265aa7e1ecc49c3d80bcac4d4335
+  - id: plans-visibility
+    kind: capability
+    field_sha256:
+      scope: a93372e3a65868d0ae46b9fe1d7491b4c9b1c887ee8d41c213f1050db6f347a9
+      market_inspiration: 86b5828b49f7d5c5ec6bd6242bd1388ca827a590da5194af74b381bb9065afe3
+  - id: demand-plan-visibility
+    kind: capability
+    field_sha256:
+      scope: a41597d15dba6d020674c9a4bb6bb3ed5e7ea33d49e0ddcbf911eb8199af2496
+      market_comparisons: a3f163010336531b4bc24bdff88fa0905f63c7e9a9db9ebd37d0a8c6831edded
+      market_inspiration: 7da7e8188ffb28defe4b1d19f436e274b7f698277fe1d54ed5761cf1b01cc60a
+  - id: subdomain-integration
+    kind: area
+    field_sha256:
+      scope: c6b5c3c090ba1fc83f63c6e929241578d2895a05986544f7584e550d9635d675
+  - id: planning-data-provision
+    kind: capability
+    field_sha256:
+      scope: a957bfb1ca7977ee80606bbdb7273dc630077c931bdf10e0869d8b4759e1bd5f
+      market_comparisons: 3d01c8574483f862ff6cb8036dc84206b1c638e93581a1f4b06fdcf835ad942a
+  - id: ba-master-plan-management
+    kind: business_area
+    field_sha256:
+      scope: 2a1fe365e3d437ece59fe30c635ab2b5c03b3b14868e794374b95e9f37627c1b
+  - id: ba-outbound-information-provision
+    kind: business_area
+    field_sha256:
+      scope: f4f96a4b579b4eece7fb26c195ffa11990732f6a1e9379aab830e809c831c058
+      market_comparisons: 32212ec0829b95541408ad42f0e661aa2a5cc5486aaa6b2fdbce9f7bfd9936eb
+  - id: subdomain-collection-planning
+    kind: area
+    field_sha256:
+      definition: 2b69de1f444f50ff1be45b92e6607e0695585af96ac556d8908bc5156ca3a97c
+      finality: 1236f7c533f1f108d8cfaf05ad7de4a9f88989930b0f7af3aa0c3753e7a3a135
+      scope: df4635d49fe57b1f855c69b74ea51c4232b0eb1cc274a9908bf90a6cf4e3e0f6
+      examples: 01bbfdd9e9d0f3e1c2f53993010a42574684641cd15550e33a89b7dad97d4ce1
+      market_comparisons: 5a4f6c31f6f23d68fd58a2d2458bda505580a41379220c1aac4bf3214b9e2750
+  - id: subdomain-operational-procurement
+    kind: area
+    field_sha256:
+      scope: b56a4c5fda01658c98cfe3c0bdc58158a6ad39cbbf7169dd2926a280aa793fbf
+      market_comparisons: 0f4f56a350bd76075a707d4266231fc734560fe79df2a85b0dd08ab4df824fdc
+  - id: subdomain-assortment-catalog-management
+    kind: area
+    field_sha256:
+      scope: 32486ed4a74ea82b84a82c294e7185e3be7dbe18e7113302d8ec3a7a7fccd79f
+      market_comparisons: 787cab444dfe237451f9043821ee35c7772a8192e009c48d5d44f40d0239294f
+  - id: ba-order-backlog-management
+    kind: business_area
+    field_sha256:
+      definition: f8783875a81cd8e834bcbb5d04f098ed0d4febbb4841f309ccf34fcedd67c40a
+      finality: 6949bb7d6b11a66ebf1ca7eba2a3a6cdca57c1c4c41a32eaa1ffb3c5b38ba406
+      scope: 62215260637d9905f4e64cdde0e70a47ab0aa1eb0303af7ce9781e43d16b0665
+    parent: domain-plan
+  - id: ba-demand-forecast-management
+    kind: business_area
+    field_sha256:
+      definition: 4db8bc251e287f5c4064112561744dd797c2c1a1a144921fe433972e4271213c
+      finality: fbe018fb42f8d72dfb4898b474bac9cd8db5957dbb4422352faf7b75e3475d72
+      scope: 7443f628248b72c4c3e6ec7029b7f9e04a9dab00a4a3b7f2813dc35ebf110a04
+      market_comparisons: dfa8020ff41ae61da3bc4acef647465ba5e9bdcc381643cdb80becf154efc443
+  - id: demand-forecast-development
+    kind: capability
+    field_sha256:
+      name: d0a08714758a16f530c500b29ce59c8ce3406993d07f3191cca73ea5f52494d3
+      definition: c555fdd6d7ff0afa3262441f671bc3c34bcbb2e09df09968c548fef8f616d6f1
+      finality: 2c62585cbe5117bb7762dcacd18471d8f0f658892b4c6eb1ade049bc6f99fe14
+      scope: 532e0e3bd1998c2e764064f3f07cb3f2b887ec0b0b41f3d5df068d74e953d8e8
+      market_comparisons: 73b4174ef44f392ccc3a28d82655905cb5b8c05aeb3a230ce57d102b5b7636a2
+      examples: b8381d08ddd2629487366d5ce4ed22ed827eed9ac4b9ea46136b6986f1007890
+  - id: demand-plan-development
+    kind: capability
+    field_sha256:
+      scope: d51d43aa61ed409d7d14949b3677a09e904dae8cf541418ecb0f223edcc7d40e
+  required_relations:
+  - id: REL-U1080-PARENT-ba-order-backlog-management
+    type: contains
+    source_id: domain-plan
+    target_id: ba-order-backlog-management
+  - id: REL-U794-PLAN-INGESTION
+    field_sha256:
+      data_exchange: 6bfd5a8df0bbd1cb428c522b94c7836f9dd08253fb097cba400d7cf6196d9f2a
+  - id: REL-U826-planning-data-provision-TO-domain-plan
+    field_sha256:
+      data_exchange: 408d705d4bfb09191af14f9654bcdd9334c5f80c89eee0578224d2de89f24d5b
+  - id: REL-U1093-collection-assumptions-to-demand-plan
+    type: shares-data
+    source_id: subdomain-collection-planning
+    target_id: ba-demand-forecast-management
+    field_sha256:
+      label: 638f74b0dfc697df4f24dceb72e975263bbe96406a8338a765f89be20d1cddb1
+      data_exchange: 3563187be07ca3712626f298b913890fbaf8a6383f03a2880d542d692edcf936
+  absent_nodes:
+  - subdomain-order-backlog
+  absent_relations:
+  - REL-U1080-PRESENTS-order-backlog
+  required_glossary:
+  - id: TER045
+    field_sha256:
+      context: 7ccbc25822a4600569cc7b23a7430277d7dd15d32e826a716393049f46aa6291
+  - id: TER070
+    field_sha256:
+      context: a39d82008a7fbb238f3f6de96ab3ddaa127344a5de1372b425174bd15964d136
+  - id: TER074
+    field_sha256:
+      context: 80955636ac6c2052521ae8a3273120e139bc15c57f128e47e6f9e70cf90ba8c3
+  - id: TER099
+    field_sha256:
+      context: 54b27df4f47f17bc7e73985d265470e3841a7f42fcbed9c0939955812ed556da
+      market_comparisons: 57e0956241140874a5e3e80013d34ab707cbcad9139984cc47c0af76bc078148
+  - id: TER100
+    field_sha256:
+      context: 32c8f3c752f280535f3961ff42d36722ff538ec63f6a380df06db71594b6e2cb
+  - id: TER106
+    field_sha256:
+      context: d27a4dce3feb33c2b32f72b91dd5cd350ef5485e7c6064281af2bad34f27a5ff
+      market_comparisons: 13c744e8434c26f6e7713d99759c2d1c81ecc21833337523405faa87b8a51023
+  - id: TER111
+    field_sha256:
+      name: 23b0714e6e53cd3883387baf64c7b92331c29c29e800631bdd745b97c49118e3
+      short_description: eea3318d00ad915ba7f95a329cd00cdfebbc11964039c1059cea610a4fafc170
+      definition: 9a51b5bf6aa02dc566996df6aa6eb276e18e149d89a71486ba0d3ecd1caa397d
+      context: 2170091cae2fd4aa8a4deacd994055629f37d1ba08ac81010347b1f6771d5646
+      market_comparisons: 52278ee6c1bfb70d5e23f8ba758bddc28a9b42e257ebaa638c7eee1e79d85bc4
+  - id: TER112
+    field_sha256:
+      context: 5a493d2647b0372f30daad308170ecf29d99b8afceb13f96591060e32c87e234
+      market_comparisons: c3bf5105b672a29f220654ba48e0757e69c1b6b47a31db8cb86e14ae9a905b5a
+  - id: TER113
+    field_sha256:
+      context: c6b5c3c090ba1fc83f63c6e929241578d2895a05986544f7584e550d9635d675
+  - id: TER115
+    field_sha256:
+      context: a957bfb1ca7977ee80606bbdb7273dc630077c931bdf10e0869d8b4759e1bd5f
+  - id: TER141
+    field_sha256:
+      context: f4f96a4b579b4eece7fb26c195ffa11990732f6a1e9379aab830e809c831c058
+      market_comparisons: 32212ec0829b95541408ad42f0e661aa2a5cc5486aaa6b2fdbce9f7bfd9936eb
+  - id: TER151
+    field_sha256:
+      context: 2646d3d4053b65b6e09a7235f5d2e7d105a73b5d08b82e6f54b7404f2ba86713
+      market_comparisons: 00eb7bb98890fa4ad570c84e08b142a5f14fe0ccd4ceb26b4b5d4e0635a1e8f7
+  - id: TER205
+    field_sha256:
+      context: 0feac344d8f8f532428e42b124e0dc260f2901eba9ebdc4dded0cf5fc5b224c7
+  - id: TER208
+    field_sha256:
+      short_description: e9d68f70b60e46b58543f3e63b12266d5ddf20378b3868744da0e7a9e708bfab
+      definition: 75204f70294f3fbe134e4621c06f79981ba66b0a954ab634f1d400db99045f6e
+      context: df4635d49fe57b1f855c69b74ea51c4232b0eb1cc274a9908bf90a6cf4e3e0f6
+      market_comparisons: 23969a844d9f2042ab9ab4d91e3bec008e1ef092e64e7f35992a7487e283ed4a
+  - id: TER219
+    field_sha256:
+      context: cc2099f91fe1d0ff4b8eabf24ab2dc88c839e761e6dc10890c5bd3d9e3701db1
+      market_comparisons: 5156ab2604d79067c81e0e880fb3b05928bf44e71dcfb715f17ff498bf55d87c
+  - id: TER244
+    field_sha256:
+      context: b56a4c5fda01658c98cfe3c0bdc58158a6ad39cbbf7169dd2926a280aa793fbf
+      market_comparisons: 0f4f56a350bd76075a707d4266231fc734560fe79df2a85b0dd08ab4df824fdc
+  - id: TER245
+    field_sha256:
+      context: 32486ed4a74ea82b84a82c294e7185e3be7dbe18e7113302d8ec3a7a7fccd79f
+      market_comparisons: 787cab444dfe237451f9043821ee35c7772a8192e009c48d5d44f40d0239294f
+  - id: TER269
+    field_sha256:
+      context: 62215260637d9905f4e64cdde0e70a47ab0aa1eb0303af7ce9781e43d16b0665
+      market_comparisons: 48c3b9ac2ae959e3f390da0a5db510a0c137274272e312a8686678b31700cb26
+  - id: TER360
+    field_sha256:
+      definition: a34ce3b4ec22526ae8c9f753a0f1824717c43abbc222d9a193065388375666f7
+      short_description: c7a7cc4645adb049105af59c4b5f8dd13e7c353bd90c4a9b208cbfb7707501cc
+      context: 7443f628248b72c4c3e6ec7029b7f9e04a9dab00a4a3b7f2813dc35ebf110a04
+  - id: TER361
+    field_sha256:
+      name: d0a08714758a16f530c500b29ce59c8ce3406993d07f3191cca73ea5f52494d3
+      definition: eb4e9808ec6379612565d6dd6adedde72af01cf29a5aeb72c9e7a2b9945e2385
+      short_description: ea77760b007436eabc6b73a914e1da8a3f6b29b84d08ece16938fe6ff1baf784
+      context: 895eb7aa6677247b2fc72ab938e8fcb0017a2d1b08b7eea88c85e5b18d1b050a
+  - id: TER362
+    field_sha256:
+      context: 7442ec3b7225e9e1d8a80cc816311be830c69aec90770069bc1b7d505551f931
+  - id: TER364
+    field_sha256:
+      context: f61293c93c6cd1d8f9b6bb91e6fe2e4156474607854502284650cec18d2af82a
+  - id: TER372
+    field_sha256:
+      name: ac5c36e8aac1b5a74c94ec3ddee4500b83759038aa17fcdc41b05c21c8e29da0
+      definition: 0a0ba3a8bc7d9d85f68a202b416edbee4fa026e3ff28b9589e7a429201f480c0
+      short_description: 10b6419b580a510dc90b5b60bb0c4d77369a0f8bc45407926462c975484137da
+      context: 2d4d87f4e20b57f84c923481bc7c798463eb42c6692fa5f55680594eabb25590
+  supersedes_requirements:
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - kind
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - kind
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - kind
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: plans-visibility
+    fields:
+    - kind
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: demand-plan-visibility
+    fields:
+    - kind
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - kind
+  - annex: availability-scope-story-U1018.yaml
+    collection: nodes
+    id: ba-order-backlog-management
+    fields:
+    - definition
+    - finality
+    - kind
+    - scope
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - kind
+  - annex: business-area-migration-U846.yaml
+    collection: nodes
+    id: ba-outbound-information-provision
+    fields:
+    - kind
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - kind
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: demand-forecast-development
+    fields:
+    - kind
+    - name
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER361
+    fields:
+    - name
+  - annex: business-operations-global-application-U1091.yaml
+    collection: nodes
+    id: system-business-operations
+    fields:
+    - market_comparisons
+    - scope
+  - annex: business-operations-global-application-U1091.yaml
+    collection: nodes
+    id: subdomain-integration
+    fields:
+    - scope
+  - annex: business-operations-global-application-U1091.yaml
+    collection: nodes
+    id: ba-outbound-information-provision
+    fields:
+    - market_comparisons
+    - scope
+  - annex: business-operations-global-application-U1091.yaml
+    collection: nodes
+    id: planning-data-provision
+    fields:
+    - scope
+  - annex: business-operations-global-application-U1091.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - scope
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER106
+    fields:
+    - context
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER113
+    fields:
+    - context
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER115
+    fields:
+    - context
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER141
+    fields:
+    - context
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER360
+    fields:
+    - context
+  - annex: business-systems-U780.yaml
+    collection: nodes
+    id: system-business-operations
+    fields:
+    - kind
+  - annex: business-systems-U780.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - kind
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - kind
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: nodes
+    id: subdomain-collection-planning
+    fields:
+    - definition
+    - examples
+    - finality
+    - market_comparisons
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: terms
+    id: TER208
+    fields:
+    - definition
+    - short_description
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: subdomain-assortment-catalog-management
+    fields:
+    - kind
+  - annex: commerce-retail-structure-U987.yaml
+    collection: nodes
+    id: subdomain-assortment-catalog-management
+    fields:
+    - kind
+  - annex: context-business-systems-U975.yaml
+    collection: nodes
+    id: subdomain-collection-planning
+    fields:
+    - kind
+  - annex: context-business-systems-U975.yaml
+    collection: nodes
+    id: system-business-operations
+    fields:
+    - kind
+  - annex: context-business-systems-U975.yaml
+    collection: nodes
+    id: plans-ingestion
+    fields:
+    - kind
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-operational-procurement
+    fields:
+    - kind
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-assortment-catalog-management
+    fields:
+    - kind
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - kind
+  - annex: data-sharing-U979.yaml
+    collection: nodes
+    id: subdomain-operational-procurement
+    fields:
+    - kind
+  - annex: integration-review-U823.yaml
+    collection: nodes
+    id: subdomain-integration
+    fields:
+    - kind
+  - annex: integration-review-U823.yaml
+    collection: nodes
+    id: planning-data-provision
+    fields:
+    - kind
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - kind
+    - scope
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - kind
+    - scope
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: nodes
+    id: demand-forecast-development
+    fields:
+    - kind
+    - scope
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: nodes
+    id: demand-plan-development
+    fields:
+    - kind
+    - scope
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - definition
+    - examples
+    - finality
+    - kind
+    - market_comparisons
+    - scope
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: nodes
+    id: subdomain-collection-planning
+    fields:
+    - kind
+    - scope
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: terms
+    id: TER100
+    fields:
+    - context
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - context
+    - definition
+    - short_description
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: terms
+    id: TER208
+    fields:
+    - context
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: terms
+    id: TER362
+    fields:
+    - context
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: terms
+    id: TER364
+    fields:
+    - context
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: D05.i
+    fields:
+    - kind
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - kind
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - kind
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - kind
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - kind
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D03.j
+    fields:
+    - kind
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: D04.j
+    fields:
+    - kind
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - kind
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - definition
+    - finality
+    - kind
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - kind
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: demand-forecast-development
+    fields:
+    - definition
+    - examples
+    - finality
+    - kind
+    - market_comparisons
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: demand-plan-development
+    fields:
+    - kind
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - kind
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - kind
+    - market_comparisons
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - kind
+    - market_comparisons
+    - scope
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER099
+    fields:
+    - context
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER205
+    fields:
+    - context
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER269
+    fields:
+    - context
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER360
+    fields:
+    - definition
+    - short_description
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER361
+    fields:
+    - context
+    - definition
+    - short_description
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER112
+    fields:
+    - context
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: subdomain-order-backlog
+    fields:
+    - exists
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - kind
+    - market_inspiration
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: D03.j
+    fields:
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: D05.a
+    fields:
+    - market_comparisons
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: D05.i
+    fields:
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - kind
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - kind
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: ba-order-backlog-management
+    fields:
+    - definition
+    - finality
+    - kind
+    - parent
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: demand-plan-visibility
+    fields:
+    - market_comparisons
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - kind
+    - name
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: plans-ingestion
+    fields:
+    - kind
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: plans-visibility
+    fields:
+    - market_inspiration
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: subdomain-assortment-catalog-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: subdomain-operational-procurement
+    fields:
+    - market_comparisons
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - kind
+    - market_inspiration
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER045
+    fields:
+    - context
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER074
+    fields:
+    - context
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - name
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER151
+    fields:
+    - context
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER219
+    fields:
+    - context
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER244
+    fields:
+    - context
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER245
+    fields:
+    - context
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: relations
+    id: REL-U1080-PARENT-ba-order-backlog-management
+    fields:
+    - source_id
+    - target_id
+    - type
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: subdomain-order-backlog
+    fields:
+    - exists
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: relations
+    id: REL-U1080-PRESENTS-order-backlog
+    fields:
+    - exists
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D03
+    fields:
+    - kind
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D05.e
+    fields:
+    - kind
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D05.a
+    fields:
+    - kind
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: ba-outbound-information-provision
+    fields:
+    - kind
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: subdomain-assortment-catalog-management
+    fields:
+    - kind
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: ba-outbound-information-provision
+    fields:
+    - kind
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: subdomain-assortment-catalog-management
+    fields:
+    - kind
+  - annex: stock-configuration-boundaries-U910.yaml
+    collection: nodes
+    id: D05.f
+    fields:
+    - kind
+  - annex: stock-configuration-boundaries-U910.yaml
+    collection: nodes
+    id: D05.a
+    fields:
+    - kind
+  - annex: stock-configuration-coherence-U911.yaml
+    collection: nodes
+    id: D05.a
+    fields:
+    - kind
+  - annex: technical-identity-U804.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - kind
+  - annex: availability-scope-story-U1018.yaml
+    collection: terms
+    id: TER269
+    fields:
+    - market_comparisons
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - market_comparisons
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: terms
+    id: TER208
+    fields:
+    - market_comparisons
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER106
+    fields:
+    - market_comparisons
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER141
+    fields:
+    - market_comparisons
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER099
+    fields:
+    - market_comparisons
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER112
+    fields:
+    - market_comparisons
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER151
+    fields:
+    - market_comparisons
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER219
+    fields:
+    - market_comparisons
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER244
+    fields:
+    - market_comparisons
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER245
+    fields:
+    - market_comparisons
+  - annex: business-operations-global-application-U1091.yaml
+    collection: relations
+    id: REL-U794-PLAN-INGESTION
+    fields:
+    - data_exchange
+  - annex: business-operations-global-application-U1091.yaml
+    collection: relations
+    id: REL-U826-planning-data-provision-TO-domain-plan
+    fields:
+    - data_exchange
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: relations
+    id: REL-U1093-collection-assumptions-to-demand-plan
+    fields:
+    - data_exchange

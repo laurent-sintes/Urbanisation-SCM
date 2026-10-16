@@ -25336,3 +25336,225 @@ Verbatim :
 > Je valide. Commit & release
 
 Portée : accord sur la structure et le contenu explicitement présentés dans la synthèse précédente : les 14 sous-domaines touchés, les Business Areas et les capacités énumérées sous Planning & Optimization, Order Backlog, Availability, Commerce, Sourcing and Procurement, Operational References et Supply Policy Management. Les noms et rattachements montrés des nouvelles capacités et Business Areas de U1079 sont validés ; les textes détaillés des fiches et les correspondances marché qui n'étaient pas exposés restent proposés. La validation confirme le recentrage U1080 sans étendre ses accords aux champs non présentés. Autorise un commit local et une release Atlas du backlog courant ; aucun push n'est demandé et aucune réalisation installée n'est déduite.
+
+
+## U1082
+
+Date : 2026-10-15. Source : Laurent, revue du nom Order Backlog et de la profondeur des sous-domaines.
+
+Verbatim :
+
+> Order Backlog devrait s'appeler Order Backlog Management.
+> Les deux derniers sous domaines sont à réévaluer. Pas en terme de périmètre mais en termes de contenu.
+> On a fusionné des choses bizarres j'ai l'impression (sédimentation)
+> De plus on a des Business Area qui n'ont qu'une seule capacité : soit il en manque, soit il faut regrouper.
+
+Première interprétation de Codex, corrigée par U1083 : renommer le sous-domaine Order Backlog en Order Backlog Management ; réexaminer le contenu d’Operational References et de Supply Policy Management. La demande sur les Business Areas à capacité unique et l’hypothèse de sédimentation restent à instruire. Aucun autre rattachement, fusion, nouvelle capacité, release ou opération Git n'est autorisé implicitement.
+
+
+## U1083
+
+Date : 2026-10-15. Source : Laurent, correction immédiate de la portée de U1082.
+
+Verbatim :
+
+> Non ! Master Plan et Order Backlog
+
+Interprétation intermédiaire de Codex, corrigée par U1084 : les deux périmètres dont le contenu serait à réévaluer sont Master Plan Management et Order Backlog, pas Operational References ni Supply Policy Management. Le renommage demandé pour Order Backlog et l’examen des Business Areas à capacité unique restent d’actualité. Aucun accord sur une fusion, un retrait ou l’ajout de capacités n’est déduit.
+
+
+## U1084
+
+Date : 2026-10-15. Source : Laurent, seconde précision de périmètre de U1082.
+
+Verbatim :
+
+> Planning & optimization, désolé
+
+Portée définitive de l’examen : réévaluer le contenu des deux sous-domaines Planning & Optimization et Order Backlog, sans changer leurs périmètres métier. Master Plan Management n'est pas le second sous-domaine visé isolément ; son contenu doit néanmoins être examiné dans Planning & Optimization. Le renommage d’Order Backlog en Order Backlog Management et l’analyse des Business Areas à capacité unique restent demandés. Les interprétations intermédiaires U1082/U1083 sont conservées comme historique et remplacées dans cette portée. Aucun accord sur une fusion, un retrait, une nouvelle capacité, une release ou une opération Git n'est déduit.
+
+
+## U1085
+
+Date : 2026-10-15. Source : Laurent, précision sur la revue de Planning & Optimization.
+
+Verbatim :
+
+> Je ne vois pas quand on calcule la Demand Planning et la supply planning par exemple
+
+Portée : rendre explicites, dans la revue du contenu de Planning & Optimization, le moment et la responsabilité des calculs du plan de demande et du plan d'approvisionnement, ainsi que leur articulation avec Master Planning. Cette remarque ne valide pas encore une nouvelle décomposition ni des noms de capacités.
+
+
+## U1086
+
+Date : 2026-10-15. Source : Laurent, validation de la proposition répondant à U1085.
+
+Verbatim :
+
+> Oui
+
+Portée : validation de la chaîne présentée : prévision de demande, construction explicite du plan de demande, calcul du plan d'approvisionnement, rapprochement des plans, pilotage par Master Planning et arbitrage du carnet par Order Backlog Management, avec révision itérative. L'examen des Business Areas à une seule capacité précède tout regroupement ; leur nombre seul ne justifie ni fusion ni création artificielle. L'accord reprend aussi le renommage du sous-domaine Order Backlog demandé en U1082 et les frontières maintenues en U1084. Les formulations détaillées, choix d'implémentation et comparaisons marché ajoutés ensuite restent proposés ; aucune release ou opération Git n'est demandée.
+
+
+## U1087
+
+Date : 2026-10-15. Source : Laurent, condition de vérification du lot U1086.
+
+Verbatim :
+
+> Il faut que ça raconte une histoire avec des uses cases afin de vérifier qu'on a rien oublié. Une histoire avec pénurie bien entendu.
+
+Portée : vérifier le découpage de Planning & Optimization et Order Backlog Management par un parcours métier illustratif de bout en bout comprenant une pénurie. Le scénario doit rendre visibles les contributions des capacités, les entrées, les décisions, les résultats et les boucles de révision, puis servir à détecter les manques éventuels avant de figer le contenu. Aucun fait installé Beaumanoir n'est inféré d'un exemple fictif.
+
+
+## U1088
+
+Date : 2026-10-15. Source : Laurent, demande d'audit du niveau capacité des domaines adjacents.
+
+Verbatim :
+
+> Je voudrais un audit sur Sourcing & Procurement et Commerce. Pas bcp de capacités pour bcp de BA...
+
+Portée : examiner la profondeur réelle et la pertinence des Business Areas et capacités de Sourcing and Procurement et Commerce ; identifier les Business Areas à capacité unique, les capacités paraphrasant leur parent, les regroupements plausibles et les responsabilités éventuellement absentes. L'audit ne valide pas automatiquement une fusion, un renommage ou une nouvelle capacité.
+
+
+## U1089
+
+Date : 2026-10-15. Source : Laurent, suite de l'audit U1088.
+
+Verbatim :
+
+> Applique les préconisations de l'audit
+
+Portée : appliquer au backlog les corrections de profondeur et de frontière étayées par l'audit U1088, en éprouvant les regroupements conditionnels par les cas d'usage indiqués. Conserver les Business Areas dont l'autorité commune n'est pas établie et les responsabilités distinctes ; ne pas déduire une réalisation Beaumanoir, une release ou une opération Git.
+
+
+## U1090
+
+Date : 2026-10-15. Source : Laurent, demande d'audit global du système Business Operations.
+
+Verbatim :
+
+> Fais un audit global sur Business Operations pour voir si tout est cohérent, les frontières sont claires et respectées et que ça couvre tout
+
+Portée : examiner ensemble Commerce, Sourcing and Procurement, Demand & Supply Planning et Supply Chain Orchestration dans le backlog courant. Contrôler hiérarchie et profondeur, responsabilités et frontières internes/externes, relations, glossaire, scénarios et couverture des cas métier représentatifs. Séparer lacune démontrée, frontière insuffisamment expliquée et couverture non prouvée. Aucune modification canonique, release ou opération Git n'est déduite de la seule demande d'audit.
+
+
+## U1091
+
+Date : 2026-10-16. Source : Laurent, suite de l'audit global U1090.
+
+Verbatim :
+
+> Applique les préconisations de l'audit. Que proposes-tu ?
+
+Portée : appliquer au backlog les corrections de cohérence et de frontière étayées par l'audit U1090, aligner modèle et glossaire, et éprouver les passages de relais par des scénarios transversaux représentatifs. Proposer une responsabilité explicite pour la consommation des prévisions et documenter les sources de vérité encore à qualifier, sans inventer de maîtres ni de flux installés. Les rédactions de détail produites ensuite restent proposées jusqu'à revue. Aucune release ni opération Git n'est demandée.
+
+
+## U1092
+
+Date : 2026-10-16. Source : Laurent, question sur la prospective stratégique dans Design & Development.
+
+Verbatim :
+
+> Dans "Design et Développement", il n'y a pas des activités de forecast stratégique sur le style, les volumes, l'anticipation de nouveaux canaux comme par exemple l'achat par chatgpt etc ? C'est une sorte d'activité de planification stratégique et d'anticipation que je situe dans le développement stratégique. Les données produites pourraient aussi alimenter le master plan. Est-ce dans les standards BIZBOK, Microsoft ou SAP ?
+
+Portée : examiner la place d'hypothèses stratégiques sur les styles, volumes et nouveaux canaux dans Design & Development, leur articulation avec Planning & Optimization et Enterprise Management & Control, et confronter la proposition aux sources primaires BIZBOK, Microsoft et SAP. La question ne vaut pas accord sur une modification du modèle, une release ou une opération Git.
+
+
+## U1093
+
+Date : 2026-10-16. Source : Laurent, précision sur la phase amont des collections et le positionnement des outils.
+
+Verbatim :
+
+> Je pense que le master plan évalue les "besoins nets" alors qu'APS, par exemple est en amont avant même le lancement des collections. Il faut un espace dans la carto pour pouvoir intégrer / positionner des outils comme Optimate.
+
+Portée : rendre lisible dans la cartographie une responsabilité de cadrage et de prévision précoce des collections, distincte du calcul des besoins nets et des décisions de couverture du Master Plan ; permettre la correspondance avec des logiciels couvrant plusieurs étapes, comme Optimate, sans présumer de leur installation ni de leur choix pour FLOW. Examiner la portée exacte de Master Planning et les relations entre hypothèses amont et prévisions opérationnelles. Aucune release ni opération Git n'est demandée.
+
+
+## U1094
+
+Date : 2026-10-16. Source : Laurent, arbitrage de périmètre entre Master Planning et anticipation stratégique.
+
+Verbatim :
+
+> Je souhaite que le master plan FLOW soit aligné avec le Master Plan Microsoft. Ce change des choses en termes de périmètre dans Business Operations. Mais il y a aussi en complément de la planification stratégique Dans Design et Developpement.
+
+Portée : revoir dans le backlog le périmètre de Master Planning et ses voisins de Business Operations en prenant Master planning de Microsoft Dynamics 365 Supply Chain Management comme référence de fonction, sans transposer aveuglément son découpage logiciel. Préserver en complément l'anticipation stratégique des collections dans Design & Development et expliciter le passage de ses hypothèses vers la planification opérationnelle. La demande ne prouve aucune réalisation installée et ne demande ni release ni opération Git.
+
+
+## U1095
+
+Date : 2026-10-16. Source : Laurent, question sur le raccourci fonctionnel du Master Plan.
+
+Verbatim :
+
+> Si je dis que master plan c'est MRP + ARun + BOP, c'est juste finalement ?
+
+Portée : comparer cette formule au périmètre courant du Master Plan FLOW et aux fonctions documentées de MRP, ARun et BOP. Il s'agit d'une question, sans demande de modification du modèle, de release ou d'opération Git.
+
+
+## U1096
+
+Date : 2026-10-16. Source : Laurent, demande de correspondance de vocabulaire pour la planification opérationnelle.
+
+Verbatim :
+
+> Je vais reformuler ma question : l'idée est de cartographier les gestion des demandes et supply en termes de net opérationnel (dans Business Opérations, donc).
+>
+> Je veux un tableau qui fait la correspondance entre les termes dans ce processus pour les références BIZBOK, Microsoft, SAP et FLOW. Parce que dans le fond, je pense aligne FLOW sur Microsoft qui me parait plus clair et plus novateur car le modèle a été revu en dernier.
+
+Portée : produire une comparaison sourcée des concepts de gestion opérationnelle de la demande et des ressources entre BIZBOK, Microsoft Dynamics 365, SAP S/4HANA et le backlog FLOW, en distinguant les vocabulaires de méthode et de produit. La préférence pour Microsoft est une hypothèse de positionnement à examiner, pas une preuve d'innovation ni une demande explicite de modification du modèle, de release ou d'opération Git.
+
+
+## U1097
+
+Date : 2026-10-16. Source : Laurent, hypothèse de frontière entre forecast et Master Plan et de maille du sous-domaine.
+
+Verbatim :
+
+> Je pense que :
+>
+> - forecast plan est différent de master plan. forecast plan, c'est dans quel systeme domaine ? Moi je le vois dans Design et Developpement (c'est une part du développement que gère un chef de produit)
+> - La séparation dans master plan de la planification (répartition des grandes masses) et du pegging (arbitrage par commande) me parait bonne mais je comprends pourquoi Microsoft à mis ces activités sous la même responsabilité : Master Plan => l'automatisation. Avant, la planification opérationnelle proposait (automatisme) pour l'affection était manuelle mais cette séparation manuel / automatisation ne doit pas apparaitre dans une carte des capacités. Dans une carte des fonctionnalités produit pourquoi pas. La réalité est que l'entremêlement des automatisations avec le manuel est de moins en moins net et dépend de la situation (approche Case Management / Workflow). Ici on parle responsabilité. associer des besoins nets avec des ressources nettes est une responsabilité complète du master plan me va bien. Evidemment, il faut détailler ensuite les problématique. Mais je vois bien Master Plan comme un sous domaine, pas en dessous.
+>
+> Qu'en penses-tu ?
+
+Portée : examiner une proposition de repositionnement du Forecast Plan vers Design & Development et du Master Plan comme sous-domaine de Business Operations réunissant calcul des besoins nets et rapprochement aux ressources. L'argument manuel/automatique porte sur la méthode de découpage des capacités. Question ouverte, sans validation de rattachements détaillés ni demande de modification du modèle, de release ou d'opération Git.
+
+
+## U1098
+
+Date : 2026-10-16. Source : Laurent, validation de la proposition U1097 après discussion des frontières.
+
+Verbatim : « Je valide ».
+
+Portée : validation du découpage proposé : prévision de collection et de produit dans Design & Development ; Master Plan comme sous-domaine de Business Operations couvrant les besoins nets et leur rapprochement aux ressources, y compris l'affectation par commande en pénurie ; Order Management conserve les commandes et engagements. Les modalités manuelles ou automatisées ne fondent pas la séparation des capacités. Réexaminer la frontière d'Order Backlog Management. Cette validation ne vaut ni preuve de réalisation installée, ni release, ni opération Git.
+
+
+## U1099
+
+Date : 2026-10-16. Source : Laurent, correction du nom du périmètre prévisionnel dans Design & Development.
+
+Verbatim : « Collection Planning : le terme ne montre pas assez le "forcecasting demand / supply" ».
+
+Portée : rendre visible dans la carte la responsabilité de prévision de demande et de supply en amont du Master Plan ; réexaminer le nom et la frontière de Collection Planning.
+
+
+## U1100
+
+Date : 2026-10-16. Source : Laurent, précision sur la confusion de frontière.
+
+Verbatim : « On a l'impression qu'on est dans le design de collection ».
+
+Portée : ne pas confondre la composition de la collection et la prévision de demande et de ressources envisagées ; déterminer si les deux responsabilités doivent être distinguées dans Design & Development.
+
+
+## U1101
+
+Date : 2026-10-16. Source : Laurent, correction du terme employé en U1100.
+
+Verbatim : « desing produit j'entends ».
+
+Portée : la confusion visée est avec le design produit. La prévision demand/supply doit être lisible comme responsabilité distincte de la définition et du design des produits ; U1100 reste conservé comme verbatim initial corrigé.

@@ -36,7 +36,7 @@ class ModelCoherenceTests(unittest.TestCase):
         for text in [self.terms['TER112']['context'], self.terms['TER113']['context'],
                      self.nodes['subdomain-integration']['fields']['scope']]:
             self.assertNotIn('catégories', text)
-        self.assertIn('Planning & Optimization', plain(self.terms['TER112']['context']))
+        self.assertIn('Master Plan', plain(self.terms['TER112']['context']))
         self.assertIn('Order Backlog', plain(self.terms['TER112']['context']))
         self.assertIn('Business Areas', plain(self.terms['TER113']['context']))
         self.assertIn('Business Areas', plain(self.nodes['subdomain-integration']['fields']['scope']))
@@ -44,6 +44,17 @@ class ModelCoherenceTests(unittest.TestCase):
         meta = read(ROOT/'modeles/backlog/modeling-glossary.yaml')
         nature = next(t for t in meta['terms'] if t['id']=='MOD007')
         self.assertIn('activités et attentes', nature['values']['Orchestration'])
+
+    def test_product_forecast_has_its_own_upstream_responsibility(self):
+        children = build_display_index(self.model)['children']
+        self.assertIn('subdomain-collection-planning', children['domain-product-portfolio-collection'])
+        self.assertIn('subdomain-demand-supply-forecasting', children['domain-product-portfolio-collection'])
+        self.assertIn('domain-plan', children['supply-chain-orchestration'])
+        shared = {(r['source_id'], r['target_id']) for r in self.model['relations']
+                  if r['type'] == 'shares-data'}
+        self.assertIn(('subdomain-collection-planning', 'subdomain-demand-supply-forecasting'), shared)
+        self.assertIn(('subdomain-demand-supply-forecasting', 'ba-demand-forecast-management'), shared)
+        self.assertNotIn(('subdomain-collection-planning', 'ba-demand-forecast-management'), shared)
 
     def test_scenario_contributions_respect_packing_and_finishing(self):
         path = self.paths['fashion-launch-path']

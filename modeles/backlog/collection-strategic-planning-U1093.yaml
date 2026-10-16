@@ -1,0 +1,103 @@
+id: COLLECTION-STRATEGIC-PLANNING-U1093
+date: '2026-10-16'
+status: applied_to_backlog
+source_refs:
+- U1092
+- U1093
+decision: Rendre visible le cadrage chiffré des collections avant lancement et son passage qualifié vers la prévision de demande.
+  Le plan commun conserve les besoins nets et les décisions de couverture. Aucun déploiement d’Optimate ou d’Akolade chez
+  Beaumanoir déduit.
+market_comparison:
+  microsoft: https://learn.microsoft.com/en-us/dynamics365/guidance/business-processes/design-to-retire-overview
+  sap_s4hana: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/2f36056ae9a044bba55bcbad204b7bc5/d8968357e4879f2de10000000a44147b.html
+  sei: https://www.seilks.com/modules/construction-offre/
+  finding: La stratégie produit, la construction de collection, la prévision de demande et le plan d’achat se recouvrent dans
+    les offres, mais leurs responsabilités et maturités diffèrent. Les sources ne prescrivent pas la hiérarchie FLOW.
+  limits: Descriptions produit et processus partiels ; aucune preuve de réalisation installée Beaumanoir.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1092
+  - U1093
+  summary: Collection Planning couvre les hypothèses de volumes amont, reliées au plan de demande ; Akolade est documenté
+    comme offre candidate sur trois responsabilités distinctes.
+  required_nodes:
+  - id: domain-product-portfolio-collection
+    field_sha256:
+      definition: dcaa758e0bcdd4287a87b2afba727c8793a7e7f6e7718810423eea894b0546eb
+      finality: 2ec7dd89a47ec6b556e920024e925b1647c8b8f8ae10c83d72f18603c4f2d0d3
+      scope: 6f0b385c89db6553523798bb68e91cd890b801f5aea2574ec410679efd1f0e25
+      examples: 00ad9385e2d80ba30d25147b6eeedc8d4c67cd411bbaa62dd54df88bb872c0e8
+      market_comparisons: a244acb4260fcc158dab28f38e0cf14b08c74905ac638dd52ff3e820f1c68f83
+  - id: subdomain-product-strategy-requirements
+    field_sha256:
+      scope: 36472273ec54f7e9de28ba4be9d589123b2e9295b5d0b913601fdb35e223deeb
+      market_comparisons: 98bc4a5fdf2bc9d5cad415d0372f8d6ba22657db6966cd68251e43e5314ce883
+  - id: subdomain-collection-planning
+    field_sha256:
+      definition: 535f861696385422c7ef5b688c0593f235ece90aa6b021ac5630c55376c7ce49
+      finality: 4157761b77b1421fefd406c5ada6abf5674006c375068cabcfb7df583d713d02
+      scope: 35be9e994e1bb41f2a4ca5cfdc78b3e9d066900f9ea308e809fdb4d3df58511f
+      examples: 1719d564a84f6797c9f925e4d00577d04c8bd349616deec096128c7c40a6d49e
+      market_comparisons: eb7d0dcf9ffb0710fa4b371ebba1f74ba79812aeab5ada46511a4c81d29973e4
+  required_glossary:
+  - id: TER206
+    field_sha256:
+      short_description: 7aabad0faaba223d9d41ddfb90038ffb4f12948b37ca78d691d34bc9269fcfd7
+      definition: 7aabad0faaba223d9d41ddfb90038ffb4f12948b37ca78d691d34bc9269fcfd7
+      context: 6f0b385c89db6553523798bb68e91cd890b801f5aea2574ec410679efd1f0e25
+  - id: TER207
+    field_sha256:
+      context: 36472273ec54f7e9de28ba4be9d589123b2e9295b5d0b913601fdb35e223deeb
+  - id: TER208
+    field_sha256:
+      short_description: e697d95588721d2dbc9b6f10edf7f4c9c851079990f33067904335b558a8ce86
+      definition: e697d95588721d2dbc9b6f10edf7f4c9c851079990f33067904335b558a8ce86
+      context: 35be9e994e1bb41f2a4ca5cfdc78b3e9d066900f9ea308e809fdb4d3df58511f
+  required_relations:
+  - id: REL-U1093-collection-assumptions-to-demand-plan
+    type: shares-data
+    source_id: subdomain-collection-planning
+    target_id: ba-demand-forecast-management
+    field_sha256:
+      data_exchange: e4956f1e932a4e6e89b6e91862eb0a59f60f5c21234a759b8e741fb12abcb1bb
+  required_catalog:
+  - collection: application_products
+    id: product-akolade
+    content_sha256: f5b7ce07fd38ba816c012812a7f23225267b51f89807abcdfc6d62ec368dd4f8
+  supersedes_requirements:
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER206
+    fields:
+    - short_description
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER206
+    fields:
+    - definition
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER206
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER207
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER208
+    fields:
+    - short_description
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER208
+    fields:
+    - definition
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER208
+    fields:
+    - context
