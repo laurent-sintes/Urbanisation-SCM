@@ -1,5 +1,11 @@
 # Modèles structurés
 
+## Participants des parcours Enterprise Architecture — U1115
+
+Les `scenario_catalog.paths[].steps[].contributions` mobilisent des capacités ou références. Le champ facultatif `context_participants` relie séparément les responsabilités de contexte à leur profondeur déclarée : Domain, Subdomain ou Business Area. Chaque participant porte `node_id`, `role`, `conditions` et `source_refs`. Ce lien ne crée ni capacité périphérique ni parent métier ; les contributions restent requises. Atlas affiche les participants dans le parcours et remonte les scénarios vers leurs fiches et ancêtres depuis le même snapshot. Les publications sans ce champ restent lisibles sans complément courant.
+
+Le contrôle des liens parcourt les catalogues publiables ainsi que le modèle et ses glossaires. `method:` et son alias historique `modeling:` visent le glossaire méthodologique explicitement fourni : canonique pour le backlog, guide figé associé pour une publication. Un ancien snapshot ne consulte jamais le glossaire courant. Les `panorama_ref` applicatifs doivent résoudre dans le panorama As Is indexé et vérifié par empreinte du SI sélectionné ; une référence d’un autre SI est rejetée.
+
 ## Partages de données — U979
 
 Une relation `shares-data` identifie le producteur (`source_id`) et le destinataire (`target_id`). `fields.label` résume le contenu pour la lecture ; `fields.data_exchange.contents` nomme et décrit chaque contenu avec ses `glossary_refs`, et `purpose` explique sa finalité. `qualification` garde les conditions, effets et limites ; `source_refs`, revue et qualifications publiées gardent la provenance et la portée des accords.

@@ -99,6 +99,7 @@ class ContextIndex:
         self.path_scopes, self.scenario_contexts = {}, {}
         for identifier, path in self.scenarios['paths'].items():
             scope = {c['node_id'] for step in path.get('steps', []) for c in step.get('contributions', [])}
+            scope.update(c['node_id'] for step in path.get('steps', []) for c in step.get('context_participants', []))
             scope.update(target for kind, target in references(path) if kind == 'model')
             pending = list(scope)
             while pending:

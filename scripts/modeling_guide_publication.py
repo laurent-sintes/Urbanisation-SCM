@@ -12,6 +12,19 @@ except ImportError:
 
 VERSION = re.compile(r'\d{4}-\d{2}-\d{2}\.[1-9]\d*\Z')
 
+
+def validate_model_links(root, model, association, *, guide=None):
+    """Check methodology links against this exact frozen publication association."""
+    try:
+        from .glossary import validate
+    except ImportError:
+        from glossary import validate
+    if guide is None and association is not None:
+        entry = association['guide']
+        guide = read(Path(root) / 'modeles/modeling-guides' / entry['path'], expected_sha256=entry['sha256'])
+    return validate(model, method_terms=guide.get('glossary', {}).get('terms', []) if guide else None)
+
+
 def capture_association(root, version):
     folder = Path(root).resolve() / 'modeles/modeling-guides'
     path = folder / 'index.yaml'

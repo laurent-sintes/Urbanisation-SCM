@@ -8,7 +8,6 @@ import {
   Move,
   MoveHorizontal,
   Plus,
-  Route,
   Ruler,
   Scan,
   X,
@@ -18,6 +17,7 @@ import { createPortal } from 'react-dom';
 import { productFor, projectedApplicationMapIds, selectionMappings } from '../applicationCatalog';
 import { flowExchangeContract, flowMapBoundaryRelations, flowMapDetailBoxes } from '../flowMapDetail';
 import { buildFlowMap, type FlowMapBox } from '../flowMapLayout';
+import { flowMapPresentation } from '../flowMapPresentation';
 import { flowRibbonPath, roundedFlowPath, routeFlowExchange } from '../flowMapRouting';
 import {
   flowRouteInViewport,
@@ -34,6 +34,7 @@ import { kindLabel } from '../presentation';
 import type { AtlasRelation, PublishedModel } from '../types';
 import { COMPACT_HOTSPOT_DIAMETER, COMPACT_HOTSPOT_TOUCH_DIAMETER, HotspotMapMarker } from './HotspotDisplay';
 import { MapApplicationPicker } from './MapApplicationPicker';
+import { FLOW_TYPES, type FlowType, MapFlowPicker } from './MapFlowPicker';
 import { MapHotspotPicker } from './MapHotspotPicker';
 import type { MapPanelProps } from './MapPanel';
 import { MetaTypeLabel, ModelText, ReferenceLink } from './ModelLinks';
@@ -45,6 +46,8 @@ const cameras = new Map<string, Viewport>();
 const cameraSizes = new Map<string, { width: number; height: number }>();
 const cameraSelections = new Map<string, string>();
 const arrowChoices = new Map<string, boolean>();
+const exchangeModes = new Map<string, 'main' | 'all'>();
+const flowTypeChoices = new Map<string, readonly FlowType[]>();
 type FlowFraming = 'standard' | 'width' | 'all' | 'custom';
 const cameraFramings = new Map<string, FlowFraming>();
 const motionDuration = (duration: number) => (matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : duration);
@@ -57,6 +60,7 @@ type SpatialNode = Node<
     application: boolean;
     applicationName?: string;
     headerHeight: number;
+    hasChildren: boolean;
     onSelect: (id: string) => void;
     onCenter: (id: string) => void;
   },
@@ -68,7 +72,7 @@ function SpatialObject({ data }: NodeProps<SpatialNode>) {
   const screenWidth = box.width * zoom;
   const screenHeight = box.height * zoom;
   const header = expanded ? data.headerHeight * zoom : screenHeight;
-  const lines =
+  const maxLines =
     box.node.kind === 'business_area'
       ? box.height >= 72
         ? 3
@@ -81,19 +85,36 @@ function SpatialObject({ data }: NodeProps<SpatialNode>) {
           ? 3
           : 2;
   const padding = Math.min(box.node.kind === 'business_area' ? 8 : 10, header * 0.14, Math.max(1, (header - 25) / 2));
-  const longestWord = Math.max(...box.node.name.split(/\s+/).map((word) => word.length));
-  const labelSize = Math.max(
-    10,
-    Math.min(
-      box.node.kind === 'business_area' ? 14 : box.depth === 0 ? 20 : 17,
-      (screenWidth - padding * 2) / Math.max(6, longestWord * 0.54),
-      (header - padding * 2) / (lines * 1.25),
-    ),
-  );
+  const textWidth = screenWidth - Math.min(12, screenWidth * 0.07) * 2;
+  const lineCount = (font: number) => {
+    let count = 1;
+    let width = 0;
+    for (const word of box.node.name.split(/\s+/)) {
+      const next = [...word].reduce(
+        (sum, character) =>
+          sum + (/[ilI1.,:;'!]/.test(character) ? 0.28 : /[MW@%]/.test(character) ? 0.84 : 0.54) * font,
+        0,
+      );
+      if (width && width + next + font * 0.28 > textWidth) {
+        count++;
+        width = 0;
+      }
+      count += Math.max(0, Math.ceil(next / Math.max(1, textWidth)) - 1);
+      width += next + font * 0.28;
+    }
+    return count;
+  };
+  let labelSize = box.node.kind === 'business_area' ? 14 : box.depth === 0 ? 20 : box.node.kind === 'domain' ? 17 : 14;
+  while (
+    labelSize > 10 &&
+    (lineCount(labelSize) > maxLines || lineCount(labelSize) * labelSize * 1.25 + padding * 2 > header)
+  )
+    labelSize -= 0.5;
+  const lines = Math.min(maxLines, lineCount(labelSize));
   const titleHeight = Math.min(header, labelSize * 1.25 * lines + padding * 2);
   return (
     <div
-      className={`spatial-map-object kind-${box.node.kind}${expanded ? ' is-expanded' : ' is-collapsed'}${active ? ' is-active' : ''}${application ? ' spatial-application-mark' : ''}`}
+      className={`spatial-map-object kind-${box.node.kind}${expanded ? ' is-expanded' : ' is-collapsed'}${data.hasChildren && !expanded ? ' is-collapsed-territory' : ''}${active ? ' is-active' : ''}${application ? ' spatial-application-mark' : ''}`}
       data-node-id={box.id}
       data-world-x={box.x}
       data-world-y={box.y}
@@ -105,10 +126,12 @@ function SpatialObject({ data }: NodeProps<SpatialNode>) {
         type="button"
         className="spatial-object-title nodrag"
         aria-pressed={active}
-        aria-label={`Sélectionner ${box.node.name}`}
-        onClick={() => data.onSelect(box.id)}
-        onDoubleClick={() => data.onCenter(box.id)}
-        title={`${box.node.name} · ${kindLabel(box.node)} · Double-cliquer pour centrer`}
+        aria-label={`Ouvrir ${box.node.name}`}
+        onClick={(event) => {
+          event.stopPropagation();
+          data.onSelect(box.id);
+        }}
+        title={`${box.node.name} · ${kindLabel(box.node)} · Ouvrir ce périmètre`}
         style={{
           fontSize: labelSize / zoom,
           padding: `${padding / zoom}px ${Math.min(12, screenWidth * 0.07) / zoom}px`,
@@ -172,11 +195,20 @@ function projectedExchanges(model: PublishedModel, relations: readonly AtlasRela
         relation.sourceId === group.source.id && relation.targetId === group.target.id && relation.fields.summary_label,
     )?.fields.summary_label;
     const labels = [...new Set(group.relations.map(exchangeLabel))];
+    const nativeLabels = [
+      ...new Set(
+        group.relations
+          .filter((relation) => relation.sourceId === group.source.id && relation.targetId === group.target.id)
+          .map(exchangeLabel),
+      ),
+    ];
     group.label = typeof summary === 'string' ? summary : labels.join(' · ');
     group.caption =
       typeof summary === 'string'
         ? summary
-        : `${labels.slice(0, 2).join(' · ')}${labels.length > 2 ? ` · +${labels.length - 2}` : ''}`;
+        : nativeLabels.length
+          ? nativeLabels.join(' · ')
+          : `${labels.slice(0, 2).join(' · ')}${labels.length > 2 ? ` · +${labels.length - 2}` : ''}`;
   }
   return [...groups.values()];
 }
@@ -196,6 +228,7 @@ export function FlowMapPanel(props: MapPanelProps) {
     applicationComponentId,
     onApplicationChange,
     onSelect,
+    onRead,
     onOpenScope,
     onAnnouncement,
   } = props;
@@ -213,6 +246,8 @@ export function FlowMapPanel(props: MapPanelProps) {
   const [shortScreen, setShortScreen] = useState(() => matchMedia('(max-height: 500px)').matches);
   const [coarsePointer, setCoarsePointer] = useState(() => matchMedia('(pointer: coarse)').matches);
   const [arrows, setArrows] = useState(() => arrowChoices.get(key) ?? true);
+  const [exchangeMode, setExchangeMode] = useState<'main' | 'all'>(() => exchangeModes.get(key) || 'main');
+  const [flowTypes, setFlowTypes] = useState<readonly FlowType[]>(() => flowTypeChoices.get(key) || FLOW_TYPES);
   const [openedExchange, setOpenedExchange] = useState<{ key: string; exchange: ExchangeGroup } | null>(null);
   const [hoveredExchangeId, setHoveredExchangeId] = useState('');
   const [selectedHotspotId, setSelectedHotspotId] = useState('');
@@ -223,6 +258,14 @@ export function FlowMapPanel(props: MapPanelProps) {
   const allIds = useMemo(() => new Set(layout.boxes.map((box) => box.id)), [layout]);
   const selectedBoxId = visibleAncestorId(model, selectedId, allIds);
   const byId = useMemo(() => new Map(layout.boxes.map((box) => [box.id, box])), [layout]);
+  const enterObject = useCallback(
+    (id: string) => {
+      const hasChildren = layout.boxes.some((box) => box.parentId === id);
+      if (hasChildren && onOpenScope) onOpenScope(id);
+      else (onRead || onSelect)(id);
+    },
+    [layout.boxes, onOpenScope, onRead, onSelect],
+  );
   const scopedHotspots = useMemo(() => hotspotsInScope(model, scopeId), [model, scopeId]);
   const hotspots = useMemo(() => filterMapHotspots(scopedHotspots, hotspotFilters), [scopedHotspots, hotspotFilters]);
   const visibleKey = useMemo(() => {
@@ -246,14 +289,30 @@ export function FlowMapPanel(props: MapPanelProps) {
     return layout.boxes.filter((box) => ids.has(box.id));
   }, [layout, visibleKey]);
   const visibleIds = useMemo(() => new Set(visibleBoxes.map((box) => box.id)), [visibleBoxes]);
-  const flowBoxes = useMemo(
+  const detailBoxes = useMemo(
     () => flowMapDetailBoxes(layout.boxes, viewport.zoom).filter((box) => visibleIds.has(box.id)),
     [layout, viewport.zoom, visibleIds],
   );
-  const anchorIds = useMemo(() => new Set(flowBoxes.map((box) => box.id)), [flowBoxes]);
+  const presentation = useMemo(
+    () =>
+      flowMapPresentation(model, layout.boxes, {
+        scopeId,
+        selectedId,
+        zoom: viewport.zoom,
+        mode: exchangeMode,
+        types: flowTypes,
+      }),
+    [model, layout.boxes, scopeId, selectedId, viewport.zoom, exchangeMode, flowTypes],
+  );
+  const flowBoxes = useMemo(
+    () => presentation.boxes.filter((box) => visibleIds.has(box.id)),
+    [presentation.boxes, visibleIds],
+  );
+  const anchorIds = useMemo(() => new Set(detailBoxes.map((box) => box.id)), [detailBoxes]);
   const flowExpandedIds = useMemo(() => new Set(flowBoxes.map((box) => box.parentId)), [flowBoxes]);
   const displayedSelectionId = visibleAncestorId(model, selectedId, anchorIds);
   const expandedIds = useMemo(() => new Set(visibleBoxes.map((box) => box.parentId)), [visibleBoxes]);
+  const parentIds = useMemo(() => new Set(layout.boxes.map((box) => box.parentId)), [layout]);
   const catalog = model.raw.application_catalog;
   const mappings = useMemo(
     () => selectionMappings(catalog, applicationSelectionId, applicationComponentId),
@@ -271,13 +330,8 @@ export function FlowMapPanel(props: MapPanelProps) {
       ? productFor(catalog, selection)
       : catalog?.products.find((item) => item.id === applicationSelectionId);
   const exchanges = useMemo(
-    () =>
-      projectedExchanges(
-        model,
-        layout.exchanges.flatMap((exchange) => exchange.relations),
-        flowBoxes,
-      ),
-    [model, layout, flowBoxes],
+    () => projectedExchanges(model, presentation.relations, flowBoxes),
+    [model, presentation.relations, flowBoxes],
   );
   // A selected exchange keeps its published relations when semantic zoom changes their visible projection.
   const selectedExchange = openedExchange?.key === key ? openedExchange.exchange : undefined;
@@ -379,6 +433,8 @@ export function FlowMapPanel(props: MapPanelProps) {
     );
   }, [applicationBoxIds, byId, applicationAtScope, overview, rememberFraming]);
   useEffect(() => setFraming(cameraFramings.get(key) || 'standard'), [key]);
+  useEffect(() => setExchangeMode(exchangeModes.get(key) || 'main'), [key]);
+  useEffect(() => setFlowTypes(flowTypeChoices.get(key) || FLOW_TYPES), [key]);
   useEffect(() => {
     return () => {
       cameraSelections.set(key, lastSelection.current);
@@ -435,11 +491,22 @@ export function FlowMapPanel(props: MapPanelProps) {
           application: appIds.has(box.id),
           applicationName: product?.name,
           headerHeight: box.headerHeight,
-          onSelect,
+          hasChildren: parentIds.has(box.id),
+          onSelect: enterObject,
           onCenter: center,
         },
       })),
-    [visibleBoxes, viewport.zoom, expandedIds, displayedSelectionId, appIds, product?.name, onSelect, center],
+    [
+      visibleBoxes,
+      viewport.zoom,
+      expandedIds,
+      parentIds,
+      displayedSelectionId,
+      appIds,
+      product?.name,
+      enterObject,
+      center,
+    ],
   );
   const [markerObstacles, setMarkerObstacles] = useState<{ x: number; y: number; width: number; height: number }[]>([]);
   // biome-ignore lint/correctness/useExhaustiveDependencies: Camera, canvas and semantic detail change the measured text positions.
@@ -553,33 +620,19 @@ export function FlowMapPanel(props: MapPanelProps) {
   }, [exchanges, flowBoxes]);
   const drawings = useMemo(() => {
     const screen = (point: { x: number; y: number }) => ({
-      x: point.x * viewport.zoom + viewport.x,
-      y: point.y * viewport.zoom + viewport.y,
+      x: point.x * viewport.zoom,
+      y: point.y * viewport.zoom,
     });
     const obstacles = flowBoxes.map((box) => ({
-      x: box.x * viewport.zoom + viewport.x,
-      y: box.y * viewport.zoom + viewport.y,
+      x: box.x * viewport.zoom,
+      y: box.y * viewport.zoom,
       width: box.width * viewport.zoom,
       height: flowExpandedIds.has(box.id) ? box.headerHeight * viewport.zoom : box.height * viewport.zoom,
     }));
     const placed: { x: number; y: number; width: number; height: number }[] = [];
-    const endpointInView = (box: FlowMapBox) => {
-      const left = Math.max(0, box.x * viewport.zoom + viewport.x);
-      const top = Math.max(0, box.y * viewport.zoom + viewport.y);
-      const right = Math.min(size.width, (box.x + box.width) * viewport.zoom + viewport.x);
-      const bottom = Math.min(size.height, (box.y + box.height) * viewport.zoom + viewport.y);
-      return (
-        right - left >= Math.min(85, box.width * viewport.zoom * 0.5) &&
-        bottom - top >= Math.min(36, box.height * viewport.zoom * 0.5)
-      );
-    };
-    return routes.flatMap(({ exchange, points, labelPoint }) => {
+    const bounds = { width: layout.width * viewport.zoom, height: layout.height * viewport.zoom };
+    return routes.map(({ exchange, points, labelPoint }) => {
       const pathPoints = points.map(screen);
-      if (!flowRouteInViewport(pathPoints, size)) return [];
-      const sourceInView = endpointInView(exchange.source);
-      const targetInView = endpointInView(exchange.target);
-      // Crossing a camera window is insufficient when neither endpoint belongs to the visible neighborhood.
-      if (!sourceInView && !targetInView) return [];
       const segments = pathPoints
         .slice(1)
         .map((point, index) => ({
@@ -593,30 +646,20 @@ export function FlowMapPanel(props: MapPanelProps) {
         Math.max(84, Math.min(exchange.caption.length * 5.5 + 10, (segments[0]?.length || 120) - 40)),
       );
       const height = 53;
-      const label =
-        sourceInView && targetInView
-          ? placeFlowExchangeLabel([screen(labelPoint), ...segments], size, { width, height }, [
-              ...obstacles,
-              ...markerObstacles,
-              ...placed,
-            ])
-          : undefined;
-      const emphasized =
-        exchange.relations.some((relation) => selectedRelationIds.has(relation.id)) ||
-        hoveredExchangeId === exchange.id;
+      const label = placeFlowExchangeLabel([screen(labelPoint), ...segments], bounds, { width, height }, [
+        ...obstacles,
+        ...placed,
+      ]);
       if (label) placed.push(label);
-      return [
-        {
-          exchange,
-          path: roundedFlowPath(pathPoints, 10),
-          ribbon: flowRibbonPath(pathPoints, 10, 16),
-          contextual: !sourceInView || !targetInView,
-          label,
-          emphasized,
-        },
-      ];
+      return {
+        exchange,
+        points: pathPoints,
+        path: roundedFlowPath(pathPoints, 10),
+        ribbon: flowRibbonPath(pathPoints, 8, 14),
+        label,
+      };
     });
-  }, [routes, viewport, flowBoxes, flowExpandedIds, size, markerObstacles, selectedRelationIds, hoveredExchangeId]);
+  }, [routes, viewport.zoom, flowBoxes, flowExpandedIds, layout.width, layout.height]);
 
   const exchangeDetail = selectedExchange && (
     <aside className={`flow-exchange-detail${shortScreen ? ' is-floating' : ''}`} aria-label="Détail du flux">
@@ -730,20 +773,25 @@ export function FlowMapPanel(props: MapPanelProps) {
           <span className="flow-toolbar-note">Flux documentés</span>
         </div>
         <div className="map-actions">
-          <button
-            type="button"
-            className="flow-tool-button"
-            aria-label="Afficher les flux"
-            aria-pressed={arrows}
-            onClick={() => {
-              if (arrows) closeExchange();
-              setArrows(!arrows);
-              arrowChoices.set(key, !arrows);
+          <MapFlowPicker
+            enabled={arrows}
+            onEnabledChange={(enabled) => {
+              if (!enabled) closeExchange();
+              setArrows(enabled);
+              arrowChoices.set(key, enabled);
             }}
-          >
-            <Route size={16} />
-            Flux
-          </button>
+            types={flowTypes}
+            onTypesChange={(types) => {
+              setFlowTypes(types);
+              flowTypeChoices.set(key, types);
+            }}
+            mode={exchangeMode}
+            focused={presentation.mode === 'focus'}
+            onModeChange={(mode) => {
+              setExchangeMode(mode);
+              exchangeModes.set(key, mode);
+            }}
+          />
           {!!model.raw.hotspot_catalog?.hotspots.length && (
             <MapHotspotPicker
               filters={hotspotFilters}
@@ -836,6 +884,7 @@ export function FlowMapPanel(props: MapPanelProps) {
         }}
         data-zoom={viewport.zoom}
         data-framing={framing}
+        data-exchange-mode={presentation.mode}
         data-layout={JSON.stringify(layout.boxes.map(({ id, x, y, width, height }) => ({ id, x, y, width, height })))}
       >
         <ReactFlow<SpatialNode>
@@ -882,6 +931,7 @@ export function FlowMapPanel(props: MapPanelProps) {
               cameraSizes.set(key, { width: canvas.current.clientWidth, height: canvas.current.clientHeight });
           }}
           onPaneClick={closeExchange}
+          onNodeClick={(_, node) => enterObject(node.id)}
           proOptions={{ hideAttribution: true }}
           ariaLabelConfig={{ 'minimap.ariaLabel': 'Vue miniature de la carte spatiale' }}
         >
@@ -889,6 +939,13 @@ export function FlowMapPanel(props: MapPanelProps) {
             style={{ width: size.width < 600 ? 72 : 160, height: size.width < 600 ? 54 : 100 }}
             pannable
             zoomable
+            onClick={(_, point) => {
+              rememberFraming('custom');
+              void instance.current?.setCenter(point.x, point.y, {
+                zoom: viewport.zoom,
+                duration: motionDuration(150),
+              });
+            }}
             nodeColor={(node) => (node.data.application ? '#d7c6e8' : '#c4ded3')}
             maskColor="#edf3f0b0"
           />
@@ -915,80 +972,89 @@ export function FlowMapPanel(props: MapPanelProps) {
                 <path d="M 0 0 L 10 5 L 0 10 z" fill="#448e81" />
               </marker>
             </defs>
-            {drawings.map(({ exchange, path, ribbon, emphasized, contextual }) => (
-              // biome-ignore lint/a11y/noStaticElementInteractions: Hover spans the keyboard-accessible path and label to avoid flicker between them.
-              <g
-                className={`flow-exchange${exchange.type === 'provides-knowledge' ? ' is-knowledge' : ''}${emphasized ? ' is-emphasized' : ''}${contextual ? ' is-contextual' : ''}`}
-                key={exchange.id}
-                data-source-id={exchange.source.id}
-                data-target-id={exchange.target.id}
-                data-relation-ids={exchange.relations.map((relation) => relation.id).join('|')}
-                onMouseEnter={() => setHoveredExchangeId(exchange.id)}
-                onMouseLeave={() => setHoveredExchangeId('')}
-              >
-                <title>
-                  {exchange.source.node.name} → {exchange.target.node.name} : {exchange.label}
-                </title>
-                <path className="flow-exchange-halo" d={path} />
-                {exchange.type === 'provides-knowledge' ? (
-                  <path className="flow-exchange-line" d={path} markerEnd={`url(#${paintId}-arrow)`} />
-                ) : (
-                  <path className="flow-exchange-ribbon" d={ribbon} />
-                )}
-                <path
-                  className="flow-exchange-hit"
-                  d={path}
-                  role="button"
-                  tabIndex={0}
-                  aria-pressed={exchange.relations.some((relation) => selectedRelationIds.has(relation.id))}
-                  aria-label={`${exchange.source.node.name} vers ${exchange.target.node.name} : ${exchange.label}`}
-                  onFocus={() => setHoveredExchangeId(exchange.id)}
-                  onBlur={() => setHoveredExchangeId('')}
-                  onClick={(event) => toggleExchange(exchange, event.currentTarget)}
-                  onKeyDown={(event) => {
-                    if (event.key === 'Enter' || event.key === ' ') {
-                      event.preventDefault();
-                      toggleExchange(exchange, event.currentTarget);
+            <g className="flow-world" transform={`translate(${viewport.x} ${viewport.y})`}>
+              {drawings.map(({ exchange, path, ribbon, points }) => (
+                // biome-ignore lint/a11y/noStaticElementInteractions: Hover spans the keyboard-accessible path and label to avoid flicker between them.
+                <g
+                  className={`flow-exchange${exchange.type === 'provides-knowledge' ? ' is-knowledge' : ''}${exchange.relations.some((relation) => selectedRelationIds.has(relation.id)) || hoveredExchangeId === exchange.id ? ' is-emphasized' : ''}`}
+                  key={exchange.id}
+                  data-source-id={exchange.source.id}
+                  data-target-id={exchange.target.id}
+                  data-relation-ids={exchange.relations.map((relation) => relation.id).join('|')}
+                  onMouseEnter={() => setHoveredExchangeId(exchange.id)}
+                  onMouseLeave={() => setHoveredExchangeId('')}
+                >
+                  <title>
+                    {exchange.source.node.name} → {exchange.target.node.name} : {exchange.label}
+                  </title>
+                  <path className="flow-exchange-halo" d={path} />
+                  {exchange.type === 'provides-knowledge' ? (
+                    <path className="flow-exchange-line" d={path} markerEnd={`url(#${paintId}-arrow)`} />
+                  ) : (
+                    <path className="flow-exchange-ribbon" d={ribbon} />
+                  )}
+                  <path
+                    className="flow-exchange-hit"
+                    d={path}
+                    role="button"
+                    tabIndex={
+                      flowRouteInViewport(
+                        points.map((point) => ({ x: point.x + viewport.x, y: point.y + viewport.y })),
+                        size,
+                      )
+                        ? 0
+                        : -1
                     }
-                  }}
-                />
-              </g>
-            ))}
-            {drawings.map(
-              ({ exchange, label }) =>
-                label && (
-                  <g
-                    key={exchange.id}
-                    className="flow-exchange-caption"
-                    data-relation-ids={exchange.relations.map((relation) => relation.id).join('|')}
-                  >
-                    <line
-                      className="flow-caption-leader"
-                      x1={label.anchor.x}
-                      y1={label.anchor.y}
-                      x2={Math.max(label.x, Math.min(label.x + label.width, label.anchor.x))}
-                      y2={Math.max(label.y, Math.min(label.y + label.height, label.anchor.y))}
-                    />
-                    <foreignObject x={label.x} y={label.y} width={label.width} height={label.height}>
-                      <button
-                        type="button"
-                        className="flow-exchange-label"
-                        tabIndex={-1}
-                        title={`${exchange.label} · ${exchange.relations.length} relation${exchange.relations.length > 1 ? 's' : ''}`}
-                        aria-label={`${exchange.source.node.name} vers ${exchange.target.node.name} : ${exchange.label}`}
-                        aria-pressed={exchange.relations.some((relation) => selectedRelationIds.has(relation.id))}
-                        onMouseEnter={() => setHoveredExchangeId(exchange.id)}
-                        onMouseLeave={() => setHoveredExchangeId('')}
-                        onFocus={() => setHoveredExchangeId(exchange.id)}
-                        onBlur={() => setHoveredExchangeId('')}
-                        onClick={(event) => toggleExchange(exchange, event.currentTarget)}
-                      >
-                        {exchange.caption}
-                      </button>
-                    </foreignObject>
-                  </g>
-                ),
-            )}
+                    aria-pressed={exchange.relations.some((relation) => selectedRelationIds.has(relation.id))}
+                    aria-label={`${exchange.source.node.name} vers ${exchange.target.node.name} : ${exchange.label}`}
+                    onFocus={() => setHoveredExchangeId(exchange.id)}
+                    onBlur={() => setHoveredExchangeId('')}
+                    onClick={(event) => toggleExchange(exchange, event.currentTarget)}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        toggleExchange(exchange, event.currentTarget);
+                      }
+                    }}
+                  />
+                </g>
+              ))}
+              {drawings.map(
+                ({ exchange, label }) =>
+                  label && (
+                    <g
+                      key={exchange.id}
+                      className="flow-exchange-caption"
+                      data-relation-ids={exchange.relations.map((relation) => relation.id).join('|')}
+                    >
+                      <line
+                        className="flow-caption-leader"
+                        x1={label.anchor.x}
+                        y1={label.anchor.y}
+                        x2={Math.max(label.x, Math.min(label.x + label.width, label.anchor.x))}
+                        y2={Math.max(label.y, Math.min(label.y + label.height, label.anchor.y))}
+                      />
+                      <foreignObject x={label.x} y={label.y} width={label.width} height={label.height}>
+                        <button
+                          type="button"
+                          className="flow-exchange-label"
+                          tabIndex={-1}
+                          title={`${exchange.label} · ${exchange.relations.length} relation${exchange.relations.length > 1 ? 's' : ''}`}
+                          aria-label={`${exchange.source.node.name} vers ${exchange.target.node.name} : ${exchange.label}`}
+                          aria-pressed={exchange.relations.some((relation) => selectedRelationIds.has(relation.id))}
+                          onMouseEnter={() => setHoveredExchangeId(exchange.id)}
+                          onMouseLeave={() => setHoveredExchangeId('')}
+                          onFocus={() => setHoveredExchangeId(exchange.id)}
+                          onBlur={() => setHoveredExchangeId('')}
+                          onClick={(event) => toggleExchange(exchange, event.currentTarget)}
+                        >
+                          {exchange.caption}
+                        </button>
+                      </foreignObject>
+                    </g>
+                  ),
+              )}
+            </g>
           </svg>
         )}
         {!layout.boxes.length && (
@@ -998,7 +1064,9 @@ export function FlowMapPanel(props: MapPanelProps) {
           <p className="flow-map-note">Aucun échange documenté pour ce périmètre.</p>
         )}
         {arrows && !!layout.exchanges.length && !exchanges.length && (
-          <p className="flow-map-note">Zoome pour voir les échanges internes à ces périmètres.</p>
+          <p className="flow-map-note">
+            {!flowTypes.length ? 'Aucun type de flux sélectionné.' : 'Aucun flux de ces types dans ce cadrage.'}
+          </p>
         )}
         <div className="flow-map-hotspots">
           <svg className="flow-hotspot-leaders" width={size.width} height={size.height} aria-hidden="true">
@@ -1151,8 +1219,8 @@ export function FlowMapPanel(props: MapPanelProps) {
       </div>
       <div className="map-footer">
         <span>
-          <Move size={13} /> Glisser pour se déplacer · Zoomer jusqu’aux Business Areas · Double-cliquer sur un nom pour
-          centrer
+          <Move size={13} /> Glisser pour se déplacer · Cliquer pour entrer dans un périmètre · Zoomer jusqu’aux
+          Business Areas
         </span>
         <span>Lecture seule</span>
       </div>

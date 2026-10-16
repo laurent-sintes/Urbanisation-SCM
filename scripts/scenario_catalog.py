@@ -12,12 +12,44 @@ except ImportError:
 COLLECTIONS = ('value_streams', 'scenarios', 'paths')
 
 
+def context_participant_ids(model):
+    """Context responsibilities at their declared depth, never inferred capabilities."""
+    nodes = {n['id']: n for n in model['nodes']}
+    children = {}
+    for edge in model.get('relations', []):
+        if edge['type'] in ('contains', 'presents'):
+            children.setdefault(edge['source_id'], []).append(edge['target_id'])
+    allowed = set()
+    for domain in nodes.values():
+        if domain['kind'] != 'domain':
+            continue
+        depth = domain.get('fields', {}).get('modeling_depth')
+        if depth not in ('context', 'domains', 'business_areas'):
+            continue
+        allowed.add(domain['id'])
+        # "context" limits detail, but existing subdomains remain legitimate
+        # context participants; no capability is inferred from this traversal.
+        pending = list(children.get(domain['id'], []))
+        seen = set()
+        while pending:
+            identifier = pending.pop()
+            if identifier in seen:
+                continue
+            seen.add(identifier)
+            allowed_kinds = ('area', 'business_area') if depth == 'business_areas' else ('area',)
+            if nodes.get(identifier, {}).get('kind') in allowed_kinds:
+                allowed.add(identifier)
+                pending.extend(children.get(identifier, []))
+    return allowed
+
+
 def validate_catalog(model):
     catalog = model.get('scenario_catalog')
     if catalog is None:
         return []
     errors = []
     nodes = {n['id']: n for n in model['nodes']}
+    context_ids = context_participant_ids(model)
     indexes = {}
     for collection in COLLECTIONS:
         items = catalog.get(collection, [])
@@ -64,6 +96,20 @@ def validate_catalog(model):
             for target in contributions:
                 if nodes.get(target, {}).get('kind') not in {'capability', 'reference'}:
                     errors.append(f'{path["id"]}: contribution must reference a published capability or reference: {target}')
+            participants = step.get('context_participants', [])
+            participant_ids = [p.get('node_id') for p in participants]
+            if len(set(participant_ids)) != len(participant_ids):
+                errors.append(f'{path["id"]}/{step["id"]}: duplicate context participant')
+            for participant in participants:
+                target = participant.get('node_id')
+                if target not in context_ids:
+                    errors.append(f'{path["id"]}/{step["id"]}: context participant exceeds declared context depth: {target}')
+                if not isinstance(participant.get('role'), str) or not participant['role'].strip():
+                    errors.append(f'{path["id"]}/{step["id"]}: context participant role required')
+                for field in ('conditions', 'source_refs'):
+                    values = participant.get(field)
+                    if not isinstance(values, list) or not values or any(not isinstance(v, str) or not v.strip() for v in values):
+                        errors.append(f'{path["id"]}/{step["id"]}: context participant {field} required')
         for edge in path['dependencies']:
             if edge['from'] not in ids or edge['to'] not in ids:
                 errors.append(f'{path["id"]}: missing dependency endpoint')

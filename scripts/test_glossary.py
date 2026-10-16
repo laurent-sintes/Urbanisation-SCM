@@ -67,6 +67,23 @@ class GlossaryTests(unittest.TestCase):
         model['glossary']['terms'][1]['id'] = []
         self.assertTrue(validate(model))
 
+    def test_catalog_links_and_explicit_method_vocabulary_are_checked(self):
+        model = self.model()
+        model['scenario_catalog'] = {'paths': [{'description': '[Absent](model:missing)'}]}
+        self.assertIn('model: unresolved published link missing', validate(model))
+        model['scenario_catalog'] = {'paths': [{'description': '[Absent](method:MOD999)'}]}
+        methods = [{'id': 'MOD1', 'definition': 'Méthode.'}]
+        self.assertIn('method: unresolved published link MOD999', validate(model, method_terms=methods))
+        model['scenario_catalog']['paths'][0]['description'] = '[Méthode](modeling:MOD1)'
+        self.assertEqual(validate(model, method_terms=methods), [])
+        # Frozen callers never acquire current methodology by inference.
+        self.assertEqual(validate(model), [])
+        for key in ('hotspot_catalog', 'application_catalog', 'document_catalog', 'information_catalog'):
+            with self.subTest(catalog=key):
+                candidate = self.model()
+                candidate[key] = {'note': '[Absent](glossary:TER999)'}
+                self.assertIn('glossary: unresolved published link TER999', validate(candidate))
+
     def test_term_change_flags_unchanged_linked_statements(self):
         before = self.model()
         after = deepcopy(before)

@@ -41,6 +41,7 @@ export interface MobilizationStep {
   outcome: string;
   inputs: string[];
   contributions: { node_id: string; role: string }[];
+  context_participants?: { node_id: string; role: string; conditions: string[]; source_refs: string[] }[];
 }
 export interface MobilizationPath {
   id: string;
@@ -85,6 +86,7 @@ export function scenarioSearchText(catalog: ScenarioCatalog, scenario: BusinessS
           s.outcome,
           ...(s.inputs || []),
           ...s.contributions.map((c) => c.role),
+          ...(s.context_participants || []).flatMap((c) => [c.role, ...c.conditions]),
         ]),
       ]),
   ]
@@ -116,6 +118,16 @@ export function scenarioCapabilities(catalog: ScenarioCatalog, id: string): stri
     ),
   ];
 }
+/** Context participation remains distinct from capability mobilisation. */
+export function scenarioContextParticipants(catalog: ScenarioCatalog, id: string): string[] {
+  return [
+    ...new Set(
+      catalog.paths
+        .filter((p) => p.scenario_id === id)
+        .flatMap((p) => p.steps.flatMap((s) => (s.context_participants || []).map((c) => c.node_id))),
+    ),
+  ];
+}
 export function scenariosForNode(model: PublishedModel, id: string): BusinessScenario[] {
   const catalog = catalogOf(model);
   if (!catalog) return [];
@@ -132,6 +144,7 @@ export function scenariosForNode(model: PublishedModel, id: string): BusinessSce
   return catalog.scenarios.filter(
     (s) =>
       scenarioCapabilities(catalog, s.id).some((c) => descendants.has(c)) ||
+      scenarioContextParticipants(catalog, s.id).some((c) => descendants.has(c)) ||
       catalog.legacy_links.some((a) => a.owner_id === id && a.scenario_id === s.id),
   );
 }

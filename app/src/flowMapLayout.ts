@@ -88,8 +88,9 @@ function headerHeight(node: AtlasNode): number {
 
 function leafSize(node: AtlasNode): { width: number; height: number } {
   if (node.kind === 'business_area') return { width: 260, height: businessAreaHeight(node) };
-  if (node.kind === 'area' || node.kind === 'group') return { width: 288, height: 100 };
-  return { width: 320, height: 160 };
+  if (node.kind === 'area' || node.kind === 'group') return { width: 288, height: headerHeight(node) + 16 };
+  if (node.kind === 'domain') return { width: 288, height: titleLines(node.name) > 2 ? 128 : 104 };
+  return { width: 320, height: titleLines(node.name) > 2 ? 144 : 120 };
 }
 
 /** Track choices belong to the territory, never to viewport dimensions or active overlays. */
@@ -274,7 +275,10 @@ export function buildFlowMap(model: PublishedModel, scopeId?: string): FlowMapLa
       node.kind === 'business_area'
         ? []
         : childrenOf(model, node.id).filter((child) => KINDS.has(child.kind) && !next.has(child.id));
-    if (!descendants.length) return { node, ...leafSize(node), headerHeight: headerHeight(node), children: [] };
+    if (!descendants.length) {
+      const size = leafSize(node);
+      return { node, ...size, headerHeight: Math.min(headerHeight(node), size.height), children: [] };
+    }
     const content = arrange(
       node,
       descendants.map((child) => measure(child, next)),

@@ -25669,3 +25669,19 @@ Date : 2026-10-16. Source : Laurent, autorisation d'appliquer les corrections de
 Verbatim : « Go pour corriger le modèle et les flux, en commençant par les cinq points prioritaires, puis les chaînes manquantes. »
 
 Portée : appliquer le lot cohérent de correction du modèle et des relations décrit par l'audit U1112, avec priorité aux producteurs et destinataires de promesse et de planification, à Plan Application, à Process Ledger et à ses consommateurs, aux échanges détaillés avec Logistics et aux chaînes de préparation des plans, puis aux autres chaînes documentées manquantes. Aligner le glossaire et préserver les responsabilités métier et les portées des accords historiques. L'accord porte sur ces corrections et leur mise en cohérence, sans présumer de réalisation installée ; il ne demande ni release, ni commit, ni push.
+
+## U1114
+
+Date : 2026-10-16. Source : Laurent, demande d'audit des relations à l'échelle de l'Enterprise Architecture.
+
+Verbatim : « Je voudrais un audit complet sur le modèle du point de vue des relations entre objet mais dans un scope enterprise architecture. »
+
+Portée : étendre l'examen à tous les systèmes, domaines et objets du modèle courant, en contrôlant la structure, le sens, la qualification et la couverture des relations explicites et des liens portés par les catalogues. Distinguer anomalies, limites de profondeur déclarées et manques documentaires ; réutiliser les résultats encore valables de l'audit U1112 et de sa correction U1113. La demande autorise l'audit et ses recommandations, sans adoption implicite de corrections, modification canonique, commit ni publication.
+
+## U1115
+
+Date : 2026-10-16. Source : Laurent, autorisation de corriger le modèle après l'audit Enterprise Architecture.
+
+Verbatim : « Go pour corriger le modèle selon cet audit, dans l’ordre proposé : contradictions et synthèses, chaînes Commerce et Procurement, puis coopérations de contexte et parcours EA. »
+
+Portée : appliquer le lot cohérent des corrections et compléments proposés par l'audit U1114, dans l'ordre de ses cinq groupes de travaux : cohérence de la représentation, chaînes Commerce et Procurement, coopérations de contexte, parcours de bout en bout et traçabilité, puis consolidation et prévention des régressions. Aligner modèle et glossaires, préserver les profondeurs de contexte, identités et preuves historiques. Les voies, sources et autorités laissées à qualifier dans l'audit conservent leurs réserves ; le Go ne prouve ni maîtrise d'entreprise ni réalisation installée et n'étend pas un accord aux compléments rédigés après l'audit. Aucune release, aucun commit ni push demandé.

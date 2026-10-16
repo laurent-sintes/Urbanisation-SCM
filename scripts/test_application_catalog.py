@@ -30,6 +30,14 @@ class ApplicationCatalogTests(unittest.TestCase):
         self.assertTrue(any('foreign component' in error for error in errors))
         self.assertTrue(any('unknown business node' in error for error in errors))
 
+    def test_panorama_reference_must_exist_in_the_selected_si(self):
+        model = deepcopy(self.model)
+        selection = next(s for s in model['application_catalog']['selections'] if s.get('panorama_ref'))
+        selection['panorama_ref'] = 'APP-ABSENT'
+        self.assertTrue(any('unknown panorama_ref APP-ABSENT' in e for e in validate_catalog(model)))
+        selection['panorama_ref'] = 'APP-NEW' if selection['context_id'] != 'boardriders' else 'APP-ELA'
+        self.assertTrue(any('panorama_ref belongs to another SI' in e for e in validate_catalog(model)))
+
     def test_component_cycle_is_rejected(self):
         model = deepcopy(self.model)
         components = model['application_catalog']['products'][0]['components']

@@ -116,7 +116,7 @@ def validate_sources(source_document):
     return errors
 
 
-def validate_urbanism(model, sources, schema=None, *, require_function_mapping=False):
+def validate_urbanism(model, sources, schema=None, *, require_function_mapping=False, method_terms=None):
     try:
         from .display_codes import validate_display_index
     except ImportError:
@@ -141,7 +141,7 @@ def validate_urbanism(model, sources, schema=None, *, require_function_mapping=F
         return ["model: expected object"]
     if any(not isinstance(model.get(k), list) for k in ("nodes", "relations")):
         return ["model: nodes and relations must be lists"]
-    errors.extend(validate_glossary(model))
+    errors.extend(validate_glossary(model, method_terms=method_terms))
     errors.extend(validate_reference_policy(model))
     errors.extend(validate_information(model))
     try:
@@ -491,9 +491,9 @@ def relations_to_illustrations(snapshot):
             if r['source_id'] in illustrative or r['target_id'] in illustrative}
 
 
-def validate_release(release, decisions_document, snapshot, sources, schema=None):
+def validate_release(release, decisions_document, snapshot, sources, schema=None, *, method_terms=None):
     """Validate against the frozen input, NEVER against the live backlog."""
-    errors = validate_urbanism(release, sources, schema)
+    errors = validate_urbanism(release, sources, schema, method_terms=method_terms)
     if release.get("glossary") != snapshot.get("glossary"):
         errors.append("release: glossary differs from frozen input")
     if release.get('scenario_catalog') != snapshot.get('scenario_catalog'):
@@ -508,7 +508,7 @@ def validate_release(release, decisions_document, snapshot, sources, schema=None
         errors.append('release: information catalogue differs from frozen input')
     if errors:
         return errors
-    errors.extend(validate_urbanism(snapshot, sources, schema))
+    errors.extend(validate_urbanism(snapshot, sources, schema, method_terms=method_terms))
     if errors:
         return errors
     if release.get("space") != "release" or snapshot.get("space") != "backlog":
@@ -752,7 +752,8 @@ def validate_project(root=ROOT):
         glossary_path = working_path(root / "modeles/backlog", "glossary")
         if glossary_path.exists():
             backlog["glossary"] = _load(glossary_path)
-        errors.extend(f"backlog: {e}" for e in validate_urbanism(backlog, sources, urbanism_schema, require_function_mapping=True))
+        method_terms = _load(root / 'modeles/backlog/modeling-glossary.yaml')['terms']
+        errors.extend(f"backlog: {e}" for e in validate_urbanism(backlog, sources, urbanism_schema, require_function_mapping=True, method_terms=method_terms))
         guide_path = root / 'modeles/backlog/atlas-transformation-methodology.yaml'
         if guide_path.exists() and _load(guide_path).get('model_examples'):
             try:
@@ -798,7 +799,11 @@ def validate_project(root=ROOT):
                 errors.extend(validate_model_provenance(frozen_model_provenance))
         decision_schema = schemas / "decisions.schema.json"
         errors.extend(validate_contract(decisions, _load(decision_schema)))
-        errors.extend(f"release: {e}" for e in validate_release(release, decisions, snapshot, release_sources, urbanism_schema))
+        from app.modeling_guide import _load_associated_guide
+        frozen_guide = _load_associated_guide(root, release['version'])
+        frozen_method_terms = frozen_guide.get('guide', {}).get('glossary', {}).get('terms')
+        errors.extend(f"release: {e}" for e in validate_release(release, decisions, snapshot, release_sources, urbanism_schema,
+                                                             method_terms=frozen_method_terms))
         for key, actual in {
             "node_count": len(release["nodes"]),
             "capability_count": sum(n["kind"] == "capability" for n in release["nodes"]),

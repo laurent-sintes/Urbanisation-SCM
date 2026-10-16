@@ -5,6 +5,26 @@ from datetime import date
 import re
 
 
+def panorama_owners(root=None):
+    """Read the explicitly indexed, hash-verified As Is snapshots only."""
+    try:
+        from .structured_io import read
+    except ImportError:
+        from structured_io import read
+    root = Path(root or Path(__file__).resolve().parents[1]).resolve()
+    index = read(root / 'modeles/panorama-as-is/current.json')
+    owners = {}
+    for pointer in index['panoramas']:
+        path = (root / pointer['path']).resolve()
+        if not path.is_relative_to(root / 'modeles/panorama-as-is'):
+            raise ValueError('As Is panorama path escapes its directory')
+        panorama = read(path, expected_sha256=pointer['sha256'])
+        context_id = pointer['model_id'].removesuffix('-si')
+        for record in panorama['objects']:
+            owners.setdefault(record['id'], set()).add(context_id)
+    return owners
+
+
 CONTEXT_PERSPECTIVES = {
     'beaumanoir-historique': 'as_is',
     'boardriders': 'as_is',
@@ -53,11 +73,18 @@ def _documentation_errors(product):
     return errors
 
 
-def validate_catalog(model, *, require_function_mapping=False):
+def validate_catalog(model, *, require_function_mapping=False, panorama_records=None):
     catalog = model.get('application_catalog')
     if catalog is None:
         return []  # Historical releases predate this optional catalogue.
     errors = []
+    panorama_refs = any(selection.get('panorama_ref') for selection in catalog['selections'])
+    if panorama_refs and panorama_records is None:
+        try:
+            panorama_records = panorama_owners()
+        except (OSError, ValueError, KeyError) as exc:
+            errors.append('application_catalog: unverifiable frozen As Is panorama: ' + str(exc))
+            panorama_records = {}
     products = {}
     component_owner = {}
     for product in catalog['products']:
@@ -147,6 +174,12 @@ def validate_catalog(model, *, require_function_mapping=False):
             errors.append(f'application_catalog/{identifier}: As Is selection cannot be planned')
         if selection.get('panorama_ref') and selection['perspective'] != 'as_is':
             errors.append(f'application_catalog/{identifier}: target cannot cite an As Is record')
+        if selection.get('panorama_ref'):
+            owners = (panorama_records or {}).get(selection['panorama_ref'], set())
+            if not owners:
+                errors.append(f'application_catalog/{identifier}: unknown panorama_ref {selection["panorama_ref"]}')
+            elif selection['context_id'] not in owners:
+                errors.append(f'application_catalog/{identifier}: panorama_ref belongs to another SI: {selection["panorama_ref"]}')
         if selection.get('deployed_version') and selection['perspective'] != 'as_is':
             errors.append(f'application_catalog/{identifier}: target cannot claim a deployed version')
         if 'deployed_on' in selection:

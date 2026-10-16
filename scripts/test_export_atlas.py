@@ -128,6 +128,9 @@ class StaticExportTests(unittest.TestCase):
         hotspot['visible'] = False
         original.update(hotspot_catalog={**catalog, 'hotspots': [hotspot]},
                         information_catalog={'items': [], 'links': []},
+                        scenario_catalog={'value_streams': [], 'scenarios': [], 'paths': [{'id': 'p', 'steps': [{
+                            'context_participants': [{'node_id': 'receiving', 'role': 'Réaliser la réception',
+                                                      'conditions': ['Prestation confiée'], 'source_refs': ['U1115']}]}]}]},
                         arbitrary_published_extension={'unicode': 'Écart été → décision', 'nested': {'kept': True}})
         payload = encoded(original)
         model_path.write_bytes(payload)
@@ -146,6 +149,7 @@ class StaticExportTests(unittest.TestCase):
         schema_path.write_bytes(encoded(schema))
         guide = {'status': 'available', 'guide': {'version': version, 'glossary': {'terms': [
             {'id': 'MOD044', 'name': 'Hotspot', 'definition': 'Sujet à creuser et arbitrer.'},
+            {'id': 'MOD051', 'name': 'Context Participation', 'definition': 'Participation distincte et sourcée.'},
             {'id': 'MOD045', 'name': 'Gap Analysis', 'definition': 'Comparaison facultative.'}]}}}
         with patch.object(module, '_load_associated_guide', return_value=guide):
             export_atlas(self.root, [self.output])
@@ -165,6 +169,8 @@ class StaticExportTests(unittest.TestCase):
         types = {item['path']: item for item in meta['catalog_types']}
         self.assertEqual(types['hotspot_catalog.hotspots']['definition_source'], 'method:MOD044')
         self.assertEqual(types['hotspot_catalog.hotspots.gap_analysis']['definition_source'], 'method:MOD045')
+        self.assertEqual(types['scenario_catalog.paths.steps.context_participants']['definition_source'], 'method:MOD051')
+        self.assertEqual(meta['profile']['catalog_counts']['scenario_catalog.paths.steps.context_participants'], 1)
         self.assertEqual(meta['profile']['catalog_counts']['hotspot_catalog.hotspots'], 1)
         self.assertIn('hotspot-gap-optional', {rule['id'] for rule in meta['constraints']})
 

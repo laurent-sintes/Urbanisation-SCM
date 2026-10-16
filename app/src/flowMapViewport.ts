@@ -15,6 +15,13 @@ export interface FlowLabelPlacement {
   anchor: FlowRoutePoint;
 }
 
+function positiveMedian(values: readonly number[], fallback = 0): number {
+  const sorted = values.filter((value) => Number.isFinite(value) && value > 0).sort((a, b) => a - b);
+  if (!sorted.length) return fallback;
+  const middle = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2;
+}
+
 /**
  * Open a readable neighborhood at its natural scale, independently of the complete world's size.
  * The complete map remains available by panning; overview and a remembered camera are separate choices.
@@ -40,16 +47,10 @@ export function standardFlowCamera(
   const useful = boxes.filter(
     (box) => box.node.kind === usefulKind || (usefulKind === 'area' && box.node.kind === 'group'),
   );
-  const widths = (useful.length ? useful : territories)
-    .map((box) => box.width)
-    .filter((width) => Number.isFinite(width) && width > 0)
-    .sort((a, b) => a - b);
-  const middle = Math.floor(widths.length / 2);
-  const medianWidth = widths.length
-    ? widths.length % 2
-      ? widths[middle]
-      : (widths[middle - 1] + widths[middle]) / 2
-    : 260;
+  const medianWidth = positiveMedian(
+    (useful.length ? useful : territories).map((box) => box.width),
+    260,
+  );
   const parents = useful.flatMap((box) => {
     const parent = box.parentId ? byId.get(box.parentId) : undefined;
     return parent ? [parent] : [];
@@ -58,9 +59,26 @@ export function standardFlowCamera(
     .map((box) => box.headerHeight)
     .filter((height) => Number.isFinite(height) && height > 0);
   const headingZoom = readableHeaders.length ? Math.max(...readableHeaders.map((height) => 30 / height)) : 0;
+  // Enterprise Standard reveals named subdomains inside systems, rather than stopping at empty domain frames.
+  const medianAreaWidth =
+    first.node.kind === 'business_system'
+      ? positiveMedian(
+          boxes.filter((box) => box.node.kind === 'area' || box.node.kind === 'group').map((box) => box.width),
+        )
+      : 0;
+  const medianDomainHeader =
+    first.node.kind === 'business_system'
+      ? positiveMedian(boxes.filter((box) => box.node.kind === 'domain').map((box) => box.headerHeight))
+      : 0;
+  const systemDetailZoom = Math.max(
+    medianAreaWidth ? 120 / medianAreaWidth : 0,
+    medianDomainHeader ? 30 / medianDomainHeader : 0,
+  );
   const targetWidth = usefulKind === 'domain' ? 200 : usefulKind === 'area' ? 210 : 220;
   const zoom =
-    first.node.kind === 'business_area' ? 1 : Math.min(1.2, Math.max(targetWidth / medianWidth, headingZoom));
+    first.node.kind === 'business_area'
+      ? 1
+      : Math.min(1.2, Math.max(targetWidth / medianWidth, headingZoom, systemDetailZoom));
 
   // Use the same published corridor whatever overlays are active; nested Supply does not move a system's origin.
   const coreIds = new Set(['subdomain-integration', 'domain-plan', 'D01']);

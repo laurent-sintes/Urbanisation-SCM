@@ -1,0 +1,4014 @@
+id: EA-RELATIONSHIPS-AUDIT-U1114
+date: '2026-10-16'
+status: completed_with_findings
+source_refs:
+- U1114
+request:
+  verbatim: Je voudrais un audit complet sur le modèle du point de vue des relations entre objet mais dans un scope enterprise
+    architecture.
+  interpretation: Examiner toutes les relations du périmètre actuellement modélisé, dans les quatre systèmes métier, ainsi
+    que les liens des catalogues. La complétude de l’audit ne signifie pas que toute l’entreprise ou sa réalisation installée
+    soit modélisée.
+scope:
+  root: beaumanoir-target-universe
+  systems: 4
+  domains: 12
+  included:
+  - Hiérarchie et niveaux déclarés
+  - Types, sens, contenus et conditions des 760 relations
+  - Doublons, recouvrements, dépendances et cycles
+  - Coopérations au sein des domaines et entre les quatre systèmes
+  - Synthèses système et relations détaillées
+  - Scénarios, parcours, flux de valeur et leurs contributions
+  - Informations internes, applications, sélections SI et liens As Is
+  - Points chauds, écarts, options, observations, documents et provenance
+  - Références entre modèle, glossaires métier et méthodologique
+  limits:
+  - Aucun diagnostic de réalisation installée ni schéma technique d’interfaces.
+  - Les profondeurs de contexte restent autorisées ; aucune capacité périphérique n’est exigée pour remplir l’arbre.
+  - Les liens entre scénarios et périmètres ne deviennent pas des parents métier.
+  - Les comportements existants sont lus pour comprendre leurs relations ; l’audit clos U431 n’est pas réouvert.
+  - Les manques de relation ne prouvent pas une absence de fonctionnement réel.
+  - Une paire de systèmes ou de domaines sans relation n’est pas automatiquement une anomalie.
+  canonical_business_changes: false
+  business_adoption: false
+  publication: false
+baseline:
+  commit: 5e1ed1f
+  publication: 2026-10-16.3
+  sha256:
+    modeles/backlog/model.yaml: 8d8008ac7cee6ff0a6903bac193b91e976e4212003f73c60f984d9fecfc07029
+    modeles/backlog/glossary.yaml: c2c1b97d022ca956c874fe69c9ed00f7fc81e5a5023d2e1e4f5979c0f8ab8b5f
+    modeles/backlog/modeling-glossary.yaml: d0b9cc320fba1bae52edb6528233eedfdd3c8637b72bb2daffdc3f444654537f
+    modeles/release/index.json: 240d61577776e2cce6906bbd6f8b02d7e6f30665c7530c03dadf235a7bb9f6c0
+    modeles/schemas/urbanism.schema.json: 5791441b3c77a5bae638e1a1721308160df6238df2ee39a705a9faafae000b55
+  backlog: modeles/backlog/model.yaml
+  business_glossary: modeles/backlog/glossary.yaml
+  authority:
+  - AGENTS.md
+  - CONVENTIONS-MODELE.md
+  - modeles/AGENT-OPERATIONS.md
+  - modeles/backlog/modeling-glossary.yaml
+  - marche/methode.md
+  code_sha256:
+    scripts/validate_models.py: 6b5f9950c43ce8826f0a8de1962c84a0881a011992f1ae0afdeab8ba44b9ae35
+    scripts/glossary.py: 7f2a60ea1fd6c85961ad9209dc4dfcb1572291e212c3566429e8deb107b0b851
+    scripts/scenario_catalog.py: de5c6e7620b43a1ba6f5cb244955ba6210a32dec8e7453c83fb408cd1633660a
+    scripts/application_catalog.py: 3f121b3988d2bf7d2e719246289b6b25c0a53ac78f74d69a9e36fde687ae37cf
+    scripts/inspect_model.py: 119cbfde2c090ce1ec0baee47861df8a6f76569fd5b3c2e8042f7ec143082f5d
+  prior_work:
+    U1112: Audit centré SCO et domaines adjacents.
+    U1113: Corrections intégrées et publiées en 2026-10-16.3 ; liens corrigés relus sans les déclarer manquants.
+    receipt_model_and_glossary_unchanged: true
+executive_summary:
+  conclusion: L’arbre et les références actuelles sont intègres. Les coopérations restent fortement centrées sur Supply Chain
+    Orchestration ; les fiches Commerce, Procurement, Design et pilotage d’entreprise annoncent des passages de relais encore
+    absents du graphe. Certaines descriptions et synthèses contredisent aussi le découpage ou les échanges détaillés.
+  finding_count: 27
+  by_priority:
+    P1: 7
+    P2: 16
+    P3: 4
+  priority_meaning:
+    P1: À traiter en premier pour rendre une lecture Enterprise Architecture fidèle et exploitable. Ce niveau ne désigne pas
+      un incident de fonctionnement installé.
+    P2: Correction sémantique, chaîne complémentaire, traçabilité ou choix de contrat à instruire.
+    P3: Consolidation, maintenance éditoriale ou garde-fou technique.
+  main_points:
+  - Offre, règles de prix, parcours magasin et faits de caisse ne sont pas raccordés de bout en bout.
+  - Le besoin d’achat, la sélection, les accords et le retour de performance fournisseur restent sans chaîne structurée.
+  - Les objectifs, budgets et résultats consolidés ne sont pas reliés.
+  - Les synthèses EA omettent des échanges détaillés présents ; certains textes donnent encore des parents obsolètes.
+  - Les parcours ne peuvent pas encore représenter la participation des contextes périphériques sans inventer des capacités.
+  confirmed_clean:
+  - Aucune extrémité pendante, aucun identifiant dupliqué, aucun cycle hiérarchique ni parent multiple.
+  - Les 175 shares-data ont un contenu, une finalité et leurs qualifications ; aucun sens inversé n’a été démontré.
+  - Les 752 relations de la publication courante sont identiques au backlog sur type, extrémités, contenu et qualifications.
+  - Les 14 625 occurrences de références vérifiées dans 52 champs ne contiennent aucun lien cassé.
+method:
+  steps:
+  - Inventorier tous les objets et les relations sans inférer de lien à partir du nom ou de l’identifiant.
+  - Vérifier l’intégrité et répartir les 760 relations en ensembles disjoints couvrant exactement le modèle.
+  - Lire les contenus et qualifications en les confrontant aux responsabilités des deux extrémités.
+  - Examiner les 12 couples orientés entre systèmes et les 132 couples orientés entre domaines ; relever un manque seulement
+    lorsqu’une fiche ou une chaîne documentée le justifie.
+  - Contrôler les catalogues et leurs références par les validateurs ciblés et par un parcours indépendant des liens.
+  - Comparer les constats métier aux passages primaires pertinents ; conserver les limites produit et les appuis manquants.
+  - Consolider les recommandations sans modifier les valeurs canoniques ni capturer d’accord.
+  evidence_interpretation: Un contrôle technique réussi n’atteste pas la justesse métier de toutes les relations ; les constats
+    de sens sont argumentés par leurs champs exacts. Les sondes de validation sont faites en mémoire et n’altèrent aucune
+    donnée.
+coverage:
+  counts:
+    nodes: 352
+    relations: 760
+    hierarchical: 347
+    transverse: 413
+    kinds:
+      universe: 1
+      business_system: 4
+      domain: 12
+      area: 50
+      reference: 20
+      capability: 116
+      object: 2
+      document: 1
+      event: 1
+      behavior: 74
+      business_area: 71
+    types:
+      contains: 265
+      represents: 1
+      records: 1
+      provides-knowledge: 6
+      provides-conditions: 5
+      describes-network: 1
+      presents: 82
+      shares-data: 175
+      relates-to: 156
+      supplies-reference: 16
+      uses-reference: 49
+      confirms: 1
+      associated-document: 1
+      observed-result: 1
+  complete_relation_review:
+    unique_relations_reviewed: 760
+    unreviewed: 0
+    overlap: 0
+    partitions:
+    - selector: type in [contains, presents]
+      count: 347
+    - selector: type not in [contains, presents, shares-data]
+      count: 238
+    - selector: shares-data dont les deux extrémités ont le même Domain non nul
+      count: 112
+    - selector: shares-data entre Domain différents du même système
+      count: 10
+    - selector: shares-data entre systèmes avec extrémités détaillées
+      count: 47
+    - selector: shares-data entre Business Systems, sans Domain aux extrémités
+      count: 6
+    reviewed_ids_sha256: 25115d234794742183acaed2046f3fc4e0ebb16272c413f386692a1367890b01
+  hierarchy:
+    systems: 4
+    domains: 12
+    subdomains: 50
+    business_areas: 71
+    context_terminal_business_areas:
+    - ba-receiving-operations
+    - ba-putaway-operations
+    - ba-storage-operations
+    - ba-physical-inventory-control
+    - ba-picking-operations
+    - ba-packing-shipping-operations
+    - ba-product-preparation-operations
+    - ba-kitting-operations
+    - ba-returns-receiving-inspection
+    - ba-returns-disposition-execution
+    - ba-warehouse-resource-management
+    - ba-warehouse-work-management
+    - ba-transport-planning
+    - ba-carrier-capacity-assignment
+    - ba-transport-dispatch
+    - ba-transport-execution
+    - ba-transport-event-reporting
+    - ba-transport-incident-assessment
+    - ba-transport-recovery-coordination
+    - ba-customs-dossier-management
+    - ba-customs-procedure-management
+    conclusion: Les profondeurs périphériques explicitement limitées sont respectées ; absence de capacités sous Logistics
+      ou de descendants sous les sous-domaines de contexte non classée comme lacune.
+  domains:
+  - id: domain-sales
+    name: Commerce
+    system: system-business-operations
+    nodes: 37
+    declared_depth: capabilities
+    kinds:
+      business_area: 13
+      capability: 18
+      area: 5
+      domain: 1
+    transverse_incident: 9
+    transverse_external: 9
+    external_types:
+      shares-data: 9
+    capabilities_without_own_or_behavior_transverse:
+    - cap-assortment-eligibility-management
+    - cap-commercial-catalog-publication
+    - cap-in-store-sales-journey-management
+    - cap-promotion-rule-management
+    - cap-retail-customer-engagement-management
+    - cap-retail-loyalty-program-management
+    - cap-sales-incentive-scheme-management
+    - cap-sales-price-determination
+    - cap-sales-pricing-rule-management
+    - cap-sales-rebate-scheme-management
+    - cap-store-checkout-management
+    - cap-store-network-configuration-management
+    - cap-wholesale-account-stewardship
+    - cap-wholesale-offer-preparation
+  - id: domain-sourcing-procurement
+    name: Sourcing and Procurement
+    system: system-business-operations
+    nodes: 24
+    declared_depth: capabilities
+    kinds:
+      business_area: 9
+      capability: 10
+      area: 4
+      domain: 1
+    transverse_incident: 3
+    transverse_external: 3
+    external_types:
+      shares-data: 3
+    capabilities_without_own_or_behavior_transverse:
+    - cap-category-sourcing-strategy
+    - cap-purchase-agreement-lifecycle-management
+    - cap-purchase-requisition-handling
+    - cap-supplier-consultation-coordination
+    - cap-supplier-eligibility-assessment
+    - cap-supplier-offer-selection
+    - cap-supplier-performance-evaluation
+  - id: supply-chain-orchestration
+    name: Supply Chain Orchestration
+    system: system-business-operations
+    nodes: 220
+    declared_depth: behaviors
+    kinds:
+      behavior: 74
+      reference: 20
+      capability: 88
+      business_area: 28
+      area: 9
+      domain: 1
+    transverse_incident: 402
+    transverse_external: 58
+    external_types:
+      confirms: 1
+      associated-document: 1
+      observed-result: 1
+      shares-data: 55
+    capabilities_without_own_or_behavior_transverse:
+    - cap-internal-supplies-reference-stewardship
+    - cap-merchandise-reference-stewardship
+    - cap-packaging-reference-stewardship
+    - cap-partner-agreement-reference-stewardship
+    - cap-service-provider-eligibility-control
+    - cap-service-reference-stewardship
+    - demand-fulfilment-policy-management
+  - id: domain-finance
+    name: Finance
+    system: system-enterprise-management-control
+    nodes: 6
+    declared_depth: domains
+    kinds:
+      area: 5
+      domain: 1
+    transverse_incident: 7
+    transverse_external: 7
+    external_types:
+      shares-data: 7
+    capabilities_without_own_or_behavior_transverse: []
+  - id: domain-product-portfolio-collection
+    name: Product Portfolio & Collection Management
+    system: system-design-development
+    nodes: 5
+    declared_depth: context
+    kinds:
+      area: 4
+      domain: 1
+    transverse_incident: 2
+    transverse_external: 1
+    external_types:
+      shares-data: 1
+    capabilities_without_own_or_behavior_transverse: []
+  - id: domain-product-development
+    name: Product Development
+    system: system-design-development
+    nodes: 4
+    declared_depth: context
+    kinds:
+      area: 3
+      domain: 1
+    transverse_incident: 0
+    transverse_external: 0
+    external_types: {}
+    capabilities_without_own_or_behavior_transverse: []
+  - id: domain-product-definition-lifecycle
+    name: Product Definition & Lifecycle Management
+    system: system-design-development
+    nodes: 4
+    declared_depth: context
+    kinds:
+      area: 3
+      domain: 1
+    transverse_incident: 0
+    transverse_external: 0
+    external_types: {}
+    capabilities_without_own_or_behavior_transverse: []
+  - id: domain-enterprise-planning-performance
+    name: Enterprise Planning & Performance
+    system: system-enterprise-management-control
+    nodes: 4
+    declared_depth: context
+    kinds:
+      area: 3
+      domain: 1
+    transverse_incident: 0
+    transverse_external: 0
+    external_types: {}
+    capabilities_without_own_or_behavior_transverse: []
+  - id: domain-governance-risk-compliance
+    name: Governance, Risk & Compliance
+    system: system-enterprise-management-control
+    nodes: 4
+    declared_depth: context
+    kinds:
+      area: 3
+      domain: 1
+    transverse_incident: 0
+    transverse_external: 0
+    external_types: {}
+    capabilities_without_own_or_behavior_transverse: []
+  - id: domain-warehousing
+    name: Warehousing
+    system: domain-logistics-execution
+    nodes: 19
+    declared_depth: business_areas
+    kinds:
+      business_area: 12
+      area: 6
+      domain: 1
+    transverse_incident: 28
+    transverse_external: 28
+    external_types:
+      shares-data: 28
+    capabilities_without_own_or_behavior_transverse: []
+  - id: domain-transportation
+    name: Transportation
+    system: domain-logistics-execution
+    nodes: 11
+    declared_depth: business_areas
+    kinds:
+      area: 3
+      business_area: 7
+      domain: 1
+    transverse_incident: 7
+    transverse_external: 7
+    external_types:
+      shares-data: 7
+    capabilities_without_own_or_behavior_transverse: []
+  - id: domain-customs-management
+    name: Customs Management
+    system: domain-logistics-execution
+    nodes: 5
+    declared_depth: business_areas
+    kinds:
+      business_area: 2
+      area: 2
+      domain: 1
+    transverse_incident: 2
+    transverse_external: 2
+    external_types:
+      shares-data: 2
+    capabilities_without_own_or_behavior_transverse: []
+  system_pairs:
+  - source: system-design-development
+    target: system-business-operations
+    types:
+      shares-data: 3
+    relation_ids:
+    - REL-U979-product-definitions
+    - REL-U1101-forecast-to-demand-plan
+    - REL-U1113-design-product-reference
+    system_summary_ids:
+    - REL-U979-product-definitions
+  - source: system-design-development
+    target: system-enterprise-management-control
+    types: {}
+    relation_ids: []
+    system_summary_ids: []
+  - source: system-design-development
+    target: domain-logistics-execution
+    types: {}
+    relation_ids: []
+    system_summary_ids: []
+  - source: system-business-operations
+    target: system-design-development
+    types:
+      shares-data: 2
+    relation_ids:
+    - REL-U979-product-feedback
+    - REL-U1113-product-feedback-design
+    system_summary_ids:
+    - REL-U979-product-feedback
+  - source: system-business-operations
+    target: system-enterprise-management-control
+    types:
+      shares-data: 5
+    relation_ids:
+    - REL-U979-management-facts
+    - REL-U981-accounting-facts
+    - REL-U996-commercial-benefit-conditions
+    - REL-U996-eligible-supply-facts
+    - REL-U1091-supplier-benefit-conditions-to-settlement
+    system_summary_ids:
+    - REL-U979-management-facts
+  - source: system-business-operations
+    target: domain-logistics-execution
+    types:
+      shares-data: 17
+    relation_ids:
+    - REL-U979-service-requests
+    - REL-U1113-service-order-receiving-mandate
+    - REL-U1113-service-order-picking-mandate
+    - REL-U1113-service-order-packing-mandate
+    - REL-U1113-service-order-cross-docking-mandate
+    - REL-U1113-service-order-labeling-mandate
+    - REL-U1113-service-order-kitting-mandate
+    - REL-U1113-service-order-garment-finishing-mandate
+    - REL-U1113-service-order-cleaning-mandate
+    - REL-U1113-service-order-repair-alteration-mandate
+    - REL-U1113-service-order-personalization-mandate
+    - REL-U1113-service-order-inspection-mandate
+    - REL-U1113-service-order-scrapping-mandate
+    - REL-U1113-service-order-transport-mandate
+    - REL-U1113-service-order-transport-booking-mandate
+    - REL-U1113-service-order-customs-clearance-mandate
+    - REL-U1113-transport-plan-local-mandate
+    system_summary_ids:
+    - REL-U979-service-requests
+  - source: system-enterprise-management-control
+    target: system-design-development
+    types: {}
+    relation_ids: []
+    system_summary_ids: []
+  - source: system-enterprise-management-control
+    target: system-business-operations
+    types:
+      shares-data: 4
+    relation_ids:
+    - REL-U979-credit-profiles
+    - REL-U996-commercial-settlement-results
+    - REL-U1113-finance-credit-reference
+    - REL-U1113-accounting-processing-results
+    system_summary_ids:
+    - REL-U979-credit-profiles
+  - source: system-enterprise-management-control
+    target: domain-logistics-execution
+    types: {}
+    relation_ids: []
+    system_summary_ids: []
+  - source: domain-logistics-execution
+    target: system-design-development
+    types: {}
+    relation_ids: []
+    system_summary_ids: []
+  - source: domain-logistics-execution
+    target: system-business-operations
+    types:
+      shares-data: 22
+    relation_ids:
+    - REL-U979-execution-results
+    - REL-U1113-ba-carrier-capacity-assignment-service-results
+    - REL-U1113-ba-customs-procedure-management-service-results
+    - REL-U1113-ba-kitting-operations-service-results
+    - REL-U1113-ba-packing-shipping-operations-service-results
+    - REL-U1113-ba-picking-operations-service-results
+    - REL-U1113-ba-product-preparation-operations-service-results
+    - REL-U1113-ba-receiving-operations-service-results
+    - REL-U1113-ba-transport-execution-service-results
+    - REL-U1113-domain-warehousing-service-results
+    - REL-U1113-ba-kitting-operations-inventory-facts
+    - REL-U1113-ba-packing-shipping-operations-inventory-facts
+    - REL-U1113-ba-physical-inventory-control-inventory-facts
+    - REL-U1113-ba-picking-operations-inventory-facts
+    - REL-U1113-ba-product-preparation-operations-inventory-facts
+    - REL-U1113-ba-receiving-operations-inventory-facts
+    - REL-U1113-ba-returns-disposition-execution-inventory-facts
+    - REL-U1113-ba-returns-receiving-inspection-inventory-facts
+    - REL-U1113-ba-storage-operations-inventory-facts
+    - REL-U1113-ba-transport-execution-inventory-facts
+    - REL-U1113-domain-warehousing-inventory-facts
+    - REL-U1113-local-transport-plan
+    system_summary_ids:
+    - REL-U979-execution-results
+  - source: domain-logistics-execution
+    target: system-enterprise-management-control
+    types: {}
+    relation_ids: []
+    system_summary_ids: []
+  domain_pairs:
+  - source_id: domain-sales
+    target_id: domain-sourcing-procurement
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sales
+    target_id: supply-chain-orchestration
+    relation_ids:
+    - REL-U996-contextual-prices
+    - REL-U1091-digital-demand-to-sales-order
+    - REL-U1091-wholesale-demand-to-sales-order
+    - REL-U1091-store-stock-facts-to-inventory
+    - REL-U1091-store-preparation-results-to-fulfilment
+    count: 5
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sales
+    target_id: domain-finance
+    relation_ids:
+    - REL-U996-commercial-benefit-conditions
+    count: 1
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sales
+    target_id: domain-product-portfolio-collection
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sales
+    target_id: domain-product-development
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sales
+    target_id: domain-product-definition-lifecycle
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sales
+    target_id: domain-enterprise-planning-performance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sales
+    target_id: domain-governance-risk-compliance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sales
+    target_id: domain-warehousing
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sales
+    target_id: domain-transportation
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sales
+    target_id: domain-customs-management
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sourcing-procurement
+    target_id: domain-sales
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sourcing-procurement
+    target_id: supply-chain-orchestration
+    relation_ids:
+    - REL-U1091-supplier-response-to-purchase-order
+    - REL-U1091-purchasing-decision-to-purchase-order
+    count: 2
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sourcing-procurement
+    target_id: domain-finance
+    relation_ids:
+    - REL-U1091-supplier-benefit-conditions-to-settlement
+    count: 1
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sourcing-procurement
+    target_id: domain-product-portfolio-collection
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sourcing-procurement
+    target_id: domain-product-development
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sourcing-procurement
+    target_id: domain-product-definition-lifecycle
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sourcing-procurement
+    target_id: domain-enterprise-planning-performance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sourcing-procurement
+    target_id: domain-governance-risk-compliance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sourcing-procurement
+    target_id: domain-warehousing
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sourcing-procurement
+    target_id: domain-transportation
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-sourcing-procurement
+    target_id: domain-customs-management
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: supply-chain-orchestration
+    target_id: domain-sales
+    relation_ids:
+    - REL-U1113-sales-order-cap-digital-sales-journey-management
+    - REL-U1113-sales-order-cap-wholesale-sales-engagement
+    - REL-U1113-store-preparation-mandate
+    count: 3
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: supply-chain-orchestration
+    target_id: domain-sourcing-procurement
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: supply-chain-orchestration
+    target_id: domain-finance
+    relation_ids:
+    - REL-U981-accounting-facts
+    - REL-U996-eligible-supply-facts
+    count: 2
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: supply-chain-orchestration
+    target_id: domain-product-portfolio-collection
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: supply-chain-orchestration
+    target_id: domain-product-development
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: supply-chain-orchestration
+    target_id: domain-product-definition-lifecycle
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: supply-chain-orchestration
+    target_id: domain-enterprise-planning-performance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: supply-chain-orchestration
+    target_id: domain-governance-risk-compliance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: supply-chain-orchestration
+    target_id: domain-warehousing
+    relation_ids:
+    - REL-U1113-service-order-receiving-mandate
+    - REL-U1113-service-order-picking-mandate
+    - REL-U1113-service-order-packing-mandate
+    - REL-U1113-service-order-cross-docking-mandate
+    - REL-U1113-service-order-labeling-mandate
+    - REL-U1113-service-order-kitting-mandate
+    - REL-U1113-service-order-garment-finishing-mandate
+    - REL-U1113-service-order-cleaning-mandate
+    - REL-U1113-service-order-repair-alteration-mandate
+    - REL-U1113-service-order-personalization-mandate
+    - REL-U1113-service-order-inspection-mandate
+    - REL-U1113-service-order-scrapping-mandate
+    count: 12
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: supply-chain-orchestration
+    target_id: domain-transportation
+    relation_ids:
+    - REL-U1113-service-order-transport-mandate
+    - REL-U1113-service-order-transport-booking-mandate
+    - REL-U1113-transport-plan-local-mandate
+    count: 3
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: supply-chain-orchestration
+    target_id: domain-customs-management
+    relation_ids:
+    - REL-U1113-service-order-customs-clearance-mandate
+    count: 1
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: domain-finance
+    target_id: domain-sales
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-finance
+    target_id: domain-sourcing-procurement
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-finance
+    target_id: supply-chain-orchestration
+    relation_ids:
+    - REL-U996-commercial-settlement-results
+    - REL-U1113-finance-credit-reference
+    - REL-U1113-accounting-processing-results
+    count: 3
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: domain-finance
+    target_id: domain-product-portfolio-collection
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-finance
+    target_id: domain-product-development
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-finance
+    target_id: domain-product-definition-lifecycle
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-finance
+    target_id: domain-enterprise-planning-performance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-finance
+    target_id: domain-governance-risk-compliance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-finance
+    target_id: domain-warehousing
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-finance
+    target_id: domain-transportation
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-finance
+    target_id: domain-customs-management
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-portfolio-collection
+    target_id: domain-sales
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-portfolio-collection
+    target_id: domain-sourcing-procurement
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-portfolio-collection
+    target_id: supply-chain-orchestration
+    relation_ids:
+    - REL-U1101-forecast-to-demand-plan
+    count: 1
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-portfolio-collection
+    target_id: domain-finance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-portfolio-collection
+    target_id: domain-product-development
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-portfolio-collection
+    target_id: domain-product-definition-lifecycle
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-portfolio-collection
+    target_id: domain-enterprise-planning-performance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-portfolio-collection
+    target_id: domain-governance-risk-compliance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-portfolio-collection
+    target_id: domain-warehousing
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-portfolio-collection
+    target_id: domain-transportation
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-portfolio-collection
+    target_id: domain-customs-management
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-development
+    target_id: domain-sales
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-development
+    target_id: domain-sourcing-procurement
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-development
+    target_id: supply-chain-orchestration
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-development
+    target_id: domain-finance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-development
+    target_id: domain-product-portfolio-collection
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-development
+    target_id: domain-product-definition-lifecycle
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-development
+    target_id: domain-enterprise-planning-performance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-development
+    target_id: domain-governance-risk-compliance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-development
+    target_id: domain-warehousing
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-development
+    target_id: domain-transportation
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-development
+    target_id: domain-customs-management
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-definition-lifecycle
+    target_id: domain-sales
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-definition-lifecycle
+    target_id: domain-sourcing-procurement
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-definition-lifecycle
+    target_id: supply-chain-orchestration
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-definition-lifecycle
+    target_id: domain-finance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-definition-lifecycle
+    target_id: domain-product-portfolio-collection
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-definition-lifecycle
+    target_id: domain-product-development
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-definition-lifecycle
+    target_id: domain-enterprise-planning-performance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-definition-lifecycle
+    target_id: domain-governance-risk-compliance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-definition-lifecycle
+    target_id: domain-warehousing
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-definition-lifecycle
+    target_id: domain-transportation
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-product-definition-lifecycle
+    target_id: domain-customs-management
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-enterprise-planning-performance
+    target_id: domain-sales
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-enterprise-planning-performance
+    target_id: domain-sourcing-procurement
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-enterprise-planning-performance
+    target_id: supply-chain-orchestration
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-enterprise-planning-performance
+    target_id: domain-finance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-enterprise-planning-performance
+    target_id: domain-product-portfolio-collection
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-enterprise-planning-performance
+    target_id: domain-product-development
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-enterprise-planning-performance
+    target_id: domain-product-definition-lifecycle
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-enterprise-planning-performance
+    target_id: domain-governance-risk-compliance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-enterprise-planning-performance
+    target_id: domain-warehousing
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-enterprise-planning-performance
+    target_id: domain-transportation
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-enterprise-planning-performance
+    target_id: domain-customs-management
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-governance-risk-compliance
+    target_id: domain-sales
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-governance-risk-compliance
+    target_id: domain-sourcing-procurement
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-governance-risk-compliance
+    target_id: supply-chain-orchestration
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-governance-risk-compliance
+    target_id: domain-finance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-governance-risk-compliance
+    target_id: domain-product-portfolio-collection
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-governance-risk-compliance
+    target_id: domain-product-development
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-governance-risk-compliance
+    target_id: domain-product-definition-lifecycle
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-governance-risk-compliance
+    target_id: domain-enterprise-planning-performance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-governance-risk-compliance
+    target_id: domain-warehousing
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-governance-risk-compliance
+    target_id: domain-transportation
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-governance-risk-compliance
+    target_id: domain-customs-management
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-warehousing
+    target_id: domain-sales
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-warehousing
+    target_id: domain-sourcing-procurement
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-warehousing
+    target_id: supply-chain-orchestration
+    relation_ids:
+    - REL-U1113-ba-kitting-operations-service-results
+    - REL-U1113-ba-packing-shipping-operations-service-results
+    - REL-U1113-ba-picking-operations-service-results
+    - REL-U1113-ba-product-preparation-operations-service-results
+    - REL-U1113-ba-receiving-operations-service-results
+    - REL-U1113-domain-warehousing-service-results
+    - REL-U1113-ba-kitting-operations-inventory-facts
+    - REL-U1113-ba-packing-shipping-operations-inventory-facts
+    - REL-U1113-ba-physical-inventory-control-inventory-facts
+    - REL-U1113-ba-picking-operations-inventory-facts
+    - REL-U1113-ba-product-preparation-operations-inventory-facts
+    - REL-U1113-ba-receiving-operations-inventory-facts
+    - REL-U1113-ba-returns-disposition-execution-inventory-facts
+    - REL-U1113-ba-returns-receiving-inspection-inventory-facts
+    - REL-U1113-ba-storage-operations-inventory-facts
+    - REL-U1113-domain-warehousing-inventory-facts
+    count: 16
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: domain-warehousing
+    target_id: domain-finance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-warehousing
+    target_id: domain-product-portfolio-collection
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-warehousing
+    target_id: domain-product-development
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-warehousing
+    target_id: domain-product-definition-lifecycle
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-warehousing
+    target_id: domain-enterprise-planning-performance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-warehousing
+    target_id: domain-governance-risk-compliance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-warehousing
+    target_id: domain-transportation
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-warehousing
+    target_id: domain-customs-management
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-transportation
+    target_id: domain-sales
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-transportation
+    target_id: domain-sourcing-procurement
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-transportation
+    target_id: supply-chain-orchestration
+    relation_ids:
+    - REL-U1113-ba-carrier-capacity-assignment-service-results
+    - REL-U1113-ba-transport-execution-service-results
+    - REL-U1113-ba-transport-execution-inventory-facts
+    - REL-U1113-local-transport-plan
+    count: 4
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: domain-transportation
+    target_id: domain-finance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-transportation
+    target_id: domain-product-portfolio-collection
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-transportation
+    target_id: domain-product-development
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-transportation
+    target_id: domain-product-definition-lifecycle
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-transportation
+    target_id: domain-enterprise-planning-performance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-transportation
+    target_id: domain-governance-risk-compliance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-transportation
+    target_id: domain-warehousing
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-transportation
+    target_id: domain-customs-management
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-customs-management
+    target_id: domain-sales
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-customs-management
+    target_id: domain-sourcing-procurement
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-customs-management
+    target_id: supply-chain-orchestration
+    relation_ids:
+    - REL-U1113-ba-customs-procedure-management-service-results
+    count: 1
+    assessment: documented_to_declared_depth
+    absence_is_not_automatic_finding: true
+  - source_id: domain-customs-management
+    target_id: domain-finance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-customs-management
+    target_id: domain-product-portfolio-collection
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-customs-management
+    target_id: domain-product-development
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-customs-management
+    target_id: domain-product-definition-lifecycle
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-customs-management
+    target_id: domain-enterprise-planning-performance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-customs-management
+    target_id: domain-governance-risk-compliance
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-customs-management
+    target_id: domain-warehousing
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  - source_id: domain-customs-management
+    target_id: domain-transportation
+    relation_ids: []
+    count: 0
+    assessment: no_structured_relation_documented
+    absence_is_not_automatic_finding: true
+  catalogs:
+    application_catalog:
+      products: 13
+      components: 87
+      component_parent_links: 74
+      offering_mappings: 111
+      selections: 14
+      component_states: 18
+      selection_mappings: 15
+      by_selection_context:
+        beaumanoir-historique: 6
+        boardriders: 7
+        flow-platform: 1
+      offering_mapping_scopes:
+        by_system:
+          system-business-operations: 97
+          domain-logistics-execution: 2
+          system-design-development: 8
+          system-enterprise-management-control: 4
+        by_domain:
+          domain-sales: 64
+          supply-chain-orchestration: 27
+          domain-sourcing-procurement: 6
+          domain-warehousing: 2
+          domain-product-portfolio-collection: 2
+          domain-finance: 3
+          domain-product-development: 4
+          domain-product-definition-lifecycle: 2
+          domain-enterprise-planning-performance: 1
+        by_kind:
+          business_area: 70
+          capability: 24
+          area: 14
+          domain: 3
+        unique_nodes: 41
+      selection_mapping_scopes:
+        by_system:
+          system-business-operations: 15
+        by_domain:
+          domain-sales: 10
+          supply-chain-orchestration: 5
+        by_kind:
+          area: 4
+          capability: 3
+          domain: 1
+          business_area: 7
+        unique_nodes: 7
+      unselected_products:
+      - product-akolade
+      selections_without_mappings:
+      - selection-centric-plm-boardriders
+      - selection-sap-bpc-boardriders
+      - selection-winstore-beaumanoir-historique
+      - selection-sfcc-beaumanoir-historique
+    information_catalog:
+      items: 14
+      links: 15
+      capability_roles: 23
+      role_scopes:
+        by_system:
+          system-business-operations: 23
+        by_domain:
+          supply-chain-orchestration: 23
+        by_kind:
+          capability: 23
+        unique_nodes: 10
+      visibility: internal_hidden_U470
+    scenario_catalog:
+      value_streams: 5
+      value_stages: 15
+      scenarios: 41
+      paths: 48
+      steps: 159
+      dependencies: 47
+      contributions: 496
+      contribution_scopes:
+        by_system:
+          system-business-operations: 496
+        by_domain:
+          supply-chain-orchestration: 481
+          domain-sales: 12
+          domain-sourcing-procurement: 3
+        by_kind:
+          capability: 490
+          reference: 6
+        unique_nodes: 95
+      legacy_links: 30
+      capabilities_without_scenario:
+      - id: cap-supplier-eligibility-assessment
+        name: Supplier Eligibility Assessment
+        domain_id: domain-sourcing-procurement
+      - id: cap-supplier-performance-evaluation
+        name: Supplier Performance Evaluation
+        domain_id: domain-sourcing-procurement
+      - id: cap-category-sourcing-strategy
+        name: Category Sourcing Strategy
+        domain_id: domain-sourcing-procurement
+      - id: cap-supplier-consultation-coordination
+        name: Supplier Consultation Coordination
+        domain_id: domain-sourcing-procurement
+      - id: cap-supplier-offer-selection
+        name: Supplier Offer Selection
+        domain_id: domain-sourcing-procurement
+      - id: cap-purchase-agreement-lifecycle-management
+        name: Purchase Agreement Lifecycle Management
+        domain_id: domain-sourcing-procurement
+      - id: cap-supplier-rebate-scheme-management
+        name: Supplier Rebate Scheme Management
+        domain_id: domain-sourcing-procurement
+      - id: cap-purchase-requisition-handling
+        name: Purchase Requisition Handling
+        domain_id: domain-sourcing-procurement
+      - id: cap-wholesale-account-stewardship
+        name: Wholesale Account Stewardship
+        domain_id: domain-sales
+      - id: cap-promotion-rule-management
+        name: Promotion Rule Management
+        domain_id: domain-sales
+      - id: cap-sales-rebate-scheme-management
+        name: Sales Rebate Scheme Management
+        domain_id: domain-sales
+      - id: cap-sales-incentive-scheme-management
+        name: Sales Incentive Scheme Management
+        domain_id: domain-sales
+      - id: cap-in-store-sales-journey-management
+        name: In-store Sales Journey Management
+        domain_id: domain-sales
+      - id: cap-store-network-configuration-management
+        name: Store Network Configuration Management
+        domain_id: domain-sales
+      - id: cap-retail-customer-engagement-management
+        name: Retail Customer Engagement Management
+        domain_id: domain-sales
+      - id: cap-partner-agreement-reference-stewardship
+        name: Partner & Agreement Reference Stewardship
+        domain_id: supply-chain-orchestration
+      - id: cap-merchandise-reference-stewardship
+        name: Merchandise Reference Stewardship
+        domain_id: supply-chain-orchestration
+      - id: cap-packaging-reference-stewardship
+        name: Packaging Reference Stewardship
+        domain_id: supply-chain-orchestration
+      - id: cap-internal-supplies-reference-stewardship
+        name: Internal Supplies Reference Stewardship
+        domain_id: supply-chain-orchestration
+      - id: cap-service-reference-stewardship
+        name: Service Reference Stewardship
+        domain_id: supply-chain-orchestration
+      - id: cap-service-provider-eligibility-control
+        name: Service Provider Eligibility Control
+        domain_id: supply-chain-orchestration
+      - id: cap-sales-pricing-rule-management
+        name: Sales Pricing Rule Management
+        domain_id: domain-sales
+      - id: cap-retail-loyalty-program-management
+        name: Retail Loyalty Program Management
+        domain_id: domain-sales
+      - id: process-ledger
+        name: Process Ledger
+        domain_id: supply-chain-orchestration
+    hotspot_catalog:
+      hotspots: 30
+      visible: 9
+      anchors: 55
+      anchor_scopes:
+        by_system:
+          system-business-operations: 48
+          domain-logistics-execution: 2
+          system-design-development: 2
+          system-enterprise-management-control: 2
+          none: 1
+        by_domain:
+          none: 7
+          supply-chain-orchestration: 38
+          domain-sales: 9
+          domain-finance: 1
+        by_kind:
+          business_system: 6
+          business_area: 14
+          area: 9
+          capability: 19
+          reference: 2
+          domain: 4
+          universe: 1
+        unique_nodes: 39
+      gaps: 18
+      gap_subject_scopes:
+        by_system:
+          system-business-operations: 18
+        by_domain:
+          supply-chain-orchestration: 13
+          domain-sales: 5
+        by_kind:
+          capability: 8
+          business_area: 10
+        unique_nodes: 12
+      observations: 36
+      observation_contexts:
+        beaumanoir-historique: 19
+        boardriders: 17
+      problems: 16
+      options: 67
+      sources: 58
+    document_catalog:
+      documents: 4
+      document_links: 3
+      unlinked_documents:
+      - DOC001
+    business_glossary:
+      terms: 402
+      aliases: 12
+    modeling_glossary:
+      terms: 50
+  catalog_reference_fields:
+    application_catalog.inline.glossary:
+      references: 114
+      invalid: []
+      targets: 17
+    application_catalog.products.components.parent_id:
+      references: 74
+      invalid: []
+      targets: 19
+    application_catalog.products.offering_mappings.component_id:
+      references: 111
+      invalid: []
+      targets: 76
+    application_catalog.products.offering_mappings.node_id:
+      references: 111
+      invalid: []
+      targets: 41
+    application_catalog.selections.component_states.component_id:
+      references: 18
+      invalid: []
+      targets: 14
+    application_catalog.selections.context_id:
+      references: 14
+      invalid: []
+      targets: 3
+    application_catalog.selections.mappings.component_id:
+      references: 15
+      invalid: []
+      targets: 11
+    application_catalog.selections.mappings.node_id:
+      references: 15
+      invalid: []
+      targets: 7
+    application_catalog.selections.panorama_ref:
+      references: 6
+      invalid: []
+      targets: 6
+    application_catalog.selections.product_id:
+      references: 14
+      invalid: []
+      targets: 12
+    application_catalog.source_refs:
+      references: 346
+      invalid: []
+      targets: 29
+    business_glossary.inline.glossary:
+      references: 1401
+      invalid: []
+      targets: 152
+    business_glossary.inline.method:
+      references: 198
+      invalid: []
+      targets: 6
+    business_glossary.inline.model:
+      references: 2022
+      invalid: []
+      targets: 196
+    business_glossary.inline.model.anchor:
+      references: 13
+      invalid: []
+      targets: 1
+    business_glossary.inline.modeling:
+      references: 6
+      invalid: []
+      targets: 6
+    business_glossary.source_refs:
+      references: 6637
+      invalid: []
+      targets: 707
+    business_glossary.terms.alias_of:
+      references: 12
+      invalid: []
+      targets: 11
+    document_catalog.source_refs:
+      references: 19
+      invalid: []
+      targets: 9
+    hotspot_catalog.hotspots.document_ids:
+      references: 3
+      invalid: []
+      targets: 3
+    hotspot_catalog.hotspots.gap_analysis.observations_by_context.context_id:
+      references: 36
+      invalid: []
+      targets: 2
+    hotspot_catalog.hotspots.gap_analysis.resolution_option_ids:
+      references: 7
+      invalid: []
+      targets: 7
+    hotspot_catalog.hotspots.gap_analysis.subject_node_id:
+      references: 18
+      invalid: []
+      targets: 12
+    hotspot_catalog.hotspots.location.node_ids:
+      references: 55
+      invalid: []
+      targets: 39
+    hotspot_catalog.hotspots.problems.analysis_ids:
+      references: 9
+      invalid: []
+      targets: 9
+    hotspot_catalog.hotspots.problems.document_ids:
+      references: 2
+      invalid: []
+      targets: 1
+    hotspot_catalog.hotspots.problems.option_ids:
+      references: 23
+      invalid: []
+      targets: 23
+    hotspot_catalog.inline.glossary:
+      references: 57
+      invalid: []
+      targets: 19
+    hotspot_catalog.inline.method:
+      references: 1
+      invalid: []
+      targets: 1
+    hotspot_catalog.inline.model:
+      references: 25
+      invalid: []
+      targets: 15
+    hotspot_catalog.source_refs:
+      references: 594
+      invalid: []
+      targets: 118
+    information_catalog.items.capability_roles.capability_ref:
+      references: 23
+      invalid: []
+      targets: 10
+    information_catalog.links.from_ref:
+      references: 15
+      invalid: []
+      targets: 11
+    information_catalog.links.to_ref:
+      references: 15
+      invalid: []
+      targets: 7
+    information_catalog.source_refs:
+      references: 290
+      invalid: []
+      targets: 31
+    modeling_glossary.inline.glossary:
+      references: 4
+      invalid: []
+      targets: 4
+    modeling_glossary.inline.method:
+      references: 21
+      invalid: []
+      targets: 11
+    modeling_glossary.inline.model:
+      references: 21
+      invalid: []
+      targets: 16
+    modeling_glossary.source_refs:
+      references: 482
+      invalid: []
+      targets: 189
+    scenario_catalog.inline.glossary:
+      references: 64
+      invalid: []
+      targets: 28
+    scenario_catalog.inline.model:
+      references: 47
+      invalid: []
+      targets: 29
+    scenario_catalog.legacy_links.owner_id:
+      references: 30
+      invalid: []
+      targets: 8
+    scenario_catalog.legacy_links.scenario_id:
+      references: 30
+      invalid: []
+      targets: 26
+    scenario_catalog.paths.dependencies.from:
+      references: 47
+      invalid: []
+      targets: 32
+    scenario_catalog.paths.dependencies.to:
+      references: 47
+      invalid: []
+      targets: 33
+    scenario_catalog.paths.scenario_id:
+      references: 48
+      invalid: []
+      targets: 41
+    scenario_catalog.paths.steps.contributions.node_id:
+      references: 496
+      invalid: []
+      targets: 95
+    scenario_catalog.scenarios.events:
+      references: 48
+      invalid: []
+      targets: 13
+    scenario_catalog.scenarios.objects:
+      references: 51
+      invalid: []
+      targets: 5
+    scenario_catalog.scenarios.situations:
+      references: 43
+      invalid: []
+      targets: 3
+    scenario_catalog.scenarios.value_stream_ids:
+      references: 65
+      invalid: []
+      targets: 5
+    scenario_catalog.source_refs:
+      references: 762
+      invalid: []
+      targets: 73
+  catalog_reference_occurrences: 14625
+  qualification_coverage:
+    associated-document:
+      count: 1
+      meaning: 0
+      conditions: 0
+      effects: 0
+      scope: 0
+    confirms:
+      count: 1
+      meaning: 0
+      conditions: 0
+      effects: 0
+      scope: 0
+    describes-network:
+      count: 1
+      meaning: 0
+      conditions: 0
+      effects: 0
+      scope: 0
+    observed-result:
+      count: 1
+      meaning: 0
+      conditions: 0
+      effects: 0
+      scope: 0
+    provides-conditions:
+      count: 5
+      meaning: 4
+      conditions: 3
+      effects: 3
+      scope: 4
+    provides-knowledge:
+      count: 6
+      meaning: 5
+      conditions: 5
+      effects: 5
+      scope: 3
+    records:
+      count: 1
+      meaning: 0
+      conditions: 0
+      effects: 0
+      scope: 0
+    relates-to:
+      count: 156
+      meaning: 156
+      conditions: 155
+      effects: 155
+      scope: 108
+    represents:
+      count: 1
+      meaning: 0
+      conditions: 0
+      effects: 0
+      scope: 0
+    shares-data:
+      count: 175
+      meaning: 175
+      conditions: 175
+      effects: 175
+      scope: 175
+    supplies-reference:
+      count: 16
+      meaning: 16
+      conditions: 16
+      effects: 16
+      scope: 9
+    uses-reference:
+      count: 49
+      meaning: 49
+      conditions: 49
+      effects: 49
+      scope: 30
+controls:
+  mechanical:
+    duplicate_node_ids: 0
+    duplicate_relation_ids: 0
+    dangling_endpoints: []
+    self_relations: []
+    hierarchy_cycles: []
+    multiple_hierarchical_parents: {}
+    nodes_without_parent:
+    - beaumanoir-target-universe
+    - ILL-OBJ-01
+    - ILL-DOC-01
+    - ILL-EVT-01
+    - ILL-OBJ-02
+    nodes_without_ea_path:
+    - ILL-OBJ-01
+    - ILL-DOC-01
+    - ILL-EVT-01
+    - ILL-OBJ-02
+    exact_structural_duplicates: []
+    semantic_duplicates:
+    - - REL-U908-uses-reference-D05.e-96
+      - REL-U908-uses-reference-D05.e-131
+    parallel_transverse_same_type:
+    - - REL-INVENTORY-PLANNING-D05.e
+      - REL-INVENTORY-PLANNING-D05.g
+    - - REL-NEEDS-U290-085
+      - REL-INITIAL-STOCKING-INVENTORY
+    - - REL-U908-uses-reference-D05.e-96
+      - REL-U908-uses-reference-D05.e-131
+    - - REL-NEEDS-U290-087
+      - REL-INITIAL-STOCKING-TARGET
+    - - REL-NEEDS-U290-088
+      - REL-INITIAL-STOCKING-TRACKING
+    - - REL-NEEDS-U290-089
+      - REL-INITIAL-STOCKING-PURCHASE
+    - - REL-NEEDS-U290-090
+      - REL-INITIAL-STOCKING-TRANSFER
+    - - REL-NEEDS-U290-094
+      - REL-REDISTRIBUTION-INITIAL-STOCKING
+    - - REL-NEEDS-U395-03
+      - REL-NEEDS-U395-04
+    - - REL-AUDIT-U435-PLNK-01
+      - REL-U750-PLANNING-ASSIGNMENT
+    - - REL-U682-CATALOG-SERVICE-ORDERS
+      - REL-U711-CATALOG-SERVICE-ORDERS
+  publication_comparison:
+    publication: 2026-10-16.3
+    nodes: 348
+    relations: 752
+    common_relations: 752
+    business_field_differences: []
+    backlog_only_relations:
+    - REL-ILL-004
+    - REL-ILL-005
+    - REL-ILL-006
+    - REL-ILL-007
+    - REL-ILL-008
+    - REL-U725-ILL-001
+    - REL-U725-ILL-002
+    - REL-U725-ILL-003
+  semantic_negative_controls:
+  - control: Arbre explicite unique
+    result: Aucun cycle hiérarchique, multiparent, relation pendante ou mauvais niveau actuel. Les quatre objets illustratifs
+      restent hors arbre par conception.
+  - control: Types de relation et extrémités
+    result: Les 49 uses-reference et 16 supplies-reference relient capability → reference ; les 8 relates-to entre références
+      restent distincts des 148 entre capacités/comportements. provides-conditions (5) et provides-knowledge (6) portent les
+      types d’extrémités autorisés.
+  - control: Dépendances cycliques
+    result: 'Deux composantes de rôle needs : 3 capacités Inventory (comptage/historique/visibilité) et 16 capacités plan/promesse/commandes.
+      Ce sont des retours et réexamens plausibles ; aucun blocage métier n’est déduit de la seule présence d’un cycle. Les
+      réservations, protections et versions reconnues restent distinguées dans les contrats.'
+  - control: Sens des partages internes
+    result: 'Lecture des contenus/finalités/conditions des 112 liens internes à un Domain : producteur → consommateur cohérent.
+      Les propositions, autorisations, engagements et résultats reconnus restent distincts ; aucune inversion démontrée dans
+      ce sous-ensemble.'
+  - control: Histoire versus autorité transactionnelle
+    result: Process Ledger, les deux Inventory Ledgers et les familles de commandes conservent leurs autorités distinctes
+      ; Process Mining analyse les traces du Process Ledger. L’état à date explicite date du fait et date de connaissance.
+  - control: Types illustratifs
+    result: Les liens représente/enregistre/confirme/document/résultat des objets ILL restent illustratifs ou internes au
+      catalogue masqué ; leur qualification absente n’est pas une erreur opérationnelle. Aucun comportement U431 réaudité.
+  dependency_cycles_not_classified_as_errors:
+  - nodes:
+    - D01.d
+    - D01.g
+    - D01.c
+    relations:
+    - REL-NEEDS-U290-004
+    - REL-NEEDS-U290-006
+    - REL-NEEDS-U290-007
+  - nodes:
+    - D04.r
+    - D04.m
+    - D03.k
+    - D04.i
+    - D07.a
+    - D06.e
+    - D03.j
+    - D03.o
+    - D04.k
+    - D02.e
+    - D05.h
+    - D02.c
+    - D03.i
+    - D04.n
+    - D04.j
+    - D05.e
+    relations:
+    - REL-CTP-EXECUTION-SERVICE
+    - REL-PTP-CTP-SCENARIOS
+    - REL-NEEDS-U290-025
+    - REL-NEEDS-U290-029
+    - REL-NEEDS-U290-030
+    - REL-NEEDS-U290-033
+    - REL-NEEDS-U290-038
+    - REL-NEEDS-U290-046
+    - REL-NEEDS-U290-054
+    - REL-NEEDS-U290-060
+    - REL-NEEDS-U290-070
+    - REL-NEEDS-U290-073
+    - REL-U835-D04.n-D03.i
+    - REL-U835-D04.n-D03.j
+    - REL-U835-D04.n-D03.k
+    - REL-NEEDS-U290-089
+    - REL-NEEDS-U290-090
+    - REL-NEEDS-U290-102
+    - REL-NEEDS-U290-103
+    - REL-NEEDS-U290-108
+    - REL-NEEDS-U290-109
+    - REL-INITIAL-STOCKING-PURCHASE
+    - REL-INITIAL-STOCKING-TRANSFER
+    - REL-RESERVATION-POLICY-ATP
+    - REL-RESERVATION-POLICY-APPLICATION
+    - REL-NEEDS-U378-01
+    - REL-NEEDS-U378-02
+    - REL-NEEDS-U378-03
+    - REL-NEEDS-U378-07
+    - REL-NEEDS-U395-03
+    - REL-NEEDS-U395-04
+    - REL-AUDIT-U435-PLNK-06
+    - REL-AUDIT-U435-CONSIGNED-STRUCTURING
+    - REL-AUDIT-U435-CONSIGNED-SUPPLIER-RETURN
+  catalog_validators:
+    application_catalog: []
+    information_catalog: []
+    scenario_catalog: []
+    hotspot_catalog: []
+    document_catalog: []
+    business_glossary: []
+  catalog_independent_checks:
+  - Toutes les références explicites inventoriées résolvent dans leur collection, contexte SI, produit, parcours ou point
+    chaud.
+  - Les arbres de composants applicatifs sont enracinés et sans cycle ; correspondances d’offre et sélections par SI restent
+    distinctes.
+  - Chaque scénario possède un parcours et des classifications valides ; étapes, dépendances et liens historiques résolvent.
+  - Ancres de points chauds, sujets des écarts, observations, problèmes, options et associations documentaires sont valides.
+  - Les quatre documents figés existent et correspondent à leur format et leur empreinte SHA256.
+  - Les liens inline des catalogues et les cibles méthodologiques du modèle et des glossaires résolvent dans le contrôle indépendant.
+  - Les sources et corrections citées dans les catalogues et glossaires existent dans l’index de provenance.
+  - Les six panorama_ref actuels résolvent dans le bon SI ; les quatre sélections non reliées restent explicitement non qualifiées.
+  catalog_validator_probes:
+  - id: catalog_inline_link
+    validator_errors: []
+    expected: dangling model link rejected
+    actual: accepted
+  - id: selection_panorama_ref
+    validator_errors: []
+    expected: unknown panorama object rejected
+    actual: accepted
+  - id: method_link
+    validator_errors: []
+    expected: unknown method link rejected
+    actual: accepted
+  - id: context_participant_at_declared_depth
+    validator_errors:
+    - 'b2b-partial-stock-path: contribution must reference a published capability or reference: ba-receiving-operations'
+    expected: explicitly distinguish context participation from capability mobilisation
+    actual: business area participation is not representable by the existing contribution contract
+findings:
+- id: EA-CHAIN-01
+  priority: P1
+  title: L’offre commerciale publiée n’est reliée à aucun de ses parcours consommateurs
+  kind: missing_documented_chain
+  object_ids:
+  - cap-assortment-eligibility-management
+  - cap-commercial-catalog-publication
+  - cap-wholesale-offer-preparation
+  - cap-wholesale-sales-engagement
+  - cap-digital-sales-journey-management
+  - cap-in-store-sales-journey-management
+  evidence:
+  - object_id: cap-commercial-catalog-publication
+    field: fields.scope
+    value: |-
+      Diffuser aux canaux et clients une présentation commerciale valide des produits autorisés.
+
+      Présentation et diffusion de l’offre ; ne pas redéfinir les produits, les prix ou l’admissibilité. La liste d’assortiment SAP est un appui plus étroit que tout catalogue commercial.
+    transverse_incident_ids: []
+  - object_id: cap-wholesale-offer-preparation
+    field: fields.scope
+    value: Sélectionner les produits et conditions proposés au revendeur pour une saison, puis rendre la proposition disponible
+      au parcours de vente wholesale. Le résultat est une offre, distincte de la demande et de la commande du client ; l’assortiment
+      et le prix restent sous leurs autorités respectives.
+    transverse_incident_ids: []
+  - object_id: cap-digital-sales-journey-management
+    field: fields.scope
+    value: Présenter une offre commerciale autorisée, permettre au client de choisir, constituer son panier et soumettre une
+      demande de vente en ligne. Montrer le suivi commercial sans décider des engagements de la commande. [Sales Order](model:D04.i)
+      tient identité et transitions ; [Store Order Preparation & Handover](model:cap-store-order-preparation-handover) peut
+      réaliser un retrait en magasin.
+    transverse_incident_ids:
+    - REL-U1091-digital-demand-to-sales-order
+    - REL-U1113-sales-order-cap-digital-sales-journey-management
+  consequence: Le modèle décrit une offre autorisée préalable à la vente, mais son graphe ne permet pas de retrouver quels
+    parcours reçoivent l’assortiment, le catalogue ou la proposition wholesale. Les 9 relations Commerce sont toutes externes.
+  proposal: Relier explicitement admissibilité→publication/proposition, catalogue→parcours de vente et proposition wholesale→Wholesale
+    Sales Engagement avec produits, destinataires, validité et version. Conserver une dépendance distincte si seule une condition
+    de capacité est connue.
+  reserve: Ce sont des relations cible entre objets déjà décrits ; ne pas transformer le catalogue en maître produit ou l’assortiment
+    en affectation de stock. Pas de diffusion à tous les canaux par défaut.
+  market_source_ids:
+  - MS-ASSORTMENT
+  - SAP-ASSORTMENT
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+- id: EA-CHAIN-02
+  priority: P1
+  title: La production des prix est isolée des règles et de la vente
+  kind: missing_documented_chain
+  object_ids:
+  - cap-sales-pricing-rule-management
+  - cap-promotion-rule-management
+  - cap-sales-price-determination
+  - cap-wholesale-offer-preparation
+  - cap-store-checkout-management
+  - D04.i
+  - REL-U996-contextual-prices
+  evidence:
+  - object_id: cap-sales-price-determination
+    field: fields.scope
+    value: Calculer le prix contextualisé selon produit, client, canal et date à partir des règles approuvées par [Sales Pricing
+      Rule Management](model:cap-sales-pricing-rule-management) et des promotions autorisées. Fournir le prix proposé à la
+      vente ; [Order Management](model:D04) conserve le prix engagé.
+    transverse_incident_ids: []
+  - object_id: cap-sales-pricing-rule-management
+    field: fields.scope
+    value: Définir les tarifs, conditions et priorités de prix autorisés. Le résultat est une règle valide à utiliser par
+      [Sales Price Determination](model:cap-sales-price-determination), pas le prix engagé d’une commande.
+    transverse_incident_ids: []
+  - object_id: cap-promotion-rule-management
+    field: fields.scope
+    value: |-
+      Définir une mécanique promotionnelle, ses bénéficiaires, sa validité et ses conditions d’application.
+
+      Les règles promotionnelles sont combinées par Pricing ; la planification des ressources de la promotion reste extérieure.
+    transverse_incident_ids: []
+  consequence: La seule relation de prix part du sous-domaine Pricing & Promotions Management vers Sales Order ; la capacité
+    qui calcule le prix n’a aucune relation transverse. Les règles et promotions citées comme entrées ne sont pas raccordées,
+    ni les offres et ventes immédiates consommatrices.
+  proposal: Documenter règles/promotion→Sales Price Determination, puis les prix proposés vers les consommateurs prouvés ;
+    préciser demande de calcul, contexte et résultat si l’interaction est transactionnelle. Rattacher le flux existant à son
+    producteur exact ou déclarer sa maille agrégée.
+  reserve: Ne pas étendre les seuls prix de vente aux Purchase Orders ; la conservation du prix engagé reste dans la famille
+    de commande. La rétroactivité et la fréquence restent à qualifier.
+  market_source_ids:
+  - MS-PRICING
+  - SAP-PRICING
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+- id: EA-CHAIN-03
+  priority: P1
+  title: Le magasin peut recueillir une commande à servir sans relation vers Sales Order
+  kind: missing_documented_chain
+  object_ids:
+  - cap-in-store-sales-journey-management
+  - cap-store-checkout-management
+  - D04.i
+  - REL-U1091-digital-demand-to-sales-order
+  - REL-U1091-wholesale-demand-to-sales-order
+  evidence:
+  - object_id: cap-in-store-sales-journey-management
+    field: fields.scope
+    value: Conseiller le client, constituer son choix et recueillir une demande d’achat ou de commande en magasin. [Store
+      Checkout Management](model:cap-store-checkout-management) réalise la transaction de caisse ; une commande à livrer ou
+      retirer mobilise [Sales Order](model:D04.i).
+    transverse_incident_ids: []
+  - object_id: cap-store-checkout-management
+    field: fields.scope
+    value: Enregistrer la transaction de vente, l’encaissement et les retours ou échanges au point de vente. Transmettre les
+      faits de vente et de paiement utiles aux périmètres concernés ; une commande à servir conserve son identité dans [Sales
+      Order](model:D04.i).
+    transverse_incident_ids: []
+  consequence: Les demandes digitales et wholesale sont reliées à Sales Order avec leurs retours ; la variante magasin à livrer
+    ou retirer, explicitement décrite, n’a aucun lien équivalent et aucun retour d’acceptation/engagement.
+  proposal: Distinguer vente immédiate de la demande magasin à satisfaire ; qualifier l’émetteur entre le parcours magasin
+    et la caisse, relier la demande autorisée à Sales Order, puis le résultat d’acceptation et le suivi au parcours demandeur.
+  reserve: Une transaction encaissée et emportée ne doit pas créer artificiellement une commande restant à servir. Ne pas
+    dupliquer les retours digital/wholesale U1113.
+  market_source_ids:
+  - MS-STORE
+  - SAP-STORE
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+  related_findings:
+  - EA-CHAIN-04
+  - EA-CAT-04
+- id: EA-CHAIN-04
+  priority: P1
+  title: Les ventes et encaissements de caisse sont décrits mais sans sortie structurée
+  kind: missing_documented_chain
+  object_ids:
+  - cap-store-checkout-management
+  - cap-store-stock-operations-management
+  - D01.f
+  - subdomain-financial-accounting
+  - subdomain-treasury-cash
+  - subdomain-commercial-settlement-management
+  evidence:
+  - object_id: cap-store-checkout-management
+    field: fields.scope
+    value: Enregistrer la transaction de vente, l’encaissement et les retours ou échanges au point de vente. Transmettre les
+      faits de vente et de paiement utiles aux périmètres concernés ; une commande à servir conserve son identité dans [Sales
+      Order](model:D04.i).
+    transverse_incident_ids: []
+  - object_id: subdomain-treasury-cash
+    field: fields.scope
+    value: Ne transfère pas à FLOW la trésorerie ni les paiements fournisseurs ; les faits d’encaissement et décaissement
+      alimentent les prévisions.
+    transverse_incident_ids: []
+  - object_id: cap-store-stock-operations-management
+    field: fields.scope
+    value: Constater les quantités reçues, compter le stock, qualifier les écarts et déplacer des biens entre réserve et surface
+      de vente. Fournir les faits physiques au Core sans décider de promesse ni d’affectation. [Store Order Preparation &
+      Handover](model:cap-store-order-preparation-handover) traite les commandes à remettre.
+    transverse_incident_ids:
+    - REL-U1091-store-stock-facts-to-inventory
+  consequence: Store Checkout Management annonce la transmission des faits de vente et de paiement mais ne possède que son
+    parent. Le modèle ne montre ni la reconnaissance des sorties/retours de stock issus de vente immédiate, ni le destinataire
+    financier des faits monétaires. Les ledgers de stock ne peuvent être présumés producteurs d’un encaissement.
+  proposal: Qualifier séparément faits physiques→Inventory Tracking (directement ou via Store Stock Operations selon le mandat
+    établi), transactions de vente/paiement→Finance et faits éligibles→Settlement ; faire porter chaque diffusion à son producteur.
+  reserve: La voie précise et les autorités financières doivent être établies ; ne pas attribuer la comptabilité ou le paiement
+    à Inventory et ne pas confondre encaissement confirmé avec demande de paiement.
+  market_source_ids:
+  - MS-STORE
+  - SAP-FSD
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+- id: EA-CHAIN-05
+  priority: P1
+  title: Le parcours d’achat est interrompu avant l’engagement de commande
+  kind: missing_documented_chain
+  object_ids:
+  - cap-purchase-requisition-handling
+  - cap-supplier-eligibility-assessment
+  - cap-supplier-consultation-coordination
+  - cap-supplier-offer-selection
+  - cap-purchase-agreement-lifecycle-management
+  - cap-purchasing-case-coordination
+  - D04.j
+  evidence:
+  - object_id: cap-purchase-requisition-handling
+    field: fields.scope
+    value: |-
+      Qualifier un besoin d’achat et produire une demande autorisée avant tout engagement fournisseur.
+
+      Les plans et propositions de FLOW ne valent pas demande approuvée.
+    transverse_incident_ids: []
+  - object_id: cap-supplier-offer-selection
+    field: fields.scope
+    value: |-
+      Évaluer les offres, négocier leurs conditions proposées et choisir la source pour le besoin.
+
+      Formalisation des accords sous [Purchase Contract Management](model:subdomain-purchase-contract-management) ; pas achat implicitement engagé.
+    transverse_incident_ids: []
+  - object_id: cap-purchase-agreement-lifecycle-management
+    field: fields.scope
+    value: |-
+      Formaliser et maintenir les conditions d’un accord d’achat pendant sa période de validité.
+
+      Accord cadre et prix d’achat distincts du cycle d’une commande.
+    transverse_incident_ids: []
+  consequence: Aucune relation transverse interne ne relie les 10 capacités Procurement ; les 3 sorties existantes concernent
+    des changements/réponses de commande et des barèmes de ristourne. Le besoin approuvé, l’offre retenue et l’accord/prix
+    d’achat n’ont pas de destinataire structuré vers la commande.
+  proposal: 'Modéliser les passages attestés : besoin→consultation, admissibilité→sélection, offre retenue→formalisation d’accord,
+    demande autorisée/conditions d’achat→Purchase Order, puis état d’application vers le parcours d’achat ; les voies directes
+    sans consultation ou sans accord restent possibles et explicites.'
+  reserve: Pas de séquence obligatoire unique ni d’achat automatiquement engagé par la sélection. Le flux de réponse fournisseur
+    U1091 et le suivi du document dans SCO restent préservés. Les maîtres partenaires restent une lacune distincte déjà reconnue
+    U1113.
+  market_source_ids:
+  - MS-PROCUREMENT
+  - SAP-RFQ
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+  related_findings:
+  - EA-CHAIN-06
+  - EA-CHAIN-09
+- id: EA-CHAIN-06
+  priority: P2
+  title: Les résultats de commande et les faits observés n’alimentent pas l’évaluation fournisseur
+  kind: missing_documented_chain
+  object_ids:
+  - cap-supplier-performance-evaluation
+  - cap-supplier-commitment-follow-up
+  - cap-purchasing-case-coordination
+  - D04.j
+  - D07.d
+  evidence:
+  - object_id: cap-supplier-performance-evaluation
+    field: fields.scope
+    value: |-
+      Produire une appréciation de la performance du fournisseur à partir des résultats observés et signaler les écarts à traiter.
+
+      Consommer les faits d’achat et qualité ; ne pas conduire toutes les relances de commande.
+    transverse_incident_ids: []
+  - object_id: cap-supplier-commitment-follow-up
+    field: fields.scope
+    value: |-
+      Constater les confirmations, dates et quantités annoncées par le fournisseur et signaler leurs écarts.
+
+      La réalisation du transport et de la réception reste sous [Logistics](model:domain-logistics-execution) ; [Purchase Order](model:D04.j) garde le carnet d’achat cible et ses engagements.
+    transverse_incident_ids:
+    - REL-U1091-supplier-response-to-purchase-order
+  - object_id: cap-purchasing-case-coordination
+    field: fields.scope
+    value: Lorsqu’un fournisseur annonce un retard ou une quantité révisée, qualifier l’impact commercial, obtenir une réponse
+      et retenir une issue autorisée. Le résultat est une instruction de changement ou de maintien transmise à [Purchase Order](model:D04.j),
+      qui garde identité, engagements et transitions. [Supplier Commitment Follow-up](model:cap-supplier-commitment-follow-up)
+      constate les confirmations et écarts ; [Process Management](model:subdomain-process-management) suit le travail transversal.
+    transverse_incident_ids:
+    - REL-U1091-purchasing-decision-to-purchase-order
+  consequence: Supplier Performance Evaluation indique consommer les faits d’achat et qualité mais n’a aucun lien transverse.
+    Supplier Commitment Follow-up émet des annonces vers Purchase Order sans recevoir l’engagement applicable et les réalisations
+    nécessaires au calcul d’écarts ; Purchasing Case Coordination envoie un changement sans retour d’application.
+  proposal: Relier les états et engagements de Purchase Order, les résultats de réception/qualité reconnus et leurs corrections
+    vers les consommateurs Procurement pertinents ; distinguer réponse annoncée, fait constaté et évaluation durable.
+  reserve: Le choix de la source de qualité et du producteur d’une mesure doit être documenté. Les annonces du fournisseur
+    ne valent pas preuve de livraison. La référence SAP générale sourcing ne couvre pas à elle seule tout un score fournisseur.
+  market_source_ids:
+  - MS-PROCUREMENT
+  - SAP-FSD
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+- id: EA-CHAIN-07
+  priority: P2
+  title: Les domaines Design sont décomposés mais leurs passages de relais ne sont pas reliés
+  kind: missing_documented_chain
+  object_ids:
+  - subdomain-product-strategy-requirements
+  - subdomain-collection-planning
+  - subdomain-development-planning
+  - subdomain-product-design-specification
+  - subdomain-sampling-product-validation
+  - subdomain-product-definition-variants
+  - subdomain-product-change-release
+  evidence:
+  - object_id: subdomain-collection-planning
+    field: fields.scope
+    value: '[Sous-domaine](method:MOD038) de [Product Portfolio & Collection Management](model:domain-product-portfolio-collection).
+      Composer la collection : modèles, coloris, variantes envisagées, cohérence de gamme et dates de lancement. [Product
+      Design & Specification](model:subdomain-product-design-specification) définit ensuite les caractéristiques du produit.
+      [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) utilise la sélection de produits et le calendrier
+      comme hypothèses pour estimer la demande et les ressources possibles. La composition de la collection ne produit pas
+      à elle seule un Forecast Plan ; [Commerce](glossary:TER108) décide les assortiments par canal.'
+    transverse_incident_ids:
+    - REL-U1101-collection-to-demand-supply-forecast
+  - object_id: subdomain-product-design-specification
+    field: fields.scope
+    value: Précise forme, dimensions, composants et exigences ; la définition approuvée et ses changements sont ensuite maîtrisés
+      dans [Product Definition & Lifecycle Management](glossary:TER214).
+    transverse_incident_ids: []
+  - object_id: subdomain-product-change-release
+    field: fields.scope
+    value: Maîtrise version et conditions d’usage ; un retour opérationnel peut demander un changement sans modifier automatiquement
+      la définition.
+    transverse_incident_ids: []
+  consequence: Product Development et Product Definition & Lifecycle Management n’ont aucune relation transverse incidente.
+    Les fiches décrivent pourtant les caractéristiques définies après la collection, leur validation, puis la maîtrise des
+    versions approuvées. La seule chaîne interne Design existante est Collection Planning→Demand & Supply Forecasting.
+  proposal: Relier, à la profondeur de contexte existante, orientations/collection→développement, spécifications et validation→définition
+    approuvée, changements autorisés→versions mises à disposition ; préciser les retours de validation ou demande de correction
+    là où ils sont documentés.
+  reserve: Aucune capacité périphérique supplémentaire n’est nécessaire. Ne pas imposer de cycle séquentiel unique ni une
+    autorité sur tous les produits achetés déjà conçus ; les responsables par objet restent à établir.
+  market_source_ids:
+  - MS-PRODUCT-RELEASE
+  - SAP-FSD
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+  related_findings:
+  - EA-CHAIN-08
+  - EA-CAT-04
+- id: EA-CHAIN-08
+  priority: P2
+  title: La définition produit arrive globalement dans Business Operations sans consommateurs Commerce et Procurement identifiés
+  kind: missing_documented_chain
+  object_ids:
+  - system-design-development
+  - domain-product-definition-lifecycle
+  - subdomain-product-documentation-classification
+  - cap-assortment-eligibility-management
+  - cap-commercial-catalog-publication
+  - cap-supplier-consultation-coordination
+  - REL-U979-product-definitions
+  - REL-U1113-design-product-reference
+  evidence:
+  - object_id: subdomain-product-definition-variants
+    field: fields.scope
+    value: Conserve des identités et caractéristiques utilisables par les consommateurs ; les sources responsables sont à
+      établir par objet, notamment pour les produits achetés déjà conçus.
+    transverse_incident_ids: []
+  - object_id: subdomain-product-documentation-classification
+    field: fields.scope
+    value: Relie documents et catégories aux versions pertinentes ; les contenus commerciaux spécifiques aux canaux restent
+      à qualifier avec [Commerce](glossary:TER108).
+    transverse_incident_ids: []
+  - object_id: subdomain-assortment-catalog-management
+    field: fields.scope
+    value: |-
+      Définir et publier l’offre proposée par magasin, canal ou partenaire, avec sa présentation commerciale et sa période de validité.
+
+      Publie les produits proposés par canal, magasin ou partenaire, avec leur période de validité et leur présentation commerciale. Distingue l’[assortiment](glossary:TER250), qui délimite l’offre, du [catalogue](glossary:TER251), qui la présente, et de la sélection préparée pour un client dans [Wholesale Commerce](model:subdomain-sales-wholesale).
+
+      [Design & Development](model:system-design-development) conserve définition et préparation des produits. [Master Plan](model:domain-plan) construit les plans prévisionnels de ressources ; publier un assortiment ne calcule pas un plan Supply ni une affectation de stock. Les autorités par donnée et conditions commerciales restent à documenter. Exemple fictif : publier une sélection de modèles autorisés pour un groupe de magasins pendant une saison, indépendamment de leur disponibilité physique immédiate.
+
+      Responsabilités distinguées : [Assortment Management](model:ba-assortment-management), [Catalog Management](model:ba-catalog-management).
+    transverse_incident_ids: []
+  consequence: Le raccordement vers Reference Ingestion de Supply est maintenant présent, mais les responsabilités Design
+    définies et les consommateurs produit Commerce/Procurement restent sans liens. Une relation entre systèmes n’explicite
+    pas les spécifications de consultation, l’offre autorisée ou la documentation commerciale.
+  proposal: Qualifier les contributions produit approuvées vers les périmètres consommateurs déjà décrits, avec état d’usage/version/retrait
+    ; préciser le rôle de Product Change & Release et de la source responsable par objet. Préserver une voie séparée pour
+    les données locales Supply.
+  reserve: Le producteur exact ne doit pas être déduit de la simple existence du domaine Lifecycle ; la maîtrise enterprise
+    reste à prouver. Ce constat étend le scope au-delà du producteur→réception Supply corrigé sous FL-U1112-13.
+  market_source_ids:
+  - MS-PRODUCT-RELEASE
+  - SAP-FSD
+  - MS-ASSORTMENT
+  - SAP-ASSORTMENT
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+- id: EA-CHAIN-09
+  priority: P2
+  title: Le Forecast Plan amont ne reçoit pas les hypothèses de supply et contraintes commerciales citées
+  kind: missing_documented_chain
+  object_ids:
+  - subdomain-demand-supply-forecasting
+  - domain-sourcing-procurement
+  - cap-category-sourcing-strategy
+  - cap-supplier-offer-selection
+  - domain-sales
+  - subdomain-collection-planning
+  - REL-U1101-forecast-to-demand-plan
+  evidence:
+  - object_id: subdomain-demand-supply-forecasting
+    field: fields.scope
+    value: '[Sous-domaine](method:MOD038) de [Product Portfolio & Collection Management](model:domain-product-portfolio-collection),
+      dans [Design & Development](glossary:TER105). À partir des produits et jalons de [Collection Planning](model:subdomain-collection-planning),
+      le chef de produit et les métiers contributeurs estiment la demande future par produit, canal et horizon, puis les volumes,
+      sources, délais ou capacités d’approvisionnement envisageables. Les hypothèses de supply proviennent notamment de [Sourcing
+      and Procurement](model:domain-sourcing-procurement) et des contraintes connues ; elles ne valent ni accord fournisseur
+      ni commande. Comparer les scénarios, leurs écarts et leurs incertitudes, puis versionner un [Forecast Plan](glossary:TER372)
+      demand/supply. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) en qualifie une version pour
+      le [Master Plan](model:domain-plan), qui calcule les besoins nets et décide la couverture opérationnelle. [Order Management](model:D04)
+      conserve les commandes et engagements ; [Enterprise Planning & Performance](glossary:TER221) conserve les budgets.'
+    transverse_incident_ids:
+    - REL-U1101-collection-to-demand-supply-forecast
+    - REL-U1101-forecast-to-demand-plan
+  - object_id: domain-product-portfolio-collection
+    field: fields.scope
+    value: Choisir les orientations et les produits à développer. [Product Strategy & Requirements](model:subdomain-product-strategy-requirements)
+      examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les
+      produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime demande
+      future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
+      définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
+      qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
+      amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
+      conserve les objectifs et budgets financiers.
+    transverse_incident_ids: []
+  consequence: La sortie Forecast Plan vers Plan Ingestion est corrigée et la collection l’alimente. En revanche la fiche
+    précise que ses hypothèses de ressources proviennent notamment de Sourcing and Procurement sans aucune relation de contribution
+    depuis ce domaine ; les choix de canal/assortiment restent également sans articulation documentée.
+  proposal: Qualifier la contribution des sources, délais, volumes possibles et incertitudes de Procurement vers Forecasting.
+    Examiner les hypothèses Commerce pertinentes et les retours d’écarts avant de les ajouter. Garder la qualification du
+    plan opérationnel dans SCO.
+  reserve: Aucun fournisseur engagé ni plan acheté n’est créé par la prévision. Pas de nouveau flux toutes directions par
+    défaut ; les producteurs précis et conditions de mise à jour restent à arbitrer.
+  market_source_ids:
+  - MS-PROCUREMENT
+  - SAP-FSD
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+- id: EA-CHAIN-10
+  priority: P1
+  title: Objectifs, budgets et résultats consolidés n’ont aucun raccordement dans le graphe
+  kind: missing_documented_chain
+  object_ids:
+  - domain-enterprise-planning-performance
+  - subdomain-strategy-objectives
+  - subdomain-budgeting-forecasting
+  - subdomain-performance-analysis
+  - domain-finance
+  - subdomain-product-strategy-requirements
+  - domain-plan
+  evidence:
+  - object_id: subdomain-strategy-objectives
+    field: fields.scope
+    value: Donne les objectifs aux plans ; leur traduction financière ne couvre pas toute la stratégie entreprise.
+    transverse_incident_ids: []
+  - object_id: subdomain-budgeting-forecasting
+    field: fields.scope
+    value: Traduit les hypothèses en enveloppes financières ; ne remplace pas les prévisions de quantités de [Demand Planning](glossary:TER218)
+      ni les méthodes de coût de [Finance](glossary:TER117).
+    transverse_incident_ids: []
+  - object_id: subdomain-performance-analysis
+    field: fields.scope
+    value: Compare les résultats consolidés aux objectifs ; les faits opérationnels et leurs autorités restent dans les domaines
+      producteurs.
+    transverse_incident_ids: []
+  - object_id: subdomain-product-strategy-requirements
+    field: fields.scope
+    value: Exprimer les besoins, tendances et orientations produit. Examiner ce que des évolutions de style, de clientèle
+      ou de canal pourraient changer dans l’offre, sans décider seul l’ouverture d’un canal. Les objectifs financiers sont
+      des contraintes ; les prix de vente et les choix commerciaux par canal restent dans Commerce.
+    transverse_incident_ids: []
+  consequence: Enterprise Planning & Performance et ses 3 sous-domaines sont dépourvus de relations transverses. Les fiches
+    disent pourtant que les objectifs guident les plans, les enveloppes financières bornent les hypothèses et l’analyse compare
+    les résultats aux objectifs. La synthèse BO→EM&C est limitée aux faits comptables et ne couvre pas cette boucle.
+  proposal: Documenter au niveau Domain/Subdomain les objectifs/enveloppes vers les périmètres concernés et les résultats,
+    plans ou écarts consolidables en retour. Séparer budget financier, plan en quantités et méthodes de coûts Finance ; choisir
+    explicitement les producteurs et destinataires sans créer de capacités périphériques.
+  reserve: L’absence de détail en capacités est un choix autorisé ; la lacune porte sur les liens déjà annoncés. Ne pas inventer
+    de contrôle budget systématique ou d’autorisation centrale sur toutes les décisions locales.
+  market_source_ids:
+  - MS-PLANNING
+  - SAP-PLANNING
+  - MS-BUDGET
+  - SAP-BUDGET
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+- id: EA-CHAIN-11
+  priority: P2
+  title: Les exigences et preuves de contrôle d’entreprise restent déconnectées de leurs domaines applicateurs
+  kind: missing_documented_chain
+  object_ids:
+  - domain-governance-risk-compliance
+  - subdomain-policy-compliance
+  - subdomain-risk-internal-control
+  - subdomain-audit-assurance
+  - subdomain-policies
+  - domain-customs-management
+  - domain-product-development
+  evidence:
+  - object_id: subdomain-policy-compliance
+    field: fields.scope
+    value: Les produits et prestations appliquent les exigences pertinentes ; [Supply Policy Management](glossary:TER130)
+      conserve les règles actives locales de [Supply](glossary:TER083).
+    transverse_incident_ids: []
+  - object_id: subdomain-risk-internal-control
+    field: fields.scope
+    value: Relie risques, contrôles et corrections ; ne prend pas la place des arbitrages opérationnels et de leurs responsables.
+    transverse_incident_ids: []
+  - object_id: subdomain-audit-assurance
+    field: fields.scope
+    value: Porte l’examen des contrôles ; les règles applicatives de détection ne suffisent pas à décrire tout un mandat d’audit
+      indépendant.
+    transverse_incident_ids: []
+  - object_id: domain-governance-risk-compliance
+    field: fields.scope
+    value: Exigences et contrôles d’entreprise. Les règles actives et arbitrages locaux de [Supply](glossary:TER083) restent
+      dans leur périmètre, notamment [Supply Policy Management](glossary:TER130).
+    transverse_incident_ids: []
+  consequence: GRC et ses 3 sous-domaines ne possèdent aucune relation transverse. La propagation d’exigences vers produits/prestations
+    et la remontée de preuves, exceptions ou corrections ne peuvent pas être retracées ; on ne distingue pas un contrôle opérationnel
+    d’un examen indépendant.
+  proposal: Rendre explicites les relations d’exigence/dépendance vers les Domaines qui les appliquent et les contributions
+    de preuve vers contrôle/audit ; utiliser shares-data seulement lorsque le contenu échangé est connu. Préciser versions,
+    applicabilité et mandat avant de détailler.
+  reserve: GRC garde sa profondeur de contexte. SAP Process Control est complémentaire à S/4HANA et Dynamics Audit Policies
+    documente des contrôles ciblés, pas toute une fonction d’audit ni les exigences françaises. Pas de responsabilité juridique
+    ou déploiement inféré.
+  market_source_ids:
+  - MS-AUDIT
+  - SAP-CONTROL
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+- id: EA-CHAIN-12
+  priority: P2
+  title: Le profil de crédit est raccordé mais la sollicitation d’une décision contextualisée ne l’est pas
+  kind: missing_documented_chain
+  object_ids:
+  - subdomain-credit-collections
+  - cap-wholesale-account-stewardship
+  - cap-wholesale-sales-engagement
+  - D04.i
+  - REL-U1113-finance-credit-reference
+  - REL-U979-credit-profiles
+  evidence:
+  - object_id: subdomain-credit-collections
+    field: fields.scope
+    value: '[Finance](glossary:TER117) conserve l’autorité de crédit ; [Commerce](glossary:TER108) sollicite les contrôles
+      et FLOW utilise les profils reçus sans acquérir cette autorité.'
+    transverse_incident_ids: []
+  - object_id: cap-wholesale-account-stewardship
+    field: fields.scope
+    value: |-
+      Tenir le contexte commercial d’un revendeur, ses interlocuteurs et les conditions de relation applicables.
+
+      Consommer les conditions autorisées par Pricing et les résultats [Finance](model:domain-finance) ; ne pas reprendre la promesse ni les engagements de chaque commande.
+    transverse_incident_ids: []
+  consequence: La fiche Credit & Collections indique que Commerce sollicite les contrôles. Seuls des profils sont fournis
+    à Reference Ingestion ; ni demande de contrôle sur une transaction ni réponse/blocage/libération contextualisé n’est relié.
+    Le profil reçu ne renseigne pas à lui seul l’exposition à jour.
+  proposal: Distinguer la référence de crédit des demandes de contrôle et décisions Finance à appliquer à une vente ou commande
+    ; qualifier le point de sollicitation Commerce/Sales Order, le contexte/exposition transmis et la portée temporelle du
+    résultat.
+  reserve: Le modèle n’oblige pas un appel synchrone à chaque vente. Ne pas déplacer l’autorité de crédit dans FLOW ni faire
+    du profil un résultat universel. Ce constat complète sans annuler la réception de référence corrigée U1113.
+  market_source_ids:
+  - MS-CREDIT
+  - SAP-CREDIT
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+- id: EA-CHAIN-13
+  priority: P2
+  title: Les raccordements internes Logistics et financiers de prestation ne sont pas qualifiés
+  kind: explicit_context_gap
+  object_ids:
+  - domain-warehousing
+  - domain-transportation
+  - domain-customs-management
+  - ba-packing-shipping-operations
+  - ba-transport-execution
+  - ba-customs-procedure-management
+  - subdomain-financial-accounting
+  - domain-finance
+  evidence:
+  - object_id: domain-warehousing
+    field: fields.scope
+    value: |-
+      Organiser et réaliser l’entreposage, le traitement physique des biens et le travail local.
+
+      Réceptionner, ranger, compter, préparer, emballer, expédier et traiter physiquement les retours. FLOW conserve les engagements à satisfaire et la coordination entre acteurs.
+
+      Responsabilités distinguées : [Inbound Operations](model:subdomain-inbound-operations), [Storage & Inventory Control](model:subdomain-storage-inventory-control), [Outbound Operations](model:subdomain-outbound-operations), [Value-Added Operations](model:subdomain-value-added-returns), [Returns Operations](model:subdomain-returns-operations), [Warehouse Operations Control](model:subdomain-warehouse-operations-control).
+    transverse_incident_ids:
+    - REL-U1113-service-order-cross-docking-mandate
+    - REL-U1113-service-order-inspection-mandate
+    - REL-U1113-service-order-scrapping-mandate
+    - REL-U1113-domain-warehousing-service-results
+    - REL-U1113-domain-warehousing-inventory-facts
+  - object_id: domain-transportation
+    field: fields.scope
+    value: |-
+      Organiser les moyens de transport, réaliser les déplacements et traiter leurs écarts locaux.
+
+      Organiser les moyens, les chargements et les tournées ; suivre et résoudre les incidents du transport. FLOW coordonne les conséquences sur les commandes, les promesses et les autres prestations.
+
+      Responsabilités distinguées : [Transport Planning & Dispatch](model:subdomain-transport-planning-dispatch), [Transport Execution & Tracking](model:subdomain-transport-execution-tracking), [Transport Exception Management](model:subdomain-transport-exception).
+    transverse_incident_ids: []
+  - object_id: domain-customs-management
+    field: fields.scope
+    value: |-
+      Préparer les dossiers douaniers et conduire les procédures applicables aux mouvements internationaux jusqu’à leurs résultats.
+
+      Mandat opérationnel douanier, pas définition du droit ni toute conformité commerciale d’entreprise. [Customs Clearance Order](model:service-order-customs-clearance) FLOW confie et suit la prestation ; les autorités rendent les décisions applicables.
+
+      Limite de comparaison : Dynamics documente surtout le suivi de passage douanier dans les sources consultées ; SAP S/4HANA documente une délégation à GTS. Appuis partiels, sans prétendre une réalisation française complète ni un déploiement Beaumanoir.
+
+      Responsabilités distinguées : [Customs Documentation](model:subdomain-customs-documentation), [Customs Clearance](model:subdomain-customs-clearance).
+    transverse_incident_ids: []
+  consequence: Tous les liens Logistics détaillés vont à SCO ou en viennent ; aucun passage local entre entreposage, transport
+    et douane, ni échange Logistics↔Finance, n’est documenté. Les mandats/résultats opérationnels U1113 sont présents, mais
+    ils ne démontrent pas qui fournit les pièces de facturation du prestataire, les coûts, ou la disponibilité de la mainlevée
+    pour le mouvement.
+  proposal: 'Qualifier les interfaces de contexte nécessaires au mandat : remise au transport, contraintes/résultats douaniers
+    et justification des prestations facturables ; décider pour chacune si le passage est local, relayé par SCO ou fourni
+    à Finance. Documenter la route retenue et les responsabilités, sans ajouter de capacités artificielles.'
+  reserve: 'L’absence de flèches directes n’est pas une anomalie fonctionnelle démontrée : la coordination peut légitimement
+    passer par SCO. Cette entrée est une lacune documentaire de contexte à qualifier, pas un schéma d’interfaces imposé. Le
+    lot U1113 ne promettait pas une comptabilité de Logistics.'
+  market_source_ids:
+  - MS-PROCUREMENT
+  - SAP-FSD
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+- id: EA-CHAIN-14
+  priority: P1
+  title: Les synthèses Enterprise Architecture ne couvrent plus fidèlement les échanges détaillés
+  kind: semantic_summary_mismatch
+  object_ids:
+  - REL-U979-product-definitions
+  - REL-U979-credit-profiles
+  - REL-U979-management-facts
+  - REL-U1101-forecast-to-demand-plan
+  - REL-U996-commercial-settlement-results
+  - REL-U996-commercial-benefit-conditions
+  - REL-U1091-supplier-benefit-conditions-to-settlement
+  - REL-U1113-accounting-processing-results
+  evidence:
+  - relation_id: REL-U979-product-definitions
+    source_id: system-design-development
+    target_id: system-business-operations
+    fields:
+      label: Définitions produit
+      data_exchange:
+        contents:
+        - name: Product definitions
+          description: Identités, variantes et caractéristiques produit approuvées mises à disposition des opérations.
+          glossary_refs:
+          - TER052
+          - TER057
+          - TER058
+          - TER059
+        purpose: Permettre aux opérations de travailler sur des définitions produit cohérentes.
+    qualification:
+      meaning: Identités, variantes et caractéristiques produit approuvées mises à disposition des opérations.
+      conditions:
+      - Origine PLM explicitement citée par Laurent ; source responsable à qualifier par objet, sans autorité entreprise attribuée
+        à FLOW.
+      effects:
+      - Permettre aux opérations de travailler sur des définitions produit cohérentes.
+      scope: Échange métier cible ; ni contrat technique ni interface installée démontrée.
+  - relation_id: REL-U979-management-facts
+    source_id: system-business-operations
+    target_id: system-enterprise-management-control
+    fields:
+      label: Faits de gestion
+      data_exchange:
+        contents:
+        - name: Management facts
+          description: Faits de gestion et justificatifs utiles à leur interprétation comptable, avec origine, dates et corrections.
+          glossary_refs:
+          - TER120
+          - TER114
+        purpose: Fournir les faits nécessaires à la comptabilité.
+      summary_label: Faits de gestion
+    qualification:
+      meaning: Faits de gestion et justificatifs utiles à leur interprétation comptable, avec origine, dates et corrections.
+      conditions:
+      - Accounting Data Provision fournit les faits ; Finance conserve interprétation et comptabilisation. Une transmission
+        ne vaut pas écriture enregistrée.
+      effects:
+      - Fournir les faits nécessaires à la comptabilité.
+      scope: Échange métier cible ; ni contrat technique ni interface installée démontrée.
+  - relation_id: REL-U979-credit-profiles
+    source_id: system-enterprise-management-control
+    target_id: system-business-operations
+    fields:
+      label: Profils de crédit client
+      data_exchange:
+        contents:
+        - name: Customer credit profiles
+          description: Profils et conditions de crédit client fournis par [Finance](glossary:TER117) pour les contrôles contextualisés
+            aux parcours opérationnels.
+          glossary_refs:
+          - TER190
+          - TER155
+        purpose: Permettre aux parcours de respecter les conditions de crédit autorisées.
+      summary_label: Crédit et règlements commerciaux
+    qualification:
+      meaning: Profils et conditions de crédit client fournis par [Finance](glossary:TER117) pour les contrôles contextualisés
+        aux parcours opérationnels.
+      conditions:
+      - Finance conserve l’autorité de crédit ; le profil ne devient ni exposition courante ni résultat universel de contrôle
+        de commande.
+      effects:
+      - Permettre aux parcours de respecter les conditions de crédit autorisées.
+      scope: Échange métier cible ; ni contrat technique ni interface installée démontrée.
+  - relation_id: REL-U996-commercial-benefit-conditions
+    source_id: subdomain-rebates-incentives-management
+    target_id: subdomain-commercial-settlement-management
+    fields:
+      label: Commercial benefit conditions
+      data_exchange:
+        contents:
+        - name: Commercial benefit conditions
+          description: Dispositifs autorisés, bénéficiaires, périodes, assiettes, seuils et conditions de régularisation.
+          glossary_refs:
+          - TER259
+          - TER260
+          - TER262
+          - TER264
+        purpose: Permettre la consommation contrôlée des conditions et conséquences autorisées sans transfert de décision
+          commerciale ou financière.
+    qualification:
+      meaning: Dispositifs autorisés, bénéficiaires, périodes, assiettes, seuils et conditions de régularisation.
+      conditions:
+      - Responsables, versions, dates, validités et corrections à qualifier par donnée ; échange cible, aucune interface installée
+        présumée.
+      effects:
+      - Conserver les engagements et reconnaître les faits utiles sans calculer prix ou droit à prime dans FLOW.
+      scope: Contrat métier proposé de mise en œuvre du lot U996 ; pas de protocole technique ni de preuve de réalisation.
+  - relation_id: REL-U996-commercial-settlement-results
+    source_id: subdomain-commercial-settlement-management
+    target_id: D04
+    fields:
+      label: Commercial settlement results
+      data_exchange:
+        contents:
+        - name: Commercial settlement results
+          description: Résultats et corrections autorisés affectant les engagements ou demandes à réaliser par FLOW.
+          glossary_refs:
+          - TER259
+          - TER264
+        purpose: Permettre la consommation contrôlée des conditions et conséquences autorisées sans transfert de décision
+          commerciale ou financière.
+    qualification:
+      meaning: Résultats et corrections autorisés affectant les engagements ou demandes à réaliser par FLOW.
+      conditions:
+      - Identifier l’accord, le bénéficiaire, le résultat financier autorisé et la commande effectivement affectée.
+      - Une ristourne ou prime ne produit pas seule une demande physique ; la famille et l’autorisation sont à qualifier par
+        cas.
+      effects:
+      - Conserver les engagements et reconnaître les faits utiles sans calculer prix ou droit à prime dans FLOW.
+      scope: 'Synthèse de contexte : seuls les engagements ou demandes effectivement concernés par un résultat autorisé sont
+        destinataires ; aucune application universelle aux familles d’Order. Le producteur d’une nouvelle sortie en biens
+        reste à qualifier selon l’accord.'
+  - relation_id: REL-U1091-supplier-benefit-conditions-to-settlement
+    source_id: cap-supplier-rebate-scheme-management
+    target_id: subdomain-commercial-settlement-management
+    fields:
+      label: Supplier benefit conditions
+      data_exchange:
+        contents:
+        - name: Supplier benefit conditions
+          description: Barème fournisseur, bénéficiaire, période, assiette et version applicables.
+          glossary_refs:
+          - TER337
+          - TER259
+        purpose: Finance calcule les droits et règlements sans transférer la négociation au Core.
+    qualification:
+      meaning: Barème fournisseur, bénéficiaire, période, assiette et version applicables.
+      conditions:
+      - Conditions d’achat validées ; faits éligibles et corrections fournis séparément.
+      effects:
+      - Finance calcule les droits et règlements sans transférer la négociation au Core.
+      scope: Contrat métier cible proposé ; identité des systèmes, protocole et réalisation installée à qualifier.
+  - relation_id: REL-U1101-forecast-to-demand-plan
+    source_id: subdomain-demand-supply-forecasting
+    target_id: plans-ingestion
+    fields:
+      label: Source Forecast Plan
+      data_exchange:
+        contents:
+        - name: Source Forecast Plan
+          description: '[Forecast Plan](glossary:TER372) source : prévisions de demande et de ressources envisageables, avec
+            versions, horizons, scénarios, hypothèses et incertitudes.'
+          glossary_refs:
+          - TER372
+          - TER373
+        purpose: Recevoir localement la version du Forecast Plan à qualifier pour le plan opérationnel.
+    qualification:
+      meaning: '[Forecast Plan](glossary:TER372) source : prévisions de demande et de ressources envisageables, avec versions,
+        horizons, scénarios, hypothèses et incertitudes.'
+      conditions:
+      - '[Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) conserve l’autorité sur la prévision source
+        ; [Plan Ingestion](model:plans-ingestion) conserve réception, correction et rejet.'
+      - Identifier produit, canal, lieu, période, unités, version et statut ; aucune seconde prévision source créée.
+      effects:
+      - Recevoir localement la version du Forecast Plan à qualifier pour le plan opérationnel.
+      scope: Contrat métier cible à la profondeur déclarée du modèle ; aucune interface ni réalisation installée présumée.
+  - relation_id: REL-U1113-accounting-processing-results
+    source_id: subdomain-financial-accounting
+    target_id: accounting-data-provision
+    fields:
+      label: Accounting fact processing results
+      data_exchange:
+        contents:
+        - name: Accounting fact processing results
+          description: Acceptation métier ou rejet motivé des [faits de gestion](glossary:TER120), données manquantes, corrections
+            demandées et référence d’[écriture](glossary:TER121) lorsqu’elle est effectivement enregistrée.
+          glossary_refs:
+          - TER120
+          - TER121
+          - TER118
+        purpose: Suivre le traitement comptable des faits transmis et instruire les corrections auprès du producteur.
+    qualification:
+      meaning: Acceptation métier ou rejet motivé des [faits de gestion](glossary:TER120), données manquantes, corrections
+        demandées et référence d’[écriture](glossary:TER121) lorsqu’elle est effectivement enregistrée.
+      conditions:
+      - Distinguer réception technique, acceptation métier et écriture enregistrée ; une information absente laisse le traitement
+        indéterminé.
+      - 'Finance ne modifie pas directement le fait de stock : le producteur instruit et reconnaît sa correction.'
+      effects:
+      - Suivre le traitement comptable des faits transmis et instruire les corrections auprès du producteur.
+      scope: Contrat métier cible à la profondeur déclarée du modèle ; aucune interface ni réalisation installée présumée.
+  consequence: D&D→Business Operations ne nomme que les définitions produit alors qu’un Source Forecast Plan est détaillé
+    dans le même sens. EM&C→BO annonce summary_label=Crédit et règlements commerciaux mais ne contient que Customer credit
+    profiles dans data_exchange ; settlement et retour de traitement comptable n’y sont pas décrits. BO→EM&C ne couvre pas
+    les conditions commerciales fournies à Settlement. Le contenu affiché en EA et les objets sous-jacents divergent sémantiquement.
+  proposal: Réconcilier les six synthèses avec l’inventaire détaillé réellement présent, rendre explicites les contenus inclus
+    et les limites ; établir la lignée synthèse→relations couvertes ou un contrôle de cohérence borné aux deux extrémités
+    orientées. Réexaminer les champs modifiés, sans prétendre que l’adoption de summary_label adopte data_exchange.
+  reserve: 'Les six sens système absents ne sont pas six anomalies : aucune réciprocité ou maille complète n’est déduite.
+    Ce constat est une dérive sémantique précise après U1113, distincte de la simple coexistence des niveaux FL-U1112-19.
+    Le backlog et la publication courante sont identiques sur ces contenus.'
+  market_source_ids: []
+  prior_audit: 'Prolonge FL-U1112-19 : les corrections U1113 distinguent la lecture des niveaux, mais leur couverture sémantique
+    reste manuelle.'
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+  related_findings:
+  - EA-CAT-02
+  - EA-U1114-ST05
+- id: EA-CHAIN-15
+  priority: P2
+  title: Relation client et fidélité ne sont reliées ni aux canaux ni au calcul des avantages de vente
+  kind: missing_documented_chain_with_market_gap
+  object_ids:
+  - cap-retail-customer-engagement-management
+  - cap-retail-loyalty-program-management
+  - cap-digital-sales-journey-management
+  - cap-in-store-sales-journey-management
+  - cap-store-checkout-management
+  - cap-sales-price-determination
+  evidence:
+  - object_id: cap-retail-customer-engagement-management
+    field: fields.scope
+    value: Tenir le contexte commercial du client et organiser les interactions ou campagnes adressées en magasin et en ligne.
+      Ne pas fixer les prix ou les promotions ni présumer de la source de vérité d’entreprise des personnes. [Retail Loyalty
+      Program Management](model:cap-retail-loyalty-program-management) tient les conditions et avantages de fidélité.
+    transverse_incident_ids: []
+  - object_id: cap-retail-loyalty-program-management
+    field: fields.scope
+    value: Définir les règles du programme, reconnaître l’adhésion et le statut du client et déterminer les avantages auxquels
+      il peut prétendre. [Pricing & Promotions Management](model:subdomain-pricing-promotions-management) fixe et calcule
+      les effets de prix autorisés ; le programme n’engage pas seul le prix d’une vente.
+    transverse_incident_ids: []
+  consequence: Les deux capacités de relation client/fidélité n’ont aucune relation transverse, alors que leurs fiches font
+    alimenter les interactions magasin/en ligne et le prix par le statut et les avantages reconnus. Les ventes utiles à la
+    reconnaissance des avantages n’ont pas de retour documenté.
+  proposal: Qualifier le contexte client autorisé fourni aux parcours, le statut/avantage de fidélité fourni à la détermination
+    du prix et les faits de vente/retour nécessaires au programme ; distinguer éligibilité, effet de prix et avantage effectivement
+    utilisé.
+  reserve: 'Ne pas déduire un maître entreprise des personnes ni de nouveaux usages autorisés des données. Le passage SAP
+    Customer Checkout identifié reste inaccessible et ne constitue pas un appui S/4HANA consulté sur la fidélité : lacune
+    maintenue, recommandation justifiée d’abord par les frontières écrites dans le modèle.'
+  market_source_ids:
+  - MS-LOYALTY
+  prior_audit: Nouveau périmètre Enterprise Architecture ; ne réouvre pas les corrections U1113.
+  status: proposed
+  not_installed_claim: true
+  recommendation_status: proposed_not_adopted
+- id: EA-U1114-ST01
+  category: redundancy
+  priority: P2
+  confidence: high
+  status: confirmed
+  title: Même usage de protection dupliqué après fusion Initial Stocking / Replenishment
+  objects:
+  - D05.e
+  - D02.b
+  relations:
+  - REL-U908-uses-reference-D05.e-96
+  - REL-U908-uses-reference-D05.e-131
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U908-uses-reference-D05.e-96
+    fields:
+    - type
+    - source_id
+    - target_id
+    - qualification
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U908-uses-reference-D05.e-131
+    fields:
+    - type
+    - source_id
+    - target_id
+    - qualification
+  observation: Les deux relations portent exactement le même type, la même paire orientée, le même meaning, les mêmes conditions
+    et les mêmes effets. Elles diffèrent seulement par identité et provenance historique.
+  impact: Un besoin unique est présenté et compté deux fois ; la maintenance peut faire diverger deux copies du même contrat.
+  recommendation: Conserver une identité historique, réunir les provenances utiles et retirer explicitement l’autre relation
+    dans un lot de correction, sans réutiliser son identifiant.
+  negative_controls:
+  - Aucun doublon strict shares-data source/cible/type dans les 175 partages actuels.
+  - La conclusion ne s’étend pas aux variantes lancement/réassort dont la différence de portée est réellement décrite.
+  recommendation_status: proposed_not_adopted
+- id: EA-U1114-ST02
+  category: semantic_overlap
+  priority: P3
+  confidence: high
+  status: recommendation
+  title: Dix autres groupes de relations identiques par extrémités demandent une consolidation de portée
+  relations:
+  - REL-INVENTORY-PLANNING-D05.e
+  - REL-INVENTORY-PLANNING-D05.g
+  - REL-NEEDS-U290-085
+  - REL-INITIAL-STOCKING-INVENTORY
+  - REL-NEEDS-U290-087
+  - REL-INITIAL-STOCKING-TARGET
+  - REL-NEEDS-U290-088
+  - REL-INITIAL-STOCKING-TRACKING
+  - REL-NEEDS-U290-089
+  - REL-INITIAL-STOCKING-PURCHASE
+  - REL-NEEDS-U290-090
+  - REL-INITIAL-STOCKING-TRANSFER
+  - REL-NEEDS-U290-094
+  - REL-REDISTRIBUTION-INITIAL-STOCKING
+  - REL-NEEDS-U395-03
+  - REL-NEEDS-U395-04
+  - REL-AUDIT-U435-PLNK-01
+  - REL-U750-PLANNING-ASSIGNMENT
+  - REL-U682-CATALOG-SERVICE-ORDERS
+  - REL-U711-CATALOG-SERVICE-ORDERS
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-INVENTORY-PLANNING-D05.e
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-INVENTORY-PLANNING-D05.g
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-NEEDS-U290-085
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-INITIAL-STOCKING-INVENTORY
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-NEEDS-U290-087
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-INITIAL-STOCKING-TARGET
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-NEEDS-U290-088
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-INITIAL-STOCKING-TRACKING
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-NEEDS-U290-089
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-INITIAL-STOCKING-PURCHASE
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-NEEDS-U290-090
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-INITIAL-STOCKING-TRANSFER
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-NEEDS-U290-094
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-REDISTRIBUTION-INITIAL-STOCKING
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-NEEDS-U395-03
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-NEEDS-U395-04
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-AUDIT-U435-PLNK-01
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U750-PLANNING-ASSIGNMENT
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U682-CATALOG-SERVICE-ORDERS
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U711-CATALOG-SERVICE-ORDERS
+    fields:
+    - source_id
+    - target_id
+    - type
+    - qualification.meaning
+    - qualification.conditions
+  observation: Après retrait du doublon strict, dix paires portent deux contrats. Huit distinguent encore des apports initiaux
+    ou récurrents hérités de la fusion Replenishment. Les deux autres concernent Master Planning → Supply Assignment et Service
+    Catalog → Service Management, dont les responsabilités se recouvrent fortement.
+  impact: Le graphe suggère plusieurs interactions indépendantes lorsque les textes distinguent surtout des contextes d’un
+    même service ; les lecteurs doivent reconstruire la relation.
+  recommendation: Pour chaque paire, fusionner le contrat commun en conservant explicitement les variantes de conditions ou
+    donner des libellés réellement différenciants. Prioriser les deux paires Master Planning/Supply Assignment et Service
+    Catalog/Service Management. Aucun retrait automatique des contextes lancement ou alimentation continue.
+  negative_controls:
+  - Une même paire n’est pas interdite par le modèle et n’est pas une erreur à elle seule.
+  - 'Les deux besoins de Consignment Fill-up Order portent bien deux situations explicites : premier apport et alimentation
+    continue.'
+  recommendation_status: proposed_not_adopted
+- id: EA-U1114-ST03
+  category: relationship_semantics
+  priority: P2
+  confidence: high
+  status: confirmed
+  title: Sept fournitures métier explicitement décrites restent sans contrat de partage structuré
+  relations:
+  - REL-EXECUTION-ADAPTATION-ORCHESTRATION
+  - REL-U756-FACTS
+  - REL-U756-ESTABLISHED
+  - REL-U756-MOVEMENTS
+  - REL-U826-plans-ingestion-TO-plans-visibility
+  - REL-U826-plans-ingestion-TO-demand-plan-visibility
+  - REL-U843-order-workflow-planning-order-workflow-orchestration
+  objects:
+  - D06.f
+  - D06.d
+  - D01.f
+  - D01.h
+  - inventory-ownership-ledger
+  - D01.g
+  - plans-ingestion
+  - plans-visibility
+  - demand-plan-visibility
+  - order-workflow-planning
+  - order-workflow-orchestration
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-EXECUTION-ADAPTATION-ORCHESTRATION
+    fields:
+    - type
+    - source_id
+    - target_id
+    - qualification.meaning
+    - qualification.effects
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U756-FACTS
+    fields:
+    - type
+    - source_id
+    - target_id
+    - qualification.meaning
+    - qualification.effects
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U756-ESTABLISHED
+    fields:
+    - type
+    - source_id
+    - target_id
+    - qualification.meaning
+    - qualification.effects
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U756-MOVEMENTS
+    fields:
+    - type
+    - source_id
+    - target_id
+    - qualification.meaning
+    - qualification.effects
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U826-plans-ingestion-TO-plans-visibility
+    fields:
+    - type
+    - source_id
+    - target_id
+    - qualification.meaning
+    - qualification.effects
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U826-plans-ingestion-TO-demand-plan-visibility
+    fields:
+    - type
+    - source_id
+    - target_id
+    - qualification.meaning
+    - qualification.effects
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U843-order-workflow-planning-order-workflow-orchestration
+    fields:
+    - type
+    - source_id
+    - target_id
+    - qualification.meaning
+    - qualification.effects
+  observation: Ces relates-to disent fournir une variation retenue, des faits de propriété, un transfert établi, des effets
+    de propriété à relier aux positions, deux plans intégrés ou un parcours autorisé. Aucun shares-data de même paire ne porte
+    le contenu. Le lien métier existe donc ; sa nature de fourniture et son contenu ne sont pas structurés comme les flux
+    du lot U1113.
+  impact: La lecture des seules données partagées ne restitue pas ces transmissions ; les contrats de contenu ne peuvent pas
+    être contrôlés comme les 175 autres partages. Deux formulations restent cohérentes au sens humain mais hétérogènes au
+    niveau Enterprise Architecture.
+  recommendation: Décrire les contenus, finalités et conditions des fournitures confirmées en shares-data producteur → consommateur.
+    Préserver une relation de dépendance distincte seulement si elle décrit effectivement un besoin différent. Pour Ownership
+    Ledger → Inventory Ledger, qualifier les références d’écritures et leur rapprochement, sans créer un nouveau mouvement
+    physique.
+  negative_controls:
+  - REL-U756-DETERMINATION a déjà son pendant REL-U1113-ownership-decision-ledger.
+  - REL-U756-VISIBILITY a déjà REL-U1113-ownership-ledger-to-visibility.
+  - D07.c → Process Sentry est couvert par REL-U1113-reconciled-events-sentry.
+  - Les 121 relates-to de rôle needs restent des dépendances consommateur → fournisseur ; aucune conversion générale ni inversion
+    automatique proposée.
+  recommendation_status: proposed_not_adopted
+- id: EA-U1114-ST04
+  category: capture_coverage
+  priority: P2
+  confidence: medium
+  status: gap_to_qualify
+  title: Le contrat commun de couverture du Process Ledger ne documente pas encore tous les producteurs mobilisés par un Case
+  objects:
+  - process-ledger
+  - subdomain-service-orders
+  - D01.g
+  - inventory-ownership-ledger
+  - D05.f
+  - D03.o
+  relations:
+  - REL-U1113-order-events
+  - REL-U1113-sentry-events
+  - REL-U1113-orchestration-events
+  - REL-U1113-reconciled-events-sentry
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: process-ledger
+    fields:
+    - fields.scope
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1113-order-events
+    fields:
+    - source_id
+    - target_id
+    - fields.data_exchange
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1113-sentry-events
+    fields:
+    - source_id
+    - target_id
+    - fields.data_exchange
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1113-orchestration-events
+    fields:
+    - source_id
+    - target_id
+    - fields.data_exchange
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U1113-reconciled-events-sentry
+    fields:
+    - source_id
+    - target_id
+    - fields.data_exchange
+  observation: 'Le registre conserve explicitement les événements de neuf producteurs : orchestration, planification de parcours,
+    contributions humaines, affectations, échéances, interventions, exceptions, sentinelle et Order Management. Les transitions
+    reconnues des familles Service Management et les références des décisions ou faits de stock mobilisés par un Case n’ont
+    pas de contrat de capture explicite. Les résultats rapprochés transmis à la sentinelle couvrent une partie des faits de
+    service, sans démontrer la couverture de toutes les transitions métier de la famille.'
+  impact: La structure permet déjà registre → visibilité → mining, mais elle ne permet pas d’affirmer que l’état d’un Case
+    peut être reconstruit pour tous ses événements métier. La limite est celle de la couverture documentée, pas celle de l’existence
+    du registre.
+  recommendation: 'Définir un contrat commun de capture des événements reconnus d’un Case : producteur, lien au Case, date
+    du fait/date de connaissance, version, correction et référence au fait d’origine. Qualifier quels événements Service Management
+    et quelles références de décisions ou faits de stock sont nécessaires au dossier, puis leur chemin de capture direct ou
+    via Sentry.'
+  negative_controls:
+  - Ne pas journaliser de force toute activité Inventory hors Case.
+  - Ne pas dupliquer les écritures ni déplacer l’autorité des deux registres de stock.
+  - Les neuf producteurs et les liens Process Ledger → Visibility/Mining existent et sont cohérents.
+  - Les capacités de processus ne deviennent pas propriétaires des commandes ni parents de la hiérarchie métier.
+  recommendation_status: proposed_not_adopted
+  related_findings:
+  - EA-CAT-05
+- id: EA-U1114-ST05
+  category: description_relationship_drift
+  priority: P2
+  confidence: high
+  status: confirmed
+  title: La description de Reservation Rule Optimization donne deux parents métier contradictoires
+  objects:
+  - D05.h
+  - ba-physical-stock-configuration-optimization
+  - D03
+  relations:
+  - REL-U848-PARENT-D05.h
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: D05.h
+    fields:
+    - fields.scope
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U848-PARENT-D05.h
+    fields:
+    - type
+    - source_id
+    - target_id
+  observation: Le parent canonique est Stock Optimization sous Master Plan. Le début du scope confirme ce parent, puis sa
+    fin explique encore « Rattachement adopté U343 à Availability » et ordonne « Conserver dans Availability ». La relation
+    actuelle reste unique et conforme à l’arbre.
+  impact: La fiche peut conduire un lecteur à redessiner un parent obsolète ou à supposer une responsabilité partagée.
+  recommendation: Aligner la rédaction courante sur le parent Stock Optimization ; conserver les anciens accords de rattachement
+    dans leurs preuves historiques, sans déplacer D05.h ni élargir un accord.
+  negative_controls:
+  - Aucun multiparent réel détecté.
+  - Availability peut consommer le résultat sans devenir parent de la capacité.
+  recommendation_status: proposed_not_adopted
+  related_findings:
+  - EA-CAT-02
+- id: EA-U1114-ST06
+  category: stale_relationship_wording
+  priority: P3
+  confidence: high
+  status: confirmed
+  title: Cinq qualifications de relations conservent des noms de responsabilités retirés ou remplacés
+  relations:
+  - REL-INVENTORY-PLANNING-D05.a
+  - REL-INVENTORY-PLANNING-D05.d
+  - REL-INVENTORY-PLANNING-D05.e
+  - REL-INVENTORY-PLANNING-D05.c
+  - REL-U858-REFERENCE-033
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-INVENTORY-PLANNING-D05.a
+    fields:
+    - qualification.meaning
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-INVENTORY-PLANNING-D05.d
+    fields:
+    - qualification.meaning
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-INVENTORY-PLANNING-D05.e
+    fields:
+    - qualification.meaning
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-INVENTORY-PLANNING-D05.c
+    fields:
+    - qualification.meaning
+  - path: modeles/backlog/model.yaml
+    collection: relations
+    id: REL-U858-REFERENCE-033
+    fields:
+    - qualification.meaning
+  observation: Quatre qualifications nomment encore Inventory Planning alors que leur source est Master Planning. La cinquième
+    annonce Agreement Visibility alors que sa cible est la référence Agreement ; la capacité de consultation a été retirée
+    U858.
+  impact: Le sens reste inférable des identifiants, mais le texte suggère des responsabilités distinctes encore présentes.
+  recommendation: Mettre les qualifications au vocabulaire courant et distinguer utilisation de la référence Agreement et
+    appel d’un savoir-faire fournisseur.
+  negative_controls:
+  - Les identifiants source/cible sont actifs ; aucun lien vers un nœud retiré n’est détecté dans ces cinq relations.
+  - Aucun changement de rattachement ou de responsabilité n’est requis par ce nettoyage.
+  recommendation_status: proposed_not_adopted
+- id: EA-CAT-01
+  priority: P2
+  confidence: high
+  classification: model_semantic_staleness
+  title: Le catalogue Informations interne conserve des propriétaires et rôles de planification antérieurs.
+  object_ids:
+  - PINFO-011
+  - PINFO-013
+  - D05.f
+  - D03.o
+  - D02.e
+  - D04.i
+  - D03.i
+  - D03.j
+  - D03.k
+  evidence:
+  - path: modeles/backlog/model.yaml
+    locator: information_catalog.items[id=PINFO-013].capability_roles[capability_ref=D05.f]
+    fact: Rôle « établit et fait évoluer » et meaning « Par son comportement Apply Plan [...] applique et maintient les liens
+      choisis » ; review rappelle encore le rattachement à Order Backlog Planning U539/U541.
+  - path: modeles/backlog/model.yaml
+    locator: nodes[id=D05.f].fields.scope
+    fact: Master Planning calcule les besoins nets ; Plan Application D02.e matérialise les changements autorisés et Supply
+      Assignment D03.o choisit les liens.
+  - path: modeles/backlog/model.yaml
+    locator: information_catalog.items[id=PINFO-011].capability_roles
+    fact: Les rôles désignent encore BHV021 et Delivery Schedule Decision pour les trois identifiants D03.i/j/k, désormais
+      ATP/CTP/PTP ; BHV021 est absent du modèle courant.
+  impact: Les identifiants existent et le contrat passe, mais le catalogue peut réattribuer l’application au calcul du plan
+    et expliquer les décisions avec une ancienne responsabilité.
+  recommendation: Lors de la maintenance du catalogue interne, réconcilier seulement ces rôles avec D03.o décision et D02.e
+    application, puis les descriptions ATP/CTP/PTP courantes. Préserver le statut proposé et U466 limité à la distinction
+    proposition/engagement. Ne pas enrichir le catalogue ni le réexposer dans Atlas.
+  contract_state: valid
+  canonical_mutation: false
+  recommendation_status: proposed_not_adopted
+- id: EA-CAT-02
+  priority: P2
+  confidence: high
+  classification: model_glossary_alignment
+  title: Availability est encore décrite comme parent de planification et de matching dans ses sources d’inspiration.
+  object_ids:
+  - TER112
+  - ba-order-promising
+  - ba-master-plan-management
+  - domain-plan
+  - ba-order-backlog-management
+  evidence:
+  - path: modeles/backlog/glossary.yaml
+    locator: terms[id=TER112].definition/context
+    fact: 'Définition/contexte actuels : promesse pour une demande identifiée ; plan commun et arbitrage collectif portent
+      d’autres responsables.'
+  - path: modeles/backlog/glossary.yaml
+    locator: terms[id=TER112].market_inspiration.flow_scope/choice/flow_approach
+    fact: 'Ancien périmètre large : arbitrer ressources, adaptations et couverture ; « Six Business Areas structurent ce sous-domaine
+      » contient deux fois Master Plan Management et deux fois Stock Optimization, avec des rattachements que le graphe ne
+      donne plus à Availability.'
+  impact: Tous les liens résolvent, mais le texte implique des appartenances et une responsabilité collective qui contredisent
+    la frontière actuelle de la fiche et le graphe.
+  recommendation: Aligner ces trois champs sur la frontière actuelle d’Availability, présenter les autres périmètres comme
+    coopérations et garder les écarts natifs des sources éditeur explicitement qualifiés. Aucune nouvelle comparaison marché
+    n’est nécessaire pour constater cette contradiction interne.
+  contract_state: valid
+  canonical_mutation: false
+  recommendation_status: proposed_not_adopted
+- id: EA-CAT-03
+  priority: P2
+  confidence: high
+  classification: documented_evidence_not_linked
+  title: L’usage documenté d’AllocationRun Boardriders n’est pas raccordé à la sélection SI.
+  object_ids:
+  - selection-sap-ecc-boardriders
+  - sap-allocation-run
+  - APP-AFS
+  - HS-008
+  - hs-008-future-supply
+  - DOC002
+  - DOC003
+  - offer-sap-afs-arun
+  - D03.o
+  evidence:
+  - path: modeles/backlog/model.yaml
+    locator: application_catalog.selections[id=selection-sap-ecc-boardriders]
+    fact: component_states est vide et l’unique mapping relie sap-ecc-core à Fulfilment Orchestration D06.
+  - path: modeles/backlog/model.yaml
+    locator: application_catalog.products[id=product-sap-ecc].components[id=sap-allocation-run]/offering_mappings[id=offer-sap-afs-arun]
+    fact: Le composant AllocationRun et son rapprochement d’offre vers Supply Assignment D03.o existent ; note « Traitement
+      Boardriders mentionné par Laurent ».
+  - path: modeles/panorama-as-is/boardriders/versions/2026-09-13.1/panorama.json
+    locator: objects[id=APP-AFS]
+    fact: Mention déclarée AFS/AllocationRun, sources U01/U02 ; scope_not_established, donc pas une preuve technique de déploiement
+      exhaustif.
+  - path: modeles/backlog/model.yaml
+    locator: hotspot_catalog.hotspots[id=HS-008].gap_analysis[id=hs-008-future-supply].observations_by_context[context_id=boardriders]
+    fact: 'Source SAP juillet 2025 : Early Allocation couvre stock physique, commandes d’achat et avis d’expédition ; état
+      partly_covered, source_document, limites temporelles explicites.'
+  impact: Le catalogue de produits montre l’offre, tandis que les faits internes sur le même usage restent dans un autre catalogue.
+    La projection SI ne permet pas de suivre cette preuve vers le périmètre métier.
+  recommendation: Qualifier un mapping SI AllocationRun borné au support historique et aux déclarations déjà disponibles,
+    avec limites sur personnalisation et état actuel ; raccorder sa provenance au support. Ne pas copier toute l’offre SAP
+    dans le SI ni présumer les fonctionnalités S/4HANA.
+  contract_state: valid_but_incomplete_traceability
+  canonical_mutation: false
+  recommendation_status: proposed_not_adopted
+- id: EA-CAT-04
+  priority: P2
+  confidence: high
+  classification: enterprise_contract_coverage_limit
+  title: Les parcours ne peuvent pas relier un participant de contexte à sa profondeur déclarée.
+  object_ids:
+  - ba-receiving-operations
+  - domain-logistics-execution
+  - system-design-development
+  - system-enterprise-management-control
+  evidence:
+  - path: scripts/scenario_catalog.py
+    locator: validate_catalog(path.steps.contributions)
+    fact: Une contribution est acceptée seulement vers capability ou reference ; un lien vers Receiving Operations, Business
+      Area terminale valide de Logistics, est rejeté.
+  - path: modeles/backlog/model.yaml
+    locator: scenario_catalog.paths[*].steps[*].contributions
+    fact: 496 contributions vers 95 nœuds, toutes dans Business Operations ; aucune vers Logistics, Design & Development ou
+      Enterprise Management & Control.
+  - path: CONVENTIONS-MODELE.md
+    locator: Invariants U772 / Business Areas U1025-U1027
+    fact: La profondeur des domaines périphériques est volontairement limitée ; une nouvelle capacité n’est pas déduite pour
+      rendre possible le lien.
+  impact: L’analyse de parcours Enterprise Architecture ne peut pas exprimer un lien typé vers un exécutant ou fournisseur
+    périphérique arrêté à un autre niveau, même quand son rôle est documenté.
+  recommendation: Instruire un lien distinct de participation de contexte, compatible avec le niveau déclaré du domaine, sans
+    transformer une Business Area en capacité ni changer la hiérarchie. Conserver la mobilisation de capacités comme lien
+    distinct. Cette évolution reste proposée, non requise par les anciens parcours Supply.
+  contract_state: current_contract_respected_but_limits_EA_scope
+  canonical_mutation: false
+  recommendation_status: proposed_not_adopted
+- id: EA-CAT-05
+  priority: P3
+  confidence: high
+  classification: scenario_input_traceability
+  title: Le parcours d’analyse des délais ne nomme pas la source désormais canonique de ses traces.
+  object_ids:
+  - process-approval-bottleneck-path
+  - process-ledger
+  - process-mining
+  - BHV082
+  - operational-analysis-reporting
+  evidence:
+  - path: modeles/backlog/model.yaml
+    locator: scenario_catalog.paths[id=process-approval-bottleneck-path].steps[id=observe/measure].inputs
+    fact: Les entrées disent « Traces de parcours et tâches corrélables » et « Traces avant et après » sans origine identifiée
+      ; Process Mining et analyse/reporting les consomment.
+  - path: modeles/backlog/model.yaml
+    locator: nodes[id=process-ledger]/nodes[id=process-mining]
+    fact: U1110/U1111/U1113 identifient Process Ledger comme registre des événements de Case et source de Process Mining.
+  impact: La chaîne est expliquée dans les capacités et relations, mais le scénario de référence ne permet pas d’en suivre
+    la provenance sans recoupement.
+  recommendation: Préciser l’origine Process Ledger dans les entrées de ce parcours et ses conditions de corrélation, sans
+    ajouter une étape/action Ledger ni imposer sa mobilisation à tous les scénarios.
+  contract_state: valid
+  canonical_mutation: false
+  recommendation_status: proposed_not_adopted
+- id: EA-CAT-06
+  priority: P3
+  confidence: high
+  classification: validator_guard_gap_only
+  title: Certains liens de catalogues et méthodologiques échappent au contrôle automatique partagé.
+  object_ids: []
+  evidence:
+  - path: scripts/glossary.py
+    locator: LINK / validate(texts)
+    fact: 'Le validateur ne parcourt que les champs de nœuds, relations et certains champs de termes ; les liens inline de
+      scénarios/hotspots/produits/documents ne sont pas dans cette liste. LINK ne traite ni method: ni modeling:.'
+  - path: scripts/application_catalog.py
+    locator: validate_catalog(selection.panorama_ref)
+    fact: Le code contrôle la perspective as_is mais pas l’existence de panorama_ref ni son propriétaire SI.
+  - path: modeles/backlog/enterprise-relationships-audit-U1114.yaml
+    locator: controls.catalog_validator_probes
+    fact: Trois mutations en mémoire (lien model absent dans scénario, method MOD absent, panorama APP absent) sont acceptées
+      par les validateurs actuels. Aucun lien canonique cassé observé lors du contrôle indépendant.
+  impact: Une régression de référence peut passer les contrôles existants ; ce n’est pas une anomalie d’intégrité constatée
+    dans le modèle actuel.
+  recommendation: Étendre le contrôle des liens publiables à tous les catalogues et aux espaces méthodologiques, et vérifier
+    panorama_ref contre le bon panorama figé. Ajouter seulement des tests de références inexistantes/périmètre erroné.
+  contract_state: all_current_links_pass_independent_check
+  canonical_mutation: false
+  recommendation_status: proposed_not_adopted
+recommended_work_packages:
+- order: 1
+  name: Rendre la représentation courante cohérente
+  finding_refs:
+  - EA-CHAIN-14
+  - EA-U1114-ST05
+  - EA-CAT-02
+  - EA-U1114-ST01
+  - EA-U1114-ST03
+  - EA-U1114-ST06
+  - EA-CAT-01
+  action: Réconcilier synthèses et détails, aligner les parents décrits et les rôles obsolètes, consolider le doublon certain
+    et structurer les sept fournitures déjà décrites. Préserver accords, identités et provenance.
+  qualification: Corrections déductibles des responsabilités déjà écrites ; aucune nouvelle autorité entreprise.
+- order: 2
+  name: Relier Commerce et Procurement à leur profondeur actuelle
+  finding_refs:
+  - EA-CHAIN-01
+  - EA-CHAIN-02
+  - EA-CHAIN-03
+  - EA-CHAIN-04
+  - EA-CHAIN-05
+  - EA-CHAIN-06
+  - EA-CHAIN-12
+  - EA-CHAIN-15
+  action: Décrire producteurs, destinataires, entrées, résultats et retours pour l’offre, les prix, la vente magasin, les
+    faits monétaires et l’achat.
+  qualification: Les voies exactes de caisse, de contrôle de crédit et les sources des faits qualité restent à qualifier ;
+    aucune séquence universelle ni consommation automatique par tous les canaux.
+- order: 3
+  name: Compléter les coopérations de contexte Enterprise Architecture
+  finding_refs:
+  - EA-CHAIN-07
+  - EA-CHAIN-08
+  - EA-CHAIN-09
+  - EA-CHAIN-10
+  - EA-CHAIN-11
+  - EA-CHAIN-13
+  action: Documenter au niveau déjà déclaré les contributions produit, prévision, objectifs, budgets, résultats, exigences
+    et passages Logistics utiles.
+  qualification: Établir les sources et autorités manquantes sur preuve ; décider si chaque remise est directe, locale ou
+    relayée par SCO.
+- order: 4
+  name: Permettre et tracer les parcours de bout en bout
+  finding_refs:
+  - EA-CAT-04
+  - EA-U1114-ST04
+  - EA-CAT-05
+  - EA-CAT-03
+  action: Instruire la participation de contexte distincte de la mobilisation de capacité ; préciser la capture des événements
+    de Case, la source des traces et la preuve SI AllocationRun.
+  qualification: Évolution de contrat à arbitrer ; ne pas créer une capacité périphérique artificielle ni recopier les ledgers
+    stock dans Process Ledger.
+- order: 5
+  name: Consolider et prévenir les régressions
+  finding_refs:
+  - EA-U1114-ST02
+  - EA-CAT-06
+  action: Distinguer ou consolider les dix recouvrements, puis contrôler tous les liens inline et panorama par contexte.
+  qualification: Conserver les variantes métier et ajouter des tests de références invalides ; aucun défaut actuel de résolution
+    n’est allégué.
+market_comparison:
+  role: Appuis partiels aux responsabilités et passages de relais ; aucune taxonomie éditeur n’est adoptée comme hiérarchie
+    FLOW. Les anomalies structurelles et contradictions internes sont justifiées par le modèle lui-même.
+  local_identifiers: true
+  evidence:
+  - id: MS-PROCUREMENT
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Procurement and sourcing overview
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+    locator: Identifying a need ; Procurement ; Product receipt and invoicing ; Vendor performance
+    paraphrase: Le besoin peut entraîner une demande approuvée, une consultation ou un accord ; les spécifications sont communiquées
+      aux fournisseurs. La commande, la réception, le rapprochement de facture et le paiement sont distincts. Des rapports
+      exploitent la performance fournisseur.
+    limits: Processus produit, plus intégré que FLOW ; ne prouve ni séquence unique ni réalisation Beaumanoir.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: SAP-RFQ
+    vendor: SAP
+    product: SAP S/4HANA
+    title: Working with Requests for Quotation
+    url: https://learning.sap.com/courses/sourcing-in-sap-s4hana/working-with-requests-for-quotation
+    locator: Work with RFQs ; Manage Requests for Quotation
+    paraphrase: La consultation prépare la sélection des fournisseurs, recueille puis évalue les réponses. Une offre attribuée
+      peut devenir contrat ou commande selon le parcours.
+    limits: La sélection et la création automatisée dans le produit ne deviennent pas une autorisation automatique dans FLOW.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: MS-ASSORTMENT
+    vendor: Microsoft
+    product: Dynamics 365 Commerce
+    title: Assortment management
+    url: https://learn.microsoft.com/en-us/dynamics365/commerce/assortments
+    locator: Global and released products ; Date effectivity ; Process assortments
+    paraphrase: Les assortiments associent produits et canaux pour une période ; les canaux consomment leur publication. Le
+      produit doit aussi être mis à disposition de l’entité avant vente.
+    limits: Disponibilité commerciale, distincte du stock physique et de la promesse.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: SAP-ASSORTMENT
+    vendor: SAP
+    product: SAP S/4HANA Retail
+    title: Introducing Assortment Management
+    url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/introducing-assortment-management_c4100b3e-db2f-49ed-8724-faf679d1be8d
+    locator: Assortment Management and Layout Workbench ; Meaning of Listing
+    paraphrase: Des conditions de référencement associent articles, sites et clients pour une durée ; une liste fournit les
+      données article aux magasins.
+    limits: Le catalogue FLOW est plus large qu’une liste d’assortiment ; aucune équivalence des hiérarchies.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: MS-PRICING
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Sales trade agreement prices
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/unified-pricing-management/upm-sales-trade-agreement-prices
+    locator: Configure sales trade agreements ; Manage pricing rules
+    paraphrase: La détermination applique les conditions de prix selon client, produit, date et priorités ; les règles concurrentes
+      sont résolues selon la configuration.
+    limits: Exemple de détermination du prix, pas toutes les promotions ni une obligation de moteur central unique.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: SAP-PRICING
+    vendor: SAP
+    product: SAP S/4HANA Sales
+    title: Introducing the Condition Technique
+    url: https://learning.sap.com/courses/configuring-pricing-in-sap-s-4hana-sales/introducing-the-condition-technique_dce0f313-dee6-470e-8851-3f1773cb5d45
+    locator: Pricing Procedure ; Search for a Valid Condition Record
+    paraphrase: La procédure détermine les conditions pertinentes selon zone commerciale, client et document, puis recherche
+      les enregistrements de condition valides.
+    limits: Mécanisme logiciel plus détaillé que la responsabilité métier ; pas toutes les variantes Commerce.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: MS-STORE
+    vendor: Microsoft
+    product: Dynamics 365 Commerce
+    title: Store Commerce app capabilities
+    url: https://learn.microsoft.com/en-us/dynamics365/commerce/dev-itpro/store-commerce-capabilities
+    locator: Point of sale ; Electronic payments ; Product discovery ; Order processing and fulfillment
+    paraphrase: Le point de vente traite ventes, retours et paiements ; il peut rechercher le stock d’autres magasins et créer
+      des commandes.
+    limits: Périmètre d’un produit ; ne confond pas une vente immédiatement remise avec une commande restant à servir.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: SAP-STORE
+    vendor: SAP
+    product: SAP S/4HANA Retail
+    title: Managing Retail Store Operations
+    url: https://learning.sap.com/courses/discovering-retail-functions-and-business-processes-in-sap-s-4hana-retail/managing-retail-store-operations_f77c8f4d-b247-4ef0-879b-3c4f469a6323
+    locator: Retail Store Operations Apps
+    paraphrase: Réception, comptage, ajustement et mouvements en magasin sont distingués ; le retrait de commandes passe par
+      préparation et remise.
+    limits: Appui partiel sur le magasin ; les interactions de caisse nécessitent un autre passage primaire.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: MS-PRODUCT-RELEASE
+    vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Release product structures
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/release-product-structure
+    locator: Released data for a product ; Product acceptance ; Release policies
+    paraphrase: Les versions et documents produit sont mis à disposition des entités consommatrices ; une acceptation manuelle
+      et des dates d’effet peuvent encadrer leur usage.
+    limits: Contexte ingénierie partiel pour la mode ; les sociétés du produit ne sont pas les systèmes métier FLOW.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: SAP-FSD
+    vendor: SAP
+    product: SAP S/4HANA 2025 FPS02
+    title: Feature Scope Description
+    url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+    locator: §2.8.2 p108–111 ; §3.6.2.3 p474 ; §2.11 ; §2.12.2 p186–187 ; §4.1.3.2.5 p581–582 ; §2.11.2 Spend Visibility p151
+      Supplier evaluation
+    paraphrase: Les structures produit et changements contrôlés conservent révisions et effet. Les prestations transport peuvent
+      justifier le contrôle de facture. Store Connectivity diffuse articles/prix/promotions et reçoit ventes, retours, mouvements
+      et faits financiers. Les évaluations fournisseur exploitent des écarts de quantité, prix, délai et qualité documentés.
+    limits: Catalogue fonctionnel ; sections de base, extensions et industrie distinctes. Ces passages ne définissent pas
+      la cartographie cible ni le parcours réel Beaumanoir.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: MS-PLANNING
+    vendor: Microsoft
+    product: Dynamics 365 Finance
+    title: Business performance planning overview
+    url: https://learn.microsoft.com/en-us/dynamics365/finance/business-performance-planning/business-performance-planning-overview
+    locator: Introduction ; Key concepts and terms
+    paraphrase: La planification relie objectifs, faits chargés, scénarios et analyse ; des dimensions communes permettent
+      de comparer et exploiter les résultats.
+    limits: Appui sur la boucle de planification/analyse ; ne couvre pas toute la stratégie d’entreprise.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: SAP-PLANNING
+    vendor: SAP
+    product: SAP Analytics Cloud — Integrated Financial Planning for SAP S/4HANA
+    title: Using SAP Content Network Business Packages
+    url: https://learning.sap.com/courses/performing-manual-planning-with-sap-analytics-cloud/using-sap-content-network-business-packages-optional_e1f63cdb-d5b4-4a7e-a0a2-ebf67bc5bbb2
+    locator: Integrated Financial Planning for SAP S/4HANA ; Group Financial Planning
+    paraphrase: Les contenus connectent planification financière, coûts, ventes/rentabilité et cash flow ; le groupe combine
+      objectifs et remontée des plans.
+    limits: Produit complémentaire connecté à S/4HANA ; pas une fonction incluse universellement dans S/4HANA ni toute la
+      stratégie.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: MS-BUDGET
+    vendor: Microsoft
+    product: Dynamics 365 Finance
+    title: Budget control overview
+    url: https://learn.microsoft.com/en-us/dynamics365/finance/budgeting/budget-control-overview-configuration
+    locator: Documents and journals ; Budget funds available ; Using budget control
+    paraphrase: Les contrôles budgétaires portent sur des documents sélectionnés dont les demandes et commandes d’achat ;
+      les faits réels et engagements sont comparés aux budgets selon configuration.
+    limits: Ne justifie pas d’imposer un contrôle systématique à toutes les opérations FLOW.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: SAP-BUDGET
+    vendor: SAP
+    product: SAP S/4HANA
+    title: Setting up Budget Availability Control on Cost Centers
+    url: https://learning.sap.com/courses/cost-center-and-internal-order-accounting-in-sap-s-4hana/setting-up-budget-availability-control-on-cost-centers
+    locator: Validation logic in general ; Predictive Accounting
+    paraphrase: Les faits et engagements de demandes ou commandes peuvent consommer le budget ; des seuils produisent avertissements
+      ou blocages.
+    limits: Appui plus étroit que tous budgets d’entreprise ; les limites annuelles propres à ce mécanisme ne deviennent pas
+      une règle FLOW.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: MS-AUDIT
+    vendor: Microsoft
+    product: Dynamics 365 Finance
+    title: Audit policy rules
+    url: https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/audit-policy-rules
+    locator: Introduction ; Queries and query types
+    paraphrase: Les politiques sélectionnent des documents d’achat, factures et dépenses puis exécutent des contrôles sur
+      leurs attributs.
+    limits: Ne démontre ni l’intégralité GRC ni un audit indépendant ; appui partiel.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: SAP-CONTROL
+    vendor: SAP
+    product: SAP Process Control intégré à SAP S/4HANA Cloud
+    title: SAP Process Control — Application Help
+    url: https://help.sap.com/doc/d83af7d22baa49829e464111338e9c12/12.0.23/en-US/loio60d658f576b6452eb0f943c04b354018_en.pdf
+    locator: §2.4 p13–15 ; §3.1 p16
+    paraphrase: Une intégration documentée relie la surveillance des contrôles et les données S/4HANA Cloud ; exigences, processus
+      et contrôles sont associés.
+    limits: Produit complémentaire 12.0 SP23 ; pas toute la conformité ni preuve de réalisation ; lien S/4HANA explicite,
+      couverture GRC entière reste partielle.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: MS-CREDIT
+    vendor: Microsoft
+    product: Dynamics 365 Finance
+    title: Credit holds for sales orders
+    url: https://learn.microsoft.com/en-us/dynamics365/finance/accounts-receivable/cm-sales-order-credit-holds
+    locator: Introduction ; Set up blocking rules and exclusion rules
+    paraphrase: La transaction de vente est évaluée selon sa situation et des règles de crédit ; blocages et exceptions gouvernent
+      son traitement.
+    limits: Ni copie passive de profil ni obligation d’appel synchrone universel.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: SAP-CREDIT
+    vendor: SAP
+    product: SAP S/4HANA Sales — SAP Credit Management
+    title: Working with SAP Credit Management
+    url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/working-with-sap-credit-management_d6b177ee-a8bb-4b77-80dc-87c04a9dd3f1
+    locator: An Example Business Process Using SAP Credit Management
+    paraphrase: Un contrôle lors de la saisie de commande peut bloquer celle-ci puis une décision de crédit peut permettre
+      sa libération.
+    limits: Appui sur la décision contextualisée ; ne décide pas le point de contrôle retenu par Beaumanoir.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  - id: MS-LOYALTY
+    vendor: Microsoft
+    product: Dynamics 365 Commerce
+    title: Loyalty overview
+    url: https://learn.microsoft.com/en-us/dynamics365/commerce/set-up-customer-loyalty-program
+    locator: Loyalty components ; Loyalty programs ; Loyalty schemes
+    paraphrase: Les programmes définissent les avantages ; les barèmes lient leur acquisition ou utilisation aux transactions
+      et canaux. Les groupes de prix relient les programmes à des conditions commerciales.
+    limits: Les points et mécanismes Dynamics n’imposent pas un dispositif FLOW ; l’appui SAP S/4HANA détaillé reste manquant
+      dans cette consultation.
+    consulted_on: '2026-10-16'
+    evidence_level: passage_consulted
+    status: proposed
+  gaps:
+  - provider: SAP S/4HANA
+    url: https://help.sap.com/docs/SAP_S4HANA_ONPREMISE/9905622a5c1f49ba84e9076fc83a9c2c/6e24835edb104565bcbe34c075c34ad0.html
+    reason: Page identifiée par la fiche Store Checkout mais contenu non accessible via extraction (0 ligne). Ne constitue
+      pas un passage consulté. Le remplacement probant utilisé dans cet audit est SAP-FSD §4.1.3.2.5 Store Connectivity.
+    status: alternative_primary_passage_consulted
+  - provider: SAP S/4HANA
+    finding_refs:
+    - EA-CHAIN-11
+    reason: SAP-CONTROL est un produit complémentaire dont l’intégration S/4HANA est consultée, pas une preuve native S/4HANA
+      couvrant tout GRC. La lacune de couverture propre S/4HANA sur l’étendue complète reste explicite.
+    status: partial_complementary_evidence
+  - provider: SAP S/4HANA
+    finding_refs:
+    - EA-CHAIN-15
+    url: https://help.sap.com/docs/SAP_CUSTOMER_CHECKOUT_CLOUD_POS/71570024ae3843f08a10d68054192d3d/89e3493c14e24f718d548a4ea317500e.html?locale=en-US&state=PRODUCTION&version=2502
+    reason: Page SAP Customer Checkout identifiée dans la fiche fidélité, mais extraction vide. Aucun passage S/4HANA consulté
+      sur toute la fidélité ; ni source générique ni présence de produit SAP ne remplace cette lacune.
+    status: missing_primary_passage
+  methodological_sources_read:
+  - AGENTS.md
+  - CONVENTIONS-MODELE.md#invariants-de-travail-u772
+  - CONVENTIONS-MODELE.md#business-areas-u848
+  - CONVENTIONS-MODELE.md#interprétation-des-plans-et-références-u858
+  - modeles/backlog/modeling-glossary.yaml MOD009 MOD010 MOD047
+  - modeles/schemas/urbanism.schema.json $defs.relation
+  - scripts/validate_models.py RELATION_KINDS
+  - modeles/backlog/business-interactions.yaml
+  - modeles/backlog/flow-remediation-U1113.yaml
+  - modeles/backlog/flow-audit-U1112.yaml
+  - scripts/inspect_model.py
+  - scripts/structured_io.py
+  no_consensus_or_installed_claim: true
+preserved_documented_limits:
+- 'FL-U1112-13 : sources de vérité enterprise de plusieurs références restent à qualifier ; ne pas les inventer.'
+- 'FL-U1112-16 : familles consommatrices des résultats de settlement restent à qualifier.'
+- Les corrections promesse, plans, stock, ledger process, mandats Logistics, retours Commerce digitaux/wholesale et compta
+  U1113 sont reconnues présentes.
+- No new behaviours outside Supply Chain Orchestration or capacities under Logistics were required; declared modelling depth
+  remains authoritative.
+- Scenarios are illustrative and do not prove exhaustive enterprise/process/application coverage; repeated contributions count
+  separately.
+- Information catalogue is an internal pilot (U470), not a required exhaustive enterprise information model; no new information
+  classes proposed.
+- Products IRMA/SCORTEX/MAP/CBS and other unresolved offers are intentionally excluded pending product identity qualification
+  (application-inventory-gap-U1045).
+- Akolade is an offering candidate without an installed SI selection; this is deliberate, not an orphan product.
+- Four SI selections have no business mappings because presence/functions are explicitly unknown or insufficiently qualified;
+  this does not mean no support.
+- DOC001 is unlinked from hotspots but intentionally preserved as the former synthesis (hotspot-wholesale-rewrite-U1030.preserved);
+  it remains available from the standalone Documents catalogue. This is not an accidental orphan.
+- 'No new market comparison was performed: findings concern internal consistency/traceability and use existing canonical definitions
+  and evidence.'
+follow_up:
+  recommendations: proposed
+  model_and_glossary: unchanged
+  decision_intents: unchanged
+  release: unchanged
+  commit_or_push: not_requested
+  next_business_batch: Sélectionner les corrections et arbitrages voulus ; aligner modèle et glossaire dans le même lot avant
+    toute capture ou publication.
+verification:
+  source_index:
+    command: python scripts/refresh_sources.py
+    records: 3147
+    state: passed
+  backlog:
+    command: python scripts/check_backlog.py
+    errors: 0
+    captured_intents: 0
+    pending_lots: 0
+    requirements_files_verified: 240
+    state: passed
+  audit_integrity:
+    findings: 27
+    reviewed_relations: 760
+    unreviewed_relations: 0
+    evidence_target_ids_resolve: true
+    business_model_and_glossary_unchanged: true
+  checks_reused: Les six validations de catalogues et la comparaison backlog/publication sont liées aux empreintes de la baseline.
+    Aucun build, capture d’accord, audit historique de comportement ou publication supplémentaire.

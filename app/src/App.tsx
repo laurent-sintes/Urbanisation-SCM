@@ -1233,6 +1233,7 @@ export function App() {
                           changeRoute({ view, mapDepth: depth as 0 | 1 | 2 | 3 | 4, mapFocus: '' }, true)
                         }
                         onSelect={view === 'flows' ? selectFlow : select}
+                        onRead={read}
                         onOpenScope={openMapLevel}
                         onAnnouncement={setAnnouncement}
                         onOpenHotspot={(hotspot, groupIds) =>

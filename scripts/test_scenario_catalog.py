@@ -36,6 +36,36 @@ class ScenarioCatalogTests(unittest.TestCase):
         self.assertTrue(any('published capability or reference' in e for e in errors))
         self.assertTrue(any('endpoint' in e for e in errors))
 
+    def test_context_participation_keeps_declared_depth_and_does_not_replace_capabilities(self):
+        path = self.model['scenario_catalog']['paths'][0]
+        path['field_agreements'] = [a for a in path.get('field_agreements', []) if a['field'] != 'steps']
+        step = path['steps'][0]
+        participant = {'node_id': 'ba-receiving-operations', 'role': 'Réaliser la réception demandée.',
+                       'conditions': ['Prestation confiée et périmètre identifié.'], 'source_refs': ['U1115']}
+        step['context_participants'] = [participant]
+        self.assertEqual(validate_catalog(self.model), [])
+        schema = read('modeles/schemas/urbanism.schema.json')
+        step_contract = schema['properties']['scenario_catalog']['properties']['paths']['items']['properties']['steps']['items']
+        self.assertEqual(validate(step, step_contract), [])
+        for target in ('domain-product-development', 'subdomain-product-change-release'):
+            participant['node_id'] = target
+            self.assertEqual(validate_catalog(self.model), [], target)
+        # Even beneath an existing context subdomain, a capability cannot be
+        # reclassified as a context participant.
+        self.model['nodes'].append({'id': 'context-capability-fixture', 'kind': 'capability'})
+        self.model['relations'].append({'id': 'context-capability-parent', 'type': 'contains',
+            'source_id': 'subdomain-product-change-release', 'target_id': 'context-capability-fixture'})
+        participant['node_id'] = 'context-capability-fixture'
+        self.assertTrue(any('declared context depth' in e for e in validate_catalog(self.model)))
+        for target in ('missing', 'D04.i', 'domain-sales', 'supply-chain-orchestration'):
+            participant['node_id'] = target
+            self.assertTrue(any('declared context depth' in e for e in validate_catalog(self.model)), target)
+        participant['node_id'] = 'ba-receiving-operations'
+        step['contributions'] = []
+        self.assertTrue(any('empty or duplicate contributions' in e for e in validate_catalog(self.model)))
+        step['contributions'] = [{'node_id': 'ba-receiving-operations', 'role': 'Recevoir'}]
+        self.assertTrue(any('published capability or reference' in e for e in validate_catalog(self.model)))
+
     def test_multiple_paths_streams_and_repeated_capabilities_allowed(self):
         catalog=self.model['scenario_catalog']
         self.assertGreater(len(catalog['scenarios'][0]['value_stream_ids']),1)

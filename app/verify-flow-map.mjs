@@ -134,6 +134,27 @@ async function assertNoPageOverflow(page) {
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
 }
 
+async function flowFilters(page, action) {
+  await page.locator('.map-flow-picker > button').click();
+  const dialog = page.getByRole('dialog', { name: 'Filtres des flux', exact: true });
+  await dialog.waitFor();
+  const result = await action(dialog);
+  await dialog.getByRole('button', { name: 'Fermer les filtres des flux', exact: true }).click();
+  return result;
+}
+
+async function setFlowVisibility(page, visible) {
+  await flowFilters(page, (dialog) =>
+    dialog.getByRole('checkbox', { name: 'Afficher les flux', exact: true }).setChecked(visible),
+  );
+}
+
+async function flowVisibility(page) {
+  return flowFilters(page, (dialog) =>
+    dialog.getByRole('checkbox', { name: 'Afficher les flux', exact: true }).isChecked(),
+  );
+}
+
 async function publishedEdges(page) {
   const edges = await page.locator('.flow-exchange').evaluateAll((elements) =>
     elements.map((element) => ({
@@ -326,6 +347,12 @@ try {
 
   const canvasBox = await page.locator('.flow-map-canvas').boundingBox();
   assert.ok(canvasBox && canvasBox.width > 100 && canvasBox.height > 100);
+  const labelPositions = await page.locator('.flow-exchange-caption').evaluateAll((elements) =>
+    elements.map((element) => {
+      const label = element.querySelector('foreignObject');
+      return [element.getAttribute('data-relation-ids'), label.getAttribute('x'), label.getAttribute('y')];
+    }),
+  );
   const beforePan = await viewport(page);
   await page.mouse.move(canvasBox.x + canvasBox.width - 16, canvasBox.y + 16);
   await page.mouse.down();
@@ -333,6 +360,16 @@ try {
   await page.mouse.up();
   await waitViewportChange(page, beforePan);
   await assertWorld(page, baseline, 'Dragging the map does not change world geometry');
+  assert.deepEqual(
+    await page.locator('.flow-exchange-caption').evaluateAll((elements) =>
+      elements.map((element) => {
+        const label = element.querySelector('foreignObject');
+        return [element.getAttribute('data-relation-ids'), label.getAttribute('x'), label.getAttribute('y')];
+      }),
+    ),
+    labelPositions,
+    'Panning translates the same captions without hiding or repositioning them',
+  );
   checks.push('The spatial map pans through pointer dragging');
 
   await page.setViewportSize({ width: 1100, height: 800 });
@@ -348,16 +385,36 @@ try {
   await assertWorld(page, baseline, 'Leaving fullscreen preserves world geometry');
   checks.push('Window size and fullscreen preserve world coordinates');
 
-  const flows = page.getByRole('button', { name: 'Afficher les flux', exact: true });
-  assert.equal(await flows.getAttribute('aria-pressed'), 'true');
-  await flows.click();
+  assert.equal(await flowVisibility(page), true);
+  await setFlowVisibility(page, false);
   await page.waitForFunction(() => !document.querySelector('.flow-exchange'));
   await assertWorld(page, baseline, 'Hiding exchanges does not rearrange the map');
-  await flows.click();
+  await setFlowVisibility(page, true);
   await page.locator('.flow-exchange').first().waitFor({ state: 'attached' });
   await publishedEdges(page);
   await assertWorld(page, baseline, 'Showing exchanges preserves world geometry');
   checks.push('The exchange layer changes independently of layout');
+
+  await flowFilters(page, async (dialog) => {
+    await dialog.getByRole('radio', { name: 'Tous les flux', exact: true }).check();
+    await dialog.getByRole('checkbox', { name: 'Apport de connaissance', exact: true }).uncheck();
+  });
+  await page.waitForFunction(() => !document.querySelector('.flow-exchange.is-knowledge'));
+  assert.ok(
+    await page.locator('.flow-exchange:not(.is-knowledge)').count(),
+    'Data exchanges remain after filtering knowledge',
+  );
+  await flowFilters(page, async (dialog) => {
+    await dialog.getByRole('checkbox', { name: 'Partage de données', exact: true }).uncheck();
+    await dialog.getByRole('checkbox', { name: 'Apport de connaissance', exact: true }).check();
+  });
+  await page.waitForFunction(() => !document.querySelector('.flow-exchange:not(.is-knowledge)'));
+  await assertWorld(page, baseline, 'Flow type and presentation filters never change geography');
+  await flowFilters(page, async (dialog) => {
+    await dialog.getByRole('checkbox', { name: 'Partage de données', exact: true }).check();
+    await dialog.getByRole('radio', { name: 'Flux principaux', exact: true }).check();
+  });
+  checks.push('The Flux picker independently filters published data and knowledge exchanges and their presentation');
 
   const visibleHotspots = (model.hotspot_catalog?.hotspots || []).filter(
     (hotspot) => hotspot.visible !== false && hotspot.location.node_ids.some((id) => belongs(id, domain.id)),
@@ -478,6 +535,20 @@ try {
   assert.ok(candidate && byId.has(candidate), 'A published spatial object is selectable');
   await page.locator(`.spatial-map-object[data-node-id="${candidate}"] .spatial-object-title`).click();
   await page.waitForFunction((id) => new URLSearchParams(location.hash.split('?')[1]).get('node') === id, candidate);
+  if (baseline.some((box) => parent.get(box.id) === candidate)) {
+    assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('scope'), candidate);
+    await page.locator('.flow-map-panel').waitFor();
+  } else {
+    assert.ok(new URL(page.url()).hash.startsWith('#/sheet?'), 'Clicking a terminal map object opens its sheet');
+  }
+  await page.goBack();
+  await page.locator('.flow-map-panel').waitFor();
+  await waitCameraIdle(page);
+  await assertWorld(page, baseline, 'Back returns from the entered object to the original map');
+  checks.push('A single object click enters its map or opens its terminal sheet, with working Back navigation');
+  await visit(page, 'flows', { node: candidate, scope: domain.id, mapDepth: '3' });
+  await page.locator('.flow-map-panel').waitFor();
+  await waitCameraIdle(page);
   const selectedRoute = new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
   await page.getByRole('button', { name: 'Centrer la sélection', exact: true }).click();
   await waitCameraIdle(page);
@@ -512,11 +583,8 @@ try {
 
   const businessSystem = byId.get(parent.get(domain.id));
   if (businessSystem?.kind === 'business_system') {
-    await page.getByRole('button', { name: 'Afficher les flux', exact: true }).click();
-    assert.equal(
-      await page.getByRole('button', { name: 'Afficher les flux', exact: true }).getAttribute('aria-pressed'),
-      'false',
-    );
+    await setFlowVisibility(page, false);
+    assert.equal(await flowVisibility(page), false);
     await page
       .locator('.breadcrumb')
       .getByRole('button', { name: nameOf(businessSystem), exact: true })
@@ -527,21 +595,13 @@ try {
     );
     await page.locator('.flow-map-panel').waitFor();
     await waitCameraIdle(page);
-    assert.equal(
-      await page.getByRole('button', { name: 'Afficher les flux', exact: true }).getAttribute('aria-pressed'),
-      'true',
-      'A new scope reads its own exchange visibility',
-    );
+    assert.equal(await flowVisibility(page), true, 'A new scope reads its own exchange visibility');
     await page.goBack();
     await page.waitForFunction((id) => new URLSearchParams(location.hash.split('?')[1]).get('scope') === id, domain.id);
     await waitCameraIdle(page);
-    assert.equal(
-      await page.getByRole('button', { name: 'Afficher les flux', exact: true }).getAttribute('aria-pressed'),
-      'false',
-      'Returning to a scope restores its hidden exchange layer',
-    );
+    assert.equal(await flowVisibility(page), false, 'Returning to a scope restores its hidden exchange layer');
     await assertWorld(page, baseline, 'Changing scope and returning keeps domain geometry');
-    await page.getByRole('button', { name: 'Afficher les flux', exact: true }).click();
+    await setFlowVisibility(page, true);
     checks.push('Breadcrumb scope changes keep independent exchange layer state');
   }
 
@@ -672,6 +732,7 @@ try {
 } catch (error) {
   report.status = 'failed';
   report.failure = error.stack || String(error);
+  report.url = activePage?.url();
   const failedPage = activePage;
   if (failedPage) {
     await failedPage.screenshot({ path: resolve(output, 'failure.png') });

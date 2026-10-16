@@ -94,6 +94,16 @@ class DecisionCarryTests(unittest.TestCase):
         self.after['scenario_catalog']['unknown_rule'] = 'New global meaning'
         self.assertIn('global_business_context_changed', self.classify()['reasons'])
 
+    def test_context_participants_bring_the_scenario_into_their_approval_context(self):
+        self.before['scenario_catalog'] = {
+            'paths': [{'id': 'p', 'scenario_id': 's', 'steps': [{
+                'contributions': [{'node_id': 'peer'}],
+                'context_participants': [{'node_id': 'cap', 'role': 'Context contribution'}]}]}],
+            'scenarios': [{'id': 's', 'objective': 'Original context', 'value_stream_ids': []}], 'value_streams': []}
+        self.after = deepcopy(self.before)
+        self.after['scenario_catalog']['scenarios'][0]['objective'] = 'Changed context'
+        self.assertIn('mobilizing_scenario_changed', self.classify()['reasons'])
+
     def test_hotspot_edits_follow_model_anchors_without_global_reassessment(self):
         self.before['nodes'].append({'id': 'unrelated', 'kind': 'capability', 'fields': {'name': 'Elsewhere'}})
         self.before['hotspot_catalog'] = {'schema_version': 1, 'hotspots': [

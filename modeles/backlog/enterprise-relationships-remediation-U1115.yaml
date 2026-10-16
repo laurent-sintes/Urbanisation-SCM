@@ -1,0 +1,2530 @@
+id: EA-RELATIONSHIPS-REMEDIATION-U1115
+date: '2026-10-16'
+status: applied_to_backlog_with_explicit_limits
+source_refs:
+- U1114
+- U1115
+audit: enterprise-relationships-audit-U1114.yaml
+scope: 'Application des cinq groupes de travaux dans l’ordre proposé : cohérence, Commerce/Procurement, coopérations de contexte,
+  parcours/traçabilité, consolidation et contrôles.'
+finding_resolution:
+  EA-CHAIN-14:
+    status: applied
+    relation_ids:
+    - REL-U979-product-definitions
+    - REL-U979-product-feedback
+    - REL-U979-service-requests
+    - REL-U979-execution-results
+    - REL-U979-management-facts
+    - REL-U979-credit-profiles
+    note: Recomposer les six synthèses après les autres fragments ; union exacte des contenus détaillés orientés, lignée ci-dessous.
+      Aucun sens système absent créé.
+  EA-U1114-ST01:
+    status: applied
+    retained_relation_id: REL-U908-uses-reference-D05.e-96
+    removed_relation_ids:
+    - REL-U908-uses-reference-D05.e-131
+    note: Doublon strict retiré ; toutes les provenances conservées.
+  EA-U1114-ST02:
+    status: applied
+    differentiated_relation_ids:
+    - REL-INVENTORY-PLANNING-D05.e
+    - REL-INVENTORY-PLANNING-D05.g
+    - REL-NEEDS-U290-085
+    - REL-INITIAL-STOCKING-INVENTORY
+    - REL-NEEDS-U290-087
+    - REL-INITIAL-STOCKING-TARGET
+    - REL-NEEDS-U290-088
+    - REL-INITIAL-STOCKING-TRACKING
+    - REL-NEEDS-U290-089
+    - REL-INITIAL-STOCKING-PURCHASE
+    - REL-NEEDS-U290-090
+    - REL-INITIAL-STOCKING-TRANSFER
+    - REL-NEEDS-U290-094
+    - REL-REDISTRIBUTION-INITIAL-STOCKING
+    - REL-NEEDS-U395-03
+    - REL-NEEDS-U395-04
+    removed_relation_ids:
+    - REL-U750-PLANNING-ASSIGNMENT
+    - REL-U711-CATALOG-SERVICE-ORDERS
+    note: Huit paires conservent leurs contextes explicites initial/continu ; deux recouvrements fusionnés en conservant conditions
+      et provenances.
+  EA-U1114-ST03:
+    status: applied
+    relation_ids:
+    - REL-EXECUTION-ADAPTATION-ORCHESTRATION
+    - REL-U756-FACTS
+    - REL-U756-ESTABLISHED
+    - REL-U756-MOVEMENTS
+    - REL-U826-plans-ingestion-TO-plans-visibility
+    - REL-U826-plans-ingestion-TO-demand-plan-visibility
+    - REL-U843-order-workflow-planning-order-workflow-orchestration
+    note: Sept fournitures requalifiées en shares-data avec contenus et finalités ; aucun besoin consommateur→fournisseur
+      distinct supprimé.
+  EA-U1114-ST05:
+    status: applied
+    node_ids:
+    - D05.h
+    note: Scope aligné sur le parent Stock Optimization ; preuves de rattachement historique conservées dans leurs sources.
+  EA-U1114-ST06:
+    status: applied
+    relation_ids:
+    - REL-INVENTORY-PLANNING-D05.a
+    - REL-INVENTORY-PLANNING-D05.d
+    - REL-INVENTORY-PLANNING-D05.e
+    - REL-INVENTORY-PLANNING-D05.c
+    - REL-U858-REFERENCE-033
+    note: Master Planning et référence Agreement nommés selon le modèle courant.
+  EA-CAT-01:
+    status: applied
+    information_item_ids:
+    - PINFO-011
+    - PINFO-013
+    note: Rôles mis à jour ; catalogue interne, U466 et qualification proposée préservés.
+  EA-CAT-02:
+    status: applied
+    term_ids:
+    - TER112
+    note: Sources d’inspiration et usages FLOW alignés sur la promesse individuelle ; périmètres natifs et preuves éditeur
+      préservés.
+  EA-CHAIN-01:
+    status: applied
+    relation_ids:
+    - REL-U1115-assortment-to-catalog
+    - REL-U1115-assortment-to-wholesale-offer
+    - REL-U1115-catalog-to-digital
+    - REL-U1115-catalog-to-store
+    - REL-U1115-wholesale-offer-to-engagement
+    scope: Relations cible entre responsabilités existantes ; noms et parents inchangés. Les détails de contrat et endpoints
+      choisis après Go gardent leur qualification proposée.
+  EA-CHAIN-02:
+    status: applied
+    relation_ids:
+    - REL-U1115-pricing-rules-to-determination
+    - REL-U1115-promotion-rules-to-determination
+    - REL-U1115-wholesale-offer-pricing-context
+    - REL-U1115-proposed-price-to-wholesale-offer
+    - REL-U1115-digital-sale-pricing-context
+    - REL-U1115-proposed-price-to-digital-sale
+    - REL-U1115-store-checkout-pricing-context
+    - REL-U1115-proposed-price-to-store-checkout
+    - REL-U1115-sales-order-pricing-context
+    - REL-U996-contextual-prices
+    scope: Relations cible entre responsabilités existantes ; noms et parents inchangés. Les détails de contrat et endpoints
+      choisis après Go gardent leur qualification proposée.
+  EA-CHAIN-03:
+    status: applied
+    relation_ids:
+    - REL-U1115-store-journey-to-checkout
+    - REL-U1115-store-demand-to-sales-order
+    - REL-U1115-sales-order-to-store-journey
+    scope: Relations cible entre responsabilités existantes ; noms et parents inchangés. Les détails de contrat et endpoints
+      choisis après Go gardent leur qualification proposée.
+  EA-CHAIN-04:
+    status: applied_with_documented_limits
+    relation_ids:
+    - REL-U1115-checkout-stock-facts
+    - REL-U1115-checkout-accounting-facts
+    - REL-U1115-checkout-cash-facts
+    - REL-U1115-checkout-settlement-facts
+    scope: Relations cible entre responsabilités existantes ; noms et parents inchangés. Les détails de contrat et endpoints
+      choisis après Go gardent leur qualification proposée.
+    limits:
+    - Circuits financiers installés et périodicité à qualifier ; destinataires Finance documentés à leur maille actuelle.
+      La voie cible des effets physiques de caisse est explicite, aucune interface présumée.
+  EA-CHAIN-05:
+    status: applied
+    relation_ids:
+    - REL-U1115-requisition-to-consultation
+    - REL-U1115-requisition-to-selection
+    - REL-U1115-eligibility-to-selection
+    - REL-U1115-consultation-to-selection
+    - REL-U1115-selected-offer-to-agreement
+    - REL-U1115-requisition-to-purchase-order
+    - REL-U1115-selected-offer-to-purchase-order
+    - REL-U1115-agreement-to-purchase-order
+    - REL-U1115-purchase-order-to-requisition
+    - REL-U1115-purchase-order-agreement-consumption
+    scope: Relations cible entre responsabilités existantes ; noms et parents inchangés. Les détails de contrat et endpoints
+      choisis après Go gardent leur qualification proposée.
+  EA-CHAIN-06:
+    status: applied_with_documented_limits
+    relation_ids:
+    - REL-U1115-purchase-order-to-supplier-follow-up
+    - REL-U1115-reconciled-service-to-supplier-follow-up
+    - REL-U1115-purchase-order-to-supplier-performance
+    - REL-U1115-reconciled-service-to-supplier-performance
+    - REL-U1115-supplier-follow-up-to-purchasing-case
+    - REL-U1115-supplier-follow-up-to-performance
+    - REL-U1115-purchase-order-to-purchasing-case
+    - REL-U1115-supplier-performance-to-eligibility
+    scope: Relations cible entre responsabilités existantes ; noms et parents inchangés. Les détails de contrat et endpoints
+      choisis après Go gardent leur qualification proposée.
+    limits:
+    - Les résultats de réception/inspection passent par Service Reconciliation, alimenté par Operations Tracking ; les producteurs
+      sources et règles de mesure de qualité non documentés restent à qualifier.
+  EA-CHAIN-12:
+    status: applied
+    relation_ids:
+    - REL-U1115-pricing-conditions-to-wholesale-account
+    - REL-U1115-wholesale-account-to-offer
+    - REL-U1115-wholesale-account-to-engagement
+    - REL-U1115-wholesale-credit-control-request
+    - REL-U1115-finance-credit-control-result
+    - REL-U1115-credit-result-to-sales-order
+    scope: Relations cible entre responsabilités existantes ; noms et parents inchangés. Les détails de contrat et endpoints
+      choisis après Go gardent leur qualification proposée.
+  EA-CHAIN-15:
+    status: applied_with_documented_limits
+    relation_ids:
+    - REL-U1115-retail-context-to-digital
+    - REL-U1115-digital-interactions-to-retail-context
+    - REL-U1115-loyalty-context-to-digital
+    - REL-U1115-retail-context-to-store
+    - REL-U1115-store-interactions-to-retail-context
+    - REL-U1115-loyalty-context-to-store
+    - REL-U1115-loyalty-to-price-determination
+    - REL-U1115-checkout-facts-to-loyalty
+    - REL-U1115-sales-order-facts-to-loyalty
+    - REL-U1115-return-order-facts-to-loyalty
+    scope: Relations cible entre responsabilités existantes ; noms et parents inchangés. Les détails de contrat et endpoints
+      choisis après Go gardent leur qualification proposée.
+    limits:
+    - L’appui SAP S/4HANA consulté reste manquant pour la fidélité ; l’ancienne page SAP Customer Checkout demeure une référence
+      historique dont l’extraction vide ne vaut pas consultation probante.
+  EA-CHAIN-07:
+    status: addressed_with_explicit_limits
+    note: Coopérations de contexte décrites à la profondeur existante ; rôles et données par objet gardent leur statut et
+      leurs réserves, sans capacité périphérique créée.
+  EA-CHAIN-08:
+    status: addressed_with_explicit_limits
+    note: Coopérations de contexte décrites à la profondeur existante ; rôles et données par objet gardent leur statut et
+      leurs réserves, sans capacité périphérique créée.
+  EA-CHAIN-09:
+    status: addressed_with_explicit_limits
+    note: Coopérations de contexte décrites à la profondeur existante ; rôles et données par objet gardent leur statut et
+      leurs réserves, sans capacité périphérique créée.
+  EA-CHAIN-10:
+    status: addressed_with_explicit_limits
+    note: Coopérations de contexte décrites à la profondeur existante ; rôles et données par objet gardent leur statut et
+      leurs réserves, sans capacité périphérique créée.
+  EA-CHAIN-11:
+    status: addressed_with_explicit_limits
+    note: Coopérations de contexte décrites à la profondeur existante ; rôles et données par objet gardent leur statut et
+      leurs réserves, sans capacité périphérique créée.
+  EA-CHAIN-13:
+    status: addressed_with_explicit_limits
+    note: Remises logistiques et justificatifs financiers reliés conditionnellement ; route directe/locale ou relayée, pièces
+      et autorités précises restent à qualifier.
+  EA-U1114-ST04:
+    status: addressed_with_explicit_limits
+    note: Contrat commun du registre des événements de Case complété, six familles de producteurs/références reliées ; couverture
+      installée non présumée et aucun effet de stock dupliqué.
+  EA-CAT-03:
+    status: addressed_with_explicit_limits
+    note: Mapping AllocationRun Boardriders et état historical_document ajoutés ; sources de juillet 2025 et déclarations
+      reliées sans confirmer l’usage actuel.
+  EA-CAT-04:
+    status: implemented
+    summary: Contrat distinct context_participants, validation de profondeur, sources et conditions, lecture Atlas et remontée
+      des scénarios ; participations ajoutées seulement aux étapes existantes documentées.
+  EA-CAT-05:
+    status: implemented
+    summary: Origine Process Ledger et conditions de corrélation précisées dans les entrées avant/après du parcours d’analyse,
+      sans action Ledger fictive.
+  EA-CAT-06:
+    status: implemented
+    summary: Contrôles inline étendus aux catalogues et espaces method/modeling avec vocabulaire explicitement choisi ; panorama_ref
+      vérifié par index As Is, empreinte et propriétaire SI.
+implementation_notes:
+- Appeler recompose_summaries(model_final) après application des autres lots ; remplacer les six éditions de synthèse et leur
+  lignée dans le manifeste.
+- Comparaison marché récente U1114 réutilisée ; aucun fait éditeur ni réalisation installée ajouté. Corrections d’alignement
+  internes, compléments rédactionnels proposés.
+- Aucun accord de termes ou de descriptions nouvelles à capturer automatiquement.
+- Lecture ciblée via scripts.inspect_model.inspect ; documents canoniques lus avec scripts.structured_io.read. Aucun canonique
+  modifié par cet agent.
+- 'Périmètre : 21 fiches Commerce/Procurement, leurs termes, TER155 et TER257 ; nouveaux contrats proposés. Le terme TER353
+  reste cohérent : les autres faits de magasin suivent leur lien U1091 existant.'
+- Les sources primaires consultées et indexées dans U1114 sont réutilisées ; les rapprochements historiques des fiches sont
+  préservés et leur positionnement réexaminé sur le périmètre inchangé.
+- Aucun nouveau parent, capacité, comportement, maître entreprise, autorité financière ou réalisation installée créé.
+- Les nouveaux liens vers des destinations choisies après le Go restent proposés. intent_targets ne suggère que les extrémités
+  concrètes déjà nommées par la proposition de l’audit ; le parent doit encore qualifier chaque capture.
+- La capacité Sales Price Determination devient l’extrémité productrice du flux REL-U996-contextual-prices existant ; aucune
+  seconde relation parallèle de prix vers Sales Order n’est ajoutée.
+- Coopérations CH07–CH13 justifiées par les fiches et les passages primaires MS/SAP de l’audit U1114, relus ; pas de taxonomie
+  importée.
+- Les relations nouvelles précisent une cible proposée et ses conditions ; leurs extrémités précises et leurs textes rédigés
+  après Go ne reçoivent pas un accord de champ implicite.
+- Lacune SAP S/4HANA propre à GRC conservée malgré les appuis complémentaires Process Control.
+- Les faits monétaires de caisse restent produits par Commerce ; les registres de stock ne deviennent pas producteurs d’encaissements.
+- La lignée des synthèses EA sera recalculée sur le lot final après tous les ajouts.
+- Ajouter MOD051 à presentation.groups[id=objects].term_ids du glossaire méthodologique (parent).
+- Les étapes modifiées perdent uniquement leurs accords actifs field_agreements steps devenus périmés ; les autres accords
+  sont préservés et aucun complément n’est automatiquement validé.
+- Aucune participation Enterprise Planning ou Governance ajoutée sans étape documentée ; leurs coopérations restent portées
+  par les relations de contexte.
+- Exports bruts conservent automatiquement context_participants ; métamodèle, validation, contexte de décisions et delta sont
+  alignés.
+summary_lineage:
+  REL-U979-product-definitions:
+    source_system_id: system-design-development
+    target_system_id: system-business-operations
+    detailed_relation_ids:
+    - REL-U1101-forecast-to-demand-plan
+    - REL-U1113-design-product-reference
+    - REL-U1115-release-assortment
+    - REL-U1115-release-catalog
+    - REL-U1115-documentation-catalog
+    - REL-U1115-release-sourcing
+    - REL-U1115-material-sourcing
+    content_policy: exact_content_union_of_detailed_oriented_relations
+    original_contents_retained_without_detail: false
+  REL-U979-product-feedback:
+    source_system_id: system-business-operations
+    target_system_id: system-design-development
+    detailed_relation_ids:
+    - REL-U1113-product-feedback-design
+    - REL-U1115-sourcing-forecast-assumptions
+    - REL-U1115-supplier-offers-forecast
+    - REL-U1115-assortment-forecast
+    content_policy: exact_content_union_of_detailed_oriented_relations
+    original_contents_retained_without_detail: false
+  REL-U979-service-requests:
+    source_system_id: system-business-operations
+    target_system_id: domain-logistics-execution
+    detailed_relation_ids:
+    - REL-U1113-service-order-receiving-mandate
+    - REL-U1113-service-order-picking-mandate
+    - REL-U1113-service-order-packing-mandate
+    - REL-U1113-service-order-cross-docking-mandate
+    - REL-U1113-service-order-labeling-mandate
+    - REL-U1113-service-order-kitting-mandate
+    - REL-U1113-service-order-garment-finishing-mandate
+    - REL-U1113-service-order-cleaning-mandate
+    - REL-U1113-service-order-repair-alteration-mandate
+    - REL-U1113-service-order-personalization-mandate
+    - REL-U1113-service-order-inspection-mandate
+    - REL-U1113-service-order-scrapping-mandate
+    - REL-U1113-service-order-transport-mandate
+    - REL-U1113-service-order-transport-booking-mandate
+    - REL-U1113-service-order-customs-clearance-mandate
+    - REL-U1113-transport-plan-local-mandate
+    content_policy: exact_content_union_of_detailed_oriented_relations
+    original_contents_retained_without_detail: false
+  REL-U979-execution-results:
+    source_system_id: domain-logistics-execution
+    target_system_id: system-business-operations
+    detailed_relation_ids:
+    - REL-U1113-ba-carrier-capacity-assignment-service-results
+    - REL-U1113-ba-customs-procedure-management-service-results
+    - REL-U1113-ba-kitting-operations-service-results
+    - REL-U1113-ba-packing-shipping-operations-service-results
+    - REL-U1113-ba-picking-operations-service-results
+    - REL-U1113-ba-product-preparation-operations-service-results
+    - REL-U1113-ba-receiving-operations-service-results
+    - REL-U1113-ba-transport-execution-service-results
+    - REL-U1113-domain-warehousing-service-results
+    - REL-U1113-ba-kitting-operations-inventory-facts
+    - REL-U1113-ba-packing-shipping-operations-inventory-facts
+    - REL-U1113-ba-physical-inventory-control-inventory-facts
+    - REL-U1113-ba-picking-operations-inventory-facts
+    - REL-U1113-ba-product-preparation-operations-inventory-facts
+    - REL-U1113-ba-receiving-operations-inventory-facts
+    - REL-U1113-ba-returns-disposition-execution-inventory-facts
+    - REL-U1113-ba-returns-receiving-inspection-inventory-facts
+    - REL-U1113-ba-storage-operations-inventory-facts
+    - REL-U1113-ba-transport-execution-inventory-facts
+    - REL-U1113-domain-warehousing-inventory-facts
+    - REL-U1113-local-transport-plan
+    content_policy: exact_content_union_of_detailed_oriented_relations
+    original_contents_retained_without_detail: false
+  REL-U979-management-facts:
+    source_system_id: system-business-operations
+    target_system_id: system-enterprise-management-control
+    detailed_relation_ids:
+    - REL-U981-accounting-facts
+    - REL-U996-commercial-benefit-conditions
+    - REL-U996-eligible-supply-facts
+    - REL-U1091-supplier-benefit-conditions-to-settlement
+    - REL-U1115-checkout-accounting-facts
+    - REL-U1115-checkout-cash-facts
+    - REL-U1115-checkout-settlement-facts
+    - REL-U1115-wholesale-credit-control-request
+    - REL-U1115-master-plan-budget
+    - REL-U1115-operations-performance
+    - REL-U1115-commerce-performance
+    - REL-U1115-supplier-performance-enterprise
+    - REL-U1115-operational-control-evidence
+    content_policy: exact_content_union_of_detailed_oriented_relations
+    original_contents_retained_without_detail: false
+  REL-U979-credit-profiles:
+    source_system_id: system-enterprise-management-control
+    target_system_id: system-business-operations
+    detailed_relation_ids:
+    - REL-U996-commercial-settlement-results
+    - REL-U1113-finance-credit-reference
+    - REL-U1113-accounting-processing-results
+    - REL-U1115-finance-credit-control-result
+    - REL-U1115-objectives-master-plan
+    - REL-U1115-budget-master-plan
+    - REL-U1115-policy-supply
+    - REL-U1115-control-requirements-domain-sales
+    - REL-U1115-control-requirements-domain-sourcing-procurement
+    - REL-U1115-control-requirements-supply-chain-orchestration
+    content_policy: exact_content_union_of_detailed_oriented_relations
+    original_contents_retained_without_detail: false
+agreement_scope:
+  approved: Go sur le lot complet avec ses réserves ; captures limitées aux types et extrémités concrètement désignés dans
+    les propositions avant Go.
+  proposed: Nouveaux contrats détaillés, textes, participant de contexte, routes ou producteurs précis choisis ensuite, comparaisons
+    et état installé non démontré.
+changes:
+  nodes:
+  - D05.h
+  - subdomain-product-strategy-requirements
+  - subdomain-collection-planning
+  - subdomain-development-planning
+  - subdomain-product-design-specification
+  - subdomain-material-component-development
+  - subdomain-sampling-product-validation
+  - subdomain-product-definition-variants
+  - subdomain-product-documentation-classification
+  - subdomain-product-change-release
+  - subdomain-strategy-objectives
+  - subdomain-budgeting-forecasting
+  - subdomain-performance-analysis
+  - subdomain-policy-compliance
+  - subdomain-risk-internal-control
+  - subdomain-audit-assurance
+  - domain-warehousing
+  - domain-transportation
+  - domain-customs-management
+  - cap-supplier-eligibility-assessment
+  - cap-supplier-performance-evaluation
+  - cap-supplier-consultation-coordination
+  - cap-supplier-offer-selection
+  - cap-purchase-agreement-lifecycle-management
+  - cap-purchase-requisition-handling
+  - cap-purchasing-case-coordination
+  - cap-supplier-commitment-follow-up
+  - cap-wholesale-account-stewardship
+  - cap-wholesale-sales-engagement
+  - cap-assortment-eligibility-management
+  - cap-commercial-catalog-publication
+  - cap-sales-price-determination
+  - cap-promotion-rule-management
+  - cap-digital-sales-journey-management
+  - cap-in-store-sales-journey-management
+  - cap-retail-customer-engagement-management
+  - cap-sales-pricing-rule-management
+  - cap-store-checkout-management
+  - cap-retail-loyalty-program-management
+  - cap-wholesale-offer-preparation
+  - subdomain-demand-supply-forecasting
+  - process-ledger
+  relations:
+  - REL-INVENTORY-PLANNING-D05.a
+  - REL-INVENTORY-PLANNING-D05.d
+  - REL-INVENTORY-PLANNING-D05.e
+  - REL-INVENTORY-PLANNING-D05.c
+  - REL-EXECUTION-ADAPTATION-ORCHESTRATION
+  - REL-NEEDS-U290-085
+  - REL-U908-uses-reference-D05.e-96
+  - REL-NEEDS-U290-087
+  - REL-NEEDS-U290-088
+  - REL-NEEDS-U290-089
+  - REL-NEEDS-U290-090
+  - REL-NEEDS-U290-094
+  - REL-INVENTORY-PLANNING-D05.g
+  - REL-INITIAL-STOCKING-INVENTORY
+  - REL-INITIAL-STOCKING-TARGET
+  - REL-INITIAL-STOCKING-PURCHASE
+  - REL-INITIAL-STOCKING-TRANSFER
+  - REL-INITIAL-STOCKING-TRACKING
+  - REL-REDISTRIBUTION-INITIAL-STOCKING
+  - REL-U858-REFERENCE-033
+  - REL-NEEDS-U395-03
+  - REL-NEEDS-U395-04
+  - REL-AUDIT-U435-PLNK-01
+  - REL-U682-CATALOG-SERVICE-ORDERS
+  - REL-U756-FACTS
+  - REL-U756-ESTABLISHED
+  - REL-U756-MOVEMENTS
+  - REL-U826-plans-ingestion-TO-plans-visibility
+  - REL-U826-plans-ingestion-TO-demand-plan-visibility
+  - REL-U843-order-workflow-planning-order-workflow-orchestration
+  - REL-U979-product-definitions
+  - REL-U979-product-feedback
+  - REL-U979-service-requests
+  - REL-U979-execution-results
+  - REL-U979-management-facts
+  - REL-U979-credit-profiles
+  - REL-U996-contextual-prices
+  - REL-U1115-assortment-to-catalog
+  - REL-U1115-assortment-to-wholesale-offer
+  - REL-U1115-catalog-to-digital
+  - REL-U1115-catalog-to-store
+  - REL-U1115-wholesale-offer-to-engagement
+  - REL-U1115-pricing-rules-to-determination
+  - REL-U1115-promotion-rules-to-determination
+  - REL-U1115-wholesale-offer-pricing-context
+  - REL-U1115-proposed-price-to-wholesale-offer
+  - REL-U1115-digital-sale-pricing-context
+  - REL-U1115-proposed-price-to-digital-sale
+  - REL-U1115-store-checkout-pricing-context
+  - REL-U1115-proposed-price-to-store-checkout
+  - REL-U1115-sales-order-pricing-context
+  - REL-U1115-pricing-conditions-to-wholesale-account
+  - REL-U1115-wholesale-account-to-offer
+  - REL-U1115-wholesale-account-to-engagement
+  - REL-U1115-store-journey-to-checkout
+  - REL-U1115-store-demand-to-sales-order
+  - REL-U1115-sales-order-to-store-journey
+  - REL-U1115-checkout-stock-facts
+  - REL-U1115-checkout-accounting-facts
+  - REL-U1115-checkout-cash-facts
+  - REL-U1115-checkout-settlement-facts
+  - REL-U1115-requisition-to-consultation
+  - REL-U1115-requisition-to-selection
+  - REL-U1115-eligibility-to-selection
+  - REL-U1115-consultation-to-selection
+  - REL-U1115-selected-offer-to-agreement
+  - REL-U1115-requisition-to-purchase-order
+  - REL-U1115-selected-offer-to-purchase-order
+  - REL-U1115-agreement-to-purchase-order
+  - REL-U1115-purchase-order-to-requisition
+  - REL-U1115-purchase-order-agreement-consumption
+  - REL-U1115-purchase-order-to-supplier-follow-up
+  - REL-U1115-reconciled-service-to-supplier-follow-up
+  - REL-U1115-purchase-order-to-supplier-performance
+  - REL-U1115-reconciled-service-to-supplier-performance
+  - REL-U1115-supplier-follow-up-to-purchasing-case
+  - REL-U1115-supplier-follow-up-to-performance
+  - REL-U1115-purchase-order-to-purchasing-case
+  - REL-U1115-supplier-performance-to-eligibility
+  - REL-U1115-wholesale-credit-control-request
+  - REL-U1115-finance-credit-control-result
+  - REL-U1115-credit-result-to-sales-order
+  - REL-U1115-retail-context-to-digital
+  - REL-U1115-digital-interactions-to-retail-context
+  - REL-U1115-loyalty-context-to-digital
+  - REL-U1115-retail-context-to-store
+  - REL-U1115-store-interactions-to-retail-context
+  - REL-U1115-loyalty-context-to-store
+  - REL-U1115-loyalty-to-price-determination
+  - REL-U1115-checkout-facts-to-loyalty
+  - REL-U1115-sales-order-facts-to-loyalty
+  - REL-U1115-return-order-facts-to-loyalty
+  - REL-U1115-strategy-collection
+  - REL-U1115-collection-development-plan
+  - REL-U1115-collection-design
+  - REL-U1115-development-design
+  - REL-U1115-development-validation
+  - REL-U1115-material-design
+  - REL-U1115-design-validation
+  - REL-U1115-validation-design
+  - REL-U1115-design-definition
+  - REL-U1115-validation-release
+  - REL-U1115-definition-release
+  - REL-U1115-release-definition
+  - REL-U1115-release-documentation
+  - REL-U1115-documentation-release
+  - REL-U1115-release-assortment
+  - REL-U1115-release-catalog
+  - REL-U1115-documentation-catalog
+  - REL-U1115-release-sourcing
+  - REL-U1115-material-sourcing
+  - REL-U1115-sourcing-forecast-assumptions
+  - REL-U1115-supplier-offers-forecast
+  - REL-U1115-assortment-forecast
+  - REL-U1115-objectives-budget
+  - REL-U1115-objectives-product
+  - REL-U1115-objectives-master-plan
+  - REL-U1115-budget-forecast
+  - REL-U1115-budget-master-plan
+  - REL-U1115-forecast-budget
+  - REL-U1115-master-plan-budget
+  - REL-U1115-accounting-performance
+  - REL-U1115-operations-performance
+  - REL-U1115-commerce-performance
+  - REL-U1115-supplier-performance-enterprise
+  - REL-U1115-performance-objectives
+  - REL-U1115-performance-budget
+  - REL-U1115-policy-risk-control
+  - REL-U1115-policy-supply
+  - REL-U1115-policy-product
+  - REL-U1115-policy-customs
+  - REL-U1115-operational-control-evidence
+  - REL-U1115-product-control-evidence
+  - REL-U1115-customs-control-evidence
+  - REL-U1115-controls-audit
+  - REL-U1115-audit-controls
+  - REL-U1115-audit-policy
+  - REL-U1115-control-requirements-domain-sales
+  - REL-U1115-control-requirements-domain-sourcing-procurement
+  - REL-U1115-control-requirements-supply-chain-orchestration
+  - REL-U1115-dispatch-handover
+  - REL-U1115-transport-receiving-handover
+  - REL-U1115-customs-transport-status
+  - REL-U1115-customs-dispatch-status
+  - REL-U1115-service-supporting-facts-domain-warehousing
+  - REL-U1115-service-evidence-results-domain-warehousing
+  - REL-U1115-service-supporting-facts-domain-transportation
+  - REL-U1115-service-evidence-results-domain-transportation
+  - REL-U1115-service-supporting-facts-domain-customs-management
+  - REL-U1115-service-evidence-results-domain-customs-management
+  - REL-U1115-service-lifecycle-case-events
+  - REL-U1115-planning-case-events
+  - REL-U1115-supply-assignment-case-events
+  - REL-U1115-plan-application-case-events
+  - REL-U1115-inventory-case-references
+  - REL-U1115-ownership-case-references
+  terms:
+  - TER112
+  - TER155
+  - TER207
+  - TER208
+  - TER209
+  - TER211
+  - TER212
+  - TER213
+  - TER215
+  - TER216
+  - TER217
+  - TER222
+  - TER223
+  - TER224
+  - TER226
+  - TER227
+  - TER228
+  - TER232
+  - TER237
+  - TER257
+  - TER310
+  - TER331
+  - TER332
+  - TER334
+  - TER335
+  - TER336
+  - TER338
+  - TER339
+  - TER340
+  - TER341
+  - TER342
+  - TER343
+  - TER344
+  - TER345
+  - TER346
+  - TER349
+  - TER350
+  - TER352
+  - TER367
+  - TER368
+  - TER370
+  - TER371
+  - TER373
+  - TER375
+  - TER376
+  modeling_terms:
+  - MOD028
+  - MOD051
+  paths:
+  - return-fashion-recovery-path
+  - fashion-launch-path
+  - export-remote-services-path
+  - stocktaking-variance-path
+  - transport-missed-connection-path
+  - partial-receiving-path
+  - intercompany-direct-delivery-path
+  - product-quality-feedback-path
+  - customer-credit-hold-path
+  - process-approval-bottleneck-path
+  information_items:
+  - PINFO-011
+  - PINFO-013
+  application_products:
+  - product-sap-ecc
+  application_selections:
+  - selection-sap-ecc-boardriders
+removed:
+  relations:
+  - REL-U908-uses-reference-D05.e-131
+  - REL-U750-PLANNING-ASSIGNMENT
+  - REL-U711-CATALOG-SERVICE-ORDERS
+catalog_integrity:
+  information_items: Empreintes contrôlées par le contrat required_catalog, sans extension ni exposition du catalogue interne.
+  application_selections: Preuve AllocationRun historique, acquisition/activation/usage actuel inconnus ; aucune couverture
+    S/4HANA déduite.
+  context_participants: Participation distincte des contributions, à la profondeur déclarée ; aucun parent métier ni capacité
+    périphérique artificielle.
+explicit_remaining_limits:
+- Autorité et sources de vérité d’entreprise par objet produit/référence à établir sur preuve.
+- Circuits financiers précis, faits de qualité et méthodes de consolidation ou de coût gardent leurs qualifications.
+- Remises Logistics locales ou relayées par SCO à qualifier selon prestation ; les flèches sont des coopérations métier conditionnelles.
+- Capture Case bornée aux événements et références reconnus ; aucune preuve de couverture installée exhaustive.
+- État actuel AllocationRun Boardriders à vérifier au-delà de la source de juillet 2025.
+- Lacunes SAP S/4HANA propres à GRC et fidélité préservées.
+methodology_update:
+  source: modeles/backlog/modeling-glossary.yaml
+  term: MOD051
+  status: proposed_convention
+  publication: Brouillon méthodologique mis à jour ; aucune édition figée ni publication courante modifiée.
+market_reuse:
+  audit: enterprise-relationships-audit-U1114.yaml
+  primary_passages: 19
+  policy: Sources et limites de comparaison relues et réutilisées ; aucun nouvel accord de correspondance ou de réalisation.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1115
+  summary: Corrections de cohérence et coopérations Enterprise Architecture, chaînes Commerce/Procurement et parcours de contexte
+    appliqués avec réserves explicites.
+  required_nodes:
+  - id: D05.h
+    field_sha256:
+      scope: adaf8e9de356abfdfa9c2f522106261fe95c1d0f625df5b3d0a5ba72ac073408
+  - id: subdomain-product-strategy-requirements
+    field_sha256:
+      scope: 8b5a4afd2254d0dd2198e73a5d26cfee2b5785f94d61967106781e406c85b1c5
+  - id: subdomain-collection-planning
+    field_sha256:
+      scope: 5d789f94522b971ee6a29ff528af3b8d49af4b43150e45525d4e9348575ee9c9
+  - id: subdomain-development-planning
+    field_sha256:
+      scope: c932e1484d0889b22a28f3a82bf039c0aea823441920dbc0d2f1b72eb1dd244d
+  - id: subdomain-product-design-specification
+    field_sha256:
+      scope: 3b6d326447b8492d132d7bf1433d8ee2cf723b5a34928927b1dfe346ae954a08
+  - id: subdomain-material-component-development
+    field_sha256:
+      scope: 1c93869953c761da3ba33839f1b01b3fec0032e7a2d23ac38c7618f79463b8b6
+  - id: subdomain-sampling-product-validation
+    field_sha256:
+      scope: 0773d5cbd93fcae8d4c49a2ec40a662d2c788d1b254f2a0039d0345d6612ed8a
+  - id: subdomain-product-definition-variants
+    field_sha256:
+      scope: e21ee86129ab5255bb29d6bbb0de0a1d74f065820f46298be9d519ae2b0c9a35
+  - id: subdomain-product-documentation-classification
+    field_sha256:
+      scope: 8c6e1ff05d32de44f66b4c7c6463947f4efa13ed9385de3c79a86bd303523db9
+  - id: subdomain-product-change-release
+    field_sha256:
+      scope: fae60ca6489183f0462aaca7044591b84d6c7b4a3d17985c30572bd59cd1dd7b
+  - id: subdomain-strategy-objectives
+    field_sha256:
+      scope: 8419cc2908ec00cd6bc98100ed2c6e1b928d27f814fdf5fbe1628991b842f6c0
+  - id: subdomain-budgeting-forecasting
+    field_sha256:
+      scope: e58805c666e01629dc42762d95c239d1557a5692f25caa055ba80ffde7421952
+  - id: subdomain-performance-analysis
+    field_sha256:
+      scope: 325d65ea5586d74d47b7c50a8ca979ea8cee22ac2dfdd1427203804eee11bbaf
+  - id: subdomain-policy-compliance
+    field_sha256:
+      scope: 69217d06a23f6c1c40b72c500a34a125d1d6f44e8669336b97df84ba9ae3df8b
+  - id: subdomain-risk-internal-control
+    field_sha256:
+      scope: 0ef51f789f3de06e311e4c0a1914db626521c292db01078545f9e5b369953a59
+  - id: subdomain-audit-assurance
+    field_sha256:
+      scope: 6a0ad04f30338f2f08f08fbbadf306853f7a737869a853df2647b62b87f39829
+  - id: domain-warehousing
+    field_sha256:
+      scope: 2faf915f72fbaef2ee6d45998c9fa4cfe339036d037e08214f661cdcd5f2139f
+  - id: domain-transportation
+    field_sha256:
+      scope: 8d71f51b62394c69cc58227a16693ea8299a8e4520d568a12ebd71dacfa00715
+  - id: domain-customs-management
+    field_sha256:
+      scope: beb9f3c0ab7c5d0ef66cd4d90e28cbcc82f6aa7309e119bb974263a8db85b2b7
+  - id: cap-supplier-eligibility-assessment
+    field_sha256:
+      scope: 1bd61326f6e3b2e3a8e8d3d7916761e9888c5526696231587d677e9388f3cd83
+      market_comparisons: 2a5c8917a3a10552f38933a0ab846506ee70468723d27f11aa604ada8847dc32
+  - id: cap-supplier-performance-evaluation
+    field_sha256:
+      scope: 48194f72a20beb0fd3be5187e74afcefac5fa359bae5b2cf5035af5d305d0819
+      market_comparisons: 3bb6ca1b08d13ccf28597d19b9287ea6275e432ae78d46137a082faf99168eb9
+  - id: cap-supplier-consultation-coordination
+    field_sha256:
+      scope: 02a2bac60d5bd6200619813b2a79cc445ca971d3c80cfb7b93bb308dd381d8a5
+      market_comparisons: 2d0e75d902ca997b062635610a278201a07c0e588b52bd2a6a1467d936ffdba0
+  - id: cap-supplier-offer-selection
+    field_sha256:
+      scope: e04ae1fb8ef3b21ee46032d32a87fd732f4b5f2c04ae53666965c8e9299e246c
+      market_comparisons: c74802ee96d024832b8c593ef74967b1e7b8476bf9b8dac6a9fe5e79dfeb08c5
+  - id: cap-purchase-agreement-lifecycle-management
+    field_sha256:
+      scope: dbc6118bc1e4f4862daa2903fe4ae2efcb760b9d48e19393ee70cf2da5268d88
+      market_comparisons: ff1450abb6f5406754c5d042062420ab108e3d2d359bb2e95b31b2dd12ecd909
+  - id: cap-purchase-requisition-handling
+    field_sha256:
+      scope: d567e10218b78ae6bc55413e83b3b60a28df6568ce252fec76034ba21dfd4edf
+      market_comparisons: 0c778c1d56326158ce1a654d0757b363b5ef4f99b4dc1373f0e789e39683d6b3
+  - id: cap-purchasing-case-coordination
+    field_sha256:
+      scope: 1c7cf0d1849d89cfcc9bee68a1df4d1fc29a7769081faf6ab2481dcef77bbbd0
+      market_comparisons: c7f7fe8128774cc9c8fb935880641556e8c3c331d06713845dcd90b9f1ec3032
+  - id: cap-supplier-commitment-follow-up
+    field_sha256:
+      scope: 7b2b8f116a80609f5bc149b5126d1e0e734f4b83b9a1dc1951489019591f6d35
+      market_comparisons: c54e90f9bd3930e010161b3e3e665ba9b05fae4d339a5b76f8cd04eacecd7cec
+  - id: cap-wholesale-account-stewardship
+    field_sha256:
+      scope: 83fbb82a66ba48bbd876d5e63deec5246d9438f514e21b7b99e98db8a24801e3
+      market_comparisons: 056c205e115b5dd9c7a2be12d232c890c30a459284198c798403f0283d904173
+  - id: cap-wholesale-sales-engagement
+    field_sha256:
+      scope: 97626d976a8a0e4a123f73b1e994d7f6a106753c913a8e85aee63b42d72d5780
+      market_comparisons: 4cbefa9cf911db302cf4cdb7a4006b76d30190373532b85d193bfe64685a037d
+  - id: cap-assortment-eligibility-management
+    field_sha256:
+      scope: dd6dee578017f3559549d6b9cbd995dfb36348d25c74589dbad6aa124ec59119
+      market_comparisons: 0f367c67950ff05b6b4090474676340a428b3b5704c1351a7cf9eb57dde28d66
+  - id: cap-commercial-catalog-publication
+    field_sha256:
+      scope: 524eeeab5c32d0e18c448e120d02a2ab90fcc0e61b70ea4590d85f450f9e3b1f
+      market_comparisons: c8360f2002fc5f5fe2d4890ba42ef89737bed6f900256a0b4d7c91b8e116fa2e
+  - id: cap-sales-price-determination
+    field_sha256:
+      scope: b822736a024090c4c189e196f6648f1a4fd18aea466d13a5a43cbb42e34e85ae
+      market_comparisons: b7c97693cbf39f265ab2d93a7fadc9b1d241c11628fbcaf12d09b4de17487d69
+  - id: cap-promotion-rule-management
+    field_sha256:
+      scope: cb54b058cf229a113691a97953b0d04c7aef1135cfc6b37754e68efe24195796
+      market_comparisons: 3124fb14edfbf0ec6e38dc7bcf19e4e2e9c64d7d1a329ffd21ab5ae60753394b
+  - id: cap-digital-sales-journey-management
+    field_sha256:
+      scope: 734ada55be4607107d43770cad5b4edc3257b9facac0a9f328b90a8239cc406b
+      market_comparisons: 440dbfdf60a8dde0d6fa036666d4aef00a5c11500ffe62517e5e55bb47fa09eb
+  - id: cap-in-store-sales-journey-management
+    field_sha256:
+      scope: 48f44fa753f2c9422d8619a82983bd53ce7dbead3263ce3a2d790f766aad1517
+      market_comparisons: df7fd93d445d213a91eefe01d490e16a043376a67111d9721a08b8a5d009da00
+  - id: cap-retail-customer-engagement-management
+    field_sha256:
+      scope: 7f15c59c993fab1226fb455ea0301729e1cf1ba72fa395181f211bc79612283e
+      market_comparisons: c3bdaebaccb0cbf2bc07f68c4fdea4c92772511db4c1a71754ca82914bde5d5c
+  - id: cap-sales-pricing-rule-management
+    field_sha256:
+      scope: 3f45a911b34717f13a9367d1cdacbc76cee0ff3a1dff65c07fe15ac5d0b094b5
+      market_comparisons: 21f5181f977116b23493469a7af07e94bee95b9ec5e279b019a3483b372fd46b
+  - id: cap-store-checkout-management
+    field_sha256:
+      scope: 4b970329d6a9224bd6579e6cbc384b4ef01e1ebcb6b0598cbec57b1415cf5f27
+      market_comparisons: dba48ab862b541c00a335e1a9982933e20ffc36925539f77de45dac4c4e6b373
+  - id: cap-retail-loyalty-program-management
+    field_sha256:
+      scope: 79feaaa81684cad8051e76551d316c4a732dfaf4e235b4638b6db05d18dae1b3
+      market_comparisons: 43d2e9304aaf60c6ee6c26b99c8c36eb979c21435e67bb79e804a04241445687
+  - id: cap-wholesale-offer-preparation
+    field_sha256:
+      scope: 6170ba65cf831e1ef7b96df7b60cdd66b512605494f561bf0cdefeadefd79d18
+      market_comparisons: 061e41be938e4d7416cf7b1efbc27aa216f250a921ab54db1212f4f0454f8eb9
+  - id: subdomain-demand-supply-forecasting
+    field_sha256:
+      scope: c4e2709f88ec17fb6e37edfd6ae5a82de7ad4608981b5a37a7a29b903524ee55
+  - id: process-ledger
+    field_sha256:
+      scope: 7d1bbb26d1990d38bb16dc980f5126522fd7094e7502e963d7f4d9a589a31b72
+  required_relations:
+  - id: REL-INVENTORY-PLANNING-D05.a
+    type: relates-to
+    source_id: D05.f
+    target_id: D05.a
+  - id: REL-INVENTORY-PLANNING-D05.d
+    type: relates-to
+    source_id: D05.f
+    target_id: D05.d
+  - id: REL-INVENTORY-PLANNING-D05.e
+    type: relates-to
+    source_id: D05.f
+    target_id: D05.e
+    field_sha256:
+      label: 71d01dbd72af3b99f13c6f4baefd5e969e3ef2546f4fe7264d77bd7ae77b9077
+  - id: REL-INVENTORY-PLANNING-D05.c
+    type: relates-to
+    source_id: D05.f
+    target_id: D05.c
+  - id: REL-EXECUTION-ADAPTATION-ORCHESTRATION
+    type: shares-data
+    source_id: D06.f
+    target_id: D06.d
+    field_sha256:
+      label: 62cf7dec05e27fbad77603d2fe9ca9f8bc7feb06c745d7c7209dd0450c251336
+      data_exchange: fede2536cf7a2a97481cd27fb0e962f27e0d4a36c4e36b0ef0da5bf6d7ac4d86
+  - id: REL-NEEDS-U290-085
+    type: relates-to
+    source_id: D05.e
+    target_id: D01.c
+    field_sha256:
+      label: e6961db56256aa3365cc642a34c898a271214da9de90c7f7d5218645174f3f62
+  - id: REL-U908-uses-reference-D05.e-96
+    type: uses-reference
+    source_id: D05.e
+    target_id: D02.b
+  - id: REL-NEEDS-U290-087
+    type: relates-to
+    source_id: D05.e
+    target_id: D05.a
+    field_sha256:
+      label: 1ac88f38c175b2355e186290b7d574b8d235e877bb90e0392ffd97a619a29aec
+  - id: REL-NEEDS-U290-088
+    type: relates-to
+    source_id: D05.e
+    target_id: D07.d
+    field_sha256:
+      label: 62f1ca5a95d3d5be25acd44694d573ba7cc3ad01dfa669bb1086260a643ab742
+  - id: REL-NEEDS-U290-089
+    type: relates-to
+    source_id: D05.e
+    target_id: D04.j
+    field_sha256:
+      label: 1bc872cbe7a513c8d3fbe3397a245049e0c3db8fd8765c543f12904610aacc56
+  - id: REL-NEEDS-U290-090
+    type: relates-to
+    source_id: D05.e
+    target_id: D04.k
+    field_sha256:
+      label: d63e547ae876f6f599ae1125836258efe9edbb2f889ccb8939a2df7de8049925
+  - id: REL-NEEDS-U290-094
+    type: relates-to
+    source_id: D05.c
+    target_id: D05.e
+    field_sha256:
+      label: 65fb890366a6433e1077ce7530c0e0836bbf8947aef8c1c82968683e189f83fb
+  - id: REL-INVENTORY-PLANNING-D05.g
+    type: relates-to
+    source_id: D05.f
+    target_id: D05.e
+    field_sha256:
+      label: a45d188880eb9db7daa7d47e70f930ada429f8be78e813a0fc42aa659ed1ad49
+  - id: REL-INITIAL-STOCKING-INVENTORY
+    type: relates-to
+    source_id: D05.e
+    target_id: D01.c
+    field_sha256:
+      label: 61a7dae97173d9ad939ee1db37fc17708160c9009e0807c45653f7fb93ed7d1d
+  - id: REL-INITIAL-STOCKING-TARGET
+    type: relates-to
+    source_id: D05.e
+    target_id: D05.a
+    field_sha256:
+      label: caed16619f15b2ec817d6dfec72e0882971247fd94da9594e6247edf8b0b18f3
+  - id: REL-INITIAL-STOCKING-PURCHASE
+    type: relates-to
+    source_id: D05.e
+    target_id: D04.j
+    field_sha256:
+      label: d8521dfda13ae3e1564f1c45b6a79d863a5f03ab255625973930224d10e5c655
+  - id: REL-INITIAL-STOCKING-TRANSFER
+    type: relates-to
+    source_id: D05.e
+    target_id: D04.k
+    field_sha256:
+      label: aff428cfd639dcf0161e102c9e7db264e2f3e59e4c2196b07e75087b37cb8ce8
+  - id: REL-INITIAL-STOCKING-TRACKING
+    type: relates-to
+    source_id: D05.e
+    target_id: D07.d
+    field_sha256:
+      label: b351f5f27e9a763619bdad756dcf3ae93db632815fffc045b150cf24e4550224
+  - id: REL-REDISTRIBUTION-INITIAL-STOCKING
+    type: relates-to
+    source_id: D05.c
+    target_id: D05.e
+    field_sha256:
+      label: 68d89d8b8d47c78a4930fc749088f57bc127bb0fb7a1f638bf20bd0ac7b98c8a
+  - id: REL-U858-REFERENCE-033
+    type: uses-reference
+    source_id: D01.h
+    target_id: D11
+  - id: REL-NEEDS-U395-03
+    type: relates-to
+    source_id: D04.r
+    target_id: D05.e
+    field_sha256:
+      label: 4bad78e399ec783990cb10215479d5ed33be9ff7d02120720f765c2de02dab10
+  - id: REL-NEEDS-U395-04
+    type: relates-to
+    source_id: D04.r
+    target_id: D05.e
+    field_sha256:
+      label: 27db9da039eb84e8633f535d47ce824cbea3a65e3669a001ac5212a85950ae84
+  - id: REL-AUDIT-U435-PLNK-01
+    type: relates-to
+    source_id: D05.f
+    target_id: D03.o
+    field_sha256:
+      label: cce55c0b8b516017affd219bd03d97ea412b9229f063d77ff2105154121a06fe
+  - id: REL-U682-CATALOG-SERVICE-ORDERS
+    type: provides-conditions
+    source_id: D14
+    target_id: subdomain-service-orders
+    field_sha256:
+      label: 1d621802bea1628c9822a6cc3bae7dd6b59c0c4eb7d30a10938845507980d6da
+  - id: REL-U756-FACTS
+    type: shares-data
+    source_id: D01.f
+    target_id: D01.h
+    field_sha256:
+      label: 744db42d496986b53a3f47ba9cb6ae804a71324f41eb67673064960d800114a0
+      data_exchange: c781f5ce177fd2305c53d016d1d5eb3fa2e4182d955422ec79e350e3defb0180
+  - id: REL-U756-ESTABLISHED
+    type: shares-data
+    source_id: D01.f
+    target_id: inventory-ownership-ledger
+    field_sha256:
+      label: 677a3a9fbfcdacb45113ed27cf62ab092eefbf5b0fb82fccb8a3f020f15636d0
+      data_exchange: a135ab14928e11f13e769dfe9887597aad98bbc36a76c27487234460eab47652
+  - id: REL-U756-MOVEMENTS
+    type: shares-data
+    source_id: inventory-ownership-ledger
+    target_id: D01.g
+    field_sha256:
+      label: a3fdd720c93be0c3389de635789651602200347efd35e3afdbf05ad6a67548cf
+      data_exchange: 98e329196fbcf2dc0982aa343822d3f3de4828a714ebc7a4f72511c8733b8db7
+  - id: REL-U826-plans-ingestion-TO-plans-visibility
+    type: shares-data
+    source_id: plans-ingestion
+    target_id: plans-visibility
+    field_sha256:
+      label: a762779930ad3469ab3eba04299ba6984130af6ca82620cf61179162e1c82ca1
+      data_exchange: aaec83dde71d3e1fdba90a5fd535953e6e13014b8e580191c411ae60f9436274
+  - id: REL-U826-plans-ingestion-TO-demand-plan-visibility
+    type: shares-data
+    source_id: plans-ingestion
+    target_id: demand-plan-visibility
+    field_sha256:
+      label: 4c5afa54d2b2a43122d918d35c3c68cbec790eca207243e0ebaf974c34fce457
+      data_exchange: d12e7e496900e805c73a1e9c8a2a9bac0cb1108e13b010ac4a66b466ad3d8632
+  - id: REL-U843-order-workflow-planning-order-workflow-orchestration
+    type: shares-data
+    source_id: order-workflow-planning
+    target_id: order-workflow-orchestration
+    field_sha256:
+      label: def10020471fe413a70996f205893a0ab39b1a91e50130ff6206b4be1ad66be1
+      data_exchange: 0ea7925a442f8f9f97533af3eecfc1804fd372fbd9b418dcbec097f8fc9d63c6
+  - id: REL-U979-product-definitions
+    type: shares-data
+    source_id: system-design-development
+    target_id: system-business-operations
+    field_sha256:
+      label: ab51c490b7615fb48157fb7d3b2cccf9fc7eae2d9fc716bde1c5f10618c57df1
+      data_exchange: 842c869ddf2ef066c7a4f5322126c843bbe0465d360769e3429047b021490afb
+      summary_label: ab51c490b7615fb48157fb7d3b2cccf9fc7eae2d9fc716bde1c5f10618c57df1
+  - id: REL-U979-product-feedback
+    type: shares-data
+    source_id: system-business-operations
+    target_id: system-design-development
+    field_sha256:
+      label: 70e66a0da597ca53ad99c2a90648c59a6b7ddfde7b592f887f805fec9b80dd85
+      data_exchange: 467ce05c7702fd263e712e5b0bc6ce452b3b41c4544317d780d4b058b4c0dc2c
+      summary_label: 70e66a0da597ca53ad99c2a90648c59a6b7ddfde7b592f887f805fec9b80dd85
+  - id: REL-U979-service-requests
+    type: shares-data
+    source_id: system-business-operations
+    target_id: domain-logistics-execution
+    field_sha256:
+      label: 501ae21517ee982935f0c18370200ec7db75f07b9c456e13955874fa412ffe17
+      data_exchange: d57e1c9fcc77c88e30d9a79cc114d40f11f73a46c975b0c64fc09e60e961ceea
+      summary_label: 501ae21517ee982935f0c18370200ec7db75f07b9c456e13955874fa412ffe17
+  - id: REL-U979-execution-results
+    type: shares-data
+    source_id: domain-logistics-execution
+    target_id: system-business-operations
+    field_sha256:
+      label: a5b8ff36858ae0a37c5cc0499b35835c51c913293fd0c3f61e0be041be2fab68
+      data_exchange: 69c2e90de22d505b74c2802c56da804d5c06f12c59ae56ddac3a09db0d5e1b6a
+      summary_label: a5b8ff36858ae0a37c5cc0499b35835c51c913293fd0c3f61e0be041be2fab68
+  - id: REL-U979-management-facts
+    type: shares-data
+    source_id: system-business-operations
+    target_id: system-enterprise-management-control
+    field_sha256:
+      label: 0c4ff2936c4821e169dd5c09b69c694dd4b59ae1d04feb72286f3ca070d2fb1b
+      data_exchange: a7ac00705a3031c3c555de8d1ac36bad6c6c168b97b0aaed478ad3ce7dc4dc0c
+      summary_label: 0c4ff2936c4821e169dd5c09b69c694dd4b59ae1d04feb72286f3ca070d2fb1b
+  - id: REL-U979-credit-profiles
+    type: shares-data
+    source_id: system-enterprise-management-control
+    target_id: system-business-operations
+    field_sha256:
+      label: 8ea1449a245b994c1025a5b20e0e04e6ed2dab1271692ba337c5bc7bf35b49ea
+      data_exchange: 450b076c119e14d45df0e8e141cb7cf1cfab3c9d96eecd5e74cec0912535e37a
+      summary_label: 8ea1449a245b994c1025a5b20e0e04e6ed2dab1271692ba337c5bc7bf35b49ea
+  - id: REL-U996-contextual-prices
+    type: shares-data
+    source_id: cap-sales-price-determination
+    target_id: D04.i
+    field_sha256:
+      label: c2863788a4d50fc33759e33e7c706163ab371b31a5a155b7a185e57f20417923
+      data_exchange: a8b357ed64c02cf02ddf7b5191302bb7f071ec4a3ee1d85fa907ad9f48e94ede
+  - id: REL-U1115-assortment-to-catalog
+    type: shares-data
+    source_id: cap-assortment-eligibility-management
+    target_id: cap-commercial-catalog-publication
+    field_sha256:
+      label: f4d4cb828f5503383cd78ffeb9cc0ebc2810a64fcb1d5ac8dfb6d8c539dc3bed
+      data_exchange: 3ae28faf6618c5f3bbb016cb81c8fe1d6f1fd96925c6793035150c21ac3734fb
+  - id: REL-U1115-assortment-to-wholesale-offer
+    type: shares-data
+    source_id: cap-assortment-eligibility-management
+    target_id: cap-wholesale-offer-preparation
+    field_sha256:
+      label: 8004cd52da89b700645e81fbc26074ecebb6a5ed43ab39a4ebe3c8fd638209ae
+      data_exchange: ea11484a7195f0980acb86703cbd97aa4467cce9bd70d5963cc9e309ee7b867f
+  - id: REL-U1115-catalog-to-digital
+    type: shares-data
+    source_id: cap-commercial-catalog-publication
+    target_id: cap-digital-sales-journey-management
+    field_sha256:
+      label: 5e479056f3f8e29954daca5e3a86a67b5fa268488b1e05ded86f9e1d62d6739b
+      data_exchange: ed894110d8ca6c9b29fc965d31f7825c2bc38be31e7dc4137bf5e6f3fc679dac
+  - id: REL-U1115-catalog-to-store
+    type: shares-data
+    source_id: cap-commercial-catalog-publication
+    target_id: cap-in-store-sales-journey-management
+    field_sha256:
+      label: 5e479056f3f8e29954daca5e3a86a67b5fa268488b1e05ded86f9e1d62d6739b
+      data_exchange: ed894110d8ca6c9b29fc965d31f7825c2bc38be31e7dc4137bf5e6f3fc679dac
+  - id: REL-U1115-wholesale-offer-to-engagement
+    type: shares-data
+    source_id: cap-wholesale-offer-preparation
+    target_id: cap-wholesale-sales-engagement
+    field_sha256:
+      label: 6cc6d86650580d7a4988bd9ae5cb9d993450efdbcc6cf8840f537adddf0ca064
+      data_exchange: bdddda9a960e3e4f4cfebf7d34473d2fc1a2519d5c0fc0df10f1d08cac44c52c
+  - id: REL-U1115-pricing-rules-to-determination
+    type: shares-data
+    source_id: cap-sales-pricing-rule-management
+    target_id: cap-sales-price-determination
+    field_sha256:
+      label: 531d3bdeb4a62b35ecd8247247eefdf445aa7bfd3fb6160262456a77109bee6a
+      data_exchange: b07c80a5267b659fff29d6ac331dcaf60a64307bc3798938204b6d52e482bc36
+  - id: REL-U1115-promotion-rules-to-determination
+    type: shares-data
+    source_id: cap-promotion-rule-management
+    target_id: cap-sales-price-determination
+    field_sha256:
+      label: 134151244e0bbafef93434561dc39a16a327477b54c28516abea615e04524df8
+      data_exchange: 11e543b23b391312f9556004ecc0b61e7b705284858370d5af1ab71f6d77670d
+  - id: REL-U1115-wholesale-offer-pricing-context
+    type: shares-data
+    source_id: cap-wholesale-offer-preparation
+    target_id: cap-sales-price-determination
+    field_sha256:
+      label: 0ff1bb4898c18024b569c30fea2d6767c2f750f8cd1ecf41fc66e0bec964c35e
+      data_exchange: 426fa5e5efc70b301c1b4df13cd95ab83497ae36fd0f5c3ef7364a995b98e549
+  - id: REL-U1115-proposed-price-to-wholesale-offer
+    type: shares-data
+    source_id: cap-sales-price-determination
+    target_id: cap-wholesale-offer-preparation
+    field_sha256:
+      label: 92752ce1a9b3902cc64c0e731daec6808a66cbd202745184e6864869d1a306c5
+      data_exchange: 0156c09b782b97ec52e6a19494fb80a3ca80edd33cee77326fb778ccc2e51b5f
+  - id: REL-U1115-digital-sale-pricing-context
+    type: shares-data
+    source_id: cap-digital-sales-journey-management
+    target_id: cap-sales-price-determination
+    field_sha256:
+      label: 0ff1bb4898c18024b569c30fea2d6767c2f750f8cd1ecf41fc66e0bec964c35e
+      data_exchange: 426fa5e5efc70b301c1b4df13cd95ab83497ae36fd0f5c3ef7364a995b98e549
+  - id: REL-U1115-proposed-price-to-digital-sale
+    type: shares-data
+    source_id: cap-sales-price-determination
+    target_id: cap-digital-sales-journey-management
+    field_sha256:
+      label: 92752ce1a9b3902cc64c0e731daec6808a66cbd202745184e6864869d1a306c5
+      data_exchange: 0156c09b782b97ec52e6a19494fb80a3ca80edd33cee77326fb778ccc2e51b5f
+  - id: REL-U1115-store-checkout-pricing-context
+    type: shares-data
+    source_id: cap-store-checkout-management
+    target_id: cap-sales-price-determination
+    field_sha256:
+      label: 0ff1bb4898c18024b569c30fea2d6767c2f750f8cd1ecf41fc66e0bec964c35e
+      data_exchange: 426fa5e5efc70b301c1b4df13cd95ab83497ae36fd0f5c3ef7364a995b98e549
+  - id: REL-U1115-proposed-price-to-store-checkout
+    type: shares-data
+    source_id: cap-sales-price-determination
+    target_id: cap-store-checkout-management
+    field_sha256:
+      label: 92752ce1a9b3902cc64c0e731daec6808a66cbd202745184e6864869d1a306c5
+      data_exchange: 0156c09b782b97ec52e6a19494fb80a3ca80edd33cee77326fb778ccc2e51b5f
+  - id: REL-U1115-sales-order-pricing-context
+    type: shares-data
+    source_id: D04.i
+    target_id: cap-sales-price-determination
+    field_sha256:
+      label: 0ff1bb4898c18024b569c30fea2d6767c2f750f8cd1ecf41fc66e0bec964c35e
+      data_exchange: 426fa5e5efc70b301c1b4df13cd95ab83497ae36fd0f5c3ef7364a995b98e549
+  - id: REL-U1115-pricing-conditions-to-wholesale-account
+    type: shares-data
+    source_id: cap-sales-pricing-rule-management
+    target_id: cap-wholesale-account-stewardship
+    field_sha256:
+      label: 34208e4b34dc64af22debfeb0731eb6882cde2f403d5b42d3d0509b60bf2da52
+      data_exchange: 5ab25e77678c05b3c6ec3d1ced6f7fe60954bed3b3b6be364e3a39345ca77c68
+  - id: REL-U1115-wholesale-account-to-offer
+    type: shares-data
+    source_id: cap-wholesale-account-stewardship
+    target_id: cap-wholesale-offer-preparation
+    field_sha256:
+      label: 193d90c672db31bf501e107e5ed82e7815eba12bda1cefaf7871a61591fcace0
+      data_exchange: e64d1d5e89324a91715290f26b0b7041427e05442f446f2a530a2407fc39f933
+  - id: REL-U1115-wholesale-account-to-engagement
+    type: shares-data
+    source_id: cap-wholesale-account-stewardship
+    target_id: cap-wholesale-sales-engagement
+    field_sha256:
+      label: 193d90c672db31bf501e107e5ed82e7815eba12bda1cefaf7871a61591fcace0
+      data_exchange: e64d1d5e89324a91715290f26b0b7041427e05442f446f2a530a2407fc39f933
+  - id: REL-U1115-store-journey-to-checkout
+    type: shares-data
+    source_id: cap-in-store-sales-journey-management
+    target_id: cap-store-checkout-management
+    field_sha256:
+      label: 8ed2f34575ce1c939233897d1d62d277eb8d246d88e301f67ac46971521d3efb
+      data_exchange: a0b187cb00028025c7df25c478d9acc61b65da9f99f49db71c58fc73fc61d104
+  - id: REL-U1115-store-demand-to-sales-order
+    type: shares-data
+    source_id: cap-in-store-sales-journey-management
+    target_id: D04.i
+    field_sha256:
+      label: 0eef3acade26e14c48ce7a852e9358d3bac4c8a416a848160ef7dd0252d8bc5f
+      data_exchange: 4873ba8571fd2caf18c90e152f673e14548c68c6935cdfe14a0d5ad33963e167
+  - id: REL-U1115-sales-order-to-store-journey
+    type: shares-data
+    source_id: D04.i
+    target_id: cap-in-store-sales-journey-management
+    field_sha256:
+      label: 6b4c5abb357f633702efba223bd70ec1cc3e5fd95fd910fd99dd328f53ee7c31
+      data_exchange: f7b8d0479640c348329bc2fc1df4268226b02d9cbc15cdc0cb8a85bebcdfebc4
+  - id: REL-U1115-checkout-stock-facts
+    type: shares-data
+    source_id: cap-store-checkout-management
+    target_id: D01.f
+    field_sha256:
+      label: 8149e61e4b5f331cdb3915b47a58a0cc0898ca7b5f03f5a0cd75381bff2b6d1d
+      data_exchange: e9f132cfb2a3f1c568cb76b4281944b66638d091189b05840fc5b729c6d932d6
+  - id: REL-U1115-checkout-accounting-facts
+    type: shares-data
+    source_id: cap-store-checkout-management
+    target_id: subdomain-financial-accounting
+    field_sha256:
+      label: b26979fe7b6f938e8f3c49b0f36ef47b6b033fd41c00d9e4f9af0985ff507971
+      data_exchange: d971477a09e0ebb281557b9a5aefe14f62580683264ead218d376e7c62bfbbf8
+  - id: REL-U1115-checkout-cash-facts
+    type: shares-data
+    source_id: cap-store-checkout-management
+    target_id: subdomain-treasury-cash
+    field_sha256:
+      label: 24170393533180bf0040393f5d79e5e1e120eff466eee1cf4b74f94f54279e9c
+      data_exchange: ab5b8e6c0c049549c300dbe46df1997795fd5eda8d862c15a889e88278bc6f19
+  - id: REL-U1115-checkout-settlement-facts
+    type: shares-data
+    source_id: cap-store-checkout-management
+    target_id: subdomain-commercial-settlement-management
+    field_sha256:
+      label: 711d95a814950047ff66d49f618b8c1a838086f187db6b205ffa7f8fe0ede7d3
+      data_exchange: 2ecf1822ff33081e33261b74bec2e9f2c8c83597546705de207d124f200540e0
+  - id: REL-U1115-requisition-to-consultation
+    type: shares-data
+    source_id: cap-purchase-requisition-handling
+    target_id: cap-supplier-consultation-coordination
+    field_sha256:
+      label: a7a06ba547d31f0b930a82b2ba6a870b2f500000585f2fecddd3c287f849ff78
+      data_exchange: 00042fe13681dc820968d7a758301134b3ee6d0232530cdac2500d6324891a36
+  - id: REL-U1115-requisition-to-selection
+    type: shares-data
+    source_id: cap-purchase-requisition-handling
+    target_id: cap-supplier-offer-selection
+    field_sha256:
+      label: 274bfff5a6859b525c968fddb18e08ab8e5ea53e06d469deace04a7fbf1dfdc0
+      data_exchange: 8139d25fad69fd79cd2770f75429bd39836ec9b657e4e63edf4d43a4ce118854
+  - id: REL-U1115-eligibility-to-selection
+    type: shares-data
+    source_id: cap-supplier-eligibility-assessment
+    target_id: cap-supplier-offer-selection
+    field_sha256:
+      label: d0c6d25c862cd46a3caacc0fd7b7b9823f4b997f6d56733ccf11b9f8f54993e8
+      data_exchange: b428b169c6b903f8440c94a7a075f2ca132f16375eb161b5a2293e43021da7b7
+  - id: REL-U1115-consultation-to-selection
+    type: shares-data
+    source_id: cap-supplier-consultation-coordination
+    target_id: cap-supplier-offer-selection
+    field_sha256:
+      label: edfa91b7b0c7a5b16252624c0e494d0a3b3ac56b73fb2bf0447532ea392a9a42
+      data_exchange: d45088516a029fc17024818acefb7c55a06b1a7b8f3f49423e29af53690a81e3
+  - id: REL-U1115-selected-offer-to-agreement
+    type: shares-data
+    source_id: cap-supplier-offer-selection
+    target_id: cap-purchase-agreement-lifecycle-management
+    field_sha256:
+      label: a59cb701b7dcd794a3d37fee5dc9fb796e241de91ddb28ae7a835040e1af1c10
+      data_exchange: fc1bfc2a67089b1bd1684f2ee00a47cf49550c605415ebd695d629bd2cc9e7f8
+  - id: REL-U1115-requisition-to-purchase-order
+    type: shares-data
+    source_id: cap-purchase-requisition-handling
+    target_id: D04.j
+    field_sha256:
+      label: 1d76df80c9ab2deabe51fdffef2a702cef7834c07c138669b4e133dc14969ed4
+      data_exchange: 8ba8b6ea25912e2cc9501ae338f7a2fe0a6288cc289b292389f90a223c38fd7b
+  - id: REL-U1115-selected-offer-to-purchase-order
+    type: shares-data
+    source_id: cap-supplier-offer-selection
+    target_id: D04.j
+    field_sha256:
+      label: 6c5b793ed226e939e382a53e996d670d049e4af435fcecbd9557383ad9a48221
+      data_exchange: d9e7d739fbbcd74c6bbabbea652c5e279649af200514e8501b2693e91ead5acb
+  - id: REL-U1115-agreement-to-purchase-order
+    type: shares-data
+    source_id: cap-purchase-agreement-lifecycle-management
+    target_id: D04.j
+    field_sha256:
+      label: 1d9ded99cb66ea2d58cd27097309701af5c56e7b8f5c03b52953797730d77ae9
+      data_exchange: bd33013823e2db982ac27ecf54da4721c1e1abeda24708379020587f85219d2d
+  - id: REL-U1115-purchase-order-to-requisition
+    type: shares-data
+    source_id: D04.j
+    target_id: cap-purchase-requisition-handling
+    field_sha256:
+      label: d86d364b67a5a932c35f544b2b05b0124da01ccf84204e242ec616a4e7623639
+      data_exchange: 1f10e83db265fd2d68c1cee4d77dcf44ea8ea87015a2c8852d30581d1061d116
+  - id: REL-U1115-purchase-order-agreement-consumption
+    type: shares-data
+    source_id: D04.j
+    target_id: cap-purchase-agreement-lifecycle-management
+    field_sha256:
+      label: 7a63539a72eaaadd37d7bea5f7ef108dd8b2d501629927f92ec18bc3923802ce
+      data_exchange: f971e1edc5ce1efa17690401149d28657c4dadf1132586e359156aa3ae0036ae
+  - id: REL-U1115-purchase-order-to-supplier-follow-up
+    type: shares-data
+    source_id: D04.j
+    target_id: cap-supplier-commitment-follow-up
+    field_sha256:
+      label: 8a31e95ca9533d801f93dea992f6f3f6de74614f0d63992e7312f489f3c602d9
+      data_exchange: f117e48dc0ad9d4483a3a2b1607417ca56e1f52aefc29636d9246ec2a0bba8b4
+  - id: REL-U1115-reconciled-service-to-supplier-follow-up
+    type: shares-data
+    source_id: D07.c
+    target_id: cap-supplier-commitment-follow-up
+    field_sha256:
+      label: 5a584964b39ea2936d58d769fb15f0c53aff8a2a2263d663dacd65032d2364eb
+      data_exchange: da7b9055f6ca36363882f97e8f0095f936622e2ffa39fdd26d9a53cb5f2024cc
+  - id: REL-U1115-purchase-order-to-supplier-performance
+    type: shares-data
+    source_id: D04.j
+    target_id: cap-supplier-performance-evaluation
+    field_sha256:
+      label: 8a31e95ca9533d801f93dea992f6f3f6de74614f0d63992e7312f489f3c602d9
+      data_exchange: f117e48dc0ad9d4483a3a2b1607417ca56e1f52aefc29636d9246ec2a0bba8b4
+  - id: REL-U1115-reconciled-service-to-supplier-performance
+    type: shares-data
+    source_id: D07.c
+    target_id: cap-supplier-performance-evaluation
+    field_sha256:
+      label: 5a584964b39ea2936d58d769fb15f0c53aff8a2a2263d663dacd65032d2364eb
+      data_exchange: da7b9055f6ca36363882f97e8f0095f936622e2ffa39fdd26d9a53cb5f2024cc
+  - id: REL-U1115-supplier-follow-up-to-purchasing-case
+    type: shares-data
+    source_id: cap-supplier-commitment-follow-up
+    target_id: cap-purchasing-case-coordination
+    field_sha256:
+      label: 7fb6ae2a3a85a17a39079f22b92ec8eb6751377198a5996fe6821426d779f419
+      data_exchange: 7b9db39021f47063f5db54cd8606b1572b01f28b47e0da7219c0094e026994f3
+  - id: REL-U1115-supplier-follow-up-to-performance
+    type: shares-data
+    source_id: cap-supplier-commitment-follow-up
+    target_id: cap-supplier-performance-evaluation
+    field_sha256:
+      label: dee93d4085eaf133e0338a4a5eef5dff89dc1ae8b21a0a5361d3d3e4af2fe53c
+      data_exchange: b362d243272dc8f56771271913a5ca7d42dc960537c556ecf4b3cc4467c611f9
+  - id: REL-U1115-purchase-order-to-purchasing-case
+    type: shares-data
+    source_id: D04.j
+    target_id: cap-purchasing-case-coordination
+    field_sha256:
+      label: 1f3e98e7851f7f6ce601d90bf79a24dfff65d71b862ab79abaca19b61e0f74ed
+      data_exchange: e8c50eccf464652b998b1934bacf369a81b023a747a222cabbdf488febf93b04
+  - id: REL-U1115-supplier-performance-to-eligibility
+    type: shares-data
+    source_id: cap-supplier-performance-evaluation
+    target_id: cap-supplier-eligibility-assessment
+    field_sha256:
+      label: f42d9ec151d63ee6a34932e82c2d63fbbdc866dad18557410bc36486ba79230d
+      data_exchange: 1d6e14dffbc7aac3fbf2d855fcda0f9ff4410d5d6a438a4cf09fcf248d2a2e4f
+  - id: REL-U1115-wholesale-credit-control-request
+    type: shares-data
+    source_id: cap-wholesale-sales-engagement
+    target_id: subdomain-credit-collections
+    field_sha256:
+      label: 476bf4b6e278b26fdbe8e19613ab88b1d63772669f43ed5d72e91555e3a47f0c
+      data_exchange: 7d1f1a515278266601774a92dc60a48f61951dabcbd99c0920a9031324f3b4ca
+  - id: REL-U1115-finance-credit-control-result
+    type: shares-data
+    source_id: subdomain-credit-collections
+    target_id: cap-wholesale-sales-engagement
+    field_sha256:
+      label: 121cdf17c85a058a1addf0ba8baffa861c2563369db15072db1be5fd45a8e76d
+      data_exchange: bd4bcbcccc76ce1ea062bc7b0efe195009f84a5063ad889479b6d9d8a02d392f
+  - id: REL-U1115-credit-result-to-sales-order
+    type: shares-data
+    source_id: cap-wholesale-sales-engagement
+    target_id: D04.i
+    field_sha256:
+      label: b612cb8f0b6c2f79f370ce8c7f6b7c2d78a66e5dd83434772c149aa8916b3556
+      data_exchange: a00f70e3c63fdcb72771f294b52c0455d6a1889fc4162711579816ed21a661e3
+  - id: REL-U1115-retail-context-to-digital
+    type: shares-data
+    source_id: cap-retail-customer-engagement-management
+    target_id: cap-digital-sales-journey-management
+    field_sha256:
+      label: 2a58f4d60754740be8523c1519c573f690d4b953a9d63d7fa961c368f938fa9a
+      data_exchange: 5ff906124e469327a5116c222f389e812c67b853d62193bb29cbd09502bccc50
+  - id: REL-U1115-digital-interactions-to-retail-context
+    type: shares-data
+    source_id: cap-digital-sales-journey-management
+    target_id: cap-retail-customer-engagement-management
+    field_sha256:
+      label: ddb1e32029c11af4753cc22e76339bcc0cfdf03a1e865d52a8ddf518445c134e
+      data_exchange: f750b229e9c0f06dfe3e27e3fe56524242fa91f4103a675b0b3ac6426858001b
+  - id: REL-U1115-loyalty-context-to-digital
+    type: shares-data
+    source_id: cap-retail-loyalty-program-management
+    target_id: cap-digital-sales-journey-management
+    field_sha256:
+      label: 5841c4aa6bf519d530a631941b75bb83b6c56ef7818c2c9f9445a5982b29705b
+      data_exchange: 95a10b09300d5bd1eb508e6178368a6a9ccdd763cbf636bbf121c645894307c3
+  - id: REL-U1115-retail-context-to-store
+    type: shares-data
+    source_id: cap-retail-customer-engagement-management
+    target_id: cap-in-store-sales-journey-management
+    field_sha256:
+      label: 2a58f4d60754740be8523c1519c573f690d4b953a9d63d7fa961c368f938fa9a
+      data_exchange: 5ff906124e469327a5116c222f389e812c67b853d62193bb29cbd09502bccc50
+  - id: REL-U1115-store-interactions-to-retail-context
+    type: shares-data
+    source_id: cap-in-store-sales-journey-management
+    target_id: cap-retail-customer-engagement-management
+    field_sha256:
+      label: ddb1e32029c11af4753cc22e76339bcc0cfdf03a1e865d52a8ddf518445c134e
+      data_exchange: c623fe983d0dd43789341aab8a676a27d0383fad7261af6b0a18f5a717afe7ff
+  - id: REL-U1115-loyalty-context-to-store
+    type: shares-data
+    source_id: cap-retail-loyalty-program-management
+    target_id: cap-in-store-sales-journey-management
+    field_sha256:
+      label: 5841c4aa6bf519d530a631941b75bb83b6c56ef7818c2c9f9445a5982b29705b
+      data_exchange: 95a10b09300d5bd1eb508e6178368a6a9ccdd763cbf636bbf121c645894307c3
+  - id: REL-U1115-loyalty-to-price-determination
+    type: shares-data
+    source_id: cap-retail-loyalty-program-management
+    target_id: cap-sales-price-determination
+    field_sha256:
+      label: aaceacb85e6724732cf57b449e6ff39983017e78caad093e2805c6abfd41f4ba
+      data_exchange: 2c8a81351d948f80798b2579c76c06e5d9e1d04a78a1e2253d8a73b0e27dd93f
+  - id: REL-U1115-checkout-facts-to-loyalty
+    type: shares-data
+    source_id: cap-store-checkout-management
+    target_id: cap-retail-loyalty-program-management
+    field_sha256:
+      label: bdcf2950d5021a9233ded6e8755bba584b0d392232537e85cc734c1bce083f5b
+      data_exchange: 8feb5e38f8a564e2f4fae6344501914c5f97b8c168187745cd87ea8249f50387
+  - id: REL-U1115-sales-order-facts-to-loyalty
+    type: shares-data
+    source_id: D04.i
+    target_id: cap-retail-loyalty-program-management
+    field_sha256:
+      label: bdcf2950d5021a9233ded6e8755bba584b0d392232537e85cc734c1bce083f5b
+      data_exchange: 2f87afc196fe31e5991d1e60c36402a27128301b20dac4c85cb1b3157f2e1636
+  - id: REL-U1115-return-order-facts-to-loyalty
+    type: shares-data
+    source_id: D04.l
+    target_id: cap-retail-loyalty-program-management
+    field_sha256:
+      label: bdcf2950d5021a9233ded6e8755bba584b0d392232537e85cc734c1bce083f5b
+      data_exchange: 81c73f2bacaca05348b1a90f7208f078be1f0dbceabf7c1bdbf440945fd04afb
+  - id: REL-U1115-strategy-collection
+    type: shares-data
+    source_id: subdomain-product-strategy-requirements
+    target_id: subdomain-collection-planning
+    field_sha256:
+      label: c6130c40fd68d46ff2d5d95bf82ab006c7429632bedcc0fe443113044fa4fb40
+      data_exchange: a5999215ae4d0f2f4eff99f04a9f3d1a6365d310c8aaf8c69a32f3466fb95644
+  - id: REL-U1115-collection-development-plan
+    type: shares-data
+    source_id: subdomain-collection-planning
+    target_id: subdomain-development-planning
+    field_sha256:
+      label: a5fc39575a17245aaa71197f736c658265426eccccde38b3af77feb8ea1acb5f
+      data_exchange: 40c8bd13cecf3e9a6b7a8658b550ddcab5ae5e9ed0a7fdc5509afae200997f3f
+  - id: REL-U1115-collection-design
+    type: shares-data
+    source_id: subdomain-collection-planning
+    target_id: subdomain-product-design-specification
+    field_sha256:
+      label: b5d9cbce4a77a5bfc2cbe34112597ec2e77ccbf38fe801d8146a559b19172610
+      data_exchange: ee82f4121ff6c3e2d214ed105e355dcea952ca886c8b2275807fcb36959d1a43
+  - id: REL-U1115-development-design
+    type: shares-data
+    source_id: subdomain-development-planning
+    target_id: subdomain-product-design-specification
+    field_sha256:
+      label: def7cbe27fb1831e0d578a4a5501c8e878dc7072f13ce867548635f4098d27bc
+      data_exchange: 589cb20f1dd73293e5fe6724001602845187ffbd8a5be515c44a53616c4538b2
+  - id: REL-U1115-development-validation
+    type: shares-data
+    source_id: subdomain-development-planning
+    target_id: subdomain-sampling-product-validation
+    field_sha256:
+      label: 2550783ad5c70e4b59d8e5c3585ae96dec54555f5270e0b7f8b0839ebd8e9306
+      data_exchange: ed355c13b2dd37d4bb1fbf8dd5443af1e224c4442df7e49c8bccf4bf04a76081
+  - id: REL-U1115-material-design
+    type: shares-data
+    source_id: subdomain-material-component-development
+    target_id: subdomain-product-design-specification
+    field_sha256:
+      label: 9891d52203358b195bf8f08c2cbc534562a3e2ed2975c7dc2e543e88060ce35e
+      data_exchange: 2cd97bdba8507fb457b8680988d772d03dadaaaa4a313186f7af16f2a0ad9986
+  - id: REL-U1115-design-validation
+    type: shares-data
+    source_id: subdomain-product-design-specification
+    target_id: subdomain-sampling-product-validation
+    field_sha256:
+      label: de92f345f871bbf7e4c61a4e1b40ae41c7579c61e82c300513ec475227bec163
+      data_exchange: 65f7a7cf02fe642d4262e0afe95234fa3f845755affcf381d7d5989f504fea1c
+  - id: REL-U1115-validation-design
+    type: shares-data
+    source_id: subdomain-sampling-product-validation
+    target_id: subdomain-product-design-specification
+    field_sha256:
+      label: 21d582cd38b836feb9e4bea30b9d2a0447ec8de4533e3c22dd16824585a48eff
+      data_exchange: 5bca9875f69b8d36fa46b4b360e2154f9cd5437957e6c3639039409aca3ddc87
+  - id: REL-U1115-design-definition
+    type: shares-data
+    source_id: subdomain-product-design-specification
+    target_id: subdomain-product-definition-variants
+    field_sha256:
+      label: 2c976e7832660a6295ba9a00c4ce755d78c5f2d3a226157ffb7220f413f5ac7f
+      data_exchange: 0318cd707c93f35cceff6415e604348405a8662f8bfc9b3bdb2dc7ff84584b42
+  - id: REL-U1115-validation-release
+    type: shares-data
+    source_id: subdomain-sampling-product-validation
+    target_id: subdomain-product-change-release
+    field_sha256:
+      label: f271be6a9004e276de1db5da5c5feb10af4196c36f785e91b5263ae3a6139bf8
+      data_exchange: c5f5a8b3ae07d619e3984748343717e44574462eef611aac2985aee060ae8fb9
+  - id: REL-U1115-definition-release
+    type: shares-data
+    source_id: subdomain-product-definition-variants
+    target_id: subdomain-product-change-release
+    field_sha256:
+      label: 7405a2028b6a1ba6ec076405d22a8575350ce2919a3aca6769a97e2f9fbdafdc
+      data_exchange: 44cc6c11a9598e8d91dabf7bcab76c65fe3933e5e2bba456a8805c84c200abfc
+  - id: REL-U1115-release-definition
+    type: shares-data
+    source_id: subdomain-product-change-release
+    target_id: subdomain-product-definition-variants
+    field_sha256:
+      label: b4e3c402014af25e4d3852713f85bdf155eb5744f0d8ea061cbd41f97b9fdc09
+      data_exchange: 1958fb117b855a2f4b534dda557f69289bd32e4499781d297f167dc6213d4f7b
+  - id: REL-U1115-release-documentation
+    type: shares-data
+    source_id: subdomain-product-change-release
+    target_id: subdomain-product-documentation-classification
+    field_sha256:
+      label: 2804f39f32a96461f44fa4ec4d2fcd303678b697e957f7c9af9733563c81ce12
+      data_exchange: 18e850da330ee9f5fe0c208136704ebd70c69d6aa9fbb9aa2dde31f3fe9e7d6c
+  - id: REL-U1115-documentation-release
+    type: shares-data
+    source_id: subdomain-product-documentation-classification
+    target_id: subdomain-product-change-release
+    field_sha256:
+      label: d83e86b5e4a241bed21c6778d6a65af8e70328f80ba52b3214d4b223e25f3217
+      data_exchange: 8ff1c9bae0ea29a2cc0ff7f87b626d2a8b7b5f5d0b69f133ebc194928a0ec980
+  - id: REL-U1115-release-assortment
+    type: shares-data
+    source_id: subdomain-product-change-release
+    target_id: cap-assortment-eligibility-management
+    field_sha256:
+      label: 1522ce47e149b10edb610057293138ab2d3027dea2f6c9d87948af454e53807d
+      data_exchange: b57e204a462dc695260ec1a677f409847f11eafd6b3032cc8f2d539ea7e1e79d
+  - id: REL-U1115-release-catalog
+    type: shares-data
+    source_id: subdomain-product-change-release
+    target_id: cap-commercial-catalog-publication
+    field_sha256:
+      label: 52268eff9677b6fc8d18559fa7a0d62d7916ee95c25dd4183ab2c0f50d604604
+      data_exchange: d036f525e1800c5a094409cbcbe363c5420d7d01de1456ff59a1a3fe1d4cd87e
+  - id: REL-U1115-documentation-catalog
+    type: shares-data
+    source_id: subdomain-product-documentation-classification
+    target_id: cap-commercial-catalog-publication
+    field_sha256:
+      label: 06ed1c49909087d46676d324abba1b1de80af9e4269485f47e07cecd0e2ab90a
+      data_exchange: 7f79c305c6009442a715785f4c735eb3bf51d383524c067beaad64ff7567d4fb
+  - id: REL-U1115-release-sourcing
+    type: shares-data
+    source_id: subdomain-product-change-release
+    target_id: cap-supplier-consultation-coordination
+    field_sha256:
+      label: ec6982bcf484f445a4f1751e55371edc6216c9e89e99c65f384e75a61905b2ec
+      data_exchange: c69a1d35f92f864b4a71001aa06e08f7d9fac5f61914168f644f688834de1de1
+  - id: REL-U1115-material-sourcing
+    type: shares-data
+    source_id: subdomain-material-component-development
+    target_id: cap-supplier-consultation-coordination
+    field_sha256:
+      label: e7a701199611a8f813272c525b27d4ca5464197532068d7f5b46fc0c6b9605e7
+      data_exchange: 5bd564ea5027c1d638d45349a1902b436940673e31dd1ec541d8991c07d42e16
+  - id: REL-U1115-sourcing-forecast-assumptions
+    type: shares-data
+    source_id: cap-category-sourcing-strategy
+    target_id: subdomain-demand-supply-forecasting
+    field_sha256:
+      label: d787306e1faac06b8bd4d4fdbc901118bc172a1804225c3e37474b29892a16cb
+      data_exchange: 28081565b905d59617b6e66447a71933923b1d39b171342871e2584a41212ebd
+  - id: REL-U1115-supplier-offers-forecast
+    type: shares-data
+    source_id: cap-supplier-offer-selection
+    target_id: subdomain-demand-supply-forecasting
+    field_sha256:
+      label: fcc56b1cd9ab108851b40d650ff432f136877161a095f2b384352dde2f152f74
+      data_exchange: 00db07b8bca205f0d56b566771cfbbfd8eb72fbcd200b600a936ba3f4a379478
+  - id: REL-U1115-assortment-forecast
+    type: shares-data
+    source_id: cap-assortment-eligibility-management
+    target_id: subdomain-demand-supply-forecasting
+    field_sha256:
+      label: 4af788c2920386e7bcf8137e217ffe100cb13508480e3dae0562452c6bc15170
+      data_exchange: 52213334c0fd171b9e766baf073e443f4f13c91a1807baddc4372d728f6064bc
+  - id: REL-U1115-objectives-budget
+    type: shares-data
+    source_id: subdomain-strategy-objectives
+    target_id: subdomain-budgeting-forecasting
+    field_sha256:
+      label: cea50d01b70ce3b175077020cfc1ceaa5ce3ea1a2b54fed47c254ce1b7583ecc
+      data_exchange: 41fc5352de65f4f0ec32b552e3d7ccb19cf4c5850f26e536cca92859c388ff0c
+  - id: REL-U1115-objectives-product
+    type: shares-data
+    source_id: subdomain-strategy-objectives
+    target_id: subdomain-product-strategy-requirements
+    field_sha256:
+      label: 26f106b59f5270ac049a486dfc5696536cdd0f9abbd1e8add95f791daf2bbf38
+      data_exchange: 811f4fcd7be5508ae62842f25062b15d27879821b1f6a9f9b3156557e5b42ab0
+  - id: REL-U1115-objectives-master-plan
+    type: shares-data
+    source_id: subdomain-strategy-objectives
+    target_id: domain-plan
+    field_sha256:
+      label: e06e431bf5ae247d054867b0ea96548deb6fdf41b36811fd3b19cb2449295e5e
+      data_exchange: 646229f53584b0010870847bffd8ff4fbb8ccf36bc3c8f7803da92a35839bdc0
+  - id: REL-U1115-budget-forecast
+    type: shares-data
+    source_id: subdomain-budgeting-forecasting
+    target_id: subdomain-demand-supply-forecasting
+    field_sha256:
+      label: f87b6fadab72bffe146c38f4eccd49285799019d75d909f5211e8b3596064f33
+      data_exchange: 6fe4a8029862e9eb2b823ccab1f437b8aa8aacdcb676e1a37001a35804ed1267
+  - id: REL-U1115-budget-master-plan
+    type: shares-data
+    source_id: subdomain-budgeting-forecasting
+    target_id: domain-plan
+    field_sha256:
+      label: c9da56facb73f57e792706844ea9d77ab072cfbefd0708072a8376b0dd4bdadb
+      data_exchange: 6cefb69563f88ea9919780c95923eff9ef612af2cb0d336e78a596014d232f68
+  - id: REL-U1115-forecast-budget
+    type: shares-data
+    source_id: subdomain-demand-supply-forecasting
+    target_id: subdomain-budgeting-forecasting
+    field_sha256:
+      label: 0746e33ea963fcfad3412431550050f71bff0d52decfadd3d38438a9f238c8ca
+      data_exchange: 65835c7ac9a430f6167ed2f1b675e3395f21031f6ca525f5e7abc6f8a9895d9f
+  - id: REL-U1115-master-plan-budget
+    type: shares-data
+    source_id: domain-plan
+    target_id: subdomain-budgeting-forecasting
+    field_sha256:
+      label: bf544f5308a0e4071bf26e292eff2a2289eb912ecfc62fd40b81715cd01e9fea
+      data_exchange: 9e7e03f3fa589f15af4259b5873e8ee5080c58114ad78589b9f5b5521b076ad4
+  - id: REL-U1115-accounting-performance
+    type: shares-data
+    source_id: subdomain-financial-accounting
+    target_id: subdomain-performance-analysis
+    field_sha256:
+      label: b69dea7d97e4f5078c44f1784b1ef77e355dd56a91c012d8526a5dfc04f96c57
+      data_exchange: bc664a76bd3178d795b08e65f0bebcd22ccca672a73c67d7a04e9db3f0cc3e1b
+  - id: REL-U1115-operations-performance
+    type: shares-data
+    source_id: operational-analysis-reporting
+    target_id: subdomain-performance-analysis
+    field_sha256:
+      label: 796f46184804592dcbbae67636e7a0077c2664c98a2c27ca853a427f58cf6ad5
+      data_exchange: 3a187a001fe90600f73576cc19b14c04dba699998e16135d44093565ae0d16a6
+  - id: REL-U1115-commerce-performance
+    type: shares-data
+    source_id: domain-sales
+    target_id: subdomain-performance-analysis
+    field_sha256:
+      label: 685cd23406aee21468b7436cce39a1f9ce11d3ef454f5ec077a522ab9785b29c
+      data_exchange: a7b1ee32f5e0ae6244bfa2e863ac47ad46b536b1b8a2e2a602dea542f4bcb34e
+  - id: REL-U1115-supplier-performance-enterprise
+    type: shares-data
+    source_id: cap-supplier-performance-evaluation
+    target_id: subdomain-performance-analysis
+    field_sha256:
+      label: f42c7f1d928363769a19f01db716a3697aa614d6f4e3e8e703f9d012c57b3fb6
+      data_exchange: 1d6da489b11caeca254b0260597dea85db5eed20d359654204bfb03440c1afc3
+  - id: REL-U1115-performance-objectives
+    type: shares-data
+    source_id: subdomain-performance-analysis
+    target_id: subdomain-strategy-objectives
+    field_sha256:
+      label: 8766b879afa8b9c28252e6bce2c903759b7025a6da2cd1d5cd1fdf6645e3fb10
+      data_exchange: 1b1078ec89a0857ca8f4ab861bd4d4250d2f0812378190f9884365305f55610b
+  - id: REL-U1115-performance-budget
+    type: shares-data
+    source_id: subdomain-performance-analysis
+    target_id: subdomain-budgeting-forecasting
+    field_sha256:
+      label: 9a85576b8f9db7661b5b0771af3127596e08d3047bb09ea42fc21964f6dd6ff1
+      data_exchange: 8545d5bf64185522a31f47d3d5216d03b1ee793deb06cddc2aa3403041baf9f4
+  - id: REL-U1115-policy-risk-control
+    type: shares-data
+    source_id: subdomain-policy-compliance
+    target_id: subdomain-risk-internal-control
+    field_sha256:
+      label: 7ba76e6107a046841c4ed1cbeff506c2d02bbfa61a979c89c1d8a85c12f9e35f
+      data_exchange: 5eca090656720e1dcea4b2c938024c54874df6cb6bff25359851dc282983ba8c
+  - id: REL-U1115-policy-supply
+    type: shares-data
+    source_id: subdomain-policy-compliance
+    target_id: subdomain-policies
+    field_sha256:
+      label: e91680bd505bbbaa733818bc254140e1788c696febe34f34e08d6222245373af
+      data_exchange: e6bc3fd2383e2e17db713134f5b250977a0eac257b6ab2f1489b3fe9802889e5
+  - id: REL-U1115-policy-product
+    type: shares-data
+    source_id: subdomain-policy-compliance
+    target_id: domain-product-definition-lifecycle
+    field_sha256:
+      label: 97cc62b62605b47aacf95ae22d538bb47da1e8740bb9c97c012bc2a8a00748fa
+      data_exchange: 3237a99228c0d998529b2a4a61415b87d2e645ec24f286ab59d2ebd12cf70f8c
+  - id: REL-U1115-policy-customs
+    type: shares-data
+    source_id: subdomain-policy-compliance
+    target_id: domain-customs-management
+    field_sha256:
+      label: 6a3e2aa857f505e37640da20ac826b4dd94a2a4eef0a4b246c83531d5a904a11
+      data_exchange: 9b80adf76d8aa30a390edd6f7cba6225b2e57dc3102b9946abf941397cb170fb
+  - id: REL-U1115-operational-control-evidence
+    type: shares-data
+    source_id: operational-analysis-reporting
+    target_id: subdomain-risk-internal-control
+    field_sha256:
+      label: 4bbf9cf027599bb6d1d80d1693686f07c70e35950cd69131ffcf8b30f1cfb00c
+      data_exchange: ed8a3c0d877315c9ad9c8b2bb52741248f82b6186bea6d7f156d56dc2ccd67b3
+  - id: REL-U1115-product-control-evidence
+    type: shares-data
+    source_id: domain-product-definition-lifecycle
+    target_id: subdomain-risk-internal-control
+    field_sha256:
+      label: 45599e279c6188c6f54e3572328ba5bb4d5000e3b80b8d8b17c14f504d782f49
+      data_exchange: c6f920a610f7575fc3ca73edd8062bae47421c9db1e7c0776ff0a6ca50aca135
+  - id: REL-U1115-customs-control-evidence
+    type: shares-data
+    source_id: domain-customs-management
+    target_id: subdomain-risk-internal-control
+    field_sha256:
+      label: 7fe5f8058167ef087c1fa7ab53709c093060e512e8266859e0abddfb160b6b09
+      data_exchange: 115a3dbf3918c04486a5fafb947ecc7de56206f2a948ef2006846ce0d41ca531
+  - id: REL-U1115-controls-audit
+    type: shares-data
+    source_id: subdomain-risk-internal-control
+    target_id: subdomain-audit-assurance
+    field_sha256:
+      label: 4a292882ca10059590949cd3b5ae9b65de3b19b4a22106a4511cce9eae5e030e
+      data_exchange: 693c0784aeb5a592b35b3419407c21202466956b35afecd7d36b0b44fc913b09
+  - id: REL-U1115-audit-controls
+    type: shares-data
+    source_id: subdomain-audit-assurance
+    target_id: subdomain-risk-internal-control
+    field_sha256:
+      label: 628c5c48964aaad6d7e92a846123e03851475d4dd471093aca97b146e7390041
+      data_exchange: 7a13d0c8c822d7be3235c95f0a97bce45a71db9322e0920d7fb728981ee322e1
+  - id: REL-U1115-audit-policy
+    type: shares-data
+    source_id: subdomain-audit-assurance
+    target_id: subdomain-policy-compliance
+    field_sha256:
+      label: d8fe51a55d8f7c95510dc71dce0c83cbb7640a76146d7b41c71ebd839557ed09
+      data_exchange: 940c5a2f190a408a691f029920ea33fdb7cf603b44501b155a06baacbe4b4e65
+  - id: REL-U1115-control-requirements-domain-sales
+    type: shares-data
+    source_id: subdomain-risk-internal-control
+    target_id: domain-sales
+    field_sha256:
+      label: a85dbc5e9079b7e63acd3fc40717430166a12c50baf12119359cbea29ef61d99
+      data_exchange: b0384e6d515b1110a76427230083b80f977484c46309a9719c7ad68d28493160
+  - id: REL-U1115-control-requirements-domain-sourcing-procurement
+    type: shares-data
+    source_id: subdomain-risk-internal-control
+    target_id: domain-sourcing-procurement
+    field_sha256:
+      label: a85dbc5e9079b7e63acd3fc40717430166a12c50baf12119359cbea29ef61d99
+      data_exchange: b0384e6d515b1110a76427230083b80f977484c46309a9719c7ad68d28493160
+  - id: REL-U1115-control-requirements-supply-chain-orchestration
+    type: shares-data
+    source_id: subdomain-risk-internal-control
+    target_id: supply-chain-orchestration
+    field_sha256:
+      label: a85dbc5e9079b7e63acd3fc40717430166a12c50baf12119359cbea29ef61d99
+      data_exchange: b0384e6d515b1110a76427230083b80f977484c46309a9719c7ad68d28493160
+  - id: REL-U1115-dispatch-handover
+    type: shares-data
+    source_id: ba-packing-shipping-operations
+    target_id: ba-transport-dispatch
+    field_sha256:
+      label: 584a8ab2445aa66e2723b27f885c966e7b70df80471a160eaf256542c3cdc195
+      data_exchange: 11a67945a8bf69893f528cdc8be142fb0920831660686b26946768276cd9d1dc
+  - id: REL-U1115-transport-receiving-handover
+    type: shares-data
+    source_id: ba-transport-execution
+    target_id: ba-receiving-operations
+    field_sha256:
+      label: 3a42850b81fdbeee160ef6631f65b3b96b5df6f25f2e9b76ddc7647745dbf1e8
+      data_exchange: 4b8b9f86077ae7504ce960bdf521bbd0962670b4e5de6977d110e905cc884762
+  - id: REL-U1115-customs-transport-status
+    type: shares-data
+    source_id: ba-customs-procedure-management
+    target_id: ba-transport-execution
+    field_sha256:
+      label: 9e3917b661261ca2eaf419f669250b0b5fa05c06bb58d0b79b7d2a9e5e32f0ce
+      data_exchange: 225c34fa50f5e680e107435044d234723a5c8d1b1c6c09fb49670f83f70357e7
+  - id: REL-U1115-customs-dispatch-status
+    type: shares-data
+    source_id: ba-customs-procedure-management
+    target_id: ba-packing-shipping-operations
+    field_sha256:
+      label: 8aec636cd58d385d6df217aa1b6a9d06dcb0280ab5ab895236e8e48714a926e3
+      data_exchange: 351daeee5cac4058f136b832e849c0c2898160b7d9f5e40e3374271c32865340
+  - id: REL-U1115-service-supporting-facts-domain-warehousing
+    type: shares-data
+    source_id: domain-warehousing
+    target_id: subdomain-financial-accounting
+    field_sha256:
+      label: 5b0f0751ab9e0db4f2353f239fe4deeedd06234bf7df7f58349cdab1ee6e575a
+      data_exchange: 213e83d109c1807aef6b4a97f085c5c2f170967b65ec654ee09bfecc361760bd
+  - id: REL-U1115-service-evidence-results-domain-warehousing
+    type: shares-data
+    source_id: subdomain-financial-accounting
+    target_id: domain-warehousing
+    field_sha256:
+      label: 52ed70f8bd36060601bac6acecad381a63c83e70e6cea2b4a26d76b9401f48a8
+      data_exchange: 7855a33c08af3a1a28ffdd84f7d906c3197851771cc7051f0705ba39a70c3898
+  - id: REL-U1115-service-supporting-facts-domain-transportation
+    type: shares-data
+    source_id: domain-transportation
+    target_id: subdomain-financial-accounting
+    field_sha256:
+      label: 5b0f0751ab9e0db4f2353f239fe4deeedd06234bf7df7f58349cdab1ee6e575a
+      data_exchange: 213e83d109c1807aef6b4a97f085c5c2f170967b65ec654ee09bfecc361760bd
+  - id: REL-U1115-service-evidence-results-domain-transportation
+    type: shares-data
+    source_id: subdomain-financial-accounting
+    target_id: domain-transportation
+    field_sha256:
+      label: 52ed70f8bd36060601bac6acecad381a63c83e70e6cea2b4a26d76b9401f48a8
+      data_exchange: 7855a33c08af3a1a28ffdd84f7d906c3197851771cc7051f0705ba39a70c3898
+  - id: REL-U1115-service-supporting-facts-domain-customs-management
+    type: shares-data
+    source_id: domain-customs-management
+    target_id: subdomain-financial-accounting
+    field_sha256:
+      label: 5b0f0751ab9e0db4f2353f239fe4deeedd06234bf7df7f58349cdab1ee6e575a
+      data_exchange: 213e83d109c1807aef6b4a97f085c5c2f170967b65ec654ee09bfecc361760bd
+  - id: REL-U1115-service-evidence-results-domain-customs-management
+    type: shares-data
+    source_id: subdomain-financial-accounting
+    target_id: domain-customs-management
+    field_sha256:
+      label: 52ed70f8bd36060601bac6acecad381a63c83e70e6cea2b4a26d76b9401f48a8
+      data_exchange: 7855a33c08af3a1a28ffdd84f7d906c3197851771cc7051f0705ba39a70c3898
+  - id: REL-U1115-service-lifecycle-case-events
+    type: shares-data
+    source_id: subdomain-service-orders
+    target_id: process-ledger
+    field_sha256:
+      label: ca0871a15100ed7b08e72d34745c9a07f9e8ef7656a7fdc694919841eeab9710
+      data_exchange: 46a56f7853a97bbcc6503429cf0175cb1006d6175eb54bfc2525da7fded3a6eb
+  - id: REL-U1115-planning-case-events
+    type: shares-data
+    source_id: D05.f
+    target_id: process-ledger
+    field_sha256:
+      label: 18e1daf9d1c1d58981069c552235158a8ed8642e893fce752dc0833a7551e17e
+      data_exchange: c9928ef473c504e0046bda78fb682fec2cac38677ce02f6e859aa262062cf45d
+  - id: REL-U1115-supply-assignment-case-events
+    type: shares-data
+    source_id: D03.o
+    target_id: process-ledger
+    field_sha256:
+      label: 9abe9fec79dcffa69b1365c6e59f882ac2fc05d6185aa0c6898012dc775f8dfb
+      data_exchange: 1fa43b170b09fc6f5d05d21519022318d9e04c064ff1f06bbdf25260bf463cf5
+  - id: REL-U1115-plan-application-case-events
+    type: shares-data
+    source_id: D02.e
+    target_id: process-ledger
+    field_sha256:
+      label: c2a6c34742a382844779db2602141ae040a7d3369ab6ad4e724f3923ae8bda21
+      data_exchange: 7ab7d991411fe61e4c925640206ad14085c0a63a48f82240fe3a543ba041d64b
+  - id: REL-U1115-inventory-case-references
+    type: shares-data
+    source_id: D01.g
+    target_id: process-ledger
+    field_sha256:
+      label: d9c73d07afeff97072334fcba0524dd62e81f2096a53ea6a67adb943cf1f11b6
+      data_exchange: 188031e220395ad1100c6bba15375df39b4521e72433a1b1dcac0fbc6f457b26
+  - id: REL-U1115-ownership-case-references
+    type: shares-data
+    source_id: inventory-ownership-ledger
+    target_id: process-ledger
+    field_sha256:
+      label: 0b8de6f5902bb3a227f5d7b9442f83c4f53b19db302ffa25b9d4db799488cd3c
+      data_exchange: 9d95e8b6f87b2b28cb8889b353c66c24268e3590e0ff836070c7e12745734b21
+  required_glossary:
+  - id: TER112
+    field_sha256:
+      market_comparisons: 01e0cb4b4871f7184355bff10c1b550fe8c9c72c907aae2d7195cf58d9bcf6a7
+      market_inspiration: becd7ab1417685a9aaf72a839f963016985d2fd7c35181487ed2a260b8097c0e
+  - id: TER155
+    field_sha256:
+      context: 76007531f9b13ec2d7fd977a601e8ecd0a0dcc2d5955da4edcaecb436cb8b199
+  - id: TER207
+    field_sha256:
+      context: 8b5a4afd2254d0dd2198e73a5d26cfee2b5785f94d61967106781e406c85b1c5
+  - id: TER208
+    field_sha256:
+      context: 5d789f94522b971ee6a29ff528af3b8d49af4b43150e45525d4e9348575ee9c9
+  - id: TER209
+    field_sha256:
+      context: c932e1484d0889b22a28f3a82bf039c0aea823441920dbc0d2f1b72eb1dd244d
+  - id: TER211
+    field_sha256:
+      context: 3b6d326447b8492d132d7bf1433d8ee2cf723b5a34928927b1dfe346ae954a08
+  - id: TER212
+    field_sha256:
+      context: 1c93869953c761da3ba33839f1b01b3fec0032e7a2d23ac38c7618f79463b8b6
+  - id: TER213
+    field_sha256:
+      context: 0773d5cbd93fcae8d4c49a2ec40a662d2c788d1b254f2a0039d0345d6612ed8a
+  - id: TER215
+    field_sha256:
+      context: e21ee86129ab5255bb29d6bbb0de0a1d74f065820f46298be9d519ae2b0c9a35
+  - id: TER216
+    field_sha256:
+      context: 8c6e1ff05d32de44f66b4c7c6463947f4efa13ed9385de3c79a86bd303523db9
+  - id: TER217
+    field_sha256:
+      context: fae60ca6489183f0462aaca7044591b84d6c7b4a3d17985c30572bd59cd1dd7b
+  - id: TER222
+    field_sha256:
+      context: 8419cc2908ec00cd6bc98100ed2c6e1b928d27f814fdf5fbe1628991b842f6c0
+  - id: TER223
+    field_sha256:
+      context: e58805c666e01629dc42762d95c239d1557a5692f25caa055ba80ffde7421952
+  - id: TER224
+    field_sha256:
+      context: 325d65ea5586d74d47b7c50a8ca979ea8cee22ac2dfdd1427203804eee11bbaf
+  - id: TER226
+    field_sha256:
+      context: 69217d06a23f6c1c40b72c500a34a125d1d6f44e8669336b97df84ba9ae3df8b
+  - id: TER227
+    field_sha256:
+      context: 0ef51f789f3de06e311e4c0a1914db626521c292db01078545f9e5b369953a59
+  - id: TER228
+    field_sha256:
+      context: 6a0ad04f30338f2f08f08fbbadf306853f7a737869a853df2647b62b87f39829
+  - id: TER232
+    field_sha256:
+      context: 2faf915f72fbaef2ee6d45998c9fa4cfe339036d037e08214f661cdcd5f2139f
+  - id: TER237
+    field_sha256:
+      context: 8d71f51b62394c69cc58227a16693ea8299a8e4520d568a12ebd71dacfa00715
+  - id: TER257
+    field_sha256:
+      context: c9f22f0ff329cfe800567149d672f6f6abb466119f50f87a2f439db8af32746f
+  - id: TER310
+    field_sha256:
+      context: beb9f3c0ab7c5d0ef66cd4d90e28cbcc82f6aa7309e119bb974263a8db85b2b7
+  - id: TER331
+    field_sha256:
+      context: f4f4248920fe8b236ac6d746124adfbea4f3b462cf0983c7e6cc5b4a0aaa3d5a
+  - id: TER332
+    field_sha256:
+      context: cc597494bcdadbd321f4eb00c4a3d815504e5c57d6cc1180bf92b65c2130fdaa
+  - id: TER334
+    field_sha256:
+      context: 8024854de8432fb2cfb7c3627d4fc1f1db07eaf28faad9e7d88c6000cea8a63c
+  - id: TER335
+    field_sha256:
+      context: b3a61173dfbfe0999a4baabe104ee7cbb2732fb4260edb12c4220c63b26c341b
+  - id: TER336
+    field_sha256:
+      context: 750e05cb797d1eb6de6f86aa1e48a474492841e8758264dbeb280e8e3c9b9d11
+  - id: TER338
+    field_sha256:
+      context: 0463a4f34a4eaaf514e82fc6e3917cf1155499a175b3c49ad0d7c544455f127b
+  - id: TER339
+    field_sha256:
+      context: 692879241c906daf67249e2df33d056d0f02a4ecfd92d482e6c1b221a8d9cfcb
+  - id: TER340
+    field_sha256:
+      context: 6f97f344c1ff963dc2c9be39520d1bb660485c5498bfe1b9406f2b0839c6e91e
+  - id: TER341
+    field_sha256:
+      context: ce1c122bea261f0297f7ddd534fac6ef4c0991beb337e84998fe7275077c5fc1
+  - id: TER342
+    field_sha256:
+      context: 2f3a0b4ccd9f36f0899d95de1fbbbea0a5fbd3b4ca77f76066cbe653f0564919
+  - id: TER343
+    field_sha256:
+      context: e600dba31dced54df9f866b12346d21bf14fc159e4c95d4cbc53af00b50f2e2b
+  - id: TER344
+    field_sha256:
+      context: 7d78bd4e7890e8a5187b88e9c0e257402f5f5164a9b333c5d6c6eb5a7fce34da
+  - id: TER345
+    field_sha256:
+      context: 77b5d908b81c01afed34b9e7fd332acdca59e3033efcd3bb30436136adca430d
+  - id: TER346
+    field_sha256:
+      context: 5032e470e5c843510e1cf49568060ffe68261fb85b2828fb1bed8ba5f1d56fc8
+  - id: TER349
+    field_sha256:
+      context: 38e1c732dd3dccbe6291fc949fe8ec7f96813a1607081881e6a8af9822e7470a
+  - id: TER350
+    field_sha256:
+      context: 0fbd43be38ef4517034fd45b5d78c2e18b8a544a2af9de21f38d69ad2c3f0f50
+  - id: TER352
+    field_sha256:
+      context: 3c9bec497d82078d63037289f43afc1adb5e9707ce1b05141a27359e2e96e2f4
+  - id: TER367
+    field_sha256:
+      context: 0c5437a2753cfb0c14b6c3ace91020f97593260ed95ac3db539a50f022e7a6b2
+  - id: TER368
+    field_sha256:
+      context: f22d441014486aaa428faa80a5c883a7727104c4d87e925cbaab1235b0606ac3
+  - id: TER370
+    field_sha256:
+      context: 510bd7d93a99b437f7c7a6dc21ce1b2982294b3fa5021c506c2863f99d2ce842
+  - id: TER371
+    field_sha256:
+      context: 1c8f6cb1138e23e2c1fdfbfcb0ccf20c2595442b2be27ce7da7ffc12b265fe21
+  - id: TER373
+    field_sha256:
+      context: d98f82bdffe40d9d58402d9f7b3e8d57e1d13f37c8f4353489bf72985c10a4cd
+  - id: TER375
+    field_sha256:
+      context: 7d1bbb26d1990d38bb16dc980f5126522fd7094e7502e963d7f4d9a589a31b72
+  - id: TER376
+    field_sha256:
+      context: ad4e9ac10bcc503955d16f6fa17b421bef8616444700d49aab8041d95a709724
+  required_catalog:
+  - collection: paths
+    id: return-fashion-recovery-path
+    content_sha256: 7f666c4a5030a659779e1678117d83cfb5da9fdc4e55ab7310d15e3e4e766620
+  - collection: paths
+    id: fashion-launch-path
+    content_sha256: 87693431c2a70d512d76b83ffc02bee37ab2abff7b52b2d695b4c0b27eb7f64d
+  - collection: paths
+    id: export-remote-services-path
+    content_sha256: 5676e30569ddbdc03c2bc596ecdc305b6a388eaa590c1be73692aacd8a193a0b
+  - collection: paths
+    id: stocktaking-variance-path
+    content_sha256: c313441f6bc2459fc5b014834486c213cc7fb8b1fd10d13de28f1597e4ffa1b9
+  - collection: paths
+    id: transport-missed-connection-path
+    content_sha256: 48bf8b7a920af17dbc86ad0ee8d02b423eb62f5f6309d2193ed133efed7613bb
+  - collection: paths
+    id: partial-receiving-path
+    content_sha256: 19268c5a4f5fb98fcf4907402601bbd03203086222807b211c923a613e21c582
+  - collection: paths
+    id: intercompany-direct-delivery-path
+    content_sha256: 6a533265518f744c26caa6cfd3f4eb15ec6a4e5dbda48c4ebea2d983e2d10b35
+  - collection: paths
+    id: product-quality-feedback-path
+    content_sha256: 25d431d8f98d7931ed4463114aa232ac480401c385eb29394a260a6ad6382ce4
+  - collection: paths
+    id: customer-credit-hold-path
+    content_sha256: 15358ac6d4955f5e2986dae173d842e8cf75aecdc47bf9848cb4e7a8d56c154a
+  - collection: paths
+    id: process-approval-bottleneck-path
+    content_sha256: 15cbde25dc75f8c3151e8e036ed2d3ef5d157bdf6bf74cdaf5f7f3a4b02b26ea
+  - collection: information_items
+    id: PINFO-011
+    content_sha256: 4583445c96d7b23329c878f8673833b3e71e7a05cc7d935bd30e69c771d1abdd
+  - collection: information_items
+    id: PINFO-013
+    content_sha256: 78644a40f5b33663b4f78df4eb95552c5517d46c6819305b91ff8209ee37cc15
+  - collection: application_products
+    id: product-sap-ecc
+    content_sha256: d335970d15c14c3ad90ee3ed7f9a23c87c7061287e403220c146e187a560a947
+  - collection: application_selections
+    id: selection-sap-ecc-boardriders
+    content_sha256: 69743ad68cfbdb45c3c508cd29adc4f05520371ed5a411d41993abb345e3c1b3
+  absent_relations:
+  - REL-U908-uses-reference-D05.e-131
+  - REL-U750-PLANNING-ASSIGNMENT
+  - REL-U711-CATALOG-SERVICE-ORDERS
+  supersedes_requirements:
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-supplier-consultation-coordination
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-supplier-offer-selection
+    fields:
+    - scope
+  - annex: business-operations-global-application-U1091.yaml
+    collection: paths
+    id: fashion-launch-path
+    fields:
+    - content_sha256
+  - annex: business-operations-global-application-U1091.yaml
+    collection: nodes
+    id: cap-supplier-commitment-follow-up
+    fields:
+    - scope
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER340
+    fields:
+    - context
+  - annex: coherence-pricing-policies-U996.yaml
+    collection: relations
+    id: REL-U996-contextual-prices
+    fields:
+    - source_id
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: nodes
+    id: subdomain-product-strategy-requirements
+    fields:
+    - scope
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: terms
+    id: TER207
+    fields:
+    - context
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-supplier-eligibility-assessment
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-supplier-performance-evaluation
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-purchase-agreement-lifecycle-management
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-purchase-requisition-handling
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-purchasing-case-coordination
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-wholesale-account-stewardship
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-wholesale-sales-engagement
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-assortment-eligibility-management
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-commercial-catalog-publication
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-sales-price-determination
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-promotion-rule-management
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-digital-sales-journey-management
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-in-store-sales-journey-management
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-retail-customer-engagement-management
+    fields:
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-sales-pricing-rule-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-store-checkout-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-retail-loyalty-program-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-wholesale-offer-preparation
+    fields:
+    - market_comparisons
+    - scope
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER209
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER211
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER212
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER213
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER215
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER216
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER217
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER222
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER223
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER224
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER226
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER227
+    fields:
+    - context
+  - annex: context-business-systems-U975.yaml
+    collection: terms
+    id: TER228
+    fields:
+    - context
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: domain-warehousing
+    fields:
+    - scope
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: domain-transportation
+    fields:
+    - scope
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: domain-customs-management
+    fields:
+    - scope
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER232
+    fields:
+    - context
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER237
+    fields:
+    - context
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER310
+    fields:
+    - context
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: paths
+    id: customer-credit-hold-path
+    fields:
+    - content_sha256
+  - annex: credit-check-decision-U892.yaml
+    collection: paths
+    id: customer-credit-hold-path
+    fields:
+    - content_sha256
+  - annex: data-sharing-map-cleanup-U1068.yaml
+    collection: relations
+    id: REL-U979-management-facts
+    fields:
+    - summary_label
+  - annex: data-sharing-summary-U998.yaml
+    collection: relations
+    id: REL-U979-credit-profiles
+    fields:
+    - summary_label
+  - annex: data-sharing-U979.yaml
+    collection: relations
+    id: REL-U979-product-definitions
+    fields:
+    - data_exchange
+    - label
+  - annex: data-sharing-U979.yaml
+    collection: relations
+    id: REL-U979-product-feedback
+    fields:
+    - data_exchange
+    - label
+  - annex: data-sharing-U979.yaml
+    collection: relations
+    id: REL-U979-service-requests
+    fields:
+    - data_exchange
+    - label
+  - annex: data-sharing-U979.yaml
+    collection: relations
+    id: REL-U979-execution-results
+    fields:
+    - data_exchange
+    - label
+  - annex: data-sharing-U979.yaml
+    collection: relations
+    id: REL-U979-management-facts
+    fields:
+    - data_exchange
+    - label
+  - annex: data-sharing-U979.yaml
+    collection: relations
+    id: REL-U979-credit-profiles
+    fields:
+    - data_exchange
+    - label
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: nodes
+    id: subdomain-collection-planning
+    fields:
+    - scope
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: terms
+    id: TER208
+    fields:
+    - context
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: terms
+    id: TER373
+    fields:
+    - context
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: process-ledger
+    fields:
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: relations
+    id: REL-U996-contextual-prices
+    fields:
+    - source_id
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER375
+    fields:
+    - context
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER376
+    fields:
+    - context
+  - annex: intercompany-scenario-U831.yaml
+    collection: paths
+    id: intercompany-direct-delivery-path
+    fields:
+    - content_sha256
+  - annex: master-plan-preparation-U1103.yaml
+    collection: nodes
+    id: subdomain-demand-supply-forecasting
+    fields:
+    - scope
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER112
+    fields:
+    - market_comparisons
+  - annex: operational-work-audit-U881.yaml
+    collection: paths
+    id: customer-credit-hold-path
+    fields:
+    - content_sha256
+  - annex: operational-work-audit-U881.yaml
+    collection: paths
+    id: process-approval-bottleneck-path
+    fields:
+    - content_sha256
+  - annex: orchestration-detail-scope-U981.yaml
+    collection: paths
+    id: intercompany-direct-delivery-path
+    fields:
+    - content_sha256
+  - annex: order-backlog-refinements-U1010.yaml
+    collection: nodes
+    id: D05.h
+    fields:
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER112
+    fields:
+    - market_inspiration
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: paths
+    id: customer-credit-hold-path
+    fields:
+    - content_sha256
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: paths
+    id: intercompany-direct-delivery-path
+    fields:
+    - content_sha256
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: paths
+    id: process-approval-bottleneck-path
+    fields:
+    - content_sha256
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: paths
+    id: return-fashion-recovery-path
+    fields:
+    - content_sha256
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: paths
+    id: export-remote-services-path
+    fields:
+    - content_sha256
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: paths
+    id: stocktaking-variance-path
+    fields:
+    - content_sha256
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: paths
+    id: transport-missed-connection-path
+    fields:
+    - content_sha256
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: paths
+    id: partial-receiving-path
+    fields:
+    - content_sha256
+  - annex: software-product-audit-U1075.yaml
+    collection: application_products
+    id: product-sap-ecc
+    fields:
+    - content_sha256
+  - annex: software-product-audit-U1075.yaml
+    collection: application_selections
+    id: selection-sap-ecc-boardriders
+    fields:
+    - content_sha256
+  - annex: transversal-remediation-U853.yaml
+    collection: paths
+    id: product-quality-feedback-path
+    fields:
+    - content_sha256
+  - annex: visibility-scope-U858.yaml
+    collection: paths
+    id: product-quality-feedback-path
+    fields:
+    - content_sha256
+verification:
+  source_index_records: 3148
+  backlog_errors: 0
+  captured_field_intents: 24
+  pending_delivery_lots: 0
+  requirements_files_verified: 241
+  model_validation_errors: 0
+  build: 'pnpm --dir app build : réussi ; publication 2026-10-16.3 réutilisée, aucun backlog publié'
+  model_counts:
+    nodes: 352
+    capabilities: 116
+    behaviors: 74
+    relations: 876
+    shares_data: 301
+    context_participations: 16
+    paths_modified: 10
+  targeted_tests:
+    python_contracts_and_publication: 92
+    javascript_catalogues: 10
+    backlog_delivery: 15
+    context_depth_regression: Domain et Subdomain de contexte acceptés ; capacités/comportements exclus ; BA réservées au
+      niveau déclaré.
+  code_checks:
+  - TypeScript et Biome ciblés réussis
+  - git diff --check ciblé propre
+  - 'python app/server.py --check : frontend ready, mode static'
+  business_baseline_preserved: Aucun nœud métier ajouté ou retiré ; trois relations retirées avec provenance consolidée. Les
+    publications, leurs preuves et les fichiers As Is restent intacts.

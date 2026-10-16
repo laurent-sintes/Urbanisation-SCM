@@ -28,6 +28,7 @@ export interface MapPanelProps {
   restoreViewport?: boolean;
   onDepthChange: (depth: number) => void;
   onSelect: (id: string) => void;
+  onRead?: (id: string) => void;
   onOpenScope?: (id: string) => void;
   onAnnouncement: (message: string) => void;
   onOpenHotspot: (id: string, groupIds?: string[]) => void;

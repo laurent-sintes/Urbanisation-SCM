@@ -59,6 +59,27 @@ test('Standard at enterprise scale protects the enclosing system headings when d
   assert.deepEqual(screenOrigin(system, standard), { x: 24, y: 24 });
 });
 
+test('enterprise Standard reveals named subdomains at 120px without changing the world on mobile', () => {
+  const system = territory('system', 'business_system', { width: 10000, height: 30000, headerHeight: 200 });
+  const domain = territory('domain', 'domain', { x: 46, y: 232, width: 2000, height: 5000 }, system.id);
+  const area = territory('area', 'area', { x: 60, y: 320, height: 80 }, domain.id);
+  const other = territory('other', 'area', { x: 800, y: 320, height: 80 }, domain.id);
+  const wide = territory('wide', 'area', { x: 60, y: 1000, width: 1600, height: 600 }, domain.id);
+  const boxes = Object.freeze([system, domain, area, other, wide]);
+  const original = JSON.stringify(boxes);
+  const desktop = standardFlowCamera(boxes, { width: 1440, height: 1000 }, '@root');
+  const mobile = standardFlowCamera(boxes, { width: 320, height: 480 }, '@root');
+  assert.ok(area.width * desktop.zoom >= 120 - 1e-9);
+  assert.ok(area.height * desktop.zoom >= 32);
+  assert.ok(domain.headerHeight * desktop.zoom >= 30);
+  assert.equal(mobile.zoom, desktop.zoom);
+  assert.equal(JSON.stringify(boxes), original);
+  assert.deepEqual(screenOrigin(system, desktop), { x: 24, y: 24 });
+  const shorterHeader = { ...domain, headerHeight: 40 };
+  const protectedHeader = standardFlowCamera([system, shorterHeader, area], { width: 1440, height: 1000 }, '@root');
+  assert.ok(shorterHeader.headerHeight * protectedHeader.zoom >= 30);
+});
+
 test('Standard starts Supply on its fixed core and shows Business Areas at a natural width', () => {
   const integration = territory('subdomain-integration', 'area', { x: 734, y: 512 });
   const plan = territory('domain-plan', 'area', { x: 1162, y: 512 });

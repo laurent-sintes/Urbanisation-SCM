@@ -260,10 +260,41 @@ test('Business Area titles reserve two or three compact text lines at publicatio
   assert.equal(boxes.get('short').height, 60);
   assert.equal(boxes.get('two-lines').height, 60);
   assert.equal(boxes.get('three-lines').height, 80);
-  assert.equal(boxes.get('terminal-area').height, 100);
+  assert.equal(boxes.get('terminal-area').height, 80);
   for (const id of ['short', 'two-lines', 'three-lines']) {
     assert.equal(boxes.get(id).width, 260);
     assert.equal(boxes.get(id).headerHeight, boxes.get(id).height);
+  }
+});
+
+test('terminal territories use compact label footprints and never reserve a heading larger than their box', () => {
+  const publication = adaptPublication({
+    space: 'release',
+    version: 'terminal-footprints',
+    nodes: [
+      node('system', 'business_system', 'System'),
+      node('domain', 'domain', 'Domain'),
+      node('area', 'area', 'Context'),
+      node('group', 'group', 'Historical Context'),
+    ],
+    relations: [],
+  });
+  const boxes = new Map(buildFlowMap(publication).boxes.map((box) => [box.id, box]));
+  assert.equal(boxes.get('system').height, 120);
+  assert.equal(boxes.get('system').headerHeight, 120);
+  assert.equal(boxes.get('domain').width, 288);
+  assert.equal(boxes.get('domain').height, 104);
+  assert.equal(boxes.get('area').height, 80);
+  assert.equal(boxes.get('group').height, 80);
+  for (const box of boxes.values()) assert.ok(box.headerHeight <= box.height);
+});
+
+test('enclosing territories end after their real descendants rather than growing into empty panels', () => {
+  const { boxes } = buildFlowMap(model);
+  for (const parent of boxes) {
+    const children = boxes.filter((box) => box.parentId === parent.id);
+    if (!children.length) continue;
+    assert.equal(parent.y + parent.height - Math.max(...children.map((box) => box.y + box.height)), 14);
   }
 });
 

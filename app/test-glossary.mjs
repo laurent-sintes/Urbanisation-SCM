@@ -12,6 +12,14 @@ test('explicit links retain their label and target without interpreting HTML', (
   assert.equal(inlineParts(String.raw`\[literal](glossary:TER057)`)[0].kind, undefined);
   assert.equal(inlineParts(String.raw`[a\]b](glossary:TER057)`)[0].text, 'a]b');
 });
+test('historical modeling namespace resolves as a methodology link', () => {
+  assert.deepEqual(inlineParts('[Capability](modeling:MOD015)')[0], {
+    text: 'Capability',
+    kind: 'method',
+    target: 'MOD015',
+    anchor: undefined,
+  });
+});
 
 test('glossary deep link preserves its publication, term and section', () => {
   const route = { ...readRoute(''), view: 'glossary', term: 'TER057', section: 'definition', version: '2026-09-13.5' };

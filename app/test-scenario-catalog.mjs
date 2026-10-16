@@ -2,7 +2,13 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { adaptPublication } from './src/model.ts';
 import { readRoute, routeHash } from './src/navigation.ts';
-import { catalogOf, filterScenarios, scenariosForNode } from './src/scenarioCatalog.ts';
+import {
+  catalogOf,
+  filterScenarios,
+  scenarioCapabilities,
+  scenarioContextParticipants,
+  scenariosForNode,
+} from './src/scenarioCatalog.ts';
 import { searchPublication } from './src/search.ts';
 
 const catalog = {
@@ -59,6 +65,30 @@ test('scenario links derive from explicit contributions in same snapshot', () =>
   assert.equal(scenariosForNode(model(), 'c').length, 1);
   assert.equal(scenariosForNode(model(), 'd').length, 1);
   assert.equal(scenariosForNode(model(), 'absent').length, 0);
+});
+test('context participants link scenarios to their own ancestors without becoming capabilities', () => {
+  const raw = structuredClone(model().raw);
+  raw.nodes.push(
+    { id: 'logistics', kind: 'business_system', fields: { name: 'Logistics' } },
+    { id: 'receiving', kind: 'business_area', fields: { name: 'Receiving Operations' } },
+  );
+  raw.relations.push({ id: 'logistics-receiving', type: 'contains', source_id: 'logistics', target_id: 'receiving' });
+  raw.scenario_catalog.paths[0].steps[0].context_participants = [
+    {
+      node_id: 'receiving',
+      role: 'Confirmer la réception physique',
+      conditions: ['Prestation confiée'],
+      source_refs: ['U1115'],
+    },
+  ];
+  const m = adaptPublication(raw);
+  assert.deepEqual(scenarioCapabilities(raw.scenario_catalog, 's'), ['c']);
+  assert.deepEqual(scenarioContextParticipants(raw.scenario_catalog, 's'), ['receiving']);
+  assert.equal(scenariosForNode(m, 'receiving').length, 1);
+  assert.equal(scenariosForNode(m, 'logistics').length, 1);
+  assert.equal(filterScenarios(raw.scenario_catalog, { capability: 'receiving' }).length, 0);
+  assert.equal(filterScenarios(raw.scenario_catalog, { query: 'Confirmer la réception physique' }).length, 1);
+  assert.equal(filterScenarios(raw.scenario_catalog, { query: 'U1115' }).length, 0);
 });
 test('search returns a unique scenario and a value stream, never review metadata', () => {
   const m = model();

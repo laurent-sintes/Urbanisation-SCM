@@ -179,6 +179,28 @@ export function ScenarioCatalogPage({
                         </li>
                       ))}
                     </ul>
+                    {!!step.context_participants?.length && (
+                      <section className="step-context-participants">
+                        <h5>Participants de contexte</h5>
+                        <ul>
+                          {step.context_participants.map((participant) => (
+                            <li key={participant.node_id}>
+                              <ReferenceLink target={participant.node_id}>
+                                {model.nodeById.get(participant.node_id)?.name || participant.node_id}
+                              </ReferenceLink>{' '}
+                              — <ModelText text={participant.role} />
+                              <ul>
+                                {participant.conditions.map((condition) => (
+                                  <li key={condition}>
+                                    <ModelText text={condition} />
+                                  </li>
+                                ))}
+                              </ul>
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
+                    )}
                     <p>
                       <strong>Résultat : </strong>
                       <ModelText text={step.outcome} />

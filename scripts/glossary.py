@@ -5,7 +5,7 @@ try:
 except ImportError:
     from market_comparison import validate_comparisons, validate_inspiration
 
-LINK = re.compile(r'(?<!\\)\[((?:\\.|[^\]\\\n])+)\]\((glossary|model):([A-Za-z0-9_.-]+)(?:#([A-Za-z0-9_-]+))?\)')
+LINK = re.compile(r'(?<!\\)\[((?:\\.|[^\]\\\n])+)\]\((glossary|model|method|modeling):([A-Za-z0-9_.-]+)(?:#([A-Za-z0-9_-]+))?\)')
 
 
 def links(value):
@@ -85,7 +85,7 @@ def reference_impacts(previous, candidate):
     return result
 
 
-def validate(model):
+def validate(model, *, method_terms=None):
     catalog = model.get('glossary')
     terms = catalog.get('terms', []) if isinstance(catalog, dict) else []
     errors, ids = [], set()
@@ -142,14 +142,24 @@ def validate(model):
     # Current statements only; historical verbatim/provenance is not rewritten.
     texts = [n.get('fields', {}) for n in model.get('nodes', [])]
     texts += [{k: r.get(k) for k in ('fields', 'qualification')} for r in model.get('relations', [])]
-    texts += [{k: t.get(k) for k in ('name', 'short_description', 'definition', 'context', 'notes', 'market_inspiration')} for t in terms if isinstance(t, dict)]
+    texts += [t for t in terms if isinstance(t, dict)]
+    texts += [model.get(key, {}) for key in ('scenario_catalog', 'hotspot_catalog', 'application_catalog',
+                                           'document_catalog', 'information_catalog', 'principles')]
+    method_index = {term['id']: term for term in method_terms or []}
+    if method_terms is not None:
+        texts += list(method_index.values())
     for kind, target, anchor in links(texts):
-        if target not in (ids if kind == 'glossary' else nodes):
+        if kind in ('method', 'modeling') and method_terms is None:
+            continue  # No implicit live glossary for historical/frozen inputs.
+        targets = ids if kind == 'glossary' else method_index if kind in ('method', 'modeling') else nodes
+        if target not in targets:
             errors.append(f'{kind}: unresolved published link {target}')
         elif anchor:
             allowed = {'definition', 'short-description', 'market_comparisons'} if kind == 'glossary' else {'definition', 'finality'}
             if kind == 'model':
                 allowed.update(k for k, v in nodes[target].get('fields', {}).items() if k != 'name' and v)
+            elif kind in ('method', 'modeling'):
+                allowed = {'definition', 'short-description', 'notes', 'examples', 'market_comparisons'}
             if anchor not in allowed:
                 errors.append(f'{kind}: unresolved section {target}#{anchor}')
     return errors

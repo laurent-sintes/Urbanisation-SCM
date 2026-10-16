@@ -612,6 +612,14 @@ def stage_candidate(root, bundle, *, guide_path=None):
             manifest['files']['model-provenance.yaml'] = digest(temporary / 'model-provenance.yaml')
         if guide_path is not None:
             manifest['new_modeling_guide'] = guide_candidate.stage(root, guide_path, temporary)
+        try:
+            from .modeling_guide_publication import validate_model_links
+        except ImportError:
+            from modeling_guide_publication import validate_model_links
+        guide = read(temporary / manifest['new_modeling_guide']['path']) if manifest.get('new_modeling_guide') else None
+        link_errors = validate_model_links(root, bundle['candidate'], manifest['modeling_guide'], guide=guide)
+        if link_errors:
+            raise ValueError('\n'.join(link_errors))
         if review_files:
             manifest['decision_review'] = review_files
         write(temporary / 'manifest.json', manifest)

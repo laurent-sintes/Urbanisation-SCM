@@ -1,4 +1,8 @@
 /* Keep the map usable when browser zoom or a short screen reduces the available height. */
+.map-actions :is(.map-flow-picker, .map-hotspot-picker, .map-application-picker) .detail-trigger strong {
+  font-size: inherit;
+  font-weight: 650;
+}
 .publication-fixed-short,
 .publication-follow-short {
   display: none;

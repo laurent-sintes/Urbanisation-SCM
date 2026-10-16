@@ -3,7 +3,7 @@ from hashlib import sha256
 from pathlib import Path
 import unittest
 from scripts.structured_io import dumps, read
-from scripts.modeling_guide_publication import capture_association, verify_association, carry_association
+from scripts.modeling_guide_publication import capture_association, verify_association, carry_association, validate_model_links
 from scripts.test_publish_release import isolated_project
 
 class MethodologyPublicationTests(unittest.TestCase):
@@ -33,6 +33,16 @@ class MethodologyPublicationTests(unittest.TestCase):
 
     def test_unassociated_publication_does_not_take_latest_guide(self):
         self.assertIsNone(capture_association(self.root,'2026-09-18.1'))
+
+    def test_model_links_use_only_the_explicit_frozen_guide(self):
+        model = {'nodes': [], 'relations': [], 'scenario_catalog': {'note': '[Méthode](method:MOD050)'}}
+        # A canonical term in the fixture must not complete the frozen guide.
+        canonical = self.root / 'modeles/backlog/modeling-glossary.yaml'
+        canonical.parent.mkdir(parents=True, exist_ok=True)
+        canonical.write_text(dumps({'terms': [{'id': 'MOD050', 'definition': 'Current only'}]}), encoding='utf-8')
+        frozen = {'glossary': {'terms': [{'id': 'MOD001', 'definition': 'Frozen'}]}}
+        self.assertIn('method: unresolved published link MOD050', validate_model_links(self.root, model, None, guide=frozen))
+        self.assertEqual(validate_model_links(self.root, model, None), [])
 
     def test_changed_index_or_corrupt_frozen_guide_prevents_carry(self):
         frozen=capture_association(self.root,'2026-09-19.2')

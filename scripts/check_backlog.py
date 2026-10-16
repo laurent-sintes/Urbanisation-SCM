@@ -23,9 +23,11 @@ def check(root=ROOT, *, intents=None, render=False):
     source_document = read(root / 'modeles/provenance/source-records.json')
     sources = {s['id']: s for s in source_document['records']}
     schema = read(root / 'modeles/schemas/urbanism.schema.json')
+    method_path = root / 'modeles/backlog/modeling-glossary.yaml'
+    method_terms = read(method_path)['terms'] if method_path.exists() else None
     timings['load'] = perf_counter() - started
     step = perf_counter()
-    errors = validate_sources(source_document) + validate_urbanism(model, sources, schema, require_function_mapping=True)
+    errors = validate_sources(source_document) + validate_urbanism(model, sources, schema, require_function_mapping=True, method_terms=method_terms)
     timings['validate_backlog'] = perf_counter() - step
     step = perf_counter()
     stats = {}

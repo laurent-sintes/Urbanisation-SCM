@@ -15,6 +15,8 @@
   position: absolute;
   inset: 0;
   background: transparent;
+  /* React Flow's inline z-index would trap its MiniMap below the external exchange SVG. */
+  z-index: auto !important;
 }
 .flow-map-toolbar {
   padding: 12px 18px;
@@ -46,7 +48,7 @@
 .flow-scope-short {
   display: none;
 }
-.flow-map-toolbar strong {
+.flow-map-toolbar > div:first-child > strong {
   font-size: 16px;
   font-weight: 600;
 }
@@ -79,6 +81,109 @@
 .flow-tool-button[aria-pressed="true"] {
   background: #d9f2ea;
   border-color: #88bca9;
+}
+.flow-exchange-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  max-width: 100%;
+  padding: 5px 8px;
+  border: 1px solid #cbdcd4;
+  border-radius: 7px;
+  background: white;
+  color: #315f53;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+.flow-exchange-mode > select {
+  min-width: 0;
+  max-width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+.flow-filter-popover {
+  z-index: 3000;
+  width: min(360px, calc(100vw - 28px));
+  overflow: auto;
+  padding: 16px;
+  border: 1px solid #d9e4db;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 0 15px 40px #243b3029;
+  color: #315e48;
+  font-size: 12px;
+  line-height: 1.4;
+}
+.flow-filter-popover .flow-filter-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.flow-filter-popover .flow-filter-heading > strong {
+  font-size: 13px;
+  font-weight: 650;
+}
+.flow-filter-popover .flow-filter-heading > button {
+  display: inline-grid;
+  place-items: center;
+  min-width: 32px;
+  min-height: 32px;
+  padding: 6px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+}
+.flow-filter-popover label {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  min-height: 36px;
+  padding: 7px 0;
+  cursor: pointer;
+}
+.flow-filter-popover label > input {
+  flex: none;
+  width: 16px;
+  height: 16px;
+  margin: 1px 0 0;
+  accent-color: #236159;
+}
+.flow-filter-popover fieldset {
+  margin: 10px 0 0;
+  padding: 10px 0 0;
+  border: 0;
+  border-top: 1px solid #e0e9e3;
+}
+.flow-filter-popover legend {
+  padding: 0 8px 0 0;
+  font-size: 12px;
+  font-weight: 650;
+}
+.flow-filter-popover small {
+  display: block;
+  margin-top: 3px;
+  color: #5a6e64;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+.flow-filter-popover p {
+  margin: 10px 0 0;
+  color: #5a6e64;
+  font-size: 11px;
+  line-height: 1.4;
+}
+@media (pointer: coarse) {
+  .flow-filter-popover label {
+    min-height: 44px;
+  }
 }
 .spatial-map-object {
   position: relative;
@@ -116,6 +221,16 @@
 }
 .spatial-map-object.kind-reference {
   color: #577568;
+}
+.spatial-map-object.is-collapsed-territory {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spatial-map-object.is-collapsed-territory > .spatial-object-title {
+  width: 100%;
+  text-align: center;
+  font-weight: 650;
 }
 .spatial-map-object.is-active {
   outline: calc(var(--spatial-border) * 2) solid #236159;
@@ -342,6 +457,7 @@
   color: #385b4e;
 }
 .flow-map-canvas .react-flow__minimap {
+  z-index: 7;
   width: 160px;
   height: 100px;
   border: 1px solid #c6d7cd;
@@ -349,6 +465,7 @@
   bottom: 50px;
   left: 0;
   right: auto;
+  background: white;
 }
 .flow-map-hotspots {
   position: absolute;

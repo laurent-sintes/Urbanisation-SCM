@@ -42,6 +42,7 @@ FIELD_MEANINGS = {
     'relations.type': 'Type du lien, déclaré dans metamodel.relation_types.',
     'relations.qualification': 'Sens, rôle, conditions et effets propres à ce lien.',
     'display_index': 'Ordre, parenté de lecture et codes figés pour cette publication.',
+    'scenario_catalog.paths.steps.context_participants': 'Participants de contexte documentés à leur profondeur déclarée, distincts des contributions de capacités et sans appartenance hiérarchique induite.',
     'hotspot_catalog.hotspots': 'Sujets autonomes à instruire et arbitrer, hors de la hiérarchie métier.',
     'hotspot_catalog.hotspots.status': 'Qualification du sujet ; validated ne confirme ni dysfonctionnement ni solution.',
     'hotspot_catalog.hotspots.visible': 'Visibilité technique, vraie par défaut. Faux masque halos et filtres ; le sujet reste accessible en fin de liste et de sélecteur, grisé après un séparateur. Aucun changement de qualification ou de résolution.',
@@ -193,6 +194,10 @@ def _constraints(model):
              'rule': 'Chaque étape mobilise au moins une capacité ou référence publiée ; ses dépendances pointent vers des étapes du même parcours.',
              'source': 'validation'},
         ])
+        if any(step.get('context_participants') for path in model['scenario_catalog']['paths'] for step in path['steps']):
+            rules.append({'id': 'step-context-participants', 'applies_to': 'scenario_catalog.paths.steps.context_participants',
+                          'rule': 'Une participation de contexte vise un Domain, Subdomain ou Business Area à la profondeur de contexte déclarée ; rôle, conditions et sources sont explicites. Elle ne devient ni mobilisation de capacité ni parent métier.',
+                          'source': 'validation'})
     if model.get('information_catalog') is not None:
         rules.extend([
             {'id': 'information-capability-roles', 'applies_to': 'information_catalog.items',
@@ -230,6 +235,7 @@ CATALOG_TERMS = (
     ('scenario_catalog.scenarios', 'Business Scenario', None),
     ('scenario_catalog.paths', 'Capability Mobilization Path', None),
     ('scenario_catalog.paths.steps', 'Capability Mobilization Step', None),
+    ('scenario_catalog.paths.steps.context_participants', 'Context Participation', 'Responsabilité de contexte participant à une étape, avec rôle, conditions et sources, sans capacité artificielle ni nouvelle hiérarchie.'),
     ('scenario_catalog.facets', 'Scenario Facet', 'Valeur de classement utilisée pour retrouver des scénarios par événement, objet métier ou type de situation.'),
     ('scenario_catalog.legacy_links', 'Legacy Scenario Link', 'Correspondance de lecture entre une ancienne illustration locale et un scénario autonome de cette publication.'),
     ('information_catalog.items', 'Information', None),
@@ -263,6 +269,7 @@ def _catalog_types(model, terms):
         'scenario_catalog.scenarios': len(scenarios.get('scenarios', [])),
         'scenario_catalog.paths': len(paths),
         'scenario_catalog.paths.steps': sum(len(item.get('steps', [])) for item in paths),
+        'scenario_catalog.paths.steps.context_participants': sum(len(step.get('context_participants', [])) for path in paths for step in path.get('steps', [])),
         'scenario_catalog.facets': sum(len(values) for values in scenarios.get('facets', {}).values()),
         'scenario_catalog.legacy_links': len(scenarios.get('legacy_links', [])),
         'information_catalog.items': len((model.get('information_catalog') or {}).get('items', [])),
@@ -279,6 +286,8 @@ def _catalog_types(model, terms):
     for path, term_name, fallback in CATALOG_TERMS:
         if path.split('.')[0] not in model:
             continue
+        if path.endswith('.context_participants') and not counts[path]:
+            continue  # Historical snapshots do not acquire a new catalogue type.
         term = terms.get(term_name)
         result.append({'path': path, 'label': term_name,
                        'definition': _plain(term['definition']) if term else fallback,

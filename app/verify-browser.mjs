@@ -875,6 +875,10 @@ try {
       return rect.left >= 0 && rect.right <= innerWidth + 1 && rect.top < innerHeight;
     }),
   );
+  // The mobile scroll can place a glossary term under the mouse; close that hover help before testing the detail.
+  await page.mouse.move(0, 0);
+  await page.waitForFunction(() => !document.querySelector('.reference-tooltip'));
+  await page.waitForFunction(() => document.activeElement?.matches('.dependency-detail'));
   await page.keyboard.press('Escape');
   await relationDetail.waitFor({ state: 'hidden' });
   await page.waitForFunction((id) => document.activeElement?.getAttribute('data-relation-id') === id, mobileRelationId);

@@ -53,6 +53,7 @@ def delta(before, after):
             if row['collection'] in ('paths', 'scenarios', 'value_streams'):
                 for path in model.get('scenario_catalog', {}).get('paths', []):
                     nodes.update(c['node_id'] for step in path.get('steps', []) for c in step.get('contributions', []))
+                    nodes.update(c['node_id'] for step in path.get('steps', []) for c in step.get('context_participants', []))
         affected_terms = ReferenceIndex(model.get('glossary', {}).get('terms', [])).changed_reachable(term_changes)
         for term, users in term_users(model).items():
             if term in affected_terms:

@@ -1,12 +1,14 @@
-id: flow-methodology-2026-10-13.3
-version: 2026-10-13.3
-as_of: '2026-10-13'
+id: flow-methodology-2026-10-16.1
+version: 2026-10-16.1
+as_of: '2026-10-16'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
 editorial_status: implementation_wording
 scope: Méthodologie de transformation et métamodèle ; Business Area obligatoire entre sous-domaine et capacité (U880). Les
   éditions historiques restent figées.
 source_refs:
+- U1115
+- U1114
 - U1070
 - U970
 - U969
@@ -322,6 +324,22 @@ lessons:
     - U482
   model_links: []
 sources:
+- id: U1115
+  title: Correction des relations et parcours Enterprise Architecture
+  kind: user_contribution
+  date: '2026-10-16'
+  excerpt: 'Go pour corriger le modèle selon cet audit, dans l’ordre proposé : contradictions et synthèses, chaînes Commerce
+    et Procurement, puis coopérations de contexte et parcours EA.'
+  scope: Appliquer les corrections de l’audit U1114 et représenter les participants de contexte à leur profondeur déclarée
+    ; le terme et sa rédaction de mise en œuvre restent proposés, sans accord étendu aux participants individuels.
+- id: U1114
+  title: Audit des relations Enterprise Architecture
+  kind: user_contribution
+  date: '2026-10-16'
+  excerpt: Je voudrais un audit complet sur le modèle du point de vue des relations entre objet mais dans un scope enterprise
+    architecture.
+  scope: Examiner les relations et leurs limites documentaires à l’échelle Enterprise Architecture ; la demande d’audit ne
+    vaut pas adoption implicite des corrections.
 - id: U1070
   title: Problèmes et Options des Hotspots
   kind: user_contribution
@@ -1236,6 +1254,10 @@ glossary:
       Un processus peut être abstrait ; le parcours FLOW limite son détail à l’analyse de mobilisation et de couverture.
     - 'Ce parcours ne constitue pas automatiquement un Value Stream : un flux de valeur explicite une création de valeur de
       bout en bout pour une partie prenante, tandis qu’un parcours peut étudier une exception locale.'
+    - 'U1115 : les participants de contexte sont liés séparément dans context_participants avec rôle, conditions et sources,
+      à leur profondeur déclarée [Domain](method:MOD008), [Subdomain](method:MOD013) ou [Business Area](method:MOD039). Cette
+      [participation de contexte](method:MOD051) ne remplace pas une contribution de [capacité](method:MOD015) ou [référence](method:MOD009)
+      et ne crée ni capacité périphérique ni parent métier.'
     canonical_fields:
     - name
     - label_fr
@@ -1437,6 +1459,25 @@ glossary:
     canonical_fields: [name, label_fr, definition, short_description]
     notes:
     - Chaque Option est rattachée à la question qu’elle cherche à résoudre ; sa présence ne vaut pas choix.
+  - id: MOD051
+    canonical_fields:
+    - name
+    - label_fr
+    - definition
+    - short_description
+    notes:
+    - Convention FLOW U1115 répondant à la limite identifiée par EA-CAT-04 ; aucune équivalence de métamodèle éditeur n’est
+      affirmée.
+    - Les contributions d’une étape continuent à viser des capacités ou références ; un participant ne prouve ni capacité descendante
+      ni réalisation installée.
+    - Les anciens snapshots sans ce lien restent inchangés et ne sont pas complétés par le backlog.
+    source_refs:
+    - U1114
+    - U1115
+    review:
+      state: proposed
+      note: Mise en œuvre du Go sur l’audit EA ; terme et rédaction éditoriale proposés, sans accord étendu aux participants
+        individuels.
   - id: MOD046
     canonical_fields:
     - name
@@ -1491,6 +1532,7 @@ glossary:
     - MOD029
     - MOD030
     - MOD031
+    - MOD051
   - id: attributes
     label: Qualificatifs
     term_ids:

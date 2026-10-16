@@ -7,14 +7,14 @@ export type InlinePart = {
 const unescapeInline = (text: string) => text.replace(/\\([[\]\\()])/g, '$1');
 export function inlineParts(text: string): InlinePart[] {
   const pattern =
-    /(?<!\\)\[((?:\\.|[^\]\\\n])+)\]\((glossary|model|method|guide):([A-Za-z0-9_.-]+)(?:#([A-Za-z0-9_-]+))?\)/g;
+    /(?<!\\)\[((?:\\.|[^\]\\\n])+)\]\((glossary|model|method|modeling|guide):([A-Za-z0-9_.-]+)(?:#([A-Za-z0-9_-]+))?\)/g;
   const parts: InlinePart[] = [];
   let from = 0;
   for (const match of text.matchAll(pattern)) {
     if (match.index > from) parts.push({ text: unescapeInline(text.slice(from, match.index)) });
     parts.push({
       text: unescapeInline(match[1]),
-      kind: match[2] as InlinePart['kind'],
+      kind: (match[2] === 'modeling' ? 'method' : match[2]) as InlinePart['kind'],
       target: match[3],
       anchor: match[4],
     });

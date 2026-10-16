@@ -117,6 +117,11 @@ def stage_candidate(root, bundle, guide_path=None):
                     'modeling_guide': workflow.capture_association(root, bundle['pointer']['version'])}
         if guide_path:
             manifest['new_modeling_guide'] = workflow.guide_candidate.stage(root, guide_path, folder)
+        from .modeling_guide_publication import validate_model_links
+        guide = read(folder / manifest['new_modeling_guide']['path']) if manifest.get('new_modeling_guide') else None
+        link_errors = validate_model_links(root, bundle['candidate'], manifest['modeling_guide'], guide=guide)
+        if link_errors:
+            raise ValueError('\n'.join(link_errors))
         workflow.write(folder / 'manifest.json', manifest)
         check_stage(root, folder, manifest)
         # Move files, not the TemporaryDirectory itself, keeping cleanup ownership clear.

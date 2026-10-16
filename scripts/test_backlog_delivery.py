@@ -6,6 +6,73 @@ from scripts.backlog_delivery import check_delivery
 
 
 class DeliveryTests(unittest.TestCase):
+    def test_information_delivery_checks_items_and_links_separately(self):
+        from copy import deepcopy
+        from scripts.element_versions import content_hash
+        item = {'id': 'PINFO011', 'definition': 'Recognized stock facts', 'review': {'state': 'proposed'}}
+        link = {'id': 'PINFOL001', 'from_ref': 'PINFO011', 'to_ref': 'PINFO013', 'meaning': 'Supports a position'}
+        self.model['information_catalog'] = {'items': [item], 'links': [link]}
+        declaration = {'state': 'applied', 'required_catalog': [
+            {'collection': collection, 'id': value['id'], 'content_sha256': content_hash(value)}
+            for collection, value in [('information_items', item), ('information_links', link)]]}
+        (self.folder / 'information.yaml').write_text(dumps({'publication_delivery': declaration}), encoding='utf-8')
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+        self.assertEqual(item['review']['state'], 'proposed')
+        for key, field, value in [('items', 'definition', 'Different facts'), ('links', 'to_ref', 'PINFO099')]:
+            with self.subTest(collection=key):
+                original = deepcopy(self.model['information_catalog'][key])
+                identifier = original[0]['id']
+                self.model['information_catalog'][key][0][field] = value
+                self.assertTrue(any(f'catalog mismatch: {identifier}' in error
+                                    for error in check_delivery(self.root, self.model)[1]))
+                self.model['information_catalog'][key] = []
+                self.assertTrue(any(f'catalog mismatch: {identifier}' in error
+                                    for error in check_delivery(self.root, self.model)[1]))
+                self.model['information_catalog'][key] = original
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+
+    def test_information_supersession_preserves_other_proofs_and_checks_replacement(self):
+        from copy import deepcopy
+        from scripts.element_versions import content_hash
+        for collection, key in [('information_items', 'items'), ('information_links', 'links')]:
+            with self.subTest(collection=collection):
+                root = self.root / collection
+                folder = root / 'modeles/backlog'
+                folder.mkdir(parents=True)
+                original = {'id': 'target', 'description': 'Original responsibility'}
+                current = dict(original, description='Corrected responsibility')
+                unrelated = {'id': 'other', 'description': 'Preserve this proof'}
+                opposite_key = 'links' if key == 'items' else 'items'
+                opposite_collection = 'information_links' if key == 'items' else 'information_items'
+                # A matching id in another collection must not be superseded.
+                opposite = {'id': 'target', 'description': 'Different collection'}
+                model = deepcopy(self.model)
+                model['information_catalog'] = {key: [current, unrelated], opposite_key: [opposite]}
+                old_path = folder / 'old.yaml'
+                old_path.write_text(dumps({'publication_delivery': {'state': 'applied', 'required_catalog': [
+                    {'collection': coll, 'id': value['id'], 'content_sha256': content_hash(value)}
+                    for coll, value in [(collection, original), (collection, unrelated),
+                                        (opposite_collection, opposite)]]}}), encoding='utf-8')
+                old_bytes = old_path.read_bytes()
+                replacement = {'state': 'applied', 'source_refs': ['U1115'], 'required_catalog': [
+                    {'collection': collection, 'id': current['id'], 'content_sha256': content_hash(current)}],
+                    'supersedes_requirements': [{'annex': 'old.yaml', 'collection': collection,
+                                                'id': current['id'], 'fields': ['content_sha256']}]}
+                new_path = folder / 'new.yaml'
+                new_path.write_text(dumps({'publication_delivery': replacement}), encoding='utf-8')
+                self.assertEqual(check_delivery(root, model)[1], [])
+                self.assertEqual(old_path.read_bytes(), old_bytes)
+                for value in [current, unrelated, opposite]:
+                    description = value['description']
+                    value['description'] = 'Unapproved change'
+                    self.assertTrue(any(f'catalog mismatch: {value["id"]}' in error
+                                        for error in check_delivery(root, model)[1]))
+                    value['description'] = description
+                self.assertEqual(check_delivery(root, model)[1], [])
+                replacement['required_catalog'] = []
+                new_path.write_text(dumps({'publication_delivery': replacement}), encoding='utf-8')
+                self.assertTrue(any('invalid supersession' in error for error in check_delivery(root, model)[1]))
+
     def test_application_delivery_checks_product_and_si_selection_separately(self):
         from scripts.element_versions import content_hash
         product = {'id': 'product-oms', 'documentation': {'channels': ['online_b2c']}}

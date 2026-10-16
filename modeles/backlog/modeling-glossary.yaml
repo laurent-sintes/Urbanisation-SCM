@@ -73,6 +73,7 @@ source_refs:
 - U921
 - U922
 - U1035
+- U1115
 purpose: Vocabulaire de modélisation en support à la définition des objets du modèle ; distinct du glossaire métier.
 boundary:
   business_glossary: modeles/backlog/glossary.yaml
@@ -1486,6 +1487,10 @@ terms:
     Un processus peut être abstrait ; le parcours FLOW limite son détail à l’analyse de mobilisation et de couverture.
   - 'Ce parcours ne constitue pas automatiquement un Value Stream : un flux de valeur explicite une création de valeur de
     bout en bout pour une partie prenante, tandis qu’un parcours peut étudier une exception locale.'
+  - 'U1115 : les participants de contexte sont liés séparément dans context_participants avec rôle, conditions et sources,
+    à leur profondeur déclarée [Domain](method:MOD008), [Subdomain](method:MOD013) ou [Business Area](method:MOD039). Cette
+    [participation de contexte](method:MOD051) ne remplace pas une contribution de [capacité](method:MOD015) ou [référence](method:MOD009)
+    et ne crée ni capacité périphérique ni parent métier.'
   source_refs:
   - U786
   - U787
@@ -1493,6 +1498,7 @@ terms:
   - U790
   - U791
   - U792
+  - U1115
   review:
     state: partial
     adopted_scope: 'U791 : définition du parcours présentée après U790 et distinctions discutées après U789 ; étapes, contributions,
@@ -1734,9 +1740,10 @@ terms:
   - 'Chaque capacité a un parent métier unique : une Business Area de son sous-domaine.'
   - Une Area de références porte leur cohérence et leur fourniture locale. Elle les présente sans les transformer en capacités
     ; chaque référence conserve un parent de présentation unique.
-  - U1025 autorise des Business Areas terminales dans les domaines de contexte dont la profondeur le prévoit explicitement ;
-    depuis U1079, cette limite demeure pour Logistics, tandis que les quatre domaines de Business Operations vont jusqu’aux
-    capacités. Aucune capacité artificielle n’est créée pour remplir un niveau ; chaque capacité reste rattachée à sa Business Area.
+  - U1025 autorise des Business Areas terminales dans les domaines de contexte dont la profondeur le prévoit explicitement
+    ; depuis U1079, cette limite demeure pour Logistics, tandis que les quatre domaines de Business Operations vont jusqu’aux
+    capacités. Aucune capacité artificielle n’est créée pour remplir un niveau ; chaque capacité reste rattachée à sa Business
+    Area.
   source_refs:
   - U845
   - U846
@@ -1867,11 +1874,13 @@ terms:
     révélation ne démontre pas un dysfonctionnement. Un point chaud de périmètre est ancré sur un ou plusieurs objets du modèle
     ; un point chaud d’intégration relie exactement deux objets. Sa gravité combine la complexité d’arbitrage et la difficulté
     d’implémentation selon une grille publiée, sans mesurer automatiquement l’urgence ni l’impact.
-  role: Rendre visibles les sujets à traiter sur les cartes et garder leurs problèmes de cadrage, Options, sources, réserves et arbitrages.
+  role: Rendre visibles les sujets à traiter sur les cartes et garder leurs problèmes de cadrage, Options, sources, réserves
+    et arbitrages.
   notes:
   - Les statuts Atlas découvert, partagé, validé et résolu ne remplacent pas les états de suivi du registre FLOW-Program.
   - La fiche reste hors de la hiérarchie métier ; sa localisation ne crée pas une relation de décomposition.
-  - Le signal initial peut conduire à plusieurs [problèmes de cadrage](method:MOD049). Chacun porte une question et ses [Options](method:MOD050) ; une analyse d’écarts fournit des observations, sans imposer la même liste d’Options à toutes les questions.
+  - Le signal initial peut conduire à plusieurs [problèmes de cadrage](method:MOD049). Chacun porte une question et ses [Options](method:MOD050)
+    ; une analyse d’écarts fournit des observations, sans imposer la même liste d’Options à toutes les questions.
   - Une lecture du marché peut distinguer pratiques documentées, avis pour FLOW et limites, avec des sources primaires consultées.
     Elle n'attribue pas une décision métier à Laurent.
   - Le cadrage progresse de À explorer à Pistes identifiées, puis Options en qualification, Option recommandée à arbitrer
@@ -1943,7 +1952,8 @@ terms:
   - U1035
   review:
     state: partial
-    adopted_scope: U1035 valide l’état Option recommandée à arbitrer, distinct de la clôture du cadrage, sans qualifier automatiquement les points chauds existants.
+    adopted_scope: U1035 valide l’état Option recommandée à arbitrer, distinct de la clôture du cadrage, sans qualifier automatiquement
+      les points chauds existants.
     proposed_scope: Les autres libellés, états et calculs de gravité restent à éprouver.
 - id: MOD045
   name: Gap Analysis
@@ -1959,7 +1969,8 @@ terms:
   - Dimension facultative, indépendante du type du hotspot, de sa criticité et de sa progression de cadrage.
   - Documenté signifie que la déclaration ou la source est enregistrée ; la nature de preuve et les limites indiquent ce qui
     est effectivement confirmé. Absence d’évaluation ne signifie jamais absence de fonction.
-  - Plusieurs écarts peuvent concerner un même hotspot ; ils ne se propagent pas aux enfants du périmètre. Ils peuvent alimenter des problèmes de cadrage distincts.
+  - Plusieurs écarts peuvent concerner un même hotspot ; ils ne se propagent pas aux enfants du périmètre. Ils peuvent alimenter
+    des problèmes de cadrage distincts.
   - Une réalisation commune peut conserver des règles différentes. Aucune unification ou solution n’est déduite automatiquement.
   - Le périmètre d’observation ne crée pas un nouveau SI ni un parent dans la hiérarchie métier.
   - Deux observations du même SI exigent des périmètres explicites et distincts ; une variante peut être légitime.
@@ -2024,10 +2035,10 @@ terms:
   name: Application Mapping
   label_fr: Positionnement applicatif
   short_description: Lien qualifié entre un composant logiciel choisi dans un SI et une responsabilité métier.
-  definition: Un positionnement applicatif relie un produit, module, option ou extension à un élément de la carte métier
-    dans un contexte SI donné. Il précise son rôle, ses preuves et ses limites. Le catalogue éditeur décrit les fonctions
-    possibles ; la sélection par SI distingue acquisition, activation et usage. Le lien ne transforme pas une fonction
-    logicielle en capacité métier et ne déduit pas l'usage d'une fonction de sa seule disponibilité.
+  definition: Un positionnement applicatif relie un produit, module, option ou extension à un élément de la carte métier dans
+    un contexte SI donné. Il précise son rôle, ses preuves et ses limites. Le catalogue éditeur décrit les fonctions possibles
+    ; la sélection par SI distingue acquisition, activation et usage. Le lien ne transforme pas une fonction logicielle en
+    capacité métier et ne déduit pas l'usage d'une fonction de sa seule disponibilité.
   role: Lire les réalisations As Is et les composants cibles sur la même carte de responsabilités métier.
   source_refs:
   - U1033
@@ -2039,7 +2050,8 @@ terms:
   - U1042
   review:
     state: proposed
-    note: Deux accès distincts, produits de marché et SI à faire converger ; aucune activation ou couverture installée validée par cette définition.
+    note: Deux accès distincts, produits de marché et SI à faire converger ; aucune activation ou couverture installée validée
+      par cette définition.
 - id: MOD049
   name: Hotspot Problem
   label_fr: Problème de cadrage
@@ -2053,7 +2065,8 @@ terms:
   - Le champ historique problem du Hotspot décrit son signal initial ; il ne constitue pas la liste des problèmes de cadrage.
   - Une question ouverte sans Option documentée n’autorise pas à inventer une réponse.
   - L’état global du Hotspot ne vaut pas décision pour chacun de ses problèmes.
-  source_refs: [U1070]
+  source_refs:
+  - U1070
   review:
     state: proposed
     note: Découpage demandé par Laurent ; questions et rattachements des Hotspots visibles préparés sans choix d’Option.
@@ -2061,17 +2074,39 @@ terms:
   name: Hotspot Option
   label_fr: Option
   short_description: Réponse possible à la question d’un problème de cadrage, sans choix implicite.
-  definition: Une Option décrit une réponse possible à la question d’un problème de cadrage. Son principe, ses effets,
-    conditions, compromis, complexité et niveau de preuve restent qualifiés. Une Option peut être proposée, crédible,
-    recommandée ou retenue selon les champs explicites de la fiche ; sa présence seule ne la valide pas.
+  definition: Une Option décrit une réponse possible à la question d’un problème de cadrage. Son principe, ses effets, conditions,
+    compromis, complexité et niveau de preuve restent qualifiés. Une Option peut être proposée, crédible, recommandée ou retenue
+    selon les champs explicites de la fiche ; sa présence seule ne la valide pas.
   role: Comparer les réponses possibles à un problème sans mélanger les questions ni présumer d’un arbitrage.
   notes:
   - Dans une fiche structurée en problèmes, chaque Option appartient à un seul problème.
   - Le terme d’interface et de métamodèle est Option, pas chemin.
-  source_refs: [U1070]
+  source_refs:
+  - U1070
   review:
     state: proposed
     note: Terme demandé par Laurent ; les Options existantes restent ouvertes et conservent leurs réserves.
+- id: MOD051
+  name: Context Participation
+  label_fr: Participation de contexte
+  short_description: Lien sourcé entre une étape de parcours et une responsabilité de contexte, sans capacité artificielle.
+  definition: Une participation de contexte relie une étape d’un [parcours](method:MOD028) à un [Domain](method:MOD008), [Subdomain](method:MOD013)
+    ou [Business Area](method:MOD039) de contexte à sa profondeur déclarée. Elle explique son rôle dans le résultat attendu,
+    les conditions de sa participation et les sources qui la documentent. Elle reste distincte de la mobilisation d’une [capacité](method:MOD015)
+    ou [référence](method:MOD009) et n’ajoute aucune appartenance à la hiérarchie métier.
+  notes:
+  - Convention FLOW U1115 répondant à la limite identifiée par EA-CAT-04 ; aucune équivalence de métamodèle éditeur n’est
+    affirmée.
+  - Les contributions d’une étape continuent à viser des capacités ou références ; un participant ne prouve ni capacité descendante
+    ni réalisation installée.
+  - Les anciens snapshots sans ce lien restent inchangés et ne sont pas complétés par le backlog.
+  source_refs:
+  - U1114
+  - U1115
+  review:
+    state: proposed
+    note: Mise en œuvre du Go sur l’audit EA ; terme et rédaction éditoriale proposés, sans accord étendu aux participants
+      individuels.
 methodology_agreements:
 - id: AGREEMENT-U787
   source_refs:
@@ -2289,6 +2324,7 @@ presentation:
     - MOD030
     - MOD031
     - MOD044
+    - MOD051
   - id: attributes
     label: Qualificatifs
     term_ids:
