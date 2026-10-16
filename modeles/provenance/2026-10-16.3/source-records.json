@@ -20777,6 +20777,46 @@
       "line": 25577,
       "content_sha256": "053863dfd01e8aadd882d6c5dfedc580b4fb7caf53df6bce085012db45f62873",
       "captured_text": "## U1103\n\nDate : 2026-10-16. Source : Laurent, ordre de lecture et validation de la restructuration proposée après audit.\n\nVerbatim :\n\n> En termes d'ordre naturel, Stock Optimization à la fin ?\n>\n> Go\n\nPortée : accord sur la proposition complète discutée : une Business Area Demand & Supply Plan Preparation regroupe Demand Forecast Qualification, Demand Plan Development, Supply Plan Development et Planning Scenario Reconciliation ; Master Plan Management, Order Backlog Management et Stock Optimization restent des Business Areas distinctes dans cet ordre de lecture. Les quatre capacités de préparation conservent leur identité et leurs responsabilités ; les trois anciennes Business Areas de préparation sont retirées du backlog courant sans réutilisation de leurs identifiants. Stock Optimization est présenté en dernier sans imposer une séquence d'exécution : ses décisions peuvent aussi alimenter ou faire réviser le plan. L'accord ne modifie ni les engagements des commandes, ni la prévision source de Design & Development, ni la réalisation installée ; il ne demande ni release, ni commit, ni push."
+    },
+    {
+      "id": "U1107",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1107",
+      "line": 25613,
+      "content_sha256": "f2fdb33d403cbfc356a713de0829bc2c791ab2d80a6ba08565adc78366b20b72",
+      "captured_text": "## U1107\n\nDate : 2026-10-16. Source : Laurent, réponse sur l'émission et la réception des données externes.\n\nVerbatim : « Oui, distinguer émission et réception (Recommended) ».\n\nPortée : distinguer la diffusion portée par le producteur externe et la réception ou la tenue locale nécessaire dans Supply, près du référentiel ou du plan alimenté. Le libellé « (Recommended) » provient de l'option proposée."
+    },
+    {
+      "id": "U1110",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1110",
+      "line": 25637,
+      "content_sha256": "2f345c51fc9cb121935cbf1cfd6431bbaadbc936b7060f288681f1d9e33d0f2e",
+      "captured_text": "## U1110\n\nDate : 2026-10-16. Source : Laurent, précision sur les faits des Cases et question de couverture du modèle.\n\nVerbatim :\n\n> Dans une logique de Case Management, tous les événements métier produit dans le processus géré par le Case, que ces événements soient internes ou externes et captés (par la sentinelle), sont stocké dans un ledger également. Pas un ledger Stock mais un Ledger Process (Process Management). Ce ledger permet de reconstituer les faits passés, d'avoir l'état exact d'une demande à un instant t et permet d'alimenter l'analytics.\n>\n> Est-ce qu'on a bien ce ledger et les liens associés dans le modèle ?\n\nPortée : vérifier si Process Management comporte une responsabilité distincte de conservation des événements métier de chaque Case, couvrant événements internes et externes captés, reconstitution historique et alimentation de l'analytics, ainsi que ses liens producteurs et consommateurs. La question demande un constat sur le backlog et la publication ; elle ne vaut pas encore accord sur une nouvelle fiche ni sur ses rattachements détaillés."
+    },
+    {
+      "id": "U1111",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1111",
+      "line": 25649,
+      "content_sha256": "147e2885ea3f122656de4c7bb6c705bf75d564e7b8ca303fb4ae44bc75598e95",
+      "captured_text": "## U1111\n\nDate : 2026-10-16. Source : Laurent, précision sur la source des traces analysées.\n\nVerbatim : « Process Mining analyse effectivement les traces qui sont dans ce ledger. »\n\nPortée : dans la proposition de Process Ledger, rendre explicite que Process Mining analyse les traces conservées par ce ledger. Ne pas confondre cette consommation avec la tenue du ledger ni présenter le lien comme déjà présent dans le modèle courant."
+    },
+    {
+      "id": "U1112",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1112",
+      "line": 25657,
+      "content_sha256": "25ac21f18e53b73ae8040875852bb1eb7d99f628167ab7b91029560f9bc312bf",
+      "captured_text": "## U1112\n\nDate : 2026-10-16. Source : Laurent, demande d'audit des flux de la cartographie.\n\nVerbatim : « On est en très de voir comment voir les flux dans une cartographie. Je me rends compte qu'il est possible qu'on n'ait jamais vérifié si c'était bon. Je veux un audit des flux principalement centré sur Supply chain Orchestration et les domaines en adhérence. »\n\nPortée : auditer le sens métier et la couverture des flux internes et des échanges avec les domaines adjacents à Supply Chain Orchestration, ainsi que leur fidélité de lecture cartographique. Comparer backlog et publication courante ; distinguer contenu existant, manques documentaires et recommandations. La demande porte sur l'audit, sans adoption implicite des corrections proposées ni publication."
+    },
+    {
+      "id": "U1113",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1113",
+      "line": 25665,
+      "content_sha256": "9661f3e2842fe8fc73cfc783df2fdf2a24340d3f4cea9af32eda15d9e07880a5",
+      "captured_text": "## U1113\n\nDate : 2026-10-16. Source : Laurent, autorisation d'appliquer les corrections de l'audit des flux.\n\nVerbatim : « Go pour corriger le modèle et les flux, en commençant par les cinq points prioritaires, puis les chaînes manquantes. »\n\nPortée : appliquer le lot cohérent de correction du modèle et des relations décrit par l'audit U1112, avec priorité aux producteurs et destinataires de promesse et de planification, à Plan Application, à Process Ledger et à ses consommateurs, aux échanges détaillés avec Logistics et aux chaînes de préparation des plans, puis aux autres chaînes documentées manquantes. Aligner le glossaire et préserver les responsabilités métier et les portées des accords historiques. L'accord porte sur ces corrections et leur mise en cohérence, sans présumer de réalisation installée ; il ne demande ni release, ni commit, ni push."
     }
   ]
 }
