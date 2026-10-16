@@ -25,7 +25,7 @@ export function MapApplicationPicker({
 }) {
   const [open, setOpen] = useState(false);
   const id = useId();
-  const { refs, floatingStyles, context, host } = useHotspotFloating(open, setOpen, 0.75);
+  const { refs, floatingStyles, context, host } = useHotspotFloating(open, setOpen, 0.75, { reserveToolbar: false });
   const click = useClick(context);
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: 'dialog' });

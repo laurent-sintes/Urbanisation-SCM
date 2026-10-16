@@ -1,0 +1,690 @@
+/** Verify the spatial Flux map against the compiled, selected publication. */
+import assert from 'node:assert/strict';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { extname, resolve, sep } from 'node:path';
+import { browserOptions, chromium } from './browser-runtime.mjs';
+
+const dist = resolve(import.meta.dirname, process.env.ATLAS_FLOW_DIST || 'dist');
+const output = resolve(import.meta.dirname, '.runtime/qa-flow-map');
+await mkdir(output, { recursive: true });
+const catalog = JSON.parse(await readFile(resolve(dist, 'data/index.json'), 'utf8'));
+const version = process.argv.find((arg) => arg.startsWith('--version='))?.slice(10) || catalog.current_version;
+const model = JSON.parse(await readFile(resolve(dist, `data/${version}/model.json`), 'utf8'));
+const byId = new Map(model.nodes.map((node) => [node.id, node]));
+const relations = new Map(model.relations.map((relation) => [relation.id, relation]));
+const parent = new Map(
+  model.relations
+    .filter((relation) => ['contains', 'presents'].includes(relation.type))
+    .map((relation) => [relation.target_id, relation.source_id]),
+);
+const belongs = (id, scope) => !scope || id === scope || (parent.has(id) && belongs(parent.get(id), scope));
+const domain = byId.get('supply-chain-orchestration') || model.nodes.find((node) => node.kind === 'domain');
+assert.ok(domain, 'A published domain is required');
+const nameOf = (node) => node.fields?.name || node.name || node.id;
+const parseIds = (value) => {
+  if (!value) return [];
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [parsed];
+  } catch {
+    return value.split(/[\s,|]+/).filter(Boolean);
+  }
+};
+const base = 'https://atlas.test/Urbanisation-SCM/';
+const errors = [];
+const checks = [];
+const report = { version, checks, errors };
+const browser = await chromium.launch(browserOptions);
+let activePage;
+
+async function preparePage(options = {}) {
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce', ...options });
+  activePage = page;
+  page.setDefaultTimeout(15000);
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.route('**/*', async (route) => {
+    const url = new URL(route.request().url());
+    assert.ok(url.href.startsWith(base), `No external resource required: ${url.href}`);
+    const relative = decodeURIComponent(url.pathname.slice(new URL(base).pathname.length)) || 'index.html';
+    const target = resolve(dist, relative);
+    assert.ok(target.startsWith(dist + sep), 'Static requests stay inside dist');
+    await route.fulfill({
+      body: await readFile(target),
+      contentType:
+        {
+          '.html': 'text/html',
+          '.js': 'text/javascript',
+          '.css': 'text/css',
+          '.json': 'application/json',
+          '.png': 'image/png',
+          '.svg': 'image/svg+xml',
+          '.webmanifest': 'application/manifest+json',
+        }[extname(target)] || 'application/octet-stream',
+    });
+  });
+  return page;
+}
+
+async function visit(page, view, params = {}) {
+  await page.goto(`${base}#/${view}?${new URLSearchParams({ version, ...params })}`);
+  await page.locator(`#fa-version[data-version="${version}"]`).waitFor({ state: 'attached' });
+}
+
+async function world(page) {
+  await page.waitForFunction(() => Boolean(document.querySelector('.flow-map-canvas')?.getAttribute('data-layout')));
+  const layout = JSON.parse(await page.locator('.flow-map-canvas').getAttribute('data-layout'));
+  assert.ok(Array.isArray(layout) && layout.length > 0, 'The complete spatial layout is inspectable');
+  for (const item of layout) {
+    assert.ok(byId.has(item.id), `Spatial object ${item.id} belongs to the selected publication`);
+    assert.ok(
+      !['capability', 'behavior', 'reference'].includes(byId.get(item.id).kind),
+      'Flux stops at Business Areas; detailed objects remain in published exchange data',
+    );
+    for (const key of ['x', 'y', 'width', 'height'])
+      assert.ok(Number.isFinite(item[key]), `${item.id}.${key} is finite`);
+    assert.ok(item.width > 0 && item.height > 0, `${item.id} has positive dimensions`);
+  }
+  return layout.toSorted((a, b) => a.id.localeCompare(b.id));
+}
+
+async function viewport(page) {
+  return page.locator('.flow-map-canvas .react-flow__viewport').evaluate((element) => {
+    const matrix = new DOMMatrix(getComputedStyle(element).transform);
+    return { x: matrix.e, y: matrix.f, zoom: matrix.a };
+  });
+}
+
+async function waitCameraIdle(page) {
+  let previous = await viewport(page);
+  let stable = 0;
+  for (let poll = 0; poll < 30; poll++) {
+    await page.waitForTimeout(50);
+    const next = await viewport(page);
+    stable =
+      Math.hypot(next.x - previous.x, next.y - previous.y) < 0.01 && Math.abs(next.zoom - previous.zoom) < 0.0001
+        ? stable + 1
+        : 0;
+    if (stable === 3) return;
+    previous = next;
+  }
+  assert.fail('The Flux camera did not finish moving');
+}
+
+async function waitViewportChange(page, before, zoomOnly = false) {
+  await page.waitForFunction(
+    ({ before, zoomOnly }) => {
+      const element = document.querySelector('.flow-map-canvas .react-flow__viewport');
+      if (!element) return false;
+      const matrix = new DOMMatrix(getComputedStyle(element).transform);
+      return (
+        Math.abs(matrix.a - before.zoom) > 0.001 ||
+        (!zoomOnly && Math.hypot(matrix.e - before.x, matrix.f - before.y) > 2)
+      );
+    },
+    { before, zoomOnly },
+  );
+  await waitCameraIdle(page);
+}
+
+async function assertWorld(page, expected, reason) {
+  assert.deepEqual(await world(page), expected, reason);
+}
+
+async function assertNoPageOverflow(page) {
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+}
+
+async function publishedEdges(page) {
+  const edges = await page.locator('.flow-exchange').evaluateAll((elements) =>
+    elements.map((element) => ({
+      source: element.getAttribute('data-source-id'),
+      target: element.getAttribute('data-target-id'),
+      ids: element.getAttribute('data-relation-ids'),
+    })),
+  );
+  assert.ok(edges.length > 0, 'The Flux view shows published exchanges');
+  for (const edge of edges) {
+    assert.ok(byId.has(edge.source) && byId.has(edge.target), 'Projected exchange ends are published objects');
+    const ids = parseIds(edge.ids);
+    assert.ok(ids.length > 0, 'Every projected exchange identifies its published relations');
+    for (const id of ids) {
+      const relation = relations.get(id);
+      assert.ok(relation, `Exchange relation ${id} belongs to the selected publication`);
+      assert.ok(!['contains', 'presents'].includes(relation.type), 'Hierarchy membership is not an exchange');
+      assert.ok(belongs(relation.source_id, edge.source), 'The projected source contains the published source');
+      assert.ok(belongs(relation.target_id, edge.target), 'The projected target contains the published target');
+    }
+  }
+  return edges.length;
+}
+
+try {
+  const page = await preparePage();
+  await visit(page, 'map', { node: domain.id, scope: domain.id, mapDepth: '3' });
+  await page.getByRole('tab', { name: 'Catalogue', exact: true }).waitFor();
+  for (const label of ['Pleine page', 'Pleine largeur']) {
+    const choice = page.getByRole('button', { name: label, exact: true });
+    await choice.click();
+    assert.equal(await choice.getAttribute('aria-pressed'), 'true');
+  }
+  checks.push('Catalogue retains its independent framing choices');
+
+  await page.getByRole('tab', { name: 'Flux', exact: true }).click();
+  await page.locator('.flow-map-panel .flow-map-canvas').waitFor();
+  assert.ok(new URL(page.url()).hash.startsWith('#/flows?'));
+  for (const label of ['Auto', 'Pleine page', 'Pleine largeur'])
+    assert.equal(await page.locator('.flow-map-panel').getByRole('button', { name: label, exact: true }).count(), 0);
+  assert.equal(
+    await page
+      .locator('.flow-map-panel')
+      .getByRole('button', { name: /^Détail / })
+      .count(),
+    0,
+  );
+  await waitCameraIdle(page);
+  const baseline = await world(page);
+  await publishedEdges(page);
+  checks.push('Flux is a distinct spatial view with published objects and exchanges');
+
+  await page.getByRole('button', { name: 'Échelle standard', exact: true }).click();
+  await waitCameraIdle(page);
+  const standardCamera = await viewport(page);
+  assert.equal(await page.locator('.flow-map-canvas').getAttribute('data-framing'), 'standard');
+  for (const [label, framing] of [
+    ['Cadrer la largeur', 'width'],
+    ['Tout cadrer', 'all'],
+  ]) {
+    await page.getByRole('button', { name: label, exact: true }).click();
+    await waitCameraIdle(page);
+    assert.equal(await page.locator('.flow-map-canvas').getAttribute('data-framing'), framing);
+    await assertWorld(page, baseline, `${label} changes only the camera`);
+  }
+  assert.ok(standardCamera.zoom > (await viewport(page)).zoom, 'Standard preserves a readable neighborhood');
+  await page.getByRole('button', { name: 'Échelle standard', exact: true }).click();
+  await waitCameraIdle(page);
+  const returnedStandard = await viewport(page);
+  assert.ok(Math.hypot(returnedStandard.x - standardCamera.x, returnedStandard.y - standardCamera.y) < 0.2);
+  assert.ok(Math.abs(returnedStandard.zoom - standardCamera.zoom) < 0.0001);
+  checks.push('Standard, width and whole-map framing preserve geography and restore the natural camera');
+
+  let exchangeIds = await page.locator('.flow-exchange-label').evaluateAll((elements) => {
+    const canvas = document.querySelector('.flow-map-canvas').getBoundingClientRect();
+    return elements
+      .find((element) => {
+        const bounds = element.getBoundingClientRect();
+        const x = bounds.x + bounds.width / 2;
+        const y = bounds.y + bounds.height / 2;
+        return (
+          x > canvas.left &&
+          x < canvas.right &&
+          y > canvas.top &&
+          y < canvas.bottom &&
+          document.elementFromPoint(x, y) === element
+        );
+      })
+      ?.closest('[data-relation-ids]')
+      ?.getAttribute('data-relation-ids');
+  });
+  if (exchangeIds) {
+    await page.locator(`[data-relation-ids="${exchangeIds}"] .flow-exchange-label`).click();
+  } else {
+    // Dense overviews may suppress labels; every exchange remains reachable by keyboard.
+    const path = page.locator('.flow-exchange-hit[role="button"]').first();
+    await path.focus();
+    exchangeIds = await path.evaluate((element) =>
+      element.closest('[data-relation-ids]').getAttribute('data-relation-ids'),
+    );
+    await path.press('Enter');
+  }
+  assert.ok(exchangeIds, 'A published exchange can be opened through its label or keyboard action');
+  const exchangeDetail = page.getByRole('complementary', { name: 'Détail du flux' });
+  await exchangeDetail.waitFor();
+  const detailText = await exchangeDetail.innerText();
+  for (const id of parseIds(exchangeIds)) {
+    const relation = relations.get(id);
+    assert.ok(
+      detailText.includes(nameOf(byId.get(relation.source_id))),
+      'The detail names the original published source',
+    );
+    assert.ok(
+      detailText.includes(nameOf(byId.get(relation.target_id))),
+      'The detail names the original published target',
+    );
+    for (const item of relation.data_exchange?.contents || [])
+      assert.ok(detailText.includes(item.name), `Published content ${item.name} is readable`);
+  }
+  await page.getByRole('button', { name: 'Fermer le détail du flux', exact: true }).click();
+  checks.push('Exchange details preserve published orientation and contents');
+
+  const beforeZoom = await viewport(page);
+  await page.getByRole('button', { name: 'Zoom avant', exact: true }).click();
+  await waitViewportChange(page, beforeZoom, true);
+  await assertWorld(page, baseline, 'Zoom does not change world geometry');
+  const afterZoom = await viewport(page);
+  assert.ok(afterZoom.zoom > beforeZoom.zoom, 'Zoom avant increases scale');
+  assert.equal(await page.locator('.flow-map-canvas').getAttribute('data-framing'), 'custom');
+  await page.getByRole('button', { name: 'Zoom arrière', exact: true }).click();
+  await waitViewportChange(page, afterZoom, true);
+  await assertWorld(page, baseline, 'Zoom arrière does not change world geometry');
+  checks.push('Zoom controls transform the viewport without rearranging objects');
+
+  const initialObjects = await page.locator('.spatial-map-object').count();
+  const projectedExchangeIndex = await page.locator('.flow-exchange').evaluateAll(
+    (elements, published) =>
+      elements.findIndex((element) =>
+        element
+          .getAttribute('data-relation-ids')
+          .split('|')
+          .some((id) => {
+            const relation = published.find((item) => item.id === id);
+            return (
+              relation &&
+              (relation.source_id !== element.getAttribute('data-source-id') ||
+                relation.target_id !== element.getAttribute('data-target-id'))
+            );
+          }),
+      ),
+    model.relations,
+  );
+  assert.ok(projectedExchangeIndex >= 0, 'An overview exchange projects a more detailed published endpoint');
+  const projectedExchange = page.locator('.flow-exchange-hit[role="button"]').nth(projectedExchangeIndex);
+  await projectedExchange.focus();
+  await projectedExchange.press('Enter');
+  await exchangeDetail.waitFor();
+  const detailBeforeSemanticZoom = await exchangeDetail.innerText();
+  for (let step = 0; step < 18 && (await viewport(page)).zoom < 1.5; step++) {
+    const previous = await viewport(page);
+    await page.getByRole('button', { name: 'Zoom avant', exact: true }).click();
+    await waitViewportChange(page, previous, true);
+  }
+  assert.ok(
+    (await page.locator('.spatial-map-object').count()) >= initialObjects,
+    'Zoom retains the published perimeters inside the same territories',
+  );
+  assert.equal(
+    await page
+      .locator(
+        '.spatial-map-object.kind-capability, .spatial-map-object.kind-behavior, .spatial-map-object.kind-reference',
+      )
+      .count(),
+    0,
+    'Even high zoom never turns Flux into a capability catalogue',
+  );
+  await assertWorld(page, baseline, 'Revealing hierarchy does not change world geometry');
+  assert.equal(
+    await exchangeDetail.innerText(),
+    detailBeforeSemanticZoom,
+    'Semantic zoom preserves the opened exchange and its original published details',
+  );
+  await page.getByRole('button', { name: 'Fermer le détail du flux', exact: true }).click();
+  await page.waitForFunction(() =>
+    document.activeElement?.matches('.flow-exchange-label, .flow-exchange-hit, .flow-camera-tools button'),
+  );
+  await page.getByRole('button', { name: 'Tout cadrer', exact: true }).click();
+  await waitCameraIdle(page);
+  checks.push('Semantic zoom reveals descendants while preserving territories, opened details and return focus');
+
+  const canvasBox = await page.locator('.flow-map-canvas').boundingBox();
+  assert.ok(canvasBox && canvasBox.width > 100 && canvasBox.height > 100);
+  const beforePan = await viewport(page);
+  await page.mouse.move(canvasBox.x + canvasBox.width - 16, canvasBox.y + 16);
+  await page.mouse.down();
+  await page.mouse.move(canvasBox.x + canvasBox.width - 106, canvasBox.y + 76, { steps: 10 });
+  await page.mouse.up();
+  await waitViewportChange(page, beforePan);
+  await assertWorld(page, baseline, 'Dragging the map does not change world geometry');
+  checks.push('The spatial map pans through pointer dragging');
+
+  await page.setViewportSize({ width: 1100, height: 800 });
+  await assertWorld(page, baseline, 'Resizing does not rearrange the spatial layout');
+  await assertNoPageOverflow(page);
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.getByRole('button', { name: 'Étendre la carte', exact: true }).click();
+  await page.waitForFunction(() => Boolean(document.fullscreenElement));
+  await assertWorld(page, baseline, 'Fullscreen does not rearrange the spatial layout');
+  await page.screenshot({ path: resolve(output, 'flows-fullscreen.png') });
+  await page.getByRole('button', { name: 'Réduire la carte', exact: true }).click();
+  await page.waitForFunction(() => !document.fullscreenElement);
+  await assertWorld(page, baseline, 'Leaving fullscreen preserves world geometry');
+  checks.push('Window size and fullscreen preserve world coordinates');
+
+  const flows = page.getByRole('button', { name: 'Afficher les flux', exact: true });
+  assert.equal(await flows.getAttribute('aria-pressed'), 'true');
+  await flows.click();
+  await page.waitForFunction(() => !document.querySelector('.flow-exchange'));
+  await assertWorld(page, baseline, 'Hiding exchanges does not rearrange the map');
+  await flows.click();
+  await page.locator('.flow-exchange').first().waitFor({ state: 'attached' });
+  await publishedEdges(page);
+  await assertWorld(page, baseline, 'Showing exchanges preserves world geometry');
+  checks.push('The exchange layer changes independently of layout');
+
+  const visibleHotspots = (model.hotspot_catalog?.hotspots || []).filter(
+    (hotspot) => hotspot.visible !== false && hotspot.location.node_ids.some((id) => belongs(id, domain.id)),
+  );
+  if (visibleHotspots.length) {
+    await page.locator('.flow-map-panel .map-hotspot-picker > button').click();
+    await page.getByRole('checkbox', { name: 'Afficher les points chauds', exact: true }).check();
+    await page.getByRole('button', { name: 'Fermer les filtres', exact: true }).click();
+    await page
+      .locator('.flow-hotspot-marker [data-hotspot-ids], .flow-hotspot-marker[data-hotspot-ids]')
+      .first()
+      .waitFor({ state: 'attached' });
+    const hotspotIds = await page
+      .locator('.flow-hotspot-marker [data-hotspot-ids], .flow-hotspot-marker[data-hotspot-ids]')
+      .evaluateAll((elements) => elements.map((element) => element.getAttribute('data-hotspot-ids')));
+    const expected = new Set(visibleHotspots.map((hotspot) => hotspot.id));
+    for (const ids of hotspotIds)
+      for (const id of parseIds(ids)) assert.ok(expected.has(id), `${id} is a visible published hotspot in scope`);
+    await assertWorld(page, baseline, 'Hotspots do not rearrange the spatial map');
+    checks.push('Hotspot markers come from the selected publication and preserve geometry');
+    await page.getByRole('button', { name: 'Échelle standard', exact: true }).click();
+    await waitCameraIdle(page);
+    await page.waitForFunction(() => {
+      const canvas = document.querySelector('.flow-map-canvas').getBoundingClientRect();
+      const names = [...document.querySelectorAll('.spatial-object-title')].flatMap((element) => {
+        const range = document.createRange();
+        range.selectNodeContents(element);
+        const button = element.getBoundingClientRect();
+        return [...range.getClientRects()].flatMap((rect) => {
+          const left = Math.max(rect.left, button.left, canvas.left);
+          const top = Math.max(rect.top, button.top, canvas.top);
+          const right = Math.min(rect.right, button.right, canvas.right);
+          const bottom = Math.min(rect.bottom, button.bottom, canvas.bottom);
+          return right > left && bottom > top ? [{ left, top, right, bottom }] : [];
+        });
+      });
+      return [...document.querySelectorAll('.flow-map-hotspots .hotspot-map-marker')].every((element) => {
+        const rect = element.getBoundingClientRect();
+        const x = rect.x + rect.width / 2;
+        const y = rect.y + rect.height / 2;
+        return names.every(
+          (name) =>
+            Math.hypot(
+              x - Math.max(name.left, Math.min(x, name.right)),
+              y - Math.max(name.top, Math.min(y, name.bottom)),
+            ) >=
+            rect.width / 2 + 1.5,
+        );
+      });
+    });
+    checks.push('Hotspots leave actual rendered names unobstructed after semantic zoom');
+  }
+
+  const selection = model.application_catalog?.selections.find((item) =>
+    item.mappings?.some((mapping) => belongs(mapping.node_id, domain.id)),
+  );
+  if (selection) {
+    const product = model.application_catalog.products.find((item) => item.id === selection.product_id);
+    const contextNames = {
+      'beaumanoir-historique': 'SI Beaumanoir Marques Historiques',
+      boardriders: 'SI Boardriders',
+      sarenza: 'SI Sarenza',
+      'flow-platform': 'SI Beaumanoir cible',
+    };
+    await page.locator('.flow-map-panel .map-application-picker > button').click();
+    const section = page
+      .getByRole('dialog', { name: 'Applications sur la carte' })
+      .locator('section')
+      .filter({
+        has: page.getByRole('heading', {
+          name: contextNames[selection.context_id] || selection.context_id,
+          exact: true,
+        }),
+      });
+    await section.getByRole('button', { name: product.name, exact: true }).click();
+    await page.waitForFunction(
+      (id) => new URLSearchParams(location.hash.split('?')[1]).get('app') === id,
+      selection.id,
+    );
+    await page.locator('.spatial-application-mark').first().waitFor({ state: 'attached' });
+    const marked = await page
+      .locator('.spatial-application-mark')
+      .evaluateAll((elements) =>
+        elements.map((element) => element.closest('[data-node-id]')?.getAttribute('data-node-id')),
+      );
+    for (const id of marked)
+      assert.ok(
+        selection.mappings.some((mapping) => belongs(mapping.node_id, id)),
+        `${id} contains an explicit published application mapping`,
+      );
+    await assertWorld(page, baseline, 'Application marks do not rearrange the map');
+    checks.push('Application marks follow explicit published mappings without changing geometry');
+  }
+
+  await page.getByRole('button', { name: 'Tout cadrer', exact: true }).click();
+  await waitCameraIdle(page);
+  const candidate = await page.locator('.spatial-object-title').evaluateAll((elements, scopeId) => {
+    const canvas = document.querySelector('.flow-map-canvas').getBoundingClientRect();
+    return elements
+      .find((element) => {
+        const bounds = element.getBoundingClientRect();
+        const id = element.closest('[data-node-id]')?.getAttribute('data-node-id');
+        const x = bounds.x + bounds.width / 2;
+        const y = bounds.y + bounds.height / 2;
+        return (
+          id !== scopeId &&
+          bounds.width > 0 &&
+          x > canvas.left &&
+          x < canvas.right &&
+          y > canvas.top &&
+          y < canvas.bottom &&
+          document.elementFromPoint(x, y)?.closest('.spatial-object-title') === element
+        );
+      })
+      ?.closest('[data-node-id]')
+      ?.getAttribute('data-node-id');
+  }, domain.id);
+  assert.ok(candidate && byId.has(candidate), 'A published spatial object is selectable');
+  await page.locator(`.spatial-map-object[data-node-id="${candidate}"] .spatial-object-title`).click();
+  await page.waitForFunction((id) => new URLSearchParams(location.hash.split('?')[1]).get('node') === id, candidate);
+  const selectedRoute = new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
+  await page.getByRole('button', { name: 'Centrer la sélection', exact: true }).click();
+  await waitCameraIdle(page);
+  const centeredCamera = await viewport(page);
+  await assertWorld(page, baseline, 'Centering the selection preserves world geometry');
+  await page.getByRole('tab', { name: 'Catalogue', exact: true }).click();
+  await page.locator('.map-panel, .universe-overview').first().waitFor();
+  let route = new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
+  assert.equal(route.get('node'), candidate, `Catalogue preserves selected object ${nameOf(byId.get(candidate))}`);
+  assert.equal(route.get('scope'), selectedRoute.get('scope'), 'Catalogue preserves scope');
+  assert.equal(route.get('version'), version, 'Catalogue preserves the selected publication');
+  assert.equal(route.get('mapDepth'), '3', 'Catalogue preserves its explicitly chosen detail');
+  assert.equal(
+    await page.getByRole('button', { name: 'Pleine largeur', exact: true }).getAttribute('aria-pressed'),
+    'true',
+  );
+  await page.getByRole('tab', { name: 'Flux', exact: true }).click();
+  await page.locator('.flow-map-panel').waitFor();
+  await waitCameraIdle(page);
+  route = new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
+  assert.equal(route.get('node'), candidate);
+  assert.equal(route.get('scope'), selectedRoute.get('scope'));
+  assert.equal(route.get('version'), version);
+  const restoredCamera = await viewport(page);
+  assert.ok(
+    Math.hypot(restoredCamera.x - centeredCamera.x, restoredCamera.y - centeredCamera.y) < 0.2,
+    'Returning to Flux restores its centered camera position',
+  );
+  assert.ok(Math.abs(restoredCamera.zoom - centeredCamera.zoom) < 0.0001, 'Returning to Flux restores its zoom');
+  checks.push('Catalogue and Flux share selection, scope and publication while keeping catalogue controls');
+  await page.screenshot({ path: resolve(output, 'flows-desktop.png') });
+
+  const businessSystem = byId.get(parent.get(domain.id));
+  if (businessSystem?.kind === 'business_system') {
+    await page.getByRole('button', { name: 'Afficher les flux', exact: true }).click();
+    assert.equal(
+      await page.getByRole('button', { name: 'Afficher les flux', exact: true }).getAttribute('aria-pressed'),
+      'false',
+    );
+    await page
+      .locator('.breadcrumb')
+      .getByRole('button', { name: nameOf(businessSystem), exact: true })
+      .click();
+    await page.waitForFunction(
+      (id) => new URLSearchParams(location.hash.split('?')[1]).get('scope') === id,
+      businessSystem.id,
+    );
+    await page.locator('.flow-map-panel').waitFor();
+    await waitCameraIdle(page);
+    assert.equal(
+      await page.getByRole('button', { name: 'Afficher les flux', exact: true }).getAttribute('aria-pressed'),
+      'true',
+      'A new scope reads its own exchange visibility',
+    );
+    await page.goBack();
+    await page.waitForFunction((id) => new URLSearchParams(location.hash.split('?')[1]).get('scope') === id, domain.id);
+    await waitCameraIdle(page);
+    assert.equal(
+      await page.getByRole('button', { name: 'Afficher les flux', exact: true }).getAttribute('aria-pressed'),
+      'false',
+      'Returning to a scope restores its hidden exchange layer',
+    );
+    await assertWorld(page, baseline, 'Changing scope and returning keeps domain geometry');
+    await page.getByRole('button', { name: 'Afficher les flux', exact: true }).click();
+    checks.push('Breadcrumb scope changes keep independent exchange layer state');
+  }
+
+  const rootPage = await preparePage();
+  await visit(rootPage, 'flows', { scope: '@root' });
+  await rootPage.locator('.flow-map-canvas').waitFor();
+  await waitCameraIdle(rootPage);
+  assert.ok(
+    Math.abs(
+      (await viewport(rootPage)).zoom - Number(await rootPage.locator('.flow-map-canvas').getAttribute('data-zoom')),
+    ) < 0.001,
+    'The initial enterprise camera agrees with the displayed zoom',
+  );
+  const rootWorld = await world(rootPage);
+  assert.ok(rootWorld.length >= baseline.length, 'Enterprise Architecture includes the selected domain territories');
+  await publishedEdges(rootPage);
+  await assertNoPageOverflow(rootPage);
+  await rootPage.screenshot({ path: resolve(output, 'flows-enterprise.png') });
+  checks.push('Enterprise Architecture shows the published spatial territories and exchanges');
+
+  const rootLabel = rootPage.locator('.flow-exchange-label').first();
+  await rootLabel.focus();
+  await rootPage.keyboard.press('Enter');
+  await rootPage.getByRole('complementary', { name: 'Détail du flux' }).waitFor();
+  await rootPage.keyboard.press('Escape');
+  await rootPage.getByRole('complementary', { name: 'Détail du flux' }).waitFor({ state: 'detached' });
+  await rootPage.waitForFunction(() => document.activeElement?.classList.contains('flow-exchange-label'));
+  assert.ok(
+    await rootLabel.evaluate((element) => element === document.activeElement),
+    'Escape restores focus to the exchange label that opened its detail',
+  );
+  checks.push('Escape closes exchange detail opened from its label and restores keyboard focus');
+
+  if (model.hotspot_catalog?.hotspots.some((hotspot) => hotspot.visible !== false)) {
+    await rootPage.locator('.map-hotspot-picker > button').click();
+    await rootPage.getByRole('checkbox', { name: 'Afficher les points chauds', exact: true }).check();
+    const origin = new URLSearchParams(new URL(rootPage.url()).hash.split('?')[1]);
+    const originCamera = await viewport(rootPage);
+    await rootPage.locator('.hotspot-picker-open').first().click();
+    await rootPage.locator('.hotspot-detail').waitFor();
+    const returnLink = rootPage.getByRole('link', { name: /^Retour à la carte Flux/ });
+    await returnLink.waitFor();
+    assert.ok(
+      (await returnLink.innerText()).includes(nameOf(model.nodes.find((node) => node.kind === 'universe'))),
+      'The return link names Enterprise Architecture rather than the technical @root value',
+    );
+    assert.ok((await returnLink.getAttribute('href')).startsWith('#/flows?'));
+    await returnLink.click();
+    await rootPage.locator('.flow-map-panel').waitFor();
+    await waitCameraIdle(rootPage);
+    const restored = new URLSearchParams(new URL(rootPage.url()).hash.split('?')[1]);
+    for (const parameter of ['version', 'scope', 'node', 'hf', 'app', 'component'])
+      assert.equal(restored.get(parameter), origin.get(parameter), `Returning from a hotspot preserves ${parameter}`);
+    const restoredViewport = await viewport(rootPage);
+    assert.ok(Math.hypot(restoredViewport.x - originCamera.x, restoredViewport.y - originCamera.y) < 0.2);
+    assert.ok(Math.abs(restoredViewport.zoom - originCamera.zoom) < 0.0001);
+    await assertWorld(rootPage, rootWorld, 'Returning from a hotspot preserves the spatial world');
+    checks.push('A hotspot sheet returns to the named Flux map with its publication, scope, filters and camera');
+  }
+
+  if (byId.has('domain-plan') && belongs('domain-plan', domain.id)) {
+    const masterPage = await preparePage();
+    await visit(masterPage, 'flows', { node: 'domain-plan', scope: domain.id });
+    await masterPage.locator('.flow-map-canvas').waitFor();
+    await waitCameraIdle(masterPage);
+    await masterPage.locator('.spatial-map-object.is-active[data-node-id="domain-plan"]').waitFor();
+    await assertWorld(masterPage, baseline, 'Focusing Master Plan keeps the same domain geometry');
+    await assertNoPageOverflow(masterPage);
+    await masterPage.screenshot({ path: resolve(output, 'flows-master-plan.png') });
+    checks.push('A direct Master Plan link selects and frames the existing spatial territory');
+  }
+
+  const mobile = await preparePage({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+  await visit(mobile, 'flows', { node: domain.id, scope: domain.id, mapDepth: '3' });
+  await mobile.locator('.flow-map-canvas').waitFor();
+  await waitCameraIdle(mobile);
+  const mobileWorld = await world(mobile);
+  assert.deepEqual(mobileWorld, baseline, 'Mobile keeps the same spatial world as desktop');
+  await assertNoPageOverflow(mobile);
+  assert.ok(
+    await mobile
+      .locator('.spatial-map-object')
+      .first()
+      .evaluate((element) => element.getBoundingClientRect().width >= 150),
+    'Mobile starts close enough to read a territory rather than shrinking the whole world',
+  );
+  await mobile.screenshot({ path: resolve(output, 'flows-mobile-initial.png') });
+  const mobileBox = await mobile.locator('.flow-map-canvas').boundingBox();
+  assert.ok(mobileBox && mobileBox.width >= 250 && mobileBox.height >= 180, 'Mobile retains a useful map viewport');
+  const session = await mobile.context().newCDPSession(mobile);
+  const touchStart = { x: mobileBox.x + mobileBox.width - 16, y: mobileBox.y + 16 };
+  const mobileViewport = await viewport(mobile);
+  await session.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ ...touchStart, id: 1 }] });
+  for (let step = 1; step <= 8; step++) {
+    await session.send('Input.dispatchTouchEvent', {
+      type: 'touchMove',
+      touchPoints: [{ x: touchStart.x - step * 8, y: touchStart.y + step * 5, id: 1 }],
+    });
+  }
+  await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await waitViewportChange(mobile, mobileViewport);
+  await assertWorld(mobile, mobileWorld, 'Touch panning keeps the mobile world fixed');
+  const mobileZoom = await viewport(mobile);
+  await mobile.getByRole('button', { name: 'Zoom avant', exact: true }).click();
+  await waitViewportChange(mobile, mobileZoom, true);
+  await assertWorld(mobile, mobileWorld, 'Mobile zoom keeps the world fixed');
+  await mobile.screenshot({ path: resolve(output, 'flows-mobile.png') });
+  checks.push('Mobile keeps a spatial map with working touch pan and zoom');
+
+  await mobile.setViewportSize({ width: 320, height: 480 });
+  await mobile.getByRole('combobox', { name: 'Cadrage des flux', exact: true }).selectOption('standard');
+  await waitCameraIdle(mobile);
+  await assertWorld(mobile, mobileWorld, 'The smallest mobile viewport preserves geography');
+  await assertNoPageOverflow(mobile);
+  const tools = await mobile.locator('.flow-camera-tools').boundingBox();
+  assert.ok(tools && tools.height <= 36, 'Short mobile camera controls occupy one row');
+  const scopeNote = await mobile.locator('.flow-scope-note').boundingBox();
+  assert.ok(!scopeNote || scopeNote.height <= 40, 'The boundary exchange notice leaves room for the mobile map');
+  const cameraBounds = await mobile.locator('.flow-map-canvas').boundingBox();
+  assert.ok(tools.x >= cameraBounds.x && tools.x + tools.width <= cameraBounds.x + cameraBounds.width);
+  assert.ok(Math.abs((await viewport(mobile)).zoom - standardCamera.zoom) < 0.0001);
+  await mobile.screenshot({ path: resolve(output, 'flows-mobile-short.png') });
+  checks.push('Short mobile windows retain natural scale and compact one-row camera controls');
+  assert.deepEqual(errors, [], 'The browser reports no uncaught exception');
+  report.status = 'passed';
+  await writeFile(resolve(output, 'report.json'), JSON.stringify(report, null, 2));
+  console.log(JSON.stringify({ ...report, checks: checks.length, output }));
+} catch (error) {
+  report.status = 'failed';
+  report.failure = error.stack || String(error);
+  const failedPage = activePage;
+  if (failedPage) {
+    await failedPage.screenshot({ path: resolve(output, 'failure.png') });
+    report.visibleObjects = await failedPage.locator('.spatial-object-title').evaluateAll((elements) =>
+      elements.map((element) => {
+        const bounds = element.getBoundingClientRect();
+        const hit = document.elementFromPoint(bounds.x + bounds.width / 2, bounds.y + bounds.height / 2);
+        return { title: element.textContent, bounds: bounds.toJSON(), hit: hit?.outerHTML.slice(0, 300) };
+      }),
+    );
+  }
+  await writeFile(resolve(output, 'report.json'), JSON.stringify(report, null, 2));
+  throw error;
+} finally {
+  await browser.close();
+}

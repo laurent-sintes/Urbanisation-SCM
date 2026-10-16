@@ -1,0 +1,1126 @@
+id: FLOW-AUDIT-U1112
+date: '2026-10-16'
+status: completed_with_findings
+source_refs:
+- U1112
+- U1104
+- U1105
+- U1106
+- U1107
+- U1108
+- U1109
+- U1110
+- U1111
+scope:
+  center: supply-chain-orchestration
+  adjacent:
+  - Commerce
+  - Sourcing and Procurement
+  - Design & Development
+  - Logistics
+  - Finance
+  audit_objects:
+  - Échanges d’informations métier et leur direction
+  - Producteurs, consommateurs et autorités
+  - Passages de relais et retours décrits par les fiches
+  - Lignée des faits vers ledgers, visibilité et analytics
+  - Fidélité de projection du code de carte Flux
+  exclusions:
+  - Réalisation installée, applications et interfaces réellement déployées
+  - Réouverture de l’audit des comportements clos U431
+  - Adoption des recommandations ou changement canonique
+  - Validation de la version distante du frontend
+baseline:
+  backlog: modeles/backlog/model.yaml
+  glossary: modeles/backlog/glossary.yaml
+  current_publication: 2026-10-16.2
+  release_resolution: index.json → descripteur vérifié → snapshot vérifié
+  frontend: Arbre de travail local examiné avec modifications préexistantes préservées
+  sha256:
+    modeles/backlog/model.yaml: 38b9ce900534ee53f22b81eb72d02c0e91fb8ef05a6e563718931b29284690a3
+    modeles/backlog/glossary.yaml: 3fbdd9145608fc3d0708e8c7b2e26f4a9db5731430ef288df5744a0878f83514
+    modeles/release/index.json: 71b0f3182c3794e3a381b61378fb4fa90b2fd0ec03d62a4ee7b9faff4e9173bc
+    modeles/release/2026-10-16.2/model.yaml: 84724640a8378dce5c7c4a6875797f0e18f8c5e34119d3a25b6cbb5c100d71ef
+    app/src/flowMapLayout.ts: 7a28fda9d2318d922dc39528b88381b8f548cf9953d525a2399982c8af34b313
+    app/src/flowMapDetail.ts: a68b525477bf43f84de1eef94012c669ba7b4a2080c6813111dd760923b163a4
+    app/src/flowMapRouting.ts: e9410f951f01d33adddc0bf00200449ec5c8b5c740c2fcab891a31217299e79a
+    app/src/components/FlowMapPanel.tsx: c759563fd28158a9a41fd36307b7a0275d2cb309cb20067663a0922a1dc3b3aa
+    app/src/App.tsx: ee9512581133a9cbaac4e0218cea9fda1b20f96036c992fa6428218aa560b23a
+method:
+  authority:
+  - AGENTS.md
+  - CONVENTIONS-MODELE.md U772/U979
+  - modeles/AGENT-OPERATIONS.md
+  - marche/methode.md
+  steps:
+  - Inventaire complet des relations incidentes au sous-arbre SCO et des six échanges système englobants.
+  - Revue de tous les échanges supportés par Flux, confrontés aux fiches et aux relations des principales chaînes métier.
+  - Lecture des autres relations pour distinguer données fournies, dépendances et sources de référence.
+  - Comparaison des extrémités, types, champs et qualifications des relations du backlog et de la publication.
+  - Examen du code de projection, des regroupements, du cadrage et du détail des flux.
+  - Comparaison ciblée à des sources Microsoft Dynamics et SAP S/4HANA effectivement consultées.
+  interpretation: Une absence de lien signifie une couverture structurée non documentée ; elle ne prouve pas une absence de
+    fonctionnement. Une relation publiée ou un test technique réussi ne constitue pas un accord métier.
+  prior_work: U1090 avait déjà examiné des passages de relais et U1091 en a complété certains ; le constat n’est donc pas
+    une absence totale d’audit antérieur. La revue présente couvre le lot courant et la lecture Flux.
+measurements:
+  nodes_total: 353
+  sco_nodes: 221
+  sco_capabilities: 87
+  relations_total: 631
+  relations_touching_sco: 493
+  transverse_touching_sco: 272
+  transverse_internal_sco: 258
+  transverse_types:
+    provides-knowledge: 18
+    provides-conditions: 5
+    describes-network: 1
+    relates-to: 167
+    supplies-reference: 16
+    uses-reference: 49
+    confirms: 1
+    associated-document: 1
+    observed-result: 1
+    shares-data: 13
+  shares_data_total: 22
+  shares_data_touching_sco: 13
+  flow_supported_backlog: 40
+  flow_supported_publication: 39
+  flow_supported_sco_internal_backlog: 20
+  flow_supported_sco_boundary: 11
+  enclosing_system_context: 6
+  flow_supported_adjacent_context: 3
+  zero_transverse_capabilities_examined:
+  - demand-forecast-development
+  - demand-plan-development
+  - supply-plan-development
+  - planning-scenario-reconciliation
+  - delivery-release-decision
+  - transport-plan-decision
+  - service-order-billing
+  - service-order-payment-collection
+publication_comparison:
+  common_flow_relations: 39
+  semantic_changes: []
+  added_in_backlog:
+  - REL-ILL-006
+  removed_from_backlog: []
+  note: Le seul écart est REL-ILL-006, illustration Inventory → Availability sans champs ni qualification, exclue de la publication.
+    Les enrichissements de revue et empreintes publiés ne sont pas des modifications de contenu métier.
+verdict:
+  technical_direction: Les types supportés conservent leur orientation et leurs identifiants.
+  business_correctness: Plusieurs relations affichables conservent des responsabilités anciennes après les déplacements de
+    capacités ; la carte ne peut pas être qualifiée de validée métier.
+  coverage: La couverture des échanges aux frontières et des chaînes de planification/processus est incomplète à la maille
+    des responsabilités. Les grandes flèches système fournissent un contexte, pas une preuve exhaustive.
+  readiness: Corriger les contradictions de producteurs/destinataires puis compléter les contrats structurés avant de traiter
+    la vue Flux comme référence de responsabilité.
+  findings_by_priority:
+    P1: 5
+    P2: 14
+    P3: 1
+findings:
+- id: FL-U1112-01
+  priority: P1
+  category: contradiction_actuelle
+  title: Des flèches de promesse et de planification conservent leurs anciennes responsabilités
+  node_ids:
+  - D01
+  - D03
+  - D04
+  - D06
+  - domain-plan
+  - ba-master-plan-management
+  relation_ids:
+  - REL-SERVICE-CATALOG-PROMISING
+  - REL-SUPPLY-PLAN-VISIBILITY
+  - REL-U673-PROMISING-ORDER
+  - REL-U673-MATCHING-PROMISING
+  - REL-U673-ORDER-MATCHING
+  - REL-U673-PLANS-PROMISING
+  - REL-U673-PLANS-MATCHING
+  - REL-U673-POLICIES-PROMISING
+  - REL-U673-POLICIES-MATCHING
+  - REL-U673-FULFILMENT-MATCHING
+  - REL-U673-CAPACITY-PROMISING
+  - REL-EXECUTION-PROMISING
+  - REL-U835-D03-D04
+  evidence:
+  - D01 est Inventory Management ; D03 est Availability ; domain-plan est Master Plan dans la hiérarchie courante.
+  - REL-U673-PROMISING-ORDER fait recommander la promesse par D01 ; REL-U835-D03-D04 fournit en parallèle une proposition
+    depuis D03.
+  - REL-U673-ORDER-MATCHING envoie Orders et engagements à D03 alors que son texte vise le master plan.
+  - Les autres relations citées placent encore Availability & Promising au sein d’Inventory Management ou les arbitrages collectifs
+    dans Availability. REL-EXECUTION-PROMISING a les bonnes extrémités mais garde cette ancienne attribution dans son texte.
+  recommendation: 'Requalifier chaque contenu puis ses extrémités selon le résultat produit : faits/positions de stock, possibilités
+    de promesse, engagements, plan collectif ou impact d’exécution. Consolider les doublons sémantiques après examen ; ne
+    pas déplacer toutes les flèches par une substitution de noms.'
+  limit: Relations actives, souvent en revue partial/proposed. La présence dans une publication ne vaut pas adoption de leurs
+    contenus.
+  market_evidence_refs:
+  - MKT-FLOW-MS-PROMISE
+  - MKT-FLOW-SAP-AATP
+  status: open
+- id: FL-U1112-02
+  priority: P2
+  category: semantique_de_relation
+  title: Les dépendances et les données fournies utilisent parfois le même type de relation
+  node_ids:
+  - D01.g
+  - D01.f
+  - inventory-ownership-ledger
+  - D01.c
+  relation_ids:
+  - REL-NEEDS-U290-002
+  - REL-U756-VISIBILITY
+  - REL-EXECUTION-FACTS-D04.i
+  - REL-NEEDS-U290-048
+  evidence:
+  - REL-NEEDS-U290-002 va Inventory Ledger → Inventory Tracking et signifie que le ledger consomme les faits intégrés.
+  - REL-U756-VISIBILITY va Inventory Ownership Ledger → Inventory Visibility et signifie que le premier fournit des écritures.
+  - Huit couples de relations opposées décrivent un apport et le besoin correspondant ; les interpréter comme deux flux créerait
+    des retours artificiels. uses-reference est aussi orienté consommateur → référence.
+  recommendation: Conserver les dépendances et représenter les échanges d’information avec un sens producteur → destinataire
+    et un contenu explicite. Ne pas convertir automatiquement relates-to ou uses-reference en flux.
+  limit: La carte Flux actuelle ne dessine pas relates-to ; ce constat concerne la complétude du modèle de flux et toute extension
+    de la projection.
+  market_evidence_refs: []
+  status: open
+- id: FL-U1112-03
+  priority: P1
+  category: responsabilite_absente
+  title: Process Ledger et sa chaîne vers la visibilité et Process Mining manquent
+  node_ids:
+  - subdomain-process-management
+  - order-workflow-sentry
+  - order-workflow-orchestration
+  - BHV082
+  - process-mining
+  - operational-analysis-reporting
+  relation_ids:
+  - REL-U843-D07.c-order-workflow-sentry
+  - REL-U885-work-deadline-management-order-workflow-sentry
+  - REL-U885-process-mining-BHV082
+  - REL-U885-process-mining-human-task-management
+  - REL-U885-operational-analysis-reporting-process-mining
+  evidence:
+  - Aucun nœud Process Ledger dans le backlog ni la publication courante ; les deux ledgers explicites sont ceux du stock
+    et de sa propriété.
+  - Les faits d’exécution et échéances peuvent solliciter Process Sentry ; la tenue exhaustive des événements internes/externes
+    corrélés au Case n’est attribuée à aucune capacité.
+  - Process Mining dépend de la visibilité et de Human Task Management. U1110/U1111 désignent désormais les traces conservées
+    dans Process Ledger comme sa source.
+  recommendation: Préparer Process Ledger dans Process Management et les contrats producteurs/captation → ledger → visibilité
+    et mining ; conserver identifiant du Case, date du fait et date de connaissance, provenance, corrections et liens aux
+    objets. Préserver l’autorité des commandes sur leurs engagements et transitions.
+  limit: Besoin exprimé par Laurent U1110/U1111 ; nom de la Business Area, fiche détaillée et contrats restent à construire.
+    Aucune équivalence complète de ledger opérationnel établie chez les éditeurs consultés.
+  market_evidence_refs:
+  - MKT-FLOW-MS-AUDIT
+  - MKT-FLOW-SAP-MINING
+  status: open
+- id: FL-U1112-04
+  priority: P1
+  category: couverture_frontiere
+  title: Le raccordement Logistics reste limité à deux échanges entre systèmes
+  node_ids:
+  - supply-chain-orchestration
+  - domain-logistics-execution
+  - domain-warehousing
+  - domain-transportation
+  - subdomain-service-orders
+  - D07.d
+  - D01.f
+  relation_ids:
+  - REL-U979-service-requests
+  - REL-U979-execution-results
+  evidence:
+  - Demandes, exigences et engagements sont envoyés de Business Operations à Logistics ; résultats, estimations et stock reviennent
+    dans le sens inverse.
+  - Aucun shares-data détaillé ne relie les familles Service Orders aux périmètres Warehousing/Transportation/Customs ni leurs
+    faits à Operations Tracking ou Inventory Tracking. Les résultats de préparation magasin constituent un cas détaillé distinct.
+  recommendation: 'Décrire les passages de relais prouvés : demande autorisée et modification, acceptation/refus de prise
+    en charge, avancement/résultat, faits physiques et corrections. Attribuer les producteurs à la profondeur autorisée de
+    Logistics et qualifier la réception par les Tracking concernés.'
+  limit: Absence de détail structuré, pas preuve d’absence d’interface installée. Ne pas créer de capacités logistiques au-delà
+    de la profondeur déclarée.
+  market_evidence_refs:
+  - MKT-FLOW-MS-WMS
+  - MKT-FLOW-SAP-WMS
+  - MKT-FLOW-SAP-TM
+  status: open
+- id: FL-U1112-05
+  priority: P1
+  category: couverture_interne
+  title: La préparation des plans et la libération du carnet sont isolées dans les relations
+  node_ids:
+  - demand-forecast-development
+  - demand-plan-development
+  - supply-plan-development
+  - planning-scenario-reconciliation
+  - delivery-release-decision
+  - ba-demand-supply-plan-preparation
+  relation_ids:
+  - REL-U1101-forecast-to-demand-plan
+  evidence:
+  - Les cinq capacités citées ont zéro relation transverse tous types confondus.
+  - Les fiches décrivent pourtant qualification → plan de demande, demande → supply, rapprochement des scénarios → Master
+    Planning et décision de libération → application du plan/commandes.
+  - Le Forecast Plan externe arrive seulement à la Business Area de préparation, ce qui ne matérialise pas ses échanges internes.
+  recommendation: Écrire les données d’entrée, décisions produites et résultats transmis entre capacités, à partir des frontières
+    déjà décrites. Conserver une Business Area comme synthèse sans la substituer à la traçabilité des producteurs précis.
+  limit: La carte actuelle s’arrête aux Business Areas ; une documentation à maille capacité reste utile dans le détail et
+    les Relations.
+  market_evidence_refs:
+  - MKT-FLOW-MS-PROMISE
+  - MKT-FLOW-SAP-AATP
+  status: open
+- id: FL-U1112-06
+  priority: P1
+  category: contradiction_producteur
+  title: L’application de décisions reste attribuée directement à Master Planning dans trois relations
+  node_ids:
+  - D02.e
+  - D04.j
+  - D04.k
+  - D04.r
+  relation_ids:
+  - REL-NEEDS-U290-102
+  - REL-NEEDS-U290-103
+  - REL-AUDIT-U435-PLNK-06
+  - REL-BACKLOG-REQUEST-ASSIGNMENT
+  evidence:
+  - Les trois premières relations font mobiliser achats, transferts et consignation par Master Planning pour mettre en action
+    les choix.
+  - Plan Application porte maintenant la transmission et le suivi des changements aux capacités responsables. Les liens actuels
+    mélangent calcul, mise en application et retour.
+  recommendation: Raccorder la décision retenue à Plan Application, puis les changements autorisés et leurs résultats aux
+    familles de commandes concernées. Qualifier séparément une dépendance de calcul qui doit rester sur Master Planning.
+  limit: Aucune séquence technique ni appel direct systématique n’est déduit de ces relations.
+  market_evidence_refs: []
+  status: open
+- id: FL-U1112-07
+  priority: P2
+  category: contradiction_information
+  title: Deux formulations brouillent la provenance des prévisions
+  node_ids:
+  - plans-visibility
+  - demand-plan-visibility
+  - demand-forecast-development
+  - demand-plan-development
+  - subdomain-demand-supply-forecasting
+  relation_ids:
+  - REL-U673-PLAN-COVERAGE
+  evidence:
+  - REL-U673-PLAN-COVERAGE part de Supply Plan Visibility mais dit fournir la demande prévisionnelle à Master Planning ; aucune
+    relation équivalente ne part de Demand Plan Visibility.
+  - demand-plan-development.scope dit que Demand Forecast Qualification calcule la prévision ; sa fiche décrit au contraire
+    la qualification d’un Forecast Plan reçu de Demand & Supply Forecasting sans seconde prévision maîtresse.
+  recommendation: Aligner le contenu, le producteur et le glossaire sur Forecast Plan source, qualification opérationnelle,
+    Demand Plan et Supply Plan distincts ; préciser chaque apport au calcul du plan.
+  limit: La distinction entre prévision source et élaboration des plans est conservée ; aucune nouvelle responsabilité de
+    prévision n’est déduite.
+  market_evidence_refs: []
+  status: open
+- id: FL-U1112-08
+  priority: P2
+  category: lignage_information
+  title: Les producteurs des positions futures et engagées sont insuffisamment reliés à Inventory Visibility
+  node_ids:
+  - D01.c
+  - D02.c
+  - plans-visibility
+  - demand-plan-visibility
+  relation_ids:
+  - REL-NEEDS-U290-006
+  - REL-U717-SUPPLY-TRACKING-VISIBILITY
+  evidence:
+  - La fiche Inventory Visibility rapproche achats, transferts, retours, consignation, plans et engagements ; leurs producteurs
+    précis ne sont pas tous reliés à sa composition.
+  - Le besoin de Reservation envers Inventory Visibility ne représente pas la contribution des réservations à la vue.
+  - REL-NEEDS-U290-006 renvoie encore les ressources futures à Supply Visibility, qui n’est plus un nœud distinct.
+  recommendation: 'Documenter la composition des positions : faits physiques, changements de propriété, attendus, affectations/réservations
+    et limites de connaissance ; préserver dates, corrections et règles de non-double-compte.'
+  limit: Le constat porte sur la lignée structurée de calcul ; il ne prouve pas une erreur de calcul dans un outil installé.
+  market_evidence_refs: []
+  status: open
+- id: FL-U1112-09
+  priority: P2
+  category: couverture_services
+  title: Des prestations détaillées sont décrites sans raccordement à leur maille
+  node_ids:
+  - transport-plan-decision
+  - service-order-billing
+  - service-order-payment-collection
+  - D04.t
+  relation_ids: []
+  evidence:
+  - Transport Plan Decision, Billing et Payment ont zéro relation transverse à leur maille.
+  - Le plan de transport articule pourtant sélection de service, Transport Order/Booking, libération et planification locale
+    Logistics.
+  - Consignment Pick-up Order a un lien vers la visibilité mais pas vers le rapprochement des résultats pourtant décrit dans
+    sa fiche ; les cinq familles historiques et Consignment Fill-up ont ce besoin relié.
+  recommendation: Qualifier les demandes et résultats des prestations concernées, les refus et corrections, puis raccorder
+    les capacités porteuses à leurs producteurs et consommateurs documentés.
+  limit: Des relations agrégées existent pour Service Management et Fulfilment ; il s’agit d’une lacune de détail, pas d’une
+    absence totale de coopération.
+  market_evidence_refs:
+  - MKT-FLOW-SAP-TM
+  status: open
+- id: FL-U1112-10
+  priority: P2
+  category: retour_metier_non_documente
+  title: Le retour du Core vers les parcours de vente n’est pas structuré
+  node_ids:
+  - cap-digital-sales-journey-management
+  - D04.i
+  relation_ids:
+  - REL-U1091-digital-demand-to-sales-order
+  - REL-U1091-wholesale-demand-to-sales-order
+  evidence:
+  - Les deux relations documentent la demande Commerce → Sales Order.
+  - Aucune relation transverse ne restitue depuis Supply vers ces parcours l’acceptation, l’engagement ou l’avancement ; leurs
+    fiches prévoient le suivi commercial.
+  recommendation: Préciser les résultats nécessaires au parcours commercial et les capacités sources, puis qualifier les retours
+    de confirmation, changement, annulation, réalisation ou écart selon les cas retenus.
+  limit: Un sens inverse n’est pas exigé pour chaque relation ; le besoin de retour provient ici des fiches. Ne pas étendre
+    aux ventes emportées.
+  market_evidence_refs: []
+  status: open
+- id: FL-U1112-11
+  priority: P2
+  category: demande_metier_non_documentee
+  title: La préparation magasin a un résultat relié mais pas de demande entrante identifiée
+  node_ids:
+  - cap-store-order-preparation-handover
+  - D07.d
+  relation_ids:
+  - REL-U1091-store-preparation-results-to-fulfilment
+  evidence:
+  - Store Order Preparation & Handover prend en charge une demande affectée au magasin.
+  - La relation documente seulement ses résultats vers Operations Tracking ; aucun lien transverse ne désigne le producteur
+    Supply de la demande et de ses modifications.
+  recommendation: Raccorder le mandat confié et ses modifications à leur producteur documenté, puis conserver le retour de
+    réalisation déjà défini.
+  limit: Pas d’interface réelle ni d’affectation de site déduite du modèle.
+  market_evidence_refs: []
+  status: open
+- id: FL-U1112-12
+  priority: P2
+  category: retour_metier_non_documente
+  title: Le suivi d’acceptation ou de rejet des faits comptables n’a pas de retour structuré
+  node_ids:
+  - accounting-data-provision
+  - subdomain-financial-accounting
+  relation_ids:
+  - REL-U981-accounting-facts
+  - REL-U996-commercial-settlement-results
+  evidence:
+  - Accounting Data Provision doit suivre transmission, acceptation ou rejet ; Financial Accounting conserve corrections et
+    rejets motivés.
+  - Aucun retour correspondant n’est relié. Le résultat de régularisation commerciale vers Order Management répond à un autre
+    besoin.
+  recommendation: Décrire le retour nécessaire au suivi auprès du producteur des faits, en distinguant réception technique,
+    acceptation métier et enregistrement comptable.
+  limit: Absence de preuve structurée seulement ; U1108 précise les ledgers stock comme producteurs, sans modifier à ce stade
+    les relations canoniques.
+  market_evidence_refs: []
+  status: open
+- id: FL-U1112-13
+  priority: P2
+  category: source_a_qualifier
+  title: La chaîne des référentiels commence à l’ingestion sans producteur externe détaillé
+  node_ids:
+  - master-data-ingestion
+  - business-references
+  relation_ids:
+  - REL-U979-product-definitions
+  - REL-U979-credit-profiles
+  evidence:
+  - Les supplies-reference matérialisent l’alimentation des références locales et les comportements distinguent des provenances.
+  - Aucun lien détaillé ne raccorde un producteur externe à cette réception. La répartition des sources commerciales entre
+    Commerce et Sourcing reste explicitement à documenter.
+  recommendation: Raccorder uniquement les producteurs établis sur preuve et conserver les autres sources comme non qualifiées
+    ; maintenir la distinction maîtrise externe et autorité locale Supply.
+  limit: Ne pas inventer de maîtres d’entreprise ni d’alimentations installées.
+  market_evidence_refs:
+  - MKT-FLOW-MS-EXCHANGE
+  status: open
+- id: FL-U1112-14
+  priority: P2
+  category: articulation_a_qualifier
+  title: L’émission du Forecast Plan et sa réception locale dessinent deux parcours non articulés
+  node_ids:
+  - plans-ingestion
+  - subdomain-demand-supply-forecasting
+  - ba-demand-supply-plan-preparation
+  - domain-plan
+  relation_ids:
+  - REL-U1101-forecast-to-demand-plan
+  - REL-U794-PLAN-INGESTION
+  evidence:
+  - Le producteur externe fournit le Forecast Plan directement à la Business Area de préparation.
+  - Plan Ingestion fournit parallèlement à Master Plan les contributions externes acceptées ; le raccordement entre réception
+    et qualification du même apport n’est pas explicite.
+  recommendation: Décrire le contrat source → réception locale → qualification sans laisser supposer deux apports indépendants.
+    Qualifier à part les autres contributions externes.
+  limit: Deux niveaux de responsabilité peuvent être légitimes ; aucun double flux ni double comptage réel n’est démontré.
+  market_evidence_refs: []
+  status: open
+- id: FL-U1112-15
+  priority: P2
+  category: apports_recents_non_appliques
+  title: Le regroupement Integration conserve des diffusions détachées des producteurs précisés par Laurent
+  node_ids:
+  - subdomain-integration
+  - accounting-data-provision
+  - planning-data-provision
+  - product-feedback
+  - D01.g
+  - inventory-ownership-ledger
+  - D01.c
+  relation_ids:
+  - REL-U826-D01.g-TO-accounting-data-provision
+  - REL-U826-inventory-ownership-ledger-TO-accounting-data-provision
+  - REL-U826-D01.c-TO-planning-data-provision
+  - REL-U979-product-feedback
+  evidence:
+  - Les deux ledgers sont déjà reliés comme producteurs comptables et Inventory Visibility comme source des positions utiles
+    au plan.
+  - Product Feedback n’a aucune relation métier transverse à sa maille vers ses producteurs ou Design & Development.
+  - Les précisions U1105–U1109 placent les faits comptables et produit sur les ledgers stock et limitent la source de plan
+    actuellement retenue au stock documenté ; ces précisions ne sont pas encore appliquées.
+  recommendation: Préparer le retrait du regroupement Integration avec redistribution près des producteurs et maintien des
+    responsabilités locales de réception. Rendre explicites contenus et destinataires avant de retirer ou fusionner des capacités.
+  limit: L’audit ne vaut pas accord sur les retraits, scissions, noms ou nouvelles Business Areas ; aucune de ces propositions
+    n’est appliquée ici.
+  market_evidence_refs: []
+  status: open
+- id: FL-U1112-16
+  priority: P2
+  category: consommateur_trop_large
+  title: Les prix de vente et résultats de régularisation visent tout Order Management
+  node_ids:
+  - subdomain-pricing-promotions-management
+  - D04
+  - subdomain-commercial-settlement-management
+  relation_ids:
+  - REL-U996-contextual-prices
+  - REL-U996-commercial-settlement-results
+  evidence:
+  - Le producteur des prix porte les prix de vente ; le destinataire D04 couvre aussi achats et autres familles.
+  - Les régularisations affectent des engagements ou demandes sans désigner les familles consommatrices ; les conditions restent
+    à qualifier par donnée.
+  recommendation: Préciser les consommateurs et cas concrets sans transformer la synthèse de sous-domaine en contrat universel.
+    Conserver les autorités Commerce/Finance.
+  limit: Le sens global est cohérent ; le problème est une portée encore insuffisante pour le détail des flux.
+  market_evidence_refs: []
+  status: open
+- id: FL-U1112-17
+  priority: P2
+  category: limite_cartographique
+  title: Le cadrage SCO masque ses adhérences externes
+  node_ids:
+  - supply-chain-orchestration
+  relation_ids: []
+  evidence:
+  - buildFlowMap limite le scope aux descendants. Une extrémité externe sans ancêtre dessiné fait exclure la relation.
+  - Les 11 échanges supportés aux frontières explicites SCO et les 6 relations de contexte entre Business Systems sont hors
+    de ce cadrage.
+  - Le cadrage Enterprise Architecture permet de les retrouver ; le comportement est attendu par les tests.
+  recommendation: Prévoir un cadrage de voisinage SCO et adhérences, ou signaler clairement le périmètre affiché et donner
+    l’accès aux frontières. Utiliser la racine EA pour lire l’ensemble en attendant.
+  limit: Limite de représentation du code de travail examiné ; aucun test de la version distante déployée n’a été effectué.
+  market_evidence_refs: []
+  status: open
+  code_evidence:
+  - path: app/src/flowMapLayout.ts
+    line: 273
+    meaning: Périmètre limité aux descendants ; filtrage des extrémités hors cadrage.
+  - path: app/test-flow-map-layout.mjs
+    line: 97
+    meaning: Comportement attendu du cadrage.
+- id: FL-U1112-18
+  priority: P2
+  category: information_non_restituee
+  title: Le détail Flux omet les conditions et effets qui limitent le sens d’un échange
+  node_ids: []
+  relation_ids:
+  - REL-U979-management-facts
+  evidence:
+  - FlowMapPanel affiche finalité et contenus pour shares-data ; la finalité remplace qualification.meaning et conditions/effects
+    ne sont pas rendus.
+  - La condition disant qu’une transmission ne vaut pas écriture enregistrée n’apparaît pas dans ce volet.
+  recommendation: Afficher le sens, les conditions et les effets utiles du contrat avec les contenus. Préserver les détails
+    des relations sources dans les regroupements.
+  limit: Les informations existent dans le modèle et peuvent être accessibles ailleurs, notamment dans Relations ; elles manquent
+    au volet Flux.
+  market_evidence_refs: []
+  status: open
+  code_evidence:
+  - path: app/src/components/FlowMapPanel.tsx
+    line: 553
+    meaning: Rendu du détail des flux ; finalité/contenus, sans conditions ni effets.
+- id: FL-U1112-19
+  priority: P2
+  category: niveau_de_preuve_cartographique
+  title: Une synthèse et ses détails peuvent coexister sans lignée explicite
+  node_ids: []
+  relation_ids:
+  - REL-U979-management-facts
+  - REL-U981-accounting-facts
+  evidence:
+  - Les échanges entre systèmes et entre capacités/domaines sont des relations distinctes sans lien de raffinement explicite.
+  - La carte regroupe par source visible, cible visible et type ; au zoom fin, une synthèse système et les détails peuvent
+    coexister.
+  - 'La carte s’arrête aux Business Areas : les producteurs précis restent dans le détail. Un échange au sein de la même BA
+    serait masqué ; aucun échange supporté actuel de SCO ne présente ce cas.'
+  recommendation: Qualifier synthèse, détail et provenance afin que le lecteur ne compte pas deux échanges opérationnels.
+    Afficher le niveau et les extrémités canoniques de chaque relation ; ne pas interpréter le nombre de flèches comme un
+    nombre d’interfaces.
+  limit: Il n’existe pas de doublon exact source/cible/type dans les shares-data examinés ; le risque est sémantique entre
+    niveaux.
+  market_evidence_refs: []
+  status: open
+  code_evidence:
+  - path: app/src/components/FlowMapPanel.tsx
+    line: 122
+    meaning: Remontée aux ancêtres visibles et regroupement par source/cible/type.
+  - path: app/src/flowMapLayout.ts
+    line: 42
+    meaning: Types de territoires dessinés ; arrêt aux Business Areas.
+- id: FL-U1112-20
+  priority: P3
+  category: contrat_editorial
+  title: Deux noms d’informations partagées sont des actions rédigées en français
+  node_ids: []
+  relation_ids:
+  - REL-U794-PLAN-INGESTION
+  - REL-U826-planning-data-provision-TO-domain-plan
+  evidence:
+  - data_exchange.contents[].name vaut « Fournit les contributions externes de plan » et « Fournit les entrées internes de
+    calcul ».
+  - U979 demande des noms anglais d’informations ; les descriptions et finalités restent françaises.
+  recommendation: Nommer les informations produites, puis garder le verbe de fourniture dans la description de responsabilité
+    ou le libellé de lecture.
+  limit: Écart éditorial distinct des erreurs de producteur ou des manques de couverture.
+  market_evidence_refs: []
+  status: open
+flow_register:
+- relation_id: REL-ILL-006
+  type: provides-knowledge
+  source_id: D01
+  target_id: D03
+  scope: sco_internal
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: false
+- relation_id: REL-EXECUTION-PROMISING
+  type: provides-knowledge
+  source_id: D06
+  target_id: D04
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-01
+  present_in_current_publication: true
+- relation_id: REL-SUPPLY-PLAN-VISIBILITY
+  type: provides-knowledge
+  source_id: D01
+  target_id: D03
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-01
+  present_in_current_publication: true
+- relation_id: REL-U673-PROMISING-ORDER
+  type: provides-knowledge
+  source_id: D01
+  target_id: D04
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-01
+  present_in_current_publication: true
+- relation_id: REL-U673-MATCHING-PROMISING
+  type: provides-knowledge
+  source_id: D03
+  target_id: D01
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-01
+  present_in_current_publication: true
+- relation_id: REL-U673-ORDER-MATCHING
+  type: provides-knowledge
+  source_id: D04
+  target_id: D03
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-01
+  present_in_current_publication: true
+- relation_id: REL-U673-PLANS-PROMISING
+  type: provides-knowledge
+  source_id: ba-master-plan-management
+  target_id: D01
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-01
+  present_in_current_publication: true
+- relation_id: REL-U673-PLANS-MATCHING
+  type: provides-knowledge
+  source_id: ba-master-plan-management
+  target_id: D03
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-01
+  present_in_current_publication: true
+- relation_id: REL-U673-POLICIES-PROMISING
+  type: provides-knowledge
+  source_id: subdomain-policies
+  target_id: D01
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-01
+  present_in_current_publication: true
+- relation_id: REL-U673-POLICIES-MATCHING
+  type: provides-knowledge
+  source_id: subdomain-policies
+  target_id: D03
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-01
+  present_in_current_publication: true
+- relation_id: REL-U673-FULFILMENT-MATCHING
+  type: provides-knowledge
+  source_id: D06
+  target_id: D03
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-01
+  present_in_current_publication: true
+- relation_id: REL-U673-CAPACITY-PROMISING
+  type: provides-knowledge
+  source_id: D06
+  target_id: D01
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-01
+  present_in_current_publication: true
+- relation_id: REL-U682-ORCHESTRATION-SERVICE-ORDERS
+  type: provides-knowledge
+  source_id: D06
+  target_id: subdomain-service-orders
+  scope: sco_internal
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: true
+- relation_id: REL-U711-SERVICE-ORDERS-FULFILMENT
+  type: provides-knowledge
+  source_id: subdomain-service-orders
+  target_id: D06
+  scope: sco_internal
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: true
+- relation_id: REL-U711-SERVICE-ORDERS-ORDERS
+  type: provides-knowledge
+  source_id: subdomain-service-orders
+  target_id: D04
+  scope: sco_internal
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: true
+- relation_id: REL-U725-EXECUTION-AUTHORIZATIONS
+  type: provides-knowledge
+  source_id: D04
+  target_id: D06
+  scope: sco_internal
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: true
+- relation_id: REL-U835-D03-D06
+  type: provides-knowledge
+  source_id: D03
+  target_id: D06
+  scope: sco_internal
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: true
+- relation_id: REL-U835-D03-D04
+  type: provides-knowledge
+  source_id: D03
+  target_id: D04
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-01
+  present_in_current_publication: true
+- relation_id: REL-U794-PLAN-INGESTION
+  type: shares-data
+  source_id: plans-ingestion
+  target_id: domain-plan
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-14
+  - FL-U1112-20
+  present_in_current_publication: true
+- relation_id: REL-U826-planning-data-provision-TO-domain-plan
+  type: shares-data
+  source_id: planning-data-provision
+  target_id: domain-plan
+  scope: sco_internal
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-20
+  present_in_current_publication: true
+- relation_id: REL-U979-product-definitions
+  type: shares-data
+  source_id: system-design-development
+  target_id: system-business-operations
+  scope: enclosing_system_context
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-13
+  present_in_current_publication: true
+- relation_id: REL-U979-product-feedback
+  type: shares-data
+  source_id: system-business-operations
+  target_id: system-design-development
+  scope: enclosing_system_context
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-15
+  present_in_current_publication: true
+- relation_id: REL-U979-service-requests
+  type: shares-data
+  source_id: system-business-operations
+  target_id: domain-logistics-execution
+  scope: enclosing_system_context
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-04
+  present_in_current_publication: true
+- relation_id: REL-U979-execution-results
+  type: shares-data
+  source_id: domain-logistics-execution
+  target_id: system-business-operations
+  scope: enclosing_system_context
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-04
+  present_in_current_publication: true
+- relation_id: REL-U979-management-facts
+  type: shares-data
+  source_id: system-business-operations
+  target_id: system-enterprise-management-control
+  scope: enclosing_system_context
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-18
+  - FL-U1112-19
+  present_in_current_publication: true
+- relation_id: REL-U979-credit-profiles
+  type: shares-data
+  source_id: system-enterprise-management-control
+  target_id: system-business-operations
+  scope: enclosing_system_context
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-13
+  present_in_current_publication: true
+- relation_id: REL-U981-accounting-facts
+  type: shares-data
+  source_id: accounting-data-provision
+  target_id: subdomain-financial-accounting
+  scope: sco_boundary
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-12
+  - FL-U1112-19
+  present_in_current_publication: true
+- relation_id: REL-U996-contextual-prices
+  type: shares-data
+  source_id: subdomain-pricing-promotions-management
+  target_id: D04
+  scope: sco_boundary
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-16
+  present_in_current_publication: true
+- relation_id: REL-U996-commercial-benefit-conditions
+  type: shares-data
+  source_id: subdomain-rebates-incentives-management
+  target_id: subdomain-commercial-settlement-management
+  scope: adjacent_context
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: true
+- relation_id: REL-U996-eligible-supply-facts
+  type: shares-data
+  source_id: accounting-data-provision
+  target_id: subdomain-commercial-settlement-management
+  scope: sco_boundary
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: true
+- relation_id: REL-U996-commercial-settlement-results
+  type: shares-data
+  source_id: subdomain-commercial-settlement-management
+  target_id: D04
+  scope: sco_boundary
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-12
+  - FL-U1112-16
+  present_in_current_publication: true
+- relation_id: REL-U1091-digital-demand-to-sales-order
+  type: shares-data
+  source_id: cap-digital-sales-journey-management
+  target_id: D04.i
+  scope: sco_boundary
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-10
+  present_in_current_publication: true
+- relation_id: REL-U1091-wholesale-demand-to-sales-order
+  type: shares-data
+  source_id: cap-wholesale-sales-engagement
+  target_id: D04.i
+  scope: sco_boundary
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-10
+  present_in_current_publication: true
+- relation_id: REL-U1091-store-stock-facts-to-inventory
+  type: shares-data
+  source_id: cap-store-stock-operations-management
+  target_id: D01.f
+  scope: sco_boundary
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: true
+- relation_id: REL-U1091-store-preparation-results-to-fulfilment
+  type: shares-data
+  source_id: cap-store-order-preparation-handover
+  target_id: D07.d
+  scope: sco_boundary
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-11
+  present_in_current_publication: true
+- relation_id: REL-U1091-supplier-response-to-purchase-order
+  type: shares-data
+  source_id: cap-supplier-commitment-follow-up
+  target_id: D04.j
+  scope: sco_boundary
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: true
+- relation_id: REL-U1091-purchasing-decision-to-purchase-order
+  type: shares-data
+  source_id: cap-purchasing-case-coordination
+  target_id: D04.j
+  scope: sco_boundary
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: true
+- relation_id: REL-U1091-supplier-benefit-conditions-to-settlement
+  type: shares-data
+  source_id: cap-supplier-rebate-scheme-management
+  target_id: subdomain-commercial-settlement-management
+  scope: adjacent_context
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: true
+- relation_id: REL-U1101-collection-to-demand-supply-forecast
+  type: shares-data
+  source_id: subdomain-collection-planning
+  target_id: subdomain-demand-supply-forecasting
+  scope: adjacent_context
+  audit_assessment: no_contradiction_identified_in_examined_scope
+  finding_refs: []
+  present_in_current_publication: true
+- relation_id: REL-U1101-forecast-to-demand-plan
+  type: shares-data
+  source_id: subdomain-demand-supply-forecasting
+  target_id: ba-demand-supply-plan-preparation
+  scope: sco_boundary
+  audit_assessment: finding_or_qualification
+  finding_refs:
+  - FL-U1112-05
+  - FL-U1112-14
+  present_in_current_publication: true
+market_evidence:
+- id: MKT-FLOW-MS-PROMISE
+  family: microsoft_dynamics
+  product: Dynamics 365 Supply Chain Management
+  title: Order promising
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+  consulted_on: '2026-10-16'
+  locator: Order promising ; ATP calculations ; CTP calculations
+  version: Documentation évolutive ; version globale non précisée
+  finding: La promesse calcule des quantités et dates en utilisant stock, réceptions et besoins ; ces données sources ne confèrent
+    pas à leur producteur la responsabilité de la promesse.
+  limit: Appui fonctionnel partiel ; ne démontre pas le découpage FLOW Inventory/Availability/Master Plan ni une réalisation
+    Beaumanoir.
+- id: MKT-FLOW-SAP-AATP
+  family: sap_s4hana
+  product: SAP S/4HANA aATP
+  title: Outlining Advanced Available-to-Promise (aATP) in SAP S/4HANA
+  url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-advanced-available-to-promise-aatp-in-sap-s-4hana
+  consulted_on: '2026-10-16'
+  locator: The Intelligent Order Promising ; Product Availability Check
+  version: Cours en ligne ; version globale non précisée
+  finding: aATP reçoit matériel/site/quantité/date et produit une proposition de confirmation fondée sur le stock et les apports
+    futurs, avec concurrence des besoins.
+  limit: Recouvrement partiel ; le cours regroupe aussi allocation et protection, sans imposer la hiérarchie FLOW.
+- id: MKT-FLOW-MS-WMS
+  family: microsoft_dynamics
+  product: Dynamics 365 Supply Chain Management
+  title: Warehouse management only mode with external ERP systems
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-external-erp
+  consulted_on: '2026-10-16'
+  locator: Inbound/Outbound process example ; On-hand inventory updates/reconciliation/update logs
+  version: Documentation évolutive ; version globale non précisée
+  finding: Demandes externes, résultats de réception/expédition et ajustements de stock sont distingués ; le document traite
+    le risque des doubles mises à jour.
+  limit: Appui entrepôt et ERP ; ne couvre pas toute Logistics ni une interface installée Beaumanoir.
+- id: MKT-FLOW-SAP-WMS
+  family: sap_s4hana
+  product: SAP S/4HANA 2025
+  title: Feature Scope Description
+  url: https://help.sap.com/doc/e2048712f0ab45e791e6d15ba5e20c68/2025/en-US/FSD_OP2025_latest.pdf
+  consulted_on: '2026-10-16'
+  locator: p.192 Connecting to External Warehouse Control Systems ; p.534 Decentralized EWM
+  version: 3.0 du 2026-10-07
+  finding: La description distingue tâches/annulations émises et confirmations/mouvements reçus ; le partage dépend du périmètre
+    d’intégration retenu.
+  limit: Appui partiel aux échanges entrepôt ; pas preuve exhaustive transport/douane ni couverture FLOW installée.
+- id: MKT-FLOW-MS-EXCHANGE
+  family: microsoft_dynamics
+  product: Dynamics 365 Supply Chain Management
+  title: Exchange data between systems
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/wms-only-mode-exchange-data
+  consulted_on: '2026-10-16'
+  locator: Progress data and business events ; shipment order messages ; master data
+  version: Documentation évolutive ; version globale non précisée
+  finding: Identités des sources, validation des messages, progression et faits de stock sont documentés ; certains événements
+    portent un identifiant permettant de lire le détail.
+  limit: Un contrat produit de messages ne devient pas une capacité métier ni un protocole imposé à FLOW.
+- id: MKT-FLOW-SAP-TM
+  family: sap_s4hana
+  product: SAP S/4HANA Transportation Management
+  title: Warehouse Integration
+  url: https://learning.sap.com/courses/planning-and-execution-in-sap-s-4hana-transportation-management/warehouse-integration
+  consulted_on: '2026-10-16'
+  locator: Integration of Transportation Management and Warehouse Management
+  version: Cours en ligne ; version globale non précisée
+  finding: La coordination du transport et de l’entrepôt articule plan, chargement, autorisation de sortie et retours d’exécution.
+  limit: Exemple de coordination TM/EWM ; ne prouve pas tous les mandats de Transport Plan Decision ni les échanges FLOW.
+- id: MKT-FLOW-MS-AUDIT
+  family: microsoft_dynamics
+  product: Dataverse utilisé par Dynamics 365 ; Dynamics 365 Customer Service
+  title: Manage Dataverse auditing ; Work with cases
+  url: https://learn.microsoft.com/en-us/power-platform/admin/manage-dataverse-auditing
+  additional_url: https://learn.microsoft.com/en-us/dynamics365/customer-service/use/customer-service-hub-user-guide-create-a-case
+  consulted_on: '2026-10-16'
+  locator: Audit History ; activation par table/colonne ; Case Timeline
+  version: Documentation évolutive ; version globale non précisée
+  finding: Audit des changements d’enregistrement et historique du Case constituent des appuis de traçabilité ; la conservation
+    dépend de la configuration.
+  limit: Ni audit de lignes ni timeline ne prouvent la conservation exhaustive de tous événements métier externes et internes
+    ou la reconstruction complète d’un Case FLOW.
+- id: MKT-FLOW-SAP-MINING
+  family: sap_other_supplementary
+  product: SAP Signavio Process Intelligence
+  title: Introducing to Data Transformation
+  url: https://learning.sap.com/courses/analyzing-business-processes-with-sap-signavio-solutions/data-requirements-and-setup_c3cc0080-8486-4157-824f-d37acce55c0e
+  consulted_on: '2026-10-16'
+  locator: Introduction to Data Transformation ; What’s your Case?
+  version: Cours en ligne ; version globale non précisée
+  finding: Les données sources sont transformées en journal chronologique corrélé par Case ID, nom d’événement et date pour
+    le mining.
+  limit: Journal analytique reconstruit depuis les sources ; ne démontre pas un ledger opérationnel maître et ne remplace
+    pas l’appui SAP S/4HANA exigé pour une future fiche comparée.
+market_gaps:
+- family: sap_s4hana
+  scope: Futur Process Ledger opérationnel
+  reason: Business Event Logging et Action Logs repérés, mais leurs pages détaillées renvoient un contenu vide ou une authentification
+    via le navigateur de recherche. SAP Signavio fournit un appui analytique complémentaire, pas une équivalence S/4HANA de
+    ledger opérationnel.
+  investigated_urls:
+  - https://help.sap.com/docs/SAP_S4HANA_CLOUD/a630d57fc5004c6383e7a81efee7a8bb/cee09744c9584649ac1d6d05473c6e56.html
+  - https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9442486404b54071b4ebeab6a16628e7/21fdc5536a51204be10000000a174cb4.html
+  source_refs:
+  - U1110
+  - U1111
+  - U1112
+correct_points_to_preserve:
+- Orientation et identifiants des relations supportées préservés par le moteur Flux.
+- Légende distincte pour partage de données et apport de connaissance.
+- Échanges systèmes Logistics aller/retour existants ; conditions séparant faits, engagements et réalisation.
+- Faits magasin assortis de précautions contre le double comptage ; autorité du Forecast Plan conservée chez Design & Development.
+- Summary labels Finance sont des synthèses d’échanges, sans inversion implicite.
+- Aucun doublon exact de paire orientée shares-data dans le périmètre incident SCO.
+proposed_correction_order:
+- order: 1
+  title: Réparer le sens des relations existantes
+  finding_refs:
+  - FL-U1112-01
+  - FL-U1112-06
+  - FL-U1112-07
+  - FL-U1112-02
+- order: 2
+  title: Compléter producteurs, ledgers et contrats des chaînes principales
+  finding_refs:
+  - FL-U1112-03
+  - FL-U1112-04
+  - FL-U1112-05
+  - FL-U1112-08
+  - FL-U1112-09
+  - FL-U1112-10
+  - FL-U1112-11
+  - FL-U1112-12
+  - FL-U1112-13
+  - FL-U1112-14
+  - FL-U1112-15
+  - FL-U1112-16
+- order: 3
+  title: Rendre visibles le voisinage et les qualifications
+  finding_refs:
+  - FL-U1112-17
+  - FL-U1112-18
+  - FL-U1112-19
+  - FL-U1112-20
+validation:
+  backlog_integrity:
+    command: python scripts/check_backlog.py
+    result: passed
+    errors: []
+    captured_intents: 0
+    pending_lots: []
+    note: Contrôle de structure et de contrats réussi ; il ne contredit pas les constats sémantiques de l’audit.
+  audit_references: Tous les IDs de nœuds et de relations cités sont vérifiés contre les sources structurées.
+  semantic_comparison: 39 relations communes comparées sur type, extrémités, fields et qualification ; aucune modification.
+  targeted_frontend_tests:
+    command: node --test app/test-flow-map-layout.mjs app/test-flow-map-detail.mjs app/test-flow-map-routing.mjs app/test-flow-map-viewport.mjs
+      app/test-data-sharing.mjs
+    passed: 48
+    failed: 0
+    scope: Projection, détail, routage, caméra et partage ; aucun build ni navigateur.
+  limitations: Ces contrôles ne valident ni les recommandations métier, ni une réalisation installée, ni l’exhaustivité de
+    toutes les situations futures.
+application:
+  canonical_changes: false
+  agreement_capture: false
+  release: false
+  git_operation: false

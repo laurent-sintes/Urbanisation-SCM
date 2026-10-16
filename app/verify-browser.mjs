@@ -4,6 +4,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { browserOptions, chromium } from './browser-runtime.mjs';
+import { projectDependencies } from './src/dependencyGraph.ts';
+import { adaptPublication } from './src/model.ts';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(root, 'dist');
@@ -168,7 +170,7 @@ try {
   assert.equal(await page.locator('.map-toolbar .map-detail-picker').count(), 1);
   assert.equal(await page.locator('.map-toolbar .map-hotspot-picker').count(), 1);
   await page.getByRole('tab', { name: 'Fiche' }).click();
-  await page.getByRole('tab', { name: 'Carte' }).click();
+  await page.getByRole('tab', { name: 'Catalogue' }).click();
   await page.locator('.map-toolbar .map-hotspot-picker .detail-trigger').click();
   const scopedFilters = page.getByRole('dialog', { name: 'Filtres des points chauds' });
   assert.equal(
@@ -302,8 +304,8 @@ try {
         await domainCard
           .locator(`[data-business-area-summary="${businessArea.id}"]`)
           .evaluate((element) => getComputedStyle(element).backgroundColor),
-        'rgb(243, 248, 244)',
-        'Nested Business Areas use the same restrained emphasis in System and Domain maps',
+        'rgba(0, 0, 0, 0)',
+        'Business Area headings remain plain within their Subdomain',
       );
       await expectTooltip(
         domainCard.locator(`[data-business-area-summary="${businessArea.id}"] button`),
@@ -429,7 +431,7 @@ try {
     'Subdomain cards on one row share their height',
   );
   assert.ok(domainCardHierarchy.titleSize > domainCardHierarchy.areaSize);
-  assert.equal(domainCardHierarchy.areaBackground, 'rgb(243, 248, 244)');
+  assert.equal(domainCardHierarchy.areaBackground, 'rgba(0, 0, 0, 0)');
   await page.locator('.graph-canvas').screenshot({ path: path.join(output, 'domain-detail.png') });
   assert.equal(
     await page
@@ -492,7 +494,7 @@ try {
   assert.equal(route().get('node'), capability.id);
   await page.locator(`[data-map-item-id="${capability.id}"][aria-current="true"]`).first().waitFor();
   assert.equal(await capabilityLink.getAttribute('aria-current'), 'true');
-  assert.equal(await page.getByRole('tab', { name: 'Carte' }).getAttribute('aria-selected'), 'true');
+  assert.equal(await page.getByRole('tab', { name: 'Catalogue' }).getAttribute('aria-selected'), 'true');
   await visit({ view: 'map', node: businessArea.id, scope: domain.id, mapDepth: '3', mapFocus: businessArea.id });
   const areaLink = page.locator(`[data-business-area-summary="${businessArea.id}"] button`).first();
   await areaLink.waitFor();
@@ -542,6 +544,28 @@ try {
   await page.getByRole('button', { name: 'Réduire la carte' }).click();
   await page.waitForFunction(() => !document.fullscreenElement);
   checks.push('Full screen controls and readable page framing');
+
+  const freshFraming = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
+  freshFraming.on('pageerror', (error) => errors.push(error.message));
+  await freshFraming.route('**/*', serveStatic);
+  await freshFraming.goto(
+    `${base}#/map?${new URLSearchParams({ version: model.version, node: domain.id, scope: domain.id, mapDepth: '4' })}`,
+  );
+  await freshFraming.locator('#fa-version').waitFor({ state: 'attached' });
+  await freshFraming.locator('.graph-canvas .business-card').first().waitFor();
+  await freshFraming.waitForTimeout(1000);
+  await freshFraming.getByRole('button', { name: 'Auto', exact: true }).click();
+  const pageFraming = freshFraming.getByRole('button', { name: 'Pleine page' });
+  await pageFraming.click();
+  await pageFraming.locator('.map-zoom-asterisk').waitFor();
+  const framingExplanation = freshFraming.getByRole('tooltip').filter({ hasText: 'Parcours à taille de lecture' });
+  await framingExplanation.waitFor();
+  assert.equal(await pageFraming.getAttribute('aria-describedby'), await framingExplanation.getAttribute('id'));
+  await freshFraming.keyboard.press('Escape');
+  await framingExplanation.waitFor({ state: 'hidden' });
+  assert.equal(await pageFraming.evaluate((element) => element === document.activeElement), true);
+  await freshFraming.close();
+  checks.push('Desktop page fallback explains itself on the first activation and dismisses with Escape');
 
   const sparseScope = model.nodes.find(
     (node) =>
@@ -666,10 +690,60 @@ try {
   await page.setViewportSize({ width: 1440, height: 1000 });
   checks.push('Width mode preserves multi-domain cards as the canvas grows');
 
+  for (const params of [
+    { scope: '@root', node: '', mapDepth: '2' },
+    { scope: domain.id, node: domain.id, mapDepth: '4' },
+  ]) {
+    await page.setViewportSize({ width: 980, height: 800 });
+    await visit({ view: 'map', ...params });
+    await page.getByRole('button', { name: 'Pleine largeur', exact: true }).click();
+    await page.waitForFunction(() => {
+      const viewport = document.querySelector('.overview-map-scroll, .map-scroll-viewport');
+      return viewport && viewport.scrollHeight - viewport.clientHeight > 200;
+    });
+    // Let the opening focus and framing finish before establishing the reader's own position.
+    await page.waitForTimeout(500);
+    const saved = await page.locator('.overview-map-scroll, .map-scroll-viewport').evaluate((viewport) => {
+      viewport.scrollTo({ top: 320, left: 180, behavior: 'instant' });
+      return { top: viewport.scrollTop, left: viewport.scrollLeft };
+    });
+    assert.ok(saved.top > 100, 'The Catalogue must have a real reading position to restore');
+    if (params.scope === '@root') assert.ok(saved.left > 100, 'The root Catalogue must exercise horizontal memory');
+    const framingName = params.scope === '@root' ? 'root' : 'domain';
+    await page.screenshot({ path: path.join(output, `catalogue-${framingName}-before-flux.png`) });
+    await page.getByRole('tab', { name: 'Flux', exact: true }).click();
+    await page.locator('#tab-flows[aria-selected="true"]').waitFor();
+    await page.locator('.flow-map-panel').waitFor();
+    await page.getByRole('tab', { name: 'Catalogue', exact: true }).click();
+    await page.waitForFunction((expected) => {
+      const viewport = document.querySelector('.overview-map-scroll, .map-scroll-viewport');
+      return (
+        viewport &&
+        Math.abs(viewport.scrollTop - expected.top) <= 1 &&
+        Math.abs(viewport.scrollLeft - expected.left) <= 1
+      );
+    }, saved);
+    await page.screenshot({ path: path.join(output, `catalogue-${framingName}-after-flux.png`) });
+    const moved = await page.locator('.overview-map-scroll, .map-scroll-viewport').evaluate((viewport) => {
+      viewport.scrollTo({ top: 130, left: 30, behavior: 'instant' });
+      return { top: viewport.scrollTop, left: viewport.scrollLeft };
+    });
+    await page.waitForTimeout(700);
+    assert.deepEqual(
+      await page
+        .locator('.overview-map-scroll, .map-scroll-viewport')
+        .evaluate((viewport) => ({ top: viewport.scrollTop, left: viewport.scrollLeft })),
+      moved,
+      'The restored Catalogue must stop adjusting once reading resumes',
+    );
+  }
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  checks.push('Catalogue framing survives Flux round trips and leaves subsequent scrolling alone');
+
   await visit({ node: capability.id, view: 'sheet' });
   await page.getByTestId('business-sheet').waitFor();
   await page.getByRole('heading', { level: 1, name: capability.fields.name }).waitFor();
-  await page.getByRole('tab', { name: 'Carte' }).click();
+  await page.getByRole('tab', { name: 'Catalogue' }).click();
   await page.locator(`[data-map-item-id="${capability.id}"][aria-current="true"]`).first().waitFor();
   checks.push('Sheet and return to selected map object');
 
@@ -715,57 +789,100 @@ try {
   await touchPage.getByRole('button', { name: 'Pleine largeur' }).tap();
   const touchPane = touchPage.locator('.graph-canvas.touch-scroll .react-flow__pane');
   await touchPane.waitFor();
-  assert.match(await touchPane.evaluate((element) => getComputedStyle(element).touchAction), /\bpan-y\b/);
+  const touchAction = await touchPane.evaluate((element) => getComputedStyle(element).touchAction);
+  assert.match(touchAction, /\bpan-y\b|\bmanipulation\b/);
+  assert.match(touchAction, /\bpan-x\b|\bmanipulation\b/);
   await touchPage.close();
-  checks.push('Touch emulation preserves vertical scrolling while changing map framing');
+  checks.push('Touch emulation preserves scrolling in both axes while changing map framing');
   assert.ok(
     !requests.some((request) => /DependenciesPane-[^/]+\.js$/.test(request)),
     'The Relations chunk remains deferred until Relations is opened',
   );
-  assert.ok(
-    !requests.some((request) => /cytoscape-(?:fcose|dagre)-[^/]+\.js$/.test(request)),
-    'Layout engines remain deferred until Relations is opened',
-  );
   await page.setViewportSize({ width: 1440, height: 1000 });
   const relationMeasurements = [];
-  for (const graphLayout of ['organic', 'hierarchical']) {
-    await visit({ view: 'relations', node: system.id, level: 'area', depth: '0', layout: graphLayout });
-    const canvas = page.getByTestId('cytoscape-canvas');
-    await page.waitForFunction(
-      () => document.querySelector('[data-testid="cytoscape-canvas"]')?.getAttribute('data-status') === 'ready',
-    );
-    const measurement = await canvas.evaluate((element) => ({
-      layout: new URLSearchParams(location.hash.split('?')[1]).get('layout'),
-      nodes: Number(element.dataset.nodeCount),
-      edges: Number(element.dataset.edgeCount),
-      layoutMs: Number(element.dataset.layoutMs),
-    }));
-    assert.equal(measurement.layout, graphLayout);
-    assert.ok(
-      measurement.nodes > 0 && measurement.edges > 0,
-      'Complete Relations projection contains published elements and links',
-    );
-    assert.ok(
-      Number.isFinite(measurement.layoutMs) && measurement.layoutMs >= 0,
-      'Relations layout time is observable',
-    );
-    assert.ok(
-      measurement.layoutMs < 2000,
-      `Relations ${graphLayout} placement exceeds the current-publication 2 s budget: ${measurement.layoutMs} ms`,
-    );
-    const expectedEngine = graphLayout === 'organic' ? 'fcose' : 'dagre';
-    assert.ok(
-      requests.some((request) => new RegExp(`cytoscape-${expectedEngine}-[^/]+\\.js$`).test(request)),
-      `Relations loads the ${expectedEngine} engine on demand`,
-    );
-    if (graphLayout === 'organic')
-      assert.ok(
-        !requests.some((request) => /cytoscape-dagre-[^/]+\.js$/.test(request)),
-        `The hierarchical engine is not loaded for the organic layout: ${requests.filter((request) => /cytoscape-(?:fcose|dagre)-[^/]+\.js$/.test(request)).join(', ')}`,
-      );
-    relationMeasurements.push(measurement);
-  }
-  checks.push('Complete Relations graph renders in both layouts without errors');
+  const relationModel = adaptPublication(model);
+  await visit({
+    view: 'relations',
+    node: system.id,
+    level: 'capability',
+    depth: '0',
+    layout: 'hierarchical',
+    labels: 'all',
+  });
+  const relationList = page.getByRole('group', { name: 'Liste des relations', exact: true });
+  const relationButtons = relationList.locator('button[data-relation-id]');
+  await relationButtons.first().waitFor();
+  const idsInList = () => relationButtons.evaluateAll((buttons) => buttons.map((button) => button.dataset.relationId));
+  const expectedRelations = (family) =>
+    projectDependencies(relationModel, {
+      focusId: system.id,
+      level: 'capability',
+      depth: 0,
+      direction: 'both',
+      family,
+    })
+      .relations.map((relation) => relation.id)
+      .sort();
+  assert.deepEqual((await idsInList()).sort(), expectedRelations('all'));
+  assert.equal(await page.getByTestId('cytoscape-canvas').count(), 0);
+  assert.equal(await page.getByRole('button', { name: /(?:Afficher|Masquer) le graphe/ }).count(), 0);
+  assert.equal(await page.getByLabel('Disposition', { exact: true }).count(), 0);
+  const beforeSelection = await idsInList();
+  const firstRelationId = beforeSelection[0];
+  await relationButtons.first().click();
+  const relationDetail = page.getByRole('complementary', { name: 'Relation sélectionnée' });
+  await relationDetail.waitFor();
+  assert.deepEqual(await idsInList(), beforeSelection, 'Inspecting a relation retains the filtered list');
+  assert.equal(route().get('relation'), firstRelationId);
+  await relationDetail.getByRole('button', { name: 'Retour à la liste des relations' }).click();
+  await relationDetail.waitFor({ state: 'hidden' });
+  await page.waitForFunction((id) => document.activeElement?.getAttribute('data-relation-id') === id, firstRelationId);
+  assert.equal(await relationButtons.first().evaluate((element) => element === document.activeElement), true);
+  const relationSearch = page.getByLabel('Rechercher dans les relations', { exact: true });
+  await relationSearch.fill(firstRelationId);
+  await page.waitForFunction(
+    () => document.querySelectorAll('.accessible-relations button[data-relation-id]').length < 2,
+  );
+  assert.deepEqual(await idsInList(), [firstRelationId]);
+  await relationSearch.fill('aucun résultat attendu zzz987');
+  await page.waitForFunction(
+    () => document.querySelectorAll('.accessible-relations button[data-relation-id]').length === 0,
+  );
+  await relationSearch.fill('');
+  const advanced = page.locator('.dependency-options');
+  if ((await advanced.getAttribute('open')) === null) await advanced.locator('summary').click();
+  await relationButtons.first().click();
+  await relationDetail.waitFor();
+  await page.getByLabel('Qualification', { exact: true }).selectOption('needs');
+  await page.waitForFunction(() => new URLSearchParams(location.hash.split('?')[1]).get('qualification') === 'needs');
+  await relationDetail.waitFor({ state: 'hidden' });
+  assert.equal(route().has('relation'), false, 'Changing filters clears the selected relation in the same navigation');
+  assert.deepEqual((await idsInList()).sort(), expectedRelations('needs'));
+  relationMeasurements.push({ all: beforeSelection.length, needs: await relationButtons.count() });
+  await page.getByLabel('Qualification', { exact: true }).selectOption('all');
+  await page.waitForFunction(
+    (count) => document.querySelectorAll('.accessible-relations button[data-relation-id]').length === count,
+    beforeSelection.length,
+  );
+  assert.deepEqual(await idsInList(), beforeSelection);
+  await page.setViewportSize({ width: 390, height: 667 });
+  const mobileRelationId = await relationButtons.first().getAttribute('data-relation-id');
+  await relationButtons.first().click();
+  await relationDetail.waitFor();
+  assert.ok(
+    await relationDetail.evaluate((element) => {
+      const rect = element.getBoundingClientRect();
+      return rect.left >= 0 && rect.right <= innerWidth + 1 && rect.top < innerHeight;
+    }),
+  );
+  await page.keyboard.press('Escape');
+  await relationDetail.waitFor({ state: 'hidden' });
+  await page.waitForFunction((id) => document.activeElement?.getAttribute('data-relation-id') === id, mobileRelationId);
+  assert.equal(await relationButtons.first().evaluate((element) => element === document.activeElement), true);
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+  assert.ok(!requests.some((request) => /cytoscape[^/]*-[^/]+\.js$/.test(request)), 'No graph engine is requested');
+  checks.push('Relations list preserves published links, filters, search and keyboard detail on desktop and mobile');
+  await page.setViewportSize({ width: 1440, height: 1000 });
   const oldest = catalog.versions.at(-1);
   const historical = JSON.parse(await readFile(path.join(dist, `data/${oldest.version}/model.json`), 'utf8'));
   const oldDomain = historical.nodes.find(
@@ -797,6 +914,37 @@ try {
     'Historical direct Capabilities remain in their own snapshot',
   );
   checks.push('Historical Domain fallback keeps direct published Capabilities');
+  // The earliest publication has no business links; this fixed historical sample does.
+  const historicalRelationVersion = '2026-10-12.6';
+  assert.ok(catalog.versions.some((entry) => entry.version === historicalRelationVersion));
+  const historicalRelationModel = adaptPublication(
+    JSON.parse(await readFile(path.join(dist, `data/${historicalRelationVersion}/model.json`), 'utf8')),
+  );
+  const historicalRelations = projectDependencies(historicalRelationModel, {
+    level: 'capability',
+    depth: 0,
+    direction: 'both',
+    family: 'all',
+  }).relations;
+  assert.ok(historicalRelations.length > 0, 'The historical publication retains its business relations');
+  await visit({
+    version: historicalRelationVersion,
+    view: 'relations',
+    node: '',
+    level: 'capability',
+    depth: '0',
+    relation: historicalRelations[0].id,
+  });
+  await page
+    .getByRole('region', {
+      name: `Relation entre ${historicalRelationModel.nodeById.get(historicalRelations[0].sourceId)?.name} et ${historicalRelationModel.nodeById.get(historicalRelations[0].targetId)?.name}`,
+      exact: true,
+    })
+    .waitFor();
+  assert.deepEqual((await idsInList()).sort(), historicalRelations.map((relation) => relation.id).sort());
+  assert.equal(route().get('version'), historicalRelationVersion);
+  assert.equal(await page.getByTestId('cytoscape-canvas').count(), 0);
+  checks.push('Historical relation deep links retain the original publication and complete list');
   assert.deepEqual(errors, []);
   assert.ok(!requests.some((request) => request.includes('/api/') || request.includes('backlog')));
   await writeFile(

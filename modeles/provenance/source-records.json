@@ -8827,6 +8827,86 @@
       "captured_text": "## U1103\n\nDate : 2026-10-16. Source : Laurent, ordre de lecture et validation de la restructuration proposée après audit.\n\nVerbatim :\n\n> En termes d'ordre naturel, Stock Optimization à la fin ?\n>\n> Go\n\nPortée : accord sur la proposition complète discutée : une Business Area Demand & Supply Plan Preparation regroupe Demand Forecast Qualification, Demand Plan Development, Supply Plan Development et Planning Scenario Reconciliation ; Master Plan Management, Order Backlog Management et Stock Optimization restent des Business Areas distinctes dans cet ordre de lecture. Les quatre capacités de préparation conservent leur identité et leurs responsabilités ; les trois anciennes Business Areas de préparation sont retirées du backlog courant sans réutilisation de leurs identifiants. Stock Optimization est présenté en dernier sans imposer une séquence d'exécution : ses décisions peuvent aussi alimenter ou faire réviser le plan. L'accord ne modifie ni les engagements des commandes, ni la prévision source de Design & Development, ni la réalisation installée ; il ne demande ni release, ni commit, ni push."
     },
     {
+      "id": "U1104",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1104",
+      "line": 25589,
+      "content_sha256": "2a2f13d86d2697d6c3fe28a36078093833030df2ee3d364ece2485aaf519ba1c",
+      "captured_text": "## U1104\n\nDate : 2026-10-16. Source : Laurent, question sur la pertinence métier du sous-domaine Integration.\n\nVerbatim : « Le sous domaine Intégration n'a pas de sens dans une cartographie des capacités. Ce n'est pas du métier, c'est de la fonctionnalité. Je serais pour le supprimer. Quand penses-tu ? En vois tu d'autres ? Il ne me semble pas. »\n\nPortée : demander un avis sur le retrait du sous-domaine Integration et un examen ciblé des autres sous-domaines qui pourraient relever d'un découpage fonctionnel. L'intention de retrait est exprimée comme proposition ; aucun nouveau rattachement ni accord de modification du modèle n'est encore arrêté."
+    },
+    {
+      "id": "U1105",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1105",
+      "line": 25597,
+      "content_sha256": "2f2d5b1d3c6a63e37d1dd9b70db0d651dfef27fad9f734de76e5e7b14afccb47",
+      "captured_text": "## U1105\n\nDate : 2026-10-16. Source : Laurent, principe de rattachement des capacités d'échange.\n\nVerbatim : « Il faut déplacer les capacité de recupération de données ou de broadcast au plus près de là où les données sont produites. »\n\nPortée : orienter le retrait proposé du sous-domaine Integration en rapprochant les capacités de réception ou de diffusion du périmètre métier producteur des données. Les cas à plusieurs producteurs demandent de préciser si la responsabilité commune est scindée ou conservée ; aucun rattachement détaillé n'est déduit du seul principe."
+    },
+    {
+      "id": "U1106",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1106",
+      "line": 25605,
+      "content_sha256": "751f512d1bfb27f61c6900970b8befe95d88d3c1edff7f6b870778d3717f32d8",
+      "captured_text": "## U1106\n\nDate : 2026-10-16. Source : Laurent, réponse sur les capacités transversales de diffusion.\n\nVerbatim : « Répartir par producteur (Recommended) ».\n\nPortée : répartir les responsabilités de diffusion entre les producteurs concernés, quitte à scinder une capacité transversale. Le libellé « (Recommended) » provient de l'option proposée ; il ne qualifie pas une recommandation formulée par Laurent."
+    },
+    {
+      "id": "U1107",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1107",
+      "line": 25613,
+      "content_sha256": "f2fdb33d403cbfc356a713de0829bc2c791ab2d80a6ba08565adc78366b20b72",
+      "captured_text": "## U1107\n\nDate : 2026-10-16. Source : Laurent, réponse sur l'émission et la réception des données externes.\n\nVerbatim : « Oui, distinguer émission et réception (Recommended) ».\n\nPortée : distinguer la diffusion portée par le producteur externe et la réception ou la tenue locale nécessaire dans Supply, près du référentiel ou du plan alimenté. Le libellé « (Recommended) » provient de l'option proposée."
+    },
+    {
+      "id": "U1108",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1108",
+      "line": 25621,
+      "content_sha256": "f9e6bc489b17ae91dacaf8ff6d31a03cdebbc9a4523fdf3cb2a5c98fdb4e0b81",
+      "captured_text": "## U1108\n\nDate : 2026-10-16. Source : Laurent, précision sur l'origine des faits comptables.\n\nVerbatim : « Les faits de gestion à destination de la compta, ça vient des ledgers de Inventory Management ».\n\nPortée : identifier les ledgers d'Inventory Management comme producteurs des faits de gestion fournis à la comptabilité. Cette précision ne définit pas encore les producteurs de toutes les autres données destinées à la planification ou à l'amélioration produit."
+    },
+    {
+      "id": "U1109",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1109",
+      "line": 25629,
+      "content_sha256": "5db8450555796615110d53c9e13d06afea2db12e6b9be9c57f77222156f920d5",
+      "captured_text": "## U1109\n\nDate : 2026-10-16. Source : Laurent, précision sur Product Feedback et les données de planification.\n\nVerbatim : « Pareil que la compta, ce sont les ledger de stock » ; « Oui, stock documenté seulement (Recommended) ».\n\nPortée : les ledgers d'Inventory Management sont aussi les producteurs des faits destinés à Product Feedback. Pour les données destinées au Master Plan, ne retenir à ce stade que les positions de stock documentées comme source ; les autres producteurs restent à identifier. Le libellé « (Recommended) » provient de l'option proposée."
+    },
+    {
+      "id": "U1110",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1110",
+      "line": 25637,
+      "content_sha256": "2f345c51fc9cb121935cbf1cfd6431bbaadbc936b7060f288681f1d9e33d0f2e",
+      "captured_text": "## U1110\n\nDate : 2026-10-16. Source : Laurent, précision sur les faits des Cases et question de couverture du modèle.\n\nVerbatim :\n\n> Dans une logique de Case Management, tous les événements métier produit dans le processus géré par le Case, que ces événements soient internes ou externes et captés (par la sentinelle), sont stocké dans un ledger également. Pas un ledger Stock mais un Ledger Process (Process Management). Ce ledger permet de reconstituer les faits passés, d'avoir l'état exact d'une demande à un instant t et permet d'alimenter l'analytics.\n>\n> Est-ce qu'on a bien ce ledger et les liens associés dans le modèle ?\n\nPortée : vérifier si Process Management comporte une responsabilité distincte de conservation des événements métier de chaque Case, couvrant événements internes et externes captés, reconstitution historique et alimentation de l'analytics, ainsi que ses liens producteurs et consommateurs. La question demande un constat sur le backlog et la publication ; elle ne vaut pas encore accord sur une nouvelle fiche ni sur ses rattachements détaillés."
+    },
+    {
+      "id": "U1111",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1111",
+      "line": 25649,
+      "content_sha256": "147e2885ea3f122656de4c7bb6c705bf75d564e7b8ca303fb4ae44bc75598e95",
+      "captured_text": "## U1111\n\nDate : 2026-10-16. Source : Laurent, précision sur la source des traces analysées.\n\nVerbatim : « Process Mining analyse effectivement les traces qui sont dans ce ledger. »\n\nPortée : dans la proposition de Process Ledger, rendre explicite que Process Mining analyse les traces conservées par ce ledger. Ne pas confondre cette consommation avec la tenue du ledger ni présenter le lien comme déjà présent dans le modèle courant."
+    },
+    {
+      "id": "U1112",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1112",
+      "line": 25657,
+      "content_sha256": "25ac21f18e53b73ae8040875852bb1eb7d99f628167ab7b91029560f9bc312bf",
+      "captured_text": "## U1112\n\nDate : 2026-10-16. Source : Laurent, demande d'audit des flux de la cartographie.\n\nVerbatim : « On est en très de voir comment voir les flux dans une cartographie. Je me rends compte qu'il est possible qu'on n'ait jamais vérifié si c'était bon. Je veux un audit des flux principalement centré sur Supply chain Orchestration et les domaines en adhérence. »\n\nPortée : auditer le sens métier et la couverture des flux internes et des échanges avec les domaines adjacents à Supply Chain Orchestration, ainsi que leur fidélité de lecture cartographique. Comparer backlog et publication courante ; distinguer contenu existant, manques documentaires et recommandations. La demande porte sur l'audit, sans adoption implicite des corrections proposées ni publication."
+    },
+    {
+      "id": "U1113",
+      "path": "connaissance/01-contributions-utilisateur.md",
+      "anchor": "u1113",
+      "line": 25665,
+      "content_sha256": "9661f3e2842fe8fc73cfc783df2fdf2a24340d3f4cea9af32eda15d9e07880a5",
+      "captured_text": "## U1113\n\nDate : 2026-10-16. Source : Laurent, autorisation d'appliquer les corrections de l'audit des flux.\n\nVerbatim : « Go pour corriger le modèle et les flux, en commençant par les cinq points prioritaires, puis les chaînes manquantes. »\n\nPortée : appliquer le lot cohérent de correction du modèle et des relations décrit par l'audit U1112, avec priorité aux producteurs et destinataires de promesse et de planification, à Plan Application, à Process Ledger et à ses consommateurs, aux échanges détaillés avec Logistics et aux chaînes de préparation des plans, puis aux autres chaînes documentées manquantes. Aligner le glossaire et préserver les responsabilités métier et les portées des accords historiques. L'accord porte sur ces corrections et leur mise en cohérence, sans présumer de réalisation installée ; il ne demande ni release, ni commit, ni push."
+    },
+    {
       "id": "F001",
       "path": "connaissance/02-assertions.md",
       "anchor": "f001",

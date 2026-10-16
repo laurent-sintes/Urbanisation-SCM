@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import { dependencyLevel, dependencyLevels, projectDependencies } from './src/dependencyGraph.ts';
 import { adaptPublication, cardChildListOf, childrenOf, hasCapabilityCards, lineageOf, rootsOf } from './src/model.ts';
 import { readRoute, routeHash } from './src/navigation.ts';
-import { kindLabel, modelingDepthLabel } from './src/presentation.ts';
+import { kindLabel } from './src/presentation.ts';
 
 const node = (id, kind, depth) => ({ id, kind, fields: { name: id, ...(depth ? { modeling_depth: depth } : {}) } });
 const edge = (id, type, source_id, target_id) => ({ id, type, source_id, target_id });
@@ -51,8 +51,6 @@ test('overview shows explicit domains, compact contexts and complete breadcrumbs
     ['operations', 'orchestration', 'orders', 'order'],
   );
   assert.equal(kindLabel(model.nodeById.get('operations')), 'Business System');
-  assert.equal(modelingDepthLabel(model.nodeById.get('orchestration')), 'Capacités et comportements');
-  assert.equal(modelingDepthLabel(model.nodeById.get('sales')), 'Vue de domaine');
 });
 
 test('dependency system level preserves original business relations and route', () => {

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { chooseLayoutCandidate, overviewLayout, prominentChildIndex } from './src/adaptiveLayout.ts';
 import { chooseMapGrid } from './src/mapLayout.ts';
+import { operationsMapSlots } from './src/mapPlacement.ts';
 import { widthFit } from './src/mapZoom.ts';
 
 const panels = [{ heights: [420, 380, 360, 340, 320, 300], headingHeight: 52 }];
@@ -67,6 +68,27 @@ test('domain cards share their row height beside a spanning subdomain', () => {
   assert.ok(prominentRow);
   assert.ok(prominentRow.some((item) => item.span === 2));
   assert.ok(prominentRow.every((item) => item.displayHeight === 1100));
+});
+
+test('fixed system rows keep unequal domain contents within equal outer heights', () => {
+  const ids = ['domain-sourcing-procurement', 'domain-sales', 'supply-chain-orchestration'];
+  const grid = chooseMapGrid(
+    [{ heights: [500, 850, 1600], headingHeight: 0 }],
+    1200,
+    800,
+    'width',
+    true,
+    undefined,
+    operationsMapSlots('system-business-operations', ids),
+  );
+  assert.deepEqual(
+    grid.rows[0][0].map((item) => item.height),
+    [500, 850],
+  );
+  assert.deepEqual(
+    grid.rows[0][0].map((item) => item.displayHeight),
+    [850, 850],
+  );
 });
 
 test('overview gives a clearly dominant system and nested domain more room', () => {

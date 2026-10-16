@@ -25,19 +25,6 @@ export function kindLabel(node: AtlasNode) {
     )[node.kind] || node.kind
   );
 }
-export function modelingDepthLabel(node: AtlasNode): string {
-  if (node.kind === 'domain' && node.fields.modeling_depth === 'domains') return 'Vue de domaine';
-  return (
-    (
-      {
-        context: 'Vue de contexte',
-        domains: 'Vue des domaines',
-        capabilities: 'Capacités',
-        behaviors: 'Capacités et comportements',
-      } as Record<string, string>
-    )[String(node.fields.modeling_depth)] || ''
-  );
-}
 export function statusLabel(element: AtlasNode | AtlasRelation) {
   return (
     (

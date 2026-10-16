@@ -149,22 +149,30 @@ export function ContextReturn() {
   if (!context?.model || !context.route.returnTo) return null;
   const origin = readRoute(context.route.returnTo);
   if (origin.version && origin.version !== context.model.version) return null;
+  const scopeName =
+    origin.scope && origin.scope !== '@root'
+      ? context.model.nodeById.get(origin.scope)?.name || origin.scope
+      : context.model.nodes.find((node) => node.kind === 'universe')?.name || '';
   const label =
-    origin.view === 'map'
-      ? `Retour à la carte${origin.scope ? ` : ${context.model.nodeById.get(origin.scope)?.name || origin.scope}` : ''}`
-      : origin.view === 'scenarios'
-        ? origin.scenario
-          ? 'Retour au scénario'
-          : 'Retour au catalogue'
-        : origin.view === 'metamodel'
-          ? 'Retour au métamodèle'
-          : origin.view === 'principles'
-            ? context.metaGuide
-              ? 'Retour à la transformation'
-              : 'Retour à la méthode'
-            : origin.view === 'glossary'
-              ? 'Retour au glossaire'
-              : `Retour à la fiche : ${context.model.nodeById.get(origin.node)?.name || origin.node}`;
+    origin.view === 'flows'
+      ? `Retour à la carte Flux${scopeName ? ` : ${scopeName}` : ''}`
+      : origin.view === 'map'
+        ? `Retour à la carte${scopeName ? ` : ${scopeName}` : ''}`
+        : origin.view === 'relations'
+          ? `Retour aux relations${origin.node && context.model.nodeById.has(origin.node) ? ` : ${context.model.nodeById.get(origin.node)?.name}` : ''}`
+          : origin.view === 'scenarios'
+            ? origin.scenario
+              ? 'Retour au scénario'
+              : 'Retour au catalogue'
+            : origin.view === 'metamodel'
+              ? 'Retour au métamodèle'
+              : origin.view === 'principles'
+                ? context.metaGuide
+                  ? 'Retour à la transformation'
+                  : 'Retour à la méthode'
+                : origin.view === 'glossary'
+                  ? 'Retour au glossaire'
+                  : `Retour à la fiche : ${context.model.nodeById.get(origin.node)?.name || origin.node}`;
   return (
     <p className="context-return">
       <a href={context.route.returnTo}>{label}</a>

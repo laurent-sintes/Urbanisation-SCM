@@ -8399,7 +8399,7 @@ terms:
 
     Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-    Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+    Cette capacité appartient à [Reference Maintenance](model:ba-reference-maintenance), dans [Operational References](model:business-references). Les domaines producteurs portent l’émission ; la réception et la référence utilisable restent locales à la Supply. Les maîtres des apports commerciaux, de conditionnement et de fournitures restent à documenter par objet.
 
     Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8428,13 +8428,14 @@ terms:
   - U897
   - U898
   - U996
+  - U1113
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
   review:
     state: proposed
-    note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite.'
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: SAP
     product: SAP Master Data Integration with SAP Field Service and Asset Management
@@ -8462,7 +8463,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8511,7 +8512,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8560,7 +8561,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8612,7 +8613,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8662,7 +8663,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8721,7 +8722,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8765,7 +8766,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8797,7 +8798,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [Integration](model:subdomain-integration), [Inbound Information Integration](model:ba-inbound-information-integration). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8821,8 +8822,8 @@ terms:
       source_refs:
       - U717
       - ELM710
-  revision: 1
-  last_modified: '2026-10-07T00:00:00Z'
+  revision: 2
+  last_modified: '2026-10-16T00:00:00Z'
 - id: TER051
   name: Movement Authorization
   short_description: Autorisation métier de déplacer une marchandise dans un périmètre et sous des conditions, dont un document
@@ -10705,6 +10706,8 @@ terms:
     [Process Exception Management](glossary:TER169) peut tenir un dossier de résolution reliant plusieurs commandes et contributions. Le dossier ne remplace pas leurs identités ou engagements ; une tâche terminée ne prouve pas à elle seule la résolution.
 
     Les parcours opérationnels relèvent principalement de [Commerce](model:domain-sales) et de [Sourcing and Procurement](model:domain-sourcing-procurement). Le Case porte les règles de son contexte ; [Process Orchestration](model:order-workflow-orchestration) fournit les moyens génériques de conduite. Exemple : le [Credit Check](glossary:TER155) du parcours [Wholesale Commerce](model:subdomain-sales-wholesale) mobilise les références et transitions du Core sans devenir une capacité financière du Core.
+
+    [Process Ledger](glossary:TER375) conserve les [événements de processus](glossary:TER376) internes et externes du dossier géré, leurs dates, origines et corrections. Ce registre permet à la visibilité de reconstituer sa situation passée et à [Process Mining](glossary:TER173) d’analyser les traces ; les commandes liées conservent leurs identités et engagements propres.
   source_refs:
   - U169
   - U173
@@ -10721,13 +10724,14 @@ terms:
   - U896
   - U897
   - U898
+  - U1113
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
   review:
     state: proposed
-    note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite.'
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: OMG
     product: Case Management Model and Notation
@@ -10777,7 +10781,8 @@ terms:
     choice: Rassembler les informations et actions nécessaires pour traiter une situation. Case désigne un dossier, distinct
       d’une commande et sans être un domaine ou niveau du modèle FLOW.
     flow_scope: Dossier d’une situation, demande ou problème à résoudre.
-    flow_approach: Relier pièces, échanges et activités autour de la situation suivie.
+    flow_approach: Relier pièces, échanges et activités autour de la situation suivie ; conserver les événements du dossier
+      dans [Process Ledger](glossary:TER375) avec dates, origines et corrections.
     synthesis:
     - OMG traite la structure d’un dossier adaptable ; Microsoft donne des exemples d’utilisation opérationnelle. Leur point
       commun est de réunir des éléments autour d’une situation, même si les actions ne sont pas toutes prévues au départ.
@@ -10803,7 +10808,8 @@ terms:
     - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
     source_refs:
     - U853
-  last_modified: '2026-10-07T00:00:00Z'
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER065
   name: Supply Order
   short_description: Terme générique local pour une commande dont la Supply travaille la couverture ou la satisfaction ; préciser
@@ -17581,9 +17587,10 @@ terms:
     décide des priorités et affectations entre commandes. Une proposition de promesse n’est ni une confirmation, ni une réservation,
     ni une affectation effective. Les engagements restent dans [Order Management](model:D04). Exemple fictif : après un retard
     de réception, répondre à une nouvelle demande selon le stock, les apports réalistes et les commandes déjà engagées.'
-  notes: Availability exprime le résultat métier recherché. Le matching reste un mécanisme de rapprochement et d’arbitrage
-    des besoins et ressources, sans résumer tout le sous-domaine. Plan Visibility conserve demande prévisionnelle et projections
-    d’entrées et de sorties.
+  notes: '[Availability](glossary:TER112) établit les possibilités de [promesse](glossary:TER014) pour une demande identifiée.
+    [Order Backlog Management](glossary:TER269), dans [Master Plan](glossary:TER111), porte les arbitrages collectifs de priorités
+    et d’[affectation](glossary:TER017). [Plan Visibility](glossary:TER151) contextualise les [Demand Plans](glossary:TER099)
+    et [Supply Plans](glossary:TER098) ; les familles de [commandes](glossary:TER012) conservent leurs engagements.'
   source_refs:
   - P81
   - P83
@@ -17695,13 +17702,14 @@ terms:
   - U1019
   - U1080
   - U1082
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u797
   review:
-    state: partial
-    note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
-      sans réalisation installée déduite.
+    state: proposed
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: Oracle
     product: Overview of Backlog Management Processes
@@ -17976,8 +17984,8 @@ terms:
     - U891
     term_choice: Nom et maille FLOW ; les sources appuient la distinction, sans imposer ce regroupement.
     definition_choice: Rendre les arbitrages de couverture lisibles et expliquer une absence de solution admissible.
-  revision: 5
-  last_modified: '2026-10-15T00:00:00Z'
+  revision: 6
+  last_modified: '2026-10-16T00:00:00Z'
   market_inspiration:
     choice: Déterminer quelles demandes peuvent être satisfaites, en quelles quantités, à quelles dates et sous quelles conditions
       ; arbitrer les ressources et les adaptations nécessaires à leur couverture.
@@ -18011,27 +18019,27 @@ terms:
       source_url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26b/faubm/overview-of-backlog-management-processes.html
 - id: TER113
   name: Integration
-  short_description: Recevoir et fournir les informations métier échangées entre [Supply Chain](glossary:TER084) Orchestration
-    et les autres domaines, selon les contrats convenus, sans reprendre le pilotage des exécutants.
-  definition: Recevoir des contributions externes et fournir les informations nécessaires aux autres domaines ou à la planification
-    interne, avec provenance et corrections, sans piloter les exécutants.
-  context: |-
-    Recevoir les référentiels et contributions de plans d’origine externe, puis fournir les faits et données préparés aux destinataires autorisés. [Inbound Information Integration](model:ba-inbound-information-integration) regroupe [Reference Ingestion](model:master-data-ingestion) et [Plan Ingestion](model:plans-ingestion). [Outbound Information Provision](model:ba-outbound-information-provision) regroupe [Accounting Data Provision](model:accounting-data-provision), [Planning Data Provision](model:planning-data-provision) et [Product Feedback](model:product-feedback). Ces deux [Business Areas](method:MOD039) séparent réception et fourniture des informations. Planning Data Provision prépare des données du Core pour [Master Plan](model:domain-plan), autre sous-domaine du même Core ; elle n’en reçoit pas le plan en retour.
-
-    [Inventory Tracking](model:D01.f) et [Operations Tracking](model:D07.d) intègrent les faits opérationnels ; les capacités de décision gardent leur responsabilité. Chaque échange ou préparation conserve sens, origine, dates, version et corrections. Exemple fictif : un comptage corrigé de 100 à 80 pièces alimente Finance et le prochain calcul de plan selon deux usages distincts.
-  notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée.
+  short_description: Échanges de contributions entre responsabilités métier avec leur origine et leurs corrections.
+  definition: Échanger et prendre en compte des contributions métier entre leurs producteurs et leurs destinataires.
+  context: 'Dans la cartographie courante, ces responsabilités sont réparties près des données : [Operational References](model:business-references)
+    reçoit les références, [Master Plan Management](model:ba-master-plan-management) les contributions de planification externes
+    et [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues.'
+  notes: Le regroupement historique Integration est retiré du modèle courant sous U1113 ; le terme décrit des échanges, sans
+    responsabilité centrale ni sous-domaine autonome.
   source_refs:
   - U826
   - ELM853
   - ELM854
   - U887
   - U1091
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u826
   review:
     state: proposed
-    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Supply Chain Management
@@ -18041,8 +18049,9 @@ terms:
     similarities: La planification reçoit historiques et références et fournit des prévisions.
     differences: Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention
       FLOW, pas une taxonomie éditeur.
-    flow_position: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines,
-      selon les contrats convenus, sans reprendre le pilotage des exécutants.
+    flow_position: 'Dans la cartographie courante, ces responsabilités sont réparties près des données : [Operational References](model:business-references)
+      reçoit les références, [Master Plan Management](model:ba-master-plan-management) les contributions de planification
+      externes et [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues.'
     source_title: Demand planning home page
     source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/demand-planning/demand-planning-home-page
     source_version: Documentation évolutive ; édition globale non indiquée
@@ -18064,8 +18073,9 @@ terms:
     similarities: Commandes et stocks alimentent la planification, avec chargements initiaux et changements.
     differences: Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une convention
       FLOW, pas une taxonomie éditeur.
-    flow_position: Recevoir et fournir les informations métier échangées entre Supply Chain Orchestration et les autres domaines,
-      selon les contrats convenus, sans reprendre le pilotage des exécutants.
+    flow_position: 'Dans la cartographie courante, ces responsabilités sont réparties près des données : [Operational References](model:business-references)
+      reçoit les références, [Master Plan Management](model:ba-master-plan-management) les contributions de planification
+      externes et [Inventory Management](model:D01) fournit les faits de ses registres et les positions connues.'
     source_title: Administrator’s Guide
     source_url: https://help.sap.com/doc/227fcaf7918e45378f8cb20a45ffe6a2/1.0%20SP19/en-US/loioc5148f2152294904ac379b94cb902e59.pdf
     source_version: 1.0 SP19, Order-Based Planning Integration, pages 33–35
@@ -18079,6 +18089,8 @@ terms:
     term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
     definition_choice: Les échanges sont documentés ; le sous-domaine est-ouest et les catégories Inbound/Outbound sont une
       convention FLOW, pas une taxonomie éditeur.
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER114
   name: Accounting Data Provision
   short_description: Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs
@@ -18086,11 +18098,13 @@ terms:
   definition: Sélectionner, préparer et transmettre les faits de gestion nécessaires à la comptabilité, avec leurs justificatifs
     et corrections.
   context: |-
-    Sélectionner les [faits de gestion](glossary:TER120) selon le contrat convenu avec [Finance](glossary:TER117), vérifier les informations attendues et transmettre références, dates, justificatifs et corrections. [Inventory Ledger](model:D01.g), [Inventory Ownership Ledger](model:inventory-ownership-ledger) et les autres producteurs restent responsables de leurs faits.
+    Sélectionner les [faits de gestion](glossary:TER120) selon le contrat convenu avec [Finance](glossary:TER117), vérifier les informations attendues et transmettre références, dates, justificatifs et corrections. [Inventory Ledger](model:D01.g) et [Inventory Ownership Ledger](model:inventory-ownership-ledger) produisent les faits de ce périmètre : mouvements, états et changements de propriétaire reconnus. La capacité est placée dans [Inventory State Management](model:ba-inventory-position-management), près de ces producteurs ; chaque registre conserve l’autorité sur ses faits. Les factures, paiements et autres faits produits ailleurs restent à leurs producteurs, sans collecte centrale déduite.
 
     Suivre transmission, acceptation ou rejet ; une réception technique ne prouve pas la comptabilisation. Une correction garde son lien au fait initial et une reprise ne crée pas un second fait. [Financial Accounting](model:subdomain-financial-accounting) applique les règles comptables ; les [écritures](glossary:TER121) et leur enregistrement restent sous Finance. Exemple fictif : transmettre la correction de 100 à 80 pièces sans déclarer une réception supplémentaire de 80.
 
     Fournir aux responsables de [Commercial Settlement Management](model:subdomain-commercial-settlement-management) les faits justifiés utiles à l’[assiette éligible](glossary:TER262), avec origine, période, liens et corrections, sans calculer le droit à [ristourne](glossary:TER259), [prime commerciale](glossary:TER264) ou [commission](glossary:TER260). Les ventes emportées, factures et paiements provenant d’autres producteurs restent sous leur responsabilité ; leur exhaustivité ne se déduit pas des seuls faits Supply.
+
+    [Financial Accounting](model:subdomain-financial-accounting) retourne l’acceptation métier, le rejet motivé ou la référence de prise en compte comptable lorsqu’elle est connue. Distinguer réception technique, acceptation et enregistrement ; un rejet ne corrige pas silencieusement le fait source.
   notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée. U981 conserve le sens métier
     et limite la profondeur de Finance au contexte ; aucun transfert comptable à FLOW.
   source_refs:
@@ -18099,12 +18113,14 @@ terms:
   - ELM850
   - U981
   - U996
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u826
   review:
     state: proposed
-    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Finance
@@ -18115,11 +18131,13 @@ terms:
     differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
       et enregistrement comptable.
     flow_position: |-
-      Sélectionner les [faits de gestion](glossary:TER120) selon le contrat convenu avec [Finance](glossary:TER117), vérifier les informations attendues et transmettre références, dates, justificatifs et corrections. [Inventory Ledger](model:D01.g), [Inventory Ownership Ledger](model:inventory-ownership-ledger) et les autres producteurs restent responsables de leurs faits.
+      Sélectionner les [faits de gestion](glossary:TER120) selon le contrat convenu avec [Finance](glossary:TER117), vérifier les informations attendues et transmettre références, dates, justificatifs et corrections. [Inventory Ledger](model:D01.g) et [Inventory Ownership Ledger](model:inventory-ownership-ledger) produisent les faits de ce périmètre : mouvements, états et changements de propriétaire reconnus. La capacité est placée dans [Inventory State Management](model:ba-inventory-position-management), près de ces producteurs ; chaque registre conserve l’autorité sur ses faits. Les factures, paiements et autres faits produits ailleurs restent à leurs producteurs, sans collecte centrale déduite.
 
       Suivre transmission, acceptation ou rejet ; une réception technique ne prouve pas la comptabilisation. Une correction garde son lien au fait initial et une reprise ne crée pas un second fait. [Financial Accounting](model:subdomain-financial-accounting) applique les règles comptables ; les [écritures](glossary:TER121) et leur enregistrement restent sous Finance. Exemple fictif : transmettre la correction de 100 à 80 pièces sans déclarer une réception supplémentaire de 80.
 
       Fournir aux responsables de [Commercial Settlement Management](model:subdomain-commercial-settlement-management) les faits justifiés utiles à l’[assiette éligible](glossary:TER262), avec origine, période, liens et corrections, sans calculer le droit à [ristourne](glossary:TER259), [prime commerciale](glossary:TER264) ou [commission](glossary:TER260). Les ventes emportées, factures et paiements provenant d’autres producteurs restent sous leur responsabilité ; leur exhaustivité ne se déduit pas des seuls faits Supply.
+
+      [Financial Accounting](model:subdomain-financial-accounting) retourne l’acceptation métier, le rejet motivé ou la référence de prise en compte comptable lorsqu’elle est connue. Distinguer réception technique, acceptation et enregistrement ; un rejet ne corrige pas silencieusement le fait source.
     source_title: Inventory posting
     source_url: https://learn.microsoft.com/en-us/dynamics365/finance/general-ledger/inventory-posting
     source_version: Documentation évolutive ; édition globale non indiquée
@@ -18142,11 +18160,13 @@ terms:
     differences: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
       et enregistrement comptable.
     flow_position: |-
-      Sélectionner les [faits de gestion](glossary:TER120) selon le contrat convenu avec [Finance](glossary:TER117), vérifier les informations attendues et transmettre références, dates, justificatifs et corrections. [Inventory Ledger](model:D01.g), [Inventory Ownership Ledger](model:inventory-ownership-ledger) et les autres producteurs restent responsables de leurs faits.
+      Sélectionner les [faits de gestion](glossary:TER120) selon le contrat convenu avec [Finance](glossary:TER117), vérifier les informations attendues et transmettre références, dates, justificatifs et corrections. [Inventory Ledger](model:D01.g) et [Inventory Ownership Ledger](model:inventory-ownership-ledger) produisent les faits de ce périmètre : mouvements, états et changements de propriétaire reconnus. La capacité est placée dans [Inventory State Management](model:ba-inventory-position-management), près de ces producteurs ; chaque registre conserve l’autorité sur ses faits. Les factures, paiements et autres faits produits ailleurs restent à leurs producteurs, sans collecte centrale déduite.
 
       Suivre transmission, acceptation ou rejet ; une réception technique ne prouve pas la comptabilisation. Une correction garde son lien au fait initial et une reprise ne crée pas un second fait. [Financial Accounting](model:subdomain-financial-accounting) applique les règles comptables ; les [écritures](glossary:TER121) et leur enregistrement restent sous Finance. Exemple fictif : transmettre la correction de 100 à 80 pièces sans déclarer une réception supplémentaire de 80.
 
       Fournir aux responsables de [Commercial Settlement Management](model:subdomain-commercial-settlement-management) les faits justifiés utiles à l’[assiette éligible](glossary:TER262), avec origine, période, liens et corrections, sans calculer le droit à [ristourne](glossary:TER259), [prime commerciale](glossary:TER264) ou [commission](glossary:TER260). Les ventes emportées, factures et paiements provenant d’autres producteurs restent sous leur responsabilité ; leur exhaustivité ne se déduit pas des seuls faits Supply.
+
+      [Financial Accounting](model:subdomain-financial-accounting) retourne l’acceptation métier, le rejet motivé ou la référence de prise en compte comptable lorsqu’elle est connue. Distinguer réception technique, acceptation et enregistrement ; un rejet ne corrige pas silencieusement le fait source.
     source_title: Introducing Goods Movements
     source_url: https://learning.sap.com/courses/managing-inventory-movements-and-stock-transfers-in-sap-s-4hana-cloud-public-edition/introducing-goods-movements_ba906e87-54e8-4f56-837e-bde4d82599de
     source_version: Documentation évolutive ; édition globale non indiquée
@@ -18160,16 +18180,18 @@ terms:
     term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
     definition_choice: Les produits réunissent parfois les responsabilités ; FLOW distingue fourniture des faits, interprétation
       et enregistrement comptable.
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER115
   name: Planning Data Provision
-  short_description: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs
-    corrections.
-  definition: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs corrections.
-  context: 'Préparer les historiques, positions, commandes et engagements connus du Core dont [Master Plan](model:domain-plan)
-    a besoin, avec population, granularité, dates, fraîcheur et corrections. Distinguer faits, prévisions et engagements ;
-    une donnée interne préparée n’est pas un plan externe à ingérer. [Plan Ingestion](model:plans-ingestion) reçoit uniquement
-    des contributions de plans provenant d’une source externe identifiée. Exemple fictif : une position corrigée de 100 à
-    80 pièces est disponible pour un nouveau calcul ; elle ne crée pas seule une révision du plan.'
+  short_description: Fournir à la planification les positions de stock documentées, avec leurs dates, leur provenance, leurs
+    corrections et leurs limites de connaissance.
+  definition: Fournir à la planification les positions de stock documentées, avec leurs dates, leur provenance, leurs corrections
+    et leurs limites de connaissance.
+  context: |-
+    Préparer les positions de stock connues fournies par [Inventory Visibility](model:D01.c) pour [Master Plan](model:domain-plan), avec produits, lieux, population, granularité, dates, fraîcheur et corrections. La capacité appartient à [Inventory State Management](model:ba-inventory-position-management). Distinguer faits, positions projetées, prévisions et engagements ; préserver les liens qui évitent de compter deux fois la même ressource.
+
+    Le périmètre documenté est le stock. Les autres producteurs d’entrées du plan restent à qualifier et gardent leur responsabilité de fourniture. [Plan Ingestion](model:plans-ingestion) reçoit les contributions de plans provenant d’une source externe identifiée. Exemple fictif : une position corrigée de 100 à 80 pièces est fournie pour un nouveau calcul ; cette fourniture ne révise pas à elle seule le plan.
   notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée.
   source_refs:
   - U826
@@ -18177,12 +18199,14 @@ terms:
   - ELM854
   - U1080
   - U1091
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u826
   review:
     state: proposed
-    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Supply Chain Management
@@ -18191,8 +18215,10 @@ terms:
     relationship: Recouvrement partiel
     similarities: La planification reçoit historiques et références et fournit des prévisions.
     differences: Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Master Plan.
-    flow_position: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs
-      corrections.
+    flow_position: |-
+      Préparer les positions de stock connues fournies par [Inventory Visibility](model:D01.c) pour [Master Plan](model:domain-plan), avec produits, lieux, population, granularité, dates, fraîcheur et corrections. La capacité appartient à [Inventory State Management](model:ba-inventory-position-management). Distinguer faits, positions projetées, prévisions et engagements ; préserver les liens qui évitent de compter deux fois la même ressource.
+
+      Le périmètre documenté est le stock. Les autres producteurs d’entrées du plan restent à qualifier et gardent leur responsabilité de fourniture. [Plan Ingestion](model:plans-ingestion) reçoit les contributions de plans provenant d’une source externe identifiée. Exemple fictif : une position corrigée de 100 à 80 pièces est fournie pour un nouveau calcul ; cette fourniture ne révise pas à elle seule le plan.
     source_title: Demand planning home page
     source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/demand-planning/demand-planning-home-page
     source_version: Documentation évolutive ; édition globale non indiquée
@@ -18204,7 +18230,8 @@ terms:
     - ELM853
     - U826
     term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
-    definition_choice: Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Master Plan.
+    definition_choice: FLOW limite ici la fourniture aux positions de stock documentées ; la source illustre les échanges
+      de données de planification sans établir les autres producteurs.
   - vendor: SAP
     product: SAP S/4HANA Supply Chain Integration Add-On for SAP IBP
     element_name: Administrator’s Guide
@@ -18212,8 +18239,10 @@ terms:
     relationship: Recouvrement partiel
     similarities: Commandes et stocks alimentent la planification, avec chargements initiaux et changements.
     differences: Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Master Plan.
-    flow_position: Fournir les données opérationnelles utiles à la planification, avec leurs dates, leur provenance et leurs
-      corrections.
+    flow_position: |-
+      Préparer les positions de stock connues fournies par [Inventory Visibility](model:D01.c) pour [Master Plan](model:domain-plan), avec produits, lieux, population, granularité, dates, fraîcheur et corrections. La capacité appartient à [Inventory State Management](model:ba-inventory-position-management). Distinguer faits, positions projetées, prévisions et engagements ; préserver les liens qui évitent de compter deux fois la même ressource.
+
+      Le périmètre documenté est le stock. Les autres producteurs d’entrées du plan restent à qualifier et gardent leur responsabilité de fourniture. [Plan Ingestion](model:plans-ingestion) reçoit les contributions de plans provenant d’une source externe identifiée. Exemple fictif : une position corrigée de 100 à 80 pièces est fournie pour un nouveau calcul ; cette fourniture ne révise pas à elle seule le plan.
     source_title: Administrator’s Guide
     source_url: https://help.sap.com/doc/227fcaf7918e45378f8cb20a45ffe6a2/1.0%20SP19/en-US/loioc5148f2152294904ac379b94cb902e59.pdf
     source_version: 1.0 SP19, Order-Based Planning Integration, pages 33–35
@@ -18225,26 +18254,33 @@ terms:
     - ELM854
     - U826
     term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
-    definition_choice: Les produits intègrent échanges et calculs ; FLOW conserve les calculs de plans dans Master Plan.
-  revision: 1
-  last_modified: '2026-10-15T00:00:00Z'
+    definition_choice: FLOW limite ici la fourniture aux positions de stock documentées ; la source illustre les échanges
+      de données de planification sans établir les autres producteurs.
+  revision: 2
+  last_modified: '2026-10-16T00:00:00Z'
 - id: TER116
   name: Product Feedback
   short_description: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
   definition: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
-  context: Sortie vers les responsables de conception et développement produit. Leurs outils peuvent recevoir ces constats
-    ; les modifications produit restent sous leur responsabilité.
+  context: |-
+    Préparer et fournir les constats opérationnels utiles aux responsables de conception et développement produit, avec produit concerné, contexte, dates et preuves. [Design & Development](model:system-design-development) conserve l’instruction et les décisions de modification.
+
+    Un signalement ne modifie pas automatiquement la définition du produit. Cette capacité ne représente pas tous les échanges de données de conception. Les familles de constats et leur contrat restent à qualifier. Exemple fictif : transmettre un défaut récurrent d’emballage constaté à la réception, avec les quantités et circonstances connues, sans affirmer une cause non établie.
+
+    Les constats fournis proviennent des faits reconnus conservés dans [Inventory Ledger](model:D01.g) et [Inventory Ownership Ledger](model:inventory-ownership-ledger), selon leur pertinence pour le produit. La capacité appartient à [Inventory State Management](model:ba-inventory-position-management). Fournir le fait et sa preuve connus ; ne pas inventer sa cause ni transformer un écart de propriété en défaut physique. Les corrections gardent le lien au constat initial.
   notes: Sens FLOW ; nouvelles explications proposées, sans preuve de réalisation installée.
   source_refs:
   - U826
   - ELM855
   - ELM856
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u826
   review:
     state: proposed
-    note: Alignement du vocabulaire dans le lot autorisé ; pas de validation mot à mot des compléments.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Supply Chain Management
@@ -18254,7 +18290,12 @@ terms:
     similarities: Les services opérationnels peuvent fournir des signalements et demandes d’amélioration produit.
     differences: Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit textile
       ; FLOW fournit les constats et laisse la décision de changement au destinataire.
-    flow_position: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+    flow_position: |-
+      Préparer et fournir les constats opérationnels utiles aux responsables de conception et développement produit, avec produit concerné, contexte, dates et preuves. [Design & Development](model:system-design-development) conserve l’instruction et les décisions de modification.
+
+      Un signalement ne modifie pas automatiquement la définition du produit. Cette capacité ne représente pas tous les échanges de données de conception. Les familles de constats et leur contrat restent à qualifier. Exemple fictif : transmettre un défaut récurrent d’emballage constaté à la réception, avec les quantités et circonstances connues, sans affirmer une cause non établie.
+
+      Les constats fournis proviennent des faits reconnus conservés dans [Inventory Ledger](model:D01.g) et [Inventory Ownership Ledger](model:inventory-ownership-ledger), selon leur pertinence pour le produit. La capacité appartient à [Inventory State Management](model:ba-inventory-position-management). Fournir le fait et sa preuve connus ; ne pas inventer sa cause ni transformer un écart de propriété en défaut physique. Les corrections gardent le lien au constat initial.
     source_title: Manage changes to engineering products
     source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/engineering-change-management/engineering-change-management
     source_version: Documentation évolutive ; édition globale non indiquée
@@ -18276,7 +18317,12 @@ terms:
     similarities: Un problème issu des opérations est transmis au système de développement produit pour examen.
     differences: Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit textile
       ; FLOW fournit les constats et laisse la décision de changement au destinataire.
-    flow_position: Fournir des constats terrain documentés sur les produits pour instruire leur amélioration.
+    flow_position: |-
+      Préparer et fournir les constats opérationnels utiles aux responsables de conception et développement produit, avec produit concerné, contexte, dates et preuves. [Design & Development](model:system-design-development) conserve l’instruction et les décisions de modification.
+
+      Un signalement ne modifie pas automatiquement la définition du produit. Cette capacité ne représente pas tous les échanges de données de conception. Les familles de constats et leur contrat restent à qualifier. Exemple fictif : transmettre un défaut récurrent d’emballage constaté à la réception, avec les quantités et circonstances connues, sans affirmer une cause non établie.
+
+      Les constats fournis proviennent des faits reconnus conservés dans [Inventory Ledger](model:D01.g) et [Inventory Ownership Ledger](model:inventory-ownership-ledger), selon leur pertinence pour le produit. La capacité appartient à [Inventory State Management](model:ba-inventory-position-management). Fournir le fait et sa preuve connus ; ne pas inventer sa cause ni transformer un écart de propriété en défaut physique. Les corrections gardent le lien au constat initial.
     source_title: Administration Guide for PLM System Integration for SAP S/4HANA
     source_url: https://help.sap.com/doc/6f4e849a041c4bc59c4b9d6882053532/2.0%20FP03/en-US/Administration_Guide_TC.pdf
     source_version: 2.0 FP03, document 1.0 du 2022-12-05, §7.3 p.60
@@ -18290,6 +18336,8 @@ terms:
     term_choice: Libellé FLOW décrivant la responsabilité ; les termes natifs et leurs frontières restent distincts.
     definition_choice: Les demandes de changement et échanges industriels documentés ne prouvent pas tous les retours produit
       textile ; FLOW fournit les constats et laisse la décision de changement au destinataire.
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER117
   name: Finance
   short_description: Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les
@@ -18766,7 +18814,7 @@ terms:
 
     Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-    [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+    [Reference Ingestion](model:master-data-ingestion), dans [Reference Maintenance](model:ba-reference-maintenance), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
     Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
   notes: Nom et périmètre FLOW issus du lot U835 ; rédaction de glossaire proposée.
@@ -18788,12 +18836,14 @@ terms:
   - U1013
   - U1014
   - U1015
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u835
   review:
-    state: partial
-    note: Libellé Supply Policy Management aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
+    state: proposed
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: Microsoft
     product: Data management
@@ -18811,7 +18861,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     source_title: Data management
@@ -18852,7 +18902,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     source_title: How Order-to-Cash Works in Order Management
@@ -18893,7 +18943,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     scope_summary: Articles et partenaires disposent de vues et rôles adaptés aux opérations.
@@ -18933,7 +18983,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     source_title: Introducing Common Features of Consolidation and Mass Processing
@@ -18968,7 +19018,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     scope_summary: Des données maîtres de produits peuvent être reçues depuis un système externe.
@@ -19005,7 +19055,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     scope_summary: Dynamics utilise des définitions et identifiants partagés, complétés par les informations propres aux processus.
@@ -19025,8 +19075,8 @@ terms:
     term_choice: Operational References désigne le sujet métier ; aucun référentiel technique commun n’est imposé.
     definition_choice: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en
       portant leur référence locale fiable sans transférer la maîtrise d’entreprise.
-  revision: 2
-  last_modified: '2026-10-07T00:00:00Z'
+  revision: 3
+  last_modified: '2026-10-16T00:00:00Z'
   market_inspiration:
     choice: Porter une référence locale fiable et partagée pour interpréter les opérations Supply.
     flow_scope: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant
@@ -19038,7 +19088,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [Integration](model:subdomain-integration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     synthesis:
@@ -19379,11 +19429,13 @@ terms:
 
     Exemple fictif : une confirmation client autorise la suite du parcours ; un retard rapproché d’une prestation peut au contraire nécessiter une nouvelle proposition et une nouvelle confirmation. [Fulfilment Adaptation Decision](model:D06.f) conserve les adaptations locales d’exécution qui respectent les engagements.
 
-    Utiliser les faits rapprochés par [Service Reconciliation](model:D07.c), sans dupliquer leur captation ni leur imputation. Les familles de commandes gardent la validité de leurs transitions. Le nom Sentry souligne le déclenchement d’une réaction ; il ne présume ni réponse instantanée, ni automatisation de toutes les décisions, ni suppression des interventions humaines.
+    Capter les événements externes utiles au [Case](glossary:TER064), identifier leur origine et les relier au dossier avant de qualifier la réaction. Lorsque ces événements portent sur une prestation, utiliser les faits rapprochés par [Service Reconciliation](model:D07.c) ; leur réception dans le dossier ne refait ni la captation opérationnelle ni l’imputation au service. Les familles de commandes gardent la validité de leurs transitions. Le nom Sentry souligne le déclenchement d’une réaction ; il ne présume ni réponse instantanée, ni automatisation de toutes les décisions, ni suppression des interventions humaines.
 
     Un changement du profil de [crédit client](glossary:TER155), d’une règle applicable ou d’un résultat de contrôle peut déclencher le réexamen prévu. La reprise reste soumise aux autorisations et aux transitions de la commande ; recevoir un événement ne lève pas automatiquement son blocage financier.
 
     Le périmètre relève de [Process Management](glossary:TER164) et peut relier plusieurs demandes ; [Order Management](model:D04) conserve les engagements et la validité des transitions des commandes. Les activités humaines passent par [Human Task Management](glossary:TER170) ; leur attribution et leurs échéances restent explicites. Le parcours ne se réduit pas à la succession des prestations logistiques.
+
+    Fournir à [Process Ledger](glossary:TER375) les [événements de processus](glossary:TER376) captés et les décisions de réaction reconnues, avec identité source, liens au [Case](glossary:TER064), dates et corrections. Un événement pertinent pour l’histoire du dossier est conservé même sans nouvelle action. Le déclenchement de la réaction et la tenue du registre sont deux responsabilités explicites.
   notes: Périmètre aligné avec la fiche [référente](model:order-workflow-sentry). Cible U884 appliquée U885 ; rédaction détaillée
     proposée.
   source_refs:
@@ -19396,12 +19448,14 @@ terms:
   - U883
   - U884
   - U885
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
   review:
     state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: SAP
     product: SAP S/4HANA — Flexible Workflow
@@ -19486,6 +19540,8 @@ terms:
       commune.
     definition_choice: Détecter les événements et conditions pertinents dans le contexte d’un parcours Supply puis déclencher
       la réaction autorisée.
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER128
   name: Process Planning
   definition: Construire ou adapter le parcours de traitement Supply à partir des activités disponibles, du contexte et des
@@ -19502,6 +19558,8 @@ terms:
     Produire les tâches de sollicitation, d’attente et de suivi nécessaires aux [Service Orders](glossary:TER066), à partir des activités réutilisables et du contexte. Les commandes restent passives : elles ne choisissent ni leur parcours ni les suites à donner aux événements. Ne pas confondre ces tâches de pilotage avec les tâches internes de la logistique.
 
     Le périmètre relève de [Process Management](glossary:TER164) et peut relier plusieurs demandes ; [Order Management](model:D04) conserve les engagements et la validité des transitions des commandes. Les activités humaines passent par [Human Task Management](glossary:TER170) ; leur attribution et leurs échéances restent explicites. Le parcours ne se réduit pas à la succession des prestations logistiques.
+
+    Fournir à [Process Ledger](glossary:TER375) les [événements de processus](glossary:TER376) produits par cette responsabilité, avec leur origine, leur lien au [Case](glossary:TER064), la date du fait, la date de connaissance et les corrections. Le registre conserve ces faits ; la capacité garde la responsabilité de leur sens et des actes autorisés.
   notes: Périmètre aligné avec la fiche [référente](model:order-workflow-planning). Cible U884 appliquée U885 ; rédaction
     détaillée proposée.
   source_refs:
@@ -19517,12 +19575,14 @@ terms:
   - U883
   - U884
   - U885
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
   review:
     state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: SAP
     product: SAP S/4HANA — Flexible Workflow
@@ -19609,8 +19669,8 @@ terms:
       native commune.
     definition_choice: Construire ou adapter le parcours de traitement Supply à partir des activités disponibles, du contexte
       et des règles applicables.
-  revision: 1
-  last_modified: '2026-10-06T00:00:00Z'
+  revision: 2
+  last_modified: '2026-10-16T00:00:00Z'
 - id: TER129
   name: Process Orchestration
   definition: Piloter les activités, attentes et résultats du parcours Supply retenu.
@@ -19627,6 +19687,8 @@ terms:
     Le périmètre relève de [Process Management](glossary:TER164) et peut relier plusieurs demandes ; [Order Management](model:D04) conserve les engagements et la validité des transitions des commandes. Les activités humaines passent par [Human Task Management](glossary:TER170) ; leur attribution et leurs échéances restent explicites. Le parcours ne se réduit pas à la succession des prestations logistiques.
 
     Conduire les [Cases](glossary:TER064) définis par leur domaine responsable. Pour un [Credit Check](glossary:TER155) du parcours [Wholesale Commerce](model:subdomain-sales-wholesale), organiser la sollicitation, l’attente ou le travail humain prévu puis la suite autorisée. Le Case porte le contrôle ; la conduite générique ne calcule pas la décision financière. [Sales Order](model:D04.i) applique le résultat à la commande. Une relance ou une échéance dépassée ne vaut pas accord financier.
+
+    Fournir à [Process Ledger](glossary:TER375) les [événements de processus](glossary:TER376) produits par cette responsabilité, avec leur origine, leur lien au [Case](glossary:TER064), la date du fait, la date de connaissance et les corrections. Le registre conserve ces faits ; la capacité garde la responsabilité de leur sens et des actes autorisés.
   notes: Périmètre aligné avec la fiche [référente](model:order-workflow-orchestration). Cible U884 appliquée U885 ; rédaction
     détaillée proposée.
   source_refs:
@@ -19648,13 +19710,14 @@ terms:
   - U896
   - U897
   - U898
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
   review:
     state: proposed
-    note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite.'
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: SAP
     product: SAP S/4HANA — Flexible Workflow
@@ -19808,6 +19871,8 @@ terms:
       Le périmètre relève de [Process Management](glossary:TER164) et peut relier plusieurs demandes ; [Order Management](model:D04) conserve les engagements et la validité des transitions des commandes. Les activités humaines passent par [Human Task Management](glossary:TER170) ; leur attribution et leurs échéances restent explicites. Le parcours ne se réduit pas à la succession des prestations logistiques.
 
       Conduire les [Cases](glossary:TER064) définis par leur domaine responsable. Pour un [Credit Check](glossary:TER155) du parcours [Wholesale Commerce](model:subdomain-sales-wholesale), organiser la sollicitation, l’attente ou le travail humain prévu puis la suite autorisée. Le Case porte le contrôle ; la conduite générique ne calcule pas la décision financière. [Sales Order](model:D04.i) applique le résultat à la commande. Une relance ou une échéance dépassée ne vaut pas accord financier.
+
+      Fournir à [Process Ledger](glossary:TER375) les [événements de processus](glossary:TER376) produits par cette responsabilité, avec leur origine, leur lien au [Case](glossary:TER064), la date du fait, la date de connaissance et les corrections. Le registre conserve ces faits ; la capacité garde la responsabilité de leur sens et des actes autorisés.
     synthesis:
     - Les comparaisons de fiche sont réexaminées sous U885 ; la généralisation reste limitée aux parcours Supply.
     examples:
@@ -19819,7 +19884,8 @@ terms:
       - U885
       source_title: Flexible Workflow Components
       source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/0f18dddf28764f5b807ecd80549044cc/8827801c655c498d960af209bb59ce6e.html
-  last_modified: '2026-10-07T00:00:00Z'
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER130
   name: Supply Policy Management
   definition: Définir, tenir et rendre applicables les stratégies, protections, limites et autorisations qui guident les décisions
@@ -23168,22 +23234,19 @@ terms:
   name: Inbound Information Integration
   definition: Recevoir et intégrer les plans et référentiels fournis par les domaines sources.
   short_description: Recevoir et intégrer les plans et référentiels fournis par les domaines sources.
-  context: |-
-    Ne transfère pas leur maîtrise d’entreprise et ne reprend pas les événements des prestations pilotées par Fulfilment.
-
-    Bénéficiaire et résultat : Donner aux décisions d’orchestration des données sources utilisables, datées et dont la provenance est conservée.
-
-    Exemple fictif : Recevoir une révision de plan et son périmètre ; rejeter un lot incohérent sans remplacer silencieusement la dernière version valide.
-  notes: Périmètre de responsabilité U848 ; les capacités conservent leurs identités et leurs savoir-faire. La fiche détaillée
-    est [Inbound Information Integration](model:ba-inbound-information-integration).
+  context: Les références sont reçues par [Reference Ingestion](model:master-data-ingestion), dans [Operational References](model:business-references).
+    Les contributions de plans externes sont reçues par [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management).
+  notes: Nom d’un regroupement historique retiré sous U1113 ; aucun périmètre métier courant de ce nom.
   source_refs:
   - U848
   - U853
   - U1020
   - U1021
+  - U1113
   review:
     state: proposed
-    note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Intelligent Order Management
@@ -23198,7 +23261,8 @@ terms:
     relationship: Recouvrement partiel
     similarities: Recevoir des données de fournisseurs configurés.
     differences: La réception technique ne suffit pas à établir validité, provenance et autorité métier des plans.
-    flow_position: Recevoir et intégrer les plans et référentiels fournis par les domaines sources.
+    flow_position: Les références sont reçues par [Reference Ingestion](model:master-data-ingestion), dans [Operational References](model:business-references).
+      Les contributions de plans externes sont reçues par [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management).
     definition_choice: Recevoir et intégrer les plans et référentiels fournis par les domaines sources.
     term_choice: Inbound Information Integration désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
     scope_summary: Recevoir des données de fournisseurs configurés.
@@ -23224,12 +23288,8 @@ terms:
       l’ensemble des plans et référentiels à ingérer.
     evidence_limits: Appui partiel à la réception intersystèmes ; la source ne définit ni toute validation sémantique FLOW
       ni l’ensemble des plans et référentiels à ingérer. Aucun équivalent complet ni déploiement Beaumanoir établi.
-    flow_position: |-
-      Ne transfère pas leur maîtrise d’entreprise et ne reprend pas les événements des prestations pilotées par Fulfilment.
-
-      Bénéficiaire et résultat : Donner aux décisions d’orchestration des données sources utilisables, datées et dont la provenance est conservée.
-
-      Exemple fictif : Recevoir une révision de plan et son périmètre ; rejeter un lot incohérent sans remplacer silencieusement la dernière version valide.
+    flow_position: Les références sont reçues par [Reference Ingestion](model:master-data-ingestion), dans [Operational References](model:business-references).
+      Les contributions de plans externes sont reçues par [Plan Ingestion](model:plans-ingestion), dans [Master Plan Management](model:ba-master-plan-management).
     status: proposed
     source_refs:
     - U1020
@@ -23243,29 +23303,29 @@ terms:
       ni toute validation sémantique FLOW ni l’ensemble des plans et référentiels à ingérer.
     term_choice: Inbound Information Integration nomme le périmètre FLOW ; aucune taxonomie commune aux éditeurs revendiquée.
   market_gaps: []
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER141
   name: Outbound Information Provision
   definition: Fournir les faits et données opérationnels traçables à la comptabilité, à la planification interne et à l’amélioration
     produit.
   short_description: Fournir les informations opérationnelles utiles à la comptabilité, à la planification et à l’amélioration
     produit.
-  context: 'Préparer et transmettre les faits reconnus, leurs dates, origines, versions et corrections selon le destinataire.
-    [Accounting Data Provision](model:accounting-data-provision) alimente Finance ; [Product Feedback](model:product-feedback)
-    alimente Design & Development. [Planning Data Provision](model:planning-data-provision) prépare les entrées de calcul
-    pour [Master Plan](model:domain-plan) au sein du Core. Fournir un fait ne le transforme ni en écriture comptable ni en
-    nouvelle version de plan. Exemple fictif : une correction de stock reconnue déclenche un réexamen du plan, sans prétendre
-    que le calcul a déjà eu lieu.'
-  notes: Périmètre de responsabilité U848 ; les capacités conservent leurs identités et leurs savoir-faire. La fiche détaillée
-    est [Outbound Information Provision](model:ba-outbound-information-provision).
+  context: '[Inventory Management](model:D01) porte la fourniture des faits reconnus des registres vers la comptabilité et
+    l’amélioration produit, et des positions documentées vers Master Plan. Les autres producteurs conservent la fourniture
+    de leurs informations.'
+  notes: Nom d’un regroupement historique retiré sous U1113 ; aucun périmètre métier courant de ce nom.
   source_refs:
   - U848
   - U853
   - U1020
   - U1021
   - U1091
+  - U1113
   review:
     state: proposed
-    note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   market_comparisons:
   - vendor: SAP
     product: SAP S/4HANA Cloud Public Edition
@@ -23280,8 +23340,9 @@ terms:
     relationship: Recouvrement partiel
     similarities: Extraire les faits achats pour des usages externes.
     differences: Périmètre achats seulement ; pas de preuve de toutes les données comptables, de planification et produit.
-    flow_position: Fournir les informations opérationnelles utiles à la comptabilité, à la planification et à l’amélioration
-      produit.
+    flow_position: '[Inventory Management](model:D01) porte la fourniture des faits reconnus des registres vers la comptabilité
+      et l’amélioration produit, et des positions documentées vers Master Plan. Les autres producteurs conservent la fourniture
+      de leurs informations.'
     definition_choice: Fournir les informations opérationnelles utiles à la comptabilité, à la planification et à l’amélioration
       produit.
     term_choice: Outbound Information Provision désigne le périmètre propre à FLOW, sans équivalence de taxonomie revendiquée.
@@ -23308,12 +23369,9 @@ terms:
       des plans ou faits comptables et ne prescrit pas la BA FLOW.
     evidence_limits: Exemple partiel de fourniture d’informations de référence ; la source ne couvre pas tout le provisionnement
       des plans ou faits comptables et ne prescrit pas la BA FLOW. Aucun équivalent complet ni déploiement Beaumanoir établi.
-    flow_position: 'Préparer et transmettre les faits reconnus, leurs dates, origines, versions et corrections selon le destinataire.
-      [Accounting Data Provision](model:accounting-data-provision) alimente Finance ; [Product Feedback](model:product-feedback)
-      alimente Design & Development. [Planning Data Provision](model:planning-data-provision) prépare les entrées de calcul
-      pour [Master Plan](model:domain-plan) au sein du Core. Fournir un fait ne le transforme ni en écriture comptable ni
-      en nouvelle version de plan. Exemple fictif : une correction de stock reconnue déclenche un réexamen du plan, sans prétendre
-      que le calcul a déjà eu lieu.'
+    flow_position: '[Inventory Management](model:D01) porte la fourniture des faits reconnus des registres vers la comptabilité
+      et l’amélioration produit, et des positions documentées vers Master Plan. Les autres producteurs conservent la fourniture
+      de leurs informations.'
     status: proposed
     source_refs:
     - U1020
@@ -23327,6 +23385,8 @@ terms:
       ne couvre pas tout le provisionnement des plans ou faits comptables et ne prescrit pas la BA FLOW.
     term_choice: Outbound Information Provision nomme le périmètre FLOW ; aucune taxonomie commune aux éditeurs revendiquée.
   market_gaps: []
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER142
   name: Goods Processing Order Management
   definition: Tenir les demandes et engagements de prestations portant sur le traitement des biens.
@@ -25851,6 +25911,8 @@ terms:
     Exemple fictif : faire vérifier un paiement, attendre un résultat financier reconnu puis solliciter la préparation ; analyser ensuite les attentes récurrentes avant la vérification.
 
     Les mécanismes de conduite, d’intervention et d’analyse servent les [Cases](glossary:TER064) des domaines responsables, notamment [Commerce](model:domain-sales) et [Sourcing and Procurement](model:domain-sourcing-procurement). Leur généricité ne transfère pas les règles commerciales ou financières propres à ces parcours.
+
+    Tenir l’histoire des [Cases](glossary:TER064) gérés grâce à [Process Ledger](glossary:TER375), sous [Process Supervision](glossary:TER165). Les producteurs internes et [Process Sentry](glossary:TER127) lui apportent les [événements de processus](glossary:TER376) ; visibilité et analyse exploitent ensuite ce registre avec ses dates, corrections et limites de couverture.
   notes: Périmètre aligné avec la fiche [référente](model:subdomain-process-management). Cible U884 appliquée U885 ; rédaction
     détaillée proposée.
   market_comparisons:
@@ -25968,8 +26030,8 @@ terms:
       humaines et automatisées.
   review:
     state: proposed
-    note: 'Lot U895–U897 accepté U898 : frontières Core/Cases et références métier. Les détails rédactionnels et comparaisons
-      restent proposés ; aucune réalisation installée déduite.'
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   source_refs:
   - U881
   - U882
@@ -25980,10 +26042,12 @@ terms:
   - U896
   - U897
   - U898
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
-  last_modified: '2026-10-07T00:00:00Z'
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER165
   name: Process Supervision
   definition: Comprendre les parcours en cours et assurer la prise en charge des interventions et exceptions jusqu’à leur
@@ -25994,6 +26058,8 @@ terms:
     Consolider les faits de parcours, tâches et prestations ; distinguer attente normale, information absente, blocage et échec. Tenir le mandat d’intervention et le dossier de résolution. Le pilote applique la suite autorisée ; le superviseur ne s’accorde pas les pouvoirs du propriétaire de la commande.
 
     Exemple fictif : isoler une anomalie de paiement, identifier les demandes touchées et vérifier la reprise autorisée sans rejouer un encaissement.
+
+    [Process Ledger](glossary:TER375) tient le registre durable des [événements de processus](glossary:TER376) associés aux [Cases](glossary:TER064). [Process, Tasks & Order Visibility](glossary:TER175) l’utilise pour expliquer leur situation courante ou passée ; les interventions et exceptions y laissent leur histoire sans transférer les pouvoirs des responsables métier.
   notes: Périmètre aligné avec la fiche [référente](model:ba-process-supervision). Cible U884 appliquée U885 ; rédaction détaillée
     proposée.
   market_comparisons:
@@ -26082,16 +26148,20 @@ terms:
       leur résultat attesté.
   review:
     state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   source_refs:
   - U881
   - U882
   - U883
   - U884
   - U885
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER166
   name: Human Work Management
   definition: 'Organiser la contribution des personnes : sollicitation, affectation, prise en charge, résultat et échéance.'
@@ -26357,6 +26427,8 @@ terms:
     Suspendre une tâche, un parcours, une commande et une prestation extérieure ne produit pas le même effet. Les familles d’[Orders](glossary:TER012) valident leurs transitions ; [Fulfilment Coordination](glossary:TER176) traite les prestations engagées. Un arrêt demandé ne prouve pas un arrêt physique. Une reprise n’autorise ni double paiement ni effacement d’une réalisation.
 
     Exemple fictif : suspendre le reste d’un parcours durant une investigation, puis reprendre uniquement les activités restant autorisées.
+
+    Fournir à [Process Ledger](glossary:TER375) les [événements de processus](glossary:TER376) produits par cette responsabilité, avec leur origine, leur lien au [Case](glossary:TER064), la date du fait, la date de connaissance et les corrections. Le registre conserve ces faits ; la capacité garde la responsabilité de leur sens et des actes autorisés.
   notes: Périmètre aligné avec la fiche [référente](model:process-intervention). Cible U884 appliquée U885 ; rédaction détaillée
     proposée.
   market_comparisons:
@@ -26464,16 +26536,20 @@ terms:
     definition_choice: Encadrer une intervention sur un parcours engagé et vérifier son effet dans la portée autorisée.
   review:
     state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   source_refs:
   - U881
   - U882
   - U883
   - U884
   - U885
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER169
   name: Process Exception Management
   definition: Prendre en charge une exception affectant un ou plusieurs parcours jusqu’à une résolution attestée.
@@ -26484,6 +26560,8 @@ terms:
     [Process Sentry](glossary:TER127) déclenche la prise en charge prévue ; [Service Reconciliation](model:D07.c) conserve le rapprochement des prestations et [Fulfilment Adaptation Decision](glossary:TER177) ses choix locaux. Les pouvoirs financiers et les engagements restent chez leurs responsables. Distinguer incident technique et exception métier.
 
     Exemple fictif : regrouper les investigations sur plusieurs notifications de paiement contradictoires sans fusionner les commandes concernées.
+
+    Fournir à [Process Ledger](glossary:TER375) les [événements de processus](glossary:TER376) produits par cette responsabilité, avec leur origine, leur lien au [Case](glossary:TER064), la date du fait, la date de connaissance et les corrections. Le registre conserve ces faits ; la capacité garde la responsabilité de leur sens et des actes autorisés.
   notes: Périmètre aligné avec la fiche [référente](model:process-exception-management). Cible U884 appliquée U885 ; rédaction
     détaillée proposée.
   market_comparisons:
@@ -26566,16 +26644,20 @@ terms:
     definition_choice: Prendre en charge une exception affectant un ou plusieurs parcours jusqu’à une résolution attestée.
   review:
     state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   source_refs:
   - U881
   - U882
   - U883
   - U884
   - U885
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER170
   name: Human Task Management
   definition: Solliciter une contribution humaine et recueillir un résultat exploitable par le parcours.
@@ -26586,6 +26668,8 @@ terms:
     [Process Planning](glossary:TER128) détermine la contribution nécessaire ; [Work Assignment](glossary:TER171) l’attribue ; [Process Orchestration](glossary:TER129) exploite sa réponse. La capacité métier sollicitée conserve le sens et l’autorité de sa décision. Une approbation de crédit reste financière. Une tâche opérateur interne à Logistics n’est pas assimilée automatiquement à une [Task](glossary:TER089) pilotée par FLOW.
 
     Exemple fictif : vérifier un justificatif reçu par courriel et transmettre un résultat qualifié, sans prétendre que le prestataire possède une interface automatisée.
+
+    Fournir à [Process Ledger](glossary:TER375) les [événements de processus](glossary:TER376) produits par cette responsabilité, avec leur origine, leur lien au [Case](glossary:TER064), la date du fait, la date de connaissance et les corrections. Le registre conserve ces faits ; la capacité garde la responsabilité de leur sens et des actes autorisés.
   notes: Périmètre aligné avec la fiche [référente](model:human-task-management). Cible U884 appliquée U885 ; rédaction détaillée
     proposée.
   market_comparisons:
@@ -26695,16 +26779,20 @@ terms:
     definition_choice: Solliciter une contribution humaine et recueillir un résultat exploitable par le parcours.
   review:
     state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   source_refs:
   - U881
   - U882
   - U883
   - U884
   - U885
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER171
   name: Work Assignment
   definition: Déterminer la personne ou le collectif admissible auquel attribuer le travail et rééquilibrer les affectations.
@@ -26715,6 +26803,8 @@ terms:
     La priorité d’une tâche se distingue de [Demand Prioritization](model:D03.m) et de la priorité commerciale d’une commande. Ne pas transférer la gestion RH ni la planification des opérateurs logistiques ; une absence d’information de charge reste explicite.
 
     Exemple fictif : réaffecter les vérifications non commencées d’un absent vers une équipe habilitée, sans changer l’autorité qui approuve le résultat.
+
+    Fournir à [Process Ledger](glossary:TER375) les [événements de processus](glossary:TER376) produits par cette responsabilité, avec leur origine, leur lien au [Case](glossary:TER064), la date du fait, la date de connaissance et les corrections. Le registre conserve ces faits ; la capacité garde la responsabilité de leur sens et des actes autorisés.
   notes: Périmètre aligné avec la fiche [référente](model:work-assignment). Cible U884 appliquée U885 ; rédaction détaillée
     proposée.
   market_comparisons:
@@ -26849,16 +26939,20 @@ terms:
     definition_choice: Déterminer la personne ou le collectif admissible auquel attribuer le travail et rééquilibrer les affectations.
   review:
     state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   source_refs:
   - U881
   - U882
   - U883
   - U884
   - U885
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER172
   name: Work Deadline Management
   definition: Établir et surveiller les échéances de traitement puis déclencher les relances ou [escalades](glossary:TER182)
@@ -26871,6 +26965,8 @@ terms:
     [Agreement](glossary:TER048) porte les engagements convenus ; [Process Definition Management](glossary:TER126) les règles structurelles ; [Supply Policy Management](glossary:TER130) les contrôles actifs. Un retard ne donne pas une autorisation de dérogation ni ne vaut rejet automatique. Aucun délai d’exemple n’est imposé à FLOW.
 
     Exemple fictif : une vérification dépasse son échéance ouvrée ; notifier le responsable puis solliciter un remplaçant selon la règle prévue.
+
+    Fournir à [Process Ledger](glossary:TER375) les [événements de processus](glossary:TER376) produits par cette responsabilité, avec leur origine, leur lien au [Case](glossary:TER064), la date du fait, la date de connaissance et les corrections. Le registre conserve ces faits ; la capacité garde la responsabilité de leur sens et des actes autorisés.
   notes: Périmètre aligné avec la fiche [référente](model:work-deadline-management). Cible U884 appliquée U885 ; rédaction
     détaillée proposée.
   market_comparisons:
@@ -26965,8 +27061,9 @@ terms:
       native commune.
     definition_choice: Établir et surveiller les échéances de traitement puis déclencher les relances ou escalades autorisées.
   review:
-    state: partial
-    note: Libellé Supply Policy Management aligné sur U908 ; autres contenus et accords antérieurs non étendus à cette rédaction.
+    state: proposed
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   source_refs:
   - U881
   - U882
@@ -26974,22 +27071,29 @@ terms:
   - U884
   - U885
   - U908
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER173
   name: Process Mining
   definition: Reconstituer les parcours réellement suivis à partir de traces corrélées et analyser leurs variantes et performances.
   short_description: Reconstituer les parcours réellement suivis à partir de traces corrélées et analyser leurs variantes
     et performances.
   context: |-
-    Rapprocher les faits de parcours, [Tasks](glossary:TER089) et prestations avec leur identité, version, origine et date. Identifier variantes, répétitions, temps en file, traitement actif, attentes externes et dossiers encore ouverts. Mesurer volumes, débit, ancienneté et distribution des durées ; préciser population, unité, calendrier, exclusions et formule. Comparer au parcours attendu lorsque sa définition existe.
+    Analyser les traces conservées dans [Process Ledger](glossary:TER375). Relier les [événements de processus](glossary:TER376) du [Case](glossary:TER064) aux [Tasks](glossary:TER089) et prestations avec leur identité, version, origine, date du fait et date de connaissance. Identifier variantes, répétitions, temps en file, traitement actif, attentes externes et dossiers encore ouverts. Mesurer volumes, débit, ancienneté et distribution des durées ; préciser population, unité, calendrier, exclusions et formule. Comparer au parcours attendu lorsque sa définition existe.
 
     Distinguer événement survenu et événement reçu, tentative et résultat, zéro et donnée absente. Un chemin non observé ne peut être reconstitué avec certitude ; une corrélation n’établit pas une causalité. Une [Task](glossary:TER089) peut mobiliser plusieurs services et un dossier plusieurs commandes, sans correspondance un pour un. Les identifiants et dates exploitables sont un préalable.
 
     [Process, Tasks & Order Visibility](glossary:TER175) explique un parcours courant ; [Process Mining](glossary:TER173) analyse les parcours observés et inclut leurs mesures de performance. Aucune capacité Process Performance Analysis concurrente. Les décisions d’amélioration et leurs autorisations restent chez leurs responsables.
 
     Exemple fictif : découvrir deux variantes de validation, isoler l’attente avant prise en charge et vérifier si une réaffectation autorisée réduit cette attente.
+
+    Les [mesures de processus](glossary:TER201) précisent les populations, bornes temporelles et inconnues ; leur nom seul ne garantit pas leur comparabilité.
+
+    [Process Ledger](glossary:TER375) fournit le registre des faits et de leurs corrections. La capacité d’analyse en reconstruit les parcours observés et calcule les [mesures de processus](glossary:TER201), sans tenir un registre opérationnel concurrent. Les définitions de tâche et les vues courantes aident à interpréter les traces ; elles ne remplacent pas cette source. Fournir les résultats à [Operational Analysis & Reporting](glossary:TER174), avec population, période, formule et couverture des traces.
   notes: Périmètre aligné avec la fiche [référente](model:process-mining). Cible U884 appliquée U885 ; rédaction détaillée
     proposée.
   market_comparisons:
@@ -27106,7 +27210,8 @@ terms:
       et performances.
   review:
     state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   source_refs:
   - U881
   - U882
@@ -27114,9 +27219,12 @@ terms:
   - U884
   - U885
   - U909
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER174
   name: Operational Analysis & Reporting
   definition: Analyser les parcours et résultats Supply et partager des vues de pilotage fondées sur des indicateurs explicites.
@@ -27128,6 +27236,8 @@ terms:
     Préserver les droits d’accès et éviter le double comptage des contributions liées. Distinguer information absente et absence de retard. La responsabilité métier ne se réduit ni à un éditeur de graphiques ni à une requête technique ; l’administration de la plateforme de données reste distincte.
 
     Exemple fictif : partager les demandes en attente par motif et équipe, puis ouvrir les dossiers qui composent le total.
+
+    Conserver le lien des mesures reçues de [Process Mining](glossary:TER173) et des situations restituées par [Process, Tasks & Order Visibility](glossary:TER175) aux [événements de processus](glossary:TER376) de [Process Ledger](glossary:TER375). Cette filiation permet de revenir aux faits, dates et corrections qui expliquent un résultat ; elle ne garantit pas la couverture de sources externes non documentées.
   notes: Périmètre aligné avec la fiche [référente](model:operational-analysis-reporting). Cible U884 appliquée U885 ; rédaction
     détaillée proposée.
   market_comparisons:
@@ -27242,7 +27352,8 @@ terms:
       explicites.
   review:
     state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   source_refs:
   - U881
   - U882
@@ -27252,9 +27363,12 @@ terms:
   - U909
   - U1020
   - U1021
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER175
   name: Process, Tasks & Order Visibility
   definition: Restituer ensemble la progression des parcours Supply, le travail à accomplir et la situation des commandes,
@@ -27272,6 +27386,10 @@ terms:
     [Process Orchestration](glossary:TER129) fournit les activités et attentes connues ; [Human Task Management](glossary:TER170) fournit la prise en charge et les résultats humains ; [Operations Visibility](glossary:TER178) décrit les prestations physiques et [Operations Tracking](glossary:TER179) capte leurs faits. La capacité corrèle ces apports sans créer un registre concurrent. [Fulfilment Coordination](glossary:TER176) coordonne les prestations confiées et [Fulfilment Adaptation Decision](glossary:TER177) choisit leurs adaptations locales.
 
     La capacité appartient à [Process Supervision](glossary:TER165), dans [Process Management](glossary:TER164). Elle expose aussi les attentes et engagements des commandes sans en prendre l’autorité. Le suivi de tous les processus de l’entreprise reste hors périmètre. Aucun moteur, instrumentation uniforme ou temps réel général n’est imposé.
+
+    Une [instance de processus](glossary:TER200) est une occurrence suivie ; le parcours descriptif d’un scénario ne constitue pas une exécution.
+
+    Exploiter les [événements de processus](glossary:TER376) conservés dans [Process Ledger](glossary:TER375) pour restituer l’histoire du [Case](glossary:TER064) et sa situation à un instant donné. Préciser la date des faits, la date de connaissance retenue et les limites de couverture. La vue relie ces faits aux états et engagements tenus par [Order Management](model:D04) ; elle ne déduit pas une transition autorisée de la seule présence d’une trace.
   notes: Périmètre aligné avec la fiche [référente](model:BHV082). U909 fusionne Order Visibility dans cette capacité ; les
     anciens accords restent historiques.
   market_comparisons:
@@ -27410,7 +27528,8 @@ terms:
       en distinguant faits, engagements, attentes et restes à satisfaire.
   review:
     state: proposed
-    note: 'U909 : fusion et nom demandés ; rédaction détaillée proposée.'
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   source_refs:
   - U881
   - U882
@@ -27418,9 +27537,12 @@ terms:
   - U884
   - U885
   - U909
+  - U1113
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER176
   name: Fulfilment Coordination
   definition: Coordonner le déclenchement, les dépendances et la progression des prestations jusqu’aux résultats attendus,
@@ -40678,17 +40800,22 @@ terms:
   short_description: Prévision versionnée de demande et de supply avant le plan opérationnel.
   context: '[Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) en porte la responsabilité dans [Design
     & Development](glossary:TER105). Les produits et jalons de [Collection Planning](model:subdomain-collection-planning)
-    servent d’entrées ; [Demand Forecast Qualification](model:demand-forecast-development) en qualifie une version pour le
-    [Master Plan](model:domain-plan). Le Forecast Plan ne crée ni commande, ni achat autorisé, ni besoin net opérationnel.'
+    servent d’entrées ; [Plan Ingestion](glossary:TER381) reçoit la version source dans [Master Plan Management](model:ba-master-plan-management),
+    puis [Demand Forecast Qualification](model:demand-forecast-development) en qualifie l’emploi pour le [Master Plan](model:domain-plan).
+    Le Forecast Plan ne crée ni commande, ni achat autorisé, ni besoin net opérationnel.'
   source_refs:
   - U1098
   - U1101
+  - U1113
   review:
-    state: partial
-    note: Frontière validée U1098 ; nom de l’objet FLOW proposé, sans identité imposée avec le forecast plan Microsoft.
+    state: proposed
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1098
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 - id: TER373
   name: Demand & Supply Forecasting
   definition: Prévoir la demande future des produits et les ressources envisageables pour y répondre avant la planification
@@ -40727,6 +40854,398 @@ terms:
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1103
+- id: TER375
+  name: Process Ledger
+  definition: Tenir le registre durable des événements métier d’un [Case](glossary:TER064), avec leurs dates, origines et
+    corrections, pour reconstituer ses faits et sa situation passée.
+  short_description: Registre des événements d’un dossier pour expliquer son histoire et reconstituer sa situation passée.
+  context: |-
+    Conserver les [événements de processus](glossary:TER376) produits dans le parcours d’un [Case](glossary:TER064), ainsi que les événements externes captés et reliés à ce dossier par [Process Sentry](glossary:TER127). La responsabilité couvre les événements connus du parcours géré : activités sollicitées, attentes, décisions et résultats reconnus, contributions humaines, échéances, interventions, exceptions et transitions de commandes. Un événement sans réaction immédiate reste conservé. La couverture des sources et ses lacunes sont explicites ; aucun fonctionnement installé exhaustif n’est présumé.
+
+    Relier chaque écriture à l’identité du [Case](glossary:TER064), à l’événement source et aux [Orders](glossary:TER012), [Tasks](glossary:TER089), prestations et versions concernés. Conserver la date du fait et la date à laquelle il a été connu, son producteur, ses pièces justificatives, sa qualification et les liens de correction. Une réception répétée du même événement ne devient pas un second fait. Une correction garde l’écriture antérieure et son motif ; la reconstruction applique les versions reconnues sans les additionner.
+
+    [Process Sentry](glossary:TER127) qualifie la pertinence des événements captés et déclenche la réaction autorisée ; les capacités de suivi et de rapprochement conservent la qualification de leurs faits métier. Le [Ledger](method:MOD020) tient leur histoire dans le contexte du dossier. Il ne transforme pas une notification, une estimation ou une tentative en résultat réalisé. [Inventory Ledger](model:D01.g) et [Inventory Ownership Ledger](model:inventory-ownership-ledger) conservent l’autorité des faits de stock ; leur référence dans un dossier ne crée pas une seconde écriture de stock.
+
+    Fournir à [Process, Tasks & Order Visibility](glossary:TER175) les faits permettant de reconstituer la situation du dossier à un instant donné, en précisant si l’on utilise les faits connus aujourd’hui ou seulement ceux déjà connus à cette date. L’exactitude de cette restitution dépend de la couverture documentée des sources, des dates et des corrections. [Order Management](model:D04) conserve l’identité, les états, les engagements et la validité des transitions des commandes. Le registre les explique dans le parcours sans devenir leur autorité transactionnelle.
+
+    Fournir à [Process Mining](glossary:TER173) les traces conservées, leurs liens et leurs limites de couverture ; les mesures et vues de pilotage restent produites par les capacités d’analyse. Aucun moteur de processus, protocole d’échange ou technologie de stockage n’est imposé.
+
+    Exemple fictif : une réponse externe survenue à 10 h est reçue à 10 h 20, puis corrigée le lendemain. Le registre permet de restituer ce qui s’est passé et ce que le dossier permettait de connaître à 10 h 10, sans faire disparaître la première réponse ni valider une transition interdite.
+  notes: Capacité [Process Ledger](model:process-ledger), de type [Ledger](method:MOD020), rattachée à [Process Supervision](glossary:TER165).
+  source_refs:
+  - U1110
+  - U1111
+  - U1113
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u1110
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Finance & Operations
+    source_title: View workflow history
+    source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/tasks/view-workflow-history
+    source_version: Documentation évolutive ; édition globale non établie.
+    source_locator: Instance ID, Version, Work items et Tracking details
+    consulted_on: '2026-10-16'
+    element_name: View workflow history
+    concept_name: View workflow history
+    element_type: Mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: L’historique relie instance de workflow, document, version, tâches, statut et détails de suivi.
+    differences: Le workflow documentaire ne prouve pas un registre complet de tous les événements internes et externes d’un
+      Case ni sa reconstruction à toute date.
+    flow_position: Tenir le registre durable des événements métier d’un [Case](glossary:TER064), avec leurs dates, origines
+      et corrections, pour reconstituer ses faits et sa situation passée.
+    scope_summary: L’historique relie instance de workflow, document, version, tâches, statut et détails de suivi.
+    approach_summary: FLOW distingue la production ou captation des faits, leur registre durable et leur exploitation.
+    term_choice: Process Ledger est un nom FLOW pour cette responsabilité ; aucune appellation commune des éditeurs n’est
+      établie.
+    definition_choice: Tenir le registre durable des événements métier d’un [Case](glossary:TER064), avec leurs dates, origines
+      et corrections, pour reconstituer ses faits et sa situation passée.
+    evidence_limits: Le workflow documentaire ne prouve pas un registre complet de tous les événements internes et externes
+      d’un Case ni sa reconstruction à toute date. Aucune équivalence complète, taxonomie de capacités commune ni réalisation
+      Beaumanoir déduite.
+    status: proposed
+    source_refs:
+    - U1110
+    - U1111
+    - U1113
+  - vendor: SAP
+    product: SAP Signavio Process Intelligence
+    source_title: Introducing to Data Transformation
+    source_url: https://learning.sap.com/courses/analyzing-business-processes-with-sap-signavio-solutions/data-requirements-and-setup_c3cc0080-8486-4157-824f-d37acce55c0e
+    source_version: Documentation évolutive ; édition globale non établie.
+    source_locator: Introduction to Data Transformation ; What’s your Case?
+    consulted_on: '2026-10-16'
+    element_name: Introducing to Data Transformation
+    concept_name: Introducing to Data Transformation
+    element_type: Mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Un journal chronologique conserve identifiant de Case, événement, date et attributs pour analyser les parcours.
+    differences: Le journal est reconstruit pour l’analyse à partir des sources ; il ne prouve pas un registre opérationnel
+      maître. Signavio est un appui complémentaire distinct de SAP S/4HANA.
+    flow_position: Tenir le registre durable des événements métier d’un [Case](glossary:TER064), avec leurs dates, origines
+      et corrections, pour reconstituer ses faits et sa situation passée.
+    scope_summary: Un journal chronologique conserve identifiant de Case, événement, date et attributs pour analyser les parcours.
+    approach_summary: FLOW distingue la production ou captation des faits, leur registre durable et leur exploitation.
+    term_choice: Process Ledger est un nom FLOW pour cette responsabilité ; aucune appellation commune des éditeurs n’est
+      établie.
+    definition_choice: Tenir le registre durable des événements métier d’un [Case](glossary:TER064), avec leurs dates, origines
+      et corrections, pour reconstituer ses faits et sa situation passée.
+    evidence_limits: Le journal est reconstruit pour l’analyse à partir des sources ; il ne prouve pas un registre opérationnel
+      maître. Signavio est un appui complémentaire distinct de SAP S/4HANA. Aucune équivalence complète, taxonomie de capacités
+      commune ni réalisation Beaumanoir déduite.
+    status: proposed
+    source_refs:
+    - U1110
+    - U1111
+    - U1113
+  market_gaps:
+  - family: sap_s4hana
+    reason: Les pages détaillées Business Event Logging et Action Logs repérées pour SAP S/4HANA restent vides ou requièrent
+      une authentification dans le navigateur de recherche. La nouvelle consultation de Business Event Logging le 2026-10-16
+      n’a renvoyé aucun contenu. Le journal analytique de SAP Signavio ne remplace pas cet appui et aucune équivalence opérationnelle
+      n’est établie.
+    investigated_urls:
+    - https://help.sap.com/docs/SAP_S4HANA_CLOUD/a630d57fc5004c6383e7a81efee7a8bb/cee09744c9584649ac1d6d05473c6e56.html
+    - https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9442486404b54071b4ebeab6a16628e7/21fdc5536a51204be10000000a174cb4.html
+    source_refs:
+    - U1110
+    - U1111
+    - U1112
+    - U1113
+  review:
+    state: proposed
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
+- id: TER376
+  name: Process Event
+  definition: 'Fait daté produit ou capté dans le parcours d’un Case : activité, attente, décision, résultat ou changement
+    de situation, avec son origine et sa qualification.'
+  short_description: Fait daté du parcours d’un dossier, avec son origine, ses liens et sa qualification.
+  context: 'Un [Case](glossary:TER064) relie les événements connus de son parcours. Un [événement de processus](glossary:TER376)
+    peut être interne ou provenir d’un acteur extérieur ; [Process Sentry](glossary:TER127) capte et qualifie les apports
+    utiles puis déclenche la réaction autorisée. [Process Ledger](glossary:TER375) conserve les événements et leurs corrections,
+    y compris lorsqu’aucune réaction immédiate n’est nécessaire. La [notification d’événement](glossary:TER039) annonce un
+    fait : sa réception ne prouve pas à elle seule qu’un résultat métier est réalisé. Date du fait, date de connaissance,
+    identifiant source et liens aux objets permettent d’expliquer les retards, répétitions et corrections. Exemple fictif
+    : distinguer l’heure d’une réponse client, son arrivée dans le dossier et une rectification ultérieure.'
+  notes: Terme métier introduit avec [Process Ledger](model:process-ledger), sans créer un niveau de hiérarchie ou un catalogue
+    de messages.
+  source_refs:
+  - U1110
+  - U1111
+  - U1113
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u1110
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Finance & Operations
+    source_title: View workflow history
+    source_url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/tasks/view-workflow-history
+    source_version: Documentation évolutive ; édition globale non établie.
+    source_locator: Instance ID, Version, Work items et Tracking details
+    consulted_on: '2026-10-16'
+    element_name: View workflow history
+    concept_name: View workflow history
+    element_type: Mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: L’historique relie instance de workflow, document, version, tâches, statut et détails de suivi.
+    differences: Le workflow documentaire ne prouve pas un registre complet de tous les événements internes et externes d’un
+      Case ni sa reconstruction à toute date.
+    flow_position: 'Fait daté produit ou capté dans le parcours d’un Case : activité, attente, décision, résultat ou changement
+      de situation, avec son origine et sa qualification.'
+    scope_summary: L’historique relie instance de workflow, document, version, tâches, statut et détails de suivi.
+    approach_summary: FLOW distingue la production ou captation des faits, leur registre durable et leur exploitation.
+    term_choice: Process Event désigne le fait daté dans son contexte de Case ; la notification et le traitement analytique
+      sont des usages distincts.
+    definition_choice: 'Fait daté produit ou capté dans le parcours d’un Case : activité, attente, décision, résultat ou changement
+      de situation, avec son origine et sa qualification.'
+    evidence_limits: Le workflow documentaire ne prouve pas un registre complet de tous les événements internes et externes
+      d’un Case ni sa reconstruction à toute date. Aucune équivalence complète, taxonomie de capacités commune ni réalisation
+      Beaumanoir déduite.
+    status: proposed
+    source_refs:
+    - U1110
+    - U1111
+    - U1113
+  - vendor: SAP
+    product: SAP Signavio Process Intelligence
+    source_title: Introducing to Data Transformation
+    source_url: https://learning.sap.com/courses/analyzing-business-processes-with-sap-signavio-solutions/data-requirements-and-setup_c3cc0080-8486-4157-824f-d37acce55c0e
+    source_version: Documentation évolutive ; édition globale non établie.
+    source_locator: Introduction to Data Transformation ; What’s your Case?
+    consulted_on: '2026-10-16'
+    element_name: Introducing to Data Transformation
+    concept_name: Introducing to Data Transformation
+    element_type: Mécanisme documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Un journal chronologique conserve identifiant de Case, événement, date et attributs pour analyser les parcours.
+    differences: Le journal est reconstruit pour l’analyse à partir des sources ; il ne prouve pas un registre opérationnel
+      maître. Signavio est un appui complémentaire distinct de SAP S/4HANA.
+    flow_position: 'Fait daté produit ou capté dans le parcours d’un Case : activité, attente, décision, résultat ou changement
+      de situation, avec son origine et sa qualification.'
+    scope_summary: Un journal chronologique conserve identifiant de Case, événement, date et attributs pour analyser les parcours.
+    approach_summary: FLOW distingue la production ou captation des faits, leur registre durable et leur exploitation.
+    term_choice: Process Event désigne le fait daté dans son contexte de Case ; la notification et le traitement analytique
+      sont des usages distincts.
+    definition_choice: 'Fait daté produit ou capté dans le parcours d’un Case : activité, attente, décision, résultat ou changement
+      de situation, avec son origine et sa qualification.'
+    evidence_limits: Le journal est reconstruit pour l’analyse à partir des sources ; il ne prouve pas un registre opérationnel
+      maître. Signavio est un appui complémentaire distinct de SAP S/4HANA. Aucune équivalence complète, taxonomie de capacités
+      commune ni réalisation Beaumanoir déduite.
+    status: proposed
+    source_refs:
+    - U1110
+    - U1111
+    - U1113
+  market_gaps:
+  - family: sap_s4hana
+    reason: Les pages détaillées Business Event Logging et Action Logs repérées pour SAP S/4HANA restent vides ou requièrent
+      une authentification dans le navigateur de recherche. La nouvelle consultation de Business Event Logging le 2026-10-16
+      n’a renvoyé aucun contenu. Le journal analytique de SAP Signavio ne remplace pas cet appui et aucune équivalence opérationnelle
+      n’est établie.
+    investigated_urls:
+    - https://help.sap.com/docs/SAP_S4HANA_CLOUD/a630d57fc5004c6383e7a81efee7a8bb/cee09744c9584649ac1d6d05473c6e56.html
+    - https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/9442486404b54071b4ebeab6a16628e7/21fdc5536a51204be10000000a174cb4.html
+    source_refs:
+    - U1110
+    - U1111
+    - U1112
+    - U1113
+  review:
+    state: proposed
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
+- id: TER380
+  name: Reference Maintenance
+  definition: Recevoir et prendre en compte les évolutions des références locales nécessaires à la Supply.
+  short_description: Recevoir et prendre en compte les évolutions des références locales nécessaires à la Supply.
+  context: '[Reference Ingestion](model:master-data-ingestion) reçoit les apports et leurs corrections, vérifie leur recevabilité
+    et rend compte de leur prise en compte. Les autres périmètres d’[Operational References](model:business-references) composent
+    les vues métier de chaque sujet ; les autorités d’entreprise restent externes. Une donnée rejetée ou en attente ne devient
+    pas applicable. Exemple fictif : recevoir une version tarifaire corrigée tout en conservant sa période de validité et
+    son origine.'
+  notes: Responsabilité locale d’Operational References ; les maîtres d’entreprise conservent leur autorité.
+  source_refs:
+  - U1107
+  - U1113
+  review:
+    state: proposed
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Dynamics 365 Intelligent Order Management
+    source_title: Create orchestration flows
+    source_url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/orchestration-flows
+    source_locator: Actions, conditions, publication des parcours et envoi aux prestataires
+    source_version: Documentation en ligne consultée le 2026-10-06
+    consulted_on: '2026-10-06'
+    element_name: Create orchestration flows
+    concept_name: Create orchestration flows
+    element_type: Fonction produit documentée
+    relationship: Recouvrement partiel
+    similarities: Recevoir des données de fournisseurs configurés.
+    differences: La réception technique ne suffit pas à établir validité, provenance et autorité métier des plans.
+    flow_position: '[Reference Ingestion](model:master-data-ingestion) reçoit les apports et leurs corrections, vérifie leur
+      recevabilité et rend compte de leur prise en compte. Les autres périmètres d’[Operational References](model:business-references)
+      composent les vues métier de chaque sujet ; les autorités d’entreprise restent externes. Une donnée rejetée ou en attente
+      ne devient pas applicable. Exemple fictif : recevoir une version tarifaire corrigée tout en conservant sa période de
+      validité et son origine.'
+    definition_choice: Réemploi ciblé des appuis existants sur la réception autorisée des données métier ; leur mécanisme
+      technique ne détermine pas le parent métier FLOW.
+    term_choice: Reference Maintenance désigne ici la responsabilité locale de réception et de prise en compte des références
+      ; aucun nom de module commun aux éditeurs n’est revendiqué.
+    scope_summary: Recevoir des données de fournisseurs configurés.
+    approach_summary: La réception technique ne suffit pas à établir validité, provenance et autorité métier des plans.
+    evidence_limits: Appui limité au passage indiqué ; ne démontre ni couverture complète du périmètre ni réalisation installée
+      chez Beaumanoir.
+    status: proposed
+    source_refs:
+    - U853
+  - vendor: SAP
+    product: SAP S/4HANA Cloud
+    source_title: Examining the Functions of SAP S/4HANA Cloud APIs
+    source_url: https://learning.sap.com/courses/commerce-and-s-4hana-integration-foundations/examining-the-functions-of-sap-s-4hana-cloud-apis-for-the-integration_dd7cfbbd-6ff4-450a-9d2d-4cb803aee269
+    source_version: Documentation en ligne ; édition non précisée
+    source_locator: SAP S/4HANA Cloud API ; Communication Arrangements ; inbound business documents
+    consulted_on: '2026-10-13'
+    element_name: Examining the Functions of SAP S/4HANA Cloud APIs
+    element_type: Fonctions et périmètre de produit documentés
+    relationship: Recouvrement partiel
+    similarities: Le périmètre SAP organise la réception de données et documents métier externes par échanges autorisés ;
+      le sens entrant et la portée des communications sont explicites.
+    differences: Appui partiel à la réception intersystèmes ; la source ne définit ni toute validation sémantique FLOW ni
+      l’ensemble des plans et référentiels à ingérer.
+    evidence_limits: Appui partiel à la réception intersystèmes ; la source ne définit ni toute validation sémantique FLOW
+      ni l’ensemble des plans et référentiels à ingérer. Aucun équivalent complet ni déploiement Beaumanoir établi.
+    flow_position: '[Reference Ingestion](model:master-data-ingestion) reçoit les apports et leurs corrections, vérifie leur
+      recevabilité et rend compte de leur prise en compte. Les autres périmètres d’[Operational References](model:business-references)
+      composent les vues métier de chaque sujet ; les autorités d’entreprise restent externes. Une donnée rejetée ou en attente
+      ne devient pas applicable. Exemple fictif : recevoir une version tarifaire corrigée tout en conservant sa période de
+      validité et son origine.'
+    status: proposed
+    source_refs:
+    - U1020
+    - U1021
+    concept_name: Examining the Functions of SAP S/4HANA Cloud APIs
+    scope_summary: Le périmètre SAP organise la réception de données et documents métier externes par échanges autorisés ;
+      le sens entrant et la portée des communications sont explicites.
+    approach_summary: Le périmètre SAP organise la réception de données et documents métier externes par échanges autorisés
+      ; le sens entrant et la portée des communications sont explicites.
+    definition_choice: Réemploi ciblé des appuis existants sur la réception autorisée des données métier ; leur mécanisme
+      technique ne détermine pas le parent métier FLOW.
+    term_choice: Reference Maintenance désigne ici la responsabilité locale de réception et de prise en compte des références
+      ; aucun nom de module commun aux éditeurs n’est revendiqué.
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
+- id: TER381
+  name: Plan Ingestion
+  definition: Recevoir et intégrer le [Forecast Plan](glossary:TER372) source et les contributions externes de [Supply Plan](glossary:TER098),
+    de [Demand Plan](glossary:TER099) et de [Planned Purchase Order](glossary:TER033), avec leur nature, leur version et leur
+    origine.
+  short_description: Recevoir les prévisions et contributions de plans externes avec leur origine et leur version.
+  context: |-
+    Recevoir les contributions externes aux plans de demande et de ressources, avec leurs versions, horizons, provenances et statuts ; contrôler leur recevabilité avant usage dans [Master Plan](model:domain-plan). Les plans produits dans le sous-domaine ne requièrent pas une ingestion externe. Une contribution reçue n’est ni une commande ferme ni un engagement.
+
+    [Master Plan Management](model:ba-master-plan-management) porte cette réception locale : conserver le [Forecast Plan](glossary:TER372) source fourni par [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting), puis le transmettre à [Demand Forecast Qualification](model:demand-forecast-development). Les autres contributions externes reconnues restent distinctes ; la réception n’établit pas une seconde prévision source. Les corrections et rejets restent rattachés à la version reçue.
+  notes: Responsabilité de réception locale dans Master Plan Management ; la source garde la production et l’autorité sur
+    sa contribution. Les sources marché étayent partiellement réception et consommation, sans équivalent complet revendiqué.
+  source_refs:
+  - U1107
+  - U1113
+  review:
+    state: proposed
+    note: Correction du lot autorisé U1113 appliquée ; accords de champs capturés séparément. Compléments rédactionnels et
+      comparaisons conservent leur qualification propre.
+  market_comparisons:
+  - vendor: Microsoft
+    product: Master plans overview
+    element_name: Master plans overview
+    element_type: Concept ou fonction documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Plans distincts, recalculs, simulations, conversion des propositions et suggestions de modification des
+      ordres.
+    differences: Les sources étayent la réception ou la consommation de prévisions. U1013 inclut les achats prévus dans le
+      Supply Plan ; FLOW conserve la distinction entre plan d’approvisionnement et plan interne de satisfaction du carnet.
+    flow_position: |-
+      Recevoir les contributions externes aux plans de demande et de ressources, avec leurs versions, horizons, provenances et statuts ; contrôler leur recevabilité avant usage dans [Master Plan](model:domain-plan). Les plans produits dans le sous-domaine ne requièrent pas une ingestion externe. Une contribution reçue n’est ni une commande ferme ni un engagement.
+
+      [Master Plan Management](model:ba-master-plan-management) porte cette réception locale : conserver le [Forecast Plan](glossary:TER372) source fourni par [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting), puis le transmettre à [Demand Forecast Qualification](model:demand-forecast-development). Les autres contributions externes reconnues restent distinctes ; la réception n’établit pas une seconde prévision source. Les corrections et rejets restent rattachés à la version reçue.
+    source_title: Master plans overview
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
+    source_version: Documentation évolutive, mise à jour affichée le 25 mars 2026
+    consulted_on: '2026-09-23'
+    source_locator: Using master plans ; Firming ; Action message
+    evidence_limits: Le module calcule les plans ; FLOW sépare leur production APS et la fourniture de données planifiées.
+      Les sources étayent la réception ou la consommation de prévisions. U1013 inclut les achats prévus dans le Supply Plan
+      ; FLOW conserve la distinction entre plan d’approvisionnement et plan interne de satisfaction du carnet.
+    status: proposed
+    source_refs:
+    - ELM415
+    - CMP269
+    - CMP270
+    - U673
+    - U1079
+    term_choice: Nom explicitant le sujet et la visibilité dans FLOW ; pas une nomenclature universelle des éditeurs.
+    definition_choice: 'Appui de Master plans overview : Plans distincts, recalculs, simulations, conversion des propositions
+      et suggestions de modification des ordres. Limite de reprise dans FLOW : Les sources étayent la réception ou la consommation
+      de prévisions. U1013 inclut les achats prévus dans le Supply Plan ; FLOW conserve la distinction entre plan d’approvisionnement
+      et plan interne de satisfaction du carnet.'
+    concept_name: Master plans overview
+    scope_summary: Plans distincts, recalculs, simulations, conversion des propositions et suggestions de modification des
+      ordres.
+    approach_summary: Recevoir les plans et prévisions de leurs sources autorisées, dont le [Forecast Plan](glossary:TER372)
+      de Design & Development, avec provenance, horizon, version et statut ; les rendre utilisables par le [Master Plan](model:domain-plan)
+      sans en devenir la source métier.
+  - vendor: SAP
+    product: Outlining Program Planning
+    element_name: Outlining Program Planning
+    element_type: Concept ou fonction documenté dans un produit
+    relationship: Recouvrement partiel
+    similarities: Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la stratégie.
+      Demand Management gère leur interaction pour alimenter MRP.
+    differences: Les sources étayent la réception ou la consommation de prévisions. U1013 inclut les achats prévus dans le
+      Supply Plan ; FLOW conserve la distinction entre plan d’approvisionnement et plan interne de satisfaction du carnet.
+    flow_position: |-
+      Recevoir les contributions externes aux plans de demande et de ressources, avec leurs versions, horizons, provenances et statuts ; contrôler leur recevabilité avant usage dans [Master Plan](model:domain-plan). Les plans produits dans le sous-domaine ne requièrent pas une ingestion externe. Une contribution reçue n’est ni une commande ferme ni un engagement.
+
+      [Master Plan Management](model:ba-master-plan-management) porte cette réception locale : conserver le [Forecast Plan](glossary:TER372) source fourni par [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting), puis le transmettre à [Demand Forecast Qualification](model:demand-forecast-development). Les autres contributions externes reconnues restent distinctes ; la réception n’établit pas une seconde prévision source. Les corrections et rejets restent rattachés à la version reçue.
+    source_title: Outlining Program Planning
+    source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-manufacturing-production-planning/outlining-program-planning_be612648-050c-4353-a60a-808b38c67c5a
+    source_version: Cours S/4HANA Cloud Public Edition, édition non affichée
+    consulted_on: '2026-09-23'
+    source_locator: Production Planning Overview ; Demand Management Overview
+    evidence_limits: Exemple de production, pas modèle universel de retail ; ne démontre pas l’externalisation de toute décision
+      de couverture. Les sources étayent la réception ou la consommation de prévisions. U1013 inclut les achats prévus dans
+      le Supply Plan ; FLOW conserve la distinction entre plan d’approvisionnement et plan interne de satisfaction du carnet.
+    status: proposed
+    source_refs:
+    - ELM649
+    - CMP269
+    - CMP270
+    - U673
+    - U1079
+    term_choice: Nom explicitant le sujet et la visibilité dans FLOW ; pas une nomenclature universelle des éditeurs.
+    definition_choice: 'Appui de Outlining Program Planning : Les prévisions IBP alimentent des besoins indépendants planifiés,
+      consommés par des commandes selon la stratégie. Demand Management gère leur interaction pour alimenter MRP. Limite de
+      reprise dans FLOW : Les sources étayent la réception ou la consommation de prévisions. U1013 inclut les achats prévus
+      dans le Supply Plan ; FLOW conserve la distinction entre plan d’approvisionnement et plan interne de satisfaction du
+      carnet.'
+    concept_name: Outlining Program Planning
+    scope_summary: Les prévisions IBP alimentent des besoins indépendants planifiés, consommés par des commandes selon la
+      stratégie. Demand Management gère leur interaction pour alimenter MRP.
+    approach_summary: Recevoir les plans et prévisions de leurs sources autorisées, dont le [Forecast Plan](glossary:TER372)
+      de Design & Development, avec provenance, horizon, version et statut ; les rendre utilisables par le [Master Plan](model:domain-plan)
+      sans en devenir la source métier.
+  last_modified: '2026-10-16T00:00:00Z'
+  revision: 1
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées. as_of indique la date du dernier lot éditorial appliqué
   au brouillon, sans modifier les dates des publications figées.

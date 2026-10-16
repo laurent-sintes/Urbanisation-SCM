@@ -413,11 +413,8 @@ function Canvas(props: ReactFlowPaneProps) {
   }, [zoomMode, effectiveZoomMode, layout.nodes.length, props.onPageFallbackChange]);
   const nativeTouchScroll = (effectiveZoomMode === 'width' || capabilityOverview) && touch;
   const widthFrame =
-    layout.width && canvasWidth
-      ? widthFit(layout.width, layout.height, canvasWidth, minimumHeight, Boolean(fixedSlots))
-      : undefined;
-  const surfaceWidth =
-    effectiveZoomMode === 'width' && fixedSlots ? Math.max(canvasWidth, layout.width + 32) : undefined;
+    layout.width && canvasWidth ? widthFit(layout.width, layout.height, canvasWidth, minimumHeight, true) : undefined;
+  const surfaceWidth = effectiveZoomMode === 'width' ? Math.max(canvasWidth, layout.width + 32) : undefined;
   const frameX = widthFrame?.x;
   const frameY = widthFrame?.y;
   const frameZoom = widthFrame?.zoom;
@@ -844,6 +841,7 @@ function Canvas(props: ReactFlowPaneProps) {
           edges={[]}
           nodeTypes={nodeTypes}
           nodesDraggable={false}
+          nodesFocusable={false}
           nodesConnectable={false}
           edgesReconnectable={false}
           deleteKeyCode={null}

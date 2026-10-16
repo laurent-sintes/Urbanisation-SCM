@@ -9,7 +9,7 @@ from time import perf_counter
 
 ROOT = Path(__file__).resolve().parents[1]
 GROUPS = {
-    'navigation': ['verify-browser.mjs', 'verify-ux.mjs', 'verify-hotspot-detail.mjs', 'verify-application-picker.mjs'],
+    'navigation': ['verify-browser.mjs', 'verify-flow-map.mjs', 'verify-ux.mjs', 'verify-hotspot-detail.mjs', 'verify-application-picker.mjs'],
     'structure': ['verify-map-history.mjs', 'verify-map-placement.mjs', 'verify-static.mjs', 'verify-display-codes.mjs'],
     'content': ['verify-modeling-guide.mjs', 'verify-published-content.mjs', 'verify-process-management.mjs'],
     'hotspots': ['verify-hotspots.mjs', 'verify-hotspot-clusters.mjs', 'verify-hotspot-depths.mjs',

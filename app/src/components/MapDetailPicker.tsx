@@ -75,7 +75,7 @@ export function MapDetailPicker({
                   </button>
                 ))}
               </div>
-              {max === 0 && <p>Aucun niveau supplémentaire publié.</p>}
+              {max === 0 && <p>Aucun détail supplémentaire disponible.</p>}
             </div>
           </FloatingFocusManager>
         </FloatingPortal>

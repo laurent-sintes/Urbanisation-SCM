@@ -1,6 +1,7 @@
 import type { PublishedModel } from './types.ts';
 export type View =
   | 'map'
+  | 'flows'
   | 'sheet'
   | 'relations'
   | 'market'
@@ -17,8 +18,6 @@ export interface GraphRoute {
   graphDepth?: 0 | 1 | 2 | 3;
   graphDirection?: 'both' | 'incoming' | 'outgoing';
   graphFamily?: 'all' | 'needs' | 'other';
-  graphLayout?: 'organic' | 'hierarchical';
-  graphLabels?: 'focus' | 'all';
   graphNeighbors?: boolean;
 }
 export interface RouteState extends GraphRoute {
@@ -77,10 +76,6 @@ export function readRoute(hash: string): RouteState {
     graph.graphDirection = p.get('direction') as GraphRoute['graphDirection'];
   if (['all', 'needs', 'other'].includes(p.get('qualification') || ''))
     graph.graphFamily = p.get('qualification') as GraphRoute['graphFamily'];
-  if (['organic', 'hierarchical'].includes(p.get('layout') || ''))
-    graph.graphLayout = p.get('layout') as GraphRoute['graphLayout'];
-  if (['focus', 'all'].includes(p.get('labels') || ''))
-    graph.graphLabels = p.get('labels') as GraphRoute['graphLabels'];
   if (p.get('neighbors') === 'all') graph.graphNeighbors = true;
   return {
     ...(view === 'relations' ? graph : {}),
@@ -92,6 +87,7 @@ export function readRoute(hash: string): RouteState {
     ...(p.has('mapFocus') ? { mapFocus: p.get('mapFocus') || '' } : {}),
     view: [
       'map',
+      'flows',
       'sheet',
       'relations',
       'market',
@@ -161,15 +157,15 @@ export function routePath(route: RouteState, model?: PublishedModel | null): str
     hotspot: route.view === 'hotspots' ? route.hotspot : undefined,
     group: route.view === 'hotspots' ? route.hotspotGroup : undefined,
     document: route.view === 'documents' ? route.document : undefined,
-    app: route.view === 'map' || route.view === 'applications' ? route.appSelection : undefined,
-    component: route.view === 'map' || route.view === 'applications' ? route.appComponent : undefined,
+    app: ['map', 'flows', 'applications'].includes(route.view || '') ? route.appSelection : undefined,
+    component: ['map', 'flows', 'applications'].includes(route.view || '') ? route.appComponent : undefined,
     catalog: route.view === 'applications' && route.appView === 'products' ? 'products' : undefined,
     topic: route.view === 'help' && route.helpTopic === 'workshop' ? 'workshop' : undefined,
     version: route.version,
     node: route.node,
     hf: route.hotspotFilters,
     scope: route.scope,
-    ...(route.view === 'map' ? { mapDepth: route.mapDepth, mapFocus: route.mapFocus } : {}),
+    ...(['map', 'flows'].includes(route.view || '') ? { mapDepth: route.mapDepth, mapFocus: route.mapFocus } : {}),
     q: route.query,
     status: route.status,
     relation: route.relation,
@@ -194,8 +190,6 @@ export function routePath(route: RouteState, model?: PublishedModel | null): str
           depth: route.graphDepth,
           direction: route.graphDirection,
           qualification: route.graphFamily,
-          layout: route.graphLayout,
-          labels: route.graphLabels,
           neighbors: route.graphNeighbors ? 'all' : undefined,
         }
       : {}),

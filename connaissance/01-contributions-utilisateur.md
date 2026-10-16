@@ -25585,3 +25585,87 @@ Verbatim :
 > Go
 
 Portée : accord sur la proposition complète discutée : une Business Area Demand & Supply Plan Preparation regroupe Demand Forecast Qualification, Demand Plan Development, Supply Plan Development et Planning Scenario Reconciliation ; Master Plan Management, Order Backlog Management et Stock Optimization restent des Business Areas distinctes dans cet ordre de lecture. Les quatre capacités de préparation conservent leur identité et leurs responsabilités ; les trois anciennes Business Areas de préparation sont retirées du backlog courant sans réutilisation de leurs identifiants. Stock Optimization est présenté en dernier sans imposer une séquence d'exécution : ses décisions peuvent aussi alimenter ou faire réviser le plan. L'accord ne modifie ni les engagements des commandes, ni la prévision source de Design & Development, ni la réalisation installée ; il ne demande ni release, ni commit, ni push.
+
+## U1104
+
+Date : 2026-10-16. Source : Laurent, question sur la pertinence métier du sous-domaine Integration.
+
+Verbatim : « Le sous domaine Intégration n'a pas de sens dans une cartographie des capacités. Ce n'est pas du métier, c'est de la fonctionnalité. Je serais pour le supprimer. Quand penses-tu ? En vois tu d'autres ? Il ne me semble pas. »
+
+Portée : demander un avis sur le retrait du sous-domaine Integration et un examen ciblé des autres sous-domaines qui pourraient relever d'un découpage fonctionnel. L'intention de retrait est exprimée comme proposition ; aucun nouveau rattachement ni accord de modification du modèle n'est encore arrêté.
+
+## U1105
+
+Date : 2026-10-16. Source : Laurent, principe de rattachement des capacités d'échange.
+
+Verbatim : « Il faut déplacer les capacité de recupération de données ou de broadcast au plus près de là où les données sont produites. »
+
+Portée : orienter le retrait proposé du sous-domaine Integration en rapprochant les capacités de réception ou de diffusion du périmètre métier producteur des données. Les cas à plusieurs producteurs demandent de préciser si la responsabilité commune est scindée ou conservée ; aucun rattachement détaillé n'est déduit du seul principe.
+
+## U1106
+
+Date : 2026-10-16. Source : Laurent, réponse sur les capacités transversales de diffusion.
+
+Verbatim : « Répartir par producteur (Recommended) ».
+
+Portée : répartir les responsabilités de diffusion entre les producteurs concernés, quitte à scinder une capacité transversale. Le libellé « (Recommended) » provient de l'option proposée ; il ne qualifie pas une recommandation formulée par Laurent.
+
+## U1107
+
+Date : 2026-10-16. Source : Laurent, réponse sur l'émission et la réception des données externes.
+
+Verbatim : « Oui, distinguer émission et réception (Recommended) ».
+
+Portée : distinguer la diffusion portée par le producteur externe et la réception ou la tenue locale nécessaire dans Supply, près du référentiel ou du plan alimenté. Le libellé « (Recommended) » provient de l'option proposée.
+
+## U1108
+
+Date : 2026-10-16. Source : Laurent, précision sur l'origine des faits comptables.
+
+Verbatim : « Les faits de gestion à destination de la compta, ça vient des ledgers de Inventory Management ».
+
+Portée : identifier les ledgers d'Inventory Management comme producteurs des faits de gestion fournis à la comptabilité. Cette précision ne définit pas encore les producteurs de toutes les autres données destinées à la planification ou à l'amélioration produit.
+
+## U1109
+
+Date : 2026-10-16. Source : Laurent, précision sur Product Feedback et les données de planification.
+
+Verbatim : « Pareil que la compta, ce sont les ledger de stock » ; « Oui, stock documenté seulement (Recommended) ».
+
+Portée : les ledgers d'Inventory Management sont aussi les producteurs des faits destinés à Product Feedback. Pour les données destinées au Master Plan, ne retenir à ce stade que les positions de stock documentées comme source ; les autres producteurs restent à identifier. Le libellé « (Recommended) » provient de l'option proposée.
+
+## U1110
+
+Date : 2026-10-16. Source : Laurent, précision sur les faits des Cases et question de couverture du modèle.
+
+Verbatim :
+
+> Dans une logique de Case Management, tous les événements métier produit dans le processus géré par le Case, que ces événements soient internes ou externes et captés (par la sentinelle), sont stocké dans un ledger également. Pas un ledger Stock mais un Ledger Process (Process Management). Ce ledger permet de reconstituer les faits passés, d'avoir l'état exact d'une demande à un instant t et permet d'alimenter l'analytics.
+>
+> Est-ce qu'on a bien ce ledger et les liens associés dans le modèle ?
+
+Portée : vérifier si Process Management comporte une responsabilité distincte de conservation des événements métier de chaque Case, couvrant événements internes et externes captés, reconstitution historique et alimentation de l'analytics, ainsi que ses liens producteurs et consommateurs. La question demande un constat sur le backlog et la publication ; elle ne vaut pas encore accord sur une nouvelle fiche ni sur ses rattachements détaillés.
+
+## U1111
+
+Date : 2026-10-16. Source : Laurent, précision sur la source des traces analysées.
+
+Verbatim : « Process Mining analyse effectivement les traces qui sont dans ce ledger. »
+
+Portée : dans la proposition de Process Ledger, rendre explicite que Process Mining analyse les traces conservées par ce ledger. Ne pas confondre cette consommation avec la tenue du ledger ni présenter le lien comme déjà présent dans le modèle courant.
+
+## U1112
+
+Date : 2026-10-16. Source : Laurent, demande d'audit des flux de la cartographie.
+
+Verbatim : « On est en très de voir comment voir les flux dans une cartographie. Je me rends compte qu'il est possible qu'on n'ait jamais vérifié si c'était bon. Je veux un audit des flux principalement centré sur Supply chain Orchestration et les domaines en adhérence. »
+
+Portée : auditer le sens métier et la couverture des flux internes et des échanges avec les domaines adjacents à Supply Chain Orchestration, ainsi que leur fidélité de lecture cartographique. Comparer backlog et publication courante ; distinguer contenu existant, manques documentaires et recommandations. La demande porte sur l'audit, sans adoption implicite des corrections proposées ni publication.
+
+## U1113
+
+Date : 2026-10-16. Source : Laurent, autorisation d'appliquer les corrections de l'audit des flux.
+
+Verbatim : « Go pour corriger le modèle et les flux, en commençant par les cinq points prioritaires, puis les chaînes manquantes. »
+
+Portée : appliquer le lot cohérent de correction du modèle et des relations décrit par l'audit U1112, avec priorité aux producteurs et destinataires de promesse et de planification, à Plan Application, à Process Ledger et à ses consommateurs, aux échanges détaillés avec Logistics et aux chaînes de préparation des plans, puis aux autres chaînes documentées manquantes. Aligner le glossaire et préserver les responsabilités métier et les portées des accords historiques. L'accord porte sur ces corrections et leur mise en cohérence, sans présumer de réalisation installée ; il ne demande ni release, ni commit, ni push.

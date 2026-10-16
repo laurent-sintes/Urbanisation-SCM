@@ -96,7 +96,7 @@ try {
   await page.locator('.download-menu summary').click();
   assert.equal(await page.locator('.download-menu a[download$=".json"]').count(), 0);
   const yamlPending = page.waitForEvent('download');
-  const yamlLink = page.getByRole('link', { name: /Modèle \(YAML lisible\)/ });
+  const yamlLink = page.getByRole('link', { name: /Modèle complet \(YAML\)/ });
   assert.equal(new URL(await yamlLink.getAttribute('href'), base).pathname, `${prefix}data/${version}/model.yaml`);
   await yamlLink.click();
   const yamlDownload = await yamlPending;
@@ -116,7 +116,7 @@ try {
   await page.locator('.download-menu summary').click();
   assert.equal(await page.locator('.download-menu a[download$=".json"]').count(), 0);
   const historicYamlPending = page.waitForEvent('download');
-  const historicYamlLink = page.getByRole('link', { name: /Modèle \(YAML lisible\)/ });
+  const historicYamlLink = page.getByRole('link', { name: /Modèle complet \(YAML\)/ });
   assert.equal(
     new URL(await historicYamlLink.getAttribute('href'), base).pathname,
     `${prefix}data/${historical}/model.yaml`,

@@ -123,7 +123,7 @@ function ProductFacts({ product }: { product: ApplicationProduct }) {
         )}
         {!documentation && product.kind === 'vendor_product' && (
           <div>
-            <dt>Dernière release éditeur</dt>
+            <dt>Dernière version éditeur</dt>
             <dd>
               {product.latest_release ? (
                 <a href={product.latest_release.source_url} target="_blank" rel="noopener noreferrer">
@@ -437,7 +437,7 @@ function ComponentDetail({
               {evidenceLabel[mapping.evidence_state]} · <ModelText text={mapping.note} />
             </span>
             <button type="button" onClick={() => onShowOnMap(context.id, mapping.component_id)}>
-              Voir sur la carte
+              Voir dans le Catalogue
             </button>
           </div>
         ))
@@ -593,7 +593,7 @@ export function ApplicationCatalogPage({
                   type="button"
                   onClick={() => onShowOnMap(selection.id, component.id === root?.id ? undefined : component.id)}
                 >
-                  Voir sur la carte
+                  Voir dans le Catalogue
                 </button>
               )}
             </div>

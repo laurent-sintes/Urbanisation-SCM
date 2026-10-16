@@ -98,7 +98,7 @@ try {
   await boardriders.getByRole('button', { name: 'SAP ECC' }).click();
   await desktop.locator('.application-detail').getByRole('heading', { name: 'SAP ECC' }).waitFor();
   assert.ok(
-    (await desktop.locator('.application-detail').getByRole('button', { name: 'Voir sur la carte' }).count()) > 0,
+    (await desktop.locator('.application-detail').getByRole('button', { name: 'Voir dans le Catalogue' }).count()) > 0,
   );
   await desktop
     .getByRole('navigation', { name: 'Modules de SAP ECC' })
@@ -142,7 +142,10 @@ try {
   await desktop.getByRole('button', { name: 'Produits logiciels du marché' }).click();
   const products = desktop.getByRole('navigation', { name: 'Produits du marché' });
   await products.getByRole('button', { name: 'SoCloz' }).waitFor();
-  assert.equal(await products.locator(':scope > ul > li').count(), 11);
+  assert.equal(
+    await products.locator(':scope > ul > li').count(),
+    applicationCatalog.products.filter((item) => item.kind === 'vendor_product').length,
+  );
   assert.equal(await products.getByRole('button', { name: 'Flow Core System' }).count(), 0);
   await products.getByRole('button', { name: 'Elastic Suite' }).click();
   await detail
@@ -166,18 +169,27 @@ try {
     await products.getByRole('button', { name: product.name, exact: true }).click();
     await detail.locator('.application-identity h2').filter({ hasText: product.name }).waitFor();
     const logo = detail.locator('.application-identity img');
-    await logo.waitFor();
-    await desktop.waitForFunction(() => {
-      const image = document.querySelector('.application-identity img');
-      return image?.complete && image.naturalWidth > 0;
-    });
-    assert.equal(await detail.locator('.application-history time').count(), product.documentation.history.length);
-    assert.equal(
-      await detail.locator('.application-release-tracking > a').getAttribute('href'),
-      product.documentation.release_tracking.source_url,
-    );
-    assert.ok(await detail.getByText(product.documentation.reviewed_on, { exact: true }).isVisible());
-    assert.equal(await detail.getByText('Logo à documenter').count(), 0);
+    if (product.branding) {
+      await logo.waitFor();
+      await desktop.waitForFunction(() => {
+        const image = document.querySelector('.application-identity img');
+        return image?.complete && image.naturalWidth > 0;
+      });
+      assert.equal(await detail.getByText('Logo à documenter').count(), 0);
+    } else {
+      assert.equal(await logo.count(), 0);
+      assert.ok(await detail.getByText('Logo à documenter', { exact: true }).isVisible());
+    }
+    assert.equal(await detail.locator('.application-history time').count(), product.documentation?.history.length || 0);
+    if (product.documentation) {
+      assert.equal(
+        await detail.locator('.application-release-tracking > a').getAttribute('href'),
+        product.documentation.release_tracking.source_url,
+      );
+      assert.ok(await detail.getByText(product.documentation.reviewed_on, { exact: true }).isVisible());
+    } else {
+      assert.equal(await detail.locator('.application-release-tracking').count(), 0);
+    }
   }
   await products.getByRole('button', { name: 'SoCloz' }).click();
   await detail.locator('.application-identity h2').filter({ hasText: 'SoCloz' }).waitFor();
@@ -197,7 +209,7 @@ try {
   assert.ok(await routing.getByText('Non utilisé').isVisible());
   assert.equal(await boardriders.getByRole('button', { name: 'Order Routing' }).count(), 0);
   await boardriders.getByRole('button', { name: 'Elastic Suite' }).click();
-  await detail.getByRole('button', { name: 'Voir sur la carte' }).first().click();
+  await detail.getByRole('button', { name: 'Voir dans le Catalogue' }).first().click();
   await desktop.getByRole('button', { name: 'Applications Elastic Suite' }).waitFor();
   assert.ok((await desktop.locator('.application-related-item').count()) > 0);
   assert.ok((await desktop.locator('.application-context-item').count()) > 0);
@@ -318,7 +330,7 @@ try {
   await mobile.getByRole('button', { name: 'SI à faire converger' }).click();
   await mobileSystems.getByRole('heading', { name: 'SI Boardriders' }).waitFor();
   await mobileSystems.getByRole('button', { name: 'Elastic Suite' }).first().click();
-  await mobile.locator('.application-detail').getByRole('button', { name: 'Voir sur la carte' }).first().click();
+  await mobile.locator('.application-detail').getByRole('button', { name: 'Voir dans le Catalogue' }).first().click();
   await mobile.locator('.map-application-picker > button').click();
   const componentBounds = await mobile.getByRole('dialog', { name: 'Applications sur la carte' }).boundingBox();
   assert.ok(

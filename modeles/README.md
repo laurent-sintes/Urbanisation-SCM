@@ -6,7 +6,7 @@ Une relation `shares-data` identifie le producteur (`source_id`) et le destinata
 
 Les extrémités peuvent appartenir à plusieurs niveaux métier, sans restriction aux systèmes. Un partage n’est pas une relation hiérarchique et chaque sens retour exige sa propre relation. La validation contrôle extrémités distinctes, contenu non vide et références au glossaire associé. Le contenu fait partie des empreintes et révisions de la relation.
 
-La Carte Enterprise Architecture projette les échanges publiés vers leurs systèmes métier ; elle conserve les identifiants des relations sources dans la synthèse. Les vues focalisées ne reçoivent pas cette surcouche. Une publication sans partage documenté n’affiche aucune flèche ; le frontend ne complète pas le snapshot depuis le backlog. Les échanges cible ne prouvent ni flux installé ni contrat technique.
+La vue Flux projette les échanges publiés sur les territoires visibles du périmètre choisi ; elle conserve les identifiants et les extrémités des relations sources dans le détail. À l’échelle Enterprise Architecture, les échanges sont regroupés entre systèmes métier. Dans une vue focalisée, une indication signale les échanges dont un partenaire est hors du cadre et permet de revenir à la vue d’ensemble. Une publication sans partage documenté n’affiche aucune flèche ; le frontend ne complète pas le snapshot depuis le backlog. Les échanges cible ne prouvent ni flux installé ni contrat technique.
 
 ## Écarts documentés dans les hotspots
 

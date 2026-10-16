@@ -53,6 +53,25 @@ test('an application selection keeps its component on the enterprise map', () =>
   assert.deepEqual(readRoute(routeHash(route)), route);
 });
 
+test('Catalogue and Flux preserve their shared context and the Catalogue detail when switching', () => {
+  const catalogue = readRoute(
+    '#/map?scope=D04&node=CAP-example&version=2026-10-16.2&mapDepth=4&mapFocus=CAP-example&app=selection-flow&component=planning&hf=%7B%22enabled%22%3Atrue%7D',
+  );
+  const flows = readRoute(routeHash({ ...catalogue, view: 'flows' }));
+  assert.equal(flows.view, 'flows');
+  assert.deepEqual(flows, { ...catalogue, view: 'flows' });
+  assert.deepEqual(readRoute(routeHash({ ...flows, view: 'map' })), catalogue);
+});
+
+test('a direct Flux link retains its root scope and rejects invalid Catalogue detail', () => {
+  const flows = readRoute('#/flows?scope=%40root&mapDepth=9&node=domain-commerce');
+  assert.equal(flows.view, 'flows');
+  assert.equal(flows.scope, '@root');
+  assert.equal(flows.node, 'domain-commerce');
+  assert.equal(flows.mapDepth, undefined);
+  assert.deepEqual(readRoute(routeHash(flows)), flows);
+});
+
 test('application product and SI entries keep distinct routes', () => {
   const products = readRoute('#/applications?catalog=products');
   assert.equal(products.appView, 'products');
@@ -81,7 +100,7 @@ test('market needs a selected object; principles clear model selection', () => {
   assert.ok(!routeHash({ ...method, view: 'sheet', node: 'D01' }).includes('principle='));
 });
 
-test('graph options retain valid values and reject invalid values', () => {
+test('relation filters retain valid values and ignore retired drawing settings', () => {
   const route = {
     ...readRoute(''),
     view: 'relations',
@@ -91,13 +110,20 @@ test('graph options retain valid values and reject invalid values', () => {
     graphDepth: 0,
     graphDirection: 'incoming',
     graphFamily: 'other',
-    graphLayout: 'organic',
-    graphLabels: 'focus',
   };
   assert.deepEqual(readRoute(routeHash(route)), route);
   const invalid = readRoute('#/relations?depth=-1&level=solution&direction=random&qualification=x&layout=x&labels=x');
   for (const key of Object.keys(route).filter((k) => k.startsWith('graph'))) assert.equal(invalid[key], undefined);
   assert.ok(!routeHash({ ...route, view: 'map' }).includes('depth='));
+  const legacy = readRoute(
+    '#/relations?node=D07.c&relation=REL001&version=fixed&level=domain&layout=hierarchical&labels=all',
+  );
+  assert.equal(legacy.node, 'D07.c');
+  assert.equal(legacy.relation, 'REL001');
+  assert.equal(legacy.version, 'fixed');
+  assert.equal(legacy.graphLevel, 'domain');
+  assert.ok(!routeHash(legacy).includes('layout='));
+  assert.ok(!routeHash(legacy).includes('labels='));
 });
 
 test('map detail and selected Business Area survive a fixed publication route', () => {

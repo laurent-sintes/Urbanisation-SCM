@@ -1,5 +1,6 @@
 import {
   ArrowLeft,
+  ArrowRightLeft,
   BookOpen,
   ChevronRight,
   Compass,
@@ -58,6 +59,9 @@ import { downloadWorkingModel, useWorkshop } from './workshop';
 
 const DependenciesPane = lazy(() =>
   import('./DependenciesPane').then((module) => ({ default: module.DependenciesPane })),
+);
+const FlowMapPanel = lazy(() =>
+  import('./components/FlowMapPanel').then((module) => ({ default: module.FlowMapPanel })),
 );
 const ModelingGuidePage = lazy(() =>
   import('./components/ModelingGuidePage').then((module) => ({ default: module.ModelingGuidePage })),
@@ -187,6 +191,11 @@ export function App() {
     !['domain', 'business_system'].includes(selected.kind)
       ? 'sheet'
       : 'map');
+  const cartographicView = view === 'map' || view === 'flows';
+  const previousView = useRef(view);
+  const catalogueReturn = useRef(false);
+  const [catalogueRestoreLocation, setCatalogueRestoreLocation] = useState('');
+  const CartographyPanel = view === 'flows' ? FlowMapPanel : MapPanel;
   const validScope = route.scope && model?.nodeById.has(route.scope) ? route.scope : '';
   const requestedScope =
     route.scope === '@root' || selected?.kind === 'universe'
@@ -226,10 +235,15 @@ export function App() {
     view === 'principles' ||
     view === 'metamodel' ||
     view === 'help';
-  const headingNode = referenceView ? undefined : view === 'map' ? scope : selected;
+  const headingNode = referenceView ? undefined : cartographicView ? scope : selected;
   const hotspotDetail =
     view === 'hotspots' && displayModel?.raw.hotspot_catalog?.hotspots.some((item) => item.id === route.hotspot);
-  const contentScope = view === 'map' ? scopeId : route.node;
+  const contentScope = cartographicView ? scopeId : route.node;
+  useLayoutEffect(() => {
+    catalogueReturn.current = navigationType !== 'POP' && previousView.current === 'flows' && view === 'map';
+    previousView.current = view;
+    setCatalogueRestoreLocation(catalogueReturn.current ? locationKey : '');
+  }, [locationKey, navigationType, view]);
   useLayoutEffect(() => {
     if (lastLocationKey.current === locationKey) return;
     lastLocationKey.current = locationKey;
@@ -239,6 +253,8 @@ export function App() {
   // The selected content changes the scroll context even when the effect only reads the target ref.
   // biome-ignore lint/correctness/useExhaustiveDependencies: These route fields intentionally reset reading position.
   useLayoutEffect(() => {
+    // An explicit Flux → Catalogue switch restores its own viewport once the Catalogue has settled.
+    if (view === 'map' && catalogueReturn.current) return;
     // A new view starts at the top; selecting a card in the same map does not jump.
     const top = restoreScroll.current ?? Number(route.scroll || 0);
     const target = readingViewport(content.current);
@@ -250,7 +266,8 @@ export function App() {
       });
     restore();
     restoreScroll.current = null;
-    if (!route.section) heading.current?.focus({ preventScroll: true });
+    if (!route.section && !document.activeElement?.closest('.view-tabs'))
+      heading.current?.focus({ preventScroll: true });
     // Lazy maps acquire their scrollable height after mounting and card measurement.
     if (top > 0 && target && target !== content.current) {
       let timer: ReturnType<typeof setTimeout>;
@@ -394,14 +411,14 @@ export function App() {
   useEffect(() => {
     if (model && route.node && !model.nodeById.has(route.node)) {
       setAnnouncement(`L’élément ${route.node} n’existe pas dans cette publication. Retour à la cartographie.`);
-      changeRoute({ node: '', scope: '', view: 'map', relation: '' }, true);
+      changeRoute({ node: '', scope: '', view: view === 'flows' ? 'flows' : 'map', relation: '' }, true);
     } else if (model && route.scope && route.scope !== '@root' && !model.nodeById.has(route.scope)) {
       setAnnouncement(
         'Le périmètre de cette carte n’existe pas dans la publication. Le contexte de l’élément est rétabli.',
       );
       changeRoute({ scope: '' }, true);
     }
-  }, [model, route.node, route.scope, changeRoute]);
+  }, [model, route.node, route.scope, view, changeRoute]);
   useEffect(() => {
     const shortcut = (event: KeyboardEvent) => {
       if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
@@ -427,9 +444,9 @@ export function App() {
         scroll: '',
         node: id,
         scope: domain?.id || (item?.kind === 'business_system' ? id : ''),
-        view: undefined,
-        mapDepth: depth as 0 | 1 | 2 | 3,
-        mapFocus: depth === 3 ? businessArea?.id || '' : '',
+        view: view === 'flows' ? 'flows' : undefined,
+        ...(view === 'flows' ? {} : { mapDepth: depth as 0 | 1 | 2 | 3 }),
+        mapFocus: view === 'flows' ? '' : depth === 3 ? businessArea?.id || '' : '',
         term: '',
         principle: '',
         section: '',
@@ -443,7 +460,7 @@ export function App() {
       setDrawer(false);
       if (focusHeading) setTimeout(() => heading.current?.focus({ preventScroll: true }), 50);
     },
-    [changeRoute, model],
+    [changeRoute, model, view],
   );
   const read = useCallback(
     (id: string) => {
@@ -484,6 +501,12 @@ export function App() {
     },
     [changeRoute, model, scopeId, mapDepth],
   );
+  const selectFlow = useCallback(
+    (id: string) => {
+      changeRoute({ node: id, scope: scopeId || '@root', view: 'flows', mapFocus: id, relation: '', section: '' });
+    },
+    [changeRoute, scopeId],
+  );
   const openOverviewNode = useCallback(
     (id: string) => {
       if (model?.nodeById.get(id)?.kind === 'business_system')
@@ -505,13 +528,13 @@ export function App() {
       changeRoute({
         node: id,
         scope: id || '@root',
-        view: 'map',
-        mapDepth: defaultMapDepth(model?.nodeById.get(id)?.kind),
+        view: view === 'flows' ? 'flows' : 'map',
+        ...(view === 'flows' ? {} : { mapDepth: defaultMapDepth(model?.nodeById.get(id)?.kind) }),
         mapFocus: '',
         relation: '',
         section: '',
       }),
-    [changeRoute, model],
+    [changeRoute, model, view],
   );
   const showSelectedOnMap = useCallback(() => {
     if (model) changeRoute(mapRouteForNode(model, selected?.id || ''));
@@ -543,7 +566,7 @@ export function App() {
       setAnnouncement('La copie est indisponible. Tu peux copier l’adresse dans le navigateur.');
     }
   };
-  const atMapHome = view === 'map' && !headingNode;
+  const atMapHome = cartographicView && !headingNode;
   const statistics = model && headingNode ? scopeStatistics(model, headingNode) : [];
   const breadcrumbs = (
     <nav className="breadcrumb" aria-label="Fil d’Ariane">
@@ -564,7 +587,7 @@ export function App() {
               <button
                 type="button"
                 title={node.name}
-                onClick={() => (view === 'map' ? openMapLevel(node.id) : navigate(node.id))}
+                onClick={() => (cartographicView ? openMapLevel(node.id) : navigate(node.id))}
                 aria-current={headingNode.id === node.id ? 'page' : undefined}
               >
                 {node.name}
@@ -724,8 +747,20 @@ export function App() {
           />
         )}
         <main
+          onFocusCapture={(event) => {
+            const target = event.target as HTMLElement;
+            const controls = target.closest<HTMLElement>('.map-actions');
+            if (!controls || !target.matches('button') || target.classList.contains('map-fullscreen-button')) return;
+            requestAnimationFrame(() => {
+              if (!target.isConnected) return;
+              const button = target.getBoundingClientRect();
+              const strip = controls.getBoundingClientRect();
+              if (button.left < strip.left) controls.scrollLeft -= strip.left - button.left + 4;
+              else if (button.right > strip.right) controls.scrollLeft += button.right - strip.right + 4;
+            });
+          }}
           id="fa-main"
-          className={`workspace ${!model ? 'without-model' : ''} ${view === 'map' ? 'map-workspace' : ''}`}
+          className={`workspace ${!model ? 'without-model' : ''} ${cartographicView ? 'map-workspace' : ''} ${view === 'relations' ? 'relations-workspace' : ''}`}
           inert={mobile && drawer}
           aria-busy={loading}
         >
@@ -767,13 +802,21 @@ export function App() {
                 {route.version && (
                   <aside className="publication-selection" aria-label="Publication consultée">
                     <span>
-                      <strong>Publication figée · {route.version}</strong> —{' '}
-                      {catalog?.current !== route.version
-                        ? 'Une version plus récente est disponible.'
-                        : 'Ce lien restera sur cette édition.'}
+                      <strong>
+                        <span className="publication-fixed-long">Publication figée</span>
+                        <span className="publication-fixed-short">Figée</span> · {route.version}
+                      </strong>
+                      <span className="publication-explanation">
+                        {' '}
+                        —{' '}
+                        {catalog?.current !== route.version
+                          ? 'Une version plus récente est disponible.'
+                          : 'Ce lien restera sur cette édition.'}
+                      </span>
                     </span>
                     <button
                       type="button"
+                      aria-label="Suivre la version courante"
                       onClick={() =>
                         changeRoute({
                           version: '',
@@ -784,7 +827,10 @@ export function App() {
                         })
                       }
                     >
-                      Suivre la version courante
+                      <span className="publication-follow-long">Suivre la version courante</span>
+                      <span className="publication-follow-short" aria-hidden="true">
+                        Suivre le courant
+                      </span>
                     </button>
                   </aside>
                 )}
@@ -804,9 +850,13 @@ export function App() {
                     {shareButton}
                   </div>
                 )}
-                {view === 'map' || hotspotDetail ? (
+                {cartographicView || hotspotDetail || view === 'relations' ? (
                   <h1 id="page-title" className="sr-only" ref={heading} tabIndex={-1}>
-                    {hotspotDetail ? 'Points chauds' : scope?.name || rootName}
+                    {hotspotDetail
+                      ? 'Points chauds'
+                      : view === 'relations'
+                        ? `Relations : ${headingNode?.name || rootName}`
+                        : scope?.name || rootName}
                   </h1>
                 ) : (
                   <header className="page-heading">
@@ -847,7 +897,7 @@ export function App() {
                           </span>
                         )}
                         {headingNode && (
-                          <span title={`Identité persistante : ${headingNode.id}`}>
+                          <span title={`Identifiant : ${headingNode.id}`}>
                             {headingNode.displayCode ?? headingNode.id}
                           </span>
                         )}
@@ -928,7 +978,8 @@ export function App() {
                     <div className="view-tabs" role="tablist" aria-label="Vue du modèle">
                       {(
                         [
-                          { id: 'map', label: 'Carte', Icon: LayoutGrid },
+                          { id: 'map', label: 'Catalogue', Icon: LayoutGrid },
+                          { id: 'flows', label: 'Flux', Icon: ArrowRightLeft },
                           { id: 'sheet', label: 'Fiche', Icon: FileText },
                           { id: 'relations', label: 'Relations', Icon: GitBranch },
                           { id: 'market', label: 'Sources d’inspiration', Icon: BookOpen },
@@ -945,9 +996,11 @@ export function App() {
                             tabIndex={view === tab.id ? 0 : -1}
                             aria-selected={view === tab.id}
                             onClick={() =>
-                              tab.id === 'map' && view !== 'map'
+                              tab.id === 'map' && !cartographicView
                                 ? showSelectedOnMap()
-                                : changeRoute({ view: tab.id, relation: '', section: '' })
+                                : tab.id === 'flows'
+                                  ? changeRoute({ view: 'flows', scope: scopeId || '@root', relation: '', section: '' })
+                                  : changeRoute({ view: tab.id, relation: '', section: '' })
                             }
                             onKeyDown={(e) => {
                               if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
@@ -979,10 +1032,12 @@ export function App() {
                       <button
                         type="button"
                         className="view-parent-button"
-                        onClick={() => navigate(view === 'map' ? parentScope?.id || '' : viewParent?.id || '')}
+                        onClick={() =>
+                          cartographicView ? openMapLevel(parentScope?.id || '') : navigate(viewParent?.id || '')
+                        }
                       >
                         <ArrowLeft size={14} /> Remonter vers{' '}
-                        {view === 'map' ? parentScope?.name || rootName : viewParent?.name || rootName}
+                        {cartographicView ? parentScope?.name || rootName : viewParent?.name || rootName}
                       </button>
                     )}
                   </div>
@@ -1122,7 +1177,7 @@ export function App() {
                         focusId={selected?.id}
                         relationId={route.relation}
                         settings={route}
-                        onSettings={(changes) => changeRoute(changes)}
+                        onSettings={(changes) => changeRoute({ ...changes, relation: '' })}
                         onSelectRelation={(relation) => changeRoute({ relation }, true)}
                         onFocus={(node) =>
                           changeRoute({ node, scope: '', relation: '', view: 'relations', graphDepth: node ? 1 : 0 })
@@ -1130,10 +1185,11 @@ export function App() {
                         onRead={read}
                       />
                     </Suspense>
-                  ) : !scopeId && model.nodes.some((node) => node.kind === 'business_system') ? (
+                  ) : view !== 'flows' && !scopeId && model.nodes.some((node) => node.kind === 'business_system') ? (
                     <Overview
                       model={displayModel || model}
                       detail={universeDepth}
+                      restoreViewport={catalogueRestoreLocation === locationKey}
                       hotspotFilters={hotspotFilters}
                       onHotspotFiltersChange={onHotspotFiltersChange}
                       onDepthChange={(depth) =>
@@ -1158,39 +1214,44 @@ export function App() {
                       }
                     />
                   ) : (
-                    <MapPanel
-                      model={displayModel || model}
-                      scope={scope}
-                      scopeId={scopeId}
-                      selectedId={selected?.id || ''}
-                      rootName={rootName}
-                      hotspotFilters={hotspotFilters}
-                      onHotspotFiltersChange={onHotspotFiltersChange}
-                      mapDepth={mapDepth}
-                      mapMaxDepth={mapMaxDepth}
-                      detailLabels={detailLabels}
-                      focusId={route.mapFocus}
-                      onDepthChange={(depth) =>
-                        changeRoute({ view: 'map', mapDepth: depth as 0 | 1 | 2 | 3 | 4, mapFocus: '' }, true)
-                      }
-                      onSelect={select}
-                      onAnnouncement={setAnnouncement}
-                      onOpenHotspot={(hotspot, groupIds) =>
-                        changeRoute({
-                          view: 'hotspots',
-                          returnTo: readingOrigin({ ...route, returnTo: undefined }, model.version),
-                          hotspot,
-                          hotspotGroup: groupIds?.join(',') || '',
-                          node: '',
-                          scope: '',
-                        })
-                      }
-                      applicationSelectionId={route.appSelection}
-                      applicationComponentId={route.appComponent}
-                      onApplicationChange={(appSelection, appComponent) =>
-                        changeRoute({ view: 'map', appSelection, appComponent }, true)
-                      }
-                    />
+                    <Suspense fallback={<div className="graph-canvas empty-state">Ouverture de la cartographie…</div>}>
+                      <CartographyPanel
+                        key={view === 'flows' ? `${model.version}:${scopeId || '@root'}` : 'catalogue'}
+                        model={displayModel || model}
+                        scope={scope}
+                        scopeId={scopeId}
+                        selectedId={selected?.id || ''}
+                        rootName={rootName}
+                        hotspotFilters={hotspotFilters}
+                        onHotspotFiltersChange={onHotspotFiltersChange}
+                        mapDepth={mapDepth}
+                        mapMaxDepth={mapMaxDepth}
+                        detailLabels={detailLabels}
+                        focusId={route.mapFocus}
+                        restoreViewport={view === 'map' && catalogueRestoreLocation === locationKey}
+                        onDepthChange={(depth) =>
+                          changeRoute({ view, mapDepth: depth as 0 | 1 | 2 | 3 | 4, mapFocus: '' }, true)
+                        }
+                        onSelect={view === 'flows' ? selectFlow : select}
+                        onOpenScope={openMapLevel}
+                        onAnnouncement={setAnnouncement}
+                        onOpenHotspot={(hotspot, groupIds) =>
+                          changeRoute({
+                            view: 'hotspots',
+                            returnTo: readingOrigin({ ...route, returnTo: undefined }, model.version),
+                            hotspot,
+                            hotspotGroup: groupIds?.join(',') || '',
+                            node: '',
+                            scope: '',
+                          })
+                        }
+                        applicationSelectionId={route.appSelection}
+                        applicationComponentId={route.appComponent}
+                        onApplicationChange={(appSelection, appComponent) =>
+                          changeRoute({ view, appSelection, appComponent }, true)
+                        }
+                      />
+                    </Suspense>
                   )}
                 </div>
                 <footer className="workspace-footer">

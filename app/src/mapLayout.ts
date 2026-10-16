@@ -55,7 +55,8 @@ export function chooseMapGrid(
           const height = (slot.span === 2 ? wideSection : measuredSections[0]).heights[slot.index];
           return { index: slot.index, column: slot.column, span: slot.span, height, displayHeight: height };
         });
-      rows.push(entries);
+      const rowHeight = Math.max(...entries.map((entry) => entry.height));
+      rows.push(entries.map((entry) => ({ ...entry, displayHeight: rowHeight })));
     }
     const width = columns * cardWidth + GAP + 32 + (group ? 28 : 0);
     const height =

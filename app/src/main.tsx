@@ -6,6 +6,7 @@ import { preference, readRoute, routeHash } from './navigation';
 import './styles.css';
 import './brand.css';
 import './reader.css';
+import './map-shell.css';
 
 if (!location.hash) {
   const saved = preference<string>('selection', '');

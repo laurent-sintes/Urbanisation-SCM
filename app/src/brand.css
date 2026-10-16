@@ -1,25 +1,8 @@
 /* FLOW identity adopted in U208. Exact colors and logos: ../BRANDING.md.
    Surface tints, neutral ink and borders are adaptations for the screen. */
-.modeling-depth {
-  display: inline-block;
-  margin: 2px 0 8px;
-  padding: 3px 8px;
-  border-radius: 5px;
-  background: var(--flow-mint);
-  color: var(--flow-green);
-  font-size: 12px;
-  font-weight: 600;
-}
-.business-card[data-depth="context"] .modeling-depth {
-  background: var(--flow-lavender);
-}
 .business-card[data-kind="business_system"] {
-  border-top: 4px solid var(--flow-green);
   height: auto;
   min-height: 220px;
-}
-.business-card[data-depth="context"] {
-  border-top-color: #aab6d4;
 }
 .business-card[data-depth]:not([data-depth=""]) {
   height: auto;
@@ -231,8 +214,24 @@
     background: #f9fcfb;
   }
   .map-container {
-    background: #f0faf770;
-    border-color: #c9e3d8;
+    background: #e9f5f0;
+    border-color: #bfdcd0;
+  }
+  .map-container[data-kind="business_system"] {
+    background: #e4eef8;
+    border-color: #bfd4e4;
+  }
+  .map-container[data-kind="business_system"] > .container-label > strong {
+    color: #1f536f;
+  }
+  .map-container[data-kind="area"] {
+    background: white;
+    border-color: #c9ded6;
+    box-shadow: 0 4px 14px #2361591a;
+  }
+  .map-container[data-kind="business_area"] {
+    background: #edf6fa;
+    border-color: #d6e6ed;
   }
   .presentation-container {
     background: #eadfcd26;
@@ -242,31 +241,58 @@
     color: var(--flow-green);
   }
   .business-card {
-    border-color: #d7e3dc;
-    border-top-color: var(--flow-green);
+    border-color: #c9ded6;
     background: white;
-    box-shadow: 0 3px 8px #23615906;
+    box-shadow: 0 4px 14px #2361591a;
   }
-  .business-card:hover,
-  .business-card.is-selected {
-    border-color: var(--flow-green);
+  .business-card[data-kind="domain"] {
+    border-color: #b9d9cc;
+    background: #e5f3ed;
+  }
+  .business-card[data-kind="business_system"] {
+    border-color: #bfd4e4;
+    background: #e4eef8;
+  }
+  .business-card[data-kind="business_system"] > .map-card-heading h3 {
+    color: #1f536f;
+  }
+  .business-card[data-kind="business_area"] {
+    border-color: #d6e6ed;
+    background: #edf6fa;
+  }
+  .business-card[data-kind="capability"] h3,
+  .business-card[data-kind="reference"] h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #245d61;
+  }
+  .business-card[data-kind="behavior"] h3 {
+    font-size: 12px;
+    font-weight: 400;
+    color: #526d76;
+  }
+  .business-card:hover {
+    border-color: #bfd1c8;
   }
   .business-card.is-selected {
-    box-shadow: 0 0 0 2px #d9f2ea;
+    border-color: #7c9f91;
+    box-shadow:
+      0 0 0 1px #c6ded4,
+      0 3px 12px #203c3912;
   }
   .business-card.is-presentation {
-    border-top-color: #bba47c;
+    border-color: #ded8cb;
     background: #fefdfb;
   }
   .card-child-list {
     border-color: #e1ebe5;
   }
   .child-list-heading {
-    color: #4d6f61;
+    color: #5a6e64;
   }
   .child-list-heading > span {
-    background: var(--flow-mint);
-    color: var(--flow-green);
+    background: transparent;
+    color: inherit;
   }
   .card-child-list .card-child-link,
   .card-bottom button,

@@ -405,6 +405,8 @@ try {
 
 async function assertWithinViewport(locator, page) {
   const rect = await locator.boundingBox();
+  if (await locator.evaluate((element) => element.classList.contains('hotspot-map-tooltip')))
+    assert.ok(rect.width <= 340.5, 'A hotspot summary stays compact and leaves the map visible');
   const header = await page.locator('.topbar').boundingBox();
   const viewport = page.viewportSize();
   assert.ok(rect.x >= 11 && rect.x + rect.width <= viewport.width - 11, 'popup stays inside horizontal viewport');

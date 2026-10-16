@@ -41,7 +41,7 @@ export function HotspotAssessmentGuide({ model }: { model: PublishedModel }) {
           </p>
           <div className="hotspot-matrix-scroll">
             <table className="hotspot-matrix">
-              <caption>Grille publiée {policy.id} · arbitrage en lignes, implémentation en colonnes</caption>
+              <caption>Grille de criticité · arbitrage en lignes, implémentation en colonnes</caption>
               <thead>
                 <tr>
                   <th scope="col">Arbitrage / implémentation</th>
@@ -84,10 +84,7 @@ export function HotspotAssessmentGuide({ model }: { model: PublishedModel }) {
           <p>{policy.assessment_note}</p>
         </>
       ) : (
-        <p>
-          La grille détaillée n’est pas fournie par cette publication. Aucun critère d’une édition plus récente ne lui
-          est ajouté.
-        </p>
+        <p>Cette version ne contient pas de grille détaillée.</p>
       )}
     </details>
   );

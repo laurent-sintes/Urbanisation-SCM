@@ -3,6 +3,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { selectionMappings } from '../applicationCatalog';
 import { filterMapHotspots, type HotspotMapFilters, hotspotsInScope } from '../hotspotMap';
 import type { AtlasNode, PublishedModel } from '../types';
+import { useCatalogueScrollMemory } from '../useCatalogueScrollMemory';
 import { HotspotLegend } from './HotspotDisplay';
 import { MapApplicationPicker } from './MapApplicationPicker';
 import { MapDetailPicker } from './MapDetailPicker';
@@ -24,8 +25,10 @@ export interface MapPanelProps {
   mapMaxDepth: number;
   detailLabels: string[];
   focusId?: string;
+  restoreViewport?: boolean;
   onDepthChange: (depth: number) => void;
   onSelect: (id: string) => void;
+  onOpenScope?: (id: string) => void;
   onAnnouncement: (message: string) => void;
   onOpenHotspot: (id: string, groupIds?: string[]) => void;
   applicationSelectionId?: string;
@@ -45,6 +48,7 @@ export function MapPanel({
   mapMaxDepth,
   detailLabels,
   focusId,
+  restoreViewport = false,
   onDepthChange,
   onSelect,
   onAnnouncement,
@@ -54,6 +58,14 @@ export function MapPanel({
   onApplicationChange,
 }: MapPanelProps) {
   const panel = useRef<HTMLElement>(null);
+  const scroll = useRef<HTMLDivElement>(null);
+  useCatalogueScrollMemory(
+    scroll,
+    model.version,
+    scopeId,
+    restoreViewport,
+    '[data-testid="react-flow-canvas"] .react-flow__node-business',
+  );
   const [expanded, setExpanded] = useState(false);
   const [pageFallback, setPageFallback] = useState(false);
   const [selectedHotspotId, setSelectedHotspotId] = useState('');
@@ -84,7 +96,7 @@ export function MapPanel({
         <div>
           <strong>{scope?.name || rootName}</strong>
           {scope?.kind === 'domain' && mapMaxDepth === 0 && (
-            <span className="toolbar-note">Aucun sous-domaine publié pour ce domaine.</span>
+            <span className="toolbar-note">Aucun sous-domaine décrit dans cette version.</span>
           )}
         </div>
         <div className="map-actions">
@@ -127,7 +139,7 @@ export function MapPanel({
           </button>
         </div>
       </div>
-      <div className="map-scroll-viewport" role="region" aria-label="Défilement de la carte" tabIndex={0}>
+      <div ref={scroll} className="map-scroll-viewport" role="region" aria-label="Défilement de la carte" tabIndex={0}>
         {hotspotFilters.enabled && <HotspotLegend count={visibleHotspots.length} />}
         <Suspense fallback={<div className="graph-canvas empty-state">Ouverture de la carte…</div>}>
           <ReactFlowPane

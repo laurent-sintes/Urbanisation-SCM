@@ -55,11 +55,11 @@ export async function readWorkshopStage(
     },
     timeoutMs,
   );
-  if (!value || typeof value !== 'object') throw new Error('Staging d’atelier invalide.');
+  if (!value || typeof value !== 'object') throw new Error('Fichier de séance invalide.');
   const stage = value as WorkshopStage;
   if (!stage.active) return null;
   if (!Array.isArray(stage.operations) || typeof stage.base_version !== 'string')
-    throw new Error('Staging d’atelier invalide.');
+    throw new Error('Fichier de séance invalide.');
   return stage;
 }
 
@@ -111,7 +111,7 @@ export function useWorkshop(model?: PublishedModel | null, modelSha?: string) {
       } catch (cause) {
         if (!stopped) {
           setStage(null);
-          setError(cause instanceof Error ? cause.message : 'Staging indisponible.');
+          setError(cause instanceof Error ? cause.message : 'Séance indisponible.');
         }
       } finally {
         pending = false;

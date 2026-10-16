@@ -153,8 +153,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
       {node.kind === 'behavior' && (
         <p className="behavior-context">
           Comportement de{' '}
-          <ReferenceLink target={parents[0].sourceId}>{model.nodeById.get(parents[0].sourceId)?.name}</ReferenceLink> ·
-          Dernier niveau de détail
+          <ReferenceLink target={parents[0].sourceId}>{model.nodeById.get(parents[0].sourceId)?.name}</ReferenceLink>
         </p>
       )}
       {sections.length > 0 && (
@@ -429,11 +428,11 @@ export function RelationDetails({ model, relation }: { model: PublishedModel; re
     <section
       className="relation-inspector relation-details"
       data-testid="relation-inspector"
-      aria-label={`Détail de la relation ${relation.id}`}
+      aria-label={`Relation entre ${model.nodeById.get(relation.sourceId)?.name || 'le périmètre source'} et ${model.nodeById.get(relation.targetId)?.name || 'le périmètre destinataire'}`}
     >
       <div className="section-kicker">
         <GitBranch size={16} aria-hidden="true" />
-        Comprendre la relation <span className="detail-identifiers">{relation.id}</span>
+        Comprendre la relation
       </div>
       <div className="relation-endpoints">
         <ReferenceLink target={relation.sourceId}>

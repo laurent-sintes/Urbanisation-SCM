@@ -1,6 +1,5 @@
-import { ArrowRight, ArrowUpRight, Maximize2, Network } from 'lucide-react';
-import { useMemo, useRef, useState } from 'react';
-import { CytoscapeCanvas } from './CytoscapeCanvas';
+import { ArrowRight, ArrowUpRight, X } from 'lucide-react';
+import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { RelationDetails } from './components/BusinessSheet';
 import { MetaTypeLabel, ReferenceLink } from './components/ModelLinks';
 import { type DependencyOptions, dependencyLevel, dependencyLevels, projectDependencies } from './dependencyGraph';
@@ -22,6 +21,7 @@ interface Props {
   onRead: (id: string) => void;
 }
 type Selection = { kind: 'node' | 'edge'; id: string };
+const searchable = (value: string) => value.normalize('NFD').replace(/\p{M}/gu, '').toLocaleLowerCase('fr');
 
 export function DependenciesPane({
   model,
@@ -63,22 +63,17 @@ export function DependenciesPane({
     ],
   );
   const projection = useMemo(() => projectDependencies(model, options), [model, options]);
-  const [selection, setSelection] = useState<Selection | null>(null);
-  const [showGraph, setShowGraph] = useState(() => !matchMedia('(max-width: 600px)').matches);
-  const [fullscreenError, setFullscreenError] = useState('');
-  const pane = useRef<HTMLElement>(null);
-  const relationEdge = relationId ? projection.edges.find((e) => e.relationIds.includes(relationId)) : undefined;
-  // A direct link/history change is authoritative over the previous local selection.
-  const pickedNode = relationId
-    ? projection.nodes.find((n) => n.internalRelationIds.includes(relationId))
-    : selection?.kind === 'node'
-      ? projection.nodes.find((n) => n.id === selection.id)
-      : undefined;
-  const pickedEdge = relationId
-    ? relationEdge
-    : selection?.kind === 'edge'
-      ? projection.edges.find((e) => e.id === selection.id)
-      : undefined;
+  const selectionContext = JSON.stringify([model.version, options]);
+  const [selectionState, setSelection] = useState<{ context: string; value: Selection } | null>(null);
+  const selection = selectionState?.context === selectionContext ? selectionState.value : null;
+  const [search, setSearch] = useState('');
+  const searchInput = useRef<HTMLInputElement>(null);
+  const list = useRef<HTMLDivElement>(null);
+  const detail = useRef<HTMLElement>(null);
+  const relationTrigger = useRef<HTMLButtonElement>(null);
+  const detailId = useId();
+  const pickedNode = selection?.kind === 'node' ? projection.nodes.find((n) => n.id === selection.id) : undefined;
+  const pickedEdge = selection?.kind === 'edge' ? projection.edges.find((e) => e.id === selection.id) : undefined;
   const active = pickedNode
     ? { kind: 'node' as const, id: pickedNode.id }
     : pickedEdge
@@ -95,21 +90,48 @@ export function DependenciesPane({
         ]
       : pickedEdge?.relationIds || projection.relations.map((r) => r.id),
   );
-  const shownRelations = projection.relations.filter((r) => inspectIds.has(r.id));
+  const searchValue = searchable(search.trim());
+  const shownRelations = projection.relations.filter((link) => {
+    if (!inspectIds.has(link.id)) return false;
+    const endpoints = [link.sourceId, link.targetId].flatMap((id) => {
+      const node = model.nodeById.get(id);
+      return [node?.name || id, node?.displayCode || ''];
+    });
+    return searchable(
+      [...endpoints, link.id, link.label, publicText(link.qualification.meaning || '')].join(' '),
+    ).includes(searchValue);
+  });
   const selectedName =
     pickedNode?.item.name ||
     (pickedEdge
       ? `${model.nodeById.get(pickedEdge.source)?.name || pickedEdge.source} → ${model.nodeById.get(pickedEdge.target)?.name || pickedEdge.target}`
       : 'Relations du périmètre');
   const select = (value: Selection | null) => {
-    setSelection(value);
-    onSelectRelation(
-      value?.kind === 'edge' ? projection.edges.find((e) => e.id === value.id)?.relationIds[0] || '' : '',
-    );
+    setSelection(value ? { context: selectionContext, value } : null);
+    onSelectRelation('');
   };
+  const closeRelation = () => {
+    onSelectRelation('');
+    requestAnimationFrame(() => {
+      const origin = relationTrigger.current;
+      const currentRow = [...(list.current?.querySelectorAll<HTMLButtonElement>('[data-relation-id]') || [])].find(
+        (button) => button.dataset.relationId === relationId,
+      );
+      const target =
+        origin?.isConnected && origin.dataset.relationId === relationId ? origin : currentRow || searchInput.current;
+      target?.focus();
+    });
+  };
+  useEffect(() => {
+    if (!relation) return;
+    detail.current?.focus({ preventScroll: true });
+    detail.current?.scrollIntoView({
+      block: matchMedia('(max-width: 1150px)').matches ? 'start' : 'nearest',
+      behavior: 'instant',
+    });
+  }, [relation]);
   const changes = (next: GraphRoute) => {
     setSelection(null);
-    onSelectRelation('');
     onSettings(next);
   };
   const enter = (id: string) => {
@@ -121,42 +143,15 @@ export function DependenciesPane({
     .sort((a, b) => a.name.localeCompare(b.name, 'fr'));
 
   return (
-    <section
-      ref={pane}
-      className="map-panel dependencies-pane"
-      data-testid="dependencies-pane"
-      aria-label="Graphe des relations métier"
-    >
+    <section className="map-panel dependencies-pane" data-testid="dependencies-pane" aria-label="Relations métier">
       <div className="map-toolbar">
         <div>
           <strong>{focus && options.depth !== 0 ? `Autour de ${focus.name}` : 'Toutes les relations publiées'}</strong>
-          <span className="toolbar-note">Explore les interactions, puis ouvre le détail de chaque lien.</span>
+          <span className="toolbar-note">Filtre les relations, puis ouvre leur qualification complète.</span>
         </div>
-        <button
-          type="button"
-          className="dependency-fullscreen"
-          aria-label="Afficher le graphe en plein écran"
-          title="Plein écran"
-          onClick={() => {
-            if (document.fullscreenElement) void document.exitFullscreen();
-            else {
-              setShowGraph(true);
-              void pane.current
-                ?.requestFullscreen()
-                .catch(() => setFullscreenError('Le plein écran est indisponible dans ce navigateur.'));
-            }
-          }}
-        >
-          <Maximize2 size={17} />
-        </button>
       </div>
-      {fullscreenError && (
-        <p role="status" className="dependency-help">
-          {fullscreenError}
-        </p>
-      )}
       <details className="dependency-settings">
-        <summary>Régler le niveau et la profondeur</summary>
+        <summary>Niveau et profondeur</summary>
         <div className="dependency-controls">
           <label>
             Niveau de lecture
@@ -236,103 +231,57 @@ export function DependenciesPane({
               <option value="other">Autres relations</option>
             </select>
           </label>
-          <label>
-            Disposition
-            <select
-              aria-label="Disposition"
-              value={settings.graphLayout || 'organic'}
-              onChange={(e) => changes({ graphLayout: e.target.value as GraphRoute['graphLayout'] })}
-            >
-              <option value="organic">Organique</option>
-              <option value="hierarchical">Hiérarchique</option>
-            </select>
-          </label>
-          <label>
-            Libellés
-            <select
-              aria-label="Libellés"
-              value={settings.graphLabels || 'focus'}
-              onChange={(e) => changes({ graphLabels: e.target.value as GraphRoute['graphLabels'] })}
-            >
-              <option value="focus">Autour de la sélection</option>
-              <option value="all">Tous</option>
-            </select>
-          </label>
         </div>
       </details>
       <div className="dependency-summary" role="status">
         <span>
-          {projection.nodes.length} éléments · {projection.stats.visibleRelations} relations affichées
-          {projection.stats.internalRelations > 0 && ` · ${projection.stats.internalRelations} regroupées`}
+          {projection.nodes.length} éléments · {projection.stats.visibleRelations} relations publiées
+          {projection.stats.internalRelations > 0 &&
+            ` · ${projection.stats.internalRelations} au sein d’un même périmètre`}
         </span>
         <span>Publication {model.version}</span>
       </div>
-      <button
-        type="button"
-        className="secondary-button graph-visibility"
-        aria-expanded={showGraph}
-        onClick={() => setShowGraph(!showGraph)}
-      >
-        {showGraph ? 'Masquer le graphe' : 'Afficher le graphe'}
-      </button>
-      {showGraph && (
-        <CytoscapeCanvas
-          projection={projection}
-          layout={settings.graphLayout || 'organic'}
-          labels={settings.graphLabels || 'focus'}
-          selectedId={active?.id}
-          onSelect={select}
-          onRead={onRead}
-        />
-      )}
-      {!projection.relations.length && (
-        <p className="dependency-empty">
-          <Network size={18} />
-          Aucune relation métier publiée avec ces critères.
-        </p>
-      )}
-      <div className="dependency-legend" hidden={!showGraph}>
-        <span>
-          <i />A besoin de · rôle explicite
-        </span>
-        <span>
-          <i className="other" />
-          Autre relation · voir sa qualification
-        </span>
-      </div>
-      <div className="map-footer" hidden={!showGraph}>
-        <span>Molette : zoom · Glisser : déplacer · Les liens des comportements sont regroupés avec leur capacité</span>
-        <span>Lecture seule</span>
-      </div>
       <div className="dependency-inspector" data-testid="dependency-inspector">
-        <label className="dependency-picker">
-          Inspecter un élément
-          <select
-            aria-label="Inspecter un élément"
-            value={active ? `${active.kind}|${active.id}` : ''}
-            onChange={(e) => {
-              const [kind, ...parts] = e.target.value.split('|');
-              select(kind ? { kind: kind as Selection['kind'], id: parts.join('|') } : null);
-            }}
-          >
-            <option value="">Choisir un nœud ou un lien…</option>
-            <optgroup label="Éléments">
-              {projection.nodes.map((n) => (
-                <option key={n.id} value={`node|${n.id}`}>
-                  {n.item.name} · {n.item.displayCode ?? n.id}
-                </option>
-              ))}
-            </optgroup>
-            <optgroup label="Liens regroupés">
-              {projection.edges.map((e) => (
-                <option key={e.id} value={`edge|${e.id}`}>
-                  {model.nodeById.get(e.source)?.name || e.source} → {model.nodeById.get(e.target)?.name || e.target} ·{' '}
-                  {e.label} · {e.count}
-                </option>
-              ))}
-            </optgroup>
-          </select>
-        </label>
+        <div className="dependency-list-controls">
+          <label className="dependency-search">
+            Rechercher dans les relations
+            <input
+              ref={searchInput}
+              type="search"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder="Source, cible, sens ou identifiant…"
+            />
+          </label>
+          <label className="dependency-picker">
+            Restreindre la liste
+            <select
+              aria-label="Restreindre la liste"
+              value={active ? `${active.kind}|${active.id}` : ''}
+              onChange={(e) => {
+                const [kind, ...parts] = e.target.value.split('|');
+                select(kind ? { kind: kind as Selection['kind'], id: parts.join('|') } : null);
+              }}
+            >
+              <option value="">Toutes les relations du périmètre</option>
+              <optgroup label="Éléments">
+                {projection.nodes.map((n) => (
+                  <option key={n.id} value={`node|${n.id}`}>
+                    {n.item.name} · {n.item.displayCode ?? n.id}
+                  </option>
+                ))}
+              </optgroup>
+              <optgroup label="Interactions regroupées">
+                {projection.edges.map((e) => (
+                  <option key={e.id} value={`edge|${e.id}`}>
+                    {model.nodeById.get(e.source)?.name || e.source} → {model.nodeById.get(e.target)?.name || e.target}{' '}
+                    · {e.label} · {e.count}
+                  </option>
+                ))}
+              </optgroup>
+            </select>
+          </label>
+        </div>
         {pickedNode && (
           <div className="dependency-node-detail">
             <div className="dependency-node-heading">
@@ -369,58 +318,96 @@ export function DependenciesPane({
             )}
           </div>
         )}
-        <details
-          className="dependency-relations"
-          key={active ? `${active.kind}:${active.id}` : 'all'}
-          open={!showGraph || Boolean(active)}
-        >
-          <summary>
-            {selectedName} · {shownRelations.length} relation(s) d’origine
-          </summary>
-          <div className="accessible-relations" role="group" aria-label="Liste des relations">
-            {shownRelations.map((link) => (
-              <button
-                type="button"
-                key={link.id}
-                data-relation-id={link.id}
-                aria-pressed={relationId === link.id}
-                onClick={() => onSelectRelation(link.id)}
-              >
-                <span>
-                  {model.nodeById.get(link.sourceId)?.name || link.sourceId}
-                  <span aria-hidden="true"> → </span>
-                  {model.nodeById.get(link.targetId)?.name || link.targetId}
-                </span>
-                <small>
-                  {publicText(
-                    link.qualification.meaning ||
-                      (link.label === link.type ? 'Qualification non renseignée dans cette publication.' : link.label),
-                  )}
-                </small>
-                {[link.sourceId, link.targetId].some((id) => model.nodeById.get(id)?.kind === 'behavior') && (
+        <div className={`dependency-content${relation ? ' has-detail' : ''}`}>
+          <section className="dependency-relations" aria-label={selectedName}>
+            <div className="dependency-list-heading">
+              <h2>{selectedName}</h2>
+              <span role="status">{shownRelations.length} relation(s)</span>
+            </div>
+            <div ref={list} className="accessible-relations" role="group" aria-label="Liste des relations">
+              {shownRelations.map((link) => (
+                <button
+                  type="button"
+                  key={link.id}
+                  data-relation-id={link.id}
+                  aria-pressed={relationId === link.id}
+                  aria-controls={relationId === link.id ? detailId : undefined}
+                  onClick={(event) => {
+                    relationTrigger.current = event.currentTarget;
+                    onSelectRelation(link.id);
+                  }}
+                >
+                  <span>
+                    {model.nodeById.get(link.sourceId)?.name || link.sourceId}
+                    <span role="img" aria-label="vers">
+                      {' '}
+                      →{' '}
+                    </span>
+                    {model.nodeById.get(link.targetId)?.name || link.targetId}
+                  </span>
                   <small>
-                    Comportement projeté sur sa capacité :{' '}
-                    {[link.sourceId, link.targetId]
-                      .filter((id) => model.nodeById.get(id)?.kind === 'behavior')
-                      .map((id) => model.nodeById.get(parentRelationOf(model, id)?.sourceId || '')?.name)
-                      .join(', ')}
+                    {publicText(
+                      link.qualification.meaning ||
+                        (link.label === link.type
+                          ? 'Qualification non renseignée dans cette publication.'
+                          : link.label),
+                    )}
                   </small>
-                )}
-              </button>
-            ))}
-            {!shownRelations.length && <p>Aucune relation métier publiée dans cette sélection.</p>}
-          </div>
-        </details>
-        {relation && (
-          <>
-            <RelationDetails model={model} relation={relation} />
-            {!projection.relations.some((r) => r.id === relation.id) && (
-              <p className="dependency-help">
-                Cette relation appartient à la publication, mais reste hors du périmètre affiché.
-              </p>
-            )}
-          </>
-        )}
+                  {[link.sourceId, link.targetId].some((id) => model.nodeById.get(id)?.kind === 'behavior') && (
+                    <small>
+                      Comportement de la capacité :{' '}
+                      {[link.sourceId, link.targetId]
+                        .filter((id) => model.nodeById.get(id)?.kind === 'behavior')
+                        .map((id) => model.nodeById.get(parentRelationOf(model, id)?.sourceId || '')?.name)
+                        .join(', ')}
+                    </small>
+                  )}
+                </button>
+              ))}
+              {!shownRelations.length && (
+                <p className="dependency-empty">
+                  {searchValue
+                    ? 'Aucune relation ne correspond à cette recherche.'
+                    : 'Aucune relation métier publiée avec ces critères.'}
+                </p>
+              )}
+            </div>
+          </section>
+          {relation && (
+            <aside
+              ref={detail}
+              id={detailId}
+              className="dependency-detail"
+              aria-label="Relation sélectionnée"
+              tabIndex={-1}
+              onKeyDown={(event) => {
+                if (event.key === 'Escape' && !event.defaultPrevented) {
+                  event.preventDefault();
+                  closeRelation();
+                }
+              }}
+            >
+              <div className="dependency-detail-heading">
+                <h2>Relation sélectionnée</h2>
+                <button
+                  type="button"
+                  className="secondary-button"
+                  aria-label="Retour à la liste des relations"
+                  onClick={closeRelation}
+                >
+                  <X size={16} aria-hidden="true" />
+                  Retour à la liste
+                </button>
+              </div>
+              <RelationDetails model={model} relation={relation} />
+              {!projection.relations.some((r) => r.id === relation.id) && (
+                <p className="dependency-help">
+                  Cette relation appartient à la publication, mais reste hors du périmètre affiché.
+                </p>
+              )}
+            </aside>
+          )}
+        </div>
       </div>
     </section>
   );

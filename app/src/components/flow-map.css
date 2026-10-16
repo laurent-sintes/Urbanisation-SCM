@@ -1,0 +1,613 @@
+.flow-map-panel {
+  overflow: hidden;
+}
+.flow-map-canvas {
+  position: relative;
+  flex: 1;
+  min-height: 180px;
+  overflow: hidden;
+  background: #f9fcfb;
+  background-image: radial-gradient(#cbdcd580 0.7px, transparent 0.7px);
+  background-size: 24px 24px;
+  isolation: isolate;
+}
+.flow-map-canvas > .react-flow {
+  position: absolute;
+  inset: 0;
+  background: transparent;
+}
+.flow-map-toolbar {
+  padding: 12px 18px;
+  min-height: 66px;
+}
+.flow-toolbar-note {
+  color: #526e64;
+  font-size: 11px;
+}
+.flow-scope-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  padding: 8px 18px;
+  border-top: 1px solid #dce7df;
+  background: #f1f7f3;
+  color: #416757;
+  font-size: 12px;
+}
+.flow-scope-note button {
+  padding: 3px 7px;
+  border: 1px solid #b9d3c5;
+  border-radius: 5px;
+  background: white;
+  color: #335d4b;
+  font: inherit;
+}
+.flow-scope-short {
+  display: none;
+}
+.flow-map-toolbar strong {
+  font-size: 16px;
+  font-weight: 600;
+}
+.flow-map-note {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  margin: 0;
+  max-width: calc(100% - 24px);
+  padding: 8px 12px;
+  background: #ffffffed;
+  border: 1px solid #d2e0d8;
+  border-radius: 7px;
+  font-size: 12px;
+  color: #416757;
+  pointer-events: none;
+}
+.flow-tool-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  color: #315f53;
+  border: 1px solid #cbdcd4;
+  border-radius: 7px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 12px;
+}
+.flow-tool-button[aria-pressed="true"] {
+  background: #d9f2ea;
+  border-color: #88bca9;
+}
+.spatial-map-object {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border: var(--spatial-border) solid #c5d9d0;
+  border-radius: calc(var(--spatial-unit) * 8);
+  background: #fff;
+  color: #235c54;
+  box-shadow: 0 calc(var(--spatial-unit) * 2) calc(var(--spatial-unit) * 9) #204c3d0b;
+  overflow: visible;
+}
+.spatial-map-object.kind-business_system {
+  background: #eaf2fa;
+  border-color: #adc8de;
+  color: #1f536f;
+}
+.spatial-map-object.kind-domain {
+  background: #ecf6f1;
+  border-color: #a8c9b9;
+}
+.spatial-map-object.kind-business_area {
+  background: #f4f9fb;
+  border-color: #d4e2e6;
+  color: #2c4d50;
+  box-shadow: none;
+}
+.spatial-map-object.kind-capability,
+.spatial-map-object.kind-reference {
+  background: transparent;
+  border-color: transparent;
+  border-radius: calc(var(--spatial-unit) * 3);
+  box-shadow: none;
+  color: #334e4a;
+}
+.spatial-map-object.kind-reference {
+  color: #577568;
+}
+.spatial-map-object.is-active {
+  outline: calc(var(--spatial-border) * 2) solid #236159;
+  outline-offset: calc(var(--spatial-border) * 1);
+}
+.spatial-map-object.spatial-application-mark {
+  border-color: #8b70b4;
+  box-shadow: inset 0 0 0 var(--spatial-border) #8b70b4;
+  background-color: #f7f4fb;
+}
+.spatial-application-badge {
+  position: absolute;
+  right: calc(var(--spatial-unit) * -8);
+  top: calc(var(--spatial-unit) * -9);
+  max-width: calc(100% - var(--spatial-unit) * 14);
+  padding: calc(var(--spatial-unit) * 3) calc(var(--spatial-unit) * 6);
+  border: var(--spatial-border) solid #b6a2cf;
+  border-radius: calc(var(--spatial-unit) * 3);
+  background: #fff;
+  color: #725396;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  pointer-events: none;
+}
+.spatial-object-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  max-width: 100%;
+  padding: 18px 24px;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  width: 100%;
+  border-radius: calc(var(--spatial-unit) * 7);
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: left;
+  overflow: hidden;
+  overflow-wrap: normal;
+  cursor: pointer;
+  pointer-events: auto;
+}
+.spatial-object-title:focus-visible {
+  outline: var(--spatial-border) solid #236159;
+  outline-offset: -4px;
+  background: #d9f2ea;
+}
+.spatial-map-object.kind-capability .spatial-object-title,
+.spatial-map-object.kind-reference .spatial-object-title {
+  font-weight: 400;
+}
+.spatial-object-title:hover {
+  background: #23615908;
+}
+.spatial-object-hint {
+  display: block;
+  color: #527064;
+  line-height: 1.35;
+}
+.flow-exchanges {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  overflow: hidden;
+}
+.flow-exchange-line {
+  stroke: #5b958a;
+  stroke-width: 11;
+  fill: none;
+  stroke-linejoin: round;
+}
+.flow-exchange-ribbon {
+  stroke: #5b958a;
+  stroke-width: 1;
+  fill: #dcefe8;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.flow-exchange-hit {
+  stroke: transparent;
+  stroke-width: 18;
+  fill: none;
+  pointer-events: stroke;
+  cursor: pointer;
+}
+.flow-exchange-hit:focus-visible {
+  stroke: #23615966;
+  outline: none;
+}
+.flow-exchange-halo {
+  stroke: #f9fcfb;
+  stroke-width: 15;
+  fill: none;
+  opacity: 0.9;
+}
+.flow-exchange.is-knowledge .flow-exchange-line {
+  stroke-width: 1.8;
+  stroke-dasharray: 5 4;
+  stroke: #3a8076;
+}
+.flow-exchange.is-knowledge .flow-exchange-halo {
+  stroke-width: 5;
+}
+.flow-exchange.is-contextual {
+  opacity: 0.3;
+}
+.flow-exchange.is-contextual.is-emphasized {
+  opacity: 1;
+}
+.flow-exchange-label {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  margin: auto;
+  padding: 3px 5px;
+  max-width: 100%;
+  max-height: 58px;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: #f9fcfbf5;
+  color: #345b55;
+  text-align: center;
+  font:
+    400 12px / 1.25 Aptos,
+    "Segoe UI",
+    sans-serif;
+  pointer-events: auto;
+  cursor: pointer;
+  box-shadow: none;
+}
+.flow-exchange-label:hover,
+.flow-exchange-label:focus-visible {
+  background: #fff;
+  border-color: #93b9ab;
+}
+.flow-exchange-label[aria-pressed="true"] {
+  background: #d9f2ea;
+  border-color: #236159;
+}
+.flow-exchange.is-emphasized .flow-exchange-line {
+  stroke: #236159;
+  opacity: 1;
+}
+.flow-exchange.is-emphasized .flow-exchange-ribbon {
+  fill: #bfe1d4;
+  stroke: #236159;
+  stroke-width: 1.5;
+}
+.flow-exchange-label small {
+  display: block;
+  font-weight: 400;
+  font-size: 10px;
+}
+.flow-caption-leader {
+  stroke: #448e81;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.flow-camera-tools {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  z-index: 8;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  max-width: calc(100% - 208px);
+}
+.flow-camera-tools > button,
+.flow-zoom-tools {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: white;
+  border: 1px solid #c8d9cf;
+  border-radius: 7px;
+  box-shadow: 0 2px 8px #234c3610;
+}
+.flow-camera-tools button {
+  min-height: 36px;
+  padding: 7px 9px;
+  color: #285b4f;
+  font:
+    12px Aptos,
+    "Segoe UI",
+    sans-serif;
+  cursor: pointer;
+}
+.flow-camera-tools button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.flow-camera-tools .flow-framing-button[aria-pressed="true"] {
+  background: #e6f3ed;
+  border-color: #7ba892;
+}
+.flow-framing-select {
+  display: none;
+  min-height: 36px;
+  padding: 5px 24px 5px 8px;
+  border: 1px solid #c8d9cf;
+  border-radius: 7px;
+  color: #285b4f;
+  background: white;
+  font: inherit;
+  font-size: 12px;
+}
+.flow-zoom-tools button {
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+}
+.flow-zoom-tools output {
+  min-width: 42px;
+  text-align: center;
+  font-size: 12px;
+  color: #385b4e;
+}
+.flow-map-canvas .react-flow__minimap {
+  width: 160px;
+  height: 100px;
+  border: 1px solid #c6d7cd;
+  border-radius: 7px;
+  bottom: 50px;
+  left: 0;
+  right: auto;
+}
+.flow-map-hotspots {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+.flow-map-hotspots .hotspot-map-marker {
+  pointer-events: auto;
+}
+.flow-hotspot-leaders {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.flow-hotspot-leaders line {
+  stroke: #7a897f;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
+}
+.flow-map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 18px;
+  padding: 8px 18px;
+  background: #fff;
+  border-top: 1px solid #dde7e0;
+  color: #486456;
+  font-size: 11px;
+}
+.flow-map-legend > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.flow-map-legend i {
+  width: 24px;
+  border-top: 4px solid #448e81;
+}
+.flow-map-legend i.is-knowledge {
+  border-top-width: 2px;
+  border-top-style: dashed;
+}
+.flow-map-legend .flow-app-legend {
+  color: #6d4488;
+}
+.flow-map-panel .map-footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #527064;
+}
+.flow-exchange-detail {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  z-index: 9;
+  width: min(390px, calc(100% - 28px));
+  max-height: calc(100% - 28px);
+  overflow: auto;
+  padding: 14px;
+  border: 1px solid #b9d3c5;
+  border-radius: 9px;
+  background: #fffffff5;
+  box-shadow: 0 8px 32px #173a3324;
+  font-size: 13px;
+}
+.flow-exchange-detail header {
+  display: flex;
+  gap: 8px;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid #dce7df;
+  padding-bottom: 10px;
+}
+.flow-exchange-detail header strong {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  align-items: center;
+}
+.flow-exchange-detail header button {
+  display: flex;
+  padding: 4px;
+  background: white;
+  border: 0;
+  color: #335d4b;
+}
+.flow-exchange-detail > div {
+  padding-top: 12px;
+}
+.flow-exchange-detail small {
+  display: block;
+  color: #557366;
+  margin-top: 3px;
+}
+.flow-exchange-detail p {
+  margin: 7px 0;
+  line-height: 1.45;
+}
+.flow-contract-section {
+  margin-top: 12px;
+}
+.flow-contract-section h3 {
+  margin: 0 0 5px;
+  font-size: 12px;
+  color: #416757;
+}
+.flow-contract-section ul {
+  padding-left: 20px;
+  margin: 5px 0;
+  line-height: 1.45;
+}
+.flow-contract-section li + li {
+  margin-top: 5px;
+}
+@media (max-width: 700px) {
+  .flow-map-toolbar {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  .flow-map-toolbar .map-actions {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .flow-toolbar-note {
+    display: none;
+  }
+  .flow-map-canvas .react-flow__minimap {
+    width: 72px;
+    height: 54px;
+    bottom: 0;
+    right: 0;
+    left: auto;
+    margin: 8px;
+  }
+  .flow-map-legend {
+    padding: 6px 10px;
+    gap: 5px 10px;
+    font-size: 10px;
+  }
+}
+@media (max-width: 700px), (max-height: 500px) {
+  .flow-scope-note {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    gap: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+  }
+  .flow-scope-note .flow-scope-full {
+    display: none;
+  }
+  .flow-scope-short {
+    display: inline;
+  }
+  .flow-camera-tools {
+    max-width: calc(100% - 16px);
+    flex-wrap: nowrap;
+    gap: 4px;
+    left: 8px;
+    bottom: 8px;
+  }
+  .flow-framing-select {
+    display: block;
+    width: 92px;
+    min-width: 0;
+    min-height: 32px;
+    padding: 5px 4px;
+    font-size: 11px;
+  }
+  .flow-camera-tools > .flow-framing-button,
+  .flow-camera-tools > button span {
+    display: none;
+  }
+  .flow-camera-tools button {
+    min-width: 30px;
+    min-height: 32px;
+    padding: 6px 7px;
+  }
+  .flow-camera-tools > button {
+    min-width: 32px;
+  }
+  .flow-zoom-tools {
+    gap: 0;
+  }
+  .flow-zoom-tools output {
+    min-width: 32px;
+    font-size: 11px;
+  }
+}
+@media (max-height: 600px) and (max-width: 700px) {
+  .flow-map-canvas .react-flow__minimap {
+    display: none;
+  }
+}
+@media (max-height: 500px) {
+  .flow-map-canvas .react-flow__minimap {
+    display: none;
+  }
+  .flow-exchange-detail.is-floating {
+    position: fixed;
+    top: 12px;
+    right: 12px;
+    max-height: calc(100dvh - 24px);
+    z-index: 100;
+  }
+}
+
+/* Compact hotspots belong to Flux; Catalogue retains its usual markers. */
+.flow-map-hotspots .hotspot-map-point.is-compact {
+  --marker-size: 32px;
+}
+.flow-map-hotspots .hotspot-map-point.is-compact > .hotspot-map-marker {
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #774c33;
+}
+.flow-map-hotspots .hotspot-compact-glyph {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgb(var(--hotspot-rgb) / 0.7);
+  border-radius: 50%;
+  background: #fffaf5;
+  box-shadow: 0 1px 2px #203c3912;
+  color: inherit;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1;
+}
+.flow-map-hotspots .hotspot-compact-glyph.is-count {
+  font-size: 12px;
+}
+.flow-map-hotspots .severity-unassessed.is-compact > .hotspot-map-marker {
+  color: #315d67;
+}
+.flow-map-hotspots .is-framing-closed.is-compact > .hotspot-map-marker {
+  color: #52665e;
+}
+.flow-map-hotspots .is-framing-closed.is-compact .hotspot-compact-glyph {
+  border-color: #a9bcb2;
+  background: #f4f8f5;
+}
+.flow-map-hotspots .is-workshop.is-compact .hotspot-compact-glyph {
+  border-style: dashed;
+}
+.flow-map-hotspots .is-compact > .hotspot-map-marker:focus-visible {
+  outline: 2px solid #1f536f;
+  outline-offset: 2px;
+}
+@media (pointer: coarse) {
+  .flow-map-hotspots .is-compact > .hotspot-map-marker::before {
+    position: absolute;
+    inset: -6px;
+    content: "";
+    border-radius: 50%;
+  }
+}

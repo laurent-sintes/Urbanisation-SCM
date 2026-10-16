@@ -203,36 +203,11 @@ try {
           const count = instances.filter((value) => value === id).length;
           if (count !== 1) failures.push(`hotspot-instances:${id}:${count}`);
         }
-        const accounting = overview.querySelectorAll('.hotspot-map-marker[data-hotspot-ids="HS-021"]');
-        const accountingRibbon = overview.querySelector(
-          '[data-sharing-ids*="REL-U981-accounting-facts"] .data-sharing-ribbon',
-        );
-        if (accountingRibbon && expectedIds.includes('HS-021') && accounting.length === 1) {
-          const marker = accounting[0].getBoundingClientRect();
-          const ribbon = accountingRibbon.getBoundingClientRect();
-          const x = marker.left + marker.width / 2;
-          const y = marker.top + marker.height / 2;
-          if (
-            !accounting[0].closest('.overview-exchange-hotspots') ||
-            x < ribbon.left ||
-            x > ribbon.right ||
-            y < ribbon.top ||
-            y > ribbon.bottom
-          )
-            failures.push('accounting-hotspot-off-exchange');
-          const label = accountingRibbon.closest('[data-sharing-ids]')?.querySelector('text')?.getBoundingClientRect();
-          if (
-            label &&
-            marker.right + 4 > label.left &&
-            marker.left - 4 < label.right &&
-            marker.bottom + 4 > label.top &&
-            marker.top - 4 < label.bottom
-          )
-            failures.push('accounting-hotspot-covers-exchange-label');
-        } else if (accountingRibbon && expectedIds.includes('HS-021'))
-          failures.push('accounting-hotspot-missing-or-duplicated');
-        else if (!expectedIds.includes('HS-021') && accounting.length)
-          failures.push('filtered-accounting-hotspot-visible');
+        if (overview.querySelector('.system-data-sharing-map, .overview-exchange-hotspots'))
+          failures.push('catalogue-mixes-published-flows');
+        for (const marker of overview.querySelectorAll('.hotspot-map-marker[data-hotspot-ids]'))
+          if (!marker.closest('.overview-system'))
+            failures.push(`catalogue-hotspot-outside-scope:${marker.dataset.hotspotIds}`);
         const ids = [
           'system-design-development',
           'system-business-operations',
@@ -271,14 +246,14 @@ try {
         const boxes = ids.map((id) => {
           const e =
             operations.querySelector(`.business-card[data-node-id="${id}"]`) ||
-            operations.querySelector(`[data-map-item-id="${id}"]`)?.closest('li');
+            operations.querySelector(`:scope > li > [data-map-item-id="${id}"]`)?.closest('li');
           return e?.getBoundingClientRect();
         });
-        if (boxes.slice(0, 4).every(Boolean)) {
+        if (boxes.slice(1, 4).every(Boolean)) {
           const [p, s, sales, o, l] = boxes;
           if (
             !(
-              p.bottom <= s.top + 1 &&
+              (!p || p.bottom <= s.top + 1) &&
               Math.abs(s.top - sales.top) < 1 &&
               s.right < sales.left &&
               Math.max(s.bottom, sales.bottom) <= o.top + 1 &&
@@ -309,17 +284,21 @@ try {
       ? await nativeScroll.evaluate((e) => e.scrollWidth - e.clientWidth)
       : 0;
     const scrollbars = await page.evaluate(() => {
-      const counts = { horizontal: 0, vertical: 0 };
+      const counts = { horizontal: 0, vertical: 0, toolbar: 0 };
       for (const e of document.querySelectorAll('.workspace-content, .workspace-content *')) {
         const style = getComputedStyle(e);
+        if (e.matches('.map-actions')) {
+          if (['auto', 'scroll'].includes(style.overflowX) && e.scrollWidth > e.clientWidth + 1) counts.toolbar++;
+          continue;
+        }
         if (['auto', 'scroll'].includes(style.overflowX) && e.scrollWidth > e.clientWidth + 1) counts.horizontal++;
         if (['auto', 'scroll'].includes(style.overflowY) && e.scrollHeight > e.clientHeight + 1) counts.vertical++;
       }
       return counts;
     });
     assert.ok(
-      scrollbars.horizontal <= 1 && scrollbars.vertical <= 1,
-      `Only one scroll container per axis: ${JSON.stringify(scrollbars)}`,
+      scrollbars.horizontal <= 1 && scrollbars.vertical <= 1 && scrollbars.toolbar <= 1,
+      `Only one map-content scroll container per axis, plus its short-screen command strip: ${JSON.stringify(scrollbars)}`,
     );
     const scrollBox = await nativeScroll.boundingBox();
     assert.ok(

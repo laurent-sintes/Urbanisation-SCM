@@ -15,7 +15,7 @@ import {
   useInteractions,
   useRole,
 } from '@floating-ui/react';
-import { Check, ChevronLeft, ChevronRight, Flame, Info, Pause, X } from 'lucide-react';
+import { Check, ChevronDown, ChevronLeft, ChevronRight, Flame, Info, Pause, X } from 'lucide-react';
 import {
   type ButtonHTMLAttributes,
   type CSSProperties,
@@ -42,6 +42,8 @@ import { ModelText } from './ModelLinks';
 
 const STATUS = { discovered: 'Découvert', shared: 'Partagé', validated: 'Sujet validé', resolved: 'Résolu' };
 const FLAMES = ['first', 'second', 'third', 'fourth'];
+export const COMPACT_HOTSPOT_DIAMETER = 32;
+export const COMPACT_HOTSPOT_TOUCH_DIAMETER = 44;
 export const severityLabel = (severity: string) => (severity === 'unassessed' ? 'non évaluée' : severity);
 
 function useFloatingHost() {
@@ -84,7 +86,13 @@ function safePadding(reserveClusterSpace = false) {
     bottom: footer ? window.innerHeight - footer.top + 8 : 12,
   };
 }
-export function useHotspotFloating(open: boolean, onOpenChange: (open: boolean) => void, maxHeightRatio?: number) {
+export function useHotspotFloating(
+  open: boolean,
+  onOpenChange: (open: boolean) => void,
+  maxHeightRatio?: number,
+  options: { preferredMaxWidth?: number; reserveToolbar?: boolean } = {},
+) {
+  const reserveToolbar = options.reserveToolbar ?? maxHeightRatio !== undefined;
   const host = useFloatingHost();
   const floating = useFloating({
     open,
@@ -93,13 +101,13 @@ export function useHotspotFloating(open: boolean, onOpenChange: (open: boolean) 
     placement: 'bottom-start',
     middleware: [
       offset(10),
-      flip(() => ({ padding: safePadding(maxHeightRatio !== undefined) })),
-      shift(() => ({ padding: safePadding(maxHeightRatio !== undefined) })),
+      flip(() => ({ padding: safePadding(reserveToolbar) })),
+      shift(() => ({ padding: safePadding(reserveToolbar) })),
       size(() => ({
-        padding: safePadding(maxHeightRatio !== undefined),
+        padding: safePadding(reserveToolbar),
         apply({ availableHeight, elements }) {
-          const padding = safePadding(maxHeightRatio !== undefined);
-          elements.floating.style.maxWidth = `${Math.max(0, window.innerWidth - padding.left - padding.right)}px`;
+          const padding = safePadding(reserveToolbar);
+          elements.floating.style.maxWidth = `${Math.max(0, Math.min(options.preferredMaxWidth ?? Number.POSITIVE_INFINITY, window.innerWidth - padding.left - padding.right))}px`;
           elements.floating.style.maxHeight = `${Math.max(0, Math.min(availableHeight, maxHeightRatio ? window.innerHeight * maxHeightRatio : availableHeight))}px`;
         },
       })),
@@ -115,6 +123,8 @@ export function HotspotTooltipButton({
   previewOnTouch = false,
   pinOnClick = false,
   tooltipRoot,
+  buttonRef,
+  closeOnActivate = false,
   ...props
 }: ButtonHTMLAttributes<HTMLButtonElement> & {
   tip: ReactNode;
@@ -122,6 +132,8 @@ export function HotspotTooltipButton({
   previewOnTouch?: boolean;
   pinOnClick?: boolean;
   tooltipRoot?: HTMLElement | null;
+  buttonRef?: (element: HTMLButtonElement | null) => void;
+  closeOnActivate?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [pinned, setPinned] = useState(false);
@@ -149,11 +161,19 @@ export function HotspotTooltipButton({
       if (!next) setPinned(false);
     },
     0.45,
+    { preferredMaxWidth: 340 },
   );
   const hover = useHover(context, { enabled: !pinned, handleClose: safePolygon(), delay: { open: 120, close: 100 } });
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: 'tooltip' });
   const { getReferenceProps, getFloatingProps } = useInteractions([hover, dismiss, role]);
+  const setReference = useCallback(
+    (element: HTMLButtonElement | null) => {
+      refs.setReference(element);
+      buttonRef?.(element);
+    },
+    [refs.setReference, buttonRef],
+  );
   return (
     <>
       <button
@@ -161,6 +181,10 @@ export function HotspotTooltipButton({
           ...props,
           onPointerDown(event: PointerEvent<HTMLButtonElement>) {
             touchPreview.current = previewOnTouch && event.pointerType === 'touch' && !open;
+            if (touchPreview.current) {
+              escapeDismissed.current = false;
+              setPinned(true);
+            }
             setTouchHint(previewOnTouch && event.pointerType === 'touch');
             props.onPointerDown?.(event);
           },
@@ -173,8 +197,13 @@ export function HotspotTooltipButton({
             }
             if (touchPreview.current) {
               touchPreview.current = false;
+              setPinned(true);
               setOpen(true);
               return;
+            }
+            if (closeOnActivate) {
+              setPinned(false);
+              setOpen(false);
             }
             props.onClick?.(event);
           },
@@ -197,9 +226,9 @@ export function HotspotTooltipButton({
             props.onKeyDown?.(event);
           },
         })}
-        ref={refs.setReference}
+        ref={setReference}
         aria-describedby={open ? id : undefined}
-        aria-expanded={pinOnClick ? open : undefined}
+        aria-expanded={pinOnClick ? open : props['aria-expanded']}
       />
       {open && (
         <FloatingPortal root={tooltipRoot || host}>
@@ -265,6 +294,7 @@ export function HotspotMapMarker({
   onOpen,
   onHighlight,
   onExpansionChange,
+  variant = 'default',
 }: {
   id: string;
   items: Hotspot[];
@@ -274,6 +304,7 @@ export function HotspotMapMarker({
   onOpen: (id: string, groupIds?: string[]) => void;
   onHighlight?: (active: boolean, ids: string[]) => void;
   onExpansionChange?: (expanded: boolean) => void;
+  variant?: 'default' | 'compact';
 }) {
   const [expanded, setExpanded] = useState(false);
   const [closing, setClosing] = useState(false);
@@ -492,6 +523,7 @@ export function HotspotMapMarker({
     ['XL', 'L', 'M', 'S', 'unassessed'].find((level) => severityItems.some((item) => item.severity === level)) ||
     'unassessed';
   const grouped = items.length > 1;
+  const compact = variant === 'compact';
   const title = grouped ? `${items.length} points chauds regroupés` : items[0].title;
   const locations = [
     ...new Set(items.flatMap((item) => item.location.node_ids).map((node) => model.nodeById.get(node)?.name || node)),
@@ -561,13 +593,29 @@ export function HotspotMapMarker({
       ),
     onBlur: () => onHighlight?.(false, []),
   };
+  const compactProps = grouped
+    ? getReferenceProps({ ...markerProps, 'aria-expanded': expanded })
+    : { ...markerProps, onClick: () => onOpen(items[0].id) };
   return (
     <div
-      className={`hotspot-map-point severity-${severity}${!openItems.length ? ' is-framing-closed' : ''}${items.some((item) => item.workshop) ? ' is-workshop' : ''}${expanded ? ' is-expanded' : ''}`}
+      className={`hotspot-map-point severity-${severity}${compact ? ' is-compact' : ''}${!openItems.length ? ' is-framing-closed' : ''}${items.some((item) => item.workshop) ? ' is-workshop' : ''}${expanded ? ' is-expanded' : ''}`}
       style={{ left: x, top: y }}
     >
-      <span className="hotspot-map-halo" aria-hidden="true" />
-      {grouped ? (
+      {!compact && <span className="hotspot-map-halo" aria-hidden="true" />}
+      {compact ? (
+        <HotspotTooltipButton
+          {...(compactProps as ButtonHTMLAttributes<HTMLButtonElement>)}
+          buttonRef={grouped ? refs.setReference : undefined}
+          title={markerProps['aria-label']}
+          tip={tip}
+          previewOnTouch={!grouped}
+          closeOnActivate
+        >
+          <span className={`hotspot-compact-glyph${grouped ? ' is-count' : ''}`} aria-hidden="true">
+            {grouped ? items.length : severity === 'unassessed' ? '?' : severity}
+          </span>
+        </HotspotTooltipButton>
+      ) : grouped ? (
         <button {...getReferenceProps(markerProps)} ref={refs.setReference} aria-expanded={expanded}>
           {openItems.length ? <HotspotGlyph severity={severity} /> : <HotspotResolutionGlyph item={items[0]} />}
           <span className="hotspot-map-count">
@@ -579,9 +627,11 @@ export function HotspotMapMarker({
           <HotspotResolutionGlyph item={items[0]} />
         </button>
       )}
-      <HotspotTooltipButton pinOnClick className="hotspot-info-button" aria-label={`Résumé de ${title}`} tip={tip}>
-        <Info size={16} aria-hidden="true" />
-      </HotspotTooltipButton>
+      {!compact && (
+        <HotspotTooltipButton pinOnClick className="hotspot-info-button" aria-label={`Résumé de ${title}`} tip={tip}>
+          <Info size={16} aria-hidden="true" />
+        </HotspotTooltipButton>
+      )}
       {expanded && (
         <FloatingPortal root={host}>
           <FloatingOverlay
@@ -782,22 +832,42 @@ export function HotspotMapMarker({
 }
 
 export function HotspotLegend({ count }: { count: number }) {
+  const [expanded, setExpanded] = useState(false);
+  const legendId = useId();
   return (
-    <div className="hotspot-map-legend" role="group" aria-label="Légende des points chauds">
-      <span>
-        Anneau : à explorer / pistes / qualification / option à arbitrer / solution crédible. ✓ : cadrage résolu ; pause
-        : bloqué. Anneau discontinu gris : non renseigné.
-      </span>
-      <span>Criticité</span>
-      {['S', 'M', 'L', 'XL', 'unassessed'].map((severity) => (
-        <span key={severity} className={`hotspot-legend-level severity-${severity}`}>
-          <i aria-hidden="true" />
-          {severityLabel(severity)}
+    <div className="hotspot-legend-shell">
+      <button
+        type="button"
+        className="hotspot-legend-toggle"
+        aria-expanded={expanded}
+        aria-controls={legendId}
+        onClick={() => setExpanded(!expanded)}
+      >
+        <Info size={14} aria-hidden="true" />
+        Légende des points chauds
+        <ChevronDown size={14} aria-hidden="true" />
+      </button>
+      <div
+        id={legendId}
+        className={`hotspot-map-legend${expanded ? ' is-expanded' : ''}`}
+        role="group"
+        aria-label="Légende des points chauds"
+      >
+        <span>
+          Anneau : à explorer / pistes / qualification / option à arbitrer / solution crédible. ✓ : cadrage résolu ;
+          pause : bloqué. Anneau discontinu gris : non renseigné.
         </span>
-      ))}
-      <span>
-        {count} fiche{count > 1 ? 's' : ''}
-      </span>
+        <span>Criticité</span>
+        {['S', 'M', 'L', 'XL', 'unassessed'].map((severity) => (
+          <span key={severity} className={`hotspot-legend-level severity-${severity}`}>
+            <i aria-hidden="true" />
+            {severityLabel(severity)}
+          </span>
+        ))}
+        <span>
+          {count} fiche{count > 1 ? 's' : ''}
+        </span>
+      </div>
     </div>
   );
 }

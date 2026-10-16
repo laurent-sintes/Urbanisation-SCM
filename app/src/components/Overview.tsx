@@ -1,13 +1,13 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
-import { type CSSProperties, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { type CSSProperties, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { MIN_READABLE_ZOOM, overviewLayout, prominentChildIndex } from '../adaptiveLayout';
 import { applicationMapIds, projectedApplicationMapIds, selectionMappings } from '../applicationCatalog';
-import { dataSharingCardInsets, dataSharingHeadroom, hotspotDataSharing, systemDataSharing } from '../dataSharing';
 import { filterMapHotspots, type HotspotMapFilters, hotspotRelatedElementIds } from '../hotspotMap';
 import { HOTSPOT_DIAMETERS, type HotspotPlacementGroup, layoutHotspots } from '../hotspotPlacement';
 import { operationsMapSlots, systemMapSlots } from '../mapPlacement';
 import { childrenOf, descendantsOf, lineageOf, rootsOf, visibleAncestorId } from '../model';
 import type { PublishedModel } from '../types';
+import { useCatalogueScrollMemory } from '../useCatalogueScrollMemory';
 import { HotspotLegend, HotspotMapMarker } from './HotspotDisplay';
 import { MapApplicationPicker } from './MapApplicationPicker';
 import { MapDetailPicker } from './MapDetailPicker';
@@ -15,7 +15,6 @@ import { MapHotspotPicker } from './MapHotspotPicker';
 import { MapZoomPicker, useMapZoomChoice } from './MapZoomPicker';
 import { MapNodeButton, MetaTypeLabel, ModelText } from './ModelLinks';
 import { OverviewColumns } from './OverviewColumns';
-import { type ExchangeMarkerAnchor, SystemDataSharingMap } from './SystemDataSharingMap';
 import './hotspots.css';
 
 const plainDefinition = (text: string) => text.replace(/^\[[^\]]+\]\([^)]*\)\s*:\s*/, '');
@@ -36,6 +35,7 @@ export function Overview({
   applicationSelectionId,
   applicationComponentId,
   onApplicationChange,
+  restoreViewport = false,
 }: {
   model: PublishedModel;
   detail: number;
@@ -48,6 +48,7 @@ export function Overview({
   applicationSelectionId?: string;
   applicationComponentId?: string;
   onApplicationChange: (selectionId: string, componentId: string) => void;
+  restoreViewport?: boolean;
 }) {
   const universe = rootsOf(model).find((node) => node.kind === 'universe');
   const systems = useMemo(
@@ -59,6 +60,7 @@ export function Overview({
   );
   const section = useRef<HTMLElement>(null);
   const scroll = useRef<HTMLDivElement>(null);
+  useCatalogueScrollMemory(scroll, model.version, undefined, restoreViewport, '.overview-system');
   const grid = useRef<HTMLDivElement>(null);
   const [zoomChoice, setZoomChoice] = useMapZoomChoice();
   const [frame, setFrame] = useState({ width: 1232, height: 0, pageZoom: 1 });
@@ -70,11 +72,6 @@ export function Overview({
   }, [detail, zoomChoice]);
   const [availableWidth, setAvailableWidth] = useState(0);
   const [measurementVersion, setMeasurementVersion] = useState(0);
-  const [exchangeAnchors, setExchangeAnchors] = useState<ExchangeMarkerAnchor[]>([]);
-  const exchangeGeometryChanged = useCallback((anchors: ExchangeMarkerAnchor[]) => {
-    setExchangeAnchors((previous) => (JSON.stringify(previous) === JSON.stringify(anchors) ? previous : anchors));
-    setMeasurementVersion((version) => version + 1);
-  }, []);
   const [markerPlacement, setMarkerPlacement] = useState<Record<string, OverviewPlacement>>({});
   const [clusterExpanded, setClusterExpanded] = useState(false);
   const [expanded, setExpanded] = useState(false);
@@ -191,31 +188,9 @@ export function Overview({
   });
   const layout = overviewLayout(weights, availableWidth);
   const systemSlots = useMemo(() => systemMapSlots(systems.map((system) => system.id)), [systems]);
-  const dataSharing = useMemo(() => systemDataSharing(model), [model]);
-  const exchangeHotspots = useMemo(
-    () =>
-      visibleHotspots
-        .filter((hotspot) => !hotspot.location.node_ids.includes(universe?.id || ''))
-        .flatMap((hotspot) => {
-          const exchange = hotspotDataSharing(hotspot, dataSharing);
-          return exchange ? [{ hotspot, exchangeId: exchange.id }] : [];
-        }),
-    [visibleHotspots, dataSharing, universe],
-  );
-  const exchangeHotspotIds = useMemo(
-    () => new Set(exchangeHotspots.map(({ hotspot }) => hotspot.id)),
-    [exchangeHotspots],
-  );
-  const markedExchangeIds = useMemo(
-    () => new Set(exchangeHotspots.map(({ exchangeId }) => exchangeId)),
-    [exchangeHotspots],
-  );
   const cardHotspots = useMemo(
-    () =>
-      visibleHotspots.filter(
-        (hotspot) => !exchangeHotspotIds.has(hotspot.id) && !hotspot.location.node_ids.includes(universe?.id || ''),
-      ),
-    [visibleHotspots, exchangeHotspotIds, universe],
+    () => visibleHotspots.filter((hotspot) => !hotspot.location.node_ids.includes(universe?.id || '')),
+    [visibleHotspots, universe],
   );
   const cardHotspotSystems = useMemo(
     () =>
@@ -231,15 +206,6 @@ export function Overview({
         }),
       ),
     [cardHotspots, model, systems],
-  );
-  const exchangeInsets = useMemo(
-    () =>
-      dataSharingCardInsets(
-        dataSharing,
-        systemSlots,
-        systems.map((system) => system.id),
-      ),
-    [dataSharing, systemSlots, systems],
   );
   const displayedSystems = systemSlots ? systemSlots.map((slot) => systems[slot.index]) : systems;
   // Framing changes only the scale, preserving the logical system/domain positions.
@@ -302,22 +268,6 @@ export function Overview({
         }
         return rects;
       });
-      for (const ribbon of section.current?.querySelectorAll('.data-sharing-ribbon') || []) {
-        const rect = ribbon.getBoundingClientRect();
-        if (
-          rect.right < borderRect.left ||
-          rect.left > borderRect.right ||
-          rect.bottom < borderRect.top ||
-          rect.top > borderRect.bottom
-        )
-          continue;
-        obstacles.push({
-          x: rect.left - articleRect.left - 10 * scale,
-          y: rect.top - articleRect.top - 10 * scale,
-          width: rect.width + 20 * scale,
-          height: rect.height + 20 * scale,
-        });
-      }
       const markers = cardHotspots.filter((hotspot) => cardHotspotSystems.get(hotspot.id) === system.id);
       const targetsById = new Map(
         [...article.querySelectorAll<HTMLElement>('[data-map-item-id]')].flatMap((element) => {
@@ -459,51 +409,16 @@ export function Overview({
         >
           <div
             ref={grid}
-            className={`urbanisation-overview ${dataSharing.length ? 'has-data-sharing ' : ''}${systemSlots ? 'layout-fixed' : `layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}`}
+            className={`urbanisation-overview ${systemSlots ? 'layout-fixed' : `layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}`}
             style={
               {
                 width: frame.width,
                 zoom: scale,
                 '--overview-scale': scale,
-                '--exchange-headroom': `${dataSharingHeadroom(dataSharing)}px`,
               } as CSSProperties
             }
             data-layout={systemSlots ? 'fixed' : layout.kind}
           >
-            <SystemDataSharingMap
-              model={model}
-              exchanges={dataSharing}
-              markedExchangeIds={markedExchangeIds}
-              detail={detail}
-              onGeometryChange={exchangeGeometryChanged}
-            />
-            {exchangeHotspots.length > 0 && (
-              <div
-                className="overview-exchange-hotspots"
-                role="group"
-                aria-label="Points chauds sur les échanges entre systèmes"
-              >
-                {exchangeAnchors.map(({ exchangeId, x, y }) => {
-                  const items = exchangeHotspots
-                    .filter((entry) => entry.exchangeId === exchangeId)
-                    .map((entry) => entry.hotspot);
-                  if (!items.length) return null;
-                  return (
-                    <HotspotMapMarker
-                      key={exchangeId}
-                      id={items.length === 1 ? items[0].id : `exchange:${exchangeId}`}
-                      items={items}
-                      x={x}
-                      y={y}
-                      model={model}
-                      onOpen={onOpenHotspot}
-                      onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
-                      onExpansionChange={setClusterExpanded}
-                    />
-                  );
-                })}
-              </div>
-            )}
             <OverviewColumns slots={systemSlots}>
               {displayedSystems.map((system, index) => {
                 const systemSlot = systemSlots?.[index];
@@ -540,8 +455,6 @@ export function Overview({
                               gridColumn: `${systemSlot.column + 1} / span ${systemSlot.span}`,
                             }
                           : {}),
-                        '--exchange-top-inset': `${exchangeInsets.get(system.id)?.top || 0}px`,
-                        '--exchange-bottom-inset': `${exchangeInsets.get(system.id)?.bottom || 0}px`,
                       } as CSSProperties
                     }
                     className={`overview-system${systemHotspots.length ? ' has-map-hotspots' : ''}${relatedIds.has(system.id) ? ' hotspot-related' : ''}${applicationExactIds.has(system.id) ? ' application-related' : applicationIds.has(system.id) ? ' application-context' : ''}`}
@@ -585,14 +498,14 @@ export function Overview({
                     )}
                     <div className="overview-stats" role="group" aria-label={`Contenu publié de ${system.name}`}>
                       <span>
-                        <strong>{domains.length}</strong> domaine{domains.length > 1 ? 's' : ''}
+                        {domains.length} domaine{domains.length > 1 ? 's' : ''}
                       </span>
                       <span>
-                        <strong>{subdomains.length}</strong> sous-domaine{subdomains.length > 1 ? 's' : ''}
+                        {subdomains.length} sous-domaine{subdomains.length > 1 ? 's' : ''}
                       </span>
                       {capabilities.length > 0 && (
                         <span>
-                          <strong>{capabilities.length}</strong> capacité{capabilities.length > 1 ? 's' : ''}
+                          {capabilities.length} capacité{capabilities.length > 1 ? 's' : ''}
                         </span>
                       )}
                     </div>

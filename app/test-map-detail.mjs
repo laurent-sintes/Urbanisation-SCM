@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { projectedApplicationMapIds } from './src/applicationCatalog.ts';
 import { hotspotRelatedElementIds } from './src/hotspotMap.ts';
-import { areaListAtDetail } from './src/mapDetail.ts';
+import { areaListAtDetail, cardListStatistics } from './src/mapDetail.ts';
 import { adaptPublication, visibleAncestorId } from './src/model.ts';
 
 test('Business Area detail does not reveal directly attached capabilities or references', () => {
@@ -17,6 +17,43 @@ test('Business Area detail does not reveal directly attached capabilities or ref
   assert.deepEqual(areaListAtDetail(list, 2).items, [businessArea]);
   assert.deepEqual(areaListAtDetail(list, 2).businessAreaChildren, { ba: [] });
   assert.equal(areaListAtDetail(list, 3), list);
+});
+
+test('visible list counters distinguish Business Areas, capabilities, references and displayed behaviors', () => {
+  const list = {
+    kind: 'mixed',
+    items: [
+      { id: 'ba-1', kind: 'business_area' },
+      { id: 'ba-2', kind: 'business_area' },
+    ],
+    businessAreaChildren: {
+      'ba-1': [
+        { id: 'cap-1', kind: 'capability' },
+        { id: 'ref', kind: 'reference' },
+      ],
+      'ba-2': [{ id: 'cap-2', kind: 'capability' }],
+    },
+  };
+  const behaviors = {
+    'cap-1': [
+      { id: 'bhv-1', kind: 'behavior' },
+      { id: 'bhv-2', kind: 'behavior' },
+    ],
+    'hidden-cap': [{ id: 'hidden-bhv', kind: 'behavior' }],
+  };
+  assert.deepEqual(cardListStatistics(areaListAtDetail(list, 2), 2), [
+    { kind: 'business_area', count: 2, label: 'Business Areas' },
+  ]);
+  assert.deepEqual(cardListStatistics(list, 3, behaviors), [
+    { kind: 'business_area', count: 2, label: 'Business Areas' },
+    { kind: 'capability', count: 2, label: 'capacités' },
+    { kind: 'reference', count: 1, label: 'référentiel' },
+  ]);
+  assert.deepEqual(cardListStatistics(list, 4, behaviors).at(-1), {
+    kind: 'behavior',
+    count: 2,
+    label: 'comportements',
+  });
 });
 
 test('a hidden capability lights its nearest visible Business Area for applications and hotspots', () => {

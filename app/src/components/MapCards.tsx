@@ -4,9 +4,10 @@ import { useLayoutEffect, useRef } from 'react';
 import { startsCapabilityTypeSection } from '../capabilityTypes';
 import { categoryCaption, startsCategorySection } from '../categories';
 import { NodeIcon } from '../icons';
+import { cardListStatistics } from '../mapDetail';
 import { directSectionCaption, startsDirectSection } from '../mapSections';
-import { type CardChildList, cardListedItems, type scopeStatistics } from '../model';
-import { kindLabel, modelingDepthLabel } from '../presentation';
+import type { CardChildList, scopeStatistics } from '../model';
+import { kindLabel } from '../presentation';
 import { roleOf } from '../subdomainRoles';
 import type { AtlasNode } from '../types';
 import { MapNodeButton, MetaTypeLabel, ModelText } from './ModelLinks';
@@ -39,9 +40,9 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
   const presentation = data.item.kind === 'group' && data.item.groupRole !== 'urbanism_level';
   const card = useRef<HTMLElement>(null);
   const expanded = data.childList !== undefined;
-  const listed = data.childList ? cardListedItems(data.childList) : [];
-  const visibleCount =
-    data.childList?.businessAreaChildren && data.detail < 3 ? data.childList.items.length : listed.length;
+  const listStatistics = data.childList
+    ? cardListStatistics(data.childList, data.detail, data.behaviorsByCapability)
+    : [];
   const listLabel =
     data.item.kind === 'domain'
       ? 'Sous-domaines'
@@ -62,6 +63,7 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
     <h3>
       <MapNodeButton
         node={data.item}
+        selected={data.selectedId === data.item.id}
         className="overview-name-link nodrag nopan"
         onClick={(event) => {
           event.stopPropagation();
@@ -113,6 +115,8 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
           <div
             className={`category-list-banner${data.hotspotRelatedIds?.includes(child.id) ? ' hotspot-related-item' : ''}${data.applicationRelatedIds?.includes(child.id) ? ' application-related-item' : ''}`}
             data-business-area-summary={child.id}
+            role="heading"
+            aria-level={data.item.kind === 'domain' ? 5 : 4}
           >
             <MapNodeButton
               node={child}
@@ -174,21 +178,14 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
       data-kind={data.item.kind}
       data-depth={String(data.item.fields.modeling_depth || '')}
     >
-      {data.item.kind === 'area' ? (
-        <div className="subdomain-card-heading">
-          <NodeIcon node={data.item} size={20} />
-          <MetaTypeLabel node={data.item} />
-          {title}
-        </div>
-      ) : (
-        <div className="card-eyebrow">
-          <NodeIcon node={data.item} size={22} />
-          <MetaTypeLabel node={data.item} />
-        </div>
-      )}
+      <div className={data.item.kind === 'area' ? 'subdomain-card-heading' : 'map-card-heading'}>
+        <NodeIcon node={data.item} size={20} />
+        {title}
+      </div>
+      <div className="map-card-metadata">
+        <MetaTypeLabel node={data.item} />
+      </div>
       {data.parentName && <small className="map-card-parent">{data.parentName}</small>}
-      {data.item.kind !== 'area' && title}
-      {modelingDepthLabel(data.item) && <span className="modeling-depth">{modelingDepthLabel(data.item)}</span>}
       {dominantRole && (
         <span
           className="subdomain-role"
@@ -213,15 +210,19 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
             if (['Enter', ' '].includes(event.key)) event.stopPropagation();
           }}
         >
-          <div className="child-list-heading">
-            {listLabel} <span>{visibleCount}</span>
+          <div className="child-list-heading" role="group" aria-label={`Contenu affiché de ${data.item.name}`}>
+            {listStatistics.map((stat) => (
+              <span key={stat.kind}>
+                {stat.count} {stat.label}
+              </span>
+            ))}
           </div>
           {data.childList.items.length ? (
             <ul aria-label={`${listLabel} de ${data.item.name}`}>
               {data.childList.subdomainChildren
                 ? data.childList.items.map((subdomain) => (
                     <li key={subdomain.id} className="domain-subdomain-group">
-                      {childLink(subdomain)}
+                      <h4 className="domain-subdomain-title">{childLink(subdomain)}</h4>
                       {data.detail >= 2 && data.childList?.subdomainChildren?.[subdomain.id] && (
                         <ul className="domain-subdomain-contents" aria-label={`Business Areas de ${subdomain.name}`}>
                           {areaItems(data.childList.subdomainChildren[subdomain.id], subdomain)}
@@ -241,7 +242,7 @@ function BusinessCard({ data, selected }: NodeProps<Card>) {
           <div className="subdomain-stats" role="group" aria-label={`Contenu publié de ${data.item.name}`}>
             {data.statistics.map((stat) => (
               <span key={stat.kind}>
-                <strong>{stat.count}</strong> {stat.label}
+                {stat.count} {stat.label}
               </span>
             ))}
           </div>
@@ -259,6 +260,7 @@ function GroupCard({ data }: NodeProps<Container>) {
   return (
     <div
       className={`map-container ${data.item.kind === 'group' && data.item.groupRole !== 'urbanism_level' ? 'presentation-container' : ''}`}
+      data-kind={data.item.kind}
     >
       <div className="container-label">
         <NodeIcon node={data.item} size={20} />
@@ -280,7 +282,7 @@ function CapabilityTypeDivider() {
 }
 function CategoryBanner({ data }: NodeProps<Node<{ caption: string; area?: AtlasNode }, 'categoryBanner'>>) {
   return (
-    <div className="category-banner" role="heading" aria-level={3} data-business-area={data.area?.id}>
+    <div className="category-banner" role="heading" aria-level={4} data-business-area={data.area?.id}>
       {data.caption}
     </div>
   );

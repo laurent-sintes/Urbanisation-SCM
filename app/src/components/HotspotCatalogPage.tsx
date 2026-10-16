@@ -459,7 +459,7 @@ export function HotspotCatalogPage({
         setDraftRevision(null);
       }
       setSaveMessage(
-        `${changes.length} point${changes.length > 1 ? 's' : ''} chaud${changes.length > 1 ? 's' : ''} enregistré${changes.length > 1 ? 's' : ''} dans la séance${hasLaterEdits ? '. Des modifications plus récentes restent à examiner avant un nouvel enregistrement.' : ' — à intégrer au backlog.'}`,
+        `${changes.length} point${changes.length > 1 ? 's' : ''} chaud${changes.length > 1 ? 's' : ''} enregistré${changes.length > 1 ? 's' : ''} dans la séance${hasLaterEdits ? '. Des modifications plus récentes restent à examiner avant un nouvel enregistrement.' : ' — à intégrer au modèle en préparation.'}`,
       );
     } catch (error) {
       setSaveMessage(error instanceof Error ? error.message : 'Enregistrement impossible.');
@@ -561,8 +561,8 @@ export function HotspotCatalogPage({
             </strong>
             {staleDrafts
               ? conflicts.length
-                ? ` · Le staging a changé aussi sur : ${conflicts.join(', ')}.`
-                : ' · Le staging a changé sur d’autres champs : tes saisies peuvent être reprises.'
+                ? ` · La séance a changé aussi sur : ${conflicts.join(', ')}.`
+                : ' · La séance a changé sur d’autres champs : tes saisies peuvent être reprises.'
               : ' · Saisies non enregistrées dans la séance.'}
           </span>
           {staleDrafts && workshopStage && (
