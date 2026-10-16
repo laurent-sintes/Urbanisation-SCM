@@ -1,6 +1,6 @@
 schema_version: 1.0.0
 id: flow-glossary
-as_of: '2026-10-15'
+as_of: '2026-10-16'
 source_refs:
 - C108
 - CMP096
@@ -50,6 +50,8 @@ source_refs:
 - U903
 - U904
 - U975
+- U1102
+- U1103
 terms:
 - id: TER001
   name: Capacité métier
@@ -15905,7 +15907,7 @@ terms:
   definition: Scénario versionné des besoins bruts et des approvisionnements ou transferts envisagés sur un horizon prévisionnel,
     avec hypothèses, provenance et statut.
   short_description: Scénario versionné des ressources et apports prévus.
-  context: Le [Supply Plan](glossary:TER098) est préparé par [Supply Resource Planning](model:ba-supply-resource-planning)
+  context: Le [Supply Plan](glossary:TER098) est préparé par [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
     à partir du [Demand Plan](glossary:TER099). [Plan Ingestion](model:plans-ingestion) peut recevoir des contributions externes
     qualifiées. Les achats et transferts restent des propositions. [Master Planning](model:D05.f) calcule séparément les besoins
     nets opérationnels avec les commandes, le stock et les apports réellement attendus ; il peut utiliser ce scénario sans
@@ -17447,11 +17449,10 @@ terms:
     retenue, y compris commande par commande en pénurie.
   context: '[Sous-domaine](method:MOD038) de [Supply Chain Orchestration](model:supply-chain-orchestration). [Demand & Supply
     Forecasting](model:subdomain-demand-supply-forecasting) possède le [Forecast Plan](glossary:TER372) des produits dans
-    [Design & Development](glossary:TER105). [Demand Plan Management](model:ba-demand-forecast-management) qualifie cette
-    prévision pour l’exploitation opérationnelle et distingue les commandes connues de la prévision résiduelle. [Supply Resource
-    Planning](model:ba-supply-resource-planning) projette les apports et capacités à préparer ; [Planning Reconciliation](model:ba-planning-reconciliation)
-    confronte les scénarios. [Master Plan Management](model:ba-master-plan-management) calcule les besoins nets à partir de
-    la demande retenue, du stock, des arrivées et des politiques actives. [Order Backlog Management](model:ba-order-backlog-management)
+    [Design & Development](glossary:TER105). [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) qualifie
+    la prévision pour l’exploitation opérationnelle, distingue commandes et prévision résiduelle, projette les apports et
+    confronte les scénarios avant le calcul net. [Master Plan Management](model:ba-master-plan-management) calcule les besoins
+    nets à partir de la demande retenue, du stock, des arrivées et des politiques actives. [Order Backlog Management](model:ba-order-backlog-management)
     arbitre les priorités, les affectations et les passages en livraison du carnet dans le même sous-domaine ; ces choix alimentent
     un plan commun versionné. [Stock Optimization](model:ba-physical-stock-configuration-optimization) propose des adaptations
     des stocks. Le calcul, la simulation, la décision humaine et l’automatisation sont des modalités de ces responsabilités,
@@ -30744,7 +30745,7 @@ terms:
     examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les produits
     et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime demande future,
     supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-    définit les caractéristiques du produit dans un autre domaine. [Demand Plan Management](model:ba-demand-forecast-management)
+    définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
     qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
     amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
     conserve les objectifs et budgets financiers.
@@ -30773,7 +30774,7 @@ terms:
       examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les
       produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime demande
       future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-      définit les caractéristiques du produit dans un autre domaine. [Demand Plan Management](model:ba-demand-forecast-management)
+      définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
       qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
       amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
       conserve les objectifs et budgets financiers.
@@ -30809,7 +30810,7 @@ terms:
       examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les
       produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime demande
       future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-      définit les caractéristiques du produit dans un autre domaine. [Demand Plan Management](model:ba-demand-forecast-management)
+      définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
       qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
       amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
       conserve les objectifs et budgets financiers.
@@ -31804,7 +31805,7 @@ terms:
   context: |-
     Peut produire des propositions d’achat, de production ou de transfert. Le [Supply Plan](glossary:TER098) comprend les achats prévus et les autres apports ou mouvements planifiés ; une proposition ne devient pas une commande ferme. Dans l’existant, MAP porte la planification et le carnet d’achat ; FLOW peut proposer un apport pour satisfaire le carnet via [CTP](glossary:TER045).
 
-    Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Planning](model:ba-supply-resource-planning), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
+    Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Plan Development](model:supply-plan-development), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
   notes: Périmètre de contexte du lot U975. Nom et rattachement validés ; rédaction explicative et comparaisons proposées,
     sans preuve de réalisation.
   source_refs:
@@ -31830,7 +31831,7 @@ terms:
     flow_position: |-
       Peut produire des propositions d’achat, de production ou de transfert. Le [Supply Plan](glossary:TER098) comprend les achats prévus et les autres apports ou mouvements planifiés ; une proposition ne devient pas une commande ferme. Dans l’existant, MAP porte la planification et le carnet d’achat ; FLOW peut proposer un apport pour satisfaire le carnet via [CTP](glossary:TER045).
 
-      Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Planning](model:ba-supply-resource-planning), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
+      Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Plan Development](model:supply-plan-development), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
     term_choice: Supply Planning nomme le périmètre FLOW discuté ; aucun intitulé commun aux éditeurs ni consensus de taxonomie
       revendiqué.
     definition_choice: Décrire le service rendu et sa frontière ; les textes détaillés restent proposés.
@@ -31859,7 +31860,7 @@ terms:
     flow_position: |-
       Peut produire des propositions d’achat, de production ou de transfert. Le [Supply Plan](glossary:TER098) comprend les achats prévus et les autres apports ou mouvements planifiés ; une proposition ne devient pas une commande ferme. Dans l’existant, MAP porte la planification et le carnet d’achat ; FLOW peut proposer un apport pour satisfaire le carnet via [CTP](glossary:TER045).
 
-      Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Planning](model:ba-supply-resource-planning), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
+      Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Plan Development](model:supply-plan-development), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
     term_choice: Supply Planning nomme le périmètre FLOW discuté ; aucun intitulé commun aux éditeurs ni consensus de taxonomie
       revendiqué.
     definition_choice: Décrire le service rendu et sa frontière ; les textes détaillés restent proposés.
@@ -40467,24 +40468,22 @@ terms:
     anchor: u1079
 - id: TER360
   name: Demand Plan Management
-  definition: Qualifier la prévision de produit reçue et établir la demande opérationnelle à couvrir en distinguant commandes
-    et prévision résiduelle.
-  short_description: Établir la demande opérationnelle à partir des commandes et de la prévision qualifiée.
-  context: '[Demand Forecast Qualification](model:demand-forecast-development) contrôle la version, la maille, l’horizon,
-    la provenance et l’applicabilité du [Forecast Plan](glossary:TER372) produit dans [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting).
-    Il peut signaler un écart ou demander une révision à Design & Development, sans remplacer sa prévision source. [Demand
-    Plan Development](model:demand-plan-development) construit la demande à couvrir en distinguant commandes identifiées et
-    prévision résiduelle selon les règles de consommation applicables. [Order Management](model:D04) conserve les commandes
-    et engagements. Aucun calcul de demande ne crée une commande ni ne confirme une promesse.'
+  definition: Ancien nom de Business Area regroupé dans Demand & Supply Plan Preparation ; les capacités métier gardent leur
+    identité.
+  short_description: Ancien libellé de périmètre, regroupé dans la préparation des plans.
+  context: Ce libellé reste pour la lecture des sources et publications historiques. Dans le backlog courant, [Demand & Supply
+    Plan Preparation](model:ba-demand-supply-plan-preparation) regroupe les capacités de demande, d’approvisionnement et de
+    rapprochement, sans fusionner leurs résultats.
   source_refs:
   - U1079
   - U1086
   - U1091
   - U1098
   - U1101
+  - U1103
   review:
-    state: proposed
-    note: Proposition de capacité ou de Business Area U1079 ; sans validation de la rédaction ni preuve de réalisation.
+    state: partial
+    note: Ancien libellé conservé comme repère historique ; regroupement validé U1103, rédaction proposée.
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1079
@@ -40492,7 +40491,7 @@ terms:
   name: Demand Forecast Qualification
   definition: Vérifier et qualifier une prévision de produit pour son emploi dans le plan opérationnel.
   short_description: Qualifier une prévision de produit reçue pour le plan opérationnel.
-  context: Capacité de [Demand Plan Management](model:ba-demand-forecast-management). [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting)
+  context: Capacité de [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation). [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting)
     tient la prévision source ; la qualification conserve sa version et ses réserves.
   source_refs:
   - U1079
@@ -40507,17 +40506,19 @@ terms:
     anchor: u1079
 - id: TER362
   name: Supply Resource Planning
-  definition: Projeter les besoins bruts et les apports envisagés à partir de la demande prévisionnelle et des contraintes
-    connues.
-  short_description: Projeter les besoins bruts et ressources à préparer.
-  context: Dans [Master Plan](model:domain-plan), prépare un scénario prévisionnel de ressources ; [Master Plan Management](model:ba-master-plan-management)
-    calcule ensuite les besoins nets opérationnels à partir des faits et apports à date.
+  definition: Ancien nom de Business Area regroupé dans Demand & Supply Plan Preparation ; les capacités métier gardent leur
+    identité.
+  short_description: Ancien libellé de périmètre, regroupé dans la préparation des plans.
+  context: Ce libellé reste pour la lecture des sources et publications historiques. Dans le backlog courant, [Demand & Supply
+    Plan Preparation](model:ba-demand-supply-plan-preparation) regroupe les capacités de demande, d’approvisionnement et de
+    rapprochement, sans fusionner leurs résultats.
   source_refs:
   - U1079
   - U1094
+  - U1103
   review:
-    state: proposed
-    note: Proposition de capacité ou de Business Area U1079 ; sans validation de la rédaction ni preuve de réalisation.
+    state: partial
+    note: Ancien libellé conservé comme repère historique ; regroupement validé U1103, rédaction proposée.
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1079
@@ -40525,8 +40526,8 @@ terms:
   name: Supply Plan Development
   definition: Projeter les besoins bruts et les apports envisagés à partir du plan de demande et des contraintes connues.
   short_description: Produire un scénario prévisionnel des ressources et apports envisagés.
-  context: Dans [Supply Resource Planning](model:ba-supply-resource-planning), produit un scénario qui ne crée ni achat ferme
-    ni besoin net opérationnel ; ce dernier est calculé par [Master Planning](model:D05.f).
+  context: Dans [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation), produit un scénario qui ne crée
+    ni achat ferme ni besoin net opérationnel ; ce dernier est calculé par [Master Planning](model:D05.f).
   source_refs:
   - U1079
   - U1086
@@ -40539,19 +40540,20 @@ terms:
     anchor: u1079
 - id: TER364
   name: Planning Reconciliation
-  definition: Rapprocher les plans de demande et d’approvisionnement et instruire leurs écarts avant de retenir une version
-    cohérente.
-  short_description: Rapprocher les plans et leurs écarts.
-  context: Dans [Master Plan](model:domain-plan), confronte les scénarios prévisionnels de demande et de ressources. Le calcul
-    des besoins nets relève ensuite de [Master Plan Management](model:ba-master-plan-management) ; les arbitrages du carnet
-    restent distincts.
+  definition: Ancien nom de Business Area regroupé dans Demand & Supply Plan Preparation ; les capacités métier gardent leur
+    identité.
+  short_description: Ancien libellé de périmètre, regroupé dans la préparation des plans.
+  context: Ce libellé reste pour la lecture des sources et publications historiques. Dans le backlog courant, [Demand & Supply
+    Plan Preparation](model:ba-demand-supply-plan-preparation) regroupe les capacités de demande, d’approvisionnement et de
+    rapprochement, sans fusionner leurs résultats.
   source_refs:
   - U1079
   - U1086
   - U1094
+  - U1103
   review:
-    state: proposed
-    note: Proposition de capacité ou de Business Area U1079 ; sans validation de la rédaction ni preuve de réalisation.
+    state: partial
+    note: Ancien libellé conservé comme repère historique ; regroupement validé U1103, rédaction proposée.
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1079
@@ -40559,8 +40561,8 @@ terms:
   name: Planning Scenario Reconciliation
   definition: Qualifier les écarts entre demande et approvisionnement et retenir une version cohérente ou un écart explicite.
   short_description: Qualifier les écarts et la version retenue.
-  context: Capacité de [Planning Reconciliation](model:ba-planning-reconciliation) ; la simulation compare les alternatives
-    mais ne vaut pas accord sur la version.
+  context: Capacité de [Planning Scenario Reconciliation](model:planning-scenario-reconciliation) ; la simulation compare
+    les alternatives mais ne vaut pas accord sur la version.
   source_refs:
   - U1079
   - U1086
@@ -40574,8 +40576,8 @@ terms:
   name: Demand Plan Development
   definition: Calculer et réviser un plan de demande en distinguant commandes identifiées et part de prévision encore à couvrir.
   short_description: Construire la demande planifiée sans compter deux fois commandes et prévision.
-  context: Capacité de [Demand Plan Management](model:ba-demand-forecast-management). Détermine la prévision résiduelle selon
-    une règle autorisée, un horizon et des commandes identifiées ; conserve provenance et version. [Availability](model:D03)
+  context: Capacité de [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation). Détermine la prévision
+    résiduelle selon une règle autorisée, un horizon et des commandes identifiées ; conserve provenance et version. [Availability](model:D03)
     utilise le résultat pour une promesse, sans redéfinir le plan.
   source_refs:
   - U1085
@@ -40707,6 +40709,24 @@ terms:
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1099
+- id: TER374
+  name: Demand & Supply Plan Preparation
+  definition: Responsabilité qui qualifie la demande, prépare les apports envisagés et rapproche leurs plans avant le calcul
+    des besoins nets.
+  short_description: Préparer et rapprocher les plans de demande et d’approvisionnement avant le calcul net.
+  context: '[Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) regroupe la qualification de la prévision,
+    le calcul du [Demand Plan](glossary:TER099), la projection du [Supply Plan](glossary:TER098) et le rapprochement de leurs
+    scénarios. Le [Master Plan](model:domain-plan) calcule ensuite les besoins nets. Le rapprochement peut conduire à réviser
+    les scénarios sans imposer une séquence unique.'
+  source_refs:
+  - U1102
+  - U1103
+  review:
+    state: partial
+    note: Nom et regroupement validés U1103 ; rédaction proposée.
+  source_locator:
+    path: connaissance/01-contributions-utilisateur.md
+    anchor: u1103
 note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est figé
   avec chaque nouvelle publication. Les reformulations restent proposées. as_of indique la date du dernier lot éditorial appliqué
   au brouillon, sans modifier les dates des publications figées.

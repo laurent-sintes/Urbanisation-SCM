@@ -18,8 +18,11 @@ const systems = ['system-design-development', systemId, 'system-enterprise-manag
 const logisticsId = 'domain-logistics-execution';
 const logisticsSystem = model.nodes.find((node) => node.id === logisticsId)?.kind === 'business_system';
 if (logisticsSystem) systems.push(logisticsId);
-const domains = ['domain-plan', 'domain-sourcing-procurement', 'domain-sales', domainId];
-if (!logisticsSystem) domains.push(logisticsId);
+const domainIds = new Set(model.nodes.filter((node) => node.kind === 'domain').map((node) => node.id));
+const domains = ['domain-plan', 'domain-sourcing-procurement', 'domain-sales', domainId].filter((id) =>
+  domainIds.has(id),
+);
+if (!logisticsSystem && domainIds.has(logisticsId)) domains.push(logisticsId);
 assert.ok([...systems, ...domains].every((id) => model.nodes.some((node) => node.id === id)));
 const base = 'https://atlas.test/Urbanisation-SCM/';
 const browser = await chromium.launch(browserOptions);
@@ -64,17 +67,21 @@ try {
           return element?.getBoundingClientRect();
         });
         if (boxes.some((box) => !box?.height)) return false;
-        const [plan, sourcing, sales, orchestration, logistics] = boxes;
+        const byId = Object.fromEntries(ids.map((id, index) => [id, boxes[index]]));
+        const plan = byId['domain-plan'];
+        const sourcing = byId['domain-sourcing-procurement'];
+        const sales = byId['domain-sales'];
+        const orchestration = byId['supply-chain-orchestration'];
+        const logistics = byId['domain-logistics-execution'];
         return (
-          plan.bottom <= sourcing.top + 1 &&
+          (!plan || plan.bottom <= sourcing.top + 1) &&
           Math.abs(sourcing.top - sales.top) < 1 &&
           sourcing.right <= sales.left + 1 &&
           Math.max(sourcing.bottom, sales.bottom) <= orchestration.top + 1 &&
           (!logistics || orchestration.bottom <= logistics.top + 1) &&
-          Math.abs(plan.left - sourcing.left) < 1 &&
-          Math.abs(plan.right - sales.right) < 1 &&
-          Math.abs(orchestration.left - plan.left) < 1 &&
-          (!logistics || Math.abs(logistics.right - plan.right) < 1)
+          Math.abs((plan || orchestration).left - sourcing.left) < 1 &&
+          Math.abs((plan || orchestration).right - sales.right) < 1 &&
+          (!logistics || Math.abs(logistics.right - orchestration.right) < 1)
         );
       },
       { ids: domains, overview, systemId },

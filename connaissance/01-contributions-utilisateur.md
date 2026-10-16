@@ -25558,3 +25558,30 @@ Date : 2026-10-16. Source : Laurent, correction du terme employé en U1100.
 Verbatim : « desing produit j'entends ».
 
 Portée : la confusion visée est avec le design produit. La prévision demand/supply doit être lisible comme responsabilité distincte de la définition et du design des produits ; U1100 reste conservé comme verbatim initial corrigé.
+
+## U1102
+
+Date : 2026-10-16. Source : Laurent, demande d'audit du sous-domaine Master Plan.
+
+Verbatim :
+
+> Je souhaite revoir le sous domaine Master Plan.
+>
+> - Demand Plan Management & Supply Plan Development, je les verrai bien regroupés dans une area de préparation
+> - Planning reconciliation est isolé
+>
+> Tu peux auditer le sous domaine ? Il me semble qu'il faut le restructurer.
+
+Portée : examiner le regroupement des responsabilités de préparation des plans de demande et d'approvisionnement avec leur rapprochement, sans déduire d'emblée une fusion des capacités ni une modification des autres sous-domaines.
+
+## U1103
+
+Date : 2026-10-16. Source : Laurent, ordre de lecture et validation de la restructuration proposée après audit.
+
+Verbatim :
+
+> En termes d'ordre naturel, Stock Optimization à la fin ?
+>
+> Go
+
+Portée : accord sur la proposition complète discutée : une Business Area Demand & Supply Plan Preparation regroupe Demand Forecast Qualification, Demand Plan Development, Supply Plan Development et Planning Scenario Reconciliation ; Master Plan Management, Order Backlog Management et Stock Optimization restent des Business Areas distinctes dans cet ordre de lecture. Les quatre capacités de préparation conservent leur identité et leurs responsabilités ; les trois anciennes Business Areas de préparation sont retirées du backlog courant sans réutilisation de leurs identifiants. Stock Optimization est présenté en dernier sans imposer une séquence d'exécution : ses décisions peuvent aussi alimenter ou faire réviser le plan. L'accord ne modifie ni les engagements des commandes, ni la prévision source de Design & Development, ni la réalisation installée ; il ne demande ni release, ni commit, ni push.

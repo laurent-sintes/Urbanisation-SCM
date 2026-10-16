@@ -53,8 +53,8 @@ class ModelCoherenceTests(unittest.TestCase):
         shared = {(r['source_id'], r['target_id']) for r in self.model['relations']
                   if r['type'] == 'shares-data'}
         self.assertIn(('subdomain-collection-planning', 'subdomain-demand-supply-forecasting'), shared)
-        self.assertIn(('subdomain-demand-supply-forecasting', 'ba-demand-forecast-management'), shared)
-        self.assertNotIn(('subdomain-collection-planning', 'ba-demand-forecast-management'), shared)
+        self.assertIn(('subdomain-demand-supply-forecasting', 'ba-demand-supply-plan-preparation'), shared)
+        self.assertNotIn(('subdomain-collection-planning', 'ba-demand-supply-plan-preparation'), shared)
 
     def test_scenario_contributions_respect_packing_and_finishing(self):
         path = self.paths['fashion-launch-path']

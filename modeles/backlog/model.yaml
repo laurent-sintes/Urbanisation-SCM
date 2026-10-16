@@ -2537,16 +2537,17 @@ application_catalog:
       - U1093
     - id: offer-akolade-demand-forecast
       component_id: akolade-previsions
-      node_id: ba-demand-forecast-management
+      node_id: ba-demand-supply-plan-preparation
       role: contributes
       evidence_state: documented
       note: Prévisions par produit, région et canal ; intégration possible à étudier, sans réalisation installée.
       source_url: https://www.seilks.com/modules/construction-offre/
       source_refs:
       - U1093
+      - U1103
     - id: offer-akolade-supply-plan
       component_id: akolade-plan-achats
-      node_id: ba-supply-resource-planning
+      node_id: ba-demand-supply-plan-preparation
       role: contributes
       evidence_state: documented
       note: Plan d’achats tenant compte des prévisions, stocks et contraintes fournisseurs ; ne démontre pas une couverture
@@ -2554,6 +2555,7 @@ application_catalog:
       source_url: https://www.seilks.com/modules/plan-achats/
       source_refs:
       - U1093
+      - U1103
   selections:
   - id: selection-elastic-historique
     context_id: beaumanoir-historique
@@ -3667,7 +3669,7 @@ nodes:
       restent proposés ; aucune réalisation installée déduite.'
   last_modified: '2026-10-15T00:00:00Z'
 - id: domain-plan
-  revision: 9
+  revision: 10
   kind: area
   fields:
     name: Master Plan
@@ -3676,11 +3678,10 @@ nodes:
     finality: Produire et réviser un plan opérationnel cohérent de couverture des besoins nets et des demandes en concurrence.
     scope: '[Sous-domaine](method:MOD038) de [Supply Chain Orchestration](model:supply-chain-orchestration). [Demand & Supply
       Forecasting](model:subdomain-demand-supply-forecasting) possède le [Forecast Plan](glossary:TER372) des produits dans
-      [Design & Development](glossary:TER105). [Demand Plan Management](model:ba-demand-forecast-management) qualifie cette
-      prévision pour l’exploitation opérationnelle et distingue les commandes connues de la prévision résiduelle. [Supply
-      Resource Planning](model:ba-supply-resource-planning) projette les apports et capacités à préparer ; [Planning Reconciliation](model:ba-planning-reconciliation)
-      confronte les scénarios. [Master Plan Management](model:ba-master-plan-management) calcule les besoins nets à partir
-      de la demande retenue, du stock, des arrivées et des politiques actives. [Order Backlog Management](model:ba-order-backlog-management)
+      [Design & Development](glossary:TER105). [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
+      qualifie la prévision pour l’exploitation opérationnelle, distingue commandes et prévision résiduelle, projette les
+      apports et confronte les scénarios avant le calcul net. [Master Plan Management](model:ba-master-plan-management) calcule
+      les besoins nets à partir de la demande retenue, du stock, des arrivées et des politiques actives. [Order Backlog Management](model:ba-order-backlog-management)
       arbitre les priorités, les affectations et les passages en livraison du carnet dans le même sous-domaine ; ces choix
       alimentent un plan commun versionné. [Stock Optimization](model:ba-physical-stock-configuration-optimization) propose
       des adaptations des stocks. Le calcul, la simulation, la décision humaine et l’automatisation sont des modalités de
@@ -3879,14 +3880,14 @@ nodes:
   - U974
   - U975
   - U976
+  - U1103
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u794
   review:
     state: partial
-    note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
-      sans réalisation installée déduite.
-  last_modified: '2026-10-15T00:00:00Z'
+    note: Rattachement et regroupement des Business Areas validés U1103 ; autres descriptions et comparaisons qualifiées séparément.
+  last_modified: '2026-10-16T00:00:00Z'
 - id: supply-chain-orchestration
   revision: 25
   kind: domain
@@ -39261,7 +39262,7 @@ nodes:
     note: Plan validé U848 ; accords de champs et rattachements capturés séparément.
   last_modified: '2026-10-06T00:00:00Z'
 - id: ba-master-plan-management
-  revision: 5
+  revision: 6
   kind: business_area
   fields:
     name: Master Plan Management
@@ -41021,7 +41022,7 @@ nodes:
       - U999
       - U1008
       - U1009
-    reading_order: 1
+    reading_order: 2
   source_refs:
   - U1001
   - U1003
@@ -41050,6 +41051,7 @@ nodes:
   - U848
   - U853
   - U999
+  - U1103
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u848
@@ -41057,7 +41059,7 @@ nodes:
     state: partial
     note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
       sans réalisation installée déduite.
-  last_modified: '2026-10-15T00:00:00Z'
+  last_modified: '2026-10-16T00:00:00Z'
 - id: ba-order-promising
   revision: 3
   kind: business_area
@@ -41821,6 +41823,7 @@ nodes:
   - U1019
   - U1020
   - U1080
+  - U1103
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u911
@@ -41828,7 +41831,7 @@ nodes:
     state: partial
     note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
       sans réalisation installée déduite.
-  last_modified: '2026-10-15T00:00:00Z'
+  last_modified: '2026-10-16T00:00:00Z'
 - id: ba-order-lifecycle-management
   revision: 2
   kind: business_area
@@ -46500,7 +46503,7 @@ nodes:
       examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les
       produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime demande
       future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-      définit les caractéristiques du produit dans un autre domaine. [Demand Plan Management](model:ba-demand-forecast-management)
+      définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
       qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
       amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
       conserve les objectifs et budgets financiers.
@@ -46525,7 +46528,7 @@ nodes:
         examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les
         produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime
         demande future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-        définit les caractéristiques du produit dans un autre domaine. [Demand Plan Management](model:ba-demand-forecast-management)
+        définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
         qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
         amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
         conserve les objectifs et budgets financiers.
@@ -46561,7 +46564,7 @@ nodes:
         examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les
         produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime
         demande future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-        définit les caractéristiques du produit dans un autre domaine. [Demand Plan Management](model:ba-demand-forecast-management)
+        définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
         qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
         amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
         conserve les objectifs et budgets financiers.
@@ -51571,6 +51574,7 @@ nodes:
   - U1020
   - U1080
   - U1098
+  - U1103
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1019
@@ -51578,7 +51582,7 @@ nodes:
     state: partial
     note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
       sans réalisation installée déduite.
-  last_modified: '2026-10-15T00:00:00Z'
+  last_modified: '2026-10-16T00:00:00Z'
 - id: subdomain-retail-commerce
   revision: 2
   kind: area
@@ -58590,102 +58594,87 @@ nodes:
     state: proposed
     note: Décomposition proposée à la demande de profondeur U1079 ; nom, définition, frontière et comparaison restent à revoir.
       Aucune réalisation installée déduite.
-- id: ba-demand-forecast-management
-  revision: 9
+- id: ba-demand-supply-plan-preparation
+  revision: 1
   kind: business_area
   fields:
-    name: Demand Plan Management
-    definition: '[Demand Plan Management](glossary:TER360) : qualifier la prévision de produit reçue et établir la demande
-      opérationnelle à couvrir en distinguant commandes et prévision résiduelle.'
-    finality: Fournir une demande opérationnelle traçable au calcul des besoins nets.
-    scope: '[Demand Forecast Qualification](model:demand-forecast-development) contrôle la version, la maille, l’horizon,
-      la provenance et l’applicabilité du [Forecast Plan](glossary:TER372) produit dans [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting).
-      Il peut signaler un écart ou demander une révision à Design & Development, sans remplacer sa prévision source. [Demand
-      Plan Development](model:demand-plan-development) construit la demande à couvrir en distinguant commandes identifiées
-      et prévision résiduelle selon les règles de consommation applicables. [Order Management](model:D04) conserve les commandes
-      et engagements. Aucun calcul de demande ne crée une commande ni ne confirme une promesse.'
+    name: Demand & Supply Plan Preparation
+    definition: '[Demand & Supply Plan Preparation](glossary:TER374) : qualifier la demande, préparer les apports envisagés
+      et rapprocher les deux plans avant le calcul des besoins nets.'
+    finality: Fournir au [Master Plan](model:domain-plan) des scénarios de demande et de ressources rapprochés, avec leurs
+      écarts et réserves explicites.
+    scope: '[Demand Forecast Qualification](model:demand-forecast-development) vérifie l’emploi opérationnel du [Forecast
+      Plan](glossary:TER372) produit dans [Design & Development](glossary:TER105). [Demand Plan Development](model:demand-plan-development)
+      établit la demande à couvrir sans compter deux fois commandes et prévision résiduelle. [Supply Plan Development](model:supply-plan-development)
+      projette les besoins bruts et les apports ou transferts envisagés. [Planning Scenario Reconciliation](model:planning-scenario-reconciliation)
+      confronte les versions, explicite les écarts et qualifie la version retenue ou les décisions restant à prendre. [Master
+      Planning](model:D05.f) calcule ensuite les besoins nets avec le stock et les réceptions à date. Les décisions de [Order
+      Backlog Management](model:ba-order-backlog-management) et [Stock Optimization](model:ba-physical-stock-configuration-optimization)
+      peuvent conduire à réviser les scénarios ; cet ordre de lecture ne fixe pas une séquence d’exécution. Les engagements
+      restent dans [Order Management](model:D04) et la prévision source dans [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting).'
+    reading_order: 1
     market_comparisons:
-    - vendor: SAP
-      product: SAP S/4HANA Production Planning
-      element_name: Execute Supply Chain Planning
-      element_type: Périmètre fonctionnel ou processus produit
-      relationship: Recouvrement partiel
-      similarities: Independent requirements and consumption ; forecast demand
-      differences: Le document décrit des fonctions ou processus produit ; FLOW distingue les responsabilités indépendamment
-        des applications. Le regroupement et la maille ne sont pas des équivalents natifs démontrés.
-      flow_position: La prévision de produit est tenue dans Design & Development ; FLOW qualifie une version pour la demande
-        opérationnelle et distingue commandes et prévision résiduelle.
-      term_choice: Demand Plan Management nomme la responsabilité FLOW ; ce regroupement ne correspond pas à un module éditeur
-        unique.
-      definition_choice: La prévision de produit est tenue dans Design & Development ; FLOW qualifie une version pour la demande
-        opérationnelle et distingue commandes et prévision résiduelle.
-      concept_name: Execute Supply Chain Planning
-      scope_summary: Besoins prévisionnels et commandes client, consommation de prévision et calcul des besoins.
-      approach_summary: Appui sélectif à la responsabilité ; aucune transposition de tout le module produit.
-      source_title: Execute Supply Chain Planning
-      source_url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/execute-supply-chain-planning
-      source_version: Page évolutive ; édition globale non indiquée
-      consulted_on: '2026-10-12'
-      source_locator: Independent requirements ; sales order consumption ; MRP
-      evidence_limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
-      source_refs:
-      - ELM866
-      - CMP312
-      - U974
-      - U1079
-      status: proposed
     - vendor: Microsoft
       product: Dynamics 365 Supply Chain Management
-      element_name: Master planning home page
-      element_type: Périmètre fonctionnel ou processus produit
+      source_title: Inventory forecasts
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
+      source_version: Documentation en ligne consultée le 2026-10-16
+      source_locator: Inventory forecast ; Use forecasts with master planning
+      consulted_on: '2026-10-16'
+      concept_name: Inventory forecasts
+      element_name: Demand and supply forecasts
+      element_type: Fonctions de planification documentées
       relationship: Recouvrement partiel
-      similarities: Independent requirements and consumption ; forecast demand
-      differences: Le document décrit des fonctions ou processus produit ; FLOW distingue les responsabilités indépendamment
-        des applications. Le regroupement et la maille ne sont pas des équivalents natifs démontrés.
-      flow_position: La prévision de produit est tenue dans Design & Development ; FLOW qualifie une version pour la demande
-        opérationnelle et distingue commandes et prévision résiduelle.
-      term_choice: Demand Plan Management nomme la responsabilité FLOW ; ce regroupement ne correspond pas à un module éditeur
-        unique.
-      definition_choice: La prévision de produit est tenue dans Design & Development ; FLOW qualifie une version pour la demande
-        opérationnelle et distingue commandes et prévision résiduelle.
-      concept_name: Master planning home page
-      scope_summary: Équilibrer besoins et ressources et produire des propositions, distinctes des commandes affermies.
-      approach_summary: Appui sélectif à la responsabilité ; aucune transposition de tout le module produit.
-      source_title: Master planning home page
-      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
-      source_version: Page mise à jour 2026-03-26
-      consulted_on: '2026-10-12'
-      source_locator: Net requirements ; forecast planning ; planned orders
-      evidence_limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
-      source_refs:
-      - ELM865
-      - CMP312
-      - U974
-      - U1079
+      similarities: Les prévisions de demande et d’offre sont rapprochées et peuvent alimenter le master plan.
+      differences: Le produit ne prescrit ni une [Business Area](method:MOD039) FLOW ni une capacité autonome de rapprochement
+        des scénarios.
+      flow_position: FLOW regroupe la qualification de la demande, la projection des apports et le rapprochement dans une
+        responsabilité de préparation.
+      evidence_limits: Appui fonctionnel partiel ; aucune taxonomie universelle ni réalisation installée Beaumanoir démontrée.
       status: proposed
-    examples:
-    - title: Des commandes remplacent une partie de la prévision
-      situation: 'Illustration fictive : une prévision de 100 pièces et 60 pièces de commandes identifiées conduisent, si
-        la règle applicable le confirme, à 40 pièces de prévision résiduelle et 100 pièces de demande planifiée.'
-      lesson: Le plan garde les deux origines visibles et évite de compter 160 pièces.
       source_refs:
-      - U1087
-    reading_order: 2
+      - U1102
+      - U1103
+    - vendor: SAP
+      product: SAP S/4HANA 2025 FPS01 Sales & Operations Planning
+      source_title: SOP Distribution Scenario II
+      source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/d853922bdd584e8e83027e5a0b8122f2/856ebd534f22b44ce10000000a174cb4.html?ai=true
+      source_version: SAP S/4HANA 2025 FPS01 ; consulté le 2026-10-16
+      source_locator: SOP Distribution Scenario II ; étapes 1 à 3
+      consulted_on: '2026-10-16'
+      concept_name: Sales & Operations Planning
+      element_name: Sales and production plan reconciliation
+      element_type: Scénario de planification documenté
+      relationship: Recouvrement partiel
+      similarities: Les plans commerciaux et de production sont rapprochés, puis leurs écarts et contraintes sont instruits.
+      differences: Le scénario SAP porte sur la production ; FLOW couvre aussi achats, autres apports et transferts sans copier
+        cette organisation.
+      flow_position: La préparation FLOW produit des versions rapprochées avant le calcul net et les décisions du carnet.
+      evidence_limits: Appui fonctionnel partiel ; aucune équivalence de structure ni réalisation installée démontrée.
+      status: proposed
+      source_refs:
+      - U1102
+      - U1103
+    examples:
+    - title: Préparer une demande supérieure aux apports envisagés
+      situation: 'Illustration fictive : 300 commandes connues et 700 pièces de prévision résiduelle forment un plan de demande
+        de 1 000 pièces. Le scénario d’approvisionnement envisage 850 pièces à l’horizon considéré.'
+      lesson: La préparation rend visible l’écart de 150 pièces et ses hypothèses. Le [Master Plan](model:domain-plan) calcule
+        ensuite les besoins nets avec le stock et les réceptions fermes ; les responsables du carnet arbitrent les commandes.
+      source_refs:
+      - U1102
+      - U1103
   source_refs:
-  - U1079
-  - U1080
-  - U1086
-  - U1091
-  - U1098
-  - U1101
+  - U1102
+  - U1103
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
-    anchor: u1079
+    anchor: u1103
   review:
     state: partial
-    note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
-      sans réalisation installée déduite.
-  last_modified: '2026-10-15T00:00:00Z'
+    note: Regroupement, nom et ordre validés U1103 ; rédaction et rapprochements marché proposés, sans réalisation installée
+      déduite.
+  last_modified: '2026-10-16T00:00:00Z'
 - id: demand-forecast-development
   revision: 5
   kind: capability
@@ -58782,175 +58771,6 @@ nodes:
     note: Décomposition proposée à la demande de profondeur U1079 ; nom, définition, frontière et comparaison restent à revoir.
       Aucune réalisation installée déduite.
   last_modified: '2026-10-15T00:00:00Z'
-- id: ba-supply-resource-planning
-  revision: 6
-  kind: business_area
-  fields:
-    name: Supply Resource Planning
-    definition: '[Supply Resource Planning](glossary:TER362) : projeter les besoins bruts et les apports envisagés à partir
-      de la demande prévisionnelle et des contraintes connues.'
-    finality: Préparer un scénario prévisionnel de ressources et d’apports avant le calcul opérationnel des besoins nets.
-    scope: '[Supply Plan Development](model:supply-plan-development) projette, sur l’horizon prévisionnel, les quantités et
-      échéances d’achat, d’autres apports, de transfert et, lorsque pertinent, de capacité à préparer à partir du [Demand
-      Plan](glossary:TER099) et des contraintes connues. Le résultat décrit des besoins bruts et des propositions encore incertaines
-      ; il ne déduit pas à lui seul le besoin net opérationnel du stock et des réceptions fermes. [Planning Reconciliation](model:ba-planning-reconciliation)
-      confronte ce scénario à la demande. [Master Plan Management](model:ba-master-plan-management) reprend les entrées qualifiées
-      avec les commandes, le stock et les apports attendus pour calculer les besoins nets. Une proposition ne devient pas
-      un achat ou un transfert ferme ; [Order Management](model:D04) conserve les engagements. MAP porte dans l’existant la
-      planification et le carnet d’achat ; aucun transfert installé vers FLOW Core n’est déduit.'
-    market_comparisons:
-    - vendor: Microsoft
-      product: Dynamics 365 Supply Chain Management
-      source_title: Master planning home page
-      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
-      source_version: Documentation en ligne consultée le 2026-10-16
-      source_locator: The three main planning processes
-      consulted_on: '2026-10-16'
-      concept_name: Master planning home page
-      element_name: Master planning home page
-      element_type: Processus de planification documenté
-      relationship: Recouvrement partiel
-      similarities: Microsoft distingue les besoins bruts issus des prévisions et les besoins nets du master plan opérationnel.
-      differences: Le module logiciel regroupe plusieurs processus ; FLOW répartit les responsabilités métier entre plusieurs
-        Business Areas.
-      flow_position: FLOW conserve prévision et projection de ressources en amont ; Master Planning calcule les besoins nets
-        opérationnels.
-      evidence_limits: Comparaison fonctionnelle ; ne prouve ni découpage métier universel ni réalisation installée chez Beaumanoir.
-      status: proposed
-      source_refs:
-      - U1094
-      definition_choice: FLOW conserve prévision et projection de ressources en amont ; Master Planning calcule les besoins
-        nets opérationnels.
-      term_choice: Le nom FLOW décrit une responsabilité métier ; le nom du processus éditeur ne fixe pas sa hiérarchie.
-      scope_summary: Microsoft distingue les besoins bruts issus des prévisions et les besoins nets du master plan opérationnel.
-      approach_summary: FLOW conserve prévision et projection de ressources en amont ; Master Planning calcule les besoins
-        nets opérationnels.
-    - vendor: Microsoft
-      product: Dynamics 365 Supply Chain Management
-      source_title: Inventory forecasts
-      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
-      source_version: Documentation en ligne consultée le 2026-10-16
-      source_locator: Forecast planning ; demand and supply forecast lines
-      consulted_on: '2026-10-16'
-      concept_name: Inventory forecasts
-      element_name: Inventory forecasts
-      element_type: Processus de planification documenté
-      relationship: Recouvrement partiel
-      similarities: Les prévisions de demande et d’offre alimentent un calcul de besoins bruts et des ordres planifiés.
-      differences: Une prévision peut aussi être sélectionnée comme entrée du master plan ; elle n’est pas exclue de tout
-        calcul net.
-      flow_position: FLOW qualifie la prévision résiduelle retenue avant son éventuelle prise en compte dans les besoins nets.
-      evidence_limits: Comparaison fonctionnelle ; ne prouve ni découpage métier universel ni réalisation installée chez Beaumanoir.
-      status: proposed
-      source_refs:
-      - U1094
-      definition_choice: FLOW qualifie la prévision résiduelle retenue avant son éventuelle prise en compte dans les besoins
-        nets.
-      term_choice: Le nom FLOW décrit une responsabilité métier ; le nom du processus éditeur ne fixe pas sa hiérarchie.
-      scope_summary: Les prévisions de demande et d’offre alimentent un calcul de besoins bruts et des ordres planifiés.
-      approach_summary: FLOW qualifie la prévision résiduelle retenue avant son éventuelle prise en compte dans les besoins
-        nets.
-    - vendor: SAP
-      product: SAP S/4HANA Production Planning
-      source_title: Understanding MRP in SAP S/4HANA
-      source_url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/understanding-mrp-in-sap-s-4hana
-      source_version: Documentation en ligne consultée le 2026-10-16
-      source_locator: Deterministic Planning ; Steps 2 and 3 ; net requirements ; procurement proposals
-      consulted_on: '2026-10-16'
-      concept_name: Understanding MRP in SAP S/4HANA
-      element_name: Understanding MRP in SAP S/4HANA
-      element_type: Processus de planification documenté
-      relationship: Recouvrement partiel
-      similarities: SAP rapproche demandes connues ou prévues, stock disponible et réceptions fermes pour calculer les manques,
-        puis propose un approvisionnement.
-      differences: Le MRP SAP couvre ici matériaux et production ; la maille omnicanale et les décisions de carnet FLOW ne
-        sont pas démontrées par cette source.
-      flow_position: FLOW distingue projection des besoins bruts, calcul des besoins nets et décisions de carnet.
-      evidence_limits: Comparaison fonctionnelle ; ne prouve ni découpage métier universel ni réalisation installée chez Beaumanoir.
-      status: proposed
-      source_refs:
-      - U1094
-      definition_choice: FLOW distingue projection des besoins bruts, calcul des besoins nets et décisions de carnet.
-      term_choice: Le nom FLOW décrit une responsabilité métier ; le nom du processus éditeur ne fixe pas sa hiérarchie.
-      scope_summary: SAP rapproche demandes connues ou prévues, stock disponible et réceptions fermes pour calculer les manques,
-        puis propose un approvisionnement.
-      approach_summary: FLOW distingue projection des besoins bruts, calcul des besoins nets et décisions de carnet.
-    - vendor: SAP
-      product: SAP S/4HANA Production Planning
-      element_name: Execute Supply Chain Planning
-      element_type: Périmètre fonctionnel ou processus produit
-      relationship: Recouvrement partiel
-      similarities: MRP and planned orders ; master planning
-      differences: Le document décrit des fonctions ou processus produit ; FLOW distingue les responsabilités indépendamment
-        des applications. Le regroupement et la maille ne sont pas des équivalents natifs démontrés.
-      flow_position: FLOW calcule un plan d’approvisionnement révisable à partir du plan de demande, du stock et des contraintes,
-        sans affermir seul un achat.
-      term_choice: Supply Resource Planning nomme une responsabilité FLOW ; le terme produit ne lui est pas assimilé.
-      definition_choice: Service rendu et frontière métier proposés ; aucune réalisation installée déduite.
-      concept_name: Execute Supply Chain Planning
-      scope_summary: Besoins prévisionnels et commandes client, consommation de prévision et calcul des besoins.
-      approach_summary: Appui sélectif à la responsabilité ; aucune transposition de tout le module produit.
-      source_title: Execute Supply Chain Planning
-      source_url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/execute-supply-chain-planning
-      source_version: Page évolutive ; édition globale non indiquée
-      consulted_on: '2026-10-12'
-      source_locator: Independent requirements ; sales order consumption ; MRP
-      evidence_limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
-      source_refs:
-      - ELM866
-      - CMP312
-      - U974
-      - U1079
-      status: proposed
-    - vendor: Microsoft
-      product: Dynamics 365 Supply Chain Management
-      element_name: Master planning home page
-      element_type: Périmètre fonctionnel ou processus produit
-      relationship: Recouvrement partiel
-      similarities: MRP and planned orders ; master planning
-      differences: Le document décrit des fonctions ou processus produit ; FLOW distingue les responsabilités indépendamment
-        des applications. Le regroupement et la maille ne sont pas des équivalents natifs démontrés.
-      flow_position: FLOW calcule un plan d’approvisionnement révisable à partir du plan de demande, du stock et des contraintes,
-        sans affermir seul un achat.
-      term_choice: Supply Resource Planning nomme une responsabilité FLOW ; le terme produit ne lui est pas assimilé.
-      definition_choice: Service rendu et frontière métier proposés ; aucune réalisation installée déduite.
-      concept_name: Master planning home page
-      scope_summary: Équilibrer besoins et ressources et produire des propositions, distinctes des commandes affermies.
-      approach_summary: Appui sélectif à la responsabilité ; aucune transposition de tout le module produit.
-      source_title: Master planning home page
-      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
-      source_version: Page mise à jour 2026-03-26
-      consulted_on: '2026-10-12'
-      source_locator: Net requirements ; forecast planning ; planned orders
-      evidence_limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
-      source_refs:
-      - ELM865
-      - CMP312
-      - U974
-      - U1079
-      status: proposed
-    examples:
-    - title: Préparer les ressources de la saison
-      situation: 'Illustration fictive : le plan de demande projette 1 000 pièces sur deux mois ; les délais fournisseur conduisent
-        à envisager des achats et transferts avant de connaître toutes les commandes.'
-      lesson: Le scénario prépare les ressources ; le calcul net réexaminera ensuite les commandes, le stock et les apports
-        réellement attendus.
-      source_refs:
-      - U1094
-    reading_order: 3
-  source_refs:
-  - U1079
-  - U1080
-  - U1086
-  - U1094
-  source_locator:
-    path: connaissance/01-contributions-utilisateur.md
-    anchor: u1079
-  review:
-    state: partial
-    note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
-      sans réalisation installée déduite.
-  last_modified: '2026-10-15T00:00:00Z'
 - id: supply-plan-development
   revision: 5
   kind: capability
@@ -58964,9 +58784,9 @@ nodes:
       hypothèses, dates, provenance et statut ; signaler les capacités incertaines et les écarts à instruire. Les commandes
       et apports fermes restent identifiés, mais leur déduction du stock courant pour établir les besoins nets relève de [Master
       Planning](model:D05.f). Une contribution externe conserve sa version et son statut. Réviser ce scénario lorsque la demande
-      ou les contraintes évoluent ; [Planning Reconciliation](model:ba-planning-reconciliation) confronte les versions. Une
-      proposition n’affermit ni achat ni transfert. MAP porte la planification et le carnet d’achat dans l’existant ; aucun
-      transfert installé n’est déduit.
+      ou les contraintes évoluent ; [Planning Scenario Reconciliation](model:planning-scenario-reconciliation) confronte les
+      versions. Une proposition n’affermit ni achat ni transfert. MAP porte la planification et le carnet d’achat dans l’existant
+      ; aucun transfert installé n’est déduit.
     nature: decision
     market_comparisons:
     - vendor: Microsoft
@@ -59119,101 +58939,6 @@ nodes:
     state: proposed
     note: Décomposition proposée à la demande de profondeur U1079 ; nom, définition, frontière et comparaison restent à revoir.
       Aucune réalisation installée déduite.
-  last_modified: '2026-10-15T00:00:00Z'
-- id: ba-planning-reconciliation
-  revision: 6
-  kind: business_area
-  fields:
-    name: Planning Reconciliation
-    definition: '[Planning Reconciliation](glossary:TER364) : rapprocher les plans de demande et d’approvisionnement, puis
-      faire instruire leurs écarts et hypothèses avant de retenir une version cohérente.'
-    finality: Comparer les scénarios et rapprocher les plans de demande et de ressources.
-    scope: 'Comparer les versions du [Demand Plan](glossary:TER099) et du [Supply Plan](glossary:TER098) à l’horizon prévisionnel
-      : volumes, dates, contraintes et hypothèses. Rendre visibles les écarts, les ressources à préparer et les arbitrages
-      à soumettre aux métiers concernés. [Simulation & Analysis](model:BHV006) chiffre les alternatives ; la réconciliation
-      qualifie la cohérence et le statut de la version retenue. Le calcul des besoins nets à partir du stock et des réceptions
-      à date relève de [Master Plan Management](model:ba-master-plan-management) ; les affectations du carnet et les engagements
-      restent chez leurs responsables.'
-    market_comparisons:
-    - vendor: SAP
-      product: SAP S/4HANA Production Planning
-      element_name: Introducing Predictive MRP (pMRP)
-      element_type: Périmètre fonctionnel ou processus produit
-      relationship: Recouvrement partiel
-      similarities: Simulations de scénarios selon demande et contraintes de ressources.
-      differences: Le document décrit des fonctions ou processus produit ; FLOW distingue les responsabilités indépendamment
-        des applications. Le regroupement et la maille ne sont pas des équivalents natifs démontrés.
-      flow_position: FLOW rapproche les deux plans et fait instruire leurs écarts ; la simulation compare des options sans
-        retenir seule une version.
-      term_choice: Planning Reconciliation nomme une responsabilité FLOW ; le terme produit ne lui est pas assimilé.
-      definition_choice: Service rendu et frontière métier proposés ; aucune réalisation installée déduite.
-      concept_name: Introducing Predictive MRP (pMRP)
-      scope_summary: Simulations de scénarios selon demande et contraintes de ressources.
-      approach_summary: Appui sélectif à la responsabilité ; aucune transposition de tout le module produit.
-      source_title: Introducing Predictive MRP (pMRP)
-      source_url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/introducing-predictive-mrp-pmrp-
-      source_version: Page évolutive ; édition globale non indiquée
-      consulted_on: '2026-10-15'
-      source_locator: Planning scenarios
-      evidence_limits: Appui à la simulation ; la réconciliation métier de tous les plans FLOW n’est pas démontrée. Aucune
-        réalisation Beaumanoir démontrée.
-      source_refs:
-      - ELM866
-      - CMP312
-      - U974
-      - U1079
-      - ELM912
-      - CMP321
-      status: proposed
-    - vendor: Microsoft
-      product: Dynamics 365 Supply Chain Management
-      element_name: Master plans overview
-      element_type: Périmètre fonctionnel ou processus produit
-      relationship: Recouvrement partiel
-      similarities: Plusieurs plans permettent de simuler des prévisions ou stratégies différentes.
-      differences: Le document décrit des fonctions ou processus produit ; FLOW distingue les responsabilités indépendamment
-        des applications. Le regroupement et la maille ne sont pas des équivalents natifs démontrés.
-      flow_position: FLOW rapproche les deux plans et fait instruire leurs écarts ; la simulation compare des options sans
-        retenir seule une version.
-      term_choice: Planning Reconciliation nomme une responsabilité FLOW ; le terme produit ne lui est pas assimilé.
-      definition_choice: Service rendu et frontière métier proposés ; aucune réalisation installée déduite.
-      concept_name: Master plans overview
-      scope_summary: Plusieurs plans permettent de simuler des prévisions ou stratégies différentes.
-      approach_summary: Appui sélectif à la responsabilité ; aucune transposition de tout le module produit.
-      source_title: Master plans overview
-      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
-      source_version: Page mise à jour 2024-12-12 ; avertissement relatif au catalogue de juillet 2026
-      consulted_on: '2026-10-15'
-      source_locator: Using master plans
-      evidence_limits: Appui aux scénarios de planification ; la réconciliation métier entre domaines n’est pas entièrement
-        décrite. Aucune réalisation Beaumanoir démontrée.
-      source_refs:
-      - ELM864
-      - CMP312
-      - U974
-      - U1079
-      - ELM303
-      - CMP321
-      status: proposed
-    examples:
-    - title: Application indicative
-      situation: 'Illustration fictive : comparer les scénarios et rapprocher les plans de demande et de ressources.'
-      lesson: Le cas illustre le savoir-faire visé ; il ne décrit aucun déploiement Beaumanoir.
-      source_refs:
-      - U1079
-    reading_order: 5
-  source_refs:
-  - U1079
-  - U1080
-  - U1086
-  - U1094
-  source_locator:
-    path: connaissance/01-contributions-utilisateur.md
-    anchor: u1079
-  review:
-    state: partial
-    note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
-      sans réalisation installée déduite.
   last_modified: '2026-10-15T00:00:00Z'
 - id: planning-scenario-reconciliation
   revision: 5
@@ -59874,8 +59599,8 @@ nodes:
       sources, délais ou capacités d’approvisionnement envisageables. Les hypothèses de supply proviennent notamment de [Sourcing
       and Procurement](model:domain-sourcing-procurement) et des contraintes connues ; elles ne valent ni accord fournisseur
       ni commande. Comparer les scénarios, leurs écarts et leurs incertitudes, puis versionner un [Forecast Plan](glossary:TER372)
-      demand/supply. [Demand Plan Management](model:ba-demand-forecast-management) en qualifie une version pour le [Master
-      Plan](model:domain-plan), qui calcule les besoins nets et décide la couverture opérationnelle. [Order Management](model:D04)
+      demand/supply. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) en qualifie une version pour
+      le [Master Plan](model:domain-plan), qui calcule les besoins nets et décide la couverture opérationnelle. [Order Management](model:D04)
       conserve les commandes et engagements ; [Enterprise Planning & Performance](glossary:TER221) conserve les budgets.'
     examples:
     - title: Tester une nouvelle collection et ses ressources
@@ -69872,74 +69597,11 @@ relations:
   review:
     state: proposed
     note: Rattachement de capacité proposé U1079.
-- id: REL-U1079-demand-forecast-development
-  revision: 1
-  type: contains
-  source_id: ba-demand-forecast-management
-  target_id: demand-forecast-development
-  source_refs:
-  - U1079
-  review:
-    state: proposed
-    note: Capacité proposée U1079.
-- id: REL-U1079-supply-plan-development
-  revision: 1
-  type: contains
-  source_id: ba-supply-resource-planning
-  target_id: supply-plan-development
-  source_refs:
-  - U1079
-  review:
-    state: proposed
-    note: Capacité proposée U1079.
-- id: REL-U1079-planning-scenario-reconciliation
-  revision: 1
-  type: contains
-  source_id: ba-planning-reconciliation
-  target_id: planning-scenario-reconciliation
-  source_refs:
-  - U1079
-  review:
-    state: proposed
-    note: Capacité proposée U1079.
 - id: REL-U1080-PRESENTS-planning-optimization
   revision: 1
   type: presents
   source_id: supply-chain-orchestration
   target_id: domain-plan
-  source_refs:
-  - U1080
-  review:
-    state: accepted
-    note: Rattachement explicite validé par Laurent dans le lot U1080 ; descriptions détaillées qualifiées séparément.
-  last_modified: '2026-10-15T00:00:00Z'
-- id: REL-U1080-PARENT-ba-demand-forecast-management
-  revision: 1
-  type: contains
-  source_id: domain-plan
-  target_id: ba-demand-forecast-management
-  source_refs:
-  - U1080
-  review:
-    state: accepted
-    note: Rattachement explicite validé par Laurent dans le lot U1080 ; descriptions détaillées qualifiées séparément.
-  last_modified: '2026-10-15T00:00:00Z'
-- id: REL-U1080-PARENT-ba-supply-resource-planning
-  revision: 1
-  type: contains
-  source_id: domain-plan
-  target_id: ba-supply-resource-planning
-  source_refs:
-  - U1080
-  review:
-    state: accepted
-    note: Rattachement explicite validé par Laurent dans le lot U1080 ; descriptions détaillées qualifiées séparément.
-  last_modified: '2026-10-15T00:00:00Z'
-- id: REL-U1080-PARENT-ba-planning-reconciliation
-  revision: 1
-  type: contains
-  source_id: domain-plan
-  target_id: ba-planning-reconciliation
   source_refs:
   - U1080
   review:
@@ -69980,17 +69642,6 @@ relations:
     state: accepted
     note: Rattachement explicite validé par Laurent dans le lot U1080 ; descriptions détaillées qualifiées séparément.
   last_modified: '2026-10-15T00:00:00Z'
-- id: REL-U1087-demand-plan-development
-  revision: 1
-  type: contains
-  source_id: ba-demand-forecast-management
-  target_id: demand-plan-development
-  source_refs:
-  - U1086
-  - U1087
-  review:
-    state: partial
-    note: U1086 valide une capacité explicite de construction du plan de demande dans Planning & Optimization ; nom proposé.
 - id: REL-U1089-ba-pricing-management-cap-sales-pricing-rule-management
   revision: 1
   type: contains
@@ -70266,10 +69917,10 @@ relations:
     state: proposed
     note: Lien métier de responsabilité, non flux technique.
 - id: REL-U1101-forecast-to-demand-plan
-  revision: 1
+  revision: 2
   type: shares-data
   source_id: subdomain-demand-supply-forecasting
-  target_id: ba-demand-forecast-management
+  target_id: ba-demand-supply-plan-preparation
   fields:
     label: Forecast Plan demand/supply
     data_exchange:
@@ -70282,8 +69933,8 @@ relations:
         - TER373
       purpose: Qualifier une version des scénarios demand/supply pour le plan de demande et le Master Plan opérationnel.
   qualification:
-    meaning: Demand & Supply Forecasting garde l’autorité sur le Forecast Plan ; Demand Plan Management en qualifie l’emploi
-      opérationnel.
+    meaning: Demand & Supply Forecasting garde l’autorité sur le Forecast Plan ; Demand & Supply Plan Preparation en qualifie
+      l’emploi opérationnel.
     conditions:
     - Identifier la version, le produit, le canal, le lieu, la période et le statut de la prévision.
     - Signaler les écarts et demander une révision à Design & Development si nécessaire.
@@ -70295,6 +69946,7 @@ relations:
   source_refs:
   - U1099
   - U1101
+  - U1103
   review:
     state: partial
     note: Frontière demand/supply amont demandée U1099–U1101 ; contenu détaillé de l’échange proposé, sans réalisation installée.
@@ -70309,6 +69961,61 @@ relations:
   review:
     state: partial
     note: Sous-domaine distinct du design produit proposé U1099–U1101.
+- id: REL-U1103-PARENT-ba-demand-supply-plan-preparation
+  revision: 1
+  type: contains
+  source_id: domain-plan
+  target_id: ba-demand-supply-plan-preparation
+  source_refs:
+  - U1103
+  review:
+    state: accepted
+    note: Regroupement validé par Laurent U1103.
+  last_modified: '2026-10-16T00:00:00Z'
+- id: REL-U1103-demand-forecast-development
+  revision: 1
+  type: contains
+  source_id: ba-demand-supply-plan-preparation
+  target_id: demand-forecast-development
+  source_refs:
+  - U1103
+  review:
+    state: accepted
+    note: Rattachement dans la Business Area de préparation validé U1103.
+  last_modified: '2026-10-16T00:00:00Z'
+- id: REL-U1103-demand-plan-development
+  revision: 1
+  type: contains
+  source_id: ba-demand-supply-plan-preparation
+  target_id: demand-plan-development
+  source_refs:
+  - U1103
+  review:
+    state: accepted
+    note: Rattachement dans la Business Area de préparation validé U1103.
+  last_modified: '2026-10-16T00:00:00Z'
+- id: REL-U1103-supply-plan-development
+  revision: 1
+  type: contains
+  source_id: ba-demand-supply-plan-preparation
+  target_id: supply-plan-development
+  source_refs:
+  - U1103
+  review:
+    state: accepted
+    note: Rattachement dans la Business Area de préparation validé U1103.
+  last_modified: '2026-10-16T00:00:00Z'
+- id: REL-U1103-planning-scenario-reconciliation
+  revision: 1
+  type: contains
+  source_id: ba-demand-supply-plan-preparation
+  target_id: planning-scenario-reconciliation
+  source_refs:
+  - U1103
+  review:
+    state: accepted
+    note: Rattachement dans la Business Area de préparation validé U1103.
+  last_modified: '2026-10-16T00:00:00Z'
 alternatives: []
 principles:
 - id: PRINCIPLE-REFERENCE-PROJECTIONS
@@ -73939,6 +73646,7 @@ scenario_catalog:
       et autorités.
     source_refs:
     - U1087
+    - U1103
     review:
       state: proposed
       note: Histoire fictive de vérification demandée par Laurent ; aucun fait installé Beaumanoir.
@@ -78057,13 +77765,13 @@ scenario_catalog:
       selon autorité, et le reste non couvert demeure visible.
     steps:
     - id: forecast
-      title: Calculer la prévision
-      description: Calculer 100 pièces prévues pour la période et conserver hypothèses et version. La prévision est préparée
-        par Demand Plan Management avant le calcul net du Master Plan.
-      outcome: Prévision versionnée de 100 pièces.
+      title: Qualifier la prévision
+      description: Recevoir une prévision de 100 pièces produite dans Design & Development, puis qualifier sa version et son
+        emploi opérationnel avant le calcul net du Master Plan.
+      outcome: Prévision de 100 pièces qualifiée pour le plan opérationnel.
       contributions:
       - node_id: demand-forecast-development
-        role: Calculer et versionner la prévision.
+        role: Qualifier la prévision reçue et sa version source.
       inputs:
       - Hypothèses commerciales et faits disponibles, avec provenance.
     - id: demand
@@ -78205,6 +77913,7 @@ scenario_catalog:
     - U1087
     - U1091
     - U1094
+    - U1103
     review:
       state: proposed
       note: Parcours fictif enrichi U1091 ; Demand Plan Development applique la règle autorisée de consommation, dont les

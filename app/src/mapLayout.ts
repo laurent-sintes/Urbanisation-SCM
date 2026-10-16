@@ -39,6 +39,7 @@ export function chooseMapGrid(
   group = false,
   measure?: (cardWidth: number) => readonly GridSection[],
   slots?: readonly MapSlot[],
+  stretchSpanningRows = false,
 ): MapGrid {
   if (slots && sections.length === 1) {
     const columns = 2;
@@ -122,8 +123,8 @@ export function chooseMapGrid(
           const rowHeight = Math.max(...entries.map((entry) => entry.height));
           return entries.map((entry) => ({
             ...entry,
-            // A spanning item starts a new visual group; its shorter neighbour stays compact.
-            displayHeight: entries.some((item) => item.span > 1) ? entry.height : rowHeight,
+            // Domain cards share a row height even when one spans two columns.
+            displayHeight: !stretchSpanningRows && entries.some((item) => item.span > 1) ? entry.height : rowHeight,
           }));
         });
       });

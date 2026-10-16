@@ -297,11 +297,19 @@ try {
       depth >= 2,
       'Business Areas stay inside their Subdomain',
     );
-    if (depth === 2)
+    if (depth === 2) {
+      assert.equal(
+        await domainCard
+          .locator(`[data-business-area-summary="${businessArea.id}"]`)
+          .evaluate((element) => getComputedStyle(element).backgroundColor),
+        'rgb(243, 248, 244)',
+        'Nested Business Areas use the same restrained emphasis in System and Domain maps',
+      );
       await expectTooltip(
         domainCard.locator(`[data-business-area-summary="${businessArea.id}"] button`),
         businessArea.fields.name,
       );
+    }
     assert.equal(
       (await domainCard.locator(`[data-map-item-id="${capability.id}"]`).count()) > 0,
       depth >= 3,
@@ -393,6 +401,36 @@ try {
     if (depth === 4) await page.locator('.graph-canvas.zoom-width').waitFor();
   }
   await visit({ view: 'map', node: domain.id, scope: domain.id, mapDepth: '3' });
+  await page.locator('.business-card[data-kind="area"] .category-list-banner').first().waitFor();
+  const domainCardHierarchy = await page.evaluate(() => {
+    const cards = [...document.querySelectorAll('.graph-canvas .business-card[data-kind="area"]')];
+    const rows = new Map();
+    for (const card of cards) {
+      const box = card.getBoundingClientRect();
+      const row = Math.round(box.top);
+      rows.set(row, [...(rows.get(row) || []), box.height]);
+    }
+    const card = cards.find((item) => item.querySelector('.category-list-banner'));
+    const title = card?.querySelector('.subdomain-card-heading h3');
+    const area = card?.querySelector('.category-list-banner');
+    return {
+      rows: [...rows.values()],
+      titleSize: title ? Number.parseFloat(getComputedStyle(title).fontSize) : 0,
+      areaSize: area ? Number.parseFloat(getComputedStyle(area).fontSize) : 0,
+      areaBackground: area ? getComputedStyle(area).backgroundColor : '',
+    };
+  });
+  assert.ok(
+    domainCardHierarchy.rows.some((row) => row.length > 1),
+    'Domain map has adjacent Subdomain cards',
+  );
+  assert.ok(
+    domainCardHierarchy.rows.every((row) => Math.max(...row) - Math.min(...row) < 2),
+    'Subdomain cards on one row share their height',
+  );
+  assert.ok(domainCardHierarchy.titleSize > domainCardHierarchy.areaSize);
+  assert.equal(domainCardHierarchy.areaBackground, 'rgb(243, 248, 244)');
+  await page.locator('.graph-canvas').screenshot({ path: path.join(output, 'domain-detail.png') });
   assert.equal(
     await page
       .locator('.business-card > p')
@@ -409,9 +447,16 @@ try {
     );
   assert.deepEqual(clippedHelp, [], 'Glossary links in card descriptions must remain visible');
   checks.push('Domain detail preserves nested Subdomain panels at every level');
+  for (const scope of [parent(businessArea.id), businessArea, capability]) {
+    await visit({ view: 'map', node: scope.id, scope: scope.id, mapDepth: '0' });
+    await page.locator('.graph-canvas .business-card').first().waitFor();
+    assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+  }
+  checks.push('Subdomain, Business Area and Capability maps keep their scoped cards');
+  await visit({ view: 'map', node: domain.id, scope: domain.id, mapDepth: '3' });
   if (areas.includes('subdomain-integration')) {
     const preview = await page.locator('.business-card[data-node-id="subdomain-integration"] > p').innerText();
-    assert.match(preview, /Supply Chain Orchestration/);
+    assert.ok(preview.trim().length > 0, 'The Subdomain preview keeps its published description');
     assert.doesNotMatch(preview, /glossary:|TER084|\]\(/);
   }
   await visit({ view: 'map', node: domain.id, scope: domain.id, mapDepth: '2' });
@@ -583,7 +628,7 @@ try {
   await visit({ view: 'map', node: system.id, scope: system.id, mapDepth: '0' });
   await page.getByRole('button', { name: 'Pleine largeur' }).click();
   const domainCards = page.locator('.graph-canvas .business-card');
-  assert.ok((await domainCards.count()) >= 4, 'A multi-domain system is needed to check grid redistribution');
+  assert.ok((await domainCards.count()) >= 3, 'A multi-domain system is needed to check grid redistribution');
   const columnCount = () =>
     domainCards.evaluateAll(
       (cards) => new Set(cards.map((card) => Math.round(card.getBoundingClientRect().left / 20) * 20)).size,

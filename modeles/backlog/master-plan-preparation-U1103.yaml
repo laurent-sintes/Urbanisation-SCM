@@ -1,0 +1,408 @@
+id: MASTER-PLAN-PREPARATION-U1103
+date: '2026-10-16'
+status: applied_to_backlog
+source_refs:
+- U1102
+- U1103
+decision: Regrouper la qualification de la demande, la préparation du plan d’approvisionnement et le rapprochement des scénarios
+  dans Demand & Supply Plan Preparation. Conserver les capacités et présenter Stock Optimization en dernier sans imposer une
+  séquence d’exécution.
+market_comparison:
+  microsoft: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
+  sap_s4hana: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/d853922bdd584e8e83027e5a0b8122f2/856ebd534f22b44ce10000000a174cb4.html?ai=true
+  limit: Appuis fonctionnels partiels ; aucun éditeur ne fixe les Business Areas FLOW ni ne prouve une réalisation installée.
+publication_delivery:
+  state: applied
+  source_refs:
+  - U1102
+  - U1103
+  summary: Les quatre capacités de préparation sont regroupées dans une Business Area ; Master Plan Management, Order Backlog
+    Management et Stock Optimization suivent dans cet ordre de lecture.
+  required_nodes:
+  - id: ba-demand-supply-plan-preparation
+    kind: business_area
+    parent: domain-plan
+    field_sha256:
+      name: e8fa195d7fb2f0076f0f24a90a427063aa364acfafa3fe36fca1d70e9b809697
+      definition: 0372c817849a79a7ca1d31f1f3721d1725cf0443420001ffdd6f97bb0a131474
+      finality: 42c78f4268620560ffb0911f2ea76dc49d00624d275d515c84c9b4c134b2a1b0
+      scope: 7a40cd2a1f8d0d1c9a80a972c970ffccf432ba5097b9a158a9edb8ccd13f6f94
+      reading_order: 6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b
+      examples: 77fcea094881a379ef6ad5592da452ee8392fb047c3c19072cee4eb899d4ebc8
+      market_comparisons: 1c1b949279eb8eff6d3a427861a47d8bc76a01d4b605e8632925b882024a87e1
+  - id: ba-master-plan-management
+    field_sha256:
+      reading_order: d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35
+  - id: ba-order-backlog-management
+    field_sha256:
+      reading_order: 4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce
+  - id: ba-physical-stock-configuration-optimization
+    field_sha256:
+      reading_order: 4b227777d4dd1fc61c6f884f48641d02b4d121d3fd328cb08b5531fcacdabf8a
+  - id: demand-forecast-development
+    parent: ba-demand-supply-plan-preparation
+  - id: demand-plan-development
+    parent: ba-demand-supply-plan-preparation
+  - id: domain-plan
+    field_sha256:
+      scope: b8b1d30edd19e6bab27b34eda7c780a905094ce34c167f3f9a81015886d450c0
+  - id: domain-product-portfolio-collection
+    field_sha256:
+      scope: c7d328680dca3eedf8fbf390a5350a6abd3fea657a3b1d3e5b79f4fd6fb35273
+      market_comparisons: a7ca3b608dab70ea0eca1bc6f2e777df66ebaf2f83bfd28d5124c16bb4ac4cba
+  - id: planning-scenario-reconciliation
+    parent: ba-demand-supply-plan-preparation
+  - id: subdomain-demand-supply-forecasting
+    field_sha256:
+      scope: 5687de1307f13c6064a4e1e11ff1391369bbfe7733cffbffd67ff0d652187b5a
+  - id: supply-plan-development
+    parent: ba-demand-supply-plan-preparation
+    field_sha256:
+      scope: 565c31a37c7f15caa3eca220292d43160f1b0c7e854adaf33689b4b40202d3a5
+  required_relations:
+  - id: REL-U1101-forecast-to-demand-plan
+    target_id: ba-demand-supply-plan-preparation
+    type: shares-data
+    source_id: subdomain-demand-supply-forecasting
+  - id: REL-U1103-PARENT-ba-demand-supply-plan-preparation
+    type: contains
+    source_id: domain-plan
+    target_id: ba-demand-supply-plan-preparation
+  - id: REL-U1103-demand-forecast-development
+    type: contains
+    source_id: ba-demand-supply-plan-preparation
+    target_id: demand-forecast-development
+  - id: REL-U1103-demand-plan-development
+    type: contains
+    source_id: ba-demand-supply-plan-preparation
+    target_id: demand-plan-development
+  - id: REL-U1103-planning-scenario-reconciliation
+    type: contains
+    source_id: ba-demand-supply-plan-preparation
+    target_id: planning-scenario-reconciliation
+  - id: REL-U1103-supply-plan-development
+    type: contains
+    source_id: ba-demand-supply-plan-preparation
+    target_id: supply-plan-development
+  required_glossary:
+  - id: TER098
+    field_sha256:
+      context: ee9ad156af0ea0dd7e30a01ec46a4453f4aad004e65df79a2c4457f7bf867b71
+  - id: TER111
+    field_sha256:
+      context: b8b1d30edd19e6bab27b34eda7c780a905094ce34c167f3f9a81015886d450c0
+  - id: TER206
+    field_sha256:
+      context: c7d328680dca3eedf8fbf390a5350a6abd3fea657a3b1d3e5b79f4fd6fb35273
+      market_comparisons: a7ca3b608dab70ea0eca1bc6f2e777df66ebaf2f83bfd28d5124c16bb4ac4cba
+  - id: TER219
+    field_sha256:
+      context: 6eba95749ec1e0d14678697150612cda25bd2773c1259544b86e73063d4833b8
+      market_comparisons: eb47821522c86f37f1da6dc8dee42dd20aa89da3bca635195638e06d93571846
+  - id: TER360
+    field_sha256:
+      context: d7c7d2593da029bf08c50e62226e88fcd442ca3789fb53e9bf4f951ab46ac358
+      definition: 252eeeb5713a61969578b4da584875335ebcac9b56bbe4420cbac670fce0db5f
+      short_description: 4f77e09fe62d6747da44360704cfd6ccf6c2bffce6bebe259d228bafb5fdce21
+  - id: TER361
+    field_sha256:
+      context: 6b8fd0885361c1aa11982622a07961aa697196d6cd27cd100693462c838ecbf1
+  - id: TER362
+    field_sha256:
+      definition: 252eeeb5713a61969578b4da584875335ebcac9b56bbe4420cbac670fce0db5f
+      short_description: 4f77e09fe62d6747da44360704cfd6ccf6c2bffce6bebe259d228bafb5fdce21
+      context: d7c7d2593da029bf08c50e62226e88fcd442ca3789fb53e9bf4f951ab46ac358
+  - id: TER363
+    field_sha256:
+      context: 2c7defadeaa087858f5fbc9b7d2b061fe69e356ac3c3b04a33852787461dc92d
+  - id: TER364
+    field_sha256:
+      context: d7c7d2593da029bf08c50e62226e88fcd442ca3789fb53e9bf4f951ab46ac358
+      definition: 252eeeb5713a61969578b4da584875335ebcac9b56bbe4420cbac670fce0db5f
+      short_description: 4f77e09fe62d6747da44360704cfd6ccf6c2bffce6bebe259d228bafb5fdce21
+  - id: TER365
+    field_sha256:
+      context: 94ae1ac89f9c92c052c5b6d847a150ba0c75e568d316abfb15c7efb53d2b93fa
+  - id: TER366
+    field_sha256:
+      context: a0310beb30834133ab7dfe7a8f01269126fbf83a818244fce7572004c538ddab
+  - id: TER374
+    field_sha256:
+      name: e8fa195d7fb2f0076f0f24a90a427063aa364acfafa3fe36fca1d70e9b809697
+      definition: 39c329c5305f05618f1a42f5a169c559333c73ff2121a2583b81b42d3d500fee
+      short_description: 46f180e8b29364e4ce8472be1e1ce8d2b784624d5a4dbfa3d57b1a24eb21aafb
+      context: cce7a87eb75b6b9603840f5405d364622c2ffd701ba530d39026d5398eff9212
+  required_catalog:
+  - collection: application_products
+    id: product-akolade
+    content_sha256: c835707d269244886f200d66d1e0fb7810d6263e98f857cfe5661d010ff1362b
+  - collection: scenarios
+    id: forecast-to-shortage-arbitration
+    content_sha256: c9fd68f67ba17cf54a137b5982446960e63dbe169f9d08539564bedd45c335fc
+  - collection: paths
+    id: forecast-to-shortage-arbitration-path
+    content_sha256: c46807e7c1954bf09506d573875ed85d1d076fec3b76628048ae069fa7f003a9
+  absent_nodes:
+  - ba-demand-forecast-management
+  - ba-planning-reconciliation
+  - ba-supply-resource-planning
+  absent_relations:
+  - REL-U1079-demand-forecast-development
+  - REL-U1079-planning-scenario-reconciliation
+  - REL-U1079-supply-plan-development
+  - REL-U1080-PARENT-ba-demand-forecast-management
+  - REL-U1080-PARENT-ba-planning-reconciliation
+  - REL-U1080-PARENT-ba-supply-resource-planning
+  - REL-U1087-demand-plan-development
+  supersedes_requirements:
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-planning-reconciliation
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-supply-resource-planning
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: demand-forecast-development
+    fields:
+    - parent
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: planning-scenario-reconciliation
+    fields:
+    - parent
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: supply-plan-development
+    fields:
+    - parent
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: relations
+    id: REL-U1079-demand-forecast-development
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: relations
+    id: REL-U1079-planning-scenario-reconciliation
+    fields:
+    - exists
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: relations
+    id: REL-U1079-supply-plan-development
+    fields:
+    - exists
+  - annex: business-operations-global-application-U1091.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - exists
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER366
+    fields:
+    - context
+  - annex: collection-strategic-planning-U1093.yaml
+    collection: application_products
+    id: product-akolade
+    fields:
+    - content_sha256
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - exists
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - scope
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: nodes
+    id: domain-product-portfolio-collection
+    fields:
+    - market_comparisons
+    - scope
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: nodes
+    id: subdomain-demand-supply-forecasting
+    fields:
+    - scope
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: relations
+    id: REL-U1101-forecast-to-demand-plan
+    fields:
+    - target_id
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - context
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: terms
+    id: TER206
+    fields:
+    - context
+    - market_comparisons
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: terms
+    id: TER360
+    fields:
+    - context
+  - annex: demand-supply-forecasting-boundary-U1101.yaml
+    collection: terms
+    id: TER361
+    fields:
+    - context
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: nodes
+    id: ba-planning-reconciliation
+    fields:
+    - exists
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: nodes
+    id: ba-supply-resource-planning
+    fields:
+    - exists
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: nodes
+    id: supply-plan-development
+    fields:
+    - scope
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: terms
+    id: TER098
+    fields:
+    - context
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: terms
+    id: TER362
+    fields:
+    - definition
+    - short_description
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: terms
+    id: TER363
+    fields:
+    - context
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - exists
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER219
+    fields:
+    - context
+    - market_comparisons
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER360
+    fields:
+    - definition
+    - short_description
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER362
+    fields:
+    - context
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER364
+    fields:
+    - context
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - exists
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: ba-planning-reconciliation
+    fields:
+    - exists
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: ba-supply-resource-planning
+    fields:
+    - exists
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: nodes
+    id: demand-plan-development
+    fields:
+    - parent
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: relations
+    id: REL-U1087-demand-plan-development
+    fields:
+    - exists
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER364
+    fields:
+    - definition
+    - short_description
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: terms
+    id: TER365
+    fields:
+    - context
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: ba-demand-forecast-management
+    fields:
+    - exists
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - reading_order
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: ba-planning-reconciliation
+    fields:
+    - exists
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: ba-supply-resource-planning
+    fields:
+    - exists
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: relations
+    id: REL-U1080-PARENT-ba-demand-forecast-management
+    fields:
+    - exists
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: relations
+    id: REL-U1080-PARENT-ba-planning-reconciliation
+    fields:
+    - exists
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: relations
+    id: REL-U1080-PARENT-ba-supply-resource-planning
+    fields:
+    - exists
+  - annex: semantic-coherence-audit-U1020.yaml
+    collection: nodes
+    id: ba-master-plan-management
+    fields:
+    - reading_order
+  - annex: planning-backlog-calculation-story-U1087.yaml
+    collection: scenarios
+    id: forecast-to-shortage-arbitration
+    fields:
+    - content_sha256
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: paths
+    id: forecast-to-shortage-arbitration-path
+    fields:
+    - content_sha256

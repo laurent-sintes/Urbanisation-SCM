@@ -1,6 +1,6 @@
 schema_version: 1.0.0
 model_id: flow-urbanism
-version: 2026-10-16.1
+version: 2026-10-16.2
 as_of: '2026-10-16'
 space: backlog
 display_policy: typed-tree-v1
@@ -2537,16 +2537,17 @@ application_catalog:
       - U1093
     - id: offer-akolade-demand-forecast
       component_id: akolade-previsions
-      node_id: ba-demand-forecast-management
+      node_id: ba-demand-supply-plan-preparation
       role: contributes
       evidence_state: documented
       note: Prévisions par produit, région et canal ; intégration possible à étudier, sans réalisation installée.
       source_url: https://www.seilks.com/modules/construction-offre/
       source_refs:
       - U1093
+      - U1103
     - id: offer-akolade-supply-plan
       component_id: akolade-plan-achats
-      node_id: ba-supply-resource-planning
+      node_id: ba-demand-supply-plan-preparation
       role: contributes
       evidence_state: documented
       note: Plan d’achats tenant compte des prévisions, stocks et contraintes fournisseurs ; ne démontre pas une couverture
@@ -2554,6 +2555,7 @@ application_catalog:
       source_url: https://www.seilks.com/modules/plan-achats/
       source_refs:
       - U1093
+      - U1103
   selections:
   - id: selection-elastic-historique
     context_id: beaumanoir-historique
@@ -3688,7 +3690,7 @@ nodes:
   last_modified: '2026-10-15T15:36:23.966348Z'
   content_sha256: 1c6405d2cec3386ae24d7b565a97d7bc8d24625e9763ed56a143b21dc7e74cde
 - id: domain-plan
-  revision: 9
+  revision: 10
   kind: area
   fields:
     name: Master Plan
@@ -3697,11 +3699,10 @@ nodes:
     finality: Produire et réviser un plan opérationnel cohérent de couverture des besoins nets et des demandes en concurrence.
     scope: '[Sous-domaine](method:MOD038) de [Supply Chain Orchestration](model:supply-chain-orchestration). [Demand & Supply
       Forecasting](model:subdomain-demand-supply-forecasting) possède le [Forecast Plan](glossary:TER372) des produits dans
-      [Design & Development](glossary:TER105). [Demand Plan Management](model:ba-demand-forecast-management) qualifie cette
-      prévision pour l’exploitation opérationnelle et distingue les commandes connues de la prévision résiduelle. [Supply
-      Resource Planning](model:ba-supply-resource-planning) projette les apports et capacités à préparer ; [Planning Reconciliation](model:ba-planning-reconciliation)
-      confronte les scénarios. [Master Plan Management](model:ba-master-plan-management) calcule les besoins nets à partir
-      de la demande retenue, du stock, des arrivées et des politiques actives. [Order Backlog Management](model:ba-order-backlog-management)
+      [Design & Development](glossary:TER105). [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
+      qualifie la prévision pour l’exploitation opérationnelle, distingue commandes et prévision résiduelle, projette les
+      apports et confronte les scénarios avant le calcul net. [Master Plan Management](model:ba-master-plan-management) calcule
+      les besoins nets à partir de la demande retenue, du stock, des arrivées et des politiques actives. [Order Backlog Management](model:ba-order-backlog-management)
       arbitre les priorités, les affectations et les passages en livraison du carnet dans le même sous-domaine ; ces choix
       alimentent un plan commun versionné. [Stock Optimization](model:ba-physical-stock-configuration-optimization) propose
       des adaptations des stocks. Le calcul, la simulation, la décision humaine et l’automatisation sont des modalités de
@@ -3900,17 +3901,18 @@ nodes:
   - U974
   - U975
   - U976
+  - U1103
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u794
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1080-N-planning-optimization. Note
-      antérieure, qui ne qualifie pas cette révision : « U1080 valide le repositionnement et les frontières proposés ; formulations
-      détaillées et comparaisons marché proposées, sans réalisation installée déduite. »'
-  last_modified: '2026-10-16T08:00:38.749072Z'
-  content_sha256: 002c1307f4592f195d488156f6cbd6ab39bb9f01f3e47cf4f98e4becbb644d82
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1098-MASTER-PLAN-SUBDOMAIN-FINAL-U1101-CONTEXT.
+      Note antérieure, qui ne qualifie pas cette révision : « Rattachement et regroupement des Business Areas validés U1103
+      ; autres descriptions et comparaisons qualifiées séparément. »'
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: 770593b40375f046757fc8883649247c46a0f6ab5e1d557d26338dc9ca6f73ea
 - id: supply-chain-orchestration
   revision: 14
   kind: domain
@@ -39723,7 +39725,7 @@ nodes:
   last_modified: '2026-10-06T10:11:47.750609Z'
   content_sha256: 009e6f0db0ecd7eca42c3fbbbbcbb6824c49a09355f06595ccaef0d3a0c1a968
 - id: ba-master-plan-management
-  revision: 7
+  revision: 8
   kind: business_area
   fields:
     name: Master Plan Management
@@ -41483,7 +41485,7 @@ nodes:
       - U999
       - U1008
       - U1009
-    reading_order: 1
+    reading_order: 2
   source_refs:
   - U1001
   - U1003
@@ -41512,17 +41514,16 @@ nodes:
   - U848
   - U853
   - U999
+  - U1103
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u848
   review:
     state: partial
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : ADOPT-REASSESS-e3b83e80fb1a16ab55d6c57e, ADOPT-REASSESS-f1094584841a76714a686049, ADOPT-REASSESS-da44d3e04b6371fa25c92125.
-      Note antérieure, qui ne qualifie pas cette révision : « U1080 valide le repositionnement et les frontières proposés
-      ; formulations détaillées et comparaisons marché proposées, sans réalisation installée déduite. »'
-  last_modified: '2026-10-16T08:00:38.749072Z'
-  content_sha256: 191323ef861d1d3fbc33bcba142f53baaaff2e9152df093aa4c34b7cf5f72f25
+    note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
+      sans réalisation installée déduite.
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: 7451ef3d624b38b770c3698106782de21f4e42d68641bd944818f3b33b71a755
 - id: ba-order-promising
   revision: 6
   kind: business_area
@@ -41645,7 +41646,7 @@ nodes:
   last_modified: '2026-10-13T09:50:50.476959Z'
   content_sha256: e6cbf93b91c51321a16df00d4f54e58da27f07f50b5816a5c1bb5b261044582f
 - id: ba-physical-stock-configuration-optimization
-  revision: 6
+  revision: 7
   kind: business_area
   fields:
     name: Stock Optimization
@@ -42290,17 +42291,16 @@ nodes:
   - U1019
   - U1020
   - U1080
+  - U1103
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u911
   review:
     state: partial
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : ADOPT-REASSESS-86b7be0e412097df59594333, ADOPT-REASSESS-daeeb5c30de613d6aefc2d81, ADOPT-REASSESS-3a20695c06bea1d33108c541.
-      Note antérieure, qui ne qualifie pas cette révision : « U1080 valide le repositionnement et les frontières proposés
-      ; formulations détaillées et comparaisons marché proposées, sans réalisation installée déduite. »'
-  last_modified: '2026-10-15T15:36:23.966348Z'
-  content_sha256: daf8a72762885d9602612227e3ce4256c58f28723a9f2ba696fdae69461f0c2d
+    note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
+      sans réalisation installée déduite.
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: b81f4c23ac0206b15da3ba2f14fe00d2a09bec6c18c4de5c264efc08ab7f1858
 - id: ba-order-lifecycle-management
   revision: 5
   kind: business_area
@@ -47090,7 +47090,7 @@ nodes:
   last_modified: '2026-10-12T17:34:18.071924Z'
   content_sha256: 28edf10f73029e657a10f86ac4d8b38bf7ea9c04bdf2573b537c08680c47df4c
 - id: domain-product-portfolio-collection
-  revision: 2
+  revision: 3
   kind: domain
   fields:
     name: Product Portfolio & Collection Management
@@ -47101,7 +47101,7 @@ nodes:
       examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les
       produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime demande
       future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-      définit les caractéristiques du produit dans un autre domaine. [Demand Plan Management](model:ba-demand-forecast-management)
+      définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
       qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
       amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
       conserve les objectifs et budgets financiers.
@@ -47126,7 +47126,7 @@ nodes:
         examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les
         produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime
         demande future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-        définit les caractéristiques du produit dans un autre domaine. [Demand Plan Management](model:ba-demand-forecast-management)
+        définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
         qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
         amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
         conserve les objectifs et budgets financiers.
@@ -47162,7 +47162,7 @@ nodes:
         examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les
         produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime
         demande future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-        définit les caractéristiques du produit dans un autre domaine. [Demand Plan Management](model:ba-demand-forecast-management)
+        définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
         qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
         amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
         conserve les objectifs et budgets financiers.
@@ -47198,12 +47198,12 @@ nodes:
     anchor: u975
   review:
     state: partial
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : ADOPT-REASSESS-470357683c71bf94a95df3af. Note antérieure, qui ne qualifie pas cette révision
+    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Le
+      statut éditorial du backlog ne constitue pas une preuve de validation. Note antérieure, qui ne qualifie pas cette révision
       : « Nom, niveau et parent validés U975. U1093 propose de distinguer les hypothèses de collection avant lancement des
       prévisions et besoins nets opérationnels ; texte et correspondances à revoir, sans réalisation installée. »'
-  last_modified: '2026-10-16T08:00:38.749072Z'
-  content_sha256: 57399aaadfd65dc015f2044ee673e3585f336f23bb6e8711673aa1ef62dd38f4
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: fdf844f0acb81171dfaae68f89b6b92a7579f072d4af42438fdb4a5e140ddb13
 - id: subdomain-product-strategy-requirements
   revision: 2
   kind: area
@@ -47438,7 +47438,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1ea9cbd59ed9ba9a50362362.
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1101-COLLECTION-PLANNING-BOUNDARY.
       Note antérieure, qui ne qualifie pas cette révision : « Nom et place historiques U975 conservés. U1099–U1101 distinguent
       la composition de collection des prévisions de demande et de supply ; rédaction détaillée proposée, sans réalisation
       installée déduite. »'
@@ -47702,7 +47702,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1fc80d619996c4551483aa58.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ecbeae1ee9d4b667a663cca8.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -47793,7 +47793,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a512a7c2f92e82b8079cbec1.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f3e6e2a30a818094fe0e4a5d.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -47851,8 +47851,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2fe306c7394e5db1ef15f21b,
-      ADOPT-REASSESS-745c87642901f4eb95d11d92. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ea7cf019f3c1ccee214787c7,
+      ADOPT-REASSESS-d45a137d4c9012ebdb8504d5. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T09:50:50.476959Z'
@@ -47968,7 +47968,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-31570557a2746b12d189a553.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-db609f245bcb69f6e384ba5d.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -48057,7 +48057,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-68e383b8986b1e4891da7a82.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a35eb7b02f1e6168c3fe575e.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -48261,7 +48261,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7bb785255e4ad00cd538269d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0c6037f8498750fa67778a53.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -48350,7 +48350,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3930cab6d4fc38b4144c7d20.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-474d35adaf6ee433304fecd5.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -48408,8 +48408,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f90306cb37387d87b7685750,
-      ADOPT-REASSESS-6f2bf73f92752595376742c3. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f0058b11c4c4e7fa45ae476d,
+      ADOPT-REASSESS-3de87ff582af952a3d538d03. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T09:50:50.476959Z'
@@ -48583,7 +48583,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-93ce7e66b0969631bd5ab47a.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6f651e35db08271040e18c4b.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -48930,7 +48930,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ae552f498bbeab9fe3ca732f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7b3218af6656a03b3dc91688.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -48987,8 +48987,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-097d3ef184a84f59a6017486,
-      ADOPT-REASSESS-cce5a8f7c6c8092fec65efe6. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1edff0435a526790d4d61ae3,
+      ADOPT-REASSESS-7cab7c29c1607c82287bb202. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T09:50:50.476959Z'
@@ -49250,7 +49250,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-071fac7de0c832321756ee0c.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7dbcda72f3128b4c8965b9fc.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -49361,8 +49361,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b20fb13c32e38e31000d8f16,
-      ADOPT-REASSESS-539742e985ecb63ee275fcf2. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-130ed5b6f5e6ed0b851ce68a,
+      ADOPT-REASSESS-c19a98838b52ea4e73a52b4e. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -49471,8 +49471,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-960b6d24add899689fcba59e,
-      ADOPT-REASSESS-cd22dda0800f92cc241598ef. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5138940c8761561bc187e0cc,
+      ADOPT-REASSESS-dc5467e8fb444788045eddd4. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -49581,8 +49581,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-adb2581b86bcaa7412bdf728,
-      ADOPT-REASSESS-ee2612c74c2b51a912e25dee. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-565fb6d11d7d0ad993761db7,
+      ADOPT-REASSESS-0689a4f9c9d4d300a895a01c. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -49691,8 +49691,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-745e6b27f978a2fe9290f024,
-      ADOPT-REASSESS-b59db71fd0a52e37cfa67e88. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b0f2da1ce75e2f0a1e990457,
+      ADOPT-REASSESS-39dc209dd3f1295226c83201. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -49811,7 +49811,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4c6fc4365a64384fcec6458f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0daa989126f001176093e771.
       Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau, parent et frontière du lot validé U975.
       Proposé : Définition détaillée, illustration et correspondances rédigées pour mise en œuvre ; aucune réalisation installée.
       »'
@@ -49922,8 +49922,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fb1eca7d5613b7d4f4a19645,
-      ADOPT-REASSESS-25b122cb8f190bd7037e9552. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-71a278fb273a5045b935d0c4,
+      ADOPT-REASSESS-f3984debbc9a801daa64f31d. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -50147,8 +50147,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9747204608befc3012d95907,
-      ADOPT-REASSESS-7e0b525adf26f7d142356cf2. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-829840b650952ce94ea43225,
+      ADOPT-REASSESS-4c15ea616b70e3ee8443b714. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -50238,8 +50238,8 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fec4d6dbe42a9e3debad5d97,
-      ADOPT-REASSESS-8d9a5c9be447c47fd0bafe9a. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-832f6fbf5cc1cbc586040660,
+      ADOPT-REASSESS-6f1ce9ca4d053a37e3981a5b. Note antérieure, qui ne qualifie pas cette révision : « Validé : Nom, niveau,
       parent et frontière du lot validé U975. Proposé : Définition détaillée, illustration et correspondances rédigées pour
       mise en œuvre ; aucune réalisation installée. »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -51695,7 +51695,7 @@ nodes:
   last_modified: '2026-10-13T09:01:13.717760Z'
   content_sha256: 4969baac2deebbb73d2129bef8f4c8456eb8e5bf5193e834341060db1630b30e
 - id: ba-order-backlog-management
-  revision: 4
+  revision: 5
   kind: business_area
   fields:
     name: Order Backlog Management
@@ -52373,17 +52373,16 @@ nodes:
   - U1020
   - U1080
   - U1098
+  - U1103
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u1019
   review:
     state: partial
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : ADOPT-REASSESS-246ab4255b1994a66d858c89, ADOPT-REASSESS-3f6c200c5b0ea5f3c863c060. Note
-      antérieure, qui ne qualifie pas cette révision : « U1080 valide le repositionnement et les frontières proposés ; formulations
-      détaillées et comparaisons marché proposées, sans réalisation installée déduite. »'
-  last_modified: '2026-10-16T08:00:38.749072Z'
-  content_sha256: 31ab90de4ac98a96dcd1917c532eb06ae1c89bcafbd9fb9fd80b94f57a53bb42
+    note: U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
+      sans réalisation installée déduite.
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: 203ff26f2cb82e4cc555f03c537b00c732c88d3bf1e5049113c34552f57fdd54
 - id: subdomain-retail-commerce
   revision: 2
   kind: area
@@ -54425,7 +54424,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-4751255c4326f209e85a1cdc.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e539498e22bf406e4cc9291a.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -54525,7 +54524,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c6090afb67dc2bd21cc7d928.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-38817770bc78c89222bfcc5a.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -54625,7 +54624,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-631f2ac70020da2f2eb685fa.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-643510c7b49bee55c5af19c6.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -54724,7 +54723,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-19bb9c5562bebd5e5fe11b9e.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e07607576a3894ca6f8d8636.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -54824,7 +54823,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-be8afb07cdd8c65b59893225.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a3cb7e196ef068d95bcd72a8.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -54924,7 +54923,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0a975d81cfae1119ab28dd7b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2215fb260b406782188558df.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -55001,7 +55000,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8e686dbe3ef3125ead2daf85.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-143a8ab7bc887da4b307c6f8.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -55102,7 +55101,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-19098d129db2e007e56ebf2b.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3544a20a6b17e412ac205aeb.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -55197,7 +55196,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c64b92e77530ed11d6a9cd10.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0a327d52c56d32ec8c3fd512.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -55298,7 +55297,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8c27e93c2f190a629652b8e1.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2c438a53ceb37f62238ce715.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -55399,7 +55398,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9b2db373eb2cf631e9a6f8f1.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b7033d2096f4c42875b9211c.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -55532,7 +55531,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3dd0cb2ee90b533fc562490f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-dbf53511026db825456cb465.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -55632,7 +55631,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bf11cbd21ed4550b2b6266a7.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-09c6422a9b3b7cc58798fa1b.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -55930,7 +55929,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-94c1134c5321b37afbbcb057.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-06d7ecddd03505bce4a0980d.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -56029,7 +56028,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7d39f49cb967406e775cc384.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-895925e32cdb7723b6ebc27d.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -56128,7 +56127,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cdf691329efc06397768d2e7.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cfb2bc7a1b9ff24a7500808f.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -56306,7 +56305,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-082cf96469f13a88057c9de6.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1539652ad676f35ea2fd5286.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -56383,7 +56382,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7a33d43ee4e46fecade54e88.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-296354830ce0f59d62ff40f0.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -56584,7 +56583,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-177c576206b8d056ed4b31ef.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-750e91879945e8d0f2f2f193.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -56660,7 +56659,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ed17da0e63da6bf02edfdf82.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7871a6c11bf42994df1a35b6.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -56753,7 +56752,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-9e5475afd3552e40342054eb.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c4f4c914e473103e8807c2d0.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -56852,7 +56851,7 @@ nodes:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-db1fe12a7397afcb748703b4.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a73ad5751b2e209d6dbbe9fd.
       Note antérieure, qui ne qualifie pas cette révision : « Nom, niveau, responsabilité et parent adoptés U1027 ; compléments
       de rédaction proposés, comparaisons partielles et lacunes explicites, aucune réalisation installée. »'
   source_locator:
@@ -59686,105 +59685,88 @@ nodes:
       restent à revoir. Aucune réalisation installée déduite. »'
   last_modified: '2026-10-15T15:36:23.966348Z'
   content_sha256: 93996bb0e1a245502c5f5aac46a74751c046d53a1b3db889684f50c0faad8977
-- id: ba-demand-forecast-management
-  revision: 2
+- id: ba-demand-supply-plan-preparation
+  revision: 1
   kind: business_area
   fields:
-    name: Demand Plan Management
-    definition: '[Demand Plan Management](glossary:TER360) : qualifier la prévision de produit reçue et établir la demande
-      opérationnelle à couvrir en distinguant commandes et prévision résiduelle.'
-    finality: Fournir une demande opérationnelle traçable au calcul des besoins nets.
-    scope: '[Demand Forecast Qualification](model:demand-forecast-development) contrôle la version, la maille, l’horizon,
-      la provenance et l’applicabilité du [Forecast Plan](glossary:TER372) produit dans [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting).
-      Il peut signaler un écart ou demander une révision à Design & Development, sans remplacer sa prévision source. [Demand
-      Plan Development](model:demand-plan-development) construit la demande à couvrir en distinguant commandes identifiées
-      et prévision résiduelle selon les règles de consommation applicables. [Order Management](model:D04) conserve les commandes
-      et engagements. Aucun calcul de demande ne crée une commande ni ne confirme une promesse.'
+    name: Demand & Supply Plan Preparation
+    definition: '[Demand & Supply Plan Preparation](glossary:TER374) : qualifier la demande, préparer les apports envisagés
+      et rapprocher les deux plans avant le calcul des besoins nets.'
+    finality: Fournir au [Master Plan](model:domain-plan) des scénarios de demande et de ressources rapprochés, avec leurs
+      écarts et réserves explicites.
+    scope: '[Demand Forecast Qualification](model:demand-forecast-development) vérifie l’emploi opérationnel du [Forecast
+      Plan](glossary:TER372) produit dans [Design & Development](glossary:TER105). [Demand Plan Development](model:demand-plan-development)
+      établit la demande à couvrir sans compter deux fois commandes et prévision résiduelle. [Supply Plan Development](model:supply-plan-development)
+      projette les besoins bruts et les apports ou transferts envisagés. [Planning Scenario Reconciliation](model:planning-scenario-reconciliation)
+      confronte les versions, explicite les écarts et qualifie la version retenue ou les décisions restant à prendre. [Master
+      Planning](model:D05.f) calcule ensuite les besoins nets avec le stock et les réceptions à date. Les décisions de [Order
+      Backlog Management](model:ba-order-backlog-management) et [Stock Optimization](model:ba-physical-stock-configuration-optimization)
+      peuvent conduire à réviser les scénarios ; cet ordre de lecture ne fixe pas une séquence d’exécution. Les engagements
+      restent dans [Order Management](model:D04) et la prévision source dans [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting).'
+    reading_order: 1
     market_comparisons:
-    - vendor: SAP
-      product: SAP S/4HANA Production Planning
-      element_name: Execute Supply Chain Planning
-      element_type: Périmètre fonctionnel ou processus produit
-      relationship: Recouvrement partiel
-      similarities: Independent requirements and consumption ; forecast demand
-      differences: Le document décrit des fonctions ou processus produit ; FLOW distingue les responsabilités indépendamment
-        des applications. Le regroupement et la maille ne sont pas des équivalents natifs démontrés.
-      flow_position: La prévision de produit est tenue dans Design & Development ; FLOW qualifie une version pour la demande
-        opérationnelle et distingue commandes et prévision résiduelle.
-      term_choice: Demand Plan Management nomme la responsabilité FLOW ; ce regroupement ne correspond pas à un module éditeur
-        unique.
-      definition_choice: La prévision de produit est tenue dans Design & Development ; FLOW qualifie une version pour la demande
-        opérationnelle et distingue commandes et prévision résiduelle.
-      concept_name: Execute Supply Chain Planning
-      scope_summary: Besoins prévisionnels et commandes client, consommation de prévision et calcul des besoins.
-      approach_summary: Appui sélectif à la responsabilité ; aucune transposition de tout le module produit.
-      source_title: Execute Supply Chain Planning
-      source_url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/execute-supply-chain-planning
-      source_version: Page évolutive ; édition globale non indiquée
-      consulted_on: '2026-10-12'
-      source_locator: Independent requirements ; sales order consumption ; MRP
-      evidence_limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
-      source_refs:
-      - ELM866
-      - CMP312
-      - U974
-      - U1079
-      status: proposed
     - vendor: Microsoft
       product: Dynamics 365 Supply Chain Management
-      element_name: Master planning home page
-      element_type: Périmètre fonctionnel ou processus produit
+      source_title: Inventory forecasts
+      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
+      source_version: Documentation en ligne consultée le 2026-10-16
+      source_locator: Inventory forecast ; Use forecasts with master planning
+      consulted_on: '2026-10-16'
+      concept_name: Inventory forecasts
+      element_name: Demand and supply forecasts
+      element_type: Fonctions de planification documentées
       relationship: Recouvrement partiel
-      similarities: Independent requirements and consumption ; forecast demand
-      differences: Le document décrit des fonctions ou processus produit ; FLOW distingue les responsabilités indépendamment
-        des applications. Le regroupement et la maille ne sont pas des équivalents natifs démontrés.
-      flow_position: La prévision de produit est tenue dans Design & Development ; FLOW qualifie une version pour la demande
-        opérationnelle et distingue commandes et prévision résiduelle.
-      term_choice: Demand Plan Management nomme la responsabilité FLOW ; ce regroupement ne correspond pas à un module éditeur
-        unique.
-      definition_choice: La prévision de produit est tenue dans Design & Development ; FLOW qualifie une version pour la demande
-        opérationnelle et distingue commandes et prévision résiduelle.
-      concept_name: Master planning home page
-      scope_summary: Équilibrer besoins et ressources et produire des propositions, distinctes des commandes affermies.
-      approach_summary: Appui sélectif à la responsabilité ; aucune transposition de tout le module produit.
-      source_title: Master planning home page
-      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
-      source_version: Page mise à jour 2026-03-26
-      consulted_on: '2026-10-12'
-      source_locator: Net requirements ; forecast planning ; planned orders
-      evidence_limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
-      source_refs:
-      - ELM865
-      - CMP312
-      - U974
-      - U1079
+      similarities: Les prévisions de demande et d’offre sont rapprochées et peuvent alimenter le master plan.
+      differences: Le produit ne prescrit ni une [Business Area](method:MOD039) FLOW ni une capacité autonome de rapprochement
+        des scénarios.
+      flow_position: FLOW regroupe la qualification de la demande, la projection des apports et le rapprochement dans une
+        responsabilité de préparation.
+      evidence_limits: Appui fonctionnel partiel ; aucune taxonomie universelle ni réalisation installée Beaumanoir démontrée.
       status: proposed
-    examples:
-    - title: Des commandes remplacent une partie de la prévision
-      situation: 'Illustration fictive : une prévision de 100 pièces et 60 pièces de commandes identifiées conduisent, si
-        la règle applicable le confirme, à 40 pièces de prévision résiduelle et 100 pièces de demande planifiée.'
-      lesson: Le plan garde les deux origines visibles et évite de compter 160 pièces.
       source_refs:
-      - U1087
-    reading_order: 2
+      - U1102
+      - U1103
+    - vendor: SAP
+      product: SAP S/4HANA 2025 FPS01 Sales & Operations Planning
+      source_title: SOP Distribution Scenario II
+      source_url: https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/d853922bdd584e8e83027e5a0b8122f2/856ebd534f22b44ce10000000a174cb4.html?ai=true
+      source_version: SAP S/4HANA 2025 FPS01 ; consulté le 2026-10-16
+      source_locator: SOP Distribution Scenario II ; étapes 1 à 3
+      consulted_on: '2026-10-16'
+      concept_name: Sales & Operations Planning
+      element_name: Sales and production plan reconciliation
+      element_type: Scénario de planification documenté
+      relationship: Recouvrement partiel
+      similarities: Les plans commerciaux et de production sont rapprochés, puis leurs écarts et contraintes sont instruits.
+      differences: Le scénario SAP porte sur la production ; FLOW couvre aussi achats, autres apports et transferts sans copier
+        cette organisation.
+      flow_position: La préparation FLOW produit des versions rapprochées avant le calcul net et les décisions du carnet.
+      evidence_limits: Appui fonctionnel partiel ; aucune équivalence de structure ni réalisation installée démontrée.
+      status: proposed
+      source_refs:
+      - U1102
+      - U1103
+    examples:
+    - title: Préparer une demande supérieure aux apports envisagés
+      situation: 'Illustration fictive : 300 commandes connues et 700 pièces de prévision résiduelle forment un plan de demande
+        de 1 000 pièces. Le scénario d’approvisionnement envisage 850 pièces à l’horizon considéré.'
+      lesson: La préparation rend visible l’écart de 150 pièces et ses hypothèses. Le [Master Plan](model:domain-plan) calcule
+        ensuite les besoins nets avec le stock et les réceptions fermes ; les responsables du carnet arbitrent les commandes.
+      source_refs:
+      - U1102
+      - U1103
   source_refs:
-  - U1079
-  - U1080
-  - U1086
-  - U1091
-  - U1098
-  - U1101
+  - U1102
+  - U1103
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
-    anchor: u1079
+    anchor: u1103
   review:
     state: partial
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : INT-U1081-N-ba-demand-forecast-management. Note antérieure, qui ne qualifie pas cette
-      révision : « U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché
-      proposées, sans réalisation installée déduite. »'
-  last_modified: '2026-10-16T08:00:38.749072Z'
-  content_sha256: 180cb38e8b1e677c153c5912670df71ec8b8dc8a16881415c9382e073c35d822
+    note: Regroupement, nom et ordre validés U1103 ; rédaction et rapprochements marché proposés, sans réalisation installée
+      déduite.
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: f86b545d774f8e5f69f15dfae5c640bb898220268612d222cc8e0157e584af96
 - id: demand-forecast-development
   revision: 2
   kind: capability
@@ -59884,180 +59866,8 @@ nodes:
       Aucune réalisation installée déduite. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: a345c5922e2bb43f8208e73f4dc08e4c627798d17c2cf22afe36af11c49c34b9
-- id: ba-supply-resource-planning
-  revision: 2
-  kind: business_area
-  fields:
-    name: Supply Resource Planning
-    definition: '[Supply Resource Planning](glossary:TER362) : projeter les besoins bruts et les apports envisagés à partir
-      de la demande prévisionnelle et des contraintes connues.'
-    finality: Préparer un scénario prévisionnel de ressources et d’apports avant le calcul opérationnel des besoins nets.
-    scope: '[Supply Plan Development](model:supply-plan-development) projette, sur l’horizon prévisionnel, les quantités et
-      échéances d’achat, d’autres apports, de transfert et, lorsque pertinent, de capacité à préparer à partir du [Demand
-      Plan](glossary:TER099) et des contraintes connues. Le résultat décrit des besoins bruts et des propositions encore incertaines
-      ; il ne déduit pas à lui seul le besoin net opérationnel du stock et des réceptions fermes. [Planning Reconciliation](model:ba-planning-reconciliation)
-      confronte ce scénario à la demande. [Master Plan Management](model:ba-master-plan-management) reprend les entrées qualifiées
-      avec les commandes, le stock et les apports attendus pour calculer les besoins nets. Une proposition ne devient pas
-      un achat ou un transfert ferme ; [Order Management](model:D04) conserve les engagements. MAP porte dans l’existant la
-      planification et le carnet d’achat ; aucun transfert installé vers FLOW Core n’est déduit.'
-    market_comparisons:
-    - vendor: Microsoft
-      product: Dynamics 365 Supply Chain Management
-      source_title: Master planning home page
-      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
-      source_version: Documentation en ligne consultée le 2026-10-16
-      source_locator: The three main planning processes
-      consulted_on: '2026-10-16'
-      concept_name: Master planning home page
-      element_name: Master planning home page
-      element_type: Processus de planification documenté
-      relationship: Recouvrement partiel
-      similarities: Microsoft distingue les besoins bruts issus des prévisions et les besoins nets du master plan opérationnel.
-      differences: Le module logiciel regroupe plusieurs processus ; FLOW répartit les responsabilités métier entre plusieurs
-        Business Areas.
-      flow_position: FLOW conserve prévision et projection de ressources en amont ; Master Planning calcule les besoins nets
-        opérationnels.
-      evidence_limits: Comparaison fonctionnelle ; ne prouve ni découpage métier universel ni réalisation installée chez Beaumanoir.
-      status: proposed
-      source_refs:
-      - U1094
-      definition_choice: FLOW conserve prévision et projection de ressources en amont ; Master Planning calcule les besoins
-        nets opérationnels.
-      term_choice: Le nom FLOW décrit une responsabilité métier ; le nom du processus éditeur ne fixe pas sa hiérarchie.
-      scope_summary: Microsoft distingue les besoins bruts issus des prévisions et les besoins nets du master plan opérationnel.
-      approach_summary: FLOW conserve prévision et projection de ressources en amont ; Master Planning calcule les besoins
-        nets opérationnels.
-    - vendor: Microsoft
-      product: Dynamics 365 Supply Chain Management
-      source_title: Inventory forecasts
-      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/inventory-forecast
-      source_version: Documentation en ligne consultée le 2026-10-16
-      source_locator: Forecast planning ; demand and supply forecast lines
-      consulted_on: '2026-10-16'
-      concept_name: Inventory forecasts
-      element_name: Inventory forecasts
-      element_type: Processus de planification documenté
-      relationship: Recouvrement partiel
-      similarities: Les prévisions de demande et d’offre alimentent un calcul de besoins bruts et des ordres planifiés.
-      differences: Une prévision peut aussi être sélectionnée comme entrée du master plan ; elle n’est pas exclue de tout
-        calcul net.
-      flow_position: FLOW qualifie la prévision résiduelle retenue avant son éventuelle prise en compte dans les besoins nets.
-      evidence_limits: Comparaison fonctionnelle ; ne prouve ni découpage métier universel ni réalisation installée chez Beaumanoir.
-      status: proposed
-      source_refs:
-      - U1094
-      definition_choice: FLOW qualifie la prévision résiduelle retenue avant son éventuelle prise en compte dans les besoins
-        nets.
-      term_choice: Le nom FLOW décrit une responsabilité métier ; le nom du processus éditeur ne fixe pas sa hiérarchie.
-      scope_summary: Les prévisions de demande et d’offre alimentent un calcul de besoins bruts et des ordres planifiés.
-      approach_summary: FLOW qualifie la prévision résiduelle retenue avant son éventuelle prise en compte dans les besoins
-        nets.
-    - vendor: SAP
-      product: SAP S/4HANA Production Planning
-      source_title: Understanding MRP in SAP S/4HANA
-      source_url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/understanding-mrp-in-sap-s-4hana
-      source_version: Documentation en ligne consultée le 2026-10-16
-      source_locator: Deterministic Planning ; Steps 2 and 3 ; net requirements ; procurement proposals
-      consulted_on: '2026-10-16'
-      concept_name: Understanding MRP in SAP S/4HANA
-      element_name: Understanding MRP in SAP S/4HANA
-      element_type: Processus de planification documenté
-      relationship: Recouvrement partiel
-      similarities: SAP rapproche demandes connues ou prévues, stock disponible et réceptions fermes pour calculer les manques,
-        puis propose un approvisionnement.
-      differences: Le MRP SAP couvre ici matériaux et production ; la maille omnicanale et les décisions de carnet FLOW ne
-        sont pas démontrées par cette source.
-      flow_position: FLOW distingue projection des besoins bruts, calcul des besoins nets et décisions de carnet.
-      evidence_limits: Comparaison fonctionnelle ; ne prouve ni découpage métier universel ni réalisation installée chez Beaumanoir.
-      status: proposed
-      source_refs:
-      - U1094
-      definition_choice: FLOW distingue projection des besoins bruts, calcul des besoins nets et décisions de carnet.
-      term_choice: Le nom FLOW décrit une responsabilité métier ; le nom du processus éditeur ne fixe pas sa hiérarchie.
-      scope_summary: SAP rapproche demandes connues ou prévues, stock disponible et réceptions fermes pour calculer les manques,
-        puis propose un approvisionnement.
-      approach_summary: FLOW distingue projection des besoins bruts, calcul des besoins nets et décisions de carnet.
-    - vendor: SAP
-      product: SAP S/4HANA Production Planning
-      element_name: Execute Supply Chain Planning
-      element_type: Périmètre fonctionnel ou processus produit
-      relationship: Recouvrement partiel
-      similarities: MRP and planned orders ; master planning
-      differences: Le document décrit des fonctions ou processus produit ; FLOW distingue les responsabilités indépendamment
-        des applications. Le regroupement et la maille ne sont pas des équivalents natifs démontrés.
-      flow_position: FLOW calcule un plan d’approvisionnement révisable à partir du plan de demande, du stock et des contraintes,
-        sans affermir seul un achat.
-      term_choice: Supply Resource Planning nomme une responsabilité FLOW ; le terme produit ne lui est pas assimilé.
-      definition_choice: Service rendu et frontière métier proposés ; aucune réalisation installée déduite.
-      concept_name: Execute Supply Chain Planning
-      scope_summary: Besoins prévisionnels et commandes client, consommation de prévision et calcul des besoins.
-      approach_summary: Appui sélectif à la responsabilité ; aucune transposition de tout le module produit.
-      source_title: Execute Supply Chain Planning
-      source_url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/execute-supply-chain-planning
-      source_version: Page évolutive ; édition globale non indiquée
-      consulted_on: '2026-10-12'
-      source_locator: Independent requirements ; sales order consumption ; MRP
-      evidence_limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
-      source_refs:
-      - ELM866
-      - CMP312
-      - U974
-      - U1079
-      status: proposed
-    - vendor: Microsoft
-      product: Dynamics 365 Supply Chain Management
-      element_name: Master planning home page
-      element_type: Périmètre fonctionnel ou processus produit
-      relationship: Recouvrement partiel
-      similarities: MRP and planned orders ; master planning
-      differences: Le document décrit des fonctions ou processus produit ; FLOW distingue les responsabilités indépendamment
-        des applications. Le regroupement et la maille ne sont pas des équivalents natifs démontrés.
-      flow_position: FLOW calcule un plan d’approvisionnement révisable à partir du plan de demande, du stock et des contraintes,
-        sans affermir seul un achat.
-      term_choice: Supply Resource Planning nomme une responsabilité FLOW ; le terme produit ne lui est pas assimilé.
-      definition_choice: Service rendu et frontière métier proposés ; aucune réalisation installée déduite.
-      concept_name: Master planning home page
-      scope_summary: Équilibrer besoins et ressources et produire des propositions, distinctes des commandes affermies.
-      approach_summary: Appui sélectif à la responsabilité ; aucune transposition de tout le module produit.
-      source_title: Master planning home page
-      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
-      source_version: Page mise à jour 2026-03-26
-      consulted_on: '2026-10-12'
-      source_locator: Net requirements ; forecast planning ; planned orders
-      evidence_limits: Appui produit partiel ; ni taxonomie FLOW, ni preuve de réalisation Beaumanoir.
-      source_refs:
-      - ELM865
-      - CMP312
-      - U974
-      - U1079
-      status: proposed
-    examples:
-    - title: Préparer les ressources de la saison
-      situation: 'Illustration fictive : le plan de demande projette 1 000 pièces sur deux mois ; les délais fournisseur conduisent
-        à envisager des achats et transferts avant de connaître toutes les commandes.'
-      lesson: Le scénario prépare les ressources ; le calcul net réexaminera ensuite les commandes, le stock et les apports
-        réellement attendus.
-      source_refs:
-      - U1094
-    reading_order: 3
-  source_refs:
-  - U1079
-  - U1080
-  - U1086
-  - U1094
-  source_locator:
-    path: connaissance/01-contributions-utilisateur.md
-    anchor: u1079
-  review:
-    state: partial
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : INT-U1081-N-ba-supply-resource-planning. Note antérieure, qui ne qualifie pas cette révision
-      : « U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
-      sans réalisation installée déduite. »'
-  last_modified: '2026-10-16T08:00:38.749072Z'
-  content_sha256: c08db435464aa2f958b6c39852c6491a6430a46bb7e64335c56262ba25746615
 - id: supply-plan-development
-  revision: 2
+  revision: 3
   kind: capability
   fields:
     name: Supply Plan Development
@@ -60069,9 +59879,9 @@ nodes:
       hypothèses, dates, provenance et statut ; signaler les capacités incertaines et les écarts à instruire. Les commandes
       et apports fermes restent identifiés, mais leur déduction du stock courant pour établir les besoins nets relève de [Master
       Planning](model:D05.f). Une contribution externe conserve sa version et son statut. Réviser ce scénario lorsque la demande
-      ou les contraintes évoluent ; [Planning Reconciliation](model:ba-planning-reconciliation) confronte les versions. Une
-      proposition n’affermit ni achat ni transfert. MAP porte la planification et le carnet d’achat dans l’existant ; aucun
-      transfert installé n’est déduit.
+      ou les contraintes évoluent ; [Planning Scenario Reconciliation](model:planning-scenario-reconciliation) confronte les
+      versions. Une proposition n’affermit ni achat ni transfert. MAP porte la planification et le carnet d’achat dans l’existant
+      ; aucun transfert installé n’est déduit.
     nature: decision
     market_comparisons:
     - vendor: Microsoft
@@ -60222,110 +60032,10 @@ nodes:
     anchor: u1079
   review:
     state: proposed
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : INT-U1081-N-supply-plan-development. Note antérieure, qui ne qualifie pas cette révision
-      : « Décomposition proposée à la demande de profondeur U1079 ; nom, définition, frontière et comparaison restent à revoir.
-      Aucune réalisation installée déduite. »'
-  last_modified: '2026-10-16T08:00:38.749072Z'
-  content_sha256: cab1a68fa788c2b5c91a9b601a59f25626cdeadb1f4da1ed0698c008614d11b2
-- id: ba-planning-reconciliation
-  revision: 2
-  kind: business_area
-  fields:
-    name: Planning Reconciliation
-    definition: '[Planning Reconciliation](glossary:TER364) : rapprocher les plans de demande et d’approvisionnement, puis
-      faire instruire leurs écarts et hypothèses avant de retenir une version cohérente.'
-    finality: Comparer les scénarios et rapprocher les plans de demande et de ressources.
-    scope: 'Comparer les versions du [Demand Plan](glossary:TER099) et du [Supply Plan](glossary:TER098) à l’horizon prévisionnel
-      : volumes, dates, contraintes et hypothèses. Rendre visibles les écarts, les ressources à préparer et les arbitrages
-      à soumettre aux métiers concernés. [Simulation & Analysis](model:BHV006) chiffre les alternatives ; la réconciliation
-      qualifie la cohérence et le statut de la version retenue. Le calcul des besoins nets à partir du stock et des réceptions
-      à date relève de [Master Plan Management](model:ba-master-plan-management) ; les affectations du carnet et les engagements
-      restent chez leurs responsables.'
-    market_comparisons:
-    - vendor: SAP
-      product: SAP S/4HANA Production Planning
-      element_name: Introducing Predictive MRP (pMRP)
-      element_type: Périmètre fonctionnel ou processus produit
-      relationship: Recouvrement partiel
-      similarities: Simulations de scénarios selon demande et contraintes de ressources.
-      differences: Le document décrit des fonctions ou processus produit ; FLOW distingue les responsabilités indépendamment
-        des applications. Le regroupement et la maille ne sont pas des équivalents natifs démontrés.
-      flow_position: FLOW rapproche les deux plans et fait instruire leurs écarts ; la simulation compare des options sans
-        retenir seule une version.
-      term_choice: Planning Reconciliation nomme une responsabilité FLOW ; le terme produit ne lui est pas assimilé.
-      definition_choice: Service rendu et frontière métier proposés ; aucune réalisation installée déduite.
-      concept_name: Introducing Predictive MRP (pMRP)
-      scope_summary: Simulations de scénarios selon demande et contraintes de ressources.
-      approach_summary: Appui sélectif à la responsabilité ; aucune transposition de tout le module produit.
-      source_title: Introducing Predictive MRP (pMRP)
-      source_url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/introducing-predictive-mrp-pmrp-
-      source_version: Page évolutive ; édition globale non indiquée
-      consulted_on: '2026-10-15'
-      source_locator: Planning scenarios
-      evidence_limits: Appui à la simulation ; la réconciliation métier de tous les plans FLOW n’est pas démontrée. Aucune
-        réalisation Beaumanoir démontrée.
-      source_refs:
-      - ELM866
-      - CMP312
-      - U974
-      - U1079
-      - ELM912
-      - CMP321
-      status: proposed
-    - vendor: Microsoft
-      product: Dynamics 365 Supply Chain Management
-      element_name: Master plans overview
-      element_type: Périmètre fonctionnel ou processus produit
-      relationship: Recouvrement partiel
-      similarities: Plusieurs plans permettent de simuler des prévisions ou stratégies différentes.
-      differences: Le document décrit des fonctions ou processus produit ; FLOW distingue les responsabilités indépendamment
-        des applications. Le regroupement et la maille ne sont pas des équivalents natifs démontrés.
-      flow_position: FLOW rapproche les deux plans et fait instruire leurs écarts ; la simulation compare des options sans
-        retenir seule une version.
-      term_choice: Planning Reconciliation nomme une responsabilité FLOW ; le terme produit ne lui est pas assimilé.
-      definition_choice: Service rendu et frontière métier proposés ; aucune réalisation installée déduite.
-      concept_name: Master plans overview
-      scope_summary: Plusieurs plans permettent de simuler des prévisions ou stratégies différentes.
-      approach_summary: Appui sélectif à la responsabilité ; aucune transposition de tout le module produit.
-      source_title: Master plans overview
-      source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-plans
-      source_version: Page mise à jour 2024-12-12 ; avertissement relatif au catalogue de juillet 2026
-      consulted_on: '2026-10-15'
-      source_locator: Using master plans
-      evidence_limits: Appui aux scénarios de planification ; la réconciliation métier entre domaines n’est pas entièrement
-        décrite. Aucune réalisation Beaumanoir démontrée.
-      source_refs:
-      - ELM864
-      - CMP312
-      - U974
-      - U1079
-      - ELM303
-      - CMP321
-      status: proposed
-    examples:
-    - title: Application indicative
-      situation: 'Illustration fictive : comparer les scénarios et rapprocher les plans de demande et de ressources.'
-      lesson: Le cas illustre le savoir-faire visé ; il ne décrit aucun déploiement Beaumanoir.
-      source_refs:
-      - U1079
-    reading_order: 5
-  source_refs:
-  - U1079
-  - U1080
-  - U1086
-  - U1094
-  source_locator:
-    path: connaissance/01-contributions-utilisateur.md
-    anchor: u1079
-  review:
-    state: partial
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : INT-U1081-N-ba-planning-reconciliation. Note antérieure, qui ne qualifie pas cette révision
-      : « U1080 valide le repositionnement et les frontières proposés ; formulations détaillées et comparaisons marché proposées,
-      sans réalisation installée déduite. »'
-  last_modified: '2026-10-16T08:00:38.749072Z'
-  content_sha256: 5ae4a15822aee07f256d56ed4563169a65077279e72fe8b59cc4a44ace1673c2
+    note: Décomposition proposée à la demande de profondeur U1079 ; nom, définition, frontière et comparaison restent à revoir.
+      Aucune réalisation installée déduite.
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: bc953fab9976a1935078937c05487abdb0a8cdb8f3b25d3a68e04014607989e8
 - id: planning-scenario-reconciliation
   revision: 2
   kind: capability
@@ -60987,7 +60697,7 @@ nodes:
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: f3cafd07232c46ab0ba861a6191e63bac428529cece2848dc8affd8d85e916f7
 - id: subdomain-demand-supply-forecasting
-  revision: 1
+  revision: 2
   kind: area
   fields:
     name: Demand & Supply Forecasting
@@ -61001,8 +60711,8 @@ nodes:
       sources, délais ou capacités d’approvisionnement envisageables. Les hypothèses de supply proviennent notamment de [Sourcing
       and Procurement](model:domain-sourcing-procurement) et des contraintes connues ; elles ne valent ni accord fournisseur
       ni commande. Comparer les scénarios, leurs écarts et leurs incertitudes, puis versionner un [Forecast Plan](glossary:TER372)
-      demand/supply. [Demand Plan Management](model:ba-demand-forecast-management) en qualifie une version pour le [Master
-      Plan](model:domain-plan), qui calcule les besoins nets et décide la couverture opérationnelle. [Order Management](model:D04)
+      demand/supply. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) en qualifie une version pour
+      le [Master Plan](model:domain-plan), qui calcule les besoins nets et décide la couverture opérationnelle. [Order Management](model:D04)
       conserve les commandes et engagements ; [Enterprise Planning & Performance](glossary:TER221) conserve les budgets.'
     examples:
     - title: Tester une nouvelle collection et ses ressources
@@ -61079,8 +60789,8 @@ nodes:
     note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Le
       statut éditorial du backlog ne constitue pas une preuve de validation. Note antérieure, qui ne qualifie pas cette révision
       : « Distinction demand/supply et design produit demandée U1099–U1101 ; libellé et texte détaillé proposés. »'
-  last_modified: '2026-10-16T08:00:38.749072Z'
-  content_sha256: 74fec58264a75269450dfc5182a90e3afa768cd6aaaaad71531f9955b2f2829f
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: 1ddde330a4b84fe4d46c3b9d2b8e57e37242bd0306fce29516f80a2a589b9368
 relations:
 - id: REL-U912-UNIVERSE-system-design-development
   revision: 1
@@ -70746,7 +70456,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1496e675ab0a6fff1ec72304.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5a58872701f4a56ccdd37ad7.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -70775,7 +70485,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fa622c9176eabfdd5a0a33f8.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-883c85be11e38adf0c3af3e2.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -70804,7 +70514,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bc69be0b14043eac8dd0baa5.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-6a80c3ac8ec58a25f34747cf.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -70833,7 +70543,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3faa72c842ed84a7aaede81d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-5ac0ae1bea2bc336c1607405.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -70960,7 +70670,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-465c0d3b42ba35cc44cb3a0f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-0a8cdefd97e181358960d91c.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -70975,7 +70685,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-66b70c64236939f3b910bf41.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-202f9ca53c508c34806aff37.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -70990,7 +70700,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f91ccd0e71f804b23cceb2c0.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-08985fc488e5cc29349a81b4.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -71005,7 +70715,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-dc7a15652f170bbcdef2cd20.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a7458139ed4919dce90addda.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -71048,7 +70758,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2687752ef247b4d0b5a375af.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-483af14530d7e0f9de682458.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -71063,7 +70773,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fdcf1379a3290dd3ead1f50f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e39861a1d5b15604159c20ac.
       Note antérieure, qui ne qualifie pas cette révision : « Rattachement explicite du lot validé U975, sans extension aux
       capacités ou réalisations. »'
   last_modified: '2026-10-12T15:22:12.255422Z'
@@ -72034,7 +71744,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-02bd894add9b5d7a051a1791.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-dce814183a792511e1607a86.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72053,7 +71763,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bbf623c13e7febc0767194f4.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-56284de3d75282dfb4ac9448.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72072,7 +71782,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-49fbfffe1764559d17f083ea.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a8f3048c80601efb426843d0.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72091,7 +71801,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f1001a674f1ab05989c1cedd.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1e6549c2417c5a9b566eaead.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72110,7 +71820,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7c51d659430eba2cbc947236.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c67fc82adf8617647dc4b03a.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72129,7 +71839,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-e07368e2650091628bbc6750.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-62ce6f1453e43c115a523205.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72148,7 +71858,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7111ec5755037e951bee0284.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d967aefbd805a4795baf9938.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72167,7 +71877,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-576b41aa9950d25cbb90ecf9.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-d39838d624b4921f625cec66.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72186,7 +71896,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-b5bd261147c6b0c3f11da773.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-26c4f1d5abe2abce431cafed.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72205,7 +71915,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-fc068ba13a2b82ecccb731a8.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-328f3eccdd651378d8042706.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72224,7 +71934,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-1716b576336581f88f41109f.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-c8f1f1f77f971f553c1d316c.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72243,7 +71953,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-cfc83b50f77793ecc7f0aecd.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-2cb3a6340f6a6980a3e9d426.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72262,7 +71972,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-f4472d874833b70a634960de.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-225ed0c66245bfcae7c8c123.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72353,7 +72063,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-7d285db30dd51c1308add5f8.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-a60afb0c19dafa2ee9dcbec0.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72390,7 +72100,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-28ff675772e3df2cd0055993.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-3b4eee8e3bf360d71fd272e1.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72409,7 +72119,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-8fc80dc8e7e31c52cc535908.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-06c01072e28e7daa291b6bb0.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72464,7 +72174,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-ace925b58ae607415e615b3d.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-bc06f33efab5e7cd06a55d7c.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72501,7 +72211,7 @@ relations:
   review:
     state: accepted
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-08ed3e958757bbdcc66c20b2.
+      validations antérieures suspendues. Validations conservées dans l’historique : ADOPT-REASSESS-46a73b48dbf603125df25468.
       Note antérieure, qui ne qualifie pas cette révision : « Niveau et rattachement explicitement adoptés par le lot U1027.
       »'
   last_modified: '2026-10-13T10:59:42.624441Z'
@@ -72573,7 +72283,7 @@ relations:
   review:
     state: partial
     note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
-      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1081-R-REL-U1079-ba-source-selection-cap.
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1089-PARENT-cap-supplier-offer-selection-U1101-CONTEXT.
       Note antérieure, qui ne qualifie pas cette révision : « Consultation et sélection rattachées au même événement de sourcing
       U1089. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
@@ -72914,48 +72624,6 @@ relations:
       pas cette révision : « Rattachement de capacité proposé U1079. »'
   last_modified: '2026-10-15T15:36:23.966348Z'
   content_sha256: 837e79f1edd7e68a5700493120e7b5e3d425807f515c48c4afbe883eead9099e
-- id: REL-U1079-demand-forecast-development
-  revision: 1
-  type: contains
-  source_id: ba-demand-forecast-management
-  target_id: demand-forecast-development
-  source_refs:
-  - U1079
-  review:
-    state: proposed
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : INT-U1081-R-REL-U1079-demand-forecast-development. Note antérieure, qui ne qualifie pas
-      cette révision : « Capacité proposée U1079. »'
-  last_modified: '2026-10-15T15:36:23.966348Z'
-  content_sha256: cd6e945f07879aa8ab674a5e6a69014e1411ea4dcff28360fcc78ca6f11cd644
-- id: REL-U1079-supply-plan-development
-  revision: 1
-  type: contains
-  source_id: ba-supply-resource-planning
-  target_id: supply-plan-development
-  source_refs:
-  - U1079
-  review:
-    state: proposed
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : INT-U1081-R-REL-U1079-supply-plan-development. Note antérieure, qui ne qualifie pas cette
-      révision : « Capacité proposée U1079. »'
-  last_modified: '2026-10-15T15:36:23.966348Z'
-  content_sha256: 4f7697839cd512c01326db3d663be73b983f102f291cce248589e800eafcdb3a
-- id: REL-U1079-planning-scenario-reconciliation
-  revision: 1
-  type: contains
-  source_id: ba-planning-reconciliation
-  target_id: planning-scenario-reconciliation
-  source_refs:
-  - U1079
-  review:
-    state: proposed
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : INT-U1081-R-REL-U1079-planning-scenario-reconciliation. Note antérieure, qui ne qualifie
-      pas cette révision : « Capacité proposée U1079. »'
-  last_modified: '2026-10-15T15:36:23.966348Z'
-  content_sha256: e4a477d5f4b7021d3edfb7f7ca1bab65ec0d6a572acd8523e025776e26f8c342
 - id: REL-U1080-PRESENTS-planning-optimization
   revision: 1
   type: presents
@@ -72970,48 +72638,6 @@ relations:
       : « Rattachement explicite validé par Laurent dans le lot U1080 ; descriptions détaillées qualifiées séparément. »'
   last_modified: '2026-10-15T15:36:23.966348Z'
   content_sha256: a97bbacddfb6c08d6b6fcdbf65b2aeded4474e2cfb4730191c65d8e158e52d4f
-- id: REL-U1080-PARENT-ba-demand-forecast-management
-  revision: 1
-  type: contains
-  source_id: domain-plan
-  target_id: ba-demand-forecast-management
-  source_refs:
-  - U1080
-  review:
-    state: accepted
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : INT-U1080-R-demand-forecast. Note antérieure, qui ne qualifie pas cette révision : «
-      Rattachement explicite validé par Laurent dans le lot U1080 ; descriptions détaillées qualifiées séparément. »'
-  last_modified: '2026-10-15T15:36:23.966348Z'
-  content_sha256: 7c2e1deedb9c0de0b1d3c65865af199287ed3cd54ed8b7fb8d7299b48974ea0d
-- id: REL-U1080-PARENT-ba-supply-resource-planning
-  revision: 1
-  type: contains
-  source_id: domain-plan
-  target_id: ba-supply-resource-planning
-  source_refs:
-  - U1080
-  review:
-    state: accepted
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : INT-U1080-R-supply-resource. Note antérieure, qui ne qualifie pas cette révision : «
-      Rattachement explicite validé par Laurent dans le lot U1080 ; descriptions détaillées qualifiées séparément. »'
-  last_modified: '2026-10-15T15:36:23.966348Z'
-  content_sha256: 1a45628a859a2124e911dc845c1e410b45cfe046d6910e1e4a49450a8b76e1a8
-- id: REL-U1080-PARENT-ba-planning-reconciliation
-  revision: 1
-  type: contains
-  source_id: domain-plan
-  target_id: ba-planning-reconciliation
-  source_refs:
-  - U1080
-  review:
-    state: accepted
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Validations
-      conservées dans l’historique : INT-U1080-R-reconciliation. Note antérieure, qui ne qualifie pas cette révision : « Rattachement
-      explicite validé par Laurent dans le lot U1080 ; descriptions détaillées qualifiées séparément. »'
-  last_modified: '2026-10-15T15:36:23.966348Z'
-  content_sha256: b58624b39f2c6829a4c39c78011c7f28bd341be6ca7629f1b68b884b5c34d41f
 - id: REL-U1080-PARENT-ba-master-plan-management
   revision: 1
   type: contains
@@ -73055,22 +72681,6 @@ relations:
       « Rattachement explicite validé par Laurent dans le lot U1080 ; descriptions détaillées qualifiées séparément. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: bb5f97174b812429cfc3fca072d8b26d452b3e252baefbac44fb630d083830f2
-- id: REL-U1087-demand-plan-development
-  revision: 1
-  type: contains
-  source_id: ba-demand-forecast-management
-  target_id: demand-plan-development
-  source_refs:
-  - U1086
-  - U1087
-  review:
-    state: partial
-    note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Le
-      statut éditorial du backlog ne constitue pas une preuve de validation. Note antérieure, qui ne qualifie pas cette révision
-      : « U1086 valide une capacité explicite de construction du plan de demande dans Planning & Optimization ; nom proposé.
-      »'
-  last_modified: '2026-10-16T08:00:38.749072Z'
-  content_sha256: 5950206b164e7a0c01bac4c64aa0283dd589f4bef30c61353163761eac31d4f4
 - id: REL-U1089-ba-pricing-management-cap-sales-pricing-rule-management
   revision: 1
   type: contains
@@ -73080,7 +72690,9 @@ relations:
   - U1089
   review:
     state: proposed
-    note: Rattachement proposé dans l’application de l’audit U1088.
+    note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1089-PARENT-cap-sales-pricing-rule-management-U1101-CONTEXT.
+      Note antérieure, qui ne qualifie pas cette révision : « Rattachement proposé dans l’application de l’audit U1088. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: 92940165410cb0c210868e148c55857c9917b2f22cf2b73eb82766ff6f12c70b
 - id: REL-U1089-subdomain-sales-b2c-store-cap-store-checkout-management
@@ -73092,7 +72704,9 @@ relations:
   - U1089
   review:
     state: proposed
-    note: Rattachement proposé dans l’application de l’audit U1088.
+    note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1089-PARENT-cap-store-checkout-management-U1101-CONTEXT.
+      Note antérieure, qui ne qualifie pas cette révision : « Rattachement proposé dans l’application de l’audit U1088. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: c2ae940b6b69421c914cbc41b1d3ae0785f59add8f8d475e6789ad05102f19ee
 - id: REL-U1089-subdomain-store-backoffice-operations-cap-store-order-preparation-handover
@@ -73104,7 +72718,9 @@ relations:
   - U1089
   review:
     state: proposed
-    note: Rattachement proposé dans l’application de l’audit U1088.
+    note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1089-PARENT-cap-store-order-preparation-handover-U1101-CONTEXT.
+      Note antérieure, qui ne qualifie pas cette révision : « Rattachement proposé dans l’application de l’audit U1088. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: dfc9c5eab9b19012ec2b93f7b6b384b84e4ab87b35cb2d9561d23a48fba65e10
 - id: REL-U1089-ba-retail-customer-relationship-management-cap-retail-loyalty-program-management
@@ -73116,7 +72732,9 @@ relations:
   - U1089
   review:
     state: proposed
-    note: Rattachement proposé dans l’application de l’audit U1088.
+    note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1089-PARENT-cap-retail-loyalty-program-management-U1101-CONTEXT.
+      Note antérieure, qui ne qualifie pas cette révision : « Rattachement proposé dans l’application de l’audit U1088. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: f7eae8884c2278c3cb0434adf6174ea512410cd4260d82b158675a9f062ab059
 - id: REL-U1089-ba-wholesale-sales-cap-wholesale-offer-preparation
@@ -73128,7 +72746,9 @@ relations:
   - U1089
   review:
     state: proposed
-    note: Rattachement proposé dans l’application de l’audit U1088.
+    note: 'Seules les décisions applicables à cette version qualifient les champs validés ; elles ne rétablissent pas les
+      validations antérieures suspendues. Validations conservées dans l’historique : INT-U1089-PARENT-cap-wholesale-offer-preparation-U1101-CONTEXT.
+      Note antérieure, qui ne qualifie pas cette révision : « Rattachement proposé dans l’application de l’audit U1088. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: 31e24482636d559a59646ef9f8580956fd5576c6226bf0d4493ec10621f21ada
 - id: REL-U1091-digital-demand-to-sales-order
@@ -73372,10 +72992,10 @@ relations:
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: 15af2868a2576d202fef5c175a3a49b27787a255ea1e923795470294ec0b42f5
 - id: REL-U1101-forecast-to-demand-plan
-  revision: 1
+  revision: 2
   type: shares-data
   source_id: subdomain-demand-supply-forecasting
-  target_id: ba-demand-forecast-management
+  target_id: ba-demand-supply-plan-preparation
   fields:
     label: Forecast Plan demand/supply
     data_exchange:
@@ -73388,8 +73008,8 @@ relations:
         - TER373
       purpose: Qualifier une version des scénarios demand/supply pour le plan de demande et le Master Plan opérationnel.
   qualification:
-    meaning: Demand & Supply Forecasting garde l’autorité sur le Forecast Plan ; Demand Plan Management en qualifie l’emploi
-      opérationnel.
+    meaning: Demand & Supply Forecasting garde l’autorité sur le Forecast Plan ; Demand & Supply Plan Preparation en qualifie
+      l’emploi opérationnel.
     conditions:
     - Identifier la version, le produit, le canal, le lieu, la période et le statut de la prévision.
     - Signaler les écarts et demander une révision à Design & Development si nécessaire.
@@ -73401,14 +73021,15 @@ relations:
   source_refs:
   - U1099
   - U1101
+  - U1103
   review:
     state: partial
     note: 'Aucune validation antérieure reprise pour cette révision ; aucune validation courante applicable enregistrée. Le
       statut éditorial du backlog ne constitue pas une preuve de validation. Note antérieure, qui ne qualifie pas cette révision
       : « Frontière demand/supply amont demandée U1099–U1101 ; contenu détaillé de l’échange proposé, sans réalisation installée.
       »'
-  last_modified: '2026-10-16T08:00:38.749072Z'
-  content_sha256: 35161072ce50721ecd22c20355609a0ee6895209c4ea72694b238221652ea1fc
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: 22012cab2031e40a32a7d25d1a54fc65f079693774baa2cc13488cb46674d213
 - id: REL-U1101-PRESENTS-demand-supply-forecasting
   revision: 1
   type: presents
@@ -73424,6 +73045,66 @@ relations:
       : « Sous-domaine distinct du design produit proposé U1099–U1101. »'
   last_modified: '2026-10-16T08:00:38.749072Z'
   content_sha256: 605732c75010f65d95c136c52205a5bac49dc4ba3ef4e8dd28ebb111ece1f2d7
+- id: REL-U1103-PARENT-ba-demand-supply-plan-preparation
+  revision: 1
+  type: contains
+  source_id: domain-plan
+  target_id: ba-demand-supply-plan-preparation
+  source_refs:
+  - U1103
+  review:
+    state: accepted
+    note: Regroupement validé par Laurent U1103.
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: d8cb5540318efa833951be3b88f20db5b8cf760db618486d599ae75bc81d3d61
+- id: REL-U1103-demand-forecast-development
+  revision: 1
+  type: contains
+  source_id: ba-demand-supply-plan-preparation
+  target_id: demand-forecast-development
+  source_refs:
+  - U1103
+  review:
+    state: accepted
+    note: Rattachement dans la Business Area de préparation validé U1103.
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: dc202de3d5021d26ef6b6b3e2a1dc3c4b7f15e59866bba6eca56abf47ceb3297
+- id: REL-U1103-demand-plan-development
+  revision: 1
+  type: contains
+  source_id: ba-demand-supply-plan-preparation
+  target_id: demand-plan-development
+  source_refs:
+  - U1103
+  review:
+    state: accepted
+    note: Rattachement dans la Business Area de préparation validé U1103.
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: ca835fa6bcfae65a757e8db9a9de883d562c0d0fc7b7218f80ab124de48848d9
+- id: REL-U1103-supply-plan-development
+  revision: 1
+  type: contains
+  source_id: ba-demand-supply-plan-preparation
+  target_id: supply-plan-development
+  source_refs:
+  - U1103
+  review:
+    state: accepted
+    note: Rattachement dans la Business Area de préparation validé U1103.
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: c7af02b32baa1d2f1b1aa1839305a3f8e12cac864b540999d9cc924555ebe1a2
+- id: REL-U1103-planning-scenario-reconciliation
+  revision: 1
+  type: contains
+  source_id: ba-demand-supply-plan-preparation
+  target_id: planning-scenario-reconciliation
+  source_refs:
+  - U1103
+  review:
+    state: accepted
+    note: Rattachement dans la Business Area de préparation validé U1103.
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: 07a38cf7e01d19b1e3af251faba351e621c0f53599fcbea28bf14b8e20c2a8af
 alternatives: []
 principles:
 - id: PRINCIPLE-REFERENCE-PROJECTIONS
@@ -77365,12 +77046,13 @@ scenario_catalog:
       et autorités.
     source_refs:
     - U1087
+    - U1103
     review:
       state: proposed
       note: Histoire fictive de vérification demandée par Laurent ; aucun fait installé Beaumanoir.
-    content_sha256: 080a7e330d4db937b5d9f389c5c2c5bc708aed54628ab5c15f8b4dba02f75627
-    revision: 1
-    last_modified: '2026-10-16T08:00:38.749072Z'
+    content_sha256: c9fd68f67ba17cf54a137b5982446960e63dbe169f9d08539564bedd45c335fc
+    revision: 2
+    last_modified: '2026-10-16T13:15:12.326783Z'
   paths:
   - source_refs:
     - U763
@@ -81625,13 +81307,13 @@ scenario_catalog:
       selon autorité, et le reste non couvert demeure visible.
     steps:
     - id: forecast
-      title: Calculer la prévision
-      description: Calculer 100 pièces prévues pour la période et conserver hypothèses et version. La prévision est préparée
-        par Demand Plan Management avant le calcul net du Master Plan.
-      outcome: Prévision versionnée de 100 pièces.
+      title: Qualifier la prévision
+      description: Recevoir une prévision de 100 pièces produite dans Design & Development, puis qualifier sa version et son
+        emploi opérationnel avant le calcul net du Master Plan.
+      outcome: Prévision de 100 pièces qualifiée pour le plan opérationnel.
       contributions:
       - node_id: demand-forecast-development
-        role: Calculer et versionner la prévision.
+        role: Qualifier la prévision reçue et sa version source.
       inputs:
       - Hypothèses commerciales et faits disponibles, avec provenance.
     - id: demand
@@ -81773,13 +81455,14 @@ scenario_catalog:
     - U1087
     - U1091
     - U1094
+    - U1103
     review:
       state: proposed
       note: Parcours fictif enrichi U1091 ; Demand Plan Development applique la règle autorisée de consommation, dont les
         valeurs restent à définir.
-    content_sha256: cc0a49488bea9c4f5887fc7dbb8a70c1f4ad9a09d289c75e6587dce205b764c5
-    revision: 1
-    last_modified: '2026-10-16T08:00:38.749072Z'
+    content_sha256: c46807e7c1954bf09506d573875ed85d1d076fec3b76628048ae069fa7f003a9
+    revision: 2
+    last_modified: '2026-10-16T13:15:12.326783Z'
   legacy_links:
   - owner_id: supply-chain-orchestration
     legacy_id: b2b-partial-stock
@@ -81879,9 +81562,9 @@ scenario_catalog:
     scenario_id: b2b-partial-stock
     contribution: Évaluer les disponibilités, faisabilités et conséquences économiques des options, puis sélectionner une
       proposition distincte de l’engagement confirmé.
-  content_sha256: 2e134c974cefd0224dfcd248192e116fd08084ee83953f8af2f6c07ebac8c95a
-  revision: 20
-  last_modified: '2026-10-16T08:00:38.749072Z'
+  content_sha256: 31e41587c90fb1f1f85bb527a823e1f3845d7d14c30b4b790a53999505dce760
+  revision: 21
+  last_modified: '2026-10-16T13:15:12.326783Z'
 hotspot_catalog:
   schema_version: 1
   source_refs:
@@ -87185,7 +86868,7 @@ document_catalog:
 glossary:
   schema_version: 1.0.0
   id: flow-glossary
-  as_of: '2026-10-15'
+  as_of: '2026-10-16'
   source_refs:
   - C108
   - CMP096
@@ -87235,6 +86918,8 @@ glossary:
   - U903
   - U904
   - U975
+  - U1102
+  - U1103
   terms:
   - id: TER001
     name: Capacité métier
@@ -103471,7 +103156,7 @@ glossary:
     definition: Scénario versionné des besoins bruts et des approvisionnements ou transferts envisagés sur un horizon prévisionnel,
       avec hypothèses, provenance et statut.
     short_description: Scénario versionné des ressources et apports prévus.
-    context: Le [Supply Plan](glossary:TER098) est préparé par [Supply Resource Planning](model:ba-supply-resource-planning)
+    context: Le [Supply Plan](glossary:TER098) est préparé par [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
       à partir du [Demand Plan](glossary:TER099). [Plan Ingestion](model:plans-ingestion) peut recevoir des contributions
       externes qualifiées. Les achats et transferts restent des propositions. [Master Planning](model:D05.f) calcule séparément
       les besoins nets opérationnels avec les commandes, le stock et les apports réellement attendus ; il peut utiliser ce
@@ -103607,9 +103292,9 @@ glossary:
         appellation ni sa maille.
       definition_choice: Le Supply Plan FLOW est un scénario de ressources amont, versionné et distinct des commandes fermes
         et du Master Plan net.
-    revision: 9
-    last_modified: '2026-10-16T08:00:38.749072Z'
-    content_sha256: 742bd6c147cacf6ac2c819c87c16977f49b698b23d2e63a712cd75df45c4de7b
+    revision: 10
+    last_modified: '2026-10-16T13:15:12.326783Z'
+    content_sha256: db11a486839cbe780db3becbcbe9b475eb89c1e5b289d40167f5c95687aaea28
   - id: TER099
     name: Demand Plan
     definition: Plan versionné de la demande à couvrir, distinguant commandes identifiées et besoin prévisionnel restant,
@@ -105061,11 +104746,10 @@ glossary:
       retenue, y compris commande par commande en pénurie.
     context: '[Sous-domaine](method:MOD038) de [Supply Chain Orchestration](model:supply-chain-orchestration). [Demand & Supply
       Forecasting](model:subdomain-demand-supply-forecasting) possède le [Forecast Plan](glossary:TER372) des produits dans
-      [Design & Development](glossary:TER105). [Demand Plan Management](model:ba-demand-forecast-management) qualifie cette
-      prévision pour l’exploitation opérationnelle et distingue les commandes connues de la prévision résiduelle. [Supply
-      Resource Planning](model:ba-supply-resource-planning) projette les apports et capacités à préparer ; [Planning Reconciliation](model:ba-planning-reconciliation)
-      confronte les scénarios. [Master Plan Management](model:ba-master-plan-management) calcule les besoins nets à partir
-      de la demande retenue, du stock, des arrivées et des politiques actives. [Order Backlog Management](model:ba-order-backlog-management)
+      [Design & Development](glossary:TER105). [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
+      qualifie la prévision pour l’exploitation opérationnelle, distingue commandes et prévision résiduelle, projette les
+      apports et confronte les scénarios avant le calcul net. [Master Plan Management](model:ba-master-plan-management) calcule
+      les besoins nets à partir de la demande retenue, du stock, des arrivées et des politiques actives. [Order Backlog Management](model:ba-order-backlog-management)
       arbitre les priorités, les affectations et les passages en livraison du carnet dans le même sous-domaine ; ces choix
       alimentent un plan commun versionné. [Stock Optimization](model:ba-physical-stock-configuration-optimization) propose
       des adaptations des stocks. Le calcul, la simulation, la décision humaine et l’automatisation sont des modalités de
@@ -105182,9 +104866,9 @@ glossary:
       source_refs:
       - U1080
       - U1094
-    revision: 9
-    last_modified: '2026-10-16T08:00:38.749072Z'
-    content_sha256: f91a73709b6dfda78b120d90387e19207e7487c4e43a01d97b5a2f6bf5f6eb83
+    revision: 10
+    last_modified: '2026-10-16T13:15:12.326783Z'
+    content_sha256: 86c5e5cba78bf0522c31e7cd0a9de1d0b26894a9a6b351e178bae41d1959ad07
   - id: TER112
     name: Availability
     short_description: Établir ce qui peut être promis pour une demande identifiée.
@@ -118673,7 +118357,7 @@ glossary:
       examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les
       produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime demande
       future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-      définit les caractéristiques du produit dans un autre domaine. [Demand Plan Management](model:ba-demand-forecast-management)
+      définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
       qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
       amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
       conserve les objectifs et budgets financiers.
@@ -118702,7 +118386,7 @@ glossary:
         examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les
         produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime
         demande future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-        définit les caractéristiques du produit dans un autre domaine. [Demand Plan Management](model:ba-demand-forecast-management)
+        définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
         qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
         amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
         conserve les objectifs et budgets financiers.
@@ -118738,7 +118422,7 @@ glossary:
         examine tendances, usages et nouveaux canaux. [Collection Planning](model:subdomain-collection-planning) compose les
         produits et jalons de collection ; [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) estime
         demande future, supply envisageable et écarts avant lancement. [Product Design & Specification](model:subdomain-product-design-specification)
-        définit les caractéristiques du produit dans un autre domaine. [Demand Plan Management](model:ba-demand-forecast-management)
+        définit les caractéristiques du produit dans un autre domaine. [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation)
         qualifie une version prévisionnelle pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision
         amont. [Commerce](glossary:TER108) décide les assortiments par canal ; [Enterprise Planning & Performance](glossary:TER221)
         conserve les objectifs et budgets financiers.
@@ -118761,9 +118445,9 @@ glossary:
       - U974
       - U1093
       status: proposed
-    revision: 2
-    last_modified: '2026-10-16T08:00:38.749072Z'
-    content_sha256: 7e5fa8c0014131210a85da24bdbc08d8131b7a3d51a3e6aae1802aaf4a653fc7
+    revision: 3
+    last_modified: '2026-10-16T13:15:12.326783Z'
+    content_sha256: a73977de9402efc6501f56e923bc77c8a720ea6f64c7285e5f34f273f82f2436
   - id: TER207
     name: Product Strategy & Requirements
     short_description: Définir les besoins auxquels les produits doivent répondre et les priorités de l’offre.
@@ -119770,7 +119454,7 @@ glossary:
     context: |-
       Peut produire des propositions d’achat, de production ou de transfert. Le [Supply Plan](glossary:TER098) comprend les achats prévus et les autres apports ou mouvements planifiés ; une proposition ne devient pas une commande ferme. Dans l’existant, MAP porte la planification et le carnet d’achat ; FLOW peut proposer un apport pour satisfaire le carnet via [CTP](glossary:TER045).
 
-      Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Planning](model:ba-supply-resource-planning), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
+      Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Plan Development](model:supply-plan-development), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
     notes: Périmètre de contexte du lot U975. Nom et rattachement validés ; rédaction explicative et comparaisons proposées,
       sans preuve de réalisation.
     source_refs:
@@ -119796,7 +119480,7 @@ glossary:
       flow_position: |-
         Peut produire des propositions d’achat, de production ou de transfert. Le [Supply Plan](glossary:TER098) comprend les achats prévus et les autres apports ou mouvements planifiés ; une proposition ne devient pas une commande ferme. Dans l’existant, MAP porte la planification et le carnet d’achat ; FLOW peut proposer un apport pour satisfaire le carnet via [CTP](glossary:TER045).
 
-        Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Planning](model:ba-supply-resource-planning), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
+        Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Plan Development](model:supply-plan-development), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
       term_choice: Supply Planning nomme le périmètre FLOW discuté ; aucun intitulé commun aux éditeurs ni consensus de taxonomie
         revendiqué.
       definition_choice: Décrire le service rendu et sa frontière ; les textes détaillés restent proposés.
@@ -119825,7 +119509,7 @@ glossary:
       flow_position: |-
         Peut produire des propositions d’achat, de production ou de transfert. Le [Supply Plan](glossary:TER098) comprend les achats prévus et les autres apports ou mouvements planifiés ; une proposition ne devient pas une commande ferme. Dans l’existant, MAP porte la planification et le carnet d’achat ; FLOW peut proposer un apport pour satisfaire le carnet via [CTP](glossary:TER045).
 
-        Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Planning](model:ba-supply-resource-planning), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
+        Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Plan Development](model:supply-plan-development), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
       term_choice: Supply Planning nomme le périmètre FLOW discuté ; aucun intitulé commun aux éditeurs ni consensus de taxonomie
         revendiqué.
       definition_choice: Décrire le service rendu et sa frontière ; les textes détaillés restent proposés.
@@ -119843,9 +119527,9 @@ glossary:
       - CMP312
       - U974
       status: proposed
-    revision: 4
-    last_modified: '2026-10-16T08:00:38.749072Z'
-    content_sha256: b3291a1f4e29d8692c0a2dc5da24c13f18aa197f7b8c62f8435d2ca3663659e9
+    revision: 5
+    last_modified: '2026-10-16T13:15:12.326783Z'
+    content_sha256: 08ba98c7d5cd6ace3e996af446533a18e1485140df58b527ec8c69282474167a
   - id: TER220
     name: Plan Reconciliation & Scenario Management
     short_description: Comparer les scénarios et réconcilier demande, contraintes et objectifs.
@@ -128860,35 +128544,33 @@ glossary:
     content_sha256: 10e9b9c6670eab43dcedb9e38d4fbbe34c69a3f5362734eea257935925f7d22b
   - id: TER360
     name: Demand Plan Management
-    definition: Qualifier la prévision de produit reçue et établir la demande opérationnelle à couvrir en distinguant commandes
-      et prévision résiduelle.
-    short_description: Établir la demande opérationnelle à partir des commandes et de la prévision qualifiée.
-    context: '[Demand Forecast Qualification](model:demand-forecast-development) contrôle la version, la maille, l’horizon,
-      la provenance et l’applicabilité du [Forecast Plan](glossary:TER372) produit dans [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting).
-      Il peut signaler un écart ou demander une révision à Design & Development, sans remplacer sa prévision source. [Demand
-      Plan Development](model:demand-plan-development) construit la demande à couvrir en distinguant commandes identifiées
-      et prévision résiduelle selon les règles de consommation applicables. [Order Management](model:D04) conserve les commandes
-      et engagements. Aucun calcul de demande ne crée une commande ni ne confirme une promesse.'
+    definition: Ancien nom de Business Area regroupé dans Demand & Supply Plan Preparation ; les capacités métier gardent
+      leur identité.
+    short_description: Ancien libellé de périmètre, regroupé dans la préparation des plans.
+    context: Ce libellé reste pour la lecture des sources et publications historiques. Dans le backlog courant, [Demand &
+      Supply Plan Preparation](model:ba-demand-supply-plan-preparation) regroupe les capacités de demande, d’approvisionnement
+      et de rapprochement, sans fusionner leurs résultats.
     source_refs:
     - U1079
     - U1086
     - U1091
     - U1098
     - U1101
+    - U1103
     review:
-      state: proposed
-      note: Proposition de capacité ou de Business Area U1079 ; sans validation de la rédaction ni preuve de réalisation.
+      state: partial
+      note: Ancien libellé conservé comme repère historique ; regroupement validé U1103, rédaction proposée.
     source_locator:
       path: connaissance/01-contributions-utilisateur.md
       anchor: u1079
-    revision: 2
-    last_modified: '2026-10-16T08:00:38.749072Z'
-    content_sha256: c669d20cc20a5ff0fc263bf1f35ab4ee27151516b36bbf78b32b1b3bf6b22b6c
+    revision: 3
+    last_modified: '2026-10-16T13:15:12.326783Z'
+    content_sha256: 785525a1ec80f1c717eaf9cc22f5f121b32613938bac154948cc6816d891781f
   - id: TER361
     name: Demand Forecast Qualification
     definition: Vérifier et qualifier une prévision de produit pour son emploi dans le plan opérationnel.
     short_description: Qualifier une prévision de produit reçue pour le plan opérationnel.
-    context: Capacité de [Demand Plan Management](model:ba-demand-forecast-management). [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting)
+    context: Capacité de [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation). [Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting)
       tient la prévision source ; la qualification conserve sa version et ses réserves.
     source_refs:
     - U1079
@@ -128901,34 +128583,36 @@ glossary:
     source_locator:
       path: connaissance/01-contributions-utilisateur.md
       anchor: u1079
-    revision: 2
-    last_modified: '2026-10-16T08:00:38.749072Z'
-    content_sha256: 866b566d68ae1dbdf01eb7fe674ebf6419bf15b375e8bf69b0358c4d120e348e
+    revision: 3
+    last_modified: '2026-10-16T13:15:12.326783Z'
+    content_sha256: 647ed98b052ee5cf6a02937d9fb248ccf4467a92dc9bdf1879e7e7422f21a076
   - id: TER362
     name: Supply Resource Planning
-    definition: Projeter les besoins bruts et les apports envisagés à partir de la demande prévisionnelle et des contraintes
-      connues.
-    short_description: Projeter les besoins bruts et ressources à préparer.
-    context: Dans [Master Plan](model:domain-plan), prépare un scénario prévisionnel de ressources ; [Master Plan Management](model:ba-master-plan-management)
-      calcule ensuite les besoins nets opérationnels à partir des faits et apports à date.
+    definition: Ancien nom de Business Area regroupé dans Demand & Supply Plan Preparation ; les capacités métier gardent
+      leur identité.
+    short_description: Ancien libellé de périmètre, regroupé dans la préparation des plans.
+    context: Ce libellé reste pour la lecture des sources et publications historiques. Dans le backlog courant, [Demand &
+      Supply Plan Preparation](model:ba-demand-supply-plan-preparation) regroupe les capacités de demande, d’approvisionnement
+      et de rapprochement, sans fusionner leurs résultats.
     source_refs:
     - U1079
     - U1094
+    - U1103
     review:
-      state: proposed
-      note: Proposition de capacité ou de Business Area U1079 ; sans validation de la rédaction ni preuve de réalisation.
+      state: partial
+      note: Ancien libellé conservé comme repère historique ; regroupement validé U1103, rédaction proposée.
     source_locator:
       path: connaissance/01-contributions-utilisateur.md
       anchor: u1079
-    revision: 2
-    last_modified: '2026-10-16T08:00:38.749072Z'
-    content_sha256: 0d8cade992acc2101f8373689f19a73aa37cb9785c9992c5dfa80828489099bc
+    revision: 3
+    last_modified: '2026-10-16T13:15:12.326783Z'
+    content_sha256: 544e0b5ee665b9e2090c052c2e72b6a9fb7ed8076b5c25e58f3d8765886fedf9
   - id: TER363
     name: Supply Plan Development
     definition: Projeter les besoins bruts et les apports envisagés à partir du plan de demande et des contraintes connues.
     short_description: Produire un scénario prévisionnel des ressources et apports envisagés.
-    context: Dans [Supply Resource Planning](model:ba-supply-resource-planning), produit un scénario qui ne crée ni achat
-      ferme ni besoin net opérationnel ; ce dernier est calculé par [Master Planning](model:D05.f).
+    context: Dans [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation), produit un scénario qui ne
+      crée ni achat ferme ni besoin net opérationnel ; ce dernier est calculé par [Master Planning](model:D05.f).
     source_refs:
     - U1079
     - U1086
@@ -128939,36 +128623,37 @@ glossary:
     source_locator:
       path: connaissance/01-contributions-utilisateur.md
       anchor: u1079
-    revision: 2
-    last_modified: '2026-10-16T08:00:38.749072Z'
-    content_sha256: 25d1c7f3fc6b803a9e285d8daee92bbeceb50601221b5fcf6025ef6ad3cfc12e
+    revision: 3
+    last_modified: '2026-10-16T13:15:12.326783Z'
+    content_sha256: 11581a6277f1305e70d5a87ec8e9a473eb595560327afda486e967755003d044
   - id: TER364
     name: Planning Reconciliation
-    definition: Rapprocher les plans de demande et d’approvisionnement et instruire leurs écarts avant de retenir une version
-      cohérente.
-    short_description: Rapprocher les plans et leurs écarts.
-    context: Dans [Master Plan](model:domain-plan), confronte les scénarios prévisionnels de demande et de ressources. Le
-      calcul des besoins nets relève ensuite de [Master Plan Management](model:ba-master-plan-management) ; les arbitrages
-      du carnet restent distincts.
+    definition: Ancien nom de Business Area regroupé dans Demand & Supply Plan Preparation ; les capacités métier gardent
+      leur identité.
+    short_description: Ancien libellé de périmètre, regroupé dans la préparation des plans.
+    context: Ce libellé reste pour la lecture des sources et publications historiques. Dans le backlog courant, [Demand &
+      Supply Plan Preparation](model:ba-demand-supply-plan-preparation) regroupe les capacités de demande, d’approvisionnement
+      et de rapprochement, sans fusionner leurs résultats.
     source_refs:
     - U1079
     - U1086
     - U1094
+    - U1103
     review:
-      state: proposed
-      note: Proposition de capacité ou de Business Area U1079 ; sans validation de la rédaction ni preuve de réalisation.
+      state: partial
+      note: Ancien libellé conservé comme repère historique ; regroupement validé U1103, rédaction proposée.
     source_locator:
       path: connaissance/01-contributions-utilisateur.md
       anchor: u1079
-    revision: 2
-    last_modified: '2026-10-16T08:00:38.749072Z'
-    content_sha256: d1610f9df745ccf625dbd0767140d15209756ce1ce5945370b4b50115249b4a8
+    revision: 3
+    last_modified: '2026-10-16T13:15:12.326783Z'
+    content_sha256: fc15da3376dfc4cef51a9e1ac75317347d8a52551819079c73123f1690e55ef9
   - id: TER365
     name: Planning Scenario Reconciliation
     definition: Qualifier les écarts entre demande et approvisionnement et retenir une version cohérente ou un écart explicite.
     short_description: Qualifier les écarts et la version retenue.
-    context: Capacité de [Planning Reconciliation](model:ba-planning-reconciliation) ; la simulation compare les alternatives
-      mais ne vaut pas accord sur la version.
+    context: Capacité de [Planning Scenario Reconciliation](model:planning-scenario-reconciliation) ; la simulation compare
+      les alternatives mais ne vaut pas accord sur la version.
     source_refs:
     - U1079
     - U1086
@@ -128978,16 +128663,16 @@ glossary:
     source_locator:
       path: connaissance/01-contributions-utilisateur.md
       anchor: u1079
-    revision: 2
-    last_modified: '2026-10-16T08:00:38.749072Z'
-    content_sha256: daaf3c0e64caea03c5d8ae20b1c3d76ddc871af095d533f917d86868ea6c4150
+    revision: 3
+    last_modified: '2026-10-16T13:15:12.326783Z'
+    content_sha256: 5a1e5553adfa63a5bec8a3e416930ecbbd5804c658b901d14fb27cd419dd5a59
   - id: TER366
     name: Demand Plan Development
     definition: Calculer et réviser un plan de demande en distinguant commandes identifiées et part de prévision encore à
       couvrir.
     short_description: Construire la demande planifiée sans compter deux fois commandes et prévision.
-    context: Capacité de [Demand Plan Management](model:ba-demand-forecast-management). Détermine la prévision résiduelle
-      selon une règle autorisée, un horizon et des commandes identifiées ; conserve provenance et version. [Availability](model:D03)
+    context: Capacité de [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation). Détermine la prévision
+      résiduelle selon une règle autorisée, un horizon et des commandes identifiées ; conserve provenance et version. [Availability](model:D03)
       utilise le résultat pour une promesse, sans redéfinir le plan.
     source_refs:
     - U1085
@@ -129000,9 +128685,9 @@ glossary:
     source_locator:
       path: connaissance/01-contributions-utilisateur.md
       anchor: u1085
-    revision: 1
-    last_modified: '2026-10-16T08:00:38.749072Z'
-    content_sha256: 41918516dbf9a5026ead6a82ace552b5e0bba6f5e20bf883bd4115c0ee86e5a0
+    revision: 2
+    last_modified: '2026-10-16T13:15:12.326783Z'
+    content_sha256: 5abf4994edd740ca94025d217cbbb467658180d6e42d9660c5422a8cac50beb2
   - id: TER367
     name: Sales Pricing Rule Management
     definition: Définir et maintenir les règles de prix de vente, leur validité et leurs priorités par produit, client, canal
@@ -129143,13 +128828,34 @@ glossary:
     revision: 1
     last_modified: '2026-10-16T08:00:38.749072Z'
     content_sha256: 8b7ad9285a9fb8f06b1d09c346bba1667b6395ecb96617d5b2d642fa237cc195
+  - id: TER374
+    name: Demand & Supply Plan Preparation
+    definition: Responsabilité qui qualifie la demande, prépare les apports envisagés et rapproche leurs plans avant le calcul
+      des besoins nets.
+    short_description: Préparer et rapprocher les plans de demande et d’approvisionnement avant le calcul net.
+    context: '[Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) regroupe la qualification de la
+      prévision, le calcul du [Demand Plan](glossary:TER099), la projection du [Supply Plan](glossary:TER098) et le rapprochement
+      de leurs scénarios. Le [Master Plan](model:domain-plan) calcule ensuite les besoins nets. Le rapprochement peut conduire
+      à réviser les scénarios sans imposer une séquence unique.'
+    source_refs:
+    - U1102
+    - U1103
+    review:
+      state: partial
+      note: Nom et regroupement validés U1103 ; rédaction proposée.
+    source_locator:
+      path: connaissance/01-contributions-utilisateur.md
+      anchor: u1103
+    revision: 1
+    last_modified: '2026-10-16T13:15:12.326783Z'
+    content_sha256: beedb48ada1d7cfe9aec4b05d6b2f75a5a9aba3d47c4f31cd638a65efd36e91c
   note: Catalogue structuré du backlog. Les tableaux narratifs sont conservés comme sources historiques ; ce catalogue est
     figé avec chaque nouvelle publication. Les reformulations restent proposées. as_of indique la date du dernier lot éditorial
     appliqué au brouillon, sans modifier les dates des publications figées.
-  revision: 57
-  last_modified: '2026-10-16T08:00:38.749072Z'
-  content_sha256: 6af2c8f7ddf396622d1a9a9b5837e18094562074f5dc26bec8e6b83aea135f5c
+  revision: 58
+  last_modified: '2026-10-16T13:15:12.326783Z'
+  content_sha256: 5761f24f8053e069798596e18c683bf8158bc5b6e85edf86a7ebc4aaeedcf35a
 element_versioning: 1
-revision: 80
-content_sha256: a92d58cf5d36bcc8de101388c60ce215fa1cc5479324d33307d1bd04b268d70b
-last_modified: '2026-10-16T08:00:38.749072Z'
+revision: 81
+content_sha256: 287e2e667ed56e73fbabc062885a2d8af07162500526ae37016111e9dc289662
+last_modified: '2026-10-16T13:15:12.326783Z'

@@ -59,6 +59,16 @@ test('a dominant card spans two tracks while a short neighbour keeps its own hei
   assert.equal(prominent.column + prominent.span, neighbour.column);
 });
 
+test('domain cards share their row height beside a spanning subdomain', () => {
+  const sections = [{ heights: [220, 220, 220, 1900, 220], headingHeight: 0, prominentIndex: 3 }];
+  const measure = (width) => [{ ...sections[0], heights: [220, 220, 220, width > 500 ? 1100 : 1900, 220] }];
+  const grid = chooseMapGrid(sections, 1100, 800, 'width', true, measure, undefined, true);
+  const prominentRow = grid.rows[0].find((row) => row.some((item) => item.index === 3));
+  assert.ok(prominentRow);
+  assert.ok(prominentRow.some((item) => item.span === 2));
+  assert.ok(prominentRow.every((item) => item.displayHeight === 1100));
+});
+
 test('overview gives a clearly dominant system and nested domain more room', () => {
   assert.deepEqual(overviewLayout([3, 18, 4], 1100), { kind: 'featured', featuredIndex: 1 });
   assert.deepEqual(overviewLayout([3, 18, 4], 700), { kind: 'stack' });

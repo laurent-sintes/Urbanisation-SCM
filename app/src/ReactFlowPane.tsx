@@ -265,12 +265,22 @@ function Canvas(props: ReactFlowPaneProps) {
         Boolean(group),
         measure,
         fixedSlots,
+        graph.group?.kind === 'domain',
       );
       const mode = resolveMapZoom(zoomMode, detail, pageGrid.pageZoom);
       const grid =
         mode === 'page'
           ? pageGrid
-          : chooseMapGrid(gridSections, canvasWidth, minimumHeight, 'width', Boolean(group), measure, fixedSlots);
+          : chooseMapGrid(
+              gridSections,
+              canvasWidth,
+              minimumHeight,
+              'width',
+              Boolean(group),
+              measure,
+              fixedSlots,
+              graph.group?.kind === 'domain',
+            );
       const { cardWidth } = grid;
       const positioned: ((typeof inputs)[number] & { x: number; y: number; width: number })[] = [];
       let top = 16;

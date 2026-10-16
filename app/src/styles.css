@@ -1136,6 +1136,26 @@ select {
   text-overflow: ellipsis;
   vertical-align: bottom;
 }
+.business-card[data-kind="area"] {
+  border-top-width: 4px;
+}
+.business-card[data-kind="area"] .subdomain-card-heading {
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #dce9df;
+}
+.business-card[data-kind="area"] .subdomain-card-heading h3 {
+  flex: 0 0 100%;
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: 700;
+  white-space: normal;
+  overflow: visible;
+}
+.business-card[data-kind="area"] .subdomain-card-heading h3 button {
+  white-space: normal;
+  overflow: visible;
+}
 .card-id {
   text-transform: none;
   margin-left: auto;
@@ -1850,11 +1870,12 @@ select {
 .category-list-banner {
   padding: 8px 10px;
   margin: 8px 0 4px;
-  background: #d9f2ea;
-  color: #174b43;
+  background: #f3f8f4;
+  border-left: 2px solid #8bb39a;
+  color: #426353;
   border-radius: 5px;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.4;
 }
 .category-list-banner button {
@@ -1887,6 +1908,10 @@ select {
 .category-banner[data-business-area] {
   height: 52px;
   gap: 6px;
+  background: #f3f8f4;
+  border-left-color: #8bb39a;
+  color: #426353;
+  font-weight: 600;
 }
 .category-banner[data-business-area] a {
   color: inherit;
