@@ -19,7 +19,8 @@ class BusinessAreaTests(unittest.TestCase):
         self.assertEqual(set(index['children']['ba-order-backlog-management']),
                          {'D03.m', 'D03.o', 'delivery-release-decision'})
         self.assertEqual(set(index['children']['ba-master-plan-management']),
-                         {'D05.f', 'BHV006', 'D02.e', 'plans-visibility', 'demand-plan-visibility'})
+                         {'D05.f', 'BHV006', 'D02.e', 'plans-visibility', 'demand-plan-visibility',
+                          'plans-ingestion'})
         self.assertIn('demand-fulfilment-policy-management', index['children']['ba-protection-policies'])
         self.assertIn('plans-visibility', index['children']['ba-master-plan-management'])
         self.assertIn('demand-plan-visibility', index['children']['ba-master-plan-management'])
@@ -152,7 +153,7 @@ class BusinessAreaTests(unittest.TestCase):
         self.assertEqual(((((initial_caps - retired) | process_additions | decision_additions | backlog_additions)
                            - later_retirements) - (control_references & initial_caps)) |
                          u1079_additions | u1089_additions | moved_preparation |
-                         {'demand-plan-development'}, caps)
+                         {'demand-plan-development', 'process-ledger'}, caps)
         self.assertTrue(retired.isdisjoint(nodes))
         from scripts.glossary import references as inline_references
         self.assertNotIn(('model', 'price-book'), set(inline_references(m)))
@@ -182,7 +183,8 @@ class BusinessAreaTests(unittest.TestCase):
         operational_areas = reference_areas - {'ba-protection-policies', 'ba-service-provider-controls'}
         self.assertEqual(nodes['ba-product-references']['fields']['name'], 'Merchandise References')
         self.assertEqual({r['target_id'] for r in m['relations']
-                          if r['type']=='contains' and r['source_id']=='business-references'}, operational_areas)
+                          if r['type']=='contains' and r['source_id']=='business-references'},
+                         operational_areas | {'ba-reference-maintenance'})
         self.assertEqual({r['target_id'] for r in m['relations']
                           if r['type']=='presents' and r['source_id']=='business-references'}, common_references)
         for area, expected in reference_mapping.items():
@@ -202,7 +204,9 @@ class BusinessAreaTests(unittest.TestCase):
         from scripts.model_depth import context_business_area_ids
         context_areas = context_business_area_ids(m)
         self.assertEqual(sum(n['kind']=='business_area' and n['id'] not in context_areas for n in nodes.values()),
-                     26+len(operational_areas)-len(retired_adjacent_areas)-2+26-1-2)  # U1089 and U1103 group areas.
+                     26+len(operational_areas)-len(retired_adjacent_areas)-2+26-1-2-2+1)
+        # U1089/U1103 group areas; U1113 replaces the two Integration areas
+        # with Reference Maintenance near the operational references.
         for ident in caps:
             parents = [r for r in m['relations'] if r['target_id']==ident and r['type'] in ('contains','presents')]
             self.assertEqual(len(parents), 1, ident)

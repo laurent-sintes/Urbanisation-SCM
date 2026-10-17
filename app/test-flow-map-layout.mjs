@@ -443,3 +443,109 @@ test('broad systems and domains leave bounded routing corridors at the natural m
   const gap = commerce.x - sourcing.x - sourcing.width;
   assert.ok(gap >= 140 && gap <= 320);
 });
+
+test('scope overview draws compact systems and domains at one fixed publication frontier', () => {
+  const enterprise = buildFlowMap(model, undefined, { overviewDepth: 0 });
+  assert.equal(enterprise.boxes.length, 4);
+  assert.ok(
+    enterprise.boxes.every(
+      (box) =>
+        box.node.kind === 'business_system' &&
+        box.width === 360 &&
+        box.height === 180 &&
+        box.headerHeight === 180 &&
+        !box.parentId,
+    ),
+  );
+  const systems = new Map(enterprise.boxes.map((box) => [box.id, box]));
+  assert.equal(systems.get('domain-logistics-execution').x, systems.get('system-business-operations').x);
+  assert.equal(systems.get('system-business-operations').x - systems.get('system-design-development').x - 360, 200);
+  assert.equal(enterprise.width, 1544);
+  assert.equal(enterprise.height, 624);
+
+  const operations = buildFlowMap(model, 'system-business-operations', { overviewDepth: 0 });
+  assert.deepEqual(
+    operations.boxes.map((box) => box.id),
+    ['domain-sourcing-procurement', 'domain-sales', 'supply-chain-orchestration'],
+  );
+  assert.ok(
+    operations.boxes.every(
+      (box) =>
+        box.node.kind === 'domain' &&
+        box.width === 360 &&
+        box.height === 160 &&
+        box.headerHeight === 160 &&
+        !box.parentId,
+    ),
+  );
+  const [sourcing, commerce, supply] = operations.boxes;
+  assert.equal(sourcing.y, commerce.y);
+  assert.ok(sourcing.x < supply.x && supply.x < commerce.x);
+  assert.equal(supply.y - sourcing.y - sourcing.height, 200);
+  assert.equal(operations.width, 984);
+  assert.equal(operations.height, 584);
+});
+
+test('scope overview keeps the current Supply neighborhood as nine subdomains and enters Master Plan as four BAs', () => {
+  const publication = supplyFixture(false, false);
+  const supply = buildFlowMap(publication, 'supply-chain-orchestration', { overviewDepth: 0 });
+  assert.equal(supply.boxes.length, 9);
+  assert.ok(supply.boxes.every((box) => box.node.kind === 'area' && !box.parentId));
+  const plan = supply.boxes.find((box) => box.id === 'domain-plan');
+  const inventory = supply.boxes.find((box) => box.id === 'D01');
+  assert.equal(plan.y, inventory.y);
+  assert.equal(inventory.x - plan.x - plan.width, 140);
+  const masterPlan = buildFlowMap(publication, 'domain-plan', { overviewDepth: 0 });
+  assert.equal(masterPlan.boxes.length, 4);
+  assert.ok(masterPlan.boxes.every((box) => box.node.kind === 'business_area' && !box.parentId));
+  assert.equal(new Set(masterPlan.boxes.map((box) => box.x)).size, 2);
+  assert.equal(new Set(masterPlan.boxes.map((box) => box.y)).size, 2);
+  assert.equal(buildFlowMap(publication, 'domain-plan-ba-0', { overviewDepth: 0 }).boxes.length, 1);
+  assert.deepEqual(
+    buildFlowMap(publication, 'domain-plan-ba-0-cap-0', { overviewDepth: 0 }).boxes.map((box) => box.id),
+    ['domain-plan-ba-0'],
+  );
+});
+
+test('overview exchanges and overlay anchors retain the original relation and publishable domain identity', () => {
+  const original = {
+    ...model.relationById.get('knowledge'),
+    id: 'cross-domain',
+    sourceId: 'behavior',
+    targetId: 'domain-sales',
+    type: 'shares-data',
+  };
+  const publication = { ...model, relations: [...model.relations, original] };
+  const overview = buildFlowMap(publication, 'system-business-operations', { overviewDepth: 0 });
+  const ids = new Set(overview.boxes.map((box) => box.id));
+  assert.equal(visibleAncestorId(publication, 'cap-a', ids), 'supply-chain-orchestration');
+  assert.equal(visibleAncestorId(publication, 'behavior', ids), 'supply-chain-orchestration');
+  const exchange = overview.exchanges.find((item) => item.id === original.id);
+  assert.equal(exchange.sourceId, 'supply-chain-orchestration');
+  assert.equal(exchange.targetId, 'domain-sales');
+  assert.equal(exchange.relations[0], original);
+  assert.equal(exchange.relations[0].sourceId, 'behavior');
+  assert.equal(
+    overview.exchanges.some((item) => item.id === 'knowledge'),
+    false,
+    'Internal exchanges stay inside their original domain instead of producing a loop',
+  );
+});
+
+test('hidden deeper publication detail cannot enlarge an overview territory', () => {
+  const extended = adaptPublication({
+    ...model.raw,
+    nodes: [...model.raw.nodes, node('new-subdomain', 'area'), node('new-ba', 'business_area')],
+    relations: [
+      ...model.raw.relations,
+      relation('new-subdomain-parent', 'domain-sourcing-procurement', 'new-subdomain'),
+      relation('new-ba-parent', 'new-subdomain', 'new-ba'),
+    ],
+  });
+  const geometry = (layout) => layout.boxes.map(({ node: _node, ...box }) => box);
+  for (const scope of [undefined, 'system-business-operations'])
+    assert.deepEqual(
+      geometry(buildFlowMap(extended, scope, { overviewDepth: 0 })),
+      geometry(buildFlowMap(model, scope, { overviewDepth: 0 })),
+    );
+});

@@ -25685,3 +25685,68 @@ Date : 2026-10-16. Source : Laurent, autorisation de corriger le modèle après 
 Verbatim : « Go pour corriger le modèle selon cet audit, dans l’ordre proposé : contradictions et synthèses, chaînes Commerce et Procurement, puis coopérations de contexte et parcours EA. »
 
 Portée : appliquer le lot cohérent des corrections et compléments proposés par l'audit U1114, dans l'ordre de ses cinq groupes de travaux : cohérence de la représentation, chaînes Commerce et Procurement, coopérations de contexte, parcours de bout en bout et traçabilité, puis consolidation et prévention des régressions. Aligner modèle et glossaires, préserver les profondeurs de contexte, identités et preuves historiques. Les voies, sources et autorités laissées à qualifier dans l'audit conservent leurs réserves ; le Go ne prouve ni maîtrise d'entreprise ni réalisation installée et n'étend pas un accord aux compléments rédigés après l'audit. Aucune release, aucun commit ni push demandé.
+
+## U1116
+
+Date : 2026-10-16. Source : Laurent, demande d'audit global du modèle après la release 2026-10-16.4.
+
+Verbatim : « Je veux un audit global du modèle, surtout sur les relations. »
+
+Portée : auditer l'ensemble du modèle courant, en donnant priorité à l'intégrité, au sens, aux conditions et à la couverture des relations, aux chaînes métier et aux liens des catalogues. Vérifier la cohérence avec les responsabilités, les glossaires et la publication courante ; distinguer les défauts nouveaux, les réserves encore ouvertes et les corrections U1115 déjà effectives. La demande autorise l'audit et ses recommandations ; elle ne vaut ni adoption des corrections, ni modification canonique, ni commit ou publication.
+
+## U1117
+
+Date : 2026-10-16. Source : Laurent, demande de proposition d'ordre de lecture et doute sur les liaisons avec Supply Chain Orchestration.
+
+Verbatim : « J'aimerais revoir l'ordre des sous domaines de Supply Chain Orchestration pour que ce soit plus logique. Master Plan à la fin est étrange. Que proposes-tu ?
+
+Les liens Commerce et Procurement vers Supply Chain ne sont pas tous représentés j'ai l'impression. »
+
+Portée : proposer un ordre de lecture cohérent des sous-domaines courants de Supply Chain Orchestration, en réexaminant la position de Master Plan sans en déduire une séquence obligatoire. Approfondir l'audit U1116 sur la couverture canonique et la restitution des relations de Commerce et Sourcing and Procurement avec Supply Chain Orchestration. Distinguer lien manquant, lien existant filtré ou agrégé et détail non documenté. La demande ne valide pas encore un ordre précis, une nouvelle relation ni une modification ou publication.
+
+## U1118
+
+Date : 2026-10-16. Source : Laurent, autorisation d'appliquer l'ordre proposé et les corrections du modèle et d'Atlas.
+
+Verbatim : « Go pour appliquer l’ordre proposé et corriger le modèle et Atlas selon l’audit, notamment l’affichage des liens Commerce et Procurement avec Supply Chain Orchestration. »
+
+Portée : appliquer les neuf positions de lecture proposées en U1117 et le lot cohérent des corrections de l'audit global U1116, complété par le contrôle des frontières U1117. Aligner les attributions Master Plan/Availability, le sens de l'autorisation Orders vers Fulfilment, les principes, le rôle interne Reservation et les restitutions des parcours et correspondances applicatives ; rendre accessibles les 27 relations Commerce/Procurement avec Supply depuis les vues de domaine et traiter la couverture des synthèses EA existantes et nouvelles selon les échanges documentés. Préserver les responsabilités, identités et profondeurs, les travaux présents et les portées d'accord. Les contrats non documentés restent à qualifier ; aucun lien de disponibilité préalable, révision ou retour n'est inventé. Aucun commit, release ni push demandé.
+
+## U1119
+
+Date : 2026-10-16. Source : Laurent, demande d’audit ciblé après le refactoring de Supply Chain Orchestration et réexamen de son nom.
+
+Verbatim :
+
+> Comme on a fait du refactoring dans Supply Chain Orchestration j'aimerais un audit ciblé sur les définitions et les frontières pour être sur que tout est cohérent.
+>
+> D'ailleurs, dernier point : au vu du contenu de Supply Chain Orchestration, est-ce que ça ne devrait pas s'appeler Supply Chain Management ? J'aimerais que tu audites microsoft dynamics 365 vis à vis de ce périmètre.
+
+Portée : auditer les définitions et les frontières du backlog courant de Supply Chain Orchestration après les refactorings, en contrôlant les responsabilités, les exclusions, les termes métier et les domaines adjacents. Comparer son périmètre réel à Microsoft Dynamics 365 Supply Chain Management et aux autres offres Dynamics pertinentes, avec les appuis SAP S/4HANA requis par la méthode ; distinguer catégorie métier, périmètre de produit et adaptation FLOW. Réexaminer Supply Chain Management comme nom possible, sans renommage ni correction canonique adoptés par la seule demande d’audit. Aucun commit, release ni push demandé.
+
+## U1120
+
+Date : 2026-10-16. Source : Laurent, précision de l’applicabilité et des frontières du domaine dans l’audit U1119.
+
+Verbatim :
+
+> La production n'est pas référencée car Beaumanoir ne fabrique pas et la logistique est externalisée. Si Beaumnaoir me l'avait demandé, je l'aurais naturellement rajouté.
+> Concernant les achats et le commerce, les orders couvrent tout le cycle de vie des commandes qui ont un impact sur le stock. Concernant le pilotage des canaux (backoffice, network etc), je ne le gère pas en effet. Est-ce que ça justifie que mon domaine ne s'appelle pas Supply chain Management ?
+
+Portée : préciser que l’absence de production relève de l’applicabilité à Beaumanoir et ne constitue ni une lacune à combler automatiquement ni une exclusion de principe du modèle. La logistique est externalisée ; distinguer réalisation confiée et responsabilité de pilotage. Le domaine couvre le cycle de vie complet des commandes ayant un impact sur le stock, côté achats comme commerce ; le pilotage commercial des canaux, du réseau et du backoffice n’en fait pas partie. Réexaminer l’argumentation du nom Supply Chain Management à partir de ces responsabilités, sans imposer le périmètre d’une suite logicielle ni absorber les domaines adjacents. La question ne demande pas encore un renommage canonique, un commit ou une publication.
+
+## U1121
+
+Date : 2026-10-16. Source : Laurent, décision de renommer le domaine à périmètre constant après les précisions U1120.
+
+Verbatim : « Ok, je veux donc renommer ce domaine en supply chain management »
+
+Portée : renommer le domaine d’identité persistante supply-chain-orchestration en Supply Chain Management et aligner ses mentions courantes et son vocabulaire métier. Conserver son périmètre, ses responsabilités, ses descendants et ses relations ; ne pas absorber le sourcing, les décisions commerciales ou financières ni la réalisation logistique. L’accord porte sur le nom du domaine, sans adoption implicite des autres corrections de définitions proposées dans l’audit U1119, des comparaisons marché détaillées ou d’un nouveau découpage. Aucun commit, release ni push demandé.
+
+## U1122
+
+Date : 2026-10-16. Source : Laurent, autorisation d’appliquer les corrections de l’audit des définitions et frontières U1119.
+
+Verbatim : « Applique les corrections de l'audit »
+
+Portée : appliquer le lot cohérent des corrections proposées dans l’audit U1119 après le renommage U1121, en alignant les définitions, finalités, frontières, exemples et commentaires marché concernés du modèle et du glossaire. Traiter les clarifications documentées dans la mesure où elles précisent les responsabilités existantes ; préserver les lacunes de preuve et les questions non tranchées. Conserver les identités, la structure et les responsabilités métier établies, sans ajouter de périmètre de production, de canal commercial ni de réalisation installée. Capturer les accords sur les champs effectivement corrigés ; aucun commit, release ni push demandé.

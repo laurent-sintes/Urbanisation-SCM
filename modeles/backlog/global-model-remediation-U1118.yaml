@@ -1,0 +1,363 @@
+id: GLOBAL-MODEL-REMEDIATION-U1118
+date: '2026-10-16'
+status: applied_to_backlog_and_atlas_code
+source_refs:
+- U1116
+- U1117
+- U1118
+audit: global-model-audit-U1116.yaml
+reading_proposal: subdomain-reading-boundary-review-U1117.yaml
+scope: Appliquer les corrections de l’audit global, le nouvel ordre de lecture et l’accès aux échanges Commerce/Procurement
+  avec Supply, sans inventer de contrat métier supplémentaire.
+finding_resolution:
+  GLOBAL-U1116-01:
+    state: applied
+    nodes:
+    - D04.k
+    - D04.r
+    - D04.n
+    - D06.d
+    terms:
+    - TER176
+    principles:
+    - PRINCIPLE-TO-PROMISE
+    - PRINCIPLE-INVENTORY-SCENARIO-APPLICATION
+    note: Attributions collectives alignées avec Master Plan et Supply Assignment ; Availability conserve la promesse individuelle.
+  GLOBAL-U1116-02:
+    state: applied
+    relations:
+    - REL-U725-EXECUTION-AUTHORIZATIONS
+    principles:
+    - PRINCIPLE-RELATION-DIRECTION
+    note: Rôle needs retiré de la fourniture Orders vers Fulfilment ; garde type/rôle opt-in, compatible avec les publications
+      historiques.
+  GLOBAL-U1116-03:
+    state: applied
+    principles:
+    - PRINCIPLE-SUPPLY-FIRST
+    - PRINCIPLE-ORCHESTRATION-DETAIL
+    - PRINCIPLE-EXECUTION-DECISION-AND-COORDINATION
+    note: Périmètre Commerce/Procurement et nom Master Plan alignés avec le graphe courant. Ancien intitulé Service Task Management
+      remplacé par les responsabilités courantes Reactive Workflow Management et Service Management.
+  GLOBAL-U1116-04:
+    state: applied_in_atlas_code
+    note: Scénarios sans doublon et liens directs vers les parcours qui mobilisent réellement le périmètre ; contributions
+      et participants de contexte préservés.
+  GLOBAL-U1116-05:
+    state: applied
+    relations:
+    - REL-U1118-enterprise-product-context
+    - REL-U1118-product-enterprise-evidence
+    - REL-U1118-enterprise-logistics-controls
+    - REL-U1118-logistics-enterprise-facts
+    note: Quatre synthèses complètent les dix directions documentées ; unions exactes des treize contrats détaillés, avec
+      réserves préservées. Atlas conserve aussi les directions sans synthèse par paire orientée et type.
+  GLOBAL-U1116-06:
+    state: applied
+    information_items:
+    - PINFO-014
+    note: Rôle d’application porté par Plan Application, droit opposable conservé par Reservation ; catalogue masqué et qualification
+      proposée maintenus.
+  GLOBAL-U1116-07:
+    state: applied_in_atlas_code
+    note: La preuve candidate/documentée des correspondances offre est affichée, distincte des statuts internes de revue et
+      de l’usage installé.
+  GLOBAL-U1116-08:
+    state: applied_in_atlas_code
+    note: Actions vers le plus proche périmètre commun ; les 27 relations Commerce/Procurement avec Supply sont accessibles
+      dans Business Operations avec filtres utiles et cadrage préparé.
+reading_order:
+- position: 1
+  id: business-references
+  name: Operational References
+- position: 2
+  id: subdomain-policies
+  name: Supply Policy Management
+- position: 3
+  id: D01
+  name: Inventory Management
+- position: 4
+  id: D04
+  name: Order Management
+- position: 5
+  id: domain-plan
+  name: Master Plan
+- position: 6
+  id: D03
+  name: Availability
+- position: 7
+  id: subdomain-process-management
+  name: Process Management
+- position: 8
+  id: D06
+  name: Fulfilment Orchestration
+- position: 9
+  id: subdomain-service-orders
+  name: Service Management
+summary_lineage:
+- summary_id: REL-U1118-enterprise-product-context
+  source_system_id: system-enterprise-management-control
+  target_system_id: system-design-development
+  detailed_relation_ids:
+  - REL-U1115-objectives-product
+  - REL-U1115-budget-forecast
+  - REL-U1115-policy-product
+  contents_sha256: aceeee4e59803c6623d88501810e1032b7a7f3eb79b675eee1f08f781ac1399c
+- summary_id: REL-U1118-product-enterprise-evidence
+  source_system_id: system-design-development
+  target_system_id: system-enterprise-management-control
+  detailed_relation_ids:
+  - REL-U1115-forecast-budget
+  - REL-U1115-product-control-evidence
+  contents_sha256: b9c9649661e11714562515d7a2013711c82b3716d533092f859ebdde9f8f7cc3
+- summary_id: REL-U1118-enterprise-logistics-controls
+  source_system_id: system-enterprise-management-control
+  target_system_id: domain-logistics-execution
+  detailed_relation_ids:
+  - REL-U1115-policy-customs
+  - REL-U1115-service-evidence-results-domain-warehousing
+  - REL-U1115-service-evidence-results-domain-transportation
+  - REL-U1115-service-evidence-results-domain-customs-management
+  contents_sha256: d3105ba640840a81575c425181f00eeeb9d2097c6cf975a5b5202c39bf5d54c2
+- summary_id: REL-U1118-logistics-enterprise-facts
+  source_system_id: domain-logistics-execution
+  target_system_id: system-enterprise-management-control
+  detailed_relation_ids:
+  - REL-U1115-customs-control-evidence
+  - REL-U1115-service-supporting-facts-domain-warehousing
+  - REL-U1115-service-supporting-facts-domain-transportation
+  - REL-U1115-service-supporting-facts-domain-customs-management
+  contents_sha256: 74687af18f4ed87a0ced03b4c34c7fd8808aee0c00892d22b53a92a95dc8b55c
+agreement_scope:
+  source: U1118
+  captured_fields:
+  - collection: nodes
+    id: business-references
+    fields:
+    - reading_order
+  - collection: nodes
+    id: subdomain-policies
+    fields:
+    - reading_order
+  - collection: nodes
+    id: D01
+    fields:
+    - reading_order
+  - collection: nodes
+    id: D04
+    fields:
+    - reading_order
+  - collection: nodes
+    id: domain-plan
+    fields:
+    - reading_order
+  - collection: nodes
+    id: D03
+    fields:
+    - reading_order
+  - collection: nodes
+    id: subdomain-process-management
+    fields:
+    - reading_order
+  - collection: nodes
+    id: D06
+    fields:
+    - reading_order
+  - collection: nodes
+    id: subdomain-service-orders
+    fields:
+    - reading_order
+  note: Les neuf positions exactes étaient présentées avant Go. Les formulations correctrices, nouveaux libellés de synthèse,
+    principe technique et choix de restitution rédigés après Go gardent leur qualification propre ; aucun accord global sur
+    les fiches, contrats ou descendants. Le contexte final inclut ce dernier alignement de conduite ; les premières captures
+    des positions restent conservées et sont remplacées explicitement à champ identique.
+glossary_alignment:
+  business_glossary: TER176.context aligné ; TER071/TER091 et les notions Master Plan/Availability contrôlés sans changement
+    supplémentaire.
+  modeling_glossary: MOD010 Model Relationship reste cohérent ; aucune nouvelle notion méthodologique créée.
+  market: Réutilisation des passages primaires Dynamics/SAP effectivement consultés dans U1112/U1114/U1117 et des comparaisons
+    des fiches concernées ; corrections fondées sur les responsabilités FLOW canoniques, sans équivalence produit nouvelle.
+preserved_limits:
+- Les 27 échanges Commerce/Procurement existent ; aucune nouvelle flèche détaillée entre ces domaines créée.
+- Disponibilité avant commande, instructions commerciales de révision, initiation des retours à servir et passage de propositions
+  Supply vers validation Procurement restent à qualifier.
+- Autorités produit, routes Logistics/Finance et lacunes de preuve GRC/fidélité restent explicites.
+- Identités, rattachements, profondeurs de contexte et publications historiques conservés.
+delivery_boundary:
+  backlog: Corrections et ordre appliqués.
+  atlas: Code corrigé ; build et recettes réussis sur la publication existante et un candidat isolé.
+  publication: La publication 2026-10-16.4 reste figée. L’ordre et les quatre synthèses du backlog seront visibles après une
+    prochaine release explicitement demandée.
+  commit_or_push: false
+publication_delivery:
+  state: applied
+  summary: Ordre SCO, responsabilités Master Plan/Availability, autorisation, quatre synthèses EA et rôle Reservation corrigés
+    sous U1118 ; restitutions Atlas corrigées séparément dans le code.
+  source_refs:
+  - U1118
+  required_nodes:
+  - id: domain-plan
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    fields:
+      reading_order: 5
+  - id: business-references
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    fields:
+      reading_order: 1
+  - id: D04.k
+    kind: capability
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+    field_sha256:
+      scope: 54c58483748574389f580c630a2b3cb79f09242f33b142842cad6a97ec136974
+  - id: D04.n
+    kind: capability
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+    field_sha256:
+      scope: c6ce65fc742a07270a29621c6b35dc48011bc0f48d680f861d8bb4cf79241d9f
+  - id: D04
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    fields:
+      reading_order: 4
+  - id: D01
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    fields:
+      reading_order: 3
+  - id: D06
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    fields:
+      reading_order: 8
+  - id: D03
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    fields:
+      reading_order: 6
+  - id: D06.d
+    kind: capability
+    parent: ba-execution-coordination
+    parent_type: contains
+    field_sha256:
+      scope: b75087aee77e212529277551b72dff4482b1077b1b3163da956e10394d77240c
+  - id: D04.r
+    kind: capability
+    parent: ba-order-lifecycle-management
+    parent_type: contains
+    field_sha256:
+      scope: 50150ae25da4cb832891605b402ca21c413df66440f4d96058e4aa66b7d357aa
+  - id: subdomain-policies
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    fields:
+      reading_order: 2
+  - id: subdomain-service-orders
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    fields:
+      reading_order: 9
+  - id: subdomain-process-management
+    kind: area
+    parent: supply-chain-orchestration
+    parent_type: presents
+    fields:
+      reading_order: 7
+  required_relations:
+  - id: REL-U725-EXECUTION-AUTHORIZATIONS
+    type: provides-knowledge
+    source_id: D04
+    target_id: D06
+  - id: REL-U1118-enterprise-product-context
+    type: shares-data
+    source_id: system-enterprise-management-control
+    target_id: system-design-development
+    field_sha256:
+      summary_label: 248e0c175004c86705d89f0b957fdf65a0c7a0bff4346a2bd2a70f41a911341d
+      data_exchange: 22dff531bd26c5c1541b2a4972ce3810b06a317316321d9cad4f142e7c6fe8fa
+  - id: REL-U1118-product-enterprise-evidence
+    type: shares-data
+    source_id: system-design-development
+    target_id: system-enterprise-management-control
+    field_sha256:
+      summary_label: 7e8562f2e66fcf6a08b5cec56ac68ae7f949a5770d1203f200cc340fdadfd610
+      data_exchange: 723404a377b9150de33a94b033f67768d7021e785ccbc2af125aec41d4f7b840
+  - id: REL-U1118-enterprise-logistics-controls
+    type: shares-data
+    source_id: system-enterprise-management-control
+    target_id: domain-logistics-execution
+    field_sha256:
+      summary_label: 2d2fb4d27fe0761c164037a7b60fcdc75660ee2778927e2181ee01de7ed17817
+      data_exchange: 712bc000e85e4f88335a7cf9799ed8596bdd2667a2585bd2f91d3608e50efcff
+  - id: REL-U1118-logistics-enterprise-facts
+    type: shares-data
+    source_id: domain-logistics-execution
+    target_id: system-enterprise-management-control
+    field_sha256:
+      summary_label: ded07a3318cbd4be1863f7e9588d92f068aa4dc1d6974e873a4c46605226ac9a
+      data_exchange: 5e3738ea41dcce18ae8433ba2aeb9cf3355eda0b50e24d3864080590e43e2b2f
+  required_glossary:
+  - id: TER176
+    field_sha256:
+      context: b75087aee77e212529277551b72dff4482b1077b1b3163da956e10394d77240c
+  required_catalog:
+  - collection: principles
+    id: PRINCIPLE-TO-PROMISE
+    content_sha256: f3d0d6b41b18636e96064a8adb13b7de730e7715871d4e6f3fc57156a45ea1d1
+  - collection: principles
+    id: PRINCIPLE-INVENTORY-SCENARIO-APPLICATION
+    content_sha256: 92be37b7024311a8edf5c67e76506f0c6fd3f2bc187af5ddff581684e93f0e43
+  - collection: principles
+    id: PRINCIPLE-SUPPLY-FIRST
+    content_sha256: 60b49fbb8779761e80546f99e1e64fe5de42fc10390b1147745e4bd6dadb7cd1
+  - collection: principles
+    id: PRINCIPLE-ORCHESTRATION-DETAIL
+    content_sha256: 0a7ec59fc7a615f303acbfd5b0179f8933475db1399eb4a9f884e76b7e257ce2
+  - collection: principles
+    id: PRINCIPLE-RELATION-DIRECTION
+    content_sha256: e04ac4617ccd9019ce97e13dbfd11b55ad4dadaaa0db7ecb04a87da9cc8dd0a5
+  - collection: information_items
+    id: PINFO-014
+    content_sha256: fceb118953337114e0768f14f816835d7943fc67022d98e71a1c07be4aeece68
+  - collection: principles
+    id: PRINCIPLE-EXECUTION-DECISION-AND-COORDINATION
+    content_sha256: d94a33a7987a30b35d11f95bca5ba86fa1f55c93f61a51b0cf146d1b8bee5fd5
+  supersedes_requirements:
+  - annex: operational-work-audit-U881.yaml
+    collection: nodes
+    id: D06.d
+    fields:
+    - scope
+verification:
+  date: '2026-10-16'
+  result: passed
+  backlog:
+    check_backlog: 0 erreur, rendu effectué, 9 captures finales actives ; 9 anciennes conservées et supersédées.
+    validate_models: 0 erreur sur le contexte final et les publications historiques.
+    delivery: 0 lot pending ; 244 fichiers de besoins et 115 déclarations contrôlés.
+    backend_tests: 6 tests ciblés des directions et 17 tests des obligations de livraison réussis.
+    model_sha256: 48f0868944b027076b52ad678842b68d5b62c3517bda5de8f8c251e111e57b65
+    glossary_sha256: 4e0bcfd17df97d132b645bfefaf64fd6a2821ef13d836311715dbdb5f46781c6
+  atlas:
+    unit_tests: 57 tests ciblés de présentation, géographie, routage et scénarios réussis sur les sources finales.
+    build: Build complet puis build frontend final réussis ; 107 publications réutilisées et aucun nouveau modèle publié.
+    code_checks: TypeScript et Biome ciblé réussis ; git diff --check sans erreur.
+    published_recipe: 25 contrôles Flux réussis sur 2026-10-16.4, dont 27 échanges en quatre directions, filtres mémorisés
+      et retour ; aucune erreur navigateur.
+    scenario_and_offer_recipe: Deux variantes réellement mobilisées ouvertes ; 25 correspondances candidates et 86 documentées
+      affichées ; aucune erreur navigateur.
+    isolated_candidate_recipe: Neuf sous-domaines dans l’ordre exact ; dix directions EA et quatre synthèses U1118 présentes
+      ; aucune erreur navigateur.
+    integrity: Index de release, index servis et snapshot publié inchangés avant/après la candidate isolée. Aucune écriture
+      de publication.

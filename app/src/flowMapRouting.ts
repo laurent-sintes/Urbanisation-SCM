@@ -329,7 +329,9 @@ export function routeFlowExchange(
   laneIndex = 0,
 ): FlowExchangeRoute {
   const lane = Number.isFinite(laneIndex) ? Math.max(0, Math.floor(laneIndex)) : 0;
-  const points = search(source, target, obstacles, lane, CLEARANCE);
+  // Distinct ports alone cannot separate opposing routes when both detour around the same obstacle edge.
+  const clearance = CLEARANCE + Math.min(lane, 4) * 12;
+  const points = search(source, target, obstacles, lane, clearance);
   if (!points.length) points.push(...search(source, target, obstacles, lane, 0));
   let labelPoint = { x: (source.x + target.x + source.width) / 2, y: (source.y + target.y + source.height) / 2 };
   let longest = -1;

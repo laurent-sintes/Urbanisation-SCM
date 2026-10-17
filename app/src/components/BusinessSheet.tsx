@@ -19,7 +19,7 @@ import {
   requestOriginLabels,
   requestOrigins,
 } from '../requestMetadata';
-import { catalogOf, scenariosForNode } from '../scenarioCatalog';
+import { catalogOf, pathsForNode, scenariosForNode } from '../scenarioCatalog';
 import { BusinessExamples } from './BusinessExamples';
 import { CatalogLink, MethodLink, ModelText, ReferenceLink } from './ModelLinks';
 
@@ -109,6 +109,7 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
   const fields = businessFields(node.fields);
   const examples = examplesForNode(model, node);
   const scenarios = scenariosForNode(model, node.id);
+  const scenarioPaths = pathsForNode(model, node.id);
   const scenarioSection =
     !!catalogOf(model) && ['domain', 'area', 'business_area', 'capability', 'reference'].includes(node.kind);
   const relations = relatedTo(model, node.id);
@@ -355,7 +356,22 @@ export function BusinessSheet({ model, node }: { model: PublishedModel; node: At
                 <ul>
                   {scenarios.map((s) => (
                     <li key={s.id}>
-                      <CatalogLink scenario={s.id}>{s.title}</CatalogLink>
+                      <CatalogLink scenario={s.id} path={scenarioPaths.find((path) => path.scenario_id === s.id)?.id}>
+                        {s.title}
+                      </CatalogLink>
+                      {scenarioPaths.some((path) => path.scenario_id === s.id) && (
+                        <ul aria-label={`Parcours mobilisant ce périmètre : ${s.title}`}>
+                          {scenarioPaths
+                            .filter((path) => path.scenario_id === s.id)
+                            .map((path) => (
+                              <li key={path.id}>
+                                <CatalogLink scenario={s.id} path={path.id}>
+                                  {path.title}
+                                </CatalogLink>
+                              </li>
+                            ))}
+                        </ul>
+                      )}
                       {catalogOf(model)
                         ?.legacy_links.filter((a) => a.owner_id === node.id && a.scenario_id === s.id && a.contribution)
                         .map((a) => (

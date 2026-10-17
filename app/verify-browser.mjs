@@ -402,6 +402,33 @@ try {
     );
     if (depth === 4) await page.locator('.graph-canvas.zoom-width').waitFor();
   }
+  assert.equal(
+    await page.locator('.react-flow__node-container').count(),
+    0,
+    'The scope has no duplicate enclosing card',
+  );
+  const scopeTitle = page.locator('.map-toolbar .map-scope-title');
+  await expectTooltip(scopeTitle, domain.fields.name);
+  const titleRoute = page.url();
+  await scopeTitle.click();
+  await page.locator('.map-node-tooltip').waitFor();
+  assert.equal(page.url(), titleRoute, 'Reading the scope definition preserves the detail level and selection');
+  await page.keyboard.press('Escape');
+  await page.locator('.map-node-tooltip').waitFor({ state: 'hidden' });
+  assert.ok(await scopeTitle.evaluate((element) => document.activeElement === element));
+  await page.getByRole('button', { name: 'Réduire le navigateur de carte', exact: true }).click();
+  await page.getByRole('button', { name: 'Afficher le navigateur de carte', exact: true }).click();
+  const catalogueNavigator = page.getByRole('region', { name: 'Déplacer la zone visible de la carte', exact: true });
+  await catalogueNavigator.focus();
+  await catalogueNavigator.press('End');
+  await page.waitForFunction(() => document.querySelector('.map-scroll-viewport')?.scrollTop > 100);
+  await page.waitForFunction(
+    () => Number(document.querySelector('.catalogue-navigator-window')?.getAttribute('y')) > 100,
+  );
+  assert.equal(page.url(), titleRoute, 'The navigator scrolls without changing the route or framing');
+  await catalogueNavigator.press('Home');
+  await page.waitForFunction(() => document.querySelector('.map-scroll-viewport')?.scrollTop === 0);
+  checks.push('Catalogue scope help replaces its enclosing card and its navigator controls native scrolling');
   await visit({ view: 'map', node: domain.id, scope: domain.id, mapDepth: '3' });
   await page.locator('.business-card[data-kind="area"] .category-list-banner').first().waitFor();
   const domainCardHierarchy = await page.evaluate(() => {

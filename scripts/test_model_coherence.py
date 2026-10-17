@@ -34,12 +34,19 @@ class ModelCoherenceTests(unittest.TestCase):
         self.assertLessEqual({('glossary','TER129'), ('glossary','TER176'), ('glossary','TER177')}, refs)
         self.assertNotIn('Process Adaptation Decision', str(self.terms['TER031']['market_inspiration']))
         for text in [self.terms['TER112']['context'], self.terms['TER113']['context'],
-                     self.nodes['subdomain-integration']['fields']['scope']]:
+                     self.nodes['master-data-ingestion']['fields']['scope'],
+                     self.nodes['plans-ingestion']['fields']['scope']]:
             self.assertNotIn('catégories', text)
         self.assertIn('Master Plan', plain(self.terms['TER112']['context']))
         self.assertIn('Order Backlog', plain(self.terms['TER112']['context']))
-        self.assertIn('Business Areas', plain(self.terms['TER113']['context']))
-        self.assertIn('Business Areas', plain(self.nodes['subdomain-integration']['fields']['scope']))
+        self.assertNotIn('subdomain-integration', self.nodes)
+        parents = {r['target_id']: r['source_id'] for r in self.model['relations']
+                   if r['type'] == 'contains'}
+        self.assertEqual(parents['master-data-ingestion'], 'ba-reference-maintenance')
+        self.assertEqual(parents['ba-reference-maintenance'], 'business-references')
+        self.assertEqual(parents['plans-ingestion'], 'ba-master-plan-management')
+        self.assertLessEqual({('model', 'business-references'), ('model', 'ba-master-plan-management'),
+                             ('model', 'D01')}, set(references(self.terms['TER113']['context'])))
         self.assertNotIn('Inventory Foundation', str(self.nodes['D01']['fields']))
         meta = read(ROOT/'modeles/backlog/modeling-glossary.yaml')
         nature = next(t for t in meta['terms'] if t['id']=='MOD007')
@@ -53,7 +60,9 @@ class ModelCoherenceTests(unittest.TestCase):
         shared = {(r['source_id'], r['target_id']) for r in self.model['relations']
                   if r['type'] == 'shares-data'}
         self.assertIn(('subdomain-collection-planning', 'subdomain-demand-supply-forecasting'), shared)
-        self.assertIn(('subdomain-demand-supply-forecasting', 'ba-demand-supply-plan-preparation'), shared)
+        self.assertIn(('subdomain-demand-supply-forecasting', 'plans-ingestion'), shared)
+        self.assertIn(('plans-ingestion', 'demand-forecast-development'), shared)
+        self.assertNotIn(('subdomain-demand-supply-forecasting', 'ba-demand-supply-plan-preparation'), shared)
         self.assertNotIn(('subdomain-collection-planning', 'ba-demand-supply-plan-preparation'), shared)
 
     def test_scenario_contributions_respect_packing_and_finishing(self):

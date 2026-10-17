@@ -4,10 +4,12 @@ import { MIN_READABLE_ZOOM, overviewLayout, prominentChildIndex } from '../adapt
 import { applicationMapIds, projectedApplicationMapIds, selectionMappings } from '../applicationCatalog';
 import { filterMapHotspots, type HotspotMapFilters, hotspotRelatedElementIds } from '../hotspotMap';
 import { HOTSPOT_DIAMETERS, type HotspotPlacementGroup, layoutHotspots } from '../hotspotPlacement';
+import { NodeIcon } from '../icons';
 import { operationsMapSlots, systemMapSlots } from '../mapPlacement';
 import { childrenOf, descendantsOf, lineageOf, rootsOf, visibleAncestorId } from '../model';
 import type { PublishedModel } from '../types';
 import { useCatalogueScrollMemory } from '../useCatalogueScrollMemory';
+import { CatalogueNavigator } from './CatalogueNavigator';
 import { HotspotLegend, HotspotMapMarker } from './HotspotDisplay';
 import { MapApplicationPicker } from './MapApplicationPicker';
 import { MapDetailPicker } from './MapDetailPicker';
@@ -327,7 +329,16 @@ export function Overview({
       aria-label={`${universe?.name || 'Univers'} des systèmes métier`}
     >
       <div className="universe-toolbar">
-        <h2>Systèmes métier</h2>
+        <h2>
+          {universe ? (
+            <MapNodeButton node={universe} className="map-scope-title">
+              <NodeIcon node={universe} size={18} />
+              {universe.name}
+            </MapNodeButton>
+          ) : (
+            'Systèmes métier'
+          )}
+        </h2>
         <div className="map-actions">
           <MapDetailPicker labels={['Systèmes', 'Domaines', 'Sous-domaines']} value={detail} onChange={onDepthChange} />
           {!!hotspots.length && (
@@ -368,212 +379,223 @@ export function Overview({
           </button>
         </div>
       </div>
-      <div
-        ref={scroll}
-        className="overview-map-scroll"
-        role="region"
-        aria-label="Carte des systèmes métier"
-        tabIndex={0}
-      >
-        {hotspotFilters.enabled && <HotspotLegend count={visibleHotspots.length} />}
-        {rootHotspots.length > 0 && (
-          <div
-            className="overview-global-hotspots"
-            role="group"
-            aria-label="Sujets transversaux à Enterprise Architecture"
-          >
-            <p>Sujets transversaux · {universe?.name}</p>
-            {rootHotspots.map((item) => (
-              <div className="overview-global-hotspot" key={item.id}>
-                <div className="overview-global-marker">
-                  <HotspotMapMarker
-                    id={item.id}
-                    items={[item]}
-                    x={32}
-                    y={32}
-                    model={model}
-                    onOpen={onOpenHotspot}
-                    onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
-                  />
-                </div>
-                <button type="button" onClick={() => onOpenHotspot(item.id)}>
-                  <ModelText text={item.title} />
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
+      <div className="catalogue-navigation-stage">
         <div
-          className="overview-map-frame"
-          style={{ width: frame.width * scale, height: frame.height * scale || undefined }}
+          ref={scroll}
+          className="overview-map-scroll"
+          role="region"
+          aria-label="Carte des systèmes métier"
+          tabIndex={0}
         >
+          {hotspotFilters.enabled && <HotspotLegend count={visibleHotspots.length} />}
+          {rootHotspots.length > 0 && (
+            <div
+              className="overview-global-hotspots"
+              role="group"
+              aria-label="Sujets transversaux à Enterprise Architecture"
+            >
+              <p>Sujets transversaux · {universe?.name}</p>
+              {rootHotspots.map((item) => (
+                <div className="overview-global-hotspot" key={item.id}>
+                  <div className="overview-global-marker">
+                    <HotspotMapMarker
+                      id={item.id}
+                      items={[item]}
+                      x={32}
+                      y={32}
+                      model={model}
+                      onOpen={onOpenHotspot}
+                      onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
+                    />
+                  </div>
+                  <button type="button" onClick={() => onOpenHotspot(item.id)}>
+                    <ModelText text={item.title} />
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
           <div
-            ref={grid}
-            className={`urbanisation-overview ${systemSlots ? 'layout-fixed' : `layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}`}
-            style={
-              {
-                width: frame.width,
-                zoom: scale,
-                '--overview-scale': scale,
-              } as CSSProperties
-            }
-            data-layout={systemSlots ? 'fixed' : layout.kind}
+            className="overview-map-frame"
+            style={{ width: frame.width * scale, height: frame.height * scale || undefined }}
           >
-            <OverviewColumns slots={systemSlots}>
-              {displayedSystems.map((system, index) => {
-                const systemSlot = systemSlots?.[index];
-                const systemHotspots = cardHotspots.filter(
-                  (hotspot) => cardHotspotSystems.get(hotspot.id) === system.id,
-                );
-                const groups = markerPlacement[system.id]?.groups || [];
-                const domains = childrenOf(model, system.id).filter((node) => node.kind === 'domain');
-                const subdomains = domains.flatMap((domain) =>
-                  childrenOf(model, domain.id).filter((node) => node.kind === 'area'),
-                );
-                const capabilities = descendantsOf(model, system.id).filter((node) => node.kind === 'capability');
-                const prominentDomain = prominentChildIndex(
-                  domains.map(
-                    (domain) =>
-                      1 +
-                      childrenOf(model, domain.id).filter((node) => node.kind === 'area').length * (detail > 1 ? 2 : 1),
-                  ),
-                );
-                const domainSlots = operationsMapSlots(
-                  system.id,
-                  domains.map((domain) => domain.id),
-                );
-                const displayedDomains = domainSlots ? domainSlots.map((slot) => domains[slot.index]) : domains;
-                return (
-                  <article
-                    data-node-id={system.id}
-                    key={system.id}
-                    style={
-                      {
-                        ...(systemSlot
-                          ? {
-                              gridRow: systemSlot.row + 1,
-                              gridColumn: `${systemSlot.column + 1} / span ${systemSlot.span}`,
-                            }
-                          : {}),
-                      } as CSSProperties
-                    }
-                    className={`overview-system${systemHotspots.length ? ' has-map-hotspots' : ''}${relatedIds.has(system.id) ? ' hotspot-related' : ''}${applicationExactIds.has(system.id) ? ' application-related' : applicationIds.has(system.id) ? ' application-context' : ''}`}
-                  >
-                    {groups.map((group) => (
-                      <HotspotMapMarker
-                        key={group.id}
-                        id={group.id}
-                        items={systemHotspots.filter((item) => group.ids.includes(item.id))}
-                        onExpansionChange={setClusterExpanded}
-                        x={group.x / scale}
-                        y={group.y / scale}
-                        model={model}
-                        onOpen={onOpenHotspot}
-                        onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
-                      />
-                    ))}
-                    <small>
-                      <MetaTypeLabel node={system} />
-                    </small>
-                    <h3>
-                      <MapNodeButton
-                        node={system}
-                        itemId={system.id}
-                        className={
-                          `${relatedIds.has(system.id) ? 'hotspot-related-item ' : ''}${applicationExactIds.has(system.id) ? 'application-related-item' : applicationIds.has(system.id) ? 'application-context-item' : ''}`.trim() ||
-                          undefined
-                        }
-                        onClick={() => onOpen(system.id)}
-                      >
-                        {system.name}
-                      </MapNodeButton>
-                    </h3>
-                    <p>
-                      <ModelText text={system.purpose || system.definition} />
-                    </p>
-                    {system.purpose && system.definition && (
-                      <p className="overview-definition">
-                        <ModelText text={plainDefinition(system.definition)} />
+            <div
+              ref={grid}
+              className={`urbanisation-overview ${systemSlots ? 'layout-fixed' : `layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}`}
+              style={
+                {
+                  width: frame.width,
+                  zoom: scale,
+                  '--overview-scale': scale,
+                } as CSSProperties
+              }
+              data-layout={systemSlots ? 'fixed' : layout.kind}
+            >
+              <OverviewColumns slots={systemSlots}>
+                {displayedSystems.map((system, index) => {
+                  const systemSlot = systemSlots?.[index];
+                  const systemHotspots = cardHotspots.filter(
+                    (hotspot) => cardHotspotSystems.get(hotspot.id) === system.id,
+                  );
+                  const groups = markerPlacement[system.id]?.groups || [];
+                  const domains = childrenOf(model, system.id).filter((node) => node.kind === 'domain');
+                  const subdomains = domains.flatMap((domain) =>
+                    childrenOf(model, domain.id).filter((node) => node.kind === 'area'),
+                  );
+                  const capabilities = descendantsOf(model, system.id).filter((node) => node.kind === 'capability');
+                  const prominentDomain = prominentChildIndex(
+                    domains.map(
+                      (domain) =>
+                        1 +
+                        childrenOf(model, domain.id).filter((node) => node.kind === 'area').length *
+                          (detail > 1 ? 2 : 1),
+                    ),
+                  );
+                  const domainSlots = operationsMapSlots(
+                    system.id,
+                    domains.map((domain) => domain.id),
+                  );
+                  const displayedDomains = domainSlots ? domainSlots.map((slot) => domains[slot.index]) : domains;
+                  return (
+                    <article
+                      data-node-id={system.id}
+                      key={system.id}
+                      style={
+                        {
+                          ...(systemSlot
+                            ? {
+                                gridRow: systemSlot.row + 1,
+                                gridColumn: `${systemSlot.column + 1} / span ${systemSlot.span}`,
+                              }
+                            : {}),
+                        } as CSSProperties
+                      }
+                      className={`overview-system${systemHotspots.length ? ' has-map-hotspots' : ''}${relatedIds.has(system.id) ? ' hotspot-related' : ''}${applicationExactIds.has(system.id) ? ' application-related' : applicationIds.has(system.id) ? ' application-context' : ''}`}
+                    >
+                      {groups.map((group) => (
+                        <HotspotMapMarker
+                          key={group.id}
+                          id={group.id}
+                          items={systemHotspots.filter((item) => group.ids.includes(item.id))}
+                          onExpansionChange={setClusterExpanded}
+                          x={group.x / scale}
+                          y={group.y / scale}
+                          model={model}
+                          onOpen={onOpenHotspot}
+                          onHighlight={(active, ids) => setHoveredHotspotIds(active ? ids : [])}
+                        />
+                      ))}
+                      <small>
+                        <MetaTypeLabel node={system} />
+                      </small>
+                      <h3>
+                        <MapNodeButton
+                          node={system}
+                          itemId={system.id}
+                          className={
+                            `${relatedIds.has(system.id) ? 'hotspot-related-item ' : ''}${applicationExactIds.has(system.id) ? 'application-related-item' : applicationIds.has(system.id) ? 'application-context-item' : ''}`.trim() ||
+                            undefined
+                          }
+                          onClick={() => onOpen(system.id)}
+                        >
+                          {system.name}
+                        </MapNodeButton>
+                      </h3>
+                      <p>
+                        <ModelText text={system.purpose || system.definition} />
                       </p>
-                    )}
-                    <div className="overview-stats" role="group" aria-label={`Contenu publié de ${system.name}`}>
-                      <span>
-                        {domains.length} domaine{domains.length > 1 ? 's' : ''}
-                      </span>
-                      <span>
-                        {subdomains.length} sous-domaine{subdomains.length > 1 ? 's' : ''}
-                      </span>
-                      {capabilities.length > 0 && (
-                        <span>
-                          {capabilities.length} capacité{capabilities.length > 1 ? 's' : ''}
-                        </span>
+                      {system.purpose && system.definition && (
+                        <p className="overview-definition">
+                          <ModelText text={plainDefinition(system.definition)} />
+                        </p>
                       )}
-                    </div>
-                    {detail > 0 && (
-                      <div className="overview-hierarchy">
-                        {domains.length ? (
-                          <ul className={domainSlots ? 'overview-domains-fixed' : undefined}>
-                            {displayedDomains.map((domain, domainIndex) => {
-                              const slot = domainSlots?.[domainIndex];
-                              const areas = childrenOf(model, domain.id).filter((node) => node.kind === 'area');
-                              return (
-                                <li
-                                  key={domain.id}
-                                  className={
-                                    !domainSlots && domainIndex === prominentDomain
-                                      ? 'overview-domain-prominent'
-                                      : undefined
-                                  }
-                                  style={
-                                    slot
-                                      ? { gridRow: slot.row + 1, gridColumn: `${slot.column + 1} / span ${slot.span}` }
-                                      : undefined
-                                  }
-                                >
-                                  <MapNodeButton
-                                    node={domain}
-                                    itemId={domain.id}
-                                    className={`overview-domain-link${relatedIds.has(domain.id) ? ' hotspot-related-item' : ''}${applicationExactIds.has(domain.id) ? ' application-related-item' : applicationIds.has(domain.id) ? ' application-context-item' : ''}`}
-                                    onClick={() => onOpen(domain.id)}
-                                  >
-                                    {domain.name}
-                                  </MapNodeButton>
-                                  {domain.purpose && (
-                                    <span className="overview-domain-purpose">
-                                      <ModelText text={domain.purpose} />
-                                    </span>
-                                  )}
-                                  {detail > 1 && areas.length > 0 && (
-                                    <ul>
-                                      {areas.map((area) => (
-                                        <li key={area.id}>
-                                          <MapNodeButton
-                                            node={area}
-                                            itemId={area.id}
-                                            className={`overview-subdomain-link${relatedIds.has(area.id) ? ' hotspot-related-item' : ''}${applicationExactIds.has(area.id) ? ' application-related-item' : applicationIds.has(area.id) ? ' application-context-item' : ''}`}
-                                            onClick={() => onOpen(area.id)}
-                                          >
-                                            {area.name}
-                                          </MapNodeButton>
-                                        </li>
-                                      ))}
-                                    </ul>
-                                  )}
-                                </li>
-                              );
-                            })}
-                          </ul>
-                        ) : (
-                          <p>Aucun domaine détaillé dans cette publication.</p>
+                      <div className="overview-stats" role="group" aria-label={`Contenu publié de ${system.name}`}>
+                        <span>
+                          {domains.length} domaine{domains.length > 1 ? 's' : ''}
+                        </span>
+                        <span>
+                          {subdomains.length} sous-domaine{subdomains.length > 1 ? 's' : ''}
+                        </span>
+                        {capabilities.length > 0 && (
+                          <span>
+                            {capabilities.length} capacité{capabilities.length > 1 ? 's' : ''}
+                          </span>
                         )}
                       </div>
-                    )}
-                  </article>
-                );
-              })}
-            </OverviewColumns>
+                      {detail > 0 && (
+                        <div className="overview-hierarchy">
+                          {domains.length ? (
+                            <ul className={domainSlots ? 'overview-domains-fixed' : undefined}>
+                              {displayedDomains.map((domain, domainIndex) => {
+                                const slot = domainSlots?.[domainIndex];
+                                const areas = childrenOf(model, domain.id).filter((node) => node.kind === 'area');
+                                return (
+                                  <li
+                                    key={domain.id}
+                                    className={
+                                      !domainSlots && domainIndex === prominentDomain
+                                        ? 'overview-domain-prominent'
+                                        : undefined
+                                    }
+                                    style={
+                                      slot
+                                        ? {
+                                            gridRow: slot.row + 1,
+                                            gridColumn: `${slot.column + 1} / span ${slot.span}`,
+                                          }
+                                        : undefined
+                                    }
+                                  >
+                                    <MapNodeButton
+                                      node={domain}
+                                      itemId={domain.id}
+                                      className={`overview-domain-link${relatedIds.has(domain.id) ? ' hotspot-related-item' : ''}${applicationExactIds.has(domain.id) ? ' application-related-item' : applicationIds.has(domain.id) ? ' application-context-item' : ''}`}
+                                      onClick={() => onOpen(domain.id)}
+                                    >
+                                      {domain.name}
+                                    </MapNodeButton>
+                                    {domain.purpose && (
+                                      <span className="overview-domain-purpose">
+                                        <ModelText text={domain.purpose} />
+                                      </span>
+                                    )}
+                                    {detail > 1 && areas.length > 0 && (
+                                      <ul>
+                                        {areas.map((area) => (
+                                          <li key={area.id}>
+                                            <MapNodeButton
+                                              node={area}
+                                              itemId={area.id}
+                                              className={`overview-subdomain-link${relatedIds.has(area.id) ? ' hotspot-related-item' : ''}${applicationExactIds.has(area.id) ? ' application-related-item' : applicationIds.has(area.id) ? ' application-context-item' : ''}`}
+                                              onClick={() => onOpen(area.id)}
+                                            >
+                                              {area.name}
+                                            </MapNodeButton>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    )}
+                                  </li>
+                                );
+                              })}
+                            </ul>
+                          ) : (
+                            <p>Aucun domaine détaillé dans cette publication.</p>
+                          )}
+                        </div>
+                      )}
+                    </article>
+                  );
+                })}
+              </OverviewColumns>
+            </div>
           </div>
         </div>
+        <CatalogueNavigator
+          viewportRef={scroll}
+          geometryKey={`${model.version}:@root:${detail}:${zoomChoice}`}
+          framing={zoomChoice}
+        />
       </div>
     </section>
   );

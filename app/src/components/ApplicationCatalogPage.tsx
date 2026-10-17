@@ -396,16 +396,16 @@ function ComponentDetail({
       {!selection && (
         <>
           <h5>Périmètre possible de l’offre éditeur</h5>
-          <p>Ces correspondances décrivent l’offre documentée, sans prouver son activation dans un SI.</p>
+          <p>Chaque correspondance précise son niveau de preuve, sans prouver l’activation de l’offre dans un SI.</p>
           {offeringCoverage.length ? (
             offeringCoverage.map((mapping) => (
-              <div className="application-mapping" key={mapping.id}>
+              <div className="application-mapping" data-offering-mapping={mapping.id} key={mapping.id}>
                 {component.id !== mapping.component_id && (
                   <small>{product.components.find((item) => item.id === mapping.component_id)?.name}</small>
                 )}
                 <strong>{model.nodeById.get(mapping.node_id)?.name || mapping.node_id}</strong>
                 <span>
-                  <ModelText text={mapping.note} />
+                  {evidenceLabel[mapping.evidence_state]} · <ModelText text={mapping.note} />
                 </span>
                 <div className="application-mapping-actions">
                   <button type="button" onClick={() => onShowBusinessNode(mapping.node_id)}>

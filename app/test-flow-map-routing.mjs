@@ -208,6 +208,58 @@ test('opposite exchanges use distinct directed lanes when their lane indices dif
   assert.ok(reverse.points[0].x > reverse.points.at(-1).x);
 });
 
+test('opposing Fulfilment and Service routes keep their published perimeter ports and separate the shared detour', () => {
+  // The nine subdomain rectangles in the published 2026-10-16.4 Supply map.
+  const rectangles = [
+    box('references', 32, 32, 560, 282),
+    box('policies', 732, 32, 288, 210),
+    box('inventory', 1160, 382, 288, 210),
+    box('availability', 1160, 732, 288, 138),
+    box('orders', 1160, 32, 288, 138),
+    box('process', 1588, 32, 288, 354),
+    box('fulfilment', 1588, 526, 288, 354),
+    box('service', 32, 454, 288, 354),
+    box('plan', 732, 382, 288, 354),
+  ];
+  const fulfilment = rectangles.find((item) => item.id === 'fulfilment');
+  const service = rectangles.find((item) => item.id === 'service');
+  const forward = routeFlowExchange(fulfilment, service, rectangles, 0);
+  const reverse = routeFlowExchange(service, fulfilment, rectangles, 1);
+  verify(forward, fulfilment, service, rectangles);
+  verify(reverse, service, fulfilment, rectangles);
+  assert.deepEqual(
+    [forward.points[0], forward.points.at(-1)],
+    [
+      { x: 1588, y: 703 },
+      { x: 320, y: 703 },
+    ],
+  );
+  assert.deepEqual(
+    [reverse.points[0], reverse.points.at(-1)],
+    [
+      { x: 320, y: 665.56 },
+      { x: 1588, y: 665.56 },
+    ],
+  );
+  for (let a = 1; a < forward.points.length; a++) {
+    const fromA = forward.points[a - 1],
+      toA = forward.points[a];
+    for (let b = 1; b < reverse.points.length; b++) {
+      const fromB = reverse.points[b - 1],
+        toB = reverse.points[b];
+      const horizontal = fromA.y === toA.y && fromB.y === toB.y && fromA.y === fromB.y;
+      const vertical = fromA.x === toA.x && fromB.x === toB.x && fromA.x === fromB.x;
+      const axis = horizontal ? 'x' : 'y';
+      if (horizontal || vertical)
+        assert.ok(
+          Math.min(Math.max(fromA[axis], toA[axis]), Math.max(fromB[axis], toB[axis])) <=
+            Math.max(Math.min(fromA[axis], toA[axis]), Math.min(fromB[axis], toB[axis])),
+          'Opposing paths cannot merge into a common corridor segment',
+        );
+    }
+  }
+});
+
 test('a published parent-to-child exchange can cross its parent footprint and avoids sibling content', () => {
   const parent = box('parent', 0, 0, 600, 400);
   const child = box('child', 100, 120);

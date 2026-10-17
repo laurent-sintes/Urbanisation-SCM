@@ -31,6 +31,11 @@ export interface FlowMapLayout {
   height: number;
 }
 
+export interface FlowMapLayoutOptions {
+  /** Draw only the selected scope's immediate published territories, stopping at Business Area. */
+  overviewDepth?: 0;
+}
+
 interface Territory {
   node: AtlasNode;
   width: number;
@@ -94,12 +99,13 @@ function leafSize(node: AtlasNode): { width: number; height: number } {
 }
 
 /** Track choices belong to the territory, never to viewport dimensions or active overlays. */
-function slotsFor(parent: AtlasNode | undefined, children: readonly AtlasNode[]): MapSlot[] {
+function slotsFor(parent: AtlasNode | undefined, children: readonly AtlasNode[], overview = false): MapSlot[] {
   const ids = children.map((child) => child.id);
   const explicit = parent ? operationsMapSlots(parent.id, ids) : systemMapSlots(ids);
   if (explicit) return explicit;
-  const limit =
-    parent?.kind === 'business_area'
+  const limit = overview
+    ? 3
+    : parent?.kind === 'business_area'
       ? 1
       : parent?.kind === 'area' || parent?.kind === 'group'
         ? children.length > 4
@@ -178,6 +184,7 @@ function supplyNeighborhood(parent: AtlasNode | undefined, children: readonly Te
 function arrange(
   parent: AtlasNode | undefined,
   children: readonly Territory[],
+  overview = false,
 ): {
   children: Territory['children'];
   width: number;
@@ -189,11 +196,13 @@ function arrange(
   const slots = slotsFor(
     parent,
     children.map((child) => child.node),
+    overview,
   );
   const columns = Math.max(...slots.map((slot) => slot.column + slot.span));
   const panoramic = !parent || parent.kind === 'universe';
-  const gap =
-    parent?.kind === 'business_area'
+  const gap = overview
+    ? 200
+    : parent?.kind === 'business_area'
       ? 0
       : parent?.kind === 'area' || parent?.kind === 'group'
         ? INNER_GAP
@@ -224,9 +233,14 @@ function arrange(
     const entries = slots.filter((slot) => slot.row === row);
     const height = Math.max(...entries.map((slot) => children[slot.index].height));
     for (const slot of entries) {
+      const spanWidth =
+        trackWidths.slice(slot.column, slot.column + slot.span).reduce((sum, width) => sum + width, 0) +
+        gap * (slot.span - 1);
       positioned.push({
         territory: children[slot.index],
-        x: trackWidths.slice(0, slot.column).reduce((sum, width) => sum + width + gap, 0),
+        x:
+          trackWidths.slice(0, slot.column).reduce((sum, width) => sum + width + gap, 0) +
+          (overview && slot.span > 1 ? (spanWidth - children[slot.index].width) / 2 : 0),
         y,
         width: children[slot.index].width,
         height: children[slot.index].height,
@@ -267,17 +281,31 @@ export function projectFlowMapExchanges(model: PublishedModel, visibleIds: Reado
   });
 }
 
-/** Fixed world geometry for one publication. Zoom reveals territories without moving their neighbors. */
-export function buildFlowMap(model: PublishedModel, scopeId?: string): FlowMapLayout {
+/** Fixed publication geometry at the chosen hierarchy frontier, independent of camera and overlays. */
+export function buildFlowMap(
+  model: PublishedModel,
+  scopeId?: string,
+  options: FlowMapLayoutOptions = {},
+): FlowMapLayout {
   const measure = (node: AtlasNode, ancestors = new Set<string>()): Territory => {
     const next = new Set([...ancestors, node.id]);
     const descendants =
-      node.kind === 'business_area'
+      overview || node.kind === 'business_area'
         ? []
         : childrenOf(model, node.id).filter((child) => KINDS.has(child.kind) && !next.has(child.id));
     if (!descendants.length) {
-      const size = leafSize(node);
-      return { node, ...size, headerHeight: Math.min(headerHeight(node), size.height), children: [] };
+      const size =
+        overview && node.kind === 'business_system'
+          ? { width: 360, height: 180 }
+          : overview && node.kind === 'domain'
+            ? { width: 360, height: 160 }
+            : leafSize(node);
+      return {
+        node,
+        ...size,
+        headerHeight: overview ? size.height : Math.min(headerHeight(node), size.height),
+        children: [],
+      };
     }
     const content = arrange(
       node,
@@ -309,8 +337,13 @@ export function buildFlowMap(model: PublishedModel, scopeId?: string): FlowMapLa
         )
       : requestedScope;
   if (scopeId && !scope) return { boxes: [], exchanges: [], width: 0, height: 0 };
+  const overview = options.overviewDepth === 0;
   let roots: AtlasNode[];
-  if (scope && ['universe', 'business_system', 'domain'].includes(scope.kind)) {
+  if (
+    scope &&
+    (['universe', 'business_system', 'domain'].includes(scope.kind) ||
+      (overview && ['area', 'group'].includes(scope.kind)))
+  ) {
     roots = childrenOf(model, scope.id).filter((node) => KINDS.has(node.kind));
     if (!roots.length && KINDS.has(scope.kind)) roots = [scope];
   } else if (scope) {
@@ -322,8 +355,13 @@ export function buildFlowMap(model: PublishedModel, scopeId?: string): FlowMapLa
   }
   if (!roots.length) return { boxes: [], exchanges: [], width: 0, height: 0 };
   const rootLayout = arrange(
-    scope && ['universe', 'business_system', 'domain'].includes(scope.kind) ? scope : undefined,
+    scope &&
+      (['universe', 'business_system', 'domain'].includes(scope.kind) ||
+        (overview && ['area', 'group'].includes(scope.kind)))
+      ? scope
+      : undefined,
     roots.map((node) => measure(node)),
+    overview,
   );
   const boxes: FlowMapBox[] = [];
   const emit = (

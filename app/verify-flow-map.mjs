@@ -204,6 +204,10 @@ try {
   );
   await waitCameraIdle(page);
   const baseline = await world(page);
+  assert.ok(
+    baseline.every((box) => ['area', 'group', 'business_area'].includes(byId.get(box.id).kind)),
+    'A domain map presents only its immediate published children',
+  );
   await publishedEdges(page);
   checks.push('Flux is a distinct spatial view with published objects and exchanges');
 
@@ -277,6 +281,15 @@ try {
   await page.getByRole('button', { name: 'Fermer le détail du flux', exact: true }).click();
   checks.push('Exchange details preserve published orientation and contents');
 
+  const beforeMiniMapToggle = await viewport(page);
+  await page.getByRole('button', { name: 'Masquer la miniature', exact: true }).click();
+  assert.equal(await page.locator('.react-flow__minimap').count(), 0);
+  await page.getByRole('button', { name: 'Afficher la miniature', exact: true }).click();
+  await page.locator('.react-flow__minimap').waitFor();
+  assert.deepEqual(await viewport(page), beforeMiniMapToggle, 'The miniature can fold without moving the map');
+  await assertWorld(page, baseline, 'Folding the miniature preserves geography');
+  checks.push('The desktop miniature folds without changing geography or camera');
+
   const beforeZoom = await viewport(page);
   await page.getByRole('button', { name: 'Zoom avant', exact: true }).click();
   await waitViewportChange(page, beforeZoom, true);
@@ -318,9 +331,10 @@ try {
     await page.getByRole('button', { name: 'Zoom avant', exact: true }).click();
     await waitViewportChange(page, previous, true);
   }
-  assert.ok(
-    (await page.locator('.spatial-map-object').count()) >= initialObjects,
-    'Zoom retains the published perimeters inside the same territories',
+  assert.equal(
+    await page.locator('.spatial-map-object').count(),
+    initialObjects,
+    'Zoom enlarges the same hierarchy frontier without adding descendants',
   );
   assert.equal(
     await page
@@ -396,7 +410,6 @@ try {
   checks.push('The exchange layer changes independently of layout');
 
   await flowFilters(page, async (dialog) => {
-    await dialog.getByRole('radio', { name: 'Tous les flux', exact: true }).check();
     await dialog.getByRole('checkbox', { name: 'Apport de connaissance', exact: true }).uncheck();
   });
   await page.waitForFunction(() => !document.querySelector('.flow-exchange.is-knowledge'));
@@ -412,7 +425,6 @@ try {
   await assertWorld(page, baseline, 'Flow type and presentation filters never change geography');
   await flowFilters(page, async (dialog) => {
     await dialog.getByRole('checkbox', { name: 'Partage de données', exact: true }).check();
-    await dialog.getByRole('radio', { name: 'Flux principaux', exact: true }).check();
   });
   checks.push('The Flux picker independently filters published data and knowledge exchanges and their presentation');
 
@@ -441,8 +453,9 @@ try {
       const canvas = document.querySelector('.flow-map-canvas').getBoundingClientRect();
       const names = [...document.querySelectorAll('.spatial-object-title')].flatMap((element) => {
         const range = document.createRange();
-        range.selectNodeContents(element);
-        const button = element.getBoundingClientRect();
+        const content = element.querySelector('.spatial-object-name') || element;
+        range.selectNodeContents(content);
+        const button = content.getBoundingClientRect();
         return [...range.getClientRects()].flatMap((rect) => {
           const left = Math.max(rect.left, button.left, canvas.left);
           const top = Math.max(rect.top, button.top, canvas.top);
@@ -535,7 +548,13 @@ try {
   assert.ok(candidate && byId.has(candidate), 'A published spatial object is selectable');
   await page.locator(`.spatial-map-object[data-node-id="${candidate}"] .spatial-object-title`).click();
   await page.waitForFunction((id) => new URLSearchParams(location.hash.split('?')[1]).get('node') === id, candidate);
-  if (baseline.some((box) => parent.get(box.id) === candidate)) {
+  if (
+    model.nodes.some(
+      (node) =>
+        parent.get(node.id) === candidate &&
+        ['business_system', 'domain', 'area', 'group', 'business_area'].includes(node.kind),
+    )
+  ) {
     assert.equal(new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('scope'), candidate);
     await page.locator('.flow-map-panel').waitFor();
   } else {
@@ -605,6 +624,80 @@ try {
     checks.push('Breadcrumb scope changes keep independent exchange layer state');
   }
 
+  const commerce = byId.get('domain-sales');
+  const procurement = byId.get('domain-sourcing-procurement');
+  if (businessSystem?.id === 'system-business-operations' && commerce && procurement) {
+    const exchangesWithSupply = model.relations.filter((relation) => {
+      if (!['shares-data', 'provides-knowledge'].includes(relation.type)) return false;
+      const supplySource = belongs(relation.source_id, domain.id);
+      const supplyTarget = belongs(relation.target_id, domain.id);
+      const neighborSource = belongs(relation.source_id, commerce.id) || belongs(relation.source_id, procurement.id);
+      const neighborTarget = belongs(relation.target_id, commerce.id) || belongs(relation.target_id, procurement.id);
+      return (supplySource && neighborTarget) || (neighborSource && supplyTarget);
+    });
+    if (exchangesWithSupply.length) {
+      const originUrl = page.url();
+      const originCamera = await viewport(page);
+      for (let attempt = 0; attempt < 2; attempt++) {
+        await page.locator('.map-flow-picker > button').click();
+        const dialog = page.getByRole('dialog', { name: 'Filtres des flux', exact: true });
+        await dialog
+          .getByRole('button', { name: `Voir les échanges dans ${nameOf(businessSystem)}`, exact: true })
+          .click();
+        await page.waitForFunction(
+          (id) => new URLSearchParams(location.hash.split('?')[1]).get('scope') === id,
+          businessSystem.id,
+        );
+        await waitCameraIdle(page);
+        const systemWorld = await world(page);
+        assert.equal(systemWorld.length, 3, 'Business Operations presents its three Domains');
+        assert.ok(systemWorld.every((box) => byId.get(box.id).kind === 'domain'));
+        await page.waitForFunction(
+          (ids) => {
+            const displayed = new Set(
+              [...document.querySelectorAll('.flow-exchange')].flatMap((element) =>
+                element.getAttribute('data-relation-ids').split('|'),
+              ),
+            );
+            return ids.every((id) => displayed.has(id));
+          },
+          exchangesWithSupply.map((relation) => relation.id),
+        );
+        const route = new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
+        assert.equal(route.get('version'), version);
+        assert.equal(route.get('node'), businessSystem.id);
+        assert.equal(route.get('mapFocus'), null, 'The previous selection cannot hide the other neighbor');
+        assert.equal(await page.locator('.flow-map-canvas').getAttribute('data-exchange-mode'), 'main');
+        assert.equal(await page.locator('.flow-map-canvas').getAttribute('data-framing'), 'standard');
+        assert.ok(
+          await page.locator('.flow-exchange-hit[tabindex="0"]').count(),
+          'The Domain synthesis exchanges are visible at the initial Standard scale',
+        );
+        assert.equal(
+          await page.locator('.flow-scope-note, .flow-presentation-note').count(),
+          0,
+          'No explanatory banner occupies the map',
+        );
+        if (attempt === 0) {
+          await flowFilters(page, async (filters) => {
+            await filters.getByRole('checkbox', { name: 'Afficher les flux', exact: true }).uncheck();
+            await filters.getByRole('checkbox', { name: 'Partage de données', exact: true }).uncheck();
+          });
+        }
+        await page.goBack();
+        await page.waitForURL(originUrl);
+        await waitCameraIdle(page);
+        const restored = await viewport(page);
+        assert.ok(Math.hypot(restored.x - originCamera.x, restored.y - originCamera.y) < 0.2);
+        assert.ok(Math.abs(restored.zoom - originCamera.zoom) < 0.0001);
+        await assertWorld(page, baseline, 'External exchange navigation preserves the original domain map');
+      }
+      checks.push(
+        'The compact Flux menu opens every published Commerce/Procurement–Supply exchange despite cached filters, without a banner and with working Back navigation',
+      );
+    }
+  }
+
   const rootPage = await preparePage();
   await visit(rootPage, 'flows', { scope: '@root' });
   await rootPage.locator('.flow-map-canvas').waitFor();
@@ -616,7 +709,10 @@ try {
     'The initial enterprise camera agrees with the displayed zoom',
   );
   const rootWorld = await world(rootPage);
-  assert.ok(rootWorld.length >= baseline.length, 'Enterprise Architecture includes the selected domain territories');
+  assert.ok(
+    rootWorld.length > 0 && rootWorld.every((box) => byId.get(box.id).kind === 'business_system'),
+    'Enterprise Architecture synthesizes its published Business Systems',
+  );
   await publishedEdges(rootPage);
   await assertNoPageOverflow(rootPage);
   await rootPage.screenshot({ path: resolve(output, 'flows-enterprise.png') });
@@ -672,12 +768,41 @@ try {
     await assertNoPageOverflow(masterPage);
     await masterPage.screenshot({ path: resolve(output, 'flows-master-plan.png') });
     checks.push('A direct Master Plan link selects and frames the existing spatial territory');
+
+    const masterBusinessAreas = model.nodes
+      .filter((node) => node.kind === 'business_area' && parent.get(node.id) === 'domain-plan')
+      .map((node) => node.id)
+      .sort();
+    if (masterBusinessAreas.length) {
+      await masterPage.locator('[data-node-id="domain-plan"] .spatial-object-title').click();
+      await masterPage.waitForFunction((ids) => {
+        const canvas = document.querySelector('.flow-map-canvas');
+        const boxes = JSON.parse(canvas?.getAttribute('data-layout') || '[]');
+        return boxes.length === ids.length && boxes.every((box) => ids.includes(box.id));
+      }, masterBusinessAreas);
+      await waitCameraIdle(masterPage);
+      assert.equal(new URLSearchParams(new URL(masterPage.url()).hash.split('?')[1]).get('scope'), 'domain-plan');
+      await publishedEdges(masterPage);
+      await masterPage.screenshot({ path: resolve(output, 'flows-master-plan-business-areas.png') });
+      await masterPage.goBack();
+      await masterPage.waitForFunction(
+        (ids) => {
+          const boxes = JSON.parse(document.querySelector('.flow-map-canvas')?.getAttribute('data-layout') || '[]');
+          return boxes.length === ids.length && boxes.every((box) => ids.includes(box.id));
+        },
+        baseline.map((box) => box.id),
+      );
+      await waitCameraIdle(masterPage);
+      await assertWorld(masterPage, baseline, 'Back from Master Plan restores the Domain frontier');
+      checks.push('Entering Master Plan opens its published Business Areas and Back restores the Domain map');
+    }
   }
 
   const mobile = await preparePage({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
   await visit(mobile, 'flows', { node: domain.id, scope: domain.id, mapDepth: '3' });
   await mobile.locator('.flow-map-canvas').waitFor();
   await waitCameraIdle(mobile);
+  assert.equal(await mobile.locator('.react-flow__minimap').count(), 0, 'The miniature does not cover a narrow map');
   const mobileWorld = await world(mobile);
   assert.deepEqual(mobileWorld, baseline, 'Mobile keeps the same spatial world as desktop');
   await assertNoPageOverflow(mobile);
@@ -692,7 +817,16 @@ try {
   const mobileBox = await mobile.locator('.flow-map-canvas').boundingBox();
   assert.ok(mobileBox && mobileBox.width >= 250 && mobileBox.height >= 180, 'Mobile retains a useful map viewport');
   const session = await mobile.context().newCDPSession(mobile);
-  const touchStart = { x: mobileBox.x + mobileBox.width - 16, y: mobileBox.y + 16 };
+  const touchStart = await mobile.locator('.flow-map-canvas').evaluate((canvas) => {
+    const frame = canvas.getBoundingClientRect();
+    for (const fy of [0.75, 0.6, 0.4, 0.2])
+      for (const fx of [0.9, 0.7, 0.5, 0.3, 0.1]) {
+        const point = { x: frame.x + frame.width * fx, y: frame.y + frame.height * fy };
+        if (document.elementFromPoint(point.x, point.y)?.classList.contains('react-flow__pane')) return point;
+      }
+    return null;
+  });
+  assert.ok(touchStart, 'Touch panning starts on the map background, outside an object or exchange link');
   const mobileViewport = await viewport(mobile);
   await session.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ ...touchStart, id: 1 }] });
   for (let step = 1; step <= 8; step++) {
@@ -717,10 +851,14 @@ try {
   await assertWorld(mobile, mobileWorld, 'The smallest mobile viewport preserves geography');
   await assertNoPageOverflow(mobile);
   const tools = await mobile.locator('.flow-camera-tools').boundingBox();
-  assert.ok(tools && tools.height <= 36, 'Short mobile camera controls occupy one row');
-  const scopeNote = await mobile.locator('.flow-scope-note').boundingBox();
-  assert.ok(!scopeNote || scopeNote.height <= 40, 'The boundary exchange notice leaves room for the mobile map');
+  assert.ok(tools && tools.height <= 44, 'Short mobile camera controls occupy one row');
+  assert.equal(
+    await mobile.locator('.flow-scope-note, .flow-presentation-note').count(),
+    0,
+    'No boundary exchange banner occupies the mobile map',
+  );
   const cameraBounds = await mobile.locator('.flow-map-canvas').boundingBox();
+  assert.ok(tools.y >= cameraBounds.y + cameraBounds.height - 1, 'Camera controls have their own dock below the map');
   assert.ok(tools.x >= cameraBounds.x && tools.x + tools.width <= cameraBounds.x + cameraBounds.width);
   assert.ok(Math.abs((await viewport(mobile)).zoom - standardCamera.zoom) < 0.0001);
   await mobile.screenshot({ path: resolve(output, 'flows-mobile-short.png') });

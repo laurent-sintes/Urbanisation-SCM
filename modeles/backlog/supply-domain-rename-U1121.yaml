@@ -1,0 +1,670 @@
+id: SUPPLY-DOMAIN-RENAME-U1121
+date: '2026-10-16'
+status: applied_to_backlog
+source_refs:
+- U1119
+- U1120
+- U1121
+audit: supply-definitions-boundaries-audit-U1119.yaml
+market_audit: supply-scope-dynamics-U1119.yaml
+decision:
+  persistent_id: supply-chain-orchestration
+  old_name: Supply Chain Orchestration
+  name: Supply Chain Management
+  business_parent: system-business-operations
+  scope_change: false
+  new_capability_or_relation: false
+rationale: Le domaine gère les plans, les stocks et le cycle des commandes à impact stock, achats comme commerce. La production
+  est hors applicabilité Beaumanoir ; la logistique externalisée conserve ses réalisateurs. Le pilotage commercial des canaux,
+  le sourcing et les décisions financières restent distincts. Un périmètre produit ERP ne fixe pas le domaine métier.
+glossary_alignment:
+  id: TER035
+  name: Supply Chain Management
+  definition_unchanged: true
+  former_name: Supply — sens fonctionnel du projet
+  note: Sens fonctionnel local conservé ; ancien nom gardé en notes. TER083 reste Supply côté ressources, TER084 reste Supply
+    Chain ; aucun alias entre chaîne et gestion.
+  resolved_market_gaps:
+  - term_id: TER035
+    previous_gap:
+      family: sap_s4hana
+      reason: La comparaison existante ne comporte pas encore de source primaire de ce produit justifiant précisément le sens
+        de Supply — sens fonctionnel du projet. La documentation de parcours examinée ne suffit pas à établir cette correspondance.
+      investigated_urls:
+      - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
+      source_refs:
+      - U853
+    resolution: Appui de portée SAP S/4HANA effectivement consulté pour le sens fonctionnel local renommé Supply Chain Management
+      ; correspondance partielle, aucune équivalence ou réalisation complète déduite.
+    source_url: https://learning.sap.com/products/supply-chain-management
+    source_refs:
+    - U1119
+    - U1121
+targeted_alignment:
+  method: Mentions actuelles du domaine, libellés des liens et commentaires de choix de nom ; aucun remplacement des noms
+    natifs des produits, concepts ou titres de source. Identités, structure et verbatims préservés.
+  changed_leaf_counts:
+    modeles/backlog/model.yaml: 85
+    modeles/backlog/glossary.yaml: 59
+    modeles/backlog/modeling-glossary.yaml: 5
+    modeles/backlog/atlas-transformation-methodology.yaml: 2
+  audit_effect: SCOPE-U1119-04 est aligné dans la justification de nom nécessaire au renommage ; les autres constats et clarifications
+    restent proposés.
+  scope_of_agreement: Seul le nom du domaine est nouvellement capturé. TER035 est aligné éditorialement, sans capture autonome
+    de terme. Les neuf positions U1118 inchangées sont réexaminées dans le contexte du renommage, sans ajout de champ adopté.
+    Aucune adoption des descriptions, commentaires marché ou descendants par extension.
+delivery_boundary:
+  publication: 2026-10-16.4 reste figée ; nom courant visible après une prochaine release demandée.
+  atlas: Nom lu depuis la publication ; aide et icône compatibles avec ancien et nouveau nom, identifiant persistant conservé.
+  commit_or_push: false
+publication_delivery:
+  state: applied
+  summary: Renommer le domaine Supply Chain Management à périmètre constant ; aligner les mentions et TER035, préserver noms
+    natifs et publications.
+  source_refs:
+  - U1121
+  required_nodes:
+  - id: supply-chain-orchestration
+    kind: domain
+    parent: system-business-operations
+    parent_type: presents
+    fields:
+      name: Supply Chain Management
+    field_sha256:
+      market_comparisons: 04e332fb8129c2af215b023e4c5c174983d3278bd377fba5975c97897999adee
+      name: 8b0e09231166369ed0f01ae57c73a09ba28e0ef4d29270e6929e945fb5303018
+      scope: 286fec2f4ac464b8b23d244cb35d956bc42cd308a10c02bd597b2cb824d55db7
+      market_inspiration: e35494713d519018a1c709806f46dff2ca6a0e48b4bb6167856db73f7582f6c6
+  - id: ba-wholesale-account-management
+    field_sha256:
+      market_comparisons: 16977f33dc638e3a59e737dd7f64358414ca539dbf8b8824138cc84cedd41cc0
+  - id: domain-sourcing-procurement
+    field_sha256:
+      market_comparisons: a8d3ecca07f0ad15169273f0dec0ad2295613bca49a3d3011e1f0e1a5ecad523
+      scope: 4087bcdd1625654ff0b5e523e4c8535c69dcf79732cc83f82cc654d8dbf81142
+  - id: cap-partner-agreement-reference-stewardship
+    field_sha256:
+      scope: 0cb905f246103dd1a36e26a28aebdeb6f96760d7e9eb7601cb56ce6fb56bed11
+  - id: cap-merchandise-reference-stewardship
+    field_sha256:
+      scope: 8de7ec0eda5f7c06e922bd7edbc018f1034414bc6b242c5456dfd449f3bd052c
+  - id: cap-packaging-reference-stewardship
+    field_sha256:
+      scope: c56a3fbbd90f58f2562711a2908f797a2e9562661ed7515cf05823032d043989
+  - id: cap-internal-supplies-reference-stewardship
+    field_sha256:
+      scope: 38ea3e2182ae6f6fe8feb1a799a7540ff2e10da7277e3cec07a27e3be5e7a1d6
+  - id: cap-service-reference-stewardship
+    field_sha256:
+      scope: 5bf11ef68a1cf8cd8fc0ca0b91c317dc9529336e01dc6fc7be70c4a38e32c180
+  - id: domain-sales
+    field_sha256:
+      scope: 3d511457c76bb1e23b7bd108a7055eee8d43bc35f795e62a58e3b220cc75d260
+  - id: subdomain-store-backoffice-operations
+    field_sha256:
+      scope: d4888e24f3cf505294bed7eb04420d8cdd7085e6913202efa42bc2de3a64b8a9
+  - id: subdomain-pricing-promotions-management
+    field_sha256:
+      scope: 58267d1b8dd0eb339c89442f71ea47ca2bf1dd21e3f663095ae7551758f149cb
+      market_comparisons: 5a770d8e7ca0dd11202decceafa0ac834894dade599de3640fe5039d8434e6df
+  - id: subdomain-rebates-incentives-management
+    field_sha256:
+      scope: 2175bbd2ff490bacfb9090ea5c239877fd994fac06c7cd7e0c14cee1e55b32b2
+      market_comparisons: ee766926271c50fe0c4eceb1bf81bdbe71c247746151a6a6517d8f71581247c0
+  - id: ba-wholesale-sales
+    field_sha256:
+      market_comparisons: 777625730b3bfce2cf42c17a399cba3ca61d39fd12a9f8bda0342de47a67ee41
+  - id: cap-store-order-preparation-handover
+    field_sha256:
+      scope: 1debcf1b78bdc66cb1b19c83252f3305d4c6348c3d977d4668e46d485e12df78
+  - id: domain-warehousing
+    field_sha256:
+      scope: 455077e4ec21bff736e109c8c384f7ffa7977c5e280d2d5a948c24e448ada66a
+  - id: domain-transportation
+    field_sha256:
+      scope: 7208644abeadd4bc8983a9beb05fd5f12d1084f52d856dfac6be8fe1ca19296f
+  - id: domain-customs-management
+    field_sha256:
+      scope: 3e8982f6a2428cd88a1bfa4cad5afc9f26ca967c1f1e6440d81c49348c9c2799
+  - id: cap-wholesale-account-stewardship
+    field_sha256:
+      market_comparisons: 43308c72fdd26888472660e6379c79f2cf12b92973e04ae520cfd844d8e60c7d
+  - id: cap-wholesale-sales-engagement
+    field_sha256:
+      market_comparisons: 378e7c9eed4433318f60557d792e41aa219b200eec2f0ef31bdbf6476ba7dcd8
+  - id: subdomain-process-management
+    field_sha256:
+      scope: 79c45d6fa095ce7ceaf1441568c0363bf19ecb68a8499acb540d6b0902e45624
+  - id: domain-plan
+    field_sha256:
+      scope: 6a56b1f1228d4ac6b33439d3879ff4da1c6d5655408a96f17cfb2839662fb3c7
+  - id: system-business-operations
+    field_sha256:
+      market_comparisons: 20df48389061cfbae7df16b070f04862bb39e97c5326a41062650b6bbea15245
+  - id: plans-ingestion
+    field_sha256:
+      market_inspiration: e000d3c1b127cd5dc77176f385e70b10b853a81dfd0c379a6d62717e4f81f727
+  - id: subdomain-policies
+    field_sha256:
+      scope: 9ae02653998a2afe85410ed20ca69ce9520d78a5f88e92c0d69722445f100d13
+      market_comparisons: 81c6554aebe2cb7deabfb15a84ec1888a1ddb344466952a4a58c3de124c8a6a6
+  - id: D08
+    field_sha256:
+      mastership: 38f7e83c757495c16d3bc3f179a646a21557e4698d967ea9da312f7f1aa7ad9d
+  - id: master-data-ingestion
+    field_sha256:
+      mastership: 38f7e83c757495c16d3bc3f179a646a21557e4698d967ea9da312f7f1aa7ad9d
+  required_glossary:
+  - id: TER035
+    field_sha256:
+      name: 8b0e09231166369ed0f01ae57c73a09ba28e0ef4d29270e6929e945fb5303018
+      definition: bcd70ee211f0214931acc90815b9deef4defec16e36d3563ed9b7040d64c0fda
+      context: b72ed55591f67ac9a9ed5195170587bf88ca0997a8bac8dd70f8940121c54ba8
+      notes: 14c5c68016db57f801e95b1da0afa813ef38f1663ab57b0b26d5811666b24572
+  - id: TER109
+    field_sha256:
+      market_comparisons: a8d3ecca07f0ad15169273f0dec0ad2295613bca49a3d3011e1f0e1a5ecad523
+      context: 4087bcdd1625654ff0b5e523e4c8535c69dcf79732cc83f82cc654d8dbf81142
+  - id: TER271
+    field_sha256:
+      market_comparisons: ae62f3983f3f59cc2a44c9a5e741cb6c88cfb05575aa0e9dc7fc521d283ec9d5
+  - id: TER272
+    field_sha256:
+      market_comparisons: d9712d71ebbf7975277f1441f162ce7441b7a220124efd5012719213cc6f1bbe
+  - id: TER108
+    field_sha256:
+      context: 3d511457c76bb1e23b7bd108a7055eee8d43bc35f795e62a58e3b220cc75d260
+  - id: TER191
+    field_sha256:
+      market_comparisons: d41d39accb6a99636cb4fe551475dae1544c555b555bbd23be8cc872622279f7
+  - id: TER248
+    field_sha256:
+      context: d4888e24f3cf505294bed7eb04420d8cdd7085e6913202efa42bc2de3a64b8a9
+      market_comparisons: 6439845ff4a1960ecebf46948c1e15fbbe7e43356cae542f0e57ee6bdc77e174
+  - id: TER254
+    field_sha256:
+      context: 58267d1b8dd0eb339c89442f71ea47ca2bf1dd21e3f663095ae7551758f149cb
+      market_comparisons: 5a770d8e7ca0dd11202decceafa0ac834894dade599de3640fe5039d8434e6df
+  - id: TER255
+    field_sha256:
+      context: 2175bbd2ff490bacfb9090ea5c239877fd994fac06c7cd7e0c14cee1e55b32b2
+      market_comparisons: ee766926271c50fe0c4eceb1bf81bdbe71c247746151a6a6517d8f71581247c0
+  - id: TER232
+    field_sha256:
+      context: 455077e4ec21bff736e109c8c384f7ffa7977c5e280d2d5a948c24e448ada66a
+  - id: TER237
+    field_sha256:
+      context: 7208644abeadd4bc8983a9beb05fd5f12d1084f52d856dfac6be8fe1ca19296f
+  - id: TER310
+    field_sha256:
+      context: 3e8982f6a2428cd88a1bfa4cad5afc9f26ca967c1f1e6440d81c49348c9c2799
+  - id: TER164
+    field_sha256:
+      context: 79c45d6fa095ce7ceaf1441568c0363bf19ecb68a8499acb540d6b0902e45624
+  - id: TER034
+    field_sha256:
+      context: d1b739c1e6273268022ea6c10bb1a301146217db4ae62dbe6bf672f81a64c8a3
+  - id: TER111
+    field_sha256:
+      notes: be05c2864ede94c9e844773272d9b97750fe33d49c61e0b4663096c5dc186f95
+      context: 6a56b1f1228d4ac6b33439d3879ff4da1c6d5655408a96f17cfb2839662fb3c7
+  - id: TER219
+    field_sha256:
+      context: 40180bd7e4899d53d2144353bfebb0438cba111039d82bfad3c956aebfa12a25
+      market_comparisons: cbb1356a8883ac040070b4d845da87b417ec28ab269f80eecc07b90e7cbb5680
+  - id: TER106
+    field_sha256:
+      market_comparisons: 20df48389061cfbae7df16b070f04862bb39e97c5326a41062650b6bbea15245
+  - id: TER130
+    field_sha256:
+      context: 9ae02653998a2afe85410ed20ca69ce9520d78a5f88e92c0d69722445f100d13
+      market_comparisons: 81c6554aebe2cb7deabfb15a84ec1888a1ddb344466952a4a58c3de124c8a6a6
+  required_relations: []
+  required_catalog:
+  - collection: hotspots
+    id: HS-028
+    content_sha256: e65b05c82ea51474a27c3e7dc563cf7494bb4301fe76dc64263f248adf5882f3
+  - collection: paths
+    id: product-quality-feedback-path
+    content_sha256: 7238e5d3bdb0e3a0d182a840b8a1a8b55edd0cdcca4fb0151a32620f5abeae95
+  - collection: hotspots
+    id: HS-026
+    content_sha256: a2dfc2cca76e65591ab4e8d7c7e591c0647b5e40740b6d184d4ac8948ef24e49
+  - collection: principles
+    id: PRINCIPLE-SUPPLY-FIRST
+    content_sha256: ce1623937b2ddc4f4e98622dded460b4fdbc4e04181f2de0f7f69dc5c18dc332
+  - collection: principles
+    id: PRINCIPLE-ORCHESTRATION-DETAIL
+    content_sha256: a66a8db9f89a34f58a4022654e641fe6b333d004c983f8905a439685fc06e583
+  - collection: hotspots
+    id: HS-020
+    content_sha256: 78e0ac4cc92b34f06d7b9b2eeb05f1a14df867205f71b8461955f97c16f89b51
+  - collection: hotspots
+    id: HS-032
+    content_sha256: ae0330888fd59b0569fe0a1d94a554675b2ceea18fd6f34cd30afebf00937b83
+  - collection: paths
+    id: workflow-version-change-path
+    content_sha256: 09aa4f1d0ca346c6d9804e983479ba6050a6a012fd0b14eab77c99bcfaaf90b9
+  - collection: paths
+    id: service-policy-deactivation-path
+    content_sha256: d6416f66c5ad5bfaf62fe0a9bf6325043a1bd810c2aa10fa1100ed1b76414096
+  - collection: scenarios
+    id: export-remote-services
+    content_sha256: 689c4f01f68c719345bb54b750077c4e1d316cec7c3054a76bc0133f86497bca
+  - collection: application_products
+    id: product-flow-core
+    content_sha256: 4f89994b81c5d568d2e1cf1c71f16ac18359301908f47949f9fc2262471bc530
+  - collection: application_selections
+    id: selection-flow-core-target
+    content_sha256: ea110eb98982814926bcc6e940776688c46aa419ac454cabecf7d55c838fca01
+  - collection: hotspots
+    id: HS-011
+    content_sha256: 07e2f0524825886ad73abf0782b02da088680133221b3e59abfc7f50f546c32c
+  supersedes_requirements:
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: ba-wholesale-account-management
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: domain-sourcing-procurement
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-partner-agreement-reference-stewardship
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-merchandise-reference-stewardship
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-packaging-reference-stewardship
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-internal-supplies-reference-stewardship
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: nodes
+    id: cap-service-reference-stewardship
+    fields:
+    - scope
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER109
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER271
+    fields:
+    - market_comparisons
+  - annex: business-operations-capability-depth-U1079.yaml
+    collection: terms
+    id: TER272
+    fields:
+    - market_comparisons
+  - annex: business-operations-global-application-U1091.yaml
+    collection: nodes
+    id: domain-sales
+    fields:
+    - scope
+  - annex: business-operations-global-application-U1091.yaml
+    collection: nodes
+    id: subdomain-store-backoffice-operations
+    fields:
+    - scope
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER108
+    fields:
+    - context
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER191
+    fields:
+    - market_comparisons
+  - annex: business-operations-global-application-U1091.yaml
+    collection: terms
+    id: TER248
+    fields:
+    - context
+    - market_comparisons
+  - annex: business-operations-global-application-U1091.yaml
+    collection: hotspots
+    id: HS-028
+    fields:
+    - content_sha256
+  - annex: business-systems-U780.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - name
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: subdomain-pricing-promotions-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: commerce-decomposition-approval-U1026.yaml
+    collection: nodes
+    id: subdomain-rebates-incentives-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: ba-wholesale-sales
+    fields:
+    - market_comparisons
+  - annex: commerce-procurement-depth-application-U1089.yaml
+    collection: nodes
+    id: cap-store-order-preparation-handover
+    fields:
+    - scope
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-pricing-promotions-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: context-structure-application-U1027.yaml
+    collection: nodes
+    id: subdomain-rebates-incentives-management
+    fields:
+    - market_comparisons
+    - scope
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER254
+    fields:
+    - context
+    - market_comparisons
+  - annex: context-structure-application-U1027.yaml
+    collection: terms
+    id: TER255
+    fields:
+    - context
+    - market_comparisons
+  - annex: core-reference-credit-boundaries-U895.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - name
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: nodes
+    id: domain-warehousing
+    fields:
+    - scope
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: nodes
+    id: domain-transportation
+    fields:
+    - scope
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: nodes
+    id: domain-customs-management
+    fields:
+    - scope
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: nodes
+    id: cap-wholesale-account-stewardship
+    fields:
+    - market_comparisons
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: nodes
+    id: cap-wholesale-sales-engagement
+    fields:
+    - market_comparisons
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: terms
+    id: TER232
+    fields:
+    - context
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: terms
+    id: TER237
+    fields:
+    - context
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: terms
+    id: TER310
+    fields:
+    - context
+  - annex: enterprise-relationships-remediation-U1115.yaml
+    collection: paths
+    id: product-quality-feedback-path
+    fields:
+    - content_sha256
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - market_comparisons
+    - market_inspiration
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: nodes
+    id: subdomain-process-management
+    fields:
+    - scope
+  - annex: flow-remediation-U1113.yaml
+    collection: terms
+    id: TER164
+    fields:
+    - context
+  - annex: flow-remediation-U1113.yaml
+    collection: hotspots
+    id: HS-026
+    fields:
+    - content_sha256
+  - annex: global-model-remediation-U1118.yaml
+    collection: principles
+    id: PRINCIPLE-SUPPLY-FIRST
+    fields:
+    - content_sha256
+  - annex: global-model-remediation-U1118.yaml
+    collection: principles
+    id: PRINCIPLE-ORCHESTRATION-DETAIL
+    fields:
+    - content_sha256
+  - annex: glossary-audit-U902.yaml
+    collection: terms
+    id: TER034
+    fields:
+    - context
+  - annex: hotspot-complexities-U1077.yaml
+    collection: hotspots
+    id: HS-020
+    fields:
+    - content_sha256
+  - annex: hotspot-complexities-U1077.yaml
+    collection: hotspots
+    id: HS-032
+    fields:
+    - content_sha256
+  - annex: master-plan-microsoft-alignment-U1094.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - notes
+  - annex: master-plan-preparation-U1103.yaml
+    collection: nodes
+    id: domain-plan
+    fields:
+    - scope
+  - annex: master-plan-preparation-U1103.yaml
+    collection: terms
+    id: TER111
+    fields:
+    - context
+  - annex: master-plan-preparation-U1103.yaml
+    collection: terms
+    id: TER219
+    fields:
+    - context
+    - market_comparisons
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: system-business-operations
+    fields:
+    - market_comparisons
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: nodes
+    id: plans-ingestion
+    fields:
+    - market_inspiration
+  - annex: master-plan-responsibility-U1098.yaml
+    collection: terms
+    id: TER106
+    fields:
+    - market_comparisons
+  - annex: model-coherence-audit-U886.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - name
+  - annex: operational-work-audit-U881.yaml
+    collection: paths
+    id: workflow-version-change-path
+    fields:
+    - content_sha256
+  - annex: order-backlog-audit-U999.yaml
+    collection: nodes
+    id: subdomain-policies
+    fields:
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: domain-sourcing-procurement
+    fields:
+    - scope
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - name
+  - annex: planning-backlog-repositioning-U1080.yaml
+    collection: terms
+    id: TER109
+    fields:
+    - context
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: paths
+    id: service-policy-deactivation-path
+    fields:
+    - content_sha256
+  - annex: presentation-readiness-audit-U888.yaml
+    collection: paths
+    id: workflow-version-change-path
+    fields:
+    - content_sha256
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: D08
+    fields:
+    - mastership
+  - annex: product-packaging-supply-matching-U890.yaml
+    collection: nodes
+    id: master-data-ingestion
+    fields:
+    - mastership
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: nodes
+    id: subdomain-policies
+    fields:
+    - market_comparisons
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: terms
+    id: TER130
+    fields:
+    - context
+    - market_comparisons
+  - annex: semantic-coherence-approval-U1022.yaml
+    collection: scenarios
+    id: export-remote-services
+    fields:
+    - content_sha256
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: nodes
+    id: subdomain-policies
+    fields:
+    - market_comparisons
+  - annex: semantic-coherence-remediation-U1021.yaml
+    collection: terms
+    id: TER130
+    fields:
+    - context
+    - market_comparisons
+  - annex: software-product-audit-U1075.yaml
+    collection: application_products
+    id: product-flow-core
+    fields:
+    - content_sha256
+  - annex: software-product-audit-U1075.yaml
+    collection: application_selections
+    id: selection-flow-core-target
+    fields:
+    - content_sha256
+  - annex: technical-identity-U804.yaml
+    collection: nodes
+    id: supply-chain-orchestration
+    fields:
+    - name
+  - annex: transversal-remediation-U853.yaml
+    collection: paths
+    id: service-policy-deactivation-path
+    fields:
+    - content_sha256
+  - annex: visible-hotspots-editorial-U1073.yaml
+    collection: hotspots
+    id: HS-011
+    fields:
+    - content_sha256
+verification:
+  date: '2026-10-16'
+  source_index_records: 3154
+  backlog_check:
+    errors: 0
+    render: true
+    new_name_agreements: 1
+    unchanged_reading_order_context_reviews: 9
+    pending_delivery_lots: 0
+  full_model_validation_errors: 0
+  integrity:
+    nodes: 352
+    relations: 880
+    identities_and_structure: unchanged
+    reading_order: unchanged
+    native_product_and_source_names: preserved
+    TER035_definition: unchanged
+  atlas_static_checks:
+    typescript: passed
+    biome_targeted_files: passed
+    guide_and_public_text_tests: 12
+    recipe_syntax: passed
+  atlas_build:
+    result: passed
+    published_versions_reused: 107
+    published_versions_generated: 0
+    main_bundle: index-BbPMKuvf.js
+  atlas_browser_recipe:
+    result: passed
+    candidate: 'Fixture temporaire en memoire, sans publication : nouveau nom sur fiche, carte Business Operations et aide
+      atelier.'
+    historical: 2026-10-16.4 conserve Supply Chain Orchestration sur les trois memes ecrans.
+    persistent_id_and_orbit_icon: preserved_on_candidate_and_history
+    page_errors: 0
+    protected_files_with_unchanged_sha256: 120
+    release_or_canonical_write: false
+  final_canonical_sha256:
+    modeles/backlog/model.yaml: 822c5ccb6b33d9b955196db1339acfe286af9d5380de0ced3cb3a0cbf3b8aa56
+    modeles/backlog/glossary.yaml: f985019e6e28fcbe557448be904981ba8ee84f6829ca8cf33f7258357ab161d2
+    modeles/release/index.json: 3b9d6bfe5ab8563b1c046005e7199abfed8e41744f5c5a818a66225a7a3704ef

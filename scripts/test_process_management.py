@@ -39,11 +39,19 @@ class ProcessManagementTests(unittest.TestCase):
                                 'ba-human-work-management','ba-process-intelligence'})
         caps={r['target_id'] for r in self.model['relations']
               if r['source_id'] in areas and r['type']=='contains'}
-        self.assertEqual(len(caps),12)
+        self.assertEqual(len(caps),13)
+        self.assertIn('process-ledger', caps)
         self.assertTrue(all(self.nodes[c]['kind']=='capability' for c in caps))
         contributions={c['node_id'] for p in self.model['scenario_catalog']['paths']
                        for s in p['steps'] for c in s['contributions']}
-        self.assertLessEqual(caps, contributions)
+        # U1113 introduces the ledger with qualified data flows. No scenario
+        # contribution has been documented for it; preserve the original twelve.
+        self.assertEqual(caps - contributions, {'process-ledger'})
+        flows={(r['source_id'], r['target_id']) for r in self.model['relations']
+               if r['type']=='shares-data'}
+        self.assertLessEqual({('order-workflow-sentry', 'process-ledger'),
+                              ('process-ledger', 'BHV082'),
+                              ('process-ledger', 'process-mining')}, flows)
         self.assertEqual(sum(n['fields']['name']=='Process Orchestration' for n in self.nodes.values()),1)
         self.assertEqual(check_delivery(ROOT,self.model)[1],[])
 
@@ -56,11 +64,12 @@ class ProcessManagementTests(unittest.TestCase):
                 f=self.nodes[ident]['fields']; t=terms[term_id]
                 self.assertEqual(t['name'],f['name'])
                 self.assertEqual(t['definition'],f['definition'])
-                # U903 adds glossary explanations to these sheets, while the
-                # glossary keeps the full original responsibility boundary.
+                # U903 appended explanations; U1113 aligns the full glossary
+                # context, including Process Ledger, with these sheets.
                 additions = {'process-mining': 'TER201', 'BHV082': 'TER200'}
                 if ident in additions:
-                    self.assertTrue(f['scope'].startswith(t['context'] + '\n\n'))
+                    self.assertTrue(f['scope'] == t['context'] or
+                                    f['scope'].startswith(t['context'] + '\n\n'))
                     self.assertIn(('glossary', additions[ident]), references(f['scope']))
                 else:
                     self.assertEqual(t['context'],f['scope'])

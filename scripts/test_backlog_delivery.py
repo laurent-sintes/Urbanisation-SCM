@@ -6,6 +6,63 @@ from scripts.backlog_delivery import check_delivery
 
 
 class DeliveryTests(unittest.TestCase):
+    def test_principle_delivery_checks_canonical_presence_and_content(self):
+        from copy import deepcopy
+        from scripts.element_versions import content_hash
+        principle = {'id': 'PRINCIPLE-RELATION-DIRECTION',
+                     'statement': 'Une fourniture ne porte pas le rôle de dépendance inverse.'}
+        original = deepcopy(principle)
+        self.model['principles'] = [principle]
+        declaration = {'state': 'applied', 'required_catalog': [
+            {'collection': 'principles', 'id': principle['id'], 'content_sha256': content_hash(principle)}]}
+        (self.folder / 'principles.yaml').write_text(dumps({'publication_delivery': declaration}), encoding='utf-8')
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+        principle['statement'] = 'La direction est indifférente.'
+        self.assertTrue(any('catalog mismatch: PRINCIPLE-RELATION-DIRECTION' in error
+                            for error in check_delivery(self.root, self.model)[1]))
+        # An identically named scenario collection must not satisfy a model principle.
+        self.model['scenario_catalog'] = {'principles': [original]}
+        self.model['principles'] = []
+        self.assertTrue(any('catalog mismatch: PRINCIPLE-RELATION-DIRECTION' in error
+                            for error in check_delivery(self.root, self.model)[1]))
+
+    def test_principle_supersession_preserves_other_obligations(self):
+        from scripts.element_versions import content_hash
+        original = {'id': 'target', 'statement': 'Original attribution'}
+        current = dict(original, statement='Corrected attribution')
+        other = {'id': 'other', 'statement': 'Keep this principle'}
+        same_id_item = {'id': 'target', 'description': 'Keep this information proof'}
+        self.model['principles'] = [current, other]
+        self.model['information_catalog'] = {'items': [same_id_item]}
+        old_path = self.folder / 'old.yaml'
+        old_path.write_text(dumps({'publication_delivery': {
+            'state': 'applied', 'required_catalog': [
+                {'collection': collection, 'id': value['id'], 'content_sha256': content_hash(value)}
+                for collection, value in [('principles', original), ('principles', other),
+                                          ('information_items', same_id_item)]],
+            'required_nodes': [{'id': 'packing', 'fields': {'name': 'Packing Order'}}],
+        }}), encoding='utf-8')
+        old_bytes = old_path.read_bytes()
+        replacement = {'state': 'applied', 'source_refs': ['U1118'], 'required_catalog': [
+            {'collection': 'principles', 'id': current['id'], 'content_sha256': content_hash(current)}],
+            'supersedes_requirements': [{'annex': 'old.yaml', 'collection': 'principles',
+                                        'id': 'target', 'fields': ['content_sha256']}]}
+        new_path = self.folder / 'new.yaml'
+        new_path.write_text(dumps({'publication_delivery': replacement}), encoding='utf-8')
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+        self.assertEqual(old_path.read_bytes(), old_bytes)
+        for value, field in [(current, 'statement'), (other, 'statement'),
+                             (same_id_item, 'description'), (self.model['nodes'][0]['fields'], 'name')]:
+            with self.subTest(value=value, field=field):
+                before = value[field]
+                value[field] = 'Unapproved change'
+                self.assertTrue(check_delivery(self.root, self.model)[1])
+                value[field] = before
+        self.assertEqual(check_delivery(self.root, self.model)[1], [])
+        replacement['required_catalog'] = []
+        new_path.write_text(dumps({'publication_delivery': replacement}), encoding='utf-8')
+        self.assertTrue(any('invalid supersession' in error for error in check_delivery(self.root, self.model)[1]))
+
     def test_information_delivery_checks_items_and_links_separately(self):
         from copy import deepcopy
         from scripts.element_versions import content_hash

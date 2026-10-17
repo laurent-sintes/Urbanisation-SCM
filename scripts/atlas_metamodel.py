@@ -194,7 +194,8 @@ def _constraints(model):
              'rule': 'Chaque étape mobilise au moins une capacité ou référence publiée ; ses dépendances pointent vers des étapes du même parcours.',
              'source': 'validation'},
         ])
-        if any(step.get('context_participants') for path in model['scenario_catalog']['paths'] for step in path['steps']):
+        if any(step.get('context_participants') for path in model['scenario_catalog'].get('paths', [])
+               for step in path.get('steps', [])):
             rules.append({'id': 'step-context-participants', 'applies_to': 'scenario_catalog.paths.steps.context_participants',
                           'rule': 'Une participation de contexte vise un Domain, Subdomain ou Business Area à la profondeur de contexte déclarée ; rôle, conditions et sources sont explicites. Elle ne devient ni mobilisation de capacité ni parent métier.',
                           'source': 'validation'})

@@ -1,0 +1,1805 @@
+id: SUPPLY-DEFINITIONS-BOUNDARIES-AUDIT-U1119
+date: '2026-10-16'
+status: corrected_in_backlog
+source_refs:
+- U1119
+- U1120
+- U1121
+- U1122
+request:
+  U1119:
+    verbatim: |-
+      Comme on a fait du refactoring dans Supply Chain Orchestration j'aimerais un audit ciblé sur les définitions et les frontières pour être sur que tout est cohérent.
+
+      D'ailleurs, dernier point : au vu du contenu de Supply Chain Orchestration, est-ce que ça ne devrait pas s'appeler Supply Chain Management ? J'aimerais que tu audites microsoft dynamics 365 vis à vis de ce périmètre.
+    scope: Auditer les définitions et frontières après refactoring, le vocabulaire et les adhérences ; comparer le périmètre
+      aux offres Dynamics pertinentes et aux appuis SAP S/4HANA requis, puis examiner le nom du domaine.
+  U1120:
+    verbatim: |-
+      La production n'est pas référencée car Beaumanoir ne fabrique pas et la logistique est externalisée. Si Beaumnaoir me l'avait demandé, je l'aurais naturellement rajouté.
+      Concernant les achats et le commerce, les orders couvrent tout le cycle de vie des commandes qui ont un impact sur le stock. Concernant le pilotage des canaux (backoffice, network etc), je ne le gère pas en effet. Est-ce que ça justifie que mon domaine ne s'appelle pas Supply chain Management ?
+    scope: Clarifier l’applicabilité à Beaumanoir et les frontières ; ne pas déduire une lacune de production ni limiter le
+      domaine à la seule orchestration des commandes.
+  U1121:
+    verbatim: Ok, je veux donc renommer ce domaine en supply chain management
+    scope: Adopter Supply Chain Management à périmètre constant. Cet accord de nommage ne valide pas les autres corrections
+      proposées dans cet audit.
+  U1122:
+    verbatim: Applique les corrections de l'audit
+    scope: Appliquer les corrections et clarifications U1119 à structure constante, après le renommage U1121 ; aucune publication
+      ni adoption globale des champs composites.
+baseline:
+  modeles/backlog/model.yaml: 48f0868944b027076b52ad678842b68d5b62c3517bda5de8f8c251e111e57b65
+  modeles/backlog/glossary.yaml: 4e0bcfd17df97d132b645bfefaf64fd6a2821ef13d836311715dbdb5f46781c6
+  reading: État courant examiné sous le nom Supply Chain Orchestration, avant le renommage U1121. Les extraits conservent
+    les valeurs de cet état et leurs libellés historiques.
+  implementation_claim: Les constats décrivent ce baseline. Un alignement de nom sous U1121 peut changer des libellés sans
+    appliquer les autres recommandations.
+scope:
+  included:
+  - Définitions, finalités, scopes et noms du domaine et de tous ses descendants
+  - Frontières internes entre neuf sous-domaines, Business Areas, capacités, comportements et références
+  - Adhérences Commerce, Sourcing and Procurement, Logistics, Finance et Design & Development
+  - Termes métier, exemples et commentaires de positionnement qui réexpriment les frontières concernées
+  - Liens Process Ledger/Sentry/Mining nécessaires à l’examen de leurs responsabilités
+  excluded:
+  - Aucune réouverture de l’audit des comportements clos U431
+  - Aucun nouvel inventaire global des relations ou des interfaces
+  - Aucune preuve d’un déploiement ou d’une couverture installée complète
+  - Aucun ajout de production, de canal Commerce ou de responsabilité périphérique déduit du catalogue d’un éditeur
+  canonical_correction_by_this_audit: false
+  publication: false
+  commit: false
+  push: false
+  publication_delivery_required: false
+  publication_delivery_reason: Cette annexe constate et propose ; elle ne déclare pas un lot de corrections livré. Le seul
+    nom adopté U1121 est traité dans son lot séparé.
+coverage:
+  domain_id: supply-chain-orchestration
+  domain_current_name: Supply Chain Management
+  domain_name_at_baseline: Supply Chain Orchestration
+  domain_count: 1
+  descendant_count: 219
+  total_node_count: 220
+  kind_counts:
+    area: 9
+    business_area: 28
+    capability: 88
+    behavior: 74
+    reference: 20
+    domain: 1
+  reviewed_fields:
+  - fields.name
+  - fields.definition
+  - fields.finality
+  - fields.scope
+  field_presence_in_descendants:
+    name: 219
+    definition: 219
+    finality: 194
+    scope: 219
+  field_presence_note: Les finalités absentes ont été constatées ; leur absence ne constitue pas à elle seule un défaut. Les
+    autres champs sont lus seulement selon les questions ciblées.
+  branches:
+  - id: business-references
+    name: Operational References
+    count: 29
+    reviewed_ids:
+    - business-references
+    - ba-reference-maintenance
+    - master-data-ingestion
+    - master-data-ingestion-design
+    - master-data-ingestion-finance
+    - master-data-ingestion-commerce
+    - ba-service-references
+    - cap-service-reference-stewardship
+    - service-price-book
+    - D14
+    - D13
+    - ba-internal-supplies-equipment-references
+    - cap-internal-supplies-reference-stewardship
+    - internal-supplies-equipment-reference
+    - ba-packaging-references
+    - cap-packaging-reference-stewardship
+    - packaging-specification
+    - packaging-material-reference
+    - ba-product-references
+    - cap-merchandise-reference-stewardship
+    - D16
+    - D12
+    - product-price-book
+    - D08
+    - ba-partner-agreement-references
+    - cap-partner-agreement-reference-stewardship
+    - customer-credit-profile
+    - D11
+    - D09
+  - id: subdomain-policies
+    name: Supply Policy Management
+    count: 12
+    reviewed_ids:
+    - subdomain-policies
+    - ba-service-provider-controls
+    - cap-service-provider-eligibility-control
+    - D19.a
+    - ba-protection-policies
+    - demand-fulfilment-policy-management
+    - D19.b
+    - BHV020
+    - BHV019
+    - BHV018
+    - BHV017
+    - D02.b
+  - id: D01
+    name: Inventory Management
+    count: 19
+    reviewed_ids:
+    - D01
+    - ba-inventory-ownership-management
+    - inventory-ownership-ledger
+    - D01.h
+    - BHV104
+    - BHV064
+    - BHV063
+    - ba-inventory-position-management
+    - product-feedback
+    - planning-data-provision
+    - accounting-data-provision
+    - D02.c
+    - D01.d
+    - BHV031
+    - BHV030
+    - BHV029
+    - D01.c
+    - D01.g
+    - D01.f
+  - id: D04
+    name: Order Management
+    count: 34
+    reviewed_ids:
+    - D04
+    - ba-order-lifecycle-management
+    - D04.t
+    - D04.r
+    - D04.n
+    - BHV087
+    - BHV086
+    - BHV044
+    - D04.m
+    - BHV057
+    - BHV056
+    - BHV055
+    - D04.l
+    - return-replacement-resolution
+    - return-refund-resolution
+    - return-credit-resolution
+    - BHV054
+    - BHV053
+    - BHV052
+    - BHV051
+    - BHV050
+    - D04.k
+    - D04.j
+    - BHV078
+    - BHV060
+    - BHV059
+    - BHV058
+    - D04.i
+    - sales-order-preorder
+    - BHV096
+    - BHV069
+    - BHV068
+    - BHV067
+    - BHV066
+  - id: domain-plan
+    name: Master Plan
+    count: 44
+    reviewed_ids:
+    - domain-plan
+    - ba-demand-supply-plan-preparation
+    - planning-scenario-reconciliation
+    - supply-plan-development
+    - demand-plan-development
+    - demand-forecast-development
+    - ba-order-backlog-management
+    - delivery-release-decision
+    - D03.o
+    - BHV103
+    - BHV102
+    - D03.m
+    - ba-physical-stock-configuration-optimization
+    - D05.h
+    - BHV035
+    - BHV034
+    - BHV033
+    - BHV032
+    - D05.c
+    - BHV025
+    - BHV024
+    - D05.e
+    - BHV085
+    - BHV084
+    - BHV083
+    - D05.d
+    - D05.a
+    - BHV028
+    - BHV027
+    - BHV026
+    - ba-master-plan-management
+    - plans-ingestion
+    - D02.e
+    - BHV006
+    - D05.f
+    - BHV101
+    - BHV100
+    - BHV099
+    - BHV098
+    - BHV097
+    - D04.s
+    - BHV016
+    - demand-plan-visibility
+    - plans-visibility
+  - id: D03
+    name: Availability
+    count: 11
+    reviewed_ids:
+    - D03
+    - ba-order-promising
+    - D03.k
+    - BHV108
+    - BHV107
+    - D03.j
+    - BHV076
+    - BHV075
+    - D03.i
+    - BHV004
+    - BHV002
+  - id: subdomain-process-management
+    name: Process Management
+    count: 18
+    reviewed_ids:
+    - BHV082
+    - ba-human-work-management
+    - ba-process-intelligence
+    - ba-process-supervision
+    - ba-reactive-workflow-management
+    - human-task-management
+    - operational-analysis-reporting
+    - order-workflow-orchestration
+    - order-workflow-planning
+    - order-workflow-sentry
+    - process-exception-management
+    - process-intervention
+    - process-ledger
+    - process-mining
+    - subdomain-process-management
+    - work-assignment
+    - work-deadline-management
+    - workflow-definition-management
+    field_presence:
+      name: 18
+      definition: 18
+      finality: 18
+      scope: 18
+  - id: D06
+    name: Fulfilment Orchestration
+    count: 25
+    reviewed_ids:
+    - BHV048
+    - BHV049
+    - BHV079
+    - BHV080
+    - BHV081
+    - BHV105
+    - BHV106
+    - D05.i
+    - D06
+    - D06.b
+    - D06.d
+    - D06.e
+    - D06.f
+    - D07.a
+    - D07.c
+    - D07.d
+    - ba-execution-assurance
+    - ba-execution-coordination
+    - ba-inventory-disposition
+    - ba-service-planning
+    - operations-visibility
+    - service-order-release-decision
+    - transport-load-consolidation
+    - transport-plan-decision
+    - transport-routing-scheduling
+    field_presence:
+      name: 25
+      definition: 25
+      finality: 23
+      scope: 25
+  - id: subdomain-service-orders
+    name: Service Management
+    count: 27
+    reviewed_ids:
+    - ba-customs-services
+    - ba-financial-service-order-management
+    - ba-goods-processing-order-management
+    - ba-transport-order-management
+    - service-order-billing
+    - service-order-cleaning
+    - service-order-cross-docking
+    - service-order-customs-clearance
+    - service-order-garment-finishing
+    - service-order-inspection
+    - service-order-kitting
+    - service-order-labeling
+    - service-order-packing
+    - service-order-payment-collection
+    - service-order-personalization
+    - service-order-picking
+    - service-order-receiving
+    - service-order-repair-alteration
+    - service-order-scrapping
+    - service-order-transport
+    - service-order-transport-booking
+    - subdomain-service-orders
+    - transport-appointments
+    - transport-multi-leg
+    - transport-multi-stop
+    - transport-rescheduling-redirection
+    - transport-scheduled
+    field_presence:
+      name: 27
+      definition: 27
+      finality: 27
+      scope: 27
+  all_reviewed_node_ids:
+  - supply-chain-orchestration
+  - domain-plan
+  - ba-demand-supply-plan-preparation
+  - planning-scenario-reconciliation
+  - supply-plan-development
+  - demand-plan-development
+  - demand-forecast-development
+  - ba-order-backlog-management
+  - delivery-release-decision
+  - D03.o
+  - BHV103
+  - BHV102
+  - D03.m
+  - ba-physical-stock-configuration-optimization
+  - D05.h
+  - BHV035
+  - BHV034
+  - BHV033
+  - BHV032
+  - D05.c
+  - BHV025
+  - BHV024
+  - D05.e
+  - BHV085
+  - BHV084
+  - BHV083
+  - D05.d
+  - D05.a
+  - BHV028
+  - BHV027
+  - BHV026
+  - ba-master-plan-management
+  - plans-ingestion
+  - D02.e
+  - BHV006
+  - D05.f
+  - BHV101
+  - BHV100
+  - BHV099
+  - BHV098
+  - BHV097
+  - D04.s
+  - BHV016
+  - demand-plan-visibility
+  - plans-visibility
+  - D03
+  - ba-order-promising
+  - D03.k
+  - BHV108
+  - BHV107
+  - D03.j
+  - BHV076
+  - BHV075
+  - D03.i
+  - BHV004
+  - BHV002
+  - D01
+  - ba-inventory-ownership-management
+  - inventory-ownership-ledger
+  - D01.h
+  - BHV104
+  - BHV064
+  - BHV063
+  - ba-inventory-position-management
+  - product-feedback
+  - planning-data-provision
+  - accounting-data-provision
+  - D02.c
+  - D01.d
+  - BHV031
+  - BHV030
+  - BHV029
+  - D01.c
+  - D01.g
+  - D01.f
+  - D04
+  - ba-order-lifecycle-management
+  - D04.t
+  - D04.r
+  - D04.n
+  - BHV087
+  - BHV086
+  - BHV044
+  - D04.m
+  - BHV057
+  - BHV056
+  - BHV055
+  - D04.l
+  - return-replacement-resolution
+  - return-refund-resolution
+  - return-credit-resolution
+  - BHV054
+  - BHV053
+  - BHV052
+  - BHV051
+  - BHV050
+  - D04.k
+  - D04.j
+  - BHV078
+  - BHV060
+  - BHV059
+  - BHV058
+  - D04.i
+  - sales-order-preorder
+  - BHV096
+  - BHV069
+  - BHV068
+  - BHV067
+  - BHV066
+  - subdomain-policies
+  - ba-service-provider-controls
+  - cap-service-provider-eligibility-control
+  - D19.a
+  - ba-protection-policies
+  - demand-fulfilment-policy-management
+  - D19.b
+  - BHV020
+  - BHV019
+  - BHV018
+  - BHV017
+  - D02.b
+  - business-references
+  - ba-reference-maintenance
+  - master-data-ingestion
+  - master-data-ingestion-design
+  - master-data-ingestion-finance
+  - master-data-ingestion-commerce
+  - ba-service-references
+  - cap-service-reference-stewardship
+  - service-price-book
+  - D14
+  - D13
+  - ba-internal-supplies-equipment-references
+  - cap-internal-supplies-reference-stewardship
+  - internal-supplies-equipment-reference
+  - ba-packaging-references
+  - cap-packaging-reference-stewardship
+  - packaging-specification
+  - packaging-material-reference
+  - ba-product-references
+  - cap-merchandise-reference-stewardship
+  - D16
+  - D12
+  - product-price-book
+  - D08
+  - ba-partner-agreement-references
+  - cap-partner-agreement-reference-stewardship
+  - customer-credit-profile
+  - D11
+  - D09
+  - BHV082
+  - ba-human-work-management
+  - ba-process-intelligence
+  - ba-process-supervision
+  - ba-reactive-workflow-management
+  - human-task-management
+  - operational-analysis-reporting
+  - order-workflow-orchestration
+  - order-workflow-planning
+  - order-workflow-sentry
+  - process-exception-management
+  - process-intervention
+  - process-ledger
+  - process-mining
+  - subdomain-process-management
+  - work-assignment
+  - work-deadline-management
+  - workflow-definition-management
+  - BHV048
+  - BHV049
+  - BHV079
+  - BHV080
+  - BHV081
+  - BHV105
+  - BHV106
+  - D05.i
+  - D06
+  - D06.b
+  - D06.d
+  - D06.e
+  - D06.f
+  - D07.a
+  - D07.c
+  - D07.d
+  - ba-execution-assurance
+  - ba-execution-coordination
+  - ba-inventory-disposition
+  - ba-service-planning
+  - operations-visibility
+  - service-order-release-decision
+  - transport-load-consolidation
+  - transport-plan-decision
+  - transport-routing-scheduling
+  - ba-customs-services
+  - ba-financial-service-order-management
+  - ba-goods-processing-order-management
+  - ba-transport-order-management
+  - service-order-billing
+  - service-order-cleaning
+  - service-order-cross-docking
+  - service-order-customs-clearance
+  - service-order-garment-finishing
+  - service-order-inspection
+  - service-order-kitting
+  - service-order-labeling
+  - service-order-packing
+  - service-order-payment-collection
+  - service-order-personalization
+  - service-order-picking
+  - service-order-receiving
+  - service-order-repair-alteration
+  - service-order-scrapping
+  - service-order-transport
+  - service-order-transport-booking
+  - subdomain-service-orders
+  - transport-appointments
+  - transport-multi-leg
+  - transport-multi-stop
+  - transport-rescheduling-redirection
+  - transport-scheduled
+  partition_check: Les 149 et 70 descendants des deux volets internes sont disjoints ; leur union couvre les neuf branches,
+    soit 219 descendants.
+  adjacent_nodes:
+    count: 24
+    ids:
+    - cap-sales-price-determination
+    - cap-sales-pricing-rule-management
+    - cap-supplier-rebate-scheme-management
+    - domain-customs-management
+    - domain-finance
+    - domain-logistics-execution
+    - domain-product-definition-lifecycle
+    - domain-product-development
+    - domain-product-portfolio-collection
+    - domain-sales
+    - domain-sourcing-procurement
+    - domain-transportation
+    - domain-warehousing
+    - subdomain-commercial-settlement-management
+    - subdomain-cost-profitability
+    - subdomain-financial-accounting
+    - subdomain-pricing-promotions-management
+    - subdomain-product-change-release
+    - subdomain-product-definition-variants
+    - subdomain-product-documentation-classification
+    - subdomain-purchase-contract-management
+    - subdomain-rebates-incentives-management
+    - subdomain-transport-planning-dispatch
+    - system-design-development
+    read_scope: Noms, définitions et scopes des périmètres concernés ; profondeur de contexte conservée.
+  glossary_terms:
+    count: 38
+    ids:
+    - TER035
+    - TER040
+    - TER041
+    - TER045
+    - TER050
+    - TER052
+    - TER064
+    - TER069
+    - TER071
+    - TER083
+    - TER084
+    - TER085
+    - TER089
+    - TER105
+    - TER108
+    - TER109
+    - TER110
+    - TER111
+    - TER112
+    - TER117
+    - TER123
+    - TER127
+    - TER130
+    - TER150
+    - TER151
+    - TER154
+    - TER159
+    - TER164
+    - TER173
+    - TER175
+    - TER177
+    - TER184
+    - TER190
+    - TER202
+    - TER372
+    - TER373
+    - TER375
+    - TER376
+    read_scope: Sens, contexte et usages nécessaires aux frontières examinées ; comparaisons relues sur les fiches concernées.
+  reference_mastership_fields_read: 20
+  ledger_sentry_mining:
+    ledger_sentry_mining_relation_count: 29
+    ledger_sentry_mining_relation_types:
+      relates-to: 9
+      shares-data: 20
+    ledger_incoming_shares_data: 15
+    relation_ids:
+    - REL-U843-order-workflow-sentry-workflow-definition-management
+    - REL-U843-order-workflow-sentry-order-workflow-planning
+    - REL-U843-order-workflow-sentry-order-workflow-orchestration
+    - REL-U843-D07.c-order-workflow-sentry
+    - REL-U885-order-workflow-sentry-process-exception-management
+    - REL-U885-work-deadline-management-order-workflow-sentry
+    - REL-U885-process-mining-BHV082
+    - REL-U885-process-mining-human-task-management
+    - REL-U885-operational-analysis-reporting-process-mining
+    - REL-U1113-orchestration-events
+    - REL-U1113-planning-events
+    - REL-U1113-human-events
+    - REL-U1113-assignment-events
+    - REL-U1113-deadline-events
+    - REL-U1113-intervention-events
+    - REL-U1113-exception-events
+    - REL-U1113-sentry-events
+    - REL-U1113-reconciled-events-sentry
+    - REL-U1113-deadline-events-sentry
+    - REL-U1113-order-events
+    - REL-U1113-ledger-visibility
+    - REL-U1113-ledger-mining
+    - REL-U1113-mining-reporting
+    - REL-U1115-service-lifecycle-case-events
+    - REL-U1115-planning-case-events
+    - REL-U1115-supply-assignment-case-events
+    - REL-U1115-plan-application-case-events
+    - REL-U1115-inventory-case-references
+    - REL-U1115-ownership-case-references
+  model_glossary_alignment_checks:
+  - node_id: domain-sales
+    term_id: TER108
+    definition_matches: true
+    scope_context_matches: true
+  - node_id: domain-sourcing-procurement
+    term_id: TER109
+    definition_matches: true
+    scope_context_matches: true
+  - node_id: domain-logistics-execution
+    term_id: TER110
+    definition_matches: true
+    scope_context_matches: true
+  - node_id: domain-finance
+    term_id: TER117
+    definition_matches: true
+    scope_context_matches: true
+  - node_id: business-references
+    term_id: TER123
+    definition_matches: true
+    scope_context_matches: true
+  - node_id: master-data-ingestion
+    term_id: TER050
+    definition_matches: true
+    scope_context_matches: true
+  - node: subdomain-process-management
+    term: TER164
+    definition_identical: true
+    context_scope_identical: true
+  - node: order-workflow-sentry
+    term: TER127
+    definition_identical: true
+    context_scope_identical: true
+  - node: process-mining
+    term: TER173
+    definition_identical: true
+    context_scope_identical: true
+  - node: BHV082
+    term: TER175
+    definition_identical: true
+    context_scope_identical: true
+  - node: process-ledger
+    term: TER375
+    definition_identical: true
+    context_scope_identical: true
+  - node: D06.f
+    term: TER177
+    definition_identical: true
+    context_scope_identical: true
+method:
+  reading: Lectures ciblées inspect_model et structured_io ; comparaison des responsabilités et des parents courants, sans
+    déduire un défaut d’un seul nom ou d’un champ omis.
+  consolidation: Fusion des constats d’anciennes attributions à Availability des volets planning et processus en un seul groupe.
+    Les échos dans le glossaire et les commentaires marché restent rattachés au même groupe.
+  evidence: Identifiants persistants, champs et extraits du baseline ; recommandations distinctes des constats et des améliorations
+    rédactionnelles facultatives.
+  market: La matrice dédiée supply-scope-dynamics-U1119.yaml conserve les comparaisons Dynamics, les appuis SAP S/4HANA, les
+    sources et leurs limites. Ce rapport ne reproduit pas un second catalogue de sources.
+  agreement: U1121 adopte le nouveau nom du domaine, seul nom nouvellement capturé par record_decision. TER035 est aligné
+    éditorialement sur Supply Chain Management avec le même identifiant et la même définition, sans accord autonome sur le
+    terme. Les corrections des cinq autres groupes et les clarifications restent proposées ; aucune adoption ni application
+    implicite.
+executive_summary:
+  conclusion: Les principales frontières du domaine restent cohérentes dans l’arbre et les scopes de référence. Sur les six
+    groupes de reliquats constatés au baseline, SCOPE-U1119-04 a été aligné pendant U1121 et les cinq autres sont corrigés
+    par U1122. Les sept clarifications rédactionnelles sont appliquées dans le même lot, sans nouveau périmètre, maître commun
+    ni changement de structure. Les lacunes documentaires et les limites de preuve restent explicites.
+  correction_groups: 6
+  by_priority:
+    P2: 4
+    P3: 2
+  additional_proposed_clarifications: 0
+  order:
+  - id: SCOPE-U1119-01
+    title: D’anciennes attributions placent encore le collectif et l’optimisation du stock dans Availability
+    priority: P2
+  - id: SCOPE-U1119-02
+    title: Trois commentaires de Fulfilment attribuent encore le parcours à Order Management
+    priority: P2
+  - id: SCOPE-U1119-03
+    title: Des notes de positionnement réintroduisent un périmètre générique après le retrait d’Integration
+    priority: P2
+  - id: SCOPE-U1119-04
+    title: La justification Dynamics sous-décrit l’autorité locale des références
+    priority: P2
+  - id: SCOPE-U1119-05
+    title: Cinq commentaires SAP renvoient encore au périmètre retiré Document Production
+    priority: P3
+  - id: SCOPE-U1119-06
+    title: Une synthèse de Supply nomme un autre produit Oracle que sa source
+    priority: P3
+  naming: Supply Chain Management est le nom adopté sous U1121 à périmètre constant. L’applicabilité U1120 et les responsabilités
+    réelles priment sur l’exhaustivité d’une suite logicielle.
+  proposed_correction_groups: 0
+  aligned_during_rename_U1121:
+  - SCOPE-U1119-04
+  clarifications_applied_U1122: 7
+applicability_U1120:
+  source_refs:
+  - U1120
+  production: Beaumanoir ne fabrique pas ; la production n’est donc pas représentée. Cette absence relève de l’applicabilité
+    et ne constitue ni une lacune à corriger automatiquement ni une exclusion de principe du Supply Chain Management.
+  logistics: La réalisation logistique est externalisée. Le domaine conserve le pilotage des engagements confiés et la coordination
+    transverse ; Logistics conserve le choix de ses moyens, l’organisation et la réalisation locales.
+  orders: Le domaine couvre le cycle de vie complet des commandes ayant un impact sur le stock, côté achat comme commerce,
+    avec leurs engagements et changements autorisés.
+  commerce_channels: Le pilotage commercial des canaux, du réseau et du backoffice demeure hors de ce domaine. Aucun cycle
+    concurrent de commande ni responsabilité commerciale supplémentaire n’est déduit.
+  limits: Ces précisions qualifient le périmètre métier ; elles ne prouvent pas la réalisation installée de chaque capacité.
+naming_conclusion:
+  status: adopted_name_only
+  source_refs:
+  - U1121
+  domain_id: supply-chain-orchestration
+  adopted_name: Supply Chain Management
+  previous_name: Supply Chain Orchestration
+  scope_change: false
+  reason: Le domaine gère les commandes et leurs engagements, les stocks et leur propriété, les plans et arbitrages, les politiques,
+    les références locales et la conduite des processus, en plus de la coordination des prestations. Ce périmètre justifie
+    Management. L’absence de fabrication applicable et le pilotage commercial des canaux hors scope ne retirent pas ces responsabilités.
+  market_reference: supply-scope-dynamics-U1119.yaml
+  boundaries_preserved:
+  - Sourcing et négociation des achats
+  - Décisions commerciales, prix et pilotage des canaux
+  - Autorités financières et comptables
+  - Définition produit et prévision source
+  - Organisation et réalisation logistiques locales
+  application: Le lot de nommage U1121 aligne les mentions courantes et le vocabulaire métier avec le même identifiant persistant.
+    Cette annexe n’applique aucun autre correctif.
+  term_qualification_at_baseline:
+    objects:
+    - TER084
+    field: context
+    observation: Supply Chain Management est nommé en clair ; aucune entrée portant exactement ce nom n’existe dans les 402
+      termes actuels. TER035 porte le sens fonctionnel local et TER084 la chaîne élargie.
+    recommendation: Si le nom du domaine change, documenter explicitement le sens local retenu et le distinguer de la discipline/du
+      périmètre de la suite Dynamics ; ne pas renommer ni créer une équivalence avant arbitrage.
+  term_qualification_after_U1121: Le nom est désormais décidé ; son alignement lexical relève du lot U1121, sans assimilation
+    à la totalité de la discipline ni de la suite Dynamics.
+  agreement_capture:
+    newly_captured:
+      collection: nodes
+      id: supply-chain-orchestration
+      field: name
+      source_refs:
+      - U1121
+    term_alignment:
+      id: TER035
+      status: editorial_alignment_only
+      name: Supply Chain Management
+      identity_preserved: true
+      definition_unchanged: true
+      autonomous_term_agreement: false
+    tool_scope: record_decision capture les nœuds et relations ; il ne capture pas les termes.
+    U1118_context_review:
+      reading_order_count: 9
+      values_unchanged: true
+      scope: Simple réexamen du contexte des noms et supersession conservant les valeurs de reading_order ; aucun nouvel accord
+        sur leurs contenus métier.
+findings:
+- id: SCOPE-U1119-01
+  source_finding_ids:
+  - SCOPE-U1119-INT-01
+  - PROC-DEF-U1119-01
+  priority: P2
+  status: corrected_U1122
+  business_adoption: true
+  applied: true
+  title: D’anciennes attributions placent encore le collectif et l’optimisation du stock dans Availability
+  diagnosis_status_at_audit: Contradictions internes confirmées ; reliquats détectés maintenant, sans preuve d’introduction
+    par U1115 ou U1118.
+  affected_node_ids:
+  - D02.b
+  - D05.d
+  - BHV058
+  - BHV066
+  - BHV067
+  - BHV068
+  - BHV069
+  - D06
+  - D06.f
+  - service-order-transport-booking
+  affected_term_ids:
+  - TER177
+  evidence:
+  - id: D02.b
+    field: fields.scope
+    quote: Les décisions de [Availability](model:D03) recommandent les valeurs.
+    collection: nodes
+  - id: D05.d
+    field: fields.scope
+    quote: Le calcul est une décision d’[Availability](glossary:TER112) ; la règle active et ses périodes sont gouvernées
+      par Supply Policy Management.
+    collection: nodes
+  - id: BHV058
+    field: fields.scope
+    quote: D03/D03 déterminent les besoins ou réponses ; D06 suit les prestations et D01 enregistre le stock.
+    collection: nodes
+  - id: BHV066
+    field: fields.scope
+    quote: D03 décide le plan de satisfaction ; D04 porte les possibilités et engagements de promesse ; D06 orchestre préparation
+      et transport.
+    collection: nodes
+  - id: BHV066
+    field: fields.scope
+    quote: D03 optimise leur satisfaction et Order Promising calcule les possibilités de promesse et D04 porte les engagements
+      ; D03 optimise le stock
+    collection: nodes
+  - id: BHV067
+    field: fields.scope
+    quote: D03 optimise leur satisfaction et Order Promising calcule les possibilités de promesse et D04 porte les engagements
+      ; D03 optimise le stock
+    collection: nodes
+  - id: BHV068
+    field: fields.scope
+    quote: D03 optimise leur satisfaction et Order Promising calcule les possibilités de promesse et D04 porte les engagements
+      ; D03 optimise le stock
+    collection: nodes
+  - id: BHV069
+    field: fields.scope
+    quote: D03 optimise leur satisfaction et Order Promising calcule les possibilités de promesse et D04 porte les engagements
+      ; D03 optimise le stock
+    collection: nodes
+  - id: D06
+    field: fields.definition
+    excerpt: Composer et coordonner les prestations, suivre leurs dépendances et rechercher les adaptations qui préservent
+      la promesse et les équilibres d’[Availability](glossary:TER112).
+    collection: nodes
+  - id: D06.f
+    field: fields.definition
+    excerpt: Déterminer les adaptations du plan d’exécution permettant de préserver la promesse de l’[Order](glossary:TER012)
+      et les grands équilibres d’[Availability](glossary:TER112) face aux aléas.
+    collection: nodes
+  - id: D06.f
+    field: fields.scope
+    excerpt: Le plan concerné est le plan d’exécution. Préserver promesse et grands équilibres ; transmettre les impacts non
+      absorbables à [Availability](glossary:TER112) et [Order Management](model:D04), sans seuils à définir ici.
+    collection: nodes
+  - id: service-order-transport-booking
+    field: fields.scope
+    excerpt: Une allocation interne de ressources reste [Availability](glossary:TER112) ; elle n’est pas une réservation commerciale
+      auprès du prestataire.
+    collection: nodes
+  - id: TER177
+    field: definition
+    excerpt: Déterminer les adaptations du plan d’exécution permettant de préserver la promesse de l’[Order](glossary:TER012)
+      et les grands équilibres d’[Availability](glossary:TER112) face aux aléas.
+    collection: terms
+  - id: TER177
+    field: short_description
+    excerpt: Déterminer les adaptations du plan d’exécution permettant de préserver la promesse de l’[Order](glossary:TER012)
+      et les grands équilibres d’[Availability](glossary:TER112) face aux aléas.
+    collection: terms
+  counter_evidence:
+  - id: D03
+    field: fields.definition
+    quote: Établir ce qui peut être promis pour une demande identifiée, selon les ressources, le plan commun, les règles et
+      les engagements.
+    collection: nodes
+  - id: ba-physical-stock-configuration-optimization
+    field: fields.scope
+    quote: '[Logical Stock Protection Optimization](model:D05.d) recommande les droits d’usage par groupe'
+    collection: nodes
+  - id: domain-plan
+    field: fields.scope
+    quote: '[Order Backlog Management](model:ba-order-backlog-management) arbitre les priorités, les affectations et les passages
+      en livraison du carnet'
+    collection: nodes
+  - id: ba-order-promising
+    field: fields.definition
+    quote: Déterminer et réexaminer, pour une demande identifiée, les quantités, dates et conditions de satisfaction qui peuvent
+      être proposées sans confirmer encore un engagement.
+    collection: nodes
+  - id: D03
+    field: fields.definition
+    excerpt: Établir ce qui peut être promis pour une demande identifiée, selon les ressources, le plan commun, les règles
+      et les engagements.
+    collection: nodes
+  - id: domain-plan
+    field: fields.definition
+    excerpt: '[Master Plan](glossary:TER111) : établir les besoins nets et décider comment les ressources disponibles ou attendues
+      couvrent la demande retenue, y compris commande par commande en pénurie.'
+    collection: nodes
+  - id: D03.o
+    field: fields.definition
+    excerpt: Choisir les ressources qui couvrent chaque demande et réviser ces choix.
+    collection: nodes
+  - id: D06
+    field: fields.scope
+    excerpt: Une adaptation préserve la promesse d’[Order Management](model:D04) et les grands équilibres du [master plan
+      de Matching](glossary:TER100)
+    collection: nodes
+  other_affected_paths:
+  - D06.fields.market_inspiration.flow_scope
+  - D06.f.fields.market_inspiration.flow_scope
+  - D06.f.fields.market_inspiration.flow_approach
+  - TER177.context
+  market_echoes:
+  - field: D02.b.fields.market_comparisons[0].flow_position
+    matched_quotes:
+    - Les décisions de [Availability](model:D03) recommandent les valeurs.
+  - field: D02.b.fields.market_comparisons[1].flow_position
+    matched_quotes:
+    - Les décisions de [Availability](model:D03) recommandent les valeurs.
+  - field: D02.b.fields.market_comparisons[2].flow_position
+    matched_quotes:
+    - Les décisions de [Availability](model:D03) recommandent les valeurs.
+  - field: D02.b.fields.market_comparisons[3].flow_position
+    matched_quotes:
+    - Les décisions de [Availability](model:D03) recommandent les valeurs.
+  - field: D02.b.fields.market_comparisons[4].flow_position
+    matched_quotes:
+    - Les décisions de [Availability](model:D03) recommandent les valeurs.
+  - field: D02.b.fields.market_comparisons[5].flow_position
+    matched_quotes:
+    - Les décisions de [Availability](model:D03) recommandent les valeurs.
+  - field: D05.d.fields.market_comparisons[0].flow_position
+    matched_quotes:
+    - Le calcul est une décision d’[Availability](glossary:TER112) ; la règle active et ses périodes sont gouvernées par Supply
+      Policy Management.
+  - field: D05.d.fields.market_comparisons[1].flow_position
+    matched_quotes:
+    - Le calcul est une décision d’[Availability](glossary:TER112) ; la règle active et ses périodes sont gouvernées par Supply
+      Policy Management.
+  effect: Les définitions, scopes et commentaires FLOW ne donnent pas tous le même responsable au plan collectif, aux paramètres
+    de protection et aux affectations. BHV066 attribue aussi les possibilités de promesse à Order Management. Le booking externe
+    est distinct d’une affectation interne ou d’une réservation de stock.
+  correct_boundary: Master Plan porte le plan collectif ; Order Backlog Management et Supply Assignment décident priorités
+    et affectations ; Stock Optimization recommande cibles, droits, conditions et apports. Availability établit les possibilités
+    de promesse ; Order Management tient les engagements et transitions ; Inventory Management tient les réservations. Le
+    booking de transport porte l’engagement pris auprès d’un prestataire.
+  recommendation: Corriger les seuls passages qui attribuent encore une responsabilité à son ancien parent, ainsi que TER177
+    et les synthèses FLOW qui les reprennent. Dans Transport Booking Order, nommer Supply Assignment si le texte vise l’affectation
+    des ressources aux demandes, ou Reservation si leur protection est visée, sans inventer une nouvelle gestion de capacité
+    interne. Conserver les mécanismes et la décomposition des comportements.
+  related_clarifications:
+  - SCOPE-U1119-CLAR-04
+  examples_and_market_check: Les exemples autre collecte/panne et reservation maritime restent compatibles. D06.market_inspiration.flow_scope
+    et D06.f.market_inspiration.flow_scope recopient le defaut. Aucun terme autonome Transport Booking Order ni la phrase
+    allocation interne dans glossary.yaml ; TER112 et TER017 portent les distinctions actuelles.
+  limits: Les mentions d’Availability comme consommateur de plans, de règles ou de possibilités sont légitimes. Elles ne sont
+    pas toutes des transferts de responsabilité. Les huit reprises market_comparisons.flow_position de D02.b/D05.d et les
+    quatre autres chemins sont des échos de ce même groupe, pas des défauts supplémentaires.
+  market_comparison_reference: supply-scope-dynamics-U1119.yaml
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+  business_adoption_scope: Corrections locales du lot U1122 ; aucun accord étendu aux commentaires marché entiers, aux sources
+    externes ou à la réalisation installée.
+- priority: P2
+  status: corrected_U1122
+  title: Trois commentaires de Fulfilment attribuent encore le parcours à Order Management
+  evidence:
+  - id: D06
+    field: fields.market_comparisons[0].flow_position
+    excerpt: La structure du parcours de la commande relève d’[Order Management](model:D04)
+    collection: nodes
+  - id: D06
+    field: fields.market_comparisons[1].flow_position
+    excerpt: La structure du parcours de la commande relève d’[Order Management](model:D04)
+    collection: nodes
+  - id: D06
+    field: fields.market_comparisons[2].flow_position
+    excerpt: La structure du parcours de la commande relève d’[Order Management](model:D04)
+    collection: nodes
+  vendors:
+  - Oracle
+  - Microsoft
+  - SAP
+  correct_boundary: Process Management definit et conduit le parcours ; Order Management tient identite, etats, engagements
+    et validite des transitions. Fulfilment garde la coordination specialisee et ses adaptations locales dans le mandat recu.
+  counter_evidence:
+  - id: D06
+    field: fields.scope
+    excerpt: La structure du parcours de la commande relève de [Process Management](model:subdomain-process-management)
+    collection: nodes
+  - id: D04
+    field: fields.scope
+    excerpt: Le parcours est défini et conduit par [Process Management](glossary:TER164).
+    collection: nodes
+  effect: Deux sections de la meme fiche donnent la meme responsabilite a deux sous-domaines differents.
+  recommendation: Corriger les trois commentaires FLOW flow_position seulement. Preserver termes natifs, extraits, sources
+    et limites des comparaisons ; leur correction ne vaut pas nouvelle adoption.
+  examples_and_market_check: market_inspiration.flow_approach est correct sur cette frontiere. Son exemple de collecte preserve
+    la ressource engagee pour une autre commande ; il ne remet pas le parcours sous Orders.
+  id: SCOPE-U1119-02
+  source_finding_ids:
+  - PROC-DEF-U1119-02
+  diagnosis_status_at_audit: reliquat_editorial_courant
+  business_adoption: true
+  applied: true
+  market_comparison_reference: supply-scope-dynamics-U1119.yaml
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+  business_adoption_scope: Corrections locales du lot U1122 ; aucun accord étendu aux commentaires marché entiers, aux sources
+    externes ou à la réalisation installée.
+- priority: P2
+  status: corrected_U1122
+  title: Des notes de positionnement réintroduisent un périmètre générique après le retrait d’Integration
+  objects:
+  - supply-chain-orchestration
+  - master-data-ingestion
+  - TER050
+  - TER123
+  affected_fields:
+  - collection: nodes
+    id: supply-chain-orchestration
+    field: fields.market_inspiration.flow_approach
+    occurrences: 3
+  - collection: nodes
+    id: master-data-ingestion
+    field: fields.market_inspiration.flow_approach
+    occurrences: 1
+  - collection: terms
+    id: TER050
+    field: market_comparisons.0.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER050
+    field: market_comparisons.1.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER050
+    field: market_comparisons.2.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER050
+    field: market_comparisons.3.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER050
+    field: market_comparisons.4.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER050
+    field: market_comparisons.5.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER050
+    field: market_comparisons.6.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER050
+    field: market_inspiration.flow_approach
+    occurrences: 1
+  - collection: terms
+    id: TER123
+    field: market_comparisons.0.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER123
+    field: market_comparisons.1.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER123
+    field: market_comparisons.2.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER123
+    field: market_comparisons.3.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER123
+    field: market_comparisons.4.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER123
+    field: market_comparisons.5.flow_position
+    occurrences: 1
+  - collection: terms
+    id: TER123
+    field: market_inspiration.flow_approach
+    occurrences: 1
+  counts:
+    fields: 17
+    occurrences: 19
+    objects: 4
+  evidence:
+  - id: supply-chain-orchestration
+    field: fields.market_inspiration.flow_approach
+    quote: '[responsabilités métier productrices et réceptrices](model:supply-chain-orchestration) porte les échanges est-ouest
+      avec les autres domaines.'
+    collection: nodes
+  - id: supply-chain-orchestration
+    field: fields.market_inspiration.flow_approach
+    quote: '[responsabilités métier productrices et réceptrices](model:supply-chain-orchestration) reçoit les contributions
+      externes'
+    collection: nodes
+  - id: TER123
+    field: market_inspiration.flow_approach
+    quote: '[Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration),
+      reçoit les apports sourcés'
+    collection: terms
+  - id: master-data-ingestion
+    field: fields.scope
+    quote: Cette capacité appartient à [Reference Maintenance](model:ba-reference-maintenance), dans [Operational References](model:business-references).
+    collection: nodes
+  effect: La liste pédagogique SCO présente une responsabilité générique supplémentaire au même niveau que ses neuf sous-domaines.
+    Le rattachement réel de l’ingestion devient moins précis dans des notes de marché ; les contextes TER050/TER123 sont corrects
+    mais leurs commentaires de comparaison ne sont plus alignés avec les fiches.
+  recommendation: 'Réécrire ces seuls passages selon producteurs/récepteurs et parents courants : Reference Maintenance/Reference
+    Ingestion pour les références, Master Plan Management/Plan Ingestion pour les contributions de plan, registres Inventory
+    pour les diffusions documentées. Ne recréer aucun sous-domaine Integration ni parent transversal. Aligner modèle et deux
+    termes dans le même lot, sans réécrire les preuves historiques.'
+  basis: Contradiction interne avec les parents explicites et la correction U1113 ; aucune nouvelle responsabilité déduite
+    du marché.
+  related_wording:
+    id: supply-chain-orchestration
+    field: fields.market_inspiration.choice
+    quote: en reliant Matching & Balancing, application des changements et coordination de leur réalisation.
+    assessment: Libellé métier ancien à rapprocher de Master Plan ; ne pas compter comme un second défaut de frontière indépendant.
+  id: SCOPE-U1119-03
+  source_finding_ids:
+  - BND-U1119-01
+  diagnosis_status_at_audit: confirmed_editorial_and_alignment_residue
+  business_adoption: true
+  applied: true
+  market_comparison_reference: supply-scope-dynamics-U1119.yaml
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+  business_adoption_scope: Corrections locales du lot U1122 ; aucun accord étendu aux commentaires marché entiers, aux sources
+    externes ou à la réalisation installée.
+- priority: P2
+  status: aligned_during_rename_U1121
+  title: La justification Dynamics sous-décrit l’autorité locale des références
+  evidence:
+  - id: supply-chain-orchestration
+    field: fields.market_comparisons.3.definition_choice
+    value: Les référentiels Supply sont des projections reçues par ingestion ; ce choix concentre le domaine sur la coordination
+      sans nier ses responsabilités de commandes et de stocks.
+    collection: nodes
+  - id: business-references
+    field: fields.definition
+    value: Fournir les référentiels opérationnels de l’orchestration, alimentés depuis les domaines sources, en portant leur
+      référence locale fiable sans transférer la maîtrise d’entreprise.
+    collection: nodes
+  - id: business-references
+    field: fields.mastership
+    value: Source de vérité locale du domaine pour les sujets de référence ; maîtrise d’entreprise externe. Les règles actives
+      relèvent de Supply Policy Management ; les prévisions de demande et de mouvements relèvent de Plan Visibility.
+    collection: nodes
+  effect: La note servant à justifier le nom et la frontière du domaine donne une lecture plus passive que la responsabilité
+    locale U479. Le canonique de la référence reste correct ; aucun transfert de maîtrise entreprise n’est constaté.
+  recommendation: 'Dans le réexamen du nom, maintenir les deux dimensions : apports sous autorité entreprise externe et composition,
+    actualisation, qualification et fourniture de la source locale Supply. Ne pas justifier le choix Orchestration/Management
+    par la seule idée d’une copie ingérée.'
+  limits: Sous-description éditoriale ; la phrase ne nie pas littéralement toute maintenance locale. La recommandation conserve
+    U479 et ne donne pas d’autorité nouvelle.
+  id: SCOPE-U1119-04
+  source_finding_ids:
+  - BND-U1119-02
+  diagnosis_status_at_audit: confirmed_understatement_in_market_positioning
+  business_adoption: false
+  applied: true
+  market_comparison_reference: supply-scope-dynamics-U1119.yaml
+  alignment_note: Constaté avant le renommage. Le commentaire justifiant le nom a été aligné pendant U1121 sur l’autorité
+    locale active déjà canonique ; cette mise en cohérence ne vaut pas adoption de la nouvelle formulation. Pour l’état après
+    renommage, voir supply-domain-rename-U1121.yaml.
+  post_rename_reference: supply-domain-rename-U1121.yaml
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+  business_adoption_scope: Corrections locales du lot U1122 ; aucun accord étendu aux commentaires marché entiers, aux sources
+    externes ou à la réalisation installée.
+- priority: P3
+  status: corrected_U1122
+  title: Cinq commentaires SAP renvoient encore au périmètre retiré Document Production
+  evidence:
+  - id: D07.d
+    field: fields.market_comparisons[2].flow_position
+    excerpt: FLOW conserve le périmètre métier de Operations Tracking. Les documents de transport étayent seulement une partie
+      de Document Production ; aucun catalogue universel d’ordres FLOW n’est natif de ce produit.
+    collection: nodes
+  - id: BHV080
+    field: fields.market_comparisons[2].flow_position
+    excerpt: FLOW conserve le périmètre métier de Transportation Visibility. Les documents de transport étayent seulement
+      une partie de Document Production ; aucun catalogue universel d’ordres FLOW n’est natif de ce produit.
+    collection: nodes
+  - id: service-order-transport
+    field: fields.market_comparisons[2].flow_position
+    excerpt: FLOW conserve le périmètre métier de Transport Order. Les documents de transport étayent seulement une partie
+      de Document Production ; aucun catalogue universel d’ordres FLOW n’est natif de ce produit.
+    collection: nodes
+  - id: service-order-transport-booking
+    field: fields.market_comparisons[3].flow_position
+    excerpt: FLOW conserve le périmètre métier de Transport Booking Order. Les documents de transport étayent seulement une
+      partie de Document Production ; aucun catalogue universel d’ordres FLOW n’est natif de ce produit.
+    collection: nodes
+  - id: operations-visibility
+    field: fields.market_comparisons[2].flow_position
+    excerpt: FLOW conserve le périmètre métier de Operations Visibility. Les documents de transport étayent seulement une
+      partie de Document Production ; aucun catalogue universel d’ordres FLOW n’est natif de ce produit.
+    collection: nodes
+  shared_excerpt: Les documents de transport étayent seulement une partie de Document Production ; aucun catalogue universel
+    d’ordres FLOW n’est natif de ce produit.
+  other_affected_fields:
+  - differences
+  - evidence_limits
+  - definition_choice
+  correct_boundary: Les exigences documentaires appartiennent aux services de transport, douane ou Billing. Generation et
+    mise en forme des fichiers sont des moyens techniques ; aucune capacite Document Production autonome.
+  counter_evidence:
+  - id: subdomain-service-orders
+    field: fields.scope
+    excerpt: Produire un fichier ou le mettre en forme est un moyen technique, pas une capacité autonome.
+    collection: nodes
+  - id: service-order-billing
+    field: fields.scope
+    excerpt: Sa mise en forme ou sa génération de fichier ne crée pas une capacité Document Production.
+    collection: nodes
+  effect: La justification courante renvoie sans qualification historique a un perimetre retire et ne precise pas le recouvrement
+    de chaque fiche. Aucun transfert canonique constate ; defaut editorial.
+  recommendation: 'Reformuler les limites FLOW selon l objet actuel de chaque fiche : faits, visibilite, ordre de transport
+    ou booking. Conserver les sources et leurs informations natives, sans recreer Document Production.'
+  examples_and_market_check: 'Les cinq exemples de scope ont ete relus : notifications dupliquees, estimation d arrivee, transport
+    de cartons, booking maritime, document en echec/transport acheve. Ils distinguent correctement notification, estimation,
+    engagement et realisation.'
+  id: SCOPE-U1119-05
+  source_finding_ids:
+  - PROC-DEF-U1119-03
+  diagnosis_status_at_audit: reliquat_editorial_courant
+  business_adoption: true
+  applied: true
+  market_comparison_reference: supply-scope-dynamics-U1119.yaml
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+  business_adoption_scope: Corrections locales du lot U1122 ; aucun accord étendu aux commentaires marché entiers, aux sources
+    externes ou à la réalisation installée.
+- priority: P3
+  status: corrected_U1122
+  title: Une synthèse de Supply nomme un autre produit Oracle que sa source
+  evidence:
+  - id: TER083
+    field: market_inspiration.synthesis.0
+    value: Business Central oppose Supply et Demand pour équilibrer la planification. Oracle Global Demand Management examine
+      le stock et les apports pour répondre à une date demandée. L’un raisonne sur le bilan planifié, l’autre sur la promesse.
+    collection: terms
+  - id: TER083
+    field: market_comparisons.1.source_url
+    value: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/25c/fascp/overview-of-global-order-promising.html
+    collection: terms
+  - id: TER083
+    field: market_comparisons.1.source_title
+    value: Overview of Global Order Promising
+    collection: terms
+  effect: « Oracle Global Demand Management » désigne la source de promesse alors que la référence consultée est Global Order
+    Promising ; le lecteur peut attribuer au produit de demande une capacité d’évaluation des ressources issue d’un autre
+    produit.
+  recommendation: Rétablir le nom de la source effectivement référencée ; conserver Supply au sens ressources et ses limites
+    d’admissibilité. Aucun changement métier requis.
+  id: SCOPE-U1119-06
+  source_finding_ids:
+  - BND-U1119-03
+  diagnosis_status_at_audit: confirmed_source_name_mismatch
+  business_adoption: true
+  applied: true
+  market_comparison_reference: supply-scope-dynamics-U1119.yaml
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+  business_adoption_scope: Corrections locales du lot U1122 ; aucun accord étendu aux commentaires marché entiers, aux sources
+    externes ou à la réalisation installée.
+proposed_clarifications_not_confirmed_defects:
+- id: SCOPE-U1119-CLAR-01
+  priority: P3
+  type: abrégé à aligner ; pas de changement de responsabilité proposé
+  title: La finalité de Stock Optimization résume uniquement les cibles physiques
+  evidence:
+  - id: ba-physical-stock-configuration-optimization
+    field: fields.finality
+    quote: Proposer les niveaux de stock physique à viser sans effectuer les mouvements.
+  - id: ba-physical-stock-configuration-optimization
+    field: fields.definition
+    quote: Déterminer les cibles, droits et conditions d’usage du stock, les apports manquants et les redistributions utiles.
+  recommendation: Étendre la finalité au résultat collectif de ces cinq décisions en conservant la distinction avec activation
+    des politiques, tenue du stock et mouvements physiques.
+  glossary: TER202 définition et contexte couvrent déjà le périmètre large ; pas de correction requise sur cette seule preuve.
+  limits: Une finalité courte n’a pas à recopier le catalogue des capacités ; il s’agit d’éviter une lecture réductrice, pas
+    d’une responsabilité absente.
+  source_recommendation_id: SCOPE-U1119-INT-R01
+  status: clarified_U1122
+  business_adoption: true
+  applied: true
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+- id: SCOPE-U1119-CLAR-02
+  priority: P3
+  type: clarification d’identité à qualifier ; interprétation ambiguë
+  title: Transfer Order pourrait laisser croire que tous les biens doivent avoir une identité dans Product Reference
+  evidence:
+  - id: D04.k
+    field: fields.scope
+    quote: Le déplacement peut concerner des marchandises, du conditionnement ou des biens d’usage interne. [Internal Supplies
+      & Equipment Reference](model:internal-supplies-equipment-reference) précise cet usage ; l’identité du bien reste dans
+      [Product Reference](model:D08).
+  - id: D08
+    field: fields.definition
+    quote: Décrire les produits destinés à la vente et leurs variantes, avec les unités et caractéristiques utiles aux opérations.
+  - id: business-references
+    field: fields.scope
+    quote: Un même bien peut avoir plusieurs usages. Les correspondances connues entre références conservent leur provenance
+      ; aucun référentiel technique commun n’est imposé.
+  recommendation: Préciser que le transfert conserve l’identité du bien dans la référence métier concernée et les correspondances
+    connues. Ne pas imposer une inscription de tout équipement ou matière de conditionnement dans Product Reference.
+  limits: Le texte peut viser une identité commune d’un bien à plusieurs usages, ce qui est cohérent. Il ne prouve donc pas
+    à lui seul une obligation de maître technique unique ; ne pas ouvrir de catalogue universel ni de nouveau flux.
+  source_recommendation_id: SCOPE-U1119-INT-R02
+  status: clarified_U1122
+  business_adoption: true
+  applied: true
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+- id: SCOPE-U1119-CLAR-03
+  priority: P3
+  type: résumé à préciser ; pas de défaut de frontière démontré
+  title: Les résumés de Plan Visibility restent formulés autour des prévisions reçues
+  evidence:
+  - id: demand-plan-visibility
+    field: fields.definition
+    quote: Interpréter la demande prévisionnelle reçue dans le contexte d’une demande de la supply chain, pour établir les
+      besoins prévus pertinents et leurs limites d’utilisation.
+  - id: plans-visibility
+    field: fields.definition
+    quote: Interpréter les prévisions d’approvisionnement, y compris les achats, et de mouvements de stock dans le contexte
+      d’une demande de la supply chain, pour établir les mouvements prévus pertinents et leurs limites d’utilisation.
+  glossary_evidence:
+  - id: TER151
+    field: short_description
+    quote: Interpréter les prévisions reçues pour les décisions d’Availability.
+  - id: TER151
+    field: definition
+    quote: Interpréter les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) reçus dans le contexte des demandes
+      de la supply chain pour éclairer les décisions d’[Availability](glossary:TER112).
+  recommendation: Si les abrégés sont actualisés, nommer les Demand/Supply Plans qualifiés, construits localement ou alimentés
+    par des contributions externes, sans réduire le Demand Plan à la prévision source ni limiter le consommateur à Availability.
+  limits: Reçu peut aussi vouloir dire reçu d’une autre capacité locale. Les scopes courants des deux capacités et TER151.context
+    précisent déjà cette frontière ; aucune absence de capacité ou de flux n’est inférée.
+  source_recommendation_id: SCOPE-U1119-INT-R03
+  status: clarified_U1122
+  business_adoption: true
+  applied: true
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+- id: SCOPE-U1119-CLAR-04
+  priority: P3
+  type: échos à clarifier dans le même lot, sans les compter comme quatre nouveaux défauts
+  title: Distinguer recommandation de paramètres et demande de réexamen de promesse
+  evidence:
+  - id: subdomain-policies
+    field: fields.scope
+    quote: une recommandation d’Availability ne la modifie pas automatiquement.
+  - id: ba-protection-policies
+    field: fields.scope
+    quote: Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations.
+  - id: sales-order-preorder
+    field: fields.scope
+    quote: '[Availability](model:D03) interprète les prévisions et détermine les possibilités de promesse'
+  glossary_ids:
+  - TER130
+  - TER159
+  - TER150
+  recommendation: Lors de la correction INT-01, préciser Stock Optimization comme auteur des recommandations de paramètres
+    et Master Plan Management/Plan Visibility comme fournisseur de l’interprétation des plans. Conserver Availability comme
+    utilisateur du contexte et auteur de la proposition de promesse.
+  limits: La phrase générique « une recommandation d’Availability ne modifie pas la règle » peut rester vraie pour une demande
+    de réexamen. Ces formulations ne suffisent pas toutes à prouver un transfert de responsabilité ; elles sont des précisions
+    ciblées.
+  source_recommendation_id: SCOPE-U1119-INT-R04
+  status: clarified_U1122
+  business_adoption: true
+  applied: true
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+- objects:
+  - domain-finance
+  - TER117
+  field: definition
+  quote: Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les décisions
+    de l’entreprise.
+  observation: La définition est formulée autour de l’information financière et de l’aide à la décision ; le scope couvre
+    aussi décisions de crédit, trésorerie et règlements.
+  recommendation: 'Si la rédaction est revue, rendre visibles ces actes et responsabilités sans élargir la profondeur Finance.
+    Ce n’est pas une contradiction prouvée : exploiter l’information pour agir peut déjà les inclure.'
+  id: SCOPE-U1119-CLAR-05
+  priority: P3
+  status: clarified_U1122
+  business_adoption: true
+  applied: true
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+- objects:
+  - domain-logistics-execution
+  - TER110
+  field: definition
+  quote: Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées.
+  observation: Le mot physiques peut laisser au second plan les dossiers et formalités de Customs Management, explicitement
+    inclus dans son scope.
+  recommendation: Éventuellement parler de prestations d’entreposage, transport et douane puis préciser réalisation et pilotage
+    local. Aucune suppression de douane ni nouveau domaine recommandé.
+  id: SCOPE-U1119-CLAR-06
+  priority: P3
+  status: clarified_U1122
+  business_adoption: true
+  applied: true
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+- objects:
+  - domain-sourcing-procurement
+  - TER109
+  field: scope/context
+  quote: L’outil Dans l’existant, MAP porte la planification et le carnet d’achat.
+  observation: Résidu rédactionnel sans effet de frontière ; à corriger seulement dans un lot qui modifie déjà cette fiche.
+  id: SCOPE-U1119-CLAR-07
+  priority: P3
+  status: clarified_U1122
+  business_adoption: true
+  applied: true
+  remediation_reference: supply-definitions-boundaries-remediation-U1122.yaml
+coherent_boundaries:
+  planning_inventory_orders_policies_references:
+  - ids:
+    - domain-plan
+    - ba-demand-supply-plan-preparation
+    - demand-forecast-development
+    - plans-ingestion
+    conclusion: La prévision de produit source reste dans Design & Development ; réception externe, qualification opérationnelle
+      et production des plans locaux sont séparées.
+  - ids:
+    - D05.f
+    - D05.e
+    - BHV083
+    - ba-master-plan-management
+    conclusion: 'Le netting de Master Planning et celui du réassort ne prouvent pas deux propriétaires concurrents : le premier
+      établit le bilan versionné global, la décision spécialisée instruit les quantités/dates d’apport et les contraintes.
+      Le scope explicite leur coopération.'
+  - ids:
+    - D03.o
+    - D02.e
+    - D02.c
+    - D04
+    conclusion: Choix des affectations, matérialisation autorisée, réservation opposable et confirmation d’engagement restent
+      explicitement distincts.
+  - ids:
+    - delivery-release-decision
+    - ba-order-backlog-management
+    - D04.i
+    conclusion: La décision de livraison du carnet est distincte de son application par Sales Order et de la libération des
+      Service Orders en aval.
+  - ids:
+    - D03
+    - ba-order-promising
+    - D03.i
+    - D03.j
+    - D03.k
+    conclusion: Availability est recentré sur les possibilités de promesse ; ATP ressources admissibles, CTP faisabilité d’apport,
+      PTP compromis économique. Ces angles se composent, sans trois engagements concurrents.
+  - ids:
+    - D01.f
+    - D01.g
+    - inventory-ownership-ledger
+    - D01.h
+    - D01.c
+    conclusion: Captation, historique du stock, reconnaissance de propriété, historique de propriété et composition des positions
+      ont des résultats distincts ; déplacement, propriété et comptabilité ne sont pas assimilés.
+  - ids:
+    - D05.h
+    - D02.b
+    - D02.c
+    - demand-fulfilment-policy-management
+    conclusion: Recommandation de règles, activation/version applicable et engagement individuel sont séparés. Une politique
+      nouvelle ne libère pas silencieusement les réservations existantes.
+  - ids:
+    - business-references
+    - master-data-ingestion
+    - cap-merchandise-reference-stewardship
+    - cap-partner-agreement-reference-stewardship
+    - cap-packaging-reference-stewardship
+    - cap-internal-supplies-reference-stewardship
+    - cap-service-reference-stewardship
+    conclusion: Réception des apports et cohérence des vues métier locales sont distinguées ; la maîtrise d’entreprise demeure
+      externe. Les sources inconnues sont explicitement réservées.
+  - ids:
+    - D04
+    - D04.i
+    - D04.j
+    - sales-order-preorder
+    - D04.l
+    - D04.m
+    conclusion: Identité et engagement d’une commande, précommande existante, proposition d’achat amont, retour client/fournisseur
+      et résolutions financières sont distingués sans réalisation physique absorbée.
+  process_fulfilment_services:
+  - boundary: Process Ledger / Inventory Ledger / Orders
+    ids:
+    - process-ledger
+    - D01.g
+    - inventory-ownership-ledger
+    - D04
+    - REL-U1115-inventory-case-references
+    - REL-U1115-ownership-case-references
+    conclusion: Process Ledger conserve histoire du Case, deux dates, versions et corrections. Les ledgers stock/propriete
+      conservent leur autorite et leurs effets. Orders conserve etats, engagements et transitions. Les references ne creent
+      ni second effet de stock ni transition autorisee.
+  - boundary: Sentry / Tracking / Reconciliation / Ledger
+    ids:
+    - order-workflow-sentry
+    - D07.d
+    - D07.c
+    - REL-U1113-sentry-events
+    - REL-U1113-reconciled-events-sentry
+    conclusion: Sentry correle les evenements et qualifie la reaction autorisee ; Tracking capte et integre les faits, Reconciliation
+      qualifie le realise face a l attendu. Ledger conserve aussi les evenements sans reaction immediate ; aucune double imputation
+      presume.
+  - boundary: Ledger / Mining / Visibility / Reporting
+    ids:
+    - process-ledger
+    - process-mining
+    - BHV082
+    - operational-analysis-reporting
+    - REL-U1113-ledger-mining
+    - REL-U1113-ledger-visibility
+    - REL-U1113-mining-reporting
+    conclusion: Mining analyse explicitement les traces de Process Ledger. Visibility restitue situation courante/passee ;
+      Reporting utilise les mesures et leur filiation. Le modele ne fait ni de Mining le teneur du registre ni des vues une
+      source de traces concurrente.
+  - boundary: Process / Fulfilment / Service Orders / Logistics
+    ids:
+    - order-workflow-orchestration
+    - D06.d
+    - D06.f
+    - subdomain-service-orders
+    - ba-goods-processing-order-management
+    - domain-warehousing
+    - domain-transportation
+    - domain-customs-management
+    conclusion: Les scopes canoniques donnent le parcours a Process, la coordination deleguee a Fulfilment, les engagements
+      de prestation aux familles Service Orders. Passif signifie sans orchestration autonome, avec etats/invariants. Logistics
+      organise et realise ses operations internes.
+  - boundary: Transport Plan / plan local Logistics
+    ids:
+    - transport-plan-decision
+    - subdomain-transport-planning-dispatch
+    - service-order-transport
+    - service-order-release-decision
+    conclusion: Les scopes distinguent le mandat confie de son organisation locale et refusent deux calculs pour le meme mandat.
+      Booking, choix de service, construction de plan et liberation gardent leurs objets/resultats propres.
+  - boundary: Services financiers / Finance
+    ids:
+    - service-order-billing
+    - service-order-payment-collection
+    - ba-financial-service-order-management
+    - subdomain-financial-accounting
+    conclusion: Billing tient facture/avoir autorise, Payment encaissement/remboursement clients. Decision commerciale et
+      autorites fiscales/financieres, comptabilite, tresorerie et paiements fournisseurs restent distincts.
+  - boundary: Rattachement Order Backlog actuel
+    ids:
+    - domain-plan
+    - ba-order-backlog-management
+    - D06.b
+    conclusion: Le contains courant place Order Backlog Management dans Master Plan. D06.b.scope est coherent sur ce point
+      ; la piste fondee sur les reperes U1080 historiques a ete retiree.
+  adjacent_domains:
+  - boundary: Commerce / Supply Chain Management
+    state: coherent_in_scopes
+    evidence:
+    - id: domain-sales
+      field: fields.scope
+      quote: Commerce détermine les prix applicables et les dispositifs commerciaux
+      collection: nodes
+    - id: domain-sales
+      field: fields.scope
+      quote: '[Sales Order](model:D04.i) tient l’identité et les transitions autorisées ; les canaux ne créent pas un cycle
+        concurrent.'
+      collection: nodes
+    reading: Les opérations magasin et la caisse restent commerciales ; les commandes à servir et leurs engagements sont Supply
+      Chain Management. Une vente encaissée/emportée n’est pas forcée en commande restant à servir.
+  - boundary: Sourcing and Procurement / Supply Chain Management
+    state: coherent_in_scopes
+    evidence:
+    - id: domain-sourcing-procurement
+      field: fields.scope
+      quote: '[Purchase Order](model:D04.j) y conserve le document, ses états et ses transitions autorisées ; aucun cycle
+        concurrent n’est créé.'
+      collection: nodes
+    reading: Sources, sélection, accords et Cases d’achat restent Procurement ; le cycle documentaire et les engagements de
+      Purchase Order restent Supply Chain Management. Conduire un parcours ne crée pas une seconde autorité de commande.
+  - boundary: Logistics / Supply Chain Management
+    state: coherent_in_scopes
+    evidence:
+    - id: domain-logistics-execution
+      field: fields.scope
+      quote: FLOW coordonne les engagements entre acteurs ; [Logistics](glossary:TER110) décide de ses moyens, de ses vagues
+        de préparation et de ses tournées.
+      collection: nodes
+    - id: domain-customs-management
+      field: fields.scope
+      quote: '[Customs Clearance Order](model:service-order-customs-clearance) FLOW confie et suit la prestation ; les autorités
+        rendent les décisions applicables.'
+      collection: nodes
+    reading: Réalisation et pilotage local se distinguent des prestations confiées et de la coordination transverse. Le simple
+      mot organiser dans deux définitions ne démontre pas un doublon.
+  - boundary: Finance / Supply Chain Management
+    state: coherent_in_scopes
+    evidence:
+    - id: domain-finance
+      field: fields.scope
+      quote: Les domaines opérationnels restent responsables des faits qu’ils transmettent.
+      collection: nodes
+    - id: TER154
+      field: context
+      quote: La trésorerie, la tenue comptable générale et le recouvrement des impayés restent hors périmètre.
+      collection: terms
+    - id: TER190
+      field: context
+      quote: Finance conserve l’autorité sur le risque, les limites et les dérogations.
+      collection: terms
+    reading: Le service Payment Supply Chain Management reconnaît encaissements/remboursements clients sans récupérer trésorerie/comptabilité/recouvrement
+      ou paiement fournisseurs. Un profil reçu ne vaut pas décision de crédit sur une commande.
+  - boundary: Design & Development / Supply Chain Management
+    state: coherent_in_scopes
+    evidence:
+    - id: domain-product-portfolio-collection
+      field: fields.scope
+      quote: '[Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) qualifie une version prévisionnelle
+        pour le [Master Plan](model:domain-plan), sans reprendre l’autorité de la prévision amont.'
+      collection: nodes
+    - id: TER372
+      field: context
+      quote: '[Demand & Supply Forecasting](model:subdomain-demand-supply-forecasting) en porte la responsabilité dans [Design
+        & Development](glossary:TER105).'
+      collection: terms
+    reading: Le Forecast Plan source et les définitions produit restent externes ; plans opérationnels, qualification locale,
+      calcul net et affectations sont distingués. Définition locale des références ne vaut pas conception produit ni maîtrise
+      entreprise.
+  - boundary: Operational References / autorités entreprise
+    state: local_authority_preserved_in_canonical_definition_and_scope
+    evidence:
+    - id: business-references
+      field: fields.mastership
+      quote: Source de vérité locale du domaine pour les sujets de référence ; maîtrise d’entreprise externe.
+      collection: nodes
+    - id: master-data-ingestion
+      field: fields.scope
+      quote: Le domaine tient la source de vérité locale Supply ; il ne négocie pas les accords, ne conçoit pas commercialement
+        les offres et ne corrige pas silencieusement les maîtres d’entreprise.
+      collection: nodes
+    reading: 'U479 est présent dans le canonique. Les mastership: external des références désignent les autorités amont et
+      ne suffisent pas à prouver que la responsabilité locale est passive.'
+false_positives_and_known_limits:
+  not_findings:
+  - 'D05.a utilisé par Availability ne signifie pas que la capacité appartient encore à Availability : le texte peut décrire
+    un consommateur légitime.'
+  - Availability peut envisager un transfert pour une promesse ; ce n’est pas la décision de redistribution du stock réseau
+    détenue par Stock Redistribution.
+  - Le réexamen d’une promesse existante est couvert par Order Promising ; la finalité de D03 « avant confirmation » peut
+    s’entendre avant sa confirmation révisée et ne suffit pas à prouver une exclusion.
+  - Les deux usages du calcul net dans Master Planning et Requirement-based Replenishment ne suffisent pas à exiger une fusion
+    ni une suppression.
+  - 'Les capacités de Stewardship ne sont pas des doubles référentiels : elles portent la tenue/cohérence locale ; les références
+    restent des informations métier documentaires.'
+  - Les préfixes D/BHV historiques ne déterminent ni nature ni parent courant ; aucune anomalie déduite de ces seuls identifiants.
+  - objects:
+    - domain-sourcing-procurement
+    - D03.j
+    - TER045
+    - D05.f
+    reason: La mobilisation CTP par Master Planning est explicitement prévue dans TER045 et D03.j ; ne pas la déclarer contradictoire
+      au seul motif que CTP est sous Availability. Faisabilité, proposition, achat et engagement restent distincts.
+  - objects:
+    - business-references
+    - TER123
+    - D08
+    - D09
+    - D11
+    - customer-credit-profile
+    reason: L’autorité entreprise externe est compatible avec une source de vérité locale active. Le token mastership external
+      n’est pas à requalifier globalement sans lire son contexte.
+  - objects:
+    - TER035
+    - TER083
+    - TER084
+    reason: Les sens local FLOW, ressources et chaîne élargie sont déjà distingués. Le réexamen de Supply Chain Management
+      ne doit pas les fusionner par seul voisinage lexical.
+  - objects:
+    - domain-sales
+    - domain-logistics-execution
+    reason: Les verbes organiser, préparer et réaliser existent dans les deux domaines, mais scopes magasin/canaux et prestations
+      logistiques confiées sont explicités ; aucun doublon canonique démontré sur ce seul vocabulaire.
+  process_limits:
+  - Aucune couverture installee exhaustive des sources de Process Ledger n est pretendue ; les lacunes sont explicites. Direct
+    et via Sentry gardent une identite source unique, sans capture forcee hors Case.
+  - Les mecanismes generiques Process Management peuvent servir les Cases Commerce/Procurement sans absorber leurs regles
+    ni decisions. Le credit client reste sous son autorite financiere.
+  - Les mandats precis de transport et voies de justificatifs financiers conservent les reserves U1115 ; aucune realisation
+    ou responsabilite supplementaire deduite.
+  - Homonymie partielle Service Management Dynamics/SAP analysee par la racine ; aucune equivalence ni proposition automatique
+    de renommage ici.
+  market_known_gaps:
+  - 'BHV067 Customer Pickup : l’appui primaire SAP S/4HANA de la comparaison courante reste explicitement manquant.'
+  - 'BHV068 Direct Delivery : l’appui primaire SAP S/4HANA de la comparaison courante reste explicitement manquant.'
+  - Les lacunes SAP S/4HANA des sens généraux Supply, Supply Chain et Supply fonctionnel ne sont pas comblées par une équivalence
+    générale.
+  no_gap_inference: Absence de preuve ou profondeur de contexte limitée ne valent pas défaut de couverture. Les réserves existantes
+    ne deviennent pas de nouveaux constats.
+market_comparison_reference:
+  path: modeles/backlog/supply-scope-dynamics-U1119.yaml
+  role: Matrice dédiée du périmètre Microsoft Dynamics 365 et appuis primaires SAP S/4HANA ; analyse du nom et limites.
+  separate_authority: Cette annexe porte les constats de cohérence ; la matrice conserve les passages externes et la comparaison,
+    sans accord étendu.
+provenance:
+  technical_reports:
+  - part: planning_inventory_orders_policies_references
+    path: .runtime/scope-audit-U1119/internal-planning.yaml
+    sha256: f162d47e1fb0cd9829e78b9449f216f9fdeed1c4aebe341cb314aa5ac8d1ee3a
+  - part: process_fulfilment_services
+    path: .runtime/scope-audit-U1119/internal-process.yaml
+    sha256: 2e3bd731dec99b38425ee21ab3acaac5fc597d62ade1888b001a9f1c79316376
+  - part: boundaries_glossary
+    path: .runtime/scope-audit-U1119/boundaries-glossary.yaml
+    sha256: 173cd0a11cb65e502684616adf64be970679ec2f55aedd5767e34cf7bf3503ec
+  durable_evidence: Les extraits, IDs, listes de couverture et conclusions utiles sont recopiés dans cette annexe ; sa compréhension
+    ne dépend pas de la conservation des fichiers temporaires.
+limits:
+- Audit des définitions et frontières, distinct d’une correction, d’un accord détaillé et d’une publication.
+- Les extraits décrivent le baseline antérieur au renommage ; les identifiants persistants permettent leur suivi après U1121.
+- Aucune réouverture d’U431, aucun comportement ajouté ou retiré, aucun déploiement Beaumanoir déduit.
+- Les points proposés n’étendent pas les accords historiques aux textes, descendants ou nouvelles valeurs.
+- Le seul fichier durable écrit pour cette consolidation est cette annexe.
+remediation:
+  source_ref: U1122
+  annex: supply-definitions-boundaries-remediation-U1122.yaml
+  previous_audit_status: completed_with_proposed_corrections
+  status: applied_to_backlog
+  baseline_and_evidence: Empreintes et extraits du baseline conservés ; les corrections actuelles sont décrites par leur lot
+    distinct.
+  remaining_proposed_groups: 0
+  remaining_proposed_clarifications: 0
+  published_snapshot_unchanged: 2026-10-16.4

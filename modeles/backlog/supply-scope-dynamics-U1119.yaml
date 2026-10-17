@@ -1,0 +1,751 @@
+id: SUPPLY-SCOPE-DYNAMICS-U1119
+date: '2026-10-16'
+status: completed_market_comparison_with_limits
+source_refs:
+- U1119
+- U1120
+- U1121
+purpose: Comparer le périmètre métier local à Microsoft Dynamics 365 et aux appuis pertinents SAP S/4HANA, sans faire de l’offre
+  logicielle la taxonomie FLOW.
+related_audit: supply-definitions-boundaries-audit-U1119.yaml
+baseline:
+  domain_id: supply-chain-orchestration
+  name_at_audit: Supply Chain Orchestration
+  adopted_name_U1121: Supply Chain Management
+  model_sha256_at_audit: 48f0868944b027076b52ad678842b68d5b62c3517bda5de8f8c251e111e57b65
+  glossary_sha256_at_audit: 4e0bcfd17df97d132b645bfefaf64fd6a2821ef13d836311715dbdb5f46781c6
+  scope_change: false
+qualification:
+  naming: Nom du domaine Supply Chain Management adopté U1121 à périmètre constant.
+  market_comparisons: Correspondances détaillées et formulations de comparaison proposées ; aucun accord étendu.
+  new_agreement_scope: Seul nodes/supply-chain-orchestration.name est nouvellement capturé. TER035 est aligné éditorialement
+    avec même ID/définition inchangée, sans accord autonome.
+  canonical_changes_by_this_annex: false
+  publication: false
+  product_selection: false
+  license_choice: false
+method:
+  evidence_reuse: Passages effectivement consultés par la racine le 2026-10-16 puis transmis pour consolidation. Aucune nouvelle
+    lecture web par cet agent. Les résumés sont des paraphrases, pas des citations verbatim.
+  comparison_rule: Chaque ligne possède un document Microsoft et un document SAP S/4HANA pertinents et délimités. Toute partie
+    non démontrée reste une limite/lacune explicite ; deux éditeurs ne prouvent ni consensus ni équivalence complète.
+  product_boundary: Distinguer responsabilité métier, regroupement logiciel, réalisation, couverture documentaire, offre commerciale
+    et licence.
+  SAP_scope_control: SAP4 est un cours IBP utilisé seulement pour ses sections S/4HANA aATP/BOP/Product Allocation. SAP10
+    est utilisé pour les capabilities SCM S/4HANA Cloud Public/Private Edition ; IBP/GTS et autres produits de la page ne
+    sont pas amalgamés.
+  unavailable_sources: Les pages SAP Help de vue S/4HANA et de BOP au corps vide ont été remplacées par SAP Learning réellement
+    lu ; elles ne servent pas d’appui de contenu.
+  U431: Aucun réexamen du découpage ou du nombre des comportements clos U431.
+coverage:
+  subdomain_rows: 9
+  domain_and_descendants_in_related_audit: 220
+  microsoft_documents: 14
+  sap_documents: 10
+  additional_primary_sources: 3
+  consulted_on: '2026-10-16'
+  applicability_source: U1120
+offer_vs_business_scope:
+  microsoft_source_ids:
+  - MS1
+  - MS6
+  - MS7
+  - MS8
+  - MS9
+  - MS10
+  - MS14
+  sap_source_ids:
+  - SAP1
+  - SAP10
+  conclusion: Dynamics et S/4HANA couvrent plusieurs domaines EA du modèle. Un produit peut réunir plans, commandes, stocks,
+    prix, sourcing, production, actifs et réalisation sans imposer leur rattachement à un domaine unique.
+  FLOW_scope: Commandes et engagements à effet stock, inventaire et propriété, plans/arbitrages, possibilités de promesse,
+    politiques, références locales, processus et prestations confiées.
+  limits: Ni couverture complète du produit, ni choix de solution, ni disponibilité commerciale ou assemblage de licences
+    déduits de ces documents.
+subdomain_matrix:
+- id: business-references
+  name: Operational References
+  model_scope: Tenir les références locales fiables et leur cohérence, alimentées par les domaines sources sans transférer
+    la maîtrise d’entreprise.
+  illustrative_node_ids:
+  - master-data-ingestion
+  - D08
+  - D11
+  relationship: Recouvrement partiel
+  microsoft:
+    source_ids:
+    - MS7
+  sap_s4hana:
+    source_ids:
+    - SAP7
+  similarities: Données réutilisables, mise à disposition et contextes locaux sont distingués.
+  differences: Microsoft décrit aussi définition centrale et création produit ; SAP les niveaux de données ERP. FLOW tient
+    une source de vérité locale active alimentée par des autorités externes.
+  benefit_of_FLOW_boundary: Conserver provenance, version, validité et cohérence sans réduire la responsabilité à une copie
+    reçue.
+  coverage_limits_or_gaps:
+  - Aucun maître d’entreprise Beaumanoir ni contrat détaillé de chaque objet n’est démontré ; leur qualification reste requise.
+  status: proposed_market_comparison
+  business_adoption: false
+- id: subdomain-policies
+  name: Supply Policy Management
+  model_scope: Tenir et rendre applicables stratégies, protections, limites et autorisations Supply.
+  illustrative_node_ids:
+  - demand-fulfilment-policy-management
+  - D02.b
+  - D19.b
+  relationship: Recouvrement partiel
+  microsoft:
+    source_ids:
+    - MS4
+    - MS2
+  sap_s4hana:
+    source_ids:
+    - SAP4
+  similarities: Pools protégés, allocation et stratégies de réexamen encadrent les décisions et confirmations.
+  differences: Les produits réunissent configuration et consommation. FLOW distingue recommandation de paramètres, politique
+    active et réservation ; Product Allocation et allocation de groupe ne sont pas Supply Assignment.
+  benefit_of_FLOW_boundary: Séparer le cadre applicable de l’arbitrage contextuel et éviter les doubles protections.
+  coverage_limits_or_gaps:
+  - Ces passages ne démontrent pas toutes les règles de gouvernance, dérogations, seuils de renouvellement ou restrictions
+    prestataires FLOW.
+  status: proposed_market_comparison
+  business_adoption: false
+- id: D01
+  name: Inventory Management
+  model_scope: Tenir faits reconnus, positions, réservations et changements de propriété du stock, avec historique et corrections.
+  illustrative_node_ids:
+  - D01.f
+  - D01.g
+  - D01.c
+  - D02.c
+  - D01.h
+  - inventory-ownership-ledger
+  relationship: Recouvrement partiel
+  microsoft:
+    source_ids:
+    - MS3
+  sap_s4hana:
+    source_ids:
+    - SAP3
+  similarities: Stocks de sources multiples, états, mouvements et documents permettent d’expliquer les ressources connues.
+  differences: Inventory Visibility Microsoft inclut ATP, allocation et soft reservation ; FLOW place la promesse dans Availability.
+    SAP inclut valeurs et FI ; FLOW conserve les faits sans absorber les autorités comptables.
+  benefit_of_FLOW_boundary: Séparer connaissance du stock, effets reconnus, protection et promesse, sans double imputation.
+  coverage_limits_or_gaps:
+  - Pas d’identité démontrée entre soft reservation et Reservation opposable FLOW, ni équivalence complète des deux ledgers
+    et de leur contrat temporel.
+  status: proposed_market_comparison
+  business_adoption: false
+- id: D04
+  name: Order Management
+  model_scope: Gérer le cycle complet des commandes à effet stock, leurs contenus, engagements, changements et restes à satisfaire.
+  illustrative_node_ids:
+  - D04.i
+  - D04.j
+  - D04.k
+  - D04.l
+  - D04.m
+  - D04.n
+  - D04.r
+  - D04.t
+  relationship: Recouvrement partiel
+  microsoft:
+    source_ids:
+    - MS6
+    - MS14
+  sap_s4hana:
+    source_ids:
+    - SAP8
+    - SAP9
+  similarities: Commandes structurées, lignes, échéances, confirmation, reliquats, retours et documents liés sont décrits
+    côté achats et ventes.
+  differences: Les processus produit réunissent sourcing, prix, commandes, réalisation et finance. Procurement garde accords
+    et décisions d’achat, Commerce les décisions commerciales et canaux ; FLOW garde le cycle et les engagements de la commande.
+  benefit_of_FLOW_boundary: Une autorité de commande unique consomme les résultats autorisés sans cycle concurrent.
+  coverage_limits_or_gaps:
+  - Consignation, regroupement et résolutions des retours ne sont pas tous démontrés par ces documents. U1120 fixe la portée
+    métier Beaumanoir ; aucune réalisation installée n’en découle.
+  status: proposed_market_comparison
+  business_adoption: false
+- id: domain-plan
+  name: Master Plan
+  model_scope: Préparer demande et ressources opérationnelles, calculer les besoins nets, arbitrer le carnet et proposer les
+    adaptations de stock.
+  illustrative_node_ids:
+  - D05.f
+  - D03.m
+  - D03.o
+  - D05.e
+  - D05.c
+  - D02.e
+  relationship: Recouvrement partiel
+  microsoft:
+    source_ids:
+    - MS2
+  sap_s4hana:
+    source_ids:
+    - SAP2
+  similarities: Demandes connues, prévisions, stocks et ressources attendues alimentent besoins nets et propositions d’apport.
+  differences: FLOW distingue préparation des plans, calcul net, priorités/affectations, optimisation du stock et application
+    autorisée. Le cours SAP est centré sur la production et n’impose pas une fabrication Beaumanoir.
+  benefit_of_FLOW_boundary: Distinguer demande retenue, proposition, manque et effet autorisé sans confondre apport proposé
+    et commande ferme.
+  coverage_limits_or_gaps:
+  - L’appui MRP ne couvre pas toutes les affectations collectives, simulations ou arbitrages économiques FLOW. Aucun moteur
+    unique ni transfert installé depuis MAP déduit.
+  status: proposed_market_comparison
+  business_adoption: false
+- id: D03
+  name: Availability
+  model_scope: Déterminer et réexaminer quantités, dates et conditions proposées pour une demande identifiée.
+  illustrative_node_ids:
+  - ba-order-promising
+  - D03.i
+  - D03.j
+  - D03.k
+  relationship: Recouvrement partiel
+  microsoft:
+    source_ids:
+    - MS5
+  sap_s4hana:
+    source_ids:
+    - SAP4
+  similarities: ATP/aATP évaluent quantités ou dates ; CTP Microsoft examine les capacités ; BOP SAP révise les confirmations
+    lorsque la situation change.
+  differences: FLOW sépare promesse proposée, affectation collective, confirmation et réservation. Les sections S/4HANA du
+    cours IBP ne sont ni tout IBP ni toute Supply Assignment.
+  benefit_of_FLOW_boundary: Éviter qu’une évaluation soit lue comme engagement, affectation ou réservation.
+  coverage_limits_or_gaps:
+  - PTP économique complet non prouvé par ces passages. Le détail SAP de toute la faisabilité CTP n’est pas établi par la
+    seule section aATP.
+  status: proposed_market_comparison
+  business_adoption: false
+- id: subdomain-process-management
+  name: Process Management
+  model_scope: Définir, conduire et superviser parcours et travail humain, conserver les événements du Case et analyser leurs
+    traces.
+  illustrative_node_ids:
+  - workflow-definition-management
+  - order-workflow-orchestration
+  - order-workflow-sentry
+  - process-ledger
+  - process-mining
+  relationship: Recouvrement partiel
+  microsoft:
+    source_ids:
+    - MS11
+    - MS12
+    - MS13
+  sap_s4hana:
+    source_ids:
+    - SAP5
+  similarities: Workflows, tâches, décisions, approbations, activités de Cases et processus documentaires sont représentés
+    dans les sources.
+  differences: FLOW porte une conduite générique. VCM vise trois processus préconfigurés et conserve des IDs de documents
+    sans leurs données métier. Historique workflow ou case log Microsoft ne vaut pas Process Ledger complet.
+  benefit_of_FLOW_boundary: Séparer conduite du Case, états/engagements des commandes et faits/effets des ledgers de stock.
+  coverage_limits_or_gaps:
+  - Lacune Microsoft et SAP explicite pour Process Ledger exhaustif, reconstitution exacte à un instant t et chaînage Process
+    Mining complet. SAP5 ne démontre pas tout le travail humain ni la définition générique de processus FLOW.
+  status: proposed_market_comparison
+  business_adoption: false
+- id: D06
+  name: Fulfilment Orchestration
+  model_scope: Composer, coordonner et adapter les prestations confiées dans le mandat reçu, sans absorber l’organisation
+    locale.
+  illustrative_node_ids:
+  - D06.d
+  - D06.f
+  - D06.e
+  - D06.b
+  - D07.d
+  - D07.c
+  - transport-plan-decision
+  - service-order-release-decision
+  relationship: Recouvrement partiel
+  microsoft:
+    source_ids:
+    - MS11
+    - MS9
+  sap_s4hana:
+    source_ids:
+    - SAP5
+  similarities: Orchestration multi-SI, chaînes documentaires et plans de transport se rapprochent de certaines coopérations
+    FLOW.
+  differences: VCM reste préconfiguré ; IOM et Transportation Management réunissent des fonctions que FLOW distingue. Process
+    garde le parcours, Service Management les engagements et Logistics l’organisation/réalisation locales.
+  benefit_of_FLOW_boundary: Délimiter mandat transverse, adaptations admises et impacts à transmettre au réexamen de plan
+    ou promesse.
+  coverage_limits_or_gaps:
+  - Les sources SAP retenues ne démontrent pas toute la coordination spécialisée, l’adaptation et le rapprochement des prestations
+    FLOW ; aucune équivalence complète à VCM/IOM.
+  status: proposed_market_comparison
+  business_adoption: false
+- id: subdomain-service-orders
+  name: Service Management
+  model_scope: Tenir demandes, exigences et engagements individuels des prestations, leurs changements et résultats attendus.
+  illustrative_node_ids:
+  - service-order-transport
+  - service-order-transport-booking
+  - service-order-receiving
+  - service-order-packing
+  - service-order-billing
+  - service-order-payment-collection
+  relationship: Recouvrement partiel
+  microsoft:
+    source_ids:
+    - MS10
+    - MS9
+    - MS8
+  sap_s4hana:
+    source_ids:
+    - SAP6
+  similarities: Service orders, niveaux de service, confirmations et facturation documentent une partie du suivi des prestations.
+  differences: Service management Microsoft et Service S/4HANA visent surtout le service client terrain. FLOW couvre aussi
+    prestations logistiques, douanières et financières, sans catalogue natif complet équivalent.
+  benefit_of_FLOW_boundary: Conserver le responsable de chaque engagement sans absorber les opérations locales ni imposer
+    un achat à chaque prestation.
+  coverage_limits_or_gaps:
+  - Homonymie partielle. Lacune Microsoft/SAP explicite pour l’ensemble des familles FLOW ; les sources de visites/réparations
+    terrain ne suffisent pas à la combler.
+  status: proposed_market_comparison
+  business_adoption: false
+adjacent_or_non_applicable_scope:
+- topic: Production industrielle
+  source_ids:
+  - MS1
+  - SAP1
+  - SAP2
+  disposition: 'Non applicable selon U1120 : Beaumanoir ne fabrique pas. Absence du modèle actuel, sans manque automatique
+    ni exclusion de principe du Supply Chain Management.'
+  limits: Kitting, réparation ou généalogie ne prouvent pas une fabrication industrielle.
+  gap_status: not_a_model_gap
+- topic: Entreposage, transport et douane — réalisation et pilotage local
+  source_ids:
+  - MS8
+  - MS9
+  - SAP1
+  - SAP3
+  responsibility_ids:
+  - domain-logistics-execution
+  - domain-warehousing
+  - domain-transportation
+  - domain-customs-management
+  disposition: Logistique externalisée. Supply Chain Management pilote les engagements confiés et la coordination transverse
+    ; Logistics organise ses moyens et réalise localement.
+  limits: Externaliser ne supprime pas le management Supply ; les décisions des autorités douanières restent distinctes des
+    prestations confiées.
+  gap_status: documented_boundary
+- topic: Sourcing, consultations et accords d’achat
+  source_ids:
+  - MS6
+  - SAP8
+  responsibility_ids:
+  - domain-sourcing-procurement
+  - subdomain-purchase-contract-management
+  disposition: Procurement garde sélection, négociation et accords ; Supply Chain Management garde le cycle complet des commandes
+    d’achat à effet stock.
+  limits: Le produit ne prescrit ni second cycle de Purchase Order ni même parent métier.
+  gap_status: documented_boundary
+- topic: Canaux Commerce, réseau, backoffice, prix et dispositifs commerciaux
+  source_ids:
+  - MS1
+  - MS14
+  - SAP9
+  responsibility_ids:
+  - domain-sales
+  - subdomain-pricing-promotions-management
+  - subdomain-rebates-incentives-management
+  disposition: Pilotage des canaux/réseau/backoffice et décisions commerciales hors domaine ; Supply Chain Management gère
+    les commandes à effet stock et leur prix engagé.
+  limits: Ces frontières de responsabilité ne s’opposent pas au nom SCM. Les pages retenues ne démontrent pas toutes les règles
+    de promotions/primes.
+  gap_status: documented_boundary
+- topic: Finance, valorisation et règlements
+  source_ids:
+  - MS1
+  - SAP3
+  - SAP6
+  responsibility_ids:
+  - domain-finance
+  - subdomain-financial-accounting
+  - subdomain-cost-profitability
+  - subdomain-commercial-settlement-management
+  disposition: Méthodes et décisions financières restent sous Finance. Ledgers et Accounting Data Provision transmettent les
+    faits ; Billing/Payment gardent leurs services autorisés.
+  limits: FI et coûts/factures natifs ne transfèrent pas l’autorité comptable ; Payment client n’est pas étendu aux règlements
+    fournisseurs. Pas d’audit exhaustif Finance.
+  gap_status: documented_boundary
+- topic: Définition produit et données sources
+  source_ids:
+  - MS7
+  - SAP7
+  responsibility_ids:
+  - system-design-development
+  - domain-product-definition-lifecycle
+  disposition: Définitions et versions sources restent dans les responsabilités amont ; Operational References tient une source
+    locale active.
+  limits: Ni copie passive ni transfert de maîtrise d’entreprise ; autorité précise de chaque objet à qualifier.
+  gap_status: documented_boundary
+- topic: Gestion industrielle des actifs
+  source_ids:
+  - MS1
+  - SAP1
+  responsibility_ids: []
+  disposition: Non détaillée dans le périmètre actuel ; présence dans une suite ne suffit pas à imposer une capacité FLOW.
+  limits: Applicabilité non évaluée ici ; ne pas la déduire de la seule absence de fabrication.
+  gap_status: applicability_not_assessed
+naming_conclusion:
+  status: adopted_under_U1121
+  source_refs:
+  - U1120
+  - U1121
+  domain_id: supply-chain-orchestration
+  name: Supply Chain Management
+  scope_change: false
+  primary_support:
+  - MS1
+  - SAP10
+  - CSCMP1
+  terminology_comparisons:
+  - KINAXIS1
+  - ORACLE1
+  reason: Management exprime les responsabilités durables de commandes et engagements, stock et propriété, plans/arbitrages,
+    politiques, références et processus, en plus de la coordination des prestations. U1120 explique l’absence de production
+    ; l’externalisation logistique conserve un pilotage Supply. Sourcing et canaux restent des frontières EA, sans interdire
+    le nom.
+  inference: CSCMP décrit un champ de management/coordination ; Microsoft et SAP emploient SCM pour une portée large. Cela
+    appuie le nom dans le contexte FLOW sans imposer le contenu intégral d’une suite ni toutes les activités à chaque entreprise.
+  orchestration_term_not_disqualified: Kinaxis emploie Orchestration au-delà de l’exécution et Oracle conserve Supply Chain
+    Orchestration. Le renommage FLOW ne rend pas ces usages faux et ne réécrit pas leurs noms natifs.
+  boundaries_preserved:
+  - Autorités produit et prévision source
+  - Sourcing et négociation
+  - Décisions commerciales et pilotage des canaux
+  - Autorités financières et comptables
+  - Organisation et réalisation locales de Logistics
+  adoption_limit: Accord sur le nom du domaine seulement ; TER035 aligné éditorialement. Aucun accord global sur les comparaisons,
+    corrections proposées, produits ou licences.
+source_catalog:
+- id: MS1
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Supply Chain Management welcome
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/supply-chain-management-welcome
+  sections: Core concepts
+  passage_summary: Plans, stocks, achats, information produit, engineering, production, actifs, services, ventes, prix, ristournes,
+    entreposage et transport.
+  limits: L’offre réunit plusieurs responsabilités EA ; sa liste de fonctions ne prescrit pas le découpage FLOW.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS2
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Master planning home page
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+  sections: Master planning ; forecast planning ; planned orders
+  passage_summary: Calcul des besoins nets à partir des commandes et ressources ; prévisions de besoins bruts et propositions
+    planifiées.
+  limits: Le produit réunit calculs et opérations que FLOW distingue ; proposition ne vaut pas commande ferme.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS3
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management — Inventory Visibility
+  title: Inventory Visibility
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility
+  sections: Sources ; états et agrégats ; soft reservation ; ATP ; allocation
+  passage_summary: Agrégation de sources multiples et états de stock ; soft reservation, ATP et allocation.
+  limits: Ne prouve ni ledger complet ni identité de sens entre soft reservation, Reservation FLOW et Supply Assignment.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS4
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management — Inventory Visibility
+  title: Inventory Visibility inventory allocation
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/inventory/inventory-visibility-allocation
+  sections: Pools protégés ; repères 31–45 transmis par la racine
+  passage_summary: Des pools de quantités protègent des canaux ou groupes avant les ventes.
+  limits: Allocation de groupe, soft reservation et affectation ressource-demande FLOW ne sont pas synonymes ; gouvernance
+    FLOW plus large.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS5
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Order promising — delivery dates and ATP calculations
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/delivery-dates-available-promise-calculations
+  sections: ATP ; CTP ; dates de livraison
+  passage_summary: ATP et CTP évaluent les dates ; CTP tient compte des capacités nécessaires.
+  limits: Le PTP économique complet FLOW n’est pas démontré ; évaluation, proposition et confirmation restent distinctes.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS6
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Procurement and sourcing overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/procurement/procurement-sourcing-overview
+  sections: Stratégies ; RFQ ; commandes ; approbation ; confirmation ; réception ; facturation
+  passage_summary: Commandes issues de propositions planifiées ou demandes, stratégies, consultations, approbation, confirmation
+    fournisseur, réception et facturation.
+  limits: Traverse Procurement, Supply Chain Management, Logistics et Finance ; pas d’achat imposé à toute prestation.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS7
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Product information management
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/pim/product-information
+  sections: Définition centrale ; création ou import PLM/PIM ; données released locales
+  passage_summary: Définition centrale créée ou importée depuis PLM/PIM et mise à disposition dans des contextes locaux.
+  limits: Ne transfère pas la maîtrise d’entreprise aux références locales FLOW ; autorité par objet à qualifier.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS8
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Warehouse management overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/warehousing/warehouse-management-overview
+  sections: Réception ; placement ; préparation ; packing ; expédition ; travail local
+  passage_summary: Opérations et travail locaux de réception, rangement, préparation, emballage et expédition.
+  limits: Organisation et réalisation locales à distinguer des engagements et de la coordination transverse FLOW.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS9
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Transportation management overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/transportation/transportation-management-overview
+  sections: Routes ; transporteurs ; plans de charge ; flux entrants/sortants ; prestataires externes
+  passage_summary: Routes, transporteurs et plans de charge entrants/sortants, avec prestataires externes.
+  limits: Ne démontre pas le mandat de chaque acteur FLOW ; plan confié, choix de prestation et organisation locale restent
+    distincts.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS10
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management — Service management
+  title: Service management home page
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/service-management/service-management-home-page
+  sections: Visites ; réparation ; techniciens ; contrats ; SLA ; facturation
+  passage_summary: Visites et réparations, techniciens, contrats, niveaux de service et facturation.
+  limits: Homonymie partielle avec les services FLOW ; ne couvre pas toutes ses familles logistiques, douanières et financières.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS11
+  vendor: Microsoft
+  product: Dynamics 365 Intelligent Order Management
+  title: Intelligent Order Management overview
+  url: https://learn.microsoft.com/en-us/dynamics365/intelligent-order-management/overview
+  sections: Orchestration multi-SI ; Inventory Visibility ; fulfillment optimization ; retours
+  passage_summary: Orchestration des parcours orders multi-SI, données, stocks, satisfaction et retours.
+  limits: Ne couvre pas automatiquement tout le domaine FLOW et n’impose pas sa taxonomie de capacités.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS12
+  vendor: Microsoft
+  product: Dynamics 365 Finance and Operations apps
+  title: Workflow system overview
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/fin-ops/organization-administration/overview-workflow-system
+  sections: Documents ; tâches ; décisions ; approbations ; historique
+  passage_summary: Les workflows organisent documents, tâches, décisions et approbations, avec historique.
+  limits: Ne prouve pas Process Ledger exhaustif, reconstitution exacte à un instant t ni Process Mining complet.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS13
+  vendor: Microsoft
+  product: Dynamics 365 Finance and Operations apps
+  title: Cases
+  url: https://learn.microsoft.com/en-us/dynamics365/fin-ops-core/dev-itpro/organization-administration/cases
+  sections: Cases ; activités ; case log ; analyse
+  passage_summary: Gestion de Cases, activités, case log et analyse.
+  limits: Le case log ne démontre pas le contrat complet de Process Ledger FLOW, sa couverture événementielle ou Process Mining.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: MS14
+  vendor: Microsoft
+  product: Dynamics 365 Supply Chain Management
+  title: Sales and marketing overview
+  url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/sales-marketing/overview-sales-marketing
+  sections: Quotes ; Sales Orders ; confirmation ; backorders ; retours ; factures
+  passage_summary: Devis et commandes clients, confirmations, reliquats, retours et facturation.
+  limits: Les modules mêlent Commerce, Supply Chain Management et Finance du modèle ; aucun cycle concurrent déduit.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: SAP1
+  vendor: SAP
+  product: SAP S/4HANA Cloud
+  title: SAP S/4HANA Cloud
+  url: https://learning.sap.com/products/s4hana-cloud
+  sections: Capabilities de l’offre
+  passage_summary: Actifs, finance, fabrication, engineering produit, ventes, services, sourcing, Supply Chain, Transportation
+    et Warehouse Management.
+  limits: La maille produit n’impose pas la décomposition FLOW ni une responsabilité non applicable.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: SAP2
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Understanding MRP in SAP S/4HANA
+  url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/understanding-mrp-in-sap-s-4hana
+  sections: Demandes ; prévisions ; stocks ; besoins nets ; propositions et conversion
+  passage_summary: Demandes connues, prévisions et stocks alimentent besoins nets et propositions ; leur conversion les distingue
+    des commandes d’achat résultantes.
+  limits: Cours centré sur la production ; ne prouve pas une fabrication Beaumanoir ni toute l’affectation collective FLOW.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: SAP3
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Managing Goods Movements
+  url: https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap/managing-goods-movements_d7cf8543-eb45-490b-810a-237bbd17485f
+  sections: Inventory Management MM ; EWM ; quantités/valeurs ; documents ; FI
+  passage_summary: Rôles Inventory MM/EWM distincts, mouvements et documents, quantités et valeurs, intégration financière.
+  limits: La valorisation et FI dépassent le ledger de faits FLOW ; pas d’équivalence complète du contrat de propriété/réservation.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: SAP4
+  vendor: SAP
+  product: SAP S/4HANA aATP — sections d’un cours SAP IBP
+  title: Response Planning and Available-to-Promise (ATP)
+  url: https://learning.sap.com/courses/mastering-sap-ibp-for-response-and-supply-order-based-planning/response-planning-and-available-to-promise-atp_bae753a5-3f1e-4d2a-81f5-97b528a15148
+  sections: Seulement sections S/4HANA aATP, BOP et Product Allocation
+  passage_summary: aATP propose quantités/dates ; BOP révise les confirmations après changement de situation ; Product Allocation
+    encadre les confirmations.
+  limits: Le reste du cours concerne IBP. Seules ces sections servent d’appui S/4HANA ; Product Allocation n’est pas toute
+    Supply Assignment FLOW.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: SAP5
+  vendor: SAP
+  product: SAP S/4HANA Sales — Value Chain Monitoring
+  title: Executing the Advanced Intercompany Sales and Stock Transfer Process
+  url: https://learning.sap.com/courses/functions-innovations-in-sap-s-4hana-sales/executing-the-advanced-intercompany-sales-and-stock-transfer-process_c5f8e409-c8e3-4e0a-b736-6d1d93d0f2bc
+  sections: VCM ; trois processus préconfigurés ; références documentaires
+  passage_summary: VCM orchestre trois processus préconfigurés et ne conserve que des identifiants documentaires, pas leurs
+    données métier.
+  limits: Ne démontre ni Case générique ni Process Ledger ni toute la coordination des prestations FLOW.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: SAP6
+  vendor: SAP
+  product: SAP S/4HANA Cloud Public Edition — Service
+  title: Introducing Service Order Management and Monitoring
+  url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-service-management/introducing-service-order-management-and-monitoring_c75846f1-6c1c-4ae4-b1a7-12f560575119
+  sections: Scope item 3D2 ; service client terrain ; coûts ; confirmations ; facturation
+  passage_summary: Service orders clients de terrain, coûts, confirmations et facturation.
+  limits: Ne démontre pas toutes les prestations logistiques FLOW ; aucune autorité Finance transférée.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: SAP7
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Explaining the Impact of Enterprise Structures to Master Data and Documents
+  url: https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap/explaining-the-impact-of-enterprise-structures-to-master-data-and-documents_a541b8fe-074d-4379-b54b-d7d6c803716b
+  sections: Master data ; client, plant et storage location ; documents
+  passage_summary: Structures et niveaux des données de référence, responsabilités sources/locales et documents de transaction.
+  limits: Ne prescrit pas un maître universel FLOW ; distinguer autorités et vues locales par objet.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: SAP8
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Managing Purchase Orders
+  url: https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap/managing-purchase-orders_dda0b0d0-7da6-43ec-b162-4faa1a6f339b
+  sections: Demande formelle ; contrat ; en-tête/lignes ; réception ; facture
+  passage_summary: Commande formelle au fournisseur, référence possible au contrat, en-tête/lignes et documents liés de réception
+    et facture.
+  limits: Ne donne pas à Purchase Order FLOW la négociation, la réception physique ou la comptabilité.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: SAP9
+  vendor: SAP
+  product: SAP S/4HANA
+  title: Describing Sales Order Management
+  url: https://learning.sap.com/courses/exploring-end-to-end-business-processes-in-sap/describing-sales-order-management_ca7b816e-af6f-4a03-bd88-1a5bb42cef84
+  sections: Sales Order ; schedule lines ; ATP ; pricing ; incompletion ; output
+  passage_summary: Sales Orders et échéances, ATP, prix, contrôle d’incomplétude et sortie documentaire.
+  limits: Processus réunissant Commerce, Supply Chain Management et Finance ; les prix autorisés restent sous l’autorité commerciale.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: SAP10
+  vendor: SAP
+  product: SAP S/4HANA Cloud Public Edition et Private Edition — sections de Supply Chain Management
+  title: Supply Chain Management
+  url: https://learning.sap.com/products/supply-chain-management
+  sections: Capabilities SCM S/4HANA Cloud Public/Private Edition ; repères 36–40 transmis par la racine
+  passage_summary: La page nomme Supply Chain Management et présente des capabilities SCM S/4HANA Cloud Public et Private
+    Edition.
+  limits: 'La page cite aussi IBP, GTS et d’autres produits : ne pas les amalgamer à S/4HANA ou à une offre unique. Appui
+    de portée et de nom distinct de VCM.'
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: CSCMP1
+  vendor: CSCMP
+  product: Définition professionnelle de la discipline
+  title: SCM Definitions and Glossary of Terms
+  url: https://cscmp.org/CSCMP/cscmp/educate/scm_definitions_and_glossary_of_terms.aspx
+  sections: Supply Chain Management ; Logistics Management
+  passage_summary: Planification et management, sourcing/achats, conversion, logistique et coordination avec les partenaires.
+  limits: Définition de discipline ; aucune obligation de fabriquer, d’internaliser la logistique ou de tout réunir dans un
+    même domaine.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: KINAXIS1
+  vendor: Kinaxis
+  product: Supply chain orchestration
+  title: Supply Chain Orchestration
+  url: https://www.kinaxis.com/en/solutions/supply-chain-orchestration
+  sections: Portée de l’orchestration
+  passage_summary: Orchestration incluant stratégie, planification, exécution et dernier kilomètre.
+  limits: Présentation marketing primaire ; le mot orchestration peut être large sans imposer une nomenclature métier universelle.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Page évolutive ; aucune version globale de l’offre déduite
+- id: ORACLE1
+  vendor: Oracle
+  product: Oracle Fusion Cloud Supply Chain Orchestration
+  title: Overview of Supply Chain Orchestration
+  url: https://docs.oracle.com/en/cloud/saas/supply-chain-and-manufacturing/26b/fauco/overview-of-supply-orchestration.html
+  sections: Supply requests ; buy, make and transfer
+  passage_summary: Coordination des demandes de ressources et des voies d’achat, fabrication ou transfert.
+  limits: Nom natif Supply Chain Orchestration conservé ; le renommage FLOW ne renomme pas ce produit.
+  consulted_on: '2026-10-16'
+  consulted_by: Codex, agent racine de la session U1119–U1121
+  version_scope: Oracle Fusion Cloud SCM 26B
+remaining_evidence_limits:
+- 'Mappages partiels : les contrats transverses FLOW peuvent combiner plusieurs mécanismes produit.'
+- Process Ledger exhaustif, reconstitution temporelle exacte et Process Mining complet non prouvés par Cases/workflow/VCM.
+- PTP économique complet non prouvé par les passages ATP/CTP retenus.
+- Catalogue complet des Service Orders FLOW non démontré par les services clients de terrain.
+- Aucune preuve des maîtres Beaumanoir par objet, des interfaces ou réalisations installées.
+- Les lacunes déjà enregistrées Customer Pickup/Direct Delivery et certains sens généraux Supply ne sont pas comblées par
+  une page d’offre globale.
+implementation_note: Annexe de comparaison ; aucun lot de corrections livré ni publication_delivery.

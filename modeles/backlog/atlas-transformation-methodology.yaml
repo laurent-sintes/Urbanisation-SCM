@@ -1,6 +1,6 @@
-id: flow-methodology-2026-10-16.1
-version: 2026-10-16.1
-as_of: '2026-10-16'
+id: flow-methodology-2026-10-17.1
+version: 2026-10-17.1
+as_of: '2026-10-17'
 title: Méthodologie de transformation
 subtitle: Comprendre ensemble, éprouver les options et décider progressivement.
 editorial_status: implementation_wording
@@ -78,6 +78,7 @@ source_refs:
 - U1027
 - U1028
 - U1035
+- U1121
 lessons:
 - id: business-first
   label: Le métier d’abord
@@ -92,7 +93,7 @@ lessons:
     items:
     - label: Sales / Sourcing and Procurement
       text: Exprimer l’intention et les attentes
-    - label: Supply Chain Orchestration
+    - label: Supply Chain Management
       text: Établir un engagement de satisfaction
     - label: Logistics Execution
       text: Concrétiser les prestations attendues
@@ -324,6 +325,12 @@ lessons:
     - U482
   model_links: []
 sources:
+- id: U1121
+  title: Renommage du domaine Supply Chain Management
+  kind: user_contribution
+  date: '2026-10-16'
+  excerpt: Ok, je veux donc renommer ce domaine en supply chain management
+  scope: Nom du domaine à périmètre constant ; deux libellés méthodologiques alignés, sans nouvelle règle ni nouveau terme.
 - id: U1115
   title: Correction des relations et parcours Enterprise Architecture
   kind: user_contribution
@@ -343,7 +350,8 @@ sources:
 - id: U1070
   title: Problèmes et Options des Hotspots
   kind: user_contribution
-  excerpt: Un Hotspot identifie une douleur mais l'analyse nous conduit à plusieurs problèmes dont chacun est défini par une question claire et un ensemble de chemins possibles. Plutot que chemin je préfère le terme Option, c'est celui qu'on utilise.
+  excerpt: Un Hotspot identifie une douleur mais l'analyse nous conduit à plusieurs problèmes dont chacun est défini par une
+    question claire et un ensemble de chemins possibles. Plutot que chemin je préfère le terme Option, c'est celui qu'on utilise.
   scope: Distinguer le signal initial des problèmes de cadrage et employer Option dans le métamodèle.
 - id: U971
   title: Audit du contenu et visibilité technique des Hotspots
@@ -1404,7 +1412,7 @@ glossary:
     - definition
     - short_description
     notes:
-    - Cette frontière ne crée aucun niveau hiérarchique ni composant logiciel obligatoire. Dans FLOW, Supply Chain Orchestration
+    - Cette frontière ne crée aucun niveau hiérarchique ni composant logiciel obligatoire. Dans FLOW, Supply Chain Management
       approfondit les aptitudes génériques ; Achat et Vente portent les Cases contextualisés.
     - 'Exemple : le Case Wholesale applique le contrôle de crédit à une vente avec des données financières sourcées ; il ne
       transforme pas cette règle en capacité générique du Core.'
@@ -1452,11 +1460,19 @@ glossary:
     - Chaque observation conserve son périmètre, ses sources, la nature de sa preuve et ses limites. Non évalué ne signifie
       pas absent.
   - id: MOD049
-    canonical_fields: [name, label_fr, definition, short_description]
+    canonical_fields:
+    - name
+    - label_fr
+    - definition
+    - short_description
     notes:
     - Une question appartient au problème de cadrage ; ses Options peuvent rester à définir sans inventer de réponse.
   - id: MOD050
-    canonical_fields: [name, label_fr, definition, short_description]
+    canonical_fields:
+    - name
+    - label_fr
+    - definition
+    - short_description
     notes:
     - Chaque Option est rattachée à la question qu’elle cherche à résoudre ; sa présence ne vaut pas choix.
   - id: MOD051
@@ -1468,8 +1484,8 @@ glossary:
     notes:
     - Convention FLOW U1115 répondant à la limite identifiée par EA-CAT-04 ; aucune équivalence de métamodèle éditeur n’est
       affirmée.
-    - Les contributions d’une étape continuent à viser des capacités ou références ; un participant ne prouve ni capacité descendante
-      ni réalisation installée.
+    - Les contributions d’une étape continuent à viser des capacités ou références ; un participant ne prouve ni capacité
+      descendante ni réalisation installée.
     - Les anciens snapshots sans ce lien restent inchangés et ne sont pas complétés par le backlog.
     source_refs:
     - U1114
@@ -2014,8 +2030,8 @@ chapters:
       par exemple obtenir un engagement de livraison. Dans un scénario de stock partiel, une étape de mobilisation décrit
       comment les capacités évaluent les options puis sélectionnent une promesse. Les deux vues se relient sans se confondre.
   - title: Des sujets à instruire et à arbitrer
-    text: Un [Hotspot](method:MOD044) signale une difficulté à instruire, sans présumer d’un dysfonctionnement. L’analyse peut
-      révéler plusieurs [problèmes de cadrage](method:MOD049), chacun formulé comme une question claire avec ses [Options](method:MOD050).
+    text: Un [Hotspot](method:MOD044) signale une difficulté à instruire, sans présumer d’un dysfonctionnement. L’analyse
+      peut révéler plusieurs [problèmes de cadrage](method:MOD049), chacun formulé comme une question claire avec ses [Options](method:MOD050).
       La fiche relie ces questions aux observations et aux décisions. Elle reste hors de la hiérarchie métier.
     detail: Distinguer impact sur le modèle métier ou le Core System, irritant d’usage et impact à qualifier. La criticité
       et l’avancement du cadrage sont des dimensions séparées ; « validé » reconnaît le sujet, « résolu » qualifie le cadrage.

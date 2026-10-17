@@ -201,8 +201,17 @@ export function App() {
     route.scope === '@root' || selected?.kind === 'universe'
       ? undefined
       : validScope || (selected ? selected.id : undefined);
+  const explicitFlowScope =
+    view === 'flows' &&
+    validScope &&
+    ['business_system', 'domain', 'area', 'group', 'business_area'].includes(
+      model?.nodeById.get(validScope)?.kind || '',
+    )
+      ? validScope
+      : undefined;
   const scopeId =
-    model && requestedScope
+    explicitFlowScope ||
+    (model && requestedScope
       ? [...lineageOf(model, requestedScope)]
           .reverse()
           .find((node) => node.kind === 'domain' || node.kind === 'business_system')?.id ||
@@ -212,7 +221,7 @@ export function App() {
           ['group', 'area', 'business_area', 'reference'].includes(selected.kind)
             ? selected.id
             : parentRelationOf(model, selected.id)?.sourceId))
-      : undefined;
+      : undefined);
   const scope = scopeId ? model?.nodeById.get(scopeId) : undefined;
   const mapMaxDepth = model ? mapDepthLimit(model, scopeId) : 0;
   const mapDepth = Math.min(route.mapDepth ?? defaultMapDepth(scope?.kind), mapMaxDepth);
@@ -438,12 +447,14 @@ export function App() {
       const businessArea =
         item && model ? [...lineageOf(model, id)].reverse().find((node) => node.kind === 'business_area') : undefined;
       const depth = item?.kind === 'area' ? 2 : item?.kind === 'business_area' ? 3 : defaultMapDepth(item?.kind);
+      const flowScope =
+        view === 'flows' && item && ['business_system', 'domain', 'area', 'group'].includes(item.kind) ? id : undefined;
       changeRoute({
         returnTo: '',
         catalogReturn: '',
         scroll: '',
         node: id,
-        scope: domain?.id || (item?.kind === 'business_system' ? id : ''),
+        scope: flowScope || domain?.id || (item?.kind === 'business_system' ? id : ''),
         view: view === 'flows' ? 'flows' : undefined,
         ...(view === 'flows' ? {} : { mapDepth: depth as 0 | 1 | 2 | 3 }),
         mapFocus: view === 'flows' ? '' : depth === 3 ? businessArea?.id || '' : '',
@@ -999,7 +1010,12 @@ export function App() {
                               tab.id === 'map' && !cartographicView
                                 ? showSelectedOnMap()
                                 : tab.id === 'flows'
-                                  ? changeRoute({ view: 'flows', scope: scopeId || '@root', relation: '', section: '' })
+                                  ? changeRoute({
+                                      view: 'flows',
+                                      scope: validScope || scopeId || '@root',
+                                      relation: '',
+                                      section: '',
+                                    })
                                   : changeRoute({ view: tab.id, relation: '', section: '' })
                             }
                             onKeyDown={(e) => {
@@ -1069,6 +1085,7 @@ export function App() {
                   {view === 'help' ? (
                     <HelpPage
                       topic={route.helpTopic === 'workshop' ? 'workshop' : 'start'}
+                      supplyDomainName={displayModel?.nodeById.get('supply-chain-orchestration')?.name}
                       stage={workshop.stage}
                       stageMatchesPublication={Boolean(workshop.active)}
                       stageError={workshop.error}

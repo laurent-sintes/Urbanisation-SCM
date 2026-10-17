@@ -184,6 +184,8 @@ def validate_urbanism(model, sources, schema=None, *, require_function_mapping=F
     graph_index = ModelIndex(model)
     business_areas = any(p.get('id') == 'PRINCIPLE-BUSINESS-AREA' for p in model.get('principles', []))
     required_business_areas = any(p.get('id') == 'PRINCIPLE-REQUIRED-BUSINESS-AREA' for p in model.get('principles', []))
+    relation_direction = any(p.get('id') == 'PRINCIPLE-RELATION-DIRECTION'
+                             for p in model.get('principles', []))
     if required_business_areas and not business_areas:
         errors.append('business-area: required parent policy needs the Business Area principle')
     if any(n.get('kind') == 'business_area' for n in nodes.values()) and not business_areas:
@@ -320,6 +322,15 @@ def validate_urbanism(model, sources, schema=None, *, require_function_mapping=F
                         errors.append(f"relations/{identifier}: qualification {field} must be a string list")
                 if "role" in qualification and not isinstance(qualification["role"], str):
                     errors.append(f"relations/{identifier}: qualification role must be a string")
+        # U1118 opts in to the direction contract; frozen models keep their
+        # original semantics. A supply cannot also claim the reverse needs role.
+        if (relation_direction
+                and rel.get('type') in {'shares-data', 'provides-knowledge',
+                                       'provides-conditions', 'supplies-reference'}
+                and isinstance(rel.get('qualification'), dict)
+                and rel['qualification'].get('role') == 'needs'):
+            errors.append(f"relations/{identifier}: {rel['type']} is supplier-to-consumer; "
+                          "qualification role needs is consumer-to-supplier")
         if rel.get("type") in ("contains", "presents"):
             graph[source["id"]].append(target["id"])
     # U461 requires a business document for each management fact. Opt-in keeps

@@ -117,9 +117,15 @@ class ApplicationCatalogTests(unittest.TestCase):
         self.assertEqual(parents['sap-ecc-mm-im'], 'sap-ecc-mm')
         selection = next(item for item in catalog['selections'] if item['product_id'] == sap['id'])
         self.assertEqual(selection['context_id'], 'boardriders')
-        self.assertEqual(selection['component_states'], [])
+        self.assertEqual(selection['component_states'], [{
+            'component_id': 'sap-allocation-run', 'acquired': 'unknown',
+            'activated': 'unknown', 'used': 'historical_document',
+            'source_refs': ['U02', 'U942', 'U945', 'U953', 'U1115'],
+        }])
         self.assertEqual([(item['component_id'], item['node_id'], item['evidence_state'])
-                          for item in selection['mappings']], [('sap-ecc-core', 'D06', 'declared')])
+                          for item in selection['mappings']], [
+                              ('sap-ecc-core', 'D06', 'declared'),
+                              ('sap-allocation-run', 'D03.o', 'historical_document')])
 
     def test_product_identity_does_not_infer_dates_or_deployments(self):
         catalog = self.model['application_catalog']

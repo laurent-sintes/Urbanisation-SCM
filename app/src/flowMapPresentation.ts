@@ -1,6 +1,6 @@
 import { flowMapDetailBoxes } from './flowMapDetail.ts';
 import type { FlowMapBox } from './flowMapLayout.ts';
-import { descendantsOf, visibleAncestorId } from './model.ts';
+import { descendantsOf, lineageOf, visibleAncestorId } from './model.ts';
 import type { AtlasRelation, PublishedModel } from './types.ts';
 
 export interface FlowMapPresentationOptions {
@@ -24,6 +24,40 @@ export interface FlowMapPresentation {
 
 const DISPLAY_KINDS = new Set(['business_system', 'domain', 'area', 'business_area', 'group']);
 const FLOW_TYPES = new Set(['shares-data', 'provides-knowledge']);
+
+export interface FlowBoundaryDestination {
+  /** Empty identifies the architecture view, including publications without a universe node. */
+  scopeId: string;
+  name: string;
+  relations: AtlasRelation[];
+}
+
+/** Keep each external exchange with the closest published scope containing both endpoints. */
+export function flowMapBoundaryDestinations(
+  model: PublishedModel,
+  relations: readonly AtlasRelation[],
+): FlowBoundaryDestination[] {
+  const destinations = new Map<string, FlowBoundaryDestination & { depth: number }>();
+  for (const relation of relations) {
+    const targetIds = new Set(lineageOf(model, relation.targetId).map((node) => node.id));
+    const sourceLineage = lineageOf(model, relation.sourceId);
+    const common = [...sourceLineage]
+      .reverse()
+      .find((node) => ['universe', 'business_system', 'domain'].includes(node.kind) && targetIds.has(node.id));
+    const scopeId = common && common.kind !== 'universe' ? common.id : '';
+    const destination = destinations.get(scopeId) || {
+      scopeId,
+      name: common?.name || model.nodes.find((node) => node.kind === 'universe')?.name || 'Enterprise Architecture',
+      relations: [],
+      depth: common ? sourceLineage.findIndex((node) => node.id === common.id) : -1,
+    };
+    destination.relations.push(relation);
+    destinations.set(scopeId, destination);
+  }
+  return [...destinations.values()]
+    .sort((a, b) => b.depth - a.depth || a.name.localeCompare(b.name))
+    .map(({ depth: _depth, ...destination }) => destination);
+}
 
 function projectRelation(model: PublishedModel, relation: AtlasRelation, ids: ReadonlySet<string>) {
   const source = visibleAncestorId(model, relation.sourceId, ids);
@@ -97,21 +131,16 @@ export function flowMapPresentation(
       : [];
   const frontier = scopedChildren.length ? scopedChildren : roots;
   const frontierIds = new Set(frontier.map((box) => box.id));
-  const groups = new Map<string, { native: boolean; relations: AtlasRelation[] }>();
+  const groups = new Map<string, AtlasRelation[]>();
   for (const relation of eligible) {
     const projection = projectRelation(model, relation, frontierIds);
     if (!projection) continue;
-    const group = groups.get(projection.key) || { native: false, relations: [] };
-    group.native ||= relation.sourceId === projection.source && relation.targetId === projection.target;
-    group.relations.push(relation);
+    const group = groups.get(projection.key) || [];
+    group.push(relation);
     groups.set(projection.key, group);
   }
-  const hasNative = [...groups.values()].some((group) => group.native);
-  const retained = new Set(
-    [...groups.values()]
-      .filter((group) => !hasNative || group.native)
-      .flatMap((group) => group.relations.map((relation) => relation.id)),
-  );
+  // A native summary names its own directed pair and type. Other pairs keep their documented detail.
+  const retained = new Set([...groups.values()].flatMap((group) => group.map((relation) => relation.id)));
   return finish(
     frontier,
     eligible.filter((relation) => retained.has(relation.id)),

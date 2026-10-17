@@ -174,7 +174,7 @@ class BusinessSystemTests(unittest.TestCase):
         nodes = {n['id']: n for n in self.model['nodes']}
         exchanges = {r['id']: r for r in self.model['relations'] if r['type'] == 'shares-data'}
         expected = {
-            'contextual-prices': ('subdomain-pricing-promotions-management', 'D04'),
+            'contextual-prices': ('cap-sales-price-determination', 'D04.i'),
             'commercial-benefit-conditions': ('subdomain-rebates-incentives-management', 'subdomain-commercial-settlement-management'),
             'eligible-supply-facts': ('accounting-data-provision', 'subdomain-commercial-settlement-management'),
             'commercial-settlement-results': ('subdomain-commercial-settlement-management', 'D04'),

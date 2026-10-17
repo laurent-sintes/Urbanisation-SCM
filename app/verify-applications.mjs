@@ -11,6 +11,8 @@ const output = resolve(root, 'app/.runtime/qa-applications');
 const index = JSON.parse(await readFile(resolve(dist, 'data/index.json'), 'utf8'));
 const version = index.current_version;
 const published = JSON.parse(await readFile(resolve(dist, `data/${version}/model.json`), 'utf8'));
+const supply = published.nodes.find((node) => node.id === 'supply-chain-orchestration');
+assert.ok(supply, 'The selected publication contains the persistent Supply domain');
 // This isolated fixture exercises capability-to-BA projection with HS-016.
 // Its production visibility remains unchanged; hidden hotspots stay outside the picker.
 published.hotspot_catalog.hotspots.find((item) => item.id === 'HS-016').visible = true;
@@ -243,7 +245,7 @@ try {
     .getByRole('button', { name: 'Flow Core System' })
     .click();
   await desktop.getByRole('button', { name: 'Applications Flow Core System' }).waitFor();
-  await desktop.locator('.application-related-item').filter({ hasText: 'Supply Chain Orchestration' }).waitFor();
+  await desktop.locator('.application-related-item').filter({ hasText: supply.fields.name }).waitFor();
   assert.equal(await desktop.locator('.application-related-item').count(), 1);
 
   await desktop.goto(

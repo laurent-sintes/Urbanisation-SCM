@@ -57,6 +57,7 @@ export interface ReactFlowPaneProps {
   selectedHotspotId?: string;
   applicationMappings?: ApplicationMapping[];
   onOpenHotspot?: (id: string, groupIds?: string[]) => void;
+  onScopeHotspotHighlight?: (active: boolean) => void;
 }
 interface HotspotMarker {
   id: string;
@@ -262,7 +263,7 @@ function Canvas(props: ReactFlowPaneProps) {
         canvasWidth,
         minimumHeight,
         'page',
-        Boolean(group),
+        false,
         measure,
         fixedSlots,
         graph.group?.kind === 'domain',
@@ -276,7 +277,7 @@ function Canvas(props: ReactFlowPaneProps) {
               canvasWidth,
               minimumHeight,
               'width',
-              Boolean(group),
+              false,
               measure,
               fixedSlots,
               graph.group?.kind === 'domain',
@@ -315,31 +316,17 @@ function Canvas(props: ReactFlowPaneProps) {
         }
       });
       const result = {
-        width: grid.width - (group ? 28 : 0),
+        width: grid.width,
         height: Math.max(32, top - 12),
         children: positioned,
       };
       const nodes: Node[] = [];
-      if (group)
-        nodes.push({
-          id: `group:${group.id}`,
-          type: 'container',
-          data: { item: group },
-          position: { x: 0, y: 0 },
-          width: result.width + 28,
-          height: result.height + 70,
-          style: { width: result.width + 28, height: result.height + 70 },
-          selectable: false,
-          draggable: false,
-          focusable: false,
-        });
       banners.forEach((banner, index) => {
         nodes.push({
           id: `category-banner:${scopeId}:${index}`,
           type: 'categoryBanner',
           data: { caption: banner.caption, area: banner.area },
-          position: { x: 16 + (group ? 14 : 0), y: banner.y + (group ? 54 : 0) },
-          ...(group ? { parentId: `group:${group.id}`, extent: 'parent' as const } : {}),
+          position: { x: 16, y: banner.y },
           width: result.width - 32,
           height: areaSections ? 52 : 40,
           style: { width: result.width - 32, height: areaSections ? 52 : 40 },
@@ -353,8 +340,7 @@ function Canvas(props: ReactFlowPaneProps) {
           id: `capability-type-divider:${scopeId}:${index}`,
           type: 'capabilityTypeDivider',
           data: {},
-          position: { x: 16 + (group ? 14 : 0), y: dividerY + (group ? 54 : 0) },
-          ...(group ? { parentId: `group:${group.id}`, extent: 'parent' as const } : {}),
+          position: { x: 16, y: dividerY },
           width: result.width - 32,
           height: 1,
           style: { width: result.width - 32, height: 1 },
@@ -373,8 +359,7 @@ function Canvas(props: ReactFlowPaneProps) {
           id: item.id,
           type: 'business',
           data: { item, childList, detail, behaviorsByCapability },
-          position: { x: (position.x || 0) + (group ? 14 : 0), y: (position.y || 0) + (group ? 54 : 0) },
-          ...(group ? { parentId: `group:${group.id}`, extent: 'parent' as const } : {}),
+          position: { x: position.x || 0, y: position.y || 0 },
           width: position.width,
           height: position.height,
           style: { width: position.width, height: position.height },
@@ -385,8 +370,8 @@ function Canvas(props: ReactFlowPaneProps) {
       setLayout({
         nodes,
         ms: Math.round(performance.now() - start),
-        width: result.width + (group ? 28 : 0),
-        height: result.height + (group ? 70 : 0),
+        width: result.width,
+        height: result.height,
         mode,
       });
     } catch (reason) {
@@ -525,10 +510,19 @@ function Canvas(props: ReactFlowPaneProps) {
           for (const child of children) visible.set(child.id, node);
       }
     }
-    const group = layout.nodes.find((node) => node.type === 'container');
-    if (group?.id.startsWith('group:')) visible.set(group.id.slice(6), group);
+    // The current scope remains a projection anchor for its published overlays,
+    // even though its enclosing presentation card is no longer drawn.
+    if (graph.group && layout.nodes.length)
+      visible.set(graph.group.id, {
+        id: graph.group.id,
+        type: 'container',
+        data: { item: graph.group },
+        position: { x: 0, y: 0 },
+        width: layout.width,
+        height: layout.height,
+      });
     return visible;
-  }, [layout.nodes, childLists, detail]);
+  }, [layout.nodes, layout.width, layout.height, graph.group, childLists, detail]);
   const applicationIds = projectedApplicationMapIds(
     model,
     props.applicationMappings || [],
@@ -756,6 +750,11 @@ function Canvas(props: ReactFlowPaneProps) {
         .flatMap((marker) => marker.projectedElementIds),
     ),
   );
+  const scopeHotspotHighlighted = Boolean(scopeId && hoveredElementIds.has(scopeId));
+  useEffect(() => {
+    props.onScopeHotspotHighlight?.(scopeHotspotHighlighted);
+    return () => props.onScopeHotspotHighlight?.(false);
+  }, [scopeHotspotHighlighted, props.onScopeHotspotHighlight]);
   const displayedNodes =
     hoveredElementIds.size || applicationIds.size
       ? nodes.map((node) => ({

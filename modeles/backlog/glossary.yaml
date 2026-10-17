@@ -3336,7 +3336,7 @@ terms:
   short_description: Grand périmètre de responsabilités métier au sein d’un système métier.
   definition: Grand périmètre cohérent de responsabilités métier au sein d’un Business System. Il peut être détaillé en Subdomains
     puis en capacités et comportements selon la profondeur utile à FLOW.
-  context: Dans la hiérarchie FLOW courante, Domain désigne le grand périmètre, comme Supply Chain Orchestration ; Subdomain
+  context: Dans la hiérarchie FLOW courante, Domain désigne le grand périmètre, comme Supply Chain Management ; Subdomain
     regroupe des responsabilités cohérentes en son sein. Purpose est un ancien libellé, conservé seulement dans les publications
     historiques. Les règles de construction font autorité dans le glossaire méthodologique.
   notes: |-
@@ -3374,7 +3374,7 @@ terms:
     similarities: Le périmètre part d’un sens métier cohérent.
     differences: Evans l’aborde dans la conception de logiciel.
     flow_position: Espace cohérent de problèmes métier liés entre eux, que l’on gagne à comprendre et à traiter ensemble.
-      Dans la hiérarchie FLOW courante, Domain désigne le grand périmètre, comme Supply Chain Orchestration ; Subdomain regroupe
+      Dans la hiérarchie FLOW courante, Domain désigne le grand périmètre, comme Supply Chain Management ; Subdomain regroupe
       des responsabilités cohérentes en son sein. Purpose est un ancien libellé, conservé seulement dans les publications
       historiques. Les règles de construction font autorité dans le glossaire méthodologique.
     source_title: 'Domain-Driven Design Reference: Definitions and Pattern Summaries'
@@ -3400,7 +3400,7 @@ terms:
     similarities: La cohérence du vocabulaire aide à comprendre les frontières.
     differences: Un contexte DDD n’est pas un domaine FLOW par équivalence.
     flow_position: Espace cohérent de problèmes métier liés entre eux, que l’on gagne à comprendre et à traiter ensemble.
-      Dans la hiérarchie FLOW courante, Domain désigne le grand périmètre, comme Supply Chain Orchestration ; Subdomain regroupe
+      Dans la hiérarchie FLOW courante, Domain désigne le grand périmètre, comme Supply Chain Management ; Subdomain regroupe
       des responsabilités cohérentes en son sein. Purpose est un ancien libellé, conservé seulement dans les publications
       historiques. Les règles de construction font autorité dans le glossaire méthodologique.
     source_title: Bounded Context
@@ -3419,9 +3419,9 @@ terms:
     choice: Traiter ensemble des problèmes métier liés permet d’en comprendre la logique commune. Domaine désigne cet espace
       cohérent, sans imposer une organisation ni une frontière logicielle.
     flow_scope: Espace cohérent de problèmes métier liés entre eux, que l’on gagne à comprendre et à traiter ensemble.
-    flow_approach: Dans la hiérarchie FLOW courante, Domain désigne le grand périmètre, comme Supply Chain Orchestration ;
-      Subdomain regroupe des responsabilités cohérentes en son sein. Purpose est un ancien libellé, conservé seulement dans
-      les publications historiques. Les règles de construction font autorité dans le glossaire méthodologique.
+    flow_approach: Dans la hiérarchie FLOW courante, Domain désigne le grand périmètre, comme Supply Chain Management ; Subdomain
+      regroupe des responsabilités cohérentes en son sein. Purpose est un ancien libellé, conservé seulement dans les publications
+      historiques. Les règles de construction font autorité dans le glossaire méthodologique.
     synthesis:
     - Evans emploie domain pour le champ de connaissance ou d’activité auquel s’applique le modèle. Fowler explique ensuite
       pourquoi un même vocabulaire peut prendre des sens différents dans plusieurs contextes. Les deux invitent à regarder
@@ -3824,7 +3824,7 @@ terms:
   definition: Dans le vocabulaire fonctionnel FLOW, prise en charge des parcours liés à la vente et coordination des contributions
     de la Supply pour satisfaire les demandes.
   context: Sens fonctionnel local, distinct de la catégorie de produits OMS. Il ne désigne pas un domaine supérieur à [Supply
-    Chain Orchestration](model:supply-chain-orchestration).
+    Chain Management](model:supply-chain-orchestration).
   notes: U54/U55 décrivaient les parcours et leur articulation avec la Supply selon l’ancien découpage. U373 distingue le
     nom de l’univers de la catégorie de produits OMS ; U455/U463 remplacent la hiérarchie par la coopération de responsabilités.
     La définition reste une convention locale, sans équivalence avec tout produit OMS ni adoption de nouveaux domaines.
@@ -3920,7 +3920,7 @@ terms:
     synthesis:
     - IBM décrit un OMS couvrant le cycle de commande jusqu’à la satisfaction et l’après-vente. Microsoft IOM met l’accent
       sur l’orchestration de la satisfaction. Les deux mobilisent la Supply, avec des regroupements de fonctions différents.
-    - FLOW conserve son sens local pour comprendre les discussions. Il n’en déduit ni domaine supérieur à Supply Chain Orchestration,
+    - FLOW conserve son sens local pour comprendre les discussions. Il n’en déduit ni domaine supérieur à Supply Chain Management,
       ni nouveau chantier commerce ; les responsabilités existantes coopèrent.
     examples:
     - title: Exemple IBM — un parcours traverse les canaux
@@ -3943,16 +3943,19 @@ terms:
     - U853
   presentation: historical
 - id: TER035
-  name: Supply — sens fonctionnel du projet
+  name: Supply Chain Management
   short_description: Coordination et optimisation métier de la satisfaction des demandes Supply.
   definition: Périmètre métier qui coordonne et optimise la satisfaction des demandes en mobilisant commandes, stocks, engagements
     et services exécutants.
-  context: Sens fonctionnel local porté par [Supply Chain Orchestration](model:supply-chain-orchestration), distinct du côté
+  context: Sens fonctionnel local porté par [Supply Chain Management](model:supply-chain-orchestration), distinct du côté
     ressources [Supply](glossary:TER083) et du système étendu [Supply Chain](glossary:TER084).
   notes: Les formulations U56–U58 et U367 sont conservées dans les sources et les publications historiques. U455/U463 remplacent
     la lecture en couches par des domaines et univers en interaction. Le périmètre fonctionnel FLOW ne couvre pas par déduction
     toute la Supply Chain ; les services exécutants conservent la responsabilité de leurs opérations. [Fulfillment](glossary:TER085)
-    désigne la satisfaction des commandes.
+    désigne la satisfaction des commandes. U1121 adopte Supply Chain Management comme nom du domaine à périmètre constant.
+    L’ancien libellé de cette entrée, « Supply — sens fonctionnel du projet », et l’ancien nom du domaine, « Supply Chain
+    Orchestration », restent des repères historiques ; ils ne désignent pas de nouvelles capacités. Le sens local ne vaut
+    pas équivalence avec une offre logicielle ou toute la discipline SCM.
   source_refs:
   - U203
   - U56
@@ -3975,6 +3978,8 @@ terms:
   - CMP307
   - ELM279
   - U853
+  - U1120
+  - U1121
   source_locator:
     path: connaissance/19-glossaire-metier.md
     anchor: ''
@@ -4048,6 +4053,83 @@ terms:
     definition_choice: 'Intelligent Order Management orchestre des commandes entre systèmes et prestataires avec des retours
       d’exécution. Frontière conservée : Une offre logicielle ne prescrit pas le découpage FLOW et ne prouve aucune installation
       Beaumanoir ; les capacités dépassent la couverture d’un seul produit.'
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    element_name: Welcome to Dynamics 365 Supply Chain Management
+    element_type: Périmètre de produit
+    relationship: Recouvrement partiel
+    similarities: La suite couvre notamment produits, stocks, planification, achats, production et entrepôts.
+    differences: 'Dynamics regroupe aussi sourcing, conception produit, production, entrepôts, transport et d’autres responsabilités.
+      FLOW conserve ses frontières métier : maîtrise des données d’entreprise, sourcing, décisions commerciales et financières
+      et réalisation logistique sont distincts. Production non applicable à Beaumanoir et logistique externalisée ne retirent
+      pas au domaine sa responsabilité de Supply Chain Management.'
+    flow_position: 'Sens fonctionnel local de Supply Chain Management dans FLOW : plans, stocks, commandes à impact stock,
+      engagements et coordination des prestations. Le périmètre d’une offre logicielle ou de la discipline reste distinct
+      de ce sens local.'
+    term_choice: Supply Chain Management rend visibles la gestion des plans, des stocks, des commandes et de leurs engagements.
+      La liste des modules Dynamics ne prescrit pas la frontière du domaine FLOW ; absence de fabrication et externalisation
+      logistique ne suffisent pas à écarter ce nom.
+    definition_choice: Le domaine gère plans, stocks et cycle des commandes à impact stock, puis coordonne les prestations
+      nécessaires. Les référentiels portent une source de vérité locale active sous maîtrise d’entreprise externe. Sourcing,
+      décisions commerciales et financières, pilotage commercial des canaux et réalisation logistique gardent leurs responsabilités.
+      Le périmètre de la suite Dynamics reste distinct du domaine métier FLOW.
+    source_title: Welcome to Dynamics 365 Supply Chain Management
+    source_url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/supply-chain-management-welcome
+    source_version: Page mise à jour le 10 septembre 2025
+    source_locator: Core concepts and tasks
+    consulted_on: '2026-10-16'
+    status: proposed
+    source_refs:
+    - U470
+    - U471
+    - ELM293
+    - CMP185
+    - U474
+    - U475
+    - CMP188
+    - U1119
+    - U1120
+    - U1121
+    evidence_limits: Passage primaire consulté ; rapprochement limité au périmètre décrit, sans équivalence de catalogue,
+      choix de solution ni réalisation Beaumanoir déduite.
+    concept_name: Supply Chain Management
+    scope_summary: Produits, stocks, achats, planification, production, entrepôts et transport.
+    approach_summary: Réunir ces fonctions dans une suite logicielle.
+  - vendor: SAP
+    product: SAP S/4HANA Cloud Public Edition et Private Edition — repères SCM
+    element_name: Supply Chain Management
+    concept_name: Supply Chain Management
+    element_type: Présentation de portée et repères de formation par famille produit
+    relationship: Appui de périmètre et recouvrement partiel
+    scope_summary: La page distingue les repères SCM de SAP S/4HANA Cloud Public et Private Edition et les autres solutions
+      de la famille SAP.
+    approach_summary: Repères de portée du SCM, distincts d’un catalogue équivalent aux responsabilités FLOW.
+    similarities: La gestion de la supply chain associe planification et conduite des opérations ; le nom peut couvrir plusieurs
+      responsabilités coopérantes.
+    differences: La famille et les éditions SAP regroupent aussi des activités non applicables ou confiées à d’autres domaines
+      dans FLOW. Les solutions IBP, GTS et Digital Manufacturing citées hors sections S/4HANA ne prouvent pas une couverture
+      native S/4HANA.
+    flow_position: 'Sens fonctionnel local de Supply Chain Management dans FLOW : plans, stocks, commandes à impact stock,
+      engagements et coordination des prestations. Le périmètre d’une offre logicielle ou de la discipline reste distinct
+      de ce sens local.'
+    source_title: Supply Chain Management | SAP Learning
+    source_url: https://learning.sap.com/products/supply-chain-management
+    source_version: Page évolutive sans numéro d’édition ; sections explicitement dédiées à SAP S/4HANA Cloud Public Edition
+      et Private Edition.
+    source_locator: Browse the supply chain management capabilities in SAP S/4HANA Cloud Public Edition ; Browse the supply
+      chain management capabilities in SAP S/4HANA Cloud Private Edition.
+    consulted_on: '2026-10-16'
+    evidence_limits: Présentation de portée réellement consultée ; ne démontre ni une équivalence de catalogue, ni la couverture
+      complète du domaine, ni une réalisation Beaumanoir. Les fonctions détaillées s’appuient sur leurs documents propres.
+    status: proposed
+    source_refs:
+    - U1119
+    - U1120
+    - U1121
+    term_choice: Supply Chain Management est le nom métier local adopté U1121. Le périmètre produit SAP et ses intitulés de
+      formation ne sont pas des frontières imposées au domaine.
+    definition_choice: Conserver la gestion des plans, stocks, commandes et engagements au périmètre FLOW, avec coopération
+      explicite des autres responsables. Ni production interne ni internalisation de la logistique exigées par ce nom.
   market_inspiration:
     choice: Nommer le périmètre FLOW qui coordonne la satisfaction des demandes avec commandes, stocks, engagements et services.
       Supply, dans ce sens fonctionnel local, ne désigne ni les seules ressources disponibles ni toute la Supply Chain.
@@ -4069,14 +4151,6 @@ terms:
       - U477
       - ELM405
       - CMP193
-  market_gaps:
-  - family: sap_s4hana
-    reason: La comparaison existante ne comporte pas encore de source primaire de ce produit justifiant précisément le sens
-      de Supply — sens fonctionnel du projet. La documentation de parcours examinée ne suffit pas à établir cette correspondance.
-    investigated_urls:
-    - https://learning.sap.com/courses/sap-workflow-overview-basics-strategy-and-extensibility/explaining-flexible-workflow
-    source_refs:
-    - U853
 - id: TER036
   name: Fait de gestion — sens plateforme
   short_description: Événement métier associé à un document, selon la distinction exprimée par Laurent.
@@ -8463,7 +8537,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [Reference Maintenance](model:ba-reference-maintenance), dans [Operational References](model:business-references). Les domaines producteurs portent l’émission ; la réception et la référence utilisable restent locales à la Supply. Les vues des plans relèvent de [Master Plan Management](model:ba-master-plan-management) ; le pilotage des exécutants reste distinct.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8512,7 +8586,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [Reference Maintenance](model:ba-reference-maintenance), dans [Operational References](model:business-references). Les domaines producteurs portent l’émission ; la réception et la référence utilisable restent locales à la Supply. Les vues des plans relèvent de [Master Plan Management](model:ba-master-plan-management) ; le pilotage des exécutants reste distinct.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8561,7 +8635,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [Reference Maintenance](model:ba-reference-maintenance), dans [Operational References](model:business-references). Les domaines producteurs portent l’émission ; la réception et la référence utilisable restent locales à la Supply. Les vues des plans relèvent de [Master Plan Management](model:ba-master-plan-management) ; le pilotage des exécutants reste distinct.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8613,7 +8687,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [Reference Maintenance](model:ba-reference-maintenance), dans [Operational References](model:business-references). Les domaines producteurs portent l’émission ; la réception et la référence utilisable restent locales à la Supply. Les vues des plans relèvent de [Master Plan Management](model:ba-master-plan-management) ; le pilotage des exécutants reste distinct.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8663,7 +8737,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [Reference Maintenance](model:ba-reference-maintenance), dans [Operational References](model:business-references). Les domaines producteurs portent l’émission ; la réception et la référence utilisable restent locales à la Supply. Les vues des plans relèvent de [Master Plan Management](model:ba-master-plan-management) ; le pilotage des exécutants reste distinct.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8722,7 +8796,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [Reference Maintenance](model:ba-reference-maintenance), dans [Operational References](model:business-references). Les domaines producteurs portent l’émission ; la réception et la référence utilisable restent locales à la Supply. Les vues des plans relèvent de [Master Plan Management](model:ba-master-plan-management) ; le pilotage des exécutants reste distinct.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8766,7 +8840,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [Reference Maintenance](model:ba-reference-maintenance), dans [Operational References](model:business-references). Les domaines producteurs portent l’émission ; la réception et la référence utilisable restent locales à la Supply. Les vues des plans relèvent de [Master Plan Management](model:ba-master-plan-management) ; le pilotage des exécutants reste distinct.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -8798,7 +8872,7 @@ terms:
 
       Exemple fictif : une version tarifaire corrigée est reçue avec sa date de validité. L’ingestion rend compte de son intégration ; [Product Price Book](model:product-price-book) et [Service Price Book](model:service-price-book) exposent la version applicable et sa provenance. L’évaluation économique peut alors la consommer sans réécrire le prix déjà confirmé d’une commande.
 
-      Cette capacité appartient à [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), [Reference Maintenance](model:ba-reference-maintenance). Les vues de référence ou de plan restent dans leur sous-domaine métier ; les interactions de pilotage des exécutants restent exclues.
+      Cette capacité appartient à [Reference Maintenance](model:ba-reference-maintenance), dans [Operational References](model:business-references). Les domaines producteurs portent l’émission ; la réception et la référence utilisable restent locales à la Supply. Les vues des plans relèvent de [Master Plan Management](model:ba-master-plan-management) ; le pilotage des exécutants reste distinct.
 
       Recevoir aussi les profils et [règles de crédit](glossary:TER155) émis par le contrôle de gestion, avec versions, périmètres et dates de validité. Les rendre utilisables dans [Partner & Agreement References](model:ba-partner-agreement-references), sans modifier leur autorité ni assimiler leur réception à une décision sur une commande.
 
@@ -11825,10 +11899,12 @@ terms:
 - id: TER071
   name: Transfer Order
   short_description: Demande de déplacement interne de biens entre deux points du réseau, avec quantités, dates et engagements.
-  definition: Demande de déplacement de marchandises entre sites, avec origine, destination, quantités, échéances et contraintes.
+  definition: Demande de déplacement de biens entre sites, avec origine, destination, quantités, échéances et contraintes.
     Le besoin peut relever du lancement, du réapprovisionnement, du rééquilibrage, de la consolidation ou d’une commande identifiée.
-  context: La finalité du déplacement ne crée pas à elle seule une famille ou un cycle distinct ; la propriété du stock ne
-    détermine pas seule le type d’[Order](glossary:TER012).
+  context: |-
+    La finalité du déplacement ne crée pas à elle seule une famille ou un cycle distinct ; la propriété du stock ne détermine pas seule le type d’[Order](glossary:TER012).
+
+    Le bien conserve son identité dans la référence métier concernée : [Product Reference](glossary:TER052) pour les biens destinés à la vente, [Packaging Material Reference](glossary:TER185) pour les matières de conditionnement ou [Internal Supplies & Equipment Reference](glossary:TER187) pour les fournitures et équipements internes. Les correspondances connues entre références conservent leur provenance ; aucun maître technique unique ni nouvelle autorité d’entreprise ne sont imposés.
   notes: 'L’intention prime : mettre en consignation, reprendre du stock encore consigné ou traiter un retour ne deviennent
     pas Transfer Order du seul fait d’un déplacement. Frontoffice et Backoffice désignent les origines de la demande. Le sens
     natif de Transfer Order peut être plus large dans les produits.'
@@ -11968,7 +12044,7 @@ terms:
   definition: Demande portant les marchandises retournées, leurs suites physiques et la résolution attendue pour le client,
     selon les quantités, conditions et autorisations applicables.
   context: |-
-    Supply Chain Orchestration ; distinguer intention, engagement, pilotage, résultat et document.
+    Supply Chain Management ; distinguer intention, engagement, pilotage, résultat et document.
 
     La résolution apportée au client comprend [Credit Resolution](glossary:TER156), [Refund Resolution](glossary:TER157) et [Replacement Resolution](glossary:TER158). Ces variantes se combinent avec les cinq devenirs physiques existants et entre elles : un avoir peut précéder un remboursement pendant que le produit est réparé ou remis en stock. Return Order porte le résultat attendu, les liens et le reste à satisfaire. [Billing](model:service-order-billing) produit ou corrige l’avoir ; [Payment](model:service-order-payment-collection) exécute le service de remboursement ; une [Sales Order](model:D04.i) liée porte le remplacement. L’avoir ne prouve pas un remboursement et la clôture du retour ne prouve aucune de ces réalisations.
   notes: L’intention de retour peut conduire à remise en stock, réparation, renvoi fournisseur, restitution ou rebut selon
@@ -12150,7 +12226,7 @@ terms:
     flow_scope: Demande portant les marchandises retournées, leurs suites physiques et la résolution attendue pour le client,
       selon les quantités, conditions et autorisations applicables.
     flow_approach: |-
-      Supply Chain Orchestration ; distinguer intention, engagement, pilotage, résultat et document.
+      Supply Chain Management ; distinguer intention, engagement, pilotage, résultat et document.
 
       La résolution apportée au client comprend [Credit Resolution](glossary:TER156), [Refund Resolution](glossary:TER157) et [Replacement Resolution](glossary:TER158). Ces variantes se combinent avec les cinq devenirs physiques existants et entre elles : un avoir peut précéder un remboursement pendant que le produit est réparé ou remis en stock. Return Order porte le résultat attendu, les liens et le reste à satisfaire. [Billing](model:service-order-billing) produit ou corrige l’avoir ; [Payment](model:service-order-payment-collection) exécute le service de remboursement ; une [Sales Order](model:D04.i) liée porte le remplacement. L’avoir ne prouve pas un remboursement et la clôture du retour ne prouve aucune de ces réalisations.
     synthesis:
@@ -12596,7 +12672,7 @@ terms:
 
       [Replenishment](model:D05.e) conserve les apports de lancement. Le réassort tient compte des apports d’implantation encore attendus, sans les recréer. [Stock Redistribution](model:D05.c) examine le rééquilibrage du stock existant ; coordonner les résultats pour éviter les doublons. Un transfert peut matérialiser un apport courant ou une redistribution selon sa finalité.
 
-      Les résultats précisent quantités, dates et ajustements recommandés. [Order Management](model:D04) et [les familles d’Orders](model:D04) vérifient et appliquent les changements autorisés, avec les accords et protections applicables. [Availability](model:D03) décide de la satisfaction des demandes et D06 orchestre les services et leur adaptation. La recommandation ne crée ni promesse, ni modification automatique d’un Order, ni mouvement physique. Une application automatisée reste possible selon les règles et autorités ; le porteur détaillé du déclenchement reste à préciser.
+      Les résultats précisent quantités, dates et ajustements recommandés. [Order Management](model:D04) et [les familles d’Orders](model:D04) vérifient et appliquent les changements autorisés, avec les accords et protections applicables. [Order Backlog Management](glossary:TER269) arbitre la couverture des demandes ; [Order Promising](glossary:TER124) évalue les possibilités de promesse et [Fulfilment Orchestration](model:D06) coordonne les prestations et leur adaptation. La recommandation ne crée ni promesse, ni modification automatique d’un Order, ni mouvement physique. Une application automatisée reste possible selon les règles et autorités ; le porteur détaillé du déclenchement reste à préciser.
 
       U427 adopte trois comportements : Requirement-based Replenishment, Target-based Replenishment et Replenishment Adjustment. Les deux premiers rendent explicites des politiques distinctes de détermination des apports ; le troisième révise les apports existants et se combine avec les deux. Cette décomposition remplace la conclusion de non-décomposition U425 ; les codes, paramètres et formules produits ne créent pas de sous-comportement. Le point réassort de l’audit est traité, sans présumer une couverture exhaustive du marché.
 
@@ -12610,7 +12686,7 @@ terms:
 
       Au sein de Replenishment, la finalité distingue l’implantation initiale du réassort en cours de commercialisation. Un complément tardif destiné à achever la mise en place initiale reste à qualifier selon cette finalité ; la date seule ne suffit pas à le transformer en réassort. Les apports d’implantation engagés restent visibles pour les décisions ultérieures de réassort, afin d’éviter les doublons.
 
-      [Master Planning](model:D05.f) mobilise la décision pour ses scénarios. D04 gère les Orders nécessaires, D03 décide comment les satisfaire et D06 pilote les prestations ; retenir ces apports ne réalise ni livraison ni mise en rayon. [Plan Application](model:D02.e) conserve l’affectation des ressources aux commandes. Le choix de l’assortiment et la planification commerciale de saison ne deviennent pas des responsabilités de cette capacité.
+      [Master Planning](model:D05.f) mobilise la décision pour ses scénarios. [Order Management](model:D04) gère les [Orders](glossary:TER012) nécessaires ; [Order Backlog Management](glossary:TER269) arbitre leur couverture, [Order Promising](glossary:TER124) détermine les possibilités de promesse et [Fulfilment Orchestration](model:D06) pilote les prestations ; retenir ces apports ne réalise ni livraison ni mise en rayon. [Supply Assignment](model:D03.o) décide les liens ressources-demandes ; [Plan Application](model:D02.e) matérialise les changements autorisés. Le choix de l’assortiment et la planification commerciale de saison ne deviennent pas des responsabilités de cette capacité.
 
       Frontière U673 : La frontière avec le calcul externe est la suivante : déterminer et ajuster les apports de couverture du lancement, sans recalculer l’assortiment ni le plan prévisionnel amont.
     synthesis:
@@ -13828,7 +13904,7 @@ terms:
     flow_scope: Stock et apports examinés selon quantité, date et admissibilité.
     flow_approach: Distinguer ressource connue, ressource mobilisable et engagement.
     synthesis:
-    - Business Central oppose Supply et Demand pour équilibrer la planification. Oracle Global Demand Management examine le
+    - Business Central oppose Supply et Demand pour équilibrer la planification. Oracle Global Order Promising examine le
       stock et les apports pour répondre à une date demandée. L’un raisonne sur le bilan planifié, l’autre sur la promesse.
     - FLOW retient le sens ressources commun à ces usages. Un apport attendu n’est pas automatiquement libre, fiable ou utilisable
       à la date voulue ; la perspective du lieu compte aussi pour un transfert.
@@ -13900,7 +13976,7 @@ terms:
     similarities: Pilotage intégré des activités et partenaires de la chaîne.
     differences: Une définition du management éclaire la chaîne sans définir les périmètres FLOW.
     flow_position: Nommer l’ensemble des acteurs et activités qui conduisent les produits des fournisseurs aux destinataires,
-      avec leurs retours. Supply Chain est plus large que le domaine de coordination Supply Chain Orchestration de FLOW.
+      avec leurs retours. Supply Chain est plus large que le domaine de coordination Supply Chain Management de FLOW.
     status: proposed
     source_refs:
     - U366
@@ -13927,7 +14003,7 @@ terms:
     similarities: Processus de la chaîne, de la planification aux retours.
     differences: SCOR est un modèle de processus, pas le catalogue de capacités FLOW.
     flow_position: Nommer l’ensemble des acteurs et activités qui conduisent les produits des fournisseurs aux destinataires,
-      avec leurs retours. Supply Chain est plus large que le domaine de coordination Supply Chain Orchestration de FLOW.
+      avec leurs retours. Supply Chain est plus large que le domaine de coordination Supply Chain Management de FLOW.
     status: proposed
     source_refs:
     - U477
@@ -13970,7 +14046,7 @@ terms:
       Beaumanoir ; les capacités dépassent la couverture d’un seul produit.'
   market_inspiration:
     choice: Nommer l’ensemble des acteurs et activités qui conduisent les produits des fournisseurs aux destinataires, avec
-      leurs retours. Supply Chain est plus large que le domaine de coordination Supply Chain Orchestration de FLOW.
+      leurs retours. Supply Chain est plus large que le domaine de coordination Supply Chain Management de FLOW.
     flow_scope: Approvisionnement, transformation éventuelle, stockage, transport, distribution et retours.
     flow_approach: Lire la chaîne dans son ensemble et ses coopérations.
     synthesis:
@@ -14401,7 +14477,7 @@ terms:
 - id: TER088
   name: Service Provider
   short_description: Fournisseur d’une prestation mobilisable par l’orchestration.
-  definition: Fournisseur qui propose ou réalise un Service mobilisable par Supply Chain Orchestration, principalement logistique
+  definition: Fournisseur qui propose ou réalise un Service mobilisable par Supply Chain Management, principalement logistique
     mais sans restriction à ce secteur.
   context: Rôle d’une partie, distinct de la prestation fournie et des outils utilisés pour la réaliser.
   notes: L’identité et les rôles relèvent de [Party / Role](model:D09). Les [Services](glossary:TER075) proposés sont décrits
@@ -14657,7 +14733,7 @@ terms:
     les droits de vente ou de consommation restent déterminés par l’accord applicable.
   definition: Régime dans lequel des marchandises sont détenues chez une autre partie tandis que leur propriété et les droits
     de vente ou de consommation restent déterminés par l’accord applicable.
-  context: Supply Chain Orchestration
+  context: Supply Chain Management
   notes: Distinguer propriétaire et détenteur. Le modèle couvre nos biens chez un tiers et des biens appartenant à un tiers
     dans nos entrepôts, avec mandat de vente lorsque l’accord le prévoit. Mise en place, vente, consommation, reprise et retour
     après cession ne portent pas la même intention ; aucune règle contractuelle universelle n’est déduite.
@@ -14830,7 +14906,7 @@ terms:
     par le détenteur du seul fait de leur réception.
   definition: Mise en consignation initiale ou complémentaire de marchandises conformément à un accord, sans acquisition par
     le détenteur du seul fait de leur réception.
-  context: Supply Chain Orchestration
+  context: Supply Chain Management
   notes: '[Consignment Fill-up Order](model:D04.r) porte la mise en consignation initiale ou complémentaire. Le sens SAP de
     consignation client et l’apport fournisseur Microsoft éclairent deux perspectives du régime. Le nom et l’extension détaillée
     de la capacité sont proposés U626 ; aucun achat par le détenteur ne découle de la seule réception.'
@@ -14969,7 +15045,7 @@ terms:
     au retour après une vente ou consommation déjà reconnue.
   definition: Reprise ou restitution au propriétaire de marchandises restées sous régime de consignation, sans l’assimiler
     au retour après une vente ou consommation déjà reconnue.
-  context: Supply Chain Orchestration
+  context: Supply Chain Management
   notes: L’intention reste distincte de [Return Order](glossary:TER072) et de [Transfer Order](glossary:TER071). [Order Management](model:D04)
     conserve la commande et ses engagements ; [Process Management](model:subdomain-process-management) conduit les [Tasks](glossary:TER089)
     ; [Fulfilment Coordination](model:D06.d) coordonne les prestations de collecte et transport confiées. Les exécutants réalisent
@@ -15119,7 +15195,7 @@ terms:
     prévus par l’accord.
   definition: Manière de satisfaire une vente en mobilisant du stock consigné avec les effets de cession ou de consommation
     prévus par l’accord.
-  context: Supply Chain Orchestration
+  context: Supply Chain Management
   notes: Dans FLOW, c’est un comportement de [Sales Order](model:D04.i), identifié par BHV096. L’intention première reste
     vendre ; l’effet de propriété ne crée pas un [Order](glossary:TER012) autonome. Un mandat de vente sur des biens de tiers
     peut rendre ce comportement pertinent sans achat automatique par le détenteur.
@@ -15272,7 +15348,7 @@ terms:
     engagements de service de référence.'
   definition: 'Référentiel de l’offre de services mobilisables : prestations proposées, fournisseurs, conditions et engagements
     de service de référence.'
-  context: Supply Chain Orchestration
+  context: Supply Chain Management
   notes: Le catalogue décrit l’offre. La [Service Provider Policy](glossary:TER095) précise les règles locales de recours.
     La capacité opérationnelle contextualisée et les engagements d’une prestation particulière restent distincts des conditions
     générales annoncées.
@@ -15436,7 +15512,7 @@ terms:
     fournisseurs de services selon le contexte et leur situation opérationnelle.
   definition: Cadre de règles dont le domaine porte la maîtrise pour autoriser, exclure ou limiter le recours à des fournisseurs
     de services selon le contexte et leur situation opérationnelle.
-  context: Supply Chain Orchestration
+  context: Supply Chain Management
   notes: Exclure un fournisseur ou plafonner de nouvelles sollicitations ne supprime ni son offre au catalogue ni ses engagements
     déjà acceptés. Une difficulté observée peut justifier une révision selon les autorités prévues ; elle ne constitue pas
     automatiquement une interdiction. La policy ne modifie pas la capacité physique du fournisseur.
@@ -15616,7 +15692,7 @@ terms:
     ou un service ne peut plus assurer ce qui était prévu.
   definition: Recherche d’une autre source de réalisation pour tout ou partie d’un besoin, notamment lorsqu’un site ou un
     service ne peut plus assurer ce qui était prévu.
-  context: Supply Chain Orchestration
+  context: Supply Chain Management
   notes: En cours d’exécution, Fulfillment peut reprendre le seul article manquant depuis un autre entrepôt et suivre les
     prestations issues du split en lien avec la demande initiale. Le mot ne désigne pas à lui seul une capacité autonome et
     n’impose pas de recommencer la totalité du plan.
@@ -16805,9 +16881,9 @@ terms:
   short_description: Acheter, vendre, prévoir les besoins et coordonner les engagements des marques.
   definition: Faire fonctionner les achats, les ventes et la planification des marques, et coordonner leurs engagements opérationnels.
   context: Acheter, vendre, prévoir les besoins et coordonner les engagements opérationnels des marques. Regroupe [Sourcing
-    and Procurement](glossary:TER109), [Commerce](glossary:TER108) et [Supply Chain](glossary:TER084) [Orchestration](glossary:TER031),
-    dont le sous-domaine [Master Plan](glossary:TER111). [Logistics](glossary:TER110) constitue un système distinct qui réalise
-    les prestations avec son pilotage local. Le regroupement n’impose ni séquence, ni application commune, ni organisation.
+    and Procurement](glossary:TER109), [Commerce](glossary:TER108) et [Supply Chain Management](glossary:TER035), dont le
+    sous-domaine [Master Plan](glossary:TER111). [Logistics](glossary:TER110) constitue un système distinct qui réalise les
+    prestations avec son pilotage local. Le regroupement n’impose ni séquence, ni application commune, ni organisation.
   notes: Sens FLOW U778–U780 ; profondeur ciblée. Les illustrations ne constituent pas des observations installées.
   source_refs:
   - U780
@@ -16831,7 +16907,7 @@ terms:
     differences: Le regroupement Business Operations et le domaine autonome d’orchestration sont une convention FLOW ; les
       périmètres produit et les processus éditeur ne constituent pas son arbre.
     flow_position: Acheter, vendre, prévoir les besoins et coordonner les engagements opérationnels des marques. Regroupe
-      [Sourcing and Procurement](glossary:TER109), [Commerce](glossary:TER108) et [Supply Chain](glossary:TER084) [Orchestration](glossary:TER031),
+      [Sourcing and Procurement](glossary:TER109), [Commerce](glossary:TER108) et [Supply Chain Management](glossary:TER035),
       dont le sous-domaine [Master Plan](glossary:TER111). [Logistics](glossary:TER110) constitue un système distinct qui
       réalise les prestations avec son pilotage local. Le regroupement n’impose ni séquence, ni application commune, ni organisation.
     term_choice: Nom retenu dans le cadrage U778–U780 ; appui lexical SAP pour Sales et Sourcing and Procurement, convention
@@ -16861,7 +16937,7 @@ terms:
     differences: Le regroupement Business Operations et le domaine autonome d’orchestration sont une convention FLOW ; les
       périmètres produit et les processus éditeur ne constituent pas son arbre.
     flow_position: Acheter, vendre, prévoir les besoins et coordonner les engagements opérationnels des marques. Regroupe
-      [Sourcing and Procurement](glossary:TER109), [Commerce](glossary:TER108) et [Supply Chain](glossary:TER084) [Orchestration](glossary:TER031),
+      [Sourcing and Procurement](glossary:TER109), [Commerce](glossary:TER108) et [Supply Chain Management](glossary:TER035),
       dont le sous-domaine [Master Plan](glossary:TER111). [Logistics](glossary:TER110) constitue un système distinct qui
       réalise les prestations avec son pilotage local. Le regroupement n’impose ni séquence, ni application commune, ni organisation.
     term_choice: Nom retenu dans le cadrage U778–U780 ; appui lexical SAP pour Sales et Sourcing and Procurement, convention
@@ -16888,9 +16964,9 @@ terms:
     relationship: Recouvrement partiel
     similarities: Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
     differences: Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Master Plan comme
-      sous-domaine de Supply Chain Orchestration est un choix métier FLOW, pas une architecture éditeur imposée.
+      sous-domaine de Supply Chain Management est un choix métier FLOW, pas une architecture éditeur imposée.
     flow_position: Acheter, vendre, prévoir les besoins et coordonner les engagements opérationnels des marques. Regroupe
-      [Sourcing and Procurement](glossary:TER109), [Commerce](glossary:TER108) et [Supply Chain](glossary:TER084) [Orchestration](glossary:TER031),
+      [Sourcing and Procurement](glossary:TER109), [Commerce](glossary:TER108) et [Supply Chain Management](glossary:TER035),
       dont le sous-domaine [Master Plan](glossary:TER111). [Logistics](glossary:TER110) constitue un système distinct qui
       réalise les prestations avec son pilotage local. Le regroupement n’impose ni séquence, ni application commune, ni organisation.
     source_title: Master plans overview
@@ -16917,9 +16993,9 @@ terms:
     relationship: Recouvrement partiel
     similarities: Calculer des projections et des plans datés qui éclairent les besoins et les ressources à prévoir.
     differences: Les sources décrivent des périmètres produit intégrant aussi des décisions opérationnelles. Master Plan comme
-      sous-domaine de Supply Chain Orchestration est un choix métier FLOW, pas une architecture éditeur imposée.
+      sous-domaine de Supply Chain Management est un choix métier FLOW, pas une architecture éditeur imposée.
     flow_position: Acheter, vendre, prévoir les besoins et coordonner les engagements opérationnels des marques. Regroupe
-      [Sourcing and Procurement](glossary:TER109), [Commerce](glossary:TER108) et [Supply Chain](glossary:TER084) [Orchestration](glossary:TER031),
+      [Sourcing and Procurement](glossary:TER109), [Commerce](glossary:TER108) et [Supply Chain Management](glossary:TER035),
       dont le sous-domaine [Master Plan](glossary:TER111). [Logistics](glossary:TER110) constitue un système distinct qui
       réalise les prestations avec son pilotage local. Le regroupement n’impose ni séquence, ni application commune, ni organisation.
     source_title: Outlining Program Planning
@@ -17031,7 +17107,7 @@ terms:
 
     [Retail Network Management](model:subdomain-retail-network-management) et [Store Operations](model:subdomain-store-backoffice-operations) portent le réseau et les opérations magasin ; [Store Sales](model:subdomain-sales-b2c-store) porte la vente et la caisse. Une vente encaissée et emportée est un fait réalisé, pas nécessairement une commande restant à servir.
 
-    [Supply Chain Orchestration](model:supply-chain-orchestration) conserve les commandes à satisfaire, promesses, affectations, stocks de référence et coordination. [Sales Order](model:D04.i) tient l’identité et les transitions autorisées ; les canaux ne créent pas un cycle concurrent. Commerce détermine les prix applicables et les dispositifs commerciaux ; [Commercial Settlement Management](model:subdomain-commercial-settlement-management) calcule et règle les avantages sous Finance. Les décisions de crédit et la comptabilité restent dans [Finance](glossary:TER117).
+    [Supply Chain Management](model:supply-chain-orchestration) conserve les commandes à satisfaire, promesses, affectations, stocks de référence et coordination. [Sales Order](model:D04.i) tient l’identité et les transitions autorisées ; les canaux ne créent pas un cycle concurrent. Commerce détermine les prix applicables et les dispositifs commerciaux ; [Commercial Settlement Management](model:subdomain-commercial-settlement-management) calcule et règle les avantages sous Finance. Les décisions de crédit et la comptabilité restent dans [Finance](glossary:TER117).
 
     Exemple fictif : un revendeur prépare sa sélection puis soumet une commande ; la sélection seule ne réserve pas le stock. Les capacités décrivent la cible métier, sans preuve de transfert depuis les systèmes existants.
   notes: 'U987 : nom et responsabilité validés. Explications et correspondances proposées, sans attribution à un outil.'
@@ -17128,15 +17204,15 @@ terms:
 
     [Sourcing and Procurement](glossary:TER109) porte la recherche et la sélection des sources d’achat, les conditions commerciales et les [Cases](glossary:TER064) opérationnels : validations, échanges fournisseur et suites à donner aux confirmations ou écarts.
 
-    Ces parcours mobilisent [Supply Chain Orchestration](model:supply-chain-orchestration). [Purchase Order](model:D04.j) y conserve le document, ses états et ses transitions autorisées ; aucun cycle concurrent n’est créé. La proposition planifiée reste distincte de la commande affermie. Réception physique, transport et traitements comptables gardent leurs responsabilités.
+    Ces parcours mobilisent [Supply Chain Management](model:supply-chain-orchestration). [Purchase Order](model:D04.j) y conserve le document, ses états et ses transitions autorisées ; aucun cycle concurrent n’est créé. La proposition planifiée reste distincte de la commande affermie. Réception physique, transport et traitements comptables gardent leurs responsabilités.
 
     Exemple fictif : le parcours d’achat demande une validation puis traite la confirmation fournisseur ; le Core conserve la commande et orchestre les prestations autorisées. [Supplier Management](glossary:TER241), [Strategic Sourcing](glossary:TER242), [Purchase Contract Management](glossary:TER243) et [Operational Procurement](glossary:TER244) décrivent les responsabilités du domaine, avec des capacités proposées U1079.
 
     Responsabilités distinguées : [Supplier Management](model:subdomain-supplier-management), [Strategic Sourcing](model:subdomain-strategic-sourcing), [Purchase Contract Management](model:subdomain-purchase-contract-management), [Operational Procurement](model:subdomain-operational-procurement).
 
-    L’outil Dans l’existant, MAP porte la planification et le carnet d’achat. [Master Planning](model:D05.f) peut proposer un apport via [CTP](glossary:TER045) ; seuls les choix acceptés et autorisés sont appliqués. [Purchase Order](model:D04.j) conserve identité, engagements et transitions ; [Logistics](model:domain-logistics-execution) réalise les opérations physiques, et Finance les traitements comptables et règlements.
+    Dans l’existant, MAP porte la planification et le carnet d’achat. [Master Planning](model:D05.f) peut proposer un apport via [CTP](glossary:TER045) ; seuls les choix acceptés et autorisés sont appliqués. [Purchase Order](model:D04.j) conserve identité, engagements et transitions ; [Logistics](model:domain-logistics-execution) réalise les opérations physiques, et Finance les traitements comptables et règlements.
 
-    Sourcing and Procurement décrit désormais les Business Areas et leurs capacités ; les comportements restent hors de ce lot. La tenue de la commande et des engagements demeure dans Supply Chain Orchestration.
+    Sourcing and Procurement décrit désormais les Business Areas et leurs capacités ; les comportements restent hors de ce lot. La tenue de la commande et des engagements demeure dans Supply Chain Management.
   notes: Sens FLOW U778–U780 ; profondeur ciblée. Les illustrations ne constituent pas des observations installées. U978 complète
     le contexte par quatre sous-domaines ; identité et frontières Core préservées.
   source_refs:
@@ -17179,7 +17255,7 @@ terms:
       distinctes. Appui fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
     flow_position: Choisir et qualifier les sources d’achat, tenir les accords et conduire les achats opérationnels de biens
       et prestations. Sourcing and Procurement décrit désormais les Business Areas et leurs capacités ; les comportements
-      restent hors de ce lot. La tenue de la commande et des engagements demeure dans Supply Chain Orchestration.
+      restent hors de ce lot. La tenue de la commande et des engagements demeure dans Supply Chain Management.
     status: proposed
     source_refs:
     - U1023
@@ -17211,7 +17287,7 @@ terms:
       partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
     flow_position: Choisir et qualifier les sources d’achat, tenir les accords et conduire les achats opérationnels de biens
       et prestations. Sourcing and Procurement décrit désormais les Business Areas et leurs capacités ; les comportements
-      restent hors de ce lot. La tenue de la commande et des engagements demeure dans Supply Chain Orchestration.
+      restent hors de ce lot. La tenue de la commande et des engagements demeure dans Supply Chain Management.
     status: proposed
     source_refs:
     - U1023
@@ -17231,10 +17307,12 @@ terms:
   revision: 1
 - id: TER110
   name: Logistics
-  short_description: Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées.
-  definition: Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées.
+  short_description: Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur pilotage
+    opérationnel local et les formalités applicables.
+  definition: Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur pilotage
+    opérationnel local et les formalités applicables.
   context: |-
-    Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées.
+    Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur pilotage opérationnel local et les formalités applicables.
 
     Réaliser les prestations d’entreposage et de transport, avec leur propre pilotage opérationnel. FLOW coordonne les engagements entre acteurs ; [Logistics](glossary:TER110) décide de ses moyens, de ses vagues de préparation et de ses tournées. C-LOG est un acteur qui réalise ce service ; le système métier [Logistics](glossary:TER110) reste compréhensible quel que soit le prestataire. Les formalités douanières applicables sont portées par [Customs Management](model:domain-customs-management). Les exigences de conformité d’entreprise restent distinctes de leur réalisation. Aucune application installée ni maîtrise de toutes les données de stock n’est déduite.
 
@@ -17277,7 +17355,7 @@ terms:
     evidence_limits: Appui aux responsabilités locales ; ni référence de stock d’entreprise ni assurance de tous les services
       textiles. Appui fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
     flow_position: |-
-      Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées.
+      Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur pilotage opérationnel local et les formalités applicables.
 
       Réaliser les prestations d’entreposage et de transport, avec leur propre pilotage opérationnel. FLOW coordonne les engagements entre acteurs ; [Logistics](glossary:TER110) décide de ses moyens, de ses vagues de préparation et de ses tournées. C-LOG est un acteur qui réalise ce service ; le système métier [Logistics](glossary:TER110) reste compréhensible quel que soit le prestataire. Les formalités douanières applicables sont portées par [Customs Management](model:domain-customs-management). Les exigences de conformité d’entreprise restent distinctes de leur réalisation. Aucune application installée ni maîtrise de toutes les données de stock n’est déduite.
 
@@ -17297,8 +17375,9 @@ terms:
     scope_summary: Entrées, sorties, stock et pilotage du travail de l’entrepôt.
     approach_summary: Appui à la responsabilité Logistics ; frontières FLOW maintenues.
     term_choice: Logistics nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-    definition_choice: Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées. Les
-      éléments consultés apportent un appui partiel, avec leurs limites explicites.
+    definition_choice: Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur
+      pilotage opérationnel local et les formalités applicables. Les éléments consultés apportent un appui partiel, avec leurs
+      limites explicites.
   - vendor: Microsoft
     product: Dynamics 365 Supply Chain Management
     source_title: Transportation management overview
@@ -17314,7 +17393,7 @@ terms:
     evidence_limits: Fonctions produit intégrées ; plans et engagements FLOW restent distincts du pilotage de réalisation.
       Appui fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
     flow_position: |-
-      Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées.
+      Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur pilotage opérationnel local et les formalités applicables.
 
       Réaliser les prestations d’entreposage et de transport, avec leur propre pilotage opérationnel. FLOW coordonne les engagements entre acteurs ; [Logistics](glossary:TER110) décide de ses moyens, de ses vagues de préparation et de ses tournées. C-LOG est un acteur qui réalise ce service ; le système métier [Logistics](glossary:TER110) reste compréhensible quel que soit le prestataire. Les formalités douanières applicables sont portées par [Customs Management](model:domain-customs-management). Les exigences de conformité d’entreprise restent distinctes de leur réalisation. Aucune application installée ni maîtrise de toutes les données de stock n’est déduite.
 
@@ -17334,8 +17413,9 @@ terms:
     scope_summary: Organisation des transports, ressources et options de chargement.
     approach_summary: Appui à la responsabilité Logistics ; frontières FLOW maintenues.
     term_choice: Logistics nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-    definition_choice: Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées. Les
-      éléments consultés apportent un appui partiel, avec leurs limites explicites.
+    definition_choice: Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur
+      pilotage opérationnel local et les formalités applicables. Les éléments consultés apportent un appui partiel, avec leurs
+      limites explicites.
   - vendor: SAP
     product: SAP S/4HANA
     source_title: Managing the Warehouse
@@ -17351,7 +17431,7 @@ terms:
     evidence_limits: Source S/4HANA EWM ; ne constitue pas une architecture métier complète. Appui fonctionnel partiel à cette
       fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
     flow_position: |-
-      Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées.
+      Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur pilotage opérationnel local et les formalités applicables.
 
       Réaliser les prestations d’entreposage et de transport, avec leur propre pilotage opérationnel. FLOW coordonne les engagements entre acteurs ; [Logistics](glossary:TER110) décide de ses moyens, de ses vagues de préparation et de ses tournées. C-LOG est un acteur qui réalise ce service ; le système métier [Logistics](glossary:TER110) reste compréhensible quel que soit le prestataire. Les formalités douanières applicables sont portées par [Customs Management](model:domain-customs-management). Les exigences de conformité d’entreprise restent distinctes de leur réalisation. Aucune application installée ni maîtrise de toutes les données de stock n’est déduite.
 
@@ -17371,8 +17451,9 @@ terms:
     scope_summary: Situation du stock, travail, ressources et alertes du dépôt.
     approach_summary: Appui à la responsabilité Logistics ; frontières FLOW maintenues.
     term_choice: Logistics nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-    definition_choice: Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées. Les
-      éléments consultés apportent un appui partiel, avec leurs limites explicites.
+    definition_choice: Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur
+      pilotage opérationnel local et les formalités applicables. Les éléments consultés apportent un appui partiel, avec leurs
+      limites explicites.
   - vendor: SAP
     product: SAP S/4HANA
     source_title: Learning about the SAP Transportation Management Solution
@@ -17388,7 +17469,7 @@ terms:
     evidence_limits: SAP TM inclut aussi achats de fret et règlement ; FLOW conserve Sourcing et Finance distincts. Appui
       fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
     flow_position: |-
-      Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées.
+      Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur pilotage opérationnel local et les formalités applicables.
 
       Réaliser les prestations d’entreposage et de transport, avec leur propre pilotage opérationnel. FLOW coordonne les engagements entre acteurs ; [Logistics](glossary:TER110) décide de ses moyens, de ses vagues de préparation et de ses tournées. C-LOG est un acteur qui réalise ce service ; le système métier [Logistics](glossary:TER110) reste compréhensible quel que soit le prestataire. Les formalités douanières applicables sont portées par [Customs Management](model:domain-customs-management). Les exigences de conformité d’entreprise restent distinctes de leur réalisation. Aucune application installée ni maîtrise de toutes les données de stock n’est déduite.
 
@@ -17408,8 +17489,9 @@ terms:
     scope_summary: Planification, choix de transporteurs, réalisation et suivi des écarts.
     approach_summary: Appui à la responsabilité Logistics ; frontières FLOW maintenues.
     term_choice: Logistics nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-    definition_choice: Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées. Les
-      éléments consultés apportent un appui partiel, avec leurs limites explicites.
+    definition_choice: Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur
+      pilotage opérationnel local et les formalités applicables. Les éléments consultés apportent un appui partiel, avec leurs
+      limites explicites.
   - vendor: SAP
     product: SAP S/4HANA
     source_title: Describing the Integration into SAP Global Trade Services
@@ -17425,7 +17507,7 @@ terms:
     evidence_limits: Preuve de délégation depuis S/4HANA, pas d’exécution douanière native complète dans S/4HANA. Appui fonctionnel
       partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
     flow_position: |-
-      Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées.
+      Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur pilotage opérationnel local et les formalités applicables.
 
       Réaliser les prestations d’entreposage et de transport, avec leur propre pilotage opérationnel. FLOW coordonne les engagements entre acteurs ; [Logistics](glossary:TER110) décide de ses moyens, de ses vagues de préparation et de ses tournées. C-LOG est un acteur qui réalise ce service ; le système métier [Logistics](glossary:TER110) reste compréhensible quel que soit le prestataire. Les formalités douanières applicables sont portées par [Customs Management](model:domain-customs-management). Les exigences de conformité d’entreprise restent distinctes de leur réalisation. Aucune application installée ni maîtrise de toutes les données de stock n’est déduite.
 
@@ -17445,15 +17527,16 @@ terms:
     scope_summary: S/4HANA fournit données et documents à GTS pour les opérations internationales et les échanges douaniers.
     approach_summary: Appui à la responsabilité Logistics ; frontières FLOW maintenues.
     term_choice: Logistics nomme ce périmètre FLOW ; aucune nomenclature commune aux éditeurs revendiquée.
-    definition_choice: Organiser et réaliser les opérations physiques d’entreposage, de transport et de douane confiées. Les
-      éléments consultés apportent un appui partiel, avec leurs limites explicites.
+    definition_choice: Organiser et réaliser les prestations d’entreposage, de transport et de douane confiées, avec leur
+      pilotage opérationnel local et les formalités applicables. Les éléments consultés apportent un appui partiel, avec leurs
+      limites explicites.
   market_gaps: []
 - id: TER111
   name: Master Plan
   short_description: Établir les besoins nets et arbitrer leur couverture par les ressources.
   definition: Sous-domaine opérationnel qui établit les besoins nets et décide comment les ressources couvrent la demande
     retenue, y compris commande par commande en pénurie.
-  context: '[Sous-domaine](method:MOD038) de [Supply Chain Orchestration](model:supply-chain-orchestration). [Demand & Supply
+  context: '[Sous-domaine](method:MOD038) de [Supply Chain Management](model:supply-chain-orchestration). [Demand & Supply
     Forecasting](model:subdomain-demand-supply-forecasting) possède le [Forecast Plan](glossary:TER372) des produits dans
     [Design & Development](glossary:TER105). [Demand & Supply Plan Preparation](model:ba-demand-supply-plan-preparation) qualifie
     la prévision pour l’exploitation opérationnelle, distingue commandes et prévision résiduelle, projette les apports et
@@ -17466,7 +17549,7 @@ terms:
     des commandes. [Plan Application](model:D02.e) transmet les choix autorisés ; une affectation ne vaut ni réservation ni
     confirmation de promesse. FLOW Core porte cette cible sans présumer d’un moteur unique ou d’un transfert installé depuis
     MAP.'
-  notes: 'Sous-domaine de Supply Chain Orchestration : prévision et projection de ressources précèdent le calcul opérationnel
+  notes: 'Sous-domaine de Supply Chain Management : prévision et projection de ressources précèdent le calcul opérationnel
     des besoins nets dans Master Planning. Order Backlog Management décide priorités et affectations. Ce découpage métier
     ne fixe pas un moteur unique.'
   source_refs:
@@ -18344,10 +18427,9 @@ terms:
   revision: 1
 - id: TER117
   name: Finance
-  short_description: Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les
-    décisions de l’entreprise.
-  definition: Établir et exploiter une information financière fiable pour rendre compte de l’activité et éclairer les décisions
-    de l’entreprise.
+  short_description: Tenir les comptes et piloter les coûts, le crédit, la trésorerie et les règlements.
+  definition: Tenir les comptes, analyser les coûts, décider du crédit et gérer la trésorerie et les règlements, pour rendre
+    compte de l’activité et éclairer les décisions de l’entreprise.
   context: |-
     Comptes, méthodes de coûts, crédit et trésorerie. Les domaines opérationnels restent responsables des faits qu’ils transmettent. [Financial Accounting](glossary:TER118) conserve son rattachement et son raccordement comptable existant ; [Cost & Profitability Management](glossary:TER229), [Credit & Collections Management](glossary:TER230) et [Treasury & Cash Management](glossary:TER231) complètent le contexte sans nouvelles capacités.
 
@@ -18865,7 +18947,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [Reference Maintenance](model:ba-reference-maintenance), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     source_title: Data management
@@ -18906,7 +18988,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [Reference Maintenance](model:ba-reference-maintenance), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     source_title: How Order-to-Cash Works in Order Management
@@ -18947,7 +19029,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [Reference Maintenance](model:ba-reference-maintenance), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     scope_summary: Articles et partenaires disposent de vues et rôles adaptés aux opérations.
@@ -18987,7 +19069,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [Reference Maintenance](model:ba-reference-maintenance), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     source_title: Introducing Common Features of Consolidation and Mass Processing
@@ -19022,7 +19104,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [Reference Maintenance](model:ba-reference-maintenance), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     scope_summary: Des données maîtres de produits peuvent être reçues depuis un système externe.
@@ -19059,7 +19141,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [Reference Maintenance](model:ba-reference-maintenance), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     scope_summary: Dynamics utilise des définitions et identifiants partagés, complétés par les informations propres aux processus.
@@ -19092,7 +19174,7 @@ terms:
 
       Ce sous-domaine porte la composition, l’actualisation et la fourniture des vues locales, avec versions, fraîcheur, provenance, validité et incohérences connues. Une consultation ne justifie pas une capacité autonome.
 
-      [Reference Ingestion](model:master-data-ingestion), dans [responsabilités métier productrices et réceptrices](model:supply-chain-orchestration), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
+      [Reference Ingestion](model:master-data-ingestion), dans [Reference Maintenance](model:ba-reference-maintenance), reçoit les apports sourcés et rend compte de leur prise en compte. Une donnée rejetée ou en attente ne devient pas applicable. Operational References conserve la responsabilité de la référence locale utilisable ; aucune maîtrise d’entreprise n’est transférée et aucune capacité générique de remplacement n’est créée.
 
       Les décisions consommatrices interprètent ces références dans le contexte des demandes : choisir une offre, un service ou une promesse, appliquer les conditions d’un accord. Les règles actives relèvent de [Supply Policy Management](model:subdomain-policies), les prévisions interprétées de [Master Plan Management](model:ba-master-plan-management).
     synthesis:
@@ -19897,7 +19979,7 @@ terms:
   short_description: Définir, tenir et rendre applicables les stratégies, protections, limites et autorisations qui guident
     les décisions et opérations Supply.
   context: |-
-    Supply Policy Management tient les références locales de contrôle dont Supply Chain Orchestration a la maîtrise : règles de protection des ressources et des demandes, limites de recours aux prestataires, seuils et activations temporaires. Chaque version précise sa portée, sa validité, son autorité et ses dérogations. Les capacités consommatrices utilisent la version applicable ; une recommandation d’Availability ne la modifie pas automatiquement.
+    Supply Policy Management tient les références locales de contrôle dont Supply Chain Management a la maîtrise : règles de protection des ressources et des demandes, limites de recours aux prestataires, seuils et activations temporaires. Chaque version précise sa portée, sa validité, son autorité et ses dérogations. Les capacités consommatrices utilisent la version applicable ; une recommandation de [Stock Optimization](glossary:TER202) ne la modifie pas automatiquement.
 
     Exemple fictif : activer une protection de stock pour un groupe de demandes ou suspendre les nouvelles sollicitations d’un prestataire, sans annuler les engagements déjà pris. Les réservations et faits opérationnels restent dans Inventory Management ; les parcours et leurs règles de structure relèvent de Process Management. Les règles de crédit reçues du contrôle de gestion restent sous autorité externe et sont documentées dans [Partner & Agreement References](model:ba-partner-agreement-references). Supply Policy Management désigne ici une responsabilité métier de gouvernance par configuration, sans présumer d’une plateforme technique unique ni d’une réalisation installée.
 
@@ -19931,7 +20013,7 @@ terms:
     differences: Les règles DOM et protections SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas un
       sous-domaine autonome Supply Policy Management.
     flow_position: |-
-      Supply Policy Management tient les références locales de contrôle dont Supply Chain Orchestration a la maîtrise : règles de protection des ressources et des demandes, limites de recours aux prestataires, seuils et activations temporaires. Chaque version précise sa portée, sa validité, son autorité et ses dérogations. Les capacités consommatrices utilisent la version applicable ; une recommandation d’Availability ne la modifie pas automatiquement.
+      Supply Policy Management tient les références locales de contrôle dont Supply Chain Management a la maîtrise : règles de protection des ressources et des demandes, limites de recours aux prestataires, seuils et activations temporaires. Chaque version précise sa portée, sa validité, son autorité et ses dérogations. Les capacités consommatrices utilisent la version applicable ; une recommandation de [Stock Optimization](glossary:TER202) ne la modifie pas automatiquement.
 
       Exemple fictif : activer une protection de stock pour un groupe de demandes ou suspendre les nouvelles sollicitations d’un prestataire, sans annuler les engagements déjà pris. Les réservations et faits opérationnels restent dans Inventory Management ; les parcours et leurs règles de structure relèvent de Process Management. Les règles de crédit reçues du contrôle de gestion restent sous autorité externe et sont documentées dans [Partner & Agreement References](model:ba-partner-agreement-references). Supply Policy Management désigne ici une responsabilité métier de gouvernance par configuration, sans présumer d’une plateforme technique unique ni d’une réalisation installée.
     source_title: DOM rules
@@ -19968,7 +20050,7 @@ terms:
     differences: Les règles DOM et protections SAP étayent l’encadrement des décisions. Ces produits ne prescrivent pas un
       sous-domaine autonome Supply Policy Management.
     flow_position: |-
-      Supply Policy Management tient les références locales de contrôle dont Supply Chain Orchestration a la maîtrise : règles de protection des ressources et des demandes, limites de recours aux prestataires, seuils et activations temporaires. Chaque version précise sa portée, sa validité, son autorité et ses dérogations. Les capacités consommatrices utilisent la version applicable ; une recommandation d’Availability ne la modifie pas automatiquement.
+      Supply Policy Management tient les références locales de contrôle dont Supply Chain Management a la maîtrise : règles de protection des ressources et des demandes, limites de recours aux prestataires, seuils et activations temporaires. Chaque version précise sa portée, sa validité, son autorité et ses dérogations. Les capacités consommatrices utilisent la version applicable ; une recommandation de [Stock Optimization](glossary:TER202) ne la modifie pas automatiquement.
 
       Exemple fictif : activer une protection de stock pour un groupe de demandes ou suspendre les nouvelles sollicitations d’un prestataire, sans annuler les engagements déjà pris. Les réservations et faits opérationnels restent dans Inventory Management ; les parcours et leurs règles de structure relèvent de Process Management. Les règles de crédit reçues du contrôle de gestion restent sous autorité externe et sont documentées dans [Partner & Agreement References](model:ba-partner-agreement-references). Supply Policy Management désigne ici une responsabilité métier de gouvernance par configuration, sans présumer d’une plateforme technique unique ni d’une réalisation installée.
     source_title: Explaining Supply Assignment
@@ -20017,7 +20099,7 @@ terms:
     evidence_limits: Ne prescrit pas l’organisation du contrôle de gestion ni le découpage FLOW. Aucun déploiement Beaumanoir
       déduit.
     flow_position: |-
-      Supply Policy Management tient les références locales de contrôle dont Supply Chain Orchestration a la maîtrise : règles de protection des ressources et des demandes, limites de recours aux prestataires, seuils et activations temporaires. Chaque version précise sa portée, sa validité, son autorité et ses dérogations. Les capacités consommatrices utilisent la version applicable ; une recommandation d’Availability ne la modifie pas automatiquement.
+      Supply Policy Management tient les références locales de contrôle dont Supply Chain Management a la maîtrise : règles de protection des ressources et des demandes, limites de recours aux prestataires, seuils et activations temporaires. Chaque version précise sa portée, sa validité, son autorité et ses dérogations. Les capacités consommatrices utilisent la version applicable ; une recommandation de [Stock Optimization](glossary:TER202) ne la modifie pas automatiquement.
 
       Exemple fictif : activer une protection de stock pour un groupe de demandes ou suspendre les nouvelles sollicitations d’un prestataire, sans annuler les engagements déjà pris. Les réservations et faits opérationnels restent dans Inventory Management ; les parcours et leurs règles de structure relèvent de Process Management. Les règles de crédit reçues du contrôle de gestion restent sous autorité externe et sont documentées dans [Partner & Agreement References](model:ba-partner-agreement-references). Supply Policy Management désigne ici une responsabilité métier de gouvernance par configuration, sans présumer d’une plateforme technique unique ni d’une réalisation installée.
     term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
@@ -20045,7 +20127,7 @@ terms:
     differences: SAP Credit Management couvre plus que les références reçues par FLOW.
     evidence_limits: SAP Credit Management couvre plus que les références reçues par FLOW. Aucun déploiement Beaumanoir déduit.
     flow_position: |-
-      Supply Policy Management tient les références locales de contrôle dont Supply Chain Orchestration a la maîtrise : règles de protection des ressources et des demandes, limites de recours aux prestataires, seuils et activations temporaires. Chaque version précise sa portée, sa validité, son autorité et ses dérogations. Les capacités consommatrices utilisent la version applicable ; une recommandation d’Availability ne la modifie pas automatiquement.
+      Supply Policy Management tient les références locales de contrôle dont Supply Chain Management a la maîtrise : règles de protection des ressources et des demandes, limites de recours aux prestataires, seuils et activations temporaires. Chaque version précise sa portée, sa validité, son autorité et ses dérogations. Les capacités consommatrices utilisent la version applicable ; une recommandation de [Stock Optimization](glossary:TER202) ne la modifie pas automatiquement.
 
       Exemple fictif : activer une protection de stock pour un groupe de demandes ou suspendre les nouvelles sollicitations d’un prestataire, sans annuler les engagements déjà pris. Les réservations et faits opérationnels restent dans Inventory Management ; les parcours et leurs règles de structure relèvent de Process Management. Les règles de crédit reçues du contrôle de gestion restent sous autorité externe et sont documentées dans [Partner & Agreement References](model:ba-partner-agreement-references). Supply Policy Management désigne ici une responsabilité métier de gouvernance par configuration, sans présumer d’une plateforme technique unique ni d’une réalisation installée.
     term_choice: Nom FLOW décrivant la responsabilité ; pas de nomenclature commune présumée.
@@ -24159,7 +24241,7 @@ terms:
 
     Une [précommande](glossary:TER150) conserve quantités, échéances demandées ou proposées, conditions et engagement reconnu. Elle peut être préparée puis affermie, ou être ferme dès son acceptation : attendre une disponibilité future ne signifie pas absence d’engagement. Elle reste une variante de [Sales Order](model:D04.i), combinable avec livraison, retrait et relation intercompany.
 
-    [Availability](model:D03) interprète les prévisions et détermine les possibilités de promesse ; [Order Management](model:D04) porte la confirmation. Le [workflow réactif](glossary:TER125) surveille les faits et échéances, produit les tâches de suivi et autorise la suite selon le contexte. Un retard appelle un réexamen, sans modifier automatiquement l’engagement. La précommande reste distincte d’un reliquat faute de stock après disponibilité.
+    [Plan Visibility](glossary:TER151) interprète les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) pertinents ; [Availability](glossary:TER112) détermine les possibilités de promesse ; [Order Management](model:D04) porte la confirmation. Le [workflow réactif](glossary:TER125) surveille les faits et échéances, produit les tâches de suivi et autorise la suite selon le contexte. Un retard appelle un réexamen, sans modifier automatiquement l’engagement. La précommande reste distincte d’un reliquat faute de stock après disponibilité.
 
     La demande ferme consomme la prévision correspondante selon les règles applicables, sans compter deux fois le même besoin. Les [Planned Purchase Orders](glossary:TER033) et les Purchase Orders sont deux objets reliés par l’affermissement ; cette distinction côté achat ne s’applique pas au Sales Order qui sort de Preorder en conservant son identité. Un plan ou une date de lancement ne déclenche pas seul une réservation ni une prestation.
 
@@ -24243,9 +24325,11 @@ terms:
 - id: TER151
   name: Plan Visibility
   label_fr: Interprétation des plans
-  short_description: Interpréter les prévisions reçues pour les décisions d’Availability.
-  definition: Interpréter les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) reçus dans le contexte des
-    demandes de la supply chain pour éclairer les décisions d’[Availability](glossary:TER112).
+  short_description: Interpréter les plans de demande et de ressources qualifiés, locaux ou alimentés par des contributions
+    externes, pour les décisions Supply.
+  definition: Interpréter les [Demand Plans](glossary:TER099) et [Supply Plans](glossary:TER098) qualifiés, construits dans
+    [Master Plan](glossary:TER111) ou alimentés par des contributions externes, pour éclairer les décisions de planification
+    et de promesse.
   context: '[Supply Plan Visibility](model:plans-visibility) et [Demand Plan Visibility](model:demand-plan-visibility) interprètent
     les plans construits dans [Master Plan](model:domain-plan) ou les contributions externes reçues par [Plan Ingestion](model:plans-ingestion).
     Ces capacités appartiennent à [Master Plan Management](model:ba-master-plan-management). Elles qualifient portée, période,
@@ -25441,9 +25525,9 @@ terms:
   short_description: Définir et maintenir les stratégies et règles applicables à la satisfaction des demandes et à la protection
     des ressources.
   context: |-
-    Les référentiels présentés tiennent les règles de protection et de réservation applicables, leur version, leur portée et leur validité. [Stock Optimization](model:ba-physical-stock-configuration-optimization) recommande des seuils et [Stock Optimization](model:ba-physical-stock-configuration-optimization) des droits et conditions ; ce résultat ne les active pas. Inventory tient les positions et réservations individuelles.
+    Les référentiels présentés tiennent les règles de protection et de réservation applicables, leur version, leur portée et leur validité. [Stock Optimization](glossary:TER202) recommande les seuils, droits et conditions ; ce résultat ne les active pas. Inventory tient les positions et réservations individuelles.
 
-    Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations. Exemple fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.
+    [Availability](glossary:TER112) utilise les règles actives pour évaluer une promesse ; [Inventory State Management](glossary:TER131) tient les [réservations](glossary:TER016). Exemple fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.
 
     [Demand Fulfilment Policy Management](model:demand-fulfilment-policy-management) compose et maintient la [stratégie de satisfaction des demandes](glossary:TER268). Les références de protection gardent leurs sujets et leurs versions : règle de demande, droits de groupe, conditions de réservation et paramètres de réassort ne deviennent pas une règle unique. Le plan consomme la stratégie applicable sans la modifier automatiquement.
   source_refs:
@@ -25490,8 +25574,9 @@ terms:
     differences: Inventory allocation ne couvre pas toute la politique de renouvellement FLOW. La Business Area FLOW ne reprend
       pas tout le module produit ; le nombre de capacités ne définit pas sa responsabilité.
     flow_position: 'Maintenir les règles actives de protection des ressources et des demandes dans les arbitrages de couverture.
-      Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations. Exemple
-      fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.'
+      [Availability](glossary:TER112) utilise les règles actives pour évaluer une promesse ; [Inventory State Management](glossary:TER131)
+      tient les [réservations](glossary:TER016). Exemple fictif : protéger un groupe de demandes sans réserver automatiquement
+      chaque pièce.'
     status: proposed
     source_refs:
     - U435
@@ -25515,8 +25600,9 @@ terms:
       cette différence de sens d’Allocation. La Business Area FLOW ne reprend pas tout le module produit ; le nombre de capacités
       ne définit pas sa responsabilité.
     flow_position: 'Maintenir les règles actives de protection des ressources et des demandes dans les arbitrages de couverture.
-      Availability recommande des paramètres ou applique les règles aux décisions ; Inventory tient les réservations. Exemple
-      fictif : protéger un groupe de demandes sans réserver automatiquement chaque pièce.'
+      [Availability](glossary:TER112) utilise les règles actives pour évaluer une promesse ; [Inventory State Management](glossary:TER131)
+      tient les [réservations](glossary:TER016). Exemple fictif : protéger un groupe de demandes sans réserver automatiquement
+      chaque pièce.'
     source_title: Outlining aATP with Supply Protection (SuP)
     source_url: https://learning.sap.com/courses/exploring-aatp-in-sap-s-4hana/outlining-aatp-with-supply-protection-sup-
     source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
@@ -25847,7 +25933,7 @@ terms:
   context: Expression de la traduction des [faits de gestion](glossary:TER120) en [écritures](glossary:TER121), dans [Financial
     Accounting](model:subdomain-financial-accounting). Le terme est conservé pour expliquer cette responsabilité ; la [Business
     Area](method:MOD039) correspondante est retirée du modèle courant, dont le détail en capacités est réservé à [Supply Chain
-    Orchestration](model:supply-chain-orchestration).
+    Management](model:supply-chain-orchestration).
   source_refs:
   - U880
   - U981
@@ -25914,7 +26000,7 @@ terms:
   context: |-
     Porter les activités réutilisables, la construction des parcours, leur conduite, le travail humain, les interventions et leur analyse. Un processus mobilise les capacités des autres sous-domaines ; il ne devient pas leur parent métier. Une commande conserve son identité et ses engagements dans [Order Management](model:D04). [Availability](model:D03) décide de la couverture et de la promesse ; [Fulfilment Orchestration](model:D06) coordonne les prestations confiées.
 
-    Un parcours peut concerner plusieurs commandes ; un [Case](glossary:TER064) relie une situation et ses contributions sans dupliquer ces commandes. Les exécutants conservent leur organisation interne. La responsabilité reste limitée à [Supply Chain Orchestration](model:supply-chain-orchestration), sans administration de toute la plateforme informatique ni de tous les processus de l’entreprise.
+    Un parcours peut concerner plusieurs commandes ; un [Case](glossary:TER064) relie une situation et ses contributions sans dupliquer ces commandes. Les exécutants conservent leur organisation interne. La responsabilité reste limitée à [Supply Chain Management](model:supply-chain-orchestration), sans administration de toute la plateforme informatique ni de tous les processus de l’entreprise.
 
     Exemple fictif : faire vérifier un paiement, attendre un résultat financier reconnu puis solliciter la préparation ; analyser ensuite les attentes récurrentes avant la vérification.
 
@@ -27568,7 +27654,7 @@ terms:
 
     Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. [Fulfilment Coordination](glossary:TER176) coordonne la progression ; [Fulfilment Adaptation Decision](glossary:TER177) choisit les adaptations ; [Operations Tracking](glossary:TER179) intègre les faits d’exécution ; [Operations Visibility](glossary:TER178) restitue leur avancement et [Process, Tasks & Order Visibility](glossary:TER175) en expose la contribution à la progression du processus. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun produit logiciel particulier ou nouveau niveau descriptif imposé.
 
-    Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Availability](glossary:TER112).
+    Distinguer le plan d’exécution coordonné du [Matching Master Plan](glossary:TER100) arbitré dans [Master Plan](glossary:TER111), dont les [affectations](glossary:TER017) sont décidées par [Supply Assignment](model:D03.o).
 
     [Service Management](model:subdomain-service-orders) tient le cycle et les engagements des ordres de prestation. L’orchestration utilise leurs réponses et coordonne les conditions d’activation et dépendances ; elle ne recrée pas leur cycle.
 
@@ -27717,7 +27803,8 @@ terms:
       ; VCM ne démontre pas une orchestration universelle ni toutes les adaptations locales de FLOW.'
   review:
     state: proposed
-    note: Cible U883 validée U884 et appliquée U885 ; accords exacts capturés séparément, détails rédactionnels proposés.
+    note: Correction U1118 appliquée dans le lot U1116/U1117. Les nouvelles formulations gardent leur qualification proposée
+      ; les accords historiques restent limités à leurs champs, et l’ordre de lecture est capturé séparément.
   source_refs:
   - U881
   - U882
@@ -27725,15 +27812,16 @@ terms:
   - U884
   - U885
   - U909
+  - U1118
   source_locator:
     path: connaissance/01-contributions-utilisateur.md
     anchor: u885
 - id: TER177
   name: Fulfilment Adaptation Decision
   definition: Déterminer les adaptations du plan d’exécution permettant de préserver la promesse de l’[Order](glossary:TER012)
-    et les grands équilibres d’[Availability](glossary:TER112) face aux aléas.
+    et les grands équilibres du [Matching Master Plan](glossary:TER100) face aux aléas.
   short_description: Déterminer les adaptations du plan d’exécution permettant de préserver la promesse de l’[Order](glossary:TER012)
-    et les grands équilibres d’[Availability](glossary:TER112) face aux aléas.
+    et les grands équilibres du [Matching Master Plan](glossary:TER100) face aux aléas.
   context: |-
     Déterminer la variation à retenir lorsqu’un fait, un retard ou un échec remet en cause le plan d’exécution. Mobiliser les décisions de service, les capacités communiquées et les informations sur les demandes et réalisations.
 
@@ -27743,11 +27831,11 @@ terms:
 
     Decision détermine une réponse métier ; Planning conserve le sens reconfigurer, simuler et valider en mobilisant des décisions. La séparation demandée n’ajoute pas automatiquement une capacité Planning ou un contrôle humain obligatoire.
 
-    Frontière : Remonter effet promesse à [Order Management](model:D04) ; [Availability](model:D03) peut revoir son scénario sans décider le transporteur.
+    Frontière : Remonter effet promesse à [Order Management](model:D04) ; [Availability](glossary:TER112) peut réexaminer les possibilités de promesse sans décider le transporteur.
 
     Convention U409 : le Process orchestre des Services. Les [Tasks](glossary:TER089) expriment les contributions au processus ; les services réalisent les prestations sollicitées, humaines, physiques ou numériques. Un appel informatique est un moyen de sollicitation ou de feedback, pas le service métier lui-même. [Fulfilment Coordination](glossary:TER176) coordonne la progression ; [Fulfilment Adaptation Decision](glossary:TER177) choisit les adaptations ; [Operations Tracking](model:D07.d) recueille les faits de réalisation ; [Operations Visibility](model:operations-visibility) restitue leur progression et leurs écarts. Les exécutants gardent leurs opérations internes. Le périmètre Supply et les responsabilités des sous-domaines restent inchangés ; aucun moteur de workflow ou nouveau niveau descriptif imposé.
 
-    Le plan concerné est le plan d’exécution. Préserver promesse et grands équilibres ; transmettre les impacts non absorbables à [Availability](glossary:TER112) et [Order Management](model:D04), sans seuils à définir ici.
+    Le plan concerné est le plan d’exécution. Préserver la promesse et les équilibres du [Matching Master Plan](glossary:TER100). Transmettre les impacts non absorbables aux responsables concernés : [Master Plan](glossary:TER111) pour les arbitrages collectifs, [Availability](glossary:TER112) pour les possibilités de promesse et [Order Management](model:D04) pour les engagements, sans définir de nouveaux seuils ici.
 
     La rétention anticipée et le regroupement en fonctionnement normal relèvent de [Service Order Release Decision](model:service-order-release-decision). Une adaptation peut modifier les conditions de libération, qui sont alors réévaluées ; ne pas dupliquer la décision de choix des lots.
 
@@ -27966,18 +28054,22 @@ terms:
     approach_summary: 'Rapprochement avec Operations Visibility : Freight orders et bookings portent étapes, transporteurs,
       dates, échanges de statut et documents de transport.'
     similarities: Freight orders et bookings portent étapes, transporteurs, dates, échanges de statut et documents de transport.
-    differences: Les documents de transport étayent seulement une partie de Document Production ; aucun catalogue universel
-      d’ordres FLOW n’est natif de ce produit.
-    flow_position: FLOW conserve le périmètre métier de Operations Visibility. Les documents de transport étayent seulement
-      une partie de Document Production ; aucun catalogue universel d’ordres FLOW n’est natif de ce produit.
+    differences: Les étapes, dates et statuts du transport étayent une partie de [Operations Visibility](glossary:TER178),
+      qui restitue aussi les autres prestations connues. Un document disponible ne prouve ni la réalisation des autres prestations
+      ni l’aboutissement du parcours complet ; leurs résultats restent distincts.
+    flow_position: FLOW conserve le périmètre métier de Operations Visibility. Les étapes, dates et statuts du transport étayent
+      une partie de [Operations Visibility](glossary:TER178), qui restitue aussi les autres prestations connues. Un document
+      disponible ne prouve ni la réalisation des autres prestations ni l’aboutissement du parcours complet ; leurs résultats
+      restent distincts.
     source_title: Managing Freight Orders and Freight Bookings
     source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-transportation-management/managing-freight-orders-and-freight-bookings_a83a6371-2f56-4fa2-8e12-ae0aab3c74c2
     source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
     source_locator: Managing Freight Orders and Freight Bookings — passages sur le mécanisme rapproché.
     consulted_on: '2026-09-25'
     evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
-      Beaumanoir déduit. Les documents de transport étayent seulement une partie de Document Production ; aucun catalogue
-      universel d’ordres FLOW n’est natif de ce produit.
+      Beaumanoir déduit. Les étapes, dates et statuts du transport étayent une partie de [Operations Visibility](glossary:TER178),
+      qui restitue aussi les autres prestations connues. Un document disponible ne prouve ni la réalisation des autres prestations
+      ni l’aboutissement du parcours complet ; leurs résultats restent distincts.
     status: proposed
     source_refs:
     - U774
@@ -27986,8 +28078,9 @@ terms:
     term_choice: Le nom Operations Visibility reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
       cette appellation ni sa maille.
     definition_choice: 'Freight orders et bookings portent étapes, transporteurs, dates, échanges de statut et documents de
-      transport. Frontière conservée : Les documents de transport étayent seulement une partie de Document Production ; aucun
-      catalogue universel d’ordres FLOW n’est natif de ce produit.'
+      transport. Frontière conservée : Les étapes, dates et statuts du transport étayent une partie de [Operations Visibility](glossary:TER178),
+      qui restitue aussi les autres prestations connues. Un document disponible ne prouve ni la réalisation des autres prestations
+      ni l’aboutissement du parcours complet ; leurs résultats restent distincts.'
   - vendor: SAP
     product: SAP S/4HANA — périmètre du cours cité
     element_name: Analyzing SAP S/4HANA Cloud Public Edition, Warehouse Management
@@ -28224,18 +28317,22 @@ terms:
     approach_summary: 'Rapprochement avec Operations Tracking : Freight orders et bookings portent étapes, transporteurs,
       dates, échanges de statut et documents de transport.'
     similarities: Freight orders et bookings portent étapes, transporteurs, dates, échanges de statut et documents de transport.
-    differences: Les documents de transport étayent seulement une partie de Document Production ; aucun catalogue universel
-      d’ordres FLOW n’est natif de ce produit.
-    flow_position: FLOW conserve le périmètre métier de Operations Tracking. Les documents de transport étayent seulement
-      une partie de Document Production ; aucun catalogue universel d’ordres FLOW n’est natif de ce produit.
+    differences: Les étapes et échanges de statut du transport étayent une partie des faits de réalisation intégrés par [Operations
+      Tracking](glossary:TER179), sans couvrir toutes les prestations Supply. Les documents requis relèvent des services concernés
+      ; leur génération technique ne crée pas une capacité métier autonome.
+    flow_position: FLOW conserve le périmètre métier de Operations Tracking. Les étapes et échanges de statut du transport
+      étayent une partie des faits de réalisation intégrés par [Operations Tracking](glossary:TER179), sans couvrir toutes
+      les prestations Supply. Les documents requis relèvent des services concernés ; leur génération technique ne crée pas
+      une capacité métier autonome.
     source_title: Managing Freight Orders and Freight Bookings
     source_url: https://learning.sap.com/courses/implementing-sap-s-4hana-cloud-public-edition-transportation-management/managing-freight-orders-and-freight-bookings_a83a6371-2f56-4fa2-8e12-ae0aab3c74c2
     source_version: Documentation évolutive ; périmètre produit du cours ou de la page cité, version globale non présumée.
     source_locator: Managing Freight Orders and Freight Bookings — passages sur le mécanisme rapproché.
     consulted_on: '2026-09-25'
     evidence_limits: Passages primaires consultés. Correspondance partielle ; aucun consensus, équivalence complète ou déploiement
-      Beaumanoir déduit. Les documents de transport étayent seulement une partie de Document Production ; aucun catalogue
-      universel d’ordres FLOW n’est natif de ce produit.
+      Beaumanoir déduit. Les étapes et échanges de statut du transport étayent une partie des faits de réalisation intégrés
+      par [Operations Tracking](glossary:TER179), sans couvrir toutes les prestations Supply. Les documents requis relèvent
+      des services concernés ; leur génération technique ne crée pas une capacité métier autonome.
     status: proposed
     source_refs:
     - U774
@@ -28244,8 +28341,9 @@ terms:
     term_choice: Le nom Operations Tracking reste celui du modèle FLOW ; la source étaye le rapprochement, pas nécessairement
       cette appellation ni sa maille.
     definition_choice: 'Freight orders et bookings portent étapes, transporteurs, dates, échanges de statut et documents de
-      transport. Frontière conservée : Les documents de transport étayent seulement une partie de Document Production ; aucun
-      catalogue universel d’ordres FLOW n’est natif de ce produit.'
+      transport. Frontière conservée : Les étapes et échanges de statut du transport étayent une partie des faits de réalisation
+      intégrés par [Operations Tracking](glossary:TER179), sans couvrir toutes les prestations Supply. Les documents requis
+      relèvent des services concernés ; leur génération technique ne crée pas une capacité métier autonome.'
   - vendor: SAP
     product: SAP S/4HANA — périmètre du cours cité
     element_name: Analyzing SAP S/4HANA Cloud Public Edition, Warehouse Management
@@ -29692,7 +29790,7 @@ terms:
 
       Conduit les parcours de vente [B2C](glossary:TER194) en ligne : découverte de l’offre, panier, demande client et suivi. Un portail [B2B](glossary:TER195) reste une modalité de [Wholesale Commerce](model:subdomain-sales-wholesale), même s’il est numérique.
 
-      Mobilise [Supply Chain Orchestration](model:supply-chain-orchestration) pour les demandes à satisfaire sans reprendre les promesses ni les affectations. Le lieu de réalisation reste distinct du canal de vente. Exemple fictif : le client commande sur le site et choisit le retrait en magasin ; le parcours numérique conserve son contexte et [Store Backoffice Operations](model:subdomain-store-backoffice-operations) remet les biens. Aucune décomposition en capacités hors Core.
+      Mobilise [Supply Chain Management](model:supply-chain-orchestration) pour les demandes à satisfaire sans reprendre les promesses ni les affectations. Le lieu de réalisation reste distinct du canal de vente. Exemple fictif : le client commande sur le site et choisit le retrait en magasin ; le parcours numérique conserve son contexte et [Store Backoffice Operations](model:subdomain-store-backoffice-operations) remet les biens. Aucune décomposition en capacités hors Core.
 
       Cette Business Area porte une capacité proposée ; les comportements ne sont pas détaillés.
     status: proposed
@@ -29727,7 +29825,7 @@ terms:
 
       Conduit les parcours de vente [B2C](glossary:TER194) en ligne : découverte de l’offre, panier, demande client et suivi. Un portail [B2B](glossary:TER195) reste une modalité de [Wholesale Commerce](model:subdomain-sales-wholesale), même s’il est numérique.
 
-      Mobilise [Supply Chain Orchestration](model:supply-chain-orchestration) pour les demandes à satisfaire sans reprendre les promesses ni les affectations. Le lieu de réalisation reste distinct du canal de vente. Exemple fictif : le client commande sur le site et choisit le retrait en magasin ; le parcours numérique conserve son contexte et [Store Backoffice Operations](model:subdomain-store-backoffice-operations) remet les biens. Aucune décomposition en capacités hors Core.
+      Mobilise [Supply Chain Management](model:supply-chain-orchestration) pour les demandes à satisfaire sans reprendre les promesses ni les affectations. Le lieu de réalisation reste distinct du canal de vente. Exemple fictif : le client commande sur le site et choisit le retrait en magasin ; le parcours numérique conserve son contexte et [Store Backoffice Operations](model:subdomain-store-backoffice-operations) remet les biens. Aucune décomposition en capacités hors Core.
 
       Cette Business Area porte une capacité proposée ; les comportements ne sont pas détaillés.
     status: proposed
@@ -31959,7 +32057,7 @@ terms:
   context: |-
     Peut produire des propositions d’achat, de production ou de transfert. Le [Supply Plan](glossary:TER098) comprend les achats prévus et les autres apports ou mouvements planifiés ; une proposition ne devient pas une commande ferme. Dans l’existant, MAP porte la planification et le carnet d’achat ; FLOW peut proposer un apport pour satisfaire le carnet via [CTP](glossary:TER045).
 
-    Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Plan Development](model:supply-plan-development), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
+    Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Management](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Plan Development](model:supply-plan-development), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
   notes: Périmètre de contexte du lot U975. Nom et rattachement validés ; rédaction explicative et comparaisons proposées,
     sans preuve de réalisation.
   source_refs:
@@ -31985,7 +32083,7 @@ terms:
     flow_position: |-
       Peut produire des propositions d’achat, de production ou de transfert. Le [Supply Plan](glossary:TER098) comprend les achats prévus et les autres apports ou mouvements planifiés ; une proposition ne devient pas une commande ferme. Dans l’existant, MAP porte la planification et le carnet d’achat ; FLOW peut proposer un apport pour satisfaire le carnet via [CTP](glossary:TER045).
 
-      Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Plan Development](model:supply-plan-development), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
+      Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Management](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Plan Development](model:supply-plan-development), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
     term_choice: Supply Planning nomme le périmètre FLOW discuté ; aucun intitulé commun aux éditeurs ni consensus de taxonomie
       revendiqué.
     definition_choice: Décrire le service rendu et sa frontière ; les textes détaillés restent proposés.
@@ -32014,7 +32112,7 @@ terms:
     flow_position: |-
       Peut produire des propositions d’achat, de production ou de transfert. Le [Supply Plan](glossary:TER098) comprend les achats prévus et les autres apports ou mouvements planifiés ; une proposition ne devient pas une commande ferme. Dans l’existant, MAP porte la planification et le carnet d’achat ; FLOW peut proposer un apport pour satisfaire le carnet via [CTP](glossary:TER045).
 
-      Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Orchestration](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Plan Development](model:supply-plan-development), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
+      Le [Supply Plan](glossary:TER098) utilisé dans [Supply Chain Management](model:supply-chain-orchestration) est un résultat de planification versionné. Sa construction et sa révision relèvent de [Supply Plan Development](model:supply-plan-development), dans [Master Plan](model:domain-plan). FLOW construit et exploite ce résultat dans Master Plan ; le [Matching Master Plan](glossary:TER100) interne reste un objet distinct.
     term_choice: Supply Planning nomme le périmètre FLOW discuté ; aucun intitulé commun aux éditeurs ni consensus de taxonomie
       revendiqué.
     definition_choice: Décrire le service rendu et sa frontière ; les textes détaillés restent proposés.
@@ -32951,7 +33049,7 @@ terms:
 
     Responsabilités distinguées : [Inbound Operations](model:subdomain-inbound-operations), [Storage & Inventory Control](model:subdomain-storage-inventory-control), [Outbound Operations](model:subdomain-outbound-operations), [Value-Added Operations](model:subdomain-value-added-returns), [Returns Operations](model:subdomain-returns-operations), [Warehouse Operations Control](model:subdomain-warehouse-operations-control).
 
-    Les remises entre entreposage, transport et douane conservent les références des prestations et faits d’origine. Les justificatifs financiers peuvent être fournis à [Financial Accounting](model:subdomain-financial-accounting), avec ses demandes de correction en retour. Les voies locales ou relayées par [Supply Chain Orchestration](model:supply-chain-orchestration), les pièces de facturation et les autorités financières précises restent à qualifier ; aucun nouveau montant ni mouvement n’est déduit d’un simple statut.
+    Les remises entre entreposage, transport et douane conservent les références des prestations et faits d’origine. Les justificatifs financiers peuvent être fournis à [Financial Accounting](model:subdomain-financial-accounting), avec ses demandes de correction en retour. Les voies locales ou relayées par [Supply Chain Management](model:supply-chain-orchestration), les pièces de facturation et les autorités financières précises restent à qualifier ; aucun nouveau montant ni mouvement n’est déduit d’un simple statut.
   notes: Périmètre de contexte du lot U975. Nom et rattachement validés ; rédaction explicative et comparaisons proposées,
     sans preuve de réalisation.
   source_refs:
@@ -33433,7 +33531,7 @@ terms:
 
     Responsabilités distinguées : [Transport Planning & Dispatch](model:subdomain-transport-planning-dispatch), [Transport Execution & Tracking](model:subdomain-transport-execution-tracking), [Transport Exception Management](model:subdomain-transport-exception).
 
-    Les remises entre entreposage, transport et douane conservent les références des prestations et faits d’origine. Les justificatifs financiers peuvent être fournis à [Financial Accounting](model:subdomain-financial-accounting), avec ses demandes de correction en retour. Les voies locales ou relayées par [Supply Chain Orchestration](model:supply-chain-orchestration), les pièces de facturation et les autorités financières précises restent à qualifier ; aucun nouveau montant ni mouvement n’est déduit d’un simple statut.
+    Les remises entre entreposage, transport et douane conservent les références des prestations et faits d’origine. Les justificatifs financiers peuvent être fournis à [Financial Accounting](model:subdomain-financial-accounting), avec ses demandes de correction en retour. Les voies locales ou relayées par [Supply Chain Management](model:supply-chain-orchestration), les pièces de facturation et les autorités financières précises restent à qualifier ; aucun nouveau montant ni mouvement n’est déduit d’un simple statut.
   notes: Périmètre de contexte du lot U975. Nom et rattachement validés ; rédaction explicative et comparaisons proposées,
     sans preuve de réalisation.
   source_refs:
@@ -34077,7 +34175,7 @@ terms:
   context: |-
     Qualifier les demandes d’achat et conduire les achats autorisés avec leurs suites fournisseur.
 
-    Conduit les [Case](glossary:TER064)s d’achat. [Purchase Order](glossary:TER070) dans [Supply Chain](glossary:TER084) [Orchestration](glossary:TER031) conserve l’identité, les engagements et les transitions autorisées du document. La construction des plans reste dans [Master Plan](glossary:TER111), les opérations physiques dans [Logistics](glossary:TER110) et les traitements comptables dans [Finance](glossary:TER117).
+    Conduit les [Case](glossary:TER064)s d’achat. [Purchase Order](glossary:TER070) dans [Supply Chain Management](glossary:TER035) conserve l’identité, les engagements et les transitions autorisées du document. La construction des plans reste dans [Master Plan](glossary:TER111), les opérations physiques dans [Logistics](glossary:TER110) et les traitements comptables dans [Finance](glossary:TER117).
 
     Responsabilités distinguées : [Purchase Requisition Management](model:ba-purchase-requisition-management), [Purchasing Execution Coordination](model:ba-purchasing-execution-coordination), [Supplier Delivery Follow-up](model:ba-supplier-delivery-follow-up).
 
@@ -34117,7 +34215,7 @@ terms:
     flow_position: |-
       Qualifier les demandes d’achat et conduire les achats autorisés avec leurs suites fournisseur.
 
-      Conduit les [Case](glossary:TER064)s d’achat. [Purchase Order](glossary:TER070) dans [Supply Chain](glossary:TER084) [Orchestration](glossary:TER031) conserve l’identité, les engagements et les transitions autorisées du document. La construction des plans reste dans [Master Plan](glossary:TER111), les opérations physiques dans [Logistics](glossary:TER110) et les traitements comptables dans [Finance](glossary:TER117).
+      Conduit les [Case](glossary:TER064)s d’achat. [Purchase Order](glossary:TER070) dans [Supply Chain Management](glossary:TER035) conserve l’identité, les engagements et les transitions autorisées du document. La construction des plans reste dans [Master Plan](glossary:TER111), les opérations physiques dans [Logistics](glossary:TER110) et les traitements comptables dans [Finance](glossary:TER117).
 
       Responsabilités distinguées : [Purchase Requisition Management](model:ba-purchase-requisition-management), [Purchasing Execution Coordination](model:ba-purchasing-execution-coordination), [Supplier Delivery Follow-up](model:ba-supplier-delivery-follow-up).
 
@@ -34153,7 +34251,7 @@ terms:
     flow_position: |-
       Qualifier les demandes d’achat et conduire les achats autorisés avec leurs suites fournisseur.
 
-      Conduit les [Case](glossary:TER064)s d’achat. [Purchase Order](glossary:TER070) dans [Supply Chain](glossary:TER084) [Orchestration](glossary:TER031) conserve l’identité, les engagements et les transitions autorisées du document. La construction des plans reste dans [Master Plan](glossary:TER111), les opérations physiques dans [Logistics](glossary:TER110) et les traitements comptables dans [Finance](glossary:TER117).
+      Conduit les [Case](glossary:TER064)s d’achat. [Purchase Order](glossary:TER070) dans [Supply Chain Management](glossary:TER035) conserve l’identité, les engagements et les transitions autorisées du document. La construction des plans reste dans [Master Plan](glossary:TER111), les opérations physiques dans [Logistics](glossary:TER110) et les traitements comptables dans [Finance](glossary:TER117).
 
       Responsabilités distinguées : [Purchase Requisition Management](model:ba-purchase-requisition-management), [Purchasing Execution Coordination](model:ba-purchasing-execution-coordination), [Supplier Delivery Follow-up](model:ba-supplier-delivery-follow-up).
 
@@ -34314,7 +34412,7 @@ terms:
     flow_position: |-
       Organise l’exploitation du réseau et les opérations quotidiennes des magasins, avec [Retail Network Management](model:subdomain-retail-network-management) et [Store Backoffice Operations](model:subdomain-store-backoffice-operations). Le backoffice peut être central ou local. La vente et la caisse restent dans [Store Commerce](model:subdomain-sales-b2c-store).
 
-      [Supply Chain Orchestration](model:supply-chain-orchestration) reçoit les faits utiles et coordonne les engagements ; il ne réalise pas les gestes locaux. [Logistics](model:domain-logistics-execution) conserve les prestations de transport et d’entreposage. Les gestes du magasin ne sont pas attribués à un prestataire logistique par défaut. Immobilier, ressources humaines, budgets et comptabilité ne sont pas absorbés par ce domaine. Exemple fictif : définir les règles de réception applicables au réseau, puis constater la réception locale d’une livraison. Aucun nouveau système métier ni capacité hors Core.
+      [Supply Chain Management](model:supply-chain-orchestration) reçoit les faits utiles et coordonne les engagements ; il ne réalise pas les gestes locaux. [Logistics](model:domain-logistics-execution) conserve les prestations de transport et d’entreposage. Les gestes du magasin ne sont pas attribués à un prestataire logistique par défaut. Immobilier, ressources humaines, budgets et comptabilité ne sont pas absorbés par ce domaine. Exemple fictif : définir les règles de réception applicables au réseau, puis constater la réception locale d’une livraison. Aucun nouveau système métier ni capacité hors Core.
     term_choice: Retail Operations nomme la responsabilité discutée et validée U987, sans consensus de taxonomie revendiqué.
     definition_choice: Responsabilité présentée dans la discussion ; texte détaillé proposé.
     scope_summary: Organiser le réseau de magasins et conduire leurs opérations quotidiennes.
@@ -34343,7 +34441,7 @@ terms:
     flow_position: |-
       Organise l’exploitation du réseau et les opérations quotidiennes des magasins, avec [Retail Network Management](model:subdomain-retail-network-management) et [Store Backoffice Operations](model:subdomain-store-backoffice-operations). Le backoffice peut être central ou local. La vente et la caisse restent dans [Store Commerce](model:subdomain-sales-b2c-store).
 
-      [Supply Chain Orchestration](model:supply-chain-orchestration) reçoit les faits utiles et coordonne les engagements ; il ne réalise pas les gestes locaux. [Logistics](model:domain-logistics-execution) conserve les prestations de transport et d’entreposage. Les gestes du magasin ne sont pas attribués à un prestataire logistique par défaut. Immobilier, ressources humaines, budgets et comptabilité ne sont pas absorbés par ce domaine. Exemple fictif : définir les règles de réception applicables au réseau, puis constater la réception locale d’une livraison. Aucun nouveau système métier ni capacité hors Core.
+      [Supply Chain Management](model:supply-chain-orchestration) reçoit les faits utiles et coordonne les engagements ; il ne réalise pas les gestes locaux. [Logistics](model:domain-logistics-execution) conserve les prestations de transport et d’entreposage. Les gestes du magasin ne sont pas attribués à un prestataire logistique par défaut. Immobilier, ressources humaines, budgets et comptabilité ne sont pas absorbés par ce domaine. Exemple fictif : définir les règles de réception applicables au réseau, puis constater la réception locale d’une livraison. Aucun nouveau système métier ni capacité hors Core.
     term_choice: Retail Operations nomme la responsabilité discutée et validée U987, sans consensus de taxonomie revendiqué.
     definition_choice: Responsabilité présentée dans la discussion ; texte détaillé proposé.
     scope_summary: Organiser le réseau de magasins et conduire leurs opérations quotidiennes.
@@ -34467,7 +34565,7 @@ terms:
   short_description: Gérer les opérations locales de stock, réception, inventaire, préparation et remise de commandes en magasin.
   definition: Gérer les opérations locales de stock, réception, inventaire, préparation et remise de commandes en magasin.
   context: Le magasin reçoit, compte et déplace les biens ; il prépare et remet les commandes qui lui sont confiées. Les faits
-    physiques alimentent [Supply Chain Orchestration](model:supply-chain-orchestration), responsable des promesses et affectations.
+    physiques alimentent [Supply Chain Management](model:supply-chain-orchestration), responsable des promesses et affectations.
     La vente et la caisse restent dans [Store Sales](model:subdomain-sales-b2c-store). Le backoffice central ou local organise
     ces opérations ; [Retail Network Management](model:subdomain-retail-network-management) tient la configuration du réseau.
   notes: 'U987 : nom et responsabilité validés. Explications et correspondances proposées, sans attribution à un outil.'
@@ -34505,7 +34603,7 @@ terms:
     evidence_limits: Périmètre produit plus large que le sous-domaine actuel Store Commerce ; ne prescrit pas un découpage
       de capacités. Appui fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
     flow_position: Le magasin reçoit, compte et déplace les biens ; il prépare et remet les commandes qui lui sont confiées.
-      Les faits physiques alimentent [Supply Chain Orchestration](model:supply-chain-orchestration), responsable des promesses
+      Les faits physiques alimentent [Supply Chain Management](model:supply-chain-orchestration), responsable des promesses
       et affectations. La vente et la caisse restent dans [Store Sales](model:subdomain-sales-b2c-store). Le backoffice central
       ou local organise ces opérations ; [Retail Network Management](model:subdomain-retail-network-management) tient la configuration
       du réseau.
@@ -34537,7 +34635,7 @@ terms:
     evidence_limits: Appui aux opérations locales ; ne prouve pas toute gouvernance du réseau ou tout commerce numérique.
       Appui fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
     flow_position: Le magasin reçoit, compte et déplace les biens ; il prépare et remet les commandes qui lui sont confiées.
-      Les faits physiques alimentent [Supply Chain Orchestration](model:supply-chain-orchestration), responsable des promesses
+      Les faits physiques alimentent [Supply Chain Management](model:supply-chain-orchestration), responsable des promesses
       et affectations. La vente et la caisse restent dans [Store Sales](model:subdomain-sales-b2c-store). Le backoffice central
       ou local organise ces opérations ; [Retail Network Management](model:subdomain-retail-network-management) tient la configuration
       du réseau.
@@ -34783,7 +34881,7 @@ terms:
 
     Définit les prix de vente et les [remises immédiates](glossary:TER258), avec leurs périodes, clients, produits, canaux et règles de priorité, cumul ou exclusion. Produit le [prix contextualisé](glossary:TER257) directement ou par un composant spécialisé, puis publie un résultat identifié avec sa version, son contexte, la date métier retenue et ses conditions de validité. La saison et son moment peuvent contribuer à ce contexte ; aucune date universelle de calcul n’est imposée.
 
-    [Supply Chain Orchestration](model:supply-chain-orchestration) consomme le résultat ; [Order Management](model:D04) conserve le [prix engagé](glossary:TER263). Un résultat absent, périmé ou incohérent appelle la correction ou la décision autorisée du producteur ; FLOW ne décide pas d’un nouveau prix. Les tarifs d’achat restent sous [Sourcing and Procurement](model:domain-sourcing-procurement). Les tarifs des prestations viennent de leurs responsables et accords. Une modification de prix après engagement ou à la facturation exige une autorisation explicite et sa trace.
+    [Supply Chain Management](model:supply-chain-orchestration) consomme le résultat ; [Order Management](model:D04) conserve le [prix engagé](glossary:TER263). Un résultat absent, périmé ou incohérent appelle la correction ou la décision autorisée du producteur ; FLOW ne décide pas d’un nouveau prix. Les tarifs d’achat restent sous [Sourcing and Procurement](model:domain-sourcing-procurement). Les tarifs des prestations viennent de leurs responsables et accords. Une modification de prix après engagement ou à la facturation exige une autorisation explicite et sa trace.
 
     Exemple fictif : un prix contractuel client exclut une promotion générale pendant une période donnée ; le producteur restitue le résultat et son motif. Les [ristournes](glossary:TER259) et [primes commerciales](glossary:TER264) différées relèvent de [Rebates & Incentives Management](model:subdomain-rebates-incentives-management).
 
@@ -34822,7 +34920,7 @@ terms:
 
       Définit les prix de vente et les [remises immédiates](glossary:TER258), avec leurs périodes, clients, produits, canaux et règles de priorité, cumul ou exclusion. Produit le [prix contextualisé](glossary:TER257) directement ou par un composant spécialisé, puis publie un résultat identifié avec sa version, son contexte, la date métier retenue et ses conditions de validité. La saison et son moment peuvent contribuer à ce contexte ; aucune date universelle de calcul n’est imposée.
 
-      [Supply Chain Orchestration](model:supply-chain-orchestration) consomme le résultat ; [Order Management](model:D04) conserve le [prix engagé](glossary:TER263). Un résultat absent, périmé ou incohérent appelle la correction ou la décision autorisée du producteur ; FLOW ne décide pas d’un nouveau prix. Les tarifs d’achat restent sous [Sourcing and Procurement](model:domain-sourcing-procurement). Les tarifs des prestations viennent de leurs responsables et accords. Une modification de prix après engagement ou à la facturation exige une autorisation explicite et sa trace.
+      [Supply Chain Management](model:supply-chain-orchestration) consomme le résultat ; [Order Management](model:D04) conserve le [prix engagé](glossary:TER263). Un résultat absent, périmé ou incohérent appelle la correction ou la décision autorisée du producteur ; FLOW ne décide pas d’un nouveau prix. Les tarifs d’achat restent sous [Sourcing and Procurement](model:domain-sourcing-procurement). Les tarifs des prestations viennent de leurs responsables et accords. Une modification de prix après engagement ou à la facturation exige une autorisation explicite et sa trace.
 
       Exemple fictif : un prix contractuel client exclut une promotion générale pendant une période donnée ; le producteur restitue le résultat et son motif. Les [ristournes](glossary:TER259) et [primes commerciales](glossary:TER264) différées relèvent de [Rebates & Incentives Management](model:subdomain-rebates-incentives-management).
 
@@ -34858,7 +34956,7 @@ terms:
 
       Définit les prix de vente et les [remises immédiates](glossary:TER258), avec leurs périodes, clients, produits, canaux et règles de priorité, cumul ou exclusion. Produit le [prix contextualisé](glossary:TER257) directement ou par un composant spécialisé, puis publie un résultat identifié avec sa version, son contexte, la date métier retenue et ses conditions de validité. La saison et son moment peuvent contribuer à ce contexte ; aucune date universelle de calcul n’est imposée.
 
-      [Supply Chain Orchestration](model:supply-chain-orchestration) consomme le résultat ; [Order Management](model:D04) conserve le [prix engagé](glossary:TER263). Un résultat absent, périmé ou incohérent appelle la correction ou la décision autorisée du producteur ; FLOW ne décide pas d’un nouveau prix. Les tarifs d’achat restent sous [Sourcing and Procurement](model:domain-sourcing-procurement). Les tarifs des prestations viennent de leurs responsables et accords. Une modification de prix après engagement ou à la facturation exige une autorisation explicite et sa trace.
+      [Supply Chain Management](model:supply-chain-orchestration) consomme le résultat ; [Order Management](model:D04) conserve le [prix engagé](glossary:TER263). Un résultat absent, périmé ou incohérent appelle la correction ou la décision autorisée du producteur ; FLOW ne décide pas d’un nouveau prix. Les tarifs d’achat restent sous [Sourcing and Procurement](model:domain-sourcing-procurement). Les tarifs des prestations viennent de leurs responsables et accords. Une modification de prix après engagement ou à la facturation exige une autorisation explicite et sa trace.
 
       Exemple fictif : un prix contractuel client exclut une promotion générale pendant une période donnée ; le producteur restitue le résultat et son motif. Les [ristournes](glossary:TER259) et [primes commerciales](glossary:TER264) différées relèvent de [Rebates & Incentives Management](model:subdomain-rebates-incentives-management).
 
@@ -34892,7 +34990,7 @@ terms:
 
     Définit les dispositifs de [ristournes](glossary:TER259), [primes commerciales](glossary:TER264) et [commissions](glossary:TER260) de vente : bénéficiaires, périodes, critères, seuils, [assiette éligible](glossary:TER262), exclusions et corrections. Une prime peut être en argent ou en biens ; elle ne devient pas une remise immédiate par son seul nom. Les dispositifs d’achat restent sous [Purchase Contract Management](model:subdomain-purchase-contract-management).
 
-    [Commercial Settlement Management](model:subdomain-commercial-settlement-management) calcule le droit et les régularisations selon les conditions autorisées, puis organise le règlement. Les [primes de personnel](glossary:TER261) relèvent de la responsabilité RH/paie, sans domaine détaillé ajouté par défaut. [Supply Chain Orchestration](model:supply-chain-orchestration) fournit ses faits et consomme les conséquences autorisées ; il ne calcule pas le droit à prime.
+    [Commercial Settlement Management](model:subdomain-commercial-settlement-management) calcule le droit et les régularisations selon les conditions autorisées, puis organise le règlement. Les [primes de personnel](glossary:TER261) relèvent de la responsabilité RH/paie, sans domaine détaillé ajouté par défaut. [Supply Chain Management](model:supply-chain-orchestration) fournit ses faits et consomme les conséquences autorisées ; il ne calcule pas le droit à prime.
 
     Exemple fictif : une ristourne annuelle sur le volume éligible d’un revendeur est recalculée après un retour. Le dispositif commercial, le montant estimé, le droit reconnu et son règlement restent distincts.
 
@@ -34931,7 +35029,7 @@ terms:
 
       Définit les dispositifs de [ristournes](glossary:TER259), [primes commerciales](glossary:TER264) et [commissions](glossary:TER260) de vente : bénéficiaires, périodes, critères, seuils, [assiette éligible](glossary:TER262), exclusions et corrections. Une prime peut être en argent ou en biens ; elle ne devient pas une remise immédiate par son seul nom. Les dispositifs d’achat restent sous [Purchase Contract Management](model:subdomain-purchase-contract-management).
 
-      [Commercial Settlement Management](model:subdomain-commercial-settlement-management) calcule le droit et les régularisations selon les conditions autorisées, puis organise le règlement. Les [primes de personnel](glossary:TER261) relèvent de la responsabilité RH/paie, sans domaine détaillé ajouté par défaut. [Supply Chain Orchestration](model:supply-chain-orchestration) fournit ses faits et consomme les conséquences autorisées ; il ne calcule pas le droit à prime.
+      [Commercial Settlement Management](model:subdomain-commercial-settlement-management) calcule le droit et les régularisations selon les conditions autorisées, puis organise le règlement. Les [primes de personnel](glossary:TER261) relèvent de la responsabilité RH/paie, sans domaine détaillé ajouté par défaut. [Supply Chain Management](model:supply-chain-orchestration) fournit ses faits et consomme les conséquences autorisées ; il ne calcule pas le droit à prime.
 
       Exemple fictif : une ristourne annuelle sur le volume éligible d’un revendeur est recalculée après un retour. Le dispositif commercial, le montant estimé, le droit reconnu et son règlement restent distincts.
 
@@ -34970,7 +35068,7 @@ terms:
 
       Définit les dispositifs de [ristournes](glossary:TER259), [primes commerciales](glossary:TER264) et [commissions](glossary:TER260) de vente : bénéficiaires, périodes, critères, seuils, [assiette éligible](glossary:TER262), exclusions et corrections. Une prime peut être en argent ou en biens ; elle ne devient pas une remise immédiate par son seul nom. Les dispositifs d’achat restent sous [Purchase Contract Management](model:subdomain-purchase-contract-management).
 
-      [Commercial Settlement Management](model:subdomain-commercial-settlement-management) calcule le droit et les régularisations selon les conditions autorisées, puis organise le règlement. Les [primes de personnel](glossary:TER261) relèvent de la responsabilité RH/paie, sans domaine détaillé ajouté par défaut. [Supply Chain Orchestration](model:supply-chain-orchestration) fournit ses faits et consomme les conséquences autorisées ; il ne calcule pas le droit à prime.
+      [Commercial Settlement Management](model:subdomain-commercial-settlement-management) calcule le droit et les régularisations selon les conditions autorisées, puis organise le règlement. Les [primes de personnel](glossary:TER261) relèvent de la responsabilité RH/paie, sans domaine détaillé ajouté par défaut. [Supply Chain Management](model:supply-chain-orchestration) fournit ses faits et consomme les conséquences autorisées ; il ne calcule pas le droit à prime.
 
       Exemple fictif : une ristourne annuelle sur le volume éligible d’un revendeur est recalculée après un retour. Le dispositif commercial, le montant estimé, le droit reconnu et son règlement restent distincts.
 
@@ -36232,9 +36330,9 @@ terms:
     element_type: Fonctions et périmètre de produit documentés
     relationship: Recouvrement partiel
     similarities: Commandes commerciales fashion et spécificités de vente aux revendeurs.
-    differences: Le produit traite aussi confirmations et livraison ; FLOW les répartit entre Commerce et Supply Chain Orchestration.
+    differences: Le produit traite aussi confirmations et livraison ; FLOW les répartit entre Commerce et Supply Chain Management.
     evidence_limits: Le produit traite aussi confirmations et livraison ; FLOW les répartit entre Commerce et Supply Chain
-      Orchestration. Appui fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
+      Management. Appui fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
     flow_position: |-
       Conduire la relation avec les revendeurs et tenir leurs accords commerciaux et conditions négociées.
 
@@ -36320,9 +36418,9 @@ terms:
     element_type: Fonctions et périmètre de produit documentés
     relationship: Recouvrement partiel
     similarities: Commandes commerciales fashion et spécificités de vente aux revendeurs.
-    differences: Le produit traite aussi confirmations et livraison ; FLOW les répartit entre Commerce et Supply Chain Orchestration.
+    differences: Le produit traite aussi confirmations et livraison ; FLOW les répartit entre Commerce et Supply Chain Management.
     evidence_limits: Le produit traite aussi confirmations et livraison ; FLOW les répartit entre Commerce et Supply Chain
-      Orchestration. Appui fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
+      Management. Appui fonctionnel partiel à cette fiche FLOW ; aucun équivalent complet de maille ni réalisation installée.
     flow_position: |-
       Préparer les sélections des revendeurs, recueillir leurs demandes de vente et assurer leur suivi commercial.
 
@@ -39591,7 +39689,7 @@ terms:
 
     Responsabilités distinguées : [Customs Documentation](model:subdomain-customs-documentation), [Customs Clearance](model:subdomain-customs-clearance).
 
-    Les remises entre entreposage, transport et douane conservent les références des prestations et faits d’origine. Les justificatifs financiers peuvent être fournis à [Financial Accounting](model:subdomain-financial-accounting), avec ses demandes de correction en retour. Les voies locales ou relayées par [Supply Chain Orchestration](model:supply-chain-orchestration), les pièces de facturation et les autorités financières précises restent à qualifier ; aucun nouveau montant ni mouvement n’est déduit d’un simple statut.
+    Les remises entre entreposage, transport et douane conservent les références des prestations et faits d’origine. Les justificatifs financiers peuvent être fournis à [Financial Accounting](model:subdomain-financial-accounting), avec ses demandes de correction en retour. Les voies locales ou relayées par [Supply Chain Management](model:supply-chain-orchestration), les pièces de facturation et les autorités financières précises restent à qualifier ; aucun nouveau montant ni mouvement n’est déduit d’un simple statut.
   market_comparisons:
   - vendor: Microsoft
     product: Dynamics 365 Supply Chain Management
@@ -40985,8 +41083,8 @@ terms:
   short_description: Préparer et remettre au client ou au transporteur une commande confiée au magasin.
   context: Capacité de [Store Operations](model:subdomain-store-backoffice-operations). Prendre en charge une demande de préparation
     affectée au magasin, prélever les biens, constater les manquants, préparer la remise et enregistrer sa réalisation. [Supply
-    Chain Orchestration](model:supply-chain-orchestration) conserve promesse, affectation et coordination ; la vente et la
-    caisse restent dans [Store Sales](model:subdomain-sales-b2c-store).
+    Chain Management](model:supply-chain-orchestration) conserve promesse, affectation et coordination ; la vente et la caisse
+    restent dans [Store Sales](model:subdomain-sales-b2c-store).
   source_refs:
   - U1089
   review:

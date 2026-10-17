@@ -2,6 +2,7 @@ import { MiniMap, type Node, type NodeProps, ReactFlow, type ReactFlowInstance, 
 import {
   ArrowRight,
   Focus,
+  Map as MapIcon,
   Maximize2,
   Minimize2,
   Minus,
@@ -17,7 +18,7 @@ import { createPortal } from 'react-dom';
 import { productFor, projectedApplicationMapIds, selectionMappings } from '../applicationCatalog';
 import { flowExchangeContract, flowMapBoundaryRelations, flowMapDetailBoxes } from '../flowMapDetail';
 import { buildFlowMap, type FlowMapBox } from '../flowMapLayout';
-import { flowMapPresentation } from '../flowMapPresentation';
+import { flowMapBoundaryDestinations, flowMapPresentation } from '../flowMapPresentation';
 import { flowRibbonPath, roundedFlowPath, routeFlowExchange } from '../flowMapRouting';
 import {
   flowRouteInViewport,
@@ -29,7 +30,7 @@ import {
 } from '../flowMapViewport';
 import { filterMapHotspots, hotspotsInScope } from '../hotspotMap';
 import { layoutHotspots } from '../hotspotPlacement';
-import { visibleAncestorId } from '../model';
+import { childrenOf, visibleAncestorId } from '../model';
 import { kindLabel } from '../presentation';
 import type { AtlasRelation, PublishedModel } from '../types';
 import { COMPACT_HOTSPOT_DIAMETER, COMPACT_HOTSPOT_TOUCH_DIAMETER, HotspotMapMarker } from './HotspotDisplay';
@@ -46,8 +47,8 @@ const cameras = new Map<string, Viewport>();
 const cameraSizes = new Map<string, { width: number; height: number }>();
 const cameraSelections = new Map<string, string>();
 const arrowChoices = new Map<string, boolean>();
-const exchangeModes = new Map<string, 'main' | 'all'>();
 const flowTypeChoices = new Map<string, readonly FlowType[]>();
+let titleMeasure: CanvasRenderingContext2D | null = null;
 type FlowFraming = 'standard' | 'width' | 'all' | 'custom';
 const cameraFramings = new Map<string, FlowFraming>();
 const motionDuration = (duration: number) => (matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : duration);
@@ -85,22 +86,24 @@ function SpatialObject({ data }: NodeProps<SpatialNode>) {
           ? 3
           : 2;
   const padding = Math.min(box.node.kind === 'business_area' ? 8 : 10, header * 0.14, Math.max(1, (header - 25) / 2));
-  const textWidth = screenWidth - Math.min(12, screenWidth * 0.07) * 2;
+  const horizontalPadding = Math.min(12, screenWidth * 0.07);
+  const textWidth = Math.max(1, screenWidth - 2 - horizontalPadding * 2);
+  titleMeasure ||= document.createElement('canvas').getContext('2d');
+  const fontFamily = getComputedStyle(document.body).fontFamily;
+  const fontWeight = data.hasChildren && !expanded ? 650 : 600;
   const lineCount = (font: number) => {
+    if (titleMeasure) titleMeasure.font = `${fontWeight} ${font}px ${fontFamily}`;
+    const space = titleMeasure?.measureText(' ').width ?? font * 0.28;
     let count = 1;
     let width = 0;
     for (const word of box.node.name.split(/\s+/)) {
-      const next = [...word].reduce(
-        (sum, character) =>
-          sum + (/[ilI1.,:;'!]/.test(character) ? 0.28 : /[MW@%]/.test(character) ? 0.84 : 0.54) * font,
-        0,
-      );
-      if (width && width + next + font * 0.28 > textWidth) {
+      const next = titleMeasure?.measureText(word).width ?? word.length * font * 0.54;
+      if (width && width + next + space > textWidth) {
         count++;
         width = 0;
       }
       count += Math.max(0, Math.ceil(next / Math.max(1, textWidth)) - 1);
-      width += next + font * 0.28;
+      width += next + space;
     }
     return count;
   };
@@ -110,8 +113,7 @@ function SpatialObject({ data }: NodeProps<SpatialNode>) {
     (lineCount(labelSize) > maxLines || lineCount(labelSize) * labelSize * 1.25 + padding * 2 > header)
   )
     labelSize -= 0.5;
-  const lines = Math.min(maxLines, lineCount(labelSize));
-  const titleHeight = Math.min(header, labelSize * 1.25 * lines + padding * 2);
+  const lines = Math.max(1, Math.min(maxLines, Math.floor((header - padding * 2) / (labelSize * 1.25))));
   return (
     <div
       className={`spatial-map-object kind-${box.node.kind}${expanded ? ' is-expanded' : ' is-collapsed'}${data.hasChildren && !expanded ? ' is-collapsed-territory' : ''}${active ? ' is-active' : ''}${application ? ' spatial-application-mark' : ''}`}
@@ -134,12 +136,16 @@ function SpatialObject({ data }: NodeProps<SpatialNode>) {
         title={`${box.node.name} · ${kindLabel(box.node)} · Ouvrir ce périmètre`}
         style={{
           fontSize: labelSize / zoom,
-          padding: `${padding / zoom}px ${Math.min(12, screenWidth * 0.07) / zoom}px`,
-          maxHeight: titleHeight / zoom,
-          WebkitLineClamp: lines,
+          padding: `${padding / zoom}px ${horizontalPadding / zoom}px`,
+          maxHeight: header / zoom,
         }}
       >
-        {box.node.name}
+        <span
+          className="spatial-object-name"
+          style={{ WebkitLineClamp: lines, maxHeight: (lines * labelSize * 1.25) / zoom }}
+        >
+          {box.node.name}
+        </span>
       </button>
       {application && data.applicationName && screenWidth >= 135 && screenHeight >= 32 && (
         <span className="spatial-application-badge" style={{ fontSize: 10 / zoom }}>
@@ -243,28 +249,68 @@ export function FlowMapPanel(props: MapPanelProps) {
   const [size, setSize] = useState({ width: 1000, height: 600 });
   const [framing, setFraming] = useState<FlowFraming>(() => cameraFramings.get(key) || 'standard');
   const [expanded, setExpanded] = useState(false);
+  const [showMiniMap, setShowMiniMap] = useState(true);
   const [shortScreen, setShortScreen] = useState(() => matchMedia('(max-height: 500px)').matches);
   const [coarsePointer, setCoarsePointer] = useState(() => matchMedia('(pointer: coarse)').matches);
   const [arrows, setArrows] = useState(() => arrowChoices.get(key) ?? true);
-  const [exchangeMode, setExchangeMode] = useState<'main' | 'all'>(() => exchangeModes.get(key) || 'main');
   const [flowTypes, setFlowTypes] = useState<readonly FlowType[]>(() => flowTypeChoices.get(key) || FLOW_TYPES);
   const [openedExchange, setOpenedExchange] = useState<{ key: string; exchange: ExchangeGroup } | null>(null);
   const [hoveredExchangeId, setHoveredExchangeId] = useState('');
   const [selectedHotspotId, setSelectedHotspotId] = useState('');
   const exchangeTrigger = useRef<{ element: HTMLElement | SVGElement; relationIds: string[] } | null>(null);
   const paintId = useId().replaceAll(':', '');
-  const layout = useMemo(() => buildFlowMap(model, scopeId), [model, scopeId]);
-  const boundaryRelations = useMemo(() => flowMapBoundaryRelations(model, scopeId), [model, scopeId]);
+  const layout = useMemo(() => buildFlowMap(model, scopeId, { overviewDepth: 0 }), [model, scopeId]);
+  const boundaryDestinations = useMemo(
+    () => flowMapBoundaryDestinations(model, flowMapBoundaryRelations(model, scopeId)),
+    [model, scopeId],
+  );
+  const openBoundaryDestination = (destinationScopeId: string) => {
+    const destination = boundaryDestinations.find((item) => item.scopeId === destinationScopeId);
+    if (!destination || !onOpenScope) return;
+    const destinationKey = `${model.version}/${destination.scopeId || '@root'}`;
+    flowTypeChoices.set(
+      destinationKey,
+      FLOW_TYPES.filter((type) => destination.relations.some((relation) => relation.type === type)),
+    );
+    arrowChoices.set(destinationKey, true);
+    cameraFramings.set(destinationKey, 'standard');
+    cameras.set(
+      destinationKey,
+      standardFlowCamera(
+        buildFlowMap(model, destination.scopeId || undefined, { overviewDepth: 0 }).boxes,
+        size,
+        destination.scopeId || undefined,
+      ),
+    );
+    cameraSizes.set(destinationKey, size);
+    cameraSelections.set(
+      destinationKey,
+      destination.scopeId || model.nodes.find((node) => node.kind === 'universe')?.id || '',
+    );
+    onOpenScope(destination.scopeId);
+  };
   const allIds = useMemo(() => new Set(layout.boxes.map((box) => box.id)), [layout]);
   const selectedBoxId = visibleAncestorId(model, selectedId, allIds);
   const byId = useMemo(() => new Map(layout.boxes.map((box) => [box.id, box])), [layout]);
+  const parentIds = useMemo(
+    () =>
+      new Set(
+        layout.boxes
+          .filter((box) =>
+            childrenOf(model, box.id).some((child) =>
+              ['business_system', 'domain', 'area', 'group', 'business_area'].includes(child.kind),
+            ),
+          )
+          .map((box) => box.id),
+      ),
+    [layout.boxes, model],
+  );
   const enterObject = useCallback(
     (id: string) => {
-      const hasChildren = layout.boxes.some((box) => box.parentId === id);
-      if (hasChildren && onOpenScope) onOpenScope(id);
+      if (parentIds.has(id) && onOpenScope) onOpenScope(id);
       else (onRead || onSelect)(id);
     },
-    [layout.boxes, onOpenScope, onRead, onSelect],
+    [parentIds, onOpenScope, onRead, onSelect],
   );
   const scopedHotspots = useMemo(() => hotspotsInScope(model, scopeId), [model, scopeId]);
   const hotspots = useMemo(() => filterMapHotspots(scopedHotspots, hotspotFilters), [scopedHotspots, hotspotFilters]);
@@ -297,12 +343,11 @@ export function FlowMapPanel(props: MapPanelProps) {
     () =>
       flowMapPresentation(model, layout.boxes, {
         scopeId,
-        selectedId,
         zoom: viewport.zoom,
-        mode: exchangeMode,
+        mode: 'main',
         types: flowTypes,
       }),
-    [model, layout.boxes, scopeId, selectedId, viewport.zoom, exchangeMode, flowTypes],
+    [model, layout.boxes, scopeId, viewport.zoom, flowTypes],
   );
   const flowBoxes = useMemo(
     () => presentation.boxes.filter((box) => visibleIds.has(box.id)),
@@ -312,7 +357,6 @@ export function FlowMapPanel(props: MapPanelProps) {
   const flowExpandedIds = useMemo(() => new Set(flowBoxes.map((box) => box.parentId)), [flowBoxes]);
   const displayedSelectionId = visibleAncestorId(model, selectedId, anchorIds);
   const expandedIds = useMemo(() => new Set(visibleBoxes.map((box) => box.parentId)), [visibleBoxes]);
-  const parentIds = useMemo(() => new Set(layout.boxes.map((box) => box.parentId)), [layout]);
   const catalog = model.raw.application_catalog;
   const mappings = useMemo(
     () => selectionMappings(catalog, applicationSelectionId, applicationComponentId),
@@ -356,7 +400,7 @@ export function FlowMapPanel(props: MapPanelProps) {
       );
       const target = origin.element.isConnected
         ? origin.element
-        : replacement || canvas.current?.querySelector<HTMLElement>('.flow-camera-tools button');
+        : replacement || panel.current?.querySelector<HTMLElement>('.flow-camera-tools button');
       target?.focus({ preventScroll: true });
     });
   }, []);
@@ -433,7 +477,6 @@ export function FlowMapPanel(props: MapPanelProps) {
     );
   }, [applicationBoxIds, byId, applicationAtScope, overview, rememberFraming]);
   useEffect(() => setFraming(cameraFramings.get(key) || 'standard'), [key]);
-  useEffect(() => setExchangeMode(exchangeModes.get(key) || 'main'), [key]);
   useEffect(() => setFlowTypes(flowTypeChoices.get(key) || FLOW_TYPES), [key]);
   useEffect(() => {
     return () => {
@@ -525,7 +568,9 @@ export function FlowMapPanel(props: MapPanelProps) {
       };
       for (const element of surface.querySelectorAll('.spatial-object-title, .spatial-application-badge')) {
         const range = document.createRange();
-        range.selectNodeContents(element);
+        const content = element.querySelector('.spatial-object-name') || element;
+        range.selectNodeContents(content);
+        const contentBounds = content.getBoundingClientRect();
         const rects = [...range.getClientRects()];
         if (element instanceof HTMLButtonElement) {
           const button = element.getBoundingClientRect();
@@ -542,7 +587,13 @@ export function FlowMapPanel(props: MapPanelProps) {
           element.tabIndex = visible ? 0 : -1;
           if (!visible && document.activeElement === element) surface.focus({ preventScroll: true });
         }
-        for (const rect of rects) add(rect);
+        for (const rect of rects) {
+          const left = Math.max(rect.left, contentBounds.left);
+          const top = Math.max(rect.top, contentBounds.top);
+          const right = Math.min(rect.right, contentBounds.right);
+          const bottom = Math.min(rect.bottom, contentBounds.bottom);
+          if (right > left && bottom > top) add(new DOMRect(left, top, right - left, bottom - top));
+        }
       }
       for (const element of surface.querySelectorAll('.flow-camera-tools, .react-flow__minimap, .flow-map-note'))
         add(element.getBoundingClientRect());
@@ -785,12 +836,12 @@ export function FlowMapPanel(props: MapPanelProps) {
               setFlowTypes(types);
               flowTypeChoices.set(key, types);
             }}
-            mode={exchangeMode}
-            focused={presentation.mode === 'focus'}
-            onModeChange={(mode) => {
-              setExchangeMode(mode);
-              exchangeModes.set(key, mode);
-            }}
+            destinations={boundaryDestinations.map((destination) => ({
+              scopeId: destination.scopeId,
+              name: destination.name,
+              count: destination.relations.length,
+            }))}
+            onOpenDestination={onOpenScope ? openBoundaryDestination : undefined}
           />
           {!!model.raw.hotspot_catalog?.hotspots.length && (
             <MapHotspotPicker
@@ -834,25 +885,6 @@ export function FlowMapPanel(props: MapPanelProps) {
           </button>
         </div>
       </div>
-      {!!boundaryRelations.length && (
-        <div className="flow-scope-note" role="note">
-          <span className="flow-scope-full">
-            Ce cadrage montre les échanges internes. {boundaryRelations.length} relation(s) documentée(s) avec d’autres
-            périmètres sont hors champ.
-          </span>
-          <span className="flow-scope-short">{boundaryRelations.length} échanges hors champ</span>
-          {onOpenScope && (
-            <button
-              type="button"
-              aria-label="Voir les échanges dans Enterprise Architecture"
-              onClick={() => onOpenScope('')}
-            >
-              <span className="flow-scope-full">Voir les échanges dans Enterprise Architecture</span>
-              <span className="flow-scope-short">Voir l’ensemble</span>
-            </button>
-          )}
-        </div>
-      )}
       <div
         ref={canvas}
         className="flow-map-canvas"
@@ -935,20 +967,22 @@ export function FlowMapPanel(props: MapPanelProps) {
           proOptions={{ hideAttribution: true }}
           ariaLabelConfig={{ 'minimap.ariaLabel': 'Vue miniature de la carte spatiale' }}
         >
-          <MiniMap
-            style={{ width: size.width < 600 ? 72 : 160, height: size.width < 600 ? 54 : 100 }}
-            pannable
-            zoomable
-            onClick={(_, point) => {
-              rememberFraming('custom');
-              void instance.current?.setCenter(point.x, point.y, {
-                zoom: viewport.zoom,
-                duration: motionDuration(150),
-              });
-            }}
-            nodeColor={(node) => (node.data.application ? '#d7c6e8' : '#c4ded3')}
-            maskColor="#edf3f0b0"
-          />
+          {showMiniMap && size.width > 700 && !shortScreen && (
+            <MiniMap
+              style={{ width: size.width < 600 ? 72 : 160, height: size.width < 600 ? 54 : 100 }}
+              pannable
+              zoomable
+              onClick={(_, point) => {
+                rememberFraming('custom');
+                void instance.current?.setCenter(point.x, point.y, {
+                  zoom: viewport.zoom,
+                  duration: motionDuration(150),
+                });
+              }}
+              nodeColor={(node) => (node.data.application ? '#d7c6e8' : '#c4ded3')}
+              maskColor="#edf3f0b0"
+            />
+          )}
         </ReactFlow>
         {arrows && (
           <svg
@@ -1091,109 +1125,120 @@ export function FlowMapPanel(props: MapPanelProps) {
             </div>
           ))}
         </div>
-        <div className="flow-camera-tools" role="group" aria-label="Cadrage des flux">
-          <select
-            className="flow-framing-select"
-            aria-label="Cadrage des flux"
-            value={framing}
-            onChange={(event) => {
-              if (event.target.value === 'standard') standard();
-              else if (event.target.value === 'width') fitWidth();
-              else if (event.target.value === 'all') overview();
-            }}
-          >
-            {framing === 'custom' && (
-              <option value="custom" disabled>
-                Libre
-              </option>
-            )}
-            <option value="standard">Standard</option>
-            <option value="width">Largeur</option>
-            <option value="all">Tout cadrer</option>
-          </select>
-          <button
-            className="flow-framing-button"
-            type="button"
-            aria-label="Échelle standard"
-            aria-pressed={framing === 'standard'}
-            title="Échelle de lecture naturelle ; glisser pour parcourir toute la carte"
-            onClick={() => standard()}
-          >
-            <Ruler size={16} />
-            <span>Standard</span>
-          </button>
-          <button
-            className="flow-framing-button"
-            type="button"
-            aria-label="Cadrer la largeur"
-            aria-pressed={framing === 'width'}
-            title="Adapter la largeur de toute la carte"
-            onClick={fitWidth}
-          >
-            <MoveHorizontal size={16} />
-            <span>Largeur</span>
-          </button>
-          <button
-            className="flow-framing-button"
-            type="button"
-            aria-label="Tout cadrer"
-            aria-pressed={framing === 'all'}
-            title="Voir la carte entière"
-            onClick={overview}
-          >
-            <Scan size={16} />
-            <span>Tout cadrer</span>
-          </button>
-          <button
-            type="button"
-            aria-label="Centrer la sélection"
-            title="Centrer la sélection"
-            disabled={!selectedBoxId}
-            onClick={() => center(selectedId)}
-          >
-            <Focus size={16} />
-            <span>Centrer la sélection</span>
-          </button>
-          <div className="flow-zoom-tools">
-            <button
-              type="button"
-              aria-label="Zoom arrière"
-              onClick={() => {
-                rememberFraming('custom');
-                void instance.current?.zoomOut({ duration: motionDuration(150) });
-              }}
-            >
-              <Minus size={16} />
-            </button>
-            <output aria-label="Zoom des flux">{Math.round(viewport.zoom * 100)} %</output>
-            <button
-              type="button"
-              aria-label="Zoom avant"
-              onClick={() => {
-                rememberFraming('custom');
-                void instance.current?.zoomIn({ duration: motionDuration(150) });
-              }}
-            >
-              <Plus size={16} />
-            </button>
-          </div>
-          {product && (
-            <button
-              type="button"
-              aria-label="Centrer l’application"
-              title="Centrer l’application"
-              disabled={!applicationBoxIds.size && !applicationAtScope}
-              onClick={centerApplication}
-            >
-              <Focus size={16} />
-              <span>Centrer l’application</span>
-            </button>
-          )}
-        </div>
         {exchangeDetail &&
           (shortScreen
             ? createPortal(exchangeDetail, expanded && panel.current ? panel.current : document.body)
             : exchangeDetail)}
+      </div>
+      <div className="flow-camera-tools" role="group" aria-label="Cadrage des flux">
+        <select
+          className="flow-framing-select"
+          aria-label="Cadrage des flux"
+          value={framing}
+          onChange={(event) => {
+            if (event.target.value === 'standard') standard();
+            else if (event.target.value === 'width') fitWidth();
+            else if (event.target.value === 'all') overview();
+          }}
+        >
+          {framing === 'custom' && (
+            <option value="custom" disabled>
+              Libre
+            </option>
+          )}
+          <option value="standard">Standard</option>
+          <option value="width">Largeur</option>
+          <option value="all">Tout cadrer</option>
+        </select>
+        <button
+          className="flow-framing-button"
+          type="button"
+          aria-label="Échelle standard"
+          aria-pressed={framing === 'standard'}
+          title="Échelle de lecture naturelle ; glisser pour parcourir toute la carte"
+          onClick={() => standard()}
+        >
+          <Ruler size={16} />
+          <span>Standard</span>
+        </button>
+        <button
+          className="flow-framing-button"
+          type="button"
+          aria-label="Cadrer la largeur"
+          aria-pressed={framing === 'width'}
+          title="Adapter la largeur de toute la carte"
+          onClick={fitWidth}
+        >
+          <MoveHorizontal size={16} />
+          <span>Largeur</span>
+        </button>
+        <button
+          className="flow-framing-button"
+          type="button"
+          aria-label="Tout cadrer"
+          aria-pressed={framing === 'all'}
+          title="Voir la carte entière"
+          onClick={overview}
+        >
+          <Scan size={16} />
+          <span>Tout cadrer</span>
+        </button>
+        <button
+          type="button"
+          aria-label="Centrer la sélection"
+          title="Centrer la sélection"
+          disabled={!selectedBoxId}
+          onClick={() => center(selectedId)}
+        >
+          <Focus size={16} />
+          <span>Centrer la sélection</span>
+        </button>
+        <div className="flow-zoom-tools">
+          <button
+            type="button"
+            aria-label="Zoom arrière"
+            onClick={() => {
+              rememberFraming('custom');
+              void instance.current?.zoomOut({ duration: motionDuration(150) });
+            }}
+          >
+            <Minus size={16} />
+          </button>
+          <output aria-label="Zoom des flux">{Math.round(viewport.zoom * 100)} %</output>
+          <button
+            type="button"
+            aria-label="Zoom avant"
+            onClick={() => {
+              rememberFraming('custom');
+              void instance.current?.zoomIn({ duration: motionDuration(150) });
+            }}
+          >
+            <Plus size={16} />
+          </button>
+        </div>
+        {size.width > 700 && !shortScreen && (
+          <button
+            type="button"
+            aria-label={showMiniMap ? 'Masquer la miniature' : 'Afficher la miniature'}
+            title={showMiniMap ? 'Masquer la miniature' : 'Afficher la miniature'}
+            aria-pressed={showMiniMap}
+            onClick={() => setShowMiniMap((visible) => !visible)}
+          >
+            <MapIcon size={16} />
+          </button>
+        )}
+        {product && (
+          <button
+            type="button"
+            aria-label="Centrer l’application"
+            title="Centrer l’application"
+            disabled={!applicationBoxIds.size && !applicationAtScope}
+            onClick={centerApplication}
+          >
+            <Focus size={16} />
+            <span>Centrer l’application</span>
+          </button>
+        )}
       </div>
       <div className="flow-map-legend">
         <span>
@@ -1219,8 +1264,7 @@ export function FlowMapPanel(props: MapPanelProps) {
       </div>
       <div className="map-footer">
         <span>
-          <Move size={13} /> Glisser pour se déplacer · Cliquer pour entrer dans un périmètre · Zoomer jusqu’aux
-          Business Areas
+          <Move size={13} /> Glisser pour se déplacer · Cliquer pour entrer dans un périmètre · Zoomer pour agrandir
         </span>
         <span>Lecture seule</span>
       </div>

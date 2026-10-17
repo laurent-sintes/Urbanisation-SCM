@@ -1,0 +1,1405 @@
+id: GLOBAL-MODEL-AUDIT-U1116
+date: '2026-10-16'
+status: completed_with_findings
+source_refs:
+- U1116
+- U1117
+request:
+  verbatim: Je veux un audit global du modèle, surtout sur les relations.
+  interpretation: Examiner le modèle courant dans son ensemble, avec priorité aux relations, à leur sens métier, à leur couverture
+    documentée et à leur restitution. Un audit global porte tout le périmètre décrit, sans prétendre que toute l’entreprise
+    ou ses interfaces installées sont modélisées.
+scope:
+  included:
+  - Hiérarchie, identité, parents uniques et profondeurs déclarées
+  - Toutes les 876 relations, dont 347 hiérarchiques et 529 transverses
+  - Responsabilités producteur/consommateur, dépendances, autorisations, faits, décision et application
+  - Contenus et qualifications des 301 partages de données, doublons et boucles de mobilisation
+  - Coopérations entre les quatre systèmes et les douze domaines
+  - Synthèses système, contrats détaillés et modes de lecture Flux
+  - Principes, descriptions et glossaires qui réexpriment les responsabilités
+  - Scénarios, parcours, contributions et participations de contexte
+  - Informations, offres applicatives, sélections SI et liens As Is
+  - Points chauds, écarts, observations, options, problèmes et documents
+  - Portées d’accord et fidélité du backlog à la publication courante
+  excluded:
+  - Aucun diagnostic de fonctionnement installé ni inventaire technique d’interfaces
+  - Aucune réouverture de l’audit des comportements clos U431
+  - Aucune capacité périphérique exigée hors profondeur déclarée
+  - Aucune relation déduite d’une paire vide, d’un nom de produit ou d’une observation non documentée
+  canonical_business_changes: false
+  business_adoption: false
+  publication: false
+  commit: false
+baseline:
+  commit: 46ffd27
+  publication: 2026-10-16.4
+  hashes:
+    modeles/backlog/model.yaml: 0dca93eafa45a60c9242d3e51a014e1d1a91a4a35c4188596d88a52201fd4708
+    modeles/backlog/glossary.yaml: 561cf6acdafebf63242430b644529ed32d4aacd283b9558d904d61bfb821945a
+    modeles/backlog/modeling-glossary.yaml: b1819a0e871cbab51a1ce2be02ac333d12b2f10558df814b3b8061a80c3a12ab
+    modeles/release/index.json: 3b9d6bfe5ab8563b1c046005e7199abfed8e41744f5c5a818a66225a7a3704ef
+    modeles/schemas/urbanism.schema.json: 252a447845dc981c6cde3425fe3e61984313dd07fa5ca82cf35e499e891aa12c
+  code_sha256:
+    scripts/validate_models.py: e2c80166f1e70af21874fe086af091496f6ccfc8e9e1384e1378cc120cb84f3f
+    scripts/glossary.py: 4c32465778cc4b9809d9a26f0355f1d0261ef02dc08dadb1c2d5950b5a8bb269
+    scripts/scenario_catalog.py: e5b1d9405e2145926b156444797557c25192bb43f3e90087ef761831ed80d11f
+    scripts/application_catalog.py: 5f740c66c84a785823a401ec304addd4c682d9f3ecc90e3c1ca4b6af05af7813
+    app/src/components/BusinessSheet.tsx: 6cff6f1d75f7769af2c58917c6e3aa15a4811815ef7d9de4d883866788e333b2
+    app/src/components/ModelLinks.tsx: 81493f5ccde1199270cd810a0b7cb2bd3b6129533e55fe48dc741598c43cb643
+    app/src/components/ScenarioCatalogPage.tsx: c9d1817c4ac28643b385fa3420a8f13a3cee40f92fbc33252dde523b4f57ba57
+    app/src/components/ApplicationCatalogPage.tsx: 82af5081632a5e157acb100c9bbfb07ef7c18a3a2d2cdd71addd79e17ca87485
+    app/src/flowMapPresentation.ts: 2b730baf2aff470f237d5ba8fd72dc5ca4252392f1d0df6b052e1c5a5c00b0d2
+    app/src/dependencyGraph.ts: ce214dbaa12be441d2c168f66e033228db085c825c4aa327c66eb7b36e96465a
+  prior_work:
+    U1112: Audit initial des flux SCO et adhérences.
+    U1113: Correction des flux puis publication .3.
+    U1114: Audit Enterprise Architecture, 27 constats.
+    U1115: Corrections et compléments publiés en .4 ; contenu relu et utilisé, sans déclarer à nouveau manquantes les chaînes
+      présentes.
+executive_summary:
+  conclusion: L’arbre, les références et les contrats structurés sont intègres. Sept incohérences confirmées subsistent dans
+    les attributions de responsabilité, la qualification d’une relation et la restitution de certains liens. Un choix de couverture
+    des synthèses EA reste à arbitrer. Les 27 relations Commerce/Procurement avec Supply existent ; leur accès depuis une
+    vue de domaine est mal orienté. Aucune nouvelle chaîne détaillée absente n’a été démontrée dans le périmètre documenté.
+  confirmed_defects: 7
+  representation_choices_to_arbitrate: 1
+  by_priority:
+    P1: 2
+    P2: 4
+    P3: 2
+  priority_meaning:
+    P1: Corriger d’abord pour obtenir une lecture fiable des responsabilités et du sens des relations ; aucun incident installé
+      allégué.
+    P2: Cohérence de périmètre, traçabilité ou choix de représentation à traiter ensuite.
+    P3: Consolidation d’un catalogue interne ou précision de qualification affichée.
+  first_actions:
+  - Aligner l’attribution de couverture, affectation et application avec Master Plan et Availability.
+  - Lever le conflit entre fourniture d’autorisation et rôle needs.
+  - Aligner les principes de périmètre et les liens des fiches vers les parcours réellement mobilisés.
+  known_reserves_are_not_counted_as_new_defects: true
+method:
+  steps:
+  - Vérifier les empreintes du lot publié avant de réutiliser les contrôles réussis.
+  - Recalculer indépendamment identifiants, parents, cycles hiérarchiques, auto-relations, doublons et égalité des relations
+    publiées.
+  - Partager les 529 relations transverses en deux ensembles disjoints, lire leurs significations et qualifications avec les
+    fiches de leurs extrémités.
+  - Comparer les descriptions et principes au graphe explicite et au glossaire ; un lien résolu ne prouve pas que son sens
+    soit correct.
+  - Examiner les boucles de besoin comme coopérations conditionnelles, sans les transformer en séquences exécutables.
+  - Confronter les six synthèses existantes à l’union structurée de tous leurs détails, puis examiner les directions non synthétisées.
+  - Vérifier les liens des catalogues et leurs preuves dans le code de restitution, en réutilisant les recettes inchangées.
+  - Comparer chaque constat aux périmètres U1114/U1115 ; séparer reliquat ancien, conséquence nouvelle et réserve connue.
+  - Consolider les constats recoupés une seule fois ; conserver les hypothèses non démontrées comme questions ouvertes.
+  independent_partition_proof: true
+  market_method: Les contradictions internes sont démontrées par les champs canoniques et le code. Les comparaisons primaires
+    pertinentes déjà consultées dans cette session sont réutilisées ; aucun nouveau découpage métier ni équivalence produit
+    n’est proposé.
+coverage:
+  nodes: 352
+  relations: 876
+  hierarchical: 347
+  transverse: 529
+  kinds:
+    universe: 1
+    business_system: 4
+    domain: 12
+    area: 50
+    reference: 20
+    capability: 116
+    object: 2
+    document: 1
+    event: 1
+    behavior: 74
+    business_area: 71
+  relation_types:
+    contains: 265
+    represents: 1
+    records: 1
+    provides-knowledge: 6
+    provides-conditions: 4
+    describes-network: 1
+    presents: 82
+    shares-data: 301
+    relates-to: 148
+    supplies-reference: 16
+    uses-reference: 48
+    confirms: 1
+    associated-document: 1
+    observed-result: 1
+  published_nodes: 348
+  published_relations: 868
+  partition:
+    hierarchy:
+      count: 347
+      sorted_ids_sha256: fc05687c59b6df543ec0a9b8d066be4e572dd568c87b99b081ee8ac33e6e1c27
+      predicate: type in [contains,presents]
+    supply_transverse:
+      count: 429
+      sorted_ids_sha256: 89fe5779c717409c6216022ff1186c31213fdefd6e4fb530c161da41596e273e
+      predicate: Hors hiérarchie, au moins une extrémité descend de Supply Chain Orchestration selon les seuls parents explicites.
+      internal: 347
+      boundary: 82
+    other_transverse:
+      count: 100
+      sorted_ids_sha256: 99d66f6c74a6b29b06f71312dc08e01666b14e8f8ba94dbb6e5c93836779515c
+      predicate: Hors hiérarchie, aucune extrémité ne descend de Supply Chain Orchestration.
+      published: 98
+      illustrations: 2
+    union:
+      count: 876
+      sorted_ids_sha256: 110145f59b39a06d538ea7f1c73e978b7009edec35f87ee7b6b8da5e4880da3a
+    disjoint: true
+    exhaustive_for_current_model: true
+  catalogues:
+    scenario_catalog:
+      value_streams: 5
+      scenarios: 41
+      paths: 48
+      steps: 159
+      contributions: 496
+      dependencies: 47
+      context_participations: 16
+      legacy_links: 30
+      context_participations_outside_declared_depth: []
+    information_catalog:
+      items: 14
+      links: 15
+      capability_roles: 23
+    application_catalog:
+      products: 13
+      components: 87
+      offering_mappings: 111
+      selections: 14
+      selection_mappings: 16
+      component_states: 19
+      panorama_refs: 6
+    hotspot_catalog:
+      hotspots: 30
+      gap_analyses: 18
+      observations_by_context: 36
+      resolution_options: 67
+      problems: 16
+      document_refs_on_hotspots: 3
+    document_catalog:
+      documents: 4
+      asset_integrity:
+      - id: DOC001
+        canonical_sha256_matches: true
+        export_sha256_matches: true
+      - id: DOC002
+        canonical_sha256_matches: true
+        export_sha256_matches: true
+      - id: DOC003
+        canonical_sha256_matches: true
+        export_sha256_matches: true
+      - id: DOC004
+        canonical_sha256_matches: true
+        export_sha256_matches: true
+      unlinked_document: DOC001, synthèse précédente préservée explicitement ; absence volontaire, non anomalie.
+    glossaries:
+      business_terms: 402
+      method_terms: 51
+      business_aliases: 12
+    inline_link_occurrences:
+      scenario_catalog:
+        glossary: 64
+        model: 50
+      application_catalog:
+        glossary: 114
+      information_catalog:
+        model: 6
+      hotspot_catalog:
+        glossary: 57
+        model: 25
+        method: 1
+      document_catalog: {}
+    unresolved_inline_targets: []
+  principles_read: 29
+  publication_difference: Les quatre objets illustratifs et leurs huit relations restent dans le backlog ; ils ne sont pas
+    publiés. Les 868 relations publiées sont identiques sur type, extrémités, contenus et qualifications.
+  systems: 4
+  domains: 12
+  boundary_follow_up_U1117:
+    commerce_nodes_inspected: 37
+    procurement_nodes_inspected: 24
+    commerce_capabilities: 18
+    procurement_capabilities: 10
+    direct_border_relations: 27
+    direct_border_types:
+      shares-data: 27
+    commerce_to_supply: 8
+    supply_to_commerce: 7
+    procurement_to_supply: 5
+    supply_to_procurement: 7
+controls:
+  independent_integrity:
+    duplicate_node_ids: []
+    duplicate_relation_ids: []
+    dangling_endpoints: []
+    hierarchy_cycles: []
+    multiple_parents: {}
+    active_roots:
+    - beaumanoir-target-universe
+    capability_parent_errors: []
+    self_relations: []
+    identical_semantic_relations: []
+    published_relation_drift: []
+    excluded_illustrations:
+    - REL-ILL-004
+    - REL-ILL-005
+    - REL-ILL-006
+    - REL-ILL-007
+    - REL-ILL-008
+    - REL-U725-ILL-001
+    - REL-U725-ILL-002
+    - REL-U725-ILL-003
+  same_endpoint_groups:
+    count: 9
+    interpretation: Huit paires distinguent besoins courants et implantation initiale/consignation ; la neuvième sépare demande
+      wholesale et résultat de crédit vers Sales Order. Aucune paire n’est déclarée doublon strict sur sa seule extrémité.
+    groups:
+    - type: relates-to
+      source_id: D05.f
+      target_id: D05.e
+      ids:
+      - REL-INVENTORY-PLANNING-D05.e
+      - REL-INVENTORY-PLANNING-D05.g
+    - type: relates-to
+      source_id: D05.e
+      target_id: D01.c
+      ids:
+      - REL-NEEDS-U290-085
+      - REL-INITIAL-STOCKING-INVENTORY
+    - type: relates-to
+      source_id: D05.e
+      target_id: D05.a
+      ids:
+      - REL-NEEDS-U290-087
+      - REL-INITIAL-STOCKING-TARGET
+    - type: relates-to
+      source_id: D05.e
+      target_id: D07.d
+      ids:
+      - REL-NEEDS-U290-088
+      - REL-INITIAL-STOCKING-TRACKING
+    - type: relates-to
+      source_id: D05.e
+      target_id: D04.j
+      ids:
+      - REL-NEEDS-U290-089
+      - REL-INITIAL-STOCKING-PURCHASE
+    - type: relates-to
+      source_id: D05.e
+      target_id: D04.k
+      ids:
+      - REL-NEEDS-U290-090
+      - REL-INITIAL-STOCKING-TRANSFER
+    - type: relates-to
+      source_id: D05.c
+      target_id: D05.e
+      ids:
+      - REL-NEEDS-U290-094
+      - REL-REDISTRIBUTION-INITIAL-STOCKING
+    - type: relates-to
+      source_id: D04.r
+      target_id: D05.e
+      ids:
+      - REL-NEEDS-U395-03
+      - REL-NEEDS-U395-04
+    - type: shares-data
+      source_id: cap-wholesale-sales-engagement
+      target_id: D04.i
+      ids:
+      - REL-U1091-wholesale-demand-to-sales-order
+      - REL-U1115-credit-result-to-sales-order
+  needs_cycles:
+    components:
+    - - D01.c
+      - D01.d
+      - D01.g
+    - - D02.c
+      - D02.e
+      - D03.i
+      - D03.j
+      - D03.k
+      - D03.o
+      - D04.i
+      - D04.j
+      - D04.k
+      - D04.m
+      - D04.n
+      - D04.r
+      - D05.e
+      - D05.h
+      - D06.e
+      - D07.a
+    note: Cycles de mobilisation, pas des séquences exécutables ni des blocages présumés.
+    interpretation: Deux composantes de mobilisation réciproque (inventaire ; plan/promesse/commandes/prestations). Les conditions
+      et versions empêchent de déduire une séquence universelle ; aucun blocage transactionnel impossible démontré.
+  system_summaries:
+    existing_summary_checks:
+    - relation_id: REL-U979-product-definitions
+      source_system_id: system-design-development
+      target_system_id: system-business-operations
+      detailed_relation_count: 7
+      distinct_content_count: 7
+      exact_content_union: true
+    - relation_id: REL-U979-product-feedback
+      source_system_id: system-business-operations
+      target_system_id: system-design-development
+      detailed_relation_count: 4
+      distinct_content_count: 4
+      exact_content_union: true
+    - relation_id: REL-U979-service-requests
+      source_system_id: system-business-operations
+      target_system_id: domain-logistics-execution
+      detailed_relation_count: 16
+      distinct_content_count: 16
+      exact_content_union: true
+    - relation_id: REL-U979-execution-results
+      source_system_id: domain-logistics-execution
+      target_system_id: system-business-operations
+      detailed_relation_count: 21
+      distinct_content_count: 3
+      exact_content_union: true
+    - relation_id: REL-U979-management-facts
+      source_system_id: system-business-operations
+      target_system_id: system-enterprise-management-control
+      detailed_relation_count: 13
+      distinct_content_count: 13
+      exact_content_union: true
+    - relation_id: REL-U979-credit-profiles
+      source_system_id: system-enterprise-management-control
+      target_system_id: system-business-operations
+      detailed_relation_count: 10
+      distinct_content_count: 8
+      exact_content_union: true
+    directed_pairs_documented: 10
+    pairs_with_summary: 6
+    pairs_without_summary: 4
+    details_in_unsummarized_pairs: 13
+  reused_successful_controls:
+    release_candidate:
+      version: 2026-10-16.4
+      validation_errors: 0
+      source: release.py --source U1115 --guide modeles/backlog/atlas-transformation-methodology.yaml --review .runtime/release-reviews/2026-10-16.4
+        --activate
+      reusable_because: Modèle, glossaires, schéma et code de production inchangés depuis la publication vérifiée ; seule
+        la contribution et ce résultat d’audit sont ajoutés.
+    atlas_served_data:
+      version: 2026-10-16.4
+      verified: true
+      scope: Identité du serveur, catalogue courant, égalité du JSON et du YAML au snapshot et guide associé ; vérification
+        réussie lors de la release de cette session.
+    flow_browser_recipe:
+      version: 2026-10-16.4
+      checks: 22
+      errors: 0
+      scope: Recette navigateur sans ouverture de fenêtre utilisateur ; preuve de restitution réutilisée pour les octets inchangés.
+    frontend_build: Build réussi avant activation ; export des nouvelles données réussi lors de la release. Aucun nouveau
+      build nécessaire pour cet audit sans modification du code.
+  scope_of_zero_errors: Zéro erreur structurelle ne signifie pas zéro contradiction métier ; GLOBAL-U1116-01/02/03/06 ont
+    des références techniquement valides.
+findings:
+- id: GLOBAL-U1116-01
+  priority: P1
+  status: confirmed_existing_residue_newly_detected
+  introduced_by_U1115: false
+  title: Les affectations et le master plan restent attribués à Availability dans quatre fiches, un terme et deux principes
+  object_ids:
+  - D04.k
+  - D04.r
+  - D04.n
+  - D06.d
+  - TER176
+  - D03
+  - domain-plan
+  - D03.o
+  - ba-order-backlog-management
+  evidence:
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: D04.k
+    field: fields.scope
+    quote: Les décisions de besoin et d’affectation restent dans [Availability](glossary:TER112).
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: D04.r
+    field: fields.scope
+    quote: Les décisions de besoin et d’affectation restent dans [Availability](glossary:TER112).
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: D04.n
+    field: fields.scope
+    quote: Structuring maintient la filiation, les groupes et les fusions admissibles ; il ne choisit pas les affectations
+      de [Availability](glossary:TER112) ni les regroupements physiques de transport.
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: D06.d
+    field: fields.scope
+    quote: Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Availability](glossary:TER112).
+  - path: modeles/backlog/glossary.yaml
+    collection: terms
+    id: TER176
+    field: context
+    quote: Distinguer le plan d’exécution coordonné du [master plan de matching](glossary:TER100) arbitré dans [Availability](glossary:TER112).
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: D03
+    field: fields.definition
+    quote: Établir ce qui peut être promis pour une demande identifiée, selon les ressources, le plan commun, les règles et
+      les engagements.
+  - path: modeles/backlog/model.yaml
+    collection: nodes
+    id: ba-order-backlog-management
+    field: fields.definition
+    quote: Arbitrer les priorités, les affectations et les passages en livraison des commandes en concurrence dans le Master
+      Plan.
+  - path: modeles/backlog/glossary.yaml
+    collection: terms
+    id: TER112
+    field: notes
+    quote: '[Order Backlog Management](glossary:TER269), dans [Master Plan](glossary:TER111), porte les arbitrages collectifs
+      de priorités et d’[affectation](glossary:TER017).'
+  - path: modeles/backlog/model.yaml
+    collection: principles
+    id: PRINCIPLE-TO-PROMISE
+    field: statement
+    value: Availability regroupe les décisions de promesse et les arbitrages de couverture. Order Promising est la catégorie
+      de présentation de ATP, CTP et PTP, trois capacités de décision qui intègrent sélection initiale et réexamen. Aucun
+      ordre universel de calcul, confirmation, réservation ou approvisionnement automatique. Inventory Management tient les
+      faits et engagements de quantité ; Availability conserve le master plan et les affectations ; Order Management confirme
+      les engagements et leurs révisions autorisées.
+  - path: modeles/backlog/model.yaml
+    collection: principles
+    id: PRINCIPLE-INVENTORY-SCENARIO-APPLICATION
+    field: statement
+    value: 'Planning mobilise des décisions distinctes. L’application du plan relève d’un comportement du Planning concerné
+      ; sa décomposition précise doit être justifiée par son effet métier. Les capacités qui définissent, maintiennent et
+      fournissent les configurations consommées, notamment Supply Protection, restent extérieures. Appliquer un plan peut
+      mobiliser la gestion des Orders, des engagements et la coordination des prestations sans absorber leurs responsabilités.
+      Aucun sous-comportement ni capacité Application systématique. La gestion d’une demande propre au travail de Planning
+      peut être un comportement de ce Planning ; son suivi reste distinct du plan et de ses effets. Ce choix ne retire pas
+      les Orders d’origine interne de leur famille de gestion. Exception locale validée U749 : dans Availability, Simulation
+      & Analysis et Plan Application sont des capacités distinctes, coordonnées par Master Planning ; cette maille ne se généralise
+      pas aux autres Planning.'
+  effect: Le lecteur des commandes, de leur structure ou de la coordination peut attribuer le calcul collectif et les affectations
+    à Availability alors que la hiérarchie et les contrats U1113 les placent dans Master Plan / Order Backlog Management.
+    Les liens sont résolus et valides techniquement ; leur explication métier reste contradictoire.
+  recommendation: 'Corriger ces seuls passages et TER176 dans le même lot : rattacher les décisions de besoin et de couverture
+    au Master Plan et les affectations à Supply Assignment / Order Backlog Management ; conserver Availability pour la proposition
+    de promesse individuelle. Conserver les identifiants, parents et responsabilités des quatre capacités. Fusionner ce reliquat
+    avec le constat global sur les principes de planification pour éviter de compter plusieurs fois la même contradiction.
+    Aligner aussi les deux principes courants qui situent encore master plan, affectations et Plan Application dans Availability.
+    Le périmètre actuel Master Plan et les responsabilités spécialisées restent inchangés.'
+  comparison_to_prior_audits:
+    U1112: FL-U1112-01 corrigeait les extrémités et textes de flèches de promesse ; ces quatre scopes n’étaient pas nommés.
+    U1114: EA-CAT-02 portait la contradiction Availability dans TER112.market_inspiration.
+    U1115: TER112 a été aligné, mais les quatre scopes et TER176.context ci-dessus restent dans leur état ancien. Il ne s’agit
+      pas d’une régression introduite par U1115.
+  market_evidence_refs:
+  - flow-audit-U1112.yaml#MKT-FLOW-MS-PROMISE
+  - flow-audit-U1112.yaml#MKT-FLOW-SAP-AATP
+  market_comparison: Les passages primaires Dynamics et SAP S/4HANA consultés le 16 octobre et relus dans U1112 étayent des
+    possibilités de quantité/date et une proposition de confirmation. Ils n’imposent pas la séparation FLOW ; la correction
+    recommandée repose sur les responsabilités déjà canoniques, sans nouvelle taxonomie ni nouveau mécanisme.
+  limits:
+  - Aucune erreur d’exécution ou d’affectation dans un SI installé n’est démontrée.
+  - La correction du texte ne confère aucun nouvel accord aux champs éditoriaux.
+  origin_finding_id: EA-U1116-SCO-01
+  priority_rationale: Contradiction sur l’autorité de décision dans le cœur approfondi, répétée dans quatre fiches, le glossaire
+    et deux principes courants. À aligner avant de s’appuyer sur cette carte pour répartir les responsabilités ; aucun incident
+    installé allégué.
+  principle_ids:
+  - PRINCIPLE-TO-PROMISE
+  - PRINCIPLE-INVENTORY-SCENARIO-APPLICATION
+  qualification: confirmed_defect
+- id: GLOBAL-U1116-02
+  priority: P1
+  status: old_residual_detected_now
+  title: Une autorisation fournie est simultanément qualifiée comme besoin du fournisseur
+  relation_ids:
+  - REL-U725-EXECUTION-AUTHORIZATIONS
+  object_ids:
+  - D04
+  - D06
+  evidence:
+  - path: modeles/backlog/model.yaml
+    record: REL-U725-EXECUTION-AUTHORIZATIONS
+    fields:
+      type: provides-knowledge
+      source_id: D04
+      target_id: D06
+      qualification.role: needs
+      qualification.meaning: Les familles d’Orders fournissent les autorisations de prise en charge, suspensions, protections
+        et engagements à respecter dans la coordination des prestations.
+  - path: app/src/components/BusinessSheet.tsx
+    line: 131
+    observation: Le rôle needs classe le lien sortant de D04 sous A besoin de ; D06 le reçoit sous Est utilisée par.
+  - path: app/src/flowMapPresentation.ts
+    line: 26
+    observation: La vue Flux traite provides-knowledge comme fourniture orientée D04 vers D06.
+  - path: scripts/validate_models.py
+    line: 308
+    observation: Le validateur contrôle types et extrémités, mais aucune règle ne rejette cette incompatibilité entre type
+      de fourniture et rôle needs.
+  impact: La même relation est lue comme fourniture d’autorisation dans Flux et comme dépendance inverse dans les fiches.
+    Le modèle donne deux réponses différentes à qui fournit l’autorisation et qui en a besoin.
+  recommendation: Conserver le sens métier documenté Orders vers Fulfilment et retirer le rôle needs contradictoire. Si une
+    dépendance réciproque distincte est nécessaire, la justifier avant de la représenter. Ajouter un contrôle ciblé des couples
+    type/rôle et un test des libellés de fiche.
+  prior_work: Reliquat U725 non corrigé par les sept requalifications U1115 ; aucune nouvelle inversion introduite par U1115
+    n’est alléguée.
+  basis: Contradiction interne démontrée ; aucune nouvelle responsabilité métier, taxonomie éditeur ou interface proposée.
+  limits:
+  - La fourniture d’autorisation n’est pas déclarée absente du graphe.
+  - Aucun incident dans un système installé n’est déduit.
+  origin_finding_id: U1116-ROOT-01
+  qualification: confirmed_defect
+- id: GLOBAL-U1116-03
+  priority: P2
+  status: old_residual_detected_now
+  title: Deux principes courants décrivent encore un périmètre remplacé
+  principle_ids:
+  - PRINCIPLE-SUPPLY-FIRST
+  - PRINCIPLE-ORCHESTRATION-DETAIL
+  object_ids:
+  - domain-sales
+  - domain-plan
+  evidence:
+  - record: PRINCIPLE-SUPPLY-FIRST
+    field: statement
+    excerpt: Le commerce sera étudié après la Supply Chain ; aucun domaine Commerce n’est créé par anticipation.
+    counter_evidence: domain-sales est Commerce, sous Business Operations, avec modeling_depth=capabilities et une décomposition
+      canonique effective.
+  - record: PRINCIPLE-ORCHESTRATION-DETAIL
+    field: statement
+    excerpt: Planning & Optimization est un sous-domaine de ce dernier.
+    counter_evidence: L’identité persistante domain-plan porte actuellement le nom Master Plan ; ce nom et son rattachement
+      courant font autorité.
+  impact: Les règles lisibles dans le modèle ne décrivent plus toutes le périmètre et les noms du graphe courant. Les employer
+    pour interpréter ou modifier les relations peut réintroduire d’anciennes frontières.
+  recommendation: Aligner les énoncés courants sur Commerce détaillé jusqu’aux capacités et sur Master Plan, en conservant
+    les anciennes formulations dans Git et leurs sources. Vérifier les 29 principes dans ce lot ciblé, sans réécrire les récits
+    historiques explicitement datés.
+  basis: Cohérence interne avec les noms et profondeurs canoniques ; pas de nouveau découpage métier proposé.
+  limits:
+  - Les principes historiques ou passages explicitement datés ne deviennent pas tous des anomalies.
+  - Les deux principes d’attribution du master plan à Availability sont traités avec les fiches dans le constat SCO correspondant.
+  origin_finding_id: U1116-ROOT-02
+  qualification: confirmed_defect
+- id: GLOBAL-U1116-04
+  priority: P2
+  status: old_residual_detected_now
+  classification: scenario_path_link_fidelity
+  title: Une fiche peut ouvrir le parcours par défaut où sa contribution n’est pas documentée
+  objects:
+  - order-workflow-orchestration
+  - BHV082
+  - remote-payment-ambiguous
+  - customer-credit-hold
+  evidence:
+  - path: app/src/components/BusinessSheet.tsx
+    line: 353
+    locator: Scénarios mobilisant ce périmètre
+    value: La liste ne produit que CatalogLink scenario={s.id}, sans parcours de mobilisation correspondant.
+  - path: app/src/components/ModelLinks.tsx
+    line: 120
+    locator: CatalogLink
+    value: 'path: '''''
+  - path: app/src/components/ScenarioCatalogPage.tsx
+    line: 46
+    locator: path selection
+    value: 'const path = route.path ? paths.find((p) => p.id === route.path) : paths[0]'
+  cases:
+  - node_id: order-workflow-orchestration
+    name: Process Orchestration
+    scenario_id: remote-payment-ambiguous
+    opened_path: remote-payment-ambiguous-path
+    expected_path: payment-resumption-not-confirmed-path
+    expected_step: effect
+  - node_id: BHV082
+    name: Process, Tasks & Order Visibility
+    scenario_id: customer-credit-hold
+    opened_path: customer-credit-hold-path
+    expected_path: credit-review-no-response-path
+    expected_step: escalate
+  effect: La relation de mobilisation est conservée et la variante reste accessible par le sélecteur de parcours, mais le
+    lien de la fiche ne mène pas à sa preuve. La règle AGENTS demande les liens vers scénarios et leurs parcours de mobilisation.
+  recommendation: Sous chaque scénario lié à une fiche, exposer les parcours qui mobilisent explicitement la capacité ou un
+    descendant du périmètre, avec un lien portant path. Conserver la liste sans doublons et la distinction contribution/participant
+    de contexte.
+  relation_to_previous_audit: EA-CAT-04 ajoutait les participants à profondeur de contexte ; ce défaut concerne l’arrivée
+    des liens de fiche sur les variantes déjà existantes.
+  origin_finding_id: U1116-CAT-02
+  qualification: confirmed_defect
+  priority_rationale: Traçabilité explicite des relations de mobilisation exigée par les instructions courantes ; deux arrivées
+    ne mènent pas au parcours qui justifie le lien. Les variantes restent accessibles, sans perte de contribution.
+- id: GLOBAL-U1116-05
+  priority: P2
+  status: new_representation_coverage_to_arbitrate
+  certainty: Absence des quatre synthèses certaine ; caractère fautif du choix de Flux principaux non établi sans exigence
+    de couverture représentative.
+  title: Quatre directions intersystèmes ajoutées U1115 restent sans synthèse explicite
+  kind: summary_coverage_gap_with_editorial_choice
+  object_ids:
+  - domain-logistics-execution
+  - system-design-development
+  - system-enterprise-management-control
+  detailed_relation_ids:
+  - REL-U1115-objectives-product
+  - REL-U1115-budget-forecast
+  - REL-U1115-policy-product
+  - REL-U1115-forecast-budget
+  - REL-U1115-product-control-evidence
+  - REL-U1115-policy-customs
+  - REL-U1115-service-evidence-results-domain-warehousing
+  - REL-U1115-service-evidence-results-domain-transportation
+  - REL-U1115-service-evidence-results-domain-customs-management
+  - REL-U1115-customs-control-evidence
+  - REL-U1115-service-supporting-facts-domain-warehousing
+  - REL-U1115-service-supporting-facts-domain-transportation
+  - REL-U1115-service-supporting-facts-domain-customs-management
+  evidence:
+  - source_system_id: system-enterprise-management-control
+    target_system_id: system-design-development
+    detail_count: 3
+    detailed_relation_ids:
+    - REL-U1115-objectives-product
+    - REL-U1115-budget-forecast
+    - REL-U1115-policy-product
+    evidence:
+    - relation_id: REL-U1115-objectives-product
+      source_id: subdomain-strategy-objectives
+      target_id: subdomain-product-strategy-requirements
+      type: shares-data
+      fields:
+        label: Product Objectives and Constraints
+        data_exchange:
+          contents:
+          - name: Product Objectives and Constraints
+            description: Objectifs et contraintes d’entreprise applicables aux orientations produit et à leur horizon.
+            glossary_refs:
+            - TER222
+            - TER207
+          purpose: Éclairer la stratégie produit sans transférer les choix de prix ou de canal.
+      qualification:
+        meaning: Objectifs et contraintes d’entreprise applicables aux orientations produit et à leur horizon.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Éclairer la stratégie produit sans transférer les choix de prix ou de canal.
+        scope: Coopération métier cible au niveau déjà déclaré. Les autorités par objet et les conditions d’usage restent
+          explicites ; aucune interface ni réalisation installée déduite.
+    - relation_id: REL-U1115-budget-forecast
+      source_id: subdomain-budgeting-forecasting
+      target_id: subdomain-demand-supply-forecasting
+      type: shares-data
+      fields:
+        label: Financial Planning Constraints
+        data_exchange:
+          contents:
+          - name: Financial Planning Constraints
+            description: Hypothèses et enveloppes financières applicables aux scénarios de demande et de ressources envisageables.
+            glossary_refs:
+            - TER223
+            - TER372
+          purpose: Comparer les hypothèses de prévision avec les contraintes financières pertinentes.
+      qualification:
+        meaning: Hypothèses et enveloppes financières applicables aux scénarios de demande et de ressources envisageables.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Comparer les hypothèses de prévision avec les contraintes financières pertinentes.
+        scope: Coopération métier cible au niveau déjà déclaré. Les autorités par objet et les conditions d’usage restent
+          explicites ; aucune interface ni réalisation installée déduite.
+    - relation_id: REL-U1115-policy-product
+      source_id: subdomain-policy-compliance
+      target_id: domain-product-definition-lifecycle
+      type: shares-data
+      fields:
+        label: Product Compliance Requirements
+        data_exchange:
+          contents:
+          - name: Product Compliance Requirements
+            description: Exigences pertinentes à la définition, aux documents et à la mise à disposition des produits.
+            glossary_refs:
+            - TER226
+            - TER214
+          purpose: Appliquer les exigences identifiées aux versions produit concernées.
+      qualification:
+        meaning: Exigences pertinentes à la définition, aux documents et à la mise à disposition des produits.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Appliquer les exigences identifiées aux versions produit concernées.
+        scope: Coopération métier cible au niveau déjà déclaré. Les autorités par objet et les conditions d’usage restent
+          explicites ; aucune interface ni réalisation installée déduite.
+  - source_system_id: system-design-development
+    target_system_id: system-enterprise-management-control
+    detail_count: 2
+    detailed_relation_ids:
+    - REL-U1115-forecast-budget
+    - REL-U1115-product-control-evidence
+    evidence:
+    - relation_id: REL-U1115-forecast-budget
+      source_id: subdomain-demand-supply-forecasting
+      target_id: subdomain-budgeting-forecasting
+      type: shares-data
+      fields:
+        label: Demand and Supply Forecast Assumptions
+        data_exchange:
+          contents:
+          - name: Demand and Supply Forecast Assumptions
+            description: Versions et hypothèses du Forecast Plan, volumes et incertitudes nécessaires à la traduction financière.
+            glossary_refs:
+            - TER372
+            - TER223
+          purpose: Construire ou réviser les prévisions financières sans confondre quantités et budgets.
+      qualification:
+        meaning: Versions et hypothèses du Forecast Plan, volumes et incertitudes nécessaires à la traduction financière.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Construire ou réviser les prévisions financières sans confondre quantités et budgets.
+        scope: Coopération métier cible au niveau déjà déclaré. Les autorités par objet et les conditions d’usage restent
+          explicites ; aucune interface ni réalisation installée déduite.
+    - relation_id: REL-U1115-product-control-evidence
+      source_id: domain-product-definition-lifecycle
+      target_id: subdomain-risk-internal-control
+      type: shares-data
+      fields:
+        label: Product Release Control Evidence
+        data_exchange:
+          contents:
+          - name: Product Release Control Evidence
+            description: Références des versions mises à disposition, conditions d’usage et résultats des contrôles documentés.
+            glossary_refs:
+            - TER217
+            - TER227
+          purpose: Examiner les contrôles applicables aux mises à disposition sans approuver de nouveau la définition.
+      qualification:
+        meaning: Références des versions mises à disposition, conditions d’usage et résultats des contrôles documentés.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Examiner les contrôles applicables aux mises à disposition sans approuver de nouveau la définition.
+        scope: Coopération métier cible au niveau déjà déclaré. Les autorités par objet et les conditions d’usage restent
+          explicites ; aucune interface ni réalisation installée déduite.
+  - source_system_id: system-enterprise-management-control
+    target_system_id: domain-logistics-execution
+    detail_count: 4
+    detailed_relation_ids:
+    - REL-U1115-policy-customs
+    - REL-U1115-service-evidence-results-domain-warehousing
+    - REL-U1115-service-evidence-results-domain-transportation
+    - REL-U1115-service-evidence-results-domain-customs-management
+    evidence:
+    - relation_id: REL-U1115-policy-customs
+      source_id: subdomain-policy-compliance
+      target_id: domain-customs-management
+      type: shares-data
+      fields:
+        label: Applicable Customs Requirements
+        data_exchange:
+          contents:
+          - name: Applicable Customs Requirements
+            description: Exigences d’entreprise et conditions d’applicabilité utiles aux prestations douanières.
+            glossary_refs:
+            - TER226
+            - TER310
+          purpose: Organiser les contrôles pertinents sans définir le droit ni remplacer les autorités douanières.
+      qualification:
+        meaning: Exigences d’entreprise et conditions d’applicabilité utiles aux prestations douanières.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Organiser les contrôles pertinents sans définir le droit ni remplacer les autorités douanières.
+        scope: Coopération métier cible au niveau déjà déclaré. Les autorités par objet et les conditions d’usage restent
+          explicites ; aucune interface ni réalisation installée déduite.
+    - relation_id: REL-U1115-service-evidence-results-domain-warehousing
+      source_id: subdomain-financial-accounting
+      target_id: domain-warehousing
+      type: shares-data
+      fields:
+        label: Service Evidence Processing Results
+        data_exchange:
+          contents:
+          - name: Service Evidence Processing Results
+            description: Acceptation ou rejet motivé des justificatifs transmis, pièces manquantes et corrections demandées,
+              avec référence au fait d’origine.
+            glossary_refs:
+            - TER118
+            - TER066
+          purpose: Instruire auprès du producteur les compléments des justificatifs sans modifier directement son fait métier.
+      qualification:
+        meaning: Acceptation ou rejet motivé des justificatifs transmis, pièces manquantes et corrections demandées, avec
+          référence au fait d’origine.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Instruire auprès du producteur les compléments des justificatifs sans modifier directement son fait métier.
+        scope: Coopération métier cible conditionnelle à la prestation confiée. La remise peut être locale ou relayée par
+          Supply Chain Orchestration selon le mandat ; la route, les sources précises et les pièces requises restent à qualifier.
+          Aucun transfert d’autorité, mouvement réalisé, facture ou interface installée n’est déduit de cette relation.
+    - relation_id: REL-U1115-service-evidence-results-domain-transportation
+      source_id: subdomain-financial-accounting
+      target_id: domain-transportation
+      type: shares-data
+      fields:
+        label: Service Evidence Processing Results
+        data_exchange:
+          contents:
+          - name: Service Evidence Processing Results
+            description: Acceptation ou rejet motivé des justificatifs transmis, pièces manquantes et corrections demandées,
+              avec référence au fait d’origine.
+            glossary_refs:
+            - TER118
+            - TER066
+          purpose: Instruire auprès du producteur les compléments des justificatifs sans modifier directement son fait métier.
+      qualification:
+        meaning: Acceptation ou rejet motivé des justificatifs transmis, pièces manquantes et corrections demandées, avec
+          référence au fait d’origine.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Instruire auprès du producteur les compléments des justificatifs sans modifier directement son fait métier.
+        scope: Coopération métier cible conditionnelle à la prestation confiée. La remise peut être locale ou relayée par
+          Supply Chain Orchestration selon le mandat ; la route, les sources précises et les pièces requises restent à qualifier.
+          Aucun transfert d’autorité, mouvement réalisé, facture ou interface installée n’est déduit de cette relation.
+    - relation_id: REL-U1115-service-evidence-results-domain-customs-management
+      source_id: subdomain-financial-accounting
+      target_id: domain-customs-management
+      type: shares-data
+      fields:
+        label: Service Evidence Processing Results
+        data_exchange:
+          contents:
+          - name: Service Evidence Processing Results
+            description: Acceptation ou rejet motivé des justificatifs transmis, pièces manquantes et corrections demandées,
+              avec référence au fait d’origine.
+            glossary_refs:
+            - TER118
+            - TER066
+          purpose: Instruire auprès du producteur les compléments des justificatifs sans modifier directement son fait métier.
+      qualification:
+        meaning: Acceptation ou rejet motivé des justificatifs transmis, pièces manquantes et corrections demandées, avec
+          référence au fait d’origine.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Instruire auprès du producteur les compléments des justificatifs sans modifier directement son fait métier.
+        scope: Coopération métier cible conditionnelle à la prestation confiée. La remise peut être locale ou relayée par
+          Supply Chain Orchestration selon le mandat ; la route, les sources précises et les pièces requises restent à qualifier.
+          Aucun transfert d’autorité, mouvement réalisé, facture ou interface installée n’est déduit de cette relation.
+  - source_system_id: domain-logistics-execution
+    target_system_id: system-enterprise-management-control
+    detail_count: 4
+    detailed_relation_ids:
+    - REL-U1115-customs-control-evidence
+    - REL-U1115-service-supporting-facts-domain-warehousing
+    - REL-U1115-service-supporting-facts-domain-transportation
+    - REL-U1115-service-supporting-facts-domain-customs-management
+    evidence:
+    - relation_id: REL-U1115-customs-control-evidence
+      source_id: domain-customs-management
+      target_id: subdomain-risk-internal-control
+      type: shares-data
+      fields:
+        label: Customs Procedure Control Evidence
+        data_exchange:
+          contents:
+          - name: Customs Procedure Control Evidence
+            description: Résultats et exceptions sourcés des procédures douanières avec leur portée et leur origine.
+            glossary_refs:
+            - TER314
+            - TER227
+          purpose: Examiner les contrôles sans confondre preuve d’une procédure et conformité générale.
+      qualification:
+        meaning: Résultats et exceptions sourcés des procédures douanières avec leur portée et leur origine.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Examiner les contrôles sans confondre preuve d’une procédure et conformité générale.
+        scope: Coopération métier cible au niveau déjà déclaré. Les autorités par objet et les conditions d’usage restent
+          explicites ; aucune interface ni réalisation installée déduite.
+    - relation_id: REL-U1115-service-supporting-facts-domain-warehousing
+      source_id: domain-warehousing
+      target_id: subdomain-financial-accounting
+      type: shares-data
+      fields:
+        label: Logistics Service Supporting Facts
+        data_exchange:
+          contents:
+          - name: Logistics Service Supporting Facts
+            description: Faits et justificatifs reconnus de la prestation confiée, références des demandes, résultats, écarts
+              et corrections ; seuls les éléments connus et pertinents sont fournis.
+            glossary_refs:
+            - TER066
+            - TER120
+            - TER118
+          purpose: Contrôler les justificatifs financiers de prestation sans inventer de montant, de facture ou d’écriture.
+      qualification:
+        meaning: Faits et justificatifs reconnus de la prestation confiée, références des demandes, résultats, écarts et corrections
+          ; seuls les éléments connus et pertinents sont fournis.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Contrôler les justificatifs financiers de prestation sans inventer de montant, de facture ou d’écriture.
+        scope: Coopération métier cible conditionnelle à la prestation confiée. La remise peut être locale ou relayée par
+          Supply Chain Orchestration selon le mandat ; la route, les sources précises et les pièces requises restent à qualifier.
+          Aucun transfert d’autorité, mouvement réalisé, facture ou interface installée n’est déduit de cette relation.
+    - relation_id: REL-U1115-service-supporting-facts-domain-transportation
+      source_id: domain-transportation
+      target_id: subdomain-financial-accounting
+      type: shares-data
+      fields:
+        label: Logistics Service Supporting Facts
+        data_exchange:
+          contents:
+          - name: Logistics Service Supporting Facts
+            description: Faits et justificatifs reconnus de la prestation confiée, références des demandes, résultats, écarts
+              et corrections ; seuls les éléments connus et pertinents sont fournis.
+            glossary_refs:
+            - TER066
+            - TER120
+            - TER118
+          purpose: Contrôler les justificatifs financiers de prestation sans inventer de montant, de facture ou d’écriture.
+      qualification:
+        meaning: Faits et justificatifs reconnus de la prestation confiée, références des demandes, résultats, écarts et corrections
+          ; seuls les éléments connus et pertinents sont fournis.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Contrôler les justificatifs financiers de prestation sans inventer de montant, de facture ou d’écriture.
+        scope: Coopération métier cible conditionnelle à la prestation confiée. La remise peut être locale ou relayée par
+          Supply Chain Orchestration selon le mandat ; la route, les sources précises et les pièces requises restent à qualifier.
+          Aucun transfert d’autorité, mouvement réalisé, facture ou interface installée n’est déduit de cette relation.
+    - relation_id: REL-U1115-service-supporting-facts-domain-customs-management
+      source_id: domain-customs-management
+      target_id: subdomain-financial-accounting
+      type: shares-data
+      fields:
+        label: Logistics Service Supporting Facts
+        data_exchange:
+          contents:
+          - name: Logistics Service Supporting Facts
+            description: Faits et justificatifs reconnus de la prestation confiée, références des demandes, résultats, écarts
+              et corrections ; seuls les éléments connus et pertinents sont fournis.
+            glossary_refs:
+            - TER066
+            - TER120
+            - TER118
+          purpose: Contrôler les justificatifs financiers de prestation sans inventer de montant, de facture ou d’écriture.
+      qualification:
+        meaning: Faits et justificatifs reconnus de la prestation confiée, références des demandes, résultats, écarts et corrections
+          ; seuls les éléments connus et pertinents sont fournis.
+        conditions:
+        - Périmètre, destinataire, version et période de validité identifiés ; distinguer proposition, autorisation et résultat
+          reconnu.
+        - Conserver origine, date du fait, date de connaissance, corrections et limites de couverture ; une donnée absente
+          reste inconnue.
+        effects:
+        - Contrôler les justificatifs financiers de prestation sans inventer de montant, de facture ou d’écriture.
+        scope: Coopération métier cible conditionnelle à la prestation confiée. La remise peut être locale ou relayée par
+          Supply Chain Orchestration selon le mandat ; la route, les sources précises et les pièces requises restent à qualifier.
+          Aucun transfert d’autorité, mouvement réalisé, facture ou interface installée n’est déduit de cette relation.
+  code_evidence:
+  - file: app/src/flowMapPresentation.ts
+    lines:
+    - 109
+    - 112
+    statement: Le mode main calcule hasNative pour tous les groupes puis conserve seulement les groupes natifs si au moins
+      un existe. À la frontière EA, les six synthèses U979 fournissent ces groupes ; les quatre directions sans synthèse restent
+      hors Flux principaux.
+  impact: Le mode initial Flux principaux présente les six directions historiques centrées sur Business Operations ; les treize
+    coopérations détaillées entre Enterprise Management & Control et Design & Development ou Logistics ne font pas partie
+    de cette sélection. Tous les flux les restitue ; les relations canoniques sont présentes et aucune donnée n’est perdue.
+  prior_work:
+    audit: EA-CHAIN-14
+    remediation: U1115 a recomposé les six synthèses existantes. Leur contenu est maintenant l’union structurée exacte des
+      détails dans leur sens ; ce défaut historique est corrigé. Le lot a aussi créé les treize détails des quatre autres
+      directions, sans nouvelle synthèse. Cette observation est distincte des anciennes omissions de contenu.
+  recommendation: Arbitrer la couverture souhaitée de Flux principaux à l’échelle EA. Si cette sélection doit représenter
+    chaque coopération intersystème documentée, créer quatre synthèses limitées à l’union des treize contrats existants, avec
+    lignée contrôlée. Si les six axes centrés sur Business Operations sont volontairement les seuls principaux, documenter
+    et valider cette sélection éditoriale. Ne créer aucun échange détaillé, aucune réciprocité et aucune capacité de contexte
+    par déduction.
+  market_comparison:
+    basis: Cohérence de représentation interne, sans nouveau choix de responsabilité métier. Les sources éditeur ne prescrivent
+      ni six ni dix directions principales.
+    reused_evidence: enterprise-relationships-audit-U1114.yaml#market_comparison ; les responsabilités détaillées restent
+      celles déjà comparées et publiées U1115.
+    new_business_flow_recommendation: false
+    limits: Ni consensus de cartographie ni obligation éditeur de produire ces synthèses allégués.
+  limits:
+  - Le filtre Flux principaux peut être une sélection éditoriale légitime ; son existence seule n’est pas une anomalie.
+  - Tous les flux couvre les directions absentes de la sélection initiale.
+  - Les deux directions Design & Development ↔ Logistics sans détails ne donnent lieu à aucun constat de manque.
+  origin_finding_id: U1116-ENT-01
+  qualification: representation_choice_to_arbitrate
+  merged_finding_ids:
+  - U1116-ATLAS-01
+  presentation_reproduction:
+    source: app/public/data/2026-10-16.4/model.json
+    published_version: 2026-10-16.4
+    method: adaptPublication → buildFlowMap sans scope → flowMapPresentation(mode=main,zoom=1) ; filtrage des seules relations
+      dont les ancêtres systèmes sont distincts.
+    eligible_intersystem_relations: 90
+    retained: 77
+    omitted: 13
+    groups:
+      system-enterprise-management-control -> system-design-development:
+      - REL-U1115-objectives-product
+      - REL-U1115-budget-forecast
+      - REL-U1115-policy-product
+      system-design-development -> system-enterprise-management-control:
+      - REL-U1115-forecast-budget
+      - REL-U1115-product-control-evidence
+      system-enterprise-management-control -> domain-logistics-execution:
+      - REL-U1115-policy-customs
+      - REL-U1115-service-evidence-results-domain-warehousing
+      - REL-U1115-service-evidence-results-domain-transportation
+      - REL-U1115-service-evidence-results-domain-customs-management
+      domain-logistics-execution -> system-enterprise-management-control:
+      - REL-U1115-customs-control-evidence
+      - REL-U1115-service-supporting-facts-domain-warehousing
+      - REL-U1115-service-supporting-facts-domain-transportation
+      - REL-U1115-service-supporting-facts-domain-customs-management
+- id: GLOBAL-U1116-06
+  priority: P3
+  status: old_residual_detected_now
+  classification: internal_information_role_drift
+  title: Le rôle de Reservation dans PINFO-014 reste attribué à Master Planning comme ancien Apply Plan
+  objects:
+  - PINFO-014
+  - D05.f
+  - D02.e
+  evidence:
+  - path: modeles/backlog/model.yaml
+    line: 82000
+    locator: information_catalog.items[id=PINFO-014].capability_roles[capability_ref=D05.f]
+    value: Par son comportement Apply Plan, pour les affectations, tient compte des droits de réservation lors de l’application
+      d’une affectation.
+  - path: modeles/backlog/model.yaml
+    line: 82031
+    locator: information_catalog.items[id=PINFO-014].review.note
+    value: 'U539/U541 : rôle rattaché au parent Order Backlog Planning après changement de Supply Assignment en comportement.'
+  - path: modeles/backlog/model.yaml
+    locator: nodes[id=D05.f].fields
+    value:
+      name: Master Planning
+      definition: Calculer les besoins nets de la demande opérationnelle et suivre leur couverture.
+  - path: modeles/backlog/model.yaml
+    locator: nodes[id=D02.e].fields
+    value:
+      name: Plan Application
+      definition: Faire appliquer les choix autorisés et vérifier leurs effets.
+  effect: 'La référence est valide et le contrat passe, mais ce rôle interne réattribue l’application au calcul du plan. Impact
+    nul dans les écrans Atlas actuels : le catalogue Informations n’a pas de restitution dédiée ; le contenu existe cependant
+    dans le snapshot/export JSON.'
+  recommendation: Rattacher ce rôle à Plan Application D02.e, conserver Reservation D02.c comme responsable du droit opposable
+    et actualiser seulement la note concernée. Garder le statut proposé ; aucun accord U466 étendu.
+  relation_to_previous_audit: 'Reliquat distinct de EA-CAT-01 : U1115 a corrigé PINFO-011 et PINFO-013, pas PINFO-014.'
+  origin_finding_id: U1116-CAT-01
+  qualification: confirmed_defect
+- id: GLOBAL-U1116-07
+  priority: P3
+  status: existing_display_gap_detected_now
+  classification: application_mapping_qualification_display
+  title: La fiche offre éditeur ne restitue pas la qualification candidate de 25 correspondances
+  objects:
+  - application_catalog.products[*].offering_mappings
+  - offer-sap-bpc-consolidation
+  evidence:
+  - path: app/src/components/ApplicationCatalogPage.tsx
+    line: 399
+    value: Ces correspondances décrivent l’offre documentée, sans prouver son activation dans un SI.
+  - path: app/src/components/ApplicationCatalogPage.tsx
+    line: 400
+    locator: offeringCoverage.map
+    value: La boucle restitue le nom métier, mapping.note et la source ; elle ne restitue pas mapping.evidence_state.
+  - path: app/src/components/ApplicationCatalogPage.tsx
+    line: 437
+    locator: SI mappings
+    value: Les liens par SI affichent au contraire evidenceLabel[mapping.evidence_state].
+  - path: modeles/backlog/model.yaml
+    line: 2301
+    locator: application_catalog.products[id=product-sap-bpc].offering_mappings[id=offer-sap-bpc-consolidation]
+    value: 'evidence_state: candidate ; node_id: domain-finance'
+  counts:
+    offering_mappings: 111
+    documented: 86
+    candidate: 25
+  effect: Les réserves textuelles et le titre « Périmètre possible » limitent le risque ; aucune installation n’est affirmée.
+    Cependant, deux niveaux de preuve de la correspondance métier sont présentés de la même façon, ce qui peut faire lire
+    une proposition comme une correspondance établie.
+  recommendation: Restituer le statut de correspondance dans la section offre, avec le même vocabulaire que les liens par
+    SI ; conserver les notes et la distinction offre/usage installé.
+  relation_to_previous_audit: Qualification de restitution distincte de EA-CAT-03 AllocationRun ; le rattachement historique
+    SAP corrigé U1115 est conservé.
+  origin_finding_id: U1116-CAT-03
+  qualification: confirmed_defect
+  scope_boundary: evidence_state qualifie la preuve d’une correspondance offre/périmètre. Ce n’est pas le statut interne d’adoption
+    du modèle ; ne pas exposer review.state ni un accord backlog pour corriger cet affichage.
+- id: GLOBAL-U1116-08
+  priority: P2
+  status: existing_navigation_defect_detected_by_U1117
+  title: Le renvoi « Voir les échanges dans Enterprise Architecture » ne révèle pas les échanges externes internes à Business
+    Operations
+  evidence:
+  - path: app/src/components/FlowMapPanel.tsx
+    line: 847
+    value: onOpenScope('')
+  - path: app/src/App.tsx
+    line: 526
+    value: 'openMapLevel : node=id, scope=id||''@root'', view flows, mapFocus='''', relation='''', section='''''
+  - path: app/src/useAtlasLocation.ts
+    line: 23
+    value: const next = { ...latestRoute.current, ...changes }
+  - path: app/src/components/FlowMapPanel.tsx
+    line: 239
+    value: Clé publication/périmètre ; exchangeModes.get(key)||main et flowTypeChoices.get(key)||FLOW_TYPES
+  - path: app/src/flowMapPresentation.ts
+    line: 27
+    value: projectRelation rejette source===target ; la frontière principale EA reste au système.
+  effect: Depuis Commerce, Procurement ou SCO, l’action promet de voir les échanges hors champ mais arrive, pour une première
+    visite EA, sur 0 des 27 relations étudiées. La limite interne des vues de domaine est légitime ; c’est le choix de destination
+    et de présentation qui ne répond pas à la promesse du bouton.
+  recommendation: Proposer le plus proche périmètre commun qui peut montrer les échanges (ici Business Operations), ou une
+    action d’affichage externe qui choisit une profondeur et les types nécessaires. Conserver une action EA distincte si utile
+    ; signaler les filtres empêchant la visibilité sans inventer de relation.
+  origin_finding_id: U1117-ATLAS-01
+  source_refs:
+  - U1117
+  qualification: confirmed_defect
+  canonical_relation_count: 27
+  scope_boundary: Le cadrage interne d’un domaine reste légitime. Le défaut porte le renvoi promis vers une vue qui montre
+    effectivement les relations hors périmètre.
+prior_audit_reconciliation:
+  reference: enterprise-relationships-audit-U1114.yaml
+  remediation: enterprise-relationships-remediation-U1115.yaml
+  preserved_corrections:
+  - Les trois relations retirées U1115 sont toujours absentes ; les provenances et identités restantes sont conservées.
+  - Les huit paires initial/continu sont différenciées.
+  - Les sept fournitures requalifiées U1115 ont bien leur type shares-data.
+  - Les chaînes Commerce/Procurement et coopérations Design/Finance/GRC/Logistics ajoutées sont présentes avec leurs conditions.
+  - Les six synthèses existantes sont exactement alignées avec leurs détails.
+  - Process Ledger, capture d’événements, visibilité et analyse sont reliés ; l’autorité des ledgers de stock reste séparée.
+  - Les 16 participations de contexte respectent les profondeurs ; aucune capacité périphérique inventée.
+  - Les rôles PINFO-011/PINFO-013 et la preuve historique AllocationRun conservent leur correction.
+  residuals_detected_now:
+  - Attributions textuelles Availability hors TER112 déjà corrigé
+  - Qualification needs U725 non couverte par les sept requalifications
+  - PINFO-014 non couvert par le lot PINFO-011/PINFO-013
+  - Principes de périmètre et liens vers variantes de parcours
+  new_representation_effect: Treize détails U1115 introduisent quatre directions qui n’ont pas de synthèse native ; la sélection
+    des Flux principaux les écarte, tandis que Tous les flux les restitue.
+  no_previous_audit_approval_extended: true
+known_reserves_not_new_defects:
+  enterprise:
+  - id: ENT-KNOWN-AUTHORITY
+    origin:
+    - FL-U1112-13
+    - U1115 explicit_remaining_limits
+    object_ids:
+    - domain-product-definition-lifecycle
+    - subdomain-product-definition-variants
+    - subdomain-product-change-release
+    evidence_field: fields.scope
+    evidence: Les sources responsables par objet restent à établir ; la coopération avec la mise à disposition ne crée pas
+      un maître unique de tous les produits de l’entreprise.
+    impact: La carte de coopération ne prouve pas qui est maître de chaque donnée produit dans chaque SI.
+    recommendation: Établir les autorités sur preuve lorsqu’un usage exige ce détail ; ne pas inventer un maître ni un lien
+      universel.
+    priority: P2
+    market_reuse:
+    - MS-PRODUCT-RELEASE
+    - SAP-FSD
+    limit: Réserve connue, aucune nouvelle relation métier prescrite.
+  - id: ENT-KNOWN-ROUTING
+    origin:
+    - EA-CHAIN-13
+    - U1115 explicit_remaining_limits
+    relation_ids:
+    - REL-U1115-dispatch-handover
+    - REL-U1115-transport-receiving-handover
+    - REL-U1115-customs-transport-status
+    - REL-U1115-customs-dispatch-status
+    - REL-U1115-service-supporting-facts-domain-warehousing
+    - REL-U1115-service-supporting-facts-domain-transportation
+    - REL-U1115-service-supporting-facts-domain-customs-management
+    evidence_field: qualification.scope
+    evidence: La remise peut être locale ou relayée par Supply Chain Orchestration selon le mandat ; la route, les sources
+      précises et les pièces requises restent à qualifier.
+    impact: Les flèches ne décrivent pas une interface directe installée, une facture ni un paiement reconnu.
+    recommendation: Qualifier par prestation lors du travail sur sa réalisation ; conserver la condition dans les synthèses
+      éventuelles.
+    priority: P2
+    market_reuse:
+    - MS-PROCUREMENT
+    - SAP-FSD
+    limit: Les passages Dynamics sur réception/facture et S/4HANA sur prestations ne prouvent pas le circuit Beaumanoir.
+  - id: ENT-KNOWN-MARKET
+    origin:
+    - U1114 market_comparison
+    - U1115 explicit_remaining_limits
+    object_ids:
+    - domain-governance-risk-compliance
+    - cap-retail-loyalty-program-management
+    evidence: Les appuis SAP Process Control sont complémentaires et partiels pour GRC ; aucun passage primaire SAP S/4HANA
+      ne couvre toute la fidélité dans la consultation U1114.
+    recommendation: Garder les lacunes explicites ; compléter les sources pertinentes avant d’annoncer une équivalence complète.
+    priority: P2
+    market_reuse:
+    - MS-AUDIT
+    - SAP-CONTROL
+    - MS-LOYALTY
+    limit: Aucun faux appui natif S/4HANA n’est ajouté ; aucune nouvelle étude effectuée dans cet audit de cohérence.
+  supply:
+  - Autorité et sources de vérité d’entreprise par objet produit/référence à établir sur preuve.
+  - Circuits financiers précis, faits de qualité et méthodes de consolidation ou de coût gardent leurs qualifications.
+  - Remises Logistics locales ou relayées par SCO à qualifier selon prestation ; les flèches sont des coopérations métier
+    conditionnelles.
+  - Capture Case bornée aux événements et références reconnus ; aucune preuve de couverture installée exhaustive.
+  - État actuel AllocationRun Boardriders à vérifier au-delà de la source de juillet 2025.
+  - Lacunes SAP S/4HANA propres à GRC et fidélité préservées.
+  catalogues:
+  - status: réserve_connue
+    scope: HS-026
+    note: Ancrage provisoire SCO après retrait Integration ; producteurs et localisations détaillés à qualifier, réserve U1113
+      préservée.
+  - status: réserve_connue
+    scope: As Is applications
+    note: Sarenza non évalué ; sélections sans mappings restent inconnues. Acquisition/activation AllocationRun restent inconnues
+      et usage documenté seulement par source historique de juillet 2025.
+  - status: réserve_connue
+    scope: Information catalogue
+    note: Pilote interne proposé U470 ; absence d’exhaustivité informationnelle EA non traitée comme manque de capacités.
+  - status: réserve_connue
+    scope: Logistics/Finance et autorités de référence
+    note: Routes locales ou relayées par Supply, pièces et autorités restent à qualifier ; les nouvelles relations ne prouvent
+      pas une interface installée.
+  - status: limite
+    scope: Audit sémantique
+    note: Le contrôle des références et des profondeurs couvre tout le catalogue. La lecture sémantique est ciblée sur rôles,
+      frontières changées et écarts observables ; elle ne prouve ni l’exhaustivité des flux métier ni un usage installé.
+  - status: limite
+    scope: Historique et sources externes
+    note: Aucun rejeu U431, audit historique ou nouveau contrôle marché n’a été lancé. Les documents figés sont vérifiés par
+      empreinte et leurs qualifications conservées ; leur contenu n’est pas une observation actuelle.
+  unconfirmed_wording_ambiguities:
+  - relation_id: REL-NEEDS-U290-104
+    evidence: Source Master Planning ; condition « Pour la mise en action des choix autorisés et le suivi de leur prise en
+      compte ».
+    assessment: 'Le besoin de connaître l’état de coordination est compatible avec le suivi du plan ; le texte peut suggérer
+      une mise en action qui relève de Plan Application. Pas de preuve suffisante d’une mauvaise extrémité : ne pas déplacer
+      automatiquement.'
+    recommendation: Lors d’une maintenance ciblée, préciser si le lien consomme seulement un état pour suivi/réexamen ; distinguer
+      une sollicitation d’application si cette responsabilité est effectivement visée.
+  - relation_id: REL-U835-D03-D06
+    evidence: provides-knowledge Availability→Fulfilment Orchestration ; label et meaning « Évaluer les adaptations locales
+      ».
+    assessment: Le contenu fourni n’est pas nommé. Une évaluation de promesse peut éclairer une adaptation locale ; aucune
+      inversion ni transfert de décision n’est démontré.
+    recommendation: Préciser le résultat fourni et maintenir la décision locale chez Fulfilment Adaptation Decision, sans
+      inventer de nouveau flux.
+  rules: Ces points restent à qualifier sur preuve. Ils ne sont ni de nouvelles flèches recommandées sans source, ni des défauts
+    de réalisation installée.
+market_comparison:
+  reused_from:
+  - flow-audit-U1112.yaml
+  - enterprise-relationships-audit-U1114.yaml#market_comparison
+  - enterprise-relationships-remediation-U1115.yaml#market_reuse
+  already_consulted_primary_passages_in_U1114:
+    Microsoft_Dynamics: 10
+    SAP: 9
+    consulted_on: '2026-10-16'
+  use: Appuis partiels aux responsabilités de promesse, planification, achat, vente, définition produit et comptabilité ;
+    aucune hiérarchie éditeur imposée à FLOW.
+  scope_for_this_audit: La correction recommandée des attributions conserve les responsabilités FLOW déjà documentées ; les
+    corrections de typage, de liens et de restitution sont fondées sur la cohérence interne. Aucune nouvelle fiche métier
+    n’est créée ou comparée.
+  limits:
+  - Deux éditeurs ne prouvent aucun consensus.
+  - Les lacunes SAP S/4HANA sur la couverture complète GRC et fidélité restent explicites.
+  - Une comparaison documentée ne prouve ni achat, activation, usage actuel ni interface installée.
+recommended_order:
+- order: 1
+  findings:
+  - GLOBAL-U1116-01
+  - GLOBAL-U1116-02
+  action: Corriger les attributions Master Plan/Availability, leurs principes associés et le conflit type/rôle de l’autorisation.
+- order: 2
+  findings:
+  - GLOBAL-U1116-03
+  - GLOBAL-U1116-04
+  - GLOBAL-U1116-08
+  action: Aligner les deux principes de périmètre ; conduire les fiches vers leurs parcours et les renvois hors périmètre
+    vers un cadrage qui montre les échanges.
+- order: 3
+  findings:
+  - GLOBAL-U1116-05
+  action: Décider la couverture attendue de Flux principaux puis, si elle doit représenter toutes les directions documentées,
+    ajouter les quatre synthèses ou un repli par paire sans inventer de flux.
+- order: 4
+  findings:
+  - GLOBAL-U1116-06
+  - GLOBAL-U1116-07
+  action: Corriger le rôle interne Reservation et distinguer la preuve candidate/documentée des correspondances offre.
+- order: 5
+  findings:
+  - GLOBAL-U1116-01
+  - GLOBAL-U1116-02
+  - GLOBAL-U1116-04
+  - GLOBAL-U1116-05
+  action: Ajouter des gardes ciblés contre ces régressions ; aucune nouvelle suite générale ni audit historique à déclencher
+    par défaut.
+final_state:
+  model_and_business_glossaries_unchanged: true
+  only_audit_and_traceability_written: true
+  no_agreement_captured: true
+  no_release_or_commit_requested: true
+  source_index: Actualisé après U1116/U1117 ; 3150 sources courantes, publications figées inchangées.
+follow_up_U1117:
+  proposal: subdomain-reading-boundary-review-U1117.yaml
+  reading_order_status: Proposé, sans application canonique.
+  boundary_status: 27 relations documentées ; défaut de renvoi de vue confirmé ; quatre contrats à préciser sans flèche inventée.

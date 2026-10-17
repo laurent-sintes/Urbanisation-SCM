@@ -1,5 +1,7 @@
 .flow-map-panel {
   overflow: hidden;
+  container-type: inline-size;
+  container-name: flow-map;
 }
 .flow-map-canvas {
   position: relative;
@@ -25,28 +27,6 @@
 .flow-toolbar-note {
   color: #526e64;
   font-size: 11px;
-}
-.flow-scope-note {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 12px;
-  padding: 8px 18px;
-  border-top: 1px solid #dce7df;
-  background: #f1f7f3;
-  color: #416757;
-  font-size: 12px;
-}
-.flow-scope-note button {
-  padding: 3px 7px;
-  border: 1px solid #b9d3c5;
-  border-radius: 5px;
-  background: white;
-  color: #335d4b;
-  font: inherit;
-}
-.flow-scope-short {
-  display: none;
 }
 .flow-map-toolbar > div:first-child > strong {
   font-size: 16px;
@@ -180,8 +160,29 @@
   font-size: 11px;
   line-height: 1.4;
 }
+.flow-external-destination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  min-height: 36px;
+  margin-top: 4px;
+  padding: 7px 8px;
+  border: 1px solid #d9e4db;
+  border-radius: 7px;
+  background: white;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.flow-external-destination:hover {
+  background: #f1f7f3;
+}
 @media (pointer: coarse) {
-  .flow-filter-popover label {
+  .flow-filter-popover label,
+  .flow-external-destination {
     min-height: 44px;
   }
 }
@@ -257,8 +258,7 @@
   pointer-events: none;
 }
 .spatial-object-title {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
+  display: block;
   max-width: 100%;
   padding: 18px 24px;
   border: 0;
@@ -273,6 +273,13 @@
   overflow-wrap: normal;
   cursor: pointer;
   pointer-events: auto;
+}
+.spatial-object-name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  max-width: 100%;
+  overflow: hidden;
+  text-align: inherit;
 }
 .spatial-object-title:focus-visible {
   outline: var(--spatial-border) solid #236159;
@@ -395,15 +402,19 @@
   pointer-events: none;
 }
 .flow-camera-tools {
-  position: absolute;
-  bottom: 14px;
-  left: 14px;
-  z-index: 8;
+  position: relative;
+  bottom: auto;
+  left: auto;
+  z-index: auto;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 5px;
-  max-width: calc(100% - 208px);
+  flex-shrink: 0;
+  max-width: 100%;
+  padding: 8px 14px;
+  border-top: 1px solid #dde7e0;
+  background: white;
 }
 .flow-camera-tools > button,
 .flow-zoom-tools {
@@ -495,6 +506,7 @@
   border-top: 1px solid #dde7e0;
   color: #486456;
   font-size: 11px;
+  flex-shrink: 0;
 }
 .flow-map-legend > span {
   display: inline-flex;
@@ -609,25 +621,11 @@
   }
 }
 @media (max-width: 700px), (max-height: 500px) {
-  .flow-scope-note {
-    flex-wrap: nowrap;
-    justify-content: space-between;
-    gap: 6px;
-    padding: 4px 10px;
-    font-size: 11px;
-  }
-  .flow-scope-note .flow-scope-full {
-    display: none;
-  }
-  .flow-scope-short {
-    display: inline;
-  }
   .flow-camera-tools {
-    max-width: calc(100% - 16px);
+    max-width: 100%;
     flex-wrap: nowrap;
     gap: 4px;
-    left: 8px;
-    bottom: 8px;
+    padding: 3px 8px;
   }
   .flow-framing-select {
     display: block;
@@ -656,6 +654,10 @@
     min-width: 32px;
     font-size: 11px;
   }
+  .flow-map-legend {
+    gap: 3px 10px;
+    line-height: 1.25;
+  }
 }
 @media (max-height: 600px) and (max-width: 700px) {
   .flow-map-canvas .react-flow__minimap {
@@ -672,6 +674,46 @@
     right: 12px;
     max-height: calc(100dvh - 24px);
     z-index: 100;
+  }
+}
+
+/* The sidebar can leave a narrow map even in a wide browser window. */
+@container flow-map (max-width: 700px) {
+  .flow-camera-tools {
+    flex-wrap: nowrap;
+    gap: 4px;
+    padding: 3px 8px;
+  }
+  .flow-framing-select {
+    display: block;
+    width: 92px;
+    min-width: 0;
+    min-height: 32px;
+    padding: 5px 4px;
+    font-size: 11px;
+  }
+  .flow-camera-tools > .flow-framing-button,
+  .flow-camera-tools > button span {
+    display: none;
+  }
+  .flow-camera-tools button {
+    min-width: 30px;
+    min-height: 32px;
+    padding: 6px 7px;
+  }
+  .flow-camera-tools > button {
+    min-width: 32px;
+  }
+  .flow-zoom-tools {
+    gap: 0;
+  }
+  .flow-zoom-tools output {
+    min-width: 32px;
+    font-size: 11px;
+  }
+  .flow-map-legend {
+    gap: 3px 10px;
+    line-height: 1.25;
   }
 }
 

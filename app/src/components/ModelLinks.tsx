@@ -96,10 +96,12 @@ export function readingOrigin(route: RouteState, version: string) {
 export function CatalogLink({
   scenario = '',
   stream,
+  path = '',
   children,
 }: {
   scenario?: string;
   stream?: string;
+  path?: string;
   children?: ReactNode;
 }) {
   const context = useContext(Context);
@@ -117,7 +119,7 @@ export function CatalogLink({
       view: 'scenarios',
       scenario,
       stream: stream ?? (scenario ? route.stream : ''),
-      path: '',
+      path,
       section: '',
       query: '',
       scroll: '',
@@ -239,7 +241,7 @@ export function MetaTypeLabel({ node }: { node: AtlasNode }) {
   );
 }
 
-/** A map item remains a map navigation button while exposing its published description. */
+/** Map names expose their published description; an optional action also navigates within the map. */
 export function MapNodeButton({
   node,
   children,
@@ -250,7 +252,7 @@ export function MapNodeButton({
 }: {
   node: AtlasNode;
   children: ReactNode;
-  onClick: (event: MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   selected?: boolean;
   itemId?: string;
@@ -273,8 +275,13 @@ export function MapNodeButton({
         onFocus={() => setOpen(true)}
         onBlur={() => setOpen(false)}
         onClick={(event) => {
-          setOpen(false);
-          onClick(event);
+          if (onClick) {
+            setOpen(false);
+            onClick(event);
+          } else {
+            event.stopPropagation();
+            setOpen(true);
+          }
         }}
       >
         {children}

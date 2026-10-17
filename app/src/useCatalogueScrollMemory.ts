@@ -45,6 +45,7 @@ export function useCatalogueScrollMemory(
       target.removeEventListener('pointerdown', interrupt);
       target.removeEventListener('touchstart', interrupt);
       target.removeEventListener('keydown', interrupt);
+      target.removeEventListener('catalogue:navigate', interrupt);
     };
     const interrupt = () => {
       finish();
@@ -76,6 +77,7 @@ export function useCatalogueScrollMemory(
     target.addEventListener('pointerdown', interrupt, { passive: true });
     target.addEventListener('touchstart', interrupt, { passive: true });
     target.addEventListener('keydown', interrupt);
+    target.addEventListener('catalogue:navigate', interrupt);
     const deadline = setTimeout(finish, 5000);
     void document.fonts.ready.then(schedule);
     schedule();

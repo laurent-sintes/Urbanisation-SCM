@@ -133,6 +133,7 @@ const typeIcons: Record<string, LucideIcon> = {
   event: Zap,
 };
 export function iconFor(node: AtlasNode): LucideIcon {
+  if (node.kind === 'domain' && node.id === 'supply-chain-orchestration') return Orbit;
   if (node.kind === 'behavior') {
     const nature = behaviorNature(node);
     const icons: Record<string, LucideIcon> = {

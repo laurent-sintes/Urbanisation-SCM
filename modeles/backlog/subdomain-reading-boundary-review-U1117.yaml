@@ -1,0 +1,411 @@
+id: SUBDOMAIN-READING-BOUNDARY-REVIEW-U1117
+date: '2026-10-16'
+status: proposal_and_audit_clarification
+source_refs:
+- U1116
+- U1117
+baseline:
+  commit: 46ffd27
+  publication: 2026-10-16.4
+  model_sha256: 0dca93eafa45a60c9242d3e51a014e1d1a91a4a35c4188596d88a52201fd4708
+scope:
+  parent_id: supply-chain-orchestration
+  subdomains: 9
+  canonical_business_changes: false
+  agreement: false
+  publication: false
+request:
+  reading_order: Proposer un ordre plus logique ; Master Plan placé en dernier est jugé étrange.
+  boundary_links: Vérifier l’impression de liens Commerce et Procurement vers Supply non tous représentés.
+current_direct_child_order:
+- business-references
+- subdomain-policies
+- D01
+- D03
+- D04
+- subdomain-process-management
+- D06
+- subdomain-service-orders
+- domain-plan
+proposed_reading_order:
+- position: 1
+  id: business-references
+  name: Operational References
+  reading_role: Connaître les produits, parties, accords, réseaux et services utilisables dans le domaine.
+- position: 2
+  id: subdomain-policies
+  name: Supply Policy Management
+  reading_role: Établir les règles, protections, limites et autorisations applicables.
+- position: 3
+  id: D01
+  name: Inventory Management
+  reading_role: Connaître les ressources physiques et leurs engagements de quantité.
+- position: 4
+  id: D04
+  name: Order Management
+  reading_role: Tenir les demandes, propositions, engagements et évolutions des commandes.
+- position: 5
+  id: domain-plan
+  name: Master Plan
+  reading_role: Équilibrer la demande et les ressources ; arbitrer besoins, couverture et affectations collectives.
+- position: 6
+  id: D03
+  name: Availability
+  reading_role: Déterminer ce qui peut être promis pour une demande identifiée, avec les ressources et le plan commun.
+- position: 7
+  id: subdomain-process-management
+  name: Process Management
+  reading_role: Conduire les parcours, le travail humain, la supervision et l’analyse des demandes.
+- position: 8
+  id: D06
+  name: Fulfilment Orchestration
+  reading_role: Composer, coordonner et adapter les prestations nécessaires.
+- position: 9
+  id: subdomain-service-orders
+  name: Service Management
+  reading_role: Tenir les demandes et engagements des prestations sollicitées.
+rationale:
+  axis: Fondations ; ressources et demandes ; équilibre collectif et promesse individuelle ; conduite du parcours et réalisation
+    des prestations.
+  master_plan_position: 'Après Inventory Management et Order Management, avant Availability : le lecteur connaît les ressources
+    et demandes avant de lire leurs arbitrages collectifs, puis la promesse propre à une demande.'
+  preserved_cooperations: Order Management tient aussi les engagements après la promesse et Process Management conduit tout
+    le parcours ; l’ordre proposé ne change pas leurs coopérations transverses.
+  benefit: Rendre visibles les liens ressources/demandes/plan/promesse et retirer Master Plan de sa position finale sans redécouper
+    les responsabilités.
+  tradeoff: Un ordre linéaire simplifie la lecture d’un réseau de responsabilités ; les renvois entre sous-domaines restent
+    nécessaires.
+  boundary: Ordre de lecture proposé, sans séquence obligatoire, changement de parent, renommage ni renumérotation d’une publication
+    existante.
+market_comparison:
+  source_refs:
+  - U1094
+  - U1117
+  evidence:
+  - vendor: Microsoft
+    product: Dynamics 365 Supply Chain Management
+    title: Master planning home page
+    url: https://learn.microsoft.com/en-us/dynamics365/supply-chain/master-planning/master-planning-home-page
+    consulted_on: '2026-10-16'
+    locator: Core questions ; three main planning processes
+    paraphrase: Le calcul des besoins nets rapproche les commandes actuelles, les ressources et besoins pour construire les
+      propositions de plan.
+    common_point: Rapprocher ressources et demande pour déterminer la couverture.
+    difference: La page décrit un processus et un module Dynamics ; elle ne prescrit aucun ordre d’une carte de capacités
+      FLOW.
+  - vendor: SAP
+    product: SAP S/4HANA Production Planning
+    title: Understanding MRP in SAP S/4HANA
+    url: https://learning.sap.com/courses/exploring-production-planning-in-sap-s-4hana/understanding-mrp-in-sap-s-4hana
+    consulted_on: '2026-10-16'
+    locator: Deterministic Planning ; Net Requirements Calculation ; Results of MRP
+    paraphrase: Les commandes et prévisions servent de points de départ au besoin ; le calcul confronte stocks et apports
+      pour proposer la couverture. Les propositions restent distinctes de leur conversion en commandes.
+    common_point: Distinguer demandes, ressources, décisions de plan et engagements d’exécution.
+    difference: MRP comprend nomenclatures et planification de fabrication qui ne définissent pas le périmètre complet du
+      Master Plan FLOW.
+  choice: Le rapprochement demandes/ressources est étayé ; la position de lecture entre Order Management et Availability est
+    un choix de cohérence FLOW, sans standard d’ordre ni consensus éditeur allégué.
+boundary_analysis:
+  counts:
+    commerce_nodes_inspected: 37
+    procurement_nodes_inspected: 24
+    commerce_capabilities: 18
+    procurement_capabilities: 10
+    direct_border_relations: 27
+    direct_border_types:
+      shares-data: 27
+    commerce_to_supply: 8
+    supply_to_commerce: 7
+    procurement_to_supply: 5
+    supply_to_procurement: 7
+    reused_work: Contrats et conditions des 27 relations déjà relus dans supply.json ; nouvelle lecture ciblée des scopes
+      des 61 nœuds Commerce/Procurement, dont 28 capacités. Aucune nouvelle revue globale.
+  relations_by_direction:
+    domain-sales -> supply-chain-orchestration: 8
+    domain-sourcing-procurement -> supply-chain-orchestration: 5
+    supply-chain-orchestration -> domain-sales: 7
+    supply-chain-orchestration -> domain-sourcing-procurement: 7
+  direct_relation_ids:
+  - REL-U996-contextual-prices
+  - REL-U1091-digital-demand-to-sales-order
+  - REL-U1091-wholesale-demand-to-sales-order
+  - REL-U1091-store-stock-facts-to-inventory
+  - REL-U1091-store-preparation-results-to-fulfilment
+  - REL-U1091-supplier-response-to-purchase-order
+  - REL-U1091-purchasing-decision-to-purchase-order
+  - REL-U1113-sales-order-cap-digital-sales-journey-management
+  - REL-U1113-sales-order-cap-wholesale-sales-engagement
+  - REL-U1113-store-preparation-mandate
+  - REL-U1115-sales-order-pricing-context
+  - REL-U1115-store-demand-to-sales-order
+  - REL-U1115-sales-order-to-store-journey
+  - REL-U1115-checkout-stock-facts
+  - REL-U1115-requisition-to-purchase-order
+  - REL-U1115-selected-offer-to-purchase-order
+  - REL-U1115-agreement-to-purchase-order
+  - REL-U1115-purchase-order-to-requisition
+  - REL-U1115-purchase-order-agreement-consumption
+  - REL-U1115-purchase-order-to-supplier-follow-up
+  - REL-U1115-reconciled-service-to-supplier-follow-up
+  - REL-U1115-purchase-order-to-supplier-performance
+  - REL-U1115-reconciled-service-to-supplier-performance
+  - REL-U1115-purchase-order-to-purchasing-case
+  - REL-U1115-credit-result-to-sales-order
+  - REL-U1115-sales-order-facts-to-loyalty
+  - REL-U1115-return-order-facts-to-loyalty
+  business_coverage_matrix:
+  - topic: Demandes de vente à satisfaire
+    status: present
+    relation_ids:
+    - REL-U1091-digital-demand-to-sales-order
+    - REL-U1091-wholesale-demand-to-sales-order
+    - REL-U1115-store-demand-to-sales-order
+    scope_evidence:
+    - 'cap-digital-sales-journey-management.fields.scope : soumettre la demande à Sales Order.'
+    - 'cap-in-store-sales-journey-management.fields.scope : demande à livrer ou retirer ultérieurement → Sales Order.'
+    - 'cap-wholesale-sales-engagement.fields.scope : recueillir la demande ; Sales Order tient identité et engagements.'
+    limits: Une vente encaissée et emportée ne crée pas une commande à satisfaire.
+  - topic: Révisions et annulations commerciales
+    status: partly_explicit_contract_to_qualify_not_confirmed_missing_relation
+    relation_ids:
+    - REL-U1113-sales-order-cap-digital-sales-journey-management
+    - REL-U1113-sales-order-cap-wholesale-sales-engagement
+    - REL-U1115-sales-order-to-store-journey
+    observation: Le retour Supply vers les canaux inclut explicitement révision/annulation autorisée et versions. Les liens
+      entrants nomment une demande commerciale, sans préciser une demande de révision/annulation émise par le canal.
+    proof_limit: Les fiches des trois capacités commerciales ne promettent pas explicitement de produire ces instructions.
+      Cela justifie de préciser le contrat métier si cet usage est attendu, pas de déclarer une nouvelle relation manquante
+      par seule symétrie.
+  - topic: Disponibilité ou proposition avant commande
+    status: not_documented_as_cross_boundary_interaction
+    relation_ids:
+    - REL-U673-PROMISING-ORDER
+    - REL-U1113-sales-order-cap-digital-sales-journey-management
+    - REL-U1113-sales-order-cap-wholesale-sales-engagement
+    - REL-U1115-sales-order-to-store-journey
+    observation: Availability fournit déjà la proposition à Order Management ; Sales Order restitue ensuite les engagements
+      et le suivi aux canaux. Aucun lien direct ni demande préalable Commerce→Availability n’est décrit dans les scopes des
+      capacités commerciales relus.
+    proof_limit: Présenter un prix ou une offre admissible ne constitue pas une disponibilité. Une interrogation avant création
+      de commande ou un affichage de stock en canal reste un besoin à expliciter, sans déduire un appel technique ou un inverse
+      obligatoire.
+  - topic: Statut, engagements et réalisé de vente
+    status: present
+    relation_ids:
+    - REL-U1113-sales-order-cap-digital-sales-journey-management
+    - REL-U1113-sales-order-cap-wholesale-sales-engagement
+    - REL-U1115-sales-order-to-store-journey
+    - REL-EXECUTION-FACTS-D04.i
+    observation: Sales Order restitue acceptation/refus, engagements, versions, révisions, avancement et reste à servir. Son
+      réalisé provient de Service Reconciliation ; Commerce n’a pas à refaire cette reconnaissance.
+  - topic: Préparation et remise magasin
+    status: present
+    relation_ids:
+    - REL-U1113-store-preparation-mandate
+    - REL-U1091-store-preparation-results-to-fulfilment
+    - REL-U1113-tracking-reconciliation
+    - REL-EXECUTION-FACTS-D04.i
+    observation: Mandat autorisé Fulfilment Coordination→magasin ; résultat physique du magasin→Operations Tracking, puis
+      rapprochement et tenue de la commande. Le parcours ne requiert pas un deuxième cycle de commande dans Commerce.
+  - topic: Stock magasin et effets physiques de caisse
+    status: present
+    relation_ids:
+    - REL-U1091-store-stock-facts-to-inventory
+    - REL-U1115-checkout-stock-facts
+    - REL-U1113-inventory-tracking-ledger
+    observation: Réception, comptage et mouvements locaux alimentent Inventory Tracking ; les remises et retours constatés
+      en caisse ont leur propre apport. Les contrats exigent une identité commune si le même fait arrive par deux voies.
+  - topic: Constitution des achats
+    status: present
+    relation_ids:
+    - REL-U1115-requisition-to-purchase-order
+    - REL-U1115-selected-offer-to-purchase-order
+    - REL-U1115-agreement-to-purchase-order
+    - REL-U1115-purchase-order-to-requisition
+    observation: Demande approuvée, conditions retenues et accord d’achat alimentent Purchase Order selon la voie autorisée
+      ; un résultat d’acceptation/état revient à la demande d’achat. Consultation et accord cadre ne sont pas imposés à tout
+      achat.
+  - topic: Changements d’achat et écarts fournisseur
+    status: present
+    relation_ids:
+    - REL-U1091-supplier-response-to-purchase-order
+    - REL-U1091-purchasing-decision-to-purchase-order
+    - REL-U1115-purchase-order-to-purchasing-case
+    - REL-U1115-purchase-order-to-supplier-follow-up
+    observation: Supplier Commitment Follow-up transmet les confirmations annoncées et consomme les engagements applicables.
+      Purchasing Case Coordination soumet le changement autorisé et reçoit acceptation/refus/état appliqué. Une annonce fournisseur
+      ne modifie pas seule l’engagement.
+  - topic: Réception et performance fournisseur
+    status: present_via_documented_producer
+    relation_ids:
+    - REL-U1115-reconciled-service-to-supplier-follow-up
+    - REL-U1115-reconciled-service-to-supplier-performance
+    - REL-U1115-purchase-order-to-supplier-performance
+    - REL-EXECUTION-FACTS-D04.j
+    - REL-U1113-tracking-reconciliation
+    observation: Procurement reçoit les résultats de réception ou inspection rapprochés de Service Reconciliation et les engagements
+      de Purchase Order. Logistics produit les faits physiques ; un lien direct supplémentaire Procurement→réception ne découle
+      pas du besoin de suivi.
+    limits: Producteur et rattachement de chaque mesure qualité doivent être documentés ; cette réserve U1115 reste ouverte.
+  - topic: Retours et échanges
+    status: present_for_checkout_physical_returns_and_recognized_loyalty_facts_other_initiation_not_qualified
+    relation_ids:
+    - REL-U1115-checkout-stock-facts
+    - REL-U1115-return-order-facts-to-loyalty
+    - REL-EXECUTION-FACTS-D04.l
+    - REL-EXECUTION-FACTS-D04.m
+    observation: La caisse traite les retours/échanges immédiats et fournit les faits physiques à Inventory Tracking. Return
+      Order restitue les faits reconnus utiles à la fidélité. Les familles Return Order et Supplier Return Order ont leur
+      réalisé alimenté par Service Reconciliation.
+    proof_limit: Aucune fiche Commerce/Procurement ne désigne précisément le producteur d’une demande de retour à servir,
+      d’une autorisation de retour ou d’une instruction de retour fournisseur dans ces canaux. Il faut qualifier ce parcours
+      avant de choisir ses extrémités ; ne pas traiter tout retour de caisse comme Return Order.
+  - topic: Prix et contrôle de crédit
+    status: present
+    relation_ids:
+    - REL-U1115-sales-order-pricing-context
+    - REL-U996-contextual-prices
+    - REL-U1115-credit-result-to-sales-order
+    observation: Sales Order fournit le contexte de prix et reçoit le résultat de Sales Price Determination ; Wholesale Sales
+      Engagement relaie le résultat de crédit autorisé par Finance. Le profil de crédit de référence emprunte un autre flux
+      Finance→Reference Ingestion et ne remplace pas le résultat transactionnel.
+    limits: Les prix d’achat ne viennent pas de Sales Price Determination.
+  - topic: Accords d’achat et consommation
+    status: present
+    relation_ids:
+    - REL-U1115-agreement-to-purchase-order
+    - REL-U1115-purchase-order-agreement-consumption
+    - REL-U858-REFERENCE-012
+    observation: Purchase Agreement Lifecycle Management fournit les conditions et prix autorisés ; Purchase Order restitue
+      la consommation de l’accord. La consultation de la référence locale Agreement est une dépendance d’information distincte.
+    limits: La source de vérité d’entreprise et l’alimentation de chaque référence restent à qualifier ; ne pas conclure que
+      la référence locale est la seule voie du contrat transactionnel.
+  - topic: Hypothèses commerciales et d’approvisionnement pour la prévision
+    status: present_via_external_forecast_responsibility
+    relation_ids:
+    - REL-U1115-assortment-forecast
+    - REL-U1115-sourcing-forecast-assumptions
+    - REL-U1115-supplier-offers-forecast
+    - REL-U1101-forecast-to-demand-plan
+    - REL-U1113-ingested-forecast-qualification
+    observation: Assortment, stratégie de sourcing et offres fournisseur contribuent à Demand & Supply Forecasting dans Design
+      & Development. Le Forecast Plan revient vers Plan Ingestion puis qualification. Ces coopérations indirectes ne doivent
+      pas être recréées comme trois apports indépendants au Master Plan.
+  - topic: Ristournes et primes
+    status: present_via_finance
+    relation_ids:
+    - REL-U996-eligible-supply-facts
+    - REL-U996-commercial-settlement-results
+    observation: Les dispositifs commerciaux et d’achat sont portés par Commerce/Procurement, mais le calcul/règlement des
+      droits relève de Commercial Settlement Management dans Finance. Supply fournit ses faits éligibles et reçoit les conséquences
+      autorisées. Un lien direct Commerce→Order Management pour le montant du droit ferait perdre cette autorité.
+    limits: Une prime en biens ne crée pas seule une demande physique ; producteur et famille à qualifier selon l’accord.
+  - topic: Propositions de plans Supply et demande d’achat approuvée
+    status: authorization_boundary_present_exact_procurement_handoff_not_mandated
+    relation_ids:
+    - REL-U1113-master-plan-to-application
+    - REL-U1113-application-to-D04-j
+    - REL-U1115-requisition-to-purchase-order
+    scope_evidence:
+    - 'cap-purchase-requisition-handling.fields.scope : Les plans et propositions de FLOW ne valent pas demande approuvée.'
+    - 'D02.e.fields.scope : autorisation humaine ou fondée sur des règles selon le changement.'
+    observation: La voie Plan Application→Purchase Order est limitée aux choix autorisés. Le modèle n’impose pas le passage
+      de chaque proposition par Purchase Requisition Handling.
+    proof_limit: Le besoin de qualifier ou faire approuver par Procurement certaines propositions Supply peut être précisé
+      ; aucune étape universelle ni nouvelle flèche n’est démontrée par la distinction proposition/demande approuvée seule.
+  conclusion: Les 27 frontières documentées sont présentes dans le modèle. Le problème de visibilité des vues par domaine
+    est confirmé par l’agent UI. La confrontation des fiches courantes ne prouve aucun lien métier supplémentaire manquant
+    avec des extrémités déterminées. Les interactions préalables de disponibilité, révisions émises par les canaux et initiation
+    des retours restent à cadrer si elles sont attendues ; elles ne sont pas déclarées absentes par déduction de symétrie.
+  confirmed_missing_business_links: []
+  representation:
+    Business_Operations_main: 27 relations conservées, regroupées en quatre flèches entre domaines.
+    Business_Operations_all_standard: 27 relations conservées, 25 groupes de détail.
+    Enterprise_Architecture_main: '0 de ces 27 relations : les trois domaines sont internes à Business Operations.'
+    Enterprise_Architecture_all_standard: 27 relations, avec détail suffisant pour séparer les domaines et leurs extrémités.
+    individual_domain_scopes: '0 lien frontière affiché : une extrémité se trouve hors du monde interne. Le bandeau compte
+      15 relations hors périmètre Commerce, 12 Procurement ou 27 Supply.'
+    limits: Affichage des flux et Partage de données doivent être actifs ; une caméra ou un filtre mémorisé peut restreindre
+      la vue.
+  navigation:
+    button:
+      full_text: Voir les échanges dans Enterprise Architecture
+      short_text: Voir l’ensemble
+      aria_label: Voir les échanges dans Enterprise Architecture
+      call: onOpenScope('')
+      code: app/src/components/FlowMapPanel.tsx:847
+    route_transition:
+      source: '#/flows?version=2026-10-16.4&node=supply-chain-orchestration&scope=supply-chain-orchestration&mapFocus=D04'
+      changes:
+        node: ''
+        scope: '@root'
+        view: flows
+        mapFocus: ''
+        relation: ''
+        section: ''
+      result: '#/flows?version=2026-10-16.4&scope=%40root'
+      publication: conservée par fusion de route dans useAtlasLocation
+      selection: node vide → sélection de la racine Enterprise Architecture ; mapFocus effacé ; pas de voisinage focus
+      mode: Le mode est chargé depuis exchangeModes pour la clé 2026-10-16.4/@root, ou main par défaut. Il n’est pas transporté
+        depuis la carte SCO.
+      types: Types de flux chargés depuis flowTypeChoices pour la clé EA, ou les deux types par défaut. Partage de données
+        n’est pas forcé par le bouton.
+      camera: Caméra EA mémorisée et redimensionnée si disponible ; sinon Standard. La caméra du domaine n’est pas transportée.
+      other_filters: La route conserve publication, application, composant et filtres de points chauds ; le calque des flèches
+        est celui mémorisé pour EA ou visible par défaut.
+    reliable_path:
+      route: '#/flows?version=2026-10-16.4&node=system-business-operations&scope=system-business-operations'
+      instructions: Dans Flux, ouvrir Business Operations (node et scope identiques au système), activer Afficher les flux
+        et Partage de données. Flux principaux montre quatre flèches contenant les 27 relations. Tous les flux montre les
+        groupes détaillés au Standard.
+      detail: Cliquer une flèche affiche chaque relation publiée avec ses extrémités de capacité, son sens, ses conditions
+        et son contenu.
+  confirmed_presentation_finding:
+    id: U1117-ATLAS-01
+    priority: P2
+    status: nouveau
+    title: Le renvoi « Voir les échanges dans Enterprise Architecture » ne révèle pas les échanges externes internes à Business
+      Operations
+    evidence:
+    - path: app/src/components/FlowMapPanel.tsx
+      line: 847
+      value: onOpenScope('')
+    - path: app/src/App.tsx
+      line: 526
+      value: 'openMapLevel : node=id, scope=id||''@root'', view flows, mapFocus='''', relation='''', section='''''
+    - path: app/src/useAtlasLocation.ts
+      line: 23
+      value: const next = { ...latestRoute.current, ...changes }
+    - path: app/src/components/FlowMapPanel.tsx
+      line: 239
+      value: Clé publication/périmètre ; exchangeModes.get(key)||main et flowTypeChoices.get(key)||FLOW_TYPES
+    - path: app/src/flowMapPresentation.ts
+      line: 27
+      value: projectRelation rejette source===target ; la frontière principale EA reste au système.
+    effect: Depuis Commerce, Procurement ou SCO, l’action promet de voir les échanges hors champ mais arrive, pour une première
+      visite EA, sur 0 des 27 relations étudiées. La limite interne des vues de domaine est légitime ; c’est le choix de destination
+      et de présentation qui ne répond pas à la promesse du bouton.
+    recommendation: Proposer le plus proche périmètre commun qui peut montrer les échanges (ici Business Operations), ou une
+      action d’affichage externe qui choisit une profondeur et les types nécessaires. Conserver une action EA distincte si
+      utile ; signaler les filtres empêchant la visibilité sans inventer de relation.
+  next_contracts_to_qualify:
+  - Demande de disponibilité ou proposition avant création de commande.
+  - Émission des instructions commerciales de révision ou annulation.
+  - Initiation d’un retour à servir, distinct d’un retour physique immédiat de caisse.
+  - Passage des propositions Supply vers une validation Procurement lorsque ce parcours est attendu.
+  qualification_rule: Ces quatre sujets ne sont pas déclarés couverts par les 27 liens ; leurs producteurs, consommateurs
+    et conditions restent à préciser avant toute nouvelle flèche. Ils ne constituent pas quatre relations manquantes démontrées.
+  canonical_mutations: false
+proposed_next_lot:
+  reading_order: Soumis à discussion ; aucune valeur canonique appliquée.
+  relations: Conserver les liens existants ; qualifier les défauts de lecture et les contrats non documentés avant toute nouvelle
+    flèche.
+audit_link:
+  path: global-model-audit-U1116.yaml
+  finding_id: GLOBAL-U1116-08
+verification:
+  structured_round_trip: true
+  source_index_records: 3150
+  model_unchanged_sha256: 0dca93eafa45a60c9242d3e51a014e1d1a91a4a35c4188596d88a52201fd4708
+  publication_unchanged: 2026-10-16.4

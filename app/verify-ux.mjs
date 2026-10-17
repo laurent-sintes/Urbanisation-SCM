@@ -16,16 +16,13 @@ const fixture = JSON.parse(
       '-X',
       'utf8',
       '-c',
-      "import json; from scripts.structured_io import read; from scripts.export_publication import export; print(json.dumps({'model':export('.')['raw'],'guide':read('modeles/modeling-guides/versions/2026-09-28.1.yaml'),'domainId':next(n['id'] for n in read('modeles/backlog/model.yaml')['nodes'] if n['kind']=='domain' and n['fields']['name']=='Supply Chain Orchestration')},ensure_ascii=True))",
+      "import json; from scripts.structured_io import read; from scripts.export_publication import export; print(json.dumps({'model':export('.')['raw'],'guide':read('modeles/modeling-guides/versions/2026-09-28.1.yaml'),'domainId':'supply-chain-orchestration'},ensure_ascii=True))",
     ],
     { cwd: root, encoding: 'utf8', windowsHide: true, maxBuffer: 24 * 1024 * 1024 },
   ),
 );
-// Preview the requested identity change in an isolated fixture; production stays publication-only.
-const priorDomain = fixture.model.nodes.find(
-  (n) => n.kind === 'domain' && n.fields.name === 'Supply Chain Orchestration',
-);
-fixture.model = JSON.parse(JSON.stringify(fixture.model).replaceAll(priorDomain.id, fixture.domainId));
+const supply = fixture.model.nodes.find((n) => n.kind === 'domain' && n.id === fixture.domainId);
+assert.ok(supply, 'The fixture publication contains the persistent Supply domain');
 await mkdir(output, { recursive: true });
 const browser = await chromium.launch(browserOptions);
 try {
@@ -75,7 +72,6 @@ try {
     await page.locator('.workspace-content').waitFor();
   };
   const params = () => new URLSearchParams(new URL(page.url()).hash.split('?')[1]);
-  const supply = fixture.model.nodes.find((n) => n.kind === 'domain' && n.fields.name === 'Supply Chain Orchestration');
   await visit({ view: 'sheet', node: supply.id, section: 'definition' });
   await page.getByTestId('business-sheet').waitFor();
   assert.equal(params().get('node'), fixture.domainId);

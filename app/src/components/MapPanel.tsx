@@ -2,13 +2,16 @@ import { Maximize2, Minimize2 } from 'lucide-react';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { selectionMappings } from '../applicationCatalog';
 import { filterMapHotspots, type HotspotMapFilters, hotspotsInScope } from '../hotspotMap';
+import { NodeIcon } from '../icons';
 import type { AtlasNode, PublishedModel } from '../types';
 import { useCatalogueScrollMemory } from '../useCatalogueScrollMemory';
+import { CatalogueNavigator } from './CatalogueNavigator';
 import { HotspotLegend } from './HotspotDisplay';
 import { MapApplicationPicker } from './MapApplicationPicker';
 import { MapDetailPicker } from './MapDetailPicker';
 import { MapHotspotPicker } from './MapHotspotPicker';
 import { MapZoomPicker, useMapZoomChoice } from './MapZoomPicker';
+import { MapNodeButton } from './ModelLinks';
 import './applications.css';
 
 const ReactFlowPane = lazy(() => import('../ReactFlowPane').then((module) => ({ default: module.ReactFlowPane })));
@@ -70,10 +73,13 @@ export function MapPanel({
   const [expanded, setExpanded] = useState(false);
   const [pageFallback, setPageFallback] = useState(false);
   const [selectedHotspotId, setSelectedHotspotId] = useState('');
+  const [scopeHotspotHighlighted, setScopeHotspotHighlighted] = useState(false);
   const scopedHotspots = hotspotsInScope(model, scopeId);
   const visibleHotspots = filterMapHotspots(scopedHotspots, hotspotFilters);
   const catalog = model.raw.application_catalog;
   const applicationMappings = selectionMappings(catalog, applicationSelectionId, applicationComponentId);
+  const applicationAtScope = applicationMappings.some((mapping) => mapping.node_id === scopeId);
+  const titleNode = scope || model.nodes.find((node) => node.kind === 'universe');
   const [zoomChoice, setZoomChoice] = useMapZoomChoice();
   useEffect(() => {
     const update = () => setExpanded(document.fullscreenElement === panel.current);
@@ -95,7 +101,19 @@ export function MapPanel({
     <section className="map-panel" ref={panel} aria-label="Carte du modèle">
       <div className="map-toolbar">
         <div>
-          <strong>{scope?.name || rootName}</strong>
+          <strong>
+            {titleNode ? (
+              <MapNodeButton
+                node={titleNode}
+                className={`map-scope-title${scopeHotspotHighlighted ? ' hotspot-related-item' : ''}${applicationAtScope ? ' application-related-item' : ''}`}
+              >
+                <NodeIcon node={titleNode} size={18} />
+                {titleNode.name}
+              </MapNodeButton>
+            ) : (
+              rootName
+            )}
+          </strong>
           {scope?.kind === 'domain' && mapMaxDepth === 0 && (
             <span className="toolbar-note">Aucun sous-domaine décrit dans cette version.</span>
           )}
@@ -140,30 +158,40 @@ export function MapPanel({
           </button>
         </div>
       </div>
-      <div ref={scroll} className="map-scroll-viewport" role="region" aria-label="Défilement de la carte" tabIndex={0}>
-        {hotspotFilters.enabled && <HotspotLegend count={visibleHotspots.length} />}
-        <Suspense fallback={<div className="graph-canvas empty-state">Ouverture de la carte…</div>}>
-          <ReactFlowPane
-            model={model}
-            selectedId={selectedId}
-            scopeId={scopeId}
-            detail={mapDepth}
-            zoomMode={zoomChoice}
-            focusId={focusId}
-            onSelect={onSelect}
-            onRead={onSelect}
-            onPageFallbackChange={setPageFallback}
-            perspective=""
-            hotspots={visibleHotspots}
-            selectedHotspotId={selectedHotspotId}
-            applicationMappings={applicationMappings}
-            onOpenHotspot={onOpenHotspot}
-          />
-        </Suspense>
-      </div>
-      <div className="map-footer">
-        <span>Cliquer sur un élément pour parcourir la carte · La fiche reste accessible par son onglet</span>
-        <span>Lecture seule</span>
+      <div className="catalogue-navigation-stage">
+        <div
+          ref={scroll}
+          className="map-scroll-viewport"
+          role="region"
+          aria-label="Défilement de la carte"
+          tabIndex={0}
+        >
+          {hotspotFilters.enabled && <HotspotLegend count={visibleHotspots.length} />}
+          <Suspense fallback={<div className="graph-canvas empty-state">Ouverture de la carte…</div>}>
+            <ReactFlowPane
+              model={model}
+              selectedId={selectedId}
+              scopeId={scopeId}
+              detail={mapDepth}
+              zoomMode={zoomChoice}
+              focusId={focusId}
+              onSelect={onSelect}
+              onRead={onSelect}
+              onPageFallbackChange={setPageFallback}
+              onScopeHotspotHighlight={setScopeHotspotHighlighted}
+              perspective=""
+              hotspots={visibleHotspots}
+              selectedHotspotId={selectedHotspotId}
+              applicationMappings={applicationMappings}
+              onOpenHotspot={onOpenHotspot}
+            />
+          </Suspense>
+        </div>
+        <CatalogueNavigator
+          viewportRef={scroll}
+          geometryKey={`${model.version}:${scopeId || '@root'}:${mapDepth}:${zoomChoice}`}
+          framing={zoomChoice}
+        />
       </div>
     </section>
   );

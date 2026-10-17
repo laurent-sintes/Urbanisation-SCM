@@ -6,6 +6,7 @@ import './help.css';
 
 interface Props {
   topic: 'start' | 'workshop';
+  supplyDomainName?: string;
   onNavigate: (view: View, topic?: 'workshop') => void;
   stage: WorkshopStage | null;
   stageMatchesPublication: boolean;
@@ -15,6 +16,7 @@ interface Props {
 
 export function HelpPage({
   topic,
+  supplyDomainName,
   onNavigate,
   stage,
   stageMatchesPublication,
@@ -79,8 +81,8 @@ export function HelpPage({
           <p>Une phrase courte suffit pour démarrer ; les détails peuvent être ajoutés après la discussion.</p>
           <ul className="help-prompts">
             <li>
-              « Ajoute un point chaud entre Logistics et Supply Chain Orchestration : qui décide du site d’expédition ?
-              »
+              « Ajoute un point chaud entre Logistics et {supplyDomainName || 'le domaine Supply'} : qui décide du site
+              d’expédition ? »
             </li>
             <li>« Place un post-it sur Order Management : clarifier le traitement des commandes partielles. »</li>
             <li>« Ajoute à ce point chaud l’exemple discuté : une commande est préparée depuis deux sites. »</li>

@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
+import { flowMapBoundaryRelations } from './src/flowMapDetail.ts';
 import { buildFlowMap } from './src/flowMapLayout.ts';
-import { flowMapPresentation } from './src/flowMapPresentation.ts';
+import { flowMapBoundaryDestinations, flowMapPresentation } from './src/flowMapPresentation.ts';
 import { adaptPublication } from './src/model.ts';
 
 const entries = [
@@ -79,8 +80,15 @@ test('principal flows use a single subdomain frontier and keep every original de
   const plan = principal();
   assert.equal(plan.mode, 'main');
   assert.deepEqual(ids(plan.boxes), ['area-a', 'area-b', 'area-c']);
-  assert.deepEqual(ids(plan.relations), ['detail-ab', 'detail-bc', 'summary-ab', 'summary-bc']);
-  assert.equal(plan.omittedRelationCount, 2);
+  assert.deepEqual(ids(plan.relations), [
+    'detail-ab',
+    'detail-ac',
+    'detail-bc',
+    'reverse-ba',
+    'summary-ab',
+    'summary-bc',
+  ]);
+  assert.equal(plan.omittedRelationCount, 0);
   assert.ok(
     plan.relations.every((relation) => model.relations.includes(relation)),
     'No relation ID or endpoint is synthesized',
@@ -116,16 +124,102 @@ test('historical publications without native principal summaries keep their proj
   assert.equal(plan.omittedRelationCount, 0);
 });
 
-test('the type filter precedes native-summary selection so knowledge alone keeps its projected exchanges', () => {
+test('a native summary never suppresses another directed pair or a different exchange type', () => {
   const dataNativeOnly = {
     ...model,
     relations: model.relations.filter((relation) => relation.id !== 'summary-bc'),
   };
-  assert.deepEqual(ids(principal({}, supplyBoxes, dataNativeOnly).relations), ['detail-ab', 'summary-ab']);
+  assert.deepEqual(ids(principal({}, supplyBoxes, dataNativeOnly).relations), [
+    'detail-ab',
+    'detail-ac',
+    'detail-bc',
+    'reverse-ba',
+    'summary-ab',
+  ]);
   const knowledge = principal({ types: ['provides-knowledge'] }, supplyBoxes, dataNativeOnly);
   assert.equal(knowledge.mode, 'main');
   assert.deepEqual(ids(knowledge.relations), ['detail-bc', 'reverse-ba']);
   assert.equal(knowledge.omittedRelationCount, 0, 'Disabled data summaries cannot suppress knowledge detail');
+});
+
+test('external navigation groups 27 Commerce and Procurement exchanges in their closest common system', () => {
+  const tree = [
+    ['ea', 'universe'],
+    ['operations', 'business_system', 'ea'],
+    ['enterprise', 'business_system', 'ea'],
+    ['supply', 'domain', 'operations'],
+    ['commerce', 'domain', 'operations'],
+    ['procurement', 'domain', 'operations'],
+    ['finance', 'domain', 'enterprise'],
+    ...['supply', 'commerce', 'procurement', 'finance'].flatMap((id) => [
+      [`${id}-area`, 'area', id],
+      [`${id}-ba`, 'business_area', `${id}-area`],
+      [`${id}-cap`, 'capability', `${id}-ba`],
+    ]),
+  ];
+  const exchanges = [
+    ...[
+      ['commerce', 'supply', 8],
+      ['supply', 'commerce', 7],
+      ['procurement', 'supply', 5],
+      ['supply', 'procurement', 7],
+    ].flatMap(([from, to, count]) =>
+      Array.from({ length: count }, (_, index) => ({
+        id: `${from}-${to}-${index}`,
+        type: 'shares-data',
+        source_id: `${from}-cap`,
+        target_id: `${to}-cap`,
+        fields: { label: `${from}-${to}-${index}` },
+      })),
+    ),
+    { id: 'financial-result', type: 'shares-data', source_id: 'finance-cap', target_id: 'supply-cap' },
+  ];
+  const fixture = adaptPublication({
+    version: 'boundary-27',
+    space: 'release',
+    glossary: { terms: [{ id: 'facts', name: 'Facts', definition: 'Faits transmis.' }] },
+    nodes: tree.map(([id, kind]) => ({ id, kind, fields: { name: id } })),
+    relations: [
+      ...tree
+        .filter((entry) => entry[2])
+        .map(([id, , parent]) => ({ id: `parent-${id}`, source_id: parent, target_id: id, type: 'contains' })),
+      ...exchanges.map((relation) => ({
+        ...relation,
+        fields: {
+          label: relation.id,
+          data_exchange: {
+            purpose: relation.id,
+            contents: [{ name: 'Business facts', description: relation.id, glossary_refs: ['facts'] }],
+          },
+        },
+      })),
+    ],
+  });
+  const before = structuredClone(fixture.raw);
+  const external = flowMapBoundaryRelations(fixture, 'supply');
+  const destinations = flowMapBoundaryDestinations(fixture, external);
+  assert.deepEqual(
+    destinations.map((destination) => [destination.scopeId, destination.relations.length]),
+    [
+      ['operations', 27],
+      ['', 1],
+    ],
+    'An exchange inside Business Operations does not send the reader to the architecture root',
+  );
+  const destination = destinations[0];
+  const plan = flowMapPresentation(fixture, buildFlowMap(fixture, destination.scopeId).boxes, {
+    scopeId: destination.scopeId,
+    selectedId: destination.scopeId,
+    zoom: 0.5,
+    mode: 'main',
+    types: ['shares-data'],
+  });
+  assert.equal(plan.mode, 'main', 'Opening the common scope clears the old focused neighborhood');
+  assert.deepEqual(ids(plan.relations), ids(destination.relations));
+  assert.equal(plan.relations.length, 27);
+  const domains = new Set(plan.boxes.map((box) => box.id));
+  assert.deepEqual([...domains].sort(), ['commerce', 'procurement', 'supply']);
+  assert.deepEqual(fixture.raw, before, 'Navigation does not modify the publication');
 });
 
 test('type choices apply to All and focused neighborhoods, including an explicitly empty selection', () => {

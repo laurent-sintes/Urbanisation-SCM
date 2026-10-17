@@ -179,6 +179,75 @@ class ReleaseIntegrityTests(unittest.TestCase):
         relation["target_id"] = "D01"
         self.assertTrue(any("endpoint kinds" in e for e in validate_urbanism(model, self.sources)))
 
+    def test_order_authorization_direction_is_opt_in_and_preserves_history(self):
+        published = read("modeles/release/2026-10-16.4/model.yaml")
+        authorization = next(r for r in published["relations"]
+                             if r["id"] == "REL-U725-EXECUTION-AUTHORIZATIONS")
+        self.assertEqual((authorization["type"], authorization["source_id"], authorization["target_id"]),
+                         ("provides-knowledge", "D04", "D06"))
+        self.assertEqual(authorization["qualification"]["role"], "needs")
+        self.assertIn("fournissent les autorisations", authorization["qualification"]["meaning"])
+        historical_hash = canonical_sha256(published)
+        model = deepcopy(self.snapshot)
+        model["relations"].append(deepcopy(authorization))
+        # The actual U725 contradiction remains readable under its old contract.
+        self.assertEqual(validate_urbanism(model, self.sources), [])
+        model.setdefault("principles", []).append({"id": "PRINCIPLE-RELATION-DIRECTION"})
+        errors = validate_urbanism(model, self.sources)
+        self.assertEqual(errors, [
+            "relations/REL-U725-EXECUTION-AUTHORIZATIONS: provides-knowledge is supplier-to-consumer; "
+            "qualification role needs is consumer-to-supplier"
+        ])
+        # Keeping the supply direction and removing the conflicting role is enough.
+        model["relations"][-1]["qualification"].pop("role")
+        self.assertEqual(validate_urbanism(model, self.sources), [])
+        self.assertEqual(canonical_sha256(published), historical_hash)
+
+    def test_explicit_supplies_cannot_use_the_reverse_needs_role(self):
+        endpoints = {
+            "shares-data": ("D04", "D06"),
+            "provides-knowledge": ("D04", "D06"),
+            "provides-conditions": ("D11", "D03"),
+            "supplies-reference": ("D03.a", "D11"),
+        }
+        for relation_type, (source, target) in endpoints.items():
+            with self.subTest(relation_type=relation_type):
+                model = deepcopy(self.snapshot)
+                model.setdefault("principles", []).append({"id": "PRINCIPLE-RELATION-DIRECTION"})
+                relation = {
+                    "id": "TEST-DIRECTION", "revision": 1, "type": relation_type,
+                    "source_id": source, "target_id": target,
+                    "qualification": {"role": "needs", "meaning": "Fournir les informations autorisées.",
+                                      "conditions": [], "effects": []},
+                }
+                if relation_type == "shares-data":
+                    relation["fields"] = {
+                        "label": "Authorized context",
+                        "data_exchange": {"purpose": "Respecter le contexte autorisé.", "contents": [
+                            {"name": "Authorized context", "description": "Contexte applicable.",
+                             "glossary_refs": ["TER012"]}
+                        ]},
+                    }
+                model["relations"].append(relation)
+                errors = validate_urbanism(model, self.sources)
+                self.assertEqual(len(errors), 1, errors)
+                self.assertIn("qualification role needs is consumer-to-supplier", errors[0])
+                relation["qualification"]["role"] = "context_supply"
+                self.assertEqual(validate_urbanism(model, self.sources), [])
+
+    def test_direction_policy_keeps_consumer_dependencies_and_reference_uses(self):
+        for relation_type, target in (("relates-to", "D03.b"), ("uses-reference", "D11")):
+            with self.subTest(relation_type=relation_type):
+                model = deepcopy(self.snapshot)
+                model.setdefault("principles", []).append({"id": "PRINCIPLE-RELATION-DIRECTION"})
+                model["relations"].append({
+                    "id": "TEST-NEEDS-DIRECTION", "revision": 1, "type": relation_type,
+                    "source_id": "D03.a", "target_id": target,
+                    "qualification": {"role": "needs", "meaning": "Utiliser le résultat fourni.",
+                                      "conditions": [], "effects": []},
+                })
+                self.assertEqual(validate_urbanism(model, self.sources), [])
+
     def test_relation_qualification_is_frozen_and_bound_to_adoption(self):
         release, snapshot, decisions = deepcopy(self.release), deepcopy(self.snapshot), deepcopy(self.decisions)
         released = next(r for r in release["relations"] if r["id"] == "REL-MEMBER-D03.a")

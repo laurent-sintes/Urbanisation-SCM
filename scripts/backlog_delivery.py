@@ -50,7 +50,9 @@ def check_delivery(root, candidate, *, stats=None):
             from record_decision import canonical_sha256
         for expected in catalog_checks:
             collection = expected['collection']
-            if collection == 'hotspots':
+            if collection == 'principles':
+                items = candidate.get('principles', [])
+            elif collection == 'hotspots':
                 items = candidate.get('hotspot_catalog', {}).get('hotspots', [])
             elif collection == 'application_products':
                 items = candidate.get('application_catalog', {}).get('products', [])
@@ -171,7 +173,7 @@ def replacement_scopes(documents):
 
 
 def requirement_covers(declaration, collection, identifier, field, replacement=False):
-    if collection in ('hotspots', 'scenarios', 'paths', 'application_products', 'application_selections',
+    if collection in ('principles', 'hotspots', 'scenarios', 'paths', 'application_products', 'application_selections',
                       'information_items', 'information_links'):
         return field in ('exists', 'content_sha256') and any(
             item.get('collection') == collection and item.get('id') == identifier

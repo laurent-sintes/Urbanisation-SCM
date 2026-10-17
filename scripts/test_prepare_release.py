@@ -40,7 +40,8 @@ class BacklogPublicationTests(unittest.TestCase):
         for relative in ('schemas', 'release/2026-09-13.2', 'release/2026-09-13.4',
                          'revisions/2026-09-13.4', 'decisions/2026-09-13.4.json',
                          'provenance/2026-09-13.4', 'provenance/source-records.json',
-                         'backlog/applicability.yaml', 'backlog/modeling-roadmap.yaml'):
+                         'backlog/applicability.yaml', 'backlog/modeling-roadmap.yaml',
+                         'backlog/modeling-glossary.yaml'):
             copy(relative)
         manifest_path = dst / 'release/2026-09-13.4/manifest.json'
         manifest = workflow.read(manifest_path)

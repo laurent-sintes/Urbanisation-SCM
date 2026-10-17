@@ -522,7 +522,7 @@ terms:
     de description dépend du périmètre. Lorsqu’un domaine est détaillé jusqu’aux [capacités](method:MOD015), ses [sous-domaines](method:MOD013)
     les regroupent obligatoirement dans des [Business Areas](method:MOD039).
   role: Délimiter une responsabilité métier et ses coopérations. [Commerce](model:domain-sales), [Sourcing and Procurement](model:domain-sourcing-procurement),
-    [Demand & Supply Planning](model:domain-plan) et [Supply Chain Orchestration](model:supply-chain-orchestration) sont des
+    [Demand & Supply Planning](model:domain-plan) et [Supply Chain Management](model:supply-chain-orchestration) sont des
     domaines de [Business Operations](model:system-business-operations). [Logistics](model:domain-logistics-execution) est
     un [Business System](method:MOD022) distinct.
   source_refs:
@@ -555,7 +555,7 @@ terms:
     leur vocabulaire.
   - U780 ajoute Business System au-dessus de Domain ; la profondeur de description varie selon le périmètre. Les publications
     historiques gardent leurs niveaux.
-  - 'U1025 fait évoluer U981 : [Supply Chain Orchestration](model:supply-chain-orchestration) reste détaillé jusqu’aux [capacités](method:MOD015)
+  - 'U1025 fait évoluer U981 : [Supply Chain Management](model:supply-chain-orchestration) reste détaillé jusqu’aux [capacités](method:MOD015)
     et [comportements](method:MOD006). [Commerce](model:domain-sales), [Sourcing and Procurement](model:domain-sourcing-procurement)
     et les domaines de [Logistics](model:domain-logistics-execution) peuvent aller jusqu’aux [Business Areas](method:MOD039)
     terminales de contexte ; les autres domaines gardent leur profondeur déclarée.'
@@ -602,7 +602,7 @@ terms:
     comparison_ref: CMP269
     common: Le découpage distingue des périmètres métier cohérents.
     difference: Un sous-domaine métier ne constitue pas automatiquement un bounded context logiciel.
-    flow_position: Le découpage de [Supply Chain Orchestration](model:supply-chain-orchestration) en sous-domaines est propre
+    flow_position: Le découpage de [Supply Chain Management](model:supply-chain-orchestration) en sous-domaines est propre
       à FLOW ; il ne prétend pas être une taxonomie universelle.
     sources:
     - ref: ELM635
@@ -1336,7 +1336,7 @@ terms:
   - La notion méthodologique reste distincte des noms des systèmes dans le glossaire métier.
   - 'U975 : quatre systèmes métier ; Logistics est autonome. Les systèmes périphériques et Demand & Supply Planning sont décrits
     jusqu’aux sous-domaines de contexte utiles aux interfaces ; le raccordement comptable existant est conservé. Supply Chain
-    Orchestration reste le cœur approfondi de FLOW.'
+    Management reste le cœur approfondi de FLOW.'
   - Les sources marché comparent les périmètres ; elles ne définissent pas un équivalent exact de ce niveau FLOW.
   short_description: Ensemble de domaines qui coopèrent pour une finalité commune.
 - id: MOD023
@@ -1824,7 +1824,7 @@ terms:
   short_description: Le Core porte des aptitudes génériques ; le contexte opérationnel combine ces aptitudes et les règles
     propres à une activité pour traiter ses demandes.
   notes:
-  - Cette frontière ne crée aucun niveau hiérarchique ni composant logiciel obligatoire. Dans FLOW, Supply Chain Orchestration
+  - Cette frontière ne crée aucun niveau hiérarchique ni composant logiciel obligatoire. Dans FLOW, Supply Chain Management
     approfondit les aptitudes génériques ; Achat et Vente portent les Cases contextualisés.
   - 'Exemple : le Case Wholesale applique le contrôle de crédit à une vente avec des données financières sourcées ; il ne
     transforme pas cette règle en capacité générique du Core.'

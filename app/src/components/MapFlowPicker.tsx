@@ -18,17 +18,15 @@ export function MapFlowPicker({
   onEnabledChange,
   types,
   onTypesChange,
-  mode,
-  focused,
-  onModeChange,
+  destinations = [],
+  onOpenDestination,
 }: {
   enabled: boolean;
   onEnabledChange: (value: boolean) => void;
   types: readonly FlowType[];
   onTypesChange: (types: FlowType[]) => void;
-  mode: 'main' | 'all';
-  focused: boolean;
-  onModeChange: (value: 'main' | 'all') => void;
+  destinations?: readonly { scopeId: string; name: string; count: number }[];
+  onOpenDestination?: (scopeId: string) => void;
 }) {
   const [open, setOpen] = useState(false);
   const id = useId();
@@ -46,11 +44,7 @@ export function MapFlowPicker({
         ? types[0] === 'shares-data'
           ? 'données'
           : 'connaissance'
-        : mode === 'all'
-          ? 'tous'
-          : focused
-            ? 'sélection'
-            : 'principaux';
+        : 'tous';
   return (
     <div className="map-flow-picker">
       <button
@@ -113,34 +107,26 @@ export function MapFlowPicker({
                   </label>
                 ))}
               </fieldset>
-              <fieldset>
-                <legend>Échanges affichés</legend>
-                <label>
-                  <input
-                    type="radio"
-                    aria-label={focused ? 'Flux de la sélection' : 'Flux principaux'}
-                    name={`${id}-mode`}
-                    checked={mode === 'main'}
-                    onChange={() => onModeChange('main')}
-                  />
-                  <span>
-                    {focused ? 'Flux de la sélection' : 'Flux principaux'}
-                    <small>Une synthèse au niveau du périmètre exploré.</small>
-                  </span>
-                </label>
-                <label>
-                  <input
-                    type="radio"
-                    aria-label="Tous les flux"
-                    name={`${id}-mode`}
-                    checked={mode === 'all'}
-                    onChange={() => onModeChange('all')}
-                  />
-                  <span>
-                    Tous les flux<small>Inclure les échanges détaillés, jusqu’aux Business Areas.</small>
-                  </span>
-                </label>
-              </fieldset>
+              {!!destinations.length && onOpenDestination && (
+                <fieldset className="flow-external-destinations">
+                  <legend>Explorer les échanges externes</legend>
+                  {destinations.map((destination) => (
+                    <button
+                      key={destination.scopeId}
+                      type="button"
+                      className="flow-external-destination"
+                      aria-label={`Voir les échanges dans ${destination.name}`}
+                      onClick={() => {
+                        setOpen(false);
+                        onOpenDestination(destination.scopeId);
+                      }}
+                    >
+                      <span>{destination.name}</span>
+                      <span>{destination.count}</span>
+                    </button>
+                  ))}
+                </fieldset>
+              )}
               {enabled && !types.length && <p>Aucun type de flux sélectionné.</p>}
             </div>
           </FloatingFocusManager>

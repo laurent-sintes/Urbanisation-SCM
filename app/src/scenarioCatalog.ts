@@ -128,7 +128,8 @@ export function scenarioContextParticipants(catalog: ScenarioCatalog, id: string
     ),
   ];
 }
-export function scenariosForNode(model: PublishedModel, id: string): BusinessScenario[] {
+/** Paths use only the contributions and context participants of this publication. */
+export function pathsForNode(model: PublishedModel, id: string): MobilizationPath[] {
   const catalog = catalogOf(model);
   if (!catalog) return [];
   const descendants = new Set([id]);
@@ -141,11 +142,20 @@ export function scenariosForNode(model: PublishedModel, id: string): BusinessSce
         changed = true;
       }
   }
+  return catalog.paths.filter((path) =>
+    path.steps.some(
+      (step) =>
+        step.contributions.some((contribution) => descendants.has(contribution.node_id)) ||
+        (step.context_participants || []).some((participant) => descendants.has(participant.node_id)),
+    ),
+  );
+}
+export function scenariosForNode(model: PublishedModel, id: string): BusinessScenario[] {
+  const catalog = catalogOf(model);
+  if (!catalog) return [];
+  const scenarioIds = new Set(pathsForNode(model, id).map((path) => path.scenario_id));
   return catalog.scenarios.filter(
-    (s) =>
-      scenarioCapabilities(catalog, s.id).some((c) => descendants.has(c)) ||
-      scenarioContextParticipants(catalog, s.id).some((c) => descendants.has(c)) ||
-      catalog.legacy_links.some((a) => a.owner_id === id && a.scenario_id === s.id),
+    (s) => scenarioIds.has(s.id) || catalog.legacy_links.some((a) => a.owner_id === id && a.scenario_id === s.id),
   );
 }
 export function filterScenarios(
