@@ -206,7 +206,11 @@ try {
         catalog.paths.some(
           (p) =>
             p.scenario_id === s.id &&
-            p.steps.some((step) => step.contributions.some((c) => descendants.has(c.node_id))),
+            p.steps.some(
+              (step) =>
+                step.contributions.some((c) => descendants.has(c.node_id)) ||
+                (step.context_participants || []).some((participant) => descendants.has(participant.node_id)),
+            ),
         ) || catalog.legacy_links.some((a) => a.owner_id === node.id && a.scenario_id === s.id),
     );
     await visit({ view: 'sheet', node: node.id });
@@ -232,7 +236,11 @@ try {
     if (!['capability', 'business_area', 'area', 'domain'].includes(node.kind)) continue;
     const links = page.locator('.scenario-links');
     await links.waitFor();
-    assert.equal(await links.locator('li>a').count(), expected.length, `Scenario access for ${node.id}`);
+    assert.equal(
+      await links.locator(':scope > ul > li > a').count(),
+      expected.length,
+      `Scenario access for ${node.id}`,
+    );
     for (const s of expected)
       assert.ok(await links.locator(`a[href*="scenario=${s.id}"]`).count(), `Missing ${s.id} from ${node.id}`);
     if (!expected.length)

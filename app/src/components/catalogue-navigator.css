@@ -1,6 +1,8 @@
 .catalogue-navigation-stage {
   position: relative;
   display: flex;
+  flex-direction: column;
+  gap: 8px;
   flex: 1;
   min-width: 0;
   min-height: 0;
@@ -13,9 +15,10 @@
   min-height: 0;
 }
 .catalogue-navigator {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
+  position: relative;
+  align-self: flex-end;
+  flex-shrink: 0;
+  margin: 0 12px 8px;
   z-index: 12;
   width: 196px;
   max-width: calc(100% - 24px);
@@ -123,6 +126,53 @@
 .catalogue-navigator.is-compact.is-closed .catalogue-navigator-toggle > span,
 .catalogue-navigator.is-compact.is-closed .catalogue-navigator-toggle > svg:last-child {
   display: none;
+}
+/* A short screen keeps the navigator in a shallow row below the readable map. */
+@media (max-height: 480px) {
+  .catalogue-navigation-stage {
+    gap: 4px;
+  }
+  .catalogue-navigator {
+    display: flex;
+    align-items: center;
+    width: 320px;
+    max-width: calc(100% - 16px);
+    margin: 0 8px;
+  }
+  .catalogue-navigator-toggle {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 30px;
+    padding: 4px 7px;
+    font-size: 10px;
+  }
+  .catalogue-navigator-panel {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    padding: 3px 5px 3px 0;
+  }
+  .catalogue-navigator-surface {
+    flex: 1;
+    height: 24px;
+  }
+  .catalogue-navigator-panel > small {
+    display: none;
+  }
+  .catalogue-navigator.is-compact.is-closed .catalogue-navigator-toggle {
+    width: 32px;
+    min-height: 30px;
+  }
+  /* The page title and breadcrumb already identify this overview. */
+  .universe-overview:has(> .catalogue-navigation-stage) {
+    padding-top: 0;
+  }
+  .map-workspace .universe-overview:has(> .catalogue-navigation-stage) > .universe-toolbar {
+    margin-bottom: 0;
+  }
+  .map-workspace .universe-overview:has(> .catalogue-navigation-stage) > .universe-toolbar > h2 {
+    display: none;
+  }
 }
 @media (forced-colors: active) {
   .catalogue-navigator {

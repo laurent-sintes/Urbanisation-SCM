@@ -42,8 +42,11 @@ index.current_version = version;
 const areas = childrenOf(model, 'subdomain-process-management');
 const caps = areas.flatMap((a) => childrenOf(model, a.id));
 assert.equal(areas.length, 4);
-assert.equal(caps.length, 12);
-assert.equal(cardContentSummary(model, model.nodeById.get('subdomain-process-management')), '12 capacités');
+assert.equal(caps.length, 13);
+assert.ok(caps.every((node) => node.kind === 'capability'));
+assert.ok(caps.some((node) => node.id === 'process-ledger'));
+assert.equal(model.nodeById.has('subdomain-integration'), false, 'Integration is retired from the current model');
+assert.equal(cardContentSummary(model, model.nodeById.get('subdomain-process-management')), '13 capacités');
 assert.ok(model.nodeById.get('BHV082').displayCode.startsWith('CAP-'));
 const base = 'https://atlas.test/Urbanisation-SCM/';
 const browser = await chromium.launch(browserOptions);
@@ -89,14 +92,14 @@ try {
   const processCard = page.locator('.business-card[data-node-id="subdomain-process-management"]');
   await processCard.waitFor();
   assert.equal(await processCard.locator('[data-business-area-summary]').count(), 4);
-  assert.equal(await processCard.locator('[data-map-item-id]').count(), 12);
+  assert.equal(await processCard.locator('[data-map-item-id]').count(), 13);
   assert.equal(await processCard.getByRole('button', { name: 'Sélectionner Process Management' }).count(), 0);
   const stats = (await processCard.locator('.subdomain-stats span').allTextContents()).map((value) =>
     value.replace(/\s+/g, ' ').trim(),
   );
   assert.ok(stats.includes('4 Business Areas'));
-  assert.ok(stats.includes('12 capacités'));
-  const subdomainType = processCard.locator('.subdomain-card-heading .metamodel-type');
+  assert.ok(stats.includes('13 capacités'));
+  const subdomainType = processCard.locator('.map-card-metadata .metamodel-type');
   assert.equal(await subdomainType.textContent(), 'Subdomain');
   await subdomainType.scrollIntoViewIfNeeded();
   // The map applies its fit after layout; hover once that scroll has settled.
@@ -130,17 +133,13 @@ try {
   await page.screenshot({ path: resolve(output, 'overview.png') });
   const reviewed = [
     ...caps,
-    ...[
-      'supply-chain-orchestration',
-      'subdomain-integration',
-      'D01',
-      'D03.i',
-      'D03.j',
-      'D03.k',
-      'D04.i',
-      'D07.d',
-      'operations-visibility',
-    ].map((id) => model.nodeById.get(id)),
+    ...['supply-chain-orchestration', 'D01', 'D03.i', 'D03.j', 'D03.k', 'D04.i', 'D07.d', 'operations-visibility'].map(
+      (id) => {
+        const node = model.nodeById.get(id);
+        assert.ok(node, `Reviewed current object ${id} exists`);
+        return node;
+      },
+    ),
   ];
   for (const cap of reviewed) {
     await visit({ node: cap.id, view: 'sheet' });
@@ -154,7 +153,10 @@ try {
     );
     const body = await sheet.innerText();
     assert.ok(body.includes(plainInlineText(cap.fields.definition)), `${cap.id} definition`);
-    assert.ok((await sheet.locator('.scenario-links a').count()) > 0, `${cap.id} scenarios`);
+    if (cap.id === 'process-ledger') {
+      assert.equal(await sheet.locator('.scenario-links a').count(), 0, 'No scenario is documented for Process Ledger');
+      await sheet.getByText('Aucun scénario documenté pour ce périmètre.', { exact: true }).waitFor();
+    } else assert.ok((await sheet.locator('.scenario-links a').count()) > 0, `${cap.id} scenarios`);
     assert.equal(await sheet.locator('.unresolved-reference').count(), 0, `${cap.id} references`);
     if (cap.id === 'D03.j')
       assert.ok(
@@ -194,7 +196,7 @@ try {
   await page.getByTestId('business-sheet').waitFor();
   assert.deepEqual(await page.locator('.scope-statistics li').allTextContents(), [
     '4 Business Areas',
-    '12 capacités',
+    '13 capacités',
     '0 comportements',
   ]);
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
@@ -213,7 +215,7 @@ try {
       status: 'passed',
       fixture: true,
       areas: 4,
-      capabilities: 12,
+      capabilities: 13,
       checks: [
         'banners',
         'counts',

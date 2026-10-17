@@ -38,6 +38,7 @@ interface Geometry {
   top: number;
   visibleWidth: number;
   visibleHeight: number;
+  stageHeight: number;
   blocks: Block[];
 }
 
@@ -45,7 +46,16 @@ const BLOCKS =
   '.business-card[data-node-id], .overview-system[data-node-id], .overview-domain-link[data-map-item-id], .overview-subdomain-link[data-map-item-id]';
 const CONTENT = '.graph-canvas, .map-flow-surface, .react-flow__viewport, .overview-map-frame, .urbanisation-overview';
 const MAJOR_KINDS = new Set(['business_system', 'domain', 'area', 'group']);
-const EMPTY: Geometry = { width: 1, height: 1, left: 0, top: 0, visibleWidth: 1, visibleHeight: 1, blocks: [] };
+const EMPTY: Geometry = {
+  width: 1,
+  height: 1,
+  left: 0,
+  top: 0,
+  visibleWidth: 1,
+  visibleHeight: 1,
+  stageHeight: 1,
+  blocks: [],
+};
 const rounded = (value: number) => Math.round(value * 10) / 10;
 const clamp = (value: number, max: number) => Math.max(0, Math.min(Math.max(0, max), value));
 
@@ -113,6 +123,7 @@ function measure(viewport: HTMLElement): Geometry {
     top: rounded(viewport.scrollTop),
     visibleWidth: Math.max(1, viewport.clientWidth),
     visibleHeight: Math.max(1, viewport.clientHeight),
+    stageHeight: Math.max(1, viewport.parentElement?.clientHeight ?? viewport.clientHeight),
     blocks,
   };
 }
@@ -314,7 +325,8 @@ export function CatalogueNavigator({
   const horizontalPosition = Math.round(
     clamp(geometry.left / Math.max(1, geometry.width - geometry.visibleWidth), 1) * 100,
   );
-  const previewHeight = Math.max(32, Math.min(112, geometry.visibleHeight - 88));
+  // The stage height is stable when the reserved navigator row opens or closes.
+  const previewHeight = Math.max(32, Math.min(112, geometry.stageHeight - 160));
 
   return (
     <aside

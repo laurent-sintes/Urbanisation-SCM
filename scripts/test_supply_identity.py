@@ -17,7 +17,7 @@ class SupplyIdentityTests(unittest.TestCase):
         self.assertNotIn('universe-supply', dumps(model))
         self.assertNotIn('universe-supply', dumps(glossary))
         node = next(n for n in model['nodes'] if n['id'] == identifier)
-        self.assertEqual(node['fields']['name'], 'Supply Chain Orchestration')
+        self.assertEqual(node['fields']['name'], 'Supply Chain Management')
         self.assertEqual(node['kind'], 'domain')
         parents = [r for r in model['relations'] if r['type'] in ('contains', 'presents') and r['target_id'] == identifier]
         self.assertEqual([(r['source_id'], r['type']) for r in parents], [('system-business-operations', 'presents')])
@@ -25,7 +25,7 @@ class SupplyIdentityTests(unittest.TestCase):
             [r['target_id'] for r in model['relations'] if r['source_id'] == identifier and r['type'] == 'presents'],
             ['business-references', 'subdomain-policies',
              'D04', 'D01', 'D03', 'D06', 'subdomain-service-orders',
-             'subdomain-integration', 'subdomain-process-management'],
+             'domain-plan', 'subdomain-process-management'],
         )
         nodes = {n['id']: n for n in model['nodes']}
         self.assertNotIn('subdomain-plans', nodes)
@@ -33,7 +33,7 @@ class SupplyIdentityTests(unittest.TestCase):
         self.assertEqual(
             [(r['source_id'], r['type']) for r in model['relations']
              if r['target_id'] == 'ba-master-plan-management' and r['type'] in ('contains', 'presents')],
-            [('D03', 'contains')],
+            [('domain-plan', 'contains')],
         )
         self.assertEqual(nodes['D03']['fields']['name'], 'Availability')
         self.assertEqual(nodes['business-references']['fields']['name'], 'Operational References')

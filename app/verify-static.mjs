@@ -146,14 +146,14 @@ try {
   await page.goto(base);
   await page.locator(`#fa-version[data-version="${version}"]`).waitFor({ state: 'attached' });
   await page.getByRole('button', { name: 'FLOW Atlas, accueil', exact: true }).click();
-  await page.getByRole('heading', { name: rootName, exact: true }).waitFor();
+  await page.getByRole('heading', { name: rootName, exact: true, level: 1 }).waitFor();
   newerBuild = true;
   await page.evaluate(() => window.dispatchEvent(new Event('online')));
   await page.getByText('Une nouvelle version de l’interface Atlas est disponible.', { exact: true }).waitFor();
   const currentAddress = page.url();
   newerBuild = false;
   await page.getByRole('button', { name: 'Recharger l’application', exact: true }).click();
-  await page.getByRole('heading', { name: rootName, exact: true }).waitFor();
+  await page.getByRole('heading', { name: rootName, exact: true, level: 1 }).waitFor();
   assert.equal(page.url(), currentAddress, 'Updating software must preserve the reading URL');
   await mkdir(path.join(directory, '.runtime/qa-static'), { recursive: true });
   await page.screenshot({ path: path.join(directory, '.runtime/qa-static/overview.png') });

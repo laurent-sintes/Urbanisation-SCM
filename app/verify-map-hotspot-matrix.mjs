@@ -412,11 +412,34 @@ try {
       await marker.waitFor();
       await page.waitForTimeout(700);
       await marker.scrollIntoViewIfNeeded();
-      const before = await page.locator('.map-scroll-viewport').evaluate((e) => Math.round(e.scrollTop));
-      assert.ok(before > 0, 'The deep Supply hotspot is reached by vertical map scrolling');
+      const scrolled = await page.locator('.map-scroll-viewport').evaluate((e) => Math.round(e.scrollTop));
+      assert.ok(scrolled > 0, 'The deep Supply hotspot is reached by vertical map scrolling');
+      await page.evaluate(() => {
+        window.__atlasHotspotActivationScroll = null;
+        document.addEventListener(
+          'pointerdown',
+          (event) => {
+            if (event.target?.closest?.('.hotspot-map-marker'))
+              window.__atlasHotspotActivationScroll = Math.round(
+                document.querySelector('.map-scroll-viewport').scrollTop,
+              );
+          },
+          { capture: true, once: true },
+        );
+      });
       await marker.click();
+      // Clicking can scroll the marker again; the origin is the position at actual activation.
+      const before = await page.evaluate(() => window.__atlasHotspotActivationScroll);
+      assert.ok(Number.isFinite(before) && before > 0, 'The activation records a deep map scroll origin');
       const returnLink = page.getByRole('link', { name: /^Retour à la carte/ });
       await returnLink.waitFor();
+      const returnHref = await returnLink.getAttribute('href');
+      assert.ok(returnHref, 'The hotspot exposes its return reading origin');
+      assert.equal(
+        Number(new URLSearchParams(returnHref.split('?')[1]).get('scroll')),
+        before,
+        'The return link encodes the scroll position at actual marker activation',
+      );
       if (action === 'return-link') await returnLink.click();
       else await page.goBack();
       await page.waitForFunction(
