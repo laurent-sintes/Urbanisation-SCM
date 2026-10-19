@@ -66,8 +66,8 @@ export function Overview({
   useCatalogueScrollMemory(scroll, model.version, undefined, restoreViewport, '.overview-system');
   const grid = useRef<HTMLDivElement>(null);
   const [zoomChoice, setZoomChoice] = useMapZoomChoice();
-  const [frame, setFrame] = useState({ width: 0, height: 0, pageZoom: 1 });
-  const scale = resolveMapZoom(zoomChoice, detail, frame.pageZoom) === 'page' ? frame.pageZoom : 1;
+  const [frame, setFrame] = useState({ width: 0, height: 0, pageZoom: 1, widthZoom: 1 });
+  const scale = resolveMapZoom(zoomChoice, detail, frame.pageZoom) === 'page' ? frame.pageZoom : frame.widthZoom;
   // biome-ignore lint/correctness/useExhaustiveDependencies: Detail and framing intentionally reset the map viewport.
   useEffect(() => {
     scroll.current?.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -227,6 +227,7 @@ export function Overview({
       const next = {
         width: Math.max(minimumWidth, target.clientWidth),
         height: content.offsetHeight,
+        widthZoom: Math.min(1, target.clientWidth / Math.max(1, content.offsetWidth)),
         pageZoom: stablePageFitZoom(
           Math.min(1, pageWidth / Math.max(1, content.offsetWidth), height / Math.max(1, content.offsetHeight)),
         ),
@@ -329,7 +330,9 @@ export function Overview({
           : 26;
         return { id: hotspot.id, x, y, diameter: HOTSPOT_DIAMETERS[hotspot.severity] };
       });
-      const bounds = { width: articleRect.width, height: articleRect.height, obstacles };
+      const fallbackPositions = [];
+      for (let x = 26; x <= articleRect.width - 26; x += 54) fallbackPositions.push({ x, y: 26 });
+      const bounds = { width: articleRect.width, height: articleRect.height, obstacles, fallbackPositions };
       next[system.id] = { groups: layoutHotspots(anchors, bounds) };
     }
     setMarkerPlacement((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));

@@ -118,11 +118,11 @@ try {
       await noPageOverflow();
       if (width === 320) {
         const scroll = page.locator('.overview-map-scroll');
-        assert.ok(await scroll.evaluate((element) => element.scrollWidth > element.clientWidth));
+        assert.ok(await scroll.evaluate((element) => element.scrollWidth <= element.clientWidth + 1));
         await scroll.evaluate((element) => {
           element.scrollLeft = element.scrollWidth;
         });
-        assert.ok(await scroll.evaluate((element) => element.scrollLeft > 0));
+        assert.equal(await scroll.evaluate((element) => element.scrollLeft), 0);
       }
       checks++;
     }
@@ -162,15 +162,15 @@ try {
         } else if (width === 320) {
           const canvas = page.locator('.map-scroll-viewport:has(.graph-canvas.fixed-placement.zoom-width)');
           await canvas.waitFor();
-          assert.ok(await canvas.evaluate((element) => element.scrollWidth > element.clientWidth));
           await page.waitForFunction(() => {
             const viewport = document.querySelector('.react-flow__viewport');
-            return viewport && Math.abs(new DOMMatrix(getComputedStyle(viewport).transform).a - 1) < 0.01;
+            const scroll = document.querySelector('.map-scroll-viewport');
+            return viewport && scroll.scrollWidth <= scroll.clientWidth + 1;
           });
           await canvas.evaluate((element) => {
             element.scrollLeft = element.scrollWidth;
           });
-          assert.ok(await canvas.evaluate((element) => element.scrollLeft > 0));
+          assert.equal(await canvas.evaluate((element) => element.scrollLeft), 0);
         }
       }
     }
@@ -197,7 +197,7 @@ try {
   await page.waitForFunction(() => Boolean(document.fullscreenElement));
   await checkRows(false);
   assert.ok(
-    await page.locator('.map-scroll-viewport').evaluate((element) => element.scrollWidth > element.clientWidth),
+    await page.locator('.map-scroll-viewport').evaluate((element) => element.scrollWidth <= element.clientWidth + 1),
   );
   await page.evaluate(() => document.exitFullscreen());
   await page.setViewportSize({ width: 840, height: 420 });

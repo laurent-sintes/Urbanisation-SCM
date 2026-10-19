@@ -51,7 +51,12 @@ const screens = [
   { name: 'desktop', width: 1440, height: 1000 },
   { name: 'short', width: 1440, height: 650 },
   { name: 'mobile', width: 390, height: 667 },
-  ...(widthMode ? [{ name: 'medium', width: 1280, height: 800 }] : []),
+  ...(widthMode
+    ? [
+        { name: 'medium', width: 1280, height: 800 },
+        { name: 'compact', width: 1100, height: 800 },
+      ]
+    : []),
 ];
 const layers = [
   { name: 'none', application: false, hotspots: false },
@@ -204,11 +209,16 @@ try {
           const viewport = document.querySelector('.map-scroll-viewport,.overview-map-scroll');
           const canvas = viewport.querySelector('.graph-canvas,.overview-map-frame');
           const flow = canvas.querySelector('.react-flow__viewport');
-          const overview = canvas.querySelector('.urbanisation-overview');
           if (mode === 'width')
-            return flow
-              ? canvas.classList.contains('zoom-width') && new DOMMatrix(getComputedStyle(flow).transform).a === 1
-              : !overview || new DOMMatrix(getComputedStyle(overview).transform).a === 1;
+            return (
+              (!flow || canvas.classList.contains('zoom-width')) &&
+              viewport.scrollWidth <= viewport.clientWidth + 1 &&
+              [...viewport.querySelectorAll('.business-card,.overview-system')].every((element) => {
+                const box = element.getBoundingClientRect();
+                const frame = viewport.getBoundingClientRect();
+                return box.left >= frame.left - 1 && box.right <= frame.left + viewport.clientWidth + 1;
+              })
+            );
           const frame = viewport.getBoundingClientRect();
           return (
             viewport.scrollWidth <= viewport.clientWidth + 1 &&
@@ -228,11 +238,18 @@ try {
       const state = await capture();
       const failures = [];
       if (mode === 'width') {
-        const allowedWidth = Math.max(state.width, state.minimumWidth);
-        if (Math.abs(state.scale - 1) > 0.001) failures.push('width mode changes native text scale');
+        if (state.scale <= 0 || state.scale > 1.001) failures.push('invalid width fit scale');
+        if (state.width >= state.minimumWidth && Math.abs(state.scale - 1) > 0.001)
+          failures.push('width mode reduces text despite sufficient space');
         if (state.overflowingCards.length) failures.push('content overflows its card');
-        if (state.surfaceWidth > allowedWidth + 1 || state.scrollWidth > allowedWidth + 1)
-          failures.push('map wider than its current scrollport and minimum readable columns');
+        if (state.nativeRange.x || state.surfaceWidth > state.width + 1 || state.scrollWidth > state.width + 1)
+          failures.push('horizontal scrolling in width mode');
+        if (
+          state.cards.some(
+            (rect) => rect.left < state.viewport.left - 1 || rect.right > state.viewport.left + state.width + 1,
+          )
+        )
+          failures.push('card outside visible width');
         if (Math.abs(state.canvas.width - state.width) > 1 && !state.className.includes('overview-map-frame'))
           failures.push('canvas uses a different viewport width');
         if (
@@ -278,7 +295,20 @@ try {
       return state;
     };
     const baseline = await verify('initial');
+    if (index === 0) await page.screenshot({ path: resolve(output, 'initial.png') });
     if (widthMode) {
+      // A classic scrollbar reserves horizontal space even when headless Chromium
+      // normally uses overlay scrollbars. Framing must follow clientWidth again.
+      await page.locator('.map-scroll-viewport,.overview-map-scroll').evaluate((viewport) => {
+        viewport.style.scrollbarGutter = 'stable';
+      });
+      await page.waitForTimeout(350);
+      await verify('reserved-scrollbar');
+      await page.locator('.map-scroll-viewport,.overview-map-scroll').evaluate((viewport) => {
+        viewport.style.removeProperty('scrollbar-gutter');
+      });
+      await page.waitForTimeout(350);
+      await verify('after-scrollbar', 'width', baseline);
       await page.getByRole('button', { name: 'Étendre la carte', exact: true }).click();
       await page.waitForFunction(() => Boolean(document.fullscreenElement));
       await page.waitForTimeout(350);

@@ -90,6 +90,10 @@ try {
         view === 'overview' ? '.universe-overview .hotspot-map-marker' : '.graph-canvas .hotspot-map-marker';
       const markers = page.locator(markerSelector);
       await markers.first().waitFor();
+      // The navigator intentionally overlays the map. Reveal the map underneath
+      // before checking the click targets; its own controls have a separate recipe.
+      const navigatorToggle = page.getByRole('button', { name: 'Réduire le navigateur de carte', exact: true });
+      if (await navigatorToggle.isVisible()) await navigatorToggle.click();
       await page.waitForTimeout(500);
       const geometry = await page.evaluate((selector) => {
         const markers = [...document.querySelectorAll(selector)];

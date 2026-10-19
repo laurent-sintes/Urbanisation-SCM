@@ -799,7 +799,7 @@ try {
       return { top: viewport.scrollTop, left: viewport.scrollLeft };
     });
     assert.ok(saved.top > 100, 'The Catalogue must have a real reading position to restore');
-    if (params.scope === '@root') assert.ok(saved.left > 100, 'The root Catalogue must exercise horizontal memory');
+    assert.equal(saved.left, 0, 'Width framing must not introduce horizontal scrolling');
     const framingName = params.scope === '@root' ? 'root' : 'domain';
     await page.screenshot({ path: path.join(output, `catalogue-${framingName}-before-flux.png`) });
     await page.getByRole('tab', { name: 'Flux', exact: true }).click();

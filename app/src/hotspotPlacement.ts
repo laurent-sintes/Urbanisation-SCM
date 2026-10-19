@@ -10,6 +10,8 @@ export interface HotspotPlacementBounds {
   height: number;
   obstacles?: { x: number; y: number; width: number; height: number }[];
   maxDisplacement?: number;
+  /** Reserved empty positions may be farther away than the normal local search. */
+  fallbackPositions?: { x: number; y: number }[];
 }
 
 export const HOTSPOT_DIAMETERS: Record<string, number> = {
@@ -52,9 +54,9 @@ function placeWithCandidates(
       const radius = item.diameter / 2;
       const centerX = Math.max(radius + margin, Math.min(bounds.width - radius - margin, item.x));
       const centerY = Math.max(radius + margin, Math.min(bounds.height - radius - margin, item.y));
-      const add = (x: number, y: number) => {
+      const add = (x: number, y: number, fallback = false) => {
         if (
-          Math.hypot(x - item.x, y - item.y) > maxDistance ||
+          (!fallback && Math.hypot(x - item.x, y - item.y) > maxDistance) ||
           x - radius < margin ||
           y - radius < margin ||
           x + radius > bounds.width - margin ||
@@ -101,6 +103,7 @@ function placeWithCandidates(
           const ys = [obstacle.y - radius - 2, obstacle.y + obstacle.height + radius + 2, centerY];
           for (const x of xs) for (const y of ys) add(x, y);
         }
+        for (const position of bounds.fallbackPositions || []) add(position.x, position.y, true);
       }
       positions.sort((a, b) => Math.hypot(a.x - item.x, a.y - item.y) - Math.hypot(b.x - item.x, b.y - item.y));
       cache.set(key, positions);

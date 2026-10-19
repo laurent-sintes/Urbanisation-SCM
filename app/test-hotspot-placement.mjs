@@ -2,6 +2,26 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { HOTSPOT_DIAMETERS, layoutHotspots, placeHotspots } from './src/hotspotPlacement.ts';
 
+test('dense distant anchors can use reserved headroom without hiding text or losing subjects', () => {
+  const items = Array.from({ length: 9 }, (_, index) => ({ id: String(index), x: 55, y: 500, diameter: 48 }));
+  const obstacles = [{ x: 0, y: 58, width: 110, height: 600 }];
+  const groups = layoutHotspots(items, {
+    width: 110,
+    height: 700,
+    obstacles,
+    fallbackPositions: [
+      { x: 26, y: 26 },
+      { x: 80, y: 26 },
+    ],
+  });
+  assert.equal(new Set(groups.flatMap((group) => group.ids)).size, items.length);
+  assert.ok(groups.length <= 2);
+  for (const [index, group] of groups.entries()) {
+    assert.ok(group.y + group.diameter / 2 < 58);
+    for (const other of groups.slice(index + 1)) assert.ok(Math.hypot(group.x - other.x, group.y - other.y) >= 54);
+  }
+});
+
 test('seeded mixed-size layouts preserve identities, clearance, bounds and inputs', () => {
   let seed = 915;
   const random = () => {

@@ -16,15 +16,9 @@ export function resolveMapZoom(choice: MapZoomChoice, detail: number, pageFitZoo
   return choice === 'auto' && detail >= 3 ? 'width' : 'page';
 }
 
-/** Frame a width-oriented grid at native size; the grid itself uses the available width. */
-export function widthFit(
-  layoutWidth: number,
-  layoutHeight: number,
-  viewportWidth: number,
-  minimumHeight: number,
-  preserveScale = false,
-) {
-  const zoom = preserveScale ? 1 : Math.max(0.2, Math.min(1, (viewportWidth - 32) / Math.max(1, layoutWidth)));
+/** Keep native size when possible, shrinking a minimum-width grid to the visible scrollport. */
+export function widthFit(layoutWidth: number, layoutHeight: number, viewportWidth: number, minimumHeight: number) {
+  const zoom = Math.min(1, Math.max(1, viewportWidth - 32) / Math.max(1, layoutWidth));
   return {
     zoom,
     x: Math.max(16, Math.round((viewportWidth - layoutWidth * zoom) / 2)),

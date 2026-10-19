@@ -397,8 +397,8 @@ function Canvas(props: ReactFlowPaneProps) {
   const effectiveZoomMode = layout.mode;
   const nativeTouchScroll = effectiveZoomMode === 'width' && touch;
   const widthFrame =
-    layout.width && canvasWidth ? widthFit(layout.width, layout.height, canvasWidth, minimumHeight, true) : undefined;
-  const surfaceWidth = effectiveZoomMode === 'width' ? Math.max(canvasWidth, layout.width + 32) : undefined;
+    layout.width && canvasWidth ? widthFit(layout.width, layout.height, canvasWidth, minimumHeight) : undefined;
+  const surfaceWidth = effectiveZoomMode === 'width' ? canvasWidth : undefined;
   const frameX = widthFrame?.x;
   const frameY = widthFrame?.y;
   const frameZoom = widthFrame?.zoom;
@@ -919,7 +919,7 @@ function Canvas(props: ReactFlowPaneProps) {
           zoomOnPinch={effectiveZoomMode === 'page' && !nativeTouchScroll}
           zoomOnScroll={effectiveZoomMode === 'page' && !capabilityOverview}
           preventScrolling={effectiveZoomMode === 'page' && !capabilityOverview}
-          minZoom={effectiveZoomMode === 'page' ? 0 : 0.2}
+          minZoom={0}
           maxZoom={2}
           proOptions={{ hideAttribution: false }}
           ariaLabelConfig={{
