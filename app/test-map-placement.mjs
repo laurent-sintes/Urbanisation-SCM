@@ -129,7 +129,7 @@ test('domain focus keeps the standard automatic placement, even for the same ide
   assert.ok(wide.columns > narrow.columns);
 });
 
-test('narrow fixed maps fall back to scrolling while preserving native reading size', () => {
+test('narrow fixed maps fit in page mode while automatic and width modes preserve reading size', () => {
   const slots = operationsMapSlots('system-business-operations', domains);
   const grid = chooseMapGrid(
     [{ heights: [280, 280, 280, 280, 280], headingHeight: 0 }],
@@ -140,7 +140,10 @@ test('narrow fixed maps fall back to scrolling while preserving native reading s
     undefined,
     slots,
   );
-  assert.equal(resolveMapZoom('page', 0, grid.pageZoom), 'width');
+  assert.equal(resolveMapZoom('page', 0, grid.pageZoom), 'page');
+  assert.equal(resolveMapZoom('auto', 0, grid.pageZoom), 'width');
+  assert.ok(grid.width * grid.pageZoom <= 320);
+  assert.ok(grid.height * grid.pageZoom <= 420);
   const frame = widthFit(grid.width, grid.height, 320, 420, true);
   assert.equal(frame.zoom, 1);
   assert.ok(grid.width + 32 > 320);

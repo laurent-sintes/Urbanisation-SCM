@@ -215,6 +215,39 @@ try {
   await waitCameraIdle(page);
   const standardCamera = await viewport(page);
   assert.equal(await page.locator('.flow-map-canvas').getAttribute('data-framing'), 'standard');
+  const captions = await page.evaluate(() => {
+    const paths = [...document.querySelectorAll('.flow-exchange .flow-exchange-hit')].map((path) => ({
+      ids: path.closest('[data-relation-ids]').dataset.relationIds,
+      samples: Array.from({ length: Math.ceil(path.getTotalLength() / 4) + 1 }, (_, index) =>
+        path.getPointAtLength(Math.min(path.getTotalLength(), index * 4)),
+      ),
+    }));
+    const labels = [...document.querySelectorAll('.flow-exchange-caption')];
+    const collisions = labels.flatMap((group) => {
+      const label = group.querySelector('foreignObject');
+      const x = label.x.baseVal.value,
+        y = label.y.baseVal.value,
+        width = label.width.baseVal.value,
+        height = label.height.baseVal.value;
+      return paths
+        .filter(
+          (path) =>
+            path.ids !== group.dataset.relationIds &&
+            path.samples.some(
+              (point) => point.x > x - 4 && point.x < x + width + 4 && point.y > y - 4 && point.y < y + height + 4,
+            ),
+        )
+        .map((path) => ({ label: group.dataset.relationIds, crossing: path.ids }));
+    });
+    return { labels: labels.length, paths: paths.length, collisions };
+  });
+  assert.equal(
+    captions.labels,
+    captions.paths,
+    'Every current domain exchange has a readable caption at Standard scale',
+  );
+  assert.deepEqual(captions.collisions, [], 'No foreign arrow crosses a rendered caption');
+  checks.push('Dense Standard captions remain attached to their own routes and protected from other arrows');
   for (const [label, framing] of [
     ['Cadrer la largeur', 'width'],
     ['Tout cadrer', 'all'],

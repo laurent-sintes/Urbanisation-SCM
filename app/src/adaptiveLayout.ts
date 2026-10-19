@@ -7,17 +7,11 @@ export interface LayoutCandidate {
   pageZoom: number;
 }
 
-/** Rank measured layouts without letting a tiny fitted view win over readable content. */
-export function chooseLayoutCandidate<T extends LayoutCandidate>(
-  candidates: readonly T[],
-  mode: 'page' | 'width',
-  minimumZoom = MIN_READABLE_ZOOM,
-): T {
+/** Maximize the fitted page scale; width framing favours space for nested content. */
+export function chooseLayoutCandidate<T extends LayoutCandidate>(candidates: readonly T[], mode: 'page' | 'width'): T {
   if (!candidates.length) throw new Error('A layout needs at least one candidate');
-  const readable = mode === 'page' ? candidates.filter((candidate) => candidate.pageZoom >= minimumZoom) : [];
-  const choices = readable.length ? readable : candidates;
-  return choices.reduce((best, candidate) => {
-    if (readable.length) {
+  return candidates.reduce((best, candidate) => {
+    if (mode === 'page') {
       if (candidate.pageZoom > best.pageZoom + 0.01) return candidate;
       if (candidate.pageZoom < best.pageZoom - 0.01) return best;
     }

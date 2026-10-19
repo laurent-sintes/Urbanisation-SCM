@@ -831,35 +831,6 @@ select {
   position: relative;
   display: inline-flex;
 }
-.map-zoom-asterisk {
-  margin-left: 1px;
-  color: #9a6a19;
-  font-size: 10px;
-  line-height: 1;
-}
-.map-zoom-tooltip {
-  position: absolute;
-  z-index: 10;
-  top: calc(100% + 8px);
-  left: 50%;
-  display: none;
-  width: 260px;
-  max-width: calc(100vw - 32px);
-  padding: 8px 10px;
-  transform: translateX(-50%);
-  border: 1px solid #cdded1;
-  border-radius: 6px;
-  background: #fffdf5;
-  box-shadow: 0 5px 16px #1c49301f;
-  color: #345b43;
-  font-size: 11px;
-  line-height: 1.4;
-  white-space: normal;
-}
-.map-zoom-option:hover .map-zoom-tooltip,
-.map-zoom-option:focus-within .map-zoom-tooltip {
-  display: block;
-}
 .map-actions .map-zoom-choice button {
   padding: 6px 9px;
   border-radius: 999px;
@@ -1081,6 +1052,10 @@ select {
 .business-card:hover {
   border-color: #bfd1c8;
   box-shadow: 0 5px 16px #203c3918;
+}
+/* Measure collapsed cards from their content before choosing a readable page fit. */
+.business-card:not(.has-child-list) {
+  min-height: 0;
 }
 .business-card.is-selected {
   border-color: #43816c;
@@ -1761,10 +1736,6 @@ select {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
-  }
-  .map-zoom-tooltip {
-    left: 0;
-    transform: none;
   }
   .map-actions > button {
     min-width: 36px;

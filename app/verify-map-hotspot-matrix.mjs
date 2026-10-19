@@ -116,7 +116,18 @@ try {
       window.mapQaStability = undefined;
     });
     await page.waitForFunction(
-      () => {
+      (expectedIds) => {
+        const actual = [
+          ...new Set(
+            [...document.querySelectorAll('.hotspot-map-marker[data-hotspot-ids]')].flatMap((element) =>
+              element.dataset.hotspotIds.split('|'),
+            ),
+          ),
+        ].sort();
+        if (JSON.stringify(actual) !== JSON.stringify(expectedIds)) {
+          window.mapQaStability = undefined;
+          return false;
+        }
         const boxes = [...document.querySelectorAll('.hotspot-map-marker, .business-card, .overview-system')].map(
           (e) => {
             const r = e.getBoundingClientRect();
@@ -128,7 +139,7 @@ try {
         if (window.mapQaStability?.signature !== signature) window.mapQaStability = { signature, since: now };
         return document.fonts.status === 'loaded' && now - window.mapQaStability.since >= 220;
       },
-      undefined,
+      expected,
       { polling: 'raf' },
     );
     const geometry = await page.evaluate((expectedIds) => {

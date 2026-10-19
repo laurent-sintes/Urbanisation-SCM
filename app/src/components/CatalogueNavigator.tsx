@@ -325,7 +325,7 @@ export function CatalogueNavigator({
   const horizontalPosition = Math.round(
     clamp(geometry.left / Math.max(1, geometry.width - geometry.visibleWidth), 1) * 100,
   );
-  // The stage height is stable when the reserved navigator row opens or closes.
+  // Opening the overlay leaves the scroll viewport and its geometry unchanged.
   const previewHeight = Math.max(32, Math.min(112, geometry.stageHeight - 160));
 
   return (

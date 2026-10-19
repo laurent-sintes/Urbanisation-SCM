@@ -104,3 +104,9 @@ test('equally wide layouts choose the shorter arrangement even for a modest gain
   const spread = { width: 1280, height: 1740, pageZoom: 0.4 };
   assert.equal(chooseLayoutCandidate([dense, spread], 'width'), spread);
 });
+
+test('page framing chooses the largest fitted scale even below the automatic readability threshold', () => {
+  const short = { width: 1600, height: 800, pageZoom: 0.3 };
+  const fitted = { width: 1000, height: 1000, pageZoom: 0.5 };
+  assert.equal(chooseLayoutCandidate([short, fitted], 'page'), fitted);
+});

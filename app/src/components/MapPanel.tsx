@@ -71,7 +71,6 @@ export function MapPanel({
     '[data-testid="react-flow-canvas"] .react-flow__node-business',
   );
   const [expanded, setExpanded] = useState(false);
-  const [pageFallback, setPageFallback] = useState(false);
   const [selectedHotspotId, setSelectedHotspotId] = useState('');
   const [scopeHotspotHighlighted, setScopeHotspotHighlighted] = useState(false);
   const scopedHotspots = hotspotsInScope(model, scopeId);
@@ -146,7 +145,7 @@ export function MapPanel({
               onChange={onApplicationChange}
             />
           )}
-          <MapZoomPicker choice={zoomChoice} onChange={setZoomChoice} pageFallback={pageFallback} />
+          <MapZoomPicker choice={zoomChoice} onChange={setZoomChoice} />
           <button
             type="button"
             className="map-fullscreen-button"
@@ -162,6 +161,7 @@ export function MapPanel({
         <div
           ref={scroll}
           className="map-scroll-viewport"
+          data-framing={zoomChoice}
           role="region"
           aria-label="Défilement de la carte"
           tabIndex={0}
@@ -177,7 +177,6 @@ export function MapPanel({
               focusId={focusId}
               onSelect={onSelect}
               onRead={onSelect}
-              onPageFallbackChange={setPageFallback}
               onScopeHotspotHighlight={setScopeHotspotHighlighted}
               perspective=""
               hotspots={visibleHotspots}

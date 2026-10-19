@@ -140,7 +140,26 @@ try {
         await page.getByRole('button', { name: mode, exact: true }).click();
         await checkRows(false);
         await noPageOverflow();
-        if (width === 320) {
+        if (mode === 'Pleine page') {
+          await page.waitForFunction(() => {
+            const viewport = document.querySelector('.map-scroll-viewport');
+            if (!viewport?.querySelector('.graph-canvas.zoom-page')) return false;
+            const frame = viewport.getBoundingClientRect();
+            return (
+              viewport.scrollHeight <= viewport.clientHeight + 1 &&
+              viewport.scrollWidth <= viewport.clientWidth + 1 &&
+              [...viewport.querySelectorAll('.business-card')].every((element) => {
+                const box = element.getBoundingClientRect();
+                return (
+                  box.left >= frame.left - 1 &&
+                  box.right <= frame.right + 1 &&
+                  box.top >= frame.top - 1 &&
+                  box.bottom <= frame.bottom + 1
+                );
+              })
+            );
+          });
+        } else if (width === 320) {
           const canvas = page.locator('.map-scroll-viewport:has(.graph-canvas.fixed-placement.zoom-width)');
           await canvas.waitFor();
           assert.ok(await canvas.evaluate((element) => element.scrollWidth > element.clientWidth));

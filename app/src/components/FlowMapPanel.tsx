@@ -19,11 +19,10 @@ import { productFor, projectedApplicationMapIds, selectionMappings } from '../ap
 import { flowExchangeContract, flowMapBoundaryRelations, flowMapDetailBoxes } from '../flowMapDetail';
 import { buildFlowMap, type FlowMapBox } from '../flowMapLayout';
 import { flowMapBoundaryDestinations, flowMapPresentation } from '../flowMapPresentation';
-import { flowRibbonPath, roundedFlowPath, routeFlowExchange } from '../flowMapRouting';
+import { flowRibbonPath, roundedFlowPath } from '../flowMapRouting';
 import {
   flowRouteInViewport,
   flowTargetFocus,
-  placeFlowExchangeLabel,
   resizeFlowCamera,
   standardFlowCamera,
   visibleFlowHotspotAnchor,
@@ -354,7 +353,6 @@ export function FlowMapPanel(props: MapPanelProps) {
     [presentation.boxes, visibleIds],
   );
   const anchorIds = useMemo(() => new Set(detailBoxes.map((box) => box.id)), [detailBoxes]);
-  const flowExpandedIds = useMemo(() => new Set(flowBoxes.map((box) => box.parentId)), [flowBoxes]);
   const displayedSelectionId = visibleAncestorId(model, selectedId, anchorIds);
   const expandedIds = useMemo(() => new Set(visibleBoxes.map((box) => box.parentId)), [visibleBoxes]);
   const catalog = model.raw.application_catalog;
@@ -657,60 +655,35 @@ export function FlowMapPanel(props: MapPanelProps) {
       ],
     }));
   }, [hotspots, anchorIds, scopeId, model, byId, viewport, size, markerObstacles, coarsePointer]);
-  const routes = useMemo(() => {
-    const lanes = new Map<string, number>();
-    return exchanges.map((exchange) => {
-      const pair = [exchange.source.id, exchange.target.id].sort().join('/');
-      const lane = lanes.get(pair) || 0;
-      lanes.set(pair, lane + 1);
-      return {
-        exchange,
-        ...routeFlowExchange(exchange.source, exchange.target, flowBoxes, lane),
-      };
-    });
-  }, [exchanges, flowBoxes]);
   const drawings = useMemo(() => {
     const screen = (point: { x: number; y: number }) => ({
       x: point.x * viewport.zoom,
       y: point.y * viewport.zoom,
     });
-    const obstacles = flowBoxes.map((box) => ({
-      x: box.x * viewport.zoom,
-      y: box.y * viewport.zoom,
-      width: box.width * viewport.zoom,
-      height: flowExpandedIds.has(box.id) ? box.headerHeight * viewport.zoom : box.height * viewport.zoom,
-    }));
-    const placed: { x: number; y: number; width: number; height: number }[] = [];
-    const bounds = { width: layout.width * viewport.zoom, height: layout.height * viewport.zoom };
-    return routes.map(({ exchange, points, labelPoint }) => {
+    const visible = new Map(exchanges.map((exchange) => [exchange.id, exchange]));
+    return (layout.routes || []).flatMap(({ id, points, labelPoint, label: reserved }) => {
+      const exchange = visible.get(id);
+      if (!exchange) return [];
       const pathPoints = points.map(screen);
-      const segments = pathPoints
-        .slice(1)
-        .map((point, index) => ({
-          x: (point.x + pathPoints[index].x) / 2,
-          y: (point.y + pathPoints[index].y) / 2,
-          length: Math.abs(point.x - pathPoints[index].x) + Math.abs(point.y - pathPoints[index].y),
-        }))
-        .sort((a, b) => b.length - a.length);
-      const width = Math.min(
-        190,
-        Math.max(84, Math.min(exchange.caption.length * 5.5 + 10, (segments[0]?.length || 120) - 40)),
-      );
-      const height = 53;
-      const label = placeFlowExchangeLabel([screen(labelPoint), ...segments], bounds, { width, height }, [
-        ...obstacles,
-        ...placed,
-      ]);
-      if (label) placed.push(label);
-      return {
-        exchange,
-        points: pathPoints,
-        path: roundedFlowPath(pathPoints, 10),
-        ribbon: flowRibbonPath(pathPoints, 8, 14),
-        label,
-      };
+      const anchor = screen(labelPoint);
+      // Captions stay attached to their own segment. At overview scale, keep arrows
+      // accessible without allowing a fixed-size caption to spill into another lane.
+      const width = Math.min(190, (reserved?.width || 0) * viewport.zoom);
+      const label =
+        reserved && width >= 84 && reserved.height * viewport.zoom >= 53
+          ? { x: anchor.x - width / 2, y: anchor.y - 53 / 2, width, height: 53, anchor }
+          : undefined;
+      return [
+        {
+          exchange,
+          points: pathPoints,
+          path: roundedFlowPath(pathPoints, 10),
+          ribbon: flowRibbonPath(pathPoints, 8, 14),
+          label,
+        },
+      ];
     });
-  }, [routes, viewport.zoom, flowBoxes, flowExpandedIds, layout.width, layout.height]);
+  }, [layout.routes, viewport.zoom, exchanges]);
 
   const exchangeDetail = selectedExchange && (
     <aside className={`flow-exchange-detail${shortScreen ? ' is-floating' : ''}`} aria-label="Détail du flux">

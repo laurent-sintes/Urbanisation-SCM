@@ -3,8 +3,15 @@ import { MIN_READABLE_ZOOM } from './adaptiveLayout.ts';
 export type MapZoomChoice = 'auto' | 'page' | 'width';
 export type MapZoomMode = 'page' | 'width';
 
+/** Stop subpixel rounding and constant-size overlays from repeatedly changing the fit. */
+export function stablePageFitZoom(fittedZoom: number): number {
+  const step = 10 ** (Math.floor(Math.log10(fittedZoom)) - 2);
+  return Math.floor(fittedZoom / step) * step;
+}
+
 export function resolveMapZoom(choice: MapZoomChoice, detail: number, pageFitZoom = 1): MapZoomMode {
   if (choice === 'width') return 'width';
+  if (choice === 'page') return 'page';
   if (pageFitZoom < MIN_READABLE_ZOOM) return 'width';
   return choice === 'auto' && detail >= 3 ? 'width' : 'page';
 }

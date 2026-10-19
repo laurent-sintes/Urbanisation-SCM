@@ -1,6 +1,7 @@
 import {
   Background,
   Controls,
+  getViewportForBounds,
   type Node,
   ReactFlow,
   ReactFlowProvider,
@@ -51,7 +52,6 @@ export interface ReactFlowPaneProps {
   focusId?: string;
   onSelect: (id: string) => void;
   onRead: (id: string) => void;
-  onPageFallbackChange: (fallback: boolean) => void;
   perspective: string;
   hotspots?: Hotspot[];
   selectedHotspotId?: string;
@@ -93,11 +93,12 @@ function Canvas(props: ReactFlowPaneProps) {
   const [hoveredHotspotIds, setHoveredHotspotIds] = useState<string[]>([]);
   const [clusterExpanded, setClusterExpanded] = useState(false);
   const [canvasWidth, setCanvasWidth] = useState(0);
+  const [pageWidth, setPageWidth] = useState(0);
   const [availableHeight, setAvailableHeight] = useState(0);
   const [touch, setTouch] = useState(() => matchMedia('(pointer: coarse)').matches);
   const [fullscreen, setFullscreen] = useState(() => Boolean(document.fullscreenElement));
   const [error, setError] = useState('');
-  const { fitView, setViewport } = useReactFlow();
+  const { setViewport, viewportInitialized } = useReactFlow();
   const viewport = useViewport();
   const container = useRef<HTMLDivElement>(null);
   const capabilityOverview = detail >= 3;
@@ -260,7 +261,7 @@ function Canvas(props: ReactFlowPaneProps) {
       };
       const pageGrid = chooseMapGrid(
         gridSections,
-        canvasWidth,
+        pageWidth || canvasWidth,
         minimumHeight,
         'page',
         false,
@@ -387,16 +388,14 @@ function Canvas(props: ReactFlowPaneProps) {
     areaSections,
     cardHeights,
     canvasWidth,
+    pageWidth,
     detail,
     minimumHeight,
     zoomMode,
     fixedSlots,
   ]);
   const effectiveZoomMode = layout.mode;
-  useEffect(() => {
-    props.onPageFallbackChange(zoomMode === 'page' && effectiveZoomMode === 'width' && layout.nodes.length > 0);
-  }, [zoomMode, effectiveZoomMode, layout.nodes.length, props.onPageFallbackChange]);
-  const nativeTouchScroll = (effectiveZoomMode === 'width' || capabilityOverview) && touch;
+  const nativeTouchScroll = effectiveZoomMode === 'width' && touch;
   const widthFrame =
     layout.width && canvasWidth ? widthFit(layout.width, layout.height, canvasWidth, minimumHeight, true) : undefined;
   const surfaceWidth = effectiveZoomMode === 'width' ? Math.max(canvasWidth, layout.width + 32) : undefined;
@@ -404,15 +403,62 @@ function Canvas(props: ReactFlowPaneProps) {
   const frameY = widthFrame?.y;
   const frameZoom = widthFrame?.zoom;
   useEffect(() => {
-    if (!layout.nodes.length || !canvasWidth) return;
+    if (!viewportInitialized || !layout.nodes.length || !canvasWidth) return;
     const id = setTimeout(() => {
       const duration = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 220;
       if (effectiveZoomMode === 'width' && frameX !== undefined && frameY !== undefined && frameZoom !== undefined)
         void setViewport({ x: frameX, y: frameY, zoom: frameZoom }, { duration });
-      else void fitView({ padding: fullscreen ? 0.04 : 0.01, maxZoom: 1, duration });
+      else
+        void setViewport(
+          getViewportForBounds(
+            { x: 0, y: 0, width: layout.width, height: layout.height },
+            canvasWidth,
+            minimumHeight,
+            0,
+            1,
+            fullscreen ? 0.04 : 0.01,
+          ),
+          { duration },
+        );
     }, 80);
     return () => clearTimeout(id);
-  }, [layout, canvasWidth, fitView, setViewport, fullscreen, effectiveZoomMode, frameX, frameY, frameZoom]);
+  }, [
+    viewportInitialized,
+    layout,
+    canvasWidth,
+    minimumHeight,
+    setViewport,
+    fullscreen,
+    effectiveZoomMode,
+    frameX,
+    frameY,
+    frameZoom,
+  ]);
+  useEffect(() => {
+    // A queued page fit can finish after a framing change. Width mode has one
+    // fixed camera; reading moves through the outer native scrollport.
+    if (
+      effectiveZoomMode === 'width' &&
+      viewportInitialized &&
+      frameX !== undefined &&
+      frameY !== undefined &&
+      frameZoom !== undefined &&
+      (Math.abs(viewport.x - frameX) > 0.01 ||
+        Math.abs(viewport.y - frameY) > 0.01 ||
+        Math.abs(viewport.zoom - frameZoom) > 0.001)
+    )
+      void setViewport({ x: frameX, y: frameY, zoom: frameZoom }, { duration: 0 });
+  }, [
+    effectiveZoomMode,
+    viewportInitialized,
+    frameX,
+    frameY,
+    frameZoom,
+    viewport.x,
+    viewport.y,
+    viewport.zoom,
+    setViewport,
+  ]);
   useEffect(() => {
     if (!focusId || !layout.nodes.length) return;
     const timer = setTimeout(() => {
@@ -444,17 +490,35 @@ function Canvas(props: ReactFlowPaneProps) {
     if (!target) return;
     const scroll = target.closest<HTMLElement>('.map-scroll-viewport');
     const update = () => {
-      setCanvasWidth(target.clientWidth);
-      const legend = scroll?.querySelector<HTMLElement>('.hotspot-map-legend');
-      setAvailableHeight(Math.max(60, (scroll?.clientHeight || target.clientHeight) - (legend?.offsetHeight || 0)));
+      // Use the visible scrollport, independently of the map surface's intrinsic size.
+      setCanvasWidth(scroll?.clientWidth || target.clientWidth);
+      setPageWidth(scroll ? scroll.getBoundingClientRect().width - scroll.clientLeft * 2 : target.clientWidth);
+      const offset = scroll
+        ? target.getBoundingClientRect().top - scroll.getBoundingClientRect().top + scroll.scrollTop - scroll.clientTop
+        : 0;
+      setAvailableHeight(Math.max(60, (scroll?.clientHeight || target.clientHeight) - offset));
     };
     const observer = new ResizeObserver(update);
-    observer.observe(target);
-    if (scroll) observer.observe(scroll);
-    const legend = scroll?.querySelector<HTMLElement>('.hotspot-map-legend');
-    if (legend) observer.observe(legend);
-    const mutations = new MutationObserver(update);
+    const observed = new Set<Element>();
+    const observe = () => {
+      const elements = new Set<Element>([target, ...(scroll ? [scroll, ...scroll.children] : [])]);
+      for (const element of observed)
+        if (!elements.has(element)) {
+          observer.unobserve(element);
+          observed.delete(element);
+        }
+      for (const element of elements)
+        if (!observed.has(element)) {
+          observer.observe(element);
+          observed.add(element);
+        }
+      update();
+    };
+    // Observe the complete legend shell, including its compact toggle, and any
+    // other header row. Changes of overlays must reframe the remaining space.
+    const mutations = new MutationObserver(observe);
     if (scroll) mutations.observe(scroll, { childList: true });
+    observe();
     return () => {
       observer.disconnect();
       mutations.disconnect();
@@ -602,8 +666,6 @@ function Canvas(props: ReactFlowPaneProps) {
   const [textObstacles, setTextObstacles] = useState<{ x: number; y: number; width: number; height: number }[]>([]);
   const [measuredMarkerPositions, setMeasuredMarkerPositions] = useState<Record<string, { x: number; y: number }>>({});
   const [textMeasurementVersion, setTextMeasurementVersion] = useState(0);
-  const measurementViewport = useRef(viewport);
-  measurementViewport.current = viewport;
   // biome-ignore lint/correctness/useExhaustiveDependencies: A new layout replaces the card elements being observed.
   useEffect(() => {
     const surface = container.current?.querySelector<HTMLElement>('.map-flow-surface');
@@ -627,8 +689,15 @@ function Canvas(props: ReactFlowPaneProps) {
   useLayoutEffect(() => {
     const frame = requestAnimationFrame(() => {
       const surface = container.current?.querySelector<HTMLElement>('.map-flow-surface');
-      const { x: panX, y: panY, zoom } = measurementViewport.current;
-      if (!surface || !zoom) return;
+      const flowViewport = surface?.querySelector<HTMLElement>('.react-flow__viewport');
+      if (!surface || !flowViewport) return;
+      // The DOM can finish framing before React publishes its camera state. Read
+      // the transform applied to the same rectangles to keep anchors in world space.
+      const matrix = new DOMMatrix(getComputedStyle(flowViewport).transform);
+      const panX = matrix.e,
+        panY = matrix.f,
+        zoom = matrix.a;
+      if (!zoom) return;
       const surfaceRect = surface.getBoundingClientRect();
       const targets = [...surface.querySelectorAll<HTMLElement>('[data-business-area-summary], [data-map-item-id]')];
       const targetById = new Map<string, HTMLElement>();
@@ -648,7 +717,7 @@ function Canvas(props: ReactFlowPaneProps) {
           if (!card || targets.some((target) => target.closest('.business-card') !== card)) continue;
         }
         const rects = targets.map((target) => target.getBoundingClientRect());
-        const x = (Math.max(...rects.map((rect) => rect.right)) - 16 - surfaceRect.left - panX) / zoom;
+        const x = (Math.max(...rects.map((rect) => rect.right)) - surfaceRect.left - panX) / zoom - 16;
         const y = (rects[0].top + rects[0].height / 2 - surfaceRect.top - panY) / zoom;
         next[marker.id] = { x, y };
       }
@@ -783,7 +852,7 @@ function Canvas(props: ReactFlowPaneProps) {
       : [];
   if (emptyScope && referenceCapabilities.length)
     return (
-      <div className="graph-canvas empty-state">
+      <div ref={container} className="graph-canvas empty-state" style={{ height: 'auto', minHeight: minimumHeight }}>
         <NodeIcon node={emptyScope} size={38} />
         <h2>{emptyScope.name}</h2>
         <p>
@@ -807,7 +876,7 @@ function Canvas(props: ReactFlowPaneProps) {
     !childrenOf(model, emptyScope.id).length
   )
     return (
-      <div className="graph-canvas empty-state">
+      <div ref={container} className="graph-canvas empty-state" style={{ height: 'auto', minHeight: minimumHeight }}>
         <NodeIcon node={emptyScope} size={38} />
         <h2>{emptyScope.name}</h2>
         <p>Aucun élément publié dans ce périmètre.</p>
@@ -850,10 +919,8 @@ function Canvas(props: ReactFlowPaneProps) {
           zoomOnPinch={effectiveZoomMode === 'page' && !nativeTouchScroll}
           zoomOnScroll={effectiveZoomMode === 'page' && !capabilityOverview}
           preventScrolling={effectiveZoomMode === 'page' && !capabilityOverview}
-          minZoom={effectiveZoomMode === 'page' ? 0.01 : 0.2}
+          minZoom={effectiveZoomMode === 'page' ? 0 : 0.2}
           maxZoom={2}
-          fitView
-          fitViewOptions={{ padding: fullscreen ? 0.04 : 0.01, maxZoom: 1 }}
           proOptions={{ hideAttribution: false }}
           ariaLabelConfig={{
             'controls.zoomIn.ariaLabel': 'Agrandir',

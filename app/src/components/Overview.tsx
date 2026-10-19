@@ -1,11 +1,12 @@
 import { Maximize2, Minimize2 } from 'lucide-react';
 import { type CSSProperties, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
-import { MIN_READABLE_ZOOM, overviewLayout, prominentChildIndex } from '../adaptiveLayout';
+import { overviewLayout, prominentChildIndex } from '../adaptiveLayout';
 import { applicationMapIds, projectedApplicationMapIds, selectionMappings } from '../applicationCatalog';
 import { filterMapHotspots, type HotspotMapFilters, hotspotRelatedElementIds } from '../hotspotMap';
 import { HOTSPOT_DIAMETERS, type HotspotPlacementGroup, layoutHotspots } from '../hotspotPlacement';
 import { NodeIcon } from '../icons';
 import { operationsMapSlots, systemMapSlots } from '../mapPlacement';
+import { resolveMapZoom, stablePageFitZoom } from '../mapZoom';
 import { childrenOf, descendantsOf, lineageOf, rootsOf, visibleAncestorId } from '../model';
 import type { PublishedModel } from '../types';
 import { useCatalogueScrollMemory } from '../useCatalogueScrollMemory';
@@ -65,9 +66,8 @@ export function Overview({
   useCatalogueScrollMemory(scroll, model.version, undefined, restoreViewport, '.overview-system');
   const grid = useRef<HTMLDivElement>(null);
   const [zoomChoice, setZoomChoice] = useMapZoomChoice();
-  const [frame, setFrame] = useState({ width: 1232, height: 0, pageZoom: 1 });
-  const scale = zoomChoice !== 'width' && frame.pageZoom >= MIN_READABLE_ZOOM ? frame.pageZoom : 1;
-  const pageFallback = frame.pageZoom < MIN_READABLE_ZOOM;
+  const [frame, setFrame] = useState({ width: 0, height: 0, pageZoom: 1 });
+  const scale = resolveMapZoom(zoomChoice, detail, frame.pageZoom) === 'page' ? frame.pageZoom : 1;
   // biome-ignore lint/correctness/useExhaustiveDependencies: Detail and framing intentionally reset the map viewport.
   useEffect(() => {
     scroll.current?.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -218,23 +218,45 @@ export function Overview({
     const measure = () => {
       const offset = content.getBoundingClientRect().top - target.getBoundingClientRect().top + target.scrollTop;
       const height = Math.max(1, target.clientHeight - offset - 24);
+      const pageWidth = target.getBoundingClientRect().width - target.clientLeft * 2;
+      const style = getComputedStyle(content);
+      const minimumWidth = Math.max(
+        Number.parseFloat(style.minWidth) || 0,
+        zoomChoice === 'page' ? Number.parseFloat(style.getPropertyValue('--overview-page-min-width')) || 0 : 0,
+      );
       const next = {
-        width: systemSlots ? Math.max(1232, target.clientWidth) : target.clientWidth,
+        width: Math.max(minimumWidth, target.clientWidth),
         height: content.offsetHeight,
-        pageZoom: Math.min(
-          1,
-          target.clientWidth / Math.max(1, content.offsetWidth),
-          height / Math.max(1, content.offsetHeight),
+        pageZoom: stablePageFitZoom(
+          Math.min(1, pageWidth / Math.max(1, content.offsetWidth), height / Math.max(1, content.offsetHeight)),
         ),
       };
       setFrame((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));
     };
     const observer = new ResizeObserver(measure);
-    observer.observe(target);
-    observer.observe(content);
-    measure();
-    return () => observer.disconnect();
-  }, [systemSlots]);
+    const observed = new Set<Element>();
+    const observe = () => {
+      const elements = new Set<Element>([target, content, ...target.children]);
+      for (const element of observed)
+        if (!elements.has(element)) {
+          observer.unobserve(element);
+          observed.delete(element);
+        }
+      for (const element of elements)
+        if (!observed.has(element)) {
+          observer.observe(element);
+          observed.add(element);
+        }
+      measure();
+    };
+    const mutations = new MutationObserver(observe);
+    mutations.observe(target, { childList: true });
+    observe();
+    return () => {
+      observer.disconnect();
+      mutations.disconnect();
+    };
+  }, [zoomChoice]);
   // biome-ignore lint/correctness/useExhaustiveDependencies: Detail and width change the measured DOM layout.
   useLayoutEffect(() => {
     if (clusterExpanded) return;
@@ -361,7 +383,7 @@ export function Overview({
               onChange={onApplicationChange}
             />
           )}
-          <MapZoomPicker choice={zoomChoice} onChange={setZoomChoice} pageFallback={pageFallback} />
+          <MapZoomPicker choice={zoomChoice} onChange={setZoomChoice} />
           <button
             type="button"
             className="map-fullscreen-button"
@@ -383,6 +405,7 @@ export function Overview({
         <div
           ref={scroll}
           className="overview-map-scroll"
+          data-framing={zoomChoice}
           role="region"
           aria-label="Carte des systèmes métier"
           tabIndex={0}
@@ -425,7 +448,8 @@ export function Overview({
               style={
                 {
                   width: frame.width,
-                  zoom: scale,
+                  transform: `scale(${scale})`,
+                  transformOrigin: 'top left',
                   '--overview-scale': scale,
                 } as CSSProperties
               }

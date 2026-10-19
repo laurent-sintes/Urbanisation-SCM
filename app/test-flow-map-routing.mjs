@@ -1,8 +1,127 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
-import { flowRibbonPath, roundedFlowPath, routeFlowExchange } from './src/flowMapRouting.ts';
+import { buildFlowMap } from './src/flowMapLayout.ts';
+import { flowRibbonPath, roundedFlowPath, routeFlowExchange, routeFlowExchanges } from './src/flowMapRouting.ts';
+import { FLOW_STUB, FLOW_TRACK, spaceFlowMap } from './src/flowMapSpacing.ts';
+import { adaptPublication } from './src/model.ts';
 
 const box = (id, x, y, width = 100, height = 100) => ({ id, x, y, width, height });
+
+const denseBoxes = [
+  [0, 0],
+  [428, 0],
+  [856, 220],
+  [856, 0],
+  [428, 220],
+  [856, 440],
+  [1284, 0],
+  [1284, 220],
+  [0, 220],
+].map(([x, y], index) => ({ ...box(`territory-${index}`, x, y, 288, 80), node: { kind: 'area' } }));
+const denseEdges = [
+  [7, 3],
+  [5, 4],
+  [5, 3],
+  [4, 5],
+  [3, 4],
+  [1, 5],
+  [1, 4],
+  [7, 4],
+  [7, 5],
+  [7, 8, 'knowledge'],
+  [8, 7, 'knowledge'],
+  [8, 3, 'knowledge'],
+  [3, 7, 'knowledge'],
+  [5, 7, 'knowledge'],
+  [2, 4],
+  [4, 3],
+  [3, 2],
+  [4, 2],
+  [7, 2],
+  [7, 6],
+  [3, 6],
+  [7, 8],
+  [8, 7],
+  [8, 6],
+  [4, 6],
+  [2, 6],
+].map(([source, target, type = 'data'], index) => ({
+  id: `edge-${index}`,
+  sourceId: `territory-${source}`,
+  targetId: `territory-${target}`,
+  type,
+}));
+
+test('dense flow spacing preserves row and column ordering and counts projected pairs rather than raw relations', () => {
+  const spaced = spaceFlowMap(denseBoxes, denseEdges);
+  for (const a of denseBoxes)
+    for (const b of denseBoxes)
+      for (const axis of ['x', 'y'])
+        assert.equal(
+          Math.sign(spaced.find((box) => box.id === a.id)[axis] - spaced.find((box) => box.id === b.id)[axis]),
+          Math.sign(a[axis] - b[axis]),
+        );
+  assert.deepEqual(
+    spaceFlowMap(denseBoxes, [...denseEdges, { ...denseEdges[0], id: 'another-original-relation' }]),
+    spaced,
+  );
+  const plan = spaced.find((box) => box.id === 'territory-4');
+  assert.ok(plan.height >= 5 * FLOW_TRACK, 'Busy faces reserve room for distinct ports');
+  assert.ok(plan.x - spaced[0].x - spaced[0].width > 200, 'Flow traffic expands the corridor');
+});
+
+test('joint routing gives every dense exchange distinct ports, endpoint clearance and an unambiguous text bay', () => {
+  const boxes = spaceFlowMap(denseBoxes, denseEdges);
+  const byId = new Map(boxes.map((box) => [box.id, box]));
+  const inputs = denseEdges.map((edge) => ({
+    id: edge.id,
+    source: byId.get(edge.sourceId),
+    target: byId.get(edge.targetId),
+  }));
+  const routes = routeFlowExchanges(inputs, boxes);
+  const endpointKeys = new Set();
+  for (const [index, route] of routes.entries()) {
+    verify(route, inputs[index].source, inputs[index].target, boxes);
+    assert.ok(route.label, `${route.id} keeps its caption at the natural scale`);
+    for (const [end, point, next] of [
+      [inputs[index].source.id, route.points[0], route.points[1]],
+      [inputs[index].target.id, route.points.at(-1), route.points.at(-2)],
+    ]) {
+      const key = `${end}/${point.x}/${point.y}`;
+      assert.ok(!endpointKeys.has(key), 'Incoming and outgoing exchanges never share an attachment');
+      endpointKeys.add(key);
+      assert.ok(
+        Math.hypot(point.x - next.x, point.y - next.y) >= FLOW_STUB,
+        'A clear straight lead identifies each endpoint',
+      );
+    }
+    const anchor = route.labelPoint;
+    assert.ok(
+      route.points.slice(1).some((b, i) => {
+        const a = route.points[i];
+        return (
+          (a.x === b.x && anchor.x === a.x && anchor.y >= Math.min(a.y, b.y) && anchor.y <= Math.max(a.y, b.y)) ||
+          (a.y === b.y && anchor.y === a.y && anchor.x >= Math.min(a.x, b.x) && anchor.x <= Math.max(a.x, b.x))
+        );
+      }),
+      'The caption belongs to an actual segment, with no detached leader',
+    );
+    for (const other of routes)
+      if (other.id !== route.id)
+        for (let i = 1; i < other.points.length; i++)
+          assert.equal(
+            crossesInterior(other.points[i - 1], other.points[i], route.label),
+            false,
+            `${other.id} avoids ${route.id}'s caption`,
+          );
+  }
+  const stable = (items) => items.toSorted((a, b) => a.id.localeCompare(b.id));
+  assert.deepEqual(
+    stable(routeFlowExchanges([...inputs].reverse(), boxes)),
+    stable(routes),
+    'Input iteration order cannot change the negotiated routes',
+  );
+});
 const onBoundary = (point, rectangle) =>
   point.x >= rectangle.x &&
   point.x <= rectangle.x + rectangle.width &&
@@ -31,7 +150,72 @@ function verify(route, source, target, obstacles) {
     assert.ok(a.x === b.x || a.y === b.y, 'Every segment is orthogonal');
     for (const obstacle of obstacles) assert.equal(crossesInterior(a, b, obstacle), false, `Avoid ${obstacle.id}`);
   }
+  const segments = route.points.slice(1).map((b, index) => ({ a: route.points[index], b }));
+  for (const [index, first] of segments.entries())
+    for (const second of segments.slice(index + 2)) {
+      const horizontal = first.a.y === first.b.y;
+      const otherHorizontal = second.a.y === second.b.y;
+      let overlaps = false;
+      if (horizontal === otherHorizontal) {
+        const level = (point) => (horizontal ? point.y : point.x);
+        const along = (point) => (horizontal ? point.x : point.y);
+        overlaps =
+          level(first.a) === level(second.a) &&
+          Math.min(Math.max(along(first.a), along(first.b)), Math.max(along(second.a), along(second.b))) >
+            Math.max(Math.min(along(first.a), along(first.b)), Math.min(along(second.a), along(second.b)));
+      } else {
+        const h = horizontal ? first : second,
+          v = horizontal ? second : first;
+        overlaps =
+          v.a.x >= Math.min(h.a.x, h.b.x) &&
+          v.a.x <= Math.max(h.a.x, h.b.x) &&
+          h.a.y >= Math.min(v.a.y, v.b.y) &&
+          h.a.y <= Math.max(v.a.y, v.b.y);
+      }
+      assert.equal(overlaps, false, 'A directed arrow never crosses itself or its own fixed endpoint leads');
+    }
 }
+
+test('a backward diagonal BA exchange cannot loop across its final lead while passing its caption', () => {
+  const publication = adaptPublication({
+    version: 'diagonal-regression',
+    space: 'release',
+    nodes: [
+      { id: 'scope', kind: 'area', fields: { name: 'Scope' } },
+      ...[0, 1, 2, 3].map((index) => ({ id: `ba-${index}`, kind: 'business_area', fields: { name: `Area ${index}` } })),
+    ],
+    relations: [
+      ...[0, 1, 2, 3].map((index) => ({
+        id: `parent-${index}`,
+        type: 'contains',
+        source_id: 'scope',
+        target_id: `ba-${index}`,
+      })),
+      ...[
+        [0, 1],
+        [1, 3],
+        [2, 1],
+      ].map(([source, target]) => ({
+        id: `flow-${source}-${target}`,
+        type: 'provides-knowledge',
+        source_id: `ba-${source}`,
+        target_id: `ba-${target}`,
+      })),
+    ],
+  });
+  const { boxes, routes } = buildFlowMap(publication, 'scope', { overviewDepth: 0 });
+  assert.equal(routes.length, 3);
+  for (const route of routes) {
+    const [source, target] = route.id.split('/');
+    verify(
+      route,
+      boxes.find((box) => box.id === source),
+      boxes.find((box) => box.id === target),
+      boxes,
+    );
+    assert.ok(route.label);
+  }
+});
 
 test('neighbor routes meet horizontal and vertical borders with a directed endpoint', () => {
   const source = box('source', 0, 0);

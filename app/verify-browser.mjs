@@ -7,6 +7,28 @@ import { browserOptions, chromium } from './browser-runtime.mjs';
 import { projectDependencies } from './src/dependencyGraph.ts';
 import { adaptPublication } from './src/model.ts';
 
+async function expectCompletePage(page) {
+  await page.waitForFunction(() => {
+    const viewport = document.querySelector('.map-scroll-viewport');
+    const cards = [...document.querySelectorAll('.graph-canvas.zoom-page .business-card')];
+    if (!viewport || !cards.length) return false;
+    const frame = viewport.getBoundingClientRect();
+    return (
+      viewport.scrollHeight <= viewport.clientHeight + 1 &&
+      viewport.scrollWidth <= viewport.clientWidth + 1 &&
+      cards.every((card) => {
+        const box = card.getBoundingClientRect();
+        return (
+          box.left >= frame.left - 1 &&
+          box.right <= frame.right + 1 &&
+          box.top >= frame.top - 1 &&
+          box.bottom <= frame.bottom + 1
+        );
+      })
+    );
+  });
+}
+
 const root = path.dirname(fileURLToPath(import.meta.url));
 const dist = path.join(root, 'dist');
 const output = path.join(root, '.runtime/qa-browser');
@@ -407,6 +429,54 @@ try {
     0,
     'The scope has no duplicate enclosing card',
   );
+  if (domain.id === 'supply-chain-orchestration') {
+    for (const [height, enabled] of [
+      [900, false],
+      [1000, true],
+    ]) {
+      await page.setViewportSize({ width: 1440, height });
+      await visit({ view: 'map', node: domain.id, scope: domain.id, mapDepth: '1', hf: JSON.stringify({ enabled }) });
+      await page.getByRole('button', { name: 'Pleine page', exact: true }).click();
+      await page.locator('.graph-canvas.zoom-page').waitFor();
+      await page.waitForFunction(() => {
+        const viewport = document.querySelector('.map-scroll-viewport');
+        if (
+          !viewport ||
+          viewport.scrollHeight > viewport.clientHeight + 1 ||
+          viewport.scrollWidth > viewport.clientWidth + 1
+        )
+          return false;
+        const bounds = viewport.getBoundingClientRect();
+        const cards = [...viewport.querySelectorAll('.business-card')];
+        return (
+          cards.length > 0 &&
+          cards.every((card) => {
+            const rect = card.getBoundingClientRect();
+            return (
+              rect.top >= bounds.top - 1 &&
+              rect.bottom <= bounds.bottom + 1 &&
+              rect.left >= bounds.left - 1 &&
+              rect.right <= bounds.right + 1
+            );
+          })
+        );
+      });
+      await page.locator('.catalogue-navigator.is-closed').waitFor();
+    }
+    checks.push(
+      'Subdomain page framing uses natural card heights and fits without scrolling, with or without hotspots',
+    );
+    await page.setViewportSize({ width: 1440, height: 1000 });
+    await visit({
+      view: 'map',
+      node: domain.id,
+      scope: domain.id,
+      mapDepth: '4',
+      hf: JSON.stringify({ enabled: false }),
+    });
+    await page.getByRole('button', { name: 'Pleine largeur', exact: true }).click();
+    await page.locator('.graph-canvas.zoom-width').waitFor();
+  }
   const scopeTitle = page.locator('.map-toolbar .map-scope-title');
   await expectTooltip(scopeTitle, domain.fields.name);
   const titleRoute = page.url();
@@ -416,7 +486,19 @@ try {
   await page.keyboard.press('Escape');
   await page.locator('.map-node-tooltip').waitFor({ state: 'hidden' });
   assert.ok(await scopeTitle.evaluate((element) => document.activeElement === element));
+  const catalogueViewport = page.locator('.map-scroll-viewport');
+  const openViewport = await catalogueViewport.boundingBox();
+  const navigatorBounds = await page.locator('.catalogue-navigator').boundingBox();
+  assert.ok(
+    navigatorBounds.y < openViewport.y + openViewport.height && navigatorBounds.y >= openViewport.y,
+    'The navigator overlays the map',
+  );
   await page.getByRole('button', { name: 'Réduire le navigateur de carte', exact: true }).click();
+  const foldedViewport = await catalogueViewport.boundingBox();
+  assert.ok(
+    Math.abs(foldedViewport.height - openViewport.height) < 1,
+    'Folding the overlay never changes the map viewport height',
+  );
   await page.getByRole('button', { name: 'Afficher le navigateur de carte', exact: true }).click();
   const catalogueNavigator = page.getByRole('region', { name: 'Déplacer la zone visible de la carte', exact: true });
   await catalogueNavigator.focus();
@@ -540,37 +622,10 @@ try {
     if (await term.count()) await expectTooltip(term, 'Supply Chain', true);
   }
   await page.getByRole('button', { name: 'Pleine page' }).click();
-  await page.waitForFunction(() => {
-    const canvas = document.querySelector('.graph-canvas');
-    const cards = [...document.querySelectorAll('.graph-canvas .business-card')];
-    if (!canvas || !cards.length) return false;
-    const frame = canvas.getBoundingClientRect();
-    const readable =
-      Number(
-        document
-          .querySelector('.react-flow__viewport')
-          ?.getAttribute('style')
-          ?.match(/scale\(([^)]+)\)/)?.[1] || 0,
-      ) >= 0.85;
-    if (!readable) return false;
-    return cards.every((card) => {
-      const box = card.getBoundingClientRect();
-      return box.left >= frame.left - 2 && box.right <= frame.right + 2;
-    });
-  });
-  if (await page.locator('.graph-canvas.zoom-width').count()) {
-    const pageButton = page.getByRole('button', { name: 'Pleine page' });
-    await pageButton.locator('.map-zoom-asterisk').waitFor();
-    assert.equal(await page.locator('.graph-canvas .map-layout-note').count(), 0);
-    await pageButton.hover();
-    const explanation = page.getByRole('tooltip').filter({ hasText: 'Parcours à taille de lecture' });
-    await explanation.waitFor();
-    await pageButton.focus();
-    assert.equal(await explanation.isVisible(), true);
-  }
+  await expectCompletePage(page);
   await page.getByRole('button', { name: 'Réduire la carte' }).click();
   await page.waitForFunction(() => !document.fullscreenElement);
-  checks.push('Full screen controls and readable page framing');
+  checks.push('Full screen controls and complete page framing');
 
   const freshFraming = await browser.newPage({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce' });
   freshFraming.on('pageerror', (error) => errors.push(error.message));
@@ -584,15 +639,24 @@ try {
   await freshFraming.getByRole('button', { name: 'Auto', exact: true }).click();
   const pageFraming = freshFraming.getByRole('button', { name: 'Pleine page' });
   await pageFraming.click();
-  await pageFraming.locator('.map-zoom-asterisk').waitFor();
-  const framingExplanation = freshFraming.getByRole('tooltip').filter({ hasText: 'Parcours à taille de lecture' });
-  await framingExplanation.waitFor();
-  assert.equal(await pageFraming.getAttribute('aria-describedby'), await framingExplanation.getAttribute('id'));
-  await freshFraming.keyboard.press('Escape');
-  await framingExplanation.waitFor({ state: 'hidden' });
-  assert.equal(await pageFraming.evaluate((element) => element === document.activeElement), true);
+  await expectCompletePage(freshFraming);
+  assert.ok(
+    await freshFraming
+      .locator('.react-flow__viewport')
+      .evaluate((element) => Number(element.style.transform.match(/scale\(([^)]+)\)/)?.[1]) < 0.85),
+  );
+  assert.equal(await freshFraming.locator('.map-zoom-asterisk,.map-zoom-tooltip').count(), 0);
+  await freshFraming.getByRole('button', { name: 'Pleine largeur', exact: true }).click();
+  await freshFraming.waitForFunction(() => {
+    const viewport = document.querySelector('.map-scroll-viewport');
+    return (
+      document.querySelector('.graph-canvas.zoom-width') &&
+      viewport.scrollHeight > viewport.clientHeight + 1 &&
+      document.querySelector('.react-flow__viewport')?.style.transform.includes('scale(1)')
+    );
+  });
   await freshFraming.close();
-  checks.push('Desktop page fallback explains itself on the first activation and dismisses with Escape');
+  checks.push('Dense page fits below 85 percent; width restores native scale and scrolling');
 
   const sparseScope = model.nodes.find(
     (node) =>
@@ -721,7 +785,7 @@ try {
     { scope: '@root', node: '', mapDepth: '2' },
     { scope: domain.id, node: domain.id, mapDepth: '4' },
   ]) {
-    await page.setViewportSize({ width: 980, height: 800 });
+    await page.setViewportSize({ width: params.scope === '@root' ? 600 : 980, height: 800 });
     await visit({ view: 'map', ...params });
     await page.getByRole('button', { name: 'Pleine largeur', exact: true }).click();
     await page.waitForFunction(() => {
@@ -807,12 +871,7 @@ try {
   );
   await touchPage.locator('.graph-canvas.touch-scroll .react-flow__pane').waitFor();
   await touchPage.getByRole('button', { name: 'Pleine page' }).tap();
-  await touchPage.locator('.graph-canvas.zoom-width').waitFor();
-  await touchPage.getByRole('button', { name: 'Pleine page' }).locator('.map-zoom-asterisk').waitFor();
-  const touchExplanation = touchPage.getByRole('tooltip').filter({ hasText: 'Parcours à taille de lecture' });
-  await touchExplanation.waitFor();
-  const touchTooltipBox = await touchExplanation.boundingBox();
-  assert.ok(touchTooltipBox && touchTooltipBox.x >= 0 && touchTooltipBox.x + touchTooltipBox.width <= 390);
+  await expectCompletePage(touchPage);
   await touchPage.getByRole('button', { name: 'Pleine largeur' }).tap();
   const touchPane = touchPage.locator('.graph-canvas.touch-scroll .react-flow__pane');
   await touchPane.waitFor();
