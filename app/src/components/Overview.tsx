@@ -5,8 +5,9 @@ import { applicationMapIds, productFor, projectedApplicationMapIds, selectionMap
 import { filterMapHotspots, type HotspotMapFilters, hotspotRelatedElementIds } from '../hotspotMap';
 import {
   CATALOGUE_HOTSPOT_HEADROOM,
+  catalogueHotspotDiameter,
   catalogueHotspotDock,
-  HOTSPOT_DIAMETERS,
+  catalogueHotspotsCompact,
   type HotspotPlacementGroup,
   hotspotPlacementNeedsSpace,
   layoutHotspots,
@@ -356,7 +357,12 @@ export function Overview({
               0,
             ) / targets.length
           : 26;
-        return { id: hotspot.id, x: x + origin.x, y: y + origin.y, diameter: HOTSPOT_DIAMETERS[hotspot.severity] };
+        return {
+          id: hotspot.id,
+          x: x + origin.x,
+          y: y + origin.y,
+          diameter: catalogueHotspotDiameter(hotspot.severity, scale, matchMedia('(pointer: coarse)').matches),
+        };
       });
       const bounds = {
         width: mapFrame.clientWidth,
@@ -474,6 +480,7 @@ export function Overview({
                   <div className="overview-global-marker">
                     <HotspotMapMarker
                       id={item.id}
+                      variant={catalogueHotspotsCompact(scale) ? 'compact' : 'default'}
                       items={[item]}
                       x={32}
                       y={32}
@@ -564,6 +571,7 @@ export function Overview({
                       {groups.map((group) => (
                         <HotspotMapMarker
                           key={group.id}
+                          variant={catalogueHotspotsCompact(scale) ? 'compact' : 'default'}
                           id={group.id}
                           items={systemHotspots.filter((item) => group.ids.includes(item.id))}
                           onExpansionChange={setClusterExpanded}

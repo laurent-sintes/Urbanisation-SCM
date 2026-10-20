@@ -164,7 +164,7 @@ try {
         );
         assert.deepEqual(detachedLeaders, [], 'Every callout remains attached to its displaced hotspot');
         if (width === 1440 && ((!scope && depth === 2) || (scope === 'supply-chain-orchestration' && depth === 4))) {
-          const individuals = page.locator('.hotspot-map-marker[data-id]:not(:has(.hotspot-map-count))');
+          const individuals = page.locator('.hotspot-map-marker[data-id]:not([aria-expanded])');
           for (const marker of await individuals.all()) {
             const id = (await marker.getAttribute('data-id')).slice('hotspot:'.length);
             const hotspot = model.hotspot_catalog.hotspots.find((item) => item.id === id);

@@ -2197,3 +2197,57 @@ button.hotspot-qualification:hover {
   color: #205a43;
   cursor: pointer;
 }
+
+/* Shared compact markers keep reduced maps quiet and retain their touch targets. */
+.hotspot-map-point.is-compact {
+  --marker-size: 32px;
+}
+.hotspot-map-point.is-compact > .hotspot-map-marker {
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #774c33;
+}
+.hotspot-compact-glyph {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgb(var(--hotspot-rgb) / 0.7);
+  border-radius: 50%;
+  background: #fffaf5;
+  box-shadow: 0 1px 2px #203c3912;
+  color: inherit;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1;
+}
+.hotspot-compact-glyph.is-count {
+  font-size: 12px;
+}
+.severity-unassessed.is-compact > .hotspot-map-marker {
+  color: #315d67;
+}
+.is-framing-closed.is-compact > .hotspot-map-marker {
+  color: #52665e;
+}
+.is-framing-closed.is-compact .hotspot-compact-glyph {
+  border-color: #a9bcb2;
+  background: #f4f8f5;
+}
+.is-workshop.is-compact .hotspot-compact-glyph {
+  border-style: dashed;
+}
+.is-compact > .hotspot-map-marker:focus-visible {
+  outline: 2px solid #1f536f;
+  outline-offset: 2px;
+}
+@media (pointer: coarse) {
+  .is-compact > .hotspot-map-marker::before {
+    position: absolute;
+    inset: -6px;
+    content: "";
+    border-radius: 50%;
+  }
+}

@@ -660,7 +660,14 @@ try {
         assert.equal(await remaining.evaluate((element) => Boolean(element.closest('[inert]'))), false);
         const individual = page.locator('.hotspot-map-marker:not([aria-expanded])').first();
         if (await individual.count()) {
-          await individual.locator('xpath=..').locator('.hotspot-info-button').hover();
+          // Restored keyboard focus may expose a compact marker's accessible preview.
+          // Dismiss it before testing a different subject under the pointer.
+          await page.mouse.move(2, 2);
+          await page.keyboard.press('Escape');
+          await page.locator('.hotspot-map-tooltip').waitFor({ state: 'detached' });
+          const info = individual.locator('xpath=..').locator('.hotspot-info-button');
+          if (await info.count()) await info.hover();
+          else await individual.hover();
           const preview = page.locator('.hotspot-map-tooltip').first();
           await preview.waitFor();
           await page.waitForFunction(() => {

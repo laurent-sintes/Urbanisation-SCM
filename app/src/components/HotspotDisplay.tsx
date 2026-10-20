@@ -122,6 +122,7 @@ export function HotspotTooltipButton({
   tip,
   tooltipClass = 'hotspot-map-tooltip',
   previewOnTouch = false,
+  previewOnFocus = true,
   pinOnClick = false,
   tooltipRoot,
   buttonRef,
@@ -131,6 +132,7 @@ export function HotspotTooltipButton({
   tip: ReactNode;
   tooltipClass?: string;
   previewOnTouch?: boolean;
+  previewOnFocus?: boolean;
   pinOnClick?: boolean;
   tooltipRoot?: HTMLElement | null;
   buttonRef?: (element: HTMLButtonElement | null) => void;
@@ -218,7 +220,7 @@ export function HotspotTooltipButton({
             props.onClick?.(event);
           },
           onFocus(event: FocusEvent<HTMLButtonElement>) {
-            if (!escapeDismissed.current) setOpen(true);
+            if (previewOnFocus && !escapeDismissed.current) setOpen(true);
             props.onFocus?.(event);
           },
           onBlur(event: FocusEvent<HTMLButtonElement>) {
@@ -624,6 +626,7 @@ export function HotspotMapMarker({
           title={markerProps['aria-label']}
           tip={tip}
           previewOnTouch={!grouped}
+          previewOnFocus={!grouped}
           closeOnActivate
         >
           <span className={`hotspot-compact-glyph${grouped ? ' is-count' : ''}`} aria-hidden="true">

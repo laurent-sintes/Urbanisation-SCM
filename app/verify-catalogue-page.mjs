@@ -247,6 +247,19 @@ try {
       const state = await capture();
       const integrity = await page.evaluate(catalogueTextIntegrity);
       const failures = [];
+      if (variant === 'initial' && state.width <= 700 && state.navigator?.includes('is-open'))
+        failures.push('mobile navigator starts open');
+      if (state.scale < 0.5 && item.layer.hotspots) {
+        const markers = await page.locator('.hotspot-map-marker').evaluateAll((elements) =>
+          elements.map((element) => ({
+            compact: element.closest('.hotspot-map-point')?.classList.contains('is-compact'),
+            diameter: element.getBoundingClientRect().width,
+            halo: !!element.parentElement.querySelector('.hotspot-map-halo'),
+          })),
+        );
+        if (markers.some((marker) => !marker.compact || marker.diameter > 33 || marker.halo))
+          failures.push('large hotspots dominate reduced map');
+      }
       if (integrity.collisions.length) failures.push(`hotspots cover text: ${JSON.stringify(integrity.collisions)}`);
       if (mode === 'width') {
         if (integrity.unreadable.length) failures.push(`unreadable titles: ${integrity.unreadable.join(', ')}`);

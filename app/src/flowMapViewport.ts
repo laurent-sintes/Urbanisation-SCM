@@ -13,10 +13,12 @@ export function fitFlowCamera(
   bounds: { width: number; height: number },
   framing: 'width' | 'all',
 ): FlowCamera {
-  // Dense, small overviews need a ring of free pixels for readable titles and flow identifiers.
-  const crowdedOverview = framing === 'all' && world.boxes.length >= 6 && (bounds.width < 500 || bounds.height < 220);
-  const insetX = crowdedOverview ? Math.min(80, bounds.width * 0.24) : 16;
-  const insetY = crowdedOverview ? Math.min(70, bounds.height * 0.28) : 16;
+  const insetX = framing === 'all' && world.boxes.length >= 6 && bounds.width < 340 ? 40 : 16;
+  const insetY = 16;
+  // Landscape controls sit in the corners; shrinking the central map again
+  // would leave no room for its own readable identifiers.
+  const footer =
+    framing === 'all' && !(bounds.width > 700 && bounds.height < 220) ? Math.min(56, bounds.height * 0.22) : 0;
   const zoom = Math.min(
     2.5,
     Math.max(
@@ -25,7 +27,7 @@ export function fitFlowCamera(
         ? Math.max(1, bounds.width - 64) / Math.max(1, world.width)
         : Math.min(
             Math.max(1, bounds.width - insetX * 2) / Math.max(1, world.width),
-            Math.max(1, bounds.height - insetY * 2) / Math.max(1, world.height),
+            Math.max(1, bounds.height - insetY * 2 - footer) / Math.max(1, world.height),
           ),
     ),
   );
@@ -34,7 +36,7 @@ export function fitFlowCamera(
     y:
       framing === 'width'
         ? 24 - (world.boxes.length ? Math.min(...world.boxes.map((box) => box.y)) : 0) * zoom
-        : (bounds.height - world.height * zoom) / 2,
+        : (bounds.height - footer - world.height * zoom) / 2,
     zoom,
   };
 }

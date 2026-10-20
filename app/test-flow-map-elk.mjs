@@ -178,12 +178,23 @@ test('dense Supply-style maps preserve all rows, columns, routes and captions', 
       titles,
       overview: true,
     });
-    assert.ok(result.complete, 'Every flow and territory retains an annotation in a small overview');
+    assert.ok(
+      result.complete,
+      `Every flow and territory retains an annotation in ${JSON.stringify(size)}: ${result.titles.size} titles, ${result.captions.size} flows`,
+    );
     const annotations = [...result.captions.values(), ...result.titles.values()].map((rect) => ({
       ...rect,
       x: rect.x + camera.x,
       y: rect.y + camera.y,
     }));
+    for (const [id, title] of result.titles) {
+      const box = byId.get(id),
+        x = box.x * camera.zoom,
+        y = box.y * camera.zoom;
+      const gap = size.height < 220 ? 64 : 32;
+      assert.ok(Math.max(x - title.x - title.width, title.x - x - box.width * camera.zoom, 0) <= gap);
+      assert.ok(Math.max(y - title.y - title.height, title.y - y - box.height * camera.zoom, 0) <= gap);
+    }
     for (const [i, rect] of annotations.entries()) {
       assert.ok(
         ![...annotations.slice(i + 1), ...obstacles].some((other) => flowRectanglesOverlap(rect, other)),
@@ -203,6 +214,103 @@ test('workshop-only changes reuse geometry while structural or publication chang
   assert.notEqual(flowLayoutsFor({ ...model, nodes: [] }), layouts);
   assert.notEqual(flowLayoutsFor({ ...model, relations: [] }), layouts);
   assert.notEqual(flowLayoutsFor({ ...model, version: 'v2' }), layouts);
+});
+
+test('a four-column Supply map keeps all 26 flow identifiers beside touch-sized controls on a 320px phone', async () => {
+  const positions = [
+    [0, 0],
+    [1, 0],
+    [2, 1],
+    [2, 0],
+    [1, 1],
+    [2, 2],
+    [3, 0],
+    [3, 1],
+    [0, 1],
+  ];
+  const names = [
+    'Operational References',
+    'Supply Policy Management',
+    'Inventory Management',
+    'Order Management',
+    'Master Plan',
+    'Availability',
+    'Process Management',
+    'Fulfilment Orchestration',
+    'Service Management',
+  ];
+  const boxes = positions.map(([column, row], i) => ({
+    id: `s${i}`,
+    x: column * 500,
+    y: row * 400,
+    width: 288,
+    height: 144,
+    headerHeight: 144,
+    depth: 0,
+    node: { id: `s${i}`, name: names[i], kind: 'area' },
+  }));
+  const pairs = [
+    [2, 4],
+    [2, 6],
+    [5, 3],
+    [5, 7, 1],
+    [5, 4],
+    [3, 2],
+    [3, 7, 1],
+    [3, 4],
+    [3, 6],
+    [7, 2],
+    [7, 5],
+    [7, 3],
+    [7, 4],
+    [7, 6],
+    [7, 8, 1],
+    [7, 8],
+    [4, 2],
+    [4, 5],
+    [4, 3],
+    [4, 6],
+    [1, 5],
+    [1, 4],
+    [8, 3, 1],
+    [8, 7, 1],
+    [8, 7],
+    [8, 6],
+  ];
+  const exchanges = pairs.map(([source, target, knowledge], i) => ({
+    id: `e${i}`,
+    sourceId: `s${source}`,
+    targetId: `s${target}`,
+    type: knowledge ? 'provides-knowledge' : 'shares-data',
+    label: 'Documented exchange',
+    relations: [],
+  }));
+  const layout = await layoutElkFlowMap({ boxes, exchanges, width: 1788, height: 944 }, engine);
+  const size = { width: 285, height: 228 },
+    camera = fitFlowCamera(layout, size, 'all');
+  const result = placeFlowAnnotations(layout.routes, layout.boxes, layout, size, camera.zoom, {
+    camera,
+    overview: true,
+    titles: layout.boxes.map((box) => ({
+      id: box.id,
+      text: box.node.name,
+      shortText: box.node.name
+        .split(/\s+/)
+        .map((word) => word[0])
+        .join(''),
+      x: (box.x + box.width / 2) * camera.zoom - 62,
+      y: (box.y + box.height / 2) * camera.zoom - 18,
+      width: 124,
+      height: 38,
+    })),
+    obstacles: [
+      { x: 4, y: size.height - 56, width: 246, height: 52 },
+      { x: size.width - 56, y: 4, width: 52, height: 52 },
+    ],
+  });
+  assert.ok(result.complete, 'No flow or territory annotation may disappear on the smallest phone');
+  assert.equal(result.captions.size, 26);
+  assert.equal(result.titles.size, 9);
 });
 
 test('text that cannot fit at a readable size requests an external title rather than microscopic characters', () => {

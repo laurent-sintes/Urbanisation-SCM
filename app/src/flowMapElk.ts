@@ -35,7 +35,10 @@ export async function layoutElkFlowMap(seed: FlowMapLayout, engine: FlowLayoutEn
   const connections = flowConnections(seed.exchanges).sort((a, b) => keyOf(a).localeCompare(keyOf(b)));
   const natural = seed.boxes.map((box) => ({
     ...box,
-    height: ['area', 'group'].includes(box.node.kind) ? Math.max(144, box.height) : box.height,
+    // Territories must remain substantial beside the routing corridors in a whole-map view.
+    // These publication sizes do not depend on the screen, filters or camera.
+    width: Math.max(box.node.kind === 'business_area' ? 420 : 960, box.width),
+    height: Math.max(box.node.kind === 'business_area' ? 180 : 720, box.height),
   }));
   let boxes = spaceFlowMap(natural, seed.exchanges);
   let byId = new Map(boxes.map((box) => [box.id, box]));

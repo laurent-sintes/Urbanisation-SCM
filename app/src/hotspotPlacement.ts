@@ -22,6 +22,11 @@ export const HOTSPOT_DIAMETERS: Record<string, number> = {
   unassessed: 40,
 };
 
+export const catalogueHotspotsCompact = (zoom: number) => zoom < 0.5;
+export const catalogueHotspotDiameter = (severity: string, zoom: number, touch: boolean) =>
+  // Preserve separation and grouping while the visual glyph becomes quieter.
+  Math.max(HOTSPOT_DIAMETERS[severity], catalogueHotspotsCompact(zoom) && touch ? 44 : 0);
+
 export const CATALOGUE_HOTSPOT_HEADROOM = 56;
 
 /** Reserve extra map space only when the ordinary placement still covers text. */

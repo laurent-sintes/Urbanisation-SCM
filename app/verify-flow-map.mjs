@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
+import { waitForCatalogueGeometry } from './catalogue-geometry.mjs';
 
 const dist = resolve(import.meta.dirname, process.env.ATLAS_FLOW_DIST || 'dist');
 const output = resolve(import.meta.dirname, '.runtime/qa-flow-map');
@@ -124,6 +125,11 @@ async function assertMapText(page) {
       captions: captions.length,
       objectCount: canvas.querySelectorAll('.spatial-map-object').length,
       flows: canvas.querySelectorAll('.flow-exchange').length,
+      captionTexts: captions.map((element) => ({
+        text: element.textContent,
+        expected: element.dataset.flowCaption,
+        badge: element.dataset.flowBadge,
+      })),
       clipped: [...titles, ...captions]
         .filter(
           (element) => element.scrollHeight > element.clientHeight + 1 || element.scrollWidth > element.clientWidth + 1,
@@ -133,6 +139,20 @@ async function assertMapText(page) {
         id: element.closest('[data-node-id]').dataset.nodeId,
         text: element.textContent,
         compact: element.dataset.titleDisplay === 'compact',
+        detached: (() => {
+          if (!element.classList.contains('is-external')) return false;
+          const owner = [...canvas.querySelectorAll('.spatial-map-object')].find(
+            (node) => node.dataset.nodeId === element.dataset.nodeId,
+          );
+          if (!owner) return true;
+          const a = element.getBoundingClientRect(),
+            b = owner.getBoundingClientRect();
+          const gap = canvas.clientHeight < 220 ? 65 : 33;
+          return (
+            Math.max(b.left - a.right, a.left - b.right, 0) > gap ||
+            Math.max(b.top - a.bottom, a.top - b.bottom, 0) > gap
+          );
+        })(),
         accessibleName: element.getAttribute('aria-label'),
         pixels:
           parseFloat(getComputedStyle(element).fontSize) *
@@ -162,7 +182,22 @@ async function assertMapText(page) {
   assert.deepEqual(result.clipped, [], 'Titles and captions fit without clipping');
   assert.equal(result.titles.length, result.objectCount, 'Every territory has a visible title or readable identifier');
   assert.deepEqual(result.collisions, [], 'Annotations do not overlap each other or floating controls');
+  for (const caption of result.captionTexts) {
+    assert.ok(caption.expected, 'Every caption carries its complete published display text');
+    if (caption.badge) assert.equal(caption.text, caption.badge, 'A short identifier is explicitly numbered');
+    else
+      assert.equal(
+        caption.text.replace(/\s/g, ''),
+        caption.expected.replace(/\s/g, ''),
+        'Every word of an unnumbered caption is visible; no silent truncation',
+      );
+  }
   for (const title of result.titles) {
+    assert.equal(
+      title.detached,
+      false,
+      'An external title stays near its own territory, including short landscape views',
+    );
     assert.ok(title.pixels >= 10.99, 'Titles never shrink below 11 screen pixels');
     assert.equal(
       title.accessibleName,
@@ -466,9 +501,14 @@ try {
   assert.equal(await page.locator('.flow-map-canvas').getAttribute('data-framing'), 'standard');
   assert.ok(await page.locator('.flow-scrollbar').count(), 'Standard exposes overflowing axes');
   const surface = page.locator('.flow-map-canvas');
+  const availableScrollDirection = () =>
+    page.locator('.flow-scrollbar').evaluateAll((bars) => {
+      const bar = bars.find((element) => element.classList.contains('is-vertical')) || bars[0];
+      return Number(bar.getAttribute('aria-valuenow')) > Number(bar.getAttribute('aria-valuemax')) / 2 ? -1 : 1;
+    });
   const surfaceBounds = await surface.boundingBox();
   await page.mouse.move(surfaceBounds.x + surfaceBounds.width / 2, surfaceBounds.y + surfaceBounds.height / 2);
-  await page.mouse.wheel(0, 200);
+  await page.mouse.wheel(0, 200 * (await availableScrollDirection()));
   await waitViewportChange(page, standardCamera);
   let moved = await viewport(page);
   assert.equal(moved.zoom, standardCamera.zoom, 'Ordinary wheel moves without zooming');
@@ -476,7 +516,7 @@ try {
   await selectFraming(page, 'standard');
   moved = await viewport(page);
   await surface.focus();
-  await page.keyboard.press('PageDown');
+  await page.keyboard.press((await availableScrollDirection()) > 0 ? 'PageDown' : 'PageUp');
   await waitViewportChange(page, moved);
   assert.equal((await viewport(page)).zoom, moved.zoom, 'PageDown preserves zoom');
   const scrollbar = page.locator('.flow-scrollbar.is-horizontal');
@@ -1203,6 +1243,53 @@ try {
   await mobile.screenshot({ path: resolve(output, 'flows-mobile-short.png') });
   checks.push('Short mobile windows retain natural scale and compact one-row camera controls');
 
+  for (const size of [
+    { width: 320, height: 480 },
+    { width: 390, height: 667 },
+    { width: 390, height: 844 },
+    { width: 844, height: 390 },
+  ]) {
+    await mobile.setViewportSize(size);
+    await selectFraming(mobile, 'all');
+    await assertMapText(mobile);
+    for (const scrolled of [false, true]) {
+      await mobile.locator('.flow-exchange-label').first().tap();
+      const detail = mobile.getByRole('complementary', { name: 'Détail du flux', exact: true });
+      await detail.waitFor();
+      if (scrolled)
+        await detail.evaluate((element) => {
+          element.scrollTop = element.scrollHeight;
+        });
+      const close = detail.getByRole('button', { name: 'Fermer le détail du flux', exact: true });
+      const bounds = await close.boundingBox();
+      assert.ok(bounds.width >= 44 && bounds.height >= 44, 'The detail close target remains usable by touch');
+      await close.tap();
+      await detail.waitFor({ state: 'detached' });
+    }
+  }
+  checks.push(
+    'Touch closes the flow detail above all controls, before and after scrolling, on portrait and landscape phones',
+  );
+  await mobile.setViewportSize({ width: 390, height: 667 });
+  await visit(mobile, 'map', {
+    node: domain.id,
+    scope: domain.id,
+    mapDepth: '1',
+    hf: JSON.stringify({ enabled: true }),
+  });
+  await mobile.locator('.business-card').first().waitFor();
+  await waitForCatalogueGeometry(mobile);
+  await mobile.locator('.catalogue-navigator.is-closed').waitFor();
+  await mobile.getByRole('button', { name: 'Afficher le navigateur de carte', exact: true }).tap();
+  await mobile.locator('.catalogue-navigator.is-open').waitFor();
+  assert.ok(
+    (await mobile.locator('.catalogue-navigator').boundingBox()).height <= 132,
+    'An explicitly opened mobile navigator stays shallow',
+  );
+  await mobile.getByRole('button', { name: 'Réduire le navigateur de carte', exact: true }).tap();
+  await mobile.locator('.catalogue-navigator.is-closed').waitFor();
+  checks.push('The Catalogue mobile navigator starts folded and supports explicit touch opening and closing');
+
   for (const scope of ['@root', 'system-business-operations', domain.id, 'domain-plan']) {
     if (scope !== '@root' && !byId.has(scope)) continue;
     const framingPage = await preparePage();
@@ -1247,13 +1334,10 @@ try {
     assert.ok(Math.abs(before.zoom - after.zoom) < 0.0001, 'Standard retains its natural scale');
     for (const axis of ['x', 'y']) {
       const dimension = axis === 'x' ? 'width' : 'height';
-      assert.ok(
-        Math.abs(
-          (oldBounds[dimension] / 2 - before[axis]) / before.zoom -
-            (newBounds[dimension] / 2 - after[axis]) / after.zoom,
-        ) < 1,
-        'Standard retains its world center',
-      );
+      // ResizeObserver/clientWidth round to CSS pixels; a one-world-unit
+      // tolerance becomes a fraction of a pixel at reduced zoom.
+      const drift = Math.abs(oldBounds[dimension] / 2 - before[axis] - (newBounds[dimension] / 2 - after[axis]));
+      assert.ok(drift < 1, `Standard retains its world center within one screen pixel (${scope}/${axis}: ${drift}px)`);
     }
     if (scope === 'system-business-operations' && byId.has('domain-sourcing-procurement')) {
       const arrival = await framingPage.evaluate(() => {

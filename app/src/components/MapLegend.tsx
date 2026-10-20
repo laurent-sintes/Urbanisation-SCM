@@ -25,10 +25,12 @@ export function MapLegend({
   model?: PublishedModel;
 }) {
   const [levels, setLevels] = useState<AtlasNode[]>([]);
+  const [compactMarkers, setCompactMarkers] = useState(compact);
   useEffect(() => {
     const map = mapRef?.current;
     if (!map || !model) return;
     const measure = () => {
+      setCompactMarkers(compact || !!map.querySelector('.hotspot-map-point.is-compact'));
       const seen = new Set<string>();
       const nodes: AtlasNode[] = [];
       for (const element of map.querySelectorAll<HTMLElement>(
@@ -61,11 +63,11 @@ export function MapLegend({
       childList: true,
       subtree: true,
       attributes: true,
-      attributeFilter: ['data-node-id', 'data-map-item-id', 'data-business-area-summary'],
+      attributeFilter: ['data-node-id', 'data-map-item-id', 'data-business-area-summary', 'class'],
     });
     measure();
     return () => observer.disconnect();
-  }, [mapRef, model]);
+  }, [mapRef, model, compact]);
   const severities = ['S', 'M', 'L', 'XL', 'unassessed'].filter((value) =>
     hotspots.some((item) => item.severity === value),
   );
@@ -117,13 +119,13 @@ export function MapLegend({
           <p>Criticité</p>
           {severities.map((severity) => (
             <div key={severity} className={`map-legend-entry hotspot-legend-level severity-${severity}`}>
-              <span className={`map-legend-hotspot${compact ? ' is-compact' : ''}`} aria-hidden="true">
-                {compact ? severity === 'unassessed' ? '?' : severity : <HotspotGlyph severity={severity} />}
+              <span className={`map-legend-hotspot${compactMarkers ? ' is-compact' : ''}`} aria-hidden="true">
+                {compactMarkers ? severity === 'unassessed' ? '?' : severity : <HotspotGlyph severity={severity} />}
               </span>
               {severityLabel(severity)}
             </div>
           ))}
-          {compact ? (
+          {compactMarkers ? (
             <p>Une lettre indique la criticité. Un nombre indique plusieurs points chauds regroupés.</p>
           ) : (
             <>

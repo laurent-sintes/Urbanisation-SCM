@@ -444,18 +444,22 @@
   position: absolute;
   right: calc(14px + var(--flow-scroll-y, 0px));
   top: 14px;
-  z-index: 9;
+  z-index: 30;
   width: min(390px, calc(100% - 28px));
   max-height: calc(100% - 28px - var(--flow-scroll-x, 0px));
   overflow: auto;
   padding: 14px;
   border: 1px solid #b9d3c5;
   border-radius: 9px;
-  background: #fffffff5;
+  background: #fff;
   box-shadow: 0 8px 32px #173a3324;
   font-size: 13px;
 }
 .flow-exchange-detail header {
+  position: sticky;
+  top: -14px;
+  z-index: 1;
+  background: #fff;
   display: flex;
   gap: 8px;
   justify-content: space-between;
@@ -475,6 +479,9 @@
   background: white;
   border: 0;
   color: #335d4b;
+  min-width: 44px;
+  min-height: 44px;
+  flex-shrink: 0;
 }
 .flow-exchange-detail > div {
   padding-top: 12px;
@@ -579,60 +586,6 @@
     right: 12px;
     max-height: calc(100dvh - 24px);
     z-index: 100;
-  }
-}
-
-/* Compact hotspots belong to Flux; Catalogue retains its usual markers. */
-.flow-map-hotspots .hotspot-map-point.is-compact {
-  --marker-size: 32px;
-}
-.flow-map-hotspots .hotspot-map-point.is-compact > .hotspot-map-marker {
-  padding: 2px;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  color: #774c33;
-}
-.flow-map-hotspots .hotspot-compact-glyph {
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border: 1px solid rgb(var(--hotspot-rgb) / 0.7);
-  border-radius: 50%;
-  background: #fffaf5;
-  box-shadow: 0 1px 2px #203c3912;
-  color: inherit;
-  font-size: 11px;
-  font-weight: 650;
-  line-height: 1;
-}
-.flow-map-hotspots .hotspot-compact-glyph.is-count {
-  font-size: 12px;
-}
-.flow-map-hotspots .severity-unassessed.is-compact > .hotspot-map-marker {
-  color: #315d67;
-}
-.flow-map-hotspots .is-framing-closed.is-compact > .hotspot-map-marker {
-  color: #52665e;
-}
-.flow-map-hotspots .is-framing-closed.is-compact .hotspot-compact-glyph {
-  border-color: #a9bcb2;
-  background: #f4f8f5;
-}
-.flow-map-hotspots .is-workshop.is-compact .hotspot-compact-glyph {
-  border-style: dashed;
-}
-.flow-map-hotspots .is-compact > .hotspot-map-marker:focus-visible {
-  outline: 2px solid #1f536f;
-  outline-offset: 2px;
-}
-@media (pointer: coarse) {
-  .flow-map-hotspots .is-compact > .hotspot-map-marker::before {
-    position: absolute;
-    inset: -6px;
-    content: "";
-    border-radius: 50%;
   }
 }
 

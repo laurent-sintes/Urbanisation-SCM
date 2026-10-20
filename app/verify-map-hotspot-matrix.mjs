@@ -150,6 +150,7 @@ try {
           x: r.x + r.width / 2,
           y: r.y + r.height / 2,
           radius: r.width / 2,
+          compact: e.closest('.hotspot-map-point')?.classList.contains('is-compact'),
           parent: e.closest(
             '.overview-system, .overview-exchange-hotspots, .overview-global-hotspot, .map-flow-surface',
           ),
@@ -163,7 +164,8 @@ try {
           continue;
         }
         const box = (m.parent.closest('.overview-map-frame') || m.parent).getBoundingClientRect();
-        if (m.radius < 17.9 || m.radius > 24.1) failures.push(`diameter:${m.id}`);
+        if (m.compact ? Math.abs(m.radius - 16) > 0.1 : m.radius < 17.9 || m.radius > 24.1)
+          failures.push(`diameter:${m.id}`);
         if (
           m.x - m.radius < box.left - 1 ||
           m.x + m.radius > box.right + 1 ||

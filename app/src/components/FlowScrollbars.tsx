@@ -57,6 +57,10 @@ export function FlowScrollbars({
                 : { bottom: geometry.horizontal.visible ? FLOW_SCROLLBAR_SIZE : 0 }
             }
             onScroll={(event) => {
+              // The browser can clamp a native scrollbar before ResizeObserver
+              // publishes the new canvas size. That event is not a user pan.
+              const canvas = document.getElementById(canvasId);
+              if (!canvas || canvas.clientWidth !== size.width || canvas.clientHeight !== size.height) return;
               const value = horizontalAxis ? event.currentTarget.scrollLeft : event.currentTarget.scrollTop;
               const expected = synchronized.current[axis];
               delete synchronized.current[axis];

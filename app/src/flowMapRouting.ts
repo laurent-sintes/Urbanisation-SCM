@@ -1,6 +1,9 @@
 import type { FlowMapBox } from './flowMapLayout.ts';
 import { FLOW_STUB, FLOW_TRACK, flowFacingSides, flowLabelSize } from './flowMapSpacing.ts';
 
+/** Screen pixels: overview paths stay distinct without filling the small map. */
+export const flowScreenStroke = (zoom: number) => Math.max(1.5, Math.min(8, zoom * 24));
+
 export interface FlowRoutePoint {
   x: number;
   y: number;

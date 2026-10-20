@@ -152,7 +152,7 @@ export function CatalogueNavigator({
         (block) =>
           block.x + block.width <= geometry.visibleWidth + 1 && block.y + block.height <= geometry.visibleHeight + 1,
       ));
-  const defaultOpen = framing === 'width' || !mapFits;
+  const defaultOpen = !compact && geometry.stageHeight > 260 && (framing === 'width' || !mapFits);
   const visibilityContext = `${geometryKey ?? ''}:${framing}:${defaultOpen}`;
   const open = visibility?.context === visibilityContext ? visibility.open : defaultOpen;
   const setOpen = (value: boolean) => setVisibility({ context: visibilityContext, open: value });
@@ -336,7 +336,7 @@ export function CatalogueNavigator({
     clamp(geometry.left / Math.max(1, geometry.width - geometry.visibleWidth), 1) * 100,
   );
   // Opening the overlay leaves the scroll viewport and its geometry unchanged.
-  const previewHeight = Math.max(32, Math.min(112, geometry.stageHeight - 160));
+  const previewHeight = Math.max(32, Math.min(compact ? 72 : 112, geometry.stageHeight - 160));
 
   return (
     <aside

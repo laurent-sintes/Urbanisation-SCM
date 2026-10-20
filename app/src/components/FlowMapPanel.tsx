@@ -7,7 +7,7 @@ import { type FlowRectangle, placeFlowAnnotations } from '../flowMapCaptions';
 import { flowExchangeContract, flowMapBoundaryRelations, flowMapDetailBoxes } from '../flowMapDetail';
 import type { FlowMapBox } from '../flowMapLayout';
 import { flowMapBoundaryDestinations, flowMapPresentation } from '../flowMapPresentation';
-import { flowRibbonPath, roundedFlowPath } from '../flowMapRouting';
+import { flowRibbonPath, flowScreenStroke, roundedFlowPath } from '../flowMapRouting';
 import { type FlowScrollExtent, flowScrollContent, flowScrollGeometry, scrollFlowCamera } from '../flowMapScroll';
 import { fitFlowText } from '../flowMapText';
 import {
@@ -619,9 +619,39 @@ export function FlowMapPanel(props: MapPanelProps) {
   const annotations = useMemo(() => {
     titleMeasure ||= document.createElement('canvas').getContext('2d');
     const family = getComputedStyle(document.body).fontFamily;
+    // Measure complete captions before reserving space. Filtering does not alter
+    // their footprint, and short texts do not consume an arbitrary 58px row.
+    const captionSizes = new Map(
+      projectedExchanges(
+        model,
+        model.relations.filter((relation) => relation.type === 'shares-data' || relation.type === 'provides-knowledge'),
+        flowBoxes,
+      ).map((exchange) => {
+        const measure = (text: string, font: number) => {
+          if (titleMeasure) titleMeasure.font = `400 ${font}px ${family}`;
+          return titleMeasure?.measureText(text).width ?? text.length * font * 0.55;
+        };
+        const fitted = fitFlowText(exchange.caption, size.width < 500 ? 98 : 156, 1000, 11, measure);
+        return [
+          exchange.id,
+          {
+            width: Math.max(60, Math.ceil(Math.max(...fitted.lines.map((line) => measure(line, 11)))) + 16),
+            height: Math.ceil(fitted.lines.length * 13.75) + 12,
+          },
+        ];
+      }),
+    );
     const titles = visibleBoxes.flatMap((box) => {
       if (titleMetrics.get(box.id)?.fitted.fits) return [];
-      const width = 124;
+      const neighborDistances = visibleBoxes
+        .filter(
+          (other) =>
+            other.id !== box.id &&
+            Math.abs(other.y + other.height / 2 - box.y - box.height / 2) < Math.min(other.height, box.height) / 2 &&
+            Math.abs(other.x + other.width / 2 - box.x - box.width / 2) > 1,
+        )
+        .map((other) => Math.abs(other.x + other.width / 2 - box.x - box.width / 2) * viewport.zoom);
+      const width = Math.max(44, Math.min(124, ...neighborDistances.map((distance) => distance - 8)));
       const fitted = fitFlowText(box.node.name, width - 12, 100, 11, (text, font) => {
         if (titleMeasure) titleMeasure.font = `600 ${font}px ${family}`;
         return titleMeasure?.measureText(text).width ?? text.length * font * 0.55;
@@ -646,9 +676,21 @@ export function FlowMapPanel(props: MapPanelProps) {
       camera: annotationCamera,
       obstacles: annotationHud,
       titles,
+      captionSizes,
       overview: annotationFraming === 'all',
     });
-  }, [layout, visibleBoxes, size, viewport.zoom, titleMetrics, annotationCamera, annotationHud, annotationFraming]);
+  }, [
+    layout,
+    visibleBoxes,
+    size,
+    viewport.zoom,
+    titleMetrics,
+    annotationCamera,
+    annotationHud,
+    annotationFraming,
+    model,
+    flowBoxes,
+  ]);
   const nodes: SpatialNode[] = useMemo(
     () =>
       visibleBoxes.map((box) => ({
@@ -810,15 +852,6 @@ export function FlowMapPanel(props: MapPanelProps) {
       let captionFont = 11;
       let caption = exchange.caption;
       if (label?.badge) caption = String(label.badge);
-      else if (label?.compact) {
-        const words = caption.split(/\s+/);
-        const maxCharacters = size.width < 500 ? 20 : 38;
-        caption = '';
-        for (const word of words) {
-          if (caption && caption.length + word.length + 1 > maxCharacters) break;
-          caption += (caption ? ' ' : '') + word;
-        }
-      }
       if (label && !label.badge) {
         const fitted = fitFlowText(caption, label.width - 14, label.height - 10, captionFont, (text, font) => {
           if (measure) measure.font = `400 ${font}px ${fontFamily}`;
@@ -844,14 +877,18 @@ export function FlowMapPanel(props: MapPanelProps) {
           exchange,
           points: pathPoints,
           path: roundedFlowPath(pathPoints, 10),
-          ribbon: flowRibbonPath(pathPoints, 8, 14),
+          ribbon: flowRibbonPath(
+            pathPoints,
+            flowScreenStroke(viewport.zoom),
+            Math.max(5, flowScreenStroke(viewport.zoom) * 1.75),
+          ),
           label,
           caption,
           captionFont,
         },
       ];
     });
-  }, [layout, viewport.zoom, exchanges, size, annotations]);
+  }, [layout, viewport.zoom, exchanges, annotations]);
 
   const exchangeDetail = selectedExchange && (
     <aside className={`flow-exchange-detail${shortScreen ? ' is-floating' : ''}`} aria-label="Détail du flux">
@@ -1186,7 +1223,11 @@ export function FlowMapPanel(props: MapPanelProps) {
                   <title>
                     {exchange.source.node.name} → {exchange.target.node.name} : {exchange.label}
                   </title>
-                  <path className="flow-exchange-halo" d={path} />
+                  <path
+                    className="flow-exchange-halo"
+                    d={path}
+                    style={{ strokeWidth: flowScreenStroke(viewport.zoom) + 3 }}
+                  />
                   {exchange.type === 'provides-knowledge' ? (
                     <path className="flow-exchange-line" d={path} markerEnd={`url(#${paintId}-arrow)`} />
                   ) : (
@@ -1238,6 +1279,7 @@ export function FlowMapPanel(props: MapPanelProps) {
                           type="button"
                           className={`flow-exchange-label${label.badge ? ' is-numbered' : ''}`}
                           data-flow-badge={label.badge}
+                          data-flow-caption={exchange.caption}
                           style={{
                             fontSize: captionFont,
                             maxHeight: 'none',
@@ -1303,7 +1345,7 @@ export function FlowMapPanel(props: MapPanelProps) {
                   height: title.height,
                   fontSize: 11,
                   lineHeight: 1.25,
-                  padding: annotations.shortTitles ? '2px 3px' : '4px 5px',
+                  padding: annotations.shortTitles ? '0 3px' : '4px 5px',
                   whiteSpace: 'pre',
                 }}
               >

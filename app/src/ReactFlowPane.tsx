@@ -20,8 +20,9 @@ import { ModelText } from './components/ModelLinks';
 import { hotspotRelatedElementIds } from './hotspotMap';
 import {
   CATALOGUE_HOTSPOT_HEADROOM,
+  catalogueHotspotDiameter,
   catalogueHotspotDock,
-  HOTSPOT_DIAMETERS,
+  catalogueHotspotsCompact,
   hotspotPlacementNeedsSpace,
   layoutHotspots,
 } from './hotspotPlacement';
@@ -795,7 +796,7 @@ function Canvas(props: ReactFlowPaneProps) {
     const screen = (marker: HotspotMarker) => ({
       x: viewport.x + anchor(marker).x * viewport.zoom,
       y: viewport.y + anchor(marker).y * viewport.zoom,
-      diameter: HOTSPOT_DIAMETERS[marker.severity],
+      diameter: catalogueHotspotDiameter(marker.severity, viewport.zoom, matchMedia('(pointer: coarse)').matches),
       id: marker.id,
     });
     // Zoomed-out-of-frame anchors must not pull visible markers into unrelated groups.
@@ -993,6 +994,7 @@ function Canvas(props: ReactFlowPaneProps) {
               <HotspotMapMarker
                 key={marker.id}
                 id={marker.id}
+                variant={catalogueHotspotsCompact(viewport.zoom) ? 'compact' : 'default'}
                 items={(props.hotspots || []).filter((item) => marker.hotspotIds.includes(item.id))}
                 onExpansionChange={setClusterExpanded}
                 x={marker.position.x}
