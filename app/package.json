@@ -37,7 +37,7 @@
     "export": "python ../scripts/export_atlas.py",
     "export:full": "python ../scripts/export_atlas.py --full",
     "verify:static": "node verify-static.mjs",
-    "verify:serial": "pnpm run check:code && node verify-browser.mjs && node verify-map-history.mjs && node verify-map-placement.mjs && node verify-flow-map.mjs && node verify-static.mjs && node verify-modeling-guide.mjs && node verify-display-codes.mjs && node verify-ux.mjs && node verify-published-content.mjs && node verify-process-management.mjs && pnpm run verify:hotspots && pnpm run verify:hotspot-resolution && pnpm run verify:hotspot-detail && node verify-application-picker.mjs"
+    "verify:serial": "pnpm run check:code && node verify-browser.mjs && node verify-map-history.mjs && node verify-map-placement.mjs && node verify-flow-map.mjs && node verify-static.mjs && node verify-modeling-guide.mjs && node verify-display-codes.mjs && node verify-ux.mjs && node verify-published-content.mjs && node verify-process-management.mjs && pnpm run verify:hotspots && pnpm run verify:hotspot-resolution && pnpm run verify:hotspot-detail && node verify-application-picker.mjs && node verify-catalogue-page.mjs --ci && node verify-catalogue-page.mjs --width --ci"
   },
   "dependencies": {
     "@floating-ui/react": "0.27.20",

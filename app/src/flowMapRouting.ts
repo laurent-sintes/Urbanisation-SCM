@@ -60,10 +60,13 @@ function ports(box: FlowMapBox, lane: number): FlowRoutePoint[] {
 
 /** Facing sides make neighboring exchanges readable without preventing an obstacle detour. */
 function facingSides(source: FlowMapBox, target: FlowMapBox): [number, number] | undefined {
-  if (source.x + source.width < target.x + EPSILON) return [0, 1];
-  if (target.x + target.width < source.x + EPSILON) return [1, 0];
-  if (source.y + source.height < target.y + EPSILON) return [2, 3];
-  if (target.y + target.height < source.y + EPSILON) return [3, 2];
+  if (
+    source.x + source.width < target.x + EPSILON ||
+    target.x + target.width < source.x + EPSILON ||
+    source.y + source.height < target.y + EPSILON ||
+    target.y + target.height < source.y + EPSILON
+  )
+    return flowFacingSides(source, target);
   return undefined;
 }
 
@@ -74,7 +77,7 @@ function alignFacingPorts(
   targetPorts: FlowRoutePoint[],
   facing: [number, number] | undefined,
 ) {
-  if (!facing) return;
+  if (!facing || facing[0] < 2 !== facing[1] < 2) return;
   const from = sourcePorts[facing[0]];
   const to = targetPorts[facing[1]];
   if (facing[0] < 2) {

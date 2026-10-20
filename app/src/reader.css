@@ -158,6 +158,17 @@
   gap: 16px;
   min-width: 0;
 }
+.urbanisation-overview.is-narrow {
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+}
+.urbanisation-overview.is-narrow .overview-domains-fixed {
+  grid-template-columns: minmax(0, 1fr);
+}
+.urbanisation-overview.is-narrow .overview-domains-fixed > li {
+  grid-column: 1 !important;
+  grid-row: auto !important;
+}
 .urbanisation-overview.has-data-sharing {
   position: relative;
   padding-top: var(--exchange-headroom);
@@ -198,9 +209,16 @@
 .overview-system .hotspot-map-point {
   z-index: 2;
 }
-.overview-system.has-map-hotspots {
-  /* Markers keep their screen diameter when the page shrinks; reserve the same screen space. */
-  padding-top: calc(56px / var(--overview-scale, 1) + 20px + var(--exchange-top-inset, 0px));
+.catalogue-hotspot-leaders {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+.catalogue-hotspot-leaders line {
+  stroke: #8a9d92;
+  stroke-width: 1;
+  stroke-dasharray: 3 3;
 }
 .overview-system small {
   font-size: 11px;

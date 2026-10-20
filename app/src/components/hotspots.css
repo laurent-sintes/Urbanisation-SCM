@@ -2081,6 +2081,8 @@ button.hotspot-qualification:hover {
 @media (max-height: 700px) {
   .hotspot-legend-shell {
     flex: none;
+    position: relative;
+    z-index: 20;
   }
   .hotspot-legend-toggle {
     display: flex;
@@ -2105,6 +2107,16 @@ button.hotspot-qualification:hover {
   }
   .hotspot-legend-shell > .hotspot-map-legend:not(.is-expanded) {
     display: none;
+  }
+  .hotspot-legend-shell > .hotspot-map-legend.is-expanded {
+    position: absolute;
+    inset: 100% 0 auto;
+    max-height: min(45vh, 180px);
+    overflow: auto;
+    background: #f2f8f5;
+    border: 1px solid #d5e4db;
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 6px 16px #183b2e18;
   }
 }
 .hotspot-legend-level {

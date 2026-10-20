@@ -73,6 +73,13 @@ try {
         const sales = byId['domain-sales'];
         const orchestration = byId['supply-chain-orchestration'];
         const logistics = byId['domain-logistics-execution'];
+        const compact =
+          Boolean(scope?.closest('.urbanisation-overview.is-narrow')) ||
+          (scope?.matches('.zoom-width') && scope.clientWidth < 692);
+        if (compact) {
+          const ordered = [plan, sourcing, sales, orchestration, logistics].filter(Boolean);
+          return ordered.every((box, index) => !index || ordered[index - 1].bottom <= box.top + 1);
+        }
         return (
           (!plan || plan.bottom <= sourcing.top + 1) &&
           Math.abs(sourcing.top - sales.top) < 1 &&
@@ -106,8 +113,16 @@ try {
         boxes.map((box) => box.id),
         systems,
       );
-      assert.ok(boxes[0].right < boxes[1].x && boxes[1].right < boxes[2].x);
-      assert.ok(boxes.slice(0, 3).every((box) => Math.abs(box.y - boxes[0].y) < 1));
+      const compact = await page
+        .locator('.urbanisation-overview')
+        .evaluate((element) => element.classList.contains('is-narrow'));
+      if (compact) {
+        assert.ok(boxes[0].bottom <= boxes[1].y + 1);
+        assert.ok(boxes[logisticsSystem ? 3 : 1].bottom <= boxes[2].y + 1);
+      } else {
+        assert.ok(boxes[0].right < boxes[1].x && boxes[1].right < boxes[2].x);
+        assert.ok(boxes.slice(0, 3).every((box) => Math.abs(box.y - boxes[0].y) < 1));
+      }
       if (logisticsSystem) {
         assert.ok(boxes[3].y > boxes[1].bottom);
         assert.ok(boxes[3].y - boxes[1].bottom < 150, 'Logistics is docked to Business Operations');

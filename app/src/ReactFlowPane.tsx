@@ -18,7 +18,12 @@ import { HotspotMapMarker } from './components/HotspotDisplay';
 import { type MapChildList, nodeTypes } from './components/MapCards';
 import { ModelText } from './components/ModelLinks';
 import { hotspotRelatedElementIds } from './hotspotMap';
-import { HOTSPOT_DIAMETERS, layoutHotspots } from './hotspotPlacement';
+import {
+  CATALOGUE_HOTSPOT_HEADROOM,
+  catalogueHotspotDock,
+  HOTSPOT_DIAMETERS,
+  layoutHotspots,
+} from './hotspotPlacement';
 import { NodeIcon } from './icons';
 import { measureMapCards } from './mapCardMeasure';
 import { areaListAtDetail } from './mapDetail';
@@ -102,6 +107,7 @@ function Canvas(props: ReactFlowPaneProps) {
   const viewport = useViewport();
   const container = useRef<HTMLDivElement>(null);
   const capabilityOverview = detail >= 3;
+  const hotspotHeadroom = props.hotspots?.length ? CATALOGUE_HOTSPOT_HEADROOM : 0;
   const minimumHeight = availableHeight
     ? Math.max(60, availableHeight)
     : matchMedia('(max-width: 600px)').matches
@@ -396,8 +402,13 @@ function Canvas(props: ReactFlowPaneProps) {
   ]);
   const effectiveZoomMode = layout.mode;
   const nativeTouchScroll = effectiveZoomMode === 'width' && touch;
-  const widthFrame =
-    layout.width && canvasWidth ? widthFit(layout.width, layout.height, canvasWidth, minimumHeight) : undefined;
+  const fittedWidth =
+    layout.width && canvasWidth
+      ? widthFit(layout.width, layout.height, canvasWidth, Math.max(1, minimumHeight - hotspotHeadroom))
+      : undefined;
+  const widthFrame = fittedWidth
+    ? { ...fittedWidth, y: fittedWidth.y + hotspotHeadroom, height: fittedWidth.height + hotspotHeadroom }
+    : undefined;
   const surfaceWidth = effectiveZoomMode === 'width' ? canvasWidth : undefined;
   const frameX = widthFrame?.x;
   const frameY = widthFrame?.y;
@@ -408,18 +419,19 @@ function Canvas(props: ReactFlowPaneProps) {
       const duration = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 220;
       if (effectiveZoomMode === 'width' && frameX !== undefined && frameY !== undefined && frameZoom !== undefined)
         void setViewport({ x: frameX, y: frameY, zoom: frameZoom }, { duration });
-      else
-        void setViewport(
-          getViewportForBounds(
-            { x: 0, y: 0, width: layout.width, height: layout.height },
-            canvasWidth,
-            minimumHeight,
-            0,
-            1,
-            fullscreen ? 0.04 : 0.01,
-          ),
-          { duration },
+      else {
+        // Leave real pixels around the fit: fractional scrollport dimensions and
+        // React Flow's rounded padding can otherwise clip the last row.
+        const fitted = getViewportForBounds(
+          { x: 0, y: 0, width: layout.width, height: layout.height },
+          Math.max(1, canvasWidth - 4),
+          Math.max(1, minimumHeight - hotspotHeadroom - 4),
+          0,
+          1,
+          fullscreen ? 0.04 : 0.01,
         );
+        void setViewport({ ...fitted, x: fitted.x + 2, y: fitted.y + hotspotHeadroom + 2 }, { duration });
+      }
     }, 80);
     return () => clearTimeout(id);
   }, [
@@ -433,6 +445,7 @@ function Canvas(props: ReactFlowPaneProps) {
     frameX,
     frameY,
     frameZoom,
+    hotspotHeadroom,
   ]);
   useEffect(() => {
     // A queued page fit can finish after a framing change. Width mode has one
@@ -679,9 +692,26 @@ function Canvas(props: ReactFlowPaneProps) {
     observer.observe(surface);
     for (const card of surface.querySelectorAll('.business-card')) observer.observe(card);
     window.addEventListener('resize', refresh);
+    document.fonts.addEventListener('loadingdone', refresh);
+    const flow = surface.querySelector('.react-flow__viewport');
+    const mutations = new MutationObserver((records) => {
+      // Zoom only transforms cached world-space rectangles. Rescan text when
+      // card content or styling changes, rather than on each camera movement.
+      if (records.some((record) => record.type !== 'attributes' || record.target !== flow)) refresh();
+    });
+    if (flow)
+      mutations.observe(flow, {
+        attributes: true,
+        childList: true,
+        subtree: true,
+        characterData: true,
+        attributeFilter: ['style', 'class'],
+      });
     return () => {
       observer.disconnect();
+      mutations.disconnect();
       window.removeEventListener('resize', refresh);
+      document.fonts.removeEventListener('loadingdone', refresh);
       cancelAnimationFrame(frame);
     };
   }, [layout.nodes]);
@@ -770,7 +800,12 @@ function Canvas(props: ReactFlowPaneProps) {
     const visible = hotspotMarkers
       .map(screen)
       .filter((item) => item.x >= 0 && item.x <= width && item.y >= 0 && item.y <= height);
-    const groups = layoutHotspots(visible, { width, height, obstacles: visibleTextObstacles });
+    const groups = layoutHotspots(visible, {
+      width,
+      height,
+      obstacles: visibleTextObstacles,
+      fallbackPositions: catalogueHotspotDock(width),
+    });
     const markerById = new Map(hotspotMarkers.map((marker) => [marker.id, marker]));
     const markers = groups.map((group) => {
       const members = group.ids.flatMap((id) => {
@@ -933,6 +968,20 @@ function Canvas(props: ReactFlowPaneProps) {
         </ReactFlow>
         {displayedMarkerLayout.markers.length > 0 && (
           <div className="hotspot-map-overlay">
+            <svg className="catalogue-hotspot-leaders" width="100%" height="100%" aria-hidden="true">
+              {displayedMarkerLayout.markers.map((marker) =>
+                Math.hypot(marker.position.x - marker.anchor.x, marker.position.y - marker.anchor.y) > 6 ? (
+                  <line
+                    key={marker.id}
+                    data-hotspot-leader={marker.id}
+                    x1={marker.anchor.x}
+                    y1={marker.anchor.y}
+                    x2={marker.position.x}
+                    y2={marker.position.y}
+                  />
+                ) : null,
+              )}
+            </svg>
             {displayedMarkerLayout.markers.map((marker) => (
               <HotspotMapMarker
                 key={marker.id}

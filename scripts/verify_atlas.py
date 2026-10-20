@@ -17,6 +17,8 @@ GROUPS = {
     'matrix-0': ['verify-map-hotspot-matrix.mjs --shard=0/3'],
     'matrix-1': ['verify-map-hotspot-matrix.mjs --shard=1/3'],
     'matrix-2': ['verify-map-hotspot-matrix.mjs --shard=2/3'],
+    'catalogue-page': ['verify-catalogue-page.mjs --ci'],
+    'catalogue-width': ['verify-catalogue-page.mjs --width --ci'],
 }
 SMOKE = {
     'navigation': ['verify-browser.mjs'],

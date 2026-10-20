@@ -63,7 +63,7 @@ test('Logistics is a separate system directly below Business Operations in the f
   assert.equal(systemMapSlots(ids.slice(0, 3)), undefined);
 });
 
-test('Business Operations keeps four rows in every framing mode and canvas size', () => {
+test('Business Operations preserves its rows on a page and stacks their published order at narrow reading width', () => {
   const slots = operationsMapSlots('system-business-operations', domains);
   for (const width of [320, 768, 1100, 1800]) {
     for (const height of [420, 1000]) {
@@ -74,6 +74,15 @@ test('Business Operations keeps four rows in every framing mode and canvas size'
         ]) {
           const sections = [{ heights, headingHeight: 0, prominentIndex: 3 }];
           const grid = chooseMapGrid(sections, width, height, mode, true, undefined, slots);
+          if (mode === 'width' && width < 692) {
+            assert.deepEqual(
+              idsByRow(grid),
+              expectedRows.flatMap((row) => row.map((id) => [id])),
+            );
+            assert.equal(grid.columns, 1);
+            assert.equal(widthFit(grid.width, grid.height, width, height).zoom, 1);
+            continue;
+          }
           assert.deepEqual(idsByRow(grid), expectedRows);
           assert.equal(grid.columns, 2);
           assert.deepEqual(

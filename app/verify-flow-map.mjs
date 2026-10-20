@@ -134,6 +134,38 @@ async function assertNoPageOverflow(page) {
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
 }
 
+async function selectFraming(page, mode) {
+  const compact = page.getByRole('combobox', { name: 'Cadrage des flux', exact: true });
+  if (await compact.isVisible()) await compact.selectOption(mode);
+  else
+    await page
+      .getByRole('button', {
+        name: { standard: 'Échelle standard', width: 'Cadrer la largeur', all: 'Tout cadrer' }[mode],
+        exact: true,
+      })
+      .click();
+  await waitCameraIdle(page);
+}
+
+async function assertFraming(page, mode, expectedWorld) {
+  await waitCameraIdle(page);
+  assert.equal(await page.locator('.flow-map-canvas').getAttribute('data-framing'), mode);
+  const overflow = await page.locator('.flow-map-canvas').evaluate((canvas, mode) => {
+    const frame = canvas.getBoundingClientRect();
+    return [...canvas.querySelectorAll('.spatial-map-object')].flatMap((element) => {
+      const box = element.getBoundingClientRect();
+      return box.left < frame.left - 1 ||
+        box.right > frame.right + 1 ||
+        (mode === 'all' && (box.top < frame.top - 1 || box.bottom > frame.bottom + 1))
+        ? [element.dataset.nodeId]
+        : [];
+    });
+  }, mode);
+  assert.deepEqual(overflow, [], `${mode} fits the actual rendered territories`);
+  await assertWorld(page, expectedWorld, 'Framing transitions preserve the spatial world');
+  await assertNoPageOverflow(page);
+}
+
 async function flowFilters(page, action) {
   await page.locator('.map-flow-picker > button').click();
   const dialog = page.getByRole('dialog', { name: 'Filtres des flux', exact: true });
@@ -896,6 +928,80 @@ try {
   assert.ok(Math.abs((await viewport(mobile)).zoom - standardCamera.zoom) < 0.0001);
   await mobile.screenshot({ path: resolve(output, 'flows-mobile-short.png') });
   checks.push('Short mobile windows retain natural scale and compact one-row camera controls');
+
+  for (const scope of ['@root', 'system-business-operations', domain.id, 'domain-plan']) {
+    if (scope !== '@root' && !byId.has(scope)) continue;
+    const framingPage = await preparePage();
+    await visit(framingPage, 'flows', {
+      scope,
+      ...(scope === '@root' ? {} : { node: scope }),
+      app: 'product-akolade',
+      hf: JSON.stringify({ enabled: true }),
+    });
+    const expectedWorld = await world(framingPage);
+    for (const mode of ['width', 'all']) {
+      await selectFraming(framingPage, mode);
+      for (const size of [
+        { width: 1100, height: 720 },
+        { width: 390, height: 667 },
+        { width: 844, height: 390 },
+        { width: 1440, height: 1000 },
+      ]) {
+        await framingPage.setViewportSize(size);
+        await assertFraming(framingPage, mode, expectedWorld);
+      }
+      await framingPage.getByRole('button', { name: 'Étendre la carte', exact: true }).click();
+      await framingPage.waitForFunction(() => Boolean(document.fullscreenElement));
+      await assertFraming(framingPage, mode, expectedWorld);
+      await framingPage.getByRole('button', { name: 'Réduire la carte', exact: true }).click();
+      await framingPage.waitForFunction(() => !document.fullscreenElement);
+      await assertFraming(framingPage, mode, expectedWorld);
+      await framingPage.getByRole('tab', { name: 'Catalogue', exact: true }).click();
+      await framingPage.getByRole('tab', { name: 'Flux', exact: true }).click();
+      await assertFraming(framingPage, mode, expectedWorld);
+    }
+    await selectFraming(framingPage, 'standard');
+    const before = await viewport(framingPage);
+    const oldBounds = await framingPage.locator('.flow-map-canvas').boundingBox();
+    await framingPage.setViewportSize({ width: 1100, height: 720 });
+    await waitCameraIdle(framingPage);
+    const after = await viewport(framingPage);
+    const newBounds = await framingPage.locator('.flow-map-canvas').boundingBox();
+    assert.ok(Math.abs(before.zoom - after.zoom) < 0.0001, 'Standard retains its natural scale');
+    for (const axis of ['x', 'y']) {
+      const dimension = axis === 'x' ? 'width' : 'height';
+      assert.ok(
+        Math.abs(
+          (oldBounds[dimension] / 2 - before[axis]) / before.zoom -
+            (newBounds[dimension] / 2 - after[axis]) / after.zoom,
+        ) < 1,
+        'Standard retains its world center',
+      );
+    }
+    if (scope === 'system-business-operations' && byId.has('domain-sourcing-procurement')) {
+      const arrival = await framingPage.evaluate(() => {
+        const target = document.querySelector('.spatial-map-object[data-node-id="domain-sourcing-procurement"]');
+        const path = document.querySelector(
+          '.flow-exchange[data-source-id="supply-chain-orchestration"][data-target-id="domain-sourcing-procurement"] .flow-exchange-hit',
+        );
+        if (!path || !target) return null;
+        const end = path.getPointAtLength(path.getTotalLength()).matrixTransform(path.getScreenCTM());
+        const lead = path.getPointAtLength(path.getTotalLength() - 12).matrixTransform(path.getScreenCTM());
+        const box = target.getBoundingClientRect();
+        return { end: { x: end.x, y: end.y }, lead: { x: lead.x, y: lead.y }, box: box.toJSON() };
+      });
+      assert.ok(arrival, 'The published Supply to Procurement exchange is rendered');
+      assert.ok(Math.abs(arrival.end.y - arrival.box.bottom) < 1, 'The exchange reaches Procurement from the south');
+      assert.ok(arrival.end.x > arrival.box.left && arrival.end.x < arrival.box.right);
+      assert.ok(
+        Math.abs(arrival.lead.x - arrival.end.x) < 1 && arrival.lead.y > arrival.end.y,
+        'The last segment is perpendicular to the south border',
+      );
+      checks.push('The rendered Supply to Procurement arrow attaches to the south border');
+    }
+    checks.push(`${scope}: width/all fit after resize, fullscreen and tab return; Standard preserves its center`);
+    await framingPage.close();
+  }
   assert.deepEqual(errors, [], 'The browser reports no uncaught exception');
   report.status = 'passed';
   await writeFile(resolve(output, 'report.json'), JSON.stringify(report, null, 2));

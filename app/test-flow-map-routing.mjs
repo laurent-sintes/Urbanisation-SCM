@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import { buildFlowMap } from './src/flowMapLayout.ts';
 import { flowRibbonPath, roundedFlowPath, routeFlowExchange, routeFlowExchanges } from './src/flowMapRouting.ts';
-import { FLOW_STUB, FLOW_TRACK, spaceFlowMap } from './src/flowMapSpacing.ts';
+import { FLOW_STUB, FLOW_TRACK, flowFacingSides, spaceFlowMap } from './src/flowMapSpacing.ts';
 import { adaptPublication } from './src/model.ts';
 
 const box = (id, x, y, width = 100, height = 100) => ({ id, x, y, width, height });
@@ -71,7 +71,8 @@ test('dense flow spacing preserves row and column ordering and counts projected 
 });
 
 test('joint routing gives every dense exchange distinct ports, endpoint clearance and an unambiguous text bay', () => {
-  const boxes = spaceFlowMap(denseBoxes, denseEdges);
+  // A fully occupied synthetic corridor exercises the largest adaptive spacing pass.
+  const boxes = spaceFlowMap(denseBoxes, denseEdges, 1.5);
   const byId = new Map(boxes.map((box) => [box.id, box]));
   const inputs = denseEdges.map((edge) => ({
     id: edge.id,
@@ -266,7 +267,7 @@ test('parallel lanes remain deterministic and use distinct endpoint offsets', ()
 
 test('left and right neighbors use facing ports and perpendicular departure and arrival', () => {
   const left = box('left', 0, 0);
-  const right = box('right', 400, 180);
+  const right = box('right', 400, 40);
   for (const [source, target, sign] of [
     [left, right, 1],
     [right, left, -1],
@@ -282,6 +283,35 @@ test('left and right neighbors use facing ports and perpendicular departure and 
     assert.equal(beforeLast.y, last.y, 'Arrive horizontally at the target side');
     assert.ok((second.x - first.x) * sign > 0);
     assert.ok((last.x - beforeLast.x) * sign > 0);
+  }
+});
+
+test('diagonal exchanges use the lower face of the upper territory in both directions', () => {
+  const top = box('procurement', 168, 168, 360, 160);
+  for (const bottom of [box('supply', 1104, 736, 360, 160), box('supply', -900, 736, 360, 160)]) {
+    const boxes = [top, bottom];
+    const forward = flowFacingSides(bottom, top);
+    assert.equal(forward[1], 2, 'Return to the south face of Sourcing and Procurement');
+    assert.deepEqual(flowFacingSides(top, bottom), [...forward].reverse());
+    const routes = routeFlowExchanges(
+      [
+        { id: 'supply-to-procurement', source: bottom, target: top },
+        { id: 'procurement-to-supply', source: top, target: bottom },
+      ],
+      boxes,
+    );
+    for (const [index, route] of routes.entries()) {
+      const source = index === 0 ? bottom : top;
+      const target = index === 0 ? top : bottom;
+      verify(route, source, target, boxes);
+      assert.ok(route.label, 'Both directions keep their own readable caption');
+      const port = index === 0 ? route.points.at(-1) : route.points[0];
+      const next = index === 0 ? route.points.at(-2) : route.points[1];
+      assert.equal(port.y, top.y + top.height);
+      assert.equal(next.x, port.x);
+      assert.ok(next.y > port.y, 'The lead remains below the upper territory');
+    }
+    assert.notDeepEqual(routes[0].points.at(-1), routes[1].points[0]);
   }
 });
 

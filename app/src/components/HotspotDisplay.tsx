@@ -574,6 +574,11 @@ export function HotspotMapMarker({
       {grouped && <span>Cliquer pour déployer les points de ce groupe.</span>}
     </>
   );
+  const highlightFromPointer = (active: boolean, ids: string[]) => {
+    // Native focus scrolling can move another marker under a stationary mouse.
+    // Preserve the keyboard target until focus leaves the hotspot controls.
+    if (!document.activeElement?.closest('.hotspot-map-marker, .hotspot-expanded-item')) onHighlight?.(active, ids);
+  };
   const markerProps = {
     type: 'button' as const,
     className: 'hotspot-map-marker',
@@ -581,11 +586,11 @@ export function HotspotMapMarker({
     'data-hotspot-ids': items.map((item) => item.id).join('|'),
     'aria-label': `${title}, criticité ${grouped ? 'maximale ' : ''}${severityLabel(severity)}${grouped ? `, ${openItems.length} ouverts sur ${items.length}. Déployer le groupe.` : `, ${RESOLUTION_STAGES[resolutionFor(items[0]).stage]}${resolutionFor(items[0]).blocked_reason ? ', bloqué' : ''}`}`,
     onMouseEnter: () =>
-      onHighlight?.(
+      highlightFromPointer(
         true,
         items.map((item) => item.id),
       ),
-    onMouseLeave: () => onHighlight?.(false, []),
+    onMouseLeave: () => highlightFromPointer(false, []),
     onFocus: () =>
       onHighlight?.(
         true,
@@ -741,8 +746,8 @@ export function HotspotMapMarker({
                           type="button"
                           className={`hotspot-expanded-item severity-${item.severity}${item.workshop ? ' is-workshop' : ''}${isClosedHotspot(item) ? ' is-framing-closed' : ''}`}
                           style={style}
-                          onMouseEnter={() => onHighlight?.(true, [item.id])}
-                          onMouseLeave={() => onHighlight?.(false, [])}
+                          onMouseEnter={() => highlightFromPointer(true, [item.id])}
+                          onMouseLeave={() => highlightFromPointer(false, [])}
                           onFocus={() => onHighlight?.(true, [item.id])}
                           onBlur={() => onHighlight?.(false, [])}
                           aria-label={`${item.title}, criticité ${severityLabel(item.severity)}, ${RESOLUTION_STAGES[resolutionFor(item).stage]}${resolutionFor(item).blocked_reason ? ', bloqué' : ''}`}
@@ -834,8 +839,25 @@ export function HotspotMapMarker({
 export function HotspotLegend({ count }: { count: number }) {
   const [expanded, setExpanded] = useState(false);
   const legendId = useId();
+  const shell = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!expanded) return;
+    const dismiss = (event: globalThis.PointerEvent | globalThis.KeyboardEvent) => {
+      if (event instanceof window.KeyboardEvent) {
+        if (event.key !== 'Escape') return;
+        shell.current?.querySelector('button')?.focus({ preventScroll: true });
+      } else if (shell.current?.contains(event.target as Node)) return;
+      setExpanded(false);
+    };
+    document.addEventListener('pointerdown', dismiss);
+    document.addEventListener('keydown', dismiss);
+    return () => {
+      document.removeEventListener('pointerdown', dismiss);
+      document.removeEventListener('keydown', dismiss);
+    };
+  }, [expanded]);
   return (
-    <div className="hotspot-legend-shell">
+    <div className="hotspot-legend-shell" ref={shell}>
       <button
         type="button"
         className="hotspot-legend-toggle"

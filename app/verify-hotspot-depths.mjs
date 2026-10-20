@@ -107,13 +107,11 @@ try {
           const failures = [];
           for (const [index, circle] of circles.entries()) {
             for (const other of circles.slice(index + 1)) {
-              if (
-                circle.parent === other.parent &&
-                Math.hypot(circle.x - other.x, circle.y - other.y) < circle.radius + other.radius + 5.5
-              )
+              if (Math.hypot(circle.x - other.x, circle.y - other.y) < circle.radius + other.radius + 5.5)
                 failures.push(`overlap:${circle.id}/${other.id}`);
             }
-            const parent = circle.parent.getBoundingClientRect();
+            const territory = circle.parent.closest('.overview-map-frame') || circle.parent;
+            const parent = territory.getBoundingClientRect();
             if (
               circle.x - circle.radius < parent.left - 1 ||
               circle.x + circle.radius > parent.right + 1 ||
@@ -121,7 +119,7 @@ try {
               circle.y + circle.radius > parent.bottom + 1
             )
               failures.push(`clipped:${circle.id}`);
-            for (const element of circle.parent.querySelectorAll(
+            for (const element of territory.querySelectorAll(
               '.business-card, .container-label, .category-banner, small, h3, p, .overview-stats, .overview-hierarchy',
             )) {
               const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
@@ -149,7 +147,22 @@ try {
           ...new Set(geometry.ids.flatMap((id) => id.replace(/^hotspot:(cluster:)?/, '').split('|'))),
         ].sort();
         assert.deepEqual(represented, expected, `${scope}/${depth}/${width}: exact scope survives resize`);
-        assert.equal(await page.locator('.hotspot-leader').count(), 0, 'no dotted leaders');
+        const detachedLeaders = await page.locator('.catalogue-hotspot-leaders line').evaluateAll((lines) =>
+          lines.flatMap((line) => {
+            const marker = [...document.querySelectorAll('.hotspot-map-marker')].find(
+              (element) => element.dataset.id === `hotspot:${line.dataset.hotspotLeader}`,
+            );
+            if (!marker) return [line.dataset.hotspotLeader];
+            const endpoint = new DOMPoint(line.x2.baseVal.value, line.y2.baseVal.value).matrixTransform(
+              line.getScreenCTM(),
+            );
+            const rect = marker.getBoundingClientRect();
+            return Math.hypot(endpoint.x - rect.left - rect.width / 2, endpoint.y - rect.top - rect.height / 2) > 1.5
+              ? [line.dataset.hotspotLeader]
+              : [];
+          }),
+        );
+        assert.deepEqual(detachedLeaders, [], 'Every callout remains attached to its displaced hotspot');
         if (width === 1440 && ((!scope && depth === 2) || (scope === 'supply-chain-orchestration' && depth === 4))) {
           const individuals = page.locator('.hotspot-map-marker[data-id]:not(:has(.hotspot-map-count))');
           for (const marker of await individuals.all()) {
@@ -159,40 +172,57 @@ try {
             const related = model.nodes
               .filter((node) => hotspot.location.node_ids.some((anchor) => belongs(node.id, anchor)))
               .map((node) => node.id);
-            const missing = await page.evaluate(
-              (ids) =>
-                [
-                  ...document.querySelectorAll(
-                    '[data-node-id], [data-map-item-id], [data-business-area-summary], [data-business-area]',
-                  ),
-                ]
-                  .filter((element) =>
-                    ids.includes(
-                      element.dataset.nodeId ||
-                        element.dataset.mapItemId ||
-                        element.dataset.businessAreaSummary ||
-                        element.dataset.businessArea,
-                    ),
-                  )
-                  .filter(
-                    (element) =>
-                      !element.classList.contains('hotspot-related-item') &&
-                      !element.classList.contains('hotspot-related') &&
-                      !element.closest('.react-flow__node.hotspot-related'),
-                  )
-                  .map(
-                    (element) =>
-                      element.dataset.nodeId ||
+            const unhighlighted = (ids) =>
+              [
+                ...document.querySelectorAll(
+                  '[data-node-id], [data-map-item-id], [data-business-area-summary], [data-business-area]',
+                ),
+              ]
+                .filter((element) =>
+                  ids.includes(
+                    element.dataset.nodeId ||
                       element.dataset.mapItemId ||
                       element.dataset.businessAreaSummary ||
                       element.dataset.businessArea,
                   ),
-              related,
-            );
+                )
+                .filter(
+                  (element) =>
+                    !element.classList.contains('hotspot-related-item') &&
+                    !element.classList.contains('hotspot-related') &&
+                    !element.closest('.react-flow__node.hotspot-related'),
+                )
+                .map(
+                  (element) =>
+                    element.dataset.nodeId ||
+                    element.dataset.mapItemId ||
+                    element.dataset.businessAreaSummary ||
+                    element.dataset.businessArea,
+                );
+            let missing = await page.evaluate(unhighlighted, related);
+            for (let poll = 0; missing.length && poll < 30; poll++) {
+              await page.waitForTimeout(50);
+              missing = await page.evaluate(unhighlighted, related);
+            }
+            if (missing.length)
+              console.error(
+                JSON.stringify(
+                  await page.evaluate(() => ({
+                    active: document.activeElement?.outerHTML.slice(0, 250),
+                    hovered: document.querySelector('.hotspot-map-marker:hover')?.dataset.id,
+                    related: [...document.querySelectorAll('.hotspot-related,.hotspot-related-item')].map(
+                      (e) => e.dataset.nodeId || e.dataset.mapItemId,
+                    ),
+                  })),
+                ),
+              );
             assert.deepEqual(missing, [], `${scope || 'overview'}/${id}: all visible descendants illuminate`);
             await page.keyboard.press('Escape');
           }
           await trigger.focus();
+          await page.waitForFunction(
+            () => document.querySelectorAll('.hotspot-related, .hotspot-related-item').length === 0,
+          );
           assert.equal(
             await page.locator('.hotspot-related, .hotspot-related-item').count(),
             0,

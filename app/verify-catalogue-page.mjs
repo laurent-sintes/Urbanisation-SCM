@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { browserOptions, chromium } from './browser-runtime.mjs';
+import { catalogueTextIntegrity, waitForCatalogueGeometry } from './catalogue-geometry.mjs';
 import { mapRouteForNode } from './src/mapNavigation.ts';
 import { mapDepthLimit } from './src/mapProjection.ts';
 import { adaptPublication, childrenOf } from './src/model.ts';
@@ -15,6 +16,7 @@ const model = adaptPublication(
 const quick = process.argv.includes('--quick');
 const navigationOnly = process.argv.includes('--navigation-only');
 const widthMode = process.argv.includes('--width');
+const ci = process.argv.includes('--ci');
 const only = process.argv.filter((arg) => arg.startsWith('--only=')).map((arg) => arg.slice(7));
 const shard = Number(process.argv.find((arg) => arg.startsWith('--shard='))?.slice(8) ?? -1);
 const shards = Number(process.argv.find((arg) => arg.startsWith('--shards='))?.slice(9) ?? 2);
@@ -51,6 +53,7 @@ const screens = [
   { name: 'desktop', width: 1440, height: 1000 },
   { name: 'short', width: 1440, height: 650 },
   { name: 'mobile', width: 390, height: 667 },
+  { name: 'landscape', width: 844, height: 390 },
   ...(widthMode
     ? [
         { name: 'medium', width: 1280, height: 800 },
@@ -82,6 +85,12 @@ const views = scopes.flatMap((scope) => {
 const cases = views.flatMap((view) => screens.flatMap((screen) => layers.map((layer) => ({ ...view, screen, layer }))));
 const eligible = cases.filter(
   (item) =>
+    (!ci ||
+      (item.screen.name === 'desktop' &&
+        (item.layer.name === 'both' || (item.depth === 0 && item.layer.name !== 'both'))) ||
+      (['mobile', 'landscape'].includes(item.screen.name) &&
+        referenceScopes.includes(item.scope) &&
+        item.layer.name === 'both')) &&
     (!only.length || only.includes(`${item.scope || '@root'}:${item.depth}:${item.screen.name}:${item.layer.name}`)) &&
     (!widthMode ||
       referenceScopes.includes(item.scope) ||
@@ -93,6 +102,7 @@ const eligible = cases.filter(
         : true),
 );
 const selected = eligible.filter((_, index) => shard < 0 || index % shards === shard);
+assert.ok(selected.length, 'The framing recipe must execute at least one case');
 const report = { version: model.version, cases: [], errors: [] };
 const browser = await chromium.launch(browserOptions);
 const base = 'https://atlas.test/';
@@ -202,6 +212,7 @@ try {
         };
       });
     const verify = async (variant, mode = widthMode ? 'width' : 'page', baseline) => {
+      await waitForCatalogueGeometry(page);
       // Framing follows card measurement and React Flow initialization; wait for the
       // observable result rather than assuming the next timer has already fired.
       await page
@@ -236,8 +247,11 @@ try {
         }, mode)
         .catch(() => {});
       const state = await capture();
+      const integrity = await page.evaluate(catalogueTextIntegrity);
       const failures = [];
+      if (integrity.collisions.length) failures.push(`hotspots cover text: ${JSON.stringify(integrity.collisions)}`);
       if (mode === 'width') {
+        if (integrity.unreadable.length) failures.push(`unreadable titles: ${integrity.unreadable.join(', ')}`);
         if (state.scale <= 0 || state.scale > 1.001) failures.push('invalid width fit scale');
         if (state.width >= state.minimumWidth && Math.abs(state.scale - 1) > 0.001)
           failures.push('width mode reduces text despite sufficient space');
@@ -290,7 +304,18 @@ try {
         )
           failures.push('hotspot outside page');
       }
-      if (failures.length) await page.screenshot({ path: resolve(output, `case-${index}-${variant}.png`) });
+      if (failures.length) {
+        await page.screenshot({ path: resolve(output, `case-${index}-${variant}.png`) });
+        console.log(
+          JSON.stringify({
+            scope: item.scope || '@root',
+            depth: item.depth,
+            screen: item.screen.name,
+            variant,
+            failures,
+          }),
+        );
+      }
       report.cases.push({ ...item, variant, failures, ...state });
       return state;
     };
@@ -302,33 +327,36 @@ try {
       await page.locator('.map-scroll-viewport,.overview-map-scroll').evaluate((viewport) => {
         viewport.style.scrollbarGutter = 'stable';
       });
-      await page.waitForTimeout(350);
       await verify('reserved-scrollbar');
       await page.locator('.map-scroll-viewport,.overview-map-scroll').evaluate((viewport) => {
         viewport.style.removeProperty('scrollbar-gutter');
       });
-      await page.waitForTimeout(350);
       await verify('after-scrollbar', 'width', baseline);
       await page.getByRole('button', { name: 'Étendre la carte', exact: true }).click();
       await page.waitForFunction(() => Boolean(document.fullscreenElement));
-      await page.waitForTimeout(350);
       await verify('fullscreen');
       await page.getByRole('button', { name: 'Réduire la carte', exact: true }).click();
       await page.waitForFunction(() => !document.fullscreenElement);
-      await page.waitForTimeout(350);
       await verify('after-fullscreen', 'width', baseline);
       await page.getByRole('button', { name: 'Pleine page', exact: true }).click();
-      await page.waitForTimeout(350);
       await verify('page-roundtrip', 'page');
       await page.getByRole('button', { name: 'Pleine largeur', exact: true }).click();
-      await page.waitForTimeout(350);
       await verify('after-page', 'width', baseline);
       await page.setViewportSize({ width: item.screen.width + 360, height: item.screen.height + 140 });
-      await page.waitForTimeout(350);
       await verify('resized');
       await page.setViewportSize(item.screen);
-      await page.waitForTimeout(350);
       await verify('after-resize', 'width', baseline);
+    } else if (ci && item.layer.name === 'both') {
+      await page.setViewportSize({ width: 844, height: 390 });
+      await verify('landscape-transition');
+      await page.getByRole('button', { name: 'Étendre la carte', exact: true }).click();
+      await page.waitForFunction(() => Boolean(document.fullscreenElement));
+      await verify('fullscreen-transition');
+      await page.getByRole('button', { name: 'Réduire la carte', exact: true }).click();
+      await page.waitForFunction(() => !document.fullscreenElement);
+      await verify('fullscreen-return-transition');
+      await page.setViewportSize(item.screen);
+      await verify('resize-return-transition');
     }
     if (item.focus)
       assert.ok(
@@ -342,14 +370,15 @@ try {
     await page.keyboard.press('Escape');
     const legendToggle = page.locator('.hotspot-legend-toggle');
     if (item.layer.hotspots && (await legendToggle.isVisible())) {
-      await legendToggle.click();
-      await page.waitForTimeout(350);
+      if ((await legendToggle.getAttribute('aria-expanded')) !== 'true') await legendToggle.click();
       await verify('expanded-legend');
+      await page.keyboard.press('Escape');
+      assert.equal(await legendToggle.getAttribute('aria-expanded'), 'false', 'Escape folds the short-screen legend');
+      await verify('legend-return');
     }
     if (!widthMode && item.layer.name === 'both' && item.screen.name === 'desktop' && item.depth === 0) {
       await page.getByRole('button', { name: 'Étendre la carte', exact: true }).click();
       await page.waitForFunction(() => Boolean(document.fullscreenElement));
-      await page.waitForTimeout(400);
       await verify('fullscreen');
       await page.getByRole('button', { name: 'Réduire la carte', exact: true }).click();
       await page.waitForFunction(() => !document.fullscreenElement);

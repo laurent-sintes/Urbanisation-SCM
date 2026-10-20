@@ -7,6 +7,34 @@ export interface FlowCamera {
   zoom: number;
 }
 
+/** Locked framing is recomputed from the actual canvas, independently of React Flow's resize cycle. */
+export function fitFlowCamera(
+  world: { width: number; height: number; boxes: readonly FlowMapBox[] },
+  bounds: { width: number; height: number },
+  framing: 'width' | 'all',
+): FlowCamera {
+  const zoom = Math.min(
+    2.5,
+    Math.max(
+      0.003,
+      framing === 'width'
+        ? Math.max(1, bounds.width - 64) / Math.max(1, world.width)
+        : Math.min(
+            Math.max(1, bounds.width - 32) / Math.max(1, world.width),
+            Math.max(1, bounds.height - 32) / Math.max(1, world.height),
+          ),
+    ),
+  );
+  return {
+    x: (bounds.width - world.width * zoom) / 2,
+    y:
+      framing === 'width'
+        ? 24 - (world.boxes.length ? Math.min(...world.boxes.map((box) => box.y)) : 0) * zoom
+        : (bounds.height - world.height * zoom) / 2,
+    zoom,
+  };
+}
+
 export interface FlowLabelPlacement {
   x: number;
   y: number;

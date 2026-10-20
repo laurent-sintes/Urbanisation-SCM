@@ -21,6 +21,7 @@ import { buildFlowMap, type FlowMapBox } from '../flowMapLayout';
 import { flowMapBoundaryDestinations, flowMapPresentation } from '../flowMapPresentation';
 import { flowRibbonPath, roundedFlowPath } from '../flowMapRouting';
 import {
+  fitFlowCamera,
   flowRouteInViewport,
   flowTargetFocus,
   resizeFlowCamera,
@@ -259,6 +260,15 @@ export function FlowMapPanel(props: MapPanelProps) {
   const exchangeTrigger = useRef<{ element: HTMLElement | SVGElement; relationIds: string[] } | null>(null);
   const paintId = useId().replaceAll(':', '');
   const layout = useMemo(() => buildFlowMap(model, scopeId, { overviewDepth: 0 }), [model, scopeId]);
+  const resizeCamera = useCallback(
+    (current: Viewport, previous: { width: number; height: number }, next: { width: number; height: number }) => {
+      const choice = cameraFramings.get(key);
+      return choice === 'width' || choice === 'all'
+        ? fitFlowCamera(layout, next, choice)
+        : resizeFlowCamera(current, previous, next);
+    },
+    [layout, key],
+  );
   const boundaryDestinations = useMemo(
     () => flowMapBoundaryDestinations(model, flowMapBoundaryRelations(model, scopeId)),
     [model, scopeId],
@@ -429,14 +439,10 @@ export function FlowMapPanel(props: MapPanelProps) {
   );
   const fitWidth = useCallback(() => {
     if (!layout.width) return;
-    const width = canvas.current?.clientWidth || size.width;
-    const zoom = Math.min(2.5, Math.max(0.003, (width - 64) / layout.width));
+    const bounds = canvas.current ? { width: canvas.current.clientWidth, height: canvas.current.clientHeight } : size;
     rememberFraming('width');
-    void instance.current?.setViewport(
-      { x: (width - layout.width * zoom) / 2, y: 24 - Math.min(...layout.boxes.map((box) => box.y)) * zoom, zoom },
-      { duration: motionDuration(250) },
-    );
-  }, [layout, size.width, rememberFraming]);
+    void instance.current?.setViewport(fitFlowCamera(layout, bounds, 'width'), { duration: motionDuration(250) });
+  }, [layout, size, rememberFraming]);
 
   const center = useCallback(
     (id: string, duration = 250) => {
@@ -453,11 +459,9 @@ export function FlowMapPanel(props: MapPanelProps) {
   );
   const overview = useCallback(() => {
     rememberFraming('all');
-    void instance.current?.fitBounds(
-      { x: 0, y: 0, width: layout.width, height: layout.height },
-      { padding: 0.08, duration: motionDuration(250) },
-    );
-  }, [layout, rememberFraming]);
+    const bounds = canvas.current ? { width: canvas.current.clientWidth, height: canvas.current.clientHeight } : size;
+    void instance.current?.setViewport(fitFlowCamera(layout, bounds, 'all'), { duration: motionDuration(250) });
+  }, [layout, size, rememberFraming]);
   const centerApplication = useCallback(() => {
     const boxes = [...applicationBoxIds].flatMap((id) => byId.get(id) || []);
     if (!boxes.length) {
@@ -488,7 +492,7 @@ export function FlowMapPanel(props: MapPanelProps) {
       const next = { width: target.clientWidth, height: target.clientHeight };
       const previous = lastCanvasSize.current;
       if (previous && instance.current && (previous.width !== next.width || previous.height !== next.height))
-        void instance.current.setViewport(resizeFlowCamera(instance.current.getViewport(), previous, next), {
+        void instance.current.setViewport(resizeCamera(instance.current.getViewport(), previous, next), {
           duration: 0,
         });
       lastCanvasSize.current = next;
@@ -496,7 +500,7 @@ export function FlowMapPanel(props: MapPanelProps) {
     });
     observer.observe(target);
     return () => observer.disconnect();
-  }, []);
+  }, [resizeCamera]);
   useEffect(() => {
     const changed = () => setExpanded(document.fullscreenElement === panel.current);
     document.addEventListener('fullscreenchange', changed);
@@ -919,7 +923,7 @@ export function FlowMapPanel(props: MapPanelProps) {
                 width: canvas.current.clientWidth,
                 height: canvas.current.clientHeight,
               };
-              void flow.setViewport(previous && current ? resizeFlowCamera(saved, previous, current) : saved);
+              void flow.setViewport(previous && current ? resizeCamera(saved, previous, current) : saved);
             } else
               requestAnimationFrame(() => {
                 if (focusSelection) center(selectedId, 0);

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
+  fitFlowCamera,
   flowRouteInViewport,
   flowTargetFocus,
   initialFlowTerritoryCenter,
@@ -12,6 +13,27 @@ import {
 
 const bounds = { width: 390, height: 180 };
 const camera = { x: -400, y: -300, zoom: 1 };
+
+test('locked flow framing fits the actual canvas after shrinking, expanding and fullscreen round trips', () => {
+  const world = { width: 4263, height: 2365, boxes: [] };
+  for (const size of [
+    { width: 1061, height: 580 },
+    { width: 735, height: 213 },
+    { width: 341, height: 333 },
+    { width: 796, height: 100 },
+    { width: 1440, height: 850 },
+  ]) {
+    for (const framing of ['width', 'all']) {
+      const fitted = fitFlowCamera(world, size, framing);
+      assert.ok(fitted.x >= 0);
+      assert.ok(fitted.x + world.width * fitted.zoom <= size.width);
+      if (framing === 'all') {
+        assert.ok(fitted.y >= 0);
+        assert.ok(fitted.y + world.height * fitted.zoom <= size.height);
+      }
+    }
+  }
+});
 
 const territory = (id, kind, geometry = {}, parentId) =>
   Object.freeze({

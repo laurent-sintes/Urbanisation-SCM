@@ -3,7 +3,13 @@ import { type CSSProperties, useEffect, useLayoutEffect, useMemo, useRef, useSta
 import { overviewLayout, prominentChildIndex } from '../adaptiveLayout';
 import { applicationMapIds, projectedApplicationMapIds, selectionMappings } from '../applicationCatalog';
 import { filterMapHotspots, type HotspotMapFilters, hotspotRelatedElementIds } from '../hotspotMap';
-import { HOTSPOT_DIAMETERS, type HotspotPlacementGroup, layoutHotspots } from '../hotspotPlacement';
+import {
+  CATALOGUE_HOTSPOT_HEADROOM,
+  catalogueHotspotDock,
+  HOTSPOT_DIAMETERS,
+  type HotspotPlacementGroup,
+  layoutHotspots,
+} from '../hotspotPlacement';
 import { NodeIcon } from '../icons';
 import { operationsMapSlots, systemMapSlots } from '../mapPlacement';
 import { resolveMapZoom, stablePageFitZoom } from '../mapZoom';
@@ -67,12 +73,14 @@ export function Overview({
   const grid = useRef<HTMLDivElement>(null);
   const [zoomChoice, setZoomChoice] = useMapZoomChoice();
   const [frame, setFrame] = useState({ width: 0, height: 0, pageZoom: 1, widthZoom: 1 });
-  const scale = resolveMapZoom(zoomChoice, detail, frame.pageZoom) === 'page' ? frame.pageZoom : frame.widthZoom;
+  const effectiveZoomMode = resolveMapZoom(zoomChoice, detail, frame.pageZoom);
+  const scale = effectiveZoomMode === 'page' ? frame.pageZoom : frame.widthZoom;
   // biome-ignore lint/correctness/useExhaustiveDependencies: Detail and framing intentionally reset the map viewport.
   useEffect(() => {
     scroll.current?.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [detail, zoomChoice]);
   const [availableWidth, setAvailableWidth] = useState(0);
+  const compact = effectiveZoomMode === 'width' && availableWidth > 0 && availableWidth < 812;
   const [measurementVersion, setMeasurementVersion] = useState(0);
   const [markerPlacement, setMarkerPlacement] = useState<Record<string, OverviewPlacement>>({});
   const [clusterExpanded, setClusterExpanded] = useState(false);
@@ -194,6 +202,7 @@ export function Overview({
     () => visibleHotspots.filter((hotspot) => !hotspot.location.node_ids.includes(universe?.id || '')),
     [visibleHotspots, universe],
   );
+  const hotspotHeadroom = cardHotspots.length ? CATALOGUE_HOTSPOT_HEADROOM : 0;
   const cardHotspotSystems = useMemo(
     () =>
       new Map(
@@ -210,7 +219,7 @@ export function Overview({
     [cardHotspots, model, systems],
   );
   const displayedSystems = systemSlots ? systemSlots.map((slot) => systems[slot.index]) : systems;
-  // Framing changes only the scale, preserving the logical system/domain positions.
+  // Page framing preserves the spatial composition; width framing may stack columns.
   useLayoutEffect(() => {
     const target = scroll.current;
     const content = grid.current;
@@ -262,6 +271,26 @@ export function Overview({
   useLayoutEffect(() => {
     if (clusterExpanded) return;
     const next: Record<string, OverviewPlacement> = {};
+    const mapFrame = grid.current?.parentElement;
+    if (!mapFrame || !grid.current) return;
+    const frameRect = mapFrame.getBoundingClientRect();
+    const obstacles: { x: number; y: number; width: number; height: number }[] = [];
+    for (const element of grid.current.querySelectorAll('small, h3, p, .overview-stats, .overview-hierarchy')) {
+      const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        if (!walker.currentNode.textContent?.trim()) continue;
+        const range = document.createRange();
+        range.selectNodeContents(walker.currentNode);
+        for (const rect of range.getClientRects())
+          obstacles.push({
+            x: rect.left - frameRect.left,
+            y: rect.top - frameRect.top,
+            width: rect.width,
+            height: rect.height,
+          });
+      }
+    }
+    const occupied: typeof obstacles = [];
     for (const system of systems) {
       const article = [...(section.current?.querySelectorAll<HTMLElement>('.overview-system') || [])].find(
         (element) => element.dataset.nodeId === system.id,
@@ -274,25 +303,13 @@ export function Overview({
         width: article.clientWidth * scale,
         height: article.clientHeight * scale,
       };
-      const obstacles = [
-        ...article.querySelectorAll<HTMLElement>('small, h3, p, .overview-stats, .overview-hierarchy'),
-      ].flatMap((element) => {
-        const rects = [];
-        const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT);
-        while (walker.nextNode()) {
-          if (!walker.currentNode.textContent?.trim()) continue;
-          const range = document.createRange();
-          range.selectNodeContents(walker.currentNode);
-          for (const rect of range.getClientRects())
-            rects.push({
-              x: rect.left - articleRect.left,
-              y: rect.top - articleRect.top,
-              width: rect.width,
-              height: rect.height,
-            });
-        }
-        return rects;
-      });
+      const origin = { x: articleRect.left - frameRect.left, y: articleRect.top - frameRect.top };
+      const otherSystems = [...grid.current.querySelectorAll('.overview-system')]
+        .filter((element) => element !== article)
+        .map((element) => {
+          const rect = element.getBoundingClientRect();
+          return { x: rect.left - frameRect.left, y: rect.top - frameRect.top, width: rect.width, height: rect.height };
+        });
       const markers = cardHotspots.filter((hotspot) => cardHotspotSystems.get(hotspot.id) === system.id);
       const targetsById = new Map(
         [...article.querySelectorAll<HTMLElement>('[data-map-item-id]')].flatMap((element) => {
@@ -328,12 +345,30 @@ export function Overview({
               0,
             ) / targets.length
           : 26;
-        return { id: hotspot.id, x, y, diameter: HOTSPOT_DIAMETERS[hotspot.severity] };
+        return { id: hotspot.id, x: x + origin.x, y: y + origin.y, diameter: HOTSPOT_DIAMETERS[hotspot.severity] };
       });
-      const fallbackPositions = [];
-      for (let x = 26; x <= articleRect.width - 26; x += 54) fallbackPositions.push({ x, y: 26 });
-      const bounds = { width: articleRect.width, height: articleRect.height, obstacles, fallbackPositions };
-      next[system.id] = { groups: layoutHotspots(anchors, bounds) };
+      const bounds = {
+        width: mapFrame.clientWidth,
+        height: mapFrame.clientHeight,
+        obstacles: [...obstacles, ...otherSystems, ...occupied],
+        fallbackPositions: catalogueHotspotDock(mapFrame.clientWidth),
+      };
+      const groups = layoutHotspots(anchors, bounds);
+      for (const group of groups)
+        occupied.push({
+          x: group.x - group.diameter / 2 - 3,
+          y: group.y - group.diameter / 2 - 3,
+          width: group.diameter + 6,
+          height: group.diameter + 6,
+        });
+      next[system.id] = {
+        groups: groups.map((group) => ({
+          ...group,
+          x: group.x - origin.x,
+          y: group.y - origin.y,
+          anchor: { x: group.anchor.x - origin.x, y: group.anchor.y - origin.y },
+        })),
+      };
     }
     setMarkerPlacement((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next));
   }, [
@@ -346,6 +381,7 @@ export function Overview({
     measurementVersion,
     clusterExpanded,
     scale,
+    hotspotHeadroom,
   ]);
   return (
     <section
@@ -441,16 +477,15 @@ export function Overview({
               ))}
             </div>
           )}
-          <div
-            className="overview-map-frame"
-            style={{ width: frame.width * scale, height: frame.height * scale || undefined }}
-          >
+          <div className="overview-map-frame" style={{ height: frame.height * scale + hotspotHeadroom || undefined }}>
             <div
               ref={grid}
-              className={`urbanisation-overview ${systemSlots ? 'layout-fixed' : `layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}`}
+              className={`urbanisation-overview ${systemSlots ? 'layout-fixed' : `layout-${layout.kind} ${layout.featuredIndex === 0 ? 'featured-first' : 'featured-middle'}`}${compact ? ' is-narrow' : ''}`}
               style={
                 {
                   width: frame.width,
+                  position: 'relative',
+                  top: hotspotHeadroom,
                   transform: `scale(${scale})`,
                   transformOrigin: 'top left',
                   '--overview-scale': scale,
@@ -458,7 +493,7 @@ export function Overview({
               }
               data-layout={systemSlots ? 'fixed' : layout.kind}
             >
-              <OverviewColumns slots={systemSlots}>
+              <OverviewColumns slots={systemSlots} compact={compact}>
                 {displayedSystems.map((system, index) => {
                   const systemSlot = systemSlots?.[index];
                   const systemHotspots = cardHotspots.filter(
@@ -499,6 +534,21 @@ export function Overview({
                       }
                       className={`overview-system${systemHotspots.length ? ' has-map-hotspots' : ''}${relatedIds.has(system.id) ? ' hotspot-related' : ''}${applicationExactIds.has(system.id) ? ' application-related' : applicationIds.has(system.id) ? ' application-context' : ''}`}
                     >
+                      <svg className="catalogue-hotspot-leaders" width="100%" height="100%" aria-hidden="true">
+                        {groups.map((group) =>
+                          Math.hypot(group.x - group.anchor.x, group.y - group.anchor.y) > 6 ? (
+                            <line
+                              key={group.id}
+                              data-hotspot-leader={group.id}
+                              x1={group.anchor.x / scale}
+                              y1={group.anchor.y / scale}
+                              x2={group.x / scale}
+                              y2={group.y / scale}
+                              vectorEffect="non-scaling-stroke"
+                            />
+                          ) : null,
+                        )}
+                      </svg>
                       {groups.map((group) => (
                         <HotspotMapMarker
                           key={group.id}

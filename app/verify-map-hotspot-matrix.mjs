@@ -162,7 +162,7 @@ try {
           failures.push(`no-parent:${m.id}`);
           continue;
         }
-        const box = m.parent.getBoundingClientRect();
+        const box = (m.parent.closest('.overview-map-frame') || m.parent).getBoundingClientRect();
         if (m.radius < 17.9 || m.radius > 24.1) failures.push(`diameter:${m.id}`);
         if (
           m.x - m.radius < box.left - 1 ||
@@ -229,19 +229,21 @@ try {
           const card = overview.querySelector(`.overview-system[data-node-id="${id}"]`);
           return card ? [card.getBoundingClientRect()] : [];
         });
-        if (
-          ![3, 4].includes(systems.length) ||
-          !(
-            systems[0].right < systems[1].left &&
+        const compact = overview.classList.contains('is-narrow');
+        const positioned = compact
+          ? systems[0].bottom <= systems[1].top + 1 &&
+            (systems.length === 4
+              ? systems[1].bottom < systems[3].top && systems[3].bottom <= systems[2].top + 1
+              : systems[1].bottom <= systems[2].top + 1) &&
+            systems.every((rect) => Math.abs(rect.left - systems[0].left) < 1)
+          : systems[0].right < systems[1].left &&
             systems[1].right < systems[2].left &&
             systems.slice(0, 3).every((r) => Math.abs(r.top - systems[0].top) < 1) &&
             (systems.length === 3 ||
               (systems[3].top > systems[1].bottom &&
                 Math.abs(systems[3].left - systems[1].left) < 1 &&
-                Math.abs(systems[3].right - systems[1].right) < 1))
-          )
-        )
-          failures.push('system-positions');
+                Math.abs(systems[3].right - systems[1].right) < 1));
+        if (![3, 4].includes(systems.length) || !positioned) failures.push('system-positions');
       }
       const operations =
         document.querySelector('.overview-system[data-node-id="system-business-operations"] .overview-domains-fixed') ||
@@ -262,14 +264,18 @@ try {
         });
         if (boxes.slice(1, 4).every(Boolean)) {
           const [p, s, sales, o, l] = boxes;
+          const compact =
+            Boolean(operations.closest('.urbanisation-overview.is-narrow')) ||
+            (operations.matches('.zoom-width') && operations.clientWidth < 692);
+          const ordered = boxes.filter(Boolean);
           if (
-            !(
-              (!p || p.bottom <= s.top + 1) &&
-              Math.abs(s.top - sales.top) < 1 &&
-              s.right < sales.left &&
-              Math.max(s.bottom, sales.bottom) <= o.top + 1 &&
-              (!l || o.bottom <= l.top + 1)
-            )
+            !(compact
+              ? ordered.every((box, index) => !index || ordered[index - 1].bottom <= box.top + 1)
+              : (!p || p.bottom <= s.top + 1) &&
+                Math.abs(s.top - sales.top) < 1 &&
+                s.right < sales.left &&
+                Math.max(s.bottom, sales.bottom) <= o.top + 1 &&
+                (!l || o.bottom <= l.top + 1))
           )
             failures.push('domain-positions');
         }

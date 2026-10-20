@@ -14,6 +14,17 @@ export function flowLabelSize(boxes: readonly FlowMapBox[]) {
 }
 
 export function flowFacingSides(source: FlowMapBox, target: FlowMapBox): [number, number] {
+  const left = source.x + source.width <= target.x;
+  const right = target.x + target.width <= source.x;
+  const above = source.y + source.height <= target.y;
+  const below = target.y + target.height <= source.y;
+  // Diagonal neighbors use a corner: leave the upper row through its bottom
+  // and join the lower row from the side facing it. Reversing a flow reverses
+  // the same pair, so returning traffic does not wrap around the upper block.
+  if ((left || right) && (above || below)) {
+    if (above) return [2, left ? 1 : 0];
+    return [left ? 0 : 1, 2];
+  }
   if (source.x + source.width <= target.x) return [0, 1];
   if (target.x + target.width <= source.x) return [1, 0];
   return source.y <= target.y ? [2, 3] : [3, 2];
@@ -79,11 +90,16 @@ export function spaceFlowMap(
         for (const edge of crossing)
           for (const id of [edge.sourceId, edge.targetId]) traffic.set(id, (traffic.get(id) || 0) + 1);
         const peak = Math.max(0, ...traffic.values());
+        // Crossings at different rows or columns can share the same corridor.
+        // Reserve a compact initial bundle; the routing pass expands it when
+        // obstacle avoidance or caption protection needs more room.
+        const tracks = Math.ceil(Math.sqrt(peak));
         const previousSize = Math.max(
           ...expanded.filter((box) => byId.get(box.id)?.[axis] === previous).map((box) => box[dimension]),
         );
         const labelBay = axis === 'x' ? labelSize.width : labelSize.height;
-        coordinate += previousSize + Math.max(200, FLOW_STUB * 2 + labelBay + peak * FLOW_TRACK) * corridorScale;
+        coordinate +=
+          previousSize + Math.max(200, FLOW_STUB * 2 + labelBay + Math.max(0, tracks - 1) * FLOW_TRACK) * corridorScale;
       }
       for (const box of expanded) if (byId.get(box.id)?.[axis] === position) box[axis] = coordinate;
     }

@@ -41,9 +41,11 @@ class CheckPolicyTests(unittest.TestCase):
         serial = scripts['verify:serial']
         for name in ('verify:hotspots', 'verify:hotspot-resolution', 'verify:hotspot-detail'):
             serial = serial.replace('pnpm run ' + name, scripts[name])
-        expected = {part.strip()[5:] for part in serial.split('&&') if part.strip().startswith('node ')}
+        expected = {part.strip().split()[1] for part in serial.split('&&') if part.strip().startswith('node ')}
         actual = {script.split()[0] for group in GROUPS.values() for script in group}
         self.assertEqual(actual, expected)
+        self.assertEqual(GROUPS['catalogue-page'], ['verify-catalogue-page.mjs --ci'])
+        self.assertEqual(GROUPS['catalogue-width'], ['verify-catalogue-page.mjs --width --ci'])
         self.assertEqual(sum(script.startswith('verify-map-hotspot-matrix.mjs') for group in GROUPS.values() for script in group), 3)
         self.assertEqual({script for group in SMOKE.values() for script in group},
                          {'verify-browser.mjs', 'verify-display-codes.mjs', 'verify-published-content.mjs'})
@@ -67,6 +69,9 @@ class CheckPolicyTests(unittest.TestCase):
         self.assertFalse(plan(['.github/workflows/atlas-pages.yml'])['launcher'])
         self.assertFalse(plan(['.github/workflows/atlas-pages.yml'])['matrix'])
         self.assertTrue(plan(['app/src/components/MapPanel.tsx'])['matrix'])
+        for recipe in ('catalogue-geometry.mjs', 'verify-catalogue-page.mjs', 'verify-flow-map.mjs',
+                       'verify-map-placement.mjs', 'verify-map-hotspot-matrix.mjs', 'verify-hotspot-depths.mjs'):
+            self.assertTrue(plan(['app/' + recipe])['matrix'])
         self.assertFalse(plan(['app/src/components/SearchPanel.tsx'])['matrix'])
         self.assertFalse(plan(['app/src/components/glossary.css'])['matrix'])
         self.assertEqual(plan(['modeles/backlog/model.yaml'])['contract_profile'], 'backlog')

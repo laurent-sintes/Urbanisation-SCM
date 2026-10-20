@@ -22,6 +22,15 @@ export const HOTSPOT_DIAMETERS: Record<string, number> = {
   unassessed: 40,
 };
 
+export const CATALOGUE_HOTSPOT_HEADROOM = 56;
+
+/** Safe screen-space alternatives in the empty strip above the Catalogue map. */
+export function catalogueHotspotDock(width: number): { x: number; y: number }[] {
+  const positions = [];
+  for (let x = 26; x <= width - 26; x += 54) positions.push({ x, y: 26 });
+  return positions;
+}
+
 /** Screen-space placement: fast rings first, then a finer search around obstacles. */
 export function placeHotspots(
   items: HotspotPlacementItem[],

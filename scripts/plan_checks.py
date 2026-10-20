@@ -48,7 +48,9 @@ def plan(paths):
                     modules.add('app:' + Path(path).stem)
             if 'launcher' in path:
                 flags.add('launcher')
-            if path.startswith('app/src/') and (
+            if path in {'app/catalogue-geometry.mjs', 'app/verify-catalogue-page.mjs',
+                        'app/verify-flow-map.mjs', 'app/verify-map-placement.mjs',
+                        'app/verify-map-hotspot-matrix.mjs', 'app/verify-hotspot-depths.mjs'} or path.startswith('app/src/') and (
                 any(term in path.lower() for term in ('map', 'hotspot', 'reactflow', 'overview', 'adaptivelayout'))
                 or path in {'app/src/styles.css', 'app/src/reader.css'}
             ):

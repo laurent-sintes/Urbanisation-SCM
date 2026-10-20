@@ -42,9 +42,12 @@ export function chooseMapGrid(
   stretchSpanningRows = false,
 ): MapGrid {
   if (slots && sections.length === 1) {
-    const columns = 2;
+    const compact = mode === 'width' && viewportWidth < 692;
+    const columns = compact ? 1 : 2;
     const usableWidth = Math.max(1, viewportWidth - 64 - (group ? 28 : 0));
-    const cardWidth = Math.max(MIN_CARD_WIDTH, Math.min(1200, Math.floor((usableWidth - GAP) / columns)));
+    const cardWidth = compact
+      ? Math.min(1200, usableWidth)
+      : Math.max(MIN_CARD_WIDTH, Math.min(1200, Math.floor((usableWidth - GAP) / columns)));
     const measuredSections = measure?.(cardWidth) || sections;
     const wideSection = measure?.(cardWidth * 2 + GAP)?.[0] || sections[0];
     const rows: GridItem[][] = [];
@@ -52,13 +55,20 @@ export function chooseMapGrid(
       const entries = slots
         .filter((slot) => slot.row === rowNumber)
         .map((slot) => {
-          const height = (slot.span === 2 ? wideSection : measuredSections[0]).heights[slot.index];
-          return { index: slot.index, column: slot.column, span: slot.span, height, displayHeight: height };
+          const height = (!compact && slot.span === 2 ? wideSection : measuredSections[0]).heights[slot.index];
+          return {
+            index: slot.index,
+            column: compact ? 0 : slot.column,
+            span: compact ? 1 : slot.span,
+            height,
+            displayHeight: height,
+          };
         });
       const rowHeight = Math.max(...entries.map((entry) => entry.height));
-      rows.push(entries.map((entry) => ({ ...entry, displayHeight: rowHeight })));
+      if (compact) rows.push(...entries.map((entry) => [entry]));
+      else rows.push(entries.map((entry) => ({ ...entry, displayHeight: rowHeight })));
     }
-    const width = columns * cardWidth + GAP + 32 + (group ? 28 : 0);
+    const width = columns * cardWidth + (columns - 1) * GAP + 32 + (group ? 28 : 0);
     const height =
       4 +
       measuredSections[0].headingHeight +
@@ -85,7 +95,7 @@ export function chooseMapGrid(
   for (let columns = 1; columns <= maxColumns; columns++) {
     const maxCardWidth = 1200;
     const cardWidth = Math.max(
-      MIN_CARD_WIDTH,
+      mode === 'width' ? Math.min(MIN_CARD_WIDTH, usableWidth) : MIN_CARD_WIDTH,
       Math.min(maxCardWidth, Math.floor((usableWidth - (columns - 1) * GAP) / columns)),
     );
     const width = columns * cardWidth + (columns - 1) * GAP + 32 + (group ? 28 : 0);
